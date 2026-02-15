@@ -1,0 +1,73 @@
+---
+title: Guides
+description: Production-ready UI patterns built from PyColors UI primitives.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+Guides explain **how to use PyColors UI primitives in real products**.
+
+They focus on:
+- UX decisions
+- composition rules
+- async states
+- validation flows
+- layout structure
+
+Guides do **not** introduce new UI components.
+They show how existing primitives work together in production.
+
+---
+
+## How Guides differ from other sections
+
+### UI Components
+- Individual primitives
+- Stateless
+- Token-driven
+- Reusable everywhere
+
+### Guides
+- Composition of primitives
+- UX and behavior rules
+- Real-world scenarios
+- Production constraints
+
+### Patterns (coming next)
+- Opinionated feature blocks
+- Data + UI + layout
+- Reusable at the product level
+
+---
+
+## Available guides
+
+<LinkCards>
+  <LinkCard
+    title="Empty, loading, and error states"
+    description="Handle async UI states clearly and consistently."
+    href="/docs/guides/empty-loading-error"
+  />
+  <LinkCard
+    title="Forms with validation"
+    description="Build accessible, predictable forms with RHF and Zod."
+    href="/docs/guides/forms-with-validation"
+  />
+</LinkCards>
+
+---
+
+## When to read Guides
+
+Read the Guides when:
+- UI primitives feel insufficient alone
+- you start handling async data
+- UX consistency matters more than speed
+- you want to avoid common production mistakes
+
+Guides help you **connect the dots** between components.
+
+</DocsPageShell>

@@ -1,0 +1,288 @@
+---
+title: Tabs
+description: Segmented navigation component for switching between related views.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Preview } from "@/components/docs/preview";
+
+import {
+  Tabs as UITabs,
+  TabsList as UITabsList,
+  TabsTrigger as UITabsTrigger,
+  TabsContent as UITabsContent,
+} from "@pycolors/ui";
+
+<DocsPageShell>
+
+The **Tabs** component lets users switch between related views without leaving the page.
+It is built on **Radix UI Tabs** and styled with PyColors tokens for consistent theming.
+
+Use Tabs for:
+- Settings sections (Profile / Billing / Security)
+- Dashboards (Overview / Activity / Logs)
+- Compact UIs (filters, panels, segmented content)
+
+---
+
+## Import
+
+```tsx
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <UITabs defaultValue="account" className="w-full max-w-xl">
+        <UITabsList aria-label="Account tabs">
+          <UITabsTrigger value="account">Account</UITabsTrigger>
+          <UITabsTrigger value="password">Password</UITabsTrigger>
+        </UITabsList>
+
+        <UITabsContent value="account">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Account settings content
+          </div>
+        </UITabsContent>
+
+        <UITabsContent value="password">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Password settings content
+          </div>
+        </UITabsContent>
+      </UITabs>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Tabs defaultValue="account">
+      <TabsList aria-label="Settings tabs">
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="account">...</TabsContent>
+      <TabsContent value="password">...</TabsContent>
+    </Tabs>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Tabs,
+      TabsList,
+      TabsTrigger,
+      TabsContent,
+    } from "@pycolors/ui";
+
+    export function SettingsTabs() {
+      return (
+        <Tabs defaultValue="account" className="w-full max-w-xl">
+          <TabsList aria-label="Settings tabs">
+            <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsTrigger value="password">Password</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="account">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Account settings content
+            </div>
+          </TabsContent>
+
+          <TabsContent value="password">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Password settings content
+            </div>
+          </TabsContent>
+        </Tabs>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Sizes
+
+`TabsList` and `TabsTrigger` accept a `size` prop to adapt density.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex flex-col gap-4">
+        <UITabs defaultValue="one">
+          <UITabsList size="sm" aria-label="Small tabs">
+            <UITabsTrigger size="sm" value="one">One</UITabsTrigger>
+            <UITabsTrigger size="sm" value="two">Two</UITabsTrigger>
+          </UITabsList>
+
+          <UITabsContent value="one">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Small tabs content
+            </div>
+          </UITabsContent>
+
+          <UITabsContent value="two">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Small tabs content
+            </div>
+          </UITabsContent>
+        </UITabs>
+
+        <UITabs defaultValue="one">
+          <UITabsList size="md" aria-label="Medium tabs">
+            <UITabsTrigger size="md" value="one">One</UITabsTrigger>
+            <UITabsTrigger size="md" value="two">Two</UITabsTrigger>
+          </UITabsList>
+
+          <UITabsContent value="one">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Medium tabs content
+            </div>
+          </UITabsContent>
+
+          <UITabsContent value="two">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Medium tabs content
+            </div>
+          </UITabsContent>
+        </UITabs>
+
+        <UITabs defaultValue="one">
+          <UITabsList size="lg" aria-label="Large tabs">
+            <UITabsTrigger size="lg" value="one">One</UITabsTrigger>
+            <UITabsTrigger size="lg" value="two">Two</UITabsTrigger>
+          </UITabsList>
+
+          <UITabsContent value="one">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Large tabs content
+            </div>
+          </UITabsContent>
+
+          <UITabsContent value="two">
+            <div className="rounded-md border bg-card p-4 text-sm">
+              Large tabs content
+            </div>
+          </UITabsContent>
+        </UITabs>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <TabsList size="sm">...</TabsList>
+    <TabsTrigger size="sm" value="...">...</TabsTrigger>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Tabs, TabsList, TabsTrigger } from "@pycolors/ui";
+
+    export function SizedTabsList() {
+      return (
+        <Tabs defaultValue="one">
+          <TabsList size="sm" aria-label="Small tabs">
+            <TabsTrigger size="sm" value="one">One</TabsTrigger>
+            <TabsTrigger size="sm" value="two">Two</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Available sizes
+
+| Size | Description |
+| --- | --- |
+| `sm` | Dense UIs (filters, toolbars) |
+| `md` | Default density |
+| `lg` | Comfortable spacing (marketing / onboarding) |
+
+---
+
+## API
+
+### Components
+
+| Component | Description |
+| --- | --- |
+| `Tabs` | Root container (Radix `TabsPrimitive.Root`) |
+| `TabsList` | Trigger list (supports `size`) |
+| `TabsTrigger` | Individual trigger (supports `size`) |
+| `TabsContent` | Content panel |
+
+### Props
+
+- `Tabs` extends `TabsPrimitive.TabsProps`
+- `TabsList` extends `TabsPrimitive.TabsListProps` + `{ size?: "sm" | "md" | "lg" }`
+- `TabsTrigger` extends `TabsPrimitive.TabsTriggerProps` + `{ size?: "sm" | "md" | "lg" }`
+- `TabsContent` extends `TabsPrimitive.TabsContentProps`
+
+---
+
+## TypeScript types
+
+```ts
+export type TabsSize = "sm" | "md" | "lg";
+```
+
+---
+
+## Accessibility
+
+- Always provide an `aria-label` on `TabsList` (or associate with a visible heading).
+- Ensure each `TabsTrigger` has clear text (avoid icon-only triggers).
+- Keyboard support is built-in via Radix (Arrow keys to navigate triggers).
+- Keep tab labels short and descriptive.
+
+---
+
+## Design guidelines
+
+- Use Tabs when the views are peers (same hierarchy).
+- Don’t hide critical actions behind tabs; keep actions visible in the page header.
+- Prefer 2–5 tabs; more than that usually becomes a navigation problem.
+- Keep content height stable when possible to reduce layout shift.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic tokens used for surfaces and active states."
+    href="/docs/design-system/colors#semantic-tokens"
+  />
+  <LinkCard
+    title="Typography"
+    description="Keep tab labels aligned with the type scale."
+    href="/docs/design-system/typography"
+  />
+  <LinkCard
+    title="Button"
+    description="Actions that pair with tabbed content."
+    href="/docs/ui/button"
+  />
+</LinkCards>
+
+</DocsPageShell>

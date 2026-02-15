@@ -1,0 +1,103 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "tw-animate-css";
+
+/* ==========================================================================
+   Fonts — local assets (public/)
+   ========================================================================== */
+
+@font-face {
+  font-family: "Graphit";
+  src: url("/fonts/Graphit-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mona Sans";
+  src: url("/fonts/Mona-Sans.var.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Base Layer
+   ========================================================================== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ==========================================================================
+   Typography utilities
+   ========================================================================== */
+:root {
+  --fd-nav-height: 64px !important;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-brand: "Graphit", var(--font-sans);
+  --font-mono: "Mona Sans", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Fumadocs — Sidebar overrides
+   ========================================================================== */
+
+#nd-sidebar {
+  background-color: transparent;
+  border-right: 1px solid rgba(128, 128, 128, 0.12);
+  position: fixed;
+  left: -3px;
+  width: var(--fd-sidebar-width, 260px);
+  top: var(--fd-nav-height);
+  height: calc(100vh - var(--fd-nav-height));
+  z-index: 30;
+}
+
+a[data-active="true"] {
+  background-color: var(--fd-primary);
+  color: var(--fd-primary-foreground);
+}
+
+[data-sidebar][data-side="left"] {
+  background-color: var(--background);
+}
+
+#nd-docs-layout {
+  @apply bg-background/80 border-x border-border/50;
+}
+
+.footer {
+  background-color: var(--fd-nav-height);
+}

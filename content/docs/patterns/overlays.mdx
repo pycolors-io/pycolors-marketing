@@ -1,0 +1,142 @@
+---
+title: Overlays Pattern
+description: Choose the right overlay (Dropdown, Dialog, Sheet) with production UX rules and accessible defaults.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+
+import {
+  OverlayDecisionDemo,
+  SheetFiltersDemo,
+  DialogCreateDemo,
+  DropdownRowActionsDemo,
+} from "../previews/overlays";
+
+<DocsPageShell>
+
+## Decision matrix (Dropdown vs Dialog vs Sheet)
+
+Overlays are not “UI choices”.
+They are **interaction contracts**.
+
+Use this matrix:
+
+| Overlay | Best for | Avoid when |
+|---|---|---|
+| **DropdownMenu** | Quick actions on an existing item (row actions, small choices) | Multi-step flows, forms, confirmation, long content |
+| **Dialog** | Focused task that blocks the page (create/edit, confirm destructive, short forms) | Advanced filtering, long scrollable content, navigation-like panels |
+| **Sheet** | Progressive disclosure and side workflows (filters, details panel, navigation on mobile) | Destructive confirmations, small 2-choice decisions |
+
+**Rule of thumb**
+- Dropdown = *micro actions*
+- Dialog = *focused task*
+- Sheet = *side workflow*
+
+<OverlayDecisionDemo />
+
+---
+
+## Anatomy & UX rules
+
+### Focus & keyboard
+- **Trap focus** in Dialog / Sheet.
+- Return focus to the trigger on close.
+- Support **Escape** to close (except critical confirmations where Escape is allowed but state remains safe).
+
+### Scroll lock
+- Dialog / Sheet should **lock page scroll** while open.
+- Content inside the overlay should scroll, not the page.
+
+### Stacking
+- Avoid nesting overlays (Dropdown → Dialog is OK, but keep it rare).
+- Ensure portal stacking is correct (Dropdown above tables, Dialog above everything).
+
+### Close semantics
+- Prefer explicit buttons: **Cancel / Save**
+- Don’t auto-close on submit errors.
+- Destructive actions require explicit confirmation (Dialog).
+
+---
+
+## Common flows
+
+### “Create item” (Dialog)
+
+Use Dialog when the user starts a task and must complete or cancel it.
+
+<DialogCreateDemo />
+
+---
+
+### “Filter + advanced options” (Sheet)
+
+Use Sheet when filters are progressive and the user may tweak options while keeping context.
+
+<SheetFiltersDemo />
+
+---
+
+### “Row actions” (Dropdown)
+
+Use DropdownMenu for quick row actions.
+For destructive actions, open a Dialog from the menu.
+
+<DropdownRowActionsDemo />
+
+---
+
+## Accessibility checklist
+
+Before shipping overlays, verify:
+
+- Dialog / Sheet includes a **Title** (visible or `VisuallyHidden`)
+- Focus is trapped and restored correctly
+- Escape closes (and does not lose data silently)
+- Triggers have clear labels (`aria-label` when icon-only)
+- Dropdown items are fully keyboard reachable
+
+---
+
+### Dialog example
+
+```tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Create</Button>
+  </DialogTrigger>
+
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Create project</DialogTitle>
+      <DialogDescription>
+        Give it a name and status.
+      </DialogDescription>
+    </DialogHeader>
+    {/* form */}
+  </DialogContent>
+</Dialog>
+```
+
+---
+
+### Sheet example
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">Filters</Button>
+  </SheetTrigger>
+
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Filters</SheetTitle>
+      <SheetDescription>
+        Narrow results and apply advanced options.
+      </SheetDescription>
+    </SheetHeader>
+    {/* filters */}
+  </SheetContent>
+</Sheet>
+```
+
+</DocsPageShell>

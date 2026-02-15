@@ -1,0 +1,172 @@
+---
+title: Design System
+description: Foundations of PyColors UI — tokens, colors, typography, and the principles that keep the system consistent at scale.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { CheckCircle, XCircle } from "lucide-react";
+
+<DocsPageShell>
+
+PyColors UI is not a collection of random components — it’s a **system**.
+
+The design system defines the **rules and foundations** that make every component feel consistent:
+colors, typography, radius, shadows, and the token architecture that ties everything together.
+
+If you want PyColors UI to remain clean as your product grows, start here.
+
+---
+
+## What the design system solves
+
+Most UI inconsistency comes from the same root causes:
+
+- styles are decided at the component level
+- raw values (hex, px, arbitrary radii) creep into the codebase
+- small “exceptions” accumulate until nothing matches
+- design decisions live in people’s heads, not in the system
+
+PyColors UI prevents that by encoding design decisions into **tokens** and exposing them through **semantic utilities**.
+
+---
+
+## Core principles
+
+### 1) Roles over raw values
+
+Components should use **roles** (meaning) instead of raw values (appearance).
+
+- <CheckCircle className="inline-block mr-2 h-4 w-4 text-success" /> `bg-card`, `text-muted-foreground`, `border-border`
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> `#0f172a`, `rgba(...)`, `rounded-[11px]`
+
+Roles keep components stable across themes and brands.
+
+### 2) One source of truth
+
+Global decisions (radius, elevation, colors) are defined once and consumed everywhere.
+Change the system — the UI updates coherently.
+
+### 3) Predictable composition
+
+- Tokens define the language
+- Components consume tokens
+- Patterns document real flows
+
+This separation keeps primitives small and reusable, while patterns stay realistic.
+
+---
+
+## System layers
+
+### Tokens (atomic decisions)
+
+Tokens encode the base decisions of the system:
+
+- radius scale
+- shadow scale (elevation)
+- (future) spacing, motion, z-index
+
+Tokens live in `global.css` and are mapped to Tailwind utilities.
+
+<LinkCards>
+  <LinkCard
+    title="Tokens"
+    description="Atomic decisions powering the system (radius, shadows, and more)."
+    href="/docs/design-system/tokens"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner geometry tokens (rounded-*)."
+    href="/docs/design-system/tokens/radius"
+  />
+  <LinkCard
+    title="Shadows"
+    description="Elevation scale for surfaces and floating layers."
+    href="/docs/design-system/tokens/shadows"
+  />
+</LinkCards>
+
+---
+
+### Colors (semantic theming)
+
+Colors are role-based and themeable:
+
+- OKLCH-based values for predictable contrast
+- light mode on `:root`, dark mode on `.dark`
+- semantic roles mapped to Tailwind tokens
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic color roles, OKLCH architecture, and theming."
+    href="/docs/design-system/colors"
+  />
+</LinkCards>
+
+---
+
+### Typography (hierarchy and rhythm)
+
+Typography defines readability, hierarchy, and content rhythm:
+
+- headings and type scale
+- text roles (foreground vs muted)
+- consistent metadata styles
+
+<LinkCards>
+  <LinkCard
+    title="Typography"
+    description="Text scale, roles, and hierarchy for UI and content."
+    href="/docs/design-system/typography"
+  />
+</LinkCards>
+
+---
+
+## How it all connects
+
+A component like Card is simple because the design system does the heavy lifting:
+
+- **colors** define surface roles (`bg-card`, `text-card-foreground`)
+- **tokens** define geometry (`rounded-lg`) and elevation (`shadow-sm`)
+- **typography** defines hierarchy (title vs description vs content)
+
+This is why PyColors UI scales: components remain small while the system stays expressive.
+
+---
+
+## Recommended reading order
+
+If you want to understand the whole system quickly:
+
+1. **Tokens** → Radius → Shadows
+2. **Colors**
+3. **Typography**
+4. UI Components (Button, Card, Input…)
+5. Patterns (Forms, Layouts, Settings…)
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Getting Started"
+    description="Set up the project and follow the recommended learning path."
+    href="/docs/getting-started"
+  />
+  <LinkCard
+    title="Why PyColors UI?"
+    description="Philosophy, trade-offs, and system-level decisions."
+    href="/docs"
+  />
+  <LinkCard
+    title="UI Components"
+    description="Primitives that consume the design system."
+    href="/docs/ui"
+  />
+</LinkCards>
+
+</DocsPageShell>

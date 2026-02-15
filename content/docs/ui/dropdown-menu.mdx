@@ -1,0 +1,547 @@
+---
+title: Dropdown Menu
+description: Context menu component built on Radix DropdownMenu. Supports groups, submenus, checkbox/radio items, and keyboard shortcuts.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+import { Preview } from "@/components/docs/preview";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@pycolors/ui";
+
+import { ClientOnly } from "../previews/client-only";
+
+import {
+  CheckboxMenuPreview,
+  RadioMenuPreview,
+} from "../previews/dropdown-menu-previews";
+
+<DocsPageShell>
+
+The **Dropdown Menu** component displays a list of actions in a floating surface anchored to a trigger.
+It is built on **Radix UI DropdownMenu** and styled with PyColors tokens (`bg-popover`, `border-border`, `text-popover-foreground`).
+
+Use Dropdown Menu for:
+
+- Row actions (••• menus)
+- Editor/tool menus
+- Compact command lists (rename, duplicate, delete)
+- Option selectors (checkbox/radio groups)
+
+---
+
+## Import
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from "@pycolors/ui";
+```
+
+---
+
+## Basic usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">
+            Open menu
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Open menu</Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      DropdownMenu,
+      DropdownMenuTrigger,
+      DropdownMenuContent,
+      DropdownMenuItem,
+      DropdownMenuSeparator,
+    } from "@pycolors/ui";
+
+    export function BasicDropdownMenu() {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">
+              Open menu
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Grouping, labels, and shortcuts
+
+Use `DropdownMenuLabel` to title a section, `DropdownMenuGroup` to group items, and `DropdownMenuShortcut` to render right-aligned hints.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">
+            Actions
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="start">
+          <DropdownMenuLabel>Project</DropdownMenuLabel>
+
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              Rename
+              <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Duplicate
+              <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem className="text-destructive">
+            Delete
+            <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Project</DropdownMenuLabel>
+
+      <DropdownMenuGroup>
+        <DropdownMenuItem>
+          Rename <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
+
+      <DropdownMenuSeparator />
+
+      <DropdownMenuItem className="text-destructive">
+        Delete <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      DropdownMenu,
+      DropdownMenuTrigger,
+      DropdownMenuContent,
+      DropdownMenuLabel,
+      DropdownMenuGroup,
+      DropdownMenuItem,
+      DropdownMenuSeparator,
+      DropdownMenuShortcut,
+    } from "@pycolors/ui";
+
+    export function GroupedMenu() {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">Actions</Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuLabel>Project</DropdownMenuLabel>
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                Rename <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Duplicate <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem className="text-destructive">
+              Delete <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Checkbox items
+
+Interactive checkbox examples must live in a **Client Component** (hooks + event handlers).
+This page renders them via `CheckboxMenuPreview`.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <ClientOnly>
+        <CheckboxMenuPreview />
+      </ClientOnly>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <DropdownMenuCheckboxItem checked={enabled} onCheckedChange={setEnabled}>
+      Enabled
+    </DropdownMenuCheckboxItem>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    "use client";
+
+    import * as React from "react";
+    import {
+      Button,
+      DropdownMenu,
+      DropdownMenuTrigger,
+      DropdownMenuContent,
+      DropdownMenuCheckboxItem,
+      DropdownMenuSeparator,
+    } from "@pycolors/ui";
+
+    export function CheckboxMenuPreview() {
+      const [enabled, setEnabled] = React.useState(true);
+      const [pinned, setPinned] = React.useState(false);
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">Options</Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuCheckboxItem
+              checked={enabled}
+              onCheckedChange={(v) => setEnabled(Boolean(v))}
+            >
+              Enabled
+            </DropdownMenuCheckboxItem>
+
+            <DropdownMenuCheckboxItem
+              checked={pinned}
+              onCheckedChange={(v) => setPinned(Boolean(v))}
+            >
+              Pinned
+            </DropdownMenuCheckboxItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuCheckboxItem checked disabled>
+              Disabled option
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Radio group
+
+Same rule: hooks go into a client component (`RadioMenuPreview`).
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <RadioMenuPreview />
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <DropdownMenuRadioGroup value={value} onValueChange={setValue}>
+      <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    "use client";
+
+    import * as React from "react";
+    import {
+      Button,
+      DropdownMenu,
+      DropdownMenuTrigger,
+      DropdownMenuContent,
+      DropdownMenuLabel,
+      DropdownMenuRadioGroup,
+      DropdownMenuRadioItem,
+      DropdownMenuSeparator,
+    } from "@pycolors/ui";
+
+    export function RadioMenuPreview() {
+      const [theme, setTheme] = React.useState("system");
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">Theme</Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+
+            <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+              <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuRadioItem value="contrast" disabled>
+              High contrast (soon)
+            </DropdownMenuRadioItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Submenus
+
+Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to nest options.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">More</Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem>Rename</DropdownMenuItem>
+
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>PDF</DropdownMenuItem>
+              <DropdownMenuItem>CSV</DropdownMenuItem>
+              <DropdownMenuItem>JSON</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
+        <DropdownMenuItem>PDF</DropdownMenuItem>
+        <DropdownMenuItem>CSV</DropdownMenuItem>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      DropdownMenu,
+      DropdownMenuTrigger,
+      DropdownMenuContent,
+      DropdownMenuItem,
+      DropdownMenuSub,
+      DropdownMenuSubTrigger,
+      DropdownMenuSubContent,
+      DropdownMenuSeparator,
+    } from "@pycolors/ui";
+
+    export function SubmenuExample() {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm">More</Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem>Rename</DropdownMenuItem>
+
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>PDF</DropdownMenuItem>
+                <DropdownMenuItem>CSV</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Components
+
+| Component | Description |
+| --- | --- |
+| `DropdownMenu` | Root container |
+| `DropdownMenuTrigger` | Anchor element (use `asChild` for custom triggers) |
+| `DropdownMenuContent` | Floating surface (supports Radix positioning props) |
+| `DropdownMenuItem` | Standard action item |
+| `DropdownMenuCheckboxItem` | Toggle item (checked/unchecked) |
+| `DropdownMenuRadioGroup` | Exclusive selection group |
+| `DropdownMenuRadioItem` | Item within a radio group |
+| `DropdownMenuLabel` | Section label |
+| `DropdownMenuSeparator` | Divider |
+| `DropdownMenuShortcut` | Right-aligned hint (visual only) |
+| `DropdownMenuGroup` | Group wrapper |
+| `DropdownMenuSub` | Submenu root |
+| `DropdownMenuSubTrigger` | Submenu trigger item |
+| `DropdownMenuSubContent` | Submenu surface |
+
+### Wrapper additions
+
+- `DropdownMenuItem` supports `{ inset?: boolean }`
+- `DropdownMenuLabel` supports `{ inset?: boolean }`
+- `DropdownMenuSubTrigger` supports `{ inset?: boolean }`
+
+---
+
+## Accessibility
+
+- Radix provides keyboard navigation by default:
+  - **Enter/Space** activates an item
+  - **Arrow keys** navigate
+  - **Esc** closes the menu
+- Prefer `DropdownMenuTrigger asChild` to preserve correct semantics (e.g. a real `<button>`).
+- Avoid placing complex interactive controls (inputs, comboboxes) inside dropdown menus unless necessary.
+- For destructive actions, consider a confirmation dialog.
+
+---
+
+## Design guidelines
+
+- Keep items short and action-oriented (verb-first labels).
+- Use separators to split groups; don’t over-separate.
+- Use `inset` for hierarchical menus or when aligning with item indicators.
+- Use submenus sparingly (depth 1 is usually enough).
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Button"
+    description="Best practices for triggers and actions."
+    href="/docs/ui/button"
+  />
+  <LinkCard
+    title="Sheet"
+    description="Use a sheet for complex multi-step actions."
+    href="/docs/ui/sheet"
+  />
+  <LinkCard
+    title="Accessibility"
+    description="Keyboard and focus patterns used across PyColors UI."
+    href="/docs/guides/accessibility"
+  />
+</LinkCards>
+
+</DocsPageShell>

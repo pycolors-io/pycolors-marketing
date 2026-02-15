@@ -1,0 +1,579 @@
+---
+title: Button
+description: Action button component used across PyColors UI, built on shadcn/ui. Includes variants, sizes, and best practices.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+The **Button** component is one of the core interactive elements of PyColors UI.
+It provides consistent styling, variants, accessibility, and flexible composition across marketing pages, dashboards, and applications.
+
+This implementation extends the **shadcn/ui Button primitive** and is aligned with the PyColors design system (semantic color tokens, radius, shadows, and focus rings).
+
+---
+
+## Import
+
+```tsx
+import { Button } from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Button>Click me</Button>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Button>Click me</Button>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function Demo() {
+      return <Button>Click me</Button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+The default button uses the primary semantic color tokens and adapts automatically to light/dark mode.
+
+---
+
+## Variants
+
+Buttons support several variants to adapt to different contexts.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex flex-wrap gap-4">
+        <Button variant="default">Default</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="link">Link</Button>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <div className="flex flex-wrap gap-4">
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="link">Link</Button>
+    </div>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonVariantsExample() {
+      return (
+        <div className="flex flex-wrap gap-4">
+          <Button variant="default">Default</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="destructive">Destructive</Button>
+          <Button variant="link">Link</Button>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Available variants
+
+| Variant      | Description                          |
+| ------------ | ------------------------------------ |
+| default      | Primary action button, high emphasis |
+| secondary    | Neutral alternative to primary       |
+| outline      | Bordered button for medium emphasis  |
+| ghost        | Minimal UI footprint                 |
+| destructive  | Used for destructive actions         |
+| link         | Text-style button for inline actions |
+
+---
+
+## Sizes
+
+The Button supports both regular sizes and icon-only sizes.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex items-center gap-4 flex-wrap">
+        <Button size="sm">Small</Button>
+        <Button size="default">Default</Button>
+        <Button size="lg">Large</Button>
+
+        <Button size="icon" aria-label="History">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 1a9 9 0 100 18 9 9 0 000-18zM9 5a1 1 0 012 0v5a1 1 0 01-.293.707l-3 3a1 1 0 11-1.414-1.414L9 9.586V5z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </Button>
+
+        <Button size="icon-sm" aria-label="Small icon button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+          </svg>
+        </Button>
+
+        <Button size="icon-lg" aria-label="Large icon button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+          </svg>
+        </Button>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <div className="flex items-center gap-4 flex-wrap">
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+
+      <Button size="icon" aria-label="History">
+        <HistoryIcon className="size-4" aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-sm" aria-label="Small icon button">
+        <Icon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-lg" aria-label="Large icon button">
+        <Icon aria-hidden="true" />
+      </Button>
+    </div>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonSizesExample() {
+      return (
+        <div className="flex items-center gap-4 flex-wrap">
+          <Button size="sm">Small</Button>
+          <Button size="default">Default</Button>
+          <Button size="lg">Large</Button>
+
+          <Button size="icon" aria-label="History">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M10 1a9 9 0 100 18 9 9 0 000-18z" />
+            </svg>
+          </Button>
+
+          <Button size="icon-sm" aria-label="Small icon button">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+            </svg>
+          </Button>
+
+          <Button size="icon-lg" aria-label="Large icon button">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+            </svg>
+          </Button>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Available sizes
+
+| Size      | Description                                  |
+| --------- | -------------------------------------------- |
+| sm        | Compact buttons for dense UIs                |
+| default   | Standard button size                         |
+| lg        | Larger visual weight                         |
+| icon      | Square icon-only button (base)               |
+| icon-sm   | Smaller icon-only button                      |
+| icon-lg   | Larger icon-only button                       |
+
+---
+
+## Disabled state
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex gap-4 flex-wrap">
+        <Button disabled>Disabled</Button>
+        <Button variant="secondary" disabled>
+          Disabled
+        </Button>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <div className="flex gap-4">
+      <Button disabled>Disabled</Button>
+      <Button variant="secondary" disabled>
+        Disabled
+      </Button>
+    </div>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonDisabledExample() {
+      return (
+        <div className="flex gap-4">
+          <Button disabled>Disabled</Button>
+          <Button variant="secondary" disabled>
+            Disabled
+          </Button>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Disabled buttons use reduced opacity and disable pointer events to indicate non-interactivity.
+
+---
+
+## Focus and keyboard
+
+Buttons use a **focus-visible** ring for accessible keyboard navigation.
+The ring is applied only when navigating with the keyboard (Tab / Shift+Tab), not on mouse clicks.
+
+- Keeps focus clear for keyboard users
+- Avoids noisy focus styles for pointer users
+- Uses semantic tokens (`ring-ring`, `border-ring`)
+
+---
+
+## With icon
+
+Use any icon library (Lucide, Heroicons, custom SVG).
+
+### Icon sizing rule
+
+The Button applies a default `size-4` to any nested `<svg>` that does **not** already have a `size-*` class.
+If you want a custom size, set it explicitly:
+
+```tsx
+<Button>
+  <MyIcon className="size-5" aria-hidden="true" />
+  Label
+</Button>
+```
+
+### Leading icon
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Button>
+        <svg
+          className="size-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden="true"
+        >
+          <path d="M12 5v14m7-7H5" />
+        </svg>
+        Add item
+      </Button>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Button>
+      <PlusIcon className="size-4 mr-2" aria-hidden="true" />
+      Add item
+    </Button>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonWithIconExample() {
+      return (
+        <Button>
+          <svg className="size-4 mr-2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14m7-7H5" />
+          </svg>
+          Add item
+        </Button>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Trailing icon
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Button>
+        Continue
+        <svg
+          className="size-4 ml-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden="true"
+        >
+          <path d="M9 5l7 7-7 7" />
+        </svg>
+      </Button>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Button>
+      Continue
+      <ArrowRightIcon className="size-4 ml-2" aria-hidden="true" />
+    </Button>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonTrailingIconExample() {
+      return (
+        <Button>
+          Continue
+          <svg className="size-4 ml-2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </Button>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Validation state (aria-invalid)
+
+The Button supports an invalid visual state via `aria-invalid`.
+This is useful for **submit actions** when the related form is invalid.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex gap-4 flex-wrap">
+        <Button aria-invalid="true">Fix errors</Button>
+        <Button variant="outline" aria-invalid="true">Review</Button>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Button aria-invalid="true">Fix errors</Button>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function InvalidButtonExample() {
+      return <Button aria-invalid="true">Fix errors</Button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## As child (Slot)
+
+You can render the button as another component using `asChild`.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Button asChild>
+        <a href="#docs">Go to docs</a>
+      </Button>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Button asChild>
+      <a href="#docs">Go to docs</a>
+    </Button>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button } from "@pycolors/ui";
+
+    export default function ButtonAsChildExample() {
+      return (
+        <Button asChild>
+          <a href="#docs">Go to docs</a>
+        </Button>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+This allows styling links, router components, or custom components as buttons while maintaining semantics.
+
+---
+
+## API
+
+### Props
+
+| Prop      | Type          | Default   | Description                 |
+| --------- | ------------- | --------- | --------------------------- |
+| variant   | ButtonVariant | "default" | Visual style of the button  |
+| size      | ButtonSize    | "default" | Size of the button          |
+| asChild   | boolean       | false     | Render using Radix Slot     |
+| disabled  | boolean       | false     | Disable interaction         |
+| className | string        | —         | Additional Tailwind classes |
+
+The Button extends the standard HTML button props:
+
+```ts
+React.ComponentProps<"button">
+```
+
+---
+
+## TypeScript types
+
+These types define the public API for the `variant` and `size` props and remain aligned with the source component.
+
+```ts
+export type ButtonVariant =
+  | "default"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "destructive"
+  | "link";
+
+export type ButtonSize =
+  | "default"
+  | "sm"
+  | "lg"
+  | "icon"
+  | "icon-sm"
+  | "icon-lg";
+```
+
+---
+
+## Accessibility
+
+- Use clear and descriptive labels for button text.
+- Preserve keyboard focus styles (`focus-visible`) for accessible navigation.
+- For icon-only buttons, provide an `aria-label` describing the action.
+- Icons should be marked `aria-hidden` (decorative).
+- Avoid using a Button with only an icon and no accessible label.
+
+---
+
+## Design guidelines
+
+- Use `default` for the primary action on a page.
+- Use `secondary` or `outline` for secondary actions.
+- Use `destructive` only for actions that are dangerous or irreversible.
+- Prefer consistent button sizing within a view to preserve rhythm.
+- Use icon-only sizes (`icon-*`) for toolbars and compact actions.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="UI Components"
+    description="Understand how primitives are organized in PyColors UI."
+    href="/docs/ui"
+  />
+  <LinkCard
+    title="Typography"
+    description="Keep button labels aligned with the type scale."
+    href="/docs/design-system/typography"
+  />
+  <LinkCard
+    title="Colors"
+    description="Semantic color roles used by button variants."
+    href="/docs/design-system/colors"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner radius tokens used by buttons and pills."
+    href="/docs/design-system/tokens/radius"
+  />
+</LinkCards>
+
+</DocsPageShell>

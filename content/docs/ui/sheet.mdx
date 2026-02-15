@@ -1,0 +1,377 @@
+---
+title: Sheet
+description: Slide-over panel built on Radix Dialog. Use it for side panels, filters, navigation, and contextual actions.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+The **Sheet** component is a slide-over panel (a Dialog variant) used for **side panels**, **filters**, **mobile navigation**, and **contextual editing**.
+
+It’s built on **Radix Dialog** and uses PyColors semantic tokens (`bg-card`, `border-border`, `text-foreground`) + the motion utilities already configured in the UI.
+
+---
+
+## Import
+
+```tsx
+import {
+  Sheet,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex flex-wrap gap-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Open sheet</Button>
+          </SheetTrigger>
+
+          <SheetContent side="right" className="w-[380px] sm:w-[420px]">
+            <SheetHeader>
+              <SheetTitle>Edit profile</SheetTitle>
+              <SheetDescription>Update your account details. Changes are saved on submit.</SheetDescription>
+            </SheetHeader>
+
+            <div className="mt-6 grid gap-3">
+              <Input label="Name" placeholder="John Doe" />
+              <Input label="Email" placeholder="you@domain.com" />
+              <Input label="Company" placeholder="Acme Inc." autoComplete="organization" />
+            </div>
+
+            <SheetFooter className="mt-6">
+              <SheetClose asChild>
+                <Button variant="secondary">Cancel</Button>
+              </SheetClose>
+              <Button>Save</Button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open sheet</Button>
+      </SheetTrigger>
+
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Title</SheetTitle>
+          <SheetDescription>Description</SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6">...</div>
+
+        <SheetFooter className="mt-6">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <Button>Confirm</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    "use client";
+
+    import * as React from "react";
+    import {
+      Button,
+      Input,
+      Sheet,
+      SheetTrigger,
+      SheetClose,
+      SheetContent,
+      SheetHeader,
+      SheetFooter,
+      SheetTitle,
+      SheetDescription,
+    } from "@pycolors/ui";
+
+    export function ProfileSheet() {
+      return (
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Open sheet</Button>
+          </SheetTrigger>
+
+          <SheetContent side="right" className="w-[380px] sm:w-[420px]">
+            <SheetHeader>
+              <SheetTitle>Edit profile</SheetTitle>
+              <SheetDescription>Update your account details. Changes are saved on submit.</SheetDescription>
+            </SheetHeader>
+
+            <div className="mt-6 grid gap-3">
+              <Input label="Name" placeholder="Patrice" />
+              <Input label="Email" placeholder="you@domain.com" />
+            </div>
+
+            <SheetFooter className="mt-6">
+              <SheetClose asChild>
+                <Button variant="secondary">Cancel</Button>
+              </SheetClose>
+              <Button>Save</Button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+**Notes**
+- `SheetTrigger` should typically be `asChild` to preserve semantics (Button, link, icon button).
+- `SheetClose` can wrap buttons to close without extra state.
+
+---
+
+## Sides
+
+Sheets support 4 placement options via the `side` prop. Use `right` for common “edit panels”, and `left` for navigation.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex flex-wrap gap-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Right</Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <SheetHeader>
+              <SheetTitle>Right sheet</SheetTitle>
+              <SheetDescription>Default placement.</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Left</Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <SheetHeader>
+              <SheetTitle>Left sheet</SheetTitle>
+              <SheetDescription>Great for navigation.</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Top</Button>
+          </SheetTrigger>
+          <SheetContent side="top">
+            <SheetHeader>
+              <SheetTitle>Top sheet</SheetTitle>
+              <SheetDescription>Useful for quick filters.</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Bottom</Button>
+          </SheetTrigger>
+          <SheetContent side="bottom">
+            <SheetHeader>
+              <SheetTitle>Bottom sheet</SheetTitle>
+              <SheetDescription>Mobile-friendly actions.</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <SheetContent side="right" />
+    <SheetContent side="left" />
+    <SheetContent side="top" />
+    <SheetContent side="bottom" />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button, Sheet, SheetTrigger, SheetContent } from "@pycolors/ui";
+
+    export function SheetSides() {
+      return (
+        <div className="flex flex-wrap gap-2">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Right</Button>
+            </SheetTrigger>
+            <SheetContent side="right">...</SheetContent>
+          </Sheet>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Left</Button>
+            </SheetTrigger>
+            <SheetContent side="left">...</SheetContent>
+          </Sheet>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Close behavior
+
+`SheetContent` renders a top-right close button automatically. Use `SheetClose` for explicit close actions in the footer.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Open</Button>
+        </SheetTrigger>
+
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Confirm</SheetTitle>
+            <SheetDescription>Close via button or ESC.</SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 flex gap-2">
+            <SheetClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </SheetClose>
+            <SheetClose asChild>
+              <Button>Done</Button>
+            </SheetClose>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <SheetClose asChild>
+      <Button variant="secondary">Cancel</Button>
+    </SheetClose>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button, SheetClose } from "@pycolors/ui";
+
+    export function SheetFooterActions() {
+      return (
+        <SheetClose asChild>
+          <Button variant="secondary">Cancel</Button>
+        </SheetClose>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+#### `SheetContent`
+
+| Prop | Type | Default | Description |
+|---|---:|---:|---|
+| `side` | `SheetSide` | `"right"` | Placement of the panel |
+| `className` | `string` | — | Additional Tailwind classes |
+| `...props` | `DialogPrimitive.Content` props | — | All Radix Dialog Content props |
+
+`Sheet`, `SheetTrigger`, and `SheetClose` are re-exports of Radix Dialog primitives and accept their native props.
+
+---
+
+## TypeScript types
+
+```ts
+export type SheetSide = "top" | "bottom" | "left" | "right";
+
+export interface SheetContentProps
+  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+  side?: SheetSide;
+}
+```
+
+---
+
+## Accessibility
+
+- Built on Radix Dialog: focus is trapped while open, and focus returns to the trigger on close.
+- Close with **ESC** by default.
+- Prefer `SheetTrigger asChild` to keep correct semantics for the trigger element.
+- Keep a clear title using `SheetTitle` for better screen reader navigation.
+- For destructive flows, consider using a modal Dialog instead of a Sheet.
+
+---
+
+## Design guidelines
+
+- Keep sheets **narrow** (e.g. `w-80`–`w-[420px]`) to preserve context.
+- Use `right` for editing, `left` for navigation, `top/bottom` for quick filters.
+- Avoid nesting multiple scroll containers; prefer a single scrollable content region inside the sheet.
+- Use **one primary action** in the footer to reduce decision friction.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Button"
+    description="Use Button as the trigger and actions in the footer."
+    href="/docs/ui/button"
+  />
+  <LinkCard
+    title="Input"
+    description="Common inside sheets for edit forms and filters."
+    href="/docs/ui/input"
+  />
+  <LinkCard
+    title="Shadows"
+    description="Sheets use the elevation scale (shadow-lg)."
+    href="/docs/design-system/tokens/shadows"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner radius tokens for surfaces and panels."
+    href="/docs/design-system/tokens/radius"
+  />
+</LinkCards>
+
+</DocsPageShell>

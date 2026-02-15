@@ -1,0 +1,230 @@
+---
+title: Building a SaaS layout
+description: How to compose PyColors UI primitives into a real, production-ready SaaS layout.
+---
+
+## Overview
+
+Most UI libraries stop at components.
+
+Real SaaS products need **structure**:
+navigation, headers, content areas, responsive behavior, and clear interaction patterns.
+
+This guide shows **how to compose PyColors UI primitives** into a realistic SaaS layout —
+without locking you into a rigid framework or a one-size-fits-all shell.
+
+> This is a **guide**, not a fixed API.
+> Layout decisions are intentionally left to product teams.
+
+---
+
+## The problem PyColors solves
+
+Building a SaaS layout usually means:
+- a sidebar for navigation
+- a header for context and actions
+- content areas that scale with data
+- responsive behavior (desktop vs mobile)
+
+Many libraries either:
+- don’t address layout at all, or
+- ship a rigid “app shell” that’s hard to customize.
+
+**PyColors takes a different approach.**
+
+---
+
+## Design philosophy
+
+PyColors UI provides:
+- **UI primitives** (Button, Input, Table, Dialog, …)
+- **Design tokens** (colors, radius, spacing)
+- **Guidance**, not constraints
+
+What it does **not** provide by default:
+- a mandatory AppShell
+- a fixed sidebar implementation
+- opinionated routing rules
+
+This keeps your application:
+- adaptable
+- scalable
+- framework-agnostic
+
+---
+
+## Core primitives used in a SaaS layout
+
+A typical SaaS layout can be built using only these open UI primitives:
+
+- **Button** — actions, navigation triggers
+- **Sheet** — mobile sidebar / drawers
+- **Dropdown Menu** — row actions, user menu
+- **Tabs** — settings sections
+- **Table** — data-heavy views
+- **Dialog** — confirmations and forms
+
+No special “layout components” are required.
+
+---
+
+## Example composition (conceptual)
+
+Below is a **conceptual structure**, not a public API:
+
+```tsx
+<AppShell>
+  <AppSidebar />
+  <Main>
+    <AppHeader />
+    <Content />
+  </Main>
+</AppShell>
+```
+
+This illustrates separation of concerns:
+- navigation
+- context (header)
+- content
+
+How you implement these pieces is up to your product needs.
+
+---
+
+## Sidebar strategy
+
+### Desktop
+
+On larger screens:
+- the sidebar is always visible
+- navigation is persistent
+- data tables can use the full height
+
+### Mobile
+
+On smaller screens:
+- the sidebar is hidden
+- navigation is rendered inside a Sheet
+- the header exposes a menu button
+
+This pattern provides:
+- maximum screen space
+- predictable navigation
+- excellent accessibility
+
+---
+
+## Header responsibilities
+
+A SaaS header typically contains:
+- page title
+- contextual description
+- primary actions
+- user menu
+
+Using PyColors primitives:
+- **Button** for actions
+- **Dropdown Menu** for user/account actions
+- **Sheet** trigger for mobile navigation
+
+Headers should stay lightweight and context-driven.
+
+---
+
+## Content areas
+
+Content areas usually fall into two categories:
+
+### Data-heavy pages
+- tables
+- filters
+- row actions
+- pagination
+
+### Configuration pages
+- forms
+- tabs
+- dialogs
+- confirmations
+
+PyColors UI supports both without changing your layout structure.
+
+---
+
+## Example: Projects page
+
+A typical data page combines:
+- **Table** for listing projects
+- **Badge** for status
+- **Dropdown Menu** for row actions
+- **Dialog** for destructive actions
+- **Sheet** for mobile navigation
+
+This mirrors real-world SaaS behavior and scales naturally as features grow.
+
+---
+
+## Example: Settings page
+
+A settings page often uses:
+- **Tabs** to separate concerns
+- **Input** and **Password Input** for forms
+- **Dialog** for confirmations
+
+Each section remains isolated while sharing the same layout.
+
+---
+
+## Why this approach scales
+
+This composition-based strategy allows you to:
+- evolve navigation independently
+- add or remove sections without refactoring
+- adapt layouts per product area
+- migrate to monorepos or micro-frontends later
+
+It also keeps your UI library clean and your application logic flexible.
+
+---
+
+## What PyColors intentionally avoids
+
+PyColors UI does not ship:
+- a mandatory application shell
+- framework-specific routing abstractions
+- global layout state management
+
+These decisions belong to your product, not the UI library.
+
+---
+
+## When to create your own AppShell
+
+You should introduce a custom AppShell when:
+- navigation becomes complex
+- multiple teams work on the same product
+- you want strict layout consistency
+
+At that point, PyColors UI acts as the foundation —
+not the constraint.
+
+---
+
+## Summary
+
+- PyColors UI provides primitives, not rigid layouts
+- SaaS layouts are compositions, not components
+- Guides document patterns, not APIs
+- Your product keeps full control over structure and behavior
+
+**Build structure deliberately.**
+Let your UI system stay focused.
+
+---
+
+## Related resources
+
+- UI Components overview
+- Table and data patterns
+- Dialog and Sheet usage
+- Design system tokens

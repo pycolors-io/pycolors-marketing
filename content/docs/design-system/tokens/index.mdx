@@ -1,0 +1,174 @@
+---
+title: Tokens
+description: Atomic design tokens that define the visual foundations of PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+Design tokens are the **single source of truth** for PyColors UI’s visual language.
+
+They define the atomic decisions that every component consumes — ensuring consistency,
+predictability, and safe global evolution of the design system.
+
+Tokens are **not components** and **not stylesheets**.
+They are **atomic design decisions expressed as variables**.
+
+---
+
+## What are tokens?
+
+A token encodes **meaning**, not appearance.
+
+In PyColors UI, tokens represent **roles**, not raw values. They answer questions like:
+
+- *What is the default corner radius of the system?*
+- *How much elevation does a card have?*
+- *How do surfaces visually separate from the background?*
+
+Instead of hard-coding values in components, everything flows from tokens.
+
+---
+
+## System flow
+
+Design decisions become tokens, then utilities, then components:
+
+```text
+Design decisions
+  ↓
+Tokens (CSS variables)
+  ↓
+Tailwind utilities (semantic classes)
+  ↓
+UI Components (primitives)
+  ↓
+Guides & Patterns (real product UI)
+```
+
+---
+
+## Token categories
+
+### Radius
+
+Corner geometry used across the system.
+
+- Buttons, inputs, chips
+- Cards and panels
+- Modals and overlays
+
+Radius tokens ensure that all rounded surfaces feel consistent and intentional.
+
+➡️ Defined once, consumed everywhere via `rounded-*` utilities.
+
+### Shadows
+
+Elevation and depth cues.
+
+- Subtle lift for buttons
+- Default elevation for cards
+- Floating layers for popovers and modals
+
+Shadow tokens define **how depth works** in both light and dark mode.
+
+➡️ Never stack shadows — use the scale.
+
+---
+
+## Why tokens matter
+
+Using tokens gives you:
+
+- **Global consistency** across components
+- **Safe refactors** (change one value, update the system)
+- **Predictable theming** (light / dark / brand)
+- **Clear design intent** instead of ad-hoc values
+
+Tokens are what allow PyColors UI to scale without visual entropy.
+
+---
+
+## How tokens are used
+
+Tokens are defined in `global.css` and mapped to Tailwind utilities:
+
+```css
+@theme inline {
+  --radius-md: calc(var(--radius) - 2px);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+}
+```
+
+Components then consume them indirectly:
+
+```tsx
+<Card className="rounded-lg shadow-sm bg-card border" />
+```
+
+No component ever needs to know the actual value.
+
+---
+
+## Extend tokens safely
+
+Not everything is tokenized yet — intentionally.
+
+PyColors UI starts with a minimal, high-impact token set.
+Spacing, motion, and z-index may be introduced later once patterns stabilize.
+
+When your product grows, you can:
+
+- Adjust base tokens (e.g. `--radius`)
+- Introduce new token categories (spacing, motion, z-index)
+- Theme tokens per brand or product
+
+As long as components consume tokens — the system remains stable.
+
+---
+
+## Start here
+
+<LinkCards>
+  <LinkCard
+    title="Radius"
+    description="Corner radius scale used across components and layouts."
+    href="/docs/design-system/tokens/radius"
+  />
+  <LinkCard
+    title="Shadows"
+    description="Elevation scale for surfaces and floating layers."
+    href="/docs/design-system/tokens/shadows"
+  />
+</LinkCards>
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic color roles built on OKLCH."
+    href="/docs/design-system/colors"
+  />
+  <LinkCard
+    title="Typography"
+    description="Text scale, hierarchy, and roles."
+    href="/docs/design-system/typography"
+  />
+  <LinkCard
+    title="UI Components"
+    description="Primitives that consume tokens."
+    href="/docs/ui"
+  />
+  <LinkCard
+    title="Why PyColors UI?"
+    description="Philosophy and system-level decisions."
+    href="/docs/why-pycolors-ui"
+  />
+</LinkCards>
+
+</DocsPageShell>

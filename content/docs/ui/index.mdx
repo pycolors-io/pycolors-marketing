@@ -1,0 +1,131 @@
+---
+title: UI Components
+description: Composable UI primitives built on PyColors UI tokens, shadcn/ui, and Radix UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+PyColors UI components are **primitives**, not finished widgets.
+
+They are designed to be **composed**, **extended**, and **owned** by your project —
+not consumed as opaque building blocks.
+
+This section is the entry point to the UI library: buttons, surfaces, inputs, and feedback components,
+all aligned with the PyColors design system.
+
+---
+
+## How to think about components
+
+PyColors UI follows a simple mental model:
+
+- **Tokens define the language**
+  (colors, typography, radius, shadows)
+- **Components consume tokens**
+  via semantic Tailwind utilities
+- **Patterns compose components**
+  into real features and flows
+
+If you feel a component needs *too many props* to cover a real product need,
+it likely belongs in **Patterns**, not in UI primitives.
+
+Keeping primitives small makes them easier to understand, reuse, and evolve.
+
+---
+
+## Component categories
+
+Categories are **descriptive, not prescriptive**.
+They exist to help you navigate the system — not to impose structure.
+
+### Surfaces
+
+Surfaces group content and establish visual hierarchy.
+
+- **Card** — foundational surface for panels, tiles, and list items
+- **Alert** — feedback surface for system notices and validation results
+
+### Actions
+
+Actions trigger user intent and user flows.
+
+- **Button** — primary action primitive, with variants and sizes
+
+### Inputs
+
+Inputs collect user data and support validation patterns.
+
+- **Input** — label, helper text, error state, icons, and sizing
+
+### Status & metadata
+
+Compact components for categorization and state.
+
+- **Badge** — status, labels, counts, and metadata
+
+---
+
+## Composition rules
+
+A few rules help keep the system consistent as it grows:
+
+- Prefer **composition over configuration**
+- Use **semantic tokens** (`bg-card`, `text-muted-foreground`, `border-border`)
+  instead of raw colors
+- Avoid one-off variants; if something repeats, extract a primitive or a pattern
+- If a component is interactive, keep it **semantic**
+  (render as `button` or `a` via `asChild` when needed)
+- Don’t nest interactive targets
+  (one primary clickable element per component boundary)
+
+These constraints reduce UI drift without limiting expressiveness.
+
+---
+
+## What belongs in Patterns instead
+
+Use **Patterns** when you need:
+
+- multiple components combined with layout rules
+- async states and loading skeletons
+- validation flows (RHF + Zod)
+- reusable feature blocks
+  (Settings panels, pricing cards, authentication forms)
+
+Patterns document **how primitives are used in real products**.
+They are intentionally documented as **guides**, not APIs,
+to preserve flexibility where it matters most.
+
+---
+
+## Start here
+
+If you are new to PyColors UI, start with these primitives:
+
+<LinkCards>
+  <LinkCard
+    title="Button"
+    description="Primary action primitive with variants, sizes, and accessibility guidelines."
+    href="/docs/ui/button"
+  />
+  <LinkCard
+    title="Card"
+    description="Surface component for grouping content, actions, and metadata."
+    href="/docs/ui/card"
+  />
+  <LinkCard
+    title="Input"
+    description="Form input with label, helper text, error states, and icons."
+    href="/docs/ui/input"
+  />
+  <LinkCard
+    title="Badge"
+    description="Small status and metadata label component."
+    href="/docs/ui/badge"
+  />
+</LinkCards>
+
+</DocsPageShell>

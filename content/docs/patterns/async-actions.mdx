@@ -1,0 +1,124 @@
+---
+title: Async Actions Pattern
+description: Production-ready mutation UX, toasts, optimistic UI, retry, and undo.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+
+import {
+  OptimisticToggleDemo,
+  DeleteWithUndoToastDemo,
+  SaveWithToastDemo,
+} from "../previews/async-actions";
+
+<DocsPageShell>
+
+## UX rules (latency, optimistic vs pessimistic)
+
+Async actions are different from async data.
+
+- Data loading = **waiting**
+- Mutations = **changing reality**
+
+Rules:
+- Prefer **instant feedback** over spinners.
+- Optimistic UI is best when the action is **low-risk and reversible**.
+- Pessimistic (wait for server) is best when the action is **high-risk or irreversible**.
+
+**Use optimistic UI when**
+- toggles (enable/disable)
+- starring/favoriting
+- lightweight updates that can be reverted
+
+**Use pessimistic UI when**
+- payment
+- destructive deletes without recovery
+- permission-sensitive actions
+
+<OptimisticToggleDemo />
+
+---
+
+## Feedback tiers (inline, toast, blocking)
+
+Not every action deserves the same weight.
+
+### Tier 1 — Inline (preferred)
+Use inline feedback when the result is local and expected:
+- button label changes (“Saving…”)
+- disabled state
+- small inline success text
+
+### Tier 2 — Toast (non-blocking)
+Use toast when:
+- the user can continue working
+- you want confirmation or error summary
+- you need **Undo** or **Retry**
+
+<SaveWithToastDemo />
+
+### Tier 3 — Blocking (Dialog)
+Use Dialog when:
+- action is destructive
+- action is irreversible
+- user needs to confirm intent
+
+Delete flows often start in a Dialog, then use toast for Undo/Retry.
+
+<DeleteWithUndoToastDemo />
+
+---
+
+## Retry & undo
+
+### Retry
+Retry should be:
+- explicit
+- one click
+- safe to run multiple times
+
+### Undo
+Undo is best for:
+- delete/archive
+- bulk actions
+- destructive operations that are reversible server-side
+
+Undo is not magic. It requires a real backend capability.
+
+---
+
+## Error copy guidelines
+
+Error messages should be:
+- calm
+- specific
+- actionable
+
+**Good**
+- “Couldn’t save changes. Check your connection and retry.”
+- “Payment failed. Try another card.”
+
+**Bad**
+- “Something went wrong.”
+- “Unknown error.”
+
+Rule: always include **what failed** + **what to do next**.
+
+---
+
+## Copy/paste examples (3 flows)
+
+### 1) Save (toast + inline state)
+- inline: button shows “Saving…”
+- toast: success or failure with retry
+
+### 2) Delete (confirm dialog → undo toast)
+- dialog: confirm intent
+- toast: “Deleted” + Undo
+- toast error: Retry restore if needed
+
+### 3) Optimistic toggle
+- UI flips immediately
+- rollback on error + toast
+
+</DocsPageShell>

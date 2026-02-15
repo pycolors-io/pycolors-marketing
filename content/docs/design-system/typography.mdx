@@ -1,0 +1,224 @@
+---
+title: Typography
+description: Typography scale, text roles, and visual hierarchy for PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { CheckCircle, XCircle } from "lucide-react";
+
+<DocsPageShell>
+
+PyColors UI uses a **clean, minimal, and highly readable typography system** built on Tailwind’s scale, enhanced with semantic text roles and clear hierarchy.
+
+Typography underpins the entire system — dashboards, SaaS interfaces, documentation, and marketing pages all rely on the same structure and rules.
+
+---
+
+## Font families
+
+PyColors UI relies on a system-friendly sans-serif stack by default, configured via `next/font` and exposed as CSS variables.
+
+```tsx
+// app/layout.tsx (example)
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+```
+
+Available font roles:
+
+- `font-sans` — primary UI and content font
+- `font-brand` — optional brand accent font
+- `font-mono` — code, technical values, and identifiers
+
+You are free to replace any of these fonts without changing component code.
+
+---
+
+## Default text styles
+
+To avoid inconsistency across products, PyColors UI follows simple defaults:
+
+- **SaaS UI & dashboards** → `text-sm leading-normal`
+- **Documentation & marketing** → `text-base leading-relaxed`
+
+These defaults provide density where needed and readability where it matters.
+
+---
+
+## Heading hierarchy
+
+Headings follow Tailwind’s natural scale to ensure predictable hierarchy and rhythm.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="space-y-4">
+        <h1 className="text-4xl font-bold tracking-tight">Heading 1 — Page title</h1>
+        <h2 className="text-3xl font-semibold tracking-tight">Heading 2 — Section title</h2>
+        <h3 className="text-2xl font-semibold tracking-tight">Heading 3 — Subsection</h3>
+        <h4 className="text-xl font-medium tracking-tight">Heading 4 — Minor heading</h4>
+        <h5 className="text-lg font-medium">Heading 5</h5>
+        <h6 className="text-base font-medium">Heading 6</h6>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    export function HeadingHierarchy() {
+      return (
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
+          <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
+          <h3 className="text-2xl font-semibold tracking-tight">Heading 3</h3>
+          <h4 className="text-xl font-medium tracking-tight">Heading 4</h4>
+          <h5 className="text-lg font-medium">Heading 5</h5>
+          <h6 className="text-base font-medium">Heading 6</h6>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Labels and metadata
+
+Labels and metadata are **not headings**.
+They use smaller sizes and stronger letter spacing.
+
+```tsx
+<p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+  Label / metadata
+</p>
+```
+
+Use labels for:
+- form field context
+- section indicators
+- subtle UI metadata
+
+---
+
+## Body text & hierarchy
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="space-y-3 max-w-prose">
+        <div className="text-base">
+          Standard body text for content, documentation, and product pages.
+        </div>
+
+        <div className="text-sm text-muted-foreground">
+          Secondary text for descriptions, hints, and metadata.
+        </div>
+
+        <div className="text-xs text-muted-foreground">
+          Subtle metadata, timestamps, and helper labels.
+        </div>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    export function BodyTextExample() {
+      return (
+        <div className="space-y-3 max-w-prose">
+          <p className="text-base">Standard body text.</p>
+          <p className="text-sm text-muted-foreground">
+            Secondary descriptive text.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Subtle metadata.
+          </p>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Semantic text roles
+
+Semantic roles define **meaning**, not appearance.
+
+| Role | Utility | Usage |
+|-----|--------|------|
+| Primary text | `text-foreground` | Main content |
+| Muted text | `text-muted-foreground` | Descriptions, hints |
+| Brand / links | `text-primary` | Links, key actions |
+| Destructive | `text-destructive` | Errors, warnings |
+
+Always prefer semantic roles over raw colors.
+
+---
+
+## Weights
+
+| Weight | Utility | Usage |
+|------|--------|------|
+| 400 | `font-normal` | Body text |
+| 500 | `font-medium` | Labels, UI text |
+| 600 | `font-semibold` | Headings |
+| 700 | `font-bold` | Page titles |
+
+---
+
+## Guidelines
+
+<div className="grid gap-6 sm:grid-cols-2">
+
+<div>
+### <CheckCircle className="inline-block mr-2 h-4 w-4 text-success" /> Do
+- Keep hierarchy clear and consistent
+- Use muted text for secondary information
+- Use labels instead of over-styled headings
+</div>
+
+<div>
+### <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Don’t
+- Mix too many font sizes in one view
+- Use uppercase for body text
+- Encode meaning through color alone
+</div>
+
+</div>
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic color roles used by text."
+    href="/docs/design-system/colors"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner geometry used by text containers."
+    href="/docs/design-system/tokens/radius"
+  />
+  <LinkCard
+    title="Button"
+    description="Typography hierarchy in interactive elements."
+    href="/docs/ui/button"
+  />
+  <LinkCard
+    title="Input"
+    description="Labels, helper text, and validation copy."
+    href="/docs/ui/input"
+  />
+</LinkCards>
+
+</DocsPageShell>

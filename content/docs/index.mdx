@@ -1,0 +1,81 @@
+---
+title: Getting Started
+description: Learn how to set up PyColors UI and start building modern interfaces using a documentation-first design system.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+PyColors UI is a modern, extensible **design system and UI toolkit** built with **Next.js**, **Tailwind CSS**, **shadcn/ui**, and **Fumadocs**.
+
+It provides a clean, scalable foundation for building **SaaS applications, dashboards, documentation sites, and marketing pages** — with a strong focus on accessibility, consistency, and long-term maintainability.
+
+If you want to understand the philosophy behind these choices, read
+**[Why PyColors UI?](/docs/why-pycolors-ui)**.
+
+---
+
+## Quick start
+
+<Tabs items={["New Next.js app", "Existing project"]}>
+  <Tab value="New Next.js app">
+    ```bash
+    npx create-next-app@latest my-app --ts --tailwind --app
+    cd my-app
+    ```
+  </Tab>
+
+  <Tab value="Existing project">
+    ```bash
+    npm install tailwindcss class-variance-authority
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## How PyColors UI is structured
+
+PyColors UI is built around three core principles:
+
+1. **Unified design language** via semantic tokens
+2. **Composable components** you fully own
+3. **Documentation-first workflow**
+
+These principles define how components, guides, and patterns are organized across the system.
+
+---
+
+## Recommended reading order
+
+1. Getting Started
+2. Why PyColors UI?
+3. Design System (tokens, colors, typography)
+4. UI Components (primitives)
+5. Guides & Patterns (real product usage)
+
+---
+
+## Next steps
+
+<LinkCards>
+  <LinkCard
+    title="Why PyColors UI?"
+    description="Philosophy, trade-offs, and design principles."
+    href="/docs/why-pycolors-ui"
+  />
+  <LinkCard
+    title="UI components"
+    description="Reusable primitives built on shadcn/ui."
+    href="/docs/ui"
+  />
+  <LinkCard
+    title="Guides"
+    description="Production-ready patterns for forms, states, and layouts."
+    href="/docs/guides"
+  />
+</LinkCards>
+
+</DocsPageShell>

@@ -1,0 +1,382 @@
+---
+title: Alert
+description: Feedback surface for status messages, validation results, and system notices in PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+The **Alert** component communicates important information to the user: neutral notices, success confirmations, warnings, and critical errors.
+
+Unlike Toasts, Alerts are **inline and persistent**. They’re built on semantic tokens (`bg-card`, `border-*`, `text-*`) so they remain consistent across themes.
+
+---
+
+## Import
+
+```tsx
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  AlertIndicator,
+  AlertContent,
+  type AlertProps,
+  type AlertVariant,
+} from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Alert className="max-w-xl">
+        <AlertTitle>Heads up</AlertTitle>
+        <AlertDescription>
+          <p>This is a neutral message. Use it for non-critical information.</p>
+        </AlertDescription>
+      </Alert>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Alert>
+      <AlertTitle>Heads up</AlertTitle>
+      <AlertDescription>
+        <p>This is a neutral message.</p>
+      </AlertDescription>
+    </Alert>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+    export default function Demo() {
+      return (
+        <Alert>
+          <AlertTitle>Heads up</AlertTitle>
+          <AlertDescription>
+            <p>This is a neutral message.</p>
+          </AlertDescription>
+        </Alert>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Variants
+
+Variants reflect the semantic meaning of the message. In PyColors UI, variants are mostly expressed through **border emphasis** and (optionally) indicator color.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid gap-4 max-w-xl">
+        <Alert variant="info">
+          <AlertTitle>Info</AlertTitle>
+          <AlertDescription><p>Useful context for the user.</p></AlertDescription>
+        </Alert>
+
+        <Alert variant="success">
+          <AlertTitle>Success</AlertTitle>
+          <AlertDescription><p>Your changes were saved.</p></AlertDescription>
+        </Alert>
+
+        <Alert variant="warning">
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription><p>Something may need attention.</p></AlertDescription>
+        </Alert>
+
+        <Alert variant="destructive" ariaLive="assertive">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription><p>We couldn’t save your changes. Try again.</p></AlertDescription>
+        </Alert>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Alert variant="info">...</Alert>
+    <Alert variant="success">...</Alert>
+    <Alert variant="warning">...</Alert>
+    <Alert variant="destructive" ariaLive="assertive">...</Alert>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+    export default function AlertVariants() {
+      return (
+        <div className="grid gap-4">
+          <Alert variant="info">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription><p>Useful context for the user.</p></AlertDescription>
+          </Alert>
+
+          <Alert variant="success">
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription><p>Your changes were saved.</p></AlertDescription>
+          </Alert>
+
+          <Alert variant="warning">
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription><p>Something may need attention.</p></AlertDescription>
+          </Alert>
+
+          <Alert variant="destructive" ariaLive="assertive">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription><p>We couldn’t save your changes. Try again.</p></AlertDescription>
+          </Alert>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Available variants
+
+| Variant        | Purpose                                |
+| -------------- | -------------------------------------- |
+| `default`      | Neutral information                     |
+| `info`         | Neutral information (alias of default) |
+| `success`      | Confirmation / positive feedback        |
+| `warning`      | Risk / attention required               |
+| `destructive`  | Error / critical message                |
+
+> Note: `default` and `info` intentionally share the same visual style in the current v1 token set.
+
+---
+
+## Announcements (ariaLive)
+
+PyColors UI includes an `ariaLive` prop that controls how assistive tech announces updates:
+
+- `polite` (default) → non-blocking updates (`role="status"`)
+- `assertive` → critical errors (`role="alert"`)
+- `off` → no announcement
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid gap-4 max-w-xl">
+        <Alert ariaLive="polite">
+          <AlertTitle>Status</AlertTitle>
+          <AlertDescription><p>Saved in the background (polite).</p></AlertDescription>
+        </Alert>
+
+        <Alert variant="destructive" ariaLive="assertive">
+          <AlertTitle>Critical</AlertTitle>
+          <AlertDescription><p>Payment failed. Please retry (assertive).</p></AlertDescription>
+        </Alert>
+
+        <Alert ariaLive="off">
+          <AlertTitle>Silent</AlertTitle>
+          <AlertDescription><p>No live announcement for this message.</p></AlertDescription>
+        </Alert>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Alert ariaLive="polite">...</Alert>
+    <Alert ariaLive="assertive">...</Alert>
+    <Alert ariaLive="off">...</Alert>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+    export default function AlertAriaLive() {
+      return (
+        <div className="grid gap-4">
+          <Alert ariaLive="polite">
+            <AlertTitle>Status</AlertTitle>
+            <AlertDescription><p>Saved in the background.</p></AlertDescription>
+          </Alert>
+
+          <Alert variant="destructive" ariaLive="assertive">
+            <AlertTitle>Critical</AlertTitle>
+            <AlertDescription><p>Payment failed. Please retry.</p></AlertDescription>
+          </Alert>
+
+          <Alert ariaLive="off">
+            <AlertTitle>Silent</AlertTitle>
+            <AlertDescription><p>No announcement for this message.</p></AlertDescription>
+          </Alert>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With indicator (icon)
+
+Use `AlertIndicator` + `AlertContent` to align content. The indicator is positioned absolutely; `AlertContent` adds left padding so the text lines up.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Alert variant="warning" className="max-w-xl">
+        <AlertIndicator aria-hidden="true">
+          <svg
+            className="size-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M12 9v4" />
+            <path d="M12 17h.01" />
+            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+          </svg>
+        </AlertIndicator>
+
+        <AlertContent>
+          <AlertTitle>Check your input</AlertTitle>
+          <AlertDescription>
+            <p>Some fields might be incomplete. Review before submitting.</p>
+          </AlertDescription>
+        </AlertContent>
+      </Alert>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Alert variant="warning">
+      <AlertIndicator aria-hidden="true">...</AlertIndicator>
+      <AlertContent>
+        <AlertTitle>...</AlertTitle>
+        <AlertDescription><p>...</p></AlertDescription>
+      </AlertContent>
+    </Alert>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Alert,
+      AlertIndicator,
+      AlertContent,
+      AlertTitle,
+      AlertDescription,
+    } from "@pycolors/ui";
+
+    export default function AlertWithIcon() {
+      return (
+        <Alert variant="warning">
+          <AlertIndicator aria-hidden="true">{/* icon */}</AlertIndicator>
+          <AlertContent>
+            <AlertTitle>Check your input</AlertTitle>
+            <AlertDescription><p>Review before submitting.</p></AlertDescription>
+          </AlertContent>
+        </Alert>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+| Prop       | Type                                              | Default     | Description |
+| ---------- | ------------------------------------------------- | ----------- | ----------- |
+| `variant`  | `AlertVariant`                                     | `"default"` | Visual semantics |
+| `ariaLive` | `"off" \| "polite" \| "assertive"`              | `"polite"`  | Assistive announcement behavior |
+| `className`| `string`                                           | —           | Tailwind override |
+
+The Alert components extend standard HTML props:
+
+```ts
+React.HTMLAttributes<HTMLDivElement>
+```
+
+---
+
+## TypeScript types
+
+Aligned with the source implementation:
+
+```ts
+export type AlertVariant = NonNullable<AlertProps["variant"]>;
+
+export interface AlertProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof alertVariants> {
+  ariaLive?: "off" | "polite" | "assertive";
+}
+```
+
+---
+
+## Accessibility
+
+- `ariaLive="polite"` renders `role="status"` (recommended for non-blocking updates).
+- `ariaLive="assertive"` renders `role="alert"` (use for critical errors only).
+- `ariaLive="off"` removes live-region announcements (and role).
+- When using `AlertIndicator`, mark purely decorative icons with `aria-hidden="true"`.
+
+---
+
+## Design guidelines
+
+- Keep alerts short and actionable.
+- Prefer `success` only after a user action completes.
+- Prefer `warning` when the user can still proceed but should be aware.
+- Use `destructive` for errors that block completion.
+- Don’t overuse `assertive` alerts; they can be disruptive for screen reader users.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic tokens for borders, surfaces, and state colors."
+    href="/docs/design-system/colors#semantic-tokens"
+  />
+  <LinkCard
+    title="Typography"
+    description="Alert title/description rhythm and hierarchy."
+    href="/docs/design-system/typography"
+  />
+  <LinkCard
+    title="UI Components"
+    description="How primitives are organized in PyColors UI."
+    href="/docs/ui"
+  />
+  <LinkCard
+    title="Patterns"
+    description="Real-world forms and error flows."
+    href="/docs/patterns"
+  />
+</LinkCards>
+
+</DocsPageShell>

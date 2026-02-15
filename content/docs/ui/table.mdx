@@ -1,0 +1,238 @@
+---
+title: Table
+description: Structured data table component with loading and empty states for PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+  TableEmpty,
+  TableLoading,
+} from "@pycolors/ui";
+
+<DocsPageShell>
+
+The **Table** component is used to display structured, tabular data such as lists, reports, and admin views.
+
+It provides:
+- Consistent styling via design tokens
+- Horizontal overflow handling
+- Hover feedback on rows
+- Built-in **empty** and **loading** states
+
+---
+
+## Import
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+  TableEmpty,
+  TableLoading,
+} from "@pycolors/ui";
+```
+
+---
+
+## Basic usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          <TableRow>
+            <TableCell>Jane Doe</TableCell>
+            <TableCell>jane@example.com</TableCell>
+            <TableCell>Admin</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>John Smith</TableCell>
+            <TableCell>john@example.com</TableCell>
+            <TableCell>User</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Jane Doe</TableCell>
+          <TableCell>jane@example.com</TableCell>
+          <TableCell>Admin</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Table,
+      TableHeader,
+      TableBody,
+      TableRow,
+      TableHead,
+      TableCell,
+    } from "@pycolors/ui";
+
+    export function UsersTable() {
+      return (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>Jane Doe</TableCell>
+              <TableCell>jane@example.com</TableCell>
+              <TableCell>Admin</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Caption
+
+Use `TableCaption` to provide context or summary.
+
+```tsx
+<Table>
+  <TableCaption>List of active users</TableCaption>
+  ...
+</Table>
+```
+
+---
+
+## Empty state
+
+`TableEmpty` is useful when no data matches filters.
+
+```tsx
+<TableBody>
+  <TableEmpty colSpan={3} />
+</TableBody>
+```
+
+You can customize the message:
+
+```tsx
+<TableEmpty
+  colSpan={3}
+  title="No users found"
+  description="Invite your first user to get started."
+/>
+```
+
+---
+
+## Loading state
+
+`TableLoading` displays a centered spinner and message.
+
+```tsx
+<TableBody>
+  <TableLoading colSpan={3} />
+</TableBody>
+```
+
+---
+
+## API
+
+### Components
+
+| Component | Description |
+| --- | --- |
+| `Table` | Wrapper with border and overflow handling |
+| `TableHeader` | `<thead>` section |
+| `TableBody` | `<tbody>` section |
+| `TableRow` | `<tr>` with hover feedback |
+| `TableHead` | Header cell (`<th>`) |
+| `TableCell` | Data cell (`<td>`) |
+| `TableCaption` | Optional caption |
+| `TableEmpty` | Empty state row |
+| `TableLoading` | Loading state row |
+
+All components extend their respective native HTML element props.
+
+---
+
+## Accessibility
+
+- Uses semantic table elements (`table`, `thead`, `tbody`, `th`, `td`)
+- Ensure column headers are defined with `TableHead`
+- Keep captions concise and descriptive
+- Avoid interactive elements inside table rows unless necessary
+
+---
+
+## Design guidelines
+
+- Prefer tables for dense, comparable data
+- Keep column count reasonable (3–7 columns)
+- Use empty and loading states instead of conditional rendering gaps
+- Avoid nesting complex layouts inside table cells
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Card"
+    description="Use cards to wrap tables in dashboards."
+    href="/docs/ui/card"
+  />
+  <LinkCard
+    title="Typography"
+    description="Text sizes and hierarchy inside tables."
+    href="/docs/design-system/typography"
+  />
+</LinkCards>
+
+</DocsPageShell>

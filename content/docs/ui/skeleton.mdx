@@ -1,0 +1,238 @@
+---
+title: Skeleton
+description: Visual placeholder used to represent loading content while preserving layout structure.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Skeleton,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@pycolors/ui";
+
+<DocsPageShell>
+
+The **Skeleton** component is a visual placeholder used during loading states.
+
+It helps preserve layout structure, reduce layout shifts, and improve perceived performance —
+without introducing any product or data logic.
+
+Skeleton is a **pure UI primitive**: it renders shapes, nothing more.
+
+---
+
+## Import
+
+```tsx
+import { Skeleton } from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+Use Skeleton to temporarily replace content while data is loading.
+
+Skeleton does **not** manage loading state — that responsibility belongs to pages or data layers.
+
+---
+
+## Basic example
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+<Skeleton className="h-4 w-2/3" />
+<Skeleton className="h-4 w-1/2" />
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Card loading state
+
+Skeleton composes naturally with surface components like **Card**.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Card>
+        <CardHeader>
+          <Skeleton className="h-5 w-1/3" />
+          <Skeleton className="h-4 w-2/3" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-24 w-full" />
+        </CardContent>
+      </Card>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+<Card>
+  <CardHeader>
+    <Skeleton className="h-5 w-1/3" />
+    <Skeleton className="h-4 w-2/3" />
+  </CardHeader>
+  <CardContent>
+    <Skeleton className="h-24 w-full" />
+  </CardContent>
+</Card>
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Table loading state
+
+Skeleton works well inside data-heavy components such as **Table**.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Table>
+        <TableBody>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <TableRow key={i}>
+              <TableCell>
+                <Skeleton className="h-4 w-32" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-4 w-24" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-4 w-16" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+<Table>
+  <TableBody>
+    {Array.from({ length: 3 }).map((_, i) => (
+      <TableRow key={i}>
+        <TableCell>
+          <Skeleton className="h-4 w-32" />
+        </TableCell>
+        <TableCell>
+          <Skeleton className="h-4 w-24" />
+        </TableCell>
+        <TableCell>
+          <Skeleton className="h-4 w-16" />
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Circular skeleton
+
+Use the `circle` prop for avatars or icon placeholders.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Skeleton circle className="h-10 w-10" />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+<Skeleton circle className="h-10 w-10" />
+```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `circle` | boolean | `false` | Renders a circular skeleton (avatar / icon) |
+| `className` | string | — | Additional Tailwind classes |
+
+Skeleton also accepts all standard HTML `div` props:
+
+```ts
+React.HTMLAttributes<HTMLDivElement>
+```
+
+---
+
+## Accessibility
+
+- Skeleton is rendered with `aria-hidden`
+- It should never receive focus
+- Replace skeletons with real content as soon as data is ready
+- Skeletons are **not announced** to screen readers and should not be used as status messages
+
+---
+
+## Design guidelines
+
+- Match skeleton dimensions to the final content
+- Avoid overly complex skeletons
+- Prefer multiple simple skeletons over one large placeholder
+- Do not animate beyond a subtle pulse — avoid distraction
+
+---
+
+## When not to use Skeleton
+
+Skeleton should **not** be used for:
+- Error states
+- Empty states
+- Long-running background processes
+- Global blocking overlays
+
+Use **Alert**, **EmptyState**, or dedicated patterns instead.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+  title="Empty, loading, and error states"
+    description="Designing consistent async states in real products."
+    href="/docs/guides/empty-loading-error"
+  />
+  <LinkCard
+    title="Data-heavy pages"
+    description="Handling tables, loading, and density at scale."
+    href="/docs/guides/data-heavy-pages"
+  />
+</LinkCards>
+
+</DocsPageShell>

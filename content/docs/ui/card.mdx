@@ -1,0 +1,376 @@
+---
+title: Card
+description: Surface component used for grouping content, actions, and metadata in PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+The **Card** component is a foundational surface used to group related content:
+dashboards, pricing blocks, settings panels, and list items.
+
+It is built on semantic tokens (`bg-card`, `border-border`, `text-card-foreground`) so it stays consistent across themes, and it supports **surface variants** + an optional **interactive** state for hover/focus feedback.
+
+---
+
+## Import
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Card className="max-w-sm">
+        <CardHeader>
+          <CardTitle>Account</CardTitle>
+          <CardDescription>Manage your profile settings.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm text-muted-foreground">
+            Update personal details, security preferences, and integrations.
+          </div>
+        </CardContent>
+        <CardFooter className="justify-end gap-2">
+          <Button variant="secondary">Cancel</Button>
+          <Button>Save</Button>
+        </CardFooter>
+      </Card>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Card>
+      <CardHeader>
+        <CardTitle>Account</CardTitle>
+        <CardDescription>Manage your profile settings.</CardDescription>
+      </CardHeader>
+
+      <CardContent>...</CardContent>
+
+      <CardFooter>...</CardFooter>
+    </Card>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      Card,
+      CardHeader,
+      CardTitle,
+      CardDescription,
+      CardContent,
+      CardFooter,
+    } from "@pycolors/ui";
+
+    export default function Demo() {
+      return (
+        <Card className="max-w-sm">
+          <CardHeader>
+            <CardTitle>Account</CardTitle>
+            <CardDescription>Manage your profile settings.</CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <div className="text-sm text-muted-foreground">
+              Update personal details, security preferences, and integrations.
+            </div>
+          </CardContent>
+
+          <CardFooter className="justify-end gap-2">
+            <Button variant="secondary">Cancel</Button>
+            <Button>Save</Button>
+          </CardFooter>
+        </Card>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Variants
+
+Cards support semantic surface variants. Use them to adjust contrast without changing layout.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Default</CardTitle>
+            <CardDescription>Standard surface.</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card variant="muted">
+          <CardHeader>
+            <CardTitle>Muted</CardTitle>
+            <CardDescription>Subtle background for secondary panels.</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card variant="transparent" className="border-dashed">
+          <CardHeader>
+            <CardTitle>Transparent</CardTitle>
+            <CardDescription>No background (keeps layout only).</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Card />
+    <Card variant="muted" />
+    <Card variant="transparent" />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+    export function CardVariantsExample() {
+      return (
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>Default</CardTitle>
+              <CardDescription>Standard surface.</CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card variant="muted">
+            <CardHeader>
+              <CardTitle>Muted</CardTitle>
+              <CardDescription>Subtle background.</CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card variant="transparent">
+            <CardHeader>
+              <CardTitle>Transparent</CardTitle>
+              <CardDescription>No background.</CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Available variants
+
+| Variant | Description |
+|---|---|
+| `default` | Main surface (`bg-card`) |
+| `muted` | Secondary surface (`bg-muted/40`) |
+| `transparent` | No background (`bg-transparent`) |
+
+---
+
+## Interactive cards
+
+Set `interactive` to add hover + focus styles. This is useful for **selectable list rows**, **dashboard tiles**, and **grid cards**.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Card interactive>
+          <CardHeader>
+            <CardTitle>Clickable card</CardTitle>
+            <CardDescription>Hover / focus to see feedback.</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card interactive variant="muted">
+          <CardHeader>
+            <CardTitle>Interactive + muted</CardTitle>
+            <CardDescription>Great for secondary selection items.</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Card interactive>...</Card>
+    <Card interactive variant="muted">...</Card>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+    export function InteractiveCards() {
+      return (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Card interactive>
+            <CardHeader>
+              <CardTitle>Clickable card</CardTitle>
+              <CardDescription>Hover / focus to see feedback.</CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card interactive variant="muted">
+            <CardHeader>
+              <CardTitle>Interactive + muted</CardTitle>
+              <CardDescription>Great for secondary selection items.</CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+**Recommendation:** if the card is actually a navigation element, prefer `asChild` with a real `<a>` (or `next/link`) so semantics are correct.
+
+---
+
+## As child (Slot)
+
+Use `asChild` to render the Card as another element while keeping the Card styling. Perfect for cards that are links.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Card asChild interactive className="max-w-sm">
+        <a href="/docs" className="block">
+          <CardHeader>
+            <CardTitle>Read the docs</CardTitle>
+            <CardDescription>Go to documentation →</CardDescription>
+          </CardHeader>
+        </a>
+      </Card>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Card asChild interactive>
+      <a href="/docs" className="block">...</a>
+    </Card>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+    export function CardAsLink() {
+      return (
+        <Card asChild interactive className="max-w-sm">
+          <a href="/docs" className="block">
+            <CardHeader>
+              <CardTitle>Read the docs</CardTitle>
+              <CardDescription>Go to documentation →</CardDescription>
+            </CardHeader>
+          </a>
+        </Card>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+| Prop | Type | Default | Description |
+|---|---:|---:|---|
+| `variant` | `CardVariant` | `"default"` | Surface style |
+| `interactive` | `boolean` | `false` | Adds hover + focus-visible feedback |
+| `asChild` | `boolean` | `false` | Render via Radix Slot (link cards, sections, etc.) |
+| `className` | `string` | — | Additional Tailwind classes |
+
+The Card extends standard HTML div props:
+
+```ts
+React.HTMLAttributes<HTMLDivElement>
+```
+
+---
+
+## TypeScript types
+
+```ts
+export type CardVariant = "default" | "muted" | "transparent";
+export type CardInteractive = boolean;
+```
+
+---
+
+## Accessibility
+
+- Keep structure consistent: `CardHeader` → title/description → `CardContent` → `CardFooter`.
+- If the Card is clickable, prefer `asChild` with a semantic target (`a`, `button`).
+- Avoid multiple nested interactive elements inside an interactive Card.
+- Ensure focus is visible (enabled automatically via `interactive`).
+
+---
+
+## Design guidelines
+
+- Use Cards for grouping and layout rhythm, not decoration.
+- Use `muted` for secondary surfaces and dense layouts.
+- Use `transparent` for “layout-only” containers (e.g., in a stacked list).
+- Use `interactive` only for selectable / navigational surfaces.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Colors"
+    description="Semantic surface roles (bg-card, border-border, text-muted-foreground)."
+    href="/docs/design-system/colors#semantic-tokens"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner radius tokens used for cards and surfaces."
+    href="/docs/design-system/tokens/radius"
+  />
+  <LinkCard
+    title="Shadows"
+    description="Elevation scale for card surfaces (xs → lg)."
+    href="/docs/design-system/tokens/shadows"
+  />
+  <LinkCard
+    title="Typography"
+    description="Titles, descriptions, and content rhythm inside cards."
+    href="/docs/design-system/typography"
+  />
+</LinkCards>
+
+</DocsPageShell>

@@ -1,0 +1,283 @@
+---
+title: Colors
+description: Color tokens, roles, and theming architecture used in PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+PyColors UI uses an **OKLCH-based color system** to guarantee high contrast, predictable light/dark behavior, and fully themeable experiences.
+
+OKLCH is used because it is **perceptually uniform**, making contrast and theme variations more predictable than RGB or HSL.
+
+All core colors are defined as CSS variables in `app/global.css` and mapped to Tailwind’s internal design tokens via the inline theme mapping.
+
+---
+
+## Theme mapping
+
+<Tabs items={["Code"]}>
+  <Tab value="Code">
+    ```css
+    @theme inline {
+      --color-background: var(--background);
+      --color-primary: var(--primary);
+      --color-muted-foreground: var(--muted-foreground);
+      /* ... */
+    }
+    ```
+  </Tab>
+</Tabs>
+
+This ensures the entire UI stays consistent while allowing full customization through CSS variables alone.
+
+---
+
+## Semantic tokens
+
+PyColors UI exposes **high-level tokens** instead of raw colors. These tokens represent **roles**, not visual values.
+
+### Surfaces
+
+- `--background` / `--foreground`
+- `--card` / `--card-foreground`
+- `--popover` / `--popover-foreground`
+- `--sidebar`, `--sidebar-*`
+
+### Brand / component backgrounds
+
+- `--primary` / `--primary-foreground`
+- `--secondary` / `--secondary-foreground`
+- `--accent` / `--accent-foreground`
+- `--muted` / `--muted-foreground`
+
+### States
+
+- `--destructive`
+- `--destructive-foreground`
+- `--success` / `--success-foreground`
+- `--warning` / `--warning-foreground`
+
+### Borders / input / ring
+
+- `--border`
+- `--input`
+- `--ring`
+
+### Charts
+
+- `--chart-1` … `--chart-5`
+
+Chart tokens are intentionally separated from UI tokens to avoid leaking data visualization colors into interface components.
+
+These roles ensure each component uses the correct meaning, regardless of theme or brand adaptation.
+
+---
+
+## Light & Dark mode
+
+Light mode is applied on `:root`, dark mode on `.dark`.
+
+```css
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  /* ... */
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  /* ... */
+}
+```
+
+---
+
+## Visual palette preview
+
+### Core semantic colors
+
+<Preview>
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+
+    {/* background */}
+    <div className="rounded-md border p-4 bg-background text-foreground">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">background</div>
+      <div className="h-10 rounded bg-background border" />
+    </div>
+
+    {/* card */}
+    <div className="rounded-md border p-4 bg-card text-card-foreground">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">card</div>
+      <div className="h-10 rounded bg-card border" />
+    </div>
+
+    {/* primary */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">primary</div>
+      <div className="h-10 rounded bg-primary" />
+    </div>
+
+    {/* secondary */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">secondary</div>
+      <div className="h-10 rounded bg-secondary" />
+    </div>
+
+    {/* accent */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">accent</div>
+      <div className="h-10 rounded bg-accent" />
+    </div>
+
+    {/* muted */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">muted</div>
+      <div className="h-10 rounded bg-muted" />
+    </div>
+
+    {/* destructive */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">destructive</div>
+      <div className="h-10 rounded bg-destructive" />
+    </div>
+
+    {/* success */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">success</div>
+      <div className="h-10 rounded bg-success" />
+    </div>
+
+    {/* warning */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">warning</div>
+      <div className="h-10 rounded bg-warning" />
+    </div>
+
+    {/* border */}
+    <div className="rounded-md border p-4">
+      <div className="text-xs font-medium mb-2 text-muted-foreground">border</div>
+      <div className="h-10 rounded border border-border bg-background" />
+    </div>
+
+  </div>
+</Preview>
+
+---
+
+## Usage in components
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="rounded-lg border bg-card text-card-foreground p-4 max-w-lg">
+        <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
+        <div className="mt-2 text-sm">
+          This card uses the PyColors UI semantic color tokens.
+        </div>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    export function ExampleCard() {
+      return (
+        <div className="rounded-lg border bg-card text-card-foreground p-4">
+          <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
+          <div className="mt-2 text-sm">
+            This card uses the PyColors UI semantic color tokens.
+          </div>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Roles
+
+PyColors UI follows a role-based color architecture.
+
+| Role category | Tokens |
+|--------------|--------|
+| Surfaces | background, card, popover, sidebar |
+| Text | foreground, muted-foreground, card-foreground |
+| Components | primary, secondary, accent, muted |
+| States | destructive, destructive-foreground, success, warning |
+| Inputs | border, input, ring |
+| Data Viz | chart-1 → chart-5 |
+
+---
+
+## Variables table
+
+| Token | Purpose |
+|-------|---------|
+| `--background` | Base surface |
+| `--foreground` | Primary text |
+| `--card` / `--card-foreground` | Cards & surfaces |
+| `--primary` / `--primary-foreground` | Brand action |
+| `--secondary` / `--secondary-foreground` | Secondary sections |
+| `--muted` / `--muted-foreground` | Subtle UI parts |
+| `--accent` / `--accent-foreground` | Highlights |
+| `--destructive` / `--destructive-foreground` | Dangerous actions |
+| `--success` / `--success-foreground` | Positive states |
+| `--warning` / `--warning-foreground` | Caution states |
+| `--border` | Border color |
+| `--input` | Input fields |
+| `--ring` | Focus ring |
+| `--sidebar-*` | Sidebar theming |
+| `--chart-1` → `--chart-5` | Data visualization |
+
+---
+
+## Guidelines
+
+Color tokens belong to the **design system**.
+UI components only **consume** them — they never redefine them.
+
+- Always use semantic color utilities (`bg-card`, `text-muted-foreground`).
+- Never use raw OKLCH values in components.
+- Modify tokens only in `global.css` → all components update automatically.
+- Keep contrast ratios above WCAG AA for text and interactive states.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Typography"
+    description="Font scale, weights, and semantic text roles."
+    href="/docs/design-system/typography"
+  />
+  <LinkCard
+    title="Radius"
+    description="Corner geometry for surfaces and components."
+    href="/docs/design-system/tokens/radius"
+  />
+  <LinkCard
+    title="Shadows"
+    description="Elevation scale for surfaces (xs → lg)."
+    href="/docs/design-system/tokens/shadows"
+  />
+  <LinkCard
+    title="Button"
+    description="Interactive elements using semantic tokens."
+    href="/docs/ui/button"
+  />
+</LinkCards>
+
+</DocsPageShell>

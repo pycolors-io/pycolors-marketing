@@ -1,0 +1,240 @@
+---
+title: Pagination
+description: Composable pagination primitives for navigating paged content without routing or data logic.
+---
+
+import * as React from "react";
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  buildPaginationRange,
+} from "@pycolors/ui";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+import {
+  PaginationBasicExample,
+  ProjectsTableWithPagination,
+} from "../previews/pagination-previews";
+
+<DocsPageShell>
+
+The **Pagination** component provides composable UI primitives for navigating paged content.
+
+It is intentionally **dumb**:
+
+- no router integration
+- no fetching logic
+- no URL sync
+- no cursor logic
+
+Pagination is fully controlled by the **page or data layer**.
+The UI only renders navigation.
+
+---
+
+## Import
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  buildPaginationRange,
+} from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+Pagination is composed of small building blocks:
+
+- **Pagination** → wrapper (`nav`)
+- **PaginationContent** → list container (`ul`)
+- **PaginationItem** → item wrapper (`li`)
+- **PaginationLink** → page button (active state)
+- **PaginationPrevious / PaginationNext** → navigation
+- **PaginationEllipsis** → compact overflow indicator
+
+Control page state from your page or component.
+
+---
+
+## Basic pagination
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <PaginationBasicExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+function PaginationBasicExample() {
+  const [page, setPage] = React.useState(1);
+  const totalPages = 12;
+
+  const tokens = buildPaginationRange({ page, totalPages });
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          />
+        </PaginationItem>
+
+        {tokens.map((t) =>
+          t.type === "ellipsis" ? (
+            <PaginationItem key={t.key}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={t.value}>
+              <PaginationLink
+                isActive={t.isActive}
+                onClick={() => setPage(t.value)}
+              >
+                {t.value}
+              </PaginationLink>
+            </PaginationItem>
+          )
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Table + Pagination (mock data)
+
+This example demonstrates a realistic SaaS pattern: a **Table** with a local **Pagination** control.
+
+No backend logic is included — replace the mock slice with your real data layer later.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <ProjectsTableWithPagination />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+type Project = {
+  id: string;
+  name: string;
+  status: "active" | "paused" | "archived";
+  updatedAt: string;
+};
+
+// Example idea (pseudo):
+// - keep `page` in state
+// - compute a slice from your dataset
+// - pass `page` + `totalPages` into Pagination
+//
+// const pageSize = 10;
+// const totalPages = Math.ceil(projects.length / pageSize);
+// const pageProjects = projects.slice((page - 1) * pageSize, page * pageSize);
+```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Components
+
+| Component | Description |
+|---|---|
+| `Pagination` | Wrapper `nav` element (`aria-label="Pagination"`) |
+| `PaginationContent` | List container (`ul`) |
+| `PaginationItem` | Item wrapper (`li`) |
+| `PaginationLink` | Page button with active state |
+| `PaginationPrevious` | Previous button (responsive label) |
+| `PaginationNext` | Next button (responsive label) |
+| `PaginationEllipsis` | Visual overflow indicator |
+
+### `PaginationLink` props
+
+| Prop | Type | Default | Description |
+|---|---|---:|---|
+| `isActive` | `boolean` | `false` | Marks the current page (`aria-current="page"`) |
+| `size` | `string` | `"icon-sm"` | Maps to `Button` sizes |
+| `className` | `string` | — | Additional Tailwind classes |
+
+---
+
+## Accessibility
+
+- Uses semantic `nav` with `aria-label="Pagination"`.
+- Active page sets `aria-current="page"`.
+- Buttons remain fully keyboard accessible.
+- Ellipsis is non-interactive and screen-reader labeled.
+
+---
+
+## Design guidelines
+
+- Keep pagination UI-only, controlled by the page.
+- Prefer small, consistent page sizes for tables.
+- Use ellipsis for large page counts.
+- Sync with URL and data layers in **guides or patterns**, not inside the component.
+
+---
+
+## When not to use Pagination
+
+Do not use Pagination for:
+
+- infinite scroll experiences
+- cursor-based APIs without a page concept
+- global navigation logic
+
+Those belong in patterns or product-level implementations.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Table"
+    description="Data-heavy layouts and density patterns."
+    href="/docs/ui/table"
+  />
+  <LinkCard
+    title="Building a SaaS layout"
+    description="How pagination fits into real product layouts."
+    href="/docs/guides/building-a-saas-layout"
+  />
+</LinkCards>
+
+</DocsPageShell>

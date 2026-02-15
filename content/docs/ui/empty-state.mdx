@@ -1,0 +1,309 @@
+---
+title: EmptyState
+description: UI primitive used to represent valid empty states with clear messaging and optional actions.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+import {
+  Button,
+  Card,
+  CardContent,
+  EmptyState,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell
+  } from "@pycolors/ui";
+
+<DocsPageShell>
+
+The **EmptyState** component represents a **valid state with no data**.
+
+It explains *why* there is nothing to display and optionally guides the user toward the next action — without introducing product or business logic.
+
+EmptyState is a **pure UI primitive**: it structures content, nothing more.
+
+---
+
+## Import
+
+```tsx
+import { EmptyState } from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+Use EmptyState when a screen, section, or list has no content to display, but the application is otherwise in a valid state.
+
+EmptyState should not be used for loading or error states.
+
+---
+
+## Basic example
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <EmptyState
+        title="No projects yet"
+        description="Create your first project to get started."
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to get started."
+    />
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With action
+
+EmptyState can optionally render a primary action (button or link).
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <EmptyState
+        title="No projects yet"
+        description="Projects help you organize your work."
+        action={<Button>Create project</Button>}
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button, EmptyState } from "@pycolors/ui";
+
+    export function EmptyStateWithAction() {
+      return (
+        <EmptyState
+          title="No projects yet"
+          description="Projects help you organize your work."
+          action={<Button>Create project</Button>}
+        />
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With icon
+
+Use the `icon` slot for a simple decorative icon or illustration.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <EmptyState
+        icon={
+          <svg
+            className="h-6 w-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            aria-hidden="true"
+          >
+            <path d="M3 7h18" />
+            <path d="M7 3v4" />
+            <path d="M17 3v4" />
+            <path d="M5 11h14v10H5z" />
+          </svg>
+        }
+        title="Nothing scheduled"
+        description="Create an event to see it appear here."
+        action={<Button variant="secondary">Create event</Button>}
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <EmptyState
+      icon={<CalendarIcon className="h-6 w-6" aria-hidden />}
+      title="Nothing scheduled"
+      description="Create an event to see it appear here."
+      action={<Button variant="secondary">Create event</Button>}
+    />
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Inside a Card
+
+EmptyState composes naturally with surfaces such as `Card`.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Card className="max-w-xl">
+        <CardContent className="p-6">
+          <EmptyState
+            title="No data available"
+            description="Metrics will appear once data is collected."
+          />
+        </CardContent>
+      </Card>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Card, CardContent, EmptyState } from "@pycolors/ui";
+
+    export function CardEmptyState() {
+      return (
+        <Card>
+          <CardContent className="p-6">
+            <EmptyState
+              title="No data available"
+              description="Metrics will appear once data is collected."
+            />
+          </CardContent>
+        </Card>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Table empty state
+
+EmptyState works well inside data-heavy components such as `Table` (especially for filtered results).
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Table>
+        <TableBody>
+          <TableRow className="hover:bg-transparent">
+            <TableCell colSpan={4} className="py-10">
+              <EmptyState
+                title="No results"
+                description="Try adjusting your filters."
+                action={<Button variant="outline" size="sm">Clear filters</Button>}
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Button, EmptyState, Table, TableBody, TableRow, TableCell } from "@pycolors/ui";
+
+    export function TableEmptyState() {
+      return (
+        <Table>
+          <TableBody>
+            <TableRow className="hover:bg-transparent">
+              <TableCell colSpan={4} className="py-10">
+                <EmptyState
+                  title="No results"
+                  description="Try adjusting your filters."
+                  action={
+                    <Button variant="outline" size="sm">
+                      Clear filters
+                    </Button>
+                  }
+                />
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+| Prop        | Type               | Required | Description                                   |
+|-------------|--------------------|----------|-----------------------------------------------|
+| `title`     | `string`           | Yes      | Primary message explaining the empty state    |
+| `description` | `string`         | No       | Additional context for the empty state        |
+| `action`    | `React.ReactNode`  | No       | Optional action (button, link, etc.)          |
+| `icon`      | `React.ReactNode`  | No       | Optional icon or illustration                 |
+| `className` | `string`           | No       | Additional Tailwind classes                   |
+
+
+EmptyState also accepts all standard HTML div props:
+
+```ts
+React.HTMLAttributes<HTMLDivElement>
+```
+
+---
+
+## Accessibility
+
+- Rendered with `role="status"` to announce informational state changes.
+- Content remains readable without icons.
+- Actions are fully keyboard accessible.
+- No focus is forced when the empty state appears.
+- Avoid using EmptyState to announce errors (use **Alert** for that).
+
+---
+
+## Design guidelines
+
+- Always explain **why** the state is empty (not just “Nothing here”).
+- Keep titles short and descriptive.
+- Use actions sparingly — **one primary action** is usually enough.
+- Avoid product-specific language inside the component; pages and patterns decide what happens next.
+- Keep the empty state aligned with surrounding density (use `Card` / `Table` wrappers as needed).
+
+---
+
+## When not to use EmptyState
+
+Do not use EmptyState for:
+
+- **Loading states** → use **Skeleton**
+- **Error states** → use **Alert**
+- Onboarding flows (use dedicated onboarding screens)
+- Blocking or modal interactions (use **Dialog** / **Sheet** patterns)
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Skeleton"
+    description="Visual placeholders for loading states."
+    href="/docs/ui/skeleton"
+  />
+  <LinkCard
+    title="Alert"
+    description="Feedback for errors, warnings, and confirmations."
+    href="/docs/ui/alert"
+  />
+</LinkCards>
+
+</DocsPageShell>

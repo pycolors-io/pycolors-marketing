@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pycolors.io/sitemap.xml

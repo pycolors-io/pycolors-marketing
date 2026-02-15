@@ -1,0 +1,77 @@
+---
+title: Patterns
+description: Opinionated, production-ready feature blocks built from PyColors UI primitives.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+Patterns are **reusable product-level blocks**.
+
+They go beyond single components and show **how real SaaS features are built**:
+- composition of primitives
+- UX rules and decision points
+- states + feedback
+- accessibility constraints
+- copy/paste-ready examples
+
+Patterns are intentionally **opinionated**.
+
+---
+
+## How Patterns differ from other sections
+
+### UI Components
+- Single primitive
+- Stateless
+- Token-driven
+- Reusable everywhere
+
+### Guides
+- Explanations and principles
+- Composition rules
+- “How to think” and avoid mistakes
+
+### Patterns
+- Feature-level building blocks
+- UI + behavior + state model
+- Real SaaS flows (tables, overlays, mutations)
+- Copy/paste implementations
+
+---
+
+## Available patterns
+
+<LinkCards>
+  <LinkCard
+    title="Data Table Pattern"
+    description="A SaaS-ready table layout: states, filtering, pagination, and row actions."
+    href="/docs/patterns/data-table"
+  />
+  <LinkCard
+    title="Overlays Pattern"
+    description="Choose the right overlay (Dropdown vs Dialog vs Sheet) with UX + a11y rules."
+    href="/docs/patterns/overlays"
+  />
+  <LinkCard
+    title="Async Actions Pattern"
+    description="Mutation UX: toasts, optimistic UI, retry/undo, and error copy guidelines."
+    href="/docs/patterns/async-actions"
+  />
+</LinkCards>
+
+---
+
+## When to use Patterns
+
+Use Patterns when:
+- you’re building “real features”, not just UI screens
+- you need consistency across multiple pages
+- you want predictable states and feedback
+- accessibility and UX rules matter
+
+Patterns help you ship **faster** without shipping **sloppy**.
+
+</DocsPageShell>

@@ -1,0 +1,310 @@
+---
+title: Dialog
+description: Modal dialog component built on Radix Dialog. Use it for confirmations, forms, and focused tasks.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+
+<DocsPageShell>
+
+The **Dialog** component renders a modal overlay that traps focus and requires an explicit close.
+It is built on **Radix UI Dialog** and styled with PyColors tokens (`bg-card`, `border-border`, `text-card-foreground`).
+
+Use Dialog for:
+- Confirmations (delete, sign out)
+- Forms (edit profile, create project)
+- Focused tasks that shouldn’t leave the current context
+
+---
+
+## Import
+
+```tsx
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@pycolors/ui";
+```
+
+---
+
+## Basic usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">
+            Open dialog
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription> Update your account details. Changes are saved on submit.</DialogDescription>
+          </DialogHeader>
+
+          <div className="mt-4 grid gap-3">
+            <Input label="Name" placeholder="John" />
+            <Input label="Email" placeholder="john-doe@acme.com" />
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </DialogClose>
+            <Button>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">Open dialog</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>Update your account details.</DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4">...</div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      Dialog,
+      DialogTrigger,
+      DialogContent,
+      DialogHeader,
+      DialogFooter,
+      DialogTitle,
+      DialogDescription,
+      DialogClose,
+      Input,
+    } from "@pycolors/ui";
+
+    export function EditProfileDialog() {
+      return (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm">
+              Open dialog
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>Update your account details. Changes are saved on submit.</DialogDescription>
+            </DialogHeader>
+
+            <div className="mt-4 grid gap-3">
+              <Input label="Name" placeholder="Patrice" />
+              <Input label="Email" placeholder="patrice@pycolors.com" />
+            </div>
+
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="secondary">Cancel</Button>
+              </DialogClose>
+              <Button>Save</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With destructive confirmation
+
+Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button, and keep the destructive action explicit.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive" size="sm">
+            Delete…
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete project</DialogTitle>
+            <DialogDescription>This action can’t be undone. This will permanently delete the project and its data.</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </DialogClose>
+            <Button variant="destructive">Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="destructive" size="sm">Delete…</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete project</DialogTitle>
+          <DialogDescription>This action can’t be undone.</DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button variant="destructive">Delete</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import {
+      Button,
+      Dialog,
+      DialogTrigger,
+      DialogContent,
+      DialogHeader,
+      DialogFooter,
+      DialogTitle,
+      DialogDescription,
+      DialogClose,
+    } from "@pycolors/ui";
+
+    export function DeleteDialog() {
+      return (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="destructive" size="sm">
+              Delete…
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete project</DialogTitle>
+              <DialogDescription>
+                This action can’t be undone. This will permanently delete the project and its data.
+              </DialogDescription>
+            </DialogHeader>
+
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="secondary">Cancel</Button>
+              </DialogClose>
+              <Button variant="destructive">Delete</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Components
+
+| Component | Description |
+| --- | --- |
+| `Dialog` | Root container (Radix `DialogPrimitive.Root`) |
+| `DialogTrigger` | Trigger element (use `asChild` for custom triggers) |
+| `DialogContent` | Modal surface + overlay + close button |
+| `DialogHeader` | Title/description stack helper |
+| `DialogFooter` | Action row helper (responsive alignment) |
+| `DialogTitle` | Dialog title (Radix `Title`) |
+| `DialogDescription` | Supporting text (Radix `Description`) |
+| `DialogClose` | Close control (use `asChild` to wrap a button) |
+
+### Props
+
+All components extend their respective Radix props.
+
+---
+
+## Accessibility
+
+- Radix handles focus trapping and restores focus to the trigger on close.
+- Ensure the dialog has a clear title (`DialogTitle`) and (ideally) a short description.
+- Avoid nesting dialogs. For multi-step flows, consider a **Sheet** or a full page.
+- Keep one primary action and one secondary action in the footer.
+
+---
+
+## Design guidelines
+
+- Keep dialog content focused: one task per dialog.
+- Prefer `max-w-lg` for forms; avoid very wide dialogs.
+- For complex navigation or long content, use **Sheet** instead.
+- Put destructive actions last and style them clearly.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Button"
+    description="Actions used inside dialog footers."
+    href="/docs/ui/button"
+  />
+  <LinkCard
+    title="Sheet"
+    description="Use a sheet for larger, non-blocking flows."
+    href="/docs/ui/sheet"
+  />
+  <LinkCard
+    title="Form patterns"
+    description="Recommended layouts for inputs and validation."
+    href="/docs/patterns/forms"
+  />
+</LinkCards>
+
+</DocsPageShell>

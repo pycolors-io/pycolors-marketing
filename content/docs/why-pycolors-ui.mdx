@@ -1,0 +1,193 @@
+---
+title: Why PyColors UI?
+description: Understand the philosophy, trade-offs, and principles behind PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+
+<DocsPageShell>
+
+## A system for products that last
+
+**PyColors UI is a design-system-first UI foundation for long-lived products.**
+
+Many UI libraries help you ship fast.
+Very few help you **scale calmly** as your product, team, and codebase grow.
+
+PyColors UI exists to solve a very specific problem:
+
+> **Building modern products fast — without losing structure over time.**
+
+It is not optimized for demos or throwaway projects.
+It is built for products you expect to maintain for years.
+
+---
+
+## The problem with most UI stacks
+
+Most projects start clean… and slowly degrade.
+
+Common symptoms appear over time:
+
+- Colors hard-coded in components
+- Inconsistent spacing and radii
+- Components duplicated with small differences
+- Design decisions living in people’s heads
+- Documentation lagging behind implementation
+
+Frameworks and UI libraries often optimize for **short-term velocity**,
+not for **long-term coherence**.
+
+The result is fragile UI systems that are expensive to evolve.
+
+---
+
+## What PyColors UI does differently
+
+PyColors UI is **opinionated — intentionally**.
+
+Not to restrict you, but to remove ambiguity where it hurts the most.
+
+---
+
+## 1. Tokens before components
+
+In PyColors UI, **design tokens are the foundation**.
+
+- Colors are semantic roles, not hex values
+- Radius and shadows come from a single source of truth
+- Typography follows explicit roles and hierarchy
+- Components never invent styles — they consume tokens
+
+This makes global changes **safe, predictable, and reversible**.
+
+You don’t refactor dozens of components to adjust your design system.
+You update tokens — and the system follows.
+
+---
+
+## 2. Copy, own, evolve
+
+PyColors UI does not lock you into an opaque abstraction.
+
+- Components are plain React + Tailwind
+- You copy them into your codebase
+- You are free to modify, extend, or delete them
+- No wrappers
+- No magic runtime
+- No dependency lock-in
+
+PyColors gives you **a starting point, not a cage**.
+
+Ownership is a feature, not a burden.
+
+---
+
+## 3. Documentation is part of the product
+
+Documentation is not an afterthought.
+
+With **Fumadocs + MDX**:
+
+- Every component has live previews
+- Design decisions are explained
+- Patterns are documented with real code
+- Docs evolve alongside the system
+
+This reduces tribal knowledge, improves onboarding,
+and keeps the UI system understandable as it grows.
+
+---
+
+## 4. Designed for real products
+
+PyColors UI is built from real production use cases:
+
+- Dashboards with dense data
+- SaaS settings pages that evolve over time
+- Admin panels and internal tools
+- Forms with validation and edge cases
+- Marketing pages that still respect the system
+
+Not just isolated components —
+but **composable systems used in real products**.
+
+Some higher-level patterns (like application layout and navigation)
+are documented as **guides**, not APIs, to preserve flexibility where it matters most.
+
+---
+
+## What PyColors UI is not
+
+Clarity matters.
+
+PyColors UI is **not**:
+
+- A drag-and-drop builder
+- A theme marketplace
+- A monolithic component dependency
+- A visual editor
+- A “magic” abstraction layer
+
+If you want maximum control with minimal guesswork,
+you’re in the right place.
+
+---
+
+## Who benefits most
+
+PyColors UI shines when:
+
+- You plan to maintain the product for years
+- Multiple features share the same UI language
+- You care about readability and onboarding
+- You want design decisions documented, not implicit
+
+Typical users include:
+
+- SaaS founders
+- Indie makers
+- Freelancers & agencies
+- Product engineers
+
+---
+
+## Trade-offs (transparent by design)
+
+Every system makes trade-offs.
+
+PyColors UI chooses:
+
+- Slightly slower initial setup
+  **in exchange for long-term clarity**
+- More explicit code
+  **instead of hidden abstractions**
+- Understanding
+  **over instant convenience**
+
+If you value leverage over shortcuts, this is a good trade.
+
+---
+
+## Philosophy
+
+PyColors UI follows a few simple rules:
+
+- **Explicit > implicit**
+- **Tokens > values**
+- **Ownership > abstraction**
+- **Documentation > guesswork**
+- **Consistency > novelty**
+
+These principles guide every component, pattern, and decision.
+
+---
+
+## In short
+
+PyColors UI is not a component library.
+
+It is a **system for building systems** —
+designed to stay understandable as your product grows.
+
+</DocsPageShell>

@@ -1,0 +1,346 @@
+---
+title: Empty, loading, and error states
+description: Designing clear, consistent, and production-ready async states with PyColors UI.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Button,
+  Card,
+  CardContent,
+  EmptyState,
+  Skeleton,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@pycolors/ui';
+
+import { CheckCircle, XCircle } from "lucide-react";
+
+<DocsPageShell>
+
+Modern products spend a significant amount of time in **non-happy states**.
+
+Data is loading.
+Lists are empty.
+Errors happen.
+
+How you handle these states has a direct impact on:
+- perceived performance
+- user confidence
+- overall product quality
+
+This guide explains **how to design empty, loading, and error states**
+using PyColors UI primitives — without introducing product logic into UI components.
+
+---
+
+## The three async states
+
+Every data-driven UI moves through three distinct states:
+
+1. **Loading** → data is being fetched
+2. **Empty** → request succeeded, but no data exists
+3. **Error** → request failed or action could not be completed
+
+Each state has a **different intent**
+and requires a **different UI response**.
+
+---
+
+## Loading states → Skeleton
+
+### When to use Skeleton
+
+Use **Skeleton** when:
+- data is being fetched
+- layout is already known
+- content will appear soon
+
+Skeleton preserves layout structure and reduces visual jank.
+
+### What Skeleton represents
+
+Skeleton is **not content**.
+Skeleton is **not feedback**.
+
+It is a **temporary visual placeholder**.
+
+---
+
+### Example: Card loading
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Card>
+        <CardContent className="space-y-3">
+          <Skeleton className="h-5 w-1/3" />
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-24 w-full" />
+        </CardContent>
+      </Card>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <Card>
+      <CardContent className="space-y-3">
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Example: Table loading
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Table>
+        <TableBody>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <TableRow key={i}>
+              <TableCell>
+                <Skeleton className="h-4 w-32" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-4 w-24" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="h-4 w-16" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <TableRow key={i}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Empty states → EmptyState
+
+### When to use EmptyState
+
+Use **EmptyState** when:
+- the request succeeded
+- there is no data to display
+- the state is valid and expected
+
+EmptyState answers a simple question:
+
+> *“Why is this empty — and what can I do next?”*
+
+---
+
+### Example: Empty section
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <EmptyState
+        title="No projects yet"
+        description="Create your first project to get started."
+        action={<Button>Create project</Button>}
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to get started."
+      action={<Button>Create project</Button>}
+    />
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+### Example: Table empty
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell colSpan={4}>
+              <EmptyState
+                title="No results"
+                description="Try adjusting your filters."
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell colSpan={4}>
+            <EmptyState
+              title="No results"
+              description="Try adjusting your filters."
+            />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Error states → Alert
+
+### When to use Alert
+
+Use **Alert** when:
+- an action fails
+- data cannot be loaded
+- the user needs to be informed immediately
+
+Alerts communicate **problems**, not absence.
+
+---
+
+### Example: Inline error
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Alert variant="destructive">
+        <AlertTitle>Something went wrong</AlertTitle>
+        <AlertDescription>
+          We couldn’t load your projects. Please try again.
+        </AlertDescription>
+      </Alert>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    <Alert variant="destructive">
+      <AlertTitle>Something went wrong</AlertTitle>
+      <AlertDescription>
+        We couldn’t load your projects. Please try again.
+      </AlertDescription>
+    </Alert>
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Choosing the right state
+
+A simple decision table:
+
+| Situation | Component |
+|--------|-----------|
+| Data is loading | Skeleton |
+| Request succeeded, no data | EmptyState |
+| Action or request failed | Alert |
+
+Never mix these states.
+
+---
+
+## UX rules (production-tested)
+
+- Skeleton **never explains** — it only preserves layout
+- EmptyState **always explains** why the state exists
+- Error states should be **clear, calm, and actionable**
+- Avoid flashing between states
+- Prefer consistency over clever animations
+- Replace skeletons quickly once data is ready
+
+---
+
+## Anti-patterns to avoid
+
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Skeleton with explanatory text
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> EmptyState used for errors
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Toast used for critical failures
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Loading spinners replacing entire layouts
+- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Complex logic inside UI primitives
+
+---
+
+## Mental model to keep
+
+> **Skeleton = shape**
+> **EmptyState = explanation**
+> **Alert = problem**
+
+Keeping these roles distinct is one of the simplest ways
+to make a product feel stable and professional.
+
+---
+
+## Related components
+
+<LinkCards>
+  <LinkCard
+    title="Skeleton"
+    description="Visual placeholders for loading states."
+    href="/docs/ui/skeleton"
+  />
+  <LinkCard
+    title="EmptyState"
+    description="Valid empty states with clear messaging."
+    href="/docs/ui/empty-state"
+  />
+  <LinkCard
+    title="Alert"
+    description="Inline feedback and error messaging."
+    href="/docs/ui/alert"
+  />
+</LinkCards>
+
+</DocsPageShell>

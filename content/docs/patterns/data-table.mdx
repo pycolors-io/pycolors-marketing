@@ -1,0 +1,159 @@
+---
+title: Data Table Pattern
+description: A production-ready data table pattern for real SaaS products.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+
+import {
+  DataTableLoading,
+  DataTableEmpty,
+  DataTableError,
+  DataTableWithFiltersSheet,
+  DataTableRowActionsMenu,
+} from "../previews/data-table";
+
+<DocsPageShell>
+
+## When to use
+
+Use this pattern when displaying **structured, repeatable data** such as:
+
+- users
+- projects
+- invoices
+- logs
+- subscriptions
+
+This pattern is designed for **admin and SaaS dashboards**,
+not marketing pages or content-heavy layouts.
+
+---
+
+## Anatomy
+
+A production-ready data table is **never just a table**.
+
+It is composed of four distinct areas.
+Each area has a clear responsibility and can evolve independently.
+
+### Header
+
+Responsible for **context**.
+
+- page title
+- optional description
+- primary actions (Create, Export, Invite…)
+
+The header does not handle data logic.
+
+---
+
+### Toolbar
+
+Responsible for **controls**.
+
+- filters
+- search
+- bulk actions
+- view toggles
+
+Toolbars may be inline or progressive (via Sheet).
+
+---
+
+### Table
+
+Responsible for **structure and rendering**.
+
+- rows and columns
+- sorting indicators
+- selection state
+- row-level actions
+
+The table never fetches data.
+
+---
+
+### Footer
+
+Responsible for **navigation and feedback**.
+
+- pagination
+- item count
+- selection summary
+
+Pagination is always stateless.
+
+---
+
+## States
+
+Every data table transitions through states.
+Each state has a **specific UI response**.
+
+### Loading
+
+Use `Skeleton` when:
+
+- data is loading
+- layout is already known
+- content will appear soon
+
+<DataTableLoading />
+
+---
+
+### Empty
+
+Use `EmptyState` when:
+
+- request succeeded
+- no data exists
+- the state is valid
+
+<DataTableEmpty />
+
+---
+
+### Error
+
+Use `Alert` when:
+
+- data failed to load
+- an action failed
+- the user must be informed
+
+<DataTableError />
+
+---
+
+## Variations
+
+### Table with filters
+
+For complex filters, use a **Sheet** to keep the toolbar clean.
+
+<DataTableWithFiltersSheet />
+
+---
+
+### Table with row actions
+
+Row actions should be compact and consistent.
+Use **Dropdown Menu** for contextual actions.
+
+<DataTableRowActionsMenu />
+
+---
+
+## Mental model
+
+- Table renders **structure**
+- Pagination renders **navigation**
+- Data layer owns **truth**
+- UI stays **stateless**
+
+This separation is what makes the pattern scale.
+
+</DocsPageShell>

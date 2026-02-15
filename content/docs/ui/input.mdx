@@ -1,0 +1,303 @@
+---
+title: Input
+description: Core text input component for PyColors UI, with labels, helper text, validation, icons, and accessibility built in.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { SearchIcon } from "lucide-react";
+
+<DocsPageShell>
+
+The **Input** component is a foundational form control in PyColors UI.
+It is designed to be **accessible by default**, theme-aware, and flexible enough for simple fields or complex form layouts.
+
+It supports:
+- Labels and required indicators
+- Helper text and validation errors
+- Left and right icons
+- Size variants aligned with the design system
+- Full keyboard and screen-reader support
+
+---
+
+## Import
+
+```tsx
+import { Input } from '@pycolors/ui';
+```
+
+---
+
+## Basic usage
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Input placeholder="Type something…" />
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Input placeholder="Type something…" />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Input } from '@pycolors/ui';
+
+    export default function Demo() {
+      return <Input placeholder="Type something…" />;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With label & helper text
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Input
+        label="Email"
+        placeholder="you@domain.com"
+        helperText="We’ll never share your email."
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      helperText="We’ll never share your email."
+    />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Input } from '@pycolors/ui';
+
+    export default function Example() {
+      return (
+        <Input
+          label="Email"
+          placeholder="you@domain.com"
+          helperText="We’ll never share your email."
+        />
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Validation error
+
+When `error` is provided:
+- Error styles are applied
+- `aria-invalid` is set
+- Error text is announced to screen readers
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Input
+        label="Email"
+        placeholder="you@domain.com"
+        error="Invalid email address"
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      error="Invalid email address"
+    />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Input } from '@pycolors/ui';
+
+    export default function ErrorExample() {
+      return (
+        <Input
+          label="Email"
+          placeholder="you@domain.com"
+          error="Invalid email address"
+        />
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## With icons
+
+### Left icon
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Input
+        placeholder="Search…"
+        leftIcon={<SearchIcon className="size-4" />}
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Input
+      placeholder="Search…"
+      leftIcon={<SearchIcon className="size-4" />}
+    />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Input } from '@pycolors/ui';
+    import { SearchIcon } from "lucide-react";
+
+    export default function IconExample() {
+      return (
+        <Input
+          placeholder="Search…"
+          leftIcon={<SearchIcon className="size-4" />}
+        />
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Sizes
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex flex-col gap-3 w-80">
+        <Input size="sm" placeholder="Small" />
+        <Input size="md" placeholder="Medium" />
+        <Input size="lg" placeholder="Large" />
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+    ```tsx
+    <Input size="sm" />
+    <Input size="md" />
+    <Input size="lg" />
+    ```
+  </Tab>
+
+  <Tab value="Code">
+    ```tsx
+    import { Input } from '@pycolors/ui';
+
+    export default function Sizes() {
+      return (
+        <div className="flex flex-col gap-3 w-80">
+          <Input size="sm" placeholder="Small" />
+          <Input size="md" placeholder="Medium" />
+          <Input size="lg" placeholder="Large" />
+        </div>
+      );
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## API
+
+### Props
+
+| Prop        | Type                       | Default | Description |
+|-------------|----------------------------|---------|-------------|
+| `label`     | `string`                   | —       | Accessible label above the field |
+| `helperText`| `string`                   | —       | Helper text below the field |
+| `error`     | `string`                   | —       | Validation error message |
+| `leftIcon`  | `React.ReactNode`          | —       | Icon rendered on the left |
+| `rightIcon` | `React.ReactNode`          | —       | Icon rendered on the right |
+| `size`      | `"sm" | "md" | "lg"`       | `"md"`  | Visual density |
+| `className` | `string`                   | —       | Tailwind override |
+
+Extends:
+
+```ts
+React.InputHTMLAttributes<HTMLInputElement>
+```
+
+---
+
+## TypeScript types
+
+```ts
+export type InputSize = "sm" | "md" | "lg";
+
+export interface InputProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "size"
+  > {
+  label?: string;
+  helperText?: string;
+  error?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  size?: InputSize;
+}
+```
+
+---
+
+## Accessibility
+
+- Uses `label` + `htmlFor` for proper field association
+- Automatically manages `aria-describedby`
+- Sets `aria-invalid` when errors are present
+- Preserves focus rings and keyboard navigation
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Forms"
+    description="Using Input with React Hook Form + Zod."
+    href="/docs/ui/forms"
+  />
+  <LinkCard
+    title="PasswordInput"
+    description="Secure password fields with toggle."
+    href="/docs/ui/password-input"
+  />
+  <LinkCard
+    title="Typography"
+    description="Labels and helper text on the type scale."
+    href="/docs/design-system/typography"
+  />
+</LinkCards>
+
+</DocsPageShell>

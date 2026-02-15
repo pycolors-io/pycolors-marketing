@@ -1,0 +1,252 @@
+---
+title: Toast
+description: Non-blocking feedback messages used to confirm actions or display short system messages.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { ClientOnly } from "../previews/client-only";
+import { ToastTriggerPreview, ToastVariantsPreview } from "../previews/toast-previews";
+
+<DocsPageShell>
+
+The **Toast** component displays short, non-blocking feedback messages.
+
+It confirms actions, communicates results, or provides lightweight system feedback — without interrupting the user flow.
+
+Toast is intentionally **minimal** in PyColors UI: it provides structure + accessibility, not a full notification system (queues, global store, deduping).
+
+---
+
+## Import
+
+```tsx
+import {
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  ToastTitle,
+  ToastDescription,
+} from from "@pycolors/ui";
+```
+
+---
+
+## Usage
+
+Toast is controlled explicitly by the page or component.
+Wrap your app (or a layout subtree) with `ToastProvider` and render **one** `ToastViewport` per scope.
+
+<Tabs items={["Preview", "Usage", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+        <ToastTriggerPreview />
+      </ClientOnly>
+    </Preview>
+  </Tab>
+
+  <Tab value="Usage">
+```tsx
+<ToastProvider>
+  <Button onClick={() => setOpen(true)}>Trigger toast</Button>
+
+  <Toast open={open} onOpenChange={setOpen}>
+    <ToastTitle>Action completed</ToastTitle>
+  </Toast>
+
+  <ToastViewport className="fixed bottom-4 right-4 z-50" />
+</ToastProvider>
+```
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+"use client";
+
+import * as React from "react";
+import {
+  Button,
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  ToastTitle,
+  ToastDescription,
+} from "@pycolors/ui";
+
+export function ToastExample() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <ToastProvider>
+      <Button onClick={() => setOpen(true)} variant="outline" size="sm">
+        Trigger toast
+      </Button>
+
+      <Toast
+        open={open}
+        onOpenChange={setOpen}
+        variant="success"
+        duration={2500}
+      >
+        <ToastTitle>Changes saved</ToastTitle>
+        <ToastDescription>Your settings were updated.</ToastDescription>
+      </Toast>
+
+      <ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
+    </ToastProvider>
+  );
+}
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Variants
+
+Toast supports a small set of visual variants. Keep them limited to avoid semantic overload.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+        <ToastVariantsPreview />
+      </ClientOnly>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+```tsx
+<Toast variant="default">
+  <ToastTitle>Default</ToastTitle>
+</Toast>
+
+<Toast variant="success">
+  <ToastTitle>Success</ToastTitle>
+</Toast>
+
+<Toast variant="warning">
+  <ToastTitle>Warning</ToastTitle>
+</Toast>
+
+<Toast variant="destructive">
+  <ToastTitle>Error</ToastTitle>
+  <ToastDescription>Something went wrong.</ToastDescription>
+</Toast>
+```
+  </Tab>
+</Tabs>
+
+### Available variants
+
+| Variant | Purpose |
+| --- | --- |
+| `default` | Neutral confirmation / info |
+| `success` | Positive confirmation |
+| `warning` | Attention needed, still non-blocking |
+| `destructive` | Error feedback (non-blocking) |
+
+---
+
+## With description
+
+Use `ToastDescription` for additional context when needed.
+
+```tsx
+<Toast variant="warning">
+  <ToastTitle>Unsaved changes</ToastTitle>
+  <ToastDescription>
+    Make sure to save before leaving the page.
+  </ToastDescription>
+</Toast>
+```
+
+---
+
+## API
+
+### Toast
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "success" \| "warning" \| "destructive"` | `"default"` | Visual style |
+| `open` | `boolean` | — | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | — | State handler |
+| `duration` | `number` | Radix default | Auto-close delay (ms) |
+| `className` | `string` | — | Tailwind override |
+
+Toast extends Radix props:
+
+```ts
+React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
+```
+
+### ToastProvider
+
+Wraps the area where toasts are used.
+
+```tsx
+<ToastProvider>{/* ... */}</ToastProvider>
+```
+
+### ToastViewport
+
+Defines where toasts appear on screen. Render **once** per provider scope.
+
+```tsx
+<ToastViewport className="fixed bottom-4 right-4 z-50" />
+```
+
+---
+
+## Accessibility
+
+- Built on Radix Toast primitives (keyboard + focus-safe by default).
+- Uses appropriate live regions for announcements.
+- Non-blocking: it should not trap focus or interrupt input.
+
+---
+
+## Design guidelines
+
+- Keep messages short and explicit.
+- Prefer one toast at a time (avoid stacking).
+- Use `destructive` sparingly, and don’t rely on toasts for critical errors.
+- If a user must act, prefer **Alert** (inline) or **Dialog** (blocking confirmation).
+
+---
+
+## When not to use Toast
+
+Do not use Toast for:
+- Blocking errors
+- Field-level form validation
+- Onboarding flows
+- Persistent notification centers
+
+Use **Alert**, **EmptyState**, or dedicated patterns instead.
+
+---
+
+## Related guides
+
+<LinkCards>
+  <LinkCard
+    title="Alert"
+    description="Inline feedback and blocking messages."
+    href="/docs/ui/alert"
+  />
+  <LinkCard
+    title="EmptyState"
+    description="Valid empty state with clear guidance."
+    href="/docs/ui/empty-state"
+  />
+  <LinkCard
+    title="Dialog"
+    description="Use a dialog when the user must act."
+    href="/docs/ui/dialog"
+  />
+</LinkCards>
+
+</DocsPageShell>
