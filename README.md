@@ -1,153 +1,90 @@
-# PyColors UI
+![license](https://img.shields.io/github/license/pycolors-io/pycolors-marketing)
 
-<p align="center"> <a href="https://github.com/pycolors-io/pycolors-ui/releases"> <img src="https://img.shields.io/badge/version-v1.1.0-blue?style=flat-square" alt="Version" /> </a> <a href="https://pycolors.io/roadmap"> <img src="https://img.shields.io/badge/roadmap-public-success?style=flat-square" alt="Roadmap" /> </a> <img src="https://img.shields.io/badge/status-production--ready-success?style=flat-square" alt="Status" /> <img src="https://img.shields.io/badge/docs-documentation--first-informational?style=flat-square" alt="Docs" /> </p> <p align="center"> <strong>A minimal, documentation-first UI foundation for building real-world web products.</strong><br /> The UI layer powering <strong>PyColors SaaS Starters</strong>. </p> <p align="center"> Built in public. Shipped with discipline. Designed to last. </p>
+# pycolors-marketing
 
----
+Official marketing website for **PyColors**.
 
-## Positioning
+👉 https://pycolors.io
 
-PyColors UI is a minimal UI foundation, not a generic component zoo.
+Built with **Next.js + Fumadocs**, this site is the public entry point
+for the PyColors ecosystem: documentation, starters, roadmap, and
+product updates.
 
-It is designed to be:
+------------------------------------------------------------------------
 
-- The UI layer used internally by PyColors SaaS Starters
-- a stable base for shipping SaaS dashboards, apps, and marketing pages
-- a system you can adopt independently, without buying anything
+## ⚠️ Read-only mirror
 
-PyColors UI is the foundation.
-Starters, templates, and blocks are products built on top of it.
+This repository is automatically synced from the **PyColors monorepo**.\
+**Source of truth:**\
+https://github.com/pycolors-io/pycolors/tree/main/apps/marketing
 
----
+You can safely open **Issues and Discussions in this repository**.\
+Changes are synced automatically from the monorepo.
 
-## Vision
+------------------------------------------------------------------------
 
-**PyColors UI** is not just a component library.
-It is a **product-oriented UI foundation** aimed at developers who build:
+## Purpose
 
-- SaaS dashboards
-- Marketing websites
-- Internal tools
-- Production-grade web applications
+The marketing site is the **public entry point** of the PyColors
+ecosystem:
 
-### Core principles
+-   Discover the design system and philosophy
+-   Read documentation and guides
+-   Explore starters and templates
+-   Follow the public roadmap and weekly releases
+-   Learn how to build SaaS products faster
 
-- **Documentation-first**
-  Every component ships with Preview, Usage, Code, and Props.
+------------------------------------------------------------------------
 
-- **Consistency over abundance**
-  Fewer components, well-designed APIs, predictable variants and sizing.
+## Tech stack
 
-- **Production-ready by default**
-  Accessibility, sensible defaults, semantic tokens, and release hygiene.
+-   Next.js (App Router)
+-   Fumadocs
+-   Tailwind CSS
+-   Turborepo (source monorepo)
+-   Vercel deployment
 
-- **Commercial mindset**
-  Clear versioning, roadmap transparency, licensing readiness, and trust pages.
+------------------------------------------------------------------------
 
-`v1.0` establishes the foundation. Everything else builds on top of it.
+## Local development
 
----
-
-## Installation
-
-### Requirements
-
-- Node.js ≥ 18
-- React ≥ 18
-- Tailwind CSS v4
-- TypeScript (recommended)
-
-### Install dependencies
-
-```bash
+``` bash
 pnpm install
-# or
-npm install
-# or
-yarn install
-```
-
-### Start the development server
-
-```bash
 pnpm dev
 ```
 
-Then open:
+The site will be available at: http://localhost:3000
 
-```
-http://localhost:3000
-```
-
----
-
-## Structure
-
-The project is organized to support **documentation, UI components, and future monetization**.
-
-```txt
-.
-├── app/
-│   └── docs/                # Documentation (Fumadocs)
-│
-├── components/
-│   ├── ui/                  # Core UI components (Button, Input, Card…)
-│   ├── layout/              # Layout components (SiteHeader, Footer…)
-│   └── container.tsx        # Layout width reference
-│
-├── lib/
-│   ├── utils.ts             # Utilities (cn, helpers)
-│   └── layout.shared.ts     # Navigation & shared layout data
-│
-├── styles/
-│   └── globals.css          # Theme tokens, Tailwind v4 mapping
-│
-├── public/
-│   └── assets/              # Static assets
-│
-├── README.md
-└── package.json
-```
-
-### Key architectural decisions
-
-- Single layout width source of truth (`Container`)
-- Semantic design tokens mapped to Tailwind v4
-- UI components decoupled from docs
-- Public-facing trust pages (Changelog, Roadmap)
-
----
-
-## Roadmap
-
-PyColors UI follows a **transparent, release-driven roadmap**.
-
-👉 Full roadmap available at:
-https://pycolors.io/roadmap
-
----
-
-## Status
-
-- **Current version:** v1.0.0
-- **Stability:** Production-ready
-- **Update cadence:** Iterative, release-based
-
----
+------------------------------------------------------------------------
 
 ## Contributing
 
-Issues, feedback, and discussions are welcome.
-The goal is not to ship everything — but to ship the **right things**, well.
+We welcome issues, ideas, and discussions.
 
----
+If you'd like to contribute code, please open a discussion first so we
+can coordinate changes with the monorepo.
+
+------------------------------------------------------------------------
+
+## Release & deployment
+
+This repository is a **distribution mirror**.
+
+-   Updates arrive via automated sync PRs from the monorepo
+-   Production deployment is handled by **Vercel**
+-   Releases follow the monorepo CI/CD pipeline
+
+------------------------------------------------------------------------
 
 ## License
 
-License details will be published as part of the commercialization phase.
+MIT
 
-For now, this repository is public and free to explore, but the licensing terms may evolve as the project matures.
+------------------------------------------------------------------------
 
----
+## Links
 
-Built with care by **PyColors**.
-Focus on clarity. Ship with intent.
+Website → https://pycolors.io \
+Docs → https://pycolors.io/docs \
+UI → https://github.com/pycolors-io/pycolors-ui \
+Tokens → https://github.com/pycolors-io/pycolors-tokens
