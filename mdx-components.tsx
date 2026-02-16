@@ -72,7 +72,7 @@ export function getMDXComponents(
 
     // Native integration of Fumadocs CodeBlock (recommended)
     // All ```tsx into .mdx go through this wrapper
-    pre: ({ ref: _ref, ...props }) => (
+    pre: (props) => (
       <CodeBlock {...props}>
         <Pre>{props.children}</Pre>
       </CodeBlock>
