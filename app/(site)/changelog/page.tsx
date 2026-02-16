@@ -9,8 +9,6 @@ import {
 
 import { Container } from '@/components/container';
 
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
 import {
   Badge,
   cn,
@@ -264,7 +262,6 @@ function TimelineDot() {
 export default function ChangelogPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <SiteHeader />
 
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
@@ -446,7 +443,6 @@ export default function ChangelogPage() {
         </Container>
       </main>
 
-      <Footer />
     </div>
   );
 }

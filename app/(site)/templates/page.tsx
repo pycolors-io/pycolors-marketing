@@ -18,8 +18,6 @@ import {
 
 import { Container } from '@/components/container';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
 
 export const metadata: Metadata = {
   title: 'Templates',
@@ -277,11 +275,9 @@ function TemplateCard({ t }: { t: Template }) {
 export default function TemplatesPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <SiteHeader />
 
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
-          {/* HERO */}
           <header className="mx-auto w-full max-w-4xl text-center">
             <div className="flex justify-center">
               <Badge variant="secondary" className="gap-2">
@@ -567,7 +563,6 @@ export default function TemplatesPage() {
         </Container>
       </main>
 
-      <Footer />
     </div>
   );
 }
