@@ -4,9 +4,6 @@ import type { Metadata } from 'next';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
 
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
-
 export const metadata: Metadata = {
   title: 'Starters',
   description:
@@ -68,7 +65,6 @@ function SectionHeader({
 export default function StartersPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <SiteHeader />
 
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
@@ -377,7 +373,6 @@ export default function StartersPage() {
         </Container>
       </main>
 
-      <Footer />
     </div>
   );
 }

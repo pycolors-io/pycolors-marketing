@@ -5,8 +5,6 @@ import { ExternalLink } from 'lucide-react';
 import { Container } from '@/components/container';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
 
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
 import { APP_MAJOR, formatVersion } from '@/lib/version';
 
 export const metadata: Metadata = {
@@ -151,7 +149,6 @@ const quickLinks = [
 export default function UiPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <SiteHeader />
 
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
@@ -551,8 +548,6 @@ pnpm dev`}</pre>
           </div>
         </Container>
       </main>
-
-      <Footer />
     </div>
   );
 }

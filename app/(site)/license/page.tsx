@@ -8,9 +8,6 @@ import {
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
-
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
 import { Card, Badge, Button } from '@pycolors/ui';
 
 export const metadata: Metadata = {
@@ -135,11 +132,9 @@ function SectionCard({ section }: { section: LicenseSection }) {
 export default function LicensePage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <SiteHeader />
 
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
-          {/* HEADER */}
           <header className="mx-auto w-full max-w-4xl text-center">
             <div className="flex justify-center">
               <Badge variant="secondary" className="gap-2">
@@ -159,7 +154,6 @@ export default function LicensePage() {
             </p>
           </header>
 
-          {/* PRINCIPLES */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <div className="grid gap-4 sm:grid-cols-3">
               {principles.map((p) => (
@@ -176,7 +170,6 @@ export default function LicensePage() {
             </div>
           </section>
 
-          {/* PYCOLORS UI */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <div className="grid gap-4 sm:grid-cols-2">
               <SectionCard section={freeToday} />
@@ -184,12 +177,10 @@ export default function LicensePage() {
             </div>
           </section>
 
-          {/* TEMPLATES LICENSE */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <SectionCard section={templatesLicense} />
           </section>
 
-          {/* CURRENT STATUS */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="space-y-2">
@@ -240,8 +231,6 @@ export default function LicensePage() {
           </section>
         </Container>
       </main>
-
-      <Footer />
     </div>
   );
 }
