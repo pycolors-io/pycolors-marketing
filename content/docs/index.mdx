@@ -24,12 +24,21 @@ If you want to understand the philosophy behind these choices, read
     ```bash
     npx create-next-app@latest my-app --ts --tailwind --app
     cd my-app
+
+    pnpm add @pycolors/ui @pycolors/tokens
+    pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
+
+    # app/globals.css
+    # @import "@pycolors/tokens/tokens.css";
+
+    pnpm dev
     ```
   </Tab>
 
   <Tab value="Existing project">
     ```bash
-    npm install tailwindcss class-variance-authority
+    pnpm add @pycolors/ui @pycolors/tokens
+    pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
     ```
   </Tab>
 </Tabs>
