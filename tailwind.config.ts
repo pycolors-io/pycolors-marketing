@@ -7,8 +7,7 @@ const config: Config = {
     "./components/**/*.{ts,tsx,mdx}",
     "./content/**/*.{md,mdx}",
     "./lib/**/*.{ts,tsx}",
-    '../../packages/ui/src/**/*.{ts,tsx,jsx,js}',
-    "./node_modules/@pycolors/ui/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@pycolors/ui/dist/**/*.{js,mjs}",
   ],
   theme: {
     extend: {
