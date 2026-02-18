@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
-
 import {
   Badge,
   cn,
@@ -17,27 +16,29 @@ import {
   CardHeader,
   CardContent,
 } from '@pycolors/ui';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Changelog',
   description:
-    'Release notes and Product updates for PyColors. Clear versions, stable conventions, and documentation-first releases.',
+    'Release notes and product updates for the PyColors ecosystem: UI, Starters, and Templates. Predictable releases, stable conventions, documentation-first.',
   openGraph: {
-    title: 'Changelog · PyColors UI',
+    title: 'Changelog · PyColors',
     description:
-      'Release notes and Product updates for PyColors. Stable versions, predictable conventions.',
+      'Release notes and product updates across PyColors: UI, Starters, Templates. Predictable releases and documentation-first shipping.',
     url: '/changelog',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Changelog · PyColors UI',
-    description: 'Release notes and Product updates for PyColors.',
+    title: 'Changelog · PyColors',
+    description:
+      'Release notes and product updates across PyColors: UI, Starters, Templates.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
-type ChangelogStatus = 'Stable' | 'Beta';
+type ChangelogStatus = 'Stable' | 'Beta' | 'In progress';
 
 type ChangelogItem = {
   version: string;
@@ -56,6 +57,80 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.2.0',
+    title:
+      'Ecosystem public launch: Tokens + ESLint + Release Engine',
+    dateLabel: 'Fri 13 Feb 2026',
+    dateISO: '2026-02-13',
+    status: 'Stable',
+    releaseWeekLabel: 'Feb 2026 (weekly release)',
+    summary:
+      'This release marks a major ecosystem milestone: PyColors is now a structured developer platform with public packages (UI, Tokens, ESLint) and a hardened weekly release engine. The focus shifts from “components” to “shipping infrastructure”.',
+    highlights: [
+      {
+        title: 'New public packages',
+        items: [
+          '@pycolors/tokens published on npm: light/dark themes + semantic variables + Tailwind v4 bridge.',
+          '@pycolors/eslint-config v1.0.0 released: base, Next.js, and React internal flat configs (ESLint v9 ready).',
+          'Improved peer dependency clarity and ecosystem alignment across packages.',
+        ],
+      },
+      {
+        title: 'Release & distribution engine',
+        items: [
+          'Stabilized Changesets publish workflow.',
+          'Subtree sync strategy hardened (monorepo = source of truth, mirrors = distribution).',
+          'GitHub Releases automated for public packages.',
+        ],
+      },
+      {
+        title: 'Marketing alignment',
+        items: [
+          'Changelog and roadmap updated to reflect ecosystem positioning.',
+          'Clearer messaging: PyColors as a SaaS shipping platform (UI → Starter → Templates).',
+          'Weekly release cadence formalized as a trust-building mechanism.',
+        ],
+      },
+    ],
+    cta: { label: 'Explore ecosystem', href: '/docs' },
+  },
+  {
+    version: 'v1.1.2',
+    title: 'Starter foundations + release engine',
+    dateLabel: 'Fri 6 Feb 2026',
+    dateISO: '2026-02-06',
+    status: 'Stable',
+    releaseWeekLabel: 'Feb 2026 (weekly release)',
+    summary:
+      'This release focuses on foundations for the upcoming SaaS Starter (Free) and strengthening the shipping engine: discoverability, trust surface, and consistent ecosystem messaging.',
+    highlights: [
+      {
+        title: 'Starters (in progress)',
+        items: [
+          'Started the SaaS Starter (Free): laying down production-ready foundations (structure, DX conventions, UI baseline).',
+          'Prepared ecosystem cross-links (UI ↔ Starters ↔ Templates) to support a cohesive builder workflow.',
+          'Defined starter release conventions: what is “shipped” vs “in progress” to keep public updates honest and predictable.',
+        ],
+      },
+      {
+        title: 'Discoverability & trust',
+        items: [
+          'Search & analytics baseline: ensure key pages are trackable and indexable (events, metadata hygiene).',
+          'Improved messaging across metadata to reflect PyColors as an ecosystem (not only a UI kit).',
+          'Roadmap / changelog copy aligned with weekly release cadence and commercial readiness.',
+        ],
+      },
+      {
+        title: 'Release engine',
+        items: [
+          'Standardized weekly release structure: highlights blocks, CTA focus, and a clearer “what’s next” narrative.',
+          'Small UI/UX polish passes to reduce friction and improve perceived quality.',
+        ],
+      },
+    ],
+    cta: { label: 'View roadmap', href: '/roadmap' },
+  },
+  {
     version: 'v1.1.1',
     title: 'Patterns docs + SEO polish',
     dateLabel: 'Fri 30 Jan 2026',
@@ -68,18 +143,18 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'Docs & patterns',
         items: [
-          'Introduced a new “Patterns” docs section: opinionated, feature-level UI patterns with guidance on when to use them.',
-          'Added a comprehensive Data Table pattern doc: anatomy, states, variations for SaaS/admin dashboards.',
+          'Introduced a new “Patterns” docs section: feature-level UI patterns with guidance on when to use them.',
+          'Added a comprehensive Data Table pattern doc: anatomy, states, and variations for SaaS/admin dashboards.',
           'Shipped Data Table preview components: loading, empty, error, filterable, and row actions states.',
           'Added an Overlays pattern guide (Dropdown vs Dialog vs Sheet) with interactive demos and accessibility rules.',
-          'Added Async Actions UX patterns: optimistic/pessimistic updates, feedback tiers, error handling + interactive demos (save, delete with undo, optimistic toggle).',
-          'Refactored Toast docs (removed unnecessary provider) and centralized data table preview exports via an index file.',
+          'Added Async Actions UX patterns: optimistic/pessimistic updates, feedback tiers, error handling + interactive demos.',
+          'Refactored Toast docs and centralized preview exports via an index file.',
         ],
       },
       {
         title: 'SEO & metadata',
         items: [
-          'Refined site metadata messaging to better position PyColors as a product ecosystem (not only a UI system).',
+          'Refined site metadata messaging to better position PyColors as a product ecosystem.',
           'Simplified metadata configuration by removing redundant title/description where Open Graph is the source of truth.',
           'Enhanced docs layout SEO with improved titles/descriptions and canonical URL support.',
         ],
@@ -87,13 +162,13 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'Branding & UI polish',
         items: [
-          'Updated favicon assets for improved branding consistency across browsers and platforms.',
+          'Updated favicon assets for improved branding consistency.',
         ],
       },
       {
         title: 'Refactoring',
         items: [
-          'Standardized component prop typing by migrating from interfaces to type aliases for consistency and readability.',
+          'Standardized component prop typing by migrating from interfaces to type aliases.',
         ],
       },
     ],
@@ -107,29 +182,19 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Jan 2026 (weekly release)',
     summary:
-      'Major expansion of PyColors UI with advanced Radix-based components, practical product patterns, and a clearer product ecosystem. This release strengthens PyColors as a SaaS-ready UI foundation — from core interactions to data UI and platform-level structure.',
+      'Major expansion of PyColors UI with advanced components, practical product patterns, and a clearer ecosystem structure — a SaaS-ready foundation from core interactions to data UI.',
     highlights: [
       {
         title: 'New UI components',
         items: [
-          'Password Input — accessible show/hide toggle with keyboard and screen reader support.',
-          'Sheet — slide-over panels for filters, contextual actions, and side content (Radix Dialog-based).',
-          'Dialog — accessible modal primitives with composable subcomponents and consistent styling.',
-          'Dropdown Menu — groups, submenus, checkbox/radio items, and keyboard shortcuts (Radix-based).',
-          'Tabs — segmented navigation with size variants and consistent theming.',
-          'Toast — minimal, accessible notifications with variant styling for non-blocking feedback.',
-          'Table — composable data table primitives with built-in empty and loading states.',
-          'Skeleton — loading placeholder primitive to preserve layout and improve perceived performance.',
-          'Empty State — flexible primitive for first-run, no-results, and guidance-driven UX.',
-          'Pagination — composable, stateless pagination primitives (UI-only, no routing or data logic).',
+          'Password Input, Sheet, Dialog, Dropdown Menu, Tabs, Toast, Table, Skeleton, Empty State, Pagination.',
         ],
       },
       {
         title: 'Docs & product guides',
         items: [
-          'New guides covering SaaS layout composition, async UI states (empty/loading/error), and accessible forms with validation.',
-          'Documentation expanded beyond components to include real-world product patterns and UX guidance.',
-          'Every new component ships with usage examples, design notes, and accessibility guidelines.',
+          'New guides covering SaaS layout composition, async UI states, and accessible forms with validation.',
+          'Docs expanded beyond components to include real-world product patterns and UX guidance.',
         ],
       },
       {
@@ -137,16 +202,13 @@ const CHANGELOG: ChangelogItem[] = [
         items: [
           'Restructured marketing pages to better reflect the PyColors product ecosystem.',
           'Introduced dedicated sections for UI and Starters to clarify positioning and future offerings.',
-          'Home page refined to focus on product value, use-cases, and SaaS builder workflows.',
-          'Navigation updated to streamline the user journey across Docs, UI, Templates, and Starters.',
         ],
       },
       {
         title: 'Platform readiness',
         items: [
-          'Added Radix dependencies for dialog, dropdown menu, and tabs to support advanced interactions.',
+          'Added Radix dependencies for advanced interactions.',
           'Improved discoverability through clearer information architecture and interactive previews.',
-          'Brand consistency improved with a dynamic logo and simplified layout spacing.',
         ],
       },
     ],
@@ -166,29 +228,26 @@ const CHANGELOG: ChangelogItem[] = [
         title: 'Templates',
         items: [
           'Templates index page: listing of available templates with status and positioning.',
-          'NA-AI template landing: clear value prop, stack, and “early → migration to PyColors UI planned”.',
-          'External links for distribution (Gumroad) + improved discoverability.',
+          'NA-AI template landing: clear value prop + stack + distribution links.',
         ],
       },
       {
         title: 'About page',
         items: [
-          'New About page: motivation, design principles, and direction of PyColors UI.',
+          'New About page: design principles + direction of PyColors UI.',
           'Docs-first philosophy and trust positioning for early adopters.',
         ],
       },
       {
         title: 'Navigation & UI polish',
         items: [
-          'Navigation cleanup: standardized nav data + new links (Templates/About).',
-          'Accessibility improvements: focus handling, keyboard support, ARIA refinements.',
+          'Navigation cleanup + accessibility improvements.',
           'Quick start copy updated for clearer onboarding.',
         ],
       },
     ],
     cta: { label: 'View templates', href: '/templates' },
   },
-
   {
     version: 'v1.0.0',
     title: 'UI Core Foundation',
@@ -197,23 +256,18 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Release Week (Mon 5 → Fri 9 Jan 2026)',
     summary:
-      'Official v1.0 launch of PyColors UI: core components, docs baseline, and release hygiene — a serious, production-ready foundation.',
+      'Official v1.0 launch of PyColors UI: core components, docs baseline, and release hygiene — a production-ready foundation.',
     highlights: [
       {
         title: 'UI Core Components',
         items: [
-          'Button — consistent variants + sizing, loading/disabled states, accessible interactions.',
-          'Input — stable sizing, error/helper states, consistent tokens.',
-          'Badge — semantic variants, neutral + emphasis use-cases.',
-          'Card — structural layout primitive with optional interactive states.',
-          'Alert — purpose-driven messaging, minimal but expressive when needed.',
+          'Button, Input, Badge, Card, Alert — consistent variants, sizing, and accessibility baseline.',
         ],
       },
       {
         title: 'Documentation Baseline',
         items: [
           'Every component ships with Preview / Usage / Code / Props.',
-          'Predictable API surface with consistent conventions across components.',
           'Docs quality contract established for future releases.',
         ],
       },
@@ -222,7 +276,6 @@ const CHANGELOG: ChangelogItem[] = [
         items: [
           'Changelog page + Roadmap page shipped.',
           'Semantic versioning introduced and version bumped to v1.0.0.',
-          'Release notes format standardized for future iterations.',
         ],
       },
     ],
@@ -231,14 +284,17 @@ const CHANGELOG: ChangelogItem[] = [
 ];
 
 function StatusPill({ status }: { status: ChangelogStatus }) {
-  const isStable = status === 'Stable';
+  const tone =
+    status === 'Stable'
+      ? 'bg-success'
+      : status === 'Beta'
+        ? 'bg-warning'
+        : 'bg-muted-foreground';
+
   return (
     <Badge variant="secondary" className="gap-2">
       <span
-        className={cn(
-          'inline-flex h-1.5 w-1.5 rounded-full',
-          isStable ? 'bg-success' : 'bg-warning',
-        )}
+        className={cn('inline-flex h-1.5 w-1.5 rounded-full', tone)}
       />
       {status}
     </Badge>
@@ -262,14 +318,13 @@ function TimelineDot() {
 export default function ChangelogPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <header className="mx-auto w-full max-w-4xl text-center">
             <div className="flex justify-center">
               <Badge variant="secondary" className="gap-2">
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-                Product updates
+                Ecosystem updates
               </Badge>
             </div>
 
@@ -278,8 +333,8 @@ export default function ChangelogPage() {
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Product updates, improvements, and fixes for PyColors
-              UI. Clear versions, stable conventions, and
+              Product updates across PyColors: UI, Starters, and
+              Templates. Clear versions, stable conventions, and
               documentation-first releases.
             </p>
 
@@ -293,10 +348,8 @@ export default function ChangelogPage() {
             </div>
           </header>
 
-          {/* Timeline */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <div className="relative">
-              {/* vertical line */}
               <div
                 className="absolute left-4 top-0 h-full w-px bg-border/70 sm:left-[18px]"
                 aria-hidden="true"
@@ -405,18 +458,18 @@ export default function ChangelogPage() {
                         <div className="rounded-xl border bg-muted/30 p-4">
                           <p className="text-sm text-muted-foreground">
                             <span className="font-medium text-foreground">
-                              Why v1.0?
+                              Strategy
                             </span>{' '}
-                            Stable APIs, consistent conventions, and
-                            complete docs — a serious baseline for
-                            building real products.
+                            Weekly releases build trust. Even when
+                            features are still in progress, we ship
+                            foundations and keep the roadmap explicit.
                           </p>
                         </div>
 
                         <div className="flex flex-col gap-2 sm:flex-row">
                           <Button asChild>
                             <Link href="/docs/ui">
-                              Browse components{' '}
+                              Browse components
                               <ArrowRight
                                 className="ml-2 h-4 w-4"
                                 aria-hidden="true"
@@ -435,14 +488,13 @@ export default function ChangelogPage() {
             </div>
 
             <p className="mt-6 text-center text-xs text-muted-foreground">
-              Note: changelog entries reflect shipped work; internal
+              Note: changelog entries reflect shipped work. Internal
               tasks and refactors may be grouped into a single release
               item.
             </p>
           </section>
         </Container>
       </main>
-
     </div>
   );
 }
