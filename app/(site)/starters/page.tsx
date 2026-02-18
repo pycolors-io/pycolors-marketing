@@ -65,7 +65,6 @@ function SectionHeader({
 export default function StartersPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <div className="mx-auto w-full max-w-5xl">
@@ -121,6 +120,92 @@ export default function StartersPage() {
                 <Pill>Copy/paste velocity</Pill>
               </div>
             </header>
+
+            {/* AVAILABLE NOW */}
+            <section className="py-10 sm:py-12">
+              <SectionHeader
+                title="Available now"
+                description="Start with the free demo to evaluate the UX surface. Upgrade path stays clean."
+                action={
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/starters/free">
+                      View Starter Free
+                    </Link>
+                  </Button>
+                }
+              />
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                <Card className="p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge variant="secondary" className="gap-2">
+                          <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                          Free
+                        </Badge>
+                        <Badge variant="outline">Live demo</Badge>
+                      </div>
+
+                      <div className="text-sm font-medium">
+                        Starter Free (frontend-only)
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        A production-shaped SaaS surface: dashboards,
+                        tables, dialogs, settings, billing
+                        entrypoints, and auth screens — mocked by
+                        design, ready to wire later.
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <Pill>Mock data</Pill>
+                        <Pill>Layouts + states</Pill>
+                        <Pill>Ready to wire</Pill>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0">
+                      <Button asChild size="sm">
+                        <Link href="/starters/free">Open</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="secondary" className="gap-2">
+                        <span className="inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />
+                        Coming soon
+                      </Badge>
+                      <Badge variant="outline">Pro</Badge>
+                    </div>
+
+                    <div className="text-sm font-medium">
+                      Starter Pro (wired foundation)
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Auth + billing fully wired, production data
+                      layer, more blocks, and upgrade-ready packaging.
+                      Early access opens first.
+                    </p>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Pill>Auth wired</Pill>
+                      <Pill>Billing wired</Pill>
+                      <Pill>More blocks</Pill>
+                    </div>
+
+                    <div className="pt-3">
+                      <Button asChild size="sm" variant="outline">
+                        <Link href="/roadmap">View roadmap</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </section>
 
             {/* WHAT'S INCLUDED */}
             <section className="py-8 sm:py-10">
@@ -372,7 +457,6 @@ export default function StartersPage() {
           </div>
         </Container>
       </main>
-
     </div>
   );
 }
