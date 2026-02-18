@@ -3,9 +3,8 @@ import type { Metadata } from 'next';
 import { ExternalLink } from 'lucide-react';
 
 import { Container } from '@/components/container';
+import { UI_VERSION, formatVersion } from '@/lib/version';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
-
-import { APP_MAJOR, formatVersion } from '@/lib/version';
 
 export const metadata: Metadata = {
   title: 'UI',
@@ -149,7 +148,6 @@ const quickLinks = [
 export default function UiPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <div className="mx-auto w-full max-w-5xl">
@@ -158,7 +156,7 @@ export default function UiPage() {
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <Badge variant="secondary" className="gap-2">
                     <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    {APP_MAJOR} · stable baseline
+                    {UI_VERSION} · stable baseline
                   </Badge>
 
                   <Badge variant="outline" className="gap-2">
@@ -413,15 +411,20 @@ export default function UiPage() {
                       </div>
 
                       <div className="px-4 py-4">
-                        <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`git clone https://github.com/pycolors-io/pycolors-ui.git
-cd pycolors-ui
-pnpm install
+                        <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`pnpm add @pycolors/ui @pycolors/tokens
+pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
+
+# styles (Next.js / App Router)
+# in app/globals.css:
+# @import "@pycolors/tokens/tokens.css";
+
 pnpm dev`}</pre>
 
                         <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
                           Then open{' '}
                           <span className="font-mono text-foreground">
-                            http://localhost:3000
+                            Run your app and start copying components
+                            from docs.
                           </span>
                         </div>
                       </div>
@@ -435,7 +438,7 @@ pnpm dev`}</pre>
               <div className="mb-4 flex flex-col gap-2 sm:mb-5 sm:flex-row sm:items-end sm:justify-between">
                 <div className="space-y-1">
                   <h2 className="font-brand text-lg font-semibold tracking-tight">
-                    What’s in {APP_MAJOR}
+                    What’s in {UI_VERSION}
                   </h2>
                   <p className="text-sm text-muted-foreground">
                     Advanced interactions + data UI foundations —
