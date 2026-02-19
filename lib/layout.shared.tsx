@@ -9,11 +9,10 @@ export type PrimaryNavItem = {
 };
 
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
-  { label: 'Starters', href: '/starters' },
-  { label: 'Templates', href: '/templates' },
   { label: 'UI', href: '/ui' },
+  { label: 'Templates', href: '/templates' },
+  { label: 'Starters', href: '/starters' },
   { label: 'Documentation', href: '/docs' },
-  { label: 'Roadmap', href: '/roadmap' },
 ];
 
 /**
