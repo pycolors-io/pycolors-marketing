@@ -72,67 +72,68 @@ const highlights = [
       'Preview → Usage → Code → Props + practical guides for forms and async UI states.',
   },
 ];
+const STATUS = formatVersion(UI_VERSION);
 
 const components = [
   {
     name: 'Dialog',
     desc: 'Accessible modal primitives built on Radix UI.',
     href: '/docs/ui/dialog',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Sheet',
     desc: 'Slide-over panels for filters, actions, and contextual UI.',
     href: '/docs/ui/sheet',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Dropdown Menu',
     desc: 'Groups, submenus, checkboxes/radios, shortcuts.',
     href: '/docs/ui/dropdown-menu',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Tabs',
     desc: 'Segmented navigation with size variants and theming.',
     href: '/docs/ui/tabs',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Toast',
     desc: 'Minimal, accessible notifications with variants.',
     href: '/docs/ui/toast',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Table',
     desc: 'Composable data table primitives + empty/loading states.',
     href: '/docs/ui/table',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Pagination',
     desc: 'Stateless pagination UI primitives (UI-only).',
     href: '/docs/ui/pagination',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Skeleton',
     desc: 'Loading placeholders that preserve layout.',
     href: '/docs/ui/skeleton',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Empty State',
     desc: 'Clear empty UI with optional actions and guidance.',
     href: '/docs/ui/empty-state',
-    status: 'v1.1',
+    status: STATUS,
   },
   {
     name: 'Password Input',
     desc: 'Accessible show/hide toggle for auth flows.',
     href: '/docs/ui/password-input',
-    status: 'v1.1',
+    status: STATUS,
   },
 ];
 
@@ -143,9 +144,15 @@ const quickLinks = [
   { label: 'Roadmap', href: '/roadmap' },
   { label: 'Templates', href: '/templates' },
   { label: 'License', href: '/license' },
+  { label: 'Open source', href: '/open-source' },
 ];
 
 export default function UiPage() {
+  const versionLabel =
+    typeof formatVersion === 'function'
+      ? formatVersion()
+      : UI_VERSION;
+
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
       <main className="flex-1 bg-background text-foreground">
@@ -156,7 +163,7 @@ export default function UiPage() {
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <Badge variant="secondary" className="gap-2">
                     <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    {UI_VERSION} · stable baseline
+                    {versionLabel} · stable baseline
                   </Badge>
 
                   <Badge variant="outline" className="gap-2">
@@ -214,12 +221,22 @@ export default function UiPage() {
                   <Button asChild variant="secondary">
                     <Link href="/templates">Browse templates</Link>
                   </Button>
+
+                  <Link
+                    href="/open-source"
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                      focusRing,
+                    )}
+                  >
+                    Open source
+                  </Link>
                 </div>
 
                 <div className="mt-2 grid w-full max-w-3xl gap-3 sm:grid-cols-3">
                   <Stat
                     label="Current version"
-                    value={formatVersion()}
+                    value={versionLabel}
                   />
                   <Stat
                     label="Docs format"
@@ -347,19 +364,20 @@ export default function UiPage() {
                       Quick start
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Clone the repo, run docs locally, and start
-                      copying components.
+                      Install the packages, import tokens, then copy
+                      components from the docs. Keep it fast.
                     </p>
 
                     <p className="text-xs text-muted-foreground">
-                      Fast path: open docs → copy a component → ship a
-                      screen.
+                      Fast path: install → open docs → copy/paste a
+                      component → ship a screen.
                     </p>
 
                     <div className="flex flex-wrap gap-2 pt-1">
                       <TrustPill label="Node 18+" />
                       <TrustPill label="PNPM recommended" />
-                      <TrustPill label="Docs-first workflow" />
+                      <TrustPill label="Tokens-first" />
+                      <TrustPill label="Copy/paste workflow" />
                     </div>
 
                     <div className="pt-2">
@@ -402,7 +420,7 @@ export default function UiPage() {
                             focusRing,
                           )}
                         >
-                          GitHub
+                          Repo
                           <ExternalLink
                             className="h-3.5 w-3.5"
                             aria-hidden="true"
@@ -412,20 +430,19 @@ export default function UiPage() {
 
                       <div className="px-4 py-4">
                         <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`pnpm add @pycolors/ui @pycolors/tokens
-pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
 
-# styles (Next.js / App Router)
-# in app/globals.css:
-# @import "@pycolors/tokens/tokens.css";
+# Next.js (App Router)
+# app/globals.css
+@import "@pycolors/tokens/tokens.css";
 
 pnpm dev`}</pre>
 
                         <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
                           Then open{' '}
                           <span className="font-mono text-foreground">
-                            Run your app and start copying components
-                            from docs.
-                          </span>
+                            /docs/ui
+                          </span>{' '}
+                          and copy a component.
                         </div>
                       </div>
                     </div>
@@ -517,7 +534,7 @@ pnpm dev`}</pre>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <TrustPill label="Public roadmap" />
                       <TrustPill label="Changelog updates" />
-                      <TrustPill label="Open-source repo" />
+                      <TrustPill label="Docs-first" />
                     </div>
                   </div>
 
@@ -528,17 +545,6 @@ pnpm dev`}</pre>
 
                     <Button asChild variant="outline">
                       <Link href="/templates">Templates</Link>
-                    </Button>
-
-                    <Button asChild variant="secondary">
-                      <a
-                        href="https://github.com/pycolors-io/pycolors-ui"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        aria-label="Open the PyColors UI repository on GitHub"
-                      >
-                        View repository
-                      </a>
                     </Button>
                   </div>
                 </div>
