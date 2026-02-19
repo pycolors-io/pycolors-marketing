@@ -7,19 +7,19 @@ import { Badge, Card, cn, Button } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'Roadmap',
   description:
-    'Public roadmap for PyColors UI. A realistic, release-driven plan focused on shipping, documentation quality, and commercial readiness.',
+    'Public roadmap for the PyColors ecosystem: UI, Starters, and Templates. A release-driven plan focused on shipping, trust, and commercial readiness.',
   openGraph: {
-    title: 'Roadmap · PyColors UI',
+    title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap focused on shipping: core UI, docs baseline, stability patches, and monetization-ready steps.',
+      'A release-driven roadmap for PyColors: UI, Starters, and Templates. Shipping-first, docs-first, and monetization readiness.',
     url: '/roadmap',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Roadmap · PyColors UI',
+    title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap focused on shipping and commercial readiness.',
+      'A release-driven roadmap for PyColors: UI, Starters, and Templates.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -61,19 +61,19 @@ const milestones: Array<{
     id: 'Jan 2026',
     title: 'January 2026 (post-release)',
     subtitle:
-      'Stabilize, fix gaps, improve docs quality, and prepare distribution pages.',
+      'Stabilize, improve docs quality, and build the distribution loop.',
   },
   {
     id: 'Feb 2026',
     title: 'February 2026',
     subtitle:
-      'Advance UI components + patterns that unlock dashboard-grade product UIs.',
+      'Ship Starter (Free) public alpha + strengthen trust surface (SEO, analytics, licensing).',
   },
   {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Blocks + first templates. Start monetization loop with predictable releases.',
+      'Blocks + first premium templates. Start monetization loop with predictable releases.',
   },
 ];
 
@@ -189,11 +189,37 @@ const items: RoadmapItem[] = [
     tags: ['Quality', 'Consistency'],
   },
   {
+    title: 'Public packages (Tokens + ESLint)',
+    description:
+      'Published @pycolors/tokens and @pycolors/eslint-config on npm. Ecosystem-level consistency: UI + Tokens + Linting aligned under a single architecture.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Ecosystem', 'NPM', 'DX', 'Trust'],
+  },
+  {
+    title: 'Monorepo → Mirrors sync engine',
+    description:
+      'Hardened subtree strategy: monorepo as source of truth, public repos as distribution mirrors with automated PR sync.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Architecture', 'CI/CD', 'Release'],
+  },
+  {
+    title: 'Weekly release protocol',
+    description:
+      'Formalized weekly marketing releases aligned with versioning and public roadmap updates.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Release', 'Trust', 'Brand'],
+  },
+
+  // NOW
+  {
     title: 'Search & analytics baseline',
     description:
       'Finish GA4/GTM wiring, validate key events, and set up Search Console indexing checks for faster discoverability.',
     status: 'Now',
-    milestone: 'Jan 2026',
+    milestone: 'Feb 2026',
     tags: ['SEO', 'Analytics', 'Trust'],
   },
   {
@@ -201,13 +227,41 @@ const items: RoadmapItem[] = [
     description:
       'Logo v1, domain hygiene, and lightweight legal pages (license, privacy, terms) to support trust and early sales.',
     status: 'Now',
-    milestone: 'Jan 2026',
+    milestone: 'Feb 2026',
     tags: ['Brand', 'Trust', 'Legal'],
+  },
+
+  {
+    title: 'SaaS Starter (Free) — public alpha',
+    description:
+      'Publish the free starter with a minimal but production-grade baseline: auth-ready architecture, UI foundations, DX conventions, and clear docs.',
+    status: 'Next',
+    milestone: 'Feb 2026',
+    tags: ['Starters', 'DX', 'Launch', 'Trust'],
+    href: '/starters',
+  },
+  {
+    title: 'Starter waitlist + early access loop',
+    description:
+      'Add a lightweight waitlist + early access flow to capture demand and build an audience before the Pro version.',
+    status: 'Next',
+    milestone: 'Feb 2026',
+    tags: ['Growth', 'Audience', 'Launch'],
+    href: '/starters',
+  },
+  {
+    title: 'Starter docs v1 (getting started + architecture)',
+    description:
+      'Documentation for installation, folder structure, conventions, and extension points. The starter must be self-explanatory.',
+    status: 'Next',
+    milestone: 'Feb 2026',
+    tags: ['Docs', 'Starters', 'DX'],
+    href: '/docs',
   },
   {
     title: 'Monetization readiness v1',
     description:
-      'Pricing + license clarity, packaging checklist, demo stability, and a minimal purchase funnel (Gumroad) aligned with weekly releases.',
+      'Pricing + license clarity, packaging checklist, demo stability, and a minimal purchase funnel aligned with weekly releases.',
     status: 'Next',
     milestone: 'Feb 2026',
     tags: ['Sales', 'Trust', 'Packaging'],
@@ -256,7 +310,7 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-sm font-medium">{item.title}</div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             {item.description}
           </p>
         </div>
@@ -307,7 +361,6 @@ export default function RoadmapPage() {
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <header className="mx-auto w-full max-w-4xl text-center">
@@ -325,9 +378,8 @@ export default function RoadmapPage() {
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
               A realistic plan focused on shipping. This roadmap is
               aligned with the v1.0 release week (Fri 9 Jan 2026) and
-              outlines the next steps to grow PyColors UI into a
-              stable, production-ready foundation for the broader
-              PyColors ecosystem.
+              outlines the next steps to grow PyColors into a stable
+              ecosystem: UI, Starters, and Templates.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -361,9 +413,10 @@ export default function RoadmapPage() {
                 <div className="text-sm font-medium">
                   Single thing
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Ship PyColors UI Kit Pro v1.0 and iterate weekly
-                  with measurable releases.
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Ship the PyColors ecosystem funnel: UI → Starter
+                  (Free) → Starter Pro → Templates. Weekly releases,
+                  measurable improvements, and a public roadmap.
                 </p>
               </Card>
 
@@ -371,9 +424,9 @@ export default function RoadmapPage() {
                 <div className="text-sm font-medium">
                   Documentation-first
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Every component ships with Preview, Usage, Code, and
-                  Props.
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Every component and starter ships with Preview,
+                  Usage, Code, and clear conventions.
                 </p>
               </Card>
 
@@ -381,9 +434,9 @@ export default function RoadmapPage() {
                 <div className="text-sm font-medium">
                   Commercial readiness
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Trust pages, licensing, demos, packaging, and a
-                  predictable update cadence.
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Trust pages, licensing, demos, packaging, analytics,
+                  and a predictable update cadence.
                 </p>
               </Card>
             </div>
@@ -464,7 +517,6 @@ export default function RoadmapPage() {
           </section>
         </Container>
       </main>
-
     </div>
   );
 }

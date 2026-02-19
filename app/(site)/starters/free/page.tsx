@@ -2,18 +2,29 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ExternalLink } from 'lucide-react';
 
-import { Badge, Button, Card, cn } from '@pycolors/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  cn,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@pycolors/ui';
 import { Container } from '@/components/container';
 
 export const metadata: Metadata = {
   title: 'Starter Free',
   description:
-    'A production-shaped SaaS starter (FREE): real app screens, layouts, states, and UX patterns — ready to wire to your backend.',
+    'Launch your SaaS in days, not months. Starter Free ships a production-shaped SaaS surface: dashboard, data screens, settings, billing entrypoints, and auth UX — mocked by design, ready to wire.',
   alternates: { canonical: '/starters/free' },
   openGraph: {
     title: 'Starter Free · PyColors',
     description:
-      'A production-shaped SaaS starter (FREE): real app screens, layouts, states, and UX patterns — ready to wire.',
+      'Launch your SaaS in days, not months. A production-shaped Next.js starter with real screens and UX contracts — mocked by design, ready to wire.',
     url: '/starters/free',
     images: ['/seo/og-main.png'],
   },
@@ -21,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Starter Free · PyColors',
     description:
-      'A production-shaped SaaS starter (FREE): real app screens, layouts, states, and UX patterns — ready to wire.',
+      'Launch your SaaS in days, not months. A production-shaped Next.js starter with real screens and UX contracts — mocked by design, ready to wire.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -32,8 +43,12 @@ const focusRing =
 const EXTERNAL = {
   demo: 'https://starter-demo.pycolors.io',
   repo: 'https://github.com/pycolors-io/pycolors-starter-free',
-  docs: '/docs',
-  starters: '/starters',
+  docs: 'https://pycolors.io/docs/saas-starter',
+} as const;
+
+const INTERNAL = {
+  starters: 'https://pycolors.io/starters',
+  ui: 'https://pycolors.io/ui',
 } as const;
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -51,6 +66,7 @@ function TrustPill({ label }: { label: string }) {
     </span>
   );
 }
+
 function SectionHeader({
   title,
   description,
@@ -77,29 +93,66 @@ function SectionHeader({
   );
 }
 
-function FeatureCard({
+function ProductFeatureCard({
   title,
-  description,
+  subtitle,
+  points,
+  why,
+  href,
   badge,
 }: {
   title: string;
-  description: string;
+  subtitle: string;
+  points: string[];
+  why: string;
+  href: string;
   badge?: string;
 }) {
   return (
     <Card className="p-5">
       <div className="flex items-start justify-between gap-3">
-        <div className="space-y-2">
-          <div className="text-sm font-medium">{title}</div>
+        <div className="min-w-0 space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="text-sm font-medium">{title}</div>
+            {badge ? (
+              <Badge variant="outline" className="text-xs">
+                {badge}
+              </Badge>
+            ) : null}
+          </div>
+
           <p className="text-sm text-muted-foreground leading-relaxed">
-            {description}
+            {subtitle}
           </p>
+
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            {points.map((p) => (
+              <li key={p}>• {p}</li>
+            ))}
+          </ul>
+
+          <p className="mt-3 text-xs text-muted-foreground">
+            <span className="text-foreground">Why it matters:</span>{' '}
+            {why}
+          </p>
+
+          <div className="pt-2">
+            <Button asChild size="sm" variant="outline">
+              <a
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={`Open ${title} in the live demo`}
+              >
+                View in demo
+                <ExternalLink
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </a>
+            </Button>
+          </div>
         </div>
-        {badge ? (
-          <Badge variant="secondary" className="shrink-0">
-            {badge}
-          </Badge>
-        ) : null}
       </div>
     </Card>
   );
@@ -121,7 +174,7 @@ export default function StarterFreePage() {
                 <Badge variant="outline">Production-shaped</Badge>
 
                 <Link
-                  href={EXTERNAL.starters}
+                  href={INTERNAL.starters}
                   className={cn(
                     'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
                     focusRing,
@@ -133,27 +186,50 @@ export default function StarterFreePage() {
 
               <div className="space-y-4">
                 <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  Starter Free
+                  A production-shaped SaaS starter
                   <span className="block font-bold">
-                    that feels like a real SaaS.
+                    you can run in minutes.
                   </span>
                 </h1>
 
                 <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  This isn’t a blank template. It’s a credible app
-                  surface: navigation, tables, dialogs, empty/loading
-                  states, settings, billing entrypoints, and auth
-                  screens — ready to wire to your backend later.
+                  Starter Free gives you a credible SaaS surface out
+                  of the box: auth UX, dashboard, data screens,
+                  settings, billing entrypoints, and B2B member
+                  management — mocked by design and ready to wire when
+                  you are.
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3">
                 <Button asChild>
-                  <Link href={EXTERNAL.demo}>Open live demo</Link>
+                  <a
+                    href={EXTERNAL.demo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="Open the Starter Free live demo"
+                  >
+                    Open live demo
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </Button>
 
                 <Button asChild variant="secondary">
-                  <Link href={EXTERNAL.repo}>Get the repo</Link>
+                  <a
+                    href={EXTERNAL.repo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="Open the Starter Free repository on GitHub"
+                  >
+                    Get the repo (FREE)
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </Button>
 
                 <Button asChild variant="outline">
@@ -166,56 +242,168 @@ export default function StarterFreePage() {
                 <Pill>Tailwind v4</Pill>
                 <Pill>PyColors UI</Pill>
                 <Pill>Mock data · No backend</Pill>
-                <Pill>Layouts + states</Pill>
+                <Pill>Real screens + UX contracts</Pill>
               </div>
             </header>
 
-            {/* WHAT YOU GET */}
+            {/* BUILT ON PYCOLORS UI */}
             <section className="py-10 sm:py-12">
+              <Card className="p-6 sm:p-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="secondary">Design system</Badge>
+                      <Badge variant="outline">Open source</Badge>
+                    </div>
+
+                    <h2 className="font-brand text-lg font-semibold tracking-tight">
+                      Built on PyColors UI
+                    </h2>
+
+                    <p className="max-w-xl text-sm text-muted-foreground">
+                      The starter ships with the same UI primitives
+                      used across the PyColors ecosystem — accessible,
+                      Radix-based components with semantic tokens and
+                      production-ready states.
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <TrustPill label="Radix primitives" />
+                      <TrustPill label="Semantic tokens" />
+                      <TrustPill label="Accessible by default" />
+                      <TrustPill label="Production states" />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 sm:min-w-55 sm:items-end">
+                    <Button asChild variant="outline">
+                      <Link href={INTERNAL.ui}>
+                        Explore UI system
+                      </Link>
+                    </Button>
+
+                    <p className="text-xs text-muted-foreground">
+                      Used by the starter, templates, and future Pro
+                      kits.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </section>
+
+            {/* WHAT YOU GET (productized) */}
+            <section id="included" className="py-10 sm:py-12">
               <SectionHeader
-                title="What you get (Free)"
-                description="A focused baseline to ship real screens fast — without committing to a backend yet."
+                title="What you get"
+                description="Not a list of tech. A product surface you can ship from — then wire later."
+                action={
+                  <Button asChild size="sm" variant="outline">
+                    <a
+                      href={EXTERNAL.demo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label="Open the live demo"
+                    >
+                      Open demo
+                      <ExternalLink
+                        className="ml-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
+                }
               />
 
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <FeatureCard
-                  title="Dashboard foundation"
-                  description="KPI cards, quick actions, stable layout primitives and navigation structure."
-                  badge="App"
+              <div className="grid gap-4 lg:grid-cols-2">
+                <ProductFeatureCard
+                  title="/login + /register + /forgot"
+                  badge="Auth UX"
+                  subtitle="The mandatory entry point for any SaaS — with clean states and no extra noise."
+                  points={[
+                    'Email + password',
+                    'OAuth (Google placeholder)',
+                    'Forgot password flow',
+                    'States: loading / error / success',
+                  ]}
+                  why="Without auth, it’s not a SaaS. This gives you the UX contract you’ll wire to your provider later."
+                  href={`${EXTERNAL.demo}/login`}
                 />
-                <FeatureCard
-                  title="Data UI patterns"
-                  description="Tables with loading/empty states, row actions, safe destructive flows."
-                  badge="UX"
+
+                <ProductFeatureCard
+                  title="/dashboard"
+                  badge="First impression"
+                  subtitle="Immediate product credibility — the screen that proves it’s real-world."
+                  points={[
+                    'Header (user + org)',
+                    'KPI placeholders',
+                    'Primary call to action',
+                    'Intelligent empty state',
+                  ]}
+                  why="This is where users decide if your product feels legit. The layout and states do the work."
+                  href={`${EXTERNAL.demo}/dashboard`}
                 />
-                <FeatureCard
-                  title="Settings surface"
-                  description="Tabs + forms (disabled/coming next), clear hierarchy, danger zone patterns."
-                  badge="Product"
+
+                <ProductFeatureCard
+                  title="/projects"
+                  badge="Core entity"
+                  subtitle="A placeholder business entity with full CRUD UI surface."
+                  points={[
+                    'Table list',
+                    'Create / edit / delete',
+                    'Empty state: “Create your first…”',
+                    'Simple permissions surface',
+                  ]}
+                  why="Every SaaS has a central entity. You can rename it later — the pattern stays."
+                  href={`${EXTERNAL.demo}/projects`}
                 />
-                <FeatureCard
-                  title="Admin patterns"
-                  description="Members + invitations UI surface: resend/cancel actions, role badges, B2B tone."
-                  badge="B2B"
+
+                <ProductFeatureCard
+                  title="/settings"
+                  badge="Maturity"
+                  subtitle="The section that turns a demo into a product — structure included."
+                  points={[
+                    'Tabs: Profile / Organization / Security',
+                    'Password & sessions placeholders',
+                    'Danger zone surface',
+                  ]}
+                  why="A SaaS without settings feels fake. This sells maturity instantly."
+                  href={`${EXTERNAL.demo}/settings`}
                 />
-                <FeatureCard
-                  title="Billing entrypoints"
-                  description="Plan overview + invoices table + portal entrypoint (mocked, ready to wire)."
-                  badge="Monetize"
+
+                <ProductFeatureCard
+                  title="/billing"
+                  badge="Monetization"
+                  subtitle="Billing entrypoints and subscription surface — mocked, but designed to wire to Stripe."
+                  points={[
+                    'Current plan surface',
+                    'Upgrade / downgrade actions',
+                    'Portal entrypoint (mock)',
+                    'Subscription status placeholders',
+                  ]}
+                  why="Billing is non-negotiable for SaaS. You get the UI surface now, wiring later."
+                  href={`${EXTERNAL.demo}/billing`}
                 />
-                <FeatureCard
-                  title="Auth screens"
-                  description="Login/register/forgot screens and UX contracts — provider wiring left to you."
-                  badge="UI"
+
+                <ProductFeatureCard
+                  title="/admin (members)"
+                  badge="B2B-ready"
+                  subtitle="Team management UI surface for multi-user orgs."
+                  points={[
+                    'Member management table',
+                    'Roles: owner / member',
+                    'Invitations surface',
+                  ]}
+                  why="B2B readiness is a differentiator. This proves you’re not shipping a toy."
+                  href={`${EXTERNAL.demo}/admin`}
                 />
               </div>
             </section>
 
-            {/* WHAT'S MOCKED */}
+            {/* MOCKED ON PURPOSE */}
             <section className="py-10 sm:py-12">
               <SectionHeader
-                title="What’s mocked (by design)"
-                description="Free is intentionally frontend-only — so you can evaluate UX surface first."
+                title="Mocked on purpose"
+                description="Starter Free is frontend-only so you can evaluate UX and structure first."
               />
 
               <div className="grid gap-4 lg:grid-cols-2">
@@ -225,8 +413,8 @@ export default function StarterFreePage() {
                       No backend required
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Data is mocked so you can explore flows, states,
-                      and layout composition without infrastructure.
+                      Data is mocked so you can explore flows,
+                      layouts, and states without infrastructure.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Pill>Mock data</Pill>
@@ -239,80 +427,192 @@ export default function StarterFreePage() {
                 <Card className="p-6">
                   <div className="space-y-2">
                     <div className="text-sm font-medium">
-                      Auth & billing not wired
+                      Wire later without rewrites
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Screens and UX contracts are included. You plug
-                      in NextAuth/Clerk/Supabase and Stripe when
-                      ready.
+                      Keep screens and UX contracts. Swap the
+                      data/auth/billing layers progressively when
+                      you’re ready.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Pill>Provider-ready</Pill>
                       <Pill>Stripe-ready</Pill>
-                      <Pill>Wire later</Pill>
+                      <Pill>Backend-agnostic</Pill>
                     </div>
                   </div>
                 </Card>
               </div>
             </section>
 
-            {/* WIRING PATH */}
+            {/* UPGRADE TO PRO */}
             <section className="py-10 sm:py-12">
               <SectionHeader
-                title="How to move from demo → production"
-                description="A clean upgrade path: keep the UI surface, swap the data and auth layers."
+                title="Upgrade to Pro when you scale"
+                description="Free gets you shipping faster. Pro (planned) wires the foundation for production."
+                action={
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/roadmap">View roadmap</Link>
+                  </Button>
+                }
               />
 
-              <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="p-5">
+              <Card className="p-6 sm:p-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 01
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="secondary">FREE</Badge>
+                      <Badge variant="outline">PRO (planned)</Badge>
                     </div>
-                    <div className="text-sm font-medium">
-                      Keep screens & states
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Don’t rewrite UI. Replace mock sources with real
-                      API calls progressively.
-                    </p>
-                  </div>
-                </Card>
 
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 02
-                    </div>
-                    <div className="text-sm font-medium">
-                      Wire auth provider
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Add your auth (NextAuth/Clerk/Supabase). Map
-                      existing routes to protected layouts.
+                    <p className="text-sm text-muted-foreground">
+                      Start with the product surface today, then
+                      upgrade when you want it wired and
+                      production-ready.
                     </p>
-                  </div>
-                </Card>
 
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 03
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <TrustPill label="No lock-in" />
+                      <TrustPill label="Progressive adoption" />
+                      <TrustPill label="Upgrade-ready" />
                     </div>
-                    <div className="text-sm font-medium">
-                      Add billing
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Replace the billing mocks with Stripe checkout +
-                      portal flows when you’re ready to monetize.
-                    </p>
                   </div>
-                </Card>
-              </div>
+
+                  <div className="flex flex-wrap gap-2 sm:items-end">
+                    <Button asChild variant="secondary">
+                      <a
+                        href={EXTERNAL.demo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Open demo
+                        <ExternalLink
+                          className="ml-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link href="/starters">Explore Starters</Link>
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[42%]">
+                          Capability
+                        </TableHead>
+                        <TableHead className="w-[29%]">
+                          FREE (today)
+                        </TableHead>
+                        <TableHead className="w-[29%]">
+                          PRO (planned)
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Authentication
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Auth screens + UX states (mocked)
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Auth wired (Clerk/NextAuth/Supabase)
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Billing
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Billing entrypoints (mocked)
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Stripe Checkout + Portal wired
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Organizations
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Single-org UI surface
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Multi-org + org switcher
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Roles & permissions
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Basic roles UI
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          RBAC + advanced permissions
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Data layer
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Mock sources
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Production data layer + API contracts
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          Packaging
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Demo-ready baseline
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Production-ready upgrades + guidance
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          UI components
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          <Link
+                            href={INTERNAL.ui}
+                            className="underline"
+                          >
+                            Core PyColors UI primitives
+                          </Link>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">
+                          Advanced components
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Pro isn’t public yet — roadmap is the source of
+                    truth.
+                  </p>
+                </div>
+              </Card>
             </section>
 
-            {/* QUICKSTART */}
-
+            {/* QUICK START (consistent terminal box) */}
             <section className="py-8 sm:py-10">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -321,8 +621,8 @@ export default function StarterFreePage() {
                       Quick start
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Clone the starter, run it locally, and explore
-                      real SaaS screens immediately.
+                      Clone the repo, run the starter locally, and
+                      explore real SaaS screens immediately.
                     </p>
 
                     <p className="text-xs text-muted-foreground">
@@ -334,6 +634,36 @@ export default function StarterFreePage() {
                       <TrustPill label="Next.js App Router" />
                       <TrustPill label="PNPM" />
                       <TrustPill label="Mock data (no backend)" />
+                    </div>
+
+                    <div className="pt-2 flex flex-wrap gap-2">
+                      <Button asChild size="sm" variant="outline">
+                        <a
+                          href={EXTERNAL.repo}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          Open repository
+                          <ExternalLink
+                            className="ml-2 h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      </Button>
+
+                      <Button asChild size="sm" variant="secondary">
+                        <a
+                          href={EXTERNAL.demo}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          Open live demo
+                          <ExternalLink
+                            className="ml-2 h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      </Button>
                     </div>
                   </div>
 
@@ -362,7 +692,7 @@ export default function StarterFreePage() {
                           href={EXTERNAL.repo}
                           target="_blank"
                           rel="noreferrer noopener"
-                          aria-label="Open the PyColors Starter Free repository on GitHub"
+                          aria-label="Open the Starter Free repository on GitHub"
                           className={cn(
                             'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
                             focusRing,
@@ -396,39 +726,63 @@ pnpm dev`}</pre>
             </section>
 
             {/* FINAL CTA */}
-            <section className="mx-auto mt-6 w-full max-w-5xl">
+            <section className="mx-auto mt-8 w-full max-w-5xl">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-1">
                     <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Ready to build on top of it?
+                      Start shipping faster today.
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Start with the demo. Wire backend/auth/billing
-                      when you’re ready.
+                      Open the demo, clone the repo, and build on a
+                      credible SaaS surface — then wire your
+                      production foundation when ready.
                     </p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>Product-like UX</Pill>
-                      <Pill>Stable layouts</Pill>
-                      <Pill>Fast to adapt</Pill>
+                      <Pill>Real screens</Pill>
+                      <Pill>Clear states</Pill>
+                      <Pill>Upgrade path</Pill>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     <Button asChild>
-                      <Link href={EXTERNAL.demo}>Open demo</Link>
+                      <a
+                        href={EXTERNAL.demo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Open demo
+                        <ExternalLink
+                          className="ml-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                      </a>
                     </Button>
-                    <Button asChild variant="outline">
-                      <Link href={EXTERNAL.repo}>Get the repo</Link>
+                    <Button asChild variant="secondary">
+                      <a
+                        href={EXTERNAL.repo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Get the repo (FREE)
+                        <ExternalLink
+                          className="ml-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                      </a>
                     </Button>
                   </div>
                 </div>
               </Card>
 
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                Free today. Pro version planned (auth + billing wired
-                + more blocks).
+                Docs for the Starter will live under{' '}
+                <span className="font-mono text-foreground">
+                  /docs/saas-starter
+                </span>{' '}
+                (planned).
               </p>
             </section>
           </div>

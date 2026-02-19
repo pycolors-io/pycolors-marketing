@@ -125,24 +125,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             />
           </div>
 
-          <a
-            href="https://github.com/pycolors-io/pycolors-ui"
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label="Open the PyColors UI repository on GitHub"
-            className={cn(
-              'hidden h-9 items-center gap-1.5 rounded-md border border-border px-3 text-xs font-semibold',
-              'transition-colors hover:bg-accent hover:text-accent-foreground md:inline-flex',
-              focusRing,
-            )}
-          >
-            GitHub
-            <ExternalLink
-              className="h-3.5 w-3.5"
-              aria-hidden="true"
-            />
-          </a>
-
           <button
             ref={openBtnRef}
             type="button"
@@ -249,21 +231,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 )}
               />
             </div>
-
-            <a
-              href="https://github.com/pycolors-io/pycolors-ui"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Open the PyColors UI repository on GitHub"
-              className={cn(
-                'inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border text-sm font-semibold',
-                'transition-colors hover:bg-accent hover:text-accent-foreground',
-                focusRing,
-              )}
-            >
-              GitHub
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            </a>
           </div>
         </Container>
       ) : null}
