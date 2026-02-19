@@ -14,11 +14,12 @@ import { Badge, Button, Card, cn } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'The story behind PyColors.io — an ecosystem built to ship, powered by PyColors UI as the minimal docs-first foundation.',
+    'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
+  alternates: { canonical: '/about' },
   openGraph: {
     title: 'About · PyColors',
     description:
-      'The story behind PyColors.io — an ecosystem built to ship, powered by PyColors UI as the minimal docs-first foundation.',
+      'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
     url: '/about',
     images: ['/seo/og-main.png'],
   },
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About · PyColors',
     description:
-      'The story behind PyColors.io — an ecosystem built to ship, powered by PyColors UI as the minimal docs-first foundation.',
+      'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -50,10 +51,17 @@ function BulletList({ items }: { items: string[] }) {
   );
 }
 
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+      {children}
+    </span>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
-
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <header className="mx-auto w-full max-w-4xl text-center">
@@ -69,10 +77,11 @@ export default function AboutPage() {
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Not “pretty demos”. Not “component dumps”. PyColors is a
-              product ecosystem designed to help you ship real web
-              products — with a minimal, documentation-first UI
-              foundation that stays consistent as you scale.
+              PyColors is not a “component dump” or a “pretty demo”.
+              It’s an ecosystem designed to help you ship real SaaS
+              with fewer decisions: a minimal UI foundation, templates
+              that stay consistent, and starter-ready product
+              patterns.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -99,6 +108,27 @@ export default function AboutPage() {
                   />
                 </Link>
               </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                className={cn(focusRing)}
+              >
+                <Link href="/open-source">
+                  Open source{' '}
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              <Pill>Docs-first</Pill>
+              <Pill>Tokens-first UI</Pill>
+              <Pill>Production patterns</Pill>
+              <Pill>Weekly shipping</Pill>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-balance text-xs text-muted-foreground">
@@ -118,41 +148,40 @@ export default function AboutPage() {
             </p>
           </header>
 
+          {/* THE WHY */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="space-y-3">
                 <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  The reason PyColors exists
+                  Why PyColors exists
                 </h2>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  I’ve built and maintained UI codebases where the
-                  hard part wasn’t writing a new component — it was
-                  keeping everything consistent six months later. The
-                  problems were always the same: variants drifting,
-                  spacing becoming arbitrary, tokens being “kind of”
-                  used, and docs being outdated the minute you ship.
+                  I’ve maintained UI codebases where the hard part
+                  wasn’t building a new component — it was keeping the
+                  system coherent six months later. Variants drift,
+                  spacing becomes arbitrary, tokens are “kind of”
+                  used, and docs become outdated right after release.
                 </p>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  PyColors is my answer to that — an ecosystem where
-                  the foundation is strong enough to support products.
-                  PyColors UI is the minimal, docs-first system that
-                  powers everything else: Starters and Templates.
+                  PyColors is my answer: a docs-first foundation that
+                  stays predictable, so templates and starters can be
+                  shipped without breaking consistency.
                 </p>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   <span className="font-medium text-foreground">
                     PyColors UI is the foundation.
                   </span>{' '}
-                  Starters and Templates are the products built on
+                  Templates and Starters are the products built on
                   top.
                 </p>
               </div>
 
               <BulletList
                 items={[
-                  'Docs-first: Preview → Usage → Code → Props, always.',
+                  'Docs-first: Preview → Usage → Code → Props (always).',
                   'Semantic tokens so themes stay coherent as you grow.',
                   'Radix primitives for accessibility and composability.',
                   'Minimal API surface area: fewer options, stronger defaults.',
@@ -161,6 +190,7 @@ export default function AboutPage() {
             </Card>
           </section>
 
+          {/* PRINCIPLES */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <div className="grid gap-4 sm:grid-cols-3">
               <Card className="p-5">
@@ -169,8 +199,8 @@ export default function AboutPage() {
                   Documentation-first
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  The docs are designed for speed: copy, paste, and
-                  adapt — without guessing how a component behaves.
+                  The docs are designed for speed: preview, copy, and
+                  ship — without guessing behaviors.
                 </p>
               </Card>
 
@@ -183,9 +213,8 @@ export default function AboutPage() {
                   Production constraints
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Consistent tokens, accessible defaults, predictable
-                  variants — built for SaaS, dashboards, and real
-                  shipping cycles.
+                  Accessible defaults, consistent tokens, predictable
+                  variants — built for SaaS and real cycles.
                 </p>
               </Card>
 
@@ -195,15 +224,14 @@ export default function AboutPage() {
                   Quality over noise
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Fewer components, better finished. Shipping is
-                  release-driven, and improvements are tracked
-                  publicly.
+                  Fewer components, better finished. A stable baseline
+                  you can build on for years.
                 </p>
               </Card>
             </div>
           </section>
 
-          {/* WHAT YOU CAN EXPECT */}
+          {/* NOW / NEXT */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="space-y-3">
@@ -213,10 +241,9 @@ export default function AboutPage() {
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   PyColors is built in public and shipped
-                  progressively. The goal is not to promise
-                  “everything”. The goal is to ship a foundation you
-                  can trust — then build up to blocks, templates, and
-                  starters without breaking the core.
+                  progressively. The goal is not “everything”. The
+                  goal is a foundation you can trust — then grow into
+                  templates and starters without breaking the core.
                 </p>
               </div>
 
@@ -227,9 +254,9 @@ export default function AboutPage() {
                     Now
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Stabilize v1.1.x, tighten docs quality, and expand
-                    product patterns so the ecosystem remains
-                    consistent and predictable.
+                    Stabilize the UI baseline, tighten documentation,
+                    and expand product patterns that make SaaS screens
+                    feel “real” out of the box.
                   </p>
                   <div className="mt-4">
                     <Button
@@ -251,12 +278,12 @@ export default function AboutPage() {
                 <Card className="p-5">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <Target className="h-4 w-4" aria-hidden="true" />
-                    Mid-term
+                    Next
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Grow into a sellable ecosystem: UI foundation →
-                    blocks → templates → starters, shipped via
-                    predictable weekly releases and clean packaging.
+                    Expand into a sellable ecosystem: UI foundation →
+                    templates → starters, shipped with clean packaging
+                    and predictable releases.
                   </p>
                   <div className="mt-4">
                     <Button
@@ -278,12 +305,13 @@ export default function AboutPage() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              If you care about design systems, UI engineering, and
-              shipping production-grade frontends, you’ll probably
-              find something useful here.
+              If you care about UI engineering, design systems, and
+              shipping production-grade frontends, you’ll find useful
+              patterns here.
             </p>
           </section>
 
+          {/* LINKS */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="space-y-2">
@@ -291,12 +319,26 @@ export default function AboutPage() {
                   Links
                 </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Follow progress, request features, and track
-                  releases.
+                  Follow progress, browse open-source packages,
+                  request features, and track releases.
                 </p>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <Link href="/open-source">
+                    Open source{' '}
+                    <ArrowRight
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+
                 <Button asChild className={cn(focusRing)}>
                   <a
                     href="https://github.com/pycolors-io/pycolors-ui"
