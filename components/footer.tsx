@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
 
 import { Container } from '@/components/container';
-import { cn } from '@pycolors/ui';
-import { APP_VERSION } from '@/lib/version';
+import { cn, Button, Badge } from '@pycolors/ui';
+import { UI_VERSION, APP_VERSION } from '@/lib/version';
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -20,29 +20,57 @@ type FooterLink = {
   ariaLabel?: string;
 };
 
-const links: FooterLink[] = [
-  // Product navigation
-  { label: 'Starters', href: '/starters' },
-  { label: 'Templates', href: '/templates' },
-  { label: 'UI', href: '/ui' },
-  { label: 'Docs', href: '/docs' },
-
-  // Explore
-  { label: 'Components', href: '/docs/ui' },
-  { label: 'Changelog', href: '/changelog' },
-  { label: 'Roadmap', href: '/roadmap' },
-
-  // Trust
-  { label: 'License', href: '/license' },
-  { label: 'About', href: '/about' },
-
-  // External
+const GROUPS: Array<{
+  title: string;
+  links: FooterLink[];
+}> = [
   {
-    label: 'GitHub',
+    title: 'Product',
+    links: [
+      { label: 'UI', href: '/ui' },
+      { label: 'Templates', href: '/templates' },
+      { label: 'Starters', href: '/starters' },
+      { label: 'Docs', href: '/docs' },
+    ],
+  },
+  {
+    title: 'Explore',
+    links: [
+      { label: 'Components', href: '/docs/ui' },
+      { label: 'Changelog', href: '/changelog' },
+      { label: 'Roadmap', href: '/roadmap' },
+    ],
+  },
+  {
+    title: 'Trust',
+    links: [
+      { label: 'License', href: '/license' },
+      { label: 'About', href: '/about' },
+      { label: 'Open Source', href: '/open-source' },
+    ],
+  },
+];
+
+const EXTERNAL: FooterLink[] = [
+  {
+    label: 'UI library',
     href: 'https://github.com/pycolors-io/pycolors-ui',
     external: true,
-    ariaLabel: 'Open PyColors UI on GitHub (opens in a new tab)',
+    ariaLabel: 'Open PyColors UI repository on GitHub',
   },
+  {
+    label: 'Starter Free',
+    href: 'https://github.com/pycolors-io/pycolors-starter-free',
+    external: true,
+    ariaLabel: 'Open PyColors Starter Free repository on GitHub',
+  },
+  {
+    label: 'Website',
+    href: 'https://github.com/pycolors-io/pycolors-marketing',
+    external: true,
+    ariaLabel: 'Open PyColors marketing website repository on GitHub',
+  },
+
   {
     label: 'Gumroad',
     href: 'https://pycolors.gumroad.com',
@@ -88,38 +116,36 @@ function FooterLinkItem(link: FooterLink) {
 }
 
 function getFooterBrand(pathname: string | null) {
-  if (!pathname) {
-    return {
-      label: 'PyColors.io',
-      suffix: `UI · v${APP_VERSION}`,
-    };
-  }
+  if (!pathname)
+    return { label: 'PyColors', suffix: `v${APP_VERSION}` };
 
   if (pathname === '/ui' || pathname.startsWith('/ui/')) {
     return {
-      label: 'PyColors.io',
-      suffix: `UI · v${APP_VERSION}`,
+      label: 'PyColors',
+      suffix: `UI System · v${UI_VERSION}`,
     };
   }
 
   if (pathname === '/starters' || pathname.startsWith('/starters/')) {
+    // Important: you already have Starter Free live, so don't say "Coming soon" here.
     return {
-      label: 'PyColors.io',
-      suffix: 'SaaS Starter · Coming soon',
+      label: 'PyColors',
+      suffix: 'Starters · Free demo available',
     };
+  }
+
+  if (
+    pathname === '/templates' ||
+    pathname.startsWith('/templates/')
+  ) {
+    return { label: 'PyColors', suffix: 'Templates · Premium-ready' };
   }
 
   if (pathname === '/docs' || pathname.startsWith('/docs/')) {
-    return {
-      label: 'PyColors.io',
-      suffix: 'Docs · Docs-first',
-    };
+    return { label: 'PyColors', suffix: 'Docs · Docs-first' };
   }
 
-  return {
-    label: 'PyColors.io',
-    suffix: `v${APP_VERSION}`,
-  };
+  return { label: 'PyColors', suffix: `v${APP_VERSION}` };
 }
 
 export function Footer() {
@@ -128,17 +154,79 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <Container>
-        <div className="flex flex-col items-center gap-4 py-6 text-center">
-          <nav
-            className="flex flex-wrap justify-center gap-x-4 gap-y-2"
-            aria-label="Footer navigation"
-          >
-            {links.map(FooterLinkItem)}
-          </nav>
+      <Container className="mx-auto max-w-6xl">
+        <div className="py-10">
+          <div className="grid gap-8 lg:grid-cols-12">
+            {/* Brand + CTA */}
+            <div className="lg:col-span-5">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline">Built in public</Badge>
+                  <Badge variant="outline">Production-first</Badge>
+                </div>
 
-          <div className="text-[11px] text-muted-foreground">
-            © {CURRENT_YEAR} {brand.label} · {brand.suffix}
+                <div className="space-y-1">
+                  <div className="font-brand text-base font-semibold tracking-tight">
+                    PyColors
+                  </div>
+                  <p className="max-w-md text-sm text-muted-foreground">
+                    Ship real SaaS in days, not months — with a
+                    predictable UI system, production templates, and
+                    starter foundations.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/starters/free">
+                      Open Starter Free demo
+                    </Link>
+                  </Button>
+
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/ui">Explore UI</Link>
+                  </Button>
+                </div>
+
+                <div className="pt-2">
+                  <nav
+                    className="flex flex-wrap gap-x-4 gap-y-2"
+                    aria-label="External links"
+                  >
+                    {EXTERNAL.map(FooterLinkItem)}
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            {/* Link groups */}
+            <div className="grid gap-6 sm:grid-cols-3 lg:col-span-7">
+              {GROUPS.map((group) => (
+                <div key={group.title} className="space-y-3">
+                  <div className="text-xs font-medium text-foreground">
+                    {group.title}
+                  </div>
+                  <nav
+                    className="flex flex-col gap-2"
+                    aria-label={`${group.title} links`}
+                  >
+                    {group.links.map(FooterLinkItem)}
+                  </nav>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom line */}
+          <div className="mt-10 flex flex-col gap-2 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+            <div className="text-[11px] text-muted-foreground">
+              © {CURRENT_YEAR} {brand.label} · {brand.suffix}
+            </div>
+
+            <div className="text-[11px] text-muted-foreground">
+              UI primitives are open-source · Pro layers ship
+              progressively.
+            </div>
           </div>
         </div>
       </Container>
