@@ -57,6 +57,57 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.2.1',
+    title: 'Starter Free docs + marketing UX polish',
+    dateLabel: 'Fri 20 Feb 2026',
+    dateISO: '2026-02-20',
+    status: 'Stable',
+    releaseWeekLabel: 'Feb 2026 (weekly release)',
+    summary:
+      'This release hardens PyColors.io as a distribution and onboarding surface. It ships a full Starter Free documentation set, improves the UI and Starter positioning pages, and adds trust signals like npm badges (shields.io) while tightening accessibility and navigation across mobile and layout surfaces.',
+    highlights: [
+      {
+        title: 'Starter Free documentation shipped',
+        items: [
+          'Added a comprehensive Starter Free docs set: philosophy, installation, project structure, deployment, upgrade path, and key concepts (auth & billing).',
+          'Improved progressive adoption guidance to validate product screens first, then wire backend later.',
+          'Added SaaS Starter and release policy docs to collections for clearer onboarding and team conventions.',
+        ],
+      },
+      {
+        title: 'Marketing pages: clearer product positioning',
+        items: [
+          'Revamped Starter Free page with product-focused UX: clearer Free vs Pro comparison, CTAs, and a more actionable quickstart.',
+          'Redesigned UI page messaging around outcomes (shipping SaaS screens) vs generic component lists, with richer structure and trust indicators.',
+          'Enhanced homepage with a dedicated UI section, improved starter links, and clearer CTAs + demo paths.',
+          'Refined About copy and added open-source links for better transparency and discoverability.',
+        ],
+      },
+      {
+        title:
+          'Trust surface: npm badges + safer external SVG support',
+        items: [
+          'Introduced a reusable npm badge component (version / downloads / license) to improve package visibility.',
+          'Enabled remote SVG badges from shields.io and updated CSP to support external images while keeping security constraints.',
+          'Switched multiple links to internal routing and surfaced docs paths across pages for stronger navigation consistency.',
+        ],
+      },
+      {
+        title: 'UX & accessibility polish',
+        items: [
+          'Improved mobile nav a11y: focus first link on open, added skip-to-content, and prevented layout shift with scrollbar compensation.',
+          'Refined footer layout and external links hierarchy; streamlined badges/CTAs for readability.',
+          'Cleaned redundant in-code comments and removed unused code for a tighter, more maintainable marketing codebase.',
+          'Removed sidebar border and simplified positioning for a cleaner UI.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read Starter Free docs',
+      href: '/docs/saas-starter',
+    },
+  },
+  {
     version: 'v1.2.0',
     title:
       'Ecosystem public launch: Tokens + ESLint + Release Engine',
