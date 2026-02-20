@@ -22,6 +22,7 @@ import {
   TableCell,
 } from '@pycolors/ui';
 import { UI_VERSION } from '@/lib/version';
+import { NpmBadges } from '@/components/npm-badges';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pycolors.io'),
@@ -144,7 +145,7 @@ function ProductCard({
 
 const starterSurfaces = [
   {
-    title: '/login + /register',
+    title: '/login + /register + /forgot',
     desc: 'Auth flows with states (loading / error / success), plus Google OAuth.',
     tag: 'Auth',
   },
@@ -175,6 +176,11 @@ const starterSurfaces = [
   },
 ];
 
+const EXTERNAL = {
+  starterRepo: 'https://github.com/pycolors-io/pycolors-starter-free',
+  starterDemo: 'https://starter-demo.pycolors.io',
+} as const;
+
 export default function HomePage() {
   return (
     <MarketingShell>
@@ -193,7 +199,7 @@ export default function HomePage() {
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Starter Free available
+                Starter Free is available
               </Badge>
             </div>
 
@@ -203,13 +209,13 @@ export default function HomePage() {
             </h1>
 
             <p className="max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              PyColors is a product ecosystem designed to help you
-              ship real SaaS: a predictable UI system, templates, and
-              starter foundations built for production.
+              PyColors helps you ship real SaaS with a predictable UI
+              foundation, templates, and starter-grade product
+              surfaces — designed to scale without rewrites.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild variant="secondary">
+              <Button asChild>
                 <Link href="/starters/free">
                   Get Starter Free
                   <ArrowRight
@@ -219,13 +225,28 @@ export default function HomePage() {
                 </Link>
               </Button>
 
-              <Button asChild variant="outline">
-                <a href="#what-you-get" className={cn(focusRing)}>
-                  See what you get
+              <Button asChild variant="secondary">
+                <a
+                  href={EXTERNAL.starterDemo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Open the Starter Free live demo"
+                >
+                  View live demo
+                  <Eye className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
 
-              <Button asChild>
+              <Button asChild variant="outline">
+                <Link
+                  href="/docs/saas-starter"
+                  className={cn(focusRing)}
+                >
+                  Read starter docs
+                </Link>
+              </Button>
+
+              <Button asChild variant="outline">
                 <Link href="/ui">Explore UI system</Link>
               </Button>
             </div>
@@ -291,6 +312,38 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* PYCOLORS UI TRACTION (COMPACT) */}
+        <section className="py-8 sm:py-12">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Badge variant="secondary">Open source</Badge>
+              <Badge variant="outline">npm package</Badge>
+            </div>
+
+            <p className="max-w-xl text-sm text-muted-foreground">
+              PyColors UI powers the Starters and Templates and is
+              published on npm. Use it independently or as part of the
+              ecosystem.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <NpmBadges packageName="@pycolors/ui" size="sm" />
+              <span className="text-xs text-muted-foreground">
+                Powering the Starters and Templates.
+              </span>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button asChild size="sm" variant="outline">
+                <Link href="/ui">Explore UI system</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href="/docs/ui">UI docs</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* STARTER FREE QUICKSTART */}
         <section className="py-10 sm:py-14">
           <Card className="p-6 sm:p-7">
@@ -332,6 +385,11 @@ export default function HomePage() {
                       Starter Free details
                     </Link>
                   </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/docs/saas-starter">
+                      Read starter docs
+                    </Link>
+                  </Button>
                 </div>
               </div>
 
@@ -357,7 +415,7 @@ export default function HomePage() {
                     </div>
 
                     <a
-                      href="https://github.com/pycolors-io/pycolors-starter-free"
+                      href={EXTERNAL.starterRepo}
                       target="_blank"
                       rel="noreferrer noopener"
                       aria-label="Open the Starter Free repository on GitHub"
@@ -392,7 +450,7 @@ pnpm dev`}</pre>
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span>Prefer a hosted preview?</span>
                   <a
-                    href="https://starter-demo.pycolors.io"
+                    href={EXTERNAL.starterDemo}
                     target="_blank"
                     rel="noreferrer noopener"
                     className={cn(
@@ -461,9 +519,14 @@ pnpm dev`}</pre>
                     skeletons, empty states, and an accessible
                     password input.
                   </p>
-                  <div className="pt-2">
+                  <div className="pt-2 flex flex-wrap gap-2">
                     <Button asChild size="sm" variant="outline">
                       <Link href="/ui">Explore PyColors UI</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href="/docs/saas-starter">
+                        Read starter docs
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -479,8 +542,7 @@ pnpm dev`}</pre>
               Upgrade to PRO when you scale
             </h2>
             <p className="text-sm text-muted-foreground">
-              Starter Free proves the UI surface. PRO wires the
-              foundation.
+              Upgrade when wiring slows you down.
             </p>
           </div>
 
@@ -488,9 +550,13 @@ pnpm dev`}</pre>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Capability</TableHead>
-                  <TableHead>Free</TableHead>
-                  <TableHead>PRO (coming)</TableHead>
+                  <TableHead className="w-[30%]">
+                    Capability
+                  </TableHead>
+                  <TableHead className="w-[35%]">Free</TableHead>
+                  <TableHead className="w-[35%]">
+                    PRO (coming)
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -541,16 +607,19 @@ pnpm dev`}</pre>
               <Button asChild variant="outline">
                 <Link href="/roadmap">Track roadmap</Link>
               </Button>
+              <Button asChild variant="outline">
+                <Link href="/docs/saas-starter">Starter docs</Link>
+              </Button>
             </div>
 
             <p className="mt-3 text-xs text-muted-foreground">
-              PRO is intentionally positioned early — it keeps the
-              upgrade path obvious and the packaging clean.
+              PRO stays clean: same surfaces, wired foundations, and
+              upgrade-ready packaging.
             </p>
           </Card>
         </section>
 
-        {/* FEATURED TEMPLATE (keep your existing one) */}
+        {/* FEATURED TEMPLATE */}
         <section className="py-10 sm:py-14">
           <div className="mx-auto w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
@@ -640,6 +709,12 @@ pnpm dev`}</pre>
               This is one example of the Templates line — more ship
               progressively.
             </p>
+
+            <div className="mt-3 flex justify-center">
+              <Button asChild size="sm" variant="outline">
+                <Link href="/templates">Browse all templates</Link>
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -704,7 +779,15 @@ pnpm dev`}</pre>
                   variant="outline"
                   className={cn(focusRing)}
                 >
-                  <Link href="/docs">Read the docs</Link>
+                  <Link href="/docs/saas-starter">Starter docs</Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <Link href="/docs/ui">UI docs</Link>
                 </Button>
 
                 <Button

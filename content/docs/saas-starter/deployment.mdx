@@ -1,0 +1,94 @@
+---
+description: Deploy Starter Free to production and prepare your
+  environment for real users.
+title: Deployment
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Running locally is step one.\
+Deploying early is step two.
+
+------------------------------------------------------------------------
+
+## You'll learn
+
+-   How to deploy the starter
+-   How env variables fit later
+-   What to verify after deploy
+-   Common deployment pitfalls
+
+------------------------------------------------------------------------
+
+## Production checklist
+
+Test locally:
+
+``` bash
+pnpm build
+pnpm start
+```
+
+------------------------------------------------------------------------
+
+## Deploy on Vercel
+
+Push repo:
+
+``` bash
+git remote remove origin
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+```
+
+Import project on Vercel and deploy.
+
+No environment variables required yet.
+
+------------------------------------------------------------------------
+
+## Verify routes
+
+-   /login
+-   /dashboard
+-   /projects
+-   /admin
+-   /billing
+-   /settings
+
+------------------------------------------------------------------------
+
+## Future env variables
+
+``` bash
+AUTH_SECRET=
+DATABASE_URL=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+------------------------------------------------------------------------
+
+## Common pitfalls
+
+-   Deploying too late
+-   Ignoring production builds
+-   Adding env variables too early
+
+------------------------------------------------------------------------
+
+## Mental model
+
+Deploy early.\
+Wire progressively.
+
+------------------------------------------------------------------------
+
+## Next steps
+
+→ Upgrade to PRO
+
+</DocsPageShell>

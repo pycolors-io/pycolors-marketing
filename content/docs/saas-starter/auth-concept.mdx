@@ -1,0 +1,149 @@
+---
+description: Understand how authentication is modeled in Starter Free
+  and how to wire it safely to your provider.
+title: Auth concept
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Authentication is the **entry point of every SaaS**.
+
+Starter Free ships a complete **authentication surface**: screens,
+states, validation, flows, and redirects — but no provider.
+
+This separation is intentional.
+
+------------------------------------------------------------------------
+
+## You'll learn
+
+-   How auth is modeled in the starter
+-   What is included vs intentionally missing
+-   Where to plug your auth provider
+-   How to avoid common auth mistakes
+
+------------------------------------------------------------------------
+
+## The auth philosophy
+
+Starter Free focuses on the **UX contract**, not the implementation.
+
+You keep: - Pages - Forms - Validation - Loading states - Error
+surfaces - Redirect patterns
+
+You swap: - Session provider - Token storage - API calls - Email
+delivery
+
+------------------------------------------------------------------------
+
+## Auth routes overview
+
+Included routes:
+
+-   /login
+-   /register
+-   /forgot-password
+
+------------------------------------------------------------------------
+
+## AuthShell layout
+
+``` tsx
+<AuthShell title="..." description="..." footer={...} />
+```
+
+Provides consistent layout and spacing.
+
+------------------------------------------------------------------------
+
+## Login flow
+
+Location:
+
+``` bash
+app/(auth)/login/page.tsx
+```
+
+Redirect after login:
+
+``` bash
+/dashboard
+```
+
+------------------------------------------------------------------------
+
+## Register flow
+
+Location:
+
+``` bash
+app/(auth)/register/page.tsx
+```
+
+Redirect after signup:
+
+``` bash
+/dashboard
+```
+
+------------------------------------------------------------------------
+
+## Forgot password flow
+
+Location:
+
+``` bash
+app/(auth)/forgot-password/page.tsx
+```
+
+Never reveal if an email exists.
+
+------------------------------------------------------------------------
+
+## Wiring an auth provider
+
+Provider-agnostic:
+
+-   Auth.js / NextAuth
+-   Clerk
+-   Supabase Auth
+-   Custom backend
+
+Example:
+
+``` tsx
+await signIn(email, password)
+router.push("/dashboard")
+```
+
+------------------------------------------------------------------------
+
+## Route protection (future)
+
+Protect:
+
+``` bash
+/dashboard
+/projects
+/admin
+/billing
+/settings
+```
+
+------------------------------------------------------------------------
+
+## Mental model
+
+Auth UI is stable.\
+Auth implementation is replaceable.
+
+------------------------------------------------------------------------
+
+## Next steps
+
+→ Billing concept
+
+</DocsPageShell>

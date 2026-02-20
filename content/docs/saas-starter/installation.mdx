@@ -1,0 +1,187 @@
+---
+description: Run Starter Free locally in minutes and explore the full
+  SaaS surface.
+title: Installation
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+<DocsPageShell>
+
+This page gets the starter running locally in a few minutes.
+
+At the end, you'll be able to explore real SaaS screens: dashboard,
+projects, admin, billing, settings, and auth.
+
+------------------------------------------------------------------------
+
+## You'll learn
+
+-   How to clone and run the starter
+-   What to expect on first launch
+-   How to validate the installation
+-   How to troubleshoot common setup issues
+
+------------------------------------------------------------------------
+
+## Prerequisites
+
+Make sure your environment includes:
+
+-   **Node.js ≥ 18** (recommended: latest LTS)
+-   **pnpm** installed globally
+-   **Git**
+
+Check quickly:
+
+``` bash
+node -v
+pnpm -v
+git --version
+```
+
+If pnpm is missing:
+
+``` bash
+npm install -g pnpm
+```
+
+## Step 1 — Clone the repository
+
+``` bash
+git clone https://github.com/pycolors-io/pycolors-starter-free.git
+cd pycolors-starter-free
+```
+
+## Step 2 — Install dependencies
+
+``` bash
+pnpm install
+```
+
+This installs:
+
+-   Next.js App Router
+-   Tailwind v4
+-   PyColors UI
+-   TypeScript + ESLint baseline
+
+## Step 3 — Start the development server
+
+``` bash
+pnpm dev
+```
+
+Open:
+
+    http://localhost:3000
+
+You should see the dashboard.
+
+## Step 4 — Validate the starter
+
+Open these routes:
+
+-   /login
+-   /register
+-   /dashboard
+-   /projects
+-   /admin
+-   /billing
+-   /settings
+
+If all pages load → installation is complete.
+
+## First things to try
+
+### Edit the dashboard title
+
+Open:
+
+``` bash
+app/dashboard/page.tsx
+```
+
+Change the heading text and save.
+
+Hot reload should update the browser instantly.
+
+### Rename the core entity
+
+Search for **Projects** in the repo.
+
+This is intentionally easy to rename to your domain model.
+
+### Modify mock data
+
+Open:
+
+``` bash
+components/projects/project-types.ts
+```
+
+Change the mock projects to match your product.
+
+## Troubleshooting
+
+### Port already in use
+
+``` bash
+pnpm dev --port 3001
+```
+
+### Node version errors
+
+``` bash
+node -v
+```
+
+Upgrade to Node LTS and reinstall dependencies.
+
+### Using npm or yarn
+
+``` bash
+rm -rf node_modules package-lock.json
+pnpm install
+```
+
+### Build errors after pulling updates
+
+``` bash
+rm -rf node_modules .next
+pnpm install
+pnpm dev
+```
+
+## Common pitfalls
+
+Starter Free does not require:
+
+-   database URL
+-   auth secrets
+-   Stripe keys
+
+Everything is mocked.
+
+## What you should see
+
+You now have a local SaaS surface with:
+
+-   Auth screens
+-   Dashboard
+-   CRUD UI
+-   Admin surface
+-   Billing surface
+-   Settings structure
+
+All running locally with hot reload.
+
+## Next steps
+
+Continue to:
+
+→ Project Structure
+
+</DocsPageShell>
+

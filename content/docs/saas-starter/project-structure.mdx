@@ -1,0 +1,315 @@
+---
+description: Understand how Starter Free is organized so you can extend
+  it without breaking its architecture.
+title: Project Structure
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription, Badge } from
+"@pycolors/ui";
+
+<DocsPageShell>
+
+Starter Free is structured for **clarity and long-term evolution**.
+
+You are not looking at a demo folder.\
+You are looking at a **production-shaped layout**.
+
+Understanding the structure early prevents messy refactors later.
+
+------------------------------------------------------------------------
+
+## You'll learn
+
+-   How the App Router structure is organized
+-   Where UI lives vs business logic
+-   Where to add new features
+-   What not to modify blindly
+
+------------------------------------------------------------------------
+
+## High-level architecture
+
+Starter Free follows this mental model:
+
+> **App Router pages → Feature components → UI primitives**
+
+Separation matters.
+
+-   Pages define routes and layout
+-   Feature components handle interaction
+-   UI components remain generic and reusable
+
+------------------------------------------------------------------------
+
+## Root structure overview
+
+At a high level:
+
+   - app/
+   - components/
+
+------------------------------------------------------------------------
+
+## The `app/` directory
+
+This is your routing layer.
+
+Example routes:
+<pre>
+    app/
+      (auth)/
+        login/
+        register/
+        forgot-password/
+      dashboard/
+      projects/
+      admin/
+      billing/
+      settings/
+</pre>
+Key idea:
+
+-   Routes define product surface
+-   Layout decisions happen here
+-   No heavy business logic
+
+------------------------------------------------------------------------
+
+### Auth routes
+
+    app/(auth)/
+
+Contains:
+
+-   `/login`
+-   `/register`
+-   `/forgot-password`
+
+These pages: - Simulate loading - Show form states - Expose UX contracts
+
+They are **ready to wire to any auth provider**.
+
+------------------------------------------------------------------------
+
+### App routes (main SaaS surface)
+
+    app/dashboard
+    app/projects
+    app/admin
+    app/billing
+    app/settings
+
+These routes validate:
+
+-   Navigation consistency
+-   PageShell layout
+-   Card-based structure
+-   Loading + empty states
+-   Dialog patterns
+
+------------------------------------------------------------------------
+
+## The `components/` directory
+
+This is where feature logic lives.
+
+Example:
+
+    components/
+      projects/
+        project-table.tsx
+        project-row-actions.tsx
+        project-rename-dialog.tsx
+        project-confirm-delete-dialog.tsx
+
+This separation is intentional.
+
+### Why it matters
+
+The page:
+
+    app/projects/page.tsx
+
+Does not implement rename/delete logic directly.
+
+It delegates to:
+
+    components/projects/
+
+This keeps: - Pages clean - Logic reusable - Code testable later
+
+------------------------------------------------------------------------
+
+## Mock data lives with features
+
+Example:
+
+    components/projects/project-types.ts
+
+Contains:
+
+-   Type definitions
+-   MOCK_PROJECTS
+
+This keeps mock data close to where it's used.
+
+Later, you replace:
+
+    MOCK_PROJECTS
+
+With:
+
+-   API calls
+-   Server actions
+-   Database fetches
+
+Without rewriting UI.
+
+------------------------------------------------------------------------
+
+## PageShell abstraction
+
+All main pages use:
+
+``` tsx
+<PageShell
+  title="..."
+  description="..."
+  actions={...}
+  meta={...}
+/>
+```
+
+This ensures:
+
+-   Consistent spacing
+-   Predictable headers
+-   Structured metadata blocks
+
+Do not bypass this pattern unless necessary.
+
+------------------------------------------------------------------------
+
+## Dialog patterns
+
+Rename and delete use:
+
+-   `ProjectRenameDialog`
+-   `ProjectConfirmDeleteDialog`
+
+Pattern:
+
+-   Dialog is isolated
+-   Parent controls open state
+-   Side effects handled cleanly
+
+This scales well when wiring APIs later.
+
+------------------------------------------------------------------------
+
+## Where to add a new feature
+
+Let's say you want to add:
+
+**Reports**
+
+### Step 1 — Add route
+
+``` bash
+app/reports/page.tsx
+```
+
+### Step 2 — Create feature folder
+
+``` bash
+components/reports/
+```
+
+### Step 3 — Add table + dialogs
+
+Follow the Projects pattern.
+
+Do not copy logic into the page directly.
+
+------------------------------------------------------------------------
+
+## Common pitfalls
+
+### 1. Putting logic directly in pages
+
+Avoid:
+
+``` tsx
+app/projects/page.tsx
+```
+
+Becoming 500 lines long.
+
+Keep logic in `components/feature/`.
+
+### 2. Mixing UI and data fetching
+
+UI components from `@pycolors/ui`:
+
+-   Should remain dumb
+-   Should not fetch data
+-   Should not contain business rules
+
+### 3. Deleting structure too early
+
+The layout and separation are intentional.
+
+Refactor after understanding.
+
+------------------------------------------------------------------------
+
+## How wiring will work later
+
+When you connect a backend:
+
+-   Replace mock state with fetch
+-   Move logic to server actions or API routes
+-   Keep dialogs and tables intact
+
+Structure stays.\
+Implementation changes.
+
+------------------------------------------------------------------------
+
+## When to consider PRO
+
+If you need:
+
+-   Production auth wiring
+-   Multi-organization logic
+-   Role-based permissions
+-   Stripe integration patterns
+-   Backend contracts
+
+The PRO version provides that wiring foundation.
+
+Starter Free focuses on surface.
+
+------------------------------------------------------------------------
+
+## Mental model to keep
+
+Pages define routes.\
+Components define features.\
+UI defines primitives.
+
+Respect that boundary and your product will scale calmly.
+
+------------------------------------------------------------------------
+
+## Next steps
+
+Continue to:
+
+→ Auth concept
+
+You'll understand how authentication is modeled and how to wire it
+safely.
+
+</DocsPageShell>

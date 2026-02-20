@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
 
 import { Container } from '@/components/container';
-import { cn, Button, Badge } from '@pycolors/ui';
+import { cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 
 const focusRing =
@@ -53,7 +53,7 @@ const GROUPS: Array<{
 
 const EXTERNAL: FooterLink[] = [
   {
-    label: 'UI library',
+    label: 'PyColors UI',
     href: 'https://github.com/pycolors-io/pycolors-ui',
     external: true,
     ariaLabel: 'Open PyColors UI repository on GitHub',
@@ -70,7 +70,6 @@ const EXTERNAL: FooterLink[] = [
     external: true,
     ariaLabel: 'Open PyColors marketing website repository on GitHub',
   },
-
   {
     label: 'Gumroad',
     href: 'https://pycolors.gumroad.com',
@@ -96,7 +95,7 @@ function FooterLinkItem(link: FooterLink) {
         )}
       >
         {link.label}
-        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+        <ExternalLink className="h-4 w-4" aria-hidden="true" />
       </a>
     );
   }
@@ -127,7 +126,6 @@ function getFooterBrand(pathname: string | null) {
   }
 
   if (pathname === '/starters' || pathname.startsWith('/starters/')) {
-    // Important: you already have Starter Free live, so don't say "Coming soon" here.
     return {
       label: 'PyColors',
       suffix: 'Starters · Free demo available',
@@ -156,75 +154,55 @@ export function Footer() {
     <footer className="border-t border-border bg-background">
       <Container className="mx-auto max-w-6xl">
         <div className="py-10">
-          <div className="grid gap-8 lg:grid-cols-12">
-            {/* Brand + CTA */}
+          <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline">Built in public</Badge>
-                  <Badge variant="outline">Production-first</Badge>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="font-brand text-base font-semibold tracking-tight">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="font-brand text-lg font-semibold tracking-tight">
                     PyColors
                   </div>
-                  <p className="max-w-md text-sm text-muted-foreground">
+                  <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
                     Ship real SaaS in days, not months — with a
                     predictable UI system, production templates, and
                     starter foundations.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 pt-2">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/starters/free">
-                      Open Starter Free demo
-                    </Link>
-                  </Button>
-
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/ui">Explore UI</Link>
-                  </Button>
-                </div>
-
-                <div className="pt-2">
-                  <nav
-                    className="flex flex-wrap gap-x-4 gap-y-2"
-                    aria-label="External links"
-                  >
-                    {EXTERNAL.map(FooterLinkItem)}
-                  </nav>
-                </div>
+                <nav
+                  className="flex flex-wrap gap-x-5 gap-y-2"
+                  aria-label="External links"
+                >
+                  {EXTERNAL.map(FooterLinkItem)}
+                </nav>
               </div>
             </div>
 
-            {/* Link groups */}
-            <div className="grid gap-6 sm:grid-cols-3 lg:col-span-7">
-              {GROUPS.map((group) => (
-                <div key={group.title} className="space-y-3">
-                  <div className="text-xs font-medium text-foreground">
-                    {group.title}
+            <div className="lg:col-span-7 lg:flex lg:justify-end">
+              <div className="grid gap-8 sm:grid-cols-3">
+                {GROUPS.map((group) => (
+                  <div key={group.title} className="space-y-3">
+                    <div className="text-sm font-medium text-foreground">
+                      {group.title}
+                    </div>
+                    <nav
+                      className="flex flex-col gap-2.5"
+                      aria-label={`${group.title} links`}
+                    >
+                      {group.links.map(FooterLinkItem)}
+                    </nav>
                   </div>
-                  <nav
-                    className="flex flex-col gap-2"
-                    aria-label={`${group.title} links`}
-                  >
-                    {group.links.map(FooterLinkItem)}
-                  </nav>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Bottom line */}
           <div className="mt-10 flex flex-col gap-2 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-xs text-muted-foreground">
               © {CURRENT_YEAR} {brand.label} · {brand.suffix}
             </div>
 
             <div className="text-[11px] text-muted-foreground">
-              UI primitives are open-source · Pro layers ship
+              UI primitives are open source · Pro layers ship
               progressively.
             </div>
           </div>
