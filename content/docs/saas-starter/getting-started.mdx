@@ -1,0 +1,261 @@
+---
+title: Getting Started
+description: Understand what Starter Free gives you, what it doesn’t, and how to ship your first SaaS screen in under 30 minutes.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription, Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Starter Free gives you a **credible SaaS surface out of the box**.
+
+Not a blank repo.
+Not a backend-heavy template.
+A production-shaped UI with real screens, real states, and real navigation.
+
+The goal: **run it in minutes, understand it in 15, extend it in 30.**
+
+---
+
+## You’ll learn
+
+- What Starter Free actually includes
+- What is intentionally mocked
+- How to think about wiring it later
+- The fastest path to shipping your first vertical slice
+
+---
+
+## What this starter already solves
+
+Starter Free is opinionated on purpose.
+
+It gives you a complete SaaS “surface area”:
+
+### Auth UX
+
+- `/login`
+- `/register`
+- `/forgot-password`
+- Loading states
+- Disabled + error-ready forms
+- Password input with visibility toggle
+
+Authentication is **not wired**, but the UX contract is complete.
+
+---
+
+### Application shell
+
+- Dashboard layout
+- Navigation
+- PageShell abstraction
+- Structured cards
+- KPI surfaces
+
+You are not designing layout from scratch.
+
+---
+
+### Core SaaS entity (Projects)
+
+- Table list
+- Loading state (`TableLoading`)
+- Empty state (`TableEmpty`)
+- Rename dialog
+- Delete confirmation dialog
+- Deep-link details page
+
+This validates:
+- CRUD surface
+- Row actions
+- Dialog patterns
+- Routing consistency
+
+---
+
+### Admin / B2B surface
+
+- Members list
+- Invitations
+- Roles (owner / member)
+- Invite dialog
+- Resend / cancel actions (mocked)
+
+This makes the starter feel like a real B2B SaaS.
+
+---
+
+### Billing surface
+
+- Current plan
+- Renewal info
+- Invoice table
+- Stripe portal entrypoint (disabled)
+- Payment method card
+
+Everything is mocked — but structurally correct.
+
+---
+
+### Settings structure
+
+- Tabs: Profile / Organization / Security / Danger zone
+- Disabled form patterns
+- Explicit destructive areas
+
+This matters more than most people think.
+
+---
+
+## Mocked on purpose
+
+<Alert>
+  <AlertTitle>Frontend-only by design</AlertTitle>
+  <AlertDescription>
+    Starter Free ships with mock data and no backend. This lets you evaluate structure and UX first — then wire auth, data, and billing progressively.
+  </AlertDescription>
+</Alert>
+
+Nothing is connected to:
+- Database
+- Stripe
+- Auth provider
+- Email provider
+
+That is intentional.
+
+The goal is to:
+1. Validate product structure
+2. Validate UI states
+3. Validate navigation
+4. Avoid backend friction early
+
+---
+
+## What you can ship in 30 minutes
+
+After installation, you can:
+
+- Rename “Projects” to your domain entity
+- Adjust dashboard KPIs
+- Update empty state messaging
+- Change brand tokens
+- Add one new route
+
+That’s already enough to:
+- Show a client
+- Pitch an MVP
+- Validate UX
+- Record a demo
+
+---
+
+## Mental model
+
+Think of Starter Free as:
+
+> **A UX contract, not an implementation.**
+
+You keep:
+- Pages
+- Components
+- States
+- Navigation
+
+You swap:
+- Data source
+- Auth provider
+- Billing logic
+
+No rewrites required.
+
+---
+
+## Common pitfalls
+
+### 1. Treating it like a full SaaS backend
+
+This starter does not include:
+- Database schema
+- API routes
+- Stripe integration
+- Session management
+
+That comes later.
+
+---
+
+### 2. Rewriting everything too early
+
+Don’t delete structure before understanding it.
+
+Explore:
+- Dashboard
+- Projects flow
+- Admin surface
+- Billing surface
+
+Then extend.
+
+---
+
+### 3. Mixing UI and business logic
+
+Keep the separation:
+
+- UI = screens + states
+- Logic = wiring layer
+
+The starter models that separation clearly.
+
+---
+
+## When Starter Free is enough
+
+Starter Free is perfect if:
+
+- You’re validating UX
+- You’re pitching a product
+- You’re building a frontend-first MVP
+- You want structure before backend
+
+If you need:
+
+- Production auth wiring
+- Stripe portal integration
+- Multi-org logic
+- Role-based access control
+- Backend contracts
+
+You’ll want PRO (see Upgrade later).
+
+---
+
+## Recommended first path
+
+After cloning:
+
+1. Open `/dashboard`
+2. Open `/projects`
+3. Rename a project
+4. Delete a project
+5. Open `/admin`
+6. Open `/billing`
+
+Understand the vertical slice.
+
+Then wire your own logic progressively.
+
+---
+
+## Next steps
+
+Continue to:
+
+→ **Installation**
+
+You’ll run the starter locally and explore the real screens.
+
+</DocsPageShell>

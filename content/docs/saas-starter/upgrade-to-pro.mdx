@@ -1,0 +1,180 @@
+---
+title: Upgrade to PRO
+description: When Starter Free reaches its limits, here’s how and why to upgrade safely.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Starter Free helps you **validate and ship fast**.
+PRO helps you **wire and scale safely**.
+
+You can stay on Starter Free as long as you want.
+Upgrade when the product becomes real.
+
+---
+
+## You’ll learn
+
+- When upgrading makes sense
+- What PRO adds on top of Starter Free
+- How migration works
+- Answers to common concerns
+
+---
+
+## When should you upgrade?
+
+Upgrade when you start needing **real infrastructure**.
+
+Use this checklist.
+
+You likely need PRO if you need:
+
+- Real user authentication
+- Email verification & password reset
+- Stripe Checkout & Customer Portal
+- Multi-organization support
+- Role-based access control
+- Production data layer
+- API contracts and backend patterns
+
+Starter Free is the **surface**.
+PRO is the **wiring**.
+
+---
+
+## Free vs PRO comparison
+
+| Capability | Starter Free | PRO |
+|---|---|---|
+| Authentication | Screens + states (mocked) | Provider wiring (Auth.js / Clerk / Supabase) |
+| Billing | Billing UI surface | Stripe Checkout + Portal integration |
+| Organizations | Single-org UI | Multi-org + org switcher |
+| Roles & permissions | Basic roles UI | RBAC + permission patterns |
+| Data layer | Mock data | Production data + API contracts |
+| Backend patterns | None | Server routes + architecture guidance |
+| Packaging | Demo-ready | Production-ready foundation |
+
+<small>Coming soon: final PRO feature list.</small>
+
+---
+
+## What you gain by upgrading
+
+### Time saved
+
+Auth and billing wiring can take weeks.
+PRO removes the uncertainty and gives a proven baseline.
+
+---
+
+### Reduced risk
+
+Security and billing mistakes are expensive.
+PRO provides safe integration patterns.
+
+---
+
+### Production readiness
+
+Starter Free proves the product.
+PRO prepares it for real users and revenue.
+
+---
+
+## Migration path
+
+Upgrading is designed to be **incremental**.
+
+You keep:
+- Routes
+- Pages
+- Components
+- UI structure
+
+You replace:
+- Mock data → real data
+- Mock auth → real sessions
+- Mock billing → Stripe
+
+No rewrite required.
+
+---
+
+### Typical upgrade flow
+
+1. Add auth provider
+2. Add session protection
+3. Add database
+4. Add Stripe billing
+5. Replace mock sources progressively
+
+You migrate **feature by feature**.
+
+---
+
+## Common objections
+
+### “Will I lose my changes?”
+
+No.
+
+Starter Free and PRO share the same architecture.
+Your pages and components remain compatible.
+
+---
+
+### “Can I upgrade later?”
+
+Yes.
+
+Starter Free has no lock-in.
+Upgrade whenever your product requires real wiring.
+
+---
+
+### “Do I need to migrate everything at once?”
+
+No.
+
+You can wire:
+- Auth first
+- Billing later
+- Data progressively
+
+Migration is incremental.
+
+---
+
+### “Why not wire everything myself?”
+
+You can.
+
+PRO exists to:
+- reduce risk
+- remove uncertainty
+- save engineering time
+
+It’s a leverage decision, not a requirement.
+
+---
+
+## Mental model to keep
+
+> Starter Free → validate the product
+> PRO → productionize the product
+
+Both are part of the same path.
+
+---
+
+## Next steps
+
+You now have the full Starter Free documentation.
+
+Start building your product, and upgrade when you’re ready to wire the production foundation.
+
+</DocsPageShell>

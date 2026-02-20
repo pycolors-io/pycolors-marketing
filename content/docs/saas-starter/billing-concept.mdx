@@ -1,0 +1,150 @@
+---
+description: Understand how billing is modeled in Starter Free and where
+  to plug Stripe without rewrites.
+title: Billing concept
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Billing is a core SaaS workflow — but also one of the most complex to
+wire.
+
+Starter Free gives you the **complete billing UX surface** while keeping
+implementation intentionally mocked.
+
+------------------------------------------------------------------------
+
+## You'll learn
+
+-   How billing is modeled in the starter
+-   What is included vs intentionally missing
+-   Where Stripe will plug in later
+-   How to avoid common billing mistakes
+
+------------------------------------------------------------------------
+
+## Billing philosophy
+
+Starter Free ships the **billing surface**, not the billing engine.
+
+Included:
+
+-   Plan display
+-   Renewal info
+-   Seats concept
+-   Invoice history UI
+-   Billing portal entrypoints
+
+Not included:
+
+-   Stripe integration
+-   Webhooks
+-   Subscription logic
+
+------------------------------------------------------------------------
+
+## Billing route overview
+
+Location:
+
+``` bash
+app/billing/page.tsx
+```
+
+Simulates:
+
+-   Current plan
+-   Seats
+-   Renewal date
+-   Payment method
+-   Invoice history
+-   Portal entrypoints
+
+------------------------------------------------------------------------
+
+## Mocked subscription model
+
+``` tsx
+const plan = {
+  name: "Pro",
+  priceLabel: "€29 / month",
+  seats: 10,
+  renewalIso: "2026-03-01",
+  status: "active"
+}
+```
+
+Later replaced by backend + Stripe API.
+
+------------------------------------------------------------------------
+
+## Invoice table
+
+``` tsx
+const MOCK_INVOICES = [
+  { number: "INV-0001", amountCents: 2900, status: "paid" }
+]
+```
+
+Replace with real Stripe invoices later.
+
+------------------------------------------------------------------------
+
+## Stripe integration flow
+
+Backend:
+
+``` bash
+POST /api/billing/portal
+```
+
+Pseudo code:
+
+``` ts
+const session = await stripe.billingPortal.sessions.create({
+  customer: stripeCustomerId,
+  return_url: "https://yourapp.com/billing"
+})
+```
+
+Frontend redirect:
+
+``` ts
+window.location.href = session.url
+```
+
+------------------------------------------------------------------------
+
+## Future lifecycle
+
+1.  User upgrades plan
+2.  Stripe Checkout opens
+3.  Webhook updates subscription
+4.  App loads updated plan
+5.  Billing page reflects state
+
+------------------------------------------------------------------------
+
+## Common pitfalls
+
+-   Coupling billing to UI
+-   Skipping webhooks
+-   Delaying billing architecture
+
+------------------------------------------------------------------------
+
+## Mental model
+
+Billing UI is stable.\
+Billing implementation evolves behind it.
+
+------------------------------------------------------------------------
+
+## Next steps
+
+→ Deployment
+
+</DocsPageShell>

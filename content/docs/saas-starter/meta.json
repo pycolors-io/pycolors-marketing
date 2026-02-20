@@ -1,0 +1,13 @@
+{
+  "title": "SaaS Starter",
+  "pages": [
+    "index",
+    "getting-started",
+    "installation",
+    "project-structure",
+    "auth-concept",
+    "billing-concept",
+    "deployment",
+    "upgrade-to-pro"
+  ]
+}
