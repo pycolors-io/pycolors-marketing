@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ExternalLink, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
@@ -29,12 +29,17 @@ function matchPathname(pathname: string, href: string) {
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
+function getScrollbarWidth() {
+  if (typeof window === 'undefined') return 0;
+  return window.innerWidth - document.documentElement.clientWidth;
+}
+
 export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const openBtnRef = React.useRef<HTMLButtonElement>(null);
-  const closeBtnRef = React.useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = React.useRef<HTMLAnchorElement>(null);
 
   React.useEffect(() => {
     setIsMenuOpen(false);
@@ -51,7 +56,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return matches[0]?.href ?? null;
   }, [pathname]);
 
-  // ESC to close
+  // ESC to close + restore focus
   React.useEffect(() => {
     if (!isMenuOpen) return;
 
@@ -66,25 +71,44 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isMenuOpen]);
 
-  // Body scroll lock + focus when opened
+  // Body scroll lock (+ avoid layout shift) + focus first link
   React.useEffect(() => {
     if (!isMenuOpen) return;
 
     const prevOverflow = document.body.style.overflow;
+    const prevPaddingRight = document.body.style.paddingRight;
+
+    const scrollbar = getScrollbarWidth();
     document.body.style.overflow = 'hidden';
+    if (scrollbar > 0)
+      document.body.style.paddingRight = `${scrollbar}px`;
 
     window.setTimeout(
-      () => closeBtnRef.current?.focus({ preventScroll: true }),
+      () =>
+        firstMobileLinkRef.current?.focus({ preventScroll: true }),
       0,
     );
 
     return () => {
       document.body.style.overflow = prevOverflow;
+      document.body.style.paddingRight = prevPaddingRight;
     };
   }, [isMenuOpen]);
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
+      {/* Skip link (pro a11y touch) */}
+      <a
+        href="#content"
+        className={cn(
+          'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
+          'rounded-md border border-border bg-background px-3 py-2 text-sm',
+          focusRing,
+        )}
+      >
+        Skip to content
+      </a>
+
       <Container className="flex h-16 items-center gap-3">
         <Logo />
 
@@ -140,7 +164,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             }
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav"
-            aria-haspopup="menu"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             {isMenuOpen ? (
@@ -157,25 +180,18 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           id="mobile-nav"
           className="border-t border-border bg-background/95 px-4 pb-6 pt-3 shadow-lg backdrop-blur supports-backdrop-filter:bg-background/60 md:hidden"
         >
-          <button
-            ref={closeBtnRef}
-            type="button"
-            className="sr-only"
-            aria-label="Close menu"
-            onClick={() => setIsMenuOpen(false)}
-          />
-
           <nav
             className="flex flex-col gap-1"
             aria-label="Mobile navigation"
           >
-            {PRIMARY_NAV_ITEMS.map((item) => {
+            {PRIMARY_NAV_ITEMS.map((item, idx) => {
               const isCurrent = activeHref === item.href;
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  ref={idx === 0 ? firstMobileLinkRef : undefined}
                   aria-current={isCurrent ? 'page' : undefined}
                   className={cn(
                     'rounded-md px-3 py-2 text-sm font-medium transition-colors',
