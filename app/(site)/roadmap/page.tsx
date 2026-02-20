@@ -78,6 +78,7 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  // RELEASE WEEK — shipped
   {
     title: 'Ship v1.0 — UI Core',
     description:
@@ -105,6 +106,8 @@ const items: RoadmapItem[] = [
     tags: ['Release', 'Trust'],
     href: '/changelog',
   },
+
+  // JAN 2026 — shipped
   {
     title: 'Marketing site baseline (pycolors.io)',
     description:
@@ -158,6 +161,16 @@ const items: RoadmapItem[] = [
     href: '/templates/na-ai',
   },
   {
+    title: 'Stability patch (v1.1.x)',
+    description:
+      'Fix edge cases, polish docs, align tokens + class naming, reduce inconsistencies discovered after weekly releases.',
+    status: 'Shipped',
+    milestone: 'Jan 2026',
+    tags: ['Quality', 'Consistency'],
+  },
+
+  // FEB 2026 — shipped
+  {
     title: 'UI Advanced v1',
     description:
       'First complete set of advanced, dashboard-grade UI primitives: Dialog/Modal, Dropdown/Menu, Tabs, Tooltip, and Toast. Each component ships with a stable, aligned API, accessibility-first behavior.',
@@ -179,14 +192,6 @@ const items: RoadmapItem[] = [
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Shipped', 'Advanced', 'Patterns', 'Dashboards', 'Docs'],
-  },
-  {
-    title: 'Stability patch (v1.1.x)',
-    description:
-      'Fix edge cases, polish docs, align tokens + class naming, reduce inconsistencies discovered after weekly releases.',
-    status: 'Shipped',
-    milestone: 'Jan 2026',
-    tags: ['Quality', 'Consistency'],
   },
   {
     title: 'Public packages (Tokens + ESLint)',
@@ -213,6 +218,42 @@ const items: RoadmapItem[] = [
     tags: ['Release', 'Trust', 'Brand'],
   },
 
+  // ✅ UPDATED FOR v1.2.1 (Fri 20 Feb 2026)
+  {
+    title: 'SaaS Starter (Free) — public alpha',
+    description:
+      'Starter Free is now publicly documented and positioned as the onboarding entry point: production-shaped UX, clear upgrade path, and a docs-first adoption flow.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Starters', 'Docs', 'Launch', 'Trust'],
+    href: '/starters',
+  },
+  {
+    title: 'Starter docs v1 (getting started + architecture)',
+    description:
+      'Shipped Starter Free documentation: installation, folder structure, conventions, deployment, upgrade path, plus auth & billing concepts.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Docs', 'Starters', 'DX'],
+    href: '/docs/saas-starter',
+  },
+  {
+    title: 'Trust signals: npm badges + secure external SVG support',
+    description:
+      'Added npm badges (version/downloads/license) powered by shields.io, enabled remote SVG images with a tighter CSP, and improved internal routing to docs.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Trust', 'NPM', 'Security', 'DX'],
+  },
+  {
+    title: 'Marketing positioning refresh (UI + Starter + Home)',
+    description:
+      'Refined PyColors UI and Starter pages around shipping outcomes, improved homepage entry points, and tightened a11y + navigation for a smoother onboarding funnel.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Marketing', 'Onboarding', 'A11y', 'Launch'],
+  },
+
   // NOW
   {
     title: 'Search & analytics baseline',
@@ -231,15 +272,7 @@ const items: RoadmapItem[] = [
     tags: ['Brand', 'Trust', 'Legal'],
   },
 
-  {
-    title: 'SaaS Starter (Free) — public alpha',
-    description:
-      'Publish the free starter with a minimal but production-grade baseline: auth-ready architecture, UI foundations, DX conventions, and clear docs.',
-    status: 'Next',
-    milestone: 'Feb 2026',
-    tags: ['Starters', 'DX', 'Launch', 'Trust'],
-    href: '/starters',
-  },
+  // NEXT
   {
     title: 'Starter waitlist + early access loop',
     description:
@@ -248,15 +281,6 @@ const items: RoadmapItem[] = [
     milestone: 'Feb 2026',
     tags: ['Growth', 'Audience', 'Launch'],
     href: '/starters',
-  },
-  {
-    title: 'Starter docs v1 (getting started + architecture)',
-    description:
-      'Documentation for installation, folder structure, conventions, and extension points. The starter must be self-explanatory.',
-    status: 'Next',
-    milestone: 'Feb 2026',
-    tags: ['Docs', 'Starters', 'DX'],
-    href: '/docs',
   },
   {
     title: 'Monetization readiness v1',
@@ -275,6 +299,8 @@ const items: RoadmapItem[] = [
     tags: ['Community', 'Quality', 'DX'],
     href: 'https://github.com/pycolors-io/pycolors-ui/issues',
   },
+
+  // LATER (H1 2026)
   {
     title: 'Blocks library (marketing + SaaS)',
     description:
