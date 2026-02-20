@@ -56,7 +56,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return matches[0]?.href ?? null;
   }, [pathname]);
 
-  // ESC to close + restore focus
   React.useEffect(() => {
     if (!isMenuOpen) return;
 
@@ -71,7 +70,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isMenuOpen]);
 
-  // Body scroll lock (+ avoid layout shift) + focus first link
   React.useEffect(() => {
     if (!isMenuOpen) return;
 
@@ -97,7 +95,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
-      {/* Skip link (pro a11y touch) */}
       <a
         href="#content"
         className={cn(
