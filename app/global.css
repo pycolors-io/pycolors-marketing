@@ -76,13 +76,12 @@ samp {
 
 #nd-sidebar {
   background-color: transparent;
-  border-right: 1px solid rgba(128, 128, 128, 0.12);
   position: fixed;
-  left: -3px;
   width: var(--fd-sidebar-width, 260px);
   top: var(--fd-nav-height);
   height: calc(100vh - var(--fd-nav-height));
   z-index: 30;
+  border: none;
 }
 
 a[data-active="true"] {
