@@ -43,12 +43,13 @@ const focusRing =
 const EXTERNAL = {
   demo: 'https://starter-demo.pycolors.io',
   repo: 'https://github.com/pycolors-io/pycolors-starter-free',
-  docs: 'https://pycolors.io/docs/saas-starter',
 } as const;
 
 const INTERNAL = {
-  starters: 'https://pycolors.io/starters',
-  ui: 'https://pycolors.io/ui',
+  starters: '/starters',
+  ui: '/ui',
+  docs: '/docs/saas-starter',
+  upgrade: '/docs/saas-starter/upgrade-to-pro',
 } as const;
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -233,7 +234,7 @@ export default function StarterFreePage() {
                 </Button>
 
                 <Button asChild variant="outline">
-                  <Link href={EXTERNAL.docs}>Read the docs</Link>
+                  <Link href={INTERNAL.docs}>Read the docs</Link>
                 </Button>
               </div>
 
@@ -478,21 +479,16 @@ export default function StarterFreePage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 sm:items-end">
-                    <Button asChild variant="secondary">
-                      <a
-                        href={EXTERNAL.demo}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        Open demo
-                        <ExternalLink
-                          className="ml-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    </Button>
                     <Button asChild variant="outline">
-                      <Link href="/starters">Explore Starters</Link>
+                      <Link href={INTERNAL.upgrade}>
+                        Upgrade guide
+                      </Link>
+                    </Button>
+
+                    <Button asChild variant="outline">
+                      <Link href={INTERNAL.starters}>
+                        Explore Starters
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -501,13 +497,13 @@ export default function StarterFreePage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[42%]">
+                        <TableHead className="w-[30%]">
                           Capability
                         </TableHead>
-                        <TableHead className="w-[29%]">
+                        <TableHead className="w-[35%]">
                           FREE (today)
                         </TableHead>
-                        <TableHead className="w-[29%]">
+                        <TableHead className="w-[35%]">
                           PRO (planned)
                         </TableHead>
                       </TableRow>
@@ -585,6 +581,7 @@ export default function StarterFreePage() {
                           Production-ready upgrades + guidance
                         </TableCell>
                       </TableRow>
+
                       <TableRow>
                         <TableCell className="font-medium">
                           UI components
@@ -718,6 +715,16 @@ pnpm dev`}</pre>
                             http://localhost:3000
                           </span>
                         </div>
+
+                        <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+                          Docs:{' '}
+                          <Link
+                            href={INTERNAL.docs}
+                            className="font-mono text-foreground underline underline-offset-4"
+                          >
+                            {INTERNAL.docs}
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -753,7 +760,7 @@ pnpm dev`}</pre>
                         target="_blank"
                         rel="noreferrer noopener"
                       >
-                        Open demo
+                        See live demo
                         <ExternalLink
                           className="ml-2 h-4 w-4"
                           aria-hidden="true"
@@ -778,11 +785,13 @@ pnpm dev`}</pre>
               </Card>
 
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                Docs for the Starter will live under{' '}
-                <span className="font-mono text-foreground">
+                Follow the setup guide in the docs →{' '}
+                <Link
+                  href={INTERNAL.docs}
+                  className="font-mono text-foreground underline underline-offset-4"
+                >
                   /docs/saas-starter
-                </span>{' '}
-                (planned).
+                </Link>
               </p>
             </section>
           </div>
