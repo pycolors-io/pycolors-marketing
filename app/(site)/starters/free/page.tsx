@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ExternalLink } from 'lucide-react';
+import { BadgeCheck, ExternalLink } from 'lucide-react';
 
 import {
   Badge,
@@ -15,6 +15,7 @@ import {
   TableRow,
 } from '@pycolors/ui';
 import { Container } from '@/components/container';
+import { NpmBadges } from '@/components/npm-badges';
 
 export const metadata: Metadata = {
   title: 'Starter Free',
@@ -250,43 +251,59 @@ export default function StarterFreePage() {
             {/* BUILT ON PYCOLORS UI */}
             <section className="py-10 sm:py-12">
               <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <BadgeCheck
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </span>
+
+                  <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="secondary">Design system</Badge>
-                      <Badge variant="outline">Open source</Badge>
+                      <div className="text-sm font-medium">
+                        Built on PyColors UI (already included)
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        @pycolors/ui
+                      </Badge>
                     </div>
 
-                    <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Built on PyColors UI
-                    </h2>
-
-                    <p className="max-w-xl text-sm text-muted-foreground">
-                      The starter ships with the same UI primitives
-                      used across the PyColors ecosystem — accessible,
-                      Radix-based components with semantic tokens and
-                      production-ready states.
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Starter Free ships with the PyColors UI
+                      primitives you’ve published: buttons, cards,
+                      badges, dialogs, sheets, tabs, toasts, tables,
+                      pagination, skeletons, empty states, and an
+                      accessible password input.
                     </p>
 
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      <TrustPill label="Radix primitives" />
-                      <TrustPill label="Semantic tokens" />
-                      <TrustPill label="Accessible by default" />
-                      <TrustPill label="Production states" />
+                    <div className="pt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <NpmBadges
+                          packageName="@pycolors/ui"
+                          size="sm"
+                        />
+                        <span className="text-xs text-muted-foreground">
+                          Open source · versioned · shipped weekly
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Button asChild size="sm" variant="outline">
+                          <Link href={INTERNAL.ui}>Explore UI</Link>
+                        </Button>
+
+                        <Button asChild size="sm" variant="outline">
+                          <a
+                            href="https://www.npmjs.com/package/@pycolors/ui"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            npm
+                          </a>
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 sm:min-w-55 sm:items-end">
-                    <Button asChild variant="outline">
-                      <Link href={INTERNAL.ui}>
-                        Explore UI system
-                      </Link>
-                    </Button>
-
-                    <p className="text-xs text-muted-foreground">
-                      Used by the starter, templates, and future Pro
-                      kits.
-                    </p>
                   </div>
                 </div>
               </Card>
