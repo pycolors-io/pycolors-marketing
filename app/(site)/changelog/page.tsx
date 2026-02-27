@@ -16,7 +16,6 @@ import {
   CardHeader,
   CardContent,
 } from '@pycolors/ui';
-import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Changelog',
@@ -56,6 +55,43 @@ type ChangelogItem = {
 };
 
 const CHANGELOG: ChangelogItem[] = [
+  {
+    version: 'v1.2.2',
+    title: 'Trust foundation: Terms + Privacy',
+    dateLabel: 'Fri 27 Feb 2026',
+    dateISO: '2026-02-27',
+    status: 'Stable',
+    releaseWeekLabel: 'Feb 2026 (weekly release)',
+    summary:
+      'This release completes the trust baseline required for commercial distribution. It adds Terms of Service and a Privacy Policy, updates the footer “Trust” section, and clarifies how commercial templates (like NA-AI) relate to the licensing model.',
+    highlights: [
+      {
+        title: 'Legal baseline shipped',
+        items: [
+          'Added /terms (Terms of Service) to define website and digital product usage rules.',
+          'Added /privacy (Privacy Policy) covering minimal data collection, cookies/analytics, and third-party checkout handling.',
+        ],
+      },
+      {
+        title: 'Trust surface & navigation',
+        items: [
+          'Updated footer “Trust” links to include Terms and Privacy.',
+          'Small copy alignment to ensure commercial template licensing remains clear and consistent across pages.',
+        ],
+      },
+      {
+        title: 'Commercial readiness (templates)',
+        items: [
+          'Reinforced the “open core → paid acceleration” model: open-source foundations remain discoverable while premium templates stay properly licensed.',
+          'Keeps NA-AI positioning consistent with a commercial license included at purchase (Gumroad distribution).',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read the license',
+      href: '/license',
+    },
+  },
   {
     version: 'v1.2.1',
     title: 'Starter Free docs + marketing UX polish',

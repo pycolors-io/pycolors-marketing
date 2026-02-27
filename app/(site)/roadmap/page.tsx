@@ -218,7 +218,7 @@ const items: RoadmapItem[] = [
     tags: ['Release', 'Trust', 'Brand'],
   },
 
-  // ✅ UPDATED FOR v1.2.1 (Fri 20 Feb 2026)
+  // ✅ v1.2.1 (Fri 20 Feb 2026) — shipped
   {
     title: 'SaaS Starter (Free) — public alpha',
     description:
@@ -253,6 +253,15 @@ const items: RoadmapItem[] = [
     milestone: 'Feb 2026',
     tags: ['Marketing', 'Onboarding', 'A11y', 'Launch'],
   },
+  {
+    title: 'Brand & legal baseline',
+    description:
+      'Completed trust baseline for commercial distribution: License + Open Source pages, plus Terms of Service and a Privacy Policy. Footer “Trust” navigation updated for clarity.',
+    status: 'Shipped',
+    milestone: 'Feb 2026',
+    tags: ['Trust', 'Legal', 'Sales'],
+    href: '/terms',
+  },
 
   // NOW
   {
@@ -264,12 +273,13 @@ const items: RoadmapItem[] = [
     tags: ['SEO', 'Analytics', 'Trust'],
   },
   {
-    title: 'Brand & legal baseline',
+    title: 'Cookie preferences + analytics consent (optional)',
     description:
-      'Logo v1, domain hygiene, and lightweight legal pages (license, privacy, terms) to support trust and early sales.',
+      'If analytics are enabled, add a lightweight consent layer and document what is tracked. Keep it minimal and performance-safe.',
     status: 'Now',
     milestone: 'Feb 2026',
-    tags: ['Brand', 'Trust', 'Legal'],
+    tags: ['Privacy', 'Analytics', 'Trust'],
+    href: '/privacy',
   },
 
   // NEXT
