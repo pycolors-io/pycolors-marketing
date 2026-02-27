@@ -45,8 +45,10 @@ const GROUPS: Array<{
     title: 'Trust',
     links: [
       { label: 'License', href: '/license' },
-      { label: 'About', href: '/about' },
+      { label: 'Terms', href: '/terms' },
+      { label: 'Privacy', href: '/privacy' },
       { label: 'Open Source', href: '/open-source' },
+      { label: 'About', href: '/about' },
     ],
   },
 ];
@@ -177,7 +179,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 lg:flex lg:justify-end relative Z-10">
+            <div className="lg:col-span-7 lg:flex lg:justify-end relative z-10">
               <div className="grid gap-8 sm:grid-cols-3">
                 {GROUPS.map((group) => (
                   <div key={group.title} className="space-y-3">
