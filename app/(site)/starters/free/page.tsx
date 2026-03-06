@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { BadgeCheck, ExternalLink } from 'lucide-react';
+import {
+  BadgeCheck,
+  ExternalLink,
+  ArrowRight,
+  BookOpen,
+  LayoutTemplate,
+  Sparkles,
+} from 'lucide-react';
 
 import {
   Badge,
@@ -20,12 +27,12 @@ import { NpmBadges } from '@/components/npm-badges';
 export const metadata: Metadata = {
   title: 'Starter Free',
   description:
-    'Launch your SaaS in days, not months. Starter Free ships a production-shaped SaaS surface: dashboard, data screens, settings, billing entrypoints, and auth UX — mocked by design, ready to wire.',
+    'Starter Free gives you a production-shaped SaaS surface: auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B member management — mocked by design, ready to wire.',
   alternates: { canonical: '/starters/free' },
   openGraph: {
     title: 'Starter Free · PyColors',
     description:
-      'Launch your SaaS in days, not months. A production-shaped Next.js starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
     url: '/starters/free',
     images: ['/seo/og-main.png'],
   },
@@ -33,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Starter Free · PyColors',
     description:
-      'Launch your SaaS in days, not months. A production-shaped Next.js starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -49,8 +56,14 @@ const EXTERNAL = {
 const INTERNAL = {
   starters: '/starters',
   ui: '/ui',
+  patterns: '/ui/patterns',
+  examples: '/examples',
+  guides: '/guides',
   docs: '/docs/saas-starter',
-  upgrade: '/docs/saas-starter/upgrade-to-pro',
+  docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
+  upgrade: '/upgrade',
+  access: '/access',
+  roadmap: '/roadmap',
 } as const;
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -160,6 +173,43 @@ function ProductFeatureCard({
   );
 }
 
+function ResourceCard({
+  icon,
+  title,
+  description,
+  href,
+  cta,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+}) {
+  return (
+    <Card className="p-5">
+      <div className="space-y-3">
+        <div className="inline-flex size-9 items-center justify-center rounded-md border border-border bg-muted/30 text-muted-foreground">
+          {icon}
+        </div>
+
+        <div className="space-y-2">
+          <div className="text-sm font-medium">{title}</div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        <div className="pt-1">
+          <Button asChild size="sm" variant="outline">
+            <Link href={href}>{cta}</Link>
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
 export default function StarterFreePage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
@@ -188,9 +238,9 @@ export default function StarterFreePage() {
 
               <div className="space-y-4">
                 <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  A production-shaped SaaS starter
+                  Validate your SaaS surface first.
                   <span className="block font-bold">
-                    you can run in minutes.
+                    Wire the business later.
                   </span>
                 </h1>
 
@@ -198,8 +248,8 @@ export default function StarterFreePage() {
                   Starter Free gives you a credible SaaS surface out
                   of the box: auth UX, dashboard, data screens,
                   settings, billing entrypoints, and B2B member
-                  management — mocked by design and ready to wire when
-                  you are.
+                  management — mocked by design so you can move fast
+                  without backend overhead.
                 </p>
               </div>
 
@@ -248,6 +298,47 @@ export default function StarterFreePage() {
               </div>
             </header>
 
+            {/* ENTRY POSITIONING */}
+            <section className="py-10 sm:py-12">
+              <Card className="p-6 sm:p-7">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="outline" className="gap-2">
+                        <Sparkles
+                          className="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                        Why Starter Free exists
+                      </Badge>
+                    </div>
+
+                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                      Starter Free is the entry point of the PyColors
+                      ecosystem. Its job is simple: help you validate
+                      the product surface before you spend time wiring
+                      authentication, billing, backend contracts, and
+                      deployment infrastructure.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 sm:min-w-[240px] sm:justify-end">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.guides}>Guides</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.patterns}>
+                        UI Patterns
+                      </Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.examples}>Examples</Link>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </section>
+
             {/* BUILT ON PYCOLORS UI */}
             <section className="py-10 sm:py-12">
               <Card className="p-6 sm:p-7">
@@ -271,10 +362,10 @@ export default function StarterFreePage() {
 
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       Starter Free ships with the PyColors UI
-                      primitives you’ve published: buttons, cards,
-                      badges, dialogs, sheets, tabs, toasts, tables,
-                      pagination, skeletons, empty states, and an
-                      accessible password input.
+                      primitives you’ve already published: buttons,
+                      cards, badges, dialogs, sheets, tabs, toasts,
+                      tables, pagination, skeletons, empty states, and
+                      an accessible password input.
                     </p>
 
                     <div className="pt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -309,11 +400,11 @@ export default function StarterFreePage() {
               </Card>
             </section>
 
-            {/* WHAT YOU GET (productized) */}
+            {/* WHAT YOU GET */}
             <section id="included" className="py-10 sm:py-12">
               <SectionHeader
                 title="What you get"
-                description="Not a list of tech. A product surface you can ship from — then wire later."
+                description="Not just components. A product-shaped SaaS surface you can run, inspect, and adapt."
                 action={
                   <Button asChild size="sm" variant="outline">
                     <a
@@ -336,83 +427,132 @@ export default function StarterFreePage() {
                 <ProductFeatureCard
                   title="/login + /register + /forgot"
                   badge="Auth UX"
-                  subtitle="The mandatory entry point for any SaaS — with clean states and no extra noise."
+                  subtitle="The mandatory entry point of any SaaS — with clean states and no provider lock-in."
                   points={[
-                    'Email + password',
-                    'OAuth (Google placeholder)',
+                    'Email + password surface',
+                    'OAuth placeholder',
                     'Forgot password flow',
                     'States: loading / error / success',
                   ]}
-                  why="Without auth, it’s not a SaaS. This gives you the UX contract you’ll wire to your provider later."
+                  why="You get the UX contract now and keep full freedom on which auth provider to wire later."
                   href={`${EXTERNAL.demo}/login`}
                 />
 
                 <ProductFeatureCard
                   title="/dashboard"
                   badge="First impression"
-                  subtitle="Immediate product credibility — the screen that proves it’s real-world."
+                  subtitle="The screen that makes your product feel credible on first load."
                   points={[
-                    'Header (user + org)',
+                    'Header with product context',
                     'KPI placeholders',
-                    'Primary call to action',
-                    'Intelligent empty state',
+                    'Primary next action',
+                    'Empty / structured states',
                   ]}
-                  why="This is where users decide if your product feels legit. The layout and states do the work."
+                  why="A good dashboard makes your SaaS feel real immediately, even before production wiring."
                   href={`${EXTERNAL.demo}/dashboard`}
                 />
 
                 <ProductFeatureCard
                   title="/projects"
                   badge="Core entity"
-                  subtitle="A placeholder business entity with full CRUD UI surface."
+                  subtitle="A realistic CRUD surface for your main business object."
                   points={[
                     'Table list',
                     'Create / edit / delete',
-                    'Empty state: “Create your first…”',
-                    'Simple permissions surface',
+                    'Empty state',
+                    'Row actions + dialogs',
                   ]}
-                  why="Every SaaS has a central entity. You can rename it later — the pattern stays."
+                  why="Every SaaS has a central entity. You can rename the domain later, but the pattern already works."
                   href={`${EXTERNAL.demo}/projects`}
                 />
 
                 <ProductFeatureCard
                   title="/settings"
                   badge="Maturity"
-                  subtitle="The section that turns a demo into a product — structure included."
+                  subtitle="The section that turns a mock product into something people trust."
                   points={[
-                    'Tabs: Profile / Organization / Security',
-                    'Password & sessions placeholders',
+                    'Tabs: profile / organization / security',
+                    'Password and session placeholders',
                     'Danger zone surface',
                   ]}
-                  why="A SaaS without settings feels fake. This sells maturity instantly."
+                  why="Without structured settings, a product feels incomplete. This adds maturity from day one."
                   href={`${EXTERNAL.demo}/settings`}
                 />
 
                 <ProductFeatureCard
                   title="/billing"
                   badge="Monetization"
-                  subtitle="Billing entrypoints and subscription surface — mocked, but designed to wire to Stripe."
+                  subtitle="Billing entrypoints and subscription surfaces — mocked by design, ready to wire."
                   points={[
-                    'Current plan surface',
+                    'Current plan state',
                     'Upgrade / downgrade actions',
                     'Portal entrypoint (mock)',
                     'Subscription status placeholders',
                   ]}
-                  why="Billing is non-negotiable for SaaS. You get the UI surface now, wiring later."
+                  why="You can validate how monetization fits the product before wiring Stripe."
                   href={`${EXTERNAL.demo}/billing`}
                 />
 
                 <ProductFeatureCard
-                  title="/admin (members)"
+                  title="/admin"
                   badge="B2B-ready"
-                  subtitle="Team management UI surface for multi-user orgs."
+                  subtitle="A team and roles surface that makes the starter feel company-ready."
                   points={[
-                    'Member management table',
+                    'Members table',
                     'Roles: owner / member',
                     'Invitations surface',
                   ]}
-                  why="B2B readiness is a differentiator. This proves you’re not shipping a toy."
+                  why="B2B credibility matters. This proves you’re building beyond a solo dashboard toy."
                   href={`${EXTERNAL.demo}/admin`}
+                />
+              </div>
+            </section>
+
+            {/* LEARN / EXPLORE */}
+            <section className="py-10 sm:py-12">
+              <SectionHeader
+                title="Learn before you wire"
+                description="Starter Free works even better when you connect it to the rest of the ecosystem."
+              />
+
+              <div className="grid gap-4 lg:grid-cols-3">
+                <ResourceCard
+                  icon={
+                    <BookOpen
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="Guides"
+                  description="Read focused SaaS guides covering dashboards, auth, billing, teams, admin systems, and product structure."
+                  href={INTERNAL.guides}
+                  cta="Read guides"
+                />
+
+                <ResourceCard
+                  icon={
+                    <LayoutTemplate
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="UI Patterns"
+                  description="Move from primitives to production-shaped product surfaces built for real SaaS workflows."
+                  href={INTERNAL.patterns}
+                  cta="Browse patterns"
+                />
+
+                <ResourceCard
+                  icon={
+                    <Sparkles
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="Examples"
+                  description="Explore real SaaS interface directions and what is already available today through Starter Free."
+                  href={INTERNAL.examples}
+                  cta="See examples"
                 />
               </div>
             </section>
@@ -421,7 +561,7 @@ export default function StarterFreePage() {
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="Mocked on purpose"
-                description="Starter Free is frontend-only so you can evaluate UX and structure first."
+                description="Starter Free is frontend-first so you can validate structure, UX, and product credibility before infrastructure."
               />
 
               <div className="grid gap-4 lg:grid-cols-2">
@@ -431,8 +571,9 @@ export default function StarterFreePage() {
                       No backend required
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Data is mocked so you can explore flows,
-                      layouts, and states without infrastructure.
+                      Data is mocked so you can explore layouts,
+                      navigation, product states, and flows without
+                      setting up a database, API, or auth provider.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Pill>Mock data</Pill>
@@ -445,15 +586,15 @@ export default function StarterFreePage() {
                 <Card className="p-6">
                   <div className="space-y-2">
                     <div className="text-sm font-medium">
-                      Wire later without rewrites
+                      Keep the surface, swap the wiring
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Keep screens and UX contracts. Swap the
-                      data/auth/billing layers progressively when
-                      you’re ready.
+                      The goal is progressive adoption: keep the
+                      screens and UX contracts, then plug your auth,
+                      billing, and data layer when you’re ready.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>Provider-ready</Pill>
+                      <Pill>Provider-agnostic</Pill>
                       <Pill>Stripe-ready</Pill>
                       <Pill>Backend-agnostic</Pill>
                     </div>
@@ -462,14 +603,20 @@ export default function StarterFreePage() {
               </div>
             </section>
 
-            {/* UPGRADE TO PRO */}
+            {/* FREE VS PRO */}
             <section className="py-10 sm:py-12">
               <SectionHeader
-                title="Upgrade to Pro when you scale"
-                description="Free gets you shipping faster. Pro (planned) wires the foundation for production."
+                title="Free validates UX. PRO wires the business."
+                description="Starter Free helps you move fast now. PRO is the upgrade path when auth, billing, backend, and deployment become your bottleneck."
                 action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/roadmap">View roadmap</Link>
+                  <Button asChild size="sm" variant="default">
+                    <Link href={INTERNAL.upgrade}>
+                      Explore PRO
+                      <ArrowRight
+                        className="ml-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </Button>
                 }
               />
@@ -479,13 +626,13 @@ export default function StarterFreePage() {
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge variant="secondary">FREE</Badge>
-                      <Badge variant="outline">PRO (planned)</Badge>
+                      <Badge variant="outline">PRO (coming)</Badge>
                     </div>
 
                     <p className="text-sm text-muted-foreground">
-                      Start with the product surface today, then
-                      upgrade when you want it wired and
-                      production-ready.
+                      Start with a credible product surface today.
+                      Upgrade when you want the business wiring done
+                      for you.
                     </p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -497,15 +644,13 @@ export default function StarterFreePage() {
 
                   <div className="flex flex-wrap gap-2 sm:items-end">
                     <Button asChild variant="outline">
-                      <Link href={INTERNAL.upgrade}>
-                        Upgrade guide
+                      <Link href={INTERNAL.docsUpgrade}>
+                        Migration guide
                       </Link>
                     </Button>
 
                     <Button asChild variant="outline">
-                      <Link href={INTERNAL.starters}>
-                        Explore Starters
-                      </Link>
+                      <Link href={INTERNAL.access}>View Access</Link>
                     </Button>
                   </div>
                 </div>
@@ -521,7 +666,7 @@ export default function StarterFreePage() {
                           FREE (today)
                         </TableHead>
                         <TableHead className="w-[35%]">
-                          PRO (planned)
+                          PRO (coming)
                         </TableHead>
                       </TableRow>
                     </TableHeader>
@@ -532,10 +677,10 @@ export default function StarterFreePage() {
                           Authentication
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Auth screens + UX states (mocked)
+                          Screens + UX states
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Auth wired (Clerk/NextAuth/Supabase)
+                          Providers + sessions + protected routes
                         </TableCell>
                       </TableRow>
 
@@ -544,34 +689,10 @@ export default function StarterFreePage() {
                           Billing
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Billing entrypoints (mocked)
+                          Billing UI + entrypoints
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Stripe Checkout + Portal wired
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell className="font-medium">
-                          Organizations
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          Single-org UI surface
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          Multi-org + org switcher
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell className="font-medium">
-                          Roles & permissions
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          Basic roles UI
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          RBAC + advanced permissions
+                          Stripe subscriptions + portal + webhooks
                         </TableCell>
                       </TableRow>
 
@@ -583,50 +704,47 @@ export default function StarterFreePage() {
                           Mock sources
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Production data layer + API contracts
+                          Backend foundations + production contracts
                         </TableCell>
                       </TableRow>
 
                       <TableRow>
                         <TableCell className="font-medium">
-                          Packaging
+                          Organizations
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Demo-ready baseline
+                          Single-org UI surface
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Production-ready upgrades + guidance
+                          Multi-tenant foundations
                         </TableCell>
                       </TableRow>
 
                       <TableRow>
                         <TableCell className="font-medium">
-                          UI components
+                          Deployment
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          <Link
-                            href={INTERNAL.ui}
-                            className="underline"
-                          >
-                            Core PyColors UI primitives
-                          </Link>
+                          Local-first
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          Advanced components
+                          Env setup + CI/CD + launch checklist
                         </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
 
                   <p className="mt-3 text-xs text-muted-foreground">
-                    Pro isn’t public yet — roadmap is the source of
-                    truth.
+                    PRO has its own page now. Roadmap tracks delivery,
+                    but{' '}
+                    <span className="text-foreground">/upgrade</span>{' '}
+                    is the source of truth for the offer.
                   </p>
                 </div>
               </Card>
             </section>
 
-            {/* QUICK START (consistent terminal box) */}
+            {/* QUICK START */}
             <section className="py-8 sm:py-10">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -636,12 +754,12 @@ export default function StarterFreePage() {
                     </h2>
                     <p className="text-sm text-muted-foreground">
                       Clone the repo, run the starter locally, and
-                      explore real SaaS screens immediately.
+                      inspect real SaaS screens in minutes.
                     </p>
 
                     <p className="text-xs text-muted-foreground">
                       Fast path: run → open dashboard → inspect
-                      patterns → wire later.
+                      surfaces → adapt the product copy → wire later.
                     </p>
 
                     <div className="flex flex-wrap gap-2 pt-1">
@@ -755,12 +873,14 @@ pnpm dev`}</pre>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-1">
                     <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Start shipping faster today.
+                      Start with the surface. Upgrade when wiring
+                      matters.
                     </h2>
                     <p className="text-sm text-muted-foreground">
                       Open the demo, clone the repo, and build on a
-                      credible SaaS surface — then wire your
-                      production foundation when ready.
+                      credible SaaS baseline now. Move to PRO when you
+                      want auth, billing, backend, and deployment
+                      foundations wired.
                     </p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -784,18 +904,15 @@ pnpm dev`}</pre>
                         />
                       </a>
                     </Button>
+
                     <Button asChild variant="secondary">
-                      <a
-                        href={EXTERNAL.repo}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        Get the repo (FREE)
-                        <ExternalLink
+                      <Link href={INTERNAL.upgrade}>
+                        See Upgrade to PRO
+                        <ArrowRight
                           className="ml-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>
