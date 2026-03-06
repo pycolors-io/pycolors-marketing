@@ -10,11 +10,11 @@ export type PrimaryNavItem = {
 
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
   { label: 'UI', href: '/ui' },
-  { label: 'Templates', href: '/templates' },
+  { label: 'Patterns', href: '/ui/patterns' },
+  { label: 'Examples', href: '/examples' },
+  { label: 'Guides', href: '/guides' },
   { label: 'Starters', href: '/starters' },
-  { label: 'Documentation', href: '/docs' },
 ];
-
 /**
  * Optional: if we later re-enable Fumadocs built-in navigation.
  */

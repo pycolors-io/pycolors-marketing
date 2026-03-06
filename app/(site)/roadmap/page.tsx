@@ -7,11 +7,11 @@ import { Badge, Card, cn, Button } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'Roadmap',
   description:
-    'Public roadmap for the PyColors ecosystem: UI, Starters, and Templates. A release-driven plan focused on shipping, trust, and commercial readiness.',
+    'Public roadmap for the PyColors ecosystem: UI, Starters, Guides, and future premium products. A release-driven plan focused on shipping, trust, and monetization readiness.',
   openGraph: {
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Starters, and Templates. Shipping-first, docs-first, and monetization readiness.',
+      'A release-driven roadmap for PyColors: UI, Guides, Starters, and premium products. Shipping-first, docs-first, and monetization readiness.',
     url: '/roadmap',
     images: ['/seo/og-main.png'],
   },
@@ -19,13 +19,18 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Starters, and Templates.',
+      'A release-driven roadmap for PyColors: UI, Guides, Starters, and premium products.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
 type Status = 'Now' | 'Next' | 'Later' | 'Shipped';
-type Milestone = 'Release Week' | 'Jan 2026' | 'Feb 2026' | 'H1 2026';
+type Milestone =
+  | 'Release Week'
+  | 'Jan 2026'
+  | 'Feb 2026'
+  | 'Mar 2026'
+  | 'H1 2026';
 
 type RoadmapItem = {
   title: string;
@@ -70,10 +75,16 @@ const milestones: Array<{
       'Ship Starter (Free) public alpha + strengthen trust surface (SEO, analytics, licensing).',
   },
   {
+    id: 'Mar 2026',
+    title: 'March 2026',
+    subtitle:
+      'Expand PyColors.io into a SaaS learning and conversion funnel: guides, patterns, examples, access, and PRO upgrade positioning.',
+  },
+  {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Blocks + first premium templates. Start monetization loop with predictable releases.',
+      'Turn the funnel into revenue: Starter PRO wiring, monetization flow, and launch-ready premium packaging.',
   },
 ];
 
@@ -217,8 +228,6 @@ const items: RoadmapItem[] = [
     milestone: 'Feb 2026',
     tags: ['Release', 'Trust', 'Brand'],
   },
-
-  // ✅ v1.2.1 (Fri 20 Feb 2026) — shipped
   {
     title: 'SaaS Starter (Free) — public alpha',
     description:
@@ -263,54 +272,151 @@ const items: RoadmapItem[] = [
     href: '/terms',
   },
 
+  // MAR 2026 — shipped
+  {
+    title: 'Guides knowledge layer',
+    description:
+      'Shipped a dedicated Guides layer on PyColors.io with SaaS-focused educational content covering product foundations, auth, billing, dashboards, admin surfaces, and team systems.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Guides', 'Docs', 'SaaS', 'Education'],
+    href: '/guides',
+  },
+  {
+    title: 'Guide infrastructure',
+    description:
+      'Added a reusable guide page shell and an inline “On This Page” component to improve content consistency, navigation, and reading flow across long-form SaaS guides.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Docs', 'UX', 'Guides'],
+  },
+  {
+    title: 'Patterns + Examples discovery layer',
+    description:
+      'Added dedicated marketing pages for SaaS patterns and examples to better show what users can learn, validate, and eventually build with PyColors.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Patterns', 'Examples', 'Marketing', 'Onboarding'],
+    href: '/examples',
+  },
+  {
+    title: 'Access & pricing overview',
+    description:
+      'Added an access and pricing page clarifying Free, PRO, and long-term upgrade logic to make product packaging and purchase direction easier to understand.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Pricing', 'Packaging', 'Sales', 'Trust'],
+    href: '/access',
+  },
+  {
+    title: 'PRO upgrade funnel',
+    description:
+      'Added a dedicated Upgrade to PRO landing page and clarified the value of moving from validation surfaces to production-ready wiring and business foundations.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['PRO', 'Upgrade', 'Sales', 'Positioning'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Waitlist capture for premium demand',
+    description:
+      'Added a PRO waitlist page with early access messaging, pricing preview, and bundle visibility to support launch preparation and audience capture.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Waitlist', 'Audience', 'Launch', 'Growth'],
+    href: '/waitlist',
+  },
+  {
+    title: 'Navigation restructuring',
+    description:
+      'Updated the primary navigation to reflect the new product learning flow: UI, Patterns, Examples, Guides, and Starters.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Navigation', 'UX', 'IA'],
+  },
+  {
+    title: 'Ecosystem messaging refresh',
+    description:
+      'Refined homepage, footer, header, starter pages, and upgrade messaging to better explain the PyColors funnel from learning to validation to premium acceleration.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Marketing', 'Brand', 'Conversion'],
+    href: '/',
+  },
+
   // NOW
+  {
+    title: 'Starter PRO wiring baseline',
+    description:
+      'Turn the PRO offer from positioning into implementation scope: auth provider guidance, session handling, billing integration direction, backend foundations, and production setup rules.',
+    status: 'Now',
+    milestone: 'Mar 2026',
+    tags: ['Starter PRO', 'Architecture', 'Auth', 'Billing'],
+  },
+  {
+    title: 'Waitlist conversion loop',
+    description:
+      'Connect waitlist capture to a reliable launch workflow: audience segmentation, email flow, pricing announcement sequence, and clearer launch CTA placement.',
+    status: 'Now',
+    milestone: 'Mar 2026',
+    tags: ['Waitlist', 'Conversion', 'Launch'],
+    href: '/waitlist',
+  },
+
+  // NEXT
+  {
+    title: 'Starter PRO offer page hardening',
+    description:
+      'Finalize feature comparison, FAQ, upgrade narrative, and packaging details so the PRO offer feels commercially ready before release.',
+    status: 'Next',
+    milestone: 'Mar 2026',
+    tags: ['PRO', 'Packaging', 'Sales', 'Trust'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Monetization readiness v2',
+    description:
+      'Align pricing, checkout flow, license language, demos, and upgrade path into a cleaner premium conversion system across the full site.',
+    status: 'Next',
+    milestone: 'Mar 2026',
+    tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
+  },
   {
     title: 'Search & analytics baseline',
     description:
       'Finish GA4/GTM wiring, validate key events, and set up Search Console indexing checks for faster discoverability.',
-    status: 'Now',
-    milestone: 'Feb 2026',
+    status: 'Next',
+    milestone: 'Mar 2026',
     tags: ['SEO', 'Analytics', 'Trust'],
   },
   {
     title: 'Cookie preferences + analytics consent (optional)',
     description:
       'If analytics are enabled, add a lightweight consent layer and document what is tracked. Keep it minimal and performance-safe.',
-    status: 'Now',
-    milestone: 'Feb 2026',
+    status: 'Next',
+    milestone: 'Mar 2026',
     tags: ['Privacy', 'Analytics', 'Trust'],
     href: '/privacy',
-  },
-
-  // NEXT
-  {
-    title: 'Starter waitlist + early access loop',
-    description:
-      'Add a lightweight waitlist + early access flow to capture demand and build an audience before the Pro version.',
-    status: 'Next',
-    milestone: 'Feb 2026',
-    tags: ['Growth', 'Audience', 'Launch'],
-    href: '/starters',
-  },
-  {
-    title: 'Monetization readiness v1',
-    description:
-      'Pricing + license clarity, packaging checklist, demo stability, and a minimal purchase funnel aligned with weekly releases.',
-    status: 'Next',
-    milestone: 'Feb 2026',
-    tags: ['Sales', 'Trust', 'Packaging'],
   },
   {
     title: 'Issue triage + public feedback loop',
     description:
-      'Public “good first issue”, bug bash cadence, and roadmap grooming based on real user feedback from docs + templates.',
+      'Public “good first issue”, bug bash cadence, and roadmap grooming based on real user feedback from docs + guides + starter pages.',
     status: 'Next',
-    milestone: 'Feb 2026',
+    milestone: 'Mar 2026',
     tags: ['Community', 'Quality', 'DX'],
     href: 'https://github.com/pycolors-io/pycolors-ui/issues',
   },
 
   // LATER (H1 2026)
+  {
+    title: 'Starter PRO release',
+    description:
+      'Ship the first premium Starter PRO package with production wiring guidance for auth, billing, backend foundations, and launch readiness.',
+    status: 'Later',
+    milestone: 'H1 2026',
+    tags: ['Starter PRO', 'Premium', 'Launch'],
+  },
   {
     title: 'Blocks library (marketing + SaaS)',
     description:
@@ -412,10 +518,11 @@ export default function RoadmapPage() {
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              A realistic plan focused on shipping. This roadmap is
-              aligned with the v1.0 release week (Fri 9 Jan 2026) and
-              outlines the next steps to grow PyColors into a stable
-              ecosystem: UI, Starters, and Templates.
+              A realistic plan focused on shipping. This roadmap
+              tracks how PyColors evolves from a UI library into a
+              SaaS builder ecosystem: learning resources, production
+              patterns, Starter Free, Starter PRO, and future premium
+              products.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -450,9 +557,10 @@ export default function RoadmapPage() {
                   Single thing
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Ship the PyColors ecosystem funnel: UI → Starter
-                  (Free) → Starter Pro → Templates. Weekly releases,
-                  measurable improvements, and a public roadmap.
+                  Ship the PyColors ecosystem funnel: Guides →
+                  Patterns / Examples → Starter Free → Starter PRO.
+                  Weekly releases, measurable improvements, and a
+                  public roadmap.
                 </p>
               </Card>
 
@@ -461,8 +569,9 @@ export default function RoadmapPage() {
                   Documentation-first
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Every component and starter ships with Preview,
-                  Usage, Code, and clear conventions.
+                  Every component, guide, and starter should help
+                  users understand what to build, why it matters, and
+                  how to ship it with clearer conventions.
                 </p>
               </Card>
 
@@ -471,8 +580,9 @@ export default function RoadmapPage() {
                   Commercial readiness
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Trust pages, licensing, demos, packaging, analytics,
-                  and a predictable update cadence.
+                  Trust pages, licensing, demos, pricing clarity,
+                  waitlist capture, analytics, and a predictable
+                  update cadence.
                 </p>
               </Card>
             </div>
