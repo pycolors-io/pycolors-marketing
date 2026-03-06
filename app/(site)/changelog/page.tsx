@@ -56,6 +56,54 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.3.0',
+    title: 'SaaS knowledge layer + PRO funnel',
+    dateLabel: 'Fri 6 Mar 2026',
+    dateISO: '2026-03-06',
+    status: 'Stable',
+    releaseWeekLabel: 'Mar 2026 (weekly release)',
+    summary:
+      'This release turns PyColors.io into a much stronger SaaS learning and conversion surface. It ships a full Guides layer, adds Patterns / Examples / Access pages, introduces PRO upgrade and waitlist flows, and refines navigation and ecosystem messaging to make the path from learning to upgrading much clearer.',
+    highlights: [
+      {
+        title: 'Guides layer shipped',
+        items: [
+          'Added a dedicated Guides landing page to position PyColors as a SaaS knowledge base for builders.',
+          'Shipped structured SaaS guides covering Next.js product foundations, dashboard UX, authentication flows, billing UX, admin panel design, and team & organization systems.',
+          'Introduced a reusable guide page shell and an inline “On This Page” navigation component for clearer reading and stronger content consistency.',
+        ],
+      },
+      {
+        title: 'Product discovery & ecosystem navigation',
+        items: [
+          'Added new marketing pages for Patterns, Examples, and Access to clarify the PyColors ecosystem and guide users through learning, validation, and upgrade paths.',
+          'Updated primary navigation to better reflect the new content structure: UI, Patterns, Examples, Guides, and Starters.',
+          'Improved content discoverability and onboarding by making educational, product, and upgrade resources easier to browse.',
+        ],
+      },
+      {
+        title: 'PRO upgrade funnel',
+        items: [
+          'Added a dedicated Upgrade to PRO page outlining the offer, roadmap direction, pricing tiers, value proposition, and FAQ.',
+          'Added a PRO waitlist page with early access messaging and pricing visibility to support premium demand capture before launch.',
+          'Enhanced site header with clearer PRO upgrade CTAs and badges across desktop and mobile.',
+        ],
+      },
+      {
+        title: 'Messaging, positioning & conversion clarity',
+        items: [
+          'Refined Starter, upgrade, and ecosystem messaging to better distinguish product surface validation from production wiring.',
+          'Improved footer structure and brand context to reinforce PyColors as a structured SaaS ecosystem rather than a simple UI library.',
+          'Strengthened the progression logic across the site: Guides → Patterns / Examples → Starter Free → Starter PRO.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Explore guides',
+      href: '/guides',
+    },
+  },
+  {
     version: 'v1.2.2',
     title: 'Trust foundation: Terms + Privacy',
     dateLabel: 'Fri 27 Feb 2026',
