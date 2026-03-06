@@ -34,21 +34,13 @@ const GROUPS: Array<{
     ],
   },
   {
-    title: 'Learn',
-    links: [
-      { label: 'Guides', href: '/guides' },
-      { label: 'Examples', href: '/examples' },
-      { label: 'UI Patterns', href: '/ui/patterns' },
-      { label: 'Starter docs', href: '/docs/saas-starter' },
-    ],
-  },
-  {
     title: 'Build',
     links: [
       { label: 'UI System', href: '/ui' },
       { label: 'Starters', href: '/starters' },
       { label: 'Templates', href: '/templates' },
-      { label: 'UI docs', href: '/docs/ui' },
+      { label: 'Guides', href: '/guides' },
+      { label: 'Docs', href: '/docs' },
     ],
   },
   {
@@ -59,6 +51,13 @@ const GROUPS: Array<{
       { label: 'License', href: '/license' },
       { label: 'Terms', href: '/terms' },
       { label: 'Privacy', href: '/privacy' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Open Source', href: '/open-source' },
     ],
   },
 ];
@@ -249,10 +248,9 @@ export function Footer() {
                     {brand.suffix}
                   </div>
 
-                  <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                    {brand.context}. Built to help developers ship
-                    product surfaces faster and move toward a premium,
-                    production-ready SaaS foundation.
+                  <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+                    {brand.context}. Docs-first SaaS UI system,
+                    starters, and product education.
                   </p>
                 </div>
 
@@ -267,13 +265,6 @@ export function Footer() {
                     Built in public
                   </Badge>
                 </div>
-
-                <nav
-                  className="flex flex-wrap gap-x-5 gap-y-2"
-                  aria-label="External links"
-                >
-                  {EXTERNAL.map(FooterLinkItem)}
-                </nav>
               </div>
             </div>
 
@@ -297,7 +288,16 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="mt-8 border-t border-border/60 pt-6">
+            <nav
+              className="flex flex-wrap items-center gap-x-5 gap-y-2"
+              aria-label="External links"
+            >
+              {EXTERNAL.map(FooterLinkItem)}
+            </nav>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
             <div className="text-xs text-muted-foreground">
               © {CURRENT_YEAR} PyColors · {brand.suffix}
             </div>
