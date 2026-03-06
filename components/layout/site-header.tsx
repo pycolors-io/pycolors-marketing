@@ -3,11 +3,11 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
-import { cn } from '@pycolors/ui';
+import { Badge, Button, cn } from '@pycolors/ui';
 import { PRIMARY_NAV_ITEMS } from '@/lib/layout.shared';
 import { Container } from '@/components/container';
 import { Logo } from '../logo';
@@ -34,6 +34,17 @@ function getScrollbarWidth() {
   return window.innerWidth - document.documentElement.clientWidth;
 }
 
+function isUpgradeContext(pathname: string | null) {
+  if (!pathname) return false;
+
+  return (
+    pathname === '/upgrade' ||
+    pathname.startsWith('/upgrade/') ||
+    pathname === '/waitlist' ||
+    pathname.startsWith('/waitlist/')
+  );
+}
+
 export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -48,8 +59,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const activeHref = React.useMemo(() => {
     if (!pathname) return null;
 
-    const matches = PRIMARY_NAV_ITEMS.filter((i) =>
-      matchPathname(pathname, i.href),
+    const matches = PRIMARY_NAV_ITEMS.filter((item) =>
+      matchPathname(pathname, item.href),
     );
 
     matches.sort((a, b) => b.href.length - a.href.length);
@@ -78,8 +89,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
     const scrollbar = getScrollbarWidth();
     document.body.style.overflow = 'hidden';
-    if (scrollbar > 0)
+    if (scrollbar > 0) {
       document.body.style.paddingRight = `${scrollbar}px`;
+    }
 
     window.setTimeout(
       () =>
@@ -92,6 +104,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       document.body.style.paddingRight = prevPaddingRight;
     };
   }, [isMenuOpen]);
+
+  const showWaitlistCta = isUpgradeContext(pathname);
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -107,10 +121,23 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       </a>
 
       <Container className="flex h-16 items-center gap-3">
-        <Logo />
+        {/* Brand */}
+        <div className="flex min-w-0 items-center gap-3">
+          <Logo />
 
+          <div className="hidden xl:flex xl:items-center xl:gap-2">
+            <Badge variant="outline" className="text-[10px]">
+              SaaS
+            </Badge>
+            <Badge variant="outline" className="text-[10px]">
+              Production-shaped
+            </Badge>
+          </div>
+        </div>
+
+        {/* Desktop navigation */}
         <nav
-          className="ml-6 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
+          className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
           aria-label="Primary navigation"
         >
           {PRIMARY_NAV_ITEMS.map((item) => {
@@ -123,7 +150,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 aria-current={isCurrent ? 'page' : undefined}
                 className={cn(
                   'rounded-md px-3 py-2 transition-colors',
-                  'text-muted-foreground hover:text-foreground hover:bg-accent/30',
+                  'text-muted-foreground hover:bg-accent/30 hover:text-foreground',
                   isCurrent && 'bg-accent/30 text-foreground',
                   focusRing,
                 )}
@@ -134,23 +161,53 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 sm:flex">
-            <LargeSearchToggle className={cn('w-60', focusRing)} />
-            <ThemeToggle
-              mode="light-dark-system"
-              className={cn(
-                'inline-flex h-9 items-center rounded-full border border-border px-1',
-                focusRing,
-              )}
-            />
-          </div>
+        {/* Desktop actions */}
+        <div className="hidden items-center gap-2 md:flex">
+          <LargeSearchToggle className={cn('w-52', focusRing)} />
 
+          <ThemeToggle
+            mode="light-dark-system"
+            className={cn(
+              'inline-flex h-9 items-center rounded-full border border-border px-1',
+              focusRing,
+            )}
+          />
+
+          <div className="hidden items-center gap-2 md:flex">
+            <Button asChild variant="outline" size="sm">
+              <Link href="/starters/free">Start with Free</Link>
+            </Button>
+
+            {showWaitlistCta ? (
+              <Button asChild size="sm">
+                <Link href="/waitlist">
+                  Join PRO waitlist
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild size="sm">
+                <Link href="/upgrade">
+                  Explore PRO
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className="ml-auto flex items-center gap-2 md:hidden">
           <button
             ref={openBtnRef}
             type="button"
             className={cn(
-              'inline-flex h-9 w-9 items-center justify-center rounded-md border border-border md:hidden',
+              'inline-flex h-9 w-9 items-center justify-center rounded-md border border-border',
               'transition-colors hover:bg-accent/40',
               focusRing,
             )}
@@ -175,8 +232,49 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {isMenuOpen ? (
         <Container
           id="mobile-nav"
-          className="border-t border-border bg-background/95 px-4 pb-6 pt-3 shadow-lg backdrop-blur supports-backdrop-filter:bg-background/60 md:hidden"
+          className="border-t border-border bg-background/95 px-4 pb-6 pt-4 shadow-lg backdrop-blur supports-backdrop-filter:bg-background/60 md:hidden"
         >
+          {/* Mobile CTA panel */}
+          <div className="mb-4 rounded-2xl border border-border bg-card p-4">
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="secondary">Start free</Badge>
+                <Badge variant="outline">Upgrade later</Badge>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-sm font-medium">
+                  Build with Starter Free. Upgrade when wiring
+                  matters.
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Validate the product surface first, then move to PRO
+                  for auth, billing, backend foundations, and launch
+                  guidance.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Button asChild size="sm">
+                  <Link href="/starters/free">
+                    Start with Starter Free
+                  </Link>
+                </Button>
+
+                <Button asChild variant="secondary" size="sm">
+                  <Link
+                    href={showWaitlistCta ? '/waitlist' : '/upgrade'}
+                  >
+                    {showWaitlistCta
+                      ? 'Join PRO waitlist'
+                      : 'Explore Upgrade to PRO'}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile primary nav */}
           <nav
             className="flex flex-col gap-1"
             aria-label="Mobile navigation"
@@ -203,11 +301,12 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             })}
           </nav>
 
-          {docsLinks.length > 0 && (
+          {docsLinks.length > 0 ? (
             <div className="mt-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Documentation
               </p>
+
               <div className="mt-2 max-h-64 space-y-1 overflow-y-auto pr-1">
                 {docsLinks.map((doc) => (
                   <Link
@@ -224,7 +323,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
 
           <div className="mt-4 flex flex-col gap-3">
             <LargeSearchToggle
