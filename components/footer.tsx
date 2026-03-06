@@ -34,11 +34,11 @@ const GROUPS: Array<{
     ],
   },
   {
-    title: 'Learn',
+    title: 'Explore',
     links: [
       { label: 'Guides', href: '/guides' },
+      { label: 'Patterns', href: '/ui/patterns' },
       { label: 'Examples', href: '/examples' },
-      { label: 'UI Patterns', href: '/ui/patterns' },
       { label: 'Starter docs', href: '/docs/saas-starter' },
     ],
   },
@@ -48,7 +48,7 @@ const GROUPS: Array<{
       { label: 'UI System', href: '/ui' },
       { label: 'Starters', href: '/starters' },
       { label: 'Templates', href: '/templates' },
-      { label: 'UI docs', href: '/docs/ui' },
+      { label: 'UI Docs', href: '/docs/ui' },
     ],
   },
   {
@@ -61,6 +61,11 @@ const GROUPS: Array<{
       { label: 'Privacy', href: '/privacy' },
     ],
   },
+];
+
+const COMPANY_LINKS: FooterLink[] = [
+  { label: 'About', href: '/about' },
+  { label: 'Open Source', href: '/open-source' },
 ];
 
 const EXTERNAL: FooterLink[] = [
@@ -131,7 +136,8 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: `v${APP_VERSION}`,
-      context: 'Production-shaped SaaS ecosystem',
+      context:
+        'Production-shaped SaaS ecosystem. Built to help developers ship product surfaces faster and move toward a premium, production-ready SaaS foundation.',
     };
   }
 
@@ -143,7 +149,7 @@ function getFooterBrand(pathname: string | null) {
       label: 'PyColors',
       suffix: 'Patterns · SaaS surfaces',
       context:
-        'Move from primitives to production-shaped product patterns',
+        'Move from primitives to production-shaped product patterns.',
     };
   }
 
@@ -151,7 +157,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: `UI System · v${UI_VERSION}`,
-      context: 'Predictable UI foundation',
+      context: 'A predictable UI foundation for real SaaS products.',
     };
   }
 
@@ -159,7 +165,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Examples · Product showcase',
-      context: 'See real SaaS surfaces and product directions',
+      context: 'See real SaaS surfaces and product directions.',
     };
   }
 
@@ -167,7 +173,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Guides · SaaS knowledge base',
-      context: 'Learn the product logic behind modern SaaS systems',
+      context: 'Learn the product logic behind modern SaaS systems.',
     };
   }
 
@@ -175,7 +181,8 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Access · Pricing direction',
-      context: 'Choose the path that matches your current bottleneck',
+      context:
+        'Choose the path that matches your current bottleneck.',
     };
   }
 
@@ -183,7 +190,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Starters · Free available',
-      context: 'Validate UX before wiring',
+      context: 'Validate UX first, wire the business layer later.',
     };
   }
 
@@ -191,7 +198,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'PRO · Coming soon',
-      context: 'Wire the business layer',
+      context: 'Upgrade when wiring becomes the bottleneck.',
     };
   }
 
@@ -199,7 +206,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Waitlist · Early access',
-      context: 'Join the premium path',
+      context: 'Join the premium path before launch.',
     };
   }
 
@@ -210,7 +217,7 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Templates · Premium-ready',
-      context: 'Ship polished surfaces faster',
+      context: 'Ship polished surfaces faster.',
     };
   }
 
@@ -218,14 +225,35 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Docs · Docs-first',
-      context: 'Structure before complexity',
+      context: 'Structure before complexity.',
+    };
+  }
+
+  if (pathname === '/about' || pathname.startsWith('/about')) {
+    return {
+      label: 'PyColors',
+      suffix: 'About · Ecosystem vision',
+      context:
+        'Built for learning, validating, and shipping real SaaS products.',
+    };
+  }
+
+  if (
+    pathname === '/open-source' ||
+    pathname.startsWith('/open-source')
+  ) {
+    return {
+      label: 'PyColors',
+      suffix: 'Open Source · Public foundations',
+      context: 'Open foundations first. Premium acceleration later.',
     };
   }
 
   return {
     label: 'PyColors',
     suffix: `v${APP_VERSION}`,
-    context: 'Production-shaped SaaS ecosystem',
+    context:
+      'Production-shaped SaaS ecosystem. Built to help developers ship product surfaces faster and move toward a premium, production-ready SaaS foundation.',
   };
 }
 
@@ -238,6 +266,7 @@ export function Footer() {
       <Container className="mx-auto max-w-6xl">
         <div className="py-10 sm:py-12">
           <div className="grid gap-10 lg:grid-cols-12">
+            {/* Brand / company */}
             <div className="lg:col-span-4">
               <div className="space-y-5">
                 <div className="space-y-2">
@@ -249,10 +278,8 @@ export function Footer() {
                     {brand.suffix}
                   </div>
 
-                  <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                    {brand.context}. Built to help developers ship
-                    product surfaces faster and move toward a premium,
-                    production-ready SaaS foundation.
+                  <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+                    {brand.context}
                   </p>
                 </div>
 
@@ -268,15 +295,22 @@ export function Footer() {
                   </Badge>
                 </div>
 
-                <nav
-                  className="flex flex-wrap gap-x-5 gap-y-2"
-                  aria-label="External links"
-                >
-                  {EXTERNAL.map(FooterLinkItem)}
-                </nav>
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-foreground">
+                    Company
+                  </div>
+
+                  <nav
+                    className="flex flex-wrap gap-x-4 gap-y-2"
+                    aria-label="Company links"
+                  >
+                    {COMPANY_LINKS.map(FooterLinkItem)}
+                  </nav>
+                </div>
               </div>
             </div>
 
+            {/* Main nav groups */}
             <div className="lg:col-span-8 lg:flex lg:justify-end">
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {GROUPS.map((group) => (
@@ -297,14 +331,25 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          {/* External */}
+          <div className="mt-8 border-t border-border/60 pt-6">
+            <nav
+              className="flex flex-wrap items-center gap-x-5 gap-y-2"
+              aria-label="External links"
+            >
+              {EXTERNAL.map(FooterLinkItem)}
+            </nav>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
             <div className="text-xs text-muted-foreground">
               © {CURRENT_YEAR} PyColors · {brand.suffix}
             </div>
 
             <div className="text-[11px] text-muted-foreground">
-              Guides teach the product logic · Starter Free validates
-              the surface · PRO wires the business layer
+              Learn the product logic · Validate with Starter Free ·
+              Upgrade when wiring matters
             </div>
           </div>
         </div>

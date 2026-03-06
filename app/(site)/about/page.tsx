@@ -6,6 +6,8 @@ import {
   BookOpen,
   Sparkles,
   Target,
+  Layers3,
+  Rocket,
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
@@ -14,12 +16,12 @@ import { Badge, Button, Card, cn } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
+    'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About · PyColors',
     description:
-      'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
+      'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
     url: '/about',
     images: ['/seo/og-main.png'],
   },
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About · PyColors',
     description:
-      'The story behind PyColors.io — a docs-first ecosystem for shipping real SaaS: UI foundation, templates, and starters.',
+      'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -59,6 +61,30 @@ function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
+function StatCard({
+  label,
+  value,
+  description,
+}: {
+  label: string;
+  value: string;
+  description: string;
+}) {
+  return (
+    <Card className="p-5">
+      <div className="space-y-2">
+        <div className="text-xs text-muted-foreground">{label}</div>
+        <div className="font-brand text-xl font-semibold tracking-tight">
+          {value}
+        </div>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+      </div>
+    </Card>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
@@ -73,21 +99,22 @@ export default function AboutPage() {
             </div>
 
             <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              PyColors.io is built for shipping
+              PyColors is built for shipping
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              PyColors is not a “component dump” or a “pretty demo”.
-              It’s an ecosystem designed to help you ship real SaaS
-              with fewer decisions: a minimal UI foundation, templates
-              that stay consistent, and starter-ready product
-              patterns.
+              PyColors is not a component dump, a random starter, or a
+              polished demo with no system behind it. It is a SaaS
+              ecosystem designed to help builders learn the product
+              logic, explore credible interfaces, validate faster, and
+              upgrade to real business wiring when the product becomes
+              serious.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild className={cn(focusRing)}>
-                <Link href="/docs">
-                  Read the docs{' '}
+                <Link href="/guides">
+                  Explore guides
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -100,8 +127,8 @@ export default function AboutPage() {
                 variant="outline"
                 className={cn(focusRing)}
               >
-                <Link href="/roadmap">
-                  View roadmap{' '}
+                <Link href="/starters/free">
+                  Starter Free
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -115,7 +142,7 @@ export default function AboutPage() {
                 className={cn(focusRing)}
               >
                 <Link href="/open-source">
-                  Open source{' '}
+                  Open source
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -129,6 +156,7 @@ export default function AboutPage() {
               <Pill>Tokens-first UI</Pill>
               <Pill>Production patterns</Pill>
               <Pill>Weekly shipping</Pill>
+              <Pill>Clear upgrade path</Pill>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-balance text-xs text-muted-foreground">
@@ -148,6 +176,32 @@ export default function AboutPage() {
             </p>
           </header>
 
+          {/* ECOSYSTEM TODAY */}
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard
+                label="Learn"
+                value="Guides"
+                description="Understand dashboards, auth, billing, teams, and admin systems."
+              />
+              <StatCard
+                label="Explore"
+                value="Patterns"
+                description="Move from primitives to production-shaped SaaS surfaces."
+              />
+              <StatCard
+                label="Validate"
+                value="Starter Free"
+                description="Run a credible SaaS surface locally with no backend overhead."
+              />
+              <StatCard
+                label="Scale"
+                value="PRO path"
+                description="Upgrade when auth, billing, backend, and launch setup become the bottleneck."
+              />
+            </div>
+          </section>
+
           {/* THE WHY */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
@@ -157,34 +211,36 @@ export default function AboutPage() {
                 </h2>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  I’ve maintained UI codebases where the hard part
-                  wasn’t building a new component — it was keeping the
-                  system coherent six months later. Variants drift,
-                  spacing becomes arbitrary, tokens are “kind of”
-                  used, and docs become outdated right after release.
+                  I’ve maintained UI codebases where the hardest part
+                  wasn’t creating a new component. The real difficulty
+                  was keeping the system coherent six months later:
+                  spacing drift, inconsistent variants, weak tokens,
+                  unclear documentation, and product screens that
+                  never quite felt finished.
                 </p>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  PyColors is my answer: a docs-first foundation that
-                  stays predictable, so templates and starters can be
-                  shipped without breaking consistency.
+                  PyColors is my answer to that problem. A docs-first
+                  ecosystem that helps builders stay consistent from
+                  the UI foundation to actual product surfaces.
                 </p>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   <span className="font-medium text-foreground">
                     PyColors UI is the foundation.
                   </span>{' '}
-                  Templates and Starters are the products built on
-                  top.
+                  Patterns, examples, starters, and premium layers are
+                  built on top of that foundation so the ecosystem can
+                  grow without losing coherence.
                 </p>
               </div>
 
               <BulletList
                 items={[
-                  'Docs-first: Preview → Usage → Code → Props (always).',
-                  'Semantic tokens so themes stay coherent as you grow.',
-                  'Radix primitives for accessibility and composability.',
-                  'Minimal API surface area: fewer options, stronger defaults.',
+                  'Docs-first: understand faster, copy faster, ship faster.',
+                  'Semantic tokens so light/dark theming stays coherent as you grow.',
+                  'Production-shaped patterns instead of isolated UI primitives.',
+                  'A clean path from free validation to premium business wiring.',
                 ]}
               />
             </Card>
@@ -199,8 +255,9 @@ export default function AboutPage() {
                   Documentation-first
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  The docs are designed for speed: preview, copy, and
-                  ship — without guessing behaviors.
+                  The docs are designed for speed and clarity: learn
+                  the logic, inspect the pattern, and move quickly
+                  toward implementation.
                 </p>
               </Card>
 
@@ -213,8 +270,8 @@ export default function AboutPage() {
                   Production constraints
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Accessible defaults, consistent tokens, predictable
-                  variants — built for SaaS and real cycles.
+                  Accessible defaults, stable tokens, predictable
+                  variants, and SaaS-oriented product surfaces.
                 </p>
               </Card>
 
@@ -224,26 +281,146 @@ export default function AboutPage() {
                   Quality over noise
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Fewer components, better finished. A stable baseline
-                  you can build on for years.
+                  Fewer moving parts, better finished. A baseline you
+                  can trust instead of a pile of disconnected assets.
                 </p>
               </Card>
             </div>
           </section>
 
-          {/* NOW / NEXT */}
+          {/* HOW THE ECOSYSTEM WORKS */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="space-y-3">
                 <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  What you can expect
+                  How the ecosystem works
+                </h2>
+
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  PyColors is structured as a progression, not as a
+                  random collection of pages.
+                </p>
+              </div>
+
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <Card className="p-5">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <BookOpen
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    Learn
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Use guides to understand how real SaaS products
+                    are structured.
+                  </p>
+                  <div className="mt-4">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/guides">Guides</Link>
+                    </Button>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <Layers3 className="h-4 w-4" aria-hidden="true" />
+                    Explore
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Browse patterns and examples to see credible
+                    product surfaces.
+                  </p>
+                  <div className="mt-4 flex gap-2">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/ui/patterns">Patterns</Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/examples">Examples</Link>
+                    </Button>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <Rocket className="h-4 w-4" aria-hidden="true" />
+                    Validate
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Run Starter Free locally and validate the product
+                    surface before backend complexity.
+                  </p>
+                  <div className="mt-4">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/starters/free">Starter Free</Link>
+                    </Button>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <Target className="h-4 w-4" aria-hidden="true" />
+                    Scale
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Move to premium access when the business layer
+                    becomes the real blocker.
+                  </p>
+                  <div className="mt-4 flex gap-2">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/upgrade">Upgrade</Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(focusRing)}
+                    >
+                      <Link href="/access">Access</Link>
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            </Card>
+          </section>
+
+          {/* WHAT EXISTS TODAY / WHAT'S NEXT */}
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <Card className="p-6 sm:p-7">
+              <div className="space-y-3">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  What exists today — and what comes next
                 </h2>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   PyColors is built in public and shipped
-                  progressively. The goal is not “everything”. The
-                  goal is a foundation you can trust — then grow into
-                  templates and starters without breaking the core.
+                  progressively. The goal is not to ship everything.
+                  The goal is to ship a system that compounds.
                 </p>
               </div>
 
@@ -251,12 +428,12 @@ export default function AboutPage() {
                 <Card className="p-5">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <Target className="h-4 w-4" aria-hidden="true" />
-                    Now
+                    Today
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Stabilize the UI baseline, tighten documentation,
-                    and expand product patterns that make SaaS screens
-                    feel “real” out of the box.
+                    UI foundations, guides, examples, patterns,
+                    Starter Free, and the premium path are already
+                    structured into one coherent ecosystem.
                   </p>
                   <div className="mt-4">
                     <Button
@@ -265,7 +442,7 @@ export default function AboutPage() {
                       className={cn(focusRing)}
                     >
                       <Link href="/changelog">
-                        View changelog{' '}
+                        View changelog
                         <ArrowRight
                           className="ml-2 h-4 w-4"
                           aria-hidden="true"
@@ -281,9 +458,9 @@ export default function AboutPage() {
                     Next
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Expand into a sellable ecosystem: UI foundation →
-                    templates → starters, shipped with clean packaging
-                    and predictable releases.
+                    The ecosystem expands toward premium acceleration:
+                    UI PRO, Starter PRO, and All-In Access — without
+                    breaking the open foundation underneath.
                   </p>
                   <div className="mt-4">
                     <Button
@@ -291,8 +468,8 @@ export default function AboutPage() {
                       variant="outline"
                       className={cn(focusRing)}
                     >
-                      <Link href="/templates">
-                        Browse templates{' '}
+                      <Link href="/roadmap">
+                        View roadmap
                         <ArrowRight
                           className="ml-2 h-4 w-4"
                           aria-hidden="true"
@@ -305,9 +482,9 @@ export default function AboutPage() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              If you care about UI engineering, design systems, and
-              shipping production-grade frontends, you’ll find useful
-              patterns here.
+              If you care about UI engineering, design systems, SaaS
+              product surfaces, and shipping production-grade
+              frontends, PyColors is built for that path.
             </p>
           </section>
 
@@ -331,7 +508,7 @@ export default function AboutPage() {
                   className={cn(focusRing)}
                 >
                   <Link href="/open-source">
-                    Open source{' '}
+                    Open source
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
@@ -346,7 +523,7 @@ export default function AboutPage() {
                     rel="noreferrer noopener"
                     aria-label="Open PyColors UI on GitHub (opens in a new tab)"
                   >
-                    GitHub{' '}
+                    GitHub
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
@@ -365,7 +542,7 @@ export default function AboutPage() {
                     rel="noreferrer noopener"
                     aria-label="Open PyColors UI issues on GitHub (opens in a new tab)"
                   >
-                    Issues{' '}
+                    Issues
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
@@ -384,7 +561,7 @@ export default function AboutPage() {
                     rel="noreferrer noopener"
                     aria-label="Open PyColors on X (opens in a new tab)"
                   >
-                    X{' '}
+                    X
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
@@ -403,7 +580,7 @@ export default function AboutPage() {
                     rel="noreferrer noopener"
                     aria-label="Open PyColors on LinkedIn (opens in a new tab)"
                   >
-                    LinkedIn{' '}
+                    LinkedIn
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
