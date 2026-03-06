@@ -71,7 +71,7 @@ const repos: Repo[] = [
     category: 'Core foundations',
     name: 'pycolors-tokens',
     description:
-      'Semantic design tokens powering consistent theming (light/dark) across apps, templates, and starters.',
+      'Semantic design tokens powering consistent theming across apps, templates, and starters.',
     href: 'https://github.com/pycolors-io/pycolors-tokens',
     badge: 'Tokens',
   },
@@ -79,7 +79,7 @@ const repos: Repo[] = [
     category: 'Developer tooling',
     name: 'pycolors-eslint-config',
     description:
-      'Shared ESLint configs for scalable TypeScript + Next.js codebases with sane defaults.',
+      'Shared ESLint configs for scalable TypeScript + Next.js codebases with strong defaults.',
     href: 'https://github.com/pycolors-io/pycolors-eslint-config',
     badge: 'DX',
   },
@@ -87,7 +87,7 @@ const repos: Repo[] = [
     category: 'Developer tooling',
     name: 'pycolors-typescript-config',
     description:
-      'Shared TS configs (strict, predictable) to keep projects aligned as they grow.',
+      'Shared TypeScript configs to keep projects strict, predictable, and aligned as they grow.',
     href: 'https://github.com/pycolors-io/pycolors-typescript-config',
     badge: 'DX',
   },
@@ -95,7 +95,7 @@ const repos: Repo[] = [
     category: 'Starters',
     name: 'pycolors-starter-free',
     description:
-      'Frontend-only SaaS starter demo: layouts, dashboards, data UI patterns, auth screens — mocked by design, ready to wire.',
+      'Frontend-only SaaS starter demo: auth UX, dashboards, CRUD patterns, settings, billing surfaces, and admin UI — mocked by design, ready to wire.',
     href: 'https://github.com/pycolors-io/pycolors-starter-free',
     badge: 'Free',
   },
@@ -103,7 +103,7 @@ const repos: Repo[] = [
     category: 'Website',
     name: 'pycolors-marketing',
     description:
-      'The marketing + docs site (Next.js + Fumadocs) — read-only mirror synced from the monorepo.',
+      'The marketing + docs site (Next.js + Fumadocs) — public mirror of the ecosystem website.',
     href: 'https://github.com/pycolors-io/pycolors-marketing',
     badge: 'Site',
   },
@@ -162,8 +162,8 @@ function RepoCard({ repo }: { repo: Repo }) {
           <div className="text-sm font-medium">{repo.name}</div>
           <p
             className={cn(
-              'text-sm text-muted-foreground leading-relaxed',
-              'line-clamp-2 min-h-16',
+              'min-h-16 text-sm leading-relaxed text-muted-foreground',
+              'line-clamp-3',
             )}
           >
             {repo.description}
@@ -184,6 +184,32 @@ function RepoCard({ repo }: { repo: Repo }) {
           GitHub
           <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
         </a>
+      </div>
+    </Card>
+  );
+}
+
+function ModelCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Card className="p-5">
+      <div className="flex items-start gap-3">
+        <span className="mt-0.5 inline-flex size-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+          {icon}
+        </span>
+        <div className="space-y-1">
+          <div className="text-sm font-medium">{title}</div>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+        </div>
       </div>
     </Card>
   );
@@ -230,14 +256,14 @@ export default function OpenSourcePage() {
 
                 <p className="mx-auto max-w-2xl text-balance text-xs text-muted-foreground">
                   This page centralizes the public repos. Product
-                  pages stay focused; open-source stays discoverable.
+                  pages stay focused. Open-source stays discoverable.
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3">
                 <Button asChild>
                   <Link href="/ui">
-                    Explore UI{' '}
+                    Explore UI
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
@@ -250,7 +276,7 @@ export default function OpenSourcePage() {
                 </Button>
 
                 <Button asChild variant="secondary">
-                  <Link href="/docs">Read the docs</Link>
+                  <Link href="/access">View Access</Link>
                 </Button>
               </div>
 
@@ -259,6 +285,7 @@ export default function OpenSourcePage() {
                 <Pill>Docs-first</Pill>
                 <Pill>Shipping weekly</Pill>
                 <Pill>Stable foundations</Pill>
+                <Pill>Premium path stays clear</Pill>
               </div>
             </header>
 
@@ -266,87 +293,66 @@ export default function OpenSourcePage() {
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="Why open-source"
-                description="Open-source is a trust layer and an adoption path — without breaking a product-focused marketing funnel."
+                description="Open-source is a trust layer, an adoption path, and the foundation of the PyColors open-core strategy."
               />
 
               <div className="grid gap-4 sm:grid-cols-3">
-                <Card className="p-5">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex size-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <ShieldCheck
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">Trust</div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        See the foundations. No magic, no black boxes
-                        — predictable primitives you can rely on.
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                <ModelCard
+                  icon={
+                    <ShieldCheck
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="Trust"
+                  description="See the foundations. No black boxes, no vague promises — predictable primitives and product surfaces you can inspect."
+                />
 
-                <Card className="p-5">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex size-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <GitBranch
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">
-                        Adoption
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Clone, run, and evaluate quickly. Start with
-                        UI, then templates, then starter foundations.
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                <ModelCard
+                  icon={
+                    <GitBranch
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="Adoption"
+                  description="Clone, run, and evaluate quickly. Start with the open layer before deciding whether premium acceleration is worth it."
+                />
 
-                <Card className="p-5">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex size-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <Sparkles
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">
-                        Velocity
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Production patterns reduce guesswork. You ship
-                        screens faster and stay consistent as you
-                        scale.
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                <ModelCard
+                  icon={
+                    <Sparkles
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  }
+                  title="Velocity"
+                  description="Production-shaped foundations reduce guesswork. You ship faster and keep consistency as the product grows."
+                />
               </div>
             </section>
 
-            {/* OPEN CORE MODEL */}
+            {/* OPEN CORE STRATEGY */}
             <section className="py-8 sm:py-10">
               <SectionHeader
-                title="Open core model"
-                description="The ecosystem is open-source first. Commercial layers come later (templates + Starter Pro) — without lock-in."
+                title="Open-core strategy"
+                description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to create lock-in."
+                action={
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/upgrade">See Upgrade to PRO</Link>
+                  </Button>
+                }
               />
 
-              <Card className="p-6">
+              <Card className="p-6 sm:p-7">
                 <div className="mb-4 flex flex-wrap items-center gap-2">
                   <Badge variant="outline" className="text-xs">
                     Transparency
                   </Badge>
                   <Badge variant="secondary" className="text-xs">
-                    Upgrade path stays clean
+                    Open foundations → paid acceleration
                   </Badge>
-                  <Pill>Open foundations → paid acceleration</Pill>
+                  <Pill>Adopt progressively</Pill>
                 </div>
 
                 <div className="w-full overflow-hidden rounded-xl border border-border">
@@ -357,7 +363,7 @@ export default function OpenSourcePage() {
                           Open-source (available now)
                         </TableHead>
                         <TableHead className="w-1/2">
-                          Commercial (planned / evolving)
+                          Premium acceleration (planned / evolving)
                         </TableHead>
                       </TableRow>
                     </TableHeader>
@@ -369,19 +375,19 @@ export default function OpenSourcePage() {
                               PyColors UI + Tokens
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              Stable primitives, docs-first workflow,
-                              predictable theming.
+                              Stable primitives, semantic theming, and
+                              docs-first usage.
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="space-y-1">
                             <div className="text-sm font-medium">
-                              Premium templates
+                              UI PRO
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              Paid-ready layouts, marketing pages,
-                              dashboards — zero design debt.
+                              Premium product patterns and
+                              higher-level SaaS surfaces.
                             </div>
                           </div>
                         </TableCell>
@@ -391,23 +397,22 @@ export default function OpenSourcePage() {
                         <TableCell>
                           <div className="space-y-1">
                             <div className="text-sm font-medium">
-                              Starter Free (frontend-only)
+                              Starter Free
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              Real SaaS surface with mocked data —
-                              ready to wire later.
+                              A real SaaS surface with mocked data —
+                              built to validate UX fast.
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="space-y-1">
                             <div className="text-sm font-medium">
-                              Starter Pro (wired foundation)
+                              Starter PRO
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              Auth + billing wired, production data
-                              layer, more blocks, upgrade-ready
-                              packaging.
+                              Auth, billing, backend foundations, and
+                              deployment guidance.
                             </div>
                           </div>
                         </TableCell>
@@ -420,19 +425,19 @@ export default function OpenSourcePage() {
                               Developer tooling
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              ESLint + TS configs to keep projects
-                              aligned as they grow.
+                              Shared linting and TypeScript configs to
+                              keep codebases aligned.
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="space-y-1">
                             <div className="text-sm font-medium">
-                              Advanced blocks
+                              All-In Access
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              Higher-level product blocks and
-                              workflows (planned).
+                              The premium long-term path for builders
+                              who want the full ecosystem.
                             </div>
                           </div>
                         </TableCell>
@@ -442,9 +447,9 @@ export default function OpenSourcePage() {
                 </div>
 
                 <div className="mt-4 text-xs text-muted-foreground">
-                  The goal: adopt progressively (UI → templates →
-                  starter) with a clean path to paid acceleration when
-                  you want it.
+                  The goal is simple: inspect the foundations openly,
+                  adopt progressively, and upgrade only when the next
+                  layer creates real leverage.
                 </div>
               </Card>
             </section>
@@ -464,7 +469,8 @@ export default function OpenSourcePage() {
                       Foundations
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      UI + tokens + tooling that power the ecosystem.
+                      UI, tokens, and tooling that power the
+                      ecosystem.
                     </p>
                   </div>
                   <Badge variant="default" className="text-xs">
@@ -511,7 +517,7 @@ export default function OpenSourcePage() {
                       Products
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Starter demos and the marketing website.
+                      Runnable entry points and the public website.
                     </p>
                   </div>
                   <Badge variant="default" className="text-xs">
@@ -526,7 +532,7 @@ export default function OpenSourcePage() {
                         Starters
                       </div>
                       <Badge variant="outline" className="text-xs">
-                        Demo starter
+                        Main entry point
                       </Badge>
                     </div>
                     {starters.map((repo) => (
@@ -551,7 +557,7 @@ export default function OpenSourcePage() {
               </Card>
             </section>
 
-            {/* NEXT STEPS */}
+            {/* RECOMMENDED PATH */}
             <section className="mx-auto mt-10 w-full max-w-5xl">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -560,27 +566,27 @@ export default function OpenSourcePage() {
                       Recommended path
                     </h2>
                     <p className="text-sm text-muted-foreground">
-                      Start with UI foundations, validate the starter
-                      surface, then follow the roadmap for what’s
-                      next.
+                      Start with open foundations, validate the
+                      starter surface, then move to premium access
+                      only when leverage matters.
                     </p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>UI → docs-first</Pill>
-                      <Pill>Starter Free → evaluate UX</Pill>
-                      <Pill>Roadmap → planned upgrades</Pill>
+                      <Pill>UI → foundation</Pill>
+                      <Pill>Starter Free → validate UX</Pill>
+                      <Pill>Access → premium path</Pill>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     <Button asChild>
-                      <Link href="/ui"> UI</Link>
+                      <Link href="/ui">UI</Link>
                     </Button>
                     <Button asChild variant="outline">
                       <Link href="/starters/free">Starter Free</Link>
                     </Button>
                     <Button asChild variant="secondary">
-                      <Link href="/roadmap">Roadmap</Link>
+                      <Link href="/access">Access</Link>
                     </Button>
                   </div>
                 </div>
