@@ -6,6 +6,9 @@ import {
   ArrowRight,
   Sparkles,
   BadgeCheck,
+  BookOpen,
+  Layers3,
+  LayoutTemplate,
 } from 'lucide-react';
 
 import { MarketingShell } from '@/components/shells/marketing-shell';
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'PyColors',
     description:
-      'Ship real SaaS faster with a predictable UI foundation, templates, and starter-grade product surfaces.',
+      'Validate your SaaS fast with a production-shaped UI system and starter, then upgrade to real business wiring when you scale.',
     url: '/',
     siteName: 'PyColors',
     images: ['/seo/og-main.png'],
@@ -40,13 +43,73 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PyColors',
     description:
-      'Ship real SaaS faster with a predictable UI foundation, templates, and starter-grade product surfaces.',
+      'Validate your SaaS fast with a production-shaped UI system and starter, then upgrade to real business wiring when you scale.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+const EXTERNAL = {
+  starterRepo: 'https://github.com/pycolors-io/pycolors-starter-free',
+  starterDemo: 'https://starter-demo.pycolors.io',
+  naAiBuy:
+    'https://pycolors.gumroad.com/l/na-ai-nextjs-landing?layout=profile',
+  naAiDemo: 'https://na-ai-landing-template.vercel.app',
+} as const;
+
+const INTERNAL = {
+  starters: '/starters',
+  starterFree: '/starters/free',
+  upgrade: '/upgrade',
+  waitlist: '/waitlist',
+  access: '/access',
+  starterDocs: '/docs/saas-starter',
+  starterUpgradeDocs: '/docs/saas-starter/upgrade-to-pro',
+  ui: '/ui',
+  patterns: '/ui/patterns',
+  examples: '/examples',
+  guides: '/guides',
+  uiDocs: '/docs/ui',
+  templates: '/templates',
+  templateNaAi: '/templates/na-ai',
+  roadmap: '/roadmap',
+  changelog: '/changelog',
+} as const;
+
+const starterSurfaces = [
+  {
+    title: '/login + /register + /forgot',
+    desc: 'Auth UX with clean loading, error, and success states.',
+    tag: 'Auth',
+  },
+  {
+    title: '/dashboard',
+    desc: 'A credible first screen with KPIs, structure, and next actions.',
+    tag: 'Core',
+  },
+  {
+    title: '/projects',
+    desc: 'A core entity surface with table, CRUD dialogs, and empty states.',
+    tag: 'CRUD',
+  },
+  {
+    title: '/settings',
+    desc: 'Profile, organization, security, and danger-zone patterns.',
+    tag: 'Settings',
+  },
+  {
+    title: '/billing',
+    desc: 'Billing entrypoints and subscription surfaces — mocked by design.',
+    tag: 'Billing',
+  },
+  {
+    title: '/admin',
+    desc: 'Members, roles, and invitations UI for B2B product credibility.',
+    tag: 'B2B',
+  },
+] as const;
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
@@ -62,6 +125,34 @@ function TrustPill({ label }: { label: string }) {
     <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
       {label}
     </span>
+  );
+}
+
+function SectionHeader({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-6 flex flex-col gap-3 text-center sm:mb-7">
+      <div className="space-y-1">
+        <h2 className="font-brand text-xl font-semibold tracking-tight">
+          {title}
+        </h2>
+        {description ? (
+          <p className="text-sm text-muted-foreground">
+            {description}
+          </p>
+        ) : null}
+      </div>
+      {action ? (
+        <div className="flex justify-center">{action}</div>
+      ) : null}
+    </div>
   );
 }
 
@@ -85,7 +176,7 @@ function StepCard({
       <div className="space-y-2">
         <div className="text-xs text-muted-foreground">{step}</div>
         <div className="text-sm font-medium">{title}</div>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm leading-relaxed text-muted-foreground">
           {description}
         </p>
         <div className="pt-2">
@@ -106,6 +197,7 @@ function ProductCard({
   badgeVariant = 'secondary',
   cta,
   ctaVariant = 'default',
+  eyebrow,
 }: {
   title: string;
   description: string;
@@ -114,14 +206,17 @@ function ProductCard({
   badgeVariant?: 'secondary' | 'outline';
   cta: string;
   ctaVariant?: 'default' | 'outline' | 'secondary';
+  eyebrow?: string;
 }) {
   return (
     <Card className="flex h-full flex-col justify-between p-6">
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <h3 className="font-brand text-lg font-semibold tracking-tight">
-            {title}
-          </h3>
+        <div className="flex flex-wrap items-center gap-2">
+          {eyebrow ? (
+            <span className="text-xs text-muted-foreground">
+              {eyebrow}
+            </span>
+          ) : null}
           {badge ? (
             <Badge variant={badgeVariant} className="text-xs">
               {badge}
@@ -129,9 +224,15 @@ function ProductCard({
           ) : null}
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {description}
-        </p>
+        <div className="space-y-2">
+          <h3 className="font-brand text-lg font-semibold tracking-tight">
+            {title}
+          </h3>
+
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+        </div>
       </div>
 
       <div className="mt-5">
@@ -143,43 +244,66 @@ function ProductCard({
   );
 }
 
-const starterSurfaces = [
-  {
-    title: '/login + /register + /forgot',
-    desc: 'Auth flows with states (loading / error / success), plus Google OAuth.',
-    tag: 'Auth',
-  },
-  {
-    title: '/dashboard',
-    desc: 'Product overview that feels “real” on first load (KPIs + next actions).',
-    tag: 'Core',
-  },
-  {
-    title: '/projects',
-    desc: 'Your main entity screen: table + CRUD dialogs + empty state (mock).',
-    tag: 'CRUD',
-  },
-  {
-    title: '/settings',
-    desc: 'Profile, org, security, danger zone — credibility baseline.',
-    tag: 'Settings',
-  },
-  {
-    title: '/billing',
-    desc: 'Plan state + upgrade entrypoints (wiring-ready).',
-    tag: 'Billing',
-  },
-  {
-    title: '/admin',
-    desc: 'B2B readiness: members, roles, invitations (mock).',
-    tag: 'B2B',
-  },
-];
+function PricingPreviewCard({
+  title,
+  price,
+  badge,
+  description,
+  href,
+  cta,
+  highlight = false,
+}: {
+  title: string;
+  price: string;
+  badge?: string;
+  description: string;
+  href: string;
+  cta: string;
+  highlight?: boolean;
+}) {
+  return (
+    <Card
+      className={cn(
+        'flex h-full flex-col justify-between p-6',
+        highlight && 'border-foreground/15 shadow-sm',
+      )}
+    >
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <h3 className="font-brand text-lg font-semibold tracking-tight">
+            {title}
+          </h3>
+          {badge ? (
+            <Badge
+              variant={highlight ? 'secondary' : 'outline'}
+              className="text-xs"
+            >
+              {badge}
+            </Badge>
+          ) : null}
+        </div>
 
-const EXTERNAL = {
-  starterRepo: 'https://github.com/pycolors-io/pycolors-starter-free',
-  starterDemo: 'https://starter-demo.pycolors.io',
-} as const;
+        <div className="font-brand text-3xl font-semibold tracking-tight">
+          {price}
+        </div>
+
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+      </div>
+
+      <div className="mt-5">
+        <Button
+          asChild
+          className="w-full"
+          variant={highlight ? 'default' : 'outline'}
+        >
+          <Link href={href}>{cta}</Link>
+        </Button>
+      </div>
+    </Card>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -193,7 +317,7 @@ export default function HomePage() {
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 Built in public
               </Badge>
-              <Badge variant="outline">Production-first</Badge>
+              <Badge variant="outline">Production-shaped</Badge>
               <Badge variant="outline" className="gap-1.5">
                 <Sparkles
                   className="h-3.5 w-3.5"
@@ -204,20 +328,25 @@ export default function HomePage() {
             </div>
 
             <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Launch your SaaS in days,
-              <span className="block font-bold">not months.</span>
+              Build your SaaS foundation faster.
+              <span className="block font-bold">
+                Learn the product. Validate the surface. Wire the
+                business later.
+              </span>
             </h1>
 
             <p className="max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              PyColors helps you ship real SaaS with a predictable UI
-              foundation, templates, and starter-grade product
-              surfaces — designed to scale without rewrites.
+              PyColors is a production-shaped SaaS ecosystem: guides
+              to learn the product logic, patterns and examples to
+              explore real interfaces, Starter Free to validate fast,
+              and a premium path for the business layer when you
+              scale.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3">
               <Button asChild>
-                <Link href="/starters/free">
-                  Get Starter Free
+                <Link href={INTERNAL.starterFree}>
+                  Start with Starter Free
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -226,6 +355,16 @@ export default function HomePage() {
               </Button>
 
               <Button asChild variant="secondary">
+                <Link href={INTERNAL.access}>
+                  View Access
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+
+              <Button asChild variant="outline">
                 <a
                   href={EXTERNAL.starterDemo}
                   target="_blank"
@@ -239,15 +378,11 @@ export default function HomePage() {
 
               <Button asChild variant="outline">
                 <Link
-                  href="/docs/saas-starter"
+                  href={INTERNAL.guides}
                   className={cn(focusRing)}
                 >
-                  Read starter docs
+                  Browse guides
                 </Link>
-              </Button>
-
-              <Button asChild variant="outline">
-                <Link href="/ui">Explore UI system</Link>
               </Button>
             </div>
 
@@ -255,9 +390,12 @@ export default function HomePage() {
               <Stat label="UI baseline" value={`v${UI_VERSION}`} />
               <Stat
                 label="Starter Free"
-                value="Real screens · Wiring-ready"
+                value="Real screens · Mocked by design"
               />
-              <Stat label="Cadence" value="Weekly releases" />
+              <Stat
+                label="Ecosystem path"
+                value="Guides → Patterns → Starter → PRO"
+              />
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 pt-2">
@@ -265,54 +403,106 @@ export default function HomePage() {
               <TrustPill label="Tailwind v4" />
               <TrustPill label="Tokens-first" />
               <TrustPill label="Docs-first workflow" />
+              <TrustPill label="Clear upgrade path" />
             </div>
           </div>
         </section>
 
-        {/* WHAT'S INSIDE */}
+        {/* ECOSYSTEM */}
         <section className="py-10 sm:py-14">
-          <div className="mb-6 space-y-1 text-center">
-            <h2 className="font-brand text-xl font-semibold tracking-tight">
-              What’s inside PyColors
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              One foundation → templates → starters. Start free.
-            </p>
-          </div>
+          <SectionHeader
+            title="The PyColors ecosystem"
+            description="Four layers that turn isolated UI work into a production-shaped SaaS path."
+          />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ProductCard
+              title="Guides"
+              badge="Learn"
+              badgeVariant="outline"
+              eyebrow="Knowledge layer"
+              description="Learn the product logic behind dashboards, auth, billing, teams, admin systems, and real SaaS UX."
+              href={INTERNAL.guides}
+              cta="Read guides"
+              ctaVariant="outline"
+            />
+
+            <ProductCard
+              title="Patterns"
+              badge="Explore"
+              badgeVariant="outline"
+              eyebrow="Interface layer"
+              description="Move from primitives to production-shaped product surfaces built for real SaaS workflows."
+              href={INTERNAL.patterns}
+              cta="Browse patterns"
+              ctaVariant="outline"
+            />
+
+            <ProductCard
+              title="Examples"
+              badge="Showcase"
+              badgeVariant="outline"
+              eyebrow="Product layer"
+              description="Explore real SaaS interface directions and what is already available today with Starter Free."
+              href={INTERNAL.examples}
+              cta="See examples"
+              ctaVariant="outline"
+            />
+
             <ProductCard
               title="Starter Free"
               badge="Free"
               badgeVariant="secondary"
-              description="A production-shaped SaaS surface: dashboard shell, CRUD table, dialogs, settings, billing entrypoints, and admin screens — mocked by design, ready to wire."
-              href="/starters/free"
+              eyebrow="Runnable layer"
+              description="A production-shaped SaaS surface: auth UX, dashboard, CRUD, settings, billing entrypoints, and admin."
+              href={INTERNAL.starterFree}
               cta="Open Starter Free"
               ctaVariant="secondary"
-            />
-
-            <ProductCard
-              title="UI System"
-              badge={`v${UI_VERSION}`}
-              badgeVariant="outline"
-              description="Documentation-first UI built on semantic tokens and Radix primitives — predictable, accessible, and ready for real screens."
-              href="/ui"
-              cta="View UI system"
-              ctaVariant="default"
-            />
-
-            <ProductCard
-              title="Premium Templates"
-              badge="Premium"
-              description="Paid-ready landing pages and dashboards built on PyColors UI — consistent tokens, clean structure, and zero design debt."
-              href="/templates"
-              cta="Browse templates"
-              ctaVariant="outline"
             />
           </div>
         </section>
 
-        {/* PYCOLORS UI TRACTION (COMPACT) */}
+        {/* PATH */}
+        <section className="py-8 sm:py-12">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <Layers3
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    The path
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  PyColors is built as a progression: learn with
+                  guides, study patterns and examples, validate the
+                  product surface with Starter Free, then move to
+                  premium access when authentication, billing, backend
+                  foundations, and premium product patterns become the
+                  bottleneck.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2 sm:min-w-[240px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.guides}>Guides</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.patterns}>Patterns</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.access}>Access</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* UI SYSTEM */}
         <section className="py-8 sm:py-12">
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="flex flex-wrap items-center justify-center gap-2">
@@ -321,24 +511,25 @@ export default function HomePage() {
             </div>
 
             <p className="max-w-xl text-sm text-muted-foreground">
-              PyColors UI powers the Starters and Templates and is
-              published on npm. Use it independently or as part of the
-              ecosystem.
+              PyColors UI powers the Starters, Templates, and the
+              wider ecosystem. Use it independently or as the base
+              layer for patterns, examples, and production-ready SaaS
+              surfaces.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2">
               <NpmBadges packageName="@pycolors/ui" size="sm" />
-              <span className="text-xs text-muted-foreground">
-                Powering the Starters and Templates.
-              </span>
             </div>
 
             <div className="flex flex-wrap justify-center gap-2">
               <Button asChild size="sm" variant="outline">
-                <Link href="/ui">Explore UI system</Link>
+                <Link href={INTERNAL.ui}>Explore UI system</Link>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <Link href="/docs/ui">UI docs</Link>
+                <Link href={INTERNAL.patterns}>UI patterns</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href={INTERNAL.uiDocs}>UI docs</Link>
               </Button>
             </div>
           </div>
@@ -360,33 +551,46 @@ export default function HomePage() {
                 </div>
 
                 <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Try the Starter Free
+                  Start building today
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Run it locally and explore a credible SaaS UI
-                  surface — before wiring backend, auth, or billing.
+                  Run Starter Free locally and explore a credible SaaS
+                  UI surface before wiring backend, auth, or billing.
                 </p>
 
                 <p className="text-xs text-muted-foreground">
-                  Fast path: run → open dashboard → inspect patterns →
-                  copy the structure.
+                  Fast path: run → open dashboard → inspect surfaces →
+                  adapt the copy → wire later.
                 </p>
 
                 <div className="flex flex-wrap gap-2 pt-1">
                   <TrustPill label="Instant UI surface" />
                   <TrustPill label="Mock data" />
                   <TrustPill label="No backend" />
-                  <TrustPill label="Ready to wire later" />
+                  <TrustPill label="Upgrade-ready" />
                 </div>
 
                 <div className="pt-2 flex flex-wrap gap-2">
                   <Button asChild size="sm" variant="secondary">
-                    <Link href="/starters/free">
+                    <Link href={INTERNAL.starterFree}>
                       Starter Free details
                     </Link>
                   </Button>
                   <Button asChild size="sm" variant="outline">
-                    <Link href="/docs/saas-starter">
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Open live demo
+                      <Eye
+                        className="ml-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href={INTERNAL.starterDocs}>
                       Read starter docs
                     </Link>
                   </Button>
@@ -444,6 +648,16 @@ pnpm dev`}</pre>
                         http://localhost:3000
                       </span>
                     </div>
+
+                    <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+                      Docs:{' '}
+                      <Link
+                        href={INTERNAL.starterDocs}
+                        className="font-mono text-foreground underline underline-offset-4"
+                      >
+                        {INTERNAL.starterDocs}
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
@@ -469,15 +683,10 @@ pnpm dev`}</pre>
 
         {/* WHAT YOU GET */}
         <section id="what-you-get" className="py-10 sm:py-14">
-          <div className="mb-6 space-y-1 text-center">
-            <h2 className="font-brand text-xl font-semibold tracking-tight">
-              What you get (Starter Free)
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Not “features”. Product surfaces users expect on day
-              one.
-            </p>
-          </div>
+          <SectionHeader
+            title="What you get with Starter Free"
+            description="Not feature noise. Product surfaces users expect on day one."
+          />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {starterSurfaces.map((s) => (
@@ -491,7 +700,7 @@ pnpm dev`}</pre>
                       {s.tag}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
                     {s.desc}
                   </p>
                 </div>
@@ -508,23 +717,32 @@ pnpm dev`}</pre>
                     aria-hidden="true"
                   />
                 </span>
+
                 <div className="space-y-1">
                   <div className="text-sm font-medium">
                     Built on PyColors UI (already included)
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
                     Starter Free ships with the PyColors UI primitives
                     you’ve published: buttons, cards, badges, dialogs,
                     sheets, tabs, toasts, tables, pagination,
                     skeletons, empty states, and an accessible
                     password input.
                   </p>
+
                   <div className="pt-2 flex flex-wrap gap-2">
                     <Button asChild size="sm" variant="outline">
-                      <Link href="/ui">Explore PyColors UI</Link>
+                      <Link href={INTERNAL.ui}>
+                        Explore PyColors UI
+                      </Link>
                     </Button>
                     <Button asChild size="sm" variant="outline">
-                      <Link href="/docs/saas-starter">
+                      <Link href={INTERNAL.patterns}>
+                        Browse UI patterns
+                      </Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.starterDocs}>
                         Read starter docs
                       </Link>
                     </Button>
@@ -535,16 +753,66 @@ pnpm dev`}</pre>
           </div>
         </section>
 
+        {/* LEARN / EXPLORE / BUILD */}
+        <section className="py-10 sm:py-14">
+          <SectionHeader
+            title="Learn. Explore. Build."
+            description="The fastest path is not guessing. It is understanding the product surface first."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <ProductCard
+              title="Guides"
+              badge="Knowledge"
+              badgeVariant="outline"
+              eyebrow="Learn the logic"
+              description="Read focused SaaS guides covering dashboards, auth, billing, teams, admin systems, and product structure."
+              href={INTERNAL.guides}
+              cta="Read guides"
+              ctaVariant="outline"
+            />
+
+            <ProductCard
+              title="Examples"
+              badge="Showcase"
+              badgeVariant="outline"
+              eyebrow="Explore interfaces"
+              description="See real SaaS surface directions and how PyColors is designed to support modern product workflows."
+              href={INTERNAL.examples}
+              cta="Explore examples"
+              ctaVariant="outline"
+            />
+
+            <ProductCard
+              title="Access"
+              badge="Pricing"
+              badgeVariant="outline"
+              eyebrow="Choose your path"
+              description="Understand the free entry point, the premium upgrade path, and the long-term All-In access strategy."
+              href={INTERNAL.access}
+              cta="View access"
+              ctaVariant="secondary"
+            />
+          </div>
+        </section>
+
         {/* UPGRADE MENTAL MODEL */}
         <section className="py-10 sm:py-14">
-          <div className="mb-6 space-y-1 text-center">
-            <h2 className="font-brand text-xl font-semibold tracking-tight">
-              Upgrade to PRO when you scale
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Upgrade when wiring slows you down.
-            </p>
-          </div>
+          <SectionHeader
+            title="Free validates UX. PRO wires the business."
+            description="Starter Free is the surface. PRO is the upgrade path when auth, billing, backend, and deployment become the bottleneck."
+            action={
+              <Button asChild variant="secondary">
+                <Link href={INTERNAL.upgrade}>
+                  Explore Upgrade to PRO
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+            }
+          />
 
           <Card className="p-6 sm:p-7">
             <Table>
@@ -559,42 +827,33 @@ pnpm dev`}</pre>
                   </TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
                 <TableRow>
                   <TableCell className="font-medium">Auth</TableCell>
-                  <TableCell>Mock flows + UI states</TableCell>
+                  <TableCell>Screens + UX states</TableCell>
                   <TableCell>
-                    Real auth + sessions + providers
+                    Providers + sessions + protected routes
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
                     Billing
                   </TableCell>
-                  <TableCell>Mock-ready pages</TableCell>
                   <TableCell>
-                    Stripe ready + portal + webhooks
+                    Billing UI + mocked entrypoints
+                  </TableCell>
+                  <TableCell>
+                    Stripe subscriptions + portal + webhooks
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium">
-                    Organizations
+                    Backend
                   </TableCell>
-                  <TableCell>Single org surface</TableCell>
-                  <TableCell>Multi-org + switching</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    Permissions
-                  </TableCell>
-                  <TableCell>Basic roles (owner/member)</TableCell>
-                  <TableCell>Advanced RBAC + policies</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">UI</TableCell>
-                  <TableCell>PyColors UI baseline</TableCell>
+                  <TableCell>Frontend-only + mock sources</TableCell>
                   <TableCell>
-                    PRO blocks + premium product patterns
+                    Production foundations + API contracts
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -602,21 +861,66 @@ pnpm dev`}</pre>
 
             <div className="mt-5 flex flex-wrap gap-3">
               <Button asChild variant="secondary">
-                <Link href="/starters">Starters page</Link>
+                <Link href={INTERNAL.upgrade}>See PRO scope</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/roadmap">Track roadmap</Link>
+                <Link href={INTERNAL.access}>View access</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/docs/saas-starter">Starter docs</Link>
+                <Link href={INTERNAL.starterUpgradeDocs}>
+                  Read migration guide
+                </Link>
               </Button>
             </div>
 
             <p className="mt-3 text-xs text-muted-foreground">
-              PRO stays clean: same surfaces, wired foundations, and
-              upgrade-ready packaging.
+              The product promise is stable: Starter Free validates
+              the product surface. PRO wires the business layer.
             </p>
           </Card>
+        </section>
+
+        {/* PRICING PREVIEW */}
+        <section className="py-10 sm:py-14">
+          <SectionHeader
+            title="Pricing preview"
+            description="Premium pricing aligned with time saved, setup avoided, and faster monetization."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href={INTERNAL.access}>View access</Link>
+              </Button>
+            }
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <PricingPreviewCard
+              title="UI PRO"
+              price="€129"
+              badge="Later"
+              description="Premium SaaS patterns built on top of the PyColors UI baseline."
+              href={INTERNAL.waitlist}
+              cta="Notify me"
+            />
+
+            <PricingPreviewCard
+              title="Starter PRO"
+              price="€249"
+              badge="Coming"
+              description="The wired upgrade path for builders who want the business layer handled."
+              href={INTERNAL.waitlist}
+              cta="Join waitlist"
+            />
+
+            <PricingPreviewCard
+              title="All-In Access"
+              price="€349"
+              badge="Recommended"
+              description="The long-term premium offer for builders who want the full PyColors SaaS stack."
+              href={INTERNAL.waitlist}
+              cta="Get early access"
+              highlight
+            />
+          </div>
         </section>
 
         {/* FEATURED TEMPLATE */}
@@ -631,7 +935,7 @@ pnpm dev`}</pre>
                       Featured template
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                      Early access
+                      Premium
                     </Badge>
                     <span className="text-xs text-muted-foreground">
                       $49
@@ -642,22 +946,22 @@ pnpm dev`}</pre>
                     NA-AI — Premium Landing Page
                   </h3>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
-                    Premium landing page template for AI & SaaS
+                  <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    Premium landing page template for AI and SaaS
                     products — real sections, pricing toggle,
                     integrations, dark/light mode, and clean
                     production UI.
                   </p>
 
                   <p className="text-xs text-muted-foreground">
-                    Dark + Light screenshots included. Frontend-only
-                    by design.
+                    Frontend-only by design. A fast path for shipping
+                    a polished marketing surface.
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-2 sm:min-w-[220px] sm:items-end">
                   <Button asChild className={cn(focusRing)}>
-                    <Link href="/templates/na-ai">
+                    <Link href={INTERNAL.templateNaAi}>
                       View NA-AI details
                       <ArrowRight
                         className="ml-2 h-4 w-4"
@@ -672,7 +976,7 @@ pnpm dev`}</pre>
                     className={cn(focusRing)}
                   >
                     <a
-                      href="https://pycolors.gumroad.com/l/na-ai-nextjs-landing?layout=profile"
+                      href={EXTERNAL.naAiBuy}
                       target="_blank"
                       rel="noreferrer noopener"
                       aria-label="Buy NA-AI on Gumroad (opens in a new tab)"
@@ -686,13 +990,12 @@ pnpm dev`}</pre>
                   </Button>
 
                   <a
-                    href="https://na-ai-landing-template.vercel.app"
+                    href={EXTERNAL.naAiDemo}
                     target="_blank"
                     rel="noreferrer noopener"
                     className={cn(
-                      'mt-1 inline-flex items-center text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline',
+                      'mt-1 inline-flex items-center rounded-sm text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline',
                       focusRing,
-                      'rounded-sm',
                     )}
                   >
                     View live demo
@@ -706,13 +1009,16 @@ pnpm dev`}</pre>
             </Card>
 
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              This is one example of the Templates line — more ship
-              progressively.
+              Templates are part of the ecosystem, but Starter Free is
+              the main acquisition path and PRO is the premium upgrade
+              path.
             </p>
 
             <div className="mt-3 flex justify-center">
               <Button asChild size="sm" variant="outline">
-                <Link href="/templates">Browse all templates</Link>
+                <Link href={INTERNAL.templates}>
+                  Browse all templates
+                </Link>
               </Button>
             </div>
           </div>
@@ -720,40 +1026,45 @@ pnpm dev`}</pre>
 
         {/* WORKFLOW */}
         <section className="py-10 sm:py-14">
-          <div className="mb-6 space-y-1 text-center">
-            <h2 className="font-brand text-xl font-semibold tracking-tight">
-              How it fits your workflow
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Adopt progressively — no rewrites, no lock-in.
-            </p>
-          </div>
+          <SectionHeader
+            title="How it fits your workflow"
+            description="Adopt progressively — no rewrites, no lock-in, clear path from education to validation to production."
+          />
 
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-4">
             <StepCard
               step="Step 01"
-              title="Start with the UI foundation"
-              description="Use the UI system as your stable baseline for dashboards and marketing screens."
-              href="/ui"
-              cta="Explore UI"
+              title="Learn with Guides"
+              description="Understand the product logic behind dashboards, auth, billing, teams, and admin systems."
+              href={INTERNAL.guides}
+              cta="Read guides"
               variant="outline"
             />
 
             <StepCard
               step="Step 02"
+              title="Explore Patterns & Examples"
+              description="Study production-shaped surfaces before deciding how your product should feel."
+              href={INTERNAL.examples}
+              cta="See examples"
+              variant="outline"
+            />
+
+            <StepCard
+              step="Step 03"
               title="Validate with Starter Free"
-              description="Explore a real SaaS UI surface (mock data) — prove the UX before wiring backend."
-              href="/starters/free"
+              description="Run a credible SaaS surface locally and prove the UX before wiring the business layer."
+              href={INTERNAL.starterFree}
               cta="Open Starter Free"
               variant="secondary"
             />
 
             <StepCard
-              step="Step 03"
-              title="Scale with Starters"
-              description="When you need everything wired together, the Starter becomes the fastest path to production."
-              href="/starters"
-              cta="Early access"
+              step="Step 04"
+              title="Upgrade when wiring slows you down"
+              description="Move to premium access when auth, billing, backend, and deployment become the blocker."
+              href={INTERNAL.access}
+              cta="View access"
               variant="outline"
             />
           </div>
@@ -768,8 +1079,9 @@ pnpm dev`}</pre>
                   Built in public. Shipped with discipline.
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Public roadmap, changelog, and docs-first workflow —
-                  designed to last.
+                  Public roadmap, changelog, waitlist, guides,
+                  examples, patterns, and docs-first workflow —
+                  designed to compound into a premium SaaS ecosystem.
                 </p>
               </div>
 
@@ -779,7 +1091,7 @@ pnpm dev`}</pre>
                   variant="outline"
                   className={cn(focusRing)}
                 >
-                  <Link href="/docs/saas-starter">Starter docs</Link>
+                  <Link href={INTERNAL.guides}>Guides</Link>
                 </Button>
 
                 <Button
@@ -787,7 +1099,7 @@ pnpm dev`}</pre>
                   variant="outline"
                   className={cn(focusRing)}
                 >
-                  <Link href="/docs/ui">UI docs</Link>
+                  <Link href={INTERNAL.examples}>Examples</Link>
                 </Button>
 
                 <Button
@@ -795,7 +1107,7 @@ pnpm dev`}</pre>
                   variant="outline"
                   className={cn(focusRing)}
                 >
-                  <Link href="/changelog">Changelog</Link>
+                  <Link href={INTERNAL.changelog}>Changelog</Link>
                 </Button>
 
                 <Button
@@ -803,7 +1115,7 @@ pnpm dev`}</pre>
                   variant="outline"
                   className={cn(focusRing)}
                 >
-                  <Link href="/roadmap">Roadmap</Link>
+                  <Link href={INTERNAL.roadmap}>Roadmap</Link>
                 </Button>
               </div>
             </div>
@@ -812,6 +1124,45 @@ pnpm dev`}</pre>
           <p className="mt-4 text-center text-xs text-muted-foreground">
             PyColors is designed to last — not to chase trends.
           </p>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="py-10 sm:py-14">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <h3 className="font-brand text-lg font-semibold tracking-tight">
+                  Start with Free today. Upgrade when your SaaS
+                  becomes real.
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Learn the product logic, validate the UX with
+                  Starter Free, then join the premium path when you
+                  want the revenue-critical wiring handled.
+                </p>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <TrustPill label="Guides first" />
+                  <TrustPill label="Free today" />
+                  <TrustPill label="PRO later" />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href={INTERNAL.starterFree}>
+                    Start with Starter Free
+                  </Link>
+                </Button>
+
+                <Button asChild variant="secondary">
+                  <Link href={INTERNAL.waitlist}>
+                    Join PRO waitlist
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
         </section>
       </div>
     </MarketingShell>
