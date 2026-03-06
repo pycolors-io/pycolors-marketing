@@ -6,9 +6,7 @@ import {
   ArrowRight,
   Sparkles,
   BadgeCheck,
-  BookOpen,
   Layers3,
-  LayoutTemplate,
 } from 'lucide-react';
 
 import { MarketingShell } from '@/components/shells/marketing-shell';
