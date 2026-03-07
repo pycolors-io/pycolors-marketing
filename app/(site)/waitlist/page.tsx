@@ -8,12 +8,12 @@ import { Container } from '@/components/container';
 export const metadata: Metadata = {
   title: 'PRO Waitlist',
   description:
-    'Join the PyColors PRO waitlist to get early access to Starter PRO, pricing updates, and future All-In access.',
+    'Join the PyColors PRO waitlist to get early visibility into Starter PRO, pricing updates, launch announcements, and future All-In access direction.',
   alternates: { canonical: '/waitlist' },
   openGraph: {
     title: 'PRO Waitlist · PyColors',
     description:
-      'Join the PyColors PRO waitlist to get early access to Starter PRO, pricing updates, and future All-In access.',
+      'Join the PyColors PRO waitlist to get early visibility into Starter PRO, pricing updates, launch announcements, and future All-In access direction.',
     url: '/waitlist',
     images: ['/seo/og-main.png'],
   },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PRO Waitlist · PyColors',
     description:
-      'Join the PyColors PRO waitlist to get early access to Starter PRO, pricing updates, and future All-In access.',
+      'Join the PyColors PRO waitlist to get early visibility into Starter PRO, pricing updates, launch announcements, and future All-In access direction.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -36,6 +36,9 @@ const INTERNAL = {
   starterFree: '/starters/free',
   roadmap: '/roadmap',
   docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
+  license: '/license',
+  terms: '/terms',
+  privacy: '/privacy',
 } as const;
 
 const WAITLIST_URL = 'https://tally.so/r/RG4Wr4';
@@ -106,12 +109,14 @@ function PricingPreviewCard({
   price,
   badge,
   description,
+  footnote,
   highlight = false,
 }: {
   title: string;
   price: string;
   badge?: string;
   description: string;
+  footnote?: string;
   highlight?: boolean;
 }) {
   return (
@@ -145,6 +150,12 @@ function PricingPreviewCard({
         <p className="text-sm text-muted-foreground leading-relaxed">
           {description}
         </p>
+
+        {footnote ? (
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {footnote}
+          </p>
+        ) : null}
       </div>
     </Card>
   );
@@ -209,13 +220,20 @@ export default function WaitlistPage() {
                   upgrade path for auth, billing, backend foundations,
                   and deployment guidance.
                 </p>
+
+                <p className="mx-auto max-w-3xl text-balance text-xs text-muted-foreground">
+                  Joining the waitlist signals interest and helps
+                  shape launch priority, packaging, and pricing
+                  direction. It does not create a purchase right,
+                  reservation, or guaranteed access commitment.
+                </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-2 pt-2">
-                <Pill>Early access</Pill>
+                <Pill>Early visibility</Pill>
                 <Pill>Pricing updates</Pill>
                 <Pill>Launch notifications</Pill>
-                <Pill>Bundle-first visibility</Pill>
+                <Pill>Bundle-first direction</Pill>
               </div>
             </header>
 
@@ -237,8 +255,8 @@ export default function WaitlistPage() {
                     <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground">
                       The waitlist is where PyColors captures serious
                       product intent. Join to stay close to Starter
-                      PRO, pricing decisions, and the long-term All-In
-                      direction.
+                      PRO, pricing direction, launch timing, and the
+                      long-term All-In strategy.
                     </p>
                   </div>
 
@@ -247,7 +265,7 @@ export default function WaitlistPage() {
                       href={WAITLIST_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Get early access to PyColors PRO"
+                      aria-label="Join the PyColors PRO waitlist"
                     >
                       Join the PRO waitlist
                       <ArrowRight
@@ -257,9 +275,12 @@ export default function WaitlistPage() {
                     </a>
                   </Button>
 
-                  <p className="text-xs text-muted-foreground">
-                    Be first to hear about Starter PRO, pricing
-                    updates, and All-In Access.
+                  <p className="max-w-2xl text-xs text-muted-foreground">
+                    You may receive launch communications, pricing
+                    updates, and access-related announcements
+                    connected to PRO and All-In direction. Actual
+                    commercial terms remain defined at launch on the
+                    relevant offer pages.
                   </p>
                 </div>
               </Card>
@@ -282,10 +303,10 @@ export default function WaitlistPage() {
 
                     <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
                       The waitlist is not just a notification form. It
-                      signals interest around a premium SaaS offer
-                      before the full release is public. That helps
-                      shape pricing, packaging, and shipping priority
-                      with real demand.
+                      signals real demand around a premium SaaS offer
+                      before full release. That helps shape pricing,
+                      packaging, launch sequencing, and offer priority
+                      with stronger market feedback.
                     </p>
                   </div>
 
@@ -317,20 +338,20 @@ export default function WaitlistPage() {
 
               <div className="grid gap-4 lg:grid-cols-2">
                 <BenefitCard
-                  title="Early access"
-                  description="Be among the first to know when Starter PRO becomes available."
+                  title="Early visibility"
+                  description="Be among the first to hear when Starter PRO or related premium access becomes publicly available."
                 />
                 <BenefitCard
                   title="Pricing updates"
-                  description="Get notified as founding pricing and packaging become concrete."
+                  description="Get notified as positioning, packaging, and founding pricing become more concrete."
                 />
                 <BenefitCard
-                  title="Bundle visibility"
+                  title="Bundle direction"
                   description="See how Starter PRO, UI PRO, and All-In Access evolve as a coherent premium ecosystem."
                 />
                 <BenefitCard
-                  title="Shipping progress"
-                  description="Stay close to the phased rollout without having to manually track every update."
+                  title="Launch progress"
+                  description="Stay close to the phased rollout without manually tracking every roadmap or offer update."
                 />
               </div>
             </section>
@@ -414,23 +435,61 @@ export default function WaitlistPage() {
                 <PricingPreviewCard
                   title="UI PRO"
                   price="€129"
-                  badge="Later"
+                  badge="Coming"
                   description="Premium SaaS patterns built on top of the PyColors UI baseline."
+                  footnote="Commercial scope, updates, and included materials depend on the offer available at launch."
                 />
                 <PricingPreviewCard
                   title="Starter PRO"
                   price="€249"
                   badge="Coming"
                   description="The wired upgrade path for builders who want the business layer handled."
+                  footnote="This direction reflects intended positioning, not a final legal or commercial commitment."
                 />
                 <PricingPreviewCard
                   title="All-In Access"
                   price="€349"
                   badge="Recommended"
                   description="The long-term premium offer for builders who want the full PyColors SaaS stack."
+                  footnote="Included products, updates, and future premium drops depend on the scope explicitly included in the final purchased offer."
                   highlight
                 />
               </div>
+            </section>
+
+            {/* LEGAL / COMMERCIAL NOTE */}
+            <section className="py-8 sm:py-10">
+              <Card className="p-6 sm:p-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-2">
+                    <h2 className="font-brand text-lg font-semibold tracking-tight">
+                      Waitlist scope
+                    </h2>
+                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                      This page is an interest and launch-readiness
+                      page. Joining the waitlist does not guarantee
+                      access, reserve inventory, fix pricing, or
+                      create a contractual right to purchase. The
+                      actual offer, license scope, pricing, updates,
+                      and legal terms are defined on the relevant
+                      product pages, checkout flow, and legal pages
+                      when the offer is live.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.license}>License</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.terms}>Terms</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.privacy}>Privacy</Link>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
             </section>
 
             {/* FAQ */}
@@ -456,8 +515,8 @@ export default function WaitlistPage() {
                   answer={
                     <>
                       To stay close to the launch, see pricing
-                      evolution, and capture early-access updates
-                      without checking manually.
+                      direction, and receive early updates without
+                      checking manually.
                     </>
                   }
                 />
@@ -466,9 +525,9 @@ export default function WaitlistPage() {
                   question="What happens after I join?"
                   answer={
                     <>
-                      You’ll be part of the early audience for Starter
-                      PRO, pricing announcements, and future All-In
-                      positioning.
+                      You may receive launch announcements, pricing
+                      updates, and future communications related to
+                      Starter PRO and All-In direction.
                     </>
                   }
                 />
@@ -485,12 +544,13 @@ export default function WaitlistPage() {
                 />
 
                 <FaqCard
-                  question="Does the waitlist guarantee purchase?"
+                  question="Does the waitlist guarantee purchase or pricing?"
                   answer={
                     <>
                       No. It signals interest and keeps you informed.
-                      The actual commercial offer stays defined by the
-                      upgrade and access pages.
+                      The actual commercial offer remains defined by
+                      the upgrade, access, checkout, and legal pages
+                      when the product is live.
                     </>
                   }
                 />
@@ -506,14 +566,28 @@ export default function WaitlistPage() {
                       >
                         /upgrade
                       </Link>{' '}
-                      for the upgrade promise and{' '}
+                      for the product direction,{' '}
                       <Link
                         href={INTERNAL.access}
                         className="font-mono text-foreground underline underline-offset-4"
                       >
                         /access
                       </Link>{' '}
-                      for pricing and packaging direction.
+                      for pricing and packaging direction, and{' '}
+                      <Link
+                        href={INTERNAL.license}
+                        className="font-mono text-foreground underline underline-offset-4"
+                      >
+                        /license
+                      </Link>{' '}
+                      plus{' '}
+                      <Link
+                        href={INTERNAL.terms}
+                        className="font-mono text-foreground underline underline-offset-4"
+                      >
+                        /terms
+                      </Link>{' '}
+                      for the governing usage and legal scope.
                     </>
                   }
                 />
