@@ -13,12 +13,12 @@ import { Badge, Button, Card } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'Privacy',
   description:
-    'Privacy Policy for PyColors covering website visitors, waitlists, product inquiries, analytics, premium purchases, future accounts, and international users.',
+    'Privacy Policy for PyColors covering website visitors, documentation users, waitlists, product inquiries, analytics, premium purchases, future accounts, and international users.',
   alternates: { canonical: '/privacy' },
   openGraph: {
     title: 'Privacy · PyColors',
     description:
-      'Learn how PyColors collects, uses, stores, and protects personal data across its website, digital products, and future premium services.',
+      'Learn how PyColors collects, uses, stores, and protects personal data across its website, public content, digital products, and future premium services.',
     url: '/privacy',
     images: ['/seo/og-main.png'],
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Privacy · PyColors',
     description:
-      'Learn how PyColors collects, uses, stores, and protects personal data across its website, digital products, and future premium services.',
+      'Learn how PyColors collects, uses, stores, and protects personal data across its website, public content, digital products, and future premium services.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -155,7 +155,8 @@ export default function PrivacyPage() {
               </p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
-                  the public website and documentation at pycolors.io;
+                  the public website, documentation, guides, examples,
+                  and related public content at pycolors.io;
                 </li>
                 <li>
                   waitlists, contact forms, email communications, and
@@ -167,8 +168,9 @@ export default function PrivacyPage() {
                   workflows;
                 </li>
                 <li>
-                  future accounts, premium access areas, or
-                  subscription services operated by PyColors.
+                  future accounts, premium access areas,
+                  subscriptions, or member services operated by
+                  PyColors.
                 </li>
               </ul>
               <p>
@@ -200,8 +202,8 @@ export default function PrivacyPage() {
                     Transaction data
                   </span>{' '}
                   such as purchase status, product purchased, billing
-                  metadata, and order-related identifiers provided by
-                  payment platforms.
+                  metadata, order-related identifiers, and purchase
+                  confirmation details provided by payment platforms.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">
@@ -226,7 +228,7 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   directly from you when you contact us, join a
-                  waitlist, or make a purchase;
+                  waitlist, request access, or make a purchase;
                 </li>
                 <li>automatically when you browse the website;</li>
                 <li>
@@ -234,7 +236,7 @@ export default function PrivacyPage() {
                   transaction is completed or attempted;
                 </li>
                 <li>
-                  from analytics, hosting, or email infrastructure
+                  from analytics, hosting, email, or infrastructure
                   providers used to operate the business.
                 </li>
               </ul>
@@ -335,8 +337,9 @@ export default function PrivacyPage() {
                 <span className="font-medium text-foreground">
                   Legal / implementation review recommended:
                 </span>{' '}
-                if GA is active for EU users, the cookie banner and
-                consent mode should match actual implementation.
+                if Google Analytics is active for EU users, the cookie
+                banner and consent mode should match actual
+                implementation.
               </p>
             </Section>
 
@@ -445,6 +448,10 @@ export default function PrivacyPage() {
                 <li>
                   contact messages may be retained to manage ongoing
                   conversations or support history;
+                </li>
+                <li>
+                  waitlist and access-request data may be retained to
+                  manage launch communications and access planning;
                 </li>
                 <li>
                   transaction records may be retained for accounting,
