@@ -13,12 +13,12 @@ import { Badge, Button, Card } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'Terms',
   description:
-    'Terms of Service for PyColors covering website usage, open-source products, premium templates, future PRO products, payments, subscriptions, accounts, and commercial usage.',
+    'Terms of Service for PyColors covering website usage, public repositories, premium templates, future PRO products, payments, subscriptions, accounts, and commercial usage.',
   alternates: { canonical: '/terms' },
   openGraph: {
     title: 'Terms · PyColors',
     description:
-      'Terms of Service for the PyColors ecosystem, including digital products, future SaaS offers, and commercial usage rules.',
+      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, future SaaS offers, and commercial usage rules.',
     url: '/terms',
     images: ['/seo/og-main.png'],
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Terms · PyColors',
     description:
-      'Terms of Service for the PyColors ecosystem, including digital products, future SaaS offers, and commercial usage rules.',
+      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, future SaaS offers, and commercial usage rules.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -80,9 +80,10 @@ export default function TermsPage() {
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
               These Terms govern access to the PyColors website,
-              open-source resources, premium templates, future PRO
-              products, bundled offers, and any related commercial
-              services made available by Py Colors SASU.
+              documentation, public repository ecosystem, premium
+              templates, future PRO products, bundled offers, and any
+              related commercial services made available by Py Colors
+              SASU.
             </p>
 
             <p className="mt-3 text-xs text-muted-foreground">
@@ -98,8 +99,8 @@ export default function TermsPage() {
                   Product clarity
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Separate rules for open-source, templates, and
-                  future premium access.
+                  Separate rules for open-source repositories,
+                  templates, and premium access.
                 </p>
               </Card>
               <Card className="p-5">
@@ -156,15 +157,18 @@ export default function TermsPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>the public website at pycolors.io;</li>
                 <li>
-                  documentation, guides, examples, and public content;
+                  documentation, guides, examples, changelogs,
+                  roadmaps, and public content;
                 </li>
                 <li>
-                  open-source repositories published by PyColors;
+                  the public repository ecosystem and public mirrors
+                  published by or for PyColors;
                 </li>
                 <li>premium templates sold by PyColors;</li>
                 <li>
-                  future commercial products such as Starter Pro, UI
-                  Pro, bundled access, and related premium drops;
+                  future commercial products such as UI PRO, Starter
+                  PRO, bundled access, subscriptions, and related
+                  premium drops;
                 </li>
                 <li>
                   any waitlist, account area, support interaction, or
@@ -175,10 +179,11 @@ export default function TermsPage() {
 
             <Section title="3. Acceptance of the Terms">
               <p>
-                By accessing the website, downloading an open-source
-                resource, joining a waitlist, creating an account,
-                purchasing a product, or using any PyColors commercial
-                offer, you agree to these Terms.
+                By accessing the website, browsing public content,
+                downloading an open-source resource, joining a
+                waitlist, creating an account, purchasing a product,
+                or using any PyColors commercial offer, you agree to
+                these Terms.
               </p>
               <p>
                 If you are using PyColors on behalf of a company,
@@ -195,9 +200,10 @@ export default function TermsPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   <span className="font-medium text-foreground">
-                    Open-source products
+                    Open-source repositories
                   </span>{' '}
-                  are governed by their repository license.
+                  are governed by their repository license for the
+                  repository scope.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">
@@ -208,7 +214,7 @@ export default function TermsPage() {
                 </li>
                 <li>
                   <span className="font-medium text-foreground">
-                    Future PRO products
+                    PRO products and bundle offers
                   </span>{' '}
                   may include one-time purchases, subscriptions,
                   seat-based access, bundled access, or update-based
@@ -216,8 +222,9 @@ export default function TermsPage() {
                 </li>
               </ul>
               <p>
-                The specific commercial scope of a product is defined
-                on the applicable sales, checkout, or access page.
+                The specific commercial scope of a product or offer is
+                defined on the applicable sales page, access page,
+                checkout page, invoice, or order flow.
               </p>
             </Section>
 
@@ -246,17 +253,24 @@ export default function TermsPage() {
               </ul>
             </Section>
 
-            <Section title="6. Open-source products">
+            <Section title="6. Open-source repositories">
               <p>
-                PyColors UI and Starter Free are currently positioned
-                as open-source products.
+                PyColors UI, tokens, tooling, Starter Free, and public
+                mirrors may be available as open-source or public
+                repositories.
               </p>
               <p>
                 Their use is governed by the license included in the
                 relevant repository. These Terms still apply to your
-                use of the website, branding, account-related
-                features, waitlists, and any commercial services
-                surrounding those products.
+                use of the website, branding, waitlists,
+                account-related features, and any commercial services
+                surrounding those repositories.
+              </p>
+              <p>
+                Open-source availability does not grant rights over
+                premium products, paid source code, private
+                repositories, brand assets, or future commercial
+                offers unless explicitly stated.
               </p>
             </Section>
 
@@ -289,11 +303,12 @@ export default function TermsPage() {
               </p>
             </Section>
 
-            <Section title="8. Future PRO products and subscriptions">
+            <Section title="8. PRO products, access plans, and subscriptions">
               <p>
-                PyColors may introduce premium products such as
-                Starter Pro, UI Pro, all-in bundles, subscriptions,
-                member-only access, or future commercial drops.
+                PyColors may introduce premium products and access
+                plans such as UI PRO, Starter PRO, All-In Access,
+                subscriptions, member-only access, or future
+                commercial drops.
               </p>
               <p>
                 These offers may include recurring billing, update
@@ -302,10 +317,10 @@ export default function TermsPage() {
                 limits, or bundle entitlements.
               </p>
               <p>
-                The specific pricing, renewal rules, included
-                features, and cancellation terms for each future offer
-                will be stated on the corresponding commercial page at
-                the time of launch.
+                Specific commercial terms displayed on a product page,
+                access page, pricing page, checkout page, invoice, or
+                order form supplement these Terms and control for the
+                relevant product or offer.
               </p>
             </Section>
 
@@ -322,7 +337,7 @@ export default function TermsPage() {
                 <li>
                   You authorize the relevant billing provider to
                   charge the applicable price, taxes, and recurring
-                  fees if the product is subscription-based.
+                  fees if the product or plan is subscription-based.
                 </li>
                 <li>Taxes may be added where required by law.</li>
                 <li>
@@ -350,7 +365,7 @@ export default function TermsPage() {
               <p>
                 For future products, subscriptions, or bundles, the
                 refund and cancellation rules shown on the relevant
-                checkout, order, or pricing page will apply.
+                checkout, order, pricing, or access page will apply.
               </p>
               <p>
                 Nothing in these Terms excludes mandatory consumer
@@ -366,14 +381,15 @@ export default function TermsPage() {
               <p>
                 Py Colors SASU retains all right, title, and interest
                 in and to the website, products, source materials,
-                documentation, brand identity, trademarks, and related
-                intellectual property, except for third-party
-                components governed by their own licenses.
+                documentation, public and private product packaging,
+                brand identity, trademarks, and related intellectual
+                property, except for third-party components governed
+                by their own licenses.
               </p>
               <p>
-                Purchasing a product does not transfer ownership of
-                the product itself or permit redistribution beyond the
-                granted license.
+                Purchasing a product or access plan does not transfer
+                ownership of the product itself or permit
+                redistribution beyond the granted license.
               </p>
             </Section>
 
@@ -382,7 +398,8 @@ export default function TermsPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>
                   resell, redistribute, leak, or share paid source
-                  code or premium assets in violation of the license;
+                  code, premium assets, private materials, or premium
+                  access in violation of the applicable license;
                 </li>
                 <li>
                   use the website or products for unlawful,
@@ -399,8 +416,13 @@ export default function TermsPage() {
                 </li>
                 <li>
                   misrepresent PyColors products as your own
-                  framework, toolkit, or commercial starter for
-                  resale.
+                  framework, toolkit, starter, or commercial package
+                  for resale;
+                </li>
+                <li>
+                  use PyColors brand assets, product naming, or
+                  positioning in a way that implies official
+                  affiliation or endorsement without permission.
                 </li>
               </ul>
             </Section>
@@ -421,13 +443,14 @@ export default function TermsPage() {
             <Section title="14. Availability and changes">
               <p>
                 We may update, improve, suspend, replace, or remove
-                any part of the website, product lineup, pricing,
-                features, roadmap, or access model at any time.
+                any part of the website, public content, product
+                lineup, pricing, features, roadmap, or access model at
+                any time.
               </p>
               <p>
                 We aim for continuity and clarity, but we do not
-                guarantee that every free or future feature will
-                remain available indefinitely in the same form.
+                guarantee that every free, public, or future feature
+                will remain available indefinitely in the same form.
               </p>
             </Section>
 
@@ -445,8 +468,9 @@ export default function TermsPage() {
               </p>
               <p>
                 You are responsible for evaluating whether a product
-                is suitable for your technical, legal, operational,
-                security, accessibility, and compliance requirements.
+                or access plan is suitable for your technical, legal,
+                operational, security, accessibility, and compliance
+                requirements.
               </p>
             </Section>
 
@@ -461,10 +485,10 @@ export default function TermsPage() {
               </p>
               <p>
                 To the maximum extent permitted by law, our aggregate
-                liability for any claim related to paid products will
-                not exceed the amount you paid to us for the specific
-                product giving rise to the claim during the twelve
-                months preceding the event.
+                liability for any claim related to paid products or
+                paid access will not exceed the amount you paid to us
+                for the specific product or offer giving rise to the
+                claim during the twelve months preceding the event.
               </p>
               <p>
                 <span className="font-medium text-foreground">
@@ -520,7 +544,7 @@ export default function TermsPage() {
               <p>
                 Material changes may also be reflected through the
                 relevant sales page, access page, or checkout flow for
-                the applicable product.
+                the applicable product or offer.
               </p>
             </Section>
 
