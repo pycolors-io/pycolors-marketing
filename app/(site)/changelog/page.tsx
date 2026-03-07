@@ -20,11 +20,12 @@ import {
 export const metadata: Metadata = {
   title: 'Changelog',
   description:
-    'Release notes and product updates for the PyColors ecosystem: UI, Starters, and Templates. Predictable releases, stable conventions, documentation-first.',
+    'Release notes and product updates for the PyColors ecosystem: UI, Starters, Templates, and premium product direction. Predictable releases, stable conventions, and documentation-first shipping.',
+  alternates: { canonical: '/changelog' },
   openGraph: {
     title: 'Changelog · PyColors',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, Templates. Predictable releases and documentation-first shipping.',
+      'Release notes and product updates across PyColors: UI, Starters, Templates, and premium direction. Predictable releases and documentation-first shipping.',
     url: '/changelog',
     images: ['/seo/og-main.png'],
   },
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Changelog · PyColors',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, Templates.',
+      'Release notes and product updates across PyColors: UI, Starters, Templates, and premium direction.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -63,7 +64,7 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Mar 2026 (weekly release)',
     summary:
-      'This release turns PyColors.io into a much stronger SaaS learning and conversion surface. It ships a full Guides layer, adds Patterns / Examples / Access pages, introduces PRO upgrade and waitlist flows, and refines navigation and ecosystem messaging to make the path from learning to upgrading much clearer.',
+      'This release turns PyColors.io into a much stronger SaaS learning and conversion surface. It ships a full Guides layer, adds Patterns, Examples, and Access pages, introduces PRO upgrade and waitlist flows, and refines navigation and ecosystem messaging to make the path from learning to upgrading much clearer.',
     highlights: [
       {
         title: 'Guides layer shipped',
@@ -84,8 +85,8 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'PRO upgrade funnel',
         items: [
-          'Added a dedicated Upgrade to PRO page outlining the offer, roadmap direction, pricing tiers, value proposition, and FAQ.',
-          'Added a PRO waitlist page with early access messaging and pricing visibility to support premium demand capture before launch.',
+          'Added a dedicated Upgrade to PRO page outlining the product direction, roadmap logic, pricing structure, value proposition, and FAQ.',
+          'Added a PRO waitlist page with early interest capture and pricing visibility to support premium demand before launch.',
           'Enhanced site header with clearer PRO upgrade CTAs and badges across desktop and mobile.',
         ],
       },
@@ -111,27 +112,27 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Feb 2026 (weekly release)',
     summary:
-      'This release completes the trust baseline required for commercial distribution. It adds Terms of Service and a Privacy Policy, updates the footer “Trust” section, and clarifies how commercial templates (like NA-AI) relate to the licensing model.',
+      'This release completes the trust baseline required for commercial distribution. It adds Terms of Service and a Privacy Policy, updates the footer trust section, and clarifies how commercial templates like NA-AI relate to the broader PyColors licensing model.',
     highlights: [
       {
         title: 'Legal baseline shipped',
         items: [
-          'Added /terms (Terms of Service) to define website and digital product usage rules.',
-          'Added /privacy (Privacy Policy) covering minimal data collection, cookies/analytics, and third-party checkout handling.',
+          'Added /terms (Terms of Service) to define website, repository ecosystem, and digital product usage rules.',
+          'Added /privacy (Privacy Policy) covering minimal data collection, cookies and analytics direction, and third-party checkout handling.',
         ],
       },
       {
         title: 'Trust surface & navigation',
         items: [
-          'Updated footer “Trust” links to include Terms and Privacy.',
-          'Small copy alignment to ensure commercial template licensing remains clear and consistent across pages.',
+          'Updated footer trust links to include Terms and Privacy.',
+          'Aligned trust copy so commercial template licensing remains clearer and more consistent across pages.',
         ],
       },
       {
         title: 'Commercial readiness (templates)',
         items: [
-          'Reinforced the “open core → paid acceleration” model: open-source foundations remain discoverable while premium templates stay properly licensed.',
-          'Keeps NA-AI positioning consistent with a commercial license included at purchase (Gumroad distribution).',
+          'Reinforced the open-core → paid acceleration model: open foundations remain discoverable while premium templates stay properly licensed.',
+          'Keeps NA-AI positioning consistent with a commercial license included at purchase via Gumroad distribution.',
         ],
       },
     ],
@@ -148,12 +149,12 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Feb 2026 (weekly release)',
     summary:
-      'This release hardens PyColors.io as a distribution and onboarding surface. It ships a full Starter Free documentation set, improves the UI and Starter positioning pages, and adds trust signals like npm badges (shields.io) while tightening accessibility and navigation across mobile and layout surfaces.',
+      'This release hardens PyColors.io as a distribution and onboarding surface. It ships a full Starter Free documentation set, improves the UI and Starter positioning pages, and adds trust signals like npm badges while tightening accessibility and navigation across mobile and layout surfaces.',
     highlights: [
       {
         title: 'Starter Free documentation shipped',
         items: [
-          'Added a comprehensive Starter Free docs set: philosophy, installation, project structure, deployment, upgrade path, and key concepts (auth & billing).',
+          'Added a comprehensive Starter Free docs set: philosophy, installation, project structure, deployment, upgrade path, and key concepts such as auth and billing.',
           'Improved progressive adoption guidance to validate product screens first, then wire backend later.',
           'Added SaaS Starter and release policy docs to collections for clearer onboarding and team conventions.',
         ],
@@ -162,8 +163,8 @@ const CHANGELOG: ChangelogItem[] = [
         title: 'Marketing pages: clearer product positioning',
         items: [
           'Revamped Starter Free page with product-focused UX: clearer Free vs Pro comparison, CTAs, and a more actionable quickstart.',
-          'Redesigned UI page messaging around outcomes (shipping SaaS screens) vs generic component lists, with richer structure and trust indicators.',
-          'Enhanced homepage with a dedicated UI section, improved starter links, and clearer CTAs + demo paths.',
+          'Redesigned UI page messaging around shipping outcomes instead of generic component lists, with richer structure and trust indicators.',
+          'Enhanced homepage with a dedicated UI section, improved starter links, and clearer CTA plus demo paths.',
           'Refined About copy and added open-source links for better transparency and discoverability.',
         ],
       },
@@ -179,8 +180,8 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'UX & accessibility polish',
         items: [
-          'Improved mobile nav a11y: focus first link on open, added skip-to-content, and prevented layout shift with scrollbar compensation.',
-          'Refined footer layout and external links hierarchy; streamlined badges/CTAs for readability.',
+          'Improved mobile nav accessibility: focus first link on open, added skip-to-content, and reduced layout shift with scrollbar compensation.',
+          'Refined footer layout and external links hierarchy; streamlined badges and CTAs for readability.',
           'Cleaned redundant in-code comments and removed unused code for a tighter, more maintainable marketing codebase.',
           'Removed sidebar border and simplified positioning for a cleaner UI.',
         ],
@@ -200,13 +201,13 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Feb 2026 (weekly release)',
     summary:
-      'This release marks a major ecosystem milestone: PyColors is now a structured developer platform with public packages (UI, Tokens, ESLint) and a hardened weekly release engine. The focus shifts from “components” to “shipping infrastructure”.',
+      'This release marks a major ecosystem milestone: PyColors is now a more structured developer platform with public packages (UI, Tokens, ESLint) and a hardened weekly release engine. The positioning shifts from isolated components to shipping infrastructure.',
     highlights: [
       {
         title: 'New public packages',
         items: [
-          '@pycolors/tokens published on npm: light/dark themes + semantic variables + Tailwind v4 bridge.',
-          '@pycolors/eslint-config v1.0.0 released: base, Next.js, and React internal flat configs (ESLint v9 ready).',
+          '@pycolors/tokens published on npm: light / dark themes, semantic variables, and Tailwind v4 bridge.',
+          '@pycolors/eslint-config v1.0.0 released: base, Next.js, and React internal flat configs ready for ESLint v9.',
           'Improved peer dependency clarity and ecosystem alignment across packages.',
         ],
       },
@@ -237,29 +238,29 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Feb 2026 (weekly release)',
     summary:
-      'This release focuses on foundations for the upcoming SaaS Starter (Free) and strengthening the shipping engine: discoverability, trust surface, and consistent ecosystem messaging.',
+      'This release focuses on foundations for the upcoming SaaS Starter (Free) and strengthens the shipping engine: discoverability, trust surface, and consistent ecosystem messaging.',
     highlights: [
       {
         title: 'Starters (in progress)',
         items: [
-          'Started the SaaS Starter (Free): laying down production-ready foundations (structure, DX conventions, UI baseline).',
+          'Started the SaaS Starter (Free): laying down production-ready foundations such as structure, DX conventions, and UI baseline.',
           'Prepared ecosystem cross-links (UI ↔ Starters ↔ Templates) to support a cohesive builder workflow.',
-          'Defined starter release conventions: what is “shipped” vs “in progress” to keep public updates honest and predictable.',
+          'Defined starter release conventions: what is shipped vs in progress to keep public updates honest and predictable.',
         ],
       },
       {
         title: 'Discoverability & trust',
         items: [
-          'Search & analytics baseline: ensure key pages are trackable and indexable (events, metadata hygiene).',
-          'Improved messaging across metadata to reflect PyColors as an ecosystem (not only a UI kit).',
-          'Roadmap / changelog copy aligned with weekly release cadence and commercial readiness.',
+          'Search and analytics baseline: ensure key pages are trackable and indexable through events and metadata hygiene.',
+          'Improved messaging across metadata to reflect PyColors as an ecosystem, not only a UI kit.',
+          'Roadmap and changelog copy aligned with weekly release cadence and commercial readiness.',
         ],
       },
       {
         title: 'Release engine',
         items: [
           'Standardized weekly release structure: highlights blocks, CTA focus, and a clearer “what’s next” narrative.',
-          'Small UI/UX polish passes to reduce friction and improve perceived quality.',
+          'Small UI / UX polish passes to reduce friction and improve perceived quality.',
         ],
       },
     ],
@@ -273,16 +274,16 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Jan 2026 (weekly release)',
     summary:
-      'Docs expansion for production-grade UX patterns (data tables, overlays, async actions) plus SEO/metadata cleanup, favicon refresh, and type-level refactors for consistency.',
+      'Docs expansion for production-grade UX patterns such as data tables, overlays, and async actions, plus SEO cleanup, favicon refresh, and type-level consistency refactors.',
     highlights: [
       {
         title: 'Docs & patterns',
         items: [
-          'Introduced a new “Patterns” docs section: feature-level UI patterns with guidance on when to use them.',
-          'Added a comprehensive Data Table pattern doc: anatomy, states, and variations for SaaS/admin dashboards.',
+          'Introduced a new Patterns docs section: feature-level UI patterns with guidance on when to use them.',
+          'Added a comprehensive Data Table pattern doc: anatomy, states, and variations for SaaS and admin dashboards.',
           'Shipped Data Table preview components: loading, empty, error, filterable, and row actions states.',
           'Added an Overlays pattern guide (Dropdown vs Dialog vs Sheet) with interactive demos and accessibility rules.',
-          'Added Async Actions UX patterns: optimistic/pessimistic updates, feedback tiers, error handling + interactive demos.',
+          'Added Async Actions UX patterns: optimistic / pessimistic updates, feedback tiers, error handling, and interactive demos.',
           'Refactored Toast docs and centralized preview exports via an index file.',
         ],
       },
@@ -290,14 +291,14 @@ const CHANGELOG: ChangelogItem[] = [
         title: 'SEO & metadata',
         items: [
           'Refined site metadata messaging to better position PyColors as a product ecosystem.',
-          'Simplified metadata configuration by removing redundant title/description where Open Graph is the source of truth.',
-          'Enhanced docs layout SEO with improved titles/descriptions and canonical URL support.',
+          'Simplified metadata configuration by removing redundant title / description where Open Graph acts as the source of truth.',
+          'Enhanced docs layout SEO with improved titles, descriptions, and canonical URL support.',
         ],
       },
       {
         title: 'Branding & UI polish',
         items: [
-          'Updated favicon assets for improved branding consistency.',
+          'Updated favicon assets for stronger branding consistency.',
         ],
       },
       {
@@ -357,26 +358,26 @@ const CHANGELOG: ChangelogItem[] = [
     status: 'Stable',
     releaseWeekLabel: 'Jan 2026 (post-release)',
     summary:
-      'Improves marketing + trust surface: templates listing, NA-AI template page, narrative About, and navigation/accessibility polish.',
+      'Improves the marketing and trust surface: templates listing, NA-AI template page, narrative About page, and navigation plus accessibility polish.',
     highlights: [
       {
         title: 'Templates',
         items: [
           'Templates index page: listing of available templates with status and positioning.',
-          'NA-AI template landing: clear value prop + stack + distribution links.',
+          'NA-AI template landing: clearer value proposition, stack, and distribution links.',
         ],
       },
       {
         title: 'About page',
         items: [
-          'New About page: design principles + direction of PyColors UI.',
+          'New About page: design principles and direction of PyColors UI.',
           'Docs-first philosophy and trust positioning for early adopters.',
         ],
       },
       {
         title: 'Navigation & UI polish',
         items: [
-          'Navigation cleanup + accessibility improvements.',
+          'Navigation cleanup and accessibility improvements.',
           'Quick start copy updated for clearer onboarding.',
         ],
       },
@@ -409,7 +410,7 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'Release Hygiene',
         items: [
-          'Changelog page + Roadmap page shipped.',
+          'Changelog page and Roadmap page shipped.',
           'Semantic versioning introduced and version bumped to v1.0.0.',
         ],
       },
@@ -468,9 +469,17 @@ export default function ChangelogPage() {
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Product updates across PyColors: UI, Starters, and
-              Templates. Clear versions, stable conventions, and
-              documentation-first releases.
+              Product updates across PyColors: UI, Starters,
+              Templates, and premium product direction. Clear
+              versions, stable conventions, and documentation-first
+              releases.
+            </p>
+
+            <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
+              Changelog entries reflect shipped work and public-facing
+              release notes. For future direction, packaging, pricing,
+              or launch intent, use the roadmap, access, and upgrade
+              pages.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -480,8 +489,26 @@ export default function ChangelogPage() {
               <Button asChild variant="outline">
                 <Link href="/roadmap">View roadmap</Link>
               </Button>
+              <Button asChild variant="outline">
+                <Link href="/access">View access</Link>
+              </Button>
             </div>
           </header>
+
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <div className="rounded-2xl border bg-muted/20 p-4 sm:p-5">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  Release philosophy
+                </span>{' '}
+                PyColors ships in public through release-driven
+                iterations. The changelog records shipped work. The
+                roadmap tracks priority direction. The access and
+                upgrade pages define the premium path more clearly
+                than the changelog does.
+              </p>
+            </div>
+          </section>
 
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <div className="relative">
@@ -595,9 +622,11 @@ export default function ChangelogPage() {
                             <span className="font-medium text-foreground">
                               Strategy
                             </span>{' '}
-                            Weekly releases build trust. Even when
-                            features are still in progress, we ship
-                            foundations and keep the roadmap explicit.
+                            Weekly releases build trust. Even when the
+                            larger premium system is still evolving,
+                            we ship usable foundations, document what
+                            is real, and keep product direction
+                            visible through roadmap and offer pages.
                           </p>
                         </div>
 
@@ -623,9 +652,10 @@ export default function ChangelogPage() {
             </div>
 
             <p className="mt-6 text-center text-xs text-muted-foreground">
-              Note: changelog entries reflect shipped work. Internal
-              tasks and refactors may be grouped into a single release
-              item.
+              Changelog entries reflect shipped work. Internal tasks,
+              strategy changes, and in-progress commercial scope may
+              be grouped, summarized, or represented more fully on the
+              roadmap and offer pages.
             </p>
           </section>
         </Container>
