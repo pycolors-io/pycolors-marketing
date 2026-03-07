@@ -228,7 +228,6 @@ export default function OpenSourcePage() {
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <div className="mx-auto w-full max-w-5xl">
-            {/* HERO */}
             <header className="flex flex-col items-center gap-6 text-center">
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <Badge variant="secondary" className="gap-2">
@@ -254,9 +253,10 @@ export default function OpenSourcePage() {
                   foundations.
                 </p>
 
-                <p className="mx-auto max-w-2xl text-balance text-xs text-muted-foreground">
-                  This page centralizes the public repos. Product
-                  pages stay focused. Open-source stays discoverable.
+                <p className="mx-auto max-w-3xl text-balance text-xs text-muted-foreground">
+                  Open-source is the foundation layer of the PyColors
+                  open-core strategy. Premium products exist to
+                  accelerate execution, not to create lock-in.
                 </p>
               </div>
 
@@ -289,7 +289,6 @@ export default function OpenSourcePage() {
               </div>
             </header>
 
-            {/* WHY OPEN SOURCE */}
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="Why open-source"
@@ -332,11 +331,10 @@ export default function OpenSourcePage() {
               </div>
             </section>
 
-            {/* OPEN CORE STRATEGY */}
             <section className="py-8 sm:py-10">
               <SectionHeader
                 title="Open-core strategy"
-                description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to create lock-in."
+                description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to blur ownership or licensing boundaries."
                 action={
                   <Button asChild size="sm" variant="outline">
                     <Link href="/upgrade">See Upgrade to PRO</Link>
@@ -446,22 +444,29 @@ export default function OpenSourcePage() {
                   </Table>
                 </div>
 
-                <div className="mt-4 text-xs text-muted-foreground">
-                  The goal is simple: inspect the foundations openly,
-                  adopt progressively, and upgrade only when the next
-                  layer creates real leverage.
+                <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+                  <p>
+                    The goal is simple: inspect the foundations
+                    openly, adopt progressively, and upgrade only when
+                    the next layer creates real leverage.
+                  </p>
+                  <p>
+                    Public repositories are governed by their
+                    respective repository licenses. Premium products,
+                    commercial access, private releases, and brand
+                    assets remain subject to separate commercial
+                    terms.
+                  </p>
                 </div>
               </Card>
             </section>
 
-            {/* REPOSITORIES */}
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="Repositories"
                 description="Public repos you can clone today. Each one maps to a clear role in the ecosystem."
               />
 
-              {/* Foundations */}
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
                   <div>
@@ -509,7 +514,6 @@ export default function OpenSourcePage() {
                 </div>
               </Card>
 
-              {/* Products */}
               <Card className="mt-6 p-6 sm:p-7">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
                   <div>
@@ -557,7 +561,6 @@ export default function OpenSourcePage() {
               </Card>
             </section>
 
-            {/* RECOMMENDED PATH */}
             <section className="mx-auto mt-10 w-full max-w-5xl">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

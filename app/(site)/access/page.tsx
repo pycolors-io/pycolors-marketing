@@ -24,12 +24,12 @@ import { Container } from '@/components/container';
 export const metadata: Metadata = {
   title: 'Access',
   description:
-    'Choose how you want to build with PyColors. Start with the free SaaS starter and upgrade when your product becomes real.',
+    'Choose how you want to build with PyColors. Start with the free SaaS starter and upgrade to premium access when product wiring, advanced patterns, and long-term leverage matter.',
   alternates: { canonical: '/access' },
   openGraph: {
     title: 'Access · PyColors',
     description:
-      'Choose how you want to build with PyColors. Start free, then upgrade to production wiring and premium access.',
+      'Choose how you want to build with PyColors. Start free, then move to premium access for product wiring, premium patterns, and bundle value.',
     url: '/access',
     images: ['/seo/og-main.png'],
   },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Access · PyColors',
     description:
-      'Choose how you want to build with PyColors. Start free, then upgrade to production wiring and premium access.',
+      'Choose how you want to build with PyColors. Start free, then move to premium access for product wiring, premium patterns, and bundle value.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -54,6 +54,8 @@ const INTERNAL = {
   patterns: '/ui/patterns',
   examples: '/examples',
   guides: '/guides',
+  license: '/license',
+  terms: '/terms',
 } as const;
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -101,6 +103,7 @@ function PremiumPlanCard({
   variant = 'outline',
   highlight = false,
   eyebrow,
+  footnote,
 }: {
   title: string;
   price: string;
@@ -112,6 +115,7 @@ function PremiumPlanCard({
   variant?: 'default' | 'outline' | 'secondary';
   highlight?: boolean;
   eyebrow?: string;
+  footnote?: string;
 }) {
   return (
     <Card
@@ -163,6 +167,12 @@ function PremiumPlanCard({
             <li key={point}>• {point}</li>
           ))}
         </ul>
+
+        {footnote ? (
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {footnote}
+          </p>
+        ) : null}
       </div>
 
       <div className="mt-6">
@@ -190,7 +200,7 @@ export default function AccessPage() {
                   />
                   Access
                 </Badge>
-                <Badge variant="outline">Pricing direction</Badge>
+                <Badge variant="outline">Offer structure</Badge>
 
                 <Link
                   href={INTERNAL.starters}
@@ -246,6 +256,14 @@ export default function AccessPage() {
                 <Pill>Bundle-first strategy</Pill>
                 <Pill>Built for SaaS</Pill>
               </div>
+
+              <p className="max-w-3xl text-balance text-xs text-muted-foreground">
+                Pricing, included features, update access, and launch
+                scope may evolve before public release. The applicable
+                commercial terms for any paid offer will be defined on
+                the relevant access page, checkout page, invoice, or
+                order flow at the time of purchase.
+              </p>
             </header>
 
             {/* ACCESS PHILOSOPHY */}
@@ -332,6 +350,13 @@ export default function AccessPage() {
                       <Pill>Billing entrypoints</Pill>
                       <Pill>Admin UI</Pill>
                     </div>
+
+                    <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+                      Starter Free is currently the public entry point
+                      of the ecosystem. Open-source repositories and
+                      free resources remain governed by their own
+                      applicable repository license.
+                    </p>
                   </div>
 
                   <div className="flex min-w-[240px] flex-col gap-2">
@@ -383,6 +408,7 @@ export default function AccessPage() {
                     'Higher-signal product blocks',
                     'Premium UI usage direction',
                   ]}
+                  footnote="Commercial usage, update rights, and included materials depend on the offer scope available at launch."
                   cta="Join waitlist"
                   href={INTERNAL.waitlist}
                 />
@@ -400,6 +426,7 @@ export default function AccessPage() {
                     'Database and contracts',
                     'Deployment guidance',
                   ]}
+                  footnote="This offer is intended as a commercial product license, not a transfer of product ownership or resale rights."
                   cta="Join waitlist"
                   href={INTERNAL.waitlist}
                 />
@@ -413,10 +440,11 @@ export default function AccessPage() {
                   points={[
                     'UI PRO included',
                     'Starter PRO included',
-                    'Future premium drops',
+                    'Selected future premium drops',
                     'Best long-term value',
                     'Built as the anchor offer',
                   ]}
+                  footnote="Included products, update access, and future premium drops are limited to the scope explicitly included in the offer purchased at checkout."
                   cta="Get early access"
                   href={INTERNAL.waitlist}
                   variant="default"
@@ -536,20 +564,21 @@ export default function AccessPage() {
 
                     <TableRow>
                       <TableCell className="font-medium">
-                        Future premium updates
+                        Offer-based update access
                       </TableCell>
                       <TableCell>—</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>✔</TableCell>
+                      <TableCell>Offer-based</TableCell>
+                      <TableCell>Offer-based</TableCell>
+                      <TableCell>Included by scope</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
 
                 <p className="mt-3 text-xs text-muted-foreground">
-                  Starter Free remains the entry point. Premium access
-                  is designed to reduce time-to-revenue as your
-                  product becomes real.
+                  Included access, updates, and future premium drops
+                  depend on the scope of the offer purchased at the
+                  time of checkout. Premium access is designed to
+                  reduce time-to-revenue as your product becomes real.
                 </p>
               </Card>
             </section>
@@ -609,6 +638,36 @@ export default function AccessPage() {
                   </div>
                 </Card>
               </div>
+            </section>
+
+            {/* LEGAL NOTE */}
+            <section className="py-8 sm:py-10">
+              <Card className="p-6 sm:p-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-2">
+                    <h2 className="font-brand text-lg font-semibold tracking-tight">
+                      Commercial scope
+                    </h2>
+                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                      This page is a commercial overview of the
+                      PyColors access model. License scope, permitted
+                      use, restrictions, refunds, and legal terms are
+                      governed by the applicable product page,
+                      checkout flow, invoice, and the PyColors legal
+                      pages.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.license}>License</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={INTERNAL.terms}>Terms</Link>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
             </section>
 
             {/* FINAL CTA */}

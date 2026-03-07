@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Roadmap',
   description:
     'Public roadmap for the PyColors ecosystem: UI, Starters, Guides, and future premium products. A release-driven plan focused on shipping, trust, and monetization readiness.',
+  alternates: { canonical: '/roadmap' },
   openGraph: {
     title: 'Roadmap · PyColors',
     description:
@@ -60,31 +61,31 @@ const milestones: Array<{
     id: 'Release Week',
     title: 'Release Week (Mon 5 → Fri 9 Jan 2026)',
     subtitle:
-      'Ship PyColors UI v1.0: core components + docs baseline + release hygiene.',
+      'Ship PyColors UI v1.0: core components, docs baseline, and release hygiene.',
   },
   {
     id: 'Jan 2026',
     title: 'January 2026 (post-release)',
     subtitle:
-      'Stabilize, improve docs quality, and build the distribution loop.',
+      'Stabilize quality, improve docs, and strengthen the distribution loop.',
   },
   {
     id: 'Feb 2026',
     title: 'February 2026',
     subtitle:
-      'Ship Starter (Free) public alpha + strengthen trust surface (SEO, analytics, licensing).',
+      'Ship Starter Free publicly and strengthen the trust baseline: SEO, analytics, legal pages, and packaging clarity.',
   },
   {
     id: 'Mar 2026',
     title: 'March 2026',
     subtitle:
-      'Expand PyColors.io into a SaaS learning and conversion funnel: guides, patterns, examples, access, and PRO upgrade positioning.',
+      'Expand PyColors.io into a SaaS learning and conversion funnel: guides, patterns, examples, access, and PRO positioning.',
   },
   {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Turn the funnel into revenue: Starter PRO wiring, monetization flow, and launch-ready premium packaging.',
+      'Move from positioning to monetization: Starter PRO scope, premium packaging, and launch readiness.',
   },
 ];
 
@@ -102,7 +103,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Docs quality pass (minimum bar)',
     description:
-      'Unify Related guides, add missing Preview/Code tabs, fix footer consistency between docs & marketing, quick navigation cleanup.',
+      'Unify related guides, add missing Preview/Code tabs, fix footer consistency between docs and marketing, and clean up navigation.',
     status: 'Shipped',
     milestone: 'Release Week',
     tags: ['Docs', 'DX'],
@@ -111,7 +112,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Release hygiene',
     description:
-      'Changelog page + Roadmap page + version bump + release notes format. Ensure “v1.0” looks serious.',
+      'Changelog page, Roadmap page, version bump, and release notes format. Ensure “v1.0” looks serious and credible.',
     status: 'Shipped',
     milestone: 'Release Week',
     tags: ['Release', 'Trust'],
@@ -122,7 +123,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Marketing site baseline (pycolors.io)',
     description:
-      'Home page v2 + dedicated pages: Templates, License, About. Trust-first baseline for distribution.',
+      'Home page v2 + dedicated pages: Templates, License, About. Trust-first baseline for ecosystem positioning and distribution.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['Marketing', 'Trust'],
@@ -131,7 +132,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Patterns docs v1 (Overlays, Async actions, Data Table)',
     description:
-      'New “Patterns” section with production UX rules + interactive demos: overlays decision matrix, async mutation UX, and data table states (loading/empty/error/filtering/row actions).',
+      'New Patterns layer with production UX rules and interactive demos: overlays decision matrix, async mutation UX, and data table states.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['Docs', 'Patterns', 'DX'],
@@ -140,7 +141,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Table (Data UI) direction',
     description:
-      'Production-ready data table patterns and previews: loading/empty/error states, filtering, and row actions. Minimal, practical approach for dashboards.',
+      'Production-ready data table patterns and previews: loading, empty, error states, filtering, and row actions for practical dashboards.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['Data UI', 'Dashboards', 'Docs'],
@@ -149,7 +150,7 @@ const items: RoadmapItem[] = [
   {
     title: 'SEO & branding polish',
     description:
-      'Metadata positioning cleanup (ecosystem messaging), canonical-ready docs metadata improvements, and refreshed favicons for consistent branding.',
+      'Metadata positioning cleanup, canonical-ready improvements, and refreshed favicons for more consistent branding.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['SEO', 'Brand', 'Trust'],
@@ -165,7 +166,7 @@ const items: RoadmapItem[] = [
   {
     title: 'NA-AI landing page integration',
     description:
-      'Published NA-AI as a Template on PyColors site + demo/purchase links + license section + cross-links from docs.',
+      'Published NA-AI as a premium template on the PyColors site with demo / purchase links, licensing section, and ecosystem cross-links.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['Template', 'Sales'],
@@ -174,7 +175,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Stability patch (v1.1.x)',
     description:
-      'Fix edge cases, polish docs, align tokens + class naming, reduce inconsistencies discovered after weekly releases.',
+      'Fix edge cases, polish docs, align tokens and naming, and reduce inconsistencies discovered after weekly releases.',
     status: 'Shipped',
     milestone: 'Jan 2026',
     tags: ['Quality', 'Consistency'],
@@ -184,7 +185,7 @@ const items: RoadmapItem[] = [
   {
     title: 'UI Advanced v1',
     description:
-      'First complete set of advanced, dashboard-grade UI primitives: Dialog/Modal, Dropdown/Menu, Tabs, Tooltip, and Toast. Each component ships with a stable, aligned API, accessibility-first behavior.',
+      'First complete set of advanced dashboard-grade UI primitives: Dialog, Dropdown, Tabs, Tooltip, and Toast with accessibility-first behavior.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: [
@@ -197,9 +198,9 @@ const items: RoadmapItem[] = [
     href: '/docs/ui',
   },
   {
-    title: 'February 2026 — dashboard-grade UI unlock',
+    title: 'February dashboard-grade UI unlock',
     description:
-      'Shipped advanced UI + patterns required for dashboard-grade product UX (Overlays, Async actions, Data Table) and aligned component docs.',
+      'Shipped advanced UI and patterns required for dashboard-grade product UX, with aligned component docs and stronger production credibility.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Shipped', 'Advanced', 'Patterns', 'Dashboards', 'Docs'],
@@ -207,7 +208,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Public packages (Tokens + ESLint)',
     description:
-      'Published @pycolors/tokens and @pycolors/eslint-config on npm. Ecosystem-level consistency: UI + Tokens + Linting aligned under a single architecture.',
+      'Published @pycolors/tokens and @pycolors/eslint-config on npm to strengthen ecosystem-level consistency across UI, tokens, and linting.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Ecosystem', 'NPM', 'DX', 'Trust'],
@@ -215,7 +216,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Monorepo → Mirrors sync engine',
     description:
-      'Hardened subtree strategy: monorepo as source of truth, public repos as distribution mirrors with automated PR sync.',
+      'Hardened subtree distribution strategy: monorepo as source of truth, public repos as mirrors, automated sync flows.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Architecture', 'CI/CD', 'Release'],
@@ -223,7 +224,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Weekly release protocol',
     description:
-      'Formalized weekly marketing releases aligned with versioning and public roadmap updates.',
+      'Formalized weekly marketing releases aligned with versioning, changelog, and roadmap updates.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Release', 'Trust', 'Brand'],
@@ -231,7 +232,7 @@ const items: RoadmapItem[] = [
   {
     title: 'SaaS Starter (Free) — public alpha',
     description:
-      'Starter Free is now publicly documented and positioned as the onboarding entry point: production-shaped UX, clear upgrade path, and a docs-first adoption flow.',
+      'Starter Free is now publicly documented and positioned as the onboarding entry point: production-shaped UX, clear upgrade path, and docs-first adoption.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Starters', 'Docs', 'Launch', 'Trust'],
@@ -240,7 +241,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Starter docs v1 (getting started + architecture)',
     description:
-      'Shipped Starter Free documentation: installation, folder structure, conventions, deployment, upgrade path, plus auth & billing concepts.',
+      'Shipped Starter Free documentation: installation, structure, conventions, deployment, upgrade path, plus auth and billing concepts.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Docs', 'Starters', 'DX'],
@@ -249,7 +250,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Trust signals: npm badges + secure external SVG support',
     description:
-      'Added npm badges (version/downloads/license) powered by shields.io, enabled remote SVG images with a tighter CSP, and improved internal routing to docs.',
+      'Added npm badges, enabled remote SVG images with tighter CSP, and improved internal routing to docs.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Trust', 'NPM', 'Security', 'DX'],
@@ -257,7 +258,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Marketing positioning refresh (UI + Starter + Home)',
     description:
-      'Refined PyColors UI and Starter pages around shipping outcomes, improved homepage entry points, and tightened a11y + navigation for a smoother onboarding funnel.',
+      'Refined UI and Starter pages around shipping outcomes and tightened navigation, onboarding, and accessibility.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Marketing', 'Onboarding', 'A11y', 'Launch'],
@@ -265,7 +266,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Brand & legal baseline',
     description:
-      'Completed trust baseline for commercial distribution: License + Open Source pages, plus Terms of Service and a Privacy Policy. Footer “Trust” navigation updated for clarity.',
+      'Completed trust baseline for commercial distribution: License, Open Source, Terms of Service, and Privacy Policy.',
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Trust', 'Legal', 'Sales'],
@@ -285,7 +286,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Guide infrastructure',
     description:
-      'Added a reusable guide page shell and an inline “On This Page” component to improve content consistency, navigation, and reading flow across long-form SaaS guides.',
+      'Added a reusable guide page shell and inline navigation components to improve consistency, reading flow, and long-form UX.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Docs', 'UX', 'Guides'],
@@ -302,7 +303,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Access & pricing overview',
     description:
-      'Added an access and pricing page clarifying Free, PRO, and long-term upgrade logic to make product packaging and purchase direction easier to understand.',
+      'Added an access and pricing page clarifying Free, PRO, and long-term upgrade logic to make packaging and offer direction easier to understand.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Pricing', 'Packaging', 'Sales', 'Trust'],
@@ -311,7 +312,7 @@ const items: RoadmapItem[] = [
   {
     title: 'PRO upgrade funnel',
     description:
-      'Added a dedicated Upgrade to PRO landing page and clarified the value of moving from validation surfaces to production-ready wiring and business foundations.',
+      'Added a dedicated Upgrade to PRO page clarifying the value of moving from validation surfaces to production-ready wiring and business foundations.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['PRO', 'Upgrade', 'Sales', 'Positioning'],
@@ -320,7 +321,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Waitlist capture for premium demand',
     description:
-      'Added a PRO waitlist page with early access messaging, pricing preview, and bundle visibility to support launch preparation and audience capture.',
+      'Added a PRO waitlist page with early interest capture, pricing preview, and bundle-direction messaging to support launch preparation.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Waitlist', 'Audience', 'Launch', 'Growth'],
@@ -329,7 +330,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Navigation restructuring',
     description:
-      'Updated the primary navigation to reflect the new product learning flow: UI, Patterns, Examples, Guides, and Starters.',
+      'Updated the primary navigation to reflect the product learning flow: UI, Patterns, Examples, Guides, and Starters.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Navigation', 'UX', 'IA'],
@@ -337,7 +338,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Ecosystem messaging refresh',
     description:
-      'Refined homepage, footer, header, starter pages, and upgrade messaging to better explain the PyColors funnel from learning to validation to premium acceleration.',
+      'Refined homepage, footer, starter pages, and upgrade messaging to better explain the PyColors funnel from learning to validation to premium acceleration.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Marketing', 'Brand', 'Conversion'],
@@ -348,15 +349,16 @@ const items: RoadmapItem[] = [
   {
     title: 'Starter PRO wiring baseline',
     description:
-      'Turn the PRO offer from positioning into implementation scope: auth provider guidance, session handling, billing integration direction, backend foundations, and production setup rules.',
+      'Turn the PRO offer from positioning into scoped implementation direction: auth provider guidance, session handling, billing direction, backend foundations, and production setup rules.',
     status: 'Now',
     milestone: 'Mar 2026',
     tags: ['Starter PRO', 'Architecture', 'Auth', 'Billing'],
+    href: '/upgrade',
   },
   {
     title: 'Waitlist conversion loop',
     description:
-      'Connect waitlist capture to a reliable launch workflow: audience segmentation, email flow, pricing announcement sequence, and clearer launch CTA placement.',
+      'Connect waitlist capture to a more reliable launch workflow: segmentation, email flow, pricing announcement sequence, and clearer launch CTA placement.',
     status: 'Now',
     milestone: 'Mar 2026',
     tags: ['Waitlist', 'Conversion', 'Launch'],
@@ -367,7 +369,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Starter PRO offer page hardening',
     description:
-      'Finalize feature comparison, FAQ, upgrade narrative, and packaging details so the PRO offer feels commercially ready before release.',
+      'Finalize feature comparison, FAQ, upgrade narrative, and packaging detail so the PRO offer feels commercially ready before launch.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['PRO', 'Packaging', 'Sales', 'Trust'],
@@ -376,15 +378,16 @@ const items: RoadmapItem[] = [
   {
     title: 'Monetization readiness v2',
     description:
-      'Align pricing, checkout flow, license language, demos, and upgrade path into a cleaner premium conversion system across the full site.',
+      'Align pricing, checkout logic, license language, demos, and upgrade path into a cleaner premium conversion system across the site.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
+    href: '/access',
   },
   {
     title: 'Search & analytics baseline',
     description:
-      'Finish GA4/GTM wiring, validate key events, and set up Search Console indexing checks for faster discoverability.',
+      'Finish GA4 / GTM wiring, validate key events, and set up Search Console indexing checks for stronger discoverability.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['SEO', 'Analytics', 'Trust'],
@@ -392,7 +395,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Cookie preferences + analytics consent (optional)',
     description:
-      'If analytics are enabled, add a lightweight consent layer and document what is tracked. Keep it minimal and performance-safe.',
+      'If analytics are enabled, add a lightweight consent layer and document what is tracked while keeping implementation minimal.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['Privacy', 'Analytics', 'Trust'],
@@ -401,26 +404,27 @@ const items: RoadmapItem[] = [
   {
     title: 'Issue triage + public feedback loop',
     description:
-      'Public “good first issue”, bug bash cadence, and roadmap grooming based on real user feedback from docs + guides + starter pages.',
+      'Add better issue triage, public “good first issue” direction, and roadmap grooming based on real user feedback.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['Community', 'Quality', 'DX'],
     href: 'https://github.com/pycolors-io/pycolors-ui/issues',
   },
 
-  // LATER (H1 2026)
+  // LATER
   {
     title: 'Starter PRO release',
     description:
-      'Ship the first premium Starter PRO package with production wiring guidance for auth, billing, backend foundations, and launch readiness.',
+      'Launch the first premium Starter PRO package with production-oriented auth, billing, backend foundation, and launch-readiness guidance.',
     status: 'Later',
     milestone: 'H1 2026',
     tags: ['Starter PRO', 'Premium', 'Launch'],
+    href: '/waitlist',
   },
   {
     title: 'Blocks library (marketing + SaaS)',
     description:
-      'Copy/paste sections: hero, feature grids, pricing, testimonials, FAQ, CTA, footers. Each block documented.',
+      'Ship copy-paste sections for marketing and SaaS surfaces: hero, feature grids, pricing, testimonials, FAQ, CTA, and footer blocks.',
     status: 'Later',
     milestone: 'H1 2026',
     tags: ['Blocks', 'Marketing'],
@@ -428,7 +432,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Templates line v1',
     description:
-      'First premium templates built on PyColors UI: landing + dashboard. Packaging + README + license + demo.',
+      'Expand the premium template line with new landing and dashboard directions built on PyColors UI, with stronger packaging and demo quality.',
     status: 'Later',
     milestone: 'H1 2026',
     tags: ['Templates', 'Monetization'],
@@ -477,12 +481,27 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
   );
 
   if (item.href) {
+    const isExternal = item.href.startsWith('http');
+    if (isExternal) {
+      return (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="block"
+        >
+          {body}
+        </a>
+      );
+    }
+
     return (
       <Link href={item.href} className="block">
         {body}
       </Link>
     );
   }
+
   return body;
 }
 
@@ -518,11 +537,18 @@ export default function RoadmapPage() {
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              A realistic plan focused on shipping. This roadmap
-              tracks how PyColors evolves from a UI library into a
-              SaaS builder ecosystem: learning resources, production
-              patterns, Starter Free, Starter PRO, and future premium
-              products.
+              A realistic, release-driven plan focused on shipping.
+              This roadmap tracks how PyColors evolves from UI
+              foundations into a SaaS builder ecosystem: learning
+              resources, production patterns, Starter Free, Starter
+              PRO, and future premium offers.
+            </p>
+
+            <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
+              This roadmap reflects current priorities and product
+              direction. It is not a contractual delivery promise, and
+              timing, scope, pricing, or packaging may evolve based on
+              feedback, real usage, bugs, or commercial priorities.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -546,6 +572,9 @@ export default function RoadmapPage() {
               </Button>
               <Button asChild variant="outline">
                 <Link href="/changelog">View changelog</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/access">View access</Link>
               </Button>
             </div>
           </header>
@@ -582,10 +611,38 @@ export default function RoadmapPage() {
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Trust pages, licensing, demos, pricing clarity,
                   waitlist capture, analytics, and a predictable
-                  update cadence.
+                  release cadence.
                 </p>
               </Card>
             </div>
+          </section>
+
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <Card className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-2">
+                  <h2 className="font-brand text-lg font-semibold tracking-tight">
+                    How to read this roadmap
+                  </h2>
+                  <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                    Shipped items reflect public work already
+                    released. Now and Next reflect the strongest
+                    current product and monetization priorities. Later
+                    reflects likely direction, not a fixed delivery
+                    commitment.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/upgrade">Upgrade</Link>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/waitlist">Waitlist</Link>
+                  </Button>
+                </div>
+              </div>
+            </Card>
           </section>
 
           <section className="mx-auto mt-10 w-full max-w-5xl space-y-10">
@@ -628,8 +685,8 @@ export default function RoadmapPage() {
                     Have a request?
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Requests and issues help prioritize what ships
-                    next.
+                    Requests, bugs, and feedback help prioritize what
+                    ships next.
                   </p>
                 </div>
 
@@ -657,8 +714,8 @@ export default function RoadmapPage() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Note: roadmap items may shift based on feedback, bugs,
-              and real-world usage.
+              Roadmap items may shift based on feedback, bugs,
+              technical constraints, and real-world usage.
             </p>
           </section>
         </Container>

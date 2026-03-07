@@ -56,6 +56,8 @@ const INTERNAL = {
   ui: '/ui',
   access: '/access',
   waitlist: '/waitlist',
+  license: '/license',
+  terms: '/terms',
 } as const;
 
 const PRICING = {
@@ -160,6 +162,7 @@ function PricingCard({
   variant = 'outline',
   highlight = false,
   eyebrow,
+  footnote,
 }: {
   title: string;
   price: string;
@@ -171,6 +174,7 @@ function PricingCard({
   variant?: 'default' | 'outline' | 'secondary';
   highlight?: boolean;
   eyebrow?: string;
+  footnote?: string;
 }) {
   return (
     <Card
@@ -218,6 +222,12 @@ function PricingCard({
           ))}
         </ul>
 
+        {footnote ? (
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {footnote}
+          </p>
+        ) : null}
+
         <div className="pt-2">
           <Button
             asChild
@@ -257,7 +267,6 @@ export default function UpgradePage() {
       <main className="flex-1 bg-background text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
           <div className="mx-auto w-full max-w-5xl">
-            {/* HERO */}
             <header className="flex flex-col items-center gap-6 text-center">
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <Badge variant="secondary" className="gap-2">
@@ -325,20 +334,15 @@ export default function UpgradePage() {
                 <Pill>Rolling release plan</Pill>
               </div>
 
-              <p className="text-xs text-muted-foreground">
-                PRO is not public yet. This page defines the offer.
-                Delivery progress lives on{' '}
-                <Link
-                  href={INTERNAL.roadmap}
-                  className="font-mono text-foreground underline underline-offset-4"
-                >
-                  /roadmap
-                </Link>
-                .
+              <p className="max-w-3xl text-balance text-xs text-muted-foreground">
+                PRO is not public yet. This page defines the product
+                direction and pricing structure, not a final legal or
+                delivery commitment. The applicable commercial scope
+                will be defined on the relevant access page, checkout
+                flow, invoice, or order form at launch.
               </p>
             </header>
 
-            {/* WHY PRO EXISTS */}
             <section className="py-10 sm:py-12">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -377,7 +381,6 @@ export default function UpgradePage() {
               </Card>
             </section>
 
-            {/* MENTAL MODEL */}
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="The upgrade path"
@@ -446,7 +449,6 @@ export default function UpgradePage() {
               </div>
             </section>
 
-            {/* WHAT PRO UNLOCKS */}
             <section id="included" className="py-10 sm:py-12">
               <SectionHeader
                 title="What PRO unlocks"
@@ -515,7 +517,6 @@ export default function UpgradePage() {
               </div>
             </section>
 
-            {/* FREE VS PRO TABLE */}
             <section className="py-10 sm:py-12">
               <SectionHeader
                 title="Free vs PRO"
@@ -623,11 +624,13 @@ export default function UpgradePage() {
                 <p className="mt-3 text-xs text-muted-foreground">
                   The product promise is stable: Free validates the
                   product surface. PRO wires the business layer.
+                  Specific commercial scope, included materials,
+                  update access, and launch terms depend on the offer
+                  available at purchase time.
                 </p>
               </Card>
             </section>
 
-            {/* SHIPPING PLAN */}
             <section className="py-8 sm:py-10">
               <SectionHeader
                 title="Shipping plan"
@@ -694,12 +697,12 @@ export default function UpgradePage() {
 
                 <p className="mt-3 text-xs text-muted-foreground">
                   Roadmap tracks delivery order. This page defines the
-                  strategic destination.
+                  strategic destination, not a guaranteed release
+                  contract.
                 </p>
               </Card>
             </section>
 
-            {/* PRICING */}
             <section className="py-8 sm:py-10">
               <SectionHeader
                 title="Pricing direction"
@@ -715,7 +718,7 @@ export default function UpgradePage() {
                 <PricingCard
                   title="UI PRO"
                   price={PRICING.uiPro}
-                  badge="Later"
+                  badge="Coming"
                   eyebrow="Premium layer"
                   description="Premium SaaS patterns built on top of the UI baseline."
                   points={[
@@ -723,6 +726,7 @@ export default function UpgradePage() {
                     'Higher-signal premium blocks',
                     'Designed for builders who already have wiring',
                   ]}
+                  footnote="Commercial usage, update rights, and included materials depend on the offer scope available at launch."
                   cta="Notify me"
                   href={INTERNAL.waitlist}
                   variant="outline"
@@ -739,6 +743,7 @@ export default function UpgradePage() {
                     'Billing direction',
                     'Backend + deploy foundations',
                   ]}
+                  footnote="This offer is intended as a commercial product license, not a transfer of product ownership or resale rights."
                   cta="Join waitlist"
                   href={INTERNAL.waitlist}
                   variant="outline"
@@ -749,13 +754,14 @@ export default function UpgradePage() {
                   price={PRICING.allIn}
                   badge="Recommended"
                   eyebrow="Anchor offer"
-                  description="The long-term premium offer: Starter PRO + future UI PRO + future drops."
+                  description="The long-term premium offer: Starter PRO + future UI PRO + selected future drops."
                   points={[
                     'Best strategic value',
                     'Designed as the anchor offer',
                     'Made for long-term builders',
-                    'Includes future UI PRO and drops',
+                    'Includes products within offer scope',
                   ]}
+                  footnote="Included products, update access, and future premium drops are limited to the scope explicitly included in the offer purchased at checkout."
                   cta="Get early access"
                   href={INTERNAL.waitlist}
                   variant="default"
@@ -764,7 +770,6 @@ export default function UpgradePage() {
               </div>
             </section>
 
-            {/* FAQ */}
             <section className="py-8 sm:py-10">
               <SectionHeader
                 title="FAQ"
@@ -827,25 +832,37 @@ export default function UpgradePage() {
                 />
 
                 <FaqCard
-                  question="Where should I go if I want the technical detail?"
+                  question="Where should I go for the legal scope?"
                   answer={
                     <>
-                      Use the migration guide at{' '}
+                      Use{' '}
                       <Link
-                        href={INTERNAL.docsUpgrade}
+                        href={INTERNAL.access}
                         className="font-mono text-foreground underline underline-offset-4"
                       >
-                        {INTERNAL.docsUpgrade}
+                        /access
                       </Link>{' '}
-                      for technical framing, and this page for the
-                      product offer.
+                      for the commercial overview and{' '}
+                      <Link
+                        href={INTERNAL.license}
+                        className="font-mono text-foreground underline underline-offset-4"
+                      >
+                        /license
+                      </Link>{' '}
+                      and{' '}
+                      <Link
+                        href={INTERNAL.terms}
+                        className="font-mono text-foreground underline underline-offset-4"
+                      >
+                        /terms
+                      </Link>{' '}
+                      for the governing usage and legal terms.
                     </>
                   }
                 />
               </div>
             </section>
 
-            {/* FINAL CTA */}
             <section className="mx-auto mt-10 w-full max-w-5xl">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

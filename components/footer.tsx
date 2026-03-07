@@ -262,7 +262,7 @@ export function Footer() {
   const brand = getFooterBrand(pathname);
 
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-t border-border bg-background relative z-10">
       <Container className="mx-auto max-w-6xl">
         <div className="py-10 sm:py-12">
           <div className="grid gap-10 lg:grid-cols-12">

@@ -27,11 +27,14 @@ import { NpmBadges } from '@/components/npm-badges';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pycolors.io'),
+  title: 'PyColors',
+  description:
+    'Build a credible SaaS faster with guides, patterns, Starter Free, and a premium upgrade path for business wiring.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'PyColors',
     description:
-      'Validate your SaaS fast with a production-shaped UI system and starter, then upgrade to real business wiring when you scale.',
+      'Build a credible SaaS faster with guides, patterns, Starter Free, and a premium upgrade path for business wiring.',
     url: '/',
     siteName: 'PyColors',
     images: ['/seo/og-main.png'],
@@ -41,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PyColors',
     description:
-      'Validate your SaaS fast with a production-shaped UI system and starter, then upgrade to real business wiring when you scale.',
+      'Build a credible SaaS faster with guides, patterns, Starter Free, and a premium upgrade path for business wiring.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -74,6 +77,9 @@ const INTERNAL = {
   templateNaAi: '/templates/na-ai',
   roadmap: '/roadmap',
   changelog: '/changelog',
+  openSource: '/open-source',
+  license: '/license',
+  terms: '/terms',
 } as const;
 
 const starterSurfaces = [
@@ -249,6 +255,7 @@ function PricingPreviewCard({
   description,
   href,
   cta,
+  footnote,
   highlight = false,
 }: {
   title: string;
@@ -257,6 +264,7 @@ function PricingPreviewCard({
   description: string;
   href: string;
   cta: string;
+  footnote?: string;
   highlight?: boolean;
 }) {
   return (
@@ -288,6 +296,12 @@ function PricingPreviewCard({
         <p className="text-sm leading-relaxed text-muted-foreground">
           {description}
         </p>
+
+        {footnote ? (
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {footnote}
+          </p>
+        ) : null}
       </div>
 
       <div className="mt-5">
@@ -315,21 +329,21 @@ export default function HomePage() {
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 Built in public
               </Badge>
-              <Badge variant="outline">Production-shaped</Badge>
+              <Badge variant="outline">Open-core</Badge>
               <Badge variant="outline" className="gap-1.5">
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Starter Free is available
+                Starter Free available now
               </Badge>
             </div>
 
             <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Build your SaaS foundation faster.
+              Build a credible SaaS faster.
               <span className="block font-bold">
-                Learn the product. Validate the surface. Wire the
-                business later.
+                Learn the product. Validate the UX. Wire the business
+                when it matters.
               </span>
             </h1>
 
@@ -339,6 +353,15 @@ export default function HomePage() {
               explore real interfaces, Starter Free to validate fast,
               and a premium path for the business layer when you
               scale.
+            </p>
+
+            <p className="max-w-3xl text-balance text-xs text-muted-foreground">
+              Starter Free is available today. PRO, pricing, included
+              scope, and launch packaging may evolve before public
+              release. Use{' '}
+              <span className="text-foreground">/access</span> and{' '}
+              <span className="text-foreground">/upgrade</span> for
+              current offer direction.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3">
@@ -528,6 +551,9 @@ export default function HomePage() {
               </Button>
               <Button asChild size="sm" variant="outline">
                 <Link href={INTERNAL.uiDocs}>UI docs</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href={INTERNAL.openSource}>Open source</Link>
               </Button>
             </div>
           </div>
@@ -786,7 +812,7 @@ pnpm dev`}</pre>
               badge="Pricing"
               badgeVariant="outline"
               eyebrow="Choose your path"
-              description="Understand the free entry point, the premium upgrade path, and the long-term All-In access strategy."
+              description="Understand the free entry point, the premium upgrade path, and the long-term All-In access direction."
               href={INTERNAL.access}
               cta="View access"
               ctaVariant="secondary"
@@ -874,6 +900,8 @@ pnpm dev`}</pre>
             <p className="mt-3 text-xs text-muted-foreground">
               The product promise is stable: Starter Free validates
               the product surface. PRO wires the business layer.
+              Specific pricing, included scope, and launch packaging
+              may evolve before release.
             </p>
           </Card>
         </section>
@@ -894,10 +922,11 @@ pnpm dev`}</pre>
             <PricingPreviewCard
               title="UI PRO"
               price="€129"
-              badge="Later"
+              badge="Coming"
               description="Premium SaaS patterns built on top of the PyColors UI baseline."
               href={INTERNAL.waitlist}
               cta="Notify me"
+              footnote="Commercial scope, updates, and included materials depend on the offer available at launch."
             />
 
             <PricingPreviewCard
@@ -907,6 +936,7 @@ pnpm dev`}</pre>
               description="The wired upgrade path for builders who want the business layer handled."
               href={INTERNAL.waitlist}
               cta="Join waitlist"
+              footnote="This direction reflects intended positioning, not a final legal or commercial commitment."
             />
 
             <PricingPreviewCard
@@ -916,9 +946,22 @@ pnpm dev`}</pre>
               description="The long-term premium offer for builders who want the full PyColors SaaS stack."
               href={INTERNAL.waitlist}
               cta="Get early access"
+              footnote="Included products, updates, and future premium drops depend on the scope explicitly included in the final purchased offer."
               highlight
             />
           </div>
+
+          <p className="mt-3 text-center text-xs text-muted-foreground">
+            Pricing, included scope, and launch packaging may evolve
+            before public release. See{' '}
+            <Link
+              href={INTERNAL.access}
+              className="text-foreground underline underline-offset-4"
+            >
+              /access
+            </Link>{' '}
+            for current offer direction.
+          </p>
         </section>
 
         {/* FEATURED TEMPLATE */}
@@ -930,10 +973,10 @@ pnpm dev`}</pre>
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary" className="gap-2">
                       <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      Featured template
+                      Featured premium template
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                      Premium
+                      Available today
                     </Badge>
                     <span className="text-xs text-muted-foreground">
                       $49
@@ -1007,9 +1050,9 @@ pnpm dev`}</pre>
             </Card>
 
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Templates are part of the ecosystem, but Starter Free is
-              the main acquisition path and PRO is the premium upgrade
-              path.
+              Templates are a complementary premium layer inside the
+              ecosystem. Starter Free remains the main entry point,
+              while PRO defines the upgrade path for business wiring.
             </p>
 
             <div className="mt-3 flex justify-center">
@@ -1078,8 +1121,9 @@ pnpm dev`}</pre>
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Public roadmap, changelog, waitlist, guides,
-                  examples, patterns, and docs-first workflow —
-                  designed to compound into a premium SaaS ecosystem.
+                  examples, patterns, docs-first workflow, and a clear
+                  premium path — designed to compound into a durable
+                  SaaS ecosystem.
                 </p>
               </div>
 
@@ -1118,6 +1162,18 @@ pnpm dev`}</pre>
               </div>
             </div>
           </Card>
+
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <Button asChild size="sm" variant="outline">
+              <Link href={INTERNAL.openSource}>Open source</Link>
+            </Button>
+            <Button asChild size="sm" variant="outline">
+              <Link href={INTERNAL.license}>License</Link>
+            </Button>
+            <Button asChild size="sm" variant="outline">
+              <Link href={INTERNAL.terms}>Terms</Link>
+            </Button>
+          </div>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
             PyColors is designed to last — not to chase trends.
