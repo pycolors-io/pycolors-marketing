@@ -16,12 +16,12 @@ import { Badge, Button, Card, cn } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
+    'The story behind PyColors — a docs-first open-core SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About · PyColors',
     description:
-      'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
+      'The story behind PyColors — a docs-first open-core SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
     url: '/about',
     images: ['/seo/og-main.png'],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About · PyColors',
     description:
-      'The story behind PyColors — a docs-first SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
+      'The story behind PyColors — a docs-first open-core SaaS ecosystem for learning, exploring, validating, and shipping real product surfaces.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -104,11 +104,11 @@ export default function AboutPage() {
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
               PyColors is not a component dump, a random starter, or a
-              polished demo with no system behind it. It is a SaaS
-              ecosystem designed to help builders learn the product
-              logic, explore credible interfaces, validate faster, and
-              upgrade to real business wiring when the product becomes
-              serious.
+              polished demo with no system behind it. It is an
+              open-core SaaS ecosystem designed to help builders learn
+              the product logic, explore credible interfaces, validate
+              faster, and move toward real business wiring when the
+              product becomes serious.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -229,9 +229,9 @@ export default function AboutPage() {
                   <span className="font-medium text-foreground">
                     PyColors UI is the foundation.
                   </span>{' '}
-                  Patterns, examples, starters, and premium layers are
-                  built on top of that foundation so the ecosystem can
-                  grow without losing coherence.
+                  Patterns, examples, starters, and future premium
+                  layers are built on top of that foundation so the
+                  ecosystem can grow without losing coherence.
                 </p>
               </div>
 
@@ -240,7 +240,7 @@ export default function AboutPage() {
                   'Docs-first: understand faster, copy faster, ship faster.',
                   'Semantic tokens so light/dark theming stays coherent as you grow.',
                   'Production-shaped patterns instead of isolated UI primitives.',
-                  'A clean path from free validation to premium business wiring.',
+                  'An open-core path from free validation to premium business acceleration.',
                 ]}
               />
             </Card>
@@ -459,8 +459,9 @@ export default function AboutPage() {
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                     The ecosystem expands toward premium acceleration:
-                    UI PRO, Starter PRO, and All-In Access — without
-                    breaking the open foundation underneath.
+                    planned layers such as UI PRO, Starter PRO, and
+                    All-In Access — without breaking the open
+                    foundation underneath.
                   </p>
                   <div className="mt-4">
                     <Button
@@ -587,6 +588,45 @@ export default function AboutPage() {
                     />
                   </a>
                 </Button>
+              </div>
+            </Card>
+          </section>
+
+          {/* ORIENTATION NOTE */}
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <Card className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-2">
+                  <h2 className="font-brand text-lg font-semibold tracking-tight">
+                    How to read PyColors
+                  </h2>
+                  <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                    This page explains the vision and structure of the
+                    ecosystem. For the commercial packaging, use{' '}
+                    <span className="text-foreground">/access</span>.
+                    For the product upgrade path, use{' '}
+                    <span className="text-foreground">/upgrade</span>.
+                    For usage rights and legal scope, use{' '}
+                    <span className="text-foreground">/license</span>{' '}
+                    and{' '}
+                    <span className="text-foreground">/terms</span>.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/access">Access</Link>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/upgrade">Upgrade</Link>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/license">License</Link>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/terms">Terms</Link>
+                  </Button>
+                </div>
               </div>
             </Card>
           </section>
