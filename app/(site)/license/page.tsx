@@ -13,12 +13,12 @@ import { Card, Badge, Button } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'License',
   description:
-    'Licensing information for PyColors products, including open-source packages, free starters, premium templates, future PRO products, and bundled commercial access.',
+    'Licensing information for PyColors products, including open-source repositories, free starters, premium templates, future PRO products, and bundled commercial access.',
   alternates: { canonical: '/license' },
   openGraph: {
     title: 'License · PyColors',
     description:
-      'Understand how PyColors products can be used across open-source, commercial templates, PRO products, and bundles.',
+      'Understand how PyColors products can be used across open-source repositories, commercial templates, PRO products, and bundled access.',
     url: '/license',
     images: ['/seo/og-main.png'],
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'License · PyColors',
     description:
-      'Understand how PyColors products can be used across open-source, commercial templates, PRO products, and bundles.',
+      'Understand how PyColors products can be used across open-source repositories, commercial templates, PRO products, and bundled access.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -46,32 +46,33 @@ const principles = [
   {
     title: 'Clear scope',
     description:
-      'Each PyColors product category has its own licensing logic so customers know exactly what they can use, modify, and ship.',
+      'Each PyColors product category has its own licensing logic so builders, agencies, and teams know exactly what they can use, modify, and ship.',
     icon: <Scale className="h-4 w-4" aria-hidden="true" />,
   },
   {
     title: 'Commercial confidence',
     description:
-      'Licensing is structured to support founders, agencies, SaaS teams, and long-term commercial usage without ambiguity.',
+      'Licensing is structured to support real commercial usage while protecting the long-term value of the ecosystem.',
     icon: <ShieldCheck className="h-4 w-4" aria-hidden="true" />,
   },
   {
-    title: 'Sustainable ecosystem',
+    title: 'Open-core sustainability',
     description:
-      'Free products help builders start fast. Premium products fund maintenance, upgrades, documentation, and future releases.',
+      'Open foundations drive adoption. Premium layers fund maintenance, documentation, support, and future product acceleration.',
     icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
   },
 ];
 
 const openSourceSection: LicenseSection = {
-  title: '1. Open-source products',
+  title: '1. Open-source repositories',
   description:
-    'Some PyColors products are distributed as open-source software, including PyColors UI and Starter Free.',
+    'PyColors publishes public open-source repositories, including UI foundations, tokens, developer tooling, Starter Free, and public website mirrors.',
   items: [
-    'Open-source products are governed by the license included in their repository.',
-    'If a repository includes an MIT license, that repository is governed by MIT only.',
-    'Open-source access does not grant rights over paid products, premium assets, private repositories, or future commercial drops unless explicitly stated.',
-    'Brand assets, trademarks, product names, logos, and commercial positioning remain the property of Py Colors SASU unless expressly licensed.',
+    'Each public repository is governed by the license file included in that specific repository.',
+    'If a repository includes an MIT license, that repository is governed by MIT for that repository scope only.',
+    'Open-source access does not grant rights over paid products, premium assets, private repositories, premium drops, bundled commercial access, or future commercial offers unless explicitly stated.',
+    'Brand assets, trademarks, product names, logos, domain names, and commercial positioning remain the property of Py Colors SASU unless expressly licensed.',
+    'Open-source repositories are part of the PyColors open-core strategy, but they do not create a right to reproduce or redistribute premium acceleration layers.',
   ],
 };
 
@@ -85,43 +86,46 @@ const templateSection: LicenseSection = {
     'You may modify the code for your own product or for a client deliverable.',
     'You may not resell, redistribute, sublicense, repackage, publish, or share the source code, design files, or substantially similar derivative template kits.',
     'You may not offer the template as a competing starter, UI kit, boilerplate, page builder pack, marketplace asset, or downloadable product.',
-    'Unless explicitly stated otherwise on the product page, one purchase covers one end product or one client project. Additional projects may require an additional license.',
+    'Unless explicitly stated otherwise on the product page or checkout page, one purchase covers one end product or one client project. Additional projects may require an additional license.',
   ],
 };
 
 const proSection: LicenseSection = {
-  title: '3. Future PRO products',
+  title: '3. PRO products and bundled access',
   description:
-    'Future commercial products may include Starter Pro, UI Pro, premium blocks, premium templates, and bundle access.',
+    'Future commercial products may include UI PRO, Starter PRO, premium blocks, premium templates, subscriptions, member access, and All-In Access.',
   items: [
-    'Starter Pro, UI Pro, and future commercial bundles will be governed by the license terms displayed on their respective sales pages at the time of purchase.',
-    'Commercial access may be granted as a one-time license, subscription, seat-based access, or bundle-based entitlement depending on the offer.',
-    'Access to updates, support, future drops, and premium content may depend on the specific plan purchased.',
-    'Unless explicitly stated, future PRO purchases do not transfer ownership of the product itself; they grant a right to use it under the applicable commercial terms.',
+    'UI PRO, Starter PRO, and future bundled access offers are governed by the commercial terms displayed on their relevant sales page, access page, checkout flow, invoice, or order form at the time of purchase.',
+    'Commercial access may be granted as a one-time license, subscription, seat-based access, update-based entitlement, or bundle-based entitlement depending on the offer.',
+    'Included products, updates, support, private releases, and future premium drops depend on the scope explicitly included in the purchased offer.',
+    'All-In Access grants commercial access to the products and updates explicitly included in the offer at the time of purchase. It does not transfer ownership of the underlying products or intellectual property.',
+    'Unless explicitly stated otherwise, future PRO purchases do not grant resale rights, sublicensing rights, or redistribution rights over the product itself.',
   ],
 };
 
 const restrictionsSection: LicenseSection = {
-  title: '4. Restrictions that apply across paid products',
+  title: '4. Restrictions across paid products',
   description:
     'These restrictions protect the value of PyColors products and keep the ecosystem sustainable.',
   items: [
-    'No resale or redistribution of source code, assets, or premium files.',
+    'No resale or redistribution of source code, premium assets, premium files, or private release materials.',
     'No sublicensing or white-label resale of the product itself.',
-    'No public or private sharing of paid source code outside the scope of your authorized project or team.',
+    'No public or private sharing of paid source code outside the scope of your authorized project, company, or permitted internal team use.',
+    'No creation of competing commercial starters, UI kits, template packs, block libraries, or downloadable derivative products based substantially on PyColors paid products.',
     'No removal of license notices where preservation is required.',
-    'No use of PyColors trademarks, brand identity, or product naming in a way that implies official affiliation, partnership, or endorsement without written permission.',
+    'No use of PyColors trademarks, brand identity, or product naming in a way that implies official affiliation, partnership, endorsement, or product origin without written permission.',
   ],
 };
 
 const updatesSection: LicenseSection = {
   title: '5. Updates and support',
   description:
-    'Not every product includes the same level of updates, maintenance, or support.',
+    'Not every product includes the same level of updates, maintenance, documentation, or support.',
   items: [
-    'Open-source products may receive community-visible updates without any service-level commitment.',
-    'Premium template purchases generally include the product version delivered at purchase time, plus any update rights explicitly described on the product page.',
-    'Future PRO products or bundles may include broader update access, premium documentation, private releases, or commercial support depending on the offer.',
+    'Open-source repositories may receive public updates without any service-level commitment.',
+    'Premium template purchases generally include the product version delivered at purchase time, plus any update rights explicitly described on the product page or checkout page.',
+    'PRO products or bundles may include broader update access, premium documentation, private releases, or commercial support depending on the purchased offer.',
+    'Included updates and future premium drops are limited to the scope of the applicable offer and should not be interpreted as unlimited rights to every current or future PyColors product.',
     'Unless expressly included, support is provided on a reasonable-effort basis and is not a managed services commitment.',
   ],
 };
@@ -174,8 +178,8 @@ export default function LicensePage() {
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
               This page explains how PyColors products can be used
-              across open-source repositories, premium templates,
-              future PRO products, and bundled commercial offers.
+              across open-source repositories, premium templates, PRO
+              products, and bundled commercial offers.
             </p>
 
             <p className="mt-3 text-xs text-muted-foreground">
@@ -213,10 +217,10 @@ export default function LicensePage() {
                 </h2>
                 <p>
                   If there is any conflict between this page and a
-                  license shown on a specific product page, checkout
-                  page, repository, invoice, or commercial order form,
-                  the more specific product-level terms will control
-                  for that product.
+                  license shown on a specific repository, product
+                  page, access page, checkout page, invoice, or
+                  commercial order form, the more specific terms
+                  control for that repository, product, or offer.
                 </p>
                 <p>
                   For example, an open-source repository license
