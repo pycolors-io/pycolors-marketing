@@ -1,18 +1,17 @@
 'use client';
 
-import * as React from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
-  ArrowLeft,
   Compass,
-  Sparkles,
-  Search,
+  Layers3,
+  BookOpen,
+  Rocket,
   LifeBuoy,
+  Sparkles,
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
-
 import { Footer } from '@/components/footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { Button, Badge, Card, cn } from '@pycolors/ui';
@@ -28,31 +27,35 @@ type QuickLink = {
 export default function NotFound() {
   const quickLinks: QuickLink[] = [
     {
-      title: 'Documentation',
-      description: 'Read the docs and learn the foundations.',
-      href: '/docs',
-      icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
+      title: 'Starter Free',
+      description:
+        'Validate a real SaaS surface with auth UX, dashboard, CRUD, settings, and billing entrypoints.',
+      href: '/starters/free',
+      icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
       variant: 'default',
     },
     {
-      title: 'Components',
-      description: 'Browse UI components and examples.',
-      href: '/docs/ui',
-      icon: <Compass className="h-4 w-4" aria-hidden="true" />,
+      title: 'Guides',
+      description:
+        'Learn the product logic behind dashboards, billing, authentication, admin systems, and SaaS UX.',
+      href: '/guides',
+      icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
       variant: 'secondary',
     },
     {
-      title: 'Changelog',
-      description: 'See what shipped and what’s new.',
-      href: '/changelog',
-      icon: <Search className="h-4 w-4" aria-hidden="true" />,
+      title: 'Patterns',
+      description:
+        'Explore production-shaped SaaS patterns built on top of the PyColors UI foundation.',
+      href: '/ui/patterns',
+      icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
       variant: 'outline',
     },
     {
-      title: 'Roadmap',
-      description: 'Discover what we’re building next.',
-      href: '/roadmap',
-      icon: <ArrowRight className="h-4 w-4" aria-hidden="true" />,
+      title: 'Access',
+      description:
+        'See the current pricing direction and the upgrade path from Starter Free to premium access.',
+      href: '/access',
+      icon: <Compass className="h-4 w-4" aria-hidden="true" />,
       variant: 'outline',
     },
   ];
@@ -71,19 +74,20 @@ export default function NotFound() {
               </Badge>
             </div>
 
-            <h1 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              This page doesn’t exist.
+            <h1 className="mt-4 font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              Looks like you took a wrong turn.
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              The link may be broken, or the page may have been moved.
-              Use the shortcuts below to get back on track.
+              The page you were looking for doesn’t exist or may have
+              moved. The fastest way back is to start from one of the
+              core PyColors paths below.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild>
                 <Link href="/">
-                  Back home{' '}
+                  Back to PyColors
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -92,18 +96,35 @@ export default function NotFound() {
               </Button>
 
               <Button asChild variant="outline">
-                <Link href="/docs">
-                  Browse docs{' '}
-                  <Sparkles
+                <Link href="/starters/free">
+                  Open Starter Free
+                  <Rocket
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
                   />
                 </Link>
               </Button>
             </div>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              <Badge variant="outline">Learn</Badge>
+              <Badge variant="outline">Explore</Badge>
+              <Badge variant="outline">Validate</Badge>
+              <Badge variant="outline">Upgrade</Badge>
+            </div>
           </div>
 
+          {/* Quick paths */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
+            <div className="mb-5 text-center sm:mb-6">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                Most useful pages
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Pick the path that matches what you were trying to do.
+              </p>
+            </div>
+
             <div className="grid gap-3 sm:grid-cols-2">
               {quickLinks.map((item) => (
                 <Link
@@ -135,7 +156,7 @@ export default function NotFound() {
                           </Badge>
                         </div>
 
-                        <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                           {item.description}
                         </p>
                       </div>
@@ -146,6 +167,39 @@ export default function NotFound() {
             </div>
           </section>
 
+          {/* Secondary actions */}
+          <section className="mx-auto mt-10 w-full max-w-5xl">
+            <Card className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-1 text-left">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    <Sparkles
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    Try a safer starting point
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    PyColors is structured as a system: guides to
+                    learn, patterns to explore, Starter Free to
+                    validate, and premium access when wiring matters.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild variant="outline">
+                    <Link href="/guides">Browse guides</Link>
+                  </Button>
+
+                  <Button asChild variant="secondary">
+                    <Link href="/ui/patterns">Explore patterns</Link>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </section>
+
+          {/* Help */}
           <section className="mx-auto mt-10 w-full max-w-5xl">
             <Card className="p-6 sm:p-7">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -158,17 +212,18 @@ export default function NotFound() {
                     Need help?
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    If you think this is a mistake, you can report it
-                    or open an issue.
+                    If you think this page should exist, you can
+                    report it or check the latest updates.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
                   <Button asChild variant="outline">
                     <a
-                      href="https://github.com/pycolors-io/pycolors-ui/issues"
+                      href="https://github.com/pycolors-io/pycolors-marketing/issues"
                       target="_blank"
                       rel="noreferrer noopener"
+                      aria-label="Report an issue on the PyColors marketing repository"
                     >
                       Report issue
                     </a>
@@ -176,8 +231,8 @@ export default function NotFound() {
 
                   <Button asChild variant="secondary">
                     <Link href="/changelog">
-                      Latest release{' '}
-                      <ArrowLeft
+                      Latest updates
+                      <ArrowRight
                         className="ml-2 h-4 w-4"
                         aria-hidden="true"
                       />
@@ -188,8 +243,8 @@ export default function NotFound() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Tip: use the top navigation to jump back to Docs, UI, or
-              Templates.
+              Tip: use the top navigation to jump back to UI, Guides,
+              Examples, or Starters.
             </p>
           </section>
         </Container>
