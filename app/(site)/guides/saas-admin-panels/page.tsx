@@ -115,6 +115,14 @@ export default function GuideSaaSAdminPanelsPage() {
       title="Admin panels for SaaS products"
       description="Learn the core UX and product patterns behind admin panels in SaaS — from moderation tools and operational queues to roles, permissions, audit logs, and destructive actions."
       toc={toc}
+      breadcrumb={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        {
+          label: 'Admin panels for SaaS products',
+          href: '/guides/saas-admin-panels',
+        },
+      ]}
     >
       <div>
         <section
