@@ -115,6 +115,14 @@ export default function GuideSaaSDashboardDesignPage() {
       title="SaaS dashboard design patterns"
       description="Learn the core patterns behind a modern SaaS dashboard — from layout and information hierarchy to KPI cards, tables, activity feeds, filters, and empty states."
       toc={toc}
+      breadcrumb={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        {
+          label: 'SaaS dashboard design patterns',
+          href: '/guides/saas-dashboard-design',
+        },
+      ]}
     >
       <div>
         <section
