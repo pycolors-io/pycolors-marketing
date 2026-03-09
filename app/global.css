@@ -98,5 +98,6 @@ a[data-active="true"] {
 }
 
 .footer {
-  background-color: var(--fd-nav-height);
+  background-color: color-mix(in oklch, var(--background), var(--foreground) 2%);
 }
+
