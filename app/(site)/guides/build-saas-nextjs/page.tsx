@@ -114,6 +114,14 @@ export default function GuideBuildSaaSNextjsPage() {
       title="How to build a SaaS with Next.js"
       description="Learn the core product surfaces and architectural decisions behind a modern SaaS built with Next.js — from authentication and billing to dashboards, settings, and team systems."
       toc={toc}
+      breadcrumb={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        {
+          label: 'How to build a SaaS with Next.js',
+          href: '/guides/build-saas-nextjs',
+        },
+      ]}
     >
       <div>
         <section
