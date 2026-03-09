@@ -82,12 +82,6 @@ const EXTERNAL: FooterLink[] = [
     ariaLabel: 'Open PyColors Starter Free repository on GitHub',
   },
   {
-    label: 'Website',
-    href: 'https://github.com/pycolors-io/pycolors-marketing',
-    external: true,
-    ariaLabel: 'Open PyColors marketing website repository on GitHub',
-  },
-  {
     label: 'Gumroad',
     href: 'https://pycolors.gumroad.com',
     external: true,
