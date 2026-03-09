@@ -115,6 +115,14 @@ export default function GuideSaaSBillingUxPage() {
       title="SaaS billing UX best practices"
       description="Learn the core UX patterns behind SaaS billing — from pricing visibility and plan state to usage metrics, invoices, upgrades, portals, and failed payment handling."
       toc={toc}
+      breadcrumb={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        {
+          label: 'SaaS billing UX best practices',
+          href: '/guides/saas-billing-ux',
+        },
+      ]}
     >
       <div>
         <section

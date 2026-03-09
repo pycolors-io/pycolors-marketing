@@ -115,6 +115,14 @@ export default function GuideSaaSAuthFlowsPage() {
       title="Authentication flows for SaaS"
       description="Learn the core authentication flows behind a modern SaaS product — from login and registration to password reset, email verification, protected routes, and sessions."
       toc={toc}
+      breadcrumb={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        {
+          label: 'Authentication flows for SaaS',
+          href: '/guides/saas-auth-flows',
+        },
+      ]}
     >
       <div>
         <section

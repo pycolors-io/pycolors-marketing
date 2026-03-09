@@ -4,17 +4,22 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 
 import './global.css';
 import { inter } from './fonts';
+import { JsonLd } from '@/components/seo/json-ld';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const SITE_URL = 'https://pycolors.io';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pycolors.io'),
+  metadataBase: new URL(SITE_URL),
   title: { default: 'PyColors', template: '%s · PyColors' },
   description:
     'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
   applicationName: 'PyColors',
   creator: 'PyColors',
   publisher: 'PyColors',
+  alternates: {
+    canonical: '/',
+  },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -28,7 +33,7 @@ export const metadata: Metadata = {
     title: 'PyColors',
     description:
       'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
-    url: '/',
+    url: SITE_URL,
     images: ['/seo/og-main.png'],
   },
   twitter: {
@@ -38,6 +43,36 @@ export const metadata: Metadata = {
       'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
     images: ['/seo/twitter-main.png'],
   },
+};
+
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'PyColors',
+      alternateName: 'PyColors UI',
+      description:
+        'Product ecosystem for shipping real SaaS — UI system, templates, and production-ready starters.',
+      inLanguage: 'en',
+      publisher: {
+        '@id': `${SITE_URL}/#organization`,
+      },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'PyColors',
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/logo.png`,
+      },
+      sameAs: ['https://github.com/pycolors-io'],
+    },
+  ],
 };
 
 export default function Layout({
@@ -52,6 +87,8 @@ export default function Layout({
       className={inter.className}
     >
       <head>
+        <JsonLd id="pycolors-site" data={siteJsonLd} />
+
         {GTM_ID ? (
           <Script
             id="gtm"

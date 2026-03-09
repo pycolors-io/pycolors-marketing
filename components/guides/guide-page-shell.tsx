@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 import { Container } from '@/components/container';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { Badge, Button, cn } from '@pycolors/ui';
 import {
   OnThisPageInline,
   type TocItem,
 } from './on-this-page-inline';
+import type { BreadcrumbItem } from '@/lib/seo/breadcrumb';
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -19,6 +21,7 @@ type GuidePageShellProps = {
   tags?: string[];
   toc: TocItem[];
   children: ReactNode;
+  breadcrumb?: BreadcrumbItem[];
 };
 
 export function GuidePageShell({
@@ -28,12 +31,28 @@ export function GuidePageShell({
   tags = ['Next.js', 'SaaS'],
   toc,
   children,
+  breadcrumb,
 }: GuidePageShellProps) {
+  const defaultBreadcrumb: BreadcrumbItem[] = [
+    { label: 'Home', href: '/' },
+    { label: 'Guides', href: '/guides' },
+    { label: title, href: '#' },
+  ];
+
+  const items =
+    breadcrumb && breadcrumb.length > 0
+      ? breadcrumb
+      : defaultBreadcrumb;
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <main className="flex-1">
         <Container className="py-20 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-4xl">
+            <div className="mb-6">
+              <Breadcrumb className="mb-6" items={items} />
+            </div>
+
             <div className="mb-8">
               <Button asChild variant="outline" size="sm">
                 <Link href="/guides" className={cn(focusRing)}>
