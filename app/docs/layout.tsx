@@ -7,6 +7,8 @@ import { baseOptions } from '@/lib/layout.shared';
 import { SiteHeader } from '@/components/layout/site-header';
 import { ToastDocsProvider } from '@/content/docs/previews/toast-docs-provider';
 import { DocsFooter } from '@/components/docs-footer';
+import { JsonLd } from '@/components/seo/json-ld';
+import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/docs' },
@@ -44,22 +46,31 @@ export default function Layout({
 }) {
   const docsLinks = getDocsNavLinks();
 
+  const breadcrumb = generateBreadcrumbJsonLd([
+    { label: 'Home', href: '/' },
+    { label: 'Docs', href: '/docs' },
+  ]);
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="flex-1">
-        <DocsLayout
-          tree={source.pageTree}
-          {...baseOptions()}
-          nav={{
-            enabled: true,
-            component: <SiteHeader docsLinks={docsLinks} />,
-          }}
-          sidebar={{ collapsible: false }}
-        >
-          <ToastDocsProvider>{children}</ToastDocsProvider>
-        </DocsLayout>
+    <>
+      <JsonLd id="docs-breadcrumb" data={breadcrumb} />
+
+      <div className="flex min-h-screen flex-col">
+        <div className="flex-1">
+          <DocsLayout
+            tree={source.pageTree}
+            {...baseOptions()}
+            nav={{
+              enabled: true,
+              component: <SiteHeader docsLinks={docsLinks} />,
+            }}
+            sidebar={{ collapsible: false }}
+          >
+            <ToastDocsProvider>{children}</ToastDocsProvider>
+          </DocsLayout>
+        </div>
+        <DocsFooter />
       </div>
-      <DocsFooter />
-    </div>
+    </>
   );
 }
