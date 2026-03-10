@@ -11,15 +11,15 @@ const SITE_URL = 'https://pycolors.io';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: 'PyColors', template: '%s · PyColors' },
+  title: {
+    default: 'PyColors',
+    template: '%s · PyColors',
+  },
   description:
-    'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
+    'PyColors is a production-shaped SaaS ecosystem for developers: UI system, SaaS starter, templates, guides, and patterns to build real products faster.',
   applicationName: 'PyColors',
   creator: 'PyColors',
   publisher: 'PyColors',
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'PyColors',
     title: 'PyColors',
     description:
-      'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
+      'Build SaaS products faster with PyColors — a minimal UI system, SaaS starter, templates, and guides.',
     url: SITE_URL,
     images: ['/seo/og-main.png'],
   },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PyColors',
     description:
-      'PyColors is a product ecosystem for shipping real SaaS — a minimal UI system, premium templates, and production-ready starters, built in public.',
+      'Build SaaS products faster with PyColors — UI system, SaaS starter, templates, and guides.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -53,12 +53,17 @@ const siteJsonLd = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'PyColors',
-      alternateName: 'PyColors UI',
       description:
-        'Product ecosystem for shipping real SaaS — UI system, templates, and production-ready starters.',
+        'PyColors is a SaaS ecosystem for developers: UI system, SaaS starter, guides, templates, and patterns to build real products faster.',
+      alternateName: ['PyColors UI', 'pycolors.io'],
       inLanguage: 'en',
       publisher: {
         '@id': `${SITE_URL}/#organization`,
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${SITE_URL}/search?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
       },
     },
     {
@@ -66,6 +71,8 @@ const siteJsonLd = {
       '@id': `${SITE_URL}/#organization`,
       name: 'PyColors',
       url: SITE_URL,
+      description:
+        'PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.',
       logo: {
         '@type': 'ImageObject',
         url: `${SITE_URL}/logo.png`,
