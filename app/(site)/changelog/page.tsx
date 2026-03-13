@@ -57,6 +57,54 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.4.0',
+    title: 'Starter Pro foundation + billing engine groundwork',
+    dateLabel: 'Fri 13 Mar 2026',
+    dateISO: '2026-03-13',
+    status: 'In progress',
+    releaseWeekLabel: 'Mar 2026 (weekly release)',
+    summary:
+      'This release moves PyColors from PRO positioning into real premium product implementation work. It lays the technical and product foundation for Starter Pro with the first billing architecture, Prisma subscription schema, pricing surfaces, and stronger marketing, SEO, and trust messaging. Starter Pro is not publicly launched yet, but the premium system is now materially taking shape.',
+    highlights: [
+      {
+        title: 'Starter Pro foundation in progress',
+        items: [
+          'Bootstrapped Starter Pro from the Starter Free base with dedicated branding, package metadata, navigation, sidebar copy, and proprietary licensing.',
+          'Prepared Starter Pro as a production-oriented SaaS app with dashboard, auth, settings, billing, and admin-ready product surfaces.',
+          'Added a dedicated pricing page with clearer offer structure, FAQ, guarantees, and improved upgrade entry points while the product remains in active development.',
+        ],
+      },
+      {
+        title: 'Billing engine groundwork',
+        items: [
+          'Introduced the first billing module architecture with centralized exports, typed billing plans, Stripe subscription status mapping, custom billing errors, and a service + repository foundation.',
+          'Added Stripe server integration, lazy client initialization, strict server-side environment validation, and example environment configuration.',
+          'Added API routes for checkout, billing portal access, plan changes, cancellation, resume, and Stripe webhook handling to establish the first billing workflow.',
+        ],
+      },
+      {
+        title: 'Prisma subscription data model',
+        items: [
+          'Added an initial Prisma billing schema covering users, customers, products, prices, subscriptions, invoices, and usage tracking.',
+          'Introduced Prisma tooling, scripts, singleton database client setup, and seed workflows to support development and future production billing logic.',
+          'Standardized Prisma commands with explicit schema paths and improved environment handling across development tasks.',
+        ],
+      },
+      {
+        title: 'Marketing, SEO, and trust improvements',
+        items: [
+          'Improved metadata, sitemap priorities, structured data, breadcrumb JSON-LD, and SEO-oriented navigation across marketing and docs pages.',
+          'Refined changelog, roadmap, footer, About, open-source, upgrade, access, waitlist, license, terms, and privacy messaging for clearer open-core and premium product direction.',
+          'Improved not-found UX, footer readability, docs layout structure, and MDX rendering for better documentation and ecosystem navigation.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View roadmap',
+      href: '/roadmap',
+    },
+  },
+  {
     version: 'v1.3.0',
     title: 'SaaS knowledge layer + PRO funnel',
     dateLabel: 'Fri 6 Mar 2026',

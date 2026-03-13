@@ -79,13 +79,13 @@ const milestones: Array<{
     id: 'Mar 2026',
     title: 'March 2026',
     subtitle:
-      'Expand PyColors.io into a SaaS learning and conversion funnel: guides, patterns, examples, access, and PRO positioning.',
+      'Move from PRO positioning into implementation: Starter Pro foundation, billing engine baseline, Prisma billing schema, and stronger premium conversion surfaces.',
   },
   {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Move from positioning to monetization: Starter PRO scope, premium packaging, and launch readiness.',
+      'Harden Starter Pro into a sellable premium product: auth, billing lifecycle, launch polish, and monetization readiness.',
   },
 ];
 
@@ -344,16 +344,31 @@ const items: RoadmapItem[] = [
     tags: ['Marketing', 'Brand', 'Conversion'],
     href: '/',
   },
-
-  // NOW
   {
-    title: 'Starter PRO wiring baseline',
+    title: 'Starter PRO foundation',
     description:
-      'Turn the PRO offer from positioning into scoped implementation direction: auth provider guidance, session handling, billing direction, backend foundations, and production setup rules.',
+      'Starter Pro is now bootstrapped as a dedicated premium app with early product surfaces, branding, pricing direction, proprietary licensing, and a clearer path from marketing to premium implementation. The product is still in active development and not publicly launched yet.',
     status: 'Now',
     milestone: 'Mar 2026',
-    tags: ['Starter PRO', 'Architecture', 'Auth', 'Billing'],
+    tags: ['Starter PRO', 'Premium', 'App', 'In progress'],
     href: '/upgrade',
+  },
+  {
+    title: 'Billing engine baseline',
+    description:
+      'Shipped the first real billing architecture for Starter Pro: Stripe integration, typed billing plans, repository and service layer, billing API routes, webhook endpoint, and operational billing surfaces.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Billing', 'Stripe', 'API', 'Architecture'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Prisma billing schema',
+    description:
+      'Added the initial subscription billing data model with customers, products, prices, subscriptions, invoices, and usage tracking, plus tooling, seed scripts, and explicit schema workflows.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Prisma', 'Database', 'Billing', 'DX'],
   },
   {
     title: 'Waitlist conversion loop',
@@ -367,18 +382,26 @@ const items: RoadmapItem[] = [
 
   // NEXT
   {
-    title: 'Starter PRO offer page hardening',
+    title: 'Starter PRO hardening',
     description:
-      'Finalize feature comparison, FAQ, upgrade narrative, and packaging detail so the PRO offer feels commercially ready before launch.',
+      'Replace stubs with production-ready billing behavior, validate subscription lifecycle handling, complete account-state UX, and harden premium flows before launch.',
     status: 'Next',
     milestone: 'Mar 2026',
-    tags: ['PRO', 'Packaging', 'Sales', 'Trust'],
+    tags: ['Starter PRO', 'Billing', 'Quality', 'Launch'],
     href: '/upgrade',
+  },
+  {
+    title: 'Auth + user system integration',
+    description:
+      'Wire a real authentication provider, session handling, protected app flows, and user-to-billing linkage so Starter Pro moves from premium shell to operational SaaS baseline.',
+    status: 'Next',
+    milestone: 'Mar 2026',
+    tags: ['Auth', 'Users', 'Sessions', 'Architecture'],
   },
   {
     title: 'Monetization readiness v2',
     description:
-      'Align pricing, checkout logic, license language, demos, and upgrade path into a cleaner premium conversion system across the site.',
+      'Align pricing, checkout logic, license language, demos, access messaging, and upgrade surfaces into a more credible premium conversion system.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
@@ -400,15 +423,6 @@ const items: RoadmapItem[] = [
     milestone: 'Mar 2026',
     tags: ['Privacy', 'Analytics', 'Trust'],
     href: '/privacy',
-  },
-  {
-    title: 'Issue triage + public feedback loop',
-    description:
-      'Add better issue triage, public “good first issue” direction, and roadmap grooming based on real user feedback.',
-    status: 'Next',
-    milestone: 'Mar 2026',
-    tags: ['Community', 'Quality', 'DX'],
-    href: 'https://github.com/pycolors-io/pycolors-ui/issues',
   },
 
   // LATER
@@ -441,6 +455,7 @@ const items: RoadmapItem[] = [
 
 function StatusBadge({ status }: { status: Status }) {
   const meta = statusMeta[status];
+
   return (
     <Badge variant={meta.variant} className="text-[11px]">
       {meta.label}
@@ -482,6 +497,7 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
 
   if (item.href) {
     const isExternal = item.href.startsWith('http');
+
     if (isExternal) {
       return (
         <a
@@ -507,8 +523,15 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
 
 function groupByMilestone(list: RoadmapItem[]) {
   const map = new Map<Milestone, RoadmapItem[]>();
-  for (const m of milestones.map((x) => x.id)) map.set(m, []);
-  for (const item of list) map.get(item.milestone)?.push(item);
+
+  for (const m of milestones.map((x) => x.id)) {
+    map.set(m, []);
+  }
+
+  for (const item of list) {
+    map.get(item.milestone)?.push(item);
+  }
+
   return map;
 }
 
@@ -541,7 +564,7 @@ export default function RoadmapPage() {
               This roadmap tracks how PyColors evolves from UI
               foundations into a SaaS builder ecosystem: learning
               resources, production patterns, Starter Free, Starter
-              PRO, and future premium offers.
+              Pro, billing infrastructure, and future premium offers.
             </p>
 
             <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
@@ -587,7 +610,7 @@ export default function RoadmapPage() {
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Ship the PyColors ecosystem funnel: Guides →
-                  Patterns / Examples → Starter Free → Starter PRO.
+                  Patterns / Examples → Starter Free → Starter Pro.
                   Weekly releases, measurable improvements, and a
                   public roadmap.
                 </p>
@@ -648,6 +671,7 @@ export default function RoadmapPage() {
           <section className="mx-auto mt-10 w-full max-w-5xl space-y-10">
             {milestones.map((m) => {
               const list = byMilestone.get(m.id) ?? [];
+
               return (
                 <div key={m.id} className="space-y-4">
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
