@@ -101,3 +101,110 @@ a[data-active="true"] {
   background-color: color-mix(in oklch, var(--background), var(--foreground) 2%);
 }
 
+
+/* ==========================================================================
+   Blog article surface
+   ========================================================================== */
+
+.blog-article-shell {
+  @apply rounded-2xl border border-border/60 bg-card text-card-foreground shadow-sm;
+}
+
+.blog-prose {
+  @apply text-foreground;
+}
+
+.blog-prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-brand);
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.blog-prose h2 {
+  @apply mt-10 scroll-m-24 text-2xl font-semibold tracking-tight sm:text-3xl;
+}
+
+.blog-prose h3 {
+  @apply mt-8 scroll-m-24 text-xl font-semibold tracking-tight;
+}
+
+.blog-prose p {
+  @apply text-sm leading-7 text-muted-foreground sm:text-[15px];
+}
+
+.blog-prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.blog-prose a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--foreground), transparent 65%);
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.blog-prose a:hover {
+  opacity: 0.8;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  @apply my-6 pl-5 text-sm text-muted-foreground sm:text-[15px];
+}
+
+.blog-prose li {
+  @apply my-2 leading-7;
+}
+
+.blog-prose hr {
+  @apply my-10 border-border/60;
+}
+
+.blog-prose blockquote {
+  @apply my-6 border-l-2 border-border pl-4 italic text-muted-foreground;
+}
+
+.blog-prose table {
+  @apply my-8 w-full overflow-hidden rounded-xl border border-border/60 text-sm;
+}
+
+.blog-prose thead {
+  @apply bg-muted/40;
+}
+
+.blog-prose th {
+  @apply px-4 py-3 text-left font-medium text-foreground;
+}
+
+.blog-prose td {
+  @apply px-4 py-3 text-muted-foreground;
+}
+
+.blog-prose code:not(pre code) {
+  @apply rounded-md border border-border/60 bg-muted/50 px-1.5 py-0.5 text-[0.9em] text-foreground;
+}
+
+.blog-prose img {
+  @apply my-8 rounded-2xl border border-border/60;
+}
+
+.blog-prose .fd-callout,
+.blog-prose [data-callout] {
+  @apply my-6 rounded-2xl border border-border/60 bg-muted/30;
+}
+
+/* Better anchor headings inside article */
+.blog-prose :where(h2, h3, h4) a {
+  text-decoration: none;
+}
+
+/* Optional: improve code titles if used */
+.blog-prose [data-rehype-pretty-code-title] {
+  @apply rounded-t-2xl border border-b-0 border-border/60 bg-muted/40 px-4 py-2 text-xs text-muted-foreground;
+}
+
+.blog-prose [data-rehype-pretty-code-title] + pre {
+  @apply mt-0 rounded-t-none;
+}
