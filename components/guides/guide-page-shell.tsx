@@ -45,55 +45,51 @@ export function GuidePageShell({
       : defaultBreadcrumb;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <main className="flex-1">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-6">
-              <Breadcrumb className="mb-6" items={items} />
-            </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-6">
+          <Breadcrumb className="mb-6" items={items} />
+        </div>
 
-            <div className="mb-8">
-              <Button asChild variant="outline" size="sm">
-                <Link href="/guides" className={cn(focusRing)}>
-                  <ArrowLeft
-                    className="mr-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  Back to Guides
-                </Link>
-              </Button>
-            </div>
+        <div className="mb-8">
+          <Button asChild variant="outline" size="sm">
+            <Link href="/guides" className={cn(focusRing)}>
+              <ArrowLeft
+                className="mr-2 h-4 w-4"
+                aria-hidden="true"
+              />
+              Back to Guides
+            </Link>
+          </Button>
+        </div>
 
-            <header className="mb-10 space-y-5">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="secondary">{badge}</Badge>
-                {tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="space-y-3">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  {title}
-                </h1>
-
-                <p className="max-w-3xl text-balance text-sm text-muted-foreground sm:text-base">
-                  {description}
-                </p>
-              </div>
-            </header>
-
-            <div className="mb-10">
-              <OnThisPageInline items={toc} />
-            </div>
-
-            <div className="space-y-10">{children}</div>
+        <header className="mb-10 space-y-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{badge}</Badge>
+            {tags.map((tag) => (
+              <Badge key={tag} variant="outline">
+                {tag}
+              </Badge>
+            ))}
           </div>
-        </Container>
-      </main>
-    </div>
+
+          <div className="space-y-3">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              {title}
+            </h1>
+
+            <p className="max-w-3xl text-balance text-sm text-muted-foreground sm:text-base">
+              {description}
+            </p>
+          </div>
+        </header>
+
+        <div className="mb-10">
+          <OnThisPageInline items={toc} />
+        </div>
+
+        <div className="space-y-10">{children}</div>
+      </div>
+    </Container>
   );
 }

@@ -13,6 +13,8 @@ type BreadcrumbProps = {
 };
 
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
+  if (!items.length) return null;
+
   const jsonLd = generateBreadcrumbJsonLd(items);
 
   return (
@@ -26,8 +28,8 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 
             return (
               <li
-                key={item.href}
-                className="inline-flex items-center gap-1"
+                key={`${item.href}-${index}`}
+                className="inline-flex items-center gap-1.5"
               >
                 {index > 0 ? (
                   <ChevronRight

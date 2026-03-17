@@ -1,4 +1,11 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+
+import {
+  getAllCategories,
+  getAllPosts,
+  getAllTags,
+  normalizeTaxonomy,
+} from '@/lib/blog/utils';
 
 const BASE_URL = 'https://pycolors.io';
 
@@ -41,6 +48,10 @@ const STATIC_ROUTES = [
 
   '/about',
   '/open-source',
+
+  '/blog',
+  '/blog/categories',
+  '/blog/tags',
 ] as const;
 
 function getPriority(route: string): number {
@@ -54,6 +65,7 @@ function getPriority(route: string): number {
       '/guides',
       '/ui',
       '/templates',
+      '/blog',
     ].includes(route)
   ) {
     return 0.9;
@@ -61,6 +73,7 @@ function getPriority(route: string): number {
 
   if (
     route.startsWith('/guides/') ||
+    route.startsWith('/blog/') ||
     route === '/ui/patterns' ||
     route === '/examples' ||
     route === '/starters' ||
@@ -76,6 +89,8 @@ function getPriority(route: string): number {
       '/changelog',
       '/about',
       '/open-source',
+      '/blog/categories',
+      '/blog/tags',
     ].includes(route)
   ) {
     return 0.7;
@@ -97,12 +112,17 @@ function getChangeFrequency(
       '/upgrade',
       '/access',
       '/starters/free',
+      '/blog',
     ].includes(route)
   ) {
     return 'weekly';
   }
 
-  if (route.startsWith('/guides/') || route.startsWith('/docs/')) {
+  if (
+    route.startsWith('/guides/') ||
+    route.startsWith('/docs/') ||
+    route.startsWith('/blog/')
+  ) {
     return 'monthly';
   }
 
@@ -110,12 +130,46 @@ function getChangeFrequency(
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const now = new Date();
 
-  return STATIC_ROUTES.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified,
-    changeFrequency: getChangeFrequency(route),
-    priority: getPriority(route),
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map(
+    (route) => ({
+      url: `${BASE_URL}${route}`,
+      lastModified: now,
+      changeFrequency: getChangeFrequency(route),
+      priority: getPriority(route),
+    }),
+  );
+
+  const blogPosts = getAllPosts().map((post) => ({
+    url: `${BASE_URL}${post.url}`,
+    lastModified: post.date ? new Date(post.date) : now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
   }));
+
+  const blogCategories = getAllCategories().map((category) => ({
+    url: `${BASE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  const blogTags = getAllTags().map((tag) => ({
+    url: `${BASE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  const entries = [
+    ...staticEntries,
+    ...blogPosts,
+    ...blogCategories,
+    ...blogTags,
+  ];
+
+  return Array.from(
+    new Map(entries.map((entry) => [entry.url, entry])).values(),
+  );
 }

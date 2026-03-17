@@ -5,21 +5,26 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { inter } from './fonts';
 import { JsonLd } from '@/components/seo/json-ld';
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  SITE_DEFAULT_OG_IMAGE,
+  SITE_DEFAULT_TWITTER_IMAGE,
+} from '@/lib/seo/website';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-const SITE_URL = 'https://pycolors.io';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'PyColors',
-    template: '%s · PyColors',
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    'PyColors is a production-shaped SaaS ecosystem for developers: UI system, SaaS starter, templates, guides, and patterns to build real products faster.',
-  applicationName: 'PyColors',
-  creator: 'PyColors',
-  publisher: 'PyColors',
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -29,19 +34,17 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
   openGraph: {
     type: 'website',
-    siteName: 'PyColors',
-    title: 'PyColors',
-    description:
-      'Build SaaS products faster with PyColors — a minimal UI system, SaaS starter, templates, and guides.',
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
-    images: ['/seo/og-main.png'],
+    images: [SITE_DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PyColors',
-    description:
-      'Build SaaS products faster with PyColors — UI system, SaaS starter, templates, and guides.',
-    images: ['/seo/twitter-main.png'],
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [SITE_DEFAULT_TWITTER_IMAGE],
   },
 };
 
@@ -52,9 +55,8 @@ const siteJsonLd = {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: 'PyColors',
-      description:
-        'PyColors is a SaaS ecosystem for developers: UI system, SaaS starter, guides, templates, and patterns to build real products faster.',
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
       alternateName: ['PyColors UI', 'pycolors.io'],
       inLanguage: 'en',
       publisher: {
@@ -69,7 +71,7 @@ const siteJsonLd = {
     {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
-      name: 'PyColors',
+      name: SITE_NAME,
       url: SITE_URL,
       description:
         'PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.',

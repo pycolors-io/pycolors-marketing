@@ -9,6 +9,7 @@ import {
 
 import { Badge, Button, Card } from '@pycolors/ui';
 import { Container } from '@/components/container';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'SaaS Patterns',
@@ -167,246 +168,245 @@ function PatternCard({ title, description, tag, category }: Pattern) {
 
 export default function PatternsPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto max-w-5xl">
-            {/* HERO */}
-            <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <Sparkles
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Patterns
-                </Badge>
-                <Badge variant="outline">SaaS surfaces</Badge>
-                <Badge variant="outline">Production-shaped</Badge>
-              </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'UI', href: '/ui' },
+              { label: 'Patterns', href: '/ui/patterns' },
+            ]}
+          />
+        </div>
+        {/* HERO */}
+        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Patterns
+            </Badge>
+            <Badge variant="outline">SaaS surfaces</Badge>
+            <Badge variant="outline">Production-shaped</Badge>
+          </div>
 
-              <div className="space-y-4">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  Production SaaS patterns
-                  <span className="block font-bold">
-                    built with PyColors.
-                  </span>
-                </h1>
+          <div className="space-y-4">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              Production SaaS patterns
+              <span className="block font-bold">
+                built with PyColors.
+              </span>
+            </h1>
 
-                <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  Explore real product surfaces designed for SaaS
-                  builders — dashboards, billing, settings, team
-                  systems, analytics, and admin workflows.
+            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+              Explore real product surfaces designed for SaaS builders
+              — dashboards, billing, settings, team systems,
+              analytics, and admin workflows.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/starters/free">
+                Explore Starter Free
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button asChild variant="secondary">
+              <Link href="/examples">See Examples</Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <Link href="/upgrade">Explore PRO</Link>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 pt-1">
+            <Pill>Dashboards</Pill>
+            <Pill>Billing</Pill>
+            <Pill>Settings</Pill>
+            <Pill>Teams</Pill>
+            <Pill>Admin</Pill>
+          </div>
+        </header>
+
+        {/* INTRO STRIP */}
+        <section className="py-4 sm:py-6">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <LayoutTemplate
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    Why patterns matter
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  Components are the foundation. Patterns are where a
+                  product starts to feel real. They help SaaS builders
+                  move from isolated UI pieces to coherent product
+                  surfaces with clearer UX and less design debt.
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button asChild>
-                  <Link href="/starters/free">
-                    Explore Starter Free
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
+              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/ui">Explore UI System</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/access">View Access</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* GRID */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Browse patterns"
+            description="Pattern directions for the surfaces modern SaaS products need most."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href="/guides">Read Guides</Link>
+              </Button>
+            }
+          />
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {patterns.map((pattern) => (
+              <PatternCard key={pattern.title} {...pattern} />
+            ))}
+          </div>
+        </section>
+
+        {/* PRODUCT LOGIC */}
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="How patterns fit the PyColors path"
+            description="Patterns help bridge the gap between UI primitives and a real product surface."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 01
+                </div>
+                <div className="text-sm font-medium">
+                  Move beyond primitives
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Use patterns to understand how components combine
+                  into real SaaS surfaces like dashboards, billing
+                  pages, and settings flows.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 02
+                </div>
+                <div className="text-sm font-medium">
+                  Start from a production-shaped surface
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Move into Starter Free when you want a runnable
+                  product baseline instead of disconnected UI pieces.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 03
+                </div>
+                <div className="text-sm font-medium">
+                  Upgrade when the business layer matters
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Move toward PRO when auth, billing, backend
+                  foundations, and premium product patterns become the
+                  real leverage point.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* VALUE STRIP */}
+        <section className="py-8 sm:py-10">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <Layers3
+                      className="h-3.5 w-3.5"
                       aria-hidden="true"
                     />
-                  </Link>
+                    Pattern logic
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  PyColors UI gives you the primitives. Patterns give
+                  you the product logic. Starter Free gives you the
+                  runnable SaaS surface. Together, they reduce rework
+                  and accelerate time-to-revenue.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/examples">See Examples</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/starters/free">Starter Free</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="mt-10">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  Build faster with Starter Free
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Patterns show the interface logic. Starter Free
+                  gives you the product surface to start building now.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href="/starters/free">Starter Free</Link>
                 </Button>
 
                 <Button asChild variant="secondary">
-                  <Link href="/examples">See Examples</Link>
-                </Button>
-
-                <Button asChild variant="outline">
-                  <Link href="/upgrade">Explore PRO</Link>
+                  <Link href="/waitlist">Join PRO waitlist</Link>
                 </Button>
               </div>
-
-              <div className="flex flex-wrap justify-center gap-2 pt-1">
-                <Pill>Dashboards</Pill>
-                <Pill>Billing</Pill>
-                <Pill>Settings</Pill>
-                <Pill>Teams</Pill>
-                <Pill>Admin</Pill>
-              </div>
-            </header>
-
-            {/* INTRO STRIP */}
-            <section className="py-4 sm:py-6">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="gap-2">
-                        <LayoutTemplate
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Why patterns matter
-                      </Badge>
-                    </div>
-
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      Components are the foundation. Patterns are
-                      where a product starts to feel real. They help
-                      SaaS builders move from isolated UI pieces to
-                      coherent product surfaces with clearer UX and
-                      less design debt.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/ui">Explore UI System</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/access">View Access</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* GRID */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Browse patterns"
-                description="Pattern directions for the surfaces modern SaaS products need most."
-                action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/guides">Read Guides</Link>
-                  </Button>
-                }
-              />
-
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {patterns.map((pattern) => (
-                  <PatternCard key={pattern.title} {...pattern} />
-                ))}
-              </div>
-            </section>
-
-            {/* PRODUCT LOGIC */}
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="How patterns fit the PyColors path"
-                description="Patterns help bridge the gap between UI primitives and a real product surface."
-              />
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 01
-                    </div>
-                    <div className="text-sm font-medium">
-                      Move beyond primitives
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Use patterns to understand how components
-                      combine into real SaaS surfaces like dashboards,
-                      billing pages, and settings flows.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 02
-                    </div>
-                    <div className="text-sm font-medium">
-                      Start from a production-shaped surface
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Move into Starter Free when you want a runnable
-                      product baseline instead of disconnected UI
-                      pieces.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 03
-                    </div>
-                    <div className="text-sm font-medium">
-                      Upgrade when the business layer matters
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Move toward PRO when auth, billing, backend
-                      foundations, and premium product patterns become
-                      the real leverage point.
-                    </p>
-                  </div>
-                </Card>
-              </div>
-            </section>
-
-            {/* VALUE STRIP */}
-            <section className="py-8 sm:py-10">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="gap-2">
-                        <Layers3
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Pattern logic
-                      </Badge>
-                    </div>
-
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      PyColors UI gives you the primitives. Patterns
-                      give you the product logic. Starter Free gives
-                      you the runnable SaaS surface. Together, they
-                      reduce rework and accelerate time-to-revenue.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/examples">See Examples</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/starters/free">Starter Free</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* FINAL CTA */}
-            <section className="mt-10">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="space-y-1">
-                    <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Build faster with Starter Free
-                    </h2>
-                    <p className="text-sm text-muted-foreground">
-                      Patterns show the interface logic. Starter Free
-                      gives you the product surface to start building
-                      now.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild>
-                      <Link href="/starters/free">Starter Free</Link>
-                    </Button>
-
-                    <Button asChild variant="secondary">
-                      <Link href="/waitlist">Join PRO waitlist</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-          </div>
-        </Container>
-      </main>
-    </div>
+            </div>
+          </Card>
+        </section>
+      </div>
+    </Container>
   );
 }

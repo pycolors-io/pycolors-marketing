@@ -21,6 +21,7 @@ import {
   TableRow,
   cn,
 } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Open Source',
@@ -224,384 +225,373 @@ export default function OpenSourcePage() {
   const website = repos.filter((r) => r.category === 'Website');
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto w-full max-w-5xl">
-            <header className="flex flex-col items-center gap-6 text-center">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  Built in public
-                </Badge>
-                <Badge variant="outline">Open by default</Badge>
-                <Pill>Trust + adoption</Pill>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Open Source', href: '/open-source' },
+            ]}
+          />
+        </div>
+
+        <header className="flex flex-col items-center gap-6 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Built in public
+            </Badge>
+            <Badge variant="outline">Open by default</Badge>
+            <Pill>Trust + adoption</Pill>
+          </div>
+
+          <div className="space-y-4">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              Open-source foundations
+              <span className="block font-bold">
+                behind PyColors.
+              </span>
+            </h1>
+
+            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+              PyColors is built as an ecosystem: UI system, tokens,
+              starters, and developer tooling — designed to help you
+              ship real SaaS faster with predictable foundations.
+            </p>
+
+            <p className="mx-auto max-w-3xl text-balance text-xs text-muted-foreground">
+              Open-source is the foundation layer of the PyColors
+              open-core strategy. Premium products exist to accelerate
+              execution, not to create lock-in.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/ui">
+                Explore UI
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <Link href="/starters/free">Try Starter Free</Link>
+            </Button>
+
+            <Button asChild variant="secondary">
+              <Link href="/access">View Access</Link>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 pt-2">
+            <Pill>Open core</Pill>
+            <Pill>Docs-first</Pill>
+            <Pill>Shipping weekly</Pill>
+            <Pill>Stable foundations</Pill>
+            <Pill>Premium path stays clear</Pill>
+          </div>
+        </header>
+
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Why open-source"
+            description="Open-source is a trust layer, an adoption path, and the foundation of the PyColors open-core strategy."
+          />
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <ModelCard
+              icon={
+                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              }
+              title="Trust"
+              description="See the foundations. No black boxes, no vague promises — predictable primitives and product surfaces you can inspect."
+            />
+
+            <ModelCard
+              icon={
+                <GitBranch className="h-4 w-4" aria-hidden="true" />
+              }
+              title="Adoption"
+              description="Clone, run, and evaluate quickly. Start with the open layer before deciding whether premium acceleration is worth it."
+            />
+
+            <ModelCard
+              icon={
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
+              }
+              title="Velocity"
+              description="Production-shaped foundations reduce guesswork. You ship faster and keep consistency as the product grows."
+            />
+          </div>
+        </section>
+
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="Open-core strategy"
+            description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to blur ownership or licensing boundaries."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href="/upgrade">See Upgrade to PRO</Link>
+              </Button>
+            }
+          />
+
+          <Card className="p-6 sm:p-7">
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="text-xs">
+                Transparency
+              </Badge>
+              <Badge variant="secondary" className="text-xs">
+                Open foundations → paid acceleration
+              </Badge>
+              <Pill>Adopt progressively</Pill>
+            </div>
+
+            <div className="w-full overflow-hidden rounded-xl border border-border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-1/2">
+                      Open-source (available now)
+                    </TableHead>
+                    <TableHead className="w-1/2">
+                      Premium acceleration (planned / evolving)
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          PyColors UI + Tokens
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Stable primitives, semantic theming, and
+                          docs-first usage.
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          UI PRO
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Premium product patterns and higher-level
+                          SaaS surfaces.
+                        </div>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Starter Free
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          A real SaaS surface with mocked data — built
+                          to validate UX fast.
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Starter PRO
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Auth, billing, backend foundations, and
+                          deployment guidance.
+                        </div>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Developer tooling
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Shared linting and TypeScript configs to
+                          keep codebases aligned.
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          All-In Access
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          The premium long-term path for builders who
+                          want the full ecosystem.
+                        </div>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
+
+            <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <p>
+                The goal is simple: inspect the foundations openly,
+                adopt progressively, and upgrade only when the next
+                layer creates real leverage.
+              </p>
+              <p>
+                Public repositories are governed by their respective
+                repository licenses. Premium products, commercial
+                access, private releases, and brand assets remain
+                subject to separate commercial terms.
+              </p>
+            </div>
+          </Card>
+        </section>
+
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Repositories"
+            description="Public repos you can clone today. Each one maps to a clear role in the ecosystem."
+          />
+
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="text-sm font-semibold">
+                  Foundations
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  UI, tokens, and tooling that power the ecosystem.
+                </p>
+              </div>
+              <Badge variant="default" className="text-xs">
+                Core
+              </Badge>
+            </div>
+
+            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold">
+                    Core foundations
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    UI + tokens
+                  </Badge>
+                </div>
+                {core.map((repo) => (
+                  <RepoCard key={repo.name} repo={repo} />
+                ))}
               </div>
 
               <div className="space-y-4">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  Open-source foundations
-                  <span className="block font-bold">
-                    behind PyColors.
-                  </span>
-                </h1>
-
-                <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  PyColors is built as an ecosystem: UI system,
-                  tokens, starters, and developer tooling — designed
-                  to help you ship real SaaS faster with predictable
-                  foundations.
-                </p>
-
-                <p className="mx-auto max-w-3xl text-balance text-xs text-muted-foreground">
-                  Open-source is the foundation layer of the PyColors
-                  open-core strategy. Premium products exist to
-                  accelerate execution, not to create lock-in.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button asChild>
-                  <Link href="/ui">
-                    Explore UI
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-
-                <Button asChild variant="outline">
-                  <Link href="/starters/free">Try Starter Free</Link>
-                </Button>
-
-                <Button asChild variant="secondary">
-                  <Link href="/access">View Access</Link>
-                </Button>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-2 pt-2">
-                <Pill>Open core</Pill>
-                <Pill>Docs-first</Pill>
-                <Pill>Shipping weekly</Pill>
-                <Pill>Stable foundations</Pill>
-                <Pill>Premium path stays clear</Pill>
-              </div>
-            </header>
-
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Why open-source"
-                description="Open-source is a trust layer, an adoption path, and the foundation of the PyColors open-core strategy."
-              />
-
-              <div className="grid gap-4 sm:grid-cols-3">
-                <ModelCard
-                  icon={
-                    <ShieldCheck
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  }
-                  title="Trust"
-                  description="See the foundations. No black boxes, no vague promises — predictable primitives and product surfaces you can inspect."
-                />
-
-                <ModelCard
-                  icon={
-                    <GitBranch
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  }
-                  title="Adoption"
-                  description="Clone, run, and evaluate quickly. Start with the open layer before deciding whether premium acceleration is worth it."
-                />
-
-                <ModelCard
-                  icon={
-                    <Sparkles
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  }
-                  title="Velocity"
-                  description="Production-shaped foundations reduce guesswork. You ship faster and keep consistency as the product grows."
-                />
-              </div>
-            </section>
-
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="Open-core strategy"
-                description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to blur ownership or licensing boundaries."
-                action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/upgrade">See Upgrade to PRO</Link>
-                  </Button>
-                }
-              />
-
-              <Card className="p-6 sm:p-7">
-                <div className="mb-4 flex flex-wrap items-center gap-2">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold">
+                    Developer tooling
+                  </div>
                   <Badge variant="outline" className="text-xs">
-                    Transparency
-                  </Badge>
-                  <Badge variant="secondary" className="text-xs">
-                    Open foundations → paid acceleration
-                  </Badge>
-                  <Pill>Adopt progressively</Pill>
-                </div>
-
-                <div className="w-full overflow-hidden rounded-xl border border-border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-1/2">
-                          Open-source (available now)
-                        </TableHead>
-                        <TableHead className="w-1/2">
-                          Premium acceleration (planned / evolving)
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              PyColors UI + Tokens
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              Stable primitives, semantic theming, and
-                              docs-first usage.
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              UI PRO
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              Premium product patterns and
-                              higher-level SaaS surfaces.
-                            </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              Starter Free
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              A real SaaS surface with mocked data —
-                              built to validate UX fast.
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              Starter PRO
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              Auth, billing, backend foundations, and
-                              deployment guidance.
-                            </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-
-                      <TableRow>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              Developer tooling
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              Shared linting and TypeScript configs to
-                              keep codebases aligned.
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="text-sm font-medium">
-                              All-In Access
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              The premium long-term path for builders
-                              who want the full ecosystem.
-                            </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-
-                <div className="mt-4 space-y-2 text-xs text-muted-foreground">
-                  <p>
-                    The goal is simple: inspect the foundations
-                    openly, adopt progressively, and upgrade only when
-                    the next layer creates real leverage.
-                  </p>
-                  <p>
-                    Public repositories are governed by their
-                    respective repository licenses. Premium products,
-                    commercial access, private releases, and brand
-                    assets remain subject to separate commercial
-                    terms.
-                  </p>
-                </div>
-              </Card>
-            </section>
-
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Repositories"
-                description="Public repos you can clone today. Each one maps to a clear role in the ecosystem."
-              />
-
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <div className="text-sm font-semibold">
-                      Foundations
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      UI, tokens, and tooling that power the
-                      ecosystem.
-                    </p>
-                  </div>
-                  <Badge variant="default" className="text-xs">
-                    Core
+                    DX
                   </Badge>
                 </div>
+                {tooling.map((repo) => (
+                  <RepoCard key={repo.name} repo={repo} />
+                ))}
+              </div>
+            </div>
+          </Card>
 
-                <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold">
-                        Core foundations
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        UI + tokens
-                      </Badge>
-                    </div>
-                    {core.map((repo) => (
-                      <RepoCard key={repo.name} repo={repo} />
-                    ))}
-                  </div>
+          <Card className="mt-6 p-6 sm:p-7">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="text-sm font-semibold">Products</div>
+                <p className="text-sm text-muted-foreground">
+                  Runnable entry points and the public website.
+                </p>
+              </div>
+              <Badge variant="default" className="text-xs">
+                Adoption
+              </Badge>
+            </div>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold">
-                        Developer tooling
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        DX
-                      </Badge>
-                    </div>
-                    {tooling.map((repo) => (
-                      <RepoCard key={repo.name} repo={repo} />
-                    ))}
+            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold">
+                    Starters
                   </div>
-                </div>
-              </Card>
-
-              <Card className="mt-6 p-6 sm:p-7">
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <div className="text-sm font-semibold">
-                      Products
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Runnable entry points and the public website.
-                    </p>
-                  </div>
-                  <Badge variant="default" className="text-xs">
-                    Adoption
+                  <Badge variant="outline" className="text-xs">
+                    Main entry point
                   </Badge>
                 </div>
+                {starters.map((repo) => (
+                  <RepoCard key={repo.name} repo={repo} />
+                ))}
+              </div>
 
-                <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold">
-                        Starters
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        Main entry point
-                      </Badge>
-                    </div>
-                    {starters.map((repo) => (
-                      <RepoCard key={repo.name} repo={repo} />
-                    ))}
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold">
-                        Website
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        Marketing + docs
-                      </Badge>
-                    </div>
-                    {website.map((repo) => (
-                      <RepoCard key={repo.name} repo={repo} />
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold">Website</div>
+                  <Badge variant="outline" className="text-xs">
+                    Marketing + docs
+                  </Badge>
                 </div>
-              </Card>
-            </section>
+                {website.map((repo) => (
+                  <RepoCard key={repo.name} repo={repo} />
+                ))}
+              </div>
+            </div>
+          </Card>
+        </section>
 
-            <section className="mx-auto mt-10 w-full max-w-5xl">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="space-y-1">
-                    <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Recommended path
-                    </h2>
-                    <p className="text-sm text-muted-foreground">
-                      Start with open foundations, validate the
-                      starter surface, then move to premium access
-                      only when leverage matters.
-                    </p>
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  Recommended path
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Start with open foundations, validate the starter
+                  surface, then move to premium access only when
+                  leverage matters.
+                </p>
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>UI → foundation</Pill>
-                      <Pill>Starter Free → validate UX</Pill>
-                      <Pill>Access → premium path</Pill>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild>
-                      <Link href="/ui">UI</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                      <Link href="/starters/free">Starter Free</Link>
-                    </Button>
-                    <Button asChild variant="secondary">
-                      <Link href="/access">Access</Link>
-                    </Button>
-                  </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Pill>UI → foundation</Pill>
+                  <Pill>Starter Free → validate UX</Pill>
+                  <Pill>Access → premium path</Pill>
                 </div>
-              </Card>
+              </div>
 
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                Built in public. Shipping weekly.
-              </p>
-            </section>
-          </div>
-        </Container>
-      </main>
-    </div>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href="/ui">UI</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/starters/free">Starter Free</Link>
+                </Button>
+                <Button asChild variant="secondary">
+                  <Link href="/access">Access</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            Built in public. Shipping weekly.
+          </p>
+        </section>
+      </div>
+    </Container>
   );
 }

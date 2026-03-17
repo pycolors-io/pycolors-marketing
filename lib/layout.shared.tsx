@@ -13,6 +13,7 @@ export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
   { label: 'Patterns', href: '/ui/patterns' },
   { label: 'Examples', href: '/examples' },
   { label: 'Guides', href: '/guides' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Starters', href: '/starters' },
 ];
 /**

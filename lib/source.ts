@@ -1,13 +1,18 @@
-import { docs } from 'fumadocs-mdx:collections/server';
+import { blog, docs } from 'fumadocs-mdx:collections/server';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { flattenTree } from 'fumadocs-core/page-tree';
+import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
 
-// See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: '/docs',
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
+});
+
+export const blogSource = loader({
+  baseUrl: '/blog',
+  source: toFumadocsSource(blog, []),
 });
 
 export function getPageImage(page: InferPageType<typeof source>) {
@@ -19,12 +24,23 @@ export function getPageImage(page: InferPageType<typeof source>) {
   };
 }
 
+type ProcessedPageData = {
+  title?: string;
+  getText?: (type?: 'raw' | 'processed') => Promise<string>;
+};
+
 export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await page.data.getText('processed');
+  const data = page.data as unknown as ProcessedPageData;
 
-  return `# ${page.data.title}
+  const processed = data.getText
+    ? await data.getText('processed')
+    : '';
 
-${processed}`;
+  const title = data.title ?? 'Untitled';
+
+  return `# ${title}
+
+${processed}`.trim();
 }
 
 export type DocsNavLink = {

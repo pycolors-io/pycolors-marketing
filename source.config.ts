@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import {
   defineConfig,
   defineDocs,
+  defineCollections,
   frontmatterSchema,
   metaSchema,
 } from 'fumadocs-mdx/config';
@@ -20,8 +22,30 @@ export const docs = defineDocs({
   },
 });
 
-export default defineConfig({
-  mdxOptions: {
-    // MDX options
+export const blog = defineCollections({
+  type: 'doc',
+  dir: 'content/blog',
+  schema: frontmatterSchema.extend({
+    author: z.string(),
+    date: z.string(),
+    category: z.string(),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    readingTime: z.string().optional(),
+    cover: z.string().optional(),
+    cta: z
+      .object({
+        label: z.string(),
+        href: z.string(),
+        variant: z.enum(['free', 'pro', 'blocks']).default('free'),
+      })
+      .optional(),
+  }),
+  postprocess: {
+    includeProcessedMarkdown: true,
   },
+});
+
+export default defineConfig({
+  mdxOptions: {},
 });

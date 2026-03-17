@@ -34,9 +34,10 @@ const GROUPS: Array<{
     ],
   },
   {
-    title: 'Explore',
+    title: 'Learn',
     links: [
       { label: 'Guides', href: '/guides' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Patterns', href: '/ui/patterns' },
       { label: 'Examples', href: '/examples' },
       { label: 'Starter docs', href: '/docs/saas-starter' },
