@@ -9,6 +9,7 @@ import {
 
 import { Badge, Button, Card } from '@pycolors/ui';
 import { Container } from '@/components/container';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Guides',
@@ -38,7 +39,14 @@ type Guide = {
   category: string;
 };
 
-const guides: Guide[] = [
+const guides = [
+  {
+    title: 'What a production-ready SaaS starter should include',
+    description:
+      'The essential product surfaces and foundations that make a SaaS starter genuinely useful, without unnecessary complexity.',
+    href: '/guides/production-ready-saas-starter',
+    category: 'Foundations',
+  },
   {
     title: 'How to build a SaaS with Next.js',
     description:
@@ -157,218 +165,213 @@ function GuideCard({ title, description, href, category }: Guide) {
 
 export default function GuidesPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto max-w-5xl">
-            {/* HERO */}
-            <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <BookOpen
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Guides
-                </Badge>
-                <Badge variant="outline">SaaS knowledge base</Badge>
-                <Badge variant="outline" className="gap-1.5">
-                  <Sparkles
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Product-first
-                </Badge>
-              </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Guides', href: '/guides' },
+            ]}
+          />
+        </div>
+        {/* HERO */}
+        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
+              Guides
+            </Badge>
+            <Badge variant="outline">SaaS knowledge base</Badge>
+            <Badge variant="outline" className="gap-1.5">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Product-first
+            </Badge>
+          </div>
 
-              <div className="space-y-4">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  SaaS building guides
-                  <span className="block font-bold">
-                    for developers who want to ship better products.
-                  </span>
-                </h1>
+          <div className="space-y-4">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              SaaS building guides
+              <span className="block font-bold">
+                for developers who want to ship better products.
+              </span>
+            </h1>
 
-                <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  Learn how modern SaaS products are designed and
-                  structured — from dashboards and authentication to
-                  billing, team systems, and admin surfaces.
+            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+              Learn how modern SaaS products are designed and
+              structured — from dashboards and authentication to
+              billing, team systems, and admin surfaces.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/starters/free">
+                Start with Starter Free
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button asChild variant="secondary">
+              <Link href="/examples">Explore Examples</Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <Link href="/ui/patterns">Browse UI Patterns</Link>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 pt-1">
+            <Pill>Architecture</Pill>
+            <Pill>Auth</Pill>
+            <Pill>Billing</Pill>
+            <Pill>B2B systems</Pill>
+            <Pill>Admin UX</Pill>
+          </div>
+        </header>
+
+        {/* INTRO STRIP */}
+        <section className="py-4 sm:py-6">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <Layers3
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    Why these guides exist
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  PyColors is not only a UI library or a starter. It
+                  is a system for building SaaS products with stronger
+                  structure, clearer UX, and less rework. These guides
+                  explain the product patterns behind that system.
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button asChild>
-                  <Link href="/starters/free">
-                    Start with Starter Free
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
+              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/access">View Access</Link>
                 </Button>
-
-                <Button asChild variant="secondary">
-                  <Link href="/examples">Explore Examples</Link>
-                </Button>
-
-                <Button asChild variant="outline">
-                  <Link href="/ui/patterns">Browse UI Patterns</Link>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/upgrade">Explore PRO</Link>
                 </Button>
               </div>
+            </div>
+          </Card>
+        </section>
 
-              <div className="flex flex-wrap justify-center gap-2 pt-1">
-                <Pill>Architecture</Pill>
-                <Pill>Auth</Pill>
-                <Pill>Billing</Pill>
-                <Pill>B2B systems</Pill>
-                <Pill>Admin UX</Pill>
-              </div>
-            </header>
+        {/* GRID */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Browse guides"
+            description="Focused guides for the product surfaces and systems that matter most in SaaS."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href="/docs/saas-starter">Starter docs</Link>
+              </Button>
+            }
+          />
 
-            {/* INTRO STRIP */}
-            <section className="py-4 sm:py-6">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="gap-2">
-                        <Layers3
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Why these guides exist
-                      </Badge>
-                    </div>
-
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      PyColors is not only a UI library or a starter.
-                      It is a system for building SaaS products with
-                      stronger structure, clearer UX, and less rework.
-                      These guides explain the product patterns behind
-                      that system.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/access">View Access</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/upgrade">Explore PRO</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* GRID */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Browse guides"
-                description="Focused guides for the product surfaces and systems that matter most in SaaS."
-                action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/docs/saas-starter">
-                      Starter docs
-                    </Link>
-                  </Button>
-                }
-              />
-
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {guides.map((guide) => (
-                  <GuideCard key={guide.title} {...guide} />
-                ))}
-              </div>
-            </section>
-
-            {/* MENTAL MODEL */}
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="How these guides fit the PyColors path"
-                description="The guides are educational on purpose — they help you understand the product logic before you wire the business layer."
-              />
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 01
-                    </div>
-                    <div className="text-sm font-medium">
-                      Learn the product logic
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Use the guides to understand how strong SaaS
-                      products structure dashboards, auth, billing,
-                      settings, and operations.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 02
-                    </div>
-                    <div className="text-sm font-medium">
-                      Explore patterns and examples
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Move from concepts to real interfaces with
-                      examples and UI patterns built around the same
-                      product surfaces.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 03
-                    </div>
-                    <div className="text-sm font-medium">
-                      Build with Starter Free
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Start with a production-shaped SaaS surface
-                      today, then upgrade when auth, billing, and
-                      backend wiring become the bottleneck.
-                    </p>
-                  </div>
-                </Card>
-              </div>
-            </section>
-
-            {/* FINAL CTA */}
-            <section className="mt-20">
-              <Card className="p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                <div className="space-y-2 max-w-md">
-                  <h2 className="font-brand text-lg font-semibold tracking-tight">
-                    Build your SaaS faster with PyColors
-                  </h2>
-
-                  <p className="text-sm text-muted-foreground">
-                    Use Starter Free to explore a real SaaS product
-                    surface now, then move to PRO when the business
-                    layer needs to be wired.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild>
-                    <Link href="/starters/free">Starter Free</Link>
-                  </Button>
-
-                  <Button asChild variant="secondary">
-                    <Link href="/waitlist">Join PRO waitlist</Link>
-                  </Button>
-                </div>
-              </Card>
-            </section>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {guides.map((guide) => (
+              <GuideCard key={guide.title} {...guide} />
+            ))}
           </div>
-        </Container>
-      </main>
-    </div>
+        </section>
+
+        {/* MENTAL MODEL */}
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="How these guides fit the PyColors path"
+            description="The guides are educational on purpose — they help you understand the product logic before you wire the business layer."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 01
+                </div>
+                <div className="text-sm font-medium">
+                  Learn the product logic
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Use the guides to understand how strong SaaS
+                  products structure dashboards, auth, billing,
+                  settings, and operations.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 02
+                </div>
+                <div className="text-sm font-medium">
+                  Explore patterns and examples
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Move from concepts to real interfaces with examples
+                  and UI patterns built around the same product
+                  surfaces.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 03
+                </div>
+                <div className="text-sm font-medium">
+                  Build with Starter Free
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Start with a production-shaped SaaS surface today,
+                  then upgrade when auth, billing, and backend wiring
+                  become the bottleneck.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="mt-20">
+          <Card className="p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div className="space-y-2 max-w-md">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                Build your SaaS faster with PyColors
+              </h2>
+
+              <p className="text-sm text-muted-foreground">
+                Use Starter Free to explore a real SaaS product
+                surface now, then move to PRO when the business layer
+                needs to be wired.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/starters/free">Starter Free</Link>
+              </Button>
+
+              <Button asChild variant="secondary">
+                <Link href="/waitlist">Join PRO waitlist</Link>
+              </Button>
+            </div>
+          </Card>
+        </section>
+      </div>
+    </Container>
   );
 }
