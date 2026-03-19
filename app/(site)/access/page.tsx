@@ -20,6 +20,7 @@ import {
   TableRow,
 } from '@pycolors/ui';
 import { Container } from '@/components/container';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Access',
@@ -186,530 +187,519 @@ function PremiumPlanCard({
 
 export default function AccessPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto w-full max-w-6xl">
-            {/* HERO */}
-            <header className="flex flex-col items-center gap-6 text-center">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <Sparkles
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Access
-                </Badge>
-                <Badge variant="outline">Offer structure</Badge>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Access', href: '/access' },
+            ]}
+          />
+        </div>
+        {/* HERO */}
+        <header className="flex flex-col items-center gap-6 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Access
+            </Badge>
+            <Badge variant="outline">Offer structure</Badge>
 
-                <Link
-                  href={INTERNAL.starters}
-                  className={cn(
-                    'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
-                    focusRing,
-                  )}
-                >
-                  Back to Starters
-                </Link>
-              </div>
+            <Link
+              href={INTERNAL.starters}
+              className={cn(
+                'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                focusRing,
+              )}
+            >
+              Back to Starters
+            </Link>
+          </div>
 
-              <div className="space-y-4">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  Choose how you want to build with PyColors.
-                </h1>
+          <div className="space-y-4">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              Choose how you want to build with PyColors.
+            </h1>
 
-                <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  Start with Starter Free to validate your SaaS
-                  product surface quickly. Upgrade when
-                  authentication, billing, backend foundations, and
-                  premium patterns become worth paying for.
+            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+              Start with Starter Free to validate your SaaS product
+              surface quickly. Upgrade when authentication, billing,
+              backend foundations, and premium patterns become worth
+              paying for.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href={INTERNAL.starterFree}>
+                Start with Starter Free
+              </Link>
+            </Button>
+
+            <Button asChild variant="secondary">
+              <Link href={INTERNAL.upgrade}>
+                Explore Upgrade to PRO
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <Link href={INTERNAL.waitlist}>Join PRO waitlist</Link>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 pt-2">
+            <Pill>Free entry point</Pill>
+            <Pill>Premium upgrade path</Pill>
+            <Pill>Bundle-first strategy</Pill>
+            <Pill>Built for SaaS</Pill>
+          </div>
+
+          <p className="max-w-3xl text-balance text-xs text-muted-foreground">
+            Pricing, included features, update access, and launch
+            scope may evolve before public release. The applicable
+            commercial terms for any paid offer will be defined on the
+            relevant access page, checkout page, invoice, or order
+            flow at the time of purchase.
+          </p>
+        </header>
+
+        {/* ACCESS PHILOSOPHY */}
+        <section className="py-8 sm:py-10">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <Layers3
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    Access philosophy
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  PyColors is structured as a path, not a hard
+                  paywall. Start with a credible free surface, upgrade
+                  when the business layer becomes the bottleneck, and
+                  move to All-In when long-term leverage matters more
+                  than piecemeal decisions.
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.examples}>Examples</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.patterns}>UI Patterns</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.guides}>Guides</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* STARTER FREE */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Start here"
+            description="Starter Free is the entry point. Use it to validate your SaaS product surface before paying for wiring or premium patterns."
+          />
+
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="secondary">Available today</Badge>
+                  <Badge variant="outline">Starter Free</Badge>
+                  <Badge variant="outline">Entry point</Badge>
+                </div>
+
+                <div className="space-y-2">
+                  <h2 className="font-brand text-xl font-semibold tracking-tight sm:text-2xl">
+                    Starter Free
+                  </h2>
+
+                  <div className="font-brand text-3xl font-semibold tracking-tight">
+                    Free
+                  </div>
+
+                  <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    A production-shaped SaaS surface for validating
+                    product UX and shipping screens quickly — with
+                    auth UX, dashboard, CRUD patterns, billing
+                    entrypoints, settings, and admin member surfaces.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Pill>Auth UX (mocked)</Pill>
+                  <Pill>Dashboard</Pill>
+                  <Pill>CRUD patterns</Pill>
+                  <Pill>Billing entrypoints</Pill>
+                  <Pill>Admin UI</Pill>
+                </div>
+
+                <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+                  Starter Free is currently the public entry point of
+                  the ecosystem. Open-source repositories and free
+                  resources remain governed by their own applicable
+                  repository license.
+                </p>
+              </div>
+
+              <div className="flex min-w-[240px] flex-col gap-2">
                 <Button asChild>
                   <Link href={INTERNAL.starterFree}>
-                    Start with Starter Free
+                    Start with Free
                   </Link>
                 </Button>
 
                 <Button asChild variant="secondary">
-                  <Link href={INTERNAL.upgrade}>
-                    Explore Upgrade to PRO
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
+                  <Link href={INTERNAL.starters}>
+                    Explore Starters
                   </Link>
                 </Button>
 
                 <Button asChild variant="outline">
+                  <Link href={INTERNAL.upgrade}>
+                    See Upgrade path
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* PREMIUM ACCESS */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Premium access"
+            description="Three upgrade paths, depending on whether your bottleneck is design leverage, business wiring, or long-term ecosystem value."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href={INTERNAL.roadmap}>Track roadmap</Link>
+              </Button>
+            }
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <PremiumPlanCard
+              title="UI PRO"
+              price="€129"
+              badge="Coming"
+              eyebrow="Premium layer"
+              description="Premium SaaS patterns built on top of the PyColors UI baseline."
+              points={[
+                'Advanced SaaS patterns',
+                'Billing and settings screens',
+                'Admin and analytics layouts',
+                'Higher-signal product blocks',
+                'Premium UI usage direction',
+              ]}
+              footnote="Commercial usage, update rights, and included materials depend on the offer scope available at launch."
+              cta="Join waitlist"
+              href={INTERNAL.waitlist}
+            />
+
+            <PremiumPlanCard
+              title="Starter PRO"
+              price="€249"
+              badge="Coming"
+              eyebrow="Business layer"
+              description="Production wiring for builders who want the business layer handled."
+              points={[
+                'Authentication providers',
+                'Stripe billing direction',
+                'Backend foundations',
+                'Database and contracts',
+                'Deployment guidance',
+              ]}
+              footnote="This offer is intended as a commercial product license, not a transfer of product ownership or resale rights."
+              cta="Join waitlist"
+              href={INTERNAL.waitlist}
+            />
+
+            <PremiumPlanCard
+              title="All-In Access"
+              price="€349"
+              badge="Recommended"
+              eyebrow="Anchor offer"
+              description="The long-term premium offer for builders who want the full PyColors ecosystem."
+              points={[
+                'UI PRO included',
+                'Starter PRO included',
+                'Selected future premium drops',
+                'Best long-term value',
+                'Built as the anchor offer',
+              ]}
+              footnote="Included products, update access, and future premium drops are limited to the scope explicitly included in the offer purchased at checkout."
+              cta="Get early access"
+              href={INTERNAL.waitlist}
+              variant="default"
+              highlight
+            />
+          </div>
+        </section>
+
+        {/* RECOMMENDATION */}
+        <section className="py-8 sm:py-10">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="secondary" className="gap-2">
+                    <BadgeCheck
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    Recommendation
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  If you are still shaping the product, start with
+                  Starter Free. If you already know you want the full
+                  PyColors path, All-In Access is designed to be the
+                  strongest long-term decision.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild size="sm">
+                  <Link href={INTERNAL.starterFree}>Start Free</Link>
+                </Button>
+                <Button asChild size="sm" variant="secondary">
+                  <Link href={INTERNAL.waitlist}>
+                    Join All-In waitlist
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* COMPARISON */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Compare access levels"
+            description="Same ecosystem. Different depth of leverage."
+          />
+
+          <Card className="p-6 sm:p-7">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Feature</TableHead>
+                  <TableHead>Starter Free</TableHead>
+                  <TableHead>UI PRO</TableHead>
+                  <TableHead>Starter PRO</TableHead>
+                  <TableHead>All-In</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    UI primitives
+                  </TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
+                    SaaS UI patterns
+                  </TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Auth wiring
+                  </TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Billing wiring
+                  </TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Backend foundations
+                  </TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>✔</TableCell>
+                  <TableCell>✔</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Offer-based update access
+                  </TableCell>
+                  <TableCell>—</TableCell>
+                  <TableCell>Offer-based</TableCell>
+                  <TableCell>Offer-based</TableCell>
+                  <TableCell>Included by scope</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
+            <p className="mt-3 text-xs text-muted-foreground">
+              Included access, updates, and future premium drops
+              depend on the scope of the offer purchased at the time
+              of checkout. Premium access is designed to reduce
+              time-to-revenue as your product becomes real.
+            </p>
+          </Card>
+        </section>
+
+        {/* HOW TO CHOOSE */}
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="How to choose"
+            description="You do not need everything on day one. Pick the access level that matches your current bottleneck."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Option 01
+                </div>
+                <div className="text-sm font-medium">
+                  Start with Free
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Best when you want to validate UX, ship screens, and
+                  stay flexible while the product is still taking
+                  shape.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Option 02
+                </div>
+                <div className="text-sm font-medium">
+                  Upgrade selectively
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Choose UI PRO if design system patterns matter more
+                  first. Choose Starter PRO if business wiring becomes
+                  the real cost center.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Option 03
+                </div>
+                <div className="text-sm font-medium">Go All-In</div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Best for long-term builders who want the full
+                  PyColors path and the strongest value over time.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* LEGAL NOTE */}
+        <section className="py-8 sm:py-10">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  Commercial scope
+                </h2>
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  This page is a commercial overview of the PyColors
+                  access model. License scope, permitted use,
+                  restrictions, refunds, and legal terms are governed
+                  by the applicable product page, checkout flow,
+                  invoice, and the PyColors legal pages.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.license}>License</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={INTERNAL.terms}>Terms</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  Start free now. Upgrade when leverage matters.
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  The best entry point is Starter Free. The best
+                  premium path is the one that removes your next
+                  bottleneck.
+                </p>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Pill>Starter Free</Pill>
+                  <Pill>PRO path</Pill>
+                  <Pill>All-In strategy</Pill>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href={INTERNAL.starterFree}>
+                    Start with Free
+                  </Link>
+                </Button>
+
+                <Button asChild variant="secondary">
                   <Link href={INTERNAL.waitlist}>
                     Join PRO waitlist
                   </Link>
                 </Button>
               </div>
-
-              <div className="flex flex-wrap justify-center gap-2 pt-2">
-                <Pill>Free entry point</Pill>
-                <Pill>Premium upgrade path</Pill>
-                <Pill>Bundle-first strategy</Pill>
-                <Pill>Built for SaaS</Pill>
-              </div>
-
-              <p className="max-w-3xl text-balance text-xs text-muted-foreground">
-                Pricing, included features, update access, and launch
-                scope may evolve before public release. The applicable
-                commercial terms for any paid offer will be defined on
-                the relevant access page, checkout page, invoice, or
-                order flow at the time of purchase.
-              </p>
-            </header>
-
-            {/* ACCESS PHILOSOPHY */}
-            <section className="py-8 sm:py-10">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="gap-2">
-                        <Layers3
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Access philosophy
-                      </Badge>
-                    </div>
-
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      PyColors is structured as a path, not a hard
-                      paywall. Start with a credible free surface,
-                      upgrade when the business layer becomes the
-                      bottleneck, and move to All-In when long-term
-                      leverage matters more than piecemeal decisions.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.examples}>Examples</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.patterns}>
-                        UI Patterns
-                      </Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.guides}>Guides</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* STARTER FREE */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Start here"
-                description="Starter Free is the entry point. Use it to validate your SaaS product surface before paying for wiring or premium patterns."
-              />
-
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="secondary">
-                        Available today
-                      </Badge>
-                      <Badge variant="outline">Starter Free</Badge>
-                      <Badge variant="outline">Entry point</Badge>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h2 className="font-brand text-xl font-semibold tracking-tight sm:text-2xl">
-                        Starter Free
-                      </h2>
-
-                      <div className="font-brand text-3xl font-semibold tracking-tight">
-                        Free
-                      </div>
-
-                      <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                        A production-shaped SaaS surface for
-                        validating product UX and shipping screens
-                        quickly — with auth UX, dashboard, CRUD
-                        patterns, billing entrypoints, settings, and
-                        admin member surfaces.
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <Pill>Auth UX (mocked)</Pill>
-                      <Pill>Dashboard</Pill>
-                      <Pill>CRUD patterns</Pill>
-                      <Pill>Billing entrypoints</Pill>
-                      <Pill>Admin UI</Pill>
-                    </div>
-
-                    <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-                      Starter Free is currently the public entry point
-                      of the ecosystem. Open-source repositories and
-                      free resources remain governed by their own
-                      applicable repository license.
-                    </p>
-                  </div>
-
-                  <div className="flex min-w-[240px] flex-col gap-2">
-                    <Button asChild>
-                      <Link href={INTERNAL.starterFree}>
-                        Start with Free
-                      </Link>
-                    </Button>
-
-                    <Button asChild variant="secondary">
-                      <Link href={INTERNAL.starters}>
-                        Explore Starters
-                      </Link>
-                    </Button>
-
-                    <Button asChild variant="outline">
-                      <Link href={INTERNAL.upgrade}>
-                        See Upgrade path
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* PREMIUM ACCESS */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Premium access"
-                description="Three upgrade paths, depending on whether your bottleneck is design leverage, business wiring, or long-term ecosystem value."
-                action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={INTERNAL.roadmap}>Track roadmap</Link>
-                  </Button>
-                }
-              />
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                <PremiumPlanCard
-                  title="UI PRO"
-                  price="€129"
-                  badge="Coming"
-                  eyebrow="Premium layer"
-                  description="Premium SaaS patterns built on top of the PyColors UI baseline."
-                  points={[
-                    'Advanced SaaS patterns',
-                    'Billing and settings screens',
-                    'Admin and analytics layouts',
-                    'Higher-signal product blocks',
-                    'Premium UI usage direction',
-                  ]}
-                  footnote="Commercial usage, update rights, and included materials depend on the offer scope available at launch."
-                  cta="Join waitlist"
-                  href={INTERNAL.waitlist}
-                />
-
-                <PremiumPlanCard
-                  title="Starter PRO"
-                  price="€249"
-                  badge="Coming"
-                  eyebrow="Business layer"
-                  description="Production wiring for builders who want the business layer handled."
-                  points={[
-                    'Authentication providers',
-                    'Stripe billing direction',
-                    'Backend foundations',
-                    'Database and contracts',
-                    'Deployment guidance',
-                  ]}
-                  footnote="This offer is intended as a commercial product license, not a transfer of product ownership or resale rights."
-                  cta="Join waitlist"
-                  href={INTERNAL.waitlist}
-                />
-
-                <PremiumPlanCard
-                  title="All-In Access"
-                  price="€349"
-                  badge="Recommended"
-                  eyebrow="Anchor offer"
-                  description="The long-term premium offer for builders who want the full PyColors ecosystem."
-                  points={[
-                    'UI PRO included',
-                    'Starter PRO included',
-                    'Selected future premium drops',
-                    'Best long-term value',
-                    'Built as the anchor offer',
-                  ]}
-                  footnote="Included products, update access, and future premium drops are limited to the scope explicitly included in the offer purchased at checkout."
-                  cta="Get early access"
-                  href={INTERNAL.waitlist}
-                  variant="default"
-                  highlight
-                />
-              </div>
-            </section>
-
-            {/* RECOMMENDATION */}
-            <section className="py-8 sm:py-10">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="secondary" className="gap-2">
-                        <BadgeCheck
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Recommendation
-                      </Badge>
-                    </div>
-
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      If you are still shaping the product, start with
-                      Starter Free. If you already know you want the
-                      full PyColors path, All-In Access is designed to
-                      be the strongest long-term decision.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild size="sm">
-                      <Link href={INTERNAL.starterFree}>
-                        Start Free
-                      </Link>
-                    </Button>
-                    <Button asChild size="sm" variant="secondary">
-                      <Link href={INTERNAL.waitlist}>
-                        Join All-In waitlist
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* COMPARISON */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Compare access levels"
-                description="Same ecosystem. Different depth of leverage."
-              />
-
-              <Card className="p-6 sm:p-7">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Feature</TableHead>
-                      <TableHead>Starter Free</TableHead>
-                      <TableHead>UI PRO</TableHead>
-                      <TableHead>Starter PRO</TableHead>
-                      <TableHead>All-In</TableHead>
-                    </TableRow>
-                  </TableHeader>
-
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        UI primitives
-                      </TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        SaaS UI patterns
-                      </TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        Auth wiring
-                      </TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        Billing wiring
-                      </TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        Backend foundations
-                      </TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>✔</TableCell>
-                      <TableCell>✔</TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        Offer-based update access
-                      </TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>Offer-based</TableCell>
-                      <TableCell>Offer-based</TableCell>
-                      <TableCell>Included by scope</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Included access, updates, and future premium drops
-                  depend on the scope of the offer purchased at the
-                  time of checkout. Premium access is designed to
-                  reduce time-to-revenue as your product becomes real.
-                </p>
-              </Card>
-            </section>
-
-            {/* HOW TO CHOOSE */}
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="How to choose"
-                description="You do not need everything on day one. Pick the access level that matches your current bottleneck."
-              />
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Option 01
-                    </div>
-                    <div className="text-sm font-medium">
-                      Start with Free
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Best when you want to validate UX, ship screens,
-                      and stay flexible while the product is still
-                      taking shape.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Option 02
-                    </div>
-                    <div className="text-sm font-medium">
-                      Upgrade selectively
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Choose UI PRO if design system patterns matter
-                      more first. Choose Starter PRO if business
-                      wiring becomes the real cost center.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Option 03
-                    </div>
-                    <div className="text-sm font-medium">
-                      Go All-In
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Best for long-term builders who want the full
-                      PyColors path and the strongest value over time.
-                    </p>
-                  </div>
-                </Card>
-              </div>
-            </section>
-
-            {/* LEGAL NOTE */}
-            <section className="py-8 sm:py-10">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Commercial scope
-                    </h2>
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      This page is a commercial overview of the
-                      PyColors access model. License scope, permitted
-                      use, restrictions, refunds, and legal terms are
-                      governed by the applicable product page,
-                      checkout flow, invoice, and the PyColors legal
-                      pages.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.license}>License</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.terms}>Terms</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* FINAL CTA */}
-            <section className="mx-auto mt-10 w-full max-w-6xl">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="space-y-1">
-                    <h2 className="font-brand text-lg font-semibold tracking-tight">
-                      Start free now. Upgrade when leverage matters.
-                    </h2>
-                    <p className="text-sm text-muted-foreground">
-                      The best entry point is Starter Free. The best
-                      premium path is the one that removes your next
-                      bottleneck.
-                    </p>
-
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>Starter Free</Pill>
-                      <Pill>PRO path</Pill>
-                      <Pill>All-In strategy</Pill>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild>
-                      <Link href={INTERNAL.starterFree}>
-                        Start with Free
-                      </Link>
-                    </Button>
-
-                    <Button asChild variant="secondary">
-                      <Link href={INTERNAL.waitlist}>
-                        Join PRO waitlist
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-          </div>
-        </Container>
-      </main>
-    </div>
+            </div>
+          </Card>
+        </section>
+      </div>
+    </Container>
   );
 }
