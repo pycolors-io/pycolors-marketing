@@ -1,0 +1,211 @@
+---
+title: Why I Stopped Overengineering SaaS Starters
+description: I removed complexity from my SaaS starter to make it more useful, easier to ship, and closer to what developers actually need.
+author: Patrice Parny
+date: "2026-03-19"
+category: SaaS Architecture
+tags:
+  - Next.js
+  - SaaS Starter
+  - Architecture
+  - Product Engineering
+featured: true
+readingTime: 8 min read
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Explore Starter Free
+  href: /starters/free
+  variant: free
+---
+
+## The problem
+
+At first, I wanted my SaaS starter to feel complete.
+
+Not just useful.
+Not just production-shaped.
+**Complete.**
+
+That instinct sounds good, but in practice it pushed me toward the wrong kind of complexity:
+
+- more abstraction than immediate value
+- more optionality than real product leverage
+- more architecture than shipping speed
+
+At some point, I realized I was no longer building a strong foundation for real SaaS products.
+I was building a framework for hypothetical future needs.
+
+That was the turning point.
+
+## Why this matters
+
+A SaaS starter is not valuable because it can theoretically adapt to everything.
+
+It is valuable because it removes the expensive setup work that slows real product teams down:
+
+- authentication surfaces
+- dashboard structure
+- settings architecture
+- billing entry points
+- coherent product layout
+- reusable UI primitives
+
+The more I focused on those concrete foundations, the more useful the starter became.
+
+## What I was overengineering
+
+Here are the patterns I started removing.
+
+### 1. Too many abstraction layers
+
+I was tempted to generalize too early.
+
+Examples:
+
+- wrappers around simple product sections
+- generic feature modules before having repeated use cases
+- indirection between pages, state, and UI where plain composition was enough
+
+This made the starter look “architected”, but not necessarily easier to use.
+
+The problem with early abstraction is simple:
+
+> if the variation is not real yet, the abstraction is usually fake.
+
+### 2. Optional systems with no current buyer value
+
+I also started adding systems that felt impressive but did not solve the immediate problem of shipping faster:
+
+- advanced permission scaffolding too early
+- placeholder enterprise patterns without product demand
+- configurable surfaces that were never actually configured
+
+These things create surface area, but not always leverage.
+
+A good starter should reduce the distance between “clone repo” and “start building your product”.
+
+### 3. Generic dashboards
+
+Generic dashboards are one of the fastest ways to make a starter feel fake.
+
+A serious starter does not need a random KPI grid, a fake activity feed, and placeholder charts.
+
+It needs:
+
+- clear information hierarchy
+- realistic empty states
+- good defaults for common product surfaces
+- room for real product logic
+
+That is a very different goal.
+
+## What I kept
+
+I did not remove complexity blindly.
+
+I kept the parts that create real product leverage.
+
+### 1. Authentication surfaces
+
+A SaaS starter should help developers skip repetitive auth work.
+
+That means keeping strong foundations for:
+
+- sign in
+- sign up
+- password reset
+- protected app areas
+- session-aware layouts
+
+### 2. Settings architecture
+
+Settings are often underestimated, but they are one of the most stable and valuable product surfaces in SaaS.
+
+A good starter should already have structure for:
+
+- profile
+- account
+- security
+- billing
+- organization-ready evolution later
+
+### 3. Billing entry points
+
+Even if the billing engine is not fully wired yet, the UX surface matters early.
+
+Developers need a serious foundation for:
+
+- plan presentation
+- upgrade entry points
+- billing settings
+- invoice and trust patterns later
+
+### 4. A coherent layout system
+
+Instead of adding more abstraction, I put more effort into consistency:
+
+- public marketing pages
+- authenticated app shell
+- settings navigation
+- dashboard hierarchy
+- reusable sections and cards
+
+That creates much more value than speculative flexibility.
+
+## The rule I use now
+
+This is the rule I use for PyColors now:
+
+> if a feature does not make shipping faster, clarity better, or product structure stronger, it probably does not belong in the starter yet.
+
+That rule removes a lot of noise.
+
+## What this changed in practice
+
+Once I simplified the starter, the direction became much clearer.
+
+Instead of asking:
+
+“How can this support every possible SaaS?”
+
+I started asking:
+
+“How can this help a developer ship a credible SaaS product faster this week?”
+
+That shift changed everything.
+
+It improved:
+
+- maintainability
+- product clarity
+- onboarding speed
+- implementation confidence
+- upgrade path between free and pro
+
+## Blog content vs guide content
+
+This article is intentionally opinionated.
+
+It is not meant to replace a structured guide.
+
+If you want the more educational version of the same topic, start here:
+
+- [How to build a SaaS with Next.js](/guides/build-saas-nextjs)
+- [Starter docs](/docs/saas-starter)
+
+If you want the actual product surface behind this thinking, explore:
+
+- [Starter Free](/starters/free)
+- [Upgrade to PRO](/upgrade)
+
+## Final takeaway
+
+I did not stop overengineering because simplicity looks better.
+
+I stopped because **a starter becomes more useful when it is closer to real shipping needs and farther from imaginary future abstraction**.
+
+That is the direction behind PyColors:
+
+- stronger product surfaces
+- less fake complexity
+- faster path to a real SaaS
