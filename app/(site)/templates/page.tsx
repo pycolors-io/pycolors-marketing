@@ -18,6 +18,7 @@ import {
 
 import { Container } from '@/components/container';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Templates',
@@ -274,32 +275,144 @@ function TemplateCard({ t }: { t: Template }) {
 
 export default function TemplatesPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Templates', href: '/templates' },
+            ]}
+          />
+        </div>
 
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <header className="mx-auto w-full max-w-4xl text-center">
-            <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2">
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Premium templates
-              </Badge>
+        <header className="mx-auto w-full max-w-4xl text-center">
+          <div className="flex justify-center">
+            <Badge variant="secondary" className="gap-2">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Premium templates
+            </Badge>
+          </div>
+
+          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            Ship SaaS faster with templates
+          </h1>
+
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+            Production-ready layouts built on the PyColors UI
+            direction — designed to reduce setup time, keep structure
+            clean, and avoid design debt.
+          </p>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild className={cn(focusRing)}>
+              <Link href="#templates">
+                Browse templates{' '}
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className={cn(focusRing)}
+            >
+              <Link href="/ui">See the UI foundation</Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="secondary"
+              className={cn(focusRing)}
+            >
+              <a
+                href="https://pycolors.gumroad.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Open PyColors on Gumroad (opens in a new tab)"
+              >
+                Get on Gumroad{' '}
+                <ExternalLink
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </a>
+            </Button>
+          </div>
+
+          <p className="mx-auto mt-6 max-w-2xl text-balance text-xs text-muted-foreground">
+            Templates are designed for real deployment — not
+            screenshots.
+          </p>
+        </header>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {principles.map((p) => (
+              <Card key={p.title} className="p-5">
+                <div className="inline-flex items-center gap-2 text-sm font-medium">
+                  {p.icon}
+                  {p.title}
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {p.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-2">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                What you get (practical, not marketing)
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Clean structure, predictable conventions, and a path
+                to ship quickly without rebuilding foundations.
+              </p>
             </div>
 
-            <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Ship SaaS faster with templates
-            </h1>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {whatYouGet.map((t) => (
+                <div key={t.title} className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    {t.icon}
+                    {t.title}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t.description}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Production-ready layouts built on the PyColors UI
-              direction — designed to reduce setup time, keep
-              structure clean, and avoid design debt.
-            </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {trust.map((t) => (
+                <div key={t.title} className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    {t.icon}
+                    {t.title}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t.description}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild className={cn(focusRing)}>
-                <Link href="#templates">
-                  Browse templates{' '}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button
+                asChild
+                variant="outline"
+                className={cn(focusRing)}
+              >
+                <Link href="/license">
+                  License details{' '}
                   <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
@@ -309,260 +422,153 @@ export default function TemplatesPage() {
 
               <Button
                 asChild
-                variant="outline"
-                className={cn(focusRing)}
-              >
-                <Link href="/ui">See the UI foundation</Link>
-              </Button>
-
-              <Button
-                asChild
                 variant="secondary"
                 className={cn(focusRing)}
               >
-                <a
-                  href="https://pycolors.gumroad.com"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="Open PyColors on Gumroad (opens in a new tab)"
-                >
-                  Get on Gumroad{' '}
-                  <ExternalLink
+                <Link href="/docs">
+                  Read the docs{' '}
+                  <ArrowRight
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
                   />
-                </a>
+                </Link>
               </Button>
             </div>
+          </Card>
+        </section>
 
-            <p className="mx-auto mt-6 max-w-2xl text-balance text-xs text-muted-foreground">
-              Templates are designed for real deployment — not
-              screenshots.
-            </p>
-          </header>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {principles.map((p) => (
-                <Card key={p.title} className="p-5">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    {p.icon}
-                    {p.title}
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {p.description}
-                  </p>
-                </Card>
-              ))}
+        <section className="mx-auto mt-10 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-2">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                License snapshot
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Keep this section short and confidence-building. Full
+                details live on the License page.
+              </p>
             </div>
-          </section>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="space-y-2">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  What you get (practical, not marketing)
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Clean structure, predictable conventions, and a path
-                  to ship quickly without rebuilding foundations.
-                </p>
-              </div>
+            <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+              {[
+                'Use in commercial projects (details in License).',
+                'Clear distribution rules for templates/starter packaging.',
+                'Updates shipped progressively with roadmap visibility.',
+              ].map((it) => (
+                <li key={it} className="flex gap-2">
+                  <span
+                    className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
+                    aria-hidden="true"
+                  />
+                  <span className="text-pretty">{it}</span>
+                </li>
+              ))}
+            </ul>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {whatYouGet.map((t) => (
-                  <div key={t.title} className="space-y-2">
-                    <div className="inline-flex items-center gap-2 text-sm font-medium">
-                      {t.icon}
-                      {t.title}
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {t.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild className={cn(focusRing)}>
+                <Link href="/license">
+                  Read license{' '}
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className={cn(focusRing)}
+              >
+                <Link href="/ui">UI foundation</Link>
+              </Button>
+            </div>
+          </Card>
+        </section>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {trust.map((t) => (
-                  <div key={t.title} className="space-y-2">
-                    <div className="inline-flex items-center gap-2 text-sm font-medium">
-                      {t.icon}
-                      {t.title}
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {t.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+        <section
+          id="templates"
+          className="mx-auto mt-10 w-full space-y-4"
+        >
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                Available templates
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Designed for shipping today, improved progressively.
+              </p>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {templates.length} template
+              {templates.length === 1 ? '' : 's'}
+            </div>
+          </div>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button
-                  asChild
-                  variant="outline"
-                  className={cn(focusRing)}
-                >
-                  <Link href="/license">
-                    License details{' '}
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
+          <div className="grid gap-4">
+            {templates.map((t) => (
+              <TemplateCard key={t.name} t={t} />
+            ))}
+          </div>
 
-                <Button
-                  asChild
-                  variant="secondary"
-                  className={cn(focusRing)}
-                >
-                  <Link href="/docs">
-                    Read the docs{' '}
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-              </div>
-            </Card>
-          </section>
+          <p className="text-xs text-muted-foreground">
+            Each template includes a README, setup steps, and a clean
+            structure — built for real deployment.
+          </p>
+        </section>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="space-y-2">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  License snapshot
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Keep this section short and confidence-building.
-                  Full details live on the License page.
-                </p>
-              </div>
-
-              <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-                {[
-                  'Use in commercial projects (details in License).',
-                  'Clear distribution rules for templates/starter packaging.',
-                  'Updates shipped progressively with roadmap visibility.',
-                ].map((it) => (
-                  <li key={it} className="flex gap-2">
-                    <span
-                      className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
-                      aria-hidden="true"
-                    />
-                    <span className="text-pretty">{it}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild className={cn(focusRing)}>
-                  <Link href="/license">
-                    Read license{' '}
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className={cn(focusRing)}
-                >
-                  <Link href="/ui">UI foundation</Link>
-                </Button>
-              </div>
-            </Card>
-          </section>
-
-          <section
-            id="templates"
-            className="mx-auto mt-10 w-full max-w-5xl space-y-4"
-          >
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Available templates
-                </h2>
+        <section className="mx-auto mt-10 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <div className="text-sm font-medium">
+                  Want to influence what ships next?
+                </div>
                 <p className="text-sm text-muted-foreground">
-                  Designed for shipping today, improved progressively.
+                  Requests and issues help prioritize templates,
+                  blocks, and future commercial releases.
                 </p>
               </div>
-              <div className="text-xs text-muted-foreground">
-                {templates.length} template
-                {templates.length === 1 ? '' : 's'}
-              </div>
-            </div>
 
-            <div className="grid gap-4">
-              {templates.map((t) => (
-                <TemplateCard key={t.name} t={t} />
-              ))}
-            </div>
-
-            <p className="text-xs text-muted-foreground">
-              Each template includes a README, setup steps, and a
-              clean structure — built for real deployment.
-            </p>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-1">
-                  <div className="text-sm font-medium">
-                    Want to influence what ships next?
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Requests and issues help prioritize templates,
-                    blocks, and future commercial releases.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <a
+                    href="https://github.com/pycolors-io/pycolors-ui/issues"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="Open PyColors UI issues on GitHub (opens in a new tab)"
                   >
-                    <a
-                      href="https://github.com/pycolors-io/pycolors-ui/issues"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      aria-label="Open PyColors UI issues on GitHub (opens in a new tab)"
-                    >
-                      Open an issue{' '}
-                      <ExternalLink
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
+                    Open an issue{' '}
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
 
-                  <Button asChild className={cn(focusRing)}>
-                    <Link href="/changelog">
-                      View changelog{' '}
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </Button>
-                </div>
+                <Button asChild className={cn(focusRing)}>
+                  <Link href="/changelog">
+                    View changelog{' '}
+                    <ArrowRight
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
               </div>
-            </Card>
+            </div>
+          </Card>
 
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              Templates ship progressively — early releases improve
-              fast as PyColors UI evolves.
-            </p>
-          </section>
-        </Container>
-      </main>
-
-    </div>
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            Templates ship progressively — early releases improve fast
+            as PyColors UI evolves.
+          </p>
+        </section>
+      </div>
+    </Container>
   );
 }
