@@ -19,6 +19,7 @@ import {
 
 import { Container } from '@/components/container';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'NA-AI Landing Page Template · PyColors',
@@ -227,372 +228,356 @@ function ScreenshotGrid() {
 
 export default function NaAiTemplatePage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Templates', href: '/templates' },
+              { label: 'NA-AI', href: '/templates/na-ai' },
+            ]}
+          />
+        </div>
+        <header className="mx-auto w-full max-w-4xl text-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <span
+                className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"
+                aria-hidden="true"
+              />
+              Templates
+            </Badge>
 
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <header className="mx-auto w-full max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="secondary" className="gap-2">
-                <span
-                  className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"
+            <Badge variant="outline" className="text-[11px]">
+              {PRODUCT.status}
+            </Badge>
+
+            <span className="text-xs text-muted-foreground">
+              {PRODUCT.price}
+            </span>
+          </div>
+
+          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            {PRODUCT.title}
+          </h1>
+
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+            {PRODUCT.subtitle}
+          </p>
+
+          <p className="mx-auto mt-2 max-w-2xl text-balance text-xs text-muted-foreground">
+            {PRODUCT.note}
+          </p>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild className={cn(focusRing)}>
+              <a
+                href={PRODUCT.buyUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Buy NA-AI on Gumroad (opens in a new tab)"
+              >
+                Buy NA-AI
+                <ExternalLink
+                  className="ml-2 h-4 w-4"
                   aria-hidden="true"
                 />
-                Templates
-              </Badge>
+              </a>
+            </Button>
 
-              <Badge variant="outline" className="text-[11px]">
-                {PRODUCT.status}
-              </Badge>
+            <Button
+              asChild
+              variant="outline"
+              className={cn(focusRing)}
+            >
+              <a
+                href={PRODUCT.demoUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Open NA-AI live demo (opens in a new tab)"
+              >
+                Live demo
+                <ExternalLink
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </a>
+            </Button>
+          </div>
 
-              <span className="text-xs text-muted-foreground">
-                {PRODUCT.price}
-              </span>
+          <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
+            <Link
+              href="/templates"
+              className={cn(
+                'rounded-md text-xs text-muted-foreground transition-colors hover:text-foreground',
+                focusRing,
+              )}
+              aria-label="Back to Templates"
+            >
+              ← Back to Templates
+            </Link>
+
+            <Link
+              href="/license"
+              className={cn(
+                'rounded-md text-xs text-muted-foreground transition-colors hover:text-foreground',
+                focusRing,
+              )}
+              aria-label="Read licensing information"
+            >
+              License →
+            </Link>
+          </div>
+        </header>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {highlights.map((h) => (
+              <Card key={h.title} className="p-5">
+                <div className="inline-flex items-center gap-2 text-sm font-medium">
+                  {h.icon}
+                  {h.title}
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {h.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full">
+          <ScreenshotGrid />
+        </section>
+
+        <section className="mx-auto mt-10 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-2">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                Perfect for
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                The fastest path to a clean, commercial landing page
+                for AI/SaaS.
+              </p>
             </div>
 
-            <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              {PRODUCT.title}
-            </h1>
-
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              {PRODUCT.subtitle}
-            </p>
-
-            <p className="mx-auto mt-2 max-w-2xl text-balance text-xs text-muted-foreground">
-              {PRODUCT.note}
-            </p>
-
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild className={cn(focusRing)}>
-                <a
-                  href={PRODUCT.buyUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="Buy NA-AI on Gumroad (opens in a new tab)"
-                >
-                  Buy NA-AI
-                  <ExternalLink
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </a>
-              </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                className={cn(focusRing)}
-              >
-                <a
-                  href={PRODUCT.demoUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="Open NA-AI live demo (opens in a new tab)"
-                >
-                  Live demo
-                  <ExternalLink
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </a>
-              </Button>
-            </div>
-
-            <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
-              <Link
-                href="/templates"
-                className={cn(
-                  'rounded-md text-xs text-muted-foreground transition-colors hover:text-foreground',
-                  focusRing,
-                )}
-                aria-label="Back to Templates"
-              >
-                ← Back to Templates
-              </Link>
-
-              <Link
-                href="/license"
-                className={cn(
-                  'rounded-md text-xs text-muted-foreground transition-colors hover:text-foreground',
-                  focusRing,
-                )}
-                aria-label="Read licensing information"
-              >
-                License →
-              </Link>
-            </div>
-          </header>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {highlights.map((h) => (
-                <Card key={h.title} className="p-5">
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {perfectFor.map((p) => (
+                <div key={p.title} className="space-y-2">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    {h.icon}
-                    {h.title}
+                    {p.icon}
+                    {p.title}
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {h.description}
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {p.description}
                   </p>
-                </Card>
+                </div>
               ))}
             </div>
-          </section>
+          </Card>
+        </section>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <ScreenshotGrid />
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
+        <section className="mx-auto mt-10 w-full">
+          <div className="grid gap-4 sm:grid-cols-2">
             <Card className="p-6 sm:p-7">
-              <div className="space-y-2">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Perfect for
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  The fastest path to a clean, commercial landing page
-                  for AI/SaaS.
-                </p>
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                What’s included
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                A focused set of sections and patterns for SaaS/AI
+                launches — without backend complexity.
+              </p>
+              <BulletList items={included} />
+            </Card>
+
+            <Card className="p-6 sm:p-7">
+              <h2 className="font-brand text-lg font-semibold tracking-tight">
+                Tech stack
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Modern defaults with sensible architecture and UI
+                primitives.
+              </p>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {stack.map((t) => (
+                  <span
+                    key={t}
+                    className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] text-muted-foreground"
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {perfectFor.map((p) => (
-                  <div key={p.title} className="space-y-2">
-                    <div className="inline-flex items-center gap-2 text-sm font-medium">
-                      {p.icon}
-                      {p.title}
+              <div className="mt-6 rounded-lg border border-border bg-muted/30 p-4">
+                <div className="inline-flex items-center gap-2 text-sm font-medium">
+                  <BadgeCheck
+                    className="h-4 w-4"
+                    aria-hidden="true"
+                  />
+                  Notes
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  Frontend-only by design — no authentication,
+                  database, or API included.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Card className="p-6 sm:p-7">
+              <div className="inline-flex items-center gap-2 text-sm font-medium">
+                <FileArchive className="h-4 w-4" aria-hidden="true" />
+                Delivery
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                What you receive after purchase.
+              </p>
+              <BulletList items={delivery} />
+            </Card>
+
+            <Card className="p-6 sm:p-7">
+              <div className="inline-flex items-center gap-2 text-sm font-medium">
+                <RefreshCcw className="h-4 w-4" aria-hidden="true" />
+                Updates
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                The template improves progressively as PyColors grows.
+              </p>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {updates.map((u) => (
+                  <div
+                    key={u.label}
+                    className="rounded-lg border border-border bg-muted/20 px-3 py-2"
+                  >
+                    <div className="text-[11px] text-muted-foreground">
+                      {u.label}
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {p.description}
-                    </p>
+                    <div className="mt-1 text-xs font-medium">
+                      {u.value}
+                    </div>
                   </div>
                 ))}
               </div>
-            </Card>
-          </section>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card className="p-6 sm:p-7">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  What’s included
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  A focused set of sections and patterns for SaaS/AI
-                  launches — without backend complexity.
-                </p>
-                <BulletList items={included} />
-              </Card>
-
-              <Card className="p-6 sm:p-7">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Tech stack
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  Modern defaults with sensible architecture and UI
-                  primitives.
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {stack.map((t) => (
-                    <span
-                      key={t}
-                      className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] text-muted-foreground"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 rounded-lg border border-border bg-muted/30 p-4">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    <BadgeCheck
-                      className="h-4 w-4"
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <Link href="/roadmap">
+                    View roadmap{' '}
+                    <ArrowRight
+                      className="ml-2 h-4 w-4"
                       aria-hidden="true"
                     />
-                    Notes
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Frontend-only by design — no authentication,
-                    database, or API included.
-                  </p>
-                </div>
-              </Card>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card className="p-6 sm:p-7">
-                <div className="inline-flex items-center gap-2 text-sm font-medium">
-                  <FileArchive
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  Delivery
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  What you receive after purchase.
-                </p>
-                <BulletList items={delivery} />
-              </Card>
-
-              <Card className="p-6 sm:p-7">
-                <div className="inline-flex items-center gap-2 text-sm font-medium">
-                  <RefreshCcw
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  Updates
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  The template improves progressively as PyColors
-                  grows.
-                </p>
-
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                  {updates.map((u) => (
-                    <div
-                      key={u.label}
-                      className="rounded-lg border border-border bg-muted/20 px-3 py-2"
-                    >
-                      <div className="text-[11px] text-muted-foreground">
-                        {u.label}
-                      </div>
-                      <div className="mt-1 text-xs font-medium">
-                        {u.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href="/roadmap">
-                      View roadmap{' '}
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="secondary"
-                    className={cn(focusRing)}
-                  >
-                    <Link href="/changelog">
-                      Changelog{' '}
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </Button>
-                </div>
-              </Card>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <h2 className="font-brand text-lg font-semibold tracking-tight">
-                    License summary
-                  </h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Clear rules so you can ship confidently.
-                  </p>
-                  <BulletList items={license} />
-                </div>
-
-                <div className="flex flex-col gap-2 sm:items-end">
-                  <Button asChild className={cn(focusRing)}>
-                    <a
-                      href={PRODUCT.buyUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      aria-label="Buy NA-AI on Gumroad (opens in a new tab)"
-                    >
-                      Buy NA-AI
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href="/license">Read full license</Link>
-                  </Button>
-                </div>
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="secondary"
+                  className={cn(focusRing)}
+                >
+                  <Link href="/changelog">
+                    Changelog{' '}
+                    <ArrowRight
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
               </div>
             </Card>
-
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              NA-AI is sold on Gumroad. This page is a curated product
-              hub and evolves as PyColors UI grows.
-            </p>
-          </section>
-
-          <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/80 backdrop-blur">
-            <Container className="py-3">
-              <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-                <div className="text-sm">
-                  <span className="font-medium">
-                    {PRODUCT.name} — Landing Page
-                  </span>{' '}
-                  <span className="text-muted-foreground">
-                    · {PRODUCT.price}
-                  </span>
-                </div>
-                <div className="flex gap-2">
-                  <Button asChild size="sm" className={cn(focusRing)}>
-                    <a
-                      href={PRODUCT.buyUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      Buy{' '}
-                      <ExternalLink
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <a
-                      href={PRODUCT.demoUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      Demo{' '}
-                      <ExternalLink
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </Container>
           </div>
-        </Container>
-      </main>
-    </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  License summary
+                </h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Clear rules so you can ship confidently.
+                </p>
+                <BulletList items={license} />
+              </div>
+
+              <div className="flex flex-col gap-2 sm:items-end">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <Link href="/license">Read full license</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            NA-AI is sold on Gumroad. This page is a curated product
+            hub and evolves as PyColors UI grows.
+          </p>
+        </section>
+
+        <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/80 backdrop-blur">
+          <Container className="py-3">
+            <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+              <div className="text-sm">
+                <span className="font-medium">
+                  {PRODUCT.name} — Landing Page
+                </span>{' '}
+                <span className="text-muted-foreground">
+                  · {PRODUCT.price}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Button asChild size="sm" className={cn(focusRing)}>
+                  <a
+                    href={PRODUCT.buyUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Buy{' '}
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className={cn(focusRing)}
+                >
+                  <a
+                    href={PRODUCT.demoUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Demo{' '}
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
+      </div>
+    </Container>
   );
 }

@@ -10,6 +10,7 @@ import {
 
 import { Badge, Button, Card } from '@pycolors/ui';
 import { Container } from '@/components/container';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Examples',
@@ -251,223 +252,223 @@ function ExampleDirectionCard({
 
 export default function ExamplesPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto max-w-5xl">
-            {/* HERO */}
-            <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <Sparkles
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Examples
-                </Badge>
-                <Badge variant="outline">Product showcase</Badge>
-                <Badge variant="outline">Honest availability</Badge>
-              </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Examples', href: '/examples' },
+            ]}
+          />
+        </div>
+        {/* HERO */}
+        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-2">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Examples
+            </Badge>
+            <Badge variant="outline">Product showcase</Badge>
+            <Badge variant="outline">Honest availability</Badge>
+          </div>
 
-              <div className="space-y-4">
-                <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-                  Real SaaS interfaces
-                  <span className="block font-bold">
-                    built with PyColors.
-                  </span>
-                </h1>
+          <div className="space-y-4">
+            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              Real SaaS interfaces
+              <span className="block font-bold">
+                built with PyColors.
+              </span>
+            </h1>
 
-                <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-                  Explore what is available today and the product
-                  directions PyColors is designed to support — from
-                  dashboards and billing to teams, analytics, and
-                  admin systems.
+            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+              Explore what is available today and the product
+              directions PyColors is designed to support — from
+              dashboards and billing to teams, analytics, and admin
+              systems.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/starters/free">
+                Start with Starter Free
+                <ArrowRight
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
+
+            <Button asChild variant="secondary">
+              <Link href="/ui/patterns">Browse UI Patterns</Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <Link href="/upgrade">Explore PRO</Link>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 pt-1">
+            <Pill>Dashboards</Pill>
+            <Pill>Billing</Pill>
+            <Pill>Teams</Pill>
+            <Pill>Admin</Pill>
+            <Pill>Analytics</Pill>
+          </div>
+        </header>
+
+        {/* INTRO STRIP */}
+        <section className="py-4 sm:py-6">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="gap-2">
+                    <Layers3
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    />
+                    Why examples matter
+                  </Badge>
+                </div>
+
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  Components explain the building blocks. Examples
+                  show what a real product can feel like. This page
+                  separates what is already available from the product
+                  directions PyColors is designed to support.
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button asChild>
-                  <Link href="/starters/free">
-                    Start with Starter Free
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
+              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/guides">Read Guides</Link>
                 </Button>
-
-                <Button asChild variant="secondary">
-                  <Link href="/ui/patterns">Browse UI Patterns</Link>
-                </Button>
-
-                <Button asChild variant="outline">
-                  <Link href="/upgrade">Explore PRO</Link>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/access">View Access</Link>
                 </Button>
               </div>
+            </div>
+          </Card>
+        </section>
 
-              <div className="flex flex-wrap justify-center gap-2 pt-1">
-                <Pill>Dashboards</Pill>
-                <Pill>Billing</Pill>
-                <Pill>Teams</Pill>
-                <Pill>Admin</Pill>
-                <Pill>Analytics</Pill>
-              </div>
-            </header>
+        {/* AVAILABLE NOW */}
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="Available now"
+            description="What you can explore and use today."
+          />
 
-            {/* INTRO STRIP */}
-            <section className="py-4 sm:py-6">
-              <Card className="p-6 sm:p-7">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="gap-2">
-                        <Layers3
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        Why examples matter
-                      </Badge>
-                    </div>
+          <AvailableNowCard />
+        </section>
 
-                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                      Components explain the building blocks. Examples
-                      show what a real product can feel like. This
-                      page separates what is already available from
-                      the product directions PyColors is designed to
-                      support.
-                    </p>
-                  </div>
+        {/* DIRECTIONS */}
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="Example directions"
+            description="Product directions PyColors is built to support as the ecosystem expands."
+            action={
+              <Button asChild size="sm" variant="outline">
+                <Link href="/waitlist">Join PRO waitlist</Link>
+              </Button>
+            }
+          />
 
-                  <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/guides">Read Guides</Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href="/access">View Access</Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </section>
-
-            {/* AVAILABLE NOW */}
-            <section className="py-10 sm:py-12">
-              <SectionHeader
-                title="Available now"
-                description="What you can explore and use today."
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {exampleDirections.map((example) => (
+              <ExampleDirectionCard
+                key={example.title}
+                {...example}
               />
-
-              <AvailableNowCard />
-            </section>
-
-            {/* DIRECTIONS */}
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="Example directions"
-                description="Product directions PyColors is built to support as the ecosystem expands."
-                action={
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/waitlist">Join PRO waitlist</Link>
-                  </Button>
-                }
-              />
-
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {exampleDirections.map((example) => (
-                  <ExampleDirectionCard
-                    key={example.title}
-                    {...example}
-                  />
-                ))}
-              </div>
-            </section>
-
-            {/* PRODUCT LOGIC */}
-            <section className="py-8 sm:py-10">
-              <SectionHeader
-                title="How examples fit the PyColors path"
-                description="Examples are not only inspiration. They help you see the product surface before the business layer is wired."
-              />
-
-              <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 01
-                    </div>
-                    <div className="text-sm font-medium">
-                      Explore real product surfaces
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      See how dashboards, billing pages, team systems,
-                      and admin surfaces can look when the product
-                      feels structured and credible.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 02
-                    </div>
-                    <div className="text-sm font-medium">
-                      Start from a runnable baseline
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Use Starter Free to move from inspiration to a
-                      real SaaS surface without starting from scratch.
-                    </p>
-                  </div>
-                </Card>
-
-                <Card className="p-5">
-                  <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">
-                      Step 03
-                    </div>
-                    <div className="text-sm font-medium">
-                      Upgrade when wiring matters
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      Move toward PRO when auth, billing, backend
-                      foundations, and production wiring become the
-                      bottleneck.
-                    </p>
-                  </div>
-                </Card>
-              </div>
-            </section>
-
-            {/* CTA */}
-            <section className="mt-16">
-              <Card className="p-6 sm:p-7 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="space-y-1">
-                  <h2 className="font-brand text-lg font-semibold">
-                    Build your own SaaS faster
-                  </h2>
-
-                  <p className="text-sm text-muted-foreground">
-                    Use Starter Free to begin with a production-shaped
-                    SaaS surface today, then move to PRO when the
-                    business layer needs to be wired.
-                  </p>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button asChild>
-                    <Link href="/starters/free">Starter Free</Link>
-                  </Button>
-
-                  <Button asChild variant="secondary">
-                    <Link href="/waitlist">Join PRO waitlist</Link>
-                  </Button>
-                </div>
-              </Card>
-            </section>
+            ))}
           </div>
-        </Container>
-      </main>
-    </div>
+        </section>
+
+        {/* PRODUCT LOGIC */}
+        <section className="py-8 sm:py-10">
+          <SectionHeader
+            title="How examples fit the PyColors path"
+            description="Examples are not only inspiration. They help you see the product surface before the business layer is wired."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 01
+                </div>
+                <div className="text-sm font-medium">
+                  Explore real product surfaces
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  See how dashboards, billing pages, team systems, and
+                  admin surfaces can look when the product feels
+                  structured and credible.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 02
+                </div>
+                <div className="text-sm font-medium">
+                  Start from a runnable baseline
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Use Starter Free to move from inspiration to a real
+                  SaaS surface without starting from scratch.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  Step 03
+                </div>
+                <div className="text-sm font-medium">
+                  Upgrade when wiring matters
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Move toward PRO when auth, billing, backend
+                  foundations, and production wiring become the
+                  bottleneck.
+                </p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="mt-16">
+          <Card className="p-6 sm:p-7 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="space-y-1">
+              <h2 className="font-brand text-lg font-semibold">
+                Build your own SaaS faster
+              </h2>
+
+              <p className="text-sm text-muted-foreground">
+                Use Starter Free to begin with a production-shaped
+                SaaS surface today, then move to PRO when the business
+                layer needs to be wired.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <Button asChild>
+                <Link href="/starters/free">Starter Free</Link>
+              </Button>
+
+              <Button asChild variant="secondary">
+                <Link href="/waitlist">Join PRO waitlist</Link>
+              </Button>
+            </div>
+          </Card>
+        </section>
+      </div>
+    </Container>
   );
 }
