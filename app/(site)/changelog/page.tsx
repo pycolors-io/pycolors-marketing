@@ -57,6 +57,64 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.5.0',
+    title: 'Blog platform + billing maturity + marketing clarity',
+    dateLabel: 'Fri 20 Mar 2026',
+    dateISO: '2026-03-20',
+    status: 'Stable',
+    releaseWeekLabel: 'Mar 2026 (weekly release)',
+    summary:
+      'This release significantly expands PyColors as a SaaS builder ecosystem by introducing a full blog platform with SEO-first architecture, improving billing reliability and Stripe integration, and refining marketing surfaces for clarity, navigation, and conversion. It strengthens both the distribution engine (content + SEO) and the monetization foundation (billing + PRO access).',
+    highlights: [
+      {
+        title: 'Blog platform (SEO + content engine)',
+        items: [
+          'Introduced a full blog system with dynamic article pages, categories, tags, and structured navigation.',
+          'Added blog landing page with featured and latest articles to improve content discovery and engagement.',
+          'Implemented tag and category archive pages with SEO metadata and improved navigation.',
+          'Added JSON-LD structured data, Open Graph images, RSS feed, and sitemap integration for stronger SEO.',
+          'Introduced reusable blog components: article header, cards, pagination, related posts, author badge, and CTAs.',
+          'Added “On this page” navigation and improved reading experience with styled prose and layout consistency.',
+        ],
+      },
+      {
+        title: 'Billing system maturity (Stripe + lifecycle)',
+        items: [
+          'Implemented full Stripe checkout flow with customer creation, session handling, and plan validation.',
+          'Added Stripe webhook processing with subscription and invoice synchronization.',
+          'Introduced webhook event tracking with status lifecycle (RECEIVED, PROCESSED, FAILED) and idempotency safeguards.',
+          'Improved billing page UX with real subscription data, invoice history, trial messaging, and contextual alerts.',
+          'Added billing portal integration and management actions (cancel, resume, manage subscription).',
+          'Enforced PRO access for protected routes with subscription validation logic.',
+        ],
+      },
+      {
+        title: 'Marketing clarity & navigation refactor',
+        items: [
+          'Refactored major marketing pages (About, Upgrade, Starters, Guides, UI, Access, Templates) with improved structure and breadcrumbs.',
+          'Added Blog to main navigation and improved discoverability of learning content.',
+          'Improved waitlist and upgrade flows with clearer value proposition, pricing communication, and CTAs.',
+          'Refined SEO metadata handling with centralized constants and absolute URL utilities.',
+          'Improved sharing UX (LinkedIn, X, copy link) with better encoding and feedback.',
+        ],
+      },
+      {
+        title: 'DX, architecture & reliability improvements',
+        items: [
+          'Introduced Zod for schema validation and safer data parsing.',
+          'Improved Prisma setup with singleton client, env validation, and schema tooling.',
+          'Upgraded Prisma and Node compatibility for improved stability.',
+          'Refined monorepo and app-level .gitignore for better project hygiene.',
+          'Improved CI environment consistency (Node version, DB env setup).',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read the blog',
+      href: '/blog',
+    },
+  },
+  {
     version: 'v1.4.0',
     title: 'Starter Pro foundation + billing engine groundwork',
     dateLabel: 'Fri 13 Mar 2026',
