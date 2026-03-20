@@ -108,11 +108,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const showWaitlistCta = isUpgradeContext(pathname);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 px-4 sm:px-6 lg:px-8">
       <a
         href="#content"
         className={cn(
-          'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
+          'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-60',
           'rounded-md border border-border bg-background px-3 py-2 text-sm',
           focusRing,
         )}

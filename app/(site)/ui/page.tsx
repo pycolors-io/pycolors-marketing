@@ -666,7 +666,7 @@ pnpm dev`}</pre>
         </section>
 
         {/* FINAL CTA */}
-        <section className="mx-auto mt-10 w-full max-w-5xl">
+        <section className="mx-auto mt-10 w-full">
           <Card className="p-6 sm:p-7">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">

@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { Container } from '@/components/container';
 import { Badge, Card, cn, Button } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Roadmap',
@@ -581,206 +582,209 @@ export default function RoadmapPage() {
   const later = items.filter((i) => i.status === 'Later').length;
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <header className="mx-auto w-full max-w-4xl text-center">
-            <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2">
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Public roadmap
-              </Badge>
-            </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Roadmap', href: '/roadmap' },
+            ]}
+          />
+        </div>
+        <header className="mx-auto w-full max-w-4xl text-center">
+          <div className="flex justify-center">
+            <Badge variant="secondary" className="gap-2">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Public roadmap
+            </Badge>
+          </div>
 
-            <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Roadmap
-            </h1>
+          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            Roadmap
+          </h1>
 
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              A realistic, release-driven plan focused on shipping.
-              This roadmap tracks how PyColors evolves from UI
-              foundations into a SaaS builder ecosystem: blog, guides,
-              production patterns, Starter Free, Starter Pro, billing
-              infrastructure, and future premium offers.
-            </p>
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+            A realistic, release-driven plan focused on shipping. This
+            roadmap tracks how PyColors evolves from UI foundations
+            into a SaaS builder ecosystem: blog, guides, production
+            patterns, Starter Free, Starter Pro, billing
+            infrastructure, and future premium offers.
+          </p>
 
-            <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
-              This roadmap reflects current priorities and product
-              direction. It is not a contractual delivery promise, and
-              timing, scope, pricing, or packaging may evolve based on
-              feedback, real usage, bugs, or commercial priorities.
-            </p>
+          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
+            This roadmap reflects current priorities and product
+            direction. It is not a contractual delivery promise, and
+            timing, scope, pricing, or packaging may evolve based on
+            feedback, real usage, bugs, or commercial priorities.
+          </p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
-                {shipped} shipped
-              </span>
-              <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
-                {now} now
-              </span>
-              <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
-                {next} next
-              </span>
-              <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
-                {later} later
-              </span>
-            </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+              {shipped} shipped
+            </span>
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+              {now} now
+            </span>
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+              {next} next
+            </span>
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+              {later} later
+            </span>
+          </div>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild>
-                <Link href="/docs">Read the docs</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/changelog">View changelog</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/access">View access</Link>
-              </Button>
-            </div>
-          </header>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/docs">Read the docs</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/changelog">View changelog</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/access">View access</Link>
+            </Button>
+          </div>
+        </header>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-3">
-              <Card className="p-5">
-                <div className="text-sm font-medium">
-                  Single thing
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Ship the PyColors ecosystem funnel: Guides → Blog →
-                  Patterns / Examples → Starter Free → Starter Pro.
-                  Weekly releases, measurable improvements, and a
-                  public roadmap.
-                </p>
-              </Card>
-
-              <Card className="p-5">
-                <div className="text-sm font-medium">
-                  Documentation-first
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Every component, guide, article, and starter should
-                  help users understand what to build, why it matters,
-                  and how to ship it with clearer conventions.
-                </p>
-              </Card>
-
-              <Card className="p-5">
-                <div className="text-sm font-medium">
-                  Commercial readiness
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Trust pages, licensing, demos, pricing clarity,
-                  waitlist capture, analytics, blog distribution, and
-                  a predictable release cadence.
-                </p>
-              </Card>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <h2 className="font-brand text-lg font-semibold tracking-tight">
-                    How to read this roadmap
-                  </h2>
-                  <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                    Shipped items reflect public work already
-                    released. Now and Next reflect the strongest
-                    current product, SEO, and monetization priorities.
-                    Later reflects likely direction, not a fixed
-                    delivery commitment.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/upgrade">Upgrade</Link>
-                  </Button>
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/waitlist">Waitlist</Link>
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl space-y-10">
-            {milestones.map((m) => {
-              const list = byMilestone.get(m.id) ?? [];
-
-              return (
-                <div key={m.id} className="space-y-4">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <h2 className="font-brand text-lg font-semibold tracking-tight">
-                        {m.title}
-                      </h2>
-                      <p className="text-sm text-muted-foreground">
-                        {m.subtitle}
-                      </p>
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {list.length} item{list.length === 1 ? '' : 's'}
-                    </div>
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {list.map((item) => (
-                      <RoadmapCard
-                        key={`${item.milestone}:${item.title}`}
-                        item={item}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </section>
-
-          <section className="mx-auto mt-12 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-1">
-                  <div className="text-sm font-medium">
-                    Have a request?
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Requests, bugs, and feedback help prioritize what
-                    ships next.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild variant="outline">
-                    <a
-                      href="https://github.com/pycolors-io/pycolors-ui/issues"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      Open an issue
-                    </a>
-                  </Button>
-                  <Button asChild>
-                    <a
-                      href="https://github.com/pycolors-io/pycolors-ui"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      View repository
-                    </a>
-                  </Button>
-                </div>
-              </div>
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Card className="p-5">
+              <div className="text-sm font-medium">Single thing</div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Ship the PyColors ecosystem funnel: Guides → Blog →
+                Patterns / Examples → Starter Free → Starter Pro.
+                Weekly releases, measurable improvements, and a public
+                roadmap.
+              </p>
             </Card>
 
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              Roadmap items may shift based on feedback, bugs,
-              technical constraints, and real-world usage.
-            </p>
-          </section>
-        </Container>
-      </main>
-    </div>
+            <Card className="p-5">
+              <div className="text-sm font-medium">
+                Documentation-first
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Every component, guide, article, and starter should
+                help users understand what to build, why it matters,
+                and how to ship it with clearer conventions.
+              </p>
+            </Card>
+
+            <Card className="p-5">
+              <div className="text-sm font-medium">
+                Commercial readiness
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Trust pages, licensing, demos, pricing clarity,
+                waitlist capture, analytics, blog distribution, and a
+                predictable release cadence.
+              </p>
+            </Card>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-2">
+                <h2 className="font-brand text-lg font-semibold tracking-tight">
+                  How to read this roadmap
+                </h2>
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  Shipped items reflect public work already released.
+                  Now and Next reflect the strongest current product,
+                  SEO, and monetization priorities. Later reflects
+                  likely direction, not a fixed delivery commitment.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/upgrade">Upgrade</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/waitlist">Waitlist</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl space-y-10">
+          {milestones.map((m) => {
+            const list = byMilestone.get(m.id) ?? [];
+
+            return (
+              <div key={m.id} className="space-y-4">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <h2 className="font-brand text-lg font-semibold tracking-tight">
+                      {m.title}
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      {m.subtitle}
+                    </p>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {list.length} item{list.length === 1 ? '' : 's'}
+                  </div>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {list.map((item) => (
+                    <RoadmapCard
+                      key={`${item.milestone}:${item.title}`}
+                      item={item}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </section>
+
+        <section className="mx-auto mt-12 w-full">
+          <Card className="p-6 sm:p-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <div className="text-sm font-medium">
+                  Have a request?
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Requests, bugs, and feedback help prioritize what
+                  ships next.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button asChild variant="outline">
+                  <a
+                    href="https://github.com/pycolors-io/pycolors-ui/issues"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Open an issue
+                  </a>
+                </Button>
+                <Button asChild>
+                  <a
+                    href="https://github.com/pycolors-io/pycolors-ui"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    View repository
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            Roadmap items may shift based on feedback, bugs, technical
+            constraints, and real-world usage.
+          </p>
+        </section>
+      </div>
+    </Container>
   );
 }

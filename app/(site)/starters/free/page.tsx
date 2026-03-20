@@ -859,7 +859,7 @@ pnpm dev`}</pre>
         </section>
 
         {/* FINAL CTA */}
-        <section className="mx-auto mt-8 w-full max-w-5xl">
+        <section className="mx-auto mt-8 w-full">
           <Card className="p-6 sm:p-7">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
@@ -868,9 +868,7 @@ pnpm dev`}</pre>
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   Open the demo, clone the repo, and build on a
-                  credible SaaS baseline now. Move to PRO when you
-                  want auth, billing, backend, and deployment
-                  foundations wired.
+                  credible SaaS baseline now.
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">

@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardContent,
 } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Changelog',
@@ -559,213 +560,218 @@ function TimelineDot() {
 
 export default function ChangelogPage() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <header className="mx-auto w-full max-w-4xl text-center">
-            <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2">
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-                Ecosystem updates
-              </Badge>
-            </div>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Changelog', href: '/changelog' },
+            ]}
+          />
+        </div>
+        <header className="mx-auto w-full max-w-4xl text-center">
+          <div className="flex justify-center">
+            <Badge variant="secondary" className="gap-2">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+              Ecosystem updates
+            </Badge>
+          </div>
 
-            <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Changelog
-            </h1>
+          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            Changelog
+          </h1>
 
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Product updates across PyColors: UI, Starters,
-              Templates, and premium product direction. Clear
-              versions, stable conventions, and documentation-first
-              releases.
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+            Product updates across PyColors: UI, Starters, Templates,
+            and premium product direction. Clear versions, stable
+            conventions, and documentation-first releases.
+          </p>
+
+          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
+            Changelog entries reflect shipped work and public-facing
+            release notes. For future direction, packaging, pricing,
+            or launch intent, use the roadmap, access, and upgrade
+            pages.
+          </p>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link href="/docs">Read the docs</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/roadmap">View roadmap</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/access">View access</Link>
+            </Button>
+          </div>
+        </header>
+
+        <section className="mx-auto mt-10 w-full">
+          <div className="rounded-2xl border bg-muted/20 p-4 sm:p-5">
+            <p className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">
+                Release philosophy
+              </span>{' '}
+              PyColors ships in public through release-driven
+              iterations. The changelog records shipped work. The
+              roadmap tracks priority direction. The access and
+              upgrade pages define the premium path more clearly than
+              the changelog does.
             </p>
+          </div>
+        </section>
 
-            <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
-              Changelog entries reflect shipped work and public-facing
-              release notes. For future direction, packaging, pricing,
-              or launch intent, use the roadmap, access, and upgrade
-              pages.
-            </p>
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <div className="relative">
+            <div
+              className="absolute left-4 top-0 h-full w-px bg-border/70 sm:left-[18px]"
+              aria-hidden="true"
+            />
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild>
-                <Link href="/docs">Read the docs</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/roadmap">View roadmap</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/access">View access</Link>
-              </Button>
-            </div>
-          </header>
+            <div className="space-y-8">
+              {CHANGELOG.map((entry) => (
+                <article
+                  key={entry.version}
+                  className="relative pl-14"
+                >
+                  <div className="absolute left-0 top-1">
+                    <TimelineDot />
+                  </div>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="rounded-2xl border bg-muted/20 p-4 sm:p-5">
-              <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  Release philosophy
-                </span>{' '}
-                PyColors ships in public through release-driven
-                iterations. The changelog records shipped work. The
-                roadmap tracks priority direction. The access and
-                upgrade pages define the premium path more clearly
-                than the changelog does.
-              </p>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="relative">
-              <div
-                className="absolute left-4 top-0 h-full w-px bg-border/70 sm:left-[18px]"
-                aria-hidden="true"
-              />
-
-              <div className="space-y-8">
-                {CHANGELOG.map((entry) => (
-                  <article
-                    key={entry.version}
-                    className="relative pl-14"
-                  >
-                    <div className="absolute left-0 top-1">
-                      <TimelineDot />
-                    </div>
-
-                    <Card className="overflow-hidden">
-                      <CardHeader className="border-b bg-card/60">
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                          <div className="space-y-2">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <Badge
-                                variant="secondary"
-                                className="font-medium"
-                              >
-                                {entry.version}
-                              </Badge>
-                              <StatusPill status={entry.status} />
-                            </div>
-
-                            <div className="space-y-1">
-                              <h2 className="font-brand text-xl font-semibold tracking-tight">
-                                {entry.title}
-                              </h2>
-
-                              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                                <span className="inline-flex items-center gap-1.5">
-                                  <Calendar
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                  <time dateTime={entry.dateISO}>
-                                    {entry.dateLabel}
-                                  </time>
-                                </span>
-
-                                <span className="inline-flex items-center gap-1.5">
-                                  <Tag
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                  {entry.releaseWeekLabel}
-                                </span>
-                              </div>
-                            </div>
+                  <Card className="overflow-hidden">
+                    <CardHeader className="border-b bg-card/60">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="space-y-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge
+                              variant="secondary"
+                              className="font-medium"
+                            >
+                              {entry.version}
+                            </Badge>
+                            <StatusPill status={entry.status} />
                           </div>
 
-                          {entry.cta ? (
-                            <Button
-                              asChild
-                              variant="outline"
-                              className="sm:mt-1"
-                            >
-                              <Link href={entry.cta.href}>
-                                {entry.cta.label}
-                                <ArrowRight
-                                  className="ml-2 h-4 w-4"
+                          <div className="space-y-1">
+                            <h2 className="font-brand text-xl font-semibold tracking-tight">
+                              {entry.title}
+                            </h2>
+
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                              <span className="inline-flex items-center gap-1.5">
+                                <Calendar
+                                  className="h-4 w-4"
                                   aria-hidden="true"
                                 />
-                              </Link>
-                            </Button>
-                          ) : null}
-                        </div>
-                      </CardHeader>
+                                <time dateTime={entry.dateISO}>
+                                  {entry.dateLabel}
+                                </time>
+                              </span>
 
-                      <CardContent className="space-y-6 p-6">
-                        <p className="max-w-3xl text-pretty text-sm text-muted-foreground sm:text-base">
-                          {entry.summary}
-                        </p>
-
-                        <div className="space-y-6">
-                          {entry.highlights.map((block) => (
-                            <div
-                              key={block.title}
-                              className="space-y-2"
-                            >
-                              <h3 className="text-sm font-semibold tracking-tight">
-                                {block.title}
-                              </h3>
-                              <ul className="space-y-2 text-sm text-muted-foreground">
-                                {block.items.map((it) => (
-                                  <li key={it} className="flex gap-2">
-                                    <span
-                                      className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="text-pretty">
-                                      {it}
-                                    </span>
-                                  </li>
-                                ))}
-                              </ul>
+                              <span className="inline-flex items-center gap-1.5">
+                                <Tag
+                                  className="h-4 w-4"
+                                  aria-hidden="true"
+                                />
+                                {entry.releaseWeekLabel}
+                              </span>
                             </div>
-                          ))}
+                          </div>
                         </div>
 
-                        <div className="rounded-xl border bg-muted/30 p-4">
-                          <p className="text-sm text-muted-foreground">
-                            <span className="font-medium text-foreground">
-                              Strategy
-                            </span>{' '}
-                            Weekly releases build trust. Even when the
-                            larger premium system is still evolving,
-                            we ship usable foundations, document what
-                            is real, and keep product direction
-                            visible through roadmap and offer pages.
-                          </p>
-                        </div>
-
-                        <div className="flex flex-col gap-2 sm:flex-row">
-                          <Button asChild>
-                            <Link href="/docs/ui">
-                              Browse components
+                        {entry.cta ? (
+                          <Button
+                            asChild
+                            variant="outline"
+                            className="sm:mt-1"
+                          >
+                            <Link href={entry.cta.href}>
+                              {entry.cta.label}
                               <ArrowRight
                                 className="ml-2 h-4 w-4"
                                 aria-hidden="true"
                               />
                             </Link>
                           </Button>
-                          <Button asChild variant="outline">
-                            <Link href="/docs">Read docs</Link>
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </article>
-                ))}
-              </div>
-            </div>
+                        ) : null}
+                      </div>
+                    </CardHeader>
 
-            <p className="mt-6 text-center text-xs text-muted-foreground">
-              Changelog entries reflect shipped work. Internal tasks,
-              strategy changes, and in-progress commercial scope may
-              be grouped, summarized, or represented more fully on the
-              roadmap and offer pages.
-            </p>
-          </section>
-        </Container>
-      </main>
-    </div>
+                    <CardContent className="space-y-6 p-6">
+                      <p className="max-w-3xl text-pretty text-sm text-muted-foreground sm:text-base">
+                        {entry.summary}
+                      </p>
+
+                      <div className="space-y-6">
+                        {entry.highlights.map((block) => (
+                          <div
+                            key={block.title}
+                            className="space-y-2"
+                          >
+                            <h3 className="text-sm font-semibold tracking-tight">
+                              {block.title}
+                            </h3>
+                            <ul className="space-y-2 text-sm text-muted-foreground">
+                              {block.items.map((it) => (
+                                <li key={it} className="flex gap-2">
+                                  <span
+                                    className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="text-pretty">
+                                    {it}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="rounded-xl border bg-muted/30 p-4">
+                        <p className="text-sm text-muted-foreground">
+                          <span className="font-medium text-foreground">
+                            Strategy
+                          </span>{' '}
+                          Weekly releases build trust. Even when the
+                          larger premium system is still evolving, we
+                          ship usable foundations, document what is
+                          real, and keep product direction visible
+                          through roadmap and offer pages.
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <Button asChild>
+                          <Link href="/docs/ui">
+                            Browse components
+                            <ArrowRight
+                              className="ml-2 h-4 w-4"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                          <Link href="/docs">Read docs</Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-muted-foreground">
+            Changelog entries reflect shipped work. Internal tasks,
+            strategy changes, and in-progress commercial scope may be
+            grouped, summarized, or represented more fully on the
+            roadmap and offer pages.
+          </p>
+        </section>
+      </div>
+    </Container>
   );
 }
