@@ -1140,9 +1140,7 @@ pnpm dev`}</pre>
                   </h3>
                   <p className="text-sm text-muted-foreground">
                     Public roadmap, changelog, waitlist, guides,
-                    examples, patterns, docs-first workflow, and a
-                    clear premium path — designed to compound into a
-                    durable SaaS ecosystem.
+                    examples, patterns, docs-first workflow.
                   </p>
                 </div>
 
@@ -1211,7 +1209,7 @@ pnpm dev`}</pre>
                   <p className="text-sm text-muted-foreground">
                     Learn the product logic, validate the UX with
                     Starter Free, then join the premium path when you
-                    want the revenue-critical wiring handled.
+                    want.
                   </p>
 
                   <div className="mt-3 flex flex-wrap gap-2">
