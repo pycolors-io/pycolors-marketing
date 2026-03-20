@@ -120,7 +120,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         Skip to content
       </a>
 
-      <Container className="flex h-16 items-center gap-3">
+      <section className="flex h-16 items-center gap-3">
         {/* Brand */}
         <div className="flex min-w-0 items-center gap-3">
           <Logo />
@@ -227,7 +227,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             )}
           </button>
         </div>
-      </Container>
+      </section>
 
       {isMenuOpen ? (
         <Container
