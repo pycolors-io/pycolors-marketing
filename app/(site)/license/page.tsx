@@ -9,6 +9,7 @@ import {
 
 import { Container } from '@/components/container';
 import { Card, Badge, Button } from '@pycolors/ui';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'License',
@@ -161,126 +162,130 @@ export default function LicensePage() {
   const LAST_UPDATED = 'March 7, 2026';
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <main className="flex-1 bg-background text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <header className="mx-auto w-full max-w-4xl text-center">
-            <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2">
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-                Licensing & commercial use
-              </Badge>
+    <Container className="py-20 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'License', href: '/license' },
+            ]}
+          />
+        </div>
+        <header className="mx-auto w-full max-w-4xl text-center">
+          <div className="flex justify-center">
+            <Badge variant="secondary" className="gap-2">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+              Licensing & commercial use
+            </Badge>
+          </div>
+
+          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            License
+          </h1>
+
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+            This page explains how PyColors products can be used
+            across open-source repositories, premium templates, PRO
+            products, and bundled commercial offers.
+          </p>
+
+          <p className="mt-3 text-xs text-muted-foreground">
+            Last updated: {LAST_UPDATED}
+          </p>
+        </header>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {principles.map((p) => (
+              <Card key={p.title} className="p-5">
+                <div className="inline-flex items-center gap-2 text-sm font-medium">
+                  {p.icon}
+                  {p.title}
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {p.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 w-full max-w-6xl space-y-4">
+          <SectionCard section={openSourceSection} />
+          <SectionCard section={templateSection} />
+          <SectionCard section={proSection} />
+          <SectionCard section={restrictionsSection} />
+          <SectionCard section={updatesSection} />
+
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+              <h2 className="font-brand text-lg font-semibold tracking-tight text-foreground">
+                6. License priority
+              </h2>
+              <p>
+                If there is any conflict between this page and a
+                license shown on a specific repository, product page,
+                access page, checkout page, invoice, or commercial
+                order form, the more specific terms control for that
+                repository, product, or offer.
+              </p>
+              <p>
+                For example, an open-source repository license governs
+                that repository, while a paid Gumroad template
+                purchase is governed by the commercial license
+                attached to that purchase.
+              </p>
+            </div>
+          </Card>
+
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+              <h2 className="font-brand text-lg font-semibold tracking-tight text-foreground">
+                7. Contact
+              </h2>
+              <p>
+                Licensing questions can be sent to{' '}
+                <a
+                  className="underline underline-offset-4 hover:text-foreground"
+                  href={`mailto:${COMPANY.email}`}
+                >
+                  {COMPANY.email}
+                </a>
+                .
+              </p>
+              <p>PyColors licensing is operated by {COMPANY.name}.</p>
             </div>
 
-            <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              License
-            </h1>
-
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              This page explains how PyColors products can be used
-              across open-source repositories, premium templates, PRO
-              products, and bundled commercial offers.
-            </p>
-
-            <p className="mt-3 text-xs text-muted-foreground">
-              Last updated: {LAST_UPDATED}
-            </p>
-          </header>
-
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {principles.map((p) => (
-                <Card key={p.title} className="p-5">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    {p.icon}
-                    {p.title}
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {p.description}
-                  </p>
-                </Card>
-              ))}
+            <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+              <Button asChild variant="outline">
+                <Link href="/terms">
+                  Terms
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/privacy">
+                  Privacy
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
             </div>
-          </section>
+          </Card>
 
-          <section className="mx-auto mt-10 w-full max-w-5xl space-y-4">
-            <SectionCard section={openSourceSection} />
-            <SectionCard section={templateSection} />
-            <SectionCard section={proSection} />
-            <SectionCard section={restrictionsSection} />
-            <SectionCard section={updatesSection} />
-
-            <Card className="p-6 sm:p-7">
-              <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-                <h2 className="font-brand text-lg font-semibold tracking-tight text-foreground">
-                  6. License priority
-                </h2>
-                <p>
-                  If there is any conflict between this page and a
-                  license shown on a specific repository, product
-                  page, access page, checkout page, invoice, or
-                  commercial order form, the more specific terms
-                  control for that repository, product, or offer.
-                </p>
-                <p>
-                  For example, an open-source repository license
-                  governs that repository, while a paid Gumroad
-                  template purchase is governed by the commercial
-                  license attached to that purchase.
-                </p>
-              </div>
-            </Card>
-
-            <Card className="p-6 sm:p-7">
-              <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-                <h2 className="font-brand text-lg font-semibold tracking-tight text-foreground">
-                  7. Contact
-                </h2>
-                <p>
-                  Licensing questions can be sent to{' '}
-                  <a
-                    className="underline underline-offset-4 hover:text-foreground"
-                    href={`mailto:${COMPANY.email}`}
-                  >
-                    {COMPANY.email}
-                  </a>
-                  .
-                </p>
-                <p>
-                  PyColors licensing is operated by {COMPANY.name}.
-                </p>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-                <Button asChild variant="outline">
-                  <Link href="/terms">
-                    Terms
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/privacy">
-                    Privacy
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-              </div>
-            </Card>
-
-            <p className="text-center text-xs text-muted-foreground">
-              This page is informational and commercial in intent, but
-              some product-specific licensing details may still
-              require legal review before large-scale launch.
-            </p>
-          </section>
-        </Container>
-      </main>
-    </div>
+          <p className="text-center text-xs text-muted-foreground">
+            This page is informational and commercial in intent, but
+            some product-specific licensing details may still require
+            legal review before large-scale launch.
+          </p>
+        </section>
+      </div>
+    </Container>
   );
 }
