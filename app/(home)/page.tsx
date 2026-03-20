@@ -330,7 +330,7 @@ export default function HomePage() {
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
 
       <MarketingShell>
-        <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-6xl">
           {/* HERO */}
           <section className="py-12 text-center sm:py-16">
             <div className="flex flex-col items-center gap-6">
@@ -746,7 +746,7 @@ pnpm dev`}</pre>
               ))}
             </div>
 
-            <div className="mx-auto mt-6 w-full max-w-5xl">
+            <div className="mx-auto mt-6 w-full">
               <Card className="p-6 sm:p-7">
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 inline-flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
@@ -984,7 +984,7 @@ pnpm dev`}</pre>
 
           {/* FEATURED TEMPLATE */}
           <section className="py-10 sm:py-14">
-            <div className="mx-auto w-full max-w-5xl">
+            <div className="mx-auto w-full">
               <Card className="p-6 sm:p-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">

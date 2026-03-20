@@ -7,12 +7,12 @@ import { Badge, Card, cn, Button } from '@pycolors/ui';
 export const metadata: Metadata = {
   title: 'Roadmap',
   description:
-    'Public roadmap for the PyColors ecosystem: UI, Starters, Guides, and future premium products. A release-driven plan focused on shipping, trust, and monetization readiness.',
+    'Public roadmap for the PyColors ecosystem: UI, Blog, Starters, Guides, and future premium products. A release-driven plan focused on shipping, trust, SEO, and monetization readiness.',
   alternates: { canonical: '/roadmap' },
   openGraph: {
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Guides, Starters, and premium products. Shipping-first, docs-first, and monetization readiness.',
+      'A release-driven roadmap for PyColors: UI, Blog, Guides, Starters, and premium products. Shipping-first, docs-first, SEO-aware, and monetization-ready.',
     url: '/roadmap',
     images: ['/seo/og-main.png'],
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Guides, Starters, and premium products.',
+      'A release-driven roadmap for PyColors: UI, Blog, Guides, Starters, and premium products.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -79,7 +79,7 @@ const milestones: Array<{
     id: 'Mar 2026',
     title: 'March 2026',
     subtitle:
-      'Move from PRO positioning into implementation: Starter Pro foundation, billing engine baseline, Prisma billing schema, and stronger premium conversion surfaces.',
+      'Move from PRO positioning into implementation: Starter Pro foundation, billing maturity, blog-driven distribution, and stronger premium conversion surfaces.',
   },
   {
     id: 'H1 2026',
@@ -203,7 +203,7 @@ const items: RoadmapItem[] = [
       'Shipped advanced UI and patterns required for dashboard-grade product UX, with aligned component docs and stronger production credibility.',
     status: 'Shipped',
     milestone: 'Feb 2026',
-    tags: ['Shipped', 'Advanced', 'Patterns', 'Dashboards', 'Docs'],
+    tags: ['Advanced', 'Patterns', 'Dashboards', 'Docs'],
   },
   {
     title: 'Public packages (Tokens + ESLint)',
@@ -330,7 +330,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Navigation restructuring',
     description:
-      'Updated the primary navigation to reflect the product learning flow: UI, Patterns, Examples, Guides, and Starters.',
+      'Updated the primary navigation to reflect the product learning flow: UI, Blog, Patterns, Examples, Guides, and Starters.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Navigation', 'UX', 'IA'],
@@ -348,27 +348,72 @@ const items: RoadmapItem[] = [
     title: 'Starter PRO foundation',
     description:
       'Starter Pro is now bootstrapped as a dedicated premium app with early product surfaces, branding, pricing direction, proprietary licensing, and a clearer path from marketing to premium implementation. The product is still in active development and not publicly launched yet.',
-    status: 'Now',
+    status: 'Shipped',
     milestone: 'Mar 2026',
-    tags: ['Starter PRO', 'Premium', 'App', 'In progress'],
+    tags: ['Starter PRO', 'Premium', 'App'],
     href: '/upgrade',
   },
   {
-    title: 'Billing engine baseline',
+    title: 'Billing system v1 (Stripe lifecycle)',
     description:
-      'Shipped the first real billing architecture for Starter Pro: Stripe integration, typed billing plans, repository and service layer, billing API routes, webhook endpoint, and operational billing surfaces.',
+      'Shipped a functional billing system with Stripe checkout, billing portal access, webhook processing, subscription lifecycle handling, invoice sync, and PRO access enforcement. Establishes a real monetization backbone for Starter Pro.',
     status: 'Shipped',
     milestone: 'Mar 2026',
-    tags: ['Billing', 'Stripe', 'API', 'Architecture'],
+    tags: ['Billing', 'Stripe', 'Monetization', 'API'],
     href: '/upgrade',
   },
   {
     title: 'Prisma billing schema',
     description:
-      'Added the initial subscription billing data model with customers, products, prices, subscriptions, invoices, and usage tracking, plus tooling, seed scripts, and explicit schema workflows.',
+      'Added the initial subscription billing data model with customers, products, prices, subscriptions, invoices, usage tracking, webhook events, plus tooling, seed scripts, and explicit schema workflows.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Prisma', 'Database', 'Billing', 'DX'],
+  },
+  {
+    title: 'Blog platform (SEO + distribution engine)',
+    description:
+      'Shipped a full blog system with dynamic articles, categories, tags, structured data (JSON-LD), RSS feed, sitemap integration, social sharing, and reusable article components to support SEO, content distribution, and long-term audience growth.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Blog', 'SEO', 'Content', 'Growth'],
+    href: '/blog',
+  },
+  {
+    title: 'Content-driven distribution loop',
+    description:
+      'Established blog-driven distribution with SEO-first articles, internal linking, category and tag navigation, and clearer connections between educational content, patterns, guides, and product surfaces.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['SEO', 'Growth', 'Content'],
+    href: '/blog',
+  },
+  {
+    title: 'Marketing layout clarity pass',
+    description:
+      'Refactored core marketing pages with breadcrumbs, flatter layouts, clearer hierarchy, and more consistent page structure across About, UI, Guides, Patterns, Examples, Access, Starters, Upgrade, and Waitlist.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Marketing', 'UX', 'Navigation', 'Trust'],
+  },
+
+  // NOW
+  {
+    title: 'Starter PRO hardening',
+    description:
+      'Replace remaining stubs with production-ready billing behavior, validate subscription lifecycle handling, complete account-state UX, and harden premium flows before launch.',
+    status: 'Now',
+    milestone: 'Mar 2026',
+    tags: ['Starter PRO', 'Billing', 'Quality', 'Launch'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Auth + user system integration',
+    description:
+      'Wire a real authentication provider, session handling, protected app flows, and user-to-billing linkage so Starter Pro moves from premium shell to operational SaaS baseline.',
+    status: 'Now',
+    milestone: 'Mar 2026',
+    tags: ['Auth', 'Users', 'Sessions', 'Architecture'],
   },
   {
     title: 'Waitlist conversion loop',
@@ -382,23 +427,6 @@ const items: RoadmapItem[] = [
 
   // NEXT
   {
-    title: 'Starter PRO hardening',
-    description:
-      'Replace stubs with production-ready billing behavior, validate subscription lifecycle handling, complete account-state UX, and harden premium flows before launch.',
-    status: 'Next',
-    milestone: 'Mar 2026',
-    tags: ['Starter PRO', 'Billing', 'Quality', 'Launch'],
-    href: '/upgrade',
-  },
-  {
-    title: 'Auth + user system integration',
-    description:
-      'Wire a real authentication provider, session handling, protected app flows, and user-to-billing linkage so Starter Pro moves from premium shell to operational SaaS baseline.',
-    status: 'Next',
-    milestone: 'Mar 2026',
-    tags: ['Auth', 'Users', 'Sessions', 'Architecture'],
-  },
-  {
     title: 'Monetization readiness v2',
     description:
       'Align pricing, checkout logic, license language, demos, access messaging, and upgrade surfaces into a more credible premium conversion system.',
@@ -410,7 +438,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Search & analytics baseline',
     description:
-      'Finish GA4 / GTM wiring, validate key events, and set up Search Console indexing checks for stronger discoverability.',
+      'Finish GA4 / GTM wiring, validate key events, expand Search Console checks, and measure blog, guides, upgrade, and waitlist conversion surfaces more reliably.',
     status: 'Next',
     milestone: 'Mar 2026',
     tags: ['SEO', 'Analytics', 'Trust'],
@@ -423,6 +451,15 @@ const items: RoadmapItem[] = [
     milestone: 'Mar 2026',
     tags: ['Privacy', 'Analytics', 'Trust'],
     href: '/privacy',
+  },
+  {
+    title: 'Editorial cadence for authority building',
+    description:
+      'Turn the new blog engine into a consistent publishing loop with opinionated SaaS, DX, and product engineering content tied to PyColors distribution and premium discovery.',
+    status: 'Next',
+    milestone: 'Mar 2026',
+    tags: ['Blog', 'SEO', 'Authority', 'Growth'],
+    href: '/blog',
   },
 
   // LATER
@@ -562,9 +599,9 @@ export default function RoadmapPage() {
             <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
               A realistic, release-driven plan focused on shipping.
               This roadmap tracks how PyColors evolves from UI
-              foundations into a SaaS builder ecosystem: learning
-              resources, production patterns, Starter Free, Starter
-              Pro, billing infrastructure, and future premium offers.
+              foundations into a SaaS builder ecosystem: blog, guides,
+              production patterns, Starter Free, Starter Pro, billing
+              infrastructure, and future premium offers.
             </p>
 
             <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
@@ -609,7 +646,7 @@ export default function RoadmapPage() {
                   Single thing
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Ship the PyColors ecosystem funnel: Guides →
+                  Ship the PyColors ecosystem funnel: Guides → Blog →
                   Patterns / Examples → Starter Free → Starter Pro.
                   Weekly releases, measurable improvements, and a
                   public roadmap.
@@ -621,9 +658,9 @@ export default function RoadmapPage() {
                   Documentation-first
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Every component, guide, and starter should help
-                  users understand what to build, why it matters, and
-                  how to ship it with clearer conventions.
+                  Every component, guide, article, and starter should
+                  help users understand what to build, why it matters,
+                  and how to ship it with clearer conventions.
                 </p>
               </Card>
 
@@ -633,8 +670,8 @@ export default function RoadmapPage() {
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   Trust pages, licensing, demos, pricing clarity,
-                  waitlist capture, analytics, and a predictable
-                  release cadence.
+                  waitlist capture, analytics, blog distribution, and
+                  a predictable release cadence.
                 </p>
               </Card>
             </div>
@@ -650,9 +687,9 @@ export default function RoadmapPage() {
                   <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
                     Shipped items reflect public work already
                     released. Now and Next reflect the strongest
-                    current product and monetization priorities. Later
-                    reflects likely direction, not a fixed delivery
-                    commitment.
+                    current product, SEO, and monetization priorities.
+                    Later reflects likely direction, not a fixed
+                    delivery commitment.
                   </p>
                 </div>
 
