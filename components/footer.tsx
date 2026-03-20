@@ -102,7 +102,7 @@ function FooterLinkItem(link: FooterLink) {
           link.ariaLabel ?? `${link.label} (opens in a new tab)`
         }
         className={cn(
-          'inline-flex items-center gap-1 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+          'inline-flex items-center gap-1 rounded-sm text-xs leading-5 text-muted-foreground transition-colors hover:text-foreground',
           focusRing,
         )}
       >
@@ -117,7 +117,7 @@ function FooterLinkItem(link: FooterLink) {
       key={link.label}
       href={link.href}
       className={cn(
-        'rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+        'inline-block rounded-sm text-xs leading-5 text-muted-foreground transition-colors hover:text-foreground',
         focusRing,
       )}
     >
@@ -257,12 +257,11 @@ export function Footer() {
   const brand = getFooterBrand(pathname);
 
   return (
-    <footer className="border-t border-border bg-background relative z-10">
-      <Container className="mx-auto max-w-6xl">
+    <footer className="relative z-10 border-t border-border bg-background">
+      <Container className="mx-auto max-w-6xl lg:px-0">
         <div className="py-10 sm:py-12">
-          <div className="grid gap-10 lg:grid-cols-12">
-            {/* Brand / company */}
-            <div className="lg:col-span-4">
+          <div className="grid items-start gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-4 lg:pr-8">
               <div className="space-y-5">
                 <div className="space-y-2">
                   <div className="font-brand text-lg font-semibold tracking-tight">
@@ -305,17 +304,19 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Main nav groups */}
-            <div className="lg:col-span-8 lg:flex lg:justify-end">
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="lg:col-span-8">
+              <div className="grid grid-cols-2 items-start gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
                 {GROUPS.map((group) => (
-                  <div key={group.title} className="space-y-3">
+                  <div
+                    key={group.title}
+                    className="min-w-0 space-y-3"
+                  >
                     <div className="text-sm font-medium text-foreground">
                       {group.title}
                     </div>
 
                     <nav
-                      className="flex flex-col gap-2.5"
+                      className="flex flex-col gap-2"
                       aria-label={`${group.title} links`}
                     >
                       {group.links.map(FooterLinkItem)}
@@ -326,18 +327,16 @@ export function Footer() {
             </div>
           </div>
 
-          {/* External */}
           <div className="mt-8 border-t border-border/60 pt-6">
             <nav
-              className="flex flex-wrap items-center gap-x-5 gap-y-2"
+              className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2"
               aria-label="External links"
             >
               {EXTERNAL.map(FooterLinkItem)}
             </nav>
           </div>
 
-          {/* Bottom bar */}
-          <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="mt-8 flex flex-col gap-2 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
             <div className="text-xs text-muted-foreground">
               © {CURRENT_YEAR} PyColors · {brand.suffix}
             </div>
