@@ -3,25 +3,26 @@
 import Link from 'next/link';
 import {
   ArrowRight,
+  BookOpen,
   Compass,
   Layers3,
-  BookOpen,
-  Rocket,
   LifeBuoy,
+  Rocket,
   Sparkles,
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import { SiteHeader } from '@/components/layout/site-header';
-import { Button, Badge, Card, cn } from '@pycolors/ui';
+import { Badge, Button, Card, cn } from '@pycolors/ui';
 
 type QuickLink = {
   title: string;
   description: string;
   href: string;
   icon: React.ReactNode;
-  variant?: 'default' | 'secondary' | 'outline';
+  badge?: string;
+  featured?: boolean;
 };
 
 export default function NotFound() {
@@ -29,103 +30,112 @@ export default function NotFound() {
     {
       title: 'Starter Free',
       description:
-        'Validate a real SaaS surface with auth UX, dashboard, CRUD, settings, and billing entrypoints.',
+        'Start with a production-shaped SaaS foundation and validate faster.',
       href: '/starters/free',
       icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
-      variant: 'default',
+      badge: 'Best entry',
+      featured: true,
     },
     {
-      title: 'Guides',
+      title: 'Pricing',
       description:
-        'Learn the product logic behind dashboards, billing, authentication, admin systems, and SaaS UX.',
-      href: '/guides',
+        'See the upgrade path from free exploration to premium product access.',
+      href: '/access',
+      icon: <Compass className="h-4 w-4" aria-hidden="true" />,
+      badge: 'Upgrade',
+    },
+    {
+      title: 'Documentation',
+      description:
+        'Go back to the main docs entry and navigate PyColors with clarity.',
+      href: '/docs',
       icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
-      variant: 'secondary',
+      badge: 'Learn',
     },
     {
       title: 'Patterns',
       description:
-        'Explore production-shaped SaaS patterns built on top of the PyColors UI foundation.',
+        'Explore production-ready UI and SaaS patterns built on the system.',
       href: '/ui/patterns',
       icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
-      variant: 'outline',
-    },
-    {
-      title: 'Access',
-      description:
-        'See the current pricing direction and the upgrade path from Starter Free to premium access.',
-      href: '/access',
-      icon: <Compass className="h-4 w-4" aria-hidden="true" />,
-      variant: 'outline',
+      badge: 'Explore',
     },
   ];
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-background">
       <SiteHeader />
 
-      <main className="flex-1 bg-background text-foreground">
+      <main id="content" className="flex-1 pt-16 text-foreground">
         <Container className="py-20 sm:py-20 lg:py-24">
-          <div className="mx-auto w-full max-w-4xl text-center">
+          <section className="mx-auto max-w-6xl text-center">
             <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2">
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-warning" />
-                404 — Page not found
+              <Badge variant="secondary" className="gap-2 px-3 py-1">
+                <span
+                  className="inline-flex h-1.5 w-1.5 rounded-full bg-warning"
+                  aria-hidden="true"
+                />
+                404 · Page not found
               </Badge>
             </div>
 
-            <h1 className="mt-4 font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Looks like you took a wrong turn.
+            <h1 className="mt-5 font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              This page could not be found.
             </h1>
 
-            <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              The page you were looking for doesn’t exist or may have
-              moved. The fastest way back is to start from one of the
-              core PyColors paths below.
+            <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-6 text-muted-foreground sm:text-base">
+              The link may be outdated, broken, or moved. The fastest
+              way back into PyColors is through the core product paths
+              below.
             </p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild>
-                <Link href="/">
-                  Back to PyColors
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-
-              <Button asChild variant="outline">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg" className="min-w-50">
                 <Link href="/starters/free">
-                  Open Starter Free
+                  Start with Starter Free
                   <Rocket
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
                   />
                 </Link>
               </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="min-w-50"
+              >
+                <Link href="/access">
+                  View pricing
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
             </div>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <Badge variant="outline">Learn</Badge>
-              <Badge variant="outline">Explore</Badge>
-              <Badge variant="outline">Validate</Badge>
-              <Badge variant="outline">Upgrade</Badge>
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              <Badge variant="outline">Starter</Badge>
+              <Badge variant="outline">Pricing</Badge>
+              <Badge variant="outline">Docs</Badge>
+              <Badge variant="outline">Patterns</Badge>
             </div>
-          </div>
+          </section>
 
-          {/* Quick paths */}
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <div className="mb-5 text-center sm:mb-6">
-              <h2 className="font-brand text-lg font-semibold tracking-tight">
-                Most useful pages
+          <section className="mx-auto mt-12 max-w-6xl">
+            <div className="mb-6 text-center">
+              <h2 className="font-brand text-lg font-semibold tracking-tight sm:text-xl">
+                Best next steps
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pick the path that matches what you were trying to do.
+                Choose the path that gets you back into the product
+                fastest.
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               {quickLinks.map((item) => (
                 <Link
                   key={item.href}
@@ -134,31 +144,52 @@ export default function NotFound() {
                 >
                   <Card
                     className={cn(
-                      'p-5 transition-colors',
-                      'hover:bg-accent/30',
+                      'h-full rounded-2xl border-border/70 p-5 transition-all',
+                      'hover:-translate-y-0.5 hover:border-border hover:bg-accent/20',
+                      item.featured &&
+                        'border-primary/30 bg-accent/10',
                     )}
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/40">
-                        {item.icon}
-                      </div>
-
-                      <div className="flex-1 text-left">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="text-sm font-medium">
-                            {item.title}
-                          </div>
-                          <Badge
-                            variant={item.variant ?? 'secondary'}
-                            className="text-[11px]"
+                    <div className="flex h-full flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-3">
+                          <div
+                            className={cn(
+                              'mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl border bg-background',
+                              item.featured && 'border-primary/30',
+                            )}
                           >
-                            Open
-                          </Badge>
+                            {item.icon}
+                          </div>
+
+                          <div className="text-left">
+                            <div className="text-sm font-semibold sm:text-base">
+                              {item.title}
+                            </div>
+                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                              {item.description}
+                            </p>
+                          </div>
                         </div>
 
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                          {item.description}
-                        </p>
+                        {item.badge ? (
+                          <Badge
+                            variant={
+                              item.featured ? 'default' : 'secondary'
+                            }
+                            className="shrink-0 text-[11px]"
+                          >
+                            {item.badge}
+                          </Badge>
+                        ) : null}
+                      </div>
+
+                      <div className="mt-5 flex items-center text-sm font-medium text-foreground">
+                        Open page
+                        <ArrowRight
+                          className="ml-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
                       </div>
                     </div>
                   </Card>
@@ -167,28 +198,29 @@ export default function NotFound() {
             </div>
           </section>
 
-          {/* Secondary actions */}
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-1 text-left">
+          <section className="mx-auto mt-10 max-w-6xl">
+            <Card className="rounded-2xl border-border/70 p-6 sm:p-7">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-2 text-left">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <Sparkles
                       className="h-4 w-4"
                       aria-hidden="true"
                     />
-                    Try a safer starting point
+                    A better fallback than a dead end
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    PyColors is structured as a system: guides to
-                    learn, patterns to explore, Starter Free to
-                    validate, and premium access when wiring matters.
+
+                  <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    PyColors is designed as a system: use Starter Free
+                    to begin, pricing to evaluate access, docs to
+                    learn, and patterns to explore production-ready
+                    implementation ideas.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
                   <Button asChild variant="outline">
-                    <Link href="/guides">Browse guides</Link>
+                    <Link href="/docs">Browse docs</Link>
                   </Button>
 
                   <Button asChild variant="secondary">
@@ -199,21 +231,21 @@ export default function NotFound() {
             </Card>
           </section>
 
-          {/* Help */}
-          <section className="mx-auto mt-10 w-full max-w-5xl">
-            <Card className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-1 text-left">
+          <section className="mx-auto mt-8 max-w-6xl">
+            <Card className="rounded-2xl border-border/70 p-6 sm:p-7">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-2 text-left">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <LifeBuoy
                       className="h-4 w-4"
                       aria-hidden="true"
                     />
-                    Need help?
+                    Think this page should exist?
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    If you think this page should exist, you can
-                    report it or check the latest updates.
+
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Report the broken path or check what changed
+                    recently.
                   </p>
                 </div>
 
@@ -243,8 +275,8 @@ export default function NotFound() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Tip: use the top navigation to jump back to UI, Guides,
-              Examples, or Starters.
+              Tip: the fastest recovery path is usually Starter Free,
+              Pricing, or Docs.
             </p>
           </section>
         </Container>
