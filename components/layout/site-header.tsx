@@ -166,7 +166,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           <LargeSearchToggle className={cn('w-52', focusRing)} />
 
           <ThemeToggle
-            mode="light-dark-system"
+            mode="light-dark"
             className={cn(
               'inline-flex h-9 items-center rounded-full border border-border px-1',
               focusRing,

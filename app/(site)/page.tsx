@@ -9,7 +9,6 @@ import {
   Layers3,
 } from 'lucide-react';
 
-import { MarketingShell } from '@/components/shells/marketing-shell';
 import { JsonLd } from '@/components/seo/json-ld';
 import {
   Button,
@@ -23,6 +22,7 @@ import {
   TableHead,
   TableCell,
 } from '@pycolors/ui';
+import { Container } from '@/components/container';
 import { UI_VERSION } from '@/lib/version';
 import { NpmBadges } from '@/components/npm-badges';
 import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
@@ -329,10 +329,10 @@ export default function HomePage() {
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
 
-      <MarketingShell>
+      <Container className="py-20 sm:py-20 lg:py-24">
         <div className="mx-auto w-full max-w-6xl">
           {/* HERO */}
-          <section className="py-12 text-center sm:py-16">
+          <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
             <div className="flex flex-col items-center gap-6">
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <Badge variant="secondary" className="gap-2">
@@ -440,7 +440,7 @@ export default function HomePage() {
                 <TrustPill label="Clear upgrade path" />
               </div>
             </div>
-          </section>
+          </header>
 
           {/* ECOSYSTEM */}
           <section className="py-10 sm:py-14">
@@ -1236,7 +1236,7 @@ pnpm dev`}</pre>
             </Card>
           </section>
         </div>
-      </MarketingShell>
+      </Container>
     </>
   );
 }
