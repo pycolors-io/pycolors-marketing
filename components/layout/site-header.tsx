@@ -110,36 +110,39 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     const html = document.documentElement;
     const body = document.body;
 
-    if (!isMenuOpen) return;
-
-    lastScrollYRef.current = window.scrollY;
-
     const previousHtmlOverflow = html.style.overflow;
     const previousBodyOverflow = body.style.overflow;
-    const previousBodyPosition = body.style.position;
-    const previousBodyTop = body.style.top;
-    const previousBodyWidth = body.style.width;
+    const previousHtmlOverscrollBehavior =
+      html.style.overscrollBehavior;
+    const previousBodyOverscrollBehavior =
+      body.style.overscrollBehavior;
 
-    html.style.overflow = 'hidden';
-    body.style.overflow = 'hidden';
-    body.style.position = 'fixed';
-    body.style.top = `-${lastScrollYRef.current}px`;
-    body.style.width = '100%';
+    if (isMenuOpen) {
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+      html.style.overscrollBehavior = 'none';
+      body.style.overscrollBehavior = 'none';
 
-    const timer = window.setTimeout(() => {
-      firstMobileLinkRef.current?.focus({ preventScroll: true });
-    }, 0);
+      const timer = window.setTimeout(() => {
+        firstMobileLinkRef.current?.focus({ preventScroll: true });
+      }, 0);
+
+      return () => {
+        window.clearTimeout(timer);
+        html.style.overflow = previousHtmlOverflow;
+        body.style.overflow = previousBodyOverflow;
+        html.style.overscrollBehavior =
+          previousHtmlOverscrollBehavior;
+        body.style.overscrollBehavior =
+          previousBodyOverscrollBehavior;
+      };
+    }
 
     return () => {
-      window.clearTimeout(timer);
-
       html.style.overflow = previousHtmlOverflow;
       body.style.overflow = previousBodyOverflow;
-      body.style.position = previousBodyPosition;
-      body.style.top = previousBodyTop;
-      body.style.width = previousBodyWidth;
-
-      window.scrollTo(0, lastScrollYRef.current);
+      html.style.overscrollBehavior = previousHtmlOverscrollBehavior;
+      body.style.overscrollBehavior = previousBodyOverscrollBehavior;
     };
   }, [isMenuOpen]);
 
@@ -305,12 +308,12 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               'fixed inset-x-0 top-16 z-50',
               `h-[calc(100dvh-${HEADER_HEIGHT}px)] overflow-y-auto`,
               'overscroll-contain touch-pan-y border-t border-border bg-background',
-              '[webkit-overflow-scrolling:touch]',
+              '[-webkit-overflow-scrolling:touch]',
             )}
           >
             <Container className="px-4 pb-6 pt-4">
-              <div className="flex min-h-full flex-col">
-                <div className="flex flex-1 flex-col gap-6 pb-6">
+              <div className="flex min-h-full min-w-0 flex-col">
+                <div className="flex flex-1 min-h-0 flex-col gap-6 pb-6">
                   <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1">
@@ -329,7 +332,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </span>
                     </div>
                   </div>
-
                   {mobileSections.map((section, sectionIndex) => (
                     <section
                       key={section.title}
@@ -401,7 +403,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </nav>
                     </section>
                   ))}
-
                   <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
                     <p className="text-sm font-semibold text-foreground">
                       Why PyColors
