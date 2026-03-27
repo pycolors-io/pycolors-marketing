@@ -58,6 +58,83 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.6.0',
+    title:
+      'Starter Pro auth foundation + transactional auth emails + marketing UX polish',
+    dateLabel: 'Fri 27 Mar 2026',
+    dateISO: '2026-03-27',
+    status: 'Stable',
+    releaseWeekLabel: 'Mar 2026 (weekly release)',
+    summary:
+      'This release moves Starter Pro from billing-first groundwork into a real authentication baseline. It adds Auth.js with Prisma-backed user, account, session, token, and auth-attempt models; brings credentials and OAuth-ready flows into the product; ships registration, login, email verification, forgot password, and reset password foundations; and connects billing flows to the authenticated user instead of a temporary development account. On the marketing side, it also improves breadcrumbs, mobile navigation behavior, footer polish, page structure, and homepage clarity for a cleaner and more reliable product experience.',
+    highlights: [
+      {
+        title: 'Starter Pro auth foundation (Auth.js + Prisma)',
+        items: [
+          'Extended the user model with authentication-ready fields including password hash, email verification timestamp, image, and last login tracking.',
+          'Added Auth.js core Prisma models for accounts, sessions, and verification tokens, plus dedicated auth token and auth attempt models for security and recovery workflows.',
+          'Added NextAuth and Prisma adapter dependencies and introduced a full Auth.js configuration with credentials, Google, GitHub, and email provider support.',
+          'Switched session handling to JWT for a simpler and more consistent stateless auth architecture.',
+          'Extended session and JWT typings so custom user fields remain strongly typed across the app.',
+        ],
+      },
+      {
+        title:
+          'Real user flows: registration, login, verification, reset password',
+        items: [
+          'Added server-side registration and login actions with validation, password hashing, and clearer error handling.',
+          'Connected login and registration forms to real server actions with pending states, validation feedback, and improved submission UX.',
+          'Added the post-signup email verification prompt to guide users through account activation.',
+          'Implemented forgot password and reset password flows with token-based validation and user-facing reset pages.',
+          'Added resend verification support so users can request a new verification email if needed.',
+        ],
+      },
+      {
+        title: 'Transactional auth emails',
+        items: [
+          'Added Resend integration for transactional auth emails.',
+          'Introduced reusable auth email templates for email verification, password reset, and password changed notifications.',
+          'Replaced development-only logging of verification and reset links with real email delivery.',
+          'Send verification emails after registration, resend requests, and reset emails when a password recovery request is made.',
+          'Notify users by email after a successful password reset to improve account security awareness.',
+        ],
+      },
+      {
+        title: 'Billing integration now uses the authenticated user',
+        items: [
+          'Replaced temporary development-user billing lookups with authenticated user retrieval.',
+          'Enforced authentication for checkout and billing portal session creation.',
+          'Improved billing portal session creation by validating customer existence and portal URL generation.',
+          'Added helpers for current user retrieval, required authentication, and required email verification to centralize access control.',
+          'Clarified remaining development-only helpers while continuing the migration from dev scaffolding to production-ready auth flows.',
+        ],
+      },
+      {
+        title: 'Marketing UX and navigation polish',
+        items: [
+          'Added breadcrumb navigation to key marketing pages and improved breadcrumb UX on mobile with collapsing and overflow handling.',
+          'Redesigned the mobile header navigation with grouped sections, icons, badges, preserved scroll position, and better body scroll locking.',
+          'Fixed mobile menu scroll handling and overscroll edge cases for a more reliable menu experience.',
+          'Improved footer layout, header spacing, container behavior, semantic structure, 404 guidance, and CTA section responsiveness.',
+          'Refined the homepage and broader marketing copy for clearer messaging and stronger product discovery.',
+        ],
+      },
+      {
+        title: 'Developer experience and configuration',
+        items: [
+          'Expanded environment example documentation for auth, email, OAuth providers, and seed options.',
+          'Added support for auth seed fixtures and improved seed refresh behavior through upserts.',
+          'Added bcryptjs for password hashing and improved schema support for auth and security indexing.',
+          'Updated generated type import paths to align with the current Next.js development structure.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View roadmap',
+      href: '/roadmap',
+    },
+  },
+  {
     version: 'v1.5.0',
     title: 'Blog platform + billing maturity + marketing clarity',
     dateLabel: 'Fri 20 Mar 2026',
@@ -120,7 +197,7 @@ const CHANGELOG: ChangelogItem[] = [
     title: 'Starter Pro foundation + billing engine groundwork',
     dateLabel: 'Fri 13 Mar 2026',
     dateISO: '2026-03-13',
-    status: 'In progress',
+    status: 'Stable',
     releaseWeekLabel: 'Mar 2026 (weekly release)',
     summary:
       'This release moves PyColors from PRO positioning into real premium product implementation work. It lays the technical and product foundation for Starter Pro with the first billing architecture, Prisma subscription schema, pricing surfaces, and stronger marketing, SEO, and trust messaging. Starter Pro is not publicly launched yet, but the premium system is now materially taking shape.',

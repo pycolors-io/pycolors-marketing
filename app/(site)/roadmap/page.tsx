@@ -80,7 +80,7 @@ const milestones: Array<{
     id: 'Mar 2026',
     title: 'March 2026',
     subtitle:
-      'Move from PRO positioning into implementation: Starter Pro foundation, billing maturity, blog-driven distribution, and stronger premium conversion surfaces.',
+      'Move from PRO positioning into implementation: Starter Pro foundation, billing maturity, auth baseline, and stronger premium conversion surfaces.',
   },
   {
     id: 'H1 2026',
@@ -397,24 +397,51 @@ const items: RoadmapItem[] = [
     milestone: 'Mar 2026',
     tags: ['Marketing', 'UX', 'Navigation', 'Trust'],
   },
+  {
+    title: 'Starter PRO auth foundation',
+    description:
+      'Shipped the first real authentication baseline for Starter Pro with Auth.js, Prisma-backed auth models, credentials and OAuth-ready provider support, JWT sessions, registration, login, email verification, resend verification, forgot password, reset password, and transactional auth email infrastructure.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Auth', 'Starter PRO', 'Users', 'Security', 'Email'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Authenticated billing access',
+    description:
+      'Connected billing checkout and billing portal flows to the authenticated user instead of a temporary development account, improving security and making premium access checks materially closer to production.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Billing', 'Auth', 'Security', 'Starter PRO'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Marketing navigation and mobile UX polish',
+    description:
+      'Improved breadcrumbs, footer hierarchy, homepage clarity, semantic structure, and mobile menu behavior including scroll locking, overscroll fixes, grouped navigation, and better recovery paths on the 404 page.',
+    status: 'Shipped',
+    milestone: 'Mar 2026',
+    tags: ['Marketing', 'Navigation', 'Mobile', 'UX'],
+    href: '/',
+  },
 
   // NOW
   {
     title: 'Starter PRO hardening',
     description:
-      'Replace remaining stubs with production-ready billing behavior, validate subscription lifecycle handling, complete account-state UX, and harden premium flows before launch.',
+      'Harden authenticated account-state UX, finalize edge cases around billing + auth interactions, validate subscription lifecycle behavior, and remove remaining product rough edges before launch.',
     status: 'Now',
     milestone: 'Mar 2026',
-    tags: ['Starter PRO', 'Billing', 'Quality', 'Launch'],
+    tags: ['Starter PRO', 'Billing', 'Auth', 'Quality', 'Launch'],
     href: '/upgrade',
   },
   {
-    title: 'Auth + user system integration',
+    title: 'Email verification and recovery polish',
     description:
-      'Wire a real authentication provider, session handling, protected app flows, and user-to-billing linkage so Starter Pro moves from premium shell to operational SaaS baseline.',
+      'Refine verification and password recovery UX, tighten error states, improve email delivery reliability, and make onboarding flows feel production-ready end to end.',
     status: 'Now',
     milestone: 'Mar 2026',
-    tags: ['Auth', 'Users', 'Sessions', 'Architecture'],
+    tags: ['Auth', 'Email', 'Onboarding', 'Security'],
   },
   {
     title: 'Waitlist conversion loop',
@@ -461,6 +488,14 @@ const items: RoadmapItem[] = [
     milestone: 'Mar 2026',
     tags: ['Blog', 'SEO', 'Authority', 'Growth'],
     href: '/blog',
+  },
+  {
+    title: 'OAuth and account linking polish',
+    description:
+      'Harden provider setup, linking flows, and real-world edge cases across credentials, Google, GitHub, and email-based auth.',
+    status: 'Next',
+    milestone: 'H1 2026',
+    tags: ['Auth', 'OAuth', 'Accounts', 'Quality'],
   },
 
   // LATER
@@ -608,7 +643,7 @@ export default function RoadmapPage() {
             A realistic, release-driven plan focused on shipping. This
             roadmap tracks how PyColors evolves from UI foundations
             into a SaaS builder ecosystem: blog, guides, production
-            patterns, Starter Free, Starter Pro, billing
+            patterns, Starter Free, Starter Pro, auth and billing
             infrastructure, and future premium offers.
           </p>
 
@@ -676,8 +711,8 @@ export default function RoadmapPage() {
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Trust pages, licensing, demos, pricing clarity,
-                waitlist capture, analytics, blog distribution, and a
-                predictable release cadence.
+                waitlist capture, analytics, blog distribution, auth
+                reliability, and a predictable release cadence.
               </p>
             </Card>
           </div>
