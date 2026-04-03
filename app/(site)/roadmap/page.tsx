@@ -32,6 +32,7 @@ type Milestone =
   | 'Jan 2026'
   | 'Feb 2026'
   | 'Mar 2026'
+  | 'Apr 2026'
   | 'H1 2026';
 
 type RoadmapItem = {
@@ -83,10 +84,16 @@ const milestones: Array<{
       'Move from PRO positioning into implementation: Starter Pro foundation, billing maturity, auth baseline, and stronger premium conversion surfaces.',
   },
   {
+    id: 'Apr 2026',
+    title: 'April 2026',
+    subtitle:
+      'Turn Starter Pro auth into a more complete account system: OAuth UX, connected accounts, password self-service, and safer account-state management.',
+  },
+  {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Harden Starter Pro into a sellable premium product: auth, billing lifecycle, launch polish, and monetization readiness.',
+      'Harden Starter Pro into a sellable premium product: auth, billing lifecycle, launch polish, monetization readiness, and stronger backend foundations.',
   },
 ];
 
@@ -425,31 +432,92 @@ const items: RoadmapItem[] = [
     href: '/',
   },
 
-  // NOW
+  // APR 2026 — shipped
   {
-    title: 'Starter PRO hardening',
+    title: 'OAuth sign-in and sign-up UX',
     description:
-      'Harden authenticated account-state UX, finalize edge cases around billing + auth interactions, validate subscription lifecycle behavior, and remove remaining product rough edges before launch.',
-    status: 'Now',
-    milestone: 'Mar 2026',
-    tags: ['Starter PRO', 'Billing', 'Auth', 'Quality', 'Launch'],
+      'Shipped first-class Google and GitHub OAuth entry points across registration and login with clearer provider separation, better loading states, and more intentional onboarding UX.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'OAuth', 'Starter PRO', 'Onboarding', 'UX'],
     href: '/upgrade',
   },
   {
-    title: 'Email verification and recovery polish',
+    title: 'OAuth account conflict handling',
     description:
-      'Refine verification and password recovery UX, tighten error states, improve email delivery reliability, and make onboarding flows feel production-ready end to end.',
-    status: 'Now',
-    milestone: 'Mar 2026',
-    tags: ['Auth', 'Email', 'Onboarding', 'Security'],
+      'Improved account-conflict handling and mapped auth query errors to safer, more understandable user-facing messages, reducing confusion around provider linkage and login failures.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'OAuth', 'Errors', 'UX', 'Security'],
   },
   {
-    title: 'Waitlist conversion loop',
+    title: 'Connected accounts management',
     description:
-      'Connect waitlist capture to a more reliable launch workflow: segmentation, email flow, pricing announcement sequence, and clearer launch CTA placement.',
+      'Shipped backend-driven connected accounts management in settings for Google and GitHub, including real linked-provider state, clearer account visibility, and a stronger account-security surface.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Settings', 'Accounts', 'Security', 'Starter PRO'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Safe provider disconnect rules',
+    description:
+      'Added disconnect flows for linked providers while enforcing that users must always keep at least one valid sign-in method connected, preventing accidental account lockout.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Security', 'Accounts', 'OAuth', 'Settings'],
+  },
+  {
+    title: 'In-session password change',
+    description:
+      'Shipped the first real signed-in password change flow with validation, feedback, and notification logic, making Starter Pro account security materially more complete.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Password', 'Security', 'Settings'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Real account-state in app navigation',
+    description:
+      'Replaced placeholder user navigation with backend-driven account data so the app shell now reflects the real signed-in user, including name, email, and provider context.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Navigation', 'UX', 'App shell'],
+  },
+  {
+    title: 'Auth environment and email consistency',
+    description:
+      'Improved trusted auth host and sender configuration between development and production so transactional auth flows are more reliable and less error-prone across environments.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Email', 'DX', 'Infrastructure'],
+  },
+
+  // NOW
+  {
+    title: 'Starter PRO launch hardening',
+    description:
+      'Finish the production-readiness pass across auth, account state, billing interactions, settings UX, and edge-case recovery so Starter Pro can move from credible internal product to launch candidate.',
     status: 'Now',
-    milestone: 'Mar 2026',
-    tags: ['Waitlist', 'Conversion', 'Launch'],
+    milestone: 'Apr 2026',
+    tags: ['Starter PRO', 'Launch', 'Quality', 'Auth', 'Billing'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Account lifecycle polish',
+    description:
+      'Harden account linking, disconnect, verification, reset, and provider edge cases so self-service account management feels reliable in real-world usage.',
+    status: 'Now',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Accounts', 'OAuth', 'Security', 'UX'],
+  },
+  {
+    title: 'Waitlist and premium conversion system',
+    description:
+      'Tighten the path from roadmap and marketing proof to waitlist capture, pricing trust, upgrade messaging, and premium launch intent.',
+    status: 'Now',
+    milestone: 'Apr 2026',
+    tags: ['Waitlist', 'Conversion', 'Pricing', 'Launch'],
     href: '/waitlist',
   },
 
@@ -457,45 +525,46 @@ const items: RoadmapItem[] = [
   {
     title: 'Monetization readiness v2',
     description:
-      'Align pricing, checkout logic, license language, demos, access messaging, and upgrade surfaces into a more credible premium conversion system.',
+      'Align pricing logic, checkout trust, legal language, demos, access messaging, and upgrade surfaces into a sharper premium conversion system for Starter Pro.',
     status: 'Next',
-    milestone: 'Mar 2026',
+    milestone: 'H1 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
     href: '/access',
   },
   {
-    title: 'Search & analytics baseline',
+    title: 'Analytics and launch instrumentation',
     description:
-      'Finish GA4 / GTM wiring, validate key events, expand Search Console checks, and measure blog, guides, upgrade, and waitlist conversion surfaces more reliably.',
+      'Finish GA4 and GTM wiring, validate conversion events across docs, blog, waitlist, access, and upgrade flows, and measure premium discovery more reliably.',
     status: 'Next',
-    milestone: 'Mar 2026',
-    tags: ['SEO', 'Analytics', 'Trust'],
+    milestone: 'H1 2026',
+    tags: ['Analytics', 'SEO', 'Growth', 'Launch'],
   },
   {
     title: 'Cookie preferences + analytics consent (optional)',
     description:
-      'If analytics are enabled, add a lightweight consent layer and document what is tracked while keeping implementation minimal.',
+      'If analytics remain enabled, add a lightweight consent layer and document tracking behavior in a simple and credible way.',
     status: 'Next',
-    milestone: 'Mar 2026',
+    milestone: 'H1 2026',
     tags: ['Privacy', 'Analytics', 'Trust'],
     href: '/privacy',
   },
   {
     title: 'Editorial cadence for authority building',
     description:
-      'Turn the new blog engine into a consistent publishing loop with opinionated SaaS, DX, and product engineering content tied to PyColors distribution and premium discovery.',
+      'Turn the blog and guides system into a repeatable authority engine with SaaS, DX, product engineering, and starter-focused editorial publishing.',
     status: 'Next',
-    milestone: 'Mar 2026',
+    milestone: 'H1 2026',
     tags: ['Blog', 'SEO', 'Authority', 'Growth'],
     href: '/blog',
   },
   {
-    title: 'OAuth and account linking polish',
+    title: 'Starter PRO backend foundation beyond auth and billing',
     description:
-      'Harden provider setup, linking flows, and real-world edge cases across credentials, Google, GitHub, and email-based auth.',
+      'Extend the premium starter from account and payment infrastructure into a stronger backend application baseline with clearer production patterns and launch guidance.',
     status: 'Next',
     milestone: 'H1 2026',
-    tags: ['Auth', 'OAuth', 'Accounts', 'Quality'],
+    tags: ['Starter PRO', 'Backend', 'Architecture', 'Premium'],
+    href: '/upgrade',
   },
 
   // LATER
@@ -627,6 +696,7 @@ export default function RoadmapPage() {
             ]}
           />
         </div>
+
         <header className="mx-auto w-full max-w-4xl text-center">
           <div className="flex justify-center">
             <Badge variant="secondary" className="gap-2">

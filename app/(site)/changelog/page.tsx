@@ -58,6 +58,81 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.7.0',
+    title:
+      'Starter Pro account management, OAuth UX, connected accounts, and in-session security flows',
+    dateLabel: 'Fri 3 Apr 2026',
+    dateISO: '2026-04-03',
+    status: 'Stable',
+    releaseWeekLabel: 'Apr 2026 (weekly release)',
+    summary:
+      'This release pushes Starter Pro beyond the initial auth baseline into a much more credible account system. It strengthens Google and GitHub authentication across sign-up and sign-in, improves provider configuration and safer error handling, adds connected accounts management in settings, enables secure provider disconnect rules, and ships the first real in-session password change flow. On the product side, Starter Pro now feels less like an auth prototype and more like a real SaaS account surface with persistent user data, clearer account state, and safer self-service security controls.',
+    highlights: [
+      {
+        title: 'OAuth sign-in and sign-up UX is now first-class',
+        items: [
+          'Added configurable Google and GitHub OAuth buttons for authentication with loading states and flexible provider visibility.',
+          'Added OAuth sign-up on the registration page so users can onboard faster without going through the email-password path first.',
+          'Added OAuth login options on the sign-in page with clearer separation between provider-based access and credentials-based access.',
+          'Refined helper text, form structure, and divider logic across registration and login so auth entry points feel more intentional and easier to understand.',
+          'Improved alert rendering and messaging across auth screens to guide users more clearly through available authentication options.',
+        ],
+      },
+      {
+        title:
+          'Safer auth configuration and account conflict handling',
+        items: [
+          'Improved provider configuration defaults and credential validation to make auth setup more robust and production-oriented.',
+          'Normalized auth input handling and refined user update logic during sign-in and account-link events for better consistency.',
+          'Improved email verification updates and profile synchronization when users authenticate through external providers.',
+          'Handled OAuth account conflicts with safer user-facing messaging so sign-in errors are clearer and less confusing.',
+          'Mapped query-parameter auth errors into readable product feedback instead of exposing vague or low-context failure states.',
+        ],
+      },
+      {
+        title: 'Connected accounts management in settings',
+        items: [
+          'Added a real connected accounts management card in security settings for Google and GitHub providers.',
+          'Replaced mock account settings sections with backend-driven auth data so settings now reflect the real signed-in user state.',
+          'Added backend logic to snapshot linked providers and expose accurate connection state in the UI.',
+          'Improved provider row readability and prop safety to make account management components clearer and easier to maintain.',
+          'Refocused settings around profile, security, provider connections, and verification state instead of placeholder organization and billing tabs.',
+        ],
+      },
+      {
+        title: 'Safe disconnect rules and password self-service',
+        items: [
+          'Added backend-driven connected account management with provider disconnect support directly from settings.',
+          'Enforced a critical safety rule that prevents users from disconnecting their last available sign-in method.',
+          'Added clearer UI feedback and guarded error handling for disconnect attempts and allowed account actions.',
+          'Shipped the first real in-session password change flow for signed-in users.',
+          'Added validation, feedback, and notification logic around password updates so account security management is now materially more complete.',
+        ],
+      },
+      {
+        title: 'Authenticated product surfaces feel more real',
+        items: [
+          'Hydrated the user menu from real server-side auth and account data instead of using a static user placeholder.',
+          'Improved personalization by surfacing the signed-in user name, email, and provider context in the app shell.',
+          'Moved mobile user navigation into a dedicated component for cleaner separation and easier future extension.',
+          'Improved perceived product authenticity by making account state visible across navigation and settings.',
+        ],
+      },
+      {
+        title: 'Email delivery and environment consistency',
+        items: [
+          'Corrected email sender logic for development and production modes so transactional auth emails use the right sender configuration per environment.',
+          'Improved environment variable usage around email delivery and trusted auth hosts to reduce setup mistakes between local and production deployments.',
+          'Continued tightening the production-readiness path for auth infrastructure started in the previous release.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View roadmap',
+      href: '/roadmap',
+    },
+  },
+  {
     version: 'v1.6.0',
     title:
       'Starter Pro auth foundation + transactional auth emails + marketing UX polish',
