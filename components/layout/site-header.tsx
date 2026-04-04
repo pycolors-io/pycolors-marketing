@@ -55,6 +55,7 @@ function matchPathname(pathname: string, href: string) {
 
 function isUpgradeContext(pathname: string | null) {
   if (!pathname) return false;
+
   return (
     pathname.startsWith('/upgrade') ||
     pathname.startsWith('/waitlist')
@@ -67,7 +68,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
   const openBtnRef = React.useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = React.useRef<HTMLAnchorElement>(null);
-  const lastScrollYRef = React.useRef(0);
+  const mobileNavRef = React.useRef<HTMLDialogElement>(null);
 
   const closeMenu = React.useCallback(() => {
     setIsMenuOpen(false);
@@ -97,52 +98,86 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
+        e.preventDefault();
         closeMenu();
         openBtnRef.current?.focus();
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+
+      const container = mobileNavRef.current;
+      if (!container) return;
+
+      const focusable = Array.from(
+        container.querySelectorAll<HTMLElement>(
+          [
+            'a[href]',
+            'button:not([disabled])',
+            'input:not([disabled])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])',
+          ].join(','),
+        ),
+      ).filter(
+        (element) =>
+          !element.hasAttribute('disabled') &&
+          element.getAttribute('aria-hidden') !== 'true',
+      );
+
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
       }
     }
 
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [isMenuOpen, closeMenu]);
 
   React.useEffect(() => {
-    const html = document.documentElement;
+    if (!isMenuOpen) return;
+
     const body = document.body;
+    const scrollY = window.scrollY;
 
-    const previousHtmlOverflow = html.style.overflow;
-    const previousBodyOverflow = body.style.overflow;
-    const previousHtmlOverscrollBehavior =
-      html.style.overscrollBehavior;
-    const previousBodyOverscrollBehavior =
-      body.style.overscrollBehavior;
+    const previousPosition = body.style.position;
+    const previousTop = body.style.top;
+    const previousWidth = body.style.width;
+    const previousOverflow = body.style.overflow;
 
-    if (isMenuOpen) {
-      html.style.overflow = 'hidden';
-      body.style.overflow = 'hidden';
-      html.style.overscrollBehavior = 'none';
-      body.style.overscrollBehavior = 'none';
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
 
-      const timer = window.setTimeout(() => {
-        firstMobileLinkRef.current?.focus({ preventScroll: true });
-      }, 0);
-
-      return () => {
-        window.clearTimeout(timer);
-        html.style.overflow = previousHtmlOverflow;
-        body.style.overflow = previousBodyOverflow;
-        html.style.overscrollBehavior =
-          previousHtmlOverscrollBehavior;
-        body.style.overscrollBehavior =
-          previousBodyOverscrollBehavior;
-      };
-    }
+    const timer = window.setTimeout(() => {
+      mobileNavRef.current?.focus();
+      firstMobileLinkRef.current?.focus({ preventScroll: true });
+    }, 0);
 
     return () => {
-      html.style.overflow = previousHtmlOverflow;
-      body.style.overflow = previousBodyOverflow;
-      html.style.overscrollBehavior = previousHtmlOverscrollBehavior;
-      body.style.overscrollBehavior = previousBodyOverscrollBehavior;
+      window.clearTimeout(timer);
+
+      body.style.position = previousPosition;
+      body.style.top = previousTop;
+      body.style.width = previousWidth;
+      body.style.overflow = previousOverflow;
+
+      window.scrollTo(0, scrollY);
     };
   }, [isMenuOpen]);
 
@@ -153,7 +188,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       ...PRIMARY_NAV_ITEMS.map((item) => ({
         label: item.label,
         href: item.href,
-        icon: <Package className="h-4 w-4" />,
+        icon: <Package aria-hidden="true" className="h-4 w-4" />,
       })),
     ];
 
@@ -161,18 +196,18 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: 'Documentation',
         href: '/docs',
-        icon: <BookOpen className="h-4 w-4" />,
+        icon: <BookOpen aria-hidden="true" className="h-4 w-4" />,
       },
       {
         label: 'Blog',
         href: '/blog',
-        icon: <FileText className="h-4 w-4" />,
+        icon: <FileText aria-hidden="true" className="h-4 w-4" />,
         badge: 'New',
       },
       ...docsLinks.map((doc) => ({
         label: doc.label,
         href: doc.href,
-        icon: <ChevronRight className="h-4 w-4" />,
+        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
       })),
     ];
 
@@ -180,12 +215,12 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: 'GitHub',
         href: 'https://github.com/pycolors',
-        icon: <Github className="h-4 w-4" />,
+        icon: <Github aria-hidden="true" className="h-4 w-4" />,
       },
       {
         label: 'Changelog',
         href: '/changelog',
-        icon: <Star className="h-4 w-4" />,
+        icon: <Star aria-hidden="true" className="h-4 w-4" />,
       },
     ];
 
@@ -216,7 +251,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               <Logo />
             </div>
 
-            <nav className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex">
+            <nav
+              aria-label="Primary"
+              className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
+            >
               {PRIMARY_NAV_ITEMS.map((item) => {
                 const isCurrent = activeHref === item.href;
 
@@ -255,7 +293,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   href={showWaitlistCta ? '/waitlist' : '/upgrade'}
                 >
                   {showWaitlistCta ? 'Join waitlist' : 'Explore PRO'}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="ml-2 h-4 w-4"
+                  />
                 </Link>
               </Button>
             </div>
@@ -283,9 +324,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 )}
               >
                 {isMenuOpen ? (
-                  <X className="h-5 w-5" />
+                  <X aria-hidden="true" className="h-5 w-5" />
                 ) : (
-                  <Menu className="h-5 w-5" />
+                  <Menu aria-hidden="true" className="h-5 w-5" />
                 )}
               </button>
             </div>
@@ -297,23 +338,38 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         <div className="md:hidden">
           <button
             type="button"
-            aria-label="Close menu overlay"
+            aria-label="Close navigation menu"
             onClick={closeMenu}
-            className="fixed inset-0 top-16 z-40 bg-background/80 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+            style={{ top: HEADER_HEIGHT }}
           />
 
-          <div
+          <dialog
+            ref={mobileNavRef}
             id="mobile-navigation"
+            open
+            aria-labelledby="mobile-navigation-title"
             className={cn(
-              'fixed inset-x-0 top-16 z-50',
-              `h-[calc(100dvh-${HEADER_HEIGHT}px)] overflow-y-auto`,
-              'overscroll-contain touch-pan-y border-t border-border bg-background',
-              '[-webkit-overflow-scrolling:touch]',
+              'fixed inset-x-0 z-50 m-0 flex max-h-none max-w-none flex-col overflow-hidden border-t border-border bg-background p-0 text-inherit md:hidden',
+              'backdrop:hidden',
             )}
+            style={{
+              top: HEADER_HEIGHT,
+              height: `calc(100dvh - ${HEADER_HEIGHT}px)`,
+            }}
           >
-            <Container className="px-4 pb-6 pt-4">
-              <div className="flex min-h-full min-w-0 flex-col">
-                <div className="flex flex-1 min-h-0 flex-col gap-6 pb-6">
+            <h2 id="mobile-navigation-title" className="sr-only">
+              Mobile navigation
+            </h2>
+
+            <div
+              className={cn(
+                'min-h-0 flex-1 overflow-y-auto overscroll-contain',
+                '[-webkit-overflow-scrolling:touch]',
+              )}
+            >
+              <Container className="px-4 pb-6 pt-4">
+                <div className="flex min-w-0 flex-col gap-6 pb-6">
                   <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1">
@@ -332,6 +388,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </span>
                     </div>
                   </div>
+
                   {mobileSections.map((section, sectionIndex) => (
                     <section
                       key={section.title}
@@ -341,7 +398,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         {section.title}
                       </p>
 
-                      <nav className="flex flex-col gap-1">
+                      <nav
+                        aria-label={section.title}
+                        className="flex flex-col gap-1"
+                      >
                         {section.items.map((item, itemIndex) => {
                           const isCurrent =
                             item.href.startsWith('/') &&
@@ -379,7 +439,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                               )}
                             >
                               <span className="flex min-w-0 items-center gap-3">
-                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-background">
+                                <span
+                                  aria-hidden="true"
+                                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-background"
+                                >
                                   {item.icon}
                                 </span>
 
@@ -395,7 +458,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                   </span>
                                 ) : null}
 
-                                <ChevronRight className="h-4 w-4 opacity-60 transition-transform group-hover:translate-x-0.5" />
+                                <ChevronRight
+                                  aria-hidden="true"
+                                  className="h-4 w-4 opacity-60 transition-transform group-hover:translate-x-0.5"
+                                />
                               </span>
                             </Link>
                           );
@@ -403,6 +469,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </nav>
                     </section>
                   ))}
+
                   <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
                     <p className="text-sm font-semibold text-foreground">
                       Why PyColors
@@ -421,37 +488,38 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </div>
                   </div>
                 </div>
+              </Container>
+            </div>
 
-                <div className="sticky bottom-0 z-10 -mx-4 mt-auto border-t border-border bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
-                  <div className="flex flex-col gap-3">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full justify-center"
-                    >
-                      <Link href="/starters/free" onClick={closeMenu}>
-                        Start Free
-                      </Link>
-                    </Button>
+            <div className="border-t border-border bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
+              <div className="flex flex-col gap-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full justify-center"
+                >
+                  <Link href="/starters/free" onClick={closeMenu}>
+                    Start Free
+                  </Link>
+                </Button>
 
-                    <Button asChild className="w-full justify-center">
-                      <Link
-                        href={
-                          showWaitlistCta ? '/waitlist' : '/upgrade'
-                        }
-                        onClick={closeMenu}
-                      >
-                        {showWaitlistCta
-                          ? 'Join waitlist'
-                          : 'Explore PRO'}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
+                <Button asChild className="w-full justify-center">
+                  <Link
+                    href={showWaitlistCta ? '/waitlist' : '/upgrade'}
+                    onClick={closeMenu}
+                  >
+                    {showWaitlistCta
+                      ? 'Join waitlist'
+                      : 'Explore PRO'}
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="ml-2 h-4 w-4"
+                    />
+                  </Link>
+                </Button>
               </div>
-            </Container>
-          </div>
+            </div>
+          </dialog>
         </div>
       )}
     </>
