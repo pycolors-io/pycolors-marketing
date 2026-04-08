@@ -1,31 +1,79 @@
 ---
 title: Billing system (PRO)
-description: Understand how billing works in Starter Pro and how Stripe is integrated for real SaaS monetization.
+description: Production-ready Stripe integration for real SaaS monetization, subscriptions, and revenue flows.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-Starter Free gives you **billing UI and flows**.
+# Monetization that actually works
 
-PRO gives you **real monetization wiring with Stripe**.
+<Badge>Starter PRO</Badge>
+
+Starter Free gives you **billing UI and upgrade flows**.
+Starter PRO gives you **real monetization with Stripe**.
+
+This is not a pricing page.
+
+This is your **revenue engine**.
 
 ---
 
 ## What this includes
 
-The PRO billing system provides a **production-ready Stripe integration** designed for SaaS products.
+The PRO billing system provides a **production-ready Stripe integration**.
 
 You get:
 
-- Stripe Checkout integration
+- Stripe Checkout (hosted, secure)
 - Subscription lifecycle management
-- Billing Portal access
-- Webhook synchronization
+- Billing Portal access (self-service)
+- Webhook synchronization (source of truth)
 - Invoice tracking
-- Plan-based access foundations
-- Customer and subscription models (Prisma)
+- Plan-based access control
+- Customer + subscription models (Prisma)
+
+Everything is already **wired and structured**.
+
+---
+
+## Real monetization flow
+
+This is fully functional.
+
+### Upgrade flow
+
+1. User clicks “Upgrade”
+2. Stripe Checkout session is created
+3. User completes payment
+4. Stripe confirms the subscription
+5. Webhook updates your database
+6. UI reflects real billing state
+
+---
+
+### Subscription lifecycle
+
+Handled out of the box:
+
+- trialing
+- active
+- past_due
+- canceled
+
+---
+
+### Billing portal
+
+Users can:
+
+- update payment method
+- view invoices
+- cancel subscription
+
+No custom UI required.
 
 ---
 
@@ -34,16 +82,16 @@ You get:
 Starter Free gives you:
 
 - Pricing page
-- Billing UI surface
-- Mock states
-- Upgrade flows (visual only)
+- Billing UI
+- Mock upgrade flows
+- Static states
 
 PRO adds:
 
 - Real Stripe Checkout session
-- Customer creation and sync
-- Subscription state management
-- Webhook handling (source of truth)
+- Customer creation + mapping
+- Subscription state synchronization
+- Webhook handling (critical layer)
 - Billing portal integration
 - Persistent billing data
 
@@ -51,91 +99,84 @@ PRO adds:
 
 ## Why this matters
 
-Billing is not just a checkout button.
+Billing is the most critical layer in a SaaS.
 
-A real SaaS needs:
+It handles:
 
-- subscription state synchronization
-- invoices and payment tracking
-- upgrade / downgrade handling
-- secure webhook processing
+- revenue
+- subscriptions
+- user access
+- product gating
 
-Most starters stop at UI.
+Most developers underestimate this.
 
-PRO provides a **real billing backbone**.
+And lose **days or weeks** implementing it safely.
+
+---
+
+## What you avoid building
+
+Without PRO, you need to implement:
+
+- Stripe Checkout logic
+- Customer ↔ user mapping
+- Subscription lifecycle handling
+- Webhook verification (security-critical)
+- Invoice storage
+- Plan-based access checks
+
+This is:
+
+👉 complex
+👉 error-prone
+👉 revenue-critical
+
+---
+
+## Data model
+
+Billing is structured around real SaaS entities:
+
+- Customer
+- Product
+- Price
+- Subscription
+- Invoice
+
+All synced with Stripe.
+
+---
+
+## Integration with the app
+
+Billing is not isolated.
+
+It connects to:
+
+- Pricing page → checkout
+- Settings → billing portal
+- Dashboard → subscription status
+- Backend → access control
+
+---
+
+## Plan gating
+
+You can:
+
+- restrict features to PRO users
+- check subscription status
+- handle trials
+- block access on failed payments
+
+This is how SaaS becomes a business.
 
 ---
 
 ## Mental model
 
 > Starter Free → simulate monetization
-> PRO → collect real revenue
-
----
-
-## What you avoid building
-
-Without PRO, you would need to implement:
-
-- Stripe Checkout session logic
-- Customer creation and mapping
-- Subscription lifecycle handling
-- Webhook validation and processing
-- Invoice storage
-- Billing state synchronization
-
-This typically takes **multiple days and introduces risk**.
-
----
-
-## How it works
-
-The billing system is built around Stripe as the **source of truth**.
-
-Flow:
-
-1. User clicks “Upgrade”
-2. Stripe Checkout session is created
-3. User completes payment
-4. Stripe sends webhook events
-5. Your database is updated (subscription, invoices)
-6. UI reflects real billing state
-
----
-
-## Data model
-
-Billing uses structured entities:
-
-- Customer
-- Subscription
-- Product
-- Price
-- Invoice
-
-All mapped and synced with Stripe.
-
----
-
-## Integration with the app
-
-Billing connects directly to:
-
-- Settings → Billing
-- Pricing page → Checkout
-- Protected features → plan gating
-- Backend → subscription checks
-
----
-
-## Plan gating
-
-The system allows you to:
-
-- Restrict features to PRO users
-- Check subscription status
-- Handle trial periods
-- Handle failed payments
+> Starter PRO → generate real revenue
 
 ---
 
@@ -145,19 +186,18 @@ Upgrade when:
 
 - you want to charge users
 - you need subscriptions
-- you need invoices
-- you prepare real revenue
+- you prepare monetization
+- your product becomes real
 
 ---
 
-## What you get immediately
+## The payoff
 
-After integrating billing:
+Instead of building billing:
 
-- Real payments
-- Real users
-- Real revenue
-- Production-ready SaaS loop
+- you configure Stripe
+- you plug environment variables
+- you ship
 
 ---
 
@@ -165,9 +205,9 @@ After integrating billing:
 
 ### “Is Stripe already configured?”
 
-PRO provides the structure and integration patterns.
+The system is ready.
 
-You connect your Stripe account and go live.
+You connect your Stripe account → done.
 
 ---
 
@@ -175,7 +215,7 @@ You connect your Stripe account and go live.
 
 Yes.
 
-Stripe webhooks ensure your database stays in sync.
+Stripe webhooks ensure your database stays consistent.
 
 ---
 
@@ -183,7 +223,7 @@ Stripe webhooks ensure your database stays in sync.
 
 Yes.
 
-Products and prices are modeled to support extensions.
+Products and prices are modeled for scalability.
 
 ---
 
@@ -191,15 +231,33 @@ Products and prices are modeled to support extensions.
 
 No.
 
-The core billing flows are already implemented.
+Core flows are already implemented.
 
 ---
 
 ## Mental model to keep
 
 > Auth lets users access your product
-> Billing lets your product generate revenue
+> Billing lets your product make money
 
-Both are required for a real SaaS.
+You need both to ship a real SaaS.
+
+---
+
+## Next step
+
+You now have:
+
+- Authentication
+- Billing
+
+Next layer:
+
+→ Backend foundations
+→ Organizations / multi-tenant
+
+Or upgrade:
+
+👉 https://pycolors.io/upgrade
 
 </DocsPageShell>

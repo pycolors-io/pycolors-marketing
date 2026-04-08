@@ -1,0 +1,273 @@
+---
+title: Backend foundations (PRO)
+description: Production-ready backend structure, data modeling, and API foundations for real SaaS applications.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+# From UI to real product
+
+<Badge>Starter PRO</Badge>
+
+Starter Free gives you a **frontend SaaS surface**.
+Starter PRO gives you a **real backend foundation**.
+
+This is where your product becomes **operational**.
+
+---
+
+## What this includes
+
+The PRO backend provides a **production-ready structure** for building and scaling a SaaS.
+
+You get:
+
+- Database schema (Prisma)
+- Production-ready data models
+- API structure (Next.js / Node patterns)
+- Authentication integration (sessions + user context)
+- Billing integration (subscription-aware logic)
+- Organization / membership groundwork
+- Access control patterns
+- Server actions + API routes patterns
+
+Everything is designed to be:
+
+👉 consistent
+👉 extensible
+👉 production-minded
+
+---
+
+## What this unlocks
+
+With backend foundations, you can:
+
+- persist real data
+- connect UI to real users
+- enforce permissions
+- build real product features
+- scale beyond MVP
+
+Without it, your app stays a **demo**.
+
+---
+
+## What changes vs Starter Free
+
+Starter Free gives you:
+
+- Mock data
+- Frontend-only flows
+- Static states
+- No persistence
+
+PRO adds:
+
+- Database integration (Prisma)
+- Real data persistence
+- API contracts
+- Backend structure
+- Auth-aware logic
+- Billing-aware logic
+
+---
+
+## Core architecture
+
+The backend is structured around:
+
+### Data layer
+
+- Prisma schema
+- Typed models
+- Migrations-ready structure
+
+---
+
+### Application layer
+
+- Server actions
+- API routes
+- Domain logic separation
+
+---
+
+### Integration layer
+
+- Auth (user, session)
+- Billing (subscription, plan)
+- Feature gating
+
+---
+
+## Real example
+
+A simple feature like “Projects” becomes:
+
+### Without PRO
+
+- local state
+- mock data
+- no persistence
+
+---
+
+### With PRO
+
+- database model (`Project`)
+- API or server action (`createProject`)
+- user ownership (`userId`)
+- access control
+- UI synced with real data
+
+---
+
+## Organization groundwork
+
+The backend prepares you for:
+
+- multi-user systems
+- team collaboration
+- role-based access
+- invitations (future-ready)
+
+Even if you don’t need it now,
+the structure is already compatible.
+
+---
+
+## Access control
+
+You can implement:
+
+- user-based access
+- role-based access (RBAC)
+- plan-based access (billing)
+
+Example:
+
+- free users → limited features
+- pro users → full access
+
+---
+
+## How it connects to Auth & Billing
+
+Everything is unified.
+
+### Auth
+
+- user identity
+- session context
+- protected routes
+
+---
+
+### Billing
+
+- subscription status
+- plan gating
+- feature access
+
+---
+
+### Backend
+
+- enforces rules
+- stores data
+- executes logic
+
+---
+
+## Mental model
+
+> Starter Free → UI surface
+> Starter PRO → system underneath
+
+---
+
+## What you avoid building
+
+Without PRO, you need to:
+
+- design database schema
+- structure backend logic
+- connect auth to data
+- connect billing to features
+- handle edge cases
+
+This is:
+
+👉 time-consuming
+👉 error-prone
+👉 hard to refactor later
+
+---
+
+## Why this matters
+
+Most SaaS fail at this step:
+
+- UI looks good
+- but backend is messy
+- logic is duplicated
+- scaling becomes painful
+
+PRO gives you a **clean foundation from day one**.
+
+---
+
+## When you need this
+
+Upgrade when:
+
+- you need real data
+- you build real features
+- your product grows
+- you want to scale safely
+
+---
+
+## The payoff
+
+Instead of designing backend architecture:
+
+- you start from a working structure
+- you extend instead of reinventing
+- you ship faster
+
+---
+
+## Mental model to keep
+
+> Auth = users
+> Billing = revenue
+> Backend = product
+
+You need all three for a real SaaS.
+
+---
+
+## Next step
+
+You now have:
+
+- Authentication
+- Billing
+- Backend foundations
+
+You are ready to:
+
+👉 ship a real SaaS
+👉 onboard real users
+👉 generate revenue
+
+Or upgrade:
+
+👉 https://pycolors.io/upgrade
+
+</DocsPageShell>
