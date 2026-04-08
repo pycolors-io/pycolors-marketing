@@ -1,0 +1,124 @@
+---
+title: Auth system (PRO)
+description: Understand what the production-ready authentication system includes and how it differs from Starter Free.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+Starter Free gives you **auth UX and flows**.
+
+PRO gives you **real authentication wiring and security foundations**.
+
+---
+
+## What this includes
+
+The PRO auth system is a **production-ready authentication layer** designed for real SaaS products.
+
+You get:
+
+- Credentials (email + password)
+- Google OAuth
+- GitHub OAuth
+- Email verification flow
+- Forgot / reset password
+- In-session password change
+- Add password for OAuth users
+- Connected accounts management
+- Safe provider disconnect
+- Security activity tracking
+- Rate limiting (database-backed)
+
+---
+
+## What changes vs Starter Free
+
+Starter Free gives you:
+
+- Auth screens
+- UX states
+- Navigation
+- Mock flows
+
+PRO adds:
+
+- Real sessions (Auth.js)
+- Database integration (Prisma)
+- Token system (verification / reset)
+- OAuth provider wiring
+- Security protections
+
+---
+
+## Why this matters
+
+Authentication is not just login.
+
+A real SaaS needs:
+
+- account recovery
+- email verification
+- provider linking
+- safe account access
+- security visibility
+
+Most starters stop at login screens.
+
+PRO provides the **full auth lifecycle**.
+
+---
+
+## Mental model
+
+> Starter Free → simulate auth
+> PRO → handle real users
+
+---
+
+## What you avoid building
+
+Without PRO, you would need to implement:
+
+- password hashing
+- token lifecycle (verify / reset)
+- OAuth provider linking
+- account edge cases
+- safe provider disconnect
+- rate limiting logic
+
+This typically takes **days or weeks**.
+
+---
+
+## How it integrates
+
+The auth system is designed to plug directly into the Starter Free structure.
+
+You keep:
+
+- pages
+- layouts
+- components
+
+You replace:
+
+- mock auth → real sessions
+- fake states → real data
+
+No rewrite required.
+
+---
+
+## When you need this
+
+Upgrade when:
+
+- users need to sign in for real
+- you handle real accounts
+- you start onboarding users
+- you prepare monetization
+
+</DocsPageShell>
