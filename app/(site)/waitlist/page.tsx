@@ -443,7 +443,7 @@ export default function WaitlistPage() {
             />
             <PricingPreviewCard
               title="Starter PRO"
-              price="€249"
+              price="€299"
               badge="Coming"
               description="The wired upgrade path for builders who want the business layer handled."
               footnote="This direction reflects intended positioning, not a final legal or commercial commitment."

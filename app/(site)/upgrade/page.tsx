@@ -63,7 +63,7 @@ const INTERNAL = {
 
 const PRICING = {
   uiPro: '€129',
-  starterPro: '€249',
+  starterPro: '€299',
   allIn: '€349',
 } as const;
 
@@ -488,10 +488,10 @@ export default function UpgradePage() {
               title="Real billing"
               subtitle="Turn your billing surfaces into actual monetization flows with a production-minded subscription engine."
               points={[
-                'Stripe Checkout foundations',
-                'Billing portal integration',
-                'Subscription state handling',
-                'Webhook and plan sync direction',
+                'Stripe Checkout + customer portal',
+                'Subscription lifecycle handling',
+                'Invoice and payment tracking',
+                'Webhook-based sync architecture',
               ]}
               why="Billing is the shortest path from product to revenue, and one of the most painful layers to wire cleanly."
             />
@@ -501,10 +501,10 @@ export default function UpgradePage() {
               title="Backend foundations"
               subtitle="Move from mock sources to a structure that supports SaaS data modeling, contracts, and future scalability."
               points={[
-                'Backend-aligned foundations',
-                'Production-minded data contracts',
-                'Organization / membership groundwork',
-                'Cleaner path away from local mocks',
+                'Production-ready data patterns',
+                'User + account + subscription models',
+                'Clean API and service boundaries',
+                'Scalable SaaS foundations',
               ]}
               why="Without backend foundations, the UI remains credible but incomplete. This is where the product becomes operational."
             />
@@ -514,13 +514,62 @@ export default function UpgradePage() {
               title="Deployment guidance"
               subtitle="Launch with more confidence using environment, release, and production-readiness guidance."
               points={[
-                'Environment setup direction',
-                'Operational checklist',
-                'Safer launch workflow',
-                'Less trial-and-error before go-live',
+                'Env configuration patterns',
+                'Secure production setup',
+                'Deployment checklist',
+                'Reduced launch uncertainty',
               ]}
               why="A product is not launched when the UI is ready. It’s launched when setup, wiring, and operations stop breaking confidence."
             />
+          </div>
+        </section>
+
+        <section className="py-10 sm:py-12">
+          <SectionHeader
+            title="What’s already built"
+            description="PRO is not just a direction. Core foundations are already implemented."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="font-medium text-sm">
+                  Authentication system
+                </div>
+
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>
+                    • Credentials authentication (email + password)
+                  </li>
+                  <li>• Google & GitHub OAuth</li>
+                  <li>• Email verification flow</li>
+                  <li>• Forgot & reset password</li>
+                  <li>• In-session password change</li>
+                  <li>• Connected accounts management</li>
+                  <li>• Safe provider disconnect</li>
+                  <li>• Security activity tracking</li>
+                  <li>• Rate limiting on auth actions</li>
+                </ul>
+              </div>
+            </Card>
+
+            <Card className="p-5">
+              <div className="space-y-2">
+                <div className="font-medium text-sm">
+                  Billing system
+                </div>
+
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Stripe Checkout integration</li>
+                  <li>• Customer & subscription sync</li>
+                  <li>• Billing portal support</li>
+                  <li>• Invoice tracking</li>
+                  <li>• Webhook-driven state sync</li>
+                  <li>• Pricing & upgrade flow</li>
+                  <li>• Plan-aware app structure</li>
+                </ul>
+              </div>
+            </Card>
           </div>
         </section>
 
@@ -710,6 +759,30 @@ export default function UpgradePage() {
           </Card>
         </section>
 
+        <section className="py-10 sm:py-12">
+          <Card className="p-6 sm:p-7">
+            <div className="space-y-3">
+              <div className="text-sm font-medium">
+                Built for real SaaS, not demos
+              </div>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                PRO is designed for real products, not prototypes. It
+                handles the critical layers required to ship and
+                operate a SaaS: authentication, billing, account
+                management, and security.
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                <Pill>Real auth lifecycle</Pill>
+                <Pill>Real billing lifecycle</Pill>
+                <Pill>Protected app structure</Pill>
+                <Pill>Security-first approach</Pill>
+              </div>
+            </div>
+          </Card>
+        </section>
+
         <section className="py-8 sm:py-10">
           <SectionHeader
             title="Pricing direction"
@@ -746,9 +819,10 @@ export default function UpgradePage() {
               eyebrow="Business layer"
               description="The wired upgrade path for builders who want business-critical foundations handled."
               points={[
-                'Auth direction',
-                'Billing direction',
-                'Backend + deploy foundations',
+                'Production auth system (OAuth + email)',
+                'Stripe billing integration',
+                'Protected app + plan gating',
+                'Settings and security flows',
               ]}
               footnote="This offer is intended as a commercial product license, not a transfer of product ownership or resale rights."
               cta="Join waitlist"
