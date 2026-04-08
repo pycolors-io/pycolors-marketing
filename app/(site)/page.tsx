@@ -949,7 +949,7 @@ pnpm dev`}</pre>
 
               <PricingPreviewCard
                 title="Starter PRO"
-                price="€249"
+                price="€299"
                 badge="Coming"
                 description="The wired upgrade path for builders who want the business layer handled."
                 href={INTERNAL.waitlist}

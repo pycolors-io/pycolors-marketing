@@ -1,0 +1,196 @@
+---
+title: Auth system (PRO)
+description: Production-ready authentication with real flows, OAuth, security, and account lifecycle.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+# Authentication that actually works
+
+<Badge>Starter PRO</Badge>
+
+Starter Free gives you **auth UX and flows**.
+Starter PRO gives you **real authentication wiring and security foundations**.
+
+This is not just login.
+
+This is the **full authentication lifecycle** of a real SaaS.
+
+---
+
+## What this includes
+
+The PRO auth system is a **production-ready authentication layer**.
+
+You get:
+
+- Email + password authentication
+- Google OAuth
+- GitHub OAuth
+- Email verification flow
+- Forgot / reset password
+- In-session password change
+- Add password for OAuth users
+- Connected accounts management
+- Safe provider disconnect
+- Security activity tracking
+- Rate limiting (database-backed)
+
+Everything is already **structured, integrated, and ready to use**.
+
+---
+
+## Real flows (not placeholders)
+
+This is not UI simulation.
+
+You already have:
+
+### Sign in
+
+- Credentials
+- OAuth providers
+- Error handling (invalid credentials, provider mismatch)
+
+### Register
+
+- Account creation
+- Password validation
+- OAuth instant signup
+- Email verification step
+
+### Password reset
+
+- Secure token system
+- Reset flow
+- Expiration handling
+
+### Account security
+
+- Connected providers
+- Safe unlink logic
+- Security activity logs
+
+---
+
+## What changes vs Starter Free
+
+Starter Free gives you:
+
+- Auth screens
+- UX states
+- Navigation
+- Mock flows
+
+PRO adds:
+
+- Real sessions (Auth.js)
+- Database integration (Prisma)
+- Token lifecycle (verification / reset)
+- OAuth provider wiring
+- Security protections
+- Rate limiting
+
+---
+
+## Why this matters
+
+Authentication is not just login.
+
+It is:
+
+- your first security layer
+- your first user experience
+- your first production risk
+
+Most starters stop at UI.
+
+You still have to build:
+
+- token systems
+- provider linking
+- edge cases
+- security rules
+
+This typically takes **several days or weeks**.
+
+---
+
+## What you avoid building
+
+Without PRO, you would need to implement:
+
+- password hashing & validation
+- token lifecycle (verify / reset)
+- OAuth linking logic
+- account edge cases
+- safe provider disconnect
+- rate limiting
+
+PRO removes this entire layer.
+
+---
+
+## Mental model
+
+> Starter Free → simulate auth
+> Starter PRO → handle real users
+
+---
+
+## How it integrates
+
+No rewrite required.
+
+You keep:
+
+- pages
+- layouts
+- components
+- UI structure
+
+You replace:
+
+- mock auth → real sessions
+- fake states → real data
+
+---
+
+## When you need this
+
+Upgrade when:
+
+- users need to sign in for real
+- you onboard real users
+- you prepare monetization
+- you need production security
+
+---
+
+## The payoff
+
+Instead of building auth:
+
+- you configure providers
+- you plug environment variables
+- you ship
+
+---
+
+## Next step
+
+Authentication is one part of the system.
+
+Continue with:
+
+→ Billing
+→ Backend foundations
+
+Or upgrade:
+
+👉 https://pycolors.io/upgrade
+
+</DocsPageShell>

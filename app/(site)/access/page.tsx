@@ -412,7 +412,7 @@ export default function AccessPage() {
 
             <PremiumPlanCard
               title="Starter PRO"
-              price="€249"
+              price="€299"
               badge="Coming"
               eyebrow="Business layer"
               description="Production wiring for builders who want the business layer handled."

@@ -1,0 +1,263 @@
+---
+title: Billing system (PRO)
+description: Production-ready Stripe integration for real SaaS monetization, subscriptions, and revenue flows.
+---
+
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+# Monetization that actually works
+
+<Badge>Starter PRO</Badge>
+
+Starter Free gives you **billing UI and upgrade flows**.
+Starter PRO gives you **real monetization with Stripe**.
+
+This is not a pricing page.
+
+This is your **revenue engine**.
+
+---
+
+## What this includes
+
+The PRO billing system provides a **production-ready Stripe integration**.
+
+You get:
+
+- Stripe Checkout (hosted, secure)
+- Subscription lifecycle management
+- Billing Portal access (self-service)
+- Webhook synchronization (source of truth)
+- Invoice tracking
+- Plan-based access control
+- Customer + subscription models (Prisma)
+
+Everything is already **wired and structured**.
+
+---
+
+## Real monetization flow
+
+This is fully functional.
+
+### Upgrade flow
+
+1. User clicks “Upgrade”
+2. Stripe Checkout session is created
+3. User completes payment
+4. Stripe confirms the subscription
+5. Webhook updates your database
+6. UI reflects real billing state
+
+---
+
+### Subscription lifecycle
+
+Handled out of the box:
+
+- trialing
+- active
+- past_due
+- canceled
+
+---
+
+### Billing portal
+
+Users can:
+
+- update payment method
+- view invoices
+- cancel subscription
+
+No custom UI required.
+
+---
+
+## What changes vs Starter Free
+
+Starter Free gives you:
+
+- Pricing page
+- Billing UI
+- Mock upgrade flows
+- Static states
+
+PRO adds:
+
+- Real Stripe Checkout session
+- Customer creation + mapping
+- Subscription state synchronization
+- Webhook handling (critical layer)
+- Billing portal integration
+- Persistent billing data
+
+---
+
+## Why this matters
+
+Billing is the most critical layer in a SaaS.
+
+It handles:
+
+- revenue
+- subscriptions
+- user access
+- product gating
+
+Most developers underestimate this.
+
+And lose **days or weeks** implementing it safely.
+
+---
+
+## What you avoid building
+
+Without PRO, you need to implement:
+
+- Stripe Checkout logic
+- Customer ↔ user mapping
+- Subscription lifecycle handling
+- Webhook verification (security-critical)
+- Invoice storage
+- Plan-based access checks
+
+This is:
+
+👉 complex
+👉 error-prone
+👉 revenue-critical
+
+---
+
+## Data model
+
+Billing is structured around real SaaS entities:
+
+- Customer
+- Product
+- Price
+- Subscription
+- Invoice
+
+All synced with Stripe.
+
+---
+
+## Integration with the app
+
+Billing is not isolated.
+
+It connects to:
+
+- Pricing page → checkout
+- Settings → billing portal
+- Dashboard → subscription status
+- Backend → access control
+
+---
+
+## Plan gating
+
+You can:
+
+- restrict features to PRO users
+- check subscription status
+- handle trials
+- block access on failed payments
+
+This is how SaaS becomes a business.
+
+---
+
+## Mental model
+
+> Starter Free → simulate monetization
+> Starter PRO → generate real revenue
+
+---
+
+## When you need this
+
+Upgrade when:
+
+- you want to charge users
+- you need subscriptions
+- you prepare monetization
+- your product becomes real
+
+---
+
+## The payoff
+
+Instead of building billing:
+
+- you configure Stripe
+- you plug environment variables
+- you ship
+
+---
+
+## Common concerns
+
+### “Is Stripe already configured?”
+
+The system is ready.
+
+You connect your Stripe account → done.
+
+---
+
+### “Is billing synced automatically?”
+
+Yes.
+
+Stripe webhooks ensure your database stays consistent.
+
+---
+
+### “Can I extend pricing plans?”
+
+Yes.
+
+Products and prices are modeled for scalability.
+
+---
+
+### “Do I need to build billing logic myself?”
+
+No.
+
+Core flows are already implemented.
+
+---
+
+## Mental model to keep
+
+> Auth lets users access your product
+> Billing lets your product make money
+
+You need both to ship a real SaaS.
+
+---
+
+## Next step
+
+You now have:
+
+- Authentication
+- Billing
+
+Next layer:
+
+→ Backend foundations
+→ Organizations / multi-tenant
+
+Or upgrade:
+
+👉 https://pycolors.io/upgrade
+
+</DocsPageShell>
