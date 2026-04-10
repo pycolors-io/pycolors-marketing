@@ -87,7 +87,7 @@ const milestones: Array<{
     id: 'Apr 2026',
     title: 'April 2026',
     subtitle:
-      'Turn Starter Pro auth into a more complete account system: OAuth UX, connected accounts, password self-service, and safer account-state management.',
+      'Turn Starter Pro into a more sellable launch candidate: security hardening, backend-driven account security, premium auth UX, clearer pricing, and more production-shaped app surfaces.',
   },
   {
     id: 'H1 2026',
@@ -492,61 +492,148 @@ const items: RoadmapItem[] = [
     milestone: 'Apr 2026',
     tags: ['Auth', 'Email', 'DX', 'Infrastructure'],
   },
+  {
+    title: 'Auth security hardening with rate limiting and auditing',
+    description:
+      'Hardened sensitive auth actions with rate limiting, generic responses, and audit metadata collection so Starter Pro account flows are more resilient against abuse and closer to production expectations.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Security', 'Rate limiting', 'Auditing'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Backend-driven security activity in settings',
+    description:
+      'Added recent security activity to settings with backend-driven event history, hydration-safe rendering, French locale and Paris time formatting, improved activity lookup, and more user-friendly device labels.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Settings', 'Security', 'Audit trail', 'UX'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Password creation for OAuth-first users',
+    description:
+      'Enabled users who registered with a third-party provider to set a local password when none exists, improving self-service account durability and recovery options.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Password', 'OAuth', 'Settings'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Premium auth screen redesign',
+    description:
+      'Revamped login, register, forgot-password, verify-email, and resend-verification flows with a stronger premium SaaS layout, better loading states, clearer helper text, and improved feedback.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'UX', 'Premium', 'Onboarding'],
+    href: '/upgrade',
+  },
+  {
+    title:
+      'Authenticated-user redirect protection on public auth pages',
+    description:
+      'Redirects signed-in users away from public auth routes so the product feels cleaner, safer, and less confusing during real account usage.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Auth', 'Routing', 'UX', 'Security'],
+  },
+  {
+    title: 'Starter Pro pricing repositioning',
+    description:
+      'Updated Starter Pro pricing to €299 and sharpened the pricing page, FAQ, and offer framing to better match the product’s security, billing, and backend value.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Pricing', 'Positioning', 'Sales', 'Starter PRO'],
+    href: '/pricing',
+  },
+  {
+    title: 'PRO docs expansion: auth, billing, backend',
+    description:
+      'Expanded the premium documentation structure with clearer auth, billing, and backend guides so Starter Pro feels more implementation-ready and commercially credible.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Docs', 'Starter PRO', 'Billing', 'Backend', 'Auth'],
+    href: '/docs',
+  },
+  {
+    title:
+      'Production-shaped dashboard, projects, and admin surfaces',
+    description:
+      'Improved the dashboard, projects, and admin members pages with stronger UX, search, stats, not-found recovery, upgrade teasers, and a more premium SaaS entity surface.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Dashboard', 'Projects', 'Admin', 'UX', 'Starter PRO'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Marketing and navigation credibility pass',
+    description:
+      'Improved mobile navigation accessibility with native dialog behavior, added a stronger 404 page, supported nav badges like “Pro”, and enforced an explicit upgrade URL for safer monetization flows.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: [
+      'Marketing',
+      'Navigation',
+      'Accessibility',
+      'Monetization',
+    ],
+    href: '/',
+  },
 
   // NOW
   {
     title: 'Starter PRO launch hardening',
     description:
-      'Finish the production-readiness pass across auth, account state, billing interactions, settings UX, and edge-case recovery so Starter Pro can move from credible internal product to launch candidate.',
+      'Finish the final production-readiness pass across auth, billing interactions, account lifecycle, settings UX, docs clarity, and edge-case recovery so Starter Pro can move from strong internal product to actual launch candidate.',
     status: 'Now',
     milestone: 'Apr 2026',
     tags: ['Starter PRO', 'Launch', 'Quality', 'Auth', 'Billing'],
     href: '/upgrade',
   },
   {
-    title: 'Account lifecycle polish',
+    title: 'Monetization conversion hardening',
     description:
-      'Harden account linking, disconnect, verification, reset, and provider edge cases so self-service account management feels reliable in real-world usage.',
+      'Tighten the path from pricing, dashboard proof, docs, access, roadmap, and upgrade messaging to checkout trust and purchase confidence for Starter Pro.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Auth', 'Accounts', 'OAuth', 'Security', 'UX'],
+    tags: ['Conversion', 'Pricing', 'Checkout', 'Sales', 'Launch'],
+    href: '/access',
   },
   {
-    title: 'Waitlist and premium conversion system',
+    title: 'Account lifecycle reliability pass',
     description:
-      'Tighten the path from roadmap and marketing proof to waitlist capture, pricing trust, upgrade messaging, and premium launch intent.',
+      'Harden verification, reset, provider linking, provider disconnect, password setup, session messaging, and security history edge cases so self-service account management feels dependable in real-world use.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Waitlist', 'Conversion', 'Pricing', 'Launch'],
-    href: '/waitlist',
+    tags: ['Auth', 'Accounts', 'Security', 'UX', 'Reliability'],
   },
 
   // NEXT
   {
+    title: 'Analytics and launch instrumentation',
+    description:
+      'Finish GA4 and GTM wiring, validate conversion events across docs, pricing, waitlist, access, upgrade, and checkout flows, and measure premium discovery more reliably.',
+    status: 'Next',
+    milestone: 'H1 2026',
+    tags: ['Analytics', 'SEO', 'Growth', 'Launch'],
+  },
+  {
     title: 'Monetization readiness v2',
     description:
-      'Align pricing logic, checkout trust, legal language, demos, access messaging, and upgrade surfaces into a sharper premium conversion system for Starter Pro.',
+      'Align checkout trust, billing states, legal language, demos, access messaging, upgrade framing, and premium proof into a sharper conversion system for Starter Pro.',
     status: 'Next',
     milestone: 'H1 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
     href: '/access',
   },
   {
-    title: 'Analytics and launch instrumentation',
+    title: 'Starter PRO backend foundation beyond auth and billing',
     description:
-      'Finish GA4 and GTM wiring, validate conversion events across docs, blog, waitlist, access, and upgrade flows, and measure premium discovery more reliably.',
+      'Extend the premium starter from account and payment infrastructure into a stronger backend application baseline with clearer production patterns, entities, permissions, and launch guidance.',
     status: 'Next',
     milestone: 'H1 2026',
-    tags: ['Analytics', 'SEO', 'Growth', 'Launch'],
-  },
-  {
-    title: 'Cookie preferences + analytics consent (optional)',
-    description:
-      'If analytics remain enabled, add a lightweight consent layer and document tracking behavior in a simple and credible way.',
-    status: 'Next',
-    milestone: 'H1 2026',
-    tags: ['Privacy', 'Analytics', 'Trust'],
-    href: '/privacy',
+    tags: ['Starter PRO', 'Backend', 'Architecture', 'Premium'],
+    href: '/upgrade',
   },
   {
     title: 'Editorial cadence for authority building',
@@ -558,20 +645,20 @@ const items: RoadmapItem[] = [
     href: '/blog',
   },
   {
-    title: 'Starter PRO backend foundation beyond auth and billing',
+    title: 'Cookie preferences + analytics consent (optional)',
     description:
-      'Extend the premium starter from account and payment infrastructure into a stronger backend application baseline with clearer production patterns and launch guidance.',
+      'If analytics remain enabled, add a lightweight consent layer and document tracking behavior in a simple and credible way.',
     status: 'Next',
     milestone: 'H1 2026',
-    tags: ['Starter PRO', 'Backend', 'Architecture', 'Premium'],
-    href: '/upgrade',
+    tags: ['Privacy', 'Analytics', 'Trust'],
+    href: '/privacy',
   },
 
   // LATER
   {
     title: 'Starter PRO release',
     description:
-      'Launch the first premium Starter PRO package with production-oriented auth, billing, backend foundation, and launch-readiness guidance.',
+      'Launch the first premium Starter PRO package with production-oriented auth, billing, backend foundation, launch guidance, and a commercial surface that clearly justifies the offer.',
     status: 'Later',
     milestone: 'H1 2026',
     tags: ['Starter PRO', 'Premium', 'Launch'],
@@ -780,9 +867,9 @@ export default function RoadmapPage() {
                 Commercial readiness
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Trust pages, licensing, demos, pricing clarity,
-                waitlist capture, analytics, blog distribution, auth
-                reliability, and a predictable release cadence.
+                Trust pages, pricing clarity, launch proof, demos,
+                analytics, docs depth, auth reliability, billing
+                credibility, and a predictable release cadence.
               </p>
             </Card>
           </div>

@@ -58,6 +58,96 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.8.0',
+    title:
+      'Starter Pro security hardening, account security activity, premium auth UX, pricing clarity, and production-shaped app surfaces',
+    dateLabel: 'Fri 10 Apr 2026',
+    dateISO: '2026-04-10',
+    status: 'Stable',
+    releaseWeekLabel: 'Apr 2026 (weekly release)',
+    summary:
+      'This release materially upgrades Starter Pro from a credible auth-and-billing baseline into a much stronger launch candidate. It hardens core auth actions with rate limiting and auditing, surfaces backend-driven security activity inside settings, improves self-service account management for provider-based users, and refines authentication UX into a more premium SaaS entry experience. On the product and marketing side, it sharpens pricing and docs around real SaaS monetization, improves dashboard, admin, and projects surfaces, and makes the premium path feel more intentional, secure, and commercially credible.',
+    highlights: [
+      {
+        title: 'Security hardening for authentication flows',
+        items: [
+          'Added configurable rate limiting for login, password reset, verification resend, password change, and password creation flows to reduce abuse and brute-force risk.',
+          'Introduced auditing for authentication-related actions with metadata such as IP address and user agent to improve traceability and account monitoring.',
+          'Adopted more generic success and error messaging across sensitive auth actions to reduce information leakage and improve security posture.',
+          'Extended server-side auth flows with safer operational behavior instead of relying only on UI-level validation.',
+        ],
+      },
+      {
+        title: 'Backend-driven security activity in settings',
+        items: [
+          'Integrated recent security activity directly into the backend-driven settings page so users can review sign-ins, password changes, verification actions, and related auth events.',
+          'Improved activity lookup to match both user ID and normalized email for better coverage of security-relevant events.',
+          'Made security activity rendering hydration-safe and aligned timestamps with French locale and Paris time for a more reliable and user-friendly experience.',
+          'Improved device and source labels by mapping localhost and unknown addresses to clearer human-readable values such as “Local device” and “Unknown device”.',
+        ],
+      },
+      {
+        title: 'Stronger self-service account management',
+        items: [
+          'Added support for users who signed up with Google or GitHub to set a local password when none exists, improving long-term account flexibility and recovery options.',
+          'Added a dedicated UI card for password creation with server-side validation, rate limiting, and email notification behavior.',
+          'Refined connected account logic so provider disconnect rules are computed more safely and always preserve at least one valid sign-in path.',
+          'Improved provider utility functions and primary-provider label handling to make provider-related account states clearer and more maintainable.',
+        ],
+      },
+      {
+        title: 'Premium auth UX and safer public auth routing',
+        items: [
+          'Redirect authenticated users away from login, register, forgot-password, and similar public auth pages to avoid redundant access and reduce confusion.',
+          'Revamped the auth layout into a more premium two-column SaaS entry surface with stronger hierarchy, product highlights, and better trust signaling.',
+          'Polished login, registration, forgot password, verify email, and resend verification flows with clearer helper text, better loading states, improved skeletons, and stronger user guidance.',
+          'Improved auth screen consistency so Starter Pro feels less like an internal implementation and more like a sellable premium product.',
+        ],
+      },
+      {
+        title:
+          'Pricing, billing docs, and backend narrative are clearer',
+        items: [
+          'Raised Starter Pro pricing from €249 to €299 to better align positioning with product value and premium business goals.',
+          'Revamped the pricing page with clearer product positioning, deeper feature explanation, stronger FAQ content, and better monetization messaging.',
+          'Added and refined PRO billing documentation to explain how Stripe-backed monetization works in a real SaaS context.',
+          'Expanded and improved the SaaS PRO docs structure with dedicated auth, billing, and backend guides so the premium offer feels more complete and implementation-ready.',
+        ],
+      },
+      {
+        title: 'App surfaces now look more production-shaped',
+        items: [
+          'Improved the user menu with a temporary pro-ready avatar experience, provider indicators, fallback initials, and a clearer signed-in account surface.',
+          'Refined the dashboard to communicate a more monetizable, B2B-ready SaaS product shape with stronger summary cards, surface cards, and business-oriented copy.',
+          'Upgraded projects list and detail pages into a more premium entity surface with search, richer detail views, not-found handling, and a stronger foundation for future CRUD, billing, membership, and analytics features.',
+          'Added a reusable Pro gating direction and analytics teaser on projects pages to reinforce premium upgrade logic without breaking the product flow.',
+          'Enhanced the admin members experience with search, stats, invitation filtering, and clearer production-oriented structure.',
+        ],
+      },
+      {
+        title: 'Marketing and navigation quality improvements',
+        items: [
+          'Improved mobile navigation accessibility by switching to a native dialog-based flow with better semantics, focus behavior, and background scroll prevention.',
+          'Added a more user-friendly global 404 page with clearer recovery paths and navigation options.',
+          'Improved app navigation by supporting badges such as “Pro”, handling external links more safely, and enforcing a required upgrade URL through explicit configuration validation.',
+          'Continued tightening docs ordering, release messaging, and premium-path clarity so the public product surface better supports conversion.',
+        ],
+      },
+      {
+        title: 'Project hygiene and local setup cleanup',
+        items: [
+          'Expanded ignore rules to better cover generated files, IDE metadata, and local development artifacts.',
+          'Clarified local database environment defaults for easier onboarding.',
+          'Added then removed a marketing Docker Compose setup to avoid unnecessary maintenance and keep the local development story cleaner.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View roadmap',
+      href: '/roadmap',
+    },
+  },
+  {
     version: 'v1.7.0',
     title:
       'Starter Pro account management, OAuth UX, connected accounts, and in-session security flows',
