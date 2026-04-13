@@ -1,6 +1,6 @@
 ---
-title: Upgrade to PRO
-description: Understand when Starter Free reaches its limits and how upgrading unlocks production wiring.
+title: Upgrade to Starter Pro
+description: Learn when Starter Free reaches its limits, what Starter Pro adds, and how to move from product-shaped validation to a real SaaS foundation.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
@@ -8,125 +8,274 @@ import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-Starter Free helps you **validate and ship fast**.
-PRO helps you **wire and scale safely**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Free</Badge>
+  <Badge>Starter Pro</Badge>
+</div>
 
-Starter Free focuses on **product surface and UX contracts**.
-PRO focuses on **production wiring and infrastructure patterns**.
+# Upgrade when the business layer becomes the bottleneck
+
+Starter Free helps you **validate the product surface**.
+
+Starter Pro helps you **wire the product for real users, real billing, and a stronger path to launch**.
+
+Starter Free is the right choice when you want to move quickly on:
+
+- routes
+- screens
+- UX states
+- product structure
+- interface credibility
+
+Starter Pro becomes the right choice when your bottleneck is no longer the surface, but the **business layer**:
+
+- authentication
+- billing
+- protected routes
+- backend contracts
+- production setup
 
 You can stay on Starter Free as long as you want.
 
-Upgrade when your product needs **real infrastructure**.
+Upgrade when your product needs **real wiring, not more mock structure**.
 
 ---
 
-## You’ll learn
+## What this page helps you decide
 
-- When upgrading makes sense
-- What PRO adds on top of Starter Free
-- How migration works
-- Answers to common concerns
+- when Starter Free is enough
+- when Starter Pro becomes the better choice
+- what Starter Pro adds
+- how migration works
+- why the upgrade is about leverage, not lock-in
+
+---
+
+## The simple mental model
+
+> **Starter Free** validates the product.
+> **Starter Pro** prepares the product for users, billing, and growth.
+
+That is the core difference.
+
+Starter Free is not incomplete by accident.
+
+It is intentionally focused on **product-shaped validation**.
+
+Starter Pro is not “more screens”.
+
+It is the layer that removes the engineering work that usually delays launch.
 
 ---
 
 ## When should you upgrade?
 
-Upgrade when your project starts needing **real backend wiring**.
+Upgrade when you start needing **real infrastructure**.
 
-Use this checklist.
+You likely need Starter Pro when your product requires:
 
-You likely need PRO if you need:
+- real user authentication
+- session protection
+- email verification
+- password reset and password change flows
+- Google and GitHub OAuth
+- Stripe Checkout
+- billing portal access
+- invoices and subscription state
+- protected app foundations
+- plan-aware product behavior
+- production data flows
+- backend contracts and scalable app structure
 
-- Real user authentication
-- Email verification and password reset
-- Stripe Checkout and Customer Portal
-- Multi-organization support
-- Role-based access control
-- Production data layer
-- API contracts and backend patterns
+Starter Free gives you the **surface**.
 
-Starter Free provides the **surface**.
-
-PRO provides the **wiring**.
+Starter Pro gives you the **wiring**.
 
 ---
 
-## Free vs PRO comparison
+## A more practical rule
 
-| Capability | Starter Free | PRO |
+Stay on Starter Free when your current question is:
+
+> “What should the product feel like?”
+
+Move to Starter Pro when your current question becomes:
+
+> “How do I launch this without spending weeks wiring auth and billing?”
+
+That is usually the point where the upgrade starts paying for itself.
+
+---
+
+## Free vs Starter Pro
+
+| Capability | Starter Free | Starter Pro |
 |---|---|---|
-| Authentication | Screens + states (mocked) | Provider wiring (Auth.js / Clerk / Supabase) |
-| Billing | Billing UI surface | Stripe Checkout + Portal integration |
-| Organizations | Single-org UI | Multi-org + organization switcher |
-| Roles & permissions | Basic roles UI | RBAC + permission patterns |
-| Data layer | Mock data | Production data + API contracts |
-| Backend patterns | None | API structure + backend guidance |
-| Deployment readiness | Local development | Production setup guidance |
-| Packaging | Demo-ready | Production-ready foundation |
+| Product-shaped UI surfaces | Included | Included |
+| Auth screens and UX states | Included | Included + wired |
+| Email and password auth | Mock / surface only | Real |
+| Google and GitHub OAuth | No | Real |
+| Email verification | No | Real |
+| Password reset and password change | No | Real |
+| Stripe Checkout | UI only | Real |
+| Billing portal | UI only | Real |
+| Webhook synchronization | No | Real |
+| Invoices and subscription state | No | Real |
+| Protected app foundations | Partial | Production-shaped |
+| Data layer | Mock data | Real backend-ready structure |
+| Best use case | Validate the product surface | Launch faster |
 
-<small>PRO feature scope may evolve as the product ships.</small>
-
----
-
-## What you gain by upgrading
-
-### Time saved
-
-Authentication, billing, and backend wiring can take weeks.
-
-PRO provides a **structured baseline** so you start from a working architecture.
+<small>Starter Pro scope can continue to improve over time, but the upgrade direction is stable: move from product surface to real business wiring.</small>
 
 ---
 
-### Reduced risk
+## What Starter Pro adds
 
-Auth and billing systems are easy to get wrong.
+### Real authentication
 
-PRO provides safe integration patterns and architectural guidance.
+Starter Pro adds the layer that turns auth UX into a real product system.
 
----
+Typical additions include:
 
-### Production readiness
+- credentials authentication
+- Google OAuth
+- GitHub OAuth
+- email verification
+- forgot password
+- reset password
+- password change
+- connected accounts handling
+- safer provider disconnect rules
+- rate limiting foundations
 
-Starter Free proves the **product idea**.
-
-PRO prepares it for **real users and revenue**.
-
----
-
-## Migration path
-
-Upgrading is designed to be **incremental**.
-
-You keep:
-
-- Routes
-- Pages
-- Components
-- UI structure
-- Design system usage
-
-You replace:
-
-- Mock data → real data
-- Mock auth → real sessions
-- Mock billing → Stripe integration
-
-No rewrite required.
+This is usually one of the biggest time and risk sinks in a real SaaS launch.
 
 ---
 
-### Typical upgrade flow
+### Real billing
 
-Most teams upgrade in this order:
+Starter Pro adds monetization foundations that Starter Free intentionally leaves mocked.
 
-1. Add authentication provider
-2. Add session protection
-3. Introduce database layer
-4. Add Stripe billing
-5. Replace mock sources progressively
+Typical additions include:
 
-Migration happens **feature by feature**.
+- Stripe Checkout
+- billing portal flow
+- subscription lifecycle handling
+- invoices
+- webhook synchronization
+- plan-aware product behavior
+
+This is the layer that helps the product move from “good-looking app” to “something you can actually charge for”.
+
+---
+
+### Stronger protected app structure
+
+Starter Pro is not only about integrating providers.
+
+It also adds stronger foundations for:
+
+- protected routes
+- billing-aware areas
+- settings foundations
+- clearer domain boundaries
+- production-shaped app structure
+
+That matters because many products do not fail at the design layer.
+
+They fail when the architecture becomes fragile during launch.
+
+---
+
+### A shorter path to revenue
+
+The real value of Starter Pro is not “more code”.
+
+The value is removing repeated work in the areas that most often block shipping:
+
+- auth
+- billing
+- protection
+- state synchronization
+- production setup
+
+That is why the upgrade is fundamentally a **time-to-revenue decision**.
+
+---
+
+## What you keep when you upgrade
+
+Upgrading is designed to be **incremental**, not destructive.
+
+You keep your:
+
+- routes
+- pages
+- components
+- layout structure
+- design system usage
+- product surface
+
+You do **not** need to throw away what you built with Starter Free.
+
+The goal is to preserve the product-facing layer and upgrade the wiring underneath it.
+
+---
+
+## What changes when you upgrade
+
+You progressively replace:
+
+- mock auth → real authentication
+- mock billing → real Stripe billing
+- mock data → real data layer
+- mock access states → protected routes and sessions
+
+The interface does not need to be reinvented.
+
+The business layer becomes real.
+
+---
+
+## Typical upgrade flow
+
+Most projects upgrade in an order like this:
+
+1. add authentication provider
+2. add session protection
+3. introduce the database layer
+4. wire billing and subscriptions
+5. replace mock data progressively
+6. tighten protected product behavior
+
+This happens **feature by feature**, not all at once.
+
+That matters because it keeps migration realistic.
+
+---
+
+## Why not wire everything yourself?
+
+You absolutely can.
+
+Starter Pro is not trying to replace engineering judgment.
+
+It exists to reduce the cost of repeated implementation work in areas that are:
+
+- time-consuming
+- risk-sensitive
+- easy to get partially wrong
+- often required before revenue
+
+So the question is not:
+
+> “Can I build this myself?”
+
+The better question is:
+
+> “Is rebuilding this the best use of my time right now?”
+
+For many products, the honest answer is no.
 
 ---
 
@@ -136,9 +285,11 @@ Migration happens **feature by feature**.
 
 No.
 
-Starter Free and PRO share the same architecture.
+Starter Free and Starter Pro are part of the same product path.
 
-Your pages and components remain compatible.
+Your routes, pages, components, and interface structure remain useful.
+
+The point is to preserve your surface and improve the wiring.
 
 ---
 
@@ -146,9 +297,11 @@ Your pages and components remain compatible.
 
 Yes.
 
-Starter Free has **no lock-in**.
+Starter Free has no lock-in.
 
-Upgrade whenever your product requires real wiring.
+You can stay there as long as your product is still in the validation phase.
+
+Upgrade when real auth, billing, and production foundations become necessary.
 
 ---
 
@@ -156,43 +309,71 @@ Upgrade whenever your product requires real wiring.
 
 No.
 
-You can wire parts independently:
-
-- Auth first
-- Billing later
-- Data progressively
-
 Migration is incremental.
 
----
+A common path is:
 
-### “Why not wire everything myself?”
+- auth first
+- protected routes second
+- billing after that
+- data layer progressively
 
-You absolutely can.
-
-PRO exists to:
-
-- reduce risk
-- remove uncertainty
-- save engineering time
-
-It’s a **leverage decision**, not a requirement.
+You can move in layers.
 
 ---
 
-## Mental model to keep
+### “Is Starter Pro meant for real commercial SaaS products?”
 
-> Starter Free → validate the product
-> PRO → productionize the product
+Yes.
 
-Both are part of the **same development path**.
+Starter Pro is designed to become the base of a real product, not just a demo repository or UI showcase.
+
+That is the point of the upgrade.
 
 ---
 
-## Next steps
+### “Why not stay on Starter Free forever?”
 
-You now understand when and why upgrading becomes useful.
+You can.
 
-Start building with Starter Free and upgrade when your product requires **real production wiring**.
+But once your product needs:
+
+- real users
+- real sessions
+- real billing
+- real protection
+- real launch confidence
+
+then the cost of staying on a mocked foundation usually becomes higher than the cost of upgrading.
+
+---
+
+## How to decide today
+
+Use this rule:
+
+### Stay on Starter Free if:
+- you are still shaping the product
+- you want to validate interface credibility
+- you want to test layout, navigation, and core flows
+- backend work would slow learning down
+
+### Move to Starter Pro if:
+- you are serious about launching
+- auth and billing are now the blocker
+- you want a stronger production baseline
+- you want less uncertainty between product and revenue
+
+---
+
+## Recommended next step
+
+If you are still exploring the product, keep building with Starter Free.
+
+If the business layer is now the thing slowing you down, move to Starter Pro.
+
+The product path is designed to make that transition feel natural:
+
+**validate first, wire later, launch stronger.**
 
 </DocsPageShell>
