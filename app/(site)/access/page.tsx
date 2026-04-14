@@ -68,8 +68,8 @@ const INTERNAL = {
 
 const PRICING = {
   starterFree: 'Free',
-  starterProLaunch: '$199',
-  starterProRegular: '$299',
+  starterProLaunch: '199 €',
+  starterProRegular: '299 €',
 } as const;
 
 const starterProIncludes = [

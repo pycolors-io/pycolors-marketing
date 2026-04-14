@@ -53,7 +53,7 @@ const INTERNAL = {
   roadmap: '/roadmap',
   access: '/access',
   starterFree: '/starters/free',
-  starterPro: '/starter-pro',
+  starterPro: '/starters/pro',
   docsStarter: '/docs/saas-starter',
   docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
   templates: '/templates',
