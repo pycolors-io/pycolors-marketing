@@ -14,6 +14,7 @@ import {
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import { SiteHeader } from '@/components/layout/site-header';
+import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
 
 type QuickLink = {
@@ -25,52 +26,63 @@ type QuickLink = {
   featured?: boolean;
 };
 
-export default function NotFound() {
-  const quickLinks: QuickLink[] = [
-    {
-      title: 'Starter Free',
-      description:
-        'Start with a production-shaped SaaS foundation and validate faster.',
-      href: '/starters/free',
-      icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
-      badge: 'Best entry',
-      featured: true,
-    },
-    {
-      title: 'Pricing',
-      description:
-        'See the upgrade path from free exploration to premium product access.',
-      href: '/access',
-      icon: <Compass className="h-4 w-4" aria-hidden="true" />,
-      badge: 'Upgrade',
-    },
-    {
-      title: 'Documentation',
-      description:
-        'Go back to the main docs entry and navigate PyColors with clarity.',
-      href: '/docs',
-      icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
-      badge: 'Learn',
-    },
-    {
-      title: 'Patterns',
-      description:
-        'Explore production-ready UI and SaaS patterns built on the system.',
-      href: '/ui/patterns',
-      icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
-      badge: 'Explore',
-    },
-  ];
+const quickLinks: QuickLink[] = [
+  {
+    title: 'Starter Free',
+    description:
+      'Start with a production-shaped SaaS surface and validate product direction faster.',
+    href: '/starters/free',
+    icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Best entry point',
+    featured: true,
+  },
+  {
+    title: 'Starter Pro',
+    description:
+      'Move from validation to real auth, real billing, and stronger launch-ready foundations.',
+    href: '/starter-pro',
+    icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Paid upgrade',
+  },
+  {
+    title: 'Pricing',
+    description:
+      'Review the commercial path from Starter Free to Starter Pro access.',
+    href: '/access',
+    icon: <Compass className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Decision page',
+  },
+  {
+    title: 'Documentation',
+    description:
+      'Go back to the docs and navigate PyColors through the product and implementation paths.',
+    href: '/docs',
+    icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Learn',
+  },
+  {
+    title: 'Patterns',
+    description:
+      'Explore production-shaped UI and SaaS patterns built on the system.',
+    href: '/ui/patterns',
+    icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Explore',
+  },
+];
 
+export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-background">
       <SiteHeader />
 
       <main id="content" className="flex-1 pt-16 text-foreground">
-        <Container className="py-20 sm:py-20 lg:py-24">
-          <section className="mx-auto max-w-6xl text-center">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <section className="mx-auto max-w-5xl text-center">
             <div className="flex justify-center">
-              <Badge variant="secondary" className="gap-2 px-3 py-1">
+              <Badge
+                variant="secondary"
+                className="gap-2 rounded-full px-3 py-1"
+              >
                 <span
                   className="inline-flex h-1.5 w-1.5 rounded-full bg-warning"
                   aria-hidden="true"
@@ -79,18 +91,22 @@ export default function NotFound() {
               </Badge>
             </div>
 
-            <h1 className="mt-5 font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              This page could not be found.
+            <h1 className="mt-5 text-balance font-brand text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+              This page does not exist anymore.
             </h1>
 
-            <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-6 text-muted-foreground sm:text-base">
-              The link may be outdated, broken, or moved. The fastest
-              way back into PyColors is through the core product paths
-              below.
+            <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
+              The link may be outdated, moved, or no longer part of
+              the current product structure. The fastest way back into
+              PyColors is through the core product paths below.
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg" className="min-w-50">
+              <Button
+                asChild
+                size="lg"
+                className="min-w-[220px] rounded-xl"
+              >
                 <Link href="/starters/free">
                   Start with Starter Free
                   <Rocket
@@ -100,24 +116,15 @@ export default function NotFound() {
                 </Link>
               </Button>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="min-w-50"
-              >
-                <Link href="/access">
-                  View pricing
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
+              <BuyStarterProButton
+                fullWidth={false}
+                label="Buy Starter Pro — 199 €"
+              />
             </div>
 
             <div className="mt-4 flex flex-wrap justify-center gap-2">
-              <Badge variant="outline">Starter</Badge>
+              <Badge variant="outline">Starter Free</Badge>
+              <Badge variant="outline">Starter Pro</Badge>
               <Badge variant="outline">Pricing</Badge>
               <Badge variant="outline">Docs</Badge>
               <Badge variant="outline">Patterns</Badge>
@@ -135,7 +142,7 @@ export default function NotFound() {
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {quickLinks.map((item) => (
                 <Link
                   key={item.href}
@@ -210,11 +217,12 @@ export default function NotFound() {
                     A better fallback than a dead end
                   </div>
 
-                  <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                    PyColors is designed as a system: use Starter Free
-                    to begin, pricing to evaluate access, docs to
-                    learn, and patterns to explore production-ready
-                    implementation ideas.
+                  <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                    PyColors is structured as a product ecosystem: use
+                    Starter Free to begin, Starter Pro when the
+                    business layer matters, pricing to make the buying
+                    decision, docs to learn, and patterns to explore
+                    implementation direction.
                   </p>
                 </div>
 
@@ -240,12 +248,12 @@ export default function NotFound() {
                       className="h-4 w-4"
                       aria-hidden="true"
                     />
-                    Think this page should exist?
+                    Think this page should still exist?
                   </div>
 
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    Report the broken path or check what changed
-                    recently.
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    Report the broken path, or check what changed
+                    recently in the product and documentation.
                   </p>
                 </div>
 
@@ -275,8 +283,8 @@ export default function NotFound() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Tip: the fastest recovery path is usually Starter Free,
-              Pricing, or Docs.
+              The fastest recovery path is usually Starter Free,
+              Starter Pro, Pricing, or Docs.
             </p>
           </section>
         </Container>
