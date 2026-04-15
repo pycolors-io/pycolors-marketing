@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import {
   BadgeCheck,
   BookOpen,
   ExternalLink,
   LayoutTemplate,
-  Lock,
-  Shield,
   Sparkles,
 } from 'lucide-react';
 
@@ -380,196 +379,153 @@ export default function StarterFreePage() {
           />
         </div>
 
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
+        <section className="relative overflow-hidden rounded-4xl border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
+          <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="secondary" className="gap-2">
-                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  Free
-                </Badge>
-                <Badge variant="outline">Production-shaped</Badge>
-                <Link
-                  href={INTERNAL.starters}
-                  className={cn(
-                    'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
-                    focusRing,
-                  )}
-                >
-                  Back to Starters
-                </Link>
-              </div>
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary" className="gap-2">
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                Starter Free
+              </Badge>
 
-              <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Validate the product first.{' '}
-                <span className="block text-muted-foreground">
-                  Wire the business later.
-                </span>
-              </h1>
+              <Badge variant="outline">Production-shaped</Badge>
 
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-                Starter Free gives you a credible SaaS surface out of
-                the box: auth UX, dashboard, CRUD screens, settings,
-                billing entrypoints, and B2B member management —
-                mocked by design so you can move fast without backend
-                overhead.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <a
-                    href={EXTERNAL.demo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label="Open the Starter Free live demo"
-                  >
-                    Open live demo
-                    <ExternalLink
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </Button>
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="secondary"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <a
-                    href={EXTERNAL.repo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label="Open the Starter Free repository on GitHub"
-                  >
-                    Get the repo
-                    <ExternalLink
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </Button>
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.docs}>Read the docs</Link>
-                </Button>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-2">
-                <Pill>Next.js App Router</Pill>
-                <Pill>Tailwind v4</Pill>
-                <Pill>PyColors UI</Pill>
-                <Pill>Mock data · no backend</Pill>
-                <Pill>Real screens and UX contracts</Pill>
-              </div>
+              <Link
+                href={INTERNAL.starters}
+                className={cn(
+                  'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                  focusRing,
+                )}
+              >
+                Back to Starters
+              </Link>
             </div>
 
-            <div>
-              <div className="rounded-[28px] border bg-background p-3 shadow-2xl shadow-black/5">
-                <div className="rounded-[22px] border bg-card p-4 sm:p-5">
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <div>
-                      <p className="text-sm font-medium">
-                        Starter Free Preview
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Product-shaped SaaS surface
-                      </p>
+            <h1 className="mt-6 max-w-4xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              Ship a credible SaaS UI fast.
+              <span className="mt-2 block text-muted-foreground">
+                Validate the product before wiring the backend.
+              </span>
+            </h1>
+
+            <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
+              Starter Free gives you a credible SaaS surface out of
+              the box: auth UX, dashboard, CRUD screens, settings,
+              billing entrypoints, and B2B member management — mocked
+              by design so you can move fast without backend overhead.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <a
+                  href={EXTERNAL.demo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Open the Starter Free live demo"
+                >
+                  Open live demo
+                  <ExternalLink
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="secondary"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <a
+                  href={EXTERNAL.repo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Open the Starter Free repository on GitHub"
+                >
+                  Get the repo
+                  <ExternalLink
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.docs}>Read the docs</Link>
+              </Button>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              <span>Designed for fast validation</span>
+              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+              <span>No backend required</span>
+              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+              <span>
+                Upgrade to PRO when wiring becomes the blocker
+              </span>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-2">
+              <Pill>Next.js App Router</Pill>
+              <Pill>Tailwind v4</Pill>
+              <Pill>PyColors UI</Pill>
+              <Pill>Mock data · no backend</Pill>
+              <Pill>Real screens and UX contracts</Pill>
+            </div>
+
+            <div className="mt-10">
+              <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
+                <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
+                  <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
                     </div>
-                    <Badge variant="outline" className="rounded-full">
-                      Ready to validate
-                    </Badge>
+
+                    <div className="rounded-full border px-3 py-1 text-[11px] text-muted-foreground">
+                      Starter Free preview
+                    </div>
                   </div>
 
-                  <div className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-                    <div className="rounded-2xl border p-4">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium">
-                          Dashboard surface
-                        </p>
-                        <Sparkles className="h-4 w-4 text-muted-foreground" />
-                      </div>
+                  <div className="overflow-hidden rounded-[18px] border bg-card">
+                    <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_40%)]">
+                      <Image
+                        src="/images/starters/starter-free-hero-pycolors.png"
+                        alt="Starter Free dashboard preview"
+                        fill
+                        priority
+                      />
 
-                      <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                        {[
-                          ['Projects', '12'],
-                          ['Members', '4'],
-                          ['Plan', 'Free'],
-                        ].map(([label, value]) => (
-                          <div
-                            key={label}
-                            className="rounded-xl border bg-muted/30 p-3"
-                          >
-                            <p className="text-xs text-muted-foreground">
-                              {label}
-                            </p>
-                            <p className="mt-2 text-lg font-semibold">
-                              {value}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-4 rounded-xl border bg-muted/20 p-4">
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <span>Billing entrypoint</span>
-                          <span>Mocked by design</span>
-                        </div>
-                        <div className="mt-4 h-28 rounded-xl border border-dashed bg-background" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="rounded-2xl border p-4">
-                        <div className="flex items-center gap-2">
-                          <Lock className="h-4 w-4 text-muted-foreground" />
-                          <p className="text-sm font-medium">
-                            Auth UX
+                      <div className="grid h-full place-items-center px-6 text-center">
+                        <div>
+                          <p className="text-sm font-medium text-foreground sm:text-base">
+                            Product screenshot area
+                          </p>
+                          <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+                            Place a real dashboard screenshot here to
+                            make the value instantly tangible and
+                            increase conversion.
                           </p>
                         </div>
-                        <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                          <li>Login and register</li>
-                          <li>Forgot password</li>
-                          <li>OAuth entrypoint</li>
-                          <li>Loading and error states</li>
-                        </ul>
-                      </div>
-
-                      <div className="rounded-2xl border p-4">
-                        <div className="flex items-center gap-2">
-                          <Shield className="h-4 w-4 text-muted-foreground" />
-                          <p className="text-sm font-medium">
-                            B2B surface
-                          </p>
-                        </div>
-                        <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                          <li>Admin area</li>
-                          <li>Members table</li>
-                          <li>Roles and invitations</li>
-                          <li>Settings structure</li>
-                        </ul>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <TrustPill label="No lock-in" />
-                <TrustPill label="Progressive adoption" />
-                <TrustPill label="Upgrade-ready" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/10 to-transparent" />
               </div>
             </div>
           </div>
@@ -598,7 +554,7 @@ export default function StarterFreePage() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2 sm:min-w-[240px] sm:justify-end">
+              <div className="flex flex-wrap gap-2 sm:min-w-60 sm:justify-end">
                 <Button asChild size="sm" variant="outline">
                   <Link href={INTERNAL.guides}>Guides</Link>
                 </Button>
