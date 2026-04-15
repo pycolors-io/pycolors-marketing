@@ -1,15 +1,13 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import {
-  ArrowRight,
   BadgeCheck,
   Check,
   CreditCard,
   LayoutDashboard,
   Lock,
   Rocket,
-  Shield,
-  Zap,
 } from 'lucide-react';
 
 import {
@@ -224,7 +222,7 @@ export default function StarterProPage() {
             },
             offers: {
               '@type': 'Offer',
-              priceCurrency: 'USD',
+              priceCurrency: 'EUR',
               price: '199',
               availability: 'https://schema.org/InStock',
               url: 'https://pycolors.io/access',
@@ -233,15 +231,23 @@ export default function StarterProPage() {
         }}
       />
 
-      <section className="relative overflow-hidden border-b">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-        <div className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-20 sm:px-8 sm:py-24 lg:flex-row lg:items-center lg:gap-16 lg:px-12 lg:py-28">
-          <div className="max-w-2xl flex-1">
+      <section className="relative overflow-hidden border-b bg-background">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_35%)]" />
+        <div className="absolute inset-x-0 top-0 -z-10 h-px bg-linear-to-r from-transparent via-border to-transparent" />
+        <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
+          <div className="max-w-4xl">
             <div className="mb-6 flex flex-wrap items-center gap-3">
               <Badge className="rounded-full px-3 py-1 text-xs font-medium">
                 Starter Pro
               </Badge>
+
+              <Badge
+                variant="outline"
+                className="rounded-full px-3 py-1 text-xs font-medium"
+              >
+                Production-ready
+              </Badge>
+
               <p className="text-sm text-muted-foreground">
                 Launch offer{' '}
                 <span className="font-semibold text-foreground">
@@ -252,19 +258,21 @@ export default function StarterProPage() {
               </p>
             </div>
 
-            <h1 className="max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Ship the product.{' '}
-              <span className="text-muted-foreground">
-                Skip the repeated foundation work.
+            <h1 className="max-w-5xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              Launch your SaaS with the real foundations already
+              wired.{' '}
+              <span className="mt-2 block text-muted-foreground">
+                Skip months of repeated setup work and focus on what
+                customers pay for.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
+            <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
               Starter Pro is a production-ready Next.js SaaS starter
               with real authentication, real Stripe billing, protected
-              app structure, and scalable foundations already wired so
-              you can launch sooner and focus on the part customers
-              actually pay for.
+              app structure, and scalable account foundations already
+              integrated so you can ship faster, reduce setup fatigue,
+              and move sooner toward revenue.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -275,12 +283,29 @@ export default function StarterProPage() {
 
               <Button
                 asChild
-                variant="outline"
+                variant="secondary"
                 size="lg"
                 className="h-11 rounded-xl px-6 text-sm font-medium"
               >
                 <Link href="/access">View pricing</Link>
               </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <Link href="/docs/starter-pro">Read the docs</Link>
+              </Button>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              <span>Real auth and billing included</span>
+              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+              <span>Protected app foundations</span>
+              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+              <span>Built to become a commercial SaaS</span>
             </div>
 
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -297,93 +322,48 @@ export default function StarterProPage() {
             </ul>
           </div>
 
-          <div className="flex-1">
-            <div className="relative mx-auto max-w-2xl rounded-[28px] border bg-card p-3 shadow-2xl shadow-black/5">
-              <div className="rounded-[22px] border bg-background p-4 sm:p-5">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <p className="text-sm font-medium">
-                      Starter Pro Preview
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Production-shaped SaaS surface
-                    </p>
+          <div className="mt-12">
+            <div className="relative overflow-hidden rounded-[30px] border bg-card/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
+              <div className="rounded-3xl border bg-muted/30 p-2 sm:p-3">
+                <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
                   </div>
 
-                  <Badge variant="outline" className="rounded-full">
-                    Built to monetize
-                  </Badge>
+                  <div className="rounded-full border bg-background/80 px-3 py-1 text-[11px] text-muted-foreground backdrop-blur">
+                    Starter Pro preview
+                  </div>
                 </div>
 
-                <div className="mt-4 grid gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-                  <div className="rounded-2xl border p-4">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium">
-                        Revenue dashboard
-                      </p>
-                      <Zap className="h-4 w-4 text-muted-foreground" />
-                    </div>
+                <div className="overflow-hidden rounded-[20px] border bg-background">
+                  <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_40%)]">
+                    <Image
+                      src="/images/starters/starter-pro-hero-pycolors.png"
+                      alt="Starter Pro dashboard preview"
+                      fill
+                      priority
+                      className="object-cover object-top"
+                    />
 
-                    <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                      {[
-                        ['MRR', '$3,420'],
-                        ['Trials', '28'],
-                        ['Active', '142'],
-                      ].map(([label, value]) => (
-                        <div
-                          key={label}
-                          className="rounded-xl border bg-muted/30 p-3"
-                        >
-                          <p className="text-xs text-muted-foreground">
-                            {label}
-                          </p>
-                          <p className="mt-2 text-lg font-semibold">
-                            {value}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-4 rounded-xl border bg-muted/20 p-4">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>Billing health</span>
-                        <span>Synced with Stripe</span>
-                      </div>
-                      <div className="mt-4 h-28 rounded-xl border border-dashed bg-background" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="rounded-2xl border p-4">
-                      <div className="flex items-center gap-2">
-                        <Shield className="h-4 w-4 text-muted-foreground" />
-                        <p className="text-sm font-medium">
-                          Authentication
+                    <div className="grid h-full place-items-center px-6 text-center">
+                      <div>
+                        <p className="text-sm font-medium text-foreground sm:text-base">
+                          Product screenshot area
+                        </p>
+                        <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+                          Show the real dashboard, billing, settings,
+                          and protected app flows here to make the
+                          product instantly feel production-ready.
                         </p>
                       </div>
-                      <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                        <li>Email and password</li>
-                        <li>Google and GitHub OAuth</li>
-                        <li>Email verification</li>
-                        <li>Password reset</li>
-                      </ul>
-                    </div>
-
-                    <div className="rounded-2xl border p-4">
-                      <div className="flex items-center gap-2">
-                        <CreditCard className="h-4 w-4 text-muted-foreground" />
-                        <p className="text-sm font-medium">Billing</p>
-                      </div>
-                      <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                        <li>Checkout flow</li>
-                        <li>Billing portal</li>
-                        <li>Invoices</li>
-                        <li>Webhook sync</li>
-                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/10 to-transparent" />
             </div>
           </div>
         </div>
