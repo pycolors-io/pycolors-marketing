@@ -11,7 +11,7 @@ import {
   Github,
   Menu,
   Package,
-  Star,
+  Sparkles,
   X,
 } from 'lucide-react';
 import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
@@ -51,15 +51,6 @@ const focusRing =
 function matchPathname(pathname: string, href: string) {
   if (href === '/') return pathname === '/';
   return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-function isUpgradeContext(pathname: string | null) {
-  if (!pathname) return false;
-
-  return (
-    pathname.startsWith('/upgrade') ||
-    pathname.startsWith('/waitlist')
-  );
 }
 
 export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
@@ -181,8 +172,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     };
   }, [isMenuOpen]);
 
-  const showWaitlistCta = isUpgradeContext(pathname);
-
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
     const productItems: MobileMenuItem[] = [
       ...PRIMARY_NAV_ITEMS.map((item) => ({
@@ -190,6 +179,23 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         href: item.href,
         icon: <Package aria-hidden="true" className="h-4 w-4" />,
       })),
+      {
+        label: 'Starter Free',
+        href: '/starters/free',
+        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
+        badge: 'Free',
+      },
+      {
+        label: 'Starter Pro',
+        href: '/starter-pro',
+        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
+        badge: '199 €',
+      },
+      {
+        label: 'Pricing',
+        href: '/access',
+        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
+      },
     ];
 
     const resourceItems: MobileMenuItem[] = [
@@ -220,7 +226,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: 'Changelog',
         href: '/changelog',
-        icon: <Star aria-hidden="true" className="h-4 w-4" />,
+        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
       },
     ];
 
@@ -285,14 +291,12 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               />
 
               <Button asChild size="sm" variant="outline">
-                <Link href="/starters/free">Start Free</Link>
+                <Link href="/starters/free">Starter Free</Link>
               </Button>
 
               <Button asChild size="sm">
-                <Link
-                  href={showWaitlistCta ? '/waitlist' : '/upgrade'}
-                >
-                  {showWaitlistCta ? 'Join waitlist' : 'Explore PRO'}
+                <Link href="/starter-pro">
+                  Starter Pro
                   <ArrowRight
                     aria-hidden="true"
                     className="ml-2 h-4 w-4"
@@ -374,17 +378,18 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1">
                         <p className="text-sm font-semibold text-foreground">
-                          Build faster with PyColors
+                          Build with PyColors
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Production-ready UI, starter kits, docs, and
-                          product systems built to help teams ship
-                          faster.
+                          Start with a credible product surface today,
+                          then move to real auth, real billing, and
+                          stronger business foundations when you are
+                          ready to launch.
                         </p>
                       </div>
 
                       <span className="inline-flex rounded-full border border-border/60 bg-background px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                        Premium
+                        Product-first
                       </span>
                     </div>
                   </div>
@@ -476,11 +481,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </p>
 
                     <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>• Production-ready SaaS UI</li>
-                      <li>• Faster path from idea to launch</li>
+                      <li>• Validate product shape first</li>
                       <li>
-                        • Clear upgrade path from free to premium
+                        • Upgrade when wiring becomes the bottleneck
                       </li>
+                      <li>• Move faster from idea to launch</li>
                     </ul>
 
                     <div className="mt-4">
@@ -499,18 +504,13 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   className="w-full justify-center"
                 >
                   <Link href="/starters/free" onClick={closeMenu}>
-                    Start Free
+                    Starter Free
                   </Link>
                 </Button>
 
                 <Button asChild className="w-full justify-center">
-                  <Link
-                    href={showWaitlistCta ? '/waitlist' : '/upgrade'}
-                    onClick={closeMenu}
-                  >
-                    {showWaitlistCta
-                      ? 'Join waitlist'
-                      : 'Explore PRO'}
+                  <Link href="/starter-pro" onClick={closeMenu}>
+                    Starter Pro
                     <ArrowRight
                       aria-hidden="true"
                       className="ml-2 h-4 w-4"

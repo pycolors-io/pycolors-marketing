@@ -28,19 +28,19 @@ const GROUPS: Array<{
     title: 'Start',
     links: [
       { label: 'Starter Free', href: '/starters/free' },
-      { label: 'Access', href: '/access' },
-      { label: 'Upgrade to PRO', href: '/upgrade' },
-      { label: 'PRO Waitlist', href: '/waitlist' },
+      { label: 'Starter Pro', href: '/starter-pro' },
+      { label: 'Pricing', href: '/access' },
+      { label: 'Upgrade', href: '/upgrade' },
     ],
   },
   {
     title: 'Learn',
     links: [
+      { label: 'Docs', href: '/docs' },
       { label: 'Guides', href: '/guides' },
-      { label: 'Blog', href: '/blog' },
       { label: 'Patterns', href: '/ui/patterns' },
       { label: 'Examples', href: '/examples' },
-      { label: 'Starter docs', href: '/docs/saas-starter' },
+      { label: 'Blog', href: '/blog' },
     ],
   },
   {
@@ -49,14 +49,14 @@ const GROUPS: Array<{
       { label: 'UI System', href: '/ui' },
       { label: 'Starters', href: '/starters' },
       { label: 'Templates', href: '/templates' },
-      { label: 'UI Docs', href: '/docs/ui' },
+      { label: 'Starter docs', href: '/docs/saas-starter' },
     ],
   },
   {
     title: 'Trust',
     links: [
-      { label: 'Roadmap', href: '/roadmap' },
       { label: 'Changelog', href: '/changelog' },
+      { label: 'Roadmap', href: '/roadmap' },
       { label: 'License', href: '/license' },
       { label: 'Terms', href: '/terms' },
       { label: 'Privacy', href: '/privacy' },
@@ -81,12 +81,6 @@ const EXTERNAL: FooterLink[] = [
     href: 'https://github.com/pycolors-io/pycolors-starter-free',
     external: true,
     ariaLabel: 'Open PyColors Starter Free repository on GitHub',
-  },
-  {
-    label: 'Gumroad',
-    href: 'https://pycolors.gumroad.com',
-    external: true,
-    ariaLabel: 'Open PyColors on Gumroad (opens in a new tab)',
   },
 ];
 
@@ -132,7 +126,46 @@ function getFooterBrand(pathname: string | null) {
       label: 'PyColors',
       suffix: `v${APP_VERSION}`,
       context:
-        'Production-shaped SaaS ecosystem. Built to help developers ship product surfaces faster and move toward a premium, production-ready SaaS foundation.',
+        'Production-first SaaS ecosystem built to help developers validate product surfaces first, then move toward real business wiring and launch-ready foundations.',
+    };
+  }
+
+  if (
+    pathname === '/starter-pro' ||
+    pathname.startsWith('/starter-pro')
+  ) {
+    return {
+      label: 'PyColors',
+      suffix: 'Starter Pro · Launch-ready foundation',
+      context:
+        'Move from product-shaped validation to real auth, real billing, and a stronger SaaS baseline.',
+    };
+  }
+
+  if (pathname === '/starters' || pathname.startsWith('/starters/')) {
+    return {
+      label: 'PyColors',
+      suffix: 'Starters · Validation first',
+      context:
+        'Start with a credible product surface now, then upgrade when the business layer becomes the real bottleneck.',
+    };
+  }
+
+  if (pathname === '/access' || pathname.startsWith('/access')) {
+    return {
+      label: 'PyColors',
+      suffix: 'Pricing · Clear upgrade path',
+      context:
+        'Choose the path that matches your current bottleneck: validate with Free or move faster with Starter Pro.',
+    };
+  }
+
+  if (pathname === '/upgrade' || pathname.startsWith('/upgrade')) {
+    return {
+      label: 'PyColors',
+      suffix: 'Upgrade · Free to Pro',
+      context:
+        'Understand when Starter Free reaches its limit and when Starter Pro becomes the better business decision.',
     };
   }
 
@@ -142,9 +175,9 @@ function getFooterBrand(pathname: string | null) {
   ) {
     return {
       label: 'PyColors',
-      suffix: 'Patterns · SaaS surfaces',
+      suffix: 'Patterns · Product surfaces',
       context:
-        'Move from primitives to production-shaped product patterns.',
+        'Move from primitives to production-shaped SaaS patterns built for real product workflows.',
     };
   }
 
@@ -152,15 +185,17 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: `UI System · v${UI_VERSION}`,
-      context: 'A predictable UI foundation for real SaaS products.',
+      context:
+        'A predictable UI foundation for building real SaaS products with more consistency and less friction.',
     };
   }
 
   if (pathname === '/examples' || pathname.startsWith('/examples')) {
     return {
       label: 'PyColors',
-      suffix: 'Examples · Product showcase',
-      context: 'See real SaaS surfaces and product directions.',
+      suffix: 'Examples · Product direction',
+      context:
+        'Explore real product directions and production-shaped SaaS surfaces.',
     };
   }
 
@@ -168,40 +203,8 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Guides · SaaS knowledge base',
-      context: 'Learn the product logic behind modern SaaS systems.',
-    };
-  }
-
-  if (pathname === '/access' || pathname.startsWith('/access')) {
-    return {
-      label: 'PyColors',
-      suffix: 'Access · Pricing direction',
       context:
-        'Choose the path that matches your current bottleneck.',
-    };
-  }
-
-  if (pathname === '/starters' || pathname.startsWith('/starters/')) {
-    return {
-      label: 'PyColors',
-      suffix: 'Starters · Free available',
-      context: 'Validate UX first, wire the business layer later.',
-    };
-  }
-
-  if (pathname === '/upgrade' || pathname.startsWith('/upgrade')) {
-    return {
-      label: 'PyColors',
-      suffix: 'PRO · Coming soon',
-      context: 'Upgrade when wiring becomes the bottleneck.',
-    };
-  }
-
-  if (pathname === '/waitlist' || pathname.startsWith('/waitlist')) {
-    return {
-      label: 'PyColors',
-      suffix: 'Waitlist · Early access',
-      context: 'Join the premium path before launch.',
+        'Learn the product logic behind auth, billing, dashboards, team systems, and modern SaaS structure.',
     };
   }
 
@@ -211,16 +214,18 @@ function getFooterBrand(pathname: string | null) {
   ) {
     return {
       label: 'PyColors',
-      suffix: 'Templates · Premium-ready',
-      context: 'Ship polished surfaces faster.',
+      suffix: 'Templates · Premium surfaces',
+      context:
+        'Ship polished product surfaces faster with reusable premium building blocks.',
     };
   }
 
   if (pathname === '/docs' || pathname.startsWith('/docs/')) {
     return {
       label: 'PyColors',
-      suffix: 'Docs · Docs-first',
-      context: 'Structure before complexity.',
+      suffix: 'Docs · Docs-first workflow',
+      context:
+        'Structure before complexity. Learn the system before wiring the product.',
     };
   }
 
@@ -229,7 +234,7 @@ function getFooterBrand(pathname: string | null) {
       label: 'PyColors',
       suffix: 'About · Ecosystem vision',
       context:
-        'Built for learning, validating, and shipping real SaaS products.',
+        'Built for developers who want to learn, validate, and ship real SaaS products with more leverage.',
     };
   }
 
@@ -240,7 +245,8 @@ function getFooterBrand(pathname: string | null) {
     return {
       label: 'PyColors',
       suffix: 'Open Source · Public foundations',
-      context: 'Open foundations first. Premium acceleration later.',
+      context:
+        'Open foundations first. Premium acceleration when the business layer matters.',
     };
   }
 
@@ -248,7 +254,7 @@ function getFooterBrand(pathname: string | null) {
     label: 'PyColors',
     suffix: `v${APP_VERSION}`,
     context:
-      'Production-shaped SaaS ecosystem. Built to help developers ship product surfaces faster and move toward a premium, production-ready SaaS foundation.',
+      'Production-first SaaS ecosystem built to help developers validate product surfaces first, then move toward real business wiring and launch-ready foundations.',
   };
 }
 
@@ -285,7 +291,7 @@ export function Footer() {
                     App v{APP_VERSION}
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    Built in public
+                    Product-first
                   </Badge>
                 </div>
 
@@ -342,8 +348,8 @@ export function Footer() {
             </div>
 
             <div className="text-[11px] text-muted-foreground">
-              Learn the product logic · Validate with Starter Free ·
-              Upgrade when wiring matters
+              Validate with Starter Free · Launch faster with Starter
+              Pro
             </div>
           </div>
         </div>
