@@ -1,0 +1,9 @@
+{
+  "title": "SaaS Starter Pro",
+  "pages": [
+    "index",
+    "auth",
+    "billing",
+    "backend"
+  ]
+}
