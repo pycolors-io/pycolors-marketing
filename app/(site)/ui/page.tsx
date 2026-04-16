@@ -109,7 +109,7 @@ const shipOutcomes = [
     title: 'Billing entrypoints',
     tag: 'Monetization',
     desc: 'Upgrade/plan surfaces and subscription placeholders designed to wire to Stripe later.',
-    href: '/docs/saas-starter/billing-concept',
+    href: '/docs/starter-pro/billing-concept',
     cta: 'Read concept',
     isExternal: false,
   },

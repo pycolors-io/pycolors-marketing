@@ -253,7 +253,7 @@ const items: RoadmapItem[] = [
     status: 'Shipped',
     milestone: 'Feb 2026',
     tags: ['Docs', 'Starters', 'DX'],
-    href: '/docs/saas-starter',
+    href: '/docs/starter',
   },
   {
     title: 'Trust signals: npm badges + secure external SVG support',

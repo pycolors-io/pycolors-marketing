@@ -40,7 +40,7 @@ const quickLinks: QuickLink[] = [
     title: 'Starter Pro',
     description:
       'Move from validation to real auth, real billing, and stronger launch-ready foundations.',
-    href: '/starter-pro',
+    href: '/starters/pro',
     icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
     badge: 'Paid upgrade',
   },

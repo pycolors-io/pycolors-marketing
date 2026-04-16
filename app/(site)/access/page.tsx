@@ -60,8 +60,8 @@ const INTERNAL = {
   starters: '/starters',
   upgrade: '/upgrade',
   docsStarterPro: '/docs/starter-pro',
-  docsBilling: '/docs/saas-pro/billing',
-  docsBackend: '/docs/saas-pro/backend',
+  docsBilling: '/docs/starter-pro/billing',
+  docsBackend: '/docs/starter-pro/backend',
   license: '/license',
   terms: '/terms',
 } as const;

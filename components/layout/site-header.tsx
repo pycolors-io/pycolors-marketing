@@ -187,7 +187,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       },
       {
         label: 'Starter Pro',
-        href: '/starter-pro',
+        href: '/starters/pro',
         icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
         badge: '199 €',
       },
@@ -295,7 +295,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </Button>
 
               <Button asChild size="sm">
-                <Link href="/starter-pro">
+                <Link href="/starters/pro">
                   Starter Pro
                   <ArrowRight
                     aria-hidden="true"

@@ -36,7 +36,7 @@ const INTERNAL = {
   starters: '/starters',
   starterFree: '/starters/free',
   roadmap: '/roadmap',
-  docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
+  docsUpgrade: '/docs/starter/upgrade-to-pro',
   license: '/license',
   terms: '/terms',
   privacy: '/privacy',

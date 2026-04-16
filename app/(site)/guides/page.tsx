@@ -275,7 +275,7 @@ export default function GuidesPage() {
             description="Focused guides for the product surfaces and systems that matter most in SaaS."
             action={
               <Button asChild size="sm" variant="outline">
-                <Link href="/docs/saas-starter">Starter docs</Link>
+                <Link href="/docs/starter">Starter docs</Link>
               </Button>
             }
           />

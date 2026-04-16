@@ -208,7 +208,7 @@ export default function BlogPage() {
             description="Focused content for the product surfaces and implementation decisions that matter most."
             action={
               <Button asChild size="sm" variant="outline">
-                <Link href="/docs/saas-starter">Starter docs</Link>
+                <Link href="/docs/starter">Starter docs</Link>
               </Button>
             }
           />
