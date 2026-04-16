@@ -28,7 +28,7 @@ export function DocsFooter() {
             </Link>
 
             <Link
-              href="/docs/saas-starter"
+              href="/docs/starter"
               className="transition-colors hover:text-foreground"
             >
               Starter Docs

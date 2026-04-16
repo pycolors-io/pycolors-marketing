@@ -538,7 +538,7 @@ const CHANGELOG: ChangelogItem[] = [
     ],
     cta: {
       label: 'Read Starter Free docs',
-      href: '/docs/saas-starter',
+      href: '/docs/starter',
     },
   },
   {

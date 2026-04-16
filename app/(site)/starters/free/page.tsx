@@ -62,8 +62,8 @@ const INTERNAL = {
   patterns: '/ui/patterns',
   examples: '/examples',
   guides: '/guides',
-  docs: '/docs/saas-starter',
-  docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
+  docs: '/docs/starter',
+  docsUpgrade: '/docs/starter/upgrade-to-pro',
   upgrade: '/upgrade',
   access: '/access',
   starterPro: '/starters/pro',
@@ -1015,7 +1015,7 @@ pnpm dev`}</pre>
               href={INTERNAL.docs}
               className="font-mono text-foreground underline underline-offset-4"
             >
-              /docs/saas-starter
+              /docs/starter
             </Link>
           </p>
         </section>

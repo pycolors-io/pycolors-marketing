@@ -296,7 +296,7 @@ export default function StarterProPage() {
                 size="lg"
                 className="h-11 rounded-xl px-6 text-sm font-medium"
               >
-                <Link href="/docs/saas-pro">Read the docs</Link>
+                <Link href="/docs/starter-pro">Read the docs</Link>
               </Button>
             </div>
 

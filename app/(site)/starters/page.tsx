@@ -54,8 +54,8 @@ const INTERNAL = {
   access: '/access',
   starterFree: '/starters/free',
   starterPro: '/starters/pro',
-  docsStarter: '/docs/saas-starter',
-  docsUpgrade: '/docs/saas-starter/upgrade-to-pro',
+  docsStarter: '/docs/starter',
+  docsUpgrade: '/docs/starter/upgrade-to-pro',
   templates: '/templates',
   upgrade: '/upgrade',
 } as const;

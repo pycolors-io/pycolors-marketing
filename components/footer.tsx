@@ -28,7 +28,7 @@ const GROUPS: Array<{
     title: 'Start',
     links: [
       { label: 'Starter Free', href: '/starters/free' },
-      { label: 'Starter Pro', href: '/starter-pro' },
+      { label: 'Starter Pro', href: '/starters/pro' },
       { label: 'Pricing', href: '/access' },
       { label: 'Upgrade', href: '/upgrade' },
     ],
@@ -49,7 +49,8 @@ const GROUPS: Array<{
       { label: 'UI System', href: '/ui' },
       { label: 'Starters', href: '/starters' },
       { label: 'Templates', href: '/templates' },
-      { label: 'Starter docs', href: '/docs/saas-starter' },
+      { label: 'Starter docs', href: '/docs/starter' },
+      { label: 'Starter Pro docs', href: '/docs/starter-pro' },
     ],
   },
   {
@@ -131,8 +132,8 @@ function getFooterBrand(pathname: string | null) {
   }
 
   if (
-    pathname === '/starter-pro' ||
-    pathname.startsWith('/starter-pro')
+    pathname === '/starters/pro' ||
+    pathname.startsWith('/starters/pro')
   ) {
     return {
       label: 'PyColors',
