@@ -54,7 +54,7 @@ export function BuyStarterProButton({
         size={size}
         variant={variant}
         className={cn(
-          'h-11 rounded-xl px-6 text-sm font-medium w-full sm:w-full',
+          'h-11 rounded-xl px-6 text-sm font-medium w-full sm:w-full cursor-pointer',
           fullWidth && 'w-full',
           className,
         )}

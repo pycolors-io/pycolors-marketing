@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   Lock,
   Rocket,
+  Sparkles,
 } from 'lucide-react';
 
 import {
@@ -20,6 +21,7 @@ import {
   cn,
 } from '@pycolors/ui';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
   title:
@@ -206,7 +208,7 @@ function CheckItem({ children }: { children: React.ReactNode }) {
 
 export default function StarterProPage() {
   return (
-    <main className="bg-background text-foreground">
+    <main className="bg-background text-foreground ">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -234,9 +236,10 @@ export default function StarterProPage() {
       <section className="relative overflow-hidden border-b bg-background">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_35%)]" />
         <div className="absolute inset-x-0 top-0 -z-10 h-px bg-linear-to-r from-transparent via-border to-transparent" />
+
         <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
-          <div className="max-w-4xl">
-            <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
               <Badge className="rounded-full px-3 py-1 text-xs font-medium">
                 Starter Pro
               </Badge>
@@ -248,26 +251,28 @@ export default function StarterProPage() {
                 Production-ready
               </Badge>
 
-              <p className="text-sm text-muted-foreground">
-                Launch offer{' '}
-                <span className="font-semibold text-foreground">
-                  {launchPrice}
-                </span>{' '}
-                instead of{' '}
-                <span className="line-through">{regularPrice}</span>
-              </p>
+              <Badge
+                variant="outline"
+                className="rounded-full px-3 py-1 text-xs font-medium gap-2"
+              >
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+                Launch offer {launchPrice}
+              </Badge>
             </div>
 
-            <h1 className="max-w-5xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
               Launch your SaaS with the real foundations already
               wired.{' '}
-              <span className="mt-2 block text-muted-foreground">
+              <span className="block text-muted-foreground">
                 Skip months of repeated setup work and focus on what
                 customers pay for.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
+            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
               Starter Pro is a production-ready Next.js SaaS starter
               with real authentication, real Stripe billing, protected
               app structure, and scalable account foundations already
@@ -275,7 +280,13 @@ export default function StarterProPage() {
               and move sooner toward revenue.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+              Built for developers who want a serious SaaS baseline,
+              not another demo starter that still leaves auth,
+              billing, and product foundations unfinished.
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <BuyStarterProButton
                 fullWidth={false}
                 label={`Buy Starter Pro — ${launchPrice}`}
@@ -300,15 +311,15 @@ export default function StarterProPage() {
               </Button>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
               <span>Real auth and billing included</span>
               <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
               <span>Protected app foundations</span>
               <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>Built to become a commercial SaaS</span>
+              <span>Built for commercial SaaS</span>
             </div>
 
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            <ul className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
               <CheckItem>
                 Authentication flows already wired
               </CheckItem>
@@ -322,7 +333,7 @@ export default function StarterProPage() {
             </ul>
           </div>
 
-          <div className="mt-12">
+          <div className="mx-auto mt-12 max-w-6xl">
             <div className="relative overflow-hidden rounded-[30px] border bg-card/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
               <div className="rounded-3xl border bg-muted/30 p-2 sm:p-3">
                 <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
@@ -346,19 +357,6 @@ export default function StarterProPage() {
                       priority
                       className="object-cover object-top"
                     />
-
-                    <div className="grid h-full place-items-center px-6 text-center">
-                      <div>
-                        <p className="text-sm font-medium text-foreground sm:text-base">
-                          Product screenshot area
-                        </p>
-                        <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                          Show the real dashboard, billing, settings,
-                          and protected app flows here to make the
-                          product instantly feel production-ready.
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

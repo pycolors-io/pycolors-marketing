@@ -4,6 +4,7 @@
     "index",
     "auth",
     "billing",
-    "backend"
+    "backend",
+    "delivery"
   ]
 }

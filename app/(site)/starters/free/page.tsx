@@ -378,13 +378,12 @@ export default function StarterFreePage() {
             ]}
           />
         </div>
-
-        <section className="relative overflow-hidden rounded-4xl border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
+        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
           <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-          <div className="mx-auto max-w-6xl">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
               <Badge variant="secondary" className="gap-2">
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 Starter Free
@@ -392,32 +391,37 @@ export default function StarterFreePage() {
 
               <Badge variant="outline">Production-shaped</Badge>
 
-              <Link
-                href={INTERNAL.starters}
-                className={cn(
-                  'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
-                  focusRing,
-                )}
-              >
-                Back to Starters
-              </Link>
+              <Badge variant="outline" className="gap-2">
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+                Free entry point
+              </Badge>
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Ship a credible SaaS UI fast.
-              <span className="mt-2 block text-muted-foreground">
+            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              Ship a credible SaaS UI fast.{' '}
+              <span className="block text-muted-foreground">
                 Validate the product before wiring the backend.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              Starter Free gives you a credible SaaS surface out of
-              the box: auth UX, dashboard, CRUD screens, settings,
-              billing entrypoints, and B2B member management — mocked
-              by design so you can move fast without backend overhead.
+            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
+              Starter Free gives you a production-shaped SaaS surface
+              out of the box: auth UX, dashboard, CRUD screens,
+              settings, billing entrypoints, and B2B member management
+              — mocked by design so you can move fast without backend
+              overhead.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+              Use it to validate the product surface now. Upgrade to
+              Starter Pro when authentication, billing, and the
+              business layer become the real bottleneck.
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button
                 asChild
                 size="lg"
@@ -467,70 +471,55 @@ export default function StarterFreePage() {
               </Button>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
               <span>Designed for fast validation</span>
               <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
               <span>No backend required</span>
               <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>
-                Upgrade to PRO when wiring becomes the blocker
-              </span>
+              <span>Upgrade-ready when wiring matters</span>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2">
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
               <Pill>Next.js App Router</Pill>
               <Pill>Tailwind v4</Pill>
               <Pill>PyColors UI</Pill>
               <Pill>Mock data · no backend</Pill>
               <Pill>Real screens and UX contracts</Pill>
             </div>
+          </div>
 
-            <div className="mt-10">
-              <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
-                <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
-                  <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
-                    <div className="flex items-center gap-1.5">
-                      <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-                    </div>
-
-                    <div className="rounded-full border px-3 py-1 text-[11px] text-muted-foreground">
-                      Starter Free preview
-                    </div>
+          <div className="mx-auto mt-12 max-w-6xl">
+            <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
+              <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
+                <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
                   </div>
 
-                  <div className="overflow-hidden rounded-[18px] border bg-card">
-                    <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_40%)]">
-                      <Image
-                        src="/images/starters/starter-free-hero-pycolors.png"
-                        alt="Starter Free dashboard preview"
-                        fill
-                        priority
-                      />
-
-                      <div className="grid h-full place-items-center px-6 text-center">
-                        <div>
-                          <p className="text-sm font-medium text-foreground sm:text-base">
-                            Product screenshot area
-                          </p>
-                          <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                            Place a real dashboard screenshot here to
-                            make the value instantly tangible and
-                            increase conversion.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="rounded-full border px-3 py-1 text-[11px] text-muted-foreground">
+                    Starter Free preview
                   </div>
                 </div>
 
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/10 to-transparent" />
+                <div className="overflow-hidden rounded-[18px] border bg-card">
+                  <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_40%)]">
+                    <Image
+                      src="/images/starters/starter-free-hero-pycolors.png"
+                      alt="Starter Free dashboard preview"
+                      fill
+                      priority
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
               </div>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/10 to-transparent" />
             </div>
           </div>
         </section>
-
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -568,7 +557,6 @@ export default function StarterFreePage() {
             </div>
           </Card>
         </section>
-
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex items-start gap-3">
@@ -622,7 +610,6 @@ export default function StarterFreePage() {
             </div>
           </Card>
         </section>
-
         <section id="included" className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="What you get"
@@ -660,7 +647,6 @@ export default function StarterFreePage() {
             ))}
           </div>
         </section>
-
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Learn before you wire"
@@ -703,7 +689,6 @@ export default function StarterFreePage() {
             />
           </div>
         </section>
-
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Mocked on purpose"
@@ -749,7 +734,6 @@ export default function StarterFreePage() {
             </Card>
           </div>
         </section>
-
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Free vs Pro"
@@ -836,7 +820,6 @@ export default function StarterFreePage() {
             </div>
           </Card>
         </section>
-
         <section className="py-10 sm:py-12">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -959,13 +942,13 @@ pnpm dev`}</pre>
           </Card>
         </section>
 
-        <section className="mt-8">
-          <Card className="rounded-[32px] border p-6 shadow-lg shadow-black/5 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
+        <section className="pt-4">
+          <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-2xl space-y-3">
                 <h2 className="text-lg font-semibold tracking-tight">
                   Start with the surface. Upgrade when wiring becomes
-                  the bottleneck.
+                  the bottleneck.{' '}
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   Open the demo, clone the repo, and build on a
@@ -973,7 +956,6 @@ pnpm dev`}</pre>
                   when you want auth, billing, and the business layer
                   already handled.
                 </p>
-
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Pill>Real screens</Pill>
                   <Pill>Clear states</Pill>
@@ -981,7 +963,7 @@ pnpm dev`}</pre>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col gap-3 sm:min-w-[240px]">
                 <Button
                   asChild
                   size="lg"
@@ -1000,15 +982,10 @@ pnpm dev`}</pre>
                     />
                   </a>
                 </Button>
-
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label="Buy Starter Pro — 199 €"
-                />
+                <BuyStarterProButton />
               </div>
             </div>
           </Card>
-
           <p className="mt-4 text-center text-xs text-muted-foreground">
             Follow the setup guide in the docs →{' '}
             <Link
