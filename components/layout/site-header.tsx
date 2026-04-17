@@ -509,7 +509,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 </Button>
 
                 <Button asChild className="w-full justify-center">
-                  <Link href="/starter-pro" onClick={closeMenu}>
+                  <Link href="/starters/pro" onClick={closeMenu}>
                     Starter Pro
                     <ArrowRight
                       aria-hidden="true"
