@@ -21,12 +21,12 @@ import { Breadcrumb } from '@/components/seo/breadcrumb';
 export const metadata: Metadata = {
   title: 'Changelog',
   description:
-    'Release notes and product updates for the PyColors ecosystem: UI, Starters, Templates, and premium product direction. Predictable releases, stable conventions, and documentation-first shipping.',
+    'Release notes and product updates for the PyColors ecosystem: UI, Starters, docs, templates, and commercial product growth. Predictable releases, stable conventions, and documentation-first shipping.',
   alternates: { canonical: '/changelog' },
   openGraph: {
     title: 'Changelog · PyColors',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, Templates, and premium direction. Predictable releases and documentation-first shipping.',
+      'Release notes and product updates across PyColors: UI, Starters, docs, templates, and commercial product growth. Predictable releases and documentation-first shipping.',
     url: '/changelog',
     images: ['/seo/og-main.png'],
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Changelog · PyColors',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, Templates, and premium direction.',
+      'Release notes and product updates across PyColors: UI, Starters, docs, templates, and commercial product growth.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -57,6 +57,87 @@ type ChangelogItem = {
 };
 
 const CHANGELOG: ChangelogItem[] = [
+  {
+    version: 'v1.9.0',
+    title:
+      'Starter Pro public commercial launch, checkout flow, secure delivery, and conversion hardening',
+    dateLabel: 'Fri 17 Apr 2026',
+    dateISO: '2026-04-17',
+    status: 'Stable',
+    releaseWeekLabel: 'Apr 2026 (weekly release)',
+    summary:
+      'This release marks the first real commercial launch of Starter Pro on pycolors.io. Starter Pro is now publicly available and purchasable, with a clearer conversion path from product discovery to checkout, a secure post-purchase access flow, and stronger documentation to support buyer confidence. The release upgrades the full commercial journey: product positioning, pricing clarity, checkout actions, success and cancel recovery, secure claim and download, access recovery, docs credibility, and local development support. Starter Pro now feels materially closer to a real sellable SaaS product business, not only a premium direction.',
+    highlights: [
+      {
+        title: 'Starter Pro is now live and purchasable',
+        items: [
+          'Starter Pro is now publicly available on pycolors.io as a real commercial product.',
+          'Added a reusable Starter Pro purchase button wired to the checkout flow with loading state, error handling, and redirect logic.',
+          'Improved product entry points so the premium buying path is clearer across the site.',
+          'Shifted the product narrative from premium direction and waitlist-style framing to real availability and purchase readiness.',
+        ],
+      },
+      {
+        title:
+          'Checkout and post-checkout flow are now product-shaped',
+        items: [
+          'Added a dedicated checkout success page with order confirmation details, next steps, and support guidance.',
+          'Added a checkout cancel page that clearly explains no payment was captured and offers recovery actions.',
+          'Improved buyer reassurance after interrupted or completed checkout flows so the commercial journey feels more trustworthy.',
+          'Strengthened the post-payment experience to reduce uncertainty and support real customer delivery expectations.',
+        ],
+      },
+      {
+        title: 'Secure access, claim, download, and recovery flow',
+        items: [
+          'Added an order claim and download page so customers can securely access their purchased product.',
+          'Added an order access recovery page to let customers resend their Starter Pro access link if needed.',
+          'Improved the self-service delivery experience so buyers can recover access without unnecessary support friction.',
+          'Documented secure delivery behavior more clearly in the Starter Pro docs to reinforce trust around commercial fulfillment.',
+        ],
+      },
+      {
+        title: 'Conversion surfaces were substantially hardened',
+        items: [
+          'Revamped the pricing page to reduce cognitive load and make the Free versus Starter Pro decision more obvious.',
+          'Refactored the Upgrade page with stronger value framing, proof points, pricing logic, and objection handling.',
+          'Revamped the Starters page and Starter Free / Starter Pro product pages for a clearer progression from validation to production wiring.',
+          'Improved footer messaging, product navigation, CTA labels, and not-found recovery so the overall commercial funnel feels cleaner and more intentional.',
+        ],
+      },
+      {
+        title: 'Docs, README, and commercial credibility improved',
+        items: [
+          'Refined the upgrade guide to better explain when Starter Free is enough and when Starter Pro becomes the right move.',
+          'Added and improved Starter Pro documentation, including auth, billing, backend, and secure delivery guidance.',
+          'Revamped the README with clearer setup, environment, billing, auth, seed, and usage documentation for real product evaluation.',
+          'Clarified proprietary license terms for team usage, organizations, updates, and client work to reduce ambiguity for buyers.',
+        ],
+      },
+      {
+        title: 'Local development and product operations improved',
+        items: [
+          'Added Docker Compose PostgreSQL setup to streamline local database setup and testing.',
+          'Added Docker-based database management scripts for starting, stopping, resetting, and monitoring the local DB.',
+          'Added optional seed data for a local PRO user and a trial subscription to make billing and access testing easier.',
+          'Improved metadata, sitemap structure, docs route naming, dependency consistency, and package clarity to support better maintenance and discoverability.',
+        ],
+      },
+      {
+        title: 'Commercial positioning is now materially stronger',
+        items: [
+          'Starter Pro now presents a much more credible path from discovery to purchase to delivery.',
+          'The public product surface now supports real monetization instead of only launch preparation.',
+          'This release turns Starter Pro into a sellable product layer inside the PyColors ecosystem.',
+          'The next focus should move from launch readiness toward sales proof, analytics instrumentation, delivery reliability, and customer trust reinforcement.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View roadmap',
+      href: '/roadmap',
+    },
+  },
   {
     version: 'v1.8.0',
     title:
@@ -812,6 +893,7 @@ export default function ChangelogPage() {
             ]}
           />
         </div>
+
         <header className="mx-auto w-full max-w-4xl text-center">
           <div className="flex justify-center">
             <Badge variant="secondary" className="gap-2">
@@ -826,8 +908,8 @@ export default function ChangelogPage() {
 
           <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
             Product updates across PyColors: UI, Starters, Templates,
-            and premium product direction. Clear versions, stable
-            conventions, and documentation-first releases.
+            docs, and commercial product growth. Clear versions,
+            stable conventions, and documentation-first releases.
           </p>
 
           <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">

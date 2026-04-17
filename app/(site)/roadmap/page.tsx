@@ -8,12 +8,12 @@ import { Breadcrumb } from '@/components/seo/breadcrumb';
 export const metadata: Metadata = {
   title: 'Roadmap',
   description:
-    'Public roadmap for the PyColors ecosystem: UI, Blog, Starters, Guides, and future premium products. A release-driven plan focused on shipping, trust, SEO, and monetization readiness.',
+    'Public roadmap for the PyColors ecosystem: UI, Blog, Starters, documentation, and commercial product growth. A release-driven plan focused on shipping, trust, SEO, conversion, and monetization.',
   alternates: { canonical: '/roadmap' },
   openGraph: {
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Blog, Guides, Starters, and premium products. Shipping-first, docs-first, SEO-aware, and monetization-ready.',
+      'A release-driven roadmap for PyColors across UI, Starters, docs, conversion, and commercial product growth.',
     url: '/roadmap',
     images: ['/seo/og-main.png'],
   },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Roadmap · PyColors',
     description:
-      'A release-driven roadmap for PyColors: UI, Blog, Guides, Starters, and premium products.',
+      'A release-driven roadmap for PyColors across UI, Starters, docs, conversion, and commercial product growth.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -87,13 +87,13 @@ const milestones: Array<{
     id: 'Apr 2026',
     title: 'April 2026',
     subtitle:
-      'Turn Starter Pro into a more sellable launch candidate: security hardening, backend-driven account security, premium auth UX, clearer pricing, and more production-shaped app surfaces.',
+      'Turn Starter Pro from a strong launch candidate into a real commercial product: public availability, purchase flow, secure delivery, pricing clarity, and stronger post-purchase trust.',
   },
   {
     id: 'H1 2026',
     title: 'H1 2026 (first half)',
     subtitle:
-      'Harden Starter Pro into a sellable premium product: auth, billing lifecycle, launch polish, monetization readiness, and stronger backend foundations.',
+      'Grow Starter Pro after launch through trust, proof, analytics, backend expansion, and stronger conversion systems.',
   },
 ];
 
@@ -327,15 +327,6 @@ const items: RoadmapItem[] = [
     href: '/upgrade',
   },
   {
-    title: 'Waitlist capture for premium demand',
-    description:
-      'Added a PRO waitlist page with early interest capture, pricing preview, and bundle-direction messaging to support launch preparation.',
-    status: 'Shipped',
-    milestone: 'Mar 2026',
-    tags: ['Waitlist', 'Audience', 'Launch', 'Growth'],
-    href: '/waitlist',
-  },
-  {
     title: 'Navigation restructuring',
     description:
       'Updated the primary navigation to reflect the product learning flow: UI, Blog, Patterns, Examples, Guides, and Starters.',
@@ -355,7 +346,7 @@ const items: RoadmapItem[] = [
   {
     title: 'Starter PRO foundation',
     description:
-      'Starter Pro is now bootstrapped as a dedicated premium app with early product surfaces, branding, pricing direction, proprietary licensing, and a clearer path from marketing to premium implementation. The product is still in active development and not publicly launched yet.',
+      'Starter Pro is now bootstrapped as a dedicated premium app with early product surfaces, branding, pricing direction, proprietary licensing, and a clearer path from marketing to premium implementation.',
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Starter PRO', 'Premium', 'App'],
@@ -579,61 +570,114 @@ const items: RoadmapItem[] = [
     ],
     href: '/',
   },
+  {
+    title: 'Starter Pro public commercial launch',
+    description:
+      'Starter Pro is now publicly available and purchasable on pycolors.io, moving the product from premium launch preparation into real commercial availability.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Starter PRO', 'Launch', 'Sales', 'Commercial'],
+    href: '/starters/pro',
+  },
+  {
+    title: 'Checkout, success, and cancel journey',
+    description:
+      'Added a clearer commercial checkout path with purchase entry points, post-checkout confirmation, cancel recovery, and stronger buyer guidance before and after payment.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Checkout', 'Conversion', 'Sales', 'UX'],
+    href: '/pricing',
+  },
+  {
+    title: 'Secure claim, download, and access recovery flow',
+    description:
+      'Shipped secure post-purchase access surfaces including claim, download, and access recovery pages so Starter Pro delivery feels materially more credible and self-service friendly.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Delivery', 'Download', 'Recovery', 'Trust'],
+    href: '/docs',
+  },
+  {
+    title: 'Conversion-focused pricing and upgrade hardening',
+    description:
+      'Refactored pricing, upgrade, starters, and product pages to make the Free-to-Pro path clearer, reduce friction, and support real purchase confidence.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Pricing', 'Upgrade', 'Conversion', 'Marketing'],
+    href: '/pricing',
+  },
+  {
+    title: 'Starter Pro docs, README, and license clarity pass',
+    description:
+      'Expanded documentation, improved the README, and clarified proprietary license terms so evaluation, onboarding, and commercial understanding are much stronger.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Docs', 'README', 'License', 'Trust'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Docker-based local database setup for product testing',
+    description:
+      'Added Docker Compose PostgreSQL setup, DB management scripts, and optional seeded PRO account data to make local testing and billing evaluation easier.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Docker', 'Database', 'DX', 'Testing'],
+  },
 
   // NOW
   {
-    title: 'Starter PRO launch hardening',
+    title: 'Starter Pro post-launch trust hardening',
     description:
-      'Finish the final production-readiness pass across auth, billing interactions, account lifecycle, settings UX, docs clarity, and edge-case recovery so Starter Pro can move from strong internal product to actual launch candidate.',
+      'Strengthen real customer confidence after launch through tighter delivery reliability, clearer support flows, better trust messaging, and stronger edge-case handling across purchase and account journeys.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Starter PRO', 'Launch', 'Quality', 'Auth', 'Billing'],
-    href: '/upgrade',
+    tags: ['Starter PRO', 'Post-launch', 'Trust', 'Quality'],
+    href: '/starters/pro',
   },
   {
-    title: 'Monetization conversion hardening',
+    title: 'Sales proof and conversion measurement',
     description:
-      'Tighten the path from pricing, dashboard proof, docs, access, roadmap, and upgrade messaging to checkout trust and purchase confidence for Starter Pro.',
+      'Instrument the funnel from landing pages to checkout, validate conversion behavior, and identify where buyers hesitate across pricing, docs, upgrade, and post-checkout flows.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Conversion', 'Pricing', 'Checkout', 'Sales', 'Launch'],
-    href: '/access',
+    tags: ['Analytics', 'Conversion', 'Sales', 'Growth'],
+    href: '/pricing',
   },
   {
-    title: 'Account lifecycle reliability pass',
+    title: 'Delivery and account recovery reliability',
     description:
-      'Harden verification, reset, provider linking, provider disconnect, password setup, session messaging, and security history edge cases so self-service account management feels dependable in real-world use.',
+      'Harden claim links, download access, resend access flows, verification, password reset, and account recovery edge cases so the commercial experience feels dependable in real-world use.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Auth', 'Accounts', 'Security', 'UX', 'Reliability'],
+    tags: ['Delivery', 'Recovery', 'Auth', 'Reliability'],
   },
 
   // NEXT
   {
     title: 'Analytics and launch instrumentation',
     description:
-      'Finish GA4 and GTM wiring, validate conversion events across docs, pricing, waitlist, access, upgrade, and checkout flows, and measure premium discovery more reliably.',
+      'Finish GA4 and GTM wiring, validate conversion events across docs, pricing, starters, upgrade, and checkout flows, and measure premium discovery more reliably.',
     status: 'Next',
     milestone: 'H1 2026',
     tags: ['Analytics', 'SEO', 'Growth', 'Launch'],
   },
   {
-    title: 'Monetization readiness v2',
+    title: 'Monetization system v2',
     description:
-      'Align checkout trust, billing states, legal language, demos, access messaging, upgrade framing, and premium proof into a sharper conversion system for Starter Pro.',
+      'Tighten the full commercial system around checkout trust, billing states, support reassurance, proof, demos, legal clarity, and stronger conversion logic for Starter Pro.',
     status: 'Next',
     milestone: 'H1 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
     href: '/access',
   },
   {
-    title: 'Starter PRO backend foundation beyond auth and billing',
+    title: 'Starter Pro backend expansion beyond auth and billing',
     description:
-      'Extend the premium starter from account and payment infrastructure into a stronger backend application baseline with clearer production patterns, entities, permissions, and launch guidance.',
+      'Extend the premium starter beyond account and payment infrastructure into a stronger backend application baseline with entities, permissions, admin direction, and more production-ready product patterns.',
     status: 'Next',
     milestone: 'H1 2026',
     tags: ['Starter PRO', 'Backend', 'Architecture', 'Premium'],
-    href: '/upgrade',
+    href: '/starters/pro',
   },
   {
     title: 'Editorial cadence for authority building',
@@ -656,13 +700,13 @@ const items: RoadmapItem[] = [
 
   // LATER
   {
-    title: 'Starter PRO release',
+    title: 'Starter Pro commercial maturity',
     description:
-      'Launch the first premium Starter PRO package with production-oriented auth, billing, backend foundation, launch guidance, and a commercial surface that clearly justifies the offer.',
+      'Improve Starter Pro after launch through stronger proof, onboarding, customer reassurance, delivery reliability, and a more convincing premium business surface.',
     status: 'Later',
     milestone: 'H1 2026',
-    tags: ['Starter PRO', 'Premium', 'Launch'],
-    href: '/waitlist',
+    tags: ['Starter PRO', 'Premium', 'Growth', 'Trust'],
+    href: '/starters/pro',
   },
   {
     title: 'Blocks library (marketing + SaaS)',
@@ -800,8 +844,8 @@ export default function RoadmapPage() {
             A realistic, release-driven plan focused on shipping. This
             roadmap tracks how PyColors evolves from UI foundations
             into a SaaS builder ecosystem: blog, guides, production
-            patterns, Starter Free, Starter Pro, auth and billing
-            infrastructure, and future premium offers.
+            patterns, Starter Free, Starter Pro, commercial delivery,
+            and future premium offers.
           </p>
 
           <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
@@ -867,9 +911,10 @@ export default function RoadmapPage() {
                 Commercial readiness
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Trust pages, pricing clarity, launch proof, demos,
-                analytics, docs depth, auth reliability, billing
-                credibility, and a predictable release cadence.
+                Trust pages, pricing clarity, launch proof, delivery
+                reliability, analytics, docs depth, auth reliability,
+                billing credibility, and a predictable release
+                cadence.
               </p>
             </Card>
           </div>
@@ -895,7 +940,7 @@ export default function RoadmapPage() {
                   <Link href="/upgrade">Upgrade</Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/waitlist">Waitlist</Link>
+                  <Link href="/starters/pro">Starter Pro</Link>
                 </Button>
               </div>
             </div>
