@@ -27,7 +27,6 @@ import {
   PRIMARY_NAV_ITEMS,
   PRODUCT_MENU_GROUPS,
 } from '@/lib/layout.shared';
-import { Container } from '@/components/container';
 import { Logo } from '../logo';
 
 type DocsLink = {
@@ -69,27 +68,35 @@ function isProductsActive(pathname: string | null) {
   );
 }
 
-function getActiveProductHref(pathname: string | null) {
+function getMostSpecificActiveHref(
+  pathname: string | null,
+  hrefs: string[],
+) {
   if (!pathname) return null;
 
+  const matches = hrefs.filter(
+    (href) => pathname === href || pathname.startsWith(`${href}/`),
+  );
+
+  matches.sort((a, b) => b.length - a.length);
+
+  return matches[0] ?? null;
+}
+
+function getActiveProductHref(pathname: string | null) {
   const allItems = PRODUCT_MENU_GROUPS.flatMap(
     (group) => group.items,
   );
-
-  const matches = allItems.filter(
-    (item) =>
-      pathname === item.href || pathname.startsWith(`${item.href}/`),
+  return getMostSpecificActiveHref(
+    pathname,
+    allItems.map((item) => item.href),
   );
-
-  matches.sort((a, b) => b.href.length - a.href.length);
-
-  return matches[0]?.href ?? null;
 }
 
 const PRODUCT_MENU_META: Record<
   string,
   {
-    icon: React.ComponentType<{ className?: string }>;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     description: string;
   }
 > = {
@@ -113,7 +120,7 @@ const PRODUCT_MENU_META: Record<
     icon: LayoutTemplate,
     description: 'SaaS product surfaces',
   },
-  '/ui/examples': {
+  '/examples': {
     icon: BookOpen,
     description: 'Real UI usage in context',
   },
@@ -350,6 +357,16 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     ];
   }, [docsLinks]);
 
+  const mobileActiveHref = React.useMemo(() => {
+    const allMobileHrefs = mobileSections.flatMap((section) =>
+      section.items
+        .filter((item) => item.href.startsWith('/'))
+        .map((item) => item.href),
+    );
+
+    return getMostSpecificActiveHref(pathname, allMobileHrefs);
+  }, [pathname, mobileSections]);
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
@@ -364,7 +381,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           Skip to content
         </a>
 
-        <Container className="px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
           <section className="flex h-16 items-center gap-3">
             <div className="flex shrink-0 items-center gap-3">
               <Logo />
@@ -576,7 +593,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </button>
             </div>
           </section>
-        </Container>
+        </div>
       </header>
 
       {isMenuOpen && (
@@ -595,7 +612,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             open
             aria-labelledby="mobile-navigation-title"
             className={cn(
-              'fixed inset-x-0 z-50 m-0 flex max-h-none max-w-none flex-col overflow-hidden border-t border-border bg-background p-0 text-inherit md:hidden',
+              'fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border bg-background p-0 text-inherit md:hidden',
               'backdrop:hidden',
             )}
             style={{
@@ -613,7 +630,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 '[-webkit-overflow-scrolling:touch]',
               )}
             >
-              <Container className="px-4 pb-6 pt-4">
+              <div className="px-4 pb-6 pt-4">
                 <div className="flex min-w-0 flex-col gap-6 pb-6">
                   <div className="rounded-[24px] border border-border/60 bg-muted/20 p-4">
                     <div className="space-y-3">
@@ -645,8 +662,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         {section.items.map((item, itemIndex) => {
                           const isCurrent =
                             item.href.startsWith('/') &&
-                            !!pathname &&
-                            matchPathname(pathname, item.href);
+                            mobileActiveHref === item.href;
                           const isExternal =
                             item.href.startsWith('http');
 
@@ -731,7 +747,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </div>
                   </div>
                 </div>
-              </Container>
+              </div>
             </div>
 
             <div className="border-t border-border bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
