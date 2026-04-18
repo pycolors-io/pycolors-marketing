@@ -51,7 +51,7 @@ const INTERNAL = {
   examples: '/examples',
   guides: '/guides',
   roadmap: '/roadmap',
-  access: '/access',
+  access: '/pricing',
   starterFree: '/starters/free',
   starterPro: '/starters/pro',
   docsStarter: '/docs/starter',
@@ -218,7 +218,7 @@ function StarterCard({
 
 export default function StartersPage() {
   return (
-    <Container className="py-16 sm:py-20 lg:py-24">
+    <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <Breadcrumb
@@ -531,7 +531,7 @@ export default function StartersPage() {
               explains the product.
               <span className="text-foreground"> /upgrade</span>{' '}
               explains when to move.
-              <span className="text-foreground"> /access</span>{' '}
+              <span className="text-foreground"> /pricing</span>{' '}
               defines the pricing decision.
             </p>
           </Card>

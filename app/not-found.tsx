@@ -48,7 +48,7 @@ const quickLinks: QuickLink[] = [
     title: 'Pricing',
     description:
       'Review the commercial path from Starter Free to Starter Pro access.',
-    href: '/access',
+    href: '/pricing',
     icon: <Compass className="h-4 w-4" aria-hidden="true" />,
     badge: 'Decision page',
   },

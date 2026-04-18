@@ -69,7 +69,7 @@ const INTERNAL = {
   starterFree: '/starters/free',
   starterPro: '/starter-pro',
   upgrade: '/upgrade',
-  access: '/access',
+  access: '/pricing',
   starterDocs: '/docs/starter',
   starterUpgradeDocs: '/docs/starter/upgrade-to-pro',
   ui: '/ui',
@@ -356,7 +356,7 @@ export default function HomePage() {
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
 
-      <Container className="py-16 sm:py-20 lg:py-24">
+      <Container className="py-20 sm:py-20 lg:py-24">
         <div className="mx-auto w-full max-w-6xl">
           <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />

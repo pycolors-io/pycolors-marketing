@@ -927,7 +927,7 @@ export default function ChangelogPage() {
               <Link href="/roadmap">View roadmap</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/access">View access</Link>
+              <Link href="/pricing">View pricing</Link>
             </Button>
           </div>
         </header>

@@ -281,13 +281,14 @@ function ExampleDirectionCard({
 
 export default function ExamplesPage() {
   return (
-    <Container className="py-16 sm:py-20 lg:py-24">
+    <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <Breadcrumb
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Examples', href: '/examples' },
+              { label: 'UI', href: '/ui' },
+              { label: 'Examples', href: '/ui/examples' },
             ]}
           />
         </div>
@@ -390,7 +391,7 @@ export default function ExamplesPage() {
                   <Link href="/guides">Read guides</Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/access">View pricing</Link>
+                  <Link href="/pricing">View pricing</Link>
                 </Button>
               </div>
             </div>
@@ -414,7 +415,7 @@ export default function ExamplesPage() {
             description="These are not random inspiration cards. They reflect the kinds of SaaS products PyColors patterns and starters are built to support."
             action={
               <Button asChild size="sm" variant="outline">
-                <Link href="/starter-pro">Explore Starter Pro</Link>
+                <Link href="/starters/pro">Explore Starter Pro</Link>
               </Button>
             }
           />
