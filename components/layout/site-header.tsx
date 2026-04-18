@@ -6,13 +6,16 @@ import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   BookOpen,
+  Boxes,
   ChevronDown,
   ChevronRight,
   FileText,
   Github,
   Layers3,
+  LayoutTemplate,
   Menu,
   Package2,
+  Rocket,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -66,6 +69,56 @@ function isProductsActive(pathname: string | null) {
   );
 }
 
+function getActiveProductHref(pathname: string | null) {
+  if (!pathname) return null;
+
+  const allItems = PRODUCT_MENU_GROUPS.flatMap(
+    (group) => group.items,
+  );
+
+  const matches = allItems.filter(
+    (item) =>
+      pathname === item.href || pathname.startsWith(`${item.href}/`),
+  );
+
+  matches.sort((a, b) => b.href.length - a.href.length);
+
+  return matches[0]?.href ?? null;
+}
+
+const PRODUCT_MENU_META: Record<
+  string,
+  {
+    icon: React.ComponentType<{ className?: string }>;
+    description: string;
+  }
+> = {
+  '/starters': {
+    icon: Boxes,
+    description: 'Choose the right entry point',
+  },
+  '/starters/free': {
+    icon: Sparkles,
+    description: 'Validate product shape fast',
+  },
+  '/starters/pro': {
+    icon: Rocket,
+    description: 'Auth, billing, and real SaaS foundations',
+  },
+  '/ui': {
+    icon: Layers3,
+    description: 'Components and primitives',
+  },
+  '/ui/patterns': {
+    icon: LayoutTemplate,
+    description: 'SaaS product surfaces',
+  },
+  '/ui/examples': {
+    icon: BookOpen,
+    description: 'Real UI usage in context',
+  },
+};
+
 function ProductPill({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-flex rounded-full border border-border/60 bg-background/80 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
@@ -112,6 +165,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     matches.sort((a, b) => b.href.length - a.href.length);
     return matches[0]?.href ?? null;
   }, [pathname]);
+
+  const activeProductHref = React.useMemo(
+    () => getActiveProductHref(pathname),
+    [pathname],
+  );
 
   const isProductsCurrent = React.useMemo(
     () => isProductsActive(pathname),
@@ -232,28 +290,22 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   }, [isMenuOpen]);
 
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
-    const productItems: MobileMenuItem[] = [
-      {
-        label: 'Pricing',
-        href: '/pricing',
-        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
-      },
-      ...PRODUCT_MENU_GROUPS.flatMap((group) =>
+    const productItems: MobileMenuItem[] =
+      PRODUCT_MENU_GROUPS.flatMap((group) =>
         group.items.map((item) => ({
           label: item.label,
           href: item.href,
           badge: item.badge,
-          icon:
-            group.title === 'Starters' ? (
-              <Sparkles aria-hidden="true" className="h-4 w-4" />
-            ) : group.title === 'UI system' ? (
-              <Layers3 aria-hidden="true" className="h-4 w-4" />
-            ) : (
-              <BookOpen aria-hidden="true" className="h-4 w-4" />
-            ),
+          icon: PRODUCT_MENU_META[item.href]?.icon ? (
+            React.createElement(PRODUCT_MENU_META[item.href].icon, {
+              'aria-hidden': true,
+              className: 'h-4 w-4',
+            })
+          ) : (
+            <Package2 aria-hidden="true" className="h-4 w-4" />
+          ),
         })),
-      ),
-    ];
+      );
 
     const resourceItems: MobileMenuItem[] = [
       {
@@ -278,6 +330,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         label: 'GitHub',
         href: 'https://github.com/pycolors',
         icon: <Github aria-hidden="true" className="h-4 w-4" />,
+      },
+      {
+        label: 'Pricing',
+        href: '/pricing',
+        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
       },
       {
         label: 'Changelog',
@@ -349,61 +406,92 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   role="menu"
                   aria-label="Products"
                   className={cn(
-                    'absolute left-0 top-full mt-4 w-[640px] overflow-hidden rounded-[28px] border border-border/70 bg-background/95 shadow-2xl shadow-black/10 backdrop-blur-2xl transition-all duration-200',
+                    'absolute left-0 top-full mt-4 w-[640px] origin-top-left overflow-hidden rounded-[28px] border border-border/70 bg-background/95 shadow-2xl shadow-black/10 backdrop-blur-2xl transition-all duration-200',
                     isProductsOpen
                       ? 'pointer-events-auto translate-y-0 opacity-100'
                       : 'pointer-events-none translate-y-2 opacity-0',
                   )}
                 >
-                  <div className="grid grid-cols-2 gap-2 p-3">
-                    {PRODUCT_MENU_GROUPS.map((group) => (
-                      <div key={group.title} className="p-2">
-                        <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                          {group.title}
-                        </p>
+                  <div className="p-3">
+                    <div className="grid gap-2 md:grid-cols-2">
+                      {PRODUCT_MENU_GROUPS.flatMap((group) =>
+                        group.items.map((item) => {
+                          const isCurrent =
+                            activeProductHref === item.href;
+                          const meta = PRODUCT_MENU_META[item.href];
+                          const Icon = meta?.icon ?? Package2;
 
-                        <ul className="space-y-1">
-                          {group.items.map((item) => {
-                            const isCurrent =
-                              !!pathname &&
-                              matchPathname(pathname, item.href);
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              role="menuitem"
+                              className={cn(
+                                'group flex items-start gap-3 rounded-[20px] border border-transparent px-3 py-3 transition-all duration-200',
+                                isCurrent
+                                  ? 'bg-accent/50 shadow-sm'
+                                  : 'hover:bg-accent/30',
+                                focusRing,
+                              )}
+                            >
+                              <span
+                                className={cn(
+                                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] border border-border/60 bg-muted/20 transition-colors',
+                                  isCurrent && 'bg-background',
+                                )}
+                              >
+                                <Icon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
 
-                            return (
-                              <li key={item.href}>
-                                <Link
-                                  href={item.href}
-                                  role="menuitem"
-                                  className={cn(
-                                    'group block rounded-xl px-3 py-3 transition-colors',
-                                    isCurrent
-                                      ? 'bg-accent/50'
-                                      : 'hover:bg-accent/30',
-                                    focusRing,
-                                  )}
-                                >
-                                  <div className="flex items-center justify-between gap-3">
-                                    <span className="text-sm font-medium text-foreground">
-                                      {item.label}
+                              <span className="min-w-0 flex-1">
+                                <span className="flex items-center justify-between gap-3">
+                                  <span className="truncate text-sm font-semibold tracking-tight text-foreground">
+                                    {item.label}
+                                  </span>
+
+                                  {item.badge ? (
+                                    <span className="inline-flex shrink-0 rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
+                                      {item.badge}
                                     </span>
+                                  ) : null}
+                                </span>
 
-                                    {item.badge ? (
-                                      <span className="inline-flex rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
-                                        {item.badge}
-                                      </span>
-                                    ) : (
-                                      <ChevronRight
-                                        className="h-4 w-4 text-muted-foreground opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
-                                        aria-hidden="true"
-                                      />
-                                    )}
-                                  </div>
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    ))}
+                                <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                                  {meta?.description ?? ''}
+                                </span>
+                              </span>
+                            </Link>
+                          );
+                        }),
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-border/70 bg-muted/10 px-3 py-2.5">
+                    <Link
+                      href="/pricing"
+                      className={cn(
+                        'group flex items-center justify-between rounded-xl px-3 py-2 transition-colors hover:bg-accent/30',
+                        focusRing,
+                      )}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex rounded-full bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+                          New
+                        </span>
+                        <span className="text-sm font-medium text-foreground">
+                          Starter Pro launch offer · 199 €
+                        </span>
+                      </span>
+
+                      <ChevronRight
+                        className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -534,9 +622,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </p>
 
                       <div className="flex flex-wrap gap-2">
-                        <ProductPill>Starters</ProductPill>
-                        <ProductPill>UI</ProductPill>
-                        <ProductPill>Patterns</ProductPill>
+                        <ProductPill>Products</ProductPill>
+                        <ProductPill>Pricing</ProductPill>
+                        <ProductPill>Docs</ProductPill>
                       </div>
                     </div>
                   </div>
@@ -629,11 +717,13 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </p>
 
                     <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>• Validate product shape first</li>
                       <li>
-                        • Upgrade when wiring becomes the blocker
+                        • Build from product surfaces, not isolated UI
                       </li>
-                      <li>• Move faster from idea to launch</li>
+                      <li>• Validate fast with Starter Free</li>
+                      <li>
+                        • Upgrade when the business layer matters
+                      </li>
                     </ul>
 
                     <div className="mt-4">

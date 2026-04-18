@@ -31,20 +31,13 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
     title: 'Starters',
     items: [
-      {
-        label: 'Compare Starters',
-        href: '/starters',
-      },
+      { label: 'Compare Starters', href: '/starters' },
       {
         label: 'Starter Free',
         href: '/starters/free',
-        // badge: 'Free',
+        badge: 'Free',
       },
-      {
-        label: 'Starter Pro',
-        href: '/starters/pro',
-        // badge: 'Pro',
-      },
+      { label: 'Starter Pro', href: '/starters/pro', badge: '199 €' },
     ],
   },
   {
