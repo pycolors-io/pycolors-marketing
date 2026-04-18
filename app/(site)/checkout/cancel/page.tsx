@@ -37,9 +37,9 @@ export default function CheckoutCancelPage() {
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            No payment was captured and no order was created. You can return to
-            Starter Pro pricing, review the offer again, and restart checkout
-            whenever you are ready.
+            No payment was captured and no order was created. You can
+            return to Starter Pro pricing, review the offer again, and
+            restart checkout whenever you are ready.
           </p>
         </div>
 
@@ -59,16 +59,18 @@ export default function CheckoutCancelPage() {
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <p className="text-sm font-medium">What happened</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  The payment flow was interrupted before completion. Your card
-                  was not charged and your Starter Pro access was not issued.
+                  The payment flow was interrupted before completion.
+                  Your card was not charged and your Starter Pro
+                  access was not issued.
                 </p>
               </div>
 
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <p className="text-sm font-medium">What to do next</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  Return to the pricing page, review Starter Pro again, and
-                  restart checkout when you want to continue.
+                  Return to the pricing page, review Starter Pro
+                  again, and restart checkout when you want to
+                  continue.
                 </p>
               </div>
 
@@ -78,7 +80,7 @@ export default function CheckoutCancelPage() {
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/access">
+                  <Link href="/pricing">
                     Return to pricing
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -90,13 +92,13 @@ export default function CheckoutCancelPage() {
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/starter-pro">Review Starter Pro</Link>
+                  <Link href="/starters/pro">Review Starter Pro</Link>
                 </Button>
               </div>
 
               <p className="text-xs leading-6 text-muted-foreground">
-                Canceling checkout does not create any billing commitment. You
-                remain free to restart later.
+                Canceling checkout does not create any billing
+                commitment. You remain free to restart later.
               </p>
             </CardContent>
           </Card>
@@ -113,23 +115,24 @@ export default function CheckoutCancelPage() {
                 <div className="flex items-start gap-3">
                   <Shield className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They want to review the offer one more time before buying.
+                    They want to review the offer one more time before
+                    buying.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <CreditCard className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They need to restart the payment flow with a different card
-                    or device.
+                    They need to restart the payment flow with a
+                    different card or device.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They want to confirm scope, delivery, or documentation
-                    before completing checkout.
+                    They want to confirm scope, delivery, or
+                    documentation before completing checkout.
                   </p>
                 </div>
               </CardContent>
@@ -143,15 +146,27 @@ export default function CheckoutCancelPage() {
               </CardHeader>
 
               <CardContent className="space-y-3">
-                <Button asChild variant="outline" className="w-full rounded-xl">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full rounded-xl"
+                >
                   <Link href="/docs/starter-pro">Read the docs</Link>
                 </Button>
 
-                <Button asChild variant="outline" className="w-full rounded-xl">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full rounded-xl"
+                >
                   <Link href="/upgrade">Compare Free vs Pro</Link>
                 </Button>
 
-                <Button asChild variant="ghost" className="w-full rounded-xl">
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full rounded-xl"
+                >
                   <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20checkout%20question">
                     Contact support
                   </Link>

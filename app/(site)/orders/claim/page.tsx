@@ -113,7 +113,7 @@ export default async function ClaimOrderPage({
       >
         <div className="flex flex-wrap gap-3">
           <Button asChild>
-            <Link href="/access">Back to pricing</Link>
+            <Link href="/pricing">Back to pricing</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="mailto:support@pycolors.io">
@@ -140,7 +140,7 @@ export default async function ClaimOrderPage({
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/access">Back to pricing</Link>
+            <Link href="/pricing">Back to pricing</Link>
           </Button>
         </div>
       </StatusShell>
@@ -346,7 +346,7 @@ export default async function ClaimOrderPage({
               </Button>
 
               <Button asChild variant="ghost" className="rounded-xl">
-                <Link href="/access">Back to pricing</Link>
+                <Link href="/pricing">Back to pricing</Link>
               </Button>
             </div>
           </div>

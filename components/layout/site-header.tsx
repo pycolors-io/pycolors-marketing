@@ -6,11 +6,13 @@ import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   BookOpen,
+  ChevronDown,
   ChevronRight,
   FileText,
   Github,
+  Layers3,
   Menu,
-  Package,
+  Package2,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -18,7 +20,10 @@ import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Button, cn } from '@pycolors/ui';
-import { PRIMARY_NAV_ITEMS } from '@/lib/layout.shared';
+import {
+  PRIMARY_NAV_ITEMS,
+  PRODUCT_MENU_GROUPS,
+} from '@/lib/layout.shared';
 import { Container } from '@/components/container';
 import { Logo } from '../logo';
 
@@ -53,13 +58,32 @@ function matchPathname(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function isProductsActive(pathname: string | null) {
+  if (!pathname) return false;
+
+  return PRODUCT_MENU_GROUPS.some((group) =>
+    group.items.some((item) => matchPathname(pathname, item.href)),
+  );
+}
+
+function ProductPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex rounded-full border border-border/60 bg-background/80 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
+      {children}
+    </span>
+  );
+}
+
 export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const pathname = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isProductsOpen, setIsProductsOpen] = React.useState(false);
 
   const openBtnRef = React.useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = React.useRef<HTMLAnchorElement>(null);
   const mobileNavRef = React.useRef<HTMLDialogElement>(null);
+  const productsMenuRef = React.useRef<HTMLDivElement>(null);
 
   const closeMenu = React.useCallback(() => {
     setIsMenuOpen(false);
@@ -69,9 +93,14 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     setIsMenuOpen((prev) => !prev);
   }, []);
 
+  const closeProductsMenu = React.useCallback(() => {
+    setIsProductsOpen(false);
+  }, []);
+
   React.useEffect(() => {
     closeMenu();
-  }, [pathname, closeMenu]);
+    closeProductsMenu();
+  }, [pathname, closeMenu, closeProductsMenu]);
 
   const activeHref = React.useMemo(() => {
     if (!pathname) return null;
@@ -83,6 +112,36 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     matches.sort((a, b) => b.href.length - a.href.length);
     return matches[0]?.href ?? null;
   }, [pathname]);
+
+  const isProductsCurrent = React.useMemo(
+    () => isProductsActive(pathname),
+    [pathname],
+  );
+
+  React.useEffect(() => {
+    if (!isProductsOpen) return;
+
+    function onPointerDown(event: MouseEvent) {
+      const target = event.target as Node | null;
+      if (!productsMenuRef.current?.contains(target)) {
+        closeProductsMenu();
+      }
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        closeProductsMenu();
+      }
+    }
+
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isProductsOpen, closeProductsMenu]);
 
   React.useEffect(() => {
     if (!isMenuOpen) return;
@@ -174,33 +233,31 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
     const productItems: MobileMenuItem[] = [
-      ...PRIMARY_NAV_ITEMS.map((item) => ({
-        label: item.label,
-        href: item.href,
-        icon: <Package aria-hidden="true" className="h-4 w-4" />,
-      })),
-      {
-        label: 'Starter Free',
-        href: '/starters/free',
-        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
-        badge: 'Free',
-      },
-      {
-        label: 'Starter Pro',
-        href: '/starters/pro',
-        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
-        badge: '199 €',
-      },
       {
         label: 'Pricing',
-        href: '/access',
-        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
+        href: '/pricing',
+        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
       },
+      ...PRODUCT_MENU_GROUPS.flatMap((group) =>
+        group.items.map((item) => ({
+          label: item.label,
+          href: item.href,
+          badge: item.badge,
+          icon:
+            group.title === 'Starters' ? (
+              <Sparkles aria-hidden="true" className="h-4 w-4" />
+            ) : group.title === 'UI system' ? (
+              <Layers3 aria-hidden="true" className="h-4 w-4" />
+            ) : (
+              <BookOpen aria-hidden="true" className="h-4 w-4" />
+            ),
+        })),
+      ),
     ];
 
     const resourceItems: MobileMenuItem[] = [
       {
-        label: 'Documentation',
+        label: 'Docs',
         href: '/docs',
         icon: <BookOpen aria-hidden="true" className="h-4 w-4" />,
       },
@@ -208,7 +265,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         label: 'Blog',
         href: '/blog',
         icon: <FileText aria-hidden="true" className="h-4 w-4" />,
-        badge: 'New',
       },
       ...docsLinks.map((doc) => ({
         label: doc.label,
@@ -217,7 +273,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       })),
     ];
 
-    const socialProofItems: MobileMenuItem[] = [
+    const proofItems: MobileMenuItem[] = [
       {
         label: 'GitHub',
         href: 'https://github.com/pycolors',
@@ -231,15 +287,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     ];
 
     return [
-      { title: 'Product', items: productItems },
+      { title: 'Products', items: productItems },
       { title: 'Resources', items: resourceItems },
-      { title: 'Proof', items: socialProofItems },
+      { title: 'Proof', items: proofItems },
     ];
   }, [docsLinks]);
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
         <a
           href="#content"
           className={cn(
@@ -261,7 +317,100 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               aria-label="Primary"
               className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
             >
-              {PRIMARY_NAV_ITEMS.map((item) => {
+              <div ref={productsMenuRef} className="relative">
+                <button
+                  type="button"
+                  aria-expanded={isProductsOpen}
+                  aria-haspopup="menu"
+                  aria-controls="products-menu"
+                  onClick={() => setIsProductsOpen((prev) => !prev)}
+                  className={cn(
+                    'inline-flex items-center rounded-xl px-3 py-2 transition-all duration-200',
+                    'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
+                    isProductsCurrent &&
+                      'bg-accent/40 text-foreground',
+                    isProductsOpen &&
+                      'bg-accent/40 text-foreground shadow-sm',
+                    focusRing,
+                  )}
+                >
+                  Products
+                  <ChevronDown
+                    aria-hidden="true"
+                    className={cn(
+                      'ml-1.5 h-4 w-4 transition-transform duration-200',
+                      isProductsOpen && 'rotate-180',
+                    )}
+                  />
+                </button>
+
+                <div
+                  id="products-menu"
+                  role="menu"
+                  aria-label="Products"
+                  className={cn(
+                    'absolute left-0 top-full mt-4 w-[640px] overflow-hidden rounded-[28px] border border-border/70 bg-background/95 shadow-2xl shadow-black/10 backdrop-blur-2xl transition-all duration-200',
+                    isProductsOpen
+                      ? 'pointer-events-auto translate-y-0 opacity-100'
+                      : 'pointer-events-none translate-y-2 opacity-0',
+                  )}
+                >
+                  <div className="grid grid-cols-2 gap-2 p-3">
+                    {PRODUCT_MENU_GROUPS.map((group) => (
+                      <div key={group.title} className="p-2">
+                        <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                          {group.title}
+                        </p>
+
+                        <ul className="space-y-1">
+                          {group.items.map((item) => {
+                            const isCurrent =
+                              !!pathname &&
+                              matchPathname(pathname, item.href);
+
+                            return (
+                              <li key={item.href}>
+                                <Link
+                                  href={item.href}
+                                  role="menuitem"
+                                  className={cn(
+                                    'group block rounded-xl px-3 py-3 transition-colors',
+                                    isCurrent
+                                      ? 'bg-accent/50'
+                                      : 'hover:bg-accent/30',
+                                    focusRing,
+                                  )}
+                                >
+                                  <div className="flex items-center justify-between gap-3">
+                                    <span className="text-sm font-medium text-foreground">
+                                      {item.label}
+                                    </span>
+
+                                    {item.badge ? (
+                                      <span className="inline-flex rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
+                                        {item.badge}
+                                      </span>
+                                    ) : (
+                                      <ChevronRight
+                                        className="h-4 w-4 text-muted-foreground opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                  </div>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {PRIMARY_NAV_ITEMS.filter(
+                (item) => item.label !== 'Products',
+              ).map((item) => {
                 const isCurrent = activeHref === item.href;
 
                 return (
@@ -270,9 +419,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     href={item.href}
                     aria-current={isCurrent ? 'page' : undefined}
                     className={cn(
-                      'rounded-md px-3 py-2 transition-colors',
-                      'text-muted-foreground hover:bg-accent/30 hover:text-foreground',
-                      isCurrent && 'bg-accent/30 text-foreground',
+                      'rounded-xl px-3 py-2 transition-all duration-200',
+                      'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
+                      isCurrent && 'bg-accent/40 text-foreground',
                       focusRing,
                     )}
                   >
@@ -283,7 +432,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             </nav>
 
             <div className="hidden items-center gap-2 md:flex">
-              <LargeSearchToggle className="w-52" />
+              <LargeSearchToggle className="w-44 xl:w-52" />
 
               <ThemeToggle
                 mode="light-dark"
@@ -294,9 +443,13 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <Link href="/starters/free">Starter Free</Link>
               </Button>
 
-              <Button asChild size="sm">
+              <Button
+                asChild
+                size="sm"
+                className="rounded-xl shadow-sm"
+              >
                 <Link href="/starters/pro">
-                  Starter Pro
+                  Get Starter Pro
                   <ArrowRight
                     aria-hidden="true"
                     className="ml-2 h-4 w-4"
@@ -374,30 +527,24 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             >
               <Container className="px-4 pb-6 pt-4">
                 <div className="flex min-w-0 flex-col gap-6 pb-6">
-                  <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="space-y-1">
-                        <p className="text-sm font-semibold text-foreground">
-                          Build with PyColors
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          Start with a credible product surface today,
-                          then move to real auth, real billing, and
-                          stronger business foundations when you are
-                          ready to launch.
-                        </p>
-                      </div>
+                  <div className="rounded-[24px] border border-border/60 bg-muted/20 p-4">
+                    <div className="space-y-3">
+                      <p className="text-sm font-semibold text-foreground">
+                        PyColors
+                      </p>
 
-                      <span className="inline-flex rounded-full border border-border/60 bg-background px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                        Product-first
-                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        <ProductPill>Starters</ProductPill>
+                        <ProductPill>UI</ProductPill>
+                        <ProductPill>Patterns</ProductPill>
+                      </div>
                     </div>
                   </div>
 
                   {mobileSections.map((section, sectionIndex) => (
                     <section
                       key={section.title}
-                      className="rounded-2xl border border-border/60 bg-muted/20 p-3"
+                      className="rounded-[24px] border border-border/60 bg-muted/20 p-3"
                     >
                       <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                         {section.title}
@@ -410,7 +557,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         {section.items.map((item, itemIndex) => {
                           const isCurrent =
                             item.href.startsWith('/') &&
-                            activeHref === item.href;
+                            !!pathname &&
+                            matchPathname(pathname, item.href);
                           const isExternal =
                             item.href.startsWith('http');
 
@@ -436,9 +584,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                               }
                               onClick={closeMenu}
                               className={cn(
-                                'group flex items-center justify-between rounded-xl px-3 py-3 transition-colors',
+                                'group flex items-center justify-between rounded-2xl px-3 py-3 transition-all duration-200',
                                 isCurrent
-                                  ? 'bg-accent text-foreground'
+                                  ? 'bg-accent text-foreground shadow-sm'
                                   : 'text-muted-foreground hover:bg-background hover:text-foreground',
                                 focusRing,
                               )}
@@ -446,7 +594,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                               <span className="flex min-w-0 items-center gap-3">
                                 <span
                                   aria-hidden="true"
-                                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-background"
+                                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-border/60 bg-background"
                                 >
                                   {item.icon}
                                 </span>
@@ -465,7 +613,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
                                 <ChevronRight
                                   aria-hidden="true"
-                                  className="h-4 w-4 opacity-60 transition-transform group-hover:translate-x-0.5"
+                                  className="h-4 w-4 opacity-60 transition-transform duration-200 group-hover:translate-x-0.5"
                                 />
                               </span>
                             </Link>
@@ -475,7 +623,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </section>
                   ))}
 
-                  <div className="rounded-2xl border border-border/60 bg-muted/20 p-4">
+                  <div className="rounded-[24px] border border-border/60 bg-muted/20 p-4">
                     <p className="text-sm font-semibold text-foreground">
                       Why PyColors
                     </p>
@@ -483,7 +631,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                       <li>• Validate product shape first</li>
                       <li>
-                        • Upgrade when wiring becomes the bottleneck
+                        • Upgrade when wiring becomes the blocker
                       </li>
                       <li>• Move faster from idea to launch</li>
                     </ul>
@@ -501,16 +649,19 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full justify-center"
+                  className="w-full justify-center rounded-xl"
                 >
                   <Link href="/starters/free" onClick={closeMenu}>
                     Starter Free
                   </Link>
                 </Button>
 
-                <Button asChild className="w-full justify-center">
+                <Button
+                  asChild
+                  className="w-full justify-center rounded-xl shadow-sm"
+                >
                   <Link href="/starters/pro" onClick={closeMenu}>
-                    Starter Pro
+                    Get Starter Pro
                     <ArrowRight
                       aria-hidden="true"
                       className="ml-2 h-4 w-4"

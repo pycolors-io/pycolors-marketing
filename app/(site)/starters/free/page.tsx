@@ -65,7 +65,7 @@ const INTERNAL = {
   docs: '/docs/starter',
   docsUpgrade: '/docs/starter/upgrade-to-pro',
   upgrade: '/upgrade',
-  access: '/access',
+  access: '/pricing',
   starterPro: '/starters/pro',
   roadmap: '/roadmap',
 } as const;

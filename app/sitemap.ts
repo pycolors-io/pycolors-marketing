@@ -21,7 +21,7 @@ const STATIC_ROUTES = [
   '/starters/free',
   '/starters/pro',
   '/upgrade',
-  '/access',
+  '/pricing',
 
   // 🔥 ACQUISITION CORE
   '/guides',
@@ -89,7 +89,7 @@ function getPriority(route: string): number {
   if (route === '') return 1.0;
 
   // 🔥 MONEY PAGES
-  if (['/starters/free', '/upgrade', '/access'].includes(route)) {
+  if (['/starters/free', '/upgrade', '/pricing'].includes(route)) {
     return 0.95;
   }
 
@@ -145,7 +145,7 @@ function getChangeFrequency(
   if (
     [
       '/upgrade',
-      '/access',
+      '/pricing',
       '/starters/free',
       '/roadmap',
       '/changelog',

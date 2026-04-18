@@ -321,10 +321,10 @@ export default function GuidesPage() {
 
               <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/access">View pricing</Link>
+                  <Link href="/pricing">View pricing</Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
-                  <Link href="/starter-pro">See Starter Pro</Link>
+                  <Link href="/starters/pro">See Starter Pro</Link>
                 </Button>
               </div>
             </div>

@@ -8,14 +8,64 @@ export type PrimaryNavItem = {
   href: string;
 };
 
+export type ProductMenuGroupItem = {
+  label: string;
+  href: string;
+  description?: string;
+  badge?: string;
+};
+
+export type ProductMenuGroup = {
+  title: string;
+  items: ProductMenuGroupItem[];
+};
+
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
-  { label: 'UI', href: '/ui' },
-  { label: 'Patterns', href: '/ui/patterns' },
-  { label: 'Examples', href: '/examples' },
-  { label: 'Guides', href: '/guides' },
+  { label: 'Products', href: '/products' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Docs', href: '/docs' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Starters', href: '/starters' },
 ];
+
+export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
+  {
+    title: 'Starters',
+    items: [
+      {
+        label: 'Compare Starters',
+        href: '/starters',
+      },
+      {
+        label: 'Starter Free',
+        href: '/starters/free',
+        // badge: 'Free',
+      },
+      {
+        label: 'Starter Pro',
+        href: '/starters/pro',
+        // badge: 'Pro',
+      },
+    ],
+  },
+  {
+    title: 'UI system',
+    items: [
+      {
+        label: 'UI Library',
+        href: '/ui',
+      },
+      {
+        label: 'Patterns',
+        href: '/ui/patterns',
+      },
+      {
+        label: 'Examples',
+        href: '/ui/examples',
+      },
+    ],
+  },
+];
+
 /**
  * Optional: if we later re-enable Fumadocs built-in navigation.
  */

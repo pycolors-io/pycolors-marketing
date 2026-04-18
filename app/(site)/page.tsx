@@ -69,7 +69,7 @@ const INTERNAL = {
   starterFree: '/starters/free',
   starterPro: '/starter-pro',
   upgrade: '/upgrade',
-  access: '/access',
+  access: '/pricing',
   starterDocs: '/docs/starter',
   starterUpgradeDocs: '/docs/starter/upgrade-to-pro',
   ui: '/ui',

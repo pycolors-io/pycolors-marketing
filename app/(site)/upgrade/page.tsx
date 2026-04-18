@@ -62,7 +62,7 @@ const INTERNAL = {
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
-  access: '/access',
+  access: '/pricing',
   license: '/license',
   terms: '/terms',
 } as const;
@@ -196,7 +196,7 @@ const faqs = [
   {
     question: 'Where do I find the legal and usage scope?',
     answer:
-      'Use /access for the commercial overview and /license and /terms for the governing legal scope.',
+      'Use /pricing for the commercial overview and /license and /terms for the governing legal scope.',
   },
 ] as const;
 
@@ -790,7 +790,7 @@ export default function UpgradePage() {
               href={INTERNAL.access}
               className="underline underline-offset-4"
             >
-              /access
+              /pricing
             </Link>
             ,{' '}
             <Link

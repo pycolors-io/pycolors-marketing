@@ -29,7 +29,7 @@ const GROUPS: Array<{
     links: [
       { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starter Pro', href: '/starters/pro' },
-      { label: 'Pricing', href: '/access' },
+      { label: 'Pricing', href: '/pricing' },
       { label: 'Upgrade', href: '/upgrade' },
     ],
   },
@@ -152,7 +152,7 @@ function getFooterBrand(pathname: string | null) {
     };
   }
 
-  if (pathname === '/access' || pathname.startsWith('/access')) {
+  if (pathname === '/pricing' || pathname.startsWith('/pricing')) {
     return {
       label: 'PyColors',
       suffix: 'Pricing · Clear upgrade path',

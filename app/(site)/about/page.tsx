@@ -257,7 +257,7 @@ export default function AboutPage() {
             description="PyColors is structured as a progression, not as a random collection of pages."
             action={
               <Button asChild size="sm" variant="outline">
-                <Link href="/access">View Access</Link>
+                <Link href="/pricing">View pricing</Link>
               </Button>
             }
           />
@@ -373,7 +373,7 @@ export default function AboutPage() {
                       </Link>{' '}
                       /{' '}
                       <Link
-                        href="/access"
+                        href="/pricing"
                         className="underline underline-offset-4"
                       >
                         Access
@@ -489,7 +489,7 @@ export default function AboutPage() {
                   <Link href="/starters/free">Starter Free</Link>
                 </Button>
                 <Button asChild variant="secondary">
-                  <Link href="/access">Access</Link>
+                  <Link href="/pricing">Access</Link>
                 </Button>
               </div>
             </div>

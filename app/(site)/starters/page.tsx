@@ -51,7 +51,7 @@ const INTERNAL = {
   examples: '/examples',
   guides: '/guides',
   roadmap: '/roadmap',
-  access: '/access',
+  access: '/pricing',
   starterFree: '/starters/free',
   starterPro: '/starters/pro',
   docsStarter: '/docs/starter',
@@ -531,7 +531,7 @@ export default function StartersPage() {
               explains the product.
               <span className="text-foreground"> /upgrade</span>{' '}
               explains when to move.
-              <span className="text-foreground"> /access</span>{' '}
+              <span className="text-foreground"> /pricing</span>{' '}
               defines the pricing decision.
             </p>
           </Card>

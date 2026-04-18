@@ -230,7 +230,7 @@ export default function RecoverOrderPage() {
                     variant="ghost"
                     className="rounded-xl"
                   >
-                    <Link href="/access">Back to pricing</Link>
+                    <Link href="/pricing">Back to pricing</Link>
                   </Button>
                 </div>
               </CardContent>

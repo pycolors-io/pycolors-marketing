@@ -227,7 +227,7 @@ export default function StarterProPage() {
               priceCurrency: 'EUR',
               price: '199',
               availability: 'https://schema.org/InStock',
-              url: 'https://pycolors.io/access',
+              url: 'https://pycolors.io/pricing',
             },
           }),
         }}
@@ -298,7 +298,7 @@ export default function StarterProPage() {
                 size="lg"
                 className="h-11 rounded-xl px-6 text-sm font-medium"
               >
-                <Link href="/access">View pricing</Link>
+                <Link href="/pricing">View pricing</Link>
               </Button>
 
               <Button

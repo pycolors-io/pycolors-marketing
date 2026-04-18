@@ -283,7 +283,7 @@ export default function OpenSourcePage() {
             </Button>
 
             <Button asChild variant="secondary">
-              <Link href="/access">View Access</Link>
+              <Link href="/pricing">View pricing</Link>
             </Button>
           </div>
 
@@ -581,7 +581,7 @@ export default function OpenSourcePage() {
                   <Link href="/starters/free">Starter Free</Link>
                 </Button>
                 <Button asChild variant="secondary">
-                  <Link href="/access">Access</Link>
+                  <Link href="/pricing">Access</Link>
                 </Button>
               </div>
             </div>

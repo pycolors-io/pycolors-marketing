@@ -34,12 +34,12 @@ export const metadata: Metadata = {
   title: 'Pricing | PyColors',
   description:
     'Choose the right PyColors offer for your SaaS. Start free, or buy Starter Pro for real authentication, real billing, and a production-ready SaaS foundation.',
-  alternates: { canonical: '/access' },
+  alternates: { canonical: '/pricing' },
   openGraph: {
     title: 'Pricing | PyColors',
     description:
       'Start free or buy Starter Pro for real auth, real billing, and a faster path to revenue.',
-    url: '/access',
+    url: '/pricing',
     images: ['/seo/og-main.png'],
   },
   twitter: {
@@ -276,7 +276,7 @@ export default function AccessPage() {
           <Breadcrumb
             items={[
               { label: 'Home', href: INTERNAL.home },
-              { label: 'Pricing', href: '/access' },
+              { label: 'Pricing', href: '/pricing' },
             ]}
           />
         </div>

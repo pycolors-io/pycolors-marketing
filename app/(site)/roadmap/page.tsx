@@ -315,7 +315,7 @@ const items: RoadmapItem[] = [
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Pricing', 'Packaging', 'Sales', 'Trust'],
-    href: '/access',
+    href: '/pricing',
   },
   {
     title: 'PRO upgrade funnel',
@@ -668,7 +668,7 @@ const items: RoadmapItem[] = [
     status: 'Next',
     milestone: 'H1 2026',
     tags: ['Sales', 'Checkout', 'Pricing', 'Trust'],
-    href: '/access',
+    href: '/pricing',
   },
   {
     title: 'Starter Pro backend expansion beyond auth and billing',
@@ -878,7 +878,7 @@ export default function RoadmapPage() {
               <Link href="/changelog">View changelog</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/access">View access</Link>
+              <Link href="/pricing">View pricing</Link>
             </Button>
           </div>
         </header>
