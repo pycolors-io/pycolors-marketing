@@ -108,7 +108,7 @@ function FooterLinkItem(link: FooterLink) {
 export function Footer() {
   return (
     <footer className="relative z-10 border-t border-border bg-background">
-      <Container className="mx-auto max-w-6xl">
+      <Container>
         <div className="py-16 sm:py-20">
           <section className="border-b border-border/60 pb-14 sm:pb-16">
             <div className="mx-auto max-w-3xl text-center">

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+import { Container } from '@/components/container';
 
 import { Button, cn } from '@pycolors/ui';
 import {
@@ -384,7 +385,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           Skip to content
         </a>
 
-        <div className="mx-auto  max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <section className="flex h-16 items-center gap-3">
             <div className="flex shrink-0 items-center gap-3">
               <Logo />
@@ -541,7 +542,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
             <div className="hidden items-center gap-2 md:flex">
               {showDocsSearch ? (
-                <LargeSearchToggle className="w-48 xl:w-58" />
+                <LargeSearchToggle className="w-48 xl:w-56" />
               ) : null}
 
               <ThemeToggle
@@ -594,7 +595,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </button>
             </div>
           </section>
-        </div>
+        </Container>
       </header>
 
       {isMenuOpen && (
