@@ -500,7 +500,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       )}
                     >
                       <span className="flex items-center gap-3">
-                        <span className="inline-flex rounded-full bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+                        <span className="inline-flex rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground">
                           New
                         </span>
                         <span className="text-sm font-medium text-foreground">
