@@ -367,6 +367,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return getMostSpecificActiveHref(pathname, allMobileHrefs);
   }, [pathname, mobileSections]);
 
+  const showDocsSearch =
+    pathname === '/docs' || pathname.startsWith('/docs/');
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
@@ -381,7 +384,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           Skip to content
         </a>
 
-        <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto  max-w-screen-2xl px-4 sm:px-6 lg:px-8">
           <section className="flex h-16 items-center gap-3">
             <div className="flex shrink-0 items-center gap-3">
               <Logo />
@@ -537,16 +540,14 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             </nav>
 
             <div className="hidden items-center gap-2 md:flex">
-              <LargeSearchToggle className="w-44 xl:w-52" />
+              {showDocsSearch ? (
+                <LargeSearchToggle className="w-48 xl:w-58" />
+              ) : null}
 
               <ThemeToggle
                 mode="light-dark"
                 className="inline-flex h-9 items-center rounded-full border px-1"
               />
-
-              <Button asChild size="sm" variant="outline">
-                <Link href="/starters/free">Starter Free</Link>
-              </Button>
 
               <Button
                 asChild
@@ -742,9 +743,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       </li>
                     </ul>
 
-                    <div className="mt-4">
-                      <LargeSearchToggle className="w-full" />
-                    </div>
+                    {showDocsSearch ? (
+                      <div className="mt-4">
+                        <LargeSearchToggle className="w-full" />
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
