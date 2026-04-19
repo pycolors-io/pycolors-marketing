@@ -7,6 +7,7 @@ import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -188,13 +189,17 @@ export function Footer() {
             </div>
           </section>
 
-          <section className="mt-12 flex flex-col gap-3 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <section className="mt-12 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
             <div className="text-xs text-muted-foreground">
-              © {CURRENT_YEAR} PyColors
+              © {CURRENT_YEAR} PyColors - UI {UI_VERSION} · App{' '}
+              {APP_VERSION}
             </div>
 
-            <div className="text-[11px] text-muted-foreground">
-              UI v{UI_VERSION} · App v{APP_VERSION}
+            <div className="flex items-center justify-center sm:justify-end">
+              <ThemeToggle
+                mode="light-dark-system"
+                className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:opacity-100 hover:bg-accent/30"
+              />
             </div>
           </section>
         </div>
