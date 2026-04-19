@@ -414,7 +414,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
             <nav
               aria-label="Primary"
-              className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
+              className="ml-4 hidden flex-1 items-center gap-1.5 text-[15px] font-medium md:flex"
             >
               <div ref={productsMenuRef} className="relative">
                 <button
@@ -424,7 +424,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   aria-controls="products-menu"
                   onClick={() => setIsProductsOpen((prev) => !prev)}
                   className={cn(
-                    'inline-flex items-center rounded-xl px-3 py-2 transition-all duration-200',
+                    'inline-flex items-center rounded-xl px-3.5 py-2 transition-all duration-200',
                     'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
                     isProductsCurrent &&
                       'bg-accent/40 text-foreground',
@@ -551,7 +551,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     href={item.href}
                     aria-current={isCurrent ? 'page' : undefined}
                     className={cn(
-                      'rounded-xl px-3 py-2 transition-all duration-200',
+                      'rounded-xl px-3.5 py-2 transition-all duration-200',
                       'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
                       isCurrent && 'bg-accent/40 text-foreground',
                       focusRing,
@@ -568,11 +568,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <LargeSearchToggle className="w-48 xl:w-56" />
               ) : null}
 
-              {/* <ThemeToggle
-                mode="light-dark"
-                className="inline-flex h-9 items-center rounded-full border-none px-1"
-              /> */}
-
               <Button
                 asChild
                 size="sm"
@@ -580,10 +575,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               >
                 <Link href="/starters/pro">
                   Get Starter Pro
-                  {/* <ArrowRight
+                  <ArrowRight
                     aria-hidden="true"
-                    className="ml-1 h-4 w-4"
-                  /> */}
+                    className="h-4 w-4"
+                  />
                 </Link>
               </Button>
             </div>
