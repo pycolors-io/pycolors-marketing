@@ -6,7 +6,7 @@ import {
   CreditCard,
   Lock,
   Rocket,
-  Shield,
+  ShieldCheck,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -27,7 +27,7 @@ import {
   TableRow,
 } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
+import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
@@ -55,7 +55,6 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
-  home: '/',
   starterFree: '/starters/free',
   starters: '/starters',
   upgrade: '/upgrade',
@@ -268,160 +267,147 @@ function FaqCard({
   );
 }
 
-export default function AccessPage() {
+export default function PricingPage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: INTERNAL.home },
-              { label: 'Pricing', href: '/pricing' },
-            ]}
-          />
-        </div>
-
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium">
-                  Pricing
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="rounded-full px-3 py-1 text-xs font-medium"
-                >
-                  Starter Pro launch offer {PRICING.starterProLaunch}
-                </Badge>
-              </div>
-
-              <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Ship faster.{' '}
-                <span className="block text-muted-foreground">
-                  Charge sooner.
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-                Starter Free helps you validate product shape. Starter
-                Pro gives you real authentication, real Stripe
-                billing, and a production-ready SaaS foundation
-                without rebuilding the same business layer again.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <BuyStarterProButton fullWidth={false} />
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.starterFree}>
-                    Start with Starter Free
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-2">
-                <Pill>Clear first offer</Pill>
-                <Pill>Real auth and billing</Pill>
-                <Pill>Faster time-to-revenue</Pill>
-                <Pill>Built for SaaS</Pill>
-              </div>
-            </div>
-
-            <div>
-              <div className="grid gap-4">
-                <Card className="rounded-[28px] border p-6 shadow-lg shadow-black/5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Badge
-                          variant="secondary"
-                          className="rounded-full"
-                        >
-                          Free entry point
-                        </Badge>
-                      </div>
-                      <h2 className="mt-4 text-xl font-semibold">
-                        Starter Free
-                      </h2>
-                      <div className="mt-2 text-3xl font-semibold tracking-tight">
+        <PageHero
+          maxWidth="5xl"
+          badges={[
+            {
+              label: 'Pricing',
+              variant: 'secondary',
+            },
+            {
+              label: `Launch offer ${PRICING.starterProLaunch}`,
+              variant: 'outline',
+              icon: (
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
+            },
+            {
+              label: 'Clear first decision',
+              variant: 'outline',
+            },
+          ]}
+          title="Ship faster."
+          subtitle="Charge sooner."
+          description="Starter Free helps you validate product shape. Starter Pro gives you real authentication, real Stripe billing, and a production-ready SaaS foundation without rebuilding the same business layer again."
+          actions={
+            <>
+              <BuyStarterProButton fullWidth={false} />
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.starterFree}>
+                  Start with Starter Free
+                </Link>
+              </Button>
+            </>
+          }
+          pills={[
+            'Real auth and billing',
+            'Faster time-to-revenue',
+            'Built for SaaS',
+            'Primary paid path',
+          ]}
+          extraClassName="mx-auto max-w-5xl"
+          extra={
+            <div className="grid gap-4 lg:grid-cols-2">
+              <Card className="rounded-[28px] border p-6 shadow-lg shadow-black/5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="rounded-full"
+                      >
+                        Free entry point
+                      </Badge>
+                    </div>
+                    <h2 className="mt-4 text-xl font-semibold">
+                      Starter Free
+                    </h2>
+                    <div className="mt-2 text-3xl font-semibold tracking-tight">
+                      <span className="text-4xl font-semibold tracking-tight">
                         {PRICING.starterFree}
-                      </div>
+                      </span>
                     </div>
-                    <Sparkles className="h-5 w-5 text-muted-foreground" />
                   </div>
+                  <Sparkles className="h-5 w-5 text-muted-foreground" />
+                </div>
 
-                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                    Best when you want to validate UX, explore product
-                    direction, and move quickly before paying for
-                    business wiring.
-                  </p>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  Best when you want to validate UX, explore product
+                  direction, and move quickly before paying for
+                  business wiring.
+                </p>
 
-                  <div className="mt-5">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-xl"
-                    >
-                      <Link href={INTERNAL.starterFree}>
-                        Open Starter Free
-                      </Link>
-                    </Button>
-                  </div>
-                </Card>
+                <div className="mt-5">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-11 rounded-xl px-6 text-sm font-medium w-full sm:w-full cursor-pointer',
+"
+                  >
+                    <Link href={INTERNAL.starterFree}>
+                      Open Starter Free
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
 
-                <Card className="rounded-[28px] border-2 p-6 shadow-xl shadow-black/5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Badge className="rounded-full">
-                          Main offer
-                        </Badge>
-                        <Badge
-                          variant="outline"
-                          className="rounded-full"
-                        >
-                          Best choice
-                        </Badge>
-                      </div>
-                      <h2 className="mt-4 text-xl font-semibold">
-                        Starter Pro
-                      </h2>
-                      <div className="mt-2 flex items-end gap-3">
-                        <span className="text-4xl font-semibold tracking-tight">
-                          {PRICING.starterProLaunch}
-                        </span>
-                        <span className="pb-1 text-sm text-muted-foreground">
-                          <span className="mr-2 line-through">
-                            {PRICING.starterProRegular}
-                          </span>
-                          launch price
-                        </span>
-                      </div>
+              <Card className="rounded-[28px] border p-6 shadow-lg shadow-black/5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge className="rounded-full">
+                        Main offer
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="rounded-full"
+                      >
+                        Best choice
+                      </Badge>
                     </div>
-                    <BadgeCheck className="h-5 w-5 text-muted-foreground" />
+                    <h2 className="mt-4 text-xl font-semibold">
+                      Starter Pro
+                    </h2>
+                    <div className="mt-2 flex items-end gap-3">
+                      <span className="text-4xl font-semibold tracking-tight">
+                        {PRICING.starterProLaunch}
+                      </span>
+                      <span className="pb-1 text-sm text-muted-foreground">
+                        <span className="mr-2 line-through">
+                          {PRICING.starterProRegular}
+                        </span>
+                        launch price
+                      </span>
+                    </div>
                   </div>
+                  <BadgeCheck className="h-5 w-5 text-muted-foreground" />
+                </div>
 
-                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                    Best when you already know the real bottleneck is
-                    auth, billing, protected app foundations, and
-                    getting to monetization faster.
-                  </p>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  Best when you already know the real bottleneck is
+                  auth, billing, protected app foundations, and
+                  getting to monetization faster.
+                </p>
 
-                  <div className="mt-5">
-                    <BuyStarterProButton />
-                  </div>
-                </Card>
-              </div>
+                <div className="mt-5">
+                  <BuyStarterProButton />
+                </div>
+              </Card>
             </div>
-          </div>
-        </section>
+          }
+        />
 
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
@@ -587,7 +573,7 @@ export default function AccessPage() {
               description="Use it to validate UX, explore routes, test screens, and shape the product surface without committing to business wiring yet."
             />
             <FeatureCard
-              icon={Shield}
+              icon={ShieldCheck}
               title="Starter Pro"
               description="Use it when you want real auth, real Stripe billing, stronger protected architecture, and less launch uncertainty."
             />

@@ -13,8 +13,8 @@ import { Container } from '@/components/container';
 import { UI_VERSION, formatVersion } from '@/lib/version';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { NpmBadges } from '@/components/npm-badges';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: 'UI | PyColors',
@@ -345,72 +345,32 @@ export default function UiPage() {
 
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'UI', href: '/ui' },
-            ]}
-          />
-        </div>
-
-        <section className="relative overflow-hidden rounded-[38px] border border-border/70 bg-card px-6 py-12 shadow-xl shadow-black/5 sm:px-8 sm:py-14 lg:px-12 lg:py-18">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge
-                variant="secondary"
-                className="gap-2 rounded-full"
-              >
+      <div>
+        <PageHero
+          badges={[
+            {
+              label: `${versionLabel} · stable baseline`,
+              variant: 'secondary',
+              icon: (
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                {versionLabel} · stable baseline
-              </Badge>
-
-              <Badge variant="outline" className="gap-2 rounded-full">
+              ),
+            },
+            {
+              label: 'Open source',
+              variant: 'outline',
+              icon: (
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Open source
-              </Badge>
-
-              <a
-                href="https://github.com/pycolors-io/pycolors-ui"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Open the PyColors UI repository on GitHub"
-                className={cn(
-                  'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
-                  focusRing,
-                )}
-              >
-                GitHub
-                <ExternalLink
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              </a>
-            </div>
-
-            <h1 className="mt-8 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              A premium UI foundation for real SaaS products.
-              <span className="mt-2 block text-muted-foreground">
-                Start with the interface. Move faster toward the
-                product.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              PyColors UI gives developers a clearer starting point
-              for product-shaped interfaces: accessible primitives,
-              semantic tokens, and documentation that supports real
-              implementation work instead of just showcasing
-              components.
-            </p>
-
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              ),
+            },
+          ]}
+          title="A premium UI foundation for real SaaS products."
+          subtitle="Start with the interface. Move faster toward the product."
+          description="PyColors UI gives developers a clearer starting point for product-shaped interfaces: accessible primitives, semantic tokens, and documentation that supports real implementation work instead of just showcasing components."
+          actions={
+            <>
               <Button
                 asChild
                 size="lg"
@@ -438,28 +398,50 @@ export default function UiPage() {
                 fullWidth={false}
                 label="Starter Pro — 199 €"
               />
-            </div>
+            </>
+          }
+          extra={
+            <>
+              <div className="grid mx-auto w-full max-w-3xl gap-3 sm:grid-cols-3">
+                <Stat label="Current version" value={versionLabel} />
+                <Stat
+                  label="Workflow"
+                  value="Docs → Starter → Product"
+                />
+                <Stat
+                  label="Positioning"
+                  value="Open source → SaaS system"
+                />
+              </div>
 
-            <div className="mt-10 grid w-full max-w-3xl gap-3 sm:grid-cols-3 mx-auto">
-              <Stat label="Current version" value={versionLabel} />
-              <Stat
-                label="Workflow"
-                value="Docs → Starter → Product"
-              />
-              <Stat
-                label="Positioning"
-                value="Open source → SaaS system"
-              />
-            </div>
+              <div className="mt-8 flex flex-wrap justify-center gap-2">
+                <Pill label="Semantic tokens" />
+                <Pill label="Accessible primitives" />
+                <Pill label="Product states included" />
+                <Pill label="SaaS-oriented" />
+              </div>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-2">
-              <Pill label="Semantic tokens" />
-              <Pill label="Accessible primitives" />
-              <Pill label="Product states included" />
-              <Pill label="SaaS-oriented" />
-            </div>
-          </div>
-        </section>
+              <div className="mt-6 flex justify-center">
+                <a
+                  href="https://github.com/pycolors-io/pycolors-ui"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="Open the PyColors UI repository on GitHub"
+                  className={cn(
+                    'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                    focusRing,
+                  )}
+                >
+                  GitHub
+                  <ExternalLink
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
+                  />
+                </a>
+              </div>
+            </>
+          }
+        />
 
         <section className="py-14 sm:py-16 lg:py-20">
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

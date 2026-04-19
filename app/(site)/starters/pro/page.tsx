@@ -20,8 +20,9 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title:
@@ -208,7 +209,7 @@ function CheckItem({ children }: { children: React.ReactNode }) {
 
 export default function StarterProPage() {
   return (
-    <main className="bg-background text-foreground ">
+    <main className="bg-background text-foreground">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -233,60 +234,34 @@ export default function StarterProPage() {
         }}
       />
 
-      <section className="relative overflow-hidden border-b bg-background">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_35%)]" />
-        <div className="absolute inset-x-0 top-0 -z-10 h-px bg-linear-to-r from-transparent via-border to-transparent" />
-
-        <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge className="rounded-full px-3 py-1 text-xs font-medium">
-                Starter Pro
-              </Badge>
-
-              <Badge
-                variant="outline"
-                className="rounded-full px-3 py-1 text-xs font-medium"
-              >
-                Production-ready
-              </Badge>
-
-              <Badge
-                variant="outline"
-                className="rounded-full px-3 py-1 text-xs font-medium gap-2"
-              >
+      <Container className="py-20 sm:py-20 lg:py-24">
+        <PageHero
+          maxWidth="4xl"
+          badges={[
+            {
+              label: 'Starter Pro',
+              variant: 'secondary',
+            },
+            {
+              label: 'Production-ready',
+              variant: 'outline',
+            },
+            {
+              label: `Launch offer ${launchPrice}`,
+              variant: 'outline',
+              icon: (
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Launch offer {launchPrice}
-              </Badge>
-            </div>
-
-            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Launch your SaaS with the real foundations already
-              wired.{' '}
-              <span className="block text-muted-foreground">
-                Skip months of repeated setup work and focus on what
-                customers pay for.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              Starter Pro is a production-ready Next.js SaaS starter
-              with real authentication, real Stripe billing, protected
-              app structure, and scalable account foundations already
-              integrated so you can ship faster, reduce setup fatigue,
-              and move sooner toward revenue.
-            </p>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-              Built for developers who want a serious SaaS baseline,
-              not another demo starter that still leaves auth,
-              billing, and product foundations unfinished.
-            </p>
-
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              ),
+            },
+          ]}
+          title="Launch your SaaS with the real foundations already wired."
+          subtitle="Skip months of repeated setup work and focus on what customers pay for."
+          description="Starter Pro is a production-ready Next.js SaaS starter with real authentication, real Stripe billing, protected app structure, and scalable account foundations already integrated so you can ship faster, reduce setup fatigue, and move sooner toward revenue."
+          actions={
+            <>
               <BuyStarterProButton
                 fullWidth={false}
                 label={`Buy Starter Pro — ${launchPrice}`}
@@ -309,66 +284,75 @@ export default function StarterProPage() {
               >
                 <Link href="/docs/starter-pro">Read the docs</Link>
               </Button>
-            </div>
+            </>
+          }
+          pills={[
+            'Real auth and billing included',
+            'Protected app foundations',
+            'Built for commercial SaaS',
+          ]}
+          extraClassName="mx-auto max-w-6xl"
+          extra={
+            <>
+              <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
+                Built for developers who want a serious SaaS baseline,
+                not another demo starter that still leaves auth,
+                billing, and product foundations unfinished.
+              </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-              <span>Real auth and billing included</span>
-              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>Protected app foundations</span>
-              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>Built for commercial SaaS</span>
-            </div>
+              <ul className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
+                <CheckItem>
+                  Authentication flows already wired
+                </CheckItem>
+                <CheckItem>
+                  Stripe billing already integrated
+                </CheckItem>
+                <CheckItem>
+                  Protected app and settings foundations
+                </CheckItem>
+                <CheckItem>
+                  Built to become a real commercial SaaS
+                </CheckItem>
+              </ul>
 
-            <ul className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
-              <CheckItem>
-                Authentication flows already wired
-              </CheckItem>
-              <CheckItem>Stripe billing already integrated</CheckItem>
-              <CheckItem>
-                Protected app and settings foundations
-              </CheckItem>
-              <CheckItem>
-                Built to become a real commercial SaaS
-              </CheckItem>
-            </ul>
-          </div>
+              <div className="mx-auto mt-12 max-w-6xl">
+                <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
+                  <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
+                    <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+                      </div>
 
-          <div className="mx-auto mt-12 max-w-6xl">
-            <div className="relative overflow-hidden rounded-[30px] border bg-card/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
-              <div className="rounded-3xl border bg-muted/30 p-2 sm:p-3">
-                <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+                      <div className="rounded-full border bg-background/80 px-3 py-1 text-[11px] text-muted-foreground backdrop-blur">
+                        Starter Pro preview
+                      </div>
+                    </div>
+
+                    <div className="overflow-hidden rounded-[20px] border bg-background">
+                      <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_40%)]">
+                        <Image
+                          src="/images/starters/starter-pro-hero-pycolors.png"
+                          alt="Starter Pro dashboard preview"
+                          fill
+                          priority
+                          className="object-cover object-top"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="rounded-full border bg-background/80 px-3 py-1 text-[11px] text-muted-foreground backdrop-blur">
-                    Starter Pro preview
-                  </div>
-                </div>
-
-                <div className="overflow-hidden rounded-[20px] border bg-background">
-                  <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_40%)]">
-                    <Image
-                      src="/images/starters/starter-pro-hero-pycolors.png"
-                      alt="Starter Pro dashboard preview"
-                      fill
-                      priority
-                      className="object-cover object-top"
-                    />
-                  </div>
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/10 to-transparent" />
                 </div>
               </div>
-
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/10 to-transparent" />
-            </div>
-          </div>
-        </div>
-      </section>
+            </>
+          }
+        />
+      </Container>
 
       <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Why Starter Pro"
             title="You do not need another starter. You need one that actually gets you to launch."
@@ -407,11 +391,11 @@ export default function StarterProPage() {
               </Card>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="What you get"
             title="Everything essential to launch a real SaaS foundation"
@@ -445,11 +429,11 @@ export default function StarterProPage() {
               );
             })}
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <SectionHeading
               align="left"
@@ -503,11 +487,11 @@ export default function StarterProPage() {
               </table>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Pricing"
             title="One serious offer. One clear buying decision."
@@ -583,11 +567,11 @@ export default function StarterProPage() {
               </CardContent>
             </Card>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="border-b">
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Why buy now"
             title="A faster launch is only valuable if it removes the right work"
@@ -627,11 +611,11 @@ export default function StarterProPage() {
               </Card>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="border-b">
-        <div className="mx-auto max-w-5xl px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20 max-w-5xl">
           <SectionHeading
             eyebrow="FAQ"
             title="Questions buyers will have before they pay"
@@ -652,11 +636,11 @@ export default function StarterProPage() {
               </Card>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       <section>
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-24">
+        <Container className="py-16 sm:py-16 lg:py-24">
           <div className="rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-10 sm:py-14">
             <div className="mx-auto max-w-3xl text-center">
               <Badge
@@ -695,7 +679,7 @@ export default function StarterProPage() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
     </main>
   );
