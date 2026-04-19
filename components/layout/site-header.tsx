@@ -121,7 +121,7 @@ const PRODUCT_MENU_META: Record<
     icon: LayoutTemplate,
     description: 'SaaS product surfaces',
   },
-  '/examples': {
+  '/ui/examples': {
     icon: BookOpen,
     description: 'Real UI usage in context',
   },
@@ -371,9 +371,31 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const showDocsSearch =
     pathname === '/docs' || pathname.startsWith('/docs/');
 
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/75 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
+      <header
+        className={cn(
+          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+          scrolled
+            ? 'border-b border-border/60 bg-background/80 backdrop-blur-xl'
+            : 'border-b border-transparent bg-background/55 backdrop-blur-md',
+        )}
+      >
         <a
           href="#content"
           className={cn(
@@ -384,7 +406,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         >
           Skip to content
         </a>
-
         <Container>
           <section className="flex h-16 items-center gap-3">
             <div className="flex shrink-0 items-center gap-3">
@@ -393,7 +414,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
             <nav
               aria-label="Primary"
-              className="ml-4 hidden flex-1 items-center gap-1 text-sm font-medium md:flex"
+              className="ml-4 hidden flex-1 items-center gap-1.5 text-[15px] font-medium md:flex"
             >
               <div ref={productsMenuRef} className="relative">
                 <button
@@ -403,7 +424,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   aria-controls="products-menu"
                   onClick={() => setIsProductsOpen((prev) => !prev)}
                   className={cn(
-                    'inline-flex items-center rounded-xl px-3 py-2 transition-all duration-200',
+                    'inline-flex items-center rounded-xl px-3.5 py-2 transition-all duration-200',
                     'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
                     isProductsCurrent &&
                       'bg-accent/40 text-foreground',
@@ -427,84 +448,92 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   role="menu"
                   aria-label="Products"
                   className={cn(
-                    'absolute left-0 top-full mt-4 w-[640px] origin-top-left overflow-hidden rounded-[28px] border border-border/70 bg-background/95 shadow-2xl shadow-black/10 backdrop-blur-2xl transition-all duration-200',
+                    'absolute left-0 top-full mt-3 w-150 origin-top-left overflow-hidden rounded-[10px] border border-border/70 bg-background shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-200',
                     isProductsOpen
                       ? 'pointer-events-auto translate-y-0 opacity-100'
                       : 'pointer-events-none translate-y-2 opacity-0',
                   )}
                 >
-                  <div className="p-3">
-                    <div className="grid gap-2 md:grid-cols-2">
-                      {PRODUCT_MENU_GROUPS.flatMap((group) =>
-                        group.items.map((item) => {
-                          const isCurrent =
-                            activeProductHref === item.href;
-                          const meta = PRODUCT_MENU_META[item.href];
-                          const Icon = meta?.icon ?? Package2;
+                  <div className="p-2.5">
+                    <div className="grid gap-1.5 md:grid-cols-2">
+                      {PRODUCT_MENU_GROUPS.map((group) => (
+                        <div key={group.title} className="space-y-1">
+                          {group.items.map((item) => {
+                            const isCurrent =
+                              activeProductHref === item.href;
+                            const meta = PRODUCT_MENU_META[item.href];
+                            const Icon = meta?.icon ?? Package2;
 
-                          return (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              role="menuitem"
-                              className={cn(
-                                'group flex items-start gap-3 rounded-[20px] border border-transparent px-3 py-3 transition-all duration-200',
-                                isCurrent
-                                  ? 'bg-accent/50 shadow-sm'
-                                  : 'hover:bg-accent/30',
-                                focusRing,
-                              )}
-                            >
-                              <span
+                            return (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                role="menuitem"
                                 className={cn(
-                                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] border border-border/60 bg-muted/20 transition-colors',
-                                  isCurrent && 'bg-background',
+                                  'group flex items-start gap-2.5 rounded-[10px] border border-transparent px-2.5 py-2.5 transition-all duration-200',
+                                  isCurrent
+                                    ? 'bg-accent/50 shadow-sm'
+                                    : 'hover:bg-accent/30',
+                                  focusRing,
                                 )}
                               >
-                                <Icon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              </span>
+                                {/* ICON */}
+                                <span
+                                  className={cn(
+                                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-border/50 bg-muted/20 transition-colors',
+                                    isCurrent && 'bg-background',
+                                  )}
+                                >
+                                  <Icon
+                                    className="h-4 w-4 text-muted-foreground"
+                                    aria-hidden="true"
+                                  />
+                                </span>
 
-                              <span className="min-w-0 flex-1">
-                                <span className="flex items-center justify-between gap-3">
-                                  <span className="truncate text-sm font-semibold tracking-tight text-foreground">
-                                    {item.label}
+                                {/* TEXT */}
+                                <span className="min-w-0 flex-1">
+                                  <span className="flex items-center justify-between gap-2">
+                                    <span className="truncate text-sm font-medium text-foreground">
+                                      {item.label}
+                                    </span>
+
+                                    {item.badge ? (
+                                      <span className="inline-flex shrink-0 rounded-[15px]  border border-border/60 bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                                        {item.badge}
+                                      </span>
+                                    ) : null}
                                   </span>
 
-                                  {item.badge ? (
-                                    <span className="inline-flex shrink-0 rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
-                                      {item.badge}
+                                  {meta?.description && (
+                                    <span className="mt-0.5 block text-[11px] leading-5 text-muted-foreground">
+                                      {meta.description}
                                     </span>
-                                  ) : null}
+                                  )}
                                 </span>
-
-                                <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                                  {meta?.description ?? ''}
-                                </span>
-                              </span>
-                            </Link>
-                          );
-                        }),
-                      )}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="border-t border-border/70 bg-muted/10 px-3 py-2.5">
+                  {/* CTA BAR */}
+                  <div className="border-t border-border/60 bg-muted/10 px-2.5 py-2">
                     <Link
                       href="/pricing"
                       className={cn(
-                        'group flex items-center justify-between rounded-xl px-3 py-2 transition-colors hover:bg-accent/30',
+                        'group flex items-center justify-between rounded-lg px-2.5 py-2 text-sm transition-colors hover:bg-accent/30',
                         focusRing,
                       )}
                     >
-                      <span className="flex items-center gap-3">
-                        <span className="inline-flex rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground">
+                      <span className="flex items-center gap-2.5">
+                        <span className="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                           New
                         </span>
+
                         <span className="text-sm font-medium text-foreground">
-                          Starter Pro launch offer · 199 €
+                          Starter Pro · 199 €
                         </span>
                       </span>
 
@@ -528,7 +557,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     href={item.href}
                     aria-current={isCurrent ? 'page' : undefined}
                     className={cn(
-                      'rounded-xl px-3 py-2 transition-all duration-200',
+                      'rounded-xl px-3.5 py-2 transition-all duration-200',
                       'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
                       isCurrent && 'bg-accent/40 text-foreground',
                       focusRing,
@@ -545,21 +574,16 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <LargeSearchToggle className="w-48 xl:w-56" />
               ) : null}
 
-              <ThemeToggle
-                mode="light-dark"
-                className="inline-flex h-9 items-center rounded-full border px-1"
-              />
-
               <Button
                 asChild
                 size="sm"
-                className="rounded-xl shadow-sm"
+                className="h-10 rounded-xl px-6 text-sm font-medium"
               >
                 <Link href="/starters/pro">
                   Get Starter Pro
                   <ArrowRight
                     aria-hidden="true"
-                    className="ml-2 h-4 w-4"
+                    className="h-4 w-4"
                   />
                 </Link>
               </Button>
