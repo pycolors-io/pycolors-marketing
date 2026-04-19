@@ -448,16 +448,16 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   role="menu"
                   aria-label="Products"
                   className={cn(
-                    'absolute left-0 top-full mt-4 w-[640px] origin-top-left overflow-hidden rounded-[28px] border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-2xl transition-all duration-200',
+                    'absolute left-0 top-full mt-3 w-150 origin-top-left overflow-hidden rounded-[10px] border border-border/70 bg-background shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-200',
                     isProductsOpen
                       ? 'pointer-events-auto translate-y-0 opacity-100'
                       : 'pointer-events-none translate-y-2 opacity-0',
                   )}
                 >
-                  <div className="p-3">
-                    <div className="grid gap-2 md:grid-cols-2">
+                  <div className="p-2.5">
+                    <div className="grid gap-1.5 md:grid-cols-2">
                       {PRODUCT_MENU_GROUPS.map((group) => (
-                        <div key={group.title} className="space-y-2">
+                        <div key={group.title} className="space-y-1">
                           {group.items.map((item) => {
                             const isCurrent =
                               activeProductHref === item.href;
@@ -470,41 +470,45 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                 href={item.href}
                                 role="menuitem"
                                 className={cn(
-                                  'group flex items-start gap-3 rounded-[20px] border border-transparent px-3 py-3 transition-all duration-200',
+                                  'group flex items-start gap-2.5 rounded-[10px] border border-transparent px-2.5 py-2.5 transition-all duration-200',
                                   isCurrent
                                     ? 'bg-accent/50 shadow-sm'
                                     : 'hover:bg-accent/30',
                                   focusRing,
                                 )}
                               >
+                                {/* ICON */}
                                 <span
                                   className={cn(
-                                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-[16px] border border-border/60 bg-muted/20 transition-colors',
+                                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-border/50 bg-muted/20 transition-colors',
                                     isCurrent && 'bg-background',
                                   )}
                                 >
                                   <Icon
-                                    className="h-4 w-4"
+                                    className="h-4 w-4 text-muted-foreground"
                                     aria-hidden="true"
                                   />
                                 </span>
 
+                                {/* TEXT */}
                                 <span className="min-w-0 flex-1">
-                                  <span className="flex items-center justify-between gap-3">
-                                    <span className="truncate text-sm font-semibold tracking-tight text-foreground">
+                                  <span className="flex items-center justify-between gap-2">
+                                    <span className="truncate text-sm font-medium text-foreground">
                                       {item.label}
                                     </span>
 
                                     {item.badge ? (
-                                      <span className="inline-flex shrink-0 rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
+                                      <span className="inline-flex shrink-0 rounded-[15px]  border border-border/60 bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                                         {item.badge}
                                       </span>
                                     ) : null}
                                   </span>
 
-                                  <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                                    {meta?.description ?? ''}
-                                  </span>
+                                  {meta?.description && (
+                                    <span className="mt-0.5 block text-[11px] leading-5 text-muted-foreground">
+                                      {meta.description}
+                                    </span>
+                                  )}
                                 </span>
                               </Link>
                             );
@@ -514,20 +518,22 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </div>
                   </div>
 
-                  <div className="border-t border-border/70 bg-muted/10 px-3 py-2.5">
+                  {/* CTA BAR */}
+                  <div className="border-t border-border/60 bg-muted/10 px-2.5 py-2">
                     <Link
                       href="/pricing"
                       className={cn(
-                        'group flex items-center justify-between rounded-xl px-3 py-2 transition-colors hover:bg-accent/30',
+                        'group flex items-center justify-between rounded-lg px-2.5 py-2 text-sm transition-colors hover:bg-accent/30',
                         focusRing,
                       )}
                     >
-                      <span className="flex items-center gap-3">
-                        <span className="inline-flex rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-foreground">
+                      <span className="flex items-center gap-2.5">
+                        <span className="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                           New
                         </span>
+
                         <span className="text-sm font-medium text-foreground">
-                          Starter Pro launch offer · 199 €
+                          Starter Pro · 199 €
                         </span>
                       </span>
 
