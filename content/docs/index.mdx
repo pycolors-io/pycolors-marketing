@@ -1,90 +1,167 @@
 ---
-title: Getting Started
-description: Learn how to set up PyColors UI and start building modern interfaces using a documentation-first design system.
+title: PyColors Documentation
+description: From product idea to real SaaS. Validate fast, wire auth and billing, and launch with a production-ready foundation.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-PyColors UI is a modern, extensible **design system and UI toolkit** built with **Next.js**, **Tailwind CSS**, **shadcn/ui**, and **Fumadocs**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Docs</Badge>
+  <Badge>Production-ready SaaS</Badge>
+</div>
 
-It provides a clean, scalable foundation for building **SaaS applications, dashboards, documentation sites, and marketing pages** — with a strong focus on accessibility, consistency, and long-term maintainability.
+# From idea to revenue
 
-If you want to understand the philosophy behind these choices, read
-**[Why PyColors UI?](/docs/why-pycolors-ui)**.
+Build your SaaS in the right order:
 
----
+→ validate the product
+→ wire the business layer
+→ launch with confidence
 
-## Quick start
-
-<Tabs items={["New Next.js app", "Existing project"]}>
-  <Tab value="New Next.js app">
-    ```bash
-    npx create-next-app@latest my-app --ts --tailwind --app
-    cd my-app
-
-    pnpm add @pycolors/ui @pycolors/tokens
-    pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
-
-    # app/globals.css
-    # @import "@pycolors/tokens/tokens.css";
-
-    pnpm dev
-    ```
-  </Tab>
-
-  <Tab value="Existing project">
-    ```bash
-    pnpm add @pycolors/ui @pycolors/tokens
-    pnpm add -D @pycolors/eslint-config eslint @eslint/js eslint-config-prettier typescript-eslint globals
-    ```
-  </Tab>
-</Tabs>
+PyColors helps you skip the parts that slow you down.
 
 ---
 
-## How PyColors UI is structured
-
-PyColors UI is built around three core principles:
-
-1. **Unified design language** via semantic tokens
-2. **Composable components** you fully own
-3. **Documentation-first workflow**
-
-These principles define how components, guides, and patterns are organized across the system.
-
----
-
-## Recommended reading order
-
-1. Getting Started
-2. Why PyColors UI?
-3. Design System (tokens, colors, typography)
-4. UI Components (primitives)
-5. Guides & Patterns (real product usage)
-
----
-
-## Next steps
+## Start here
 
 <LinkCards>
   <LinkCard
-    title="Why PyColors UI?"
-    description="Philosophy, trade-offs, and design principles."
-    href="/docs/why-pycolors-ui"
+    title="Starter Pro"
+    description="Production-ready SaaS foundation with auth, billing, backend, and delivery."
+    href="/docs/starter-pro"
   />
   <LinkCard
-    title="UI components"
-    description="Reusable primitives built on shadcn/ui."
-    href="/docs/ui"
-  />
-  <LinkCard
-    title="Guides"
-    description="Production-ready patterns for forms, states, and layouts."
-    href="/docs/guides"
+    title="Upgrade to Pro"
+    description="When auth and billing become your bottleneck."
+    href="/upgrade"
   />
 </LinkCards>
+
+---
+
+## The path
+
+### 1. Validate fast
+
+- build screens
+- test UX
+- shape your product
+
+👉 Use Starter Free
+
+---
+
+### 2. Wire the business layer
+
+- authentication
+- billing
+- protected routes
+- backend
+
+👉 Use Starter Pro
+
+---
+
+### 3. Launch
+
+- real users
+- real payments
+- real product
+
+---
+
+## What you need (and where to find it)
+
+<LinkCards>
+  <LinkCard
+    title="What is included"
+    description="See exactly what you get with Starter Pro."
+    href="/docs/starter-pro/what-is-included"
+  />
+  <LinkCard
+    title="Why buy instead of building"
+    description="Understand the real cost of building auth and billing yourself."
+    href="/docs/starter-pro/why-buy-instead-of-building"
+  />
+  <LinkCard
+    title="Getting started"
+    description="Run Starter Pro locally in minutes."
+    href="/docs/starter-pro/getting-started"
+  />
+</LinkCards>
+
+---
+
+## Core systems
+
+<LinkCards>
+  <LinkCard
+    title="Authentication"
+    description="Real users, sessions, OAuth, and security."
+    href="/docs/starter-pro/auth"
+  />
+  <LinkCard
+    title="Billing"
+    description="Stripe, subscriptions, invoices, and revenue."
+    href="/docs/starter-pro/billing"
+  />
+  <LinkCard
+    title="Backend"
+    description="Database, API, and product architecture."
+    href="/docs/starter-pro/backend"
+  />
+  <LinkCard
+    title="Delivery"
+    description="Secure access after purchase."
+    href="/docs/starter-pro/delivery"
+  />
+</LinkCards>
+
+---
+
+## Mental model
+
+> Starter Free → validate
+> Starter Pro → monetize
+
+---
+
+## Why this exists
+
+Most developers don’t fail at building UI.
+
+They fail here:
+
+- auth takes too long
+- billing is fragile
+- backend becomes messy
+- launch is delayed
+
+PyColors removes that phase.
+
+---
+
+## Decision
+
+If your question is:
+
+→ “What should my product look like?”
+Stay on Starter Free
+
+If your question is:
+
+→ “How do I launch this without losing weeks?”
+Move to Starter Pro
+
+---
+
+## Next step
+
+👉 **Read Starter Pro overview** → `/docs/starter-pro`
+👉 **Upgrade when ready** → `/upgrade`
 
 </DocsPageShell>
