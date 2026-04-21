@@ -7,6 +7,7 @@ import {
   ExternalLink,
   LayoutTemplate,
   Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 
 import {
@@ -30,12 +31,12 @@ import { PageHero } from '@/components/marketing/page-hero';
 export const metadata: Metadata = {
   title: 'Starter Free | PyColors',
   description:
-    'Starter Free gives you a production-shaped SaaS surface with auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B management — mocked by design, ready to wire.',
+    'Starter Free gives you a production-shaped SaaS surface with auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B management — mocked by design, ready to validate and later upgrade.',
   alternates: { canonical: '/starters/free' },
   openGraph: {
     title: 'Starter Free | PyColors',
     description:
-      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to validate and upgrade later.',
     url: '/starters/free',
     images: ['/seo/og-main.png'],
   },
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Starter Free | PyColors',
     description:
-      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to validate and upgrade later.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -65,7 +66,7 @@ const INTERNAL = {
   docs: '/docs/starter',
   docsUpgrade: '/docs/starter/upgrade-to-pro',
   upgrade: '/upgrade',
-  access: '/pricing',
+  pricing: '/pricing',
   starterPro: '/starters/pro',
   roadmap: '/roadmap',
 } as const;
@@ -393,9 +394,9 @@ export default function StarterFreePage() {
               ),
             },
           ]}
-          title="Ship a credible SaaS UI fast."
-          subtitle="Validate the product before wiring the backend."
-          description="Starter Free gives you a production-shaped SaaS surface out of the box: auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B member management — mocked by design so you can move fast without backend overhead."
+          title="Validate the SaaS surface before wiring the business layer."
+          subtitle="Starter Free helps you move fast on product shape."
+          description="Starter Free gives you a production-shaped SaaS surface out of the box: auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B member management — mocked by design so you can validate faster before auth, billing, and backend become the real bottleneck."
           actions={
             <>
               <Button
@@ -443,7 +444,9 @@ export default function StarterFreePage() {
                 variant="outline"
                 className="h-11 rounded-xl px-6 text-sm font-medium"
               >
-                <Link href={INTERNAL.docs}>Read the docs</Link>
+                <Link href={INTERNAL.upgrade}>
+                  When should I upgrade?
+                </Link>
               </Button>
             </>
           }
@@ -452,15 +455,15 @@ export default function StarterFreePage() {
             'Tailwind v4',
             'PyColors UI',
             'Mock data · no backend',
-            'Real screens and UX contracts',
+            'Upgrade-ready when wiring matters',
           ]}
           extraClassName="mx-auto max-w-6xl"
           extra={
             <>
               <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
-                Use it to validate the product surface now. Upgrade to
-                Starter Pro when authentication, billing, and the
-                business layer become the real bottleneck.
+                Use Starter Free to validate the product now. Move to
+                Starter Pro when auth, billing, and the business layer
+                start slowing you down.
               </p>
 
               <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
@@ -468,7 +471,7 @@ export default function StarterFreePage() {
                 <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
                 <span>No backend required</span>
                 <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-                <span>Upgrade-ready when wiring matters</span>
+                <span>Clear upgrade path to Pro</span>
               </div>
 
               <div className="mx-auto mt-12 max-w-6xl">
@@ -505,6 +508,7 @@ export default function StarterFreePage() {
             </>
           }
         />
+
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -536,12 +540,13 @@ export default function StarterFreePage() {
                   <Link href={INTERNAL.patterns}>UI Patterns</Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={INTERNAL.examples}>Examples</Link>
+                  <Link href={INTERNAL.upgrade}>Upgrade path</Link>
                 </Button>
               </div>
             </div>
           </Card>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex items-start gap-3">
@@ -595,6 +600,7 @@ export default function StarterFreePage() {
             </div>
           </Card>
         </section>
+
         <section id="included" className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="What you get"
@@ -632,11 +638,12 @@ export default function StarterFreePage() {
             ))}
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Learn before you wire"
             title="Starter Free works even better when connected to the rest of the ecosystem"
-            description="Use the free starter to validate product shape, then explore patterns, guides, and examples to make your next move obvious."
+            description="Use the free starter to validate product shape, then explore guides, patterns, and the upgrade path to make your next move obvious."
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
@@ -665,15 +672,16 @@ export default function StarterFreePage() {
 
             <ResourceCard
               icon={
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               }
-              title="Examples"
-              description="Explore real SaaS interface directions and what is already available today through Starter Free."
-              href={INTERNAL.examples}
-              cta="See examples"
+              title="Upgrade path"
+              description="See when Starter Free stops being enough and when Starter Pro becomes the right move."
+              href={INTERNAL.upgrade}
+              cta="See upgrade"
             />
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Mocked on purpose"
@@ -719,11 +727,12 @@ export default function StarterFreePage() {
             </Card>
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Free vs Pro"
             title="Starter Free validates the surface. Starter Pro wires the business."
-            description="Starter Free helps you move fast now. Starter Pro is the upgrade path when auth, billing, backend, and launch readiness become your real bottleneck."
+            description="Starter Free helps you move fast now. Upgrade explains when the transition becomes the right move. Pricing is where you buy."
             action={
               <BuyStarterProButton
                 fullWidth={false}
@@ -741,8 +750,10 @@ export default function StarterFreePage() {
                 </div>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  Start with a credible product surface today. Upgrade
-                  when you want the business wiring done for you.
+                  Start with a credible product surface today. Move to
+                  Upgrade when you want to evaluate the transition.
+                  Buy Starter Pro when you are ready for auth,
+                  billing, and launch-ready foundations.
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -761,6 +772,10 @@ export default function StarterFreePage() {
 
                 <Button asChild variant="outline">
                   <Link href={INTERNAL.upgrade}>See Upgrade</Link>
+                </Button>
+
+                <Button asChild variant="outline">
+                  <Link href={INTERNAL.pricing}>View pricing</Link>
                 </Button>
               </div>
             </div>
@@ -799,12 +814,14 @@ export default function StarterFreePage() {
               </Table>
 
               <p className="mt-3 text-xs text-muted-foreground">
-                Starter Free is the entry point. Starter Pro is the
-                shortest path to a monetizable SaaS baseline.
+                Starter Free is the entry point. Upgrade is the
+                transition page. Starter Pro is the shortest path to a
+                monetizable SaaS baseline.
               </p>
             </div>
           </Card>
         </section>
+
         <section className="py-10 sm:py-12">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -932,19 +949,19 @@ pnpm dev`}</pre>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
                 <h2 className="text-lg font-semibold tracking-tight">
-                  Start with the surface. Upgrade when wiring becomes
-                  the bottleneck.{' '}
+                  Start with the surface. Move to Upgrade when wiring
+                  becomes the bottleneck.
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Open the demo, clone the repo, and build on a
-                  credible SaaS baseline now. Upgrade to Starter Pro
-                  when you want auth, billing, and the business layer
-                  already handled.
+                  Open the demo, clone the repo, and validate your
+                  SaaS surface now. When auth, billing, and the
+                  business layer start blocking launch, go to Upgrade,
+                  then move to Starter Pro.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Pill>Real screens</Pill>
                   <Pill>Clear states</Pill>
-                  <Pill>Upgrade path</Pill>
+                  <Pill>Clear upgrade path</Pill>
                 </div>
               </div>
 
@@ -955,22 +972,20 @@ pnpm dev`}</pre>
                   variant="outline"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <a
-                    href={EXTERNAL.demo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    See live demo
-                    <ExternalLink
+                  <Link href={INTERNAL.upgrade}>
+                    See Upgrade
+                    <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </Button>
-                <BuyStarterProButton />
+
+                <BuyStarterProButton label="Buy Starter Pro — 199 €" />
               </div>
             </div>
           </Card>
+
           <p className="mt-4 text-center text-xs text-muted-foreground">
             Follow the setup guide in the docs →{' '}
             <Link
