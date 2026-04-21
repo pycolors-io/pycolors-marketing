@@ -9,7 +9,6 @@ import {
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
 
@@ -200,23 +199,18 @@ function PatternCard({ title, description, tag, category }: Pattern) {
 export default function PatternsPage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'UI', href: '/ui' },
-              { label: 'Patterns', href: '/ui/patterns' },
-            ]}
-          />
-        </div>
-
+      <div>
         <PageHero
           badges={[
             {
               label: 'Patterns',
               variant: 'secondary',
-              icon: Sparkles,
+              icon: (
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
             },
             {
               label: 'SaaS surfaces',

@@ -1,27 +1,48 @@
 ---
 title: Overview
-description: Understand what Starter Pro is and how it helps you monetize, secure, and scale your SaaS.
+description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, and secure your SaaS faster.
 ---
 
+import Link from 'next/link';
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 
 <DocsPageShell>
 
-Starter Free helps you **validate and ship fast**.
-Starter Pro helps you **monetize, secure, and scale**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Free</Badge>
+  <Badge>Starter Pro</Badge>
+</div>
 
-Starter Free focuses on **product surface and UX contracts**.
-Starter Pro focuses on **production wiring and business infrastructure**.
+# Starter Pro is the layer that turns a product-shaped app into a real SaaS
+
+Starter Free helps you **validate and shape the product**.
+
+Starter Pro helps you **launch with real auth, real billing, real backend foundations, and secure delivery**.
+
+It is not a UI kit.
+It is not just a demo.
+It is the layer that removes the engineering work that usually delays revenue.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
 
 ---
 
 ## What this page explains
 
-- What Starter Pro actually is
-- What problems it solves
-- What you get in concrete terms
-- When it becomes necessary
-- How it fits in your SaaS journey
+- what Starter Pro actually is
+- what problems it solves
+- what you get in concrete terms
+- when it becomes the right move
+- how it fits in the path from validation to launch
 
 ---
 
@@ -29,82 +50,94 @@ Starter Pro focuses on **production wiring and business infrastructure**.
 
 Starter Pro is a **production-ready SaaS foundation**.
 
-It is not a UI kit.
-It is not a demo.
+It helps you move from:
 
-It is the layer that makes your product:
+- product-shaped validation
+- mocked business flows
+- frontend-only exploration
 
-- usable by real users
-- secure in production
-- capable of generating revenue
+to:
+
+- real users
+- real billing
+- real protected access
+- real backend structure
+- real delivery after purchase
 
 ---
 
 ## The problem it solves
 
-Most SaaS projects slow down here:
+Most SaaS projects slow down at the same point:
 
-> “The UI is done. Now I need auth, billing, and backend.”
+> “The UI is good enough. Now I need auth, billing, and backend.”
 
-This phase is:
+That phase is usually:
 
 - time-consuming
-- error-prone
 - security-sensitive
+- revenue-critical
+- easy to partially get wrong
 
-Starter Pro removes this friction by providing a **structured, working baseline**.
+Starter Pro exists to remove that repeated implementation cost.
+
+Without it, teams often lose days or weeks on:
+
+- authentication edge cases
+- Stripe billing logic
+- session and route protection
+- backend structure
+- delivery and fulfillment flows
+
+That is exactly the layer Starter Pro is designed to reduce.
 
 ---
 
 ## What you actually get
 
-Starter Pro gives you the parts that are usually rebuilt from scratch.
+Starter Pro gives you the systems that most SaaS products need before they can launch confidently.
 
 ### Authentication
 
-- Email + password
-- OAuth providers (Google, GitHub)
-- Email verification
-- Password reset
-- Session management
-- Rate limiting foundations
-
----
+- email and password auth
+- Google OAuth
+- GitHub OAuth
+- email verification
+- password reset
+- session-aware flows
+- safer account lifecycle handling
 
 ### Billing
 
-- Stripe Checkout integration
-- Billing portal flow
-- Subscription lifecycle handling
-- Webhook synchronization
-- Invoice tracking
-
----
+- Stripe Checkout
+- billing portal
+- subscription lifecycle handling
+- webhook synchronization
+- invoice-ready billing flows
+- plan-aware product behavior
 
 ### Backend foundation
 
-- API structure (Next.js route handlers)
-- Prisma data models
-- Database-ready architecture
-- Clear domain separation (auth / billing / app)
-
----
+- database-ready structure
+- Prisma models
+- API and server-side patterns
+- auth-aware logic
+- billing-aware logic
+- clear domain boundaries
 
 ### Secure delivery
 
-- Token-based downloads
-- Private file access
-- Expiring links
-- Optional one-time usage
-
----
+- private asset delivery
+- secure access after purchase
+- token-based download flow
+- controlled fulfillment
 
 ### Application structure
 
-- Protected routes
-- Plan-based access (gating)
-- Settings system
-- Production-shaped navigation
+- protected routes
+- plan-aware access
+- settings foundations
+- production-shaped navigation and SaaS shell
 
 ---
 
@@ -112,106 +145,114 @@ Starter Pro gives you the parts that are usually rebuilt from scratch.
 
 Starter Free gives you:
 
-- Real screens
-- UX flows
-- Product structure
-- Mock data
+- real-looking screens
+- strong UX surfaces
+- product structure
+- mock data and validation-first flows
 
 Starter Pro adds:
 
-- Real authentication
-- Real billing
-- Real backend
-- Real data layer
-- Real delivery system
+- real authentication
+- real monetization
+- real persistence
+- real delivery
+- real production foundations
+
+That is the key distinction.
+
+> Starter Free validates the product.
+> Starter Pro prepares the product for users, billing, and growth.
 
 ---
 
-## Mental model
+## When Starter Pro becomes the right move
 
-> Starter Free → validate the product
-> Starter Pro → productionize the product
+You do not need Starter Pro on day one.
 
-They are not competing products.
-They are **two steps of the same path**.
+You need it when your main blocker is no longer:
 
----
+> “What should the product feel like?”
 
-## When Starter Pro becomes necessary
+but instead:
 
-You don’t need Starter Pro immediately.
+> “How do I launch this without spending weeks wiring auth, billing, and backend?”
 
-You need it when:
+That is usually the point where Starter Pro starts paying for itself.
 
-- You want to charge users
-- You need real user accounts
-- You need secure access
-- You are preparing for production
+You likely need it when:
+
+- you want to charge users
+- you need real accounts and sessions
+- you need protected routes
+- you need Stripe billing
+- you want less uncertainty before launch
+
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
 
 ---
 
 ## What this enables
 
-Starter Pro is not about adding features.
-It is about **removing blockers**.
+Starter Pro is not about adding random features.
+
+It is about removing the systems work that delays launch.
 
 It enables:
 
-- Faster time-to-revenue
-- More confident launches
-- Less infrastructure work
-- More focus on product differentiation
+- faster time-to-revenue
+- more confident launches
+- less fragile business wiring
+- more time on product differentiation
+- a stronger path from prototype to paid product
 
 ---
 
-## Typical developer path
+## Typical builder path
 
-Most builders follow this sequence:
+Most builders follow a path like this:
 
-1. Start with Starter Free
-2. Validate product UX and structure
-3. Upgrade to Starter Pro
-4. Add authentication
-5. Add billing
-6. Launch
+1. start with Starter Free
+2. validate UX and product structure
+3. move to Starter Pro
+4. wire authentication
+5. wire billing
+6. connect backend logic
+7. launch
+
+Starter Pro is the bridge between “this looks like a SaaS” and “this can become a real SaaS.”
 
 ---
 
-## What you still need to build
+## What you still build yourself
 
-Starter Pro is a foundation.
+Starter Pro is a foundation, not your final product.
 
 You still build:
 
-- Your product logic
-- Your domain model
-- Your workflows
-- Your differentiation
+- your product logic
+- your domain model
+- your workflows
+- your onboarding
+- your positioning
+- your differentiation
 
----
+That is the point.
 
-## Why this matters
-
-Authentication and billing are not optional layers.
-
-They are:
-
-- security-critical
-- revenue-critical
-- expensive to build incorrectly
-
-Starter Pro gives you a **safe starting point** for these systems.
+Starter Pro removes repeated infrastructure work so you can spend more time on what customers actually pay for.
 
 ---
 
 ## The real value
 
-You are not buying more code.
+You are not buying “more code”.
 
 You are buying:
 
 - time saved
 - risk reduced
+- cleaner execution
 - faster path to revenue
 
 ---
@@ -225,8 +266,18 @@ You are buying:
 
 ## Next steps
 
-- Understand when to upgrade → `/docs/starter-pro/upgrade`
-- Explore billing system → `/docs/starter-pro/billing`
-- Explore backend foundations → `/docs/starter-pro/backend`
+- Explore the auth layer → `/docs/starter-pro/auth`
+- Explore the billing layer → `/docs/starter-pro/billing`
+- Explore the backend layer → `/docs/starter-pro/backend`
+- Explore secure delivery → `/docs/starter-pro/delivery`
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      Compare pricing
+    </Link>
+  </Button>
+</div>
 
 </DocsPageShell>

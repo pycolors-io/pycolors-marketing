@@ -1,84 +1,189 @@
 ---
 title: Colors
-description: Color tokens, roles, and theming architecture used in PyColors UI.
+description: Semantic color roles, theming architecture, and usage guidelines used across PyColors UI.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-PyColors UI uses an **OKLCH-based color system** to guarantee high contrast, predictable light/dark behavior, and fully themeable experiences.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Design System</Badge>
+  <Badge>Colors</Badge>
+</div>
 
-OKLCH is used because it is **perceptually uniform**, making contrast and theme variations more predictable than RGB or HSL.
+# Colors define meaning before appearance
 
-All core colors are defined as CSS variables in `app/global.css` and mapped to Tailwind’s internal design tokens via the inline theme mapping.
+PyColors UI uses a **semantic color system** built to stay predictable across:
+
+- light mode
+- dark mode
+- reusable components
+- dashboards
+- settings pages
+- documentation
+- marketing surfaces
+
+The goal is simple:
+
+> components should consume **color roles**, not invent visual values locally.
+
+---
+
+## Why semantic colors matter
+
+Most UI inconsistency starts when components choose colors directly.
+
+That creates problems like:
+
+- hardcoded values
+- theme drift
+- weak contrast consistency
+- duplicated visual intent
+- surfaces that stop feeling related
+
+PyColors avoids this by exposing **roles**, not raw colors.
+
+That means components use utilities like:
+
+- `bg-card`
+- `text-foreground`
+- `text-muted-foreground`
+- `bg-primary`
+- `border-border`
+
+instead of raw values.
+
+Semantic roles keep the system coherent as the product grows.
+
+---
+
+## Color architecture
+
+PyColors uses an **OKLCH-based color system**.
+
+OKLCH is useful because it is more perceptually predictable than raw RGB or HSL when you need:
+
+- reliable contrast
+- better light/dark consistency
+- safer theme adjustments
+- clearer control over visual balance
+
+Core values are defined as CSS variables and then mapped into semantic Tailwind tokens.
 
 ---
 
 ## Theme mapping
 
+The system maps CSS variables into Tailwind theme utilities.
+
 <Tabs items={["Code"]}>
   <Tab value="Code">
-    ```css
-    @theme inline {
-      --color-background: var(--background);
-      --color-primary: var(--primary);
-      --color-muted-foreground: var(--muted-foreground);
-      /* ... */
-    }
-    ```
+
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  /* ... */
+}
+```
+
   </Tab>
 </Tabs>
 
-This ensures the entire UI stays consistent while allowing full customization through CSS variables alone.
+This is what allows the whole UI to update coherently when the token layer changes.
 
 ---
 
-## Semantic tokens
+## Semantic token roles
 
-PyColors UI exposes **high-level tokens** instead of raw colors. These tokens represent **roles**, not visual values.
+PyColors exposes high-level tokens that represent **meaning**, not decoration.
 
 ### Surfaces
 
-- `--background` / `--foreground`
-- `--card` / `--card-foreground`
-- `--popover` / `--popover-foreground`
-- `--sidebar`, `--sidebar-*`
+- `--background`
+- `--foreground`
+- `--card`
+- `--card-foreground`
+- `--popover`
+- `--popover-foreground`
+- `--sidebar`
+- `--sidebar-*`
 
-### Brand / component backgrounds
+These roles define how the interface is layered.
 
-- `--primary` / `--primary-foreground`
-- `--secondary` / `--secondary-foreground`
-- `--accent` / `--accent-foreground`
-- `--muted` / `--muted-foreground`
+### Brand and component roles
 
-### States
+- `--primary`
+- `--primary-foreground`
+- `--secondary`
+- `--secondary-foreground`
+- `--accent`
+- `--accent-foreground`
+- `--muted`
+- `--muted-foreground`
+
+These roles help distinguish:
+
+- primary actions
+- secondary emphasis
+- subtle surfaces
+- supporting UI
+
+### State roles
 
 - `--destructive`
 - `--destructive-foreground`
-- `--success` / `--success-foreground`
-- `--warning` / `--warning-foreground`
+- `--success`
+- `--success-foreground`
+- `--warning`
+- `--warning-foreground`
 
-### Borders / input / ring
+These tokens communicate product meaning:
+
+- danger
+- success
+- caution
+
+They should remain consistent across all surfaces.
+
+### Borders, inputs, and focus
 
 - `--border`
 - `--input`
 - `--ring`
 
+These roles keep form elements, containers, and focus states aligned with the rest of the system.
+
 ### Charts
 
-- `--chart-1` … `--chart-5`
+- `--chart-1`
+- `--chart-2`
+- `--chart-3`
+- `--chart-4`
+- `--chart-5`
 
-Chart tokens are intentionally separated from UI tokens to avoid leaking data visualization colors into interface components.
+Chart tokens are intentionally separated from UI roles.
 
-These roles ensure each component uses the correct meaning, regardless of theme or brand adaptation.
+That prevents data visualization colors from leaking into interface components.
 
 ---
 
-## Light & Dark mode
+## Light and dark mode
 
-Light mode is applied on `:root`, dark mode on `.dark`.
+PyColors uses CSS variables for both light and dark themes.
+
+Light mode usually lives on `:root`.
+Dark mode is applied with `.dark`.
 
 ```css
 :root {
@@ -100,183 +205,193 @@ Light mode is applied on `:root`, dark mode on `.dark`.
 }
 ```
 
+The important idea is not the specific value.
+
+It is the system behavior:
+
+- components remain unchanged
+- color meaning stays stable
+- only the token layer changes underneath
+
 ---
 
 ## Visual palette preview
 
 ### Core semantic colors
 
-<Preview>
-  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-
-    {/* background */}
-    <div className="rounded-md border p-4 bg-background text-foreground">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">background</div>
-      <div className="h-10 rounded bg-background border" />
-    </div>
-
-    {/* card */}
-    <div className="rounded-md border p-4 bg-card text-card-foreground">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">card</div>
-      <div className="h-10 rounded bg-card border" />
-    </div>
-
-    {/* primary */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">primary</div>
-      <div className="h-10 rounded bg-primary" />
-    </div>
-
-    {/* secondary */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">secondary</div>
-      <div className="h-10 rounded bg-secondary" />
-    </div>
-
-    {/* accent */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">accent</div>
-      <div className="h-10 rounded bg-accent" />
-    </div>
-
-    {/* muted */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">muted</div>
-      <div className="h-10 rounded bg-muted" />
-    </div>
-
-    {/* destructive */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">destructive</div>
-      <div className="h-10 rounded bg-destructive" />
-    </div>
-
-    {/* success */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">success</div>
-      <div className="h-10 rounded bg-success" />
-    </div>
-
-    {/* warning */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">warning</div>
-      <div className="h-10 rounded bg-warning" />
-    </div>
-
-    {/* border */}
-    <div className="rounded-md border p-4">
-      <div className="text-xs font-medium mb-2 text-muted-foreground">border</div>
-      <div className="h-10 rounded border border-border bg-background" />
-    </div>
-
+<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+  <div className="rounded-md border p-4 bg-background text-foreground">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">background</div>
+    <div className="h-10 rounded border bg-background" />
   </div>
-</Preview>
+
+  <div className="rounded-md border p-4 bg-card text-card-foreground">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">card</div>
+    <div className="h-10 rounded border bg-card" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">primary</div>
+    <div className="h-10 rounded bg-primary" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">secondary</div>
+    <div className="h-10 rounded bg-secondary" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">accent</div>
+    <div className="h-10 rounded bg-accent" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">muted</div>
+    <div className="h-10 rounded bg-muted" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">destructive</div>
+    <div className="h-10 rounded bg-destructive" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">success</div>
+    <div className="h-10 rounded bg-success" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">warning</div>
+    <div className="h-10 rounded bg-warning" />
+  </div>
+
+  <div className="rounded-md border p-4">
+    <div className="mb-2 text-xs font-medium text-muted-foreground">border</div>
+    <div className="h-10 rounded border border-border bg-background" />
+  </div>
+</div>
 
 ---
 
-## Usage in components
+## Example usage in a component
+
+A component stays simple because the color system already defines what each role means.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <div className="rounded-lg border bg-card text-card-foreground p-4 max-w-lg">
-        <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
-        <div className="mt-2 text-sm">
-          This card uses the PyColors UI semantic color tokens.
-        </div>
-      </div>
-    </Preview>
+
+<div className="max-w-lg rounded-lg border bg-card p-4 text-card-foreground">
+  <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
+  <div className="mt-2 text-sm">
+    This card uses semantic color tokens instead of raw values.
+  </div>
+</div>
+
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    export function ExampleCard() {
-      return (
-        <div className="rounded-lg border bg-card text-card-foreground p-4">
-          <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
-          <div className="mt-2 text-sm">
-            This card uses the PyColors UI semantic color tokens.
-          </div>
-        </div>
-      );
-    }
-    ```
+
+```tsx
+export function ExampleCard() {
+  return (
+    <div className="rounded-lg border bg-card p-4 text-card-foreground">
+      <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
+      <div className="mt-2 text-sm">
+        This card uses semantic color tokens instead of raw values.
+      </div>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ---
 
-## Roles
-
-PyColors UI follows a role-based color architecture.
+## Role categories
 
 | Role category | Tokens |
-|--------------|--------|
-| Surfaces | background, card, popover, sidebar |
-| Text | foreground, muted-foreground, card-foreground |
-| Components | primary, secondary, accent, muted |
-| States | destructive, destructive-foreground, success, warning |
-| Inputs | border, input, ring |
-| Data Viz | chart-1 → chart-5 |
+| --- | --- |
+| Surfaces | `background`, `card`, `popover`, `sidebar` |
+| Text | `foreground`, `muted-foreground`, `card-foreground` |
+| Components | `primary`, `secondary`, `accent`, `muted` |
+| States | `destructive`, `success`, `warning` |
+| Inputs | `border`, `input`, `ring` |
+| Data viz | `chart-1` → `chart-5` |
+
+This table is useful because it clarifies intent before implementation.
 
 ---
 
-## Variables table
+## Variables reference
 
 | Token | Purpose |
-|-------|---------|
-| `--background` | Base surface |
+| --- | --- |
+| `--background` | Base page surface |
 | `--foreground` | Primary text |
-| `--card` / `--card-foreground` | Cards & surfaces |
-| `--primary` / `--primary-foreground` | Brand action |
-| `--secondary` / `--secondary-foreground` | Secondary sections |
-| `--muted` / `--muted-foreground` | Subtle UI parts |
-| `--accent` / `--accent-foreground` | Highlights |
-| `--destructive` / `--destructive-foreground` | Dangerous actions |
+| `--card` / `--card-foreground` | Card surfaces |
+| `--primary` / `--primary-foreground` | Primary brand/action role |
+| `--secondary` / `--secondary-foreground` | Secondary surfaces |
+| `--muted` / `--muted-foreground` | Low-emphasis UI and text |
+| `--accent` / `--accent-foreground` | Highlights and focus areas |
+| `--destructive` / `--destructive-foreground` | Dangerous actions and states |
 | `--success` / `--success-foreground` | Positive states |
 | `--warning` / `--warning-foreground` | Caution states |
-| `--border` | Border color |
-| `--input` | Input fields |
+| `--border` | Borders and separators |
+| `--input` | Form field surface |
 | `--ring` | Focus ring |
 | `--sidebar-*` | Sidebar theming |
-| `--chart-1` → `--chart-5` | Data visualization |
+| `--chart-1` → `--chart-5` | Chart palettes |
 
 ---
 
-## Guidelines
+## Usage guidelines
 
-Color tokens belong to the **design system**.
-UI components only **consume** them — they never redefine them.
+- always use semantic utilities such as `bg-card` or `text-muted-foreground`
+- never place raw OKLCH or hex values inside reusable components
+- change tokens centrally, not per component
+- keep state roles stable across the product
+- preserve accessible contrast in both light and dark modes
 
-- Always use semantic color utilities (`bg-card`, `text-muted-foreground`).
-- Never use raw OKLCH values in components.
-- Modify tokens only in `global.css` → all components update automatically.
-- Keep contrast ratios above WCAG AA for text and interactive states.
+If a repeated visual need appears, solve it in the token layer first.
 
 ---
 
-## Related guides
+## Common mistakes to avoid
+
+- using raw color values inside components
+- mixing semantic roles with one-off overrides
+- treating state colors as decorative accents
+- making each product area invent its own interpretation of “muted” or “accent”
+- reusing chart colors for interface states
+
+A design system becomes fragile when roles stop meaning the same thing everywhere.
+
+---
+
+## Related
 
 <LinkCards>
   <LinkCard
     title="Typography"
-    description="Font scale, weights, and semantic text roles."
+    description="Hierarchy and text roles built on semantic contrast."
     href="/docs/design-system/typography"
   />
   <LinkCard
     title="Radius"
-    description="Corner geometry for surfaces and components."
+    description="Corner geometry used across surfaces."
     href="/docs/design-system/tokens/radius"
   />
   <LinkCard
     title="Shadows"
-    description="Elevation scale for surfaces (xs → lg)."
+    description="Elevation scale for surfaces and floating layers."
     href="/docs/design-system/tokens/shadows"
   />
   <LinkCard
-    title="Button"
-    description="Interactive elements using semantic tokens."
-    href="/docs/ui/button"
+    title="UI Components"
+    description="Primitives that consume semantic roles."
+    href="/docs/ui"
   />
 </LinkCards>
 

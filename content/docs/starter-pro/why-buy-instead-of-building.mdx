@@ -1,0 +1,253 @@
+---
+title: Why buy instead of building
+description: Understand when buying Starter Pro is a better decision than rebuilding auth, billing, and backend foundations from scratch.
+---
+
+import Link from 'next/link';
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+
+<DocsPageShell>
+
+<Badge>Starter Pro</Badge>
+
+# Why buy Starter Pro instead of rebuilding everything yourself
+
+You can absolutely build auth, billing, backend structure, and delivery yourself.
+
+The question is not whether it is possible.
+
+The question is whether it is the best use of your time **before launch**.
+
+That is the decision this page helps you make.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/upgrade">
+      Understand the upgrade
+    </Link>
+  </Button>
+</div>
+
+---
+
+## The honest tradeoff
+
+Building from scratch gives you full control.
+
+It also usually means spending real time on layers such as:
+
+- authentication
+- session handling
+- OAuth
+- Stripe checkout
+- subscriptions
+- webhooks
+- protected routes
+- plan gating
+- backend structure
+- delivery flow
+
+None of these are optional in a serious SaaS.
+
+So the real tradeoff is:
+
+### Build from scratch
+
+- more control
+- more time spent
+- more edge cases
+- more launch delay
+- more risk of partial implementation
+
+### Buy Starter Pro
+
+- faster baseline
+- less repeated work
+- less uncertainty
+- shorter path to launch
+- more time for product and distribution
+
+---
+
+## The hidden cost of building it all yourself
+
+The danger is not only the code you have to write.
+
+It is also the cost of:
+
+- designing the wrong structure
+- patching auth edge cases later
+- miswiring billing logic
+- underestimating session complexity
+- delaying product feedback
+- shipping later than necessary
+
+That cost is often much larger than the purchase price.
+
+---
+
+## Where time usually disappears
+
+Most builders say:
+
+> “I’ll just wire auth and Stripe quickly.”
+
+Then time disappears into:
+
+- provider setup
+- session handling
+- auth state logic
+- reset flows
+- email verification
+- checkout session creation
+- webhook sync
+- subscription state handling
+- access control
+- settings integration
+
+This work is not glamorous.
+
+But it still blocks launch.
+
+That is why buying can be the smarter move.
+
+---
+
+## What Starter Pro lets you skip
+
+Starter Pro does not remove product work.
+
+It removes **repeated foundation work**.
+
+That includes the layers that are usually:
+
+- annoying
+- fragile
+- security-sensitive
+- revenue-critical
+- necessary before launch
+
+This is what makes the purchase rational.
+
+Not because you cannot build it.
+
+Because you probably should not spend your best time rebuilding it.
+
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
+
+---
+
+## When buying is the better decision
+
+Buying Starter Pro is usually the better move when:
+
+- your product direction is already clear
+- you want to launch faster
+- auth and billing are obvious blockers
+- you want less setup uncertainty
+- your main risk is delay, not lack of control
+
+If your current bottleneck is already the business layer, then buying is often the high-leverage choice.
+
+---
+
+## When building it yourself still makes sense
+
+Building yourself can still make sense if:
+
+- you are learning these systems deliberately
+- you want full control for a very custom architecture
+- you are not trying to launch soon
+- your current goal is experimentation, not monetization
+
+That is a valid path.
+
+But it is a different goal.
+
+Starter Pro is for people who want a faster path to launch.
+
+---
+
+## Better question to ask
+
+Do not ask:
+
+> “Can I build this myself?”
+
+Ask:
+
+> “Is rebuilding this the thing that will create the most value for my business right now?”
+
+For many SaaS builders, the answer is no.
+
+That is where Starter Pro becomes the better decision.
+
+---
+
+## The real business logic
+
+If Starter Pro saves even a small number of days or weeks in the layers that block launch, it has already done its job.
+
+Because the real value is not code volume.
+
+It is:
+
+- faster execution
+- lower setup risk
+- earlier launch
+- earlier revenue
+- more time for distribution and iteration
+
+That is the actual ROI.
+
+---
+
+## Good mental model
+
+> Build your differentiation.
+> Buy the repeated infrastructure.
+
+That is the logic behind Starter Pro.
+
+---
+
+## Final decision rule
+
+### Build it yourself if:
+- you want the learning
+- you want the systems challenge
+- you are not in a hurry
+- launch speed is not your priority
+
+### Buy Starter Pro if:
+- you want a serious baseline now
+- you want to launch sooner
+- auth and billing are slowing you down
+- you want to focus on product and customers
+
+That is the cleanest decision rule.
+
+---
+
+## Next steps
+
+- What is included → `/docs/starter-pro/what-is-included`
+- Getting started → `/docs/starter-pro/getting-started`
+- Billing system → `/docs/starter-pro/billing`
+- Backend foundations → `/docs/starter-pro/backend`
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      View pricing
+    </Link>
+  </Button>
+</div>
+
+</DocsPageShell>

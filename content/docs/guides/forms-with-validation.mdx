@@ -1,98 +1,158 @@
 ---
 title: Forms with validation
-description: Building accessible, predictable, and production-ready forms using PyColors UI primitives.
+description: Build accessible, predictable, and production-ready forms using PyColors UI primitives.
 ---
 
 import * as React from "react";
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Alert, AlertTitle, AlertDescription, Button, Card, CardContent, CardHeader, Input } from '@pycolors/ui';
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Input,
+} from "@pycolors/ui";
 import { Cards, Card as LinkCard } from "fumadocs-ui/components/card";
 import { CheckCircle, XCircle } from "lucide-react";
 
-
 <DocsPageShell>
 
-Forms are one of the most fragile parts of any product.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>Forms</Badge>
+</div>
+
+# Build forms that behave predictably
+
+Forms are one of the most fragile parts of a product.
 
 They combine:
+
 - user input
 - validation rules
-- async states
+- async submission
+- accessibility requirements
 - error handling
-- accessibility constraints
 
-This guide explains **how to build forms with validation**
-using PyColors UI primitives — without turning forms into opaque abstractions.
+This guide explains how to build forms with validation using PyColors UI primitives without hiding logic inside opaque abstractions.
+
+---
+
+## Why forms fail so often
+
+Forms look simple on the surface.
+
+In practice, they have to coordinate:
+
+- field values
+- validation feedback
+- loading state
+- submission success or failure
+- accessibility and semantics
+
+This is why good form systems are not only about inputs.
+
+They are about **clear responsibilities**.
 
 ---
 
 ## Core principles
 
-Before looking at code, a few principles matter more than any library choice.
+Before any tool choice, a few principles matter more than APIs.
 
 ### 1. Forms are systems, not components
 
-A form is **not** a reusable UI component.
+A form is not a single reusable component.
 
 It is a composition of:
+
 - inputs
 - buttons
 - validation rules
-- async feedback
+- submission logic
+- feedback states
 
-Trying to abstract a full form usually leads to:
-- over-configuration
-- hidden logic
+Trying to abstract the entire form too early usually creates:
+
+- too many props
+- hidden rules
 - poor debuggability
+- hard-to-reuse abstractions
 
-In PyColors UI, **forms are patterns**, not primitives.
+In PyColors, forms are documented as **patterns**, not primitives.
 
 ---
 
 ### 2. Validation belongs to the data layer
 
-UI components:
+UI components should:
+
 - display values
-- display errors
-- reflect states
+- reflect errors
+- show state clearly
 
-They should **not decide what is valid**.
+They should **not define what is valid**.
 
-Validation rules live:
-- close to your schema
-- close to your domain logic
+Validation rules belong close to:
+
+- your schema
+- your domain model
+- your form logic
 
 The UI consumes the result.
 
 ---
 
-### 3. Error states must be explicit
+### 3. Error states should be explicit
 
-Good forms:
-- show errors clearly
-- do not surprise the user
-- do not rely on color alone
-- do not hide failure states
+Good forms make failure understandable.
+
+That means:
+
+- short field-level error messages
+- clear global feedback for submission errors
+- no hidden failure state
+- no reliance on color alone
 
 ---
 
-## Minimal stack (recommended)
+## Recommended minimal stack
 
-This guide uses a minimal, widely adopted stack:
+This guide uses a minimal, production-friendly setup:
 
 - **React Hook Form** for form state
 - **Zod** for schema validation
 - **PyColors UI** for rendering
 
-You can swap these tools if needed —
-the principles stay the same.
+You can swap tools later if needed.
+
+The principles remain the same.
+
+---
+
+## Mental model
+
+> Inputs display state.
+> Schemas define truth.
+> Forms coordinate the flow.
+
+Keeping those responsibilities separate makes forms easier to:
+
+- reason about
+- debug
+- extend over time
 
 ---
 
 ## Example: basic form with validation
 
 We will build a simple form with:
+
 - required fields
 - inline validation errors
 - disabled submit while loading
@@ -100,9 +160,9 @@ We will build a simple form with:
 
 ---
 
-### Schema
+## Schema
 
-Validation rules are defined first.
+Validation rules come first.
 
 ```ts
 import { z } from "zod";
@@ -113,11 +173,13 @@ export const formSchema = z.object({
 });
 ```
 
+This keeps validation explicit and close to the data model.
+
 ---
 
-### Form setup
+## Form setup
 
-```tsx
+```ts
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -130,17 +192,19 @@ const form = useForm({
 });
 ```
 
-The form state is now responsible for:
+The form state now handles:
+
 - field values
-- validation results
+- validation output
 - submission state
 
 ---
 
-### Rendering inputs
+## Rendering inputs
 
-PyColors `Input` consumes validation state —
-it does not implement validation itself.
+PyColors Input reflects validation state.
+
+It does not own validation.
 
 ```tsx
 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -160,16 +224,17 @@ it does not implement validation itself.
 </form>
 ```
 
-**Why this works**
-- Errors are explicit
-- Inputs remain stateless
-- Validation logic stays outside the UI
+This works well because:
+
+- errors remain explicit
+- inputs stay focused on rendering
+- validation logic stays outside the primitive
 
 ---
 
-### Submit button states
+## Submit button states
 
-Buttons reflect form state, they do not control it.
+Buttons should reflect form state, not invent it.
 
 ```tsx
 <Button
@@ -180,21 +245,24 @@ Buttons reflect form state, they do not control it.
 </Button>
 ```
 
-Rules:
-- Disable submit while submitting
-- Avoid double submissions
-- Reflect loading with text, not spinners
+Practical rules:
+
+- disable submit while submitting
+- avoid double submission
+- use clear loading text
+- do not rely only on animation to show progress
 
 ---
 
-### Global error feedback
+## Global error feedback
 
-Some errors are not tied to a specific field:
+Some failures are not tied to one field:
+
 - network failure
 - permission issues
-- server errors
+- unexpected server errors
 
-Use `Alert` for these cases.
+Use Alert for those cases.
 
 ```tsx
 {formStateError && (
@@ -207,9 +275,12 @@ Use `Alert` for these cases.
 )}
 ```
 
+Use field-level errors for field problems.
+Use a global error block for form-level problems.
+
 ---
 
-## Full example (simplified)
+## Full example
 
 ```tsx
 function ExampleForm() {
@@ -261,52 +332,85 @@ function ExampleForm() {
 
 ---
 
-## UX rules (production-tested)
+## UX rules
+
+These rules make forms feel more stable in production.
+
+### Validation
+
+- validate at meaningful moments
+- keep messages short and specific
+- keep field-level feedback close to the field
+- make the reason for failure obvious
+
+### Submission
+
+- disable submit while loading
+- avoid duplicate submissions
+- keep button text clear
+- show form-level failure where needed
+
+### Accessibility
+
+- use visible labels
+- do not rely only on color for errors
+- keep feedback text readable
+- preserve semantic form structure
+
+---
+
+## Production-tested guidance
 
 <div className="grid gap-6 sm:grid-cols-2">
-
   <div>
-  ### <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" />  Don’t
-  - Validate on every keystroke by default
-  - Disable fields without explanation
-  - Rely on color alone to indicate errors
+    <h3 className="mb-3 flex items-center text-base font-medium">
+      <XCircle className="mr-2 h-4 w-4 text-destructive" />
+      Avoid
+    </h3>
+
+    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
+      <li>Abstracting the entire form into one component</li>
+      <li>Hiding validation rules inside UI primitives</li>
+      <li>Showing only a toast for form failure</li>
+      <li>Submitting while the request is already running</li>
+      <li>Relying only on color to communicate errors</li>
+    </ul>
   </div>
 
   <div>
-  ### <CheckCircle className="inline-block mr-2 h-4 w-4 text-success" />  Do
-  - Validate on submit and blur
-  - Keep error messages short and specific
-  - Always include text feedback
-  </div>
+    <h3 className="mb-3 flex items-center text-base font-medium">
+      <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
+      Prefer
+    </h3>
 
+    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
+      <li>Schema-driven validation</li>
+      <li>Field-level errors near the field</li>
+      <li>Form-level alerts for submission issues</li>
+      <li>Clear loading text on the submit button</li>
+      <li>Small, explicit, predictable form structure</li>
+    </ul>
+  </div>
 </div>
 
+---
+
+## Why this scales better
+
+Predictable forms are easier to:
+
+- debug
+- evolve
+- hand off to other developers
+- reuse across product areas
+
+A clean form system prevents the codebase from filling up with inconsistent one-off form logic.
+
+That is where long-term product quality starts.
 
 ---
 
-## Common anti-patterns
-
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Abstracting the entire form into a single component
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Hiding validation rules inside UI components
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Showing only a toast for form errors
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Allowing submission while loading
-
----
-
-## Mental model to keep
-
-- Inputs display state
-- Schemas define truth
-- Forms coordinate the flow
-
-Keeping these responsibilities separate makes forms:
-- easier to reason about
-- easier to debug
-- easier to evolve
-
----
-
-## Related components & guides
+## Related components and guides
 
 <Cards>
   <LinkCard
@@ -321,7 +425,7 @@ Keeping these responsibilities separate makes forms:
   />
   <LinkCard
     title="Empty, loading, and error states"
-    description="Handling async UI states consistently."
+    description="Handle async UI states consistently."
     href="/docs/guides/empty-loading-error"
   />
 </Cards>

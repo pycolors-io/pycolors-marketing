@@ -1,131 +1,164 @@
 ---
 title: UI Components
-description: Composable UI primitives built on PyColors UI tokens, shadcn/ui, and Radix UI.
+description: Composable UI primitives built for real SaaS interfaces. Designed to scale from product validation to production.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Composable primitives</Badge>
+</div>
+
+# Build interfaces that scale with your product
+
 PyColors UI components are **primitives**, not finished widgets.
 
-They are designed to be **composed**, **extended**, and **owned** by your project —
-not consumed as opaque building blocks.
+They are designed to:
 
-This section is the entry point to the UI library: buttons, surfaces, inputs, and feedback components,
-all aligned with the PyColors design system.
+- adapt to your product
+- stay maintainable over time
+- work inside real SaaS applications
+
+This is not a UI kit for demos.
+This is a foundation for **products that evolve**.
 
 ---
 
-## How to think about components
+## Where this fits
 
-PyColors UI follows a simple mental model:
+PyColors UI is part of a larger system:
 
-- **Tokens define the language**
-  (colors, typography, radius, shadows)
-- **Components consume tokens**
-  via semantic Tailwind utilities
-- **Patterns compose components**
-  into real features and flows
+- **Starter Free** → validate product UI
+- **UI components** → build consistent interfaces
+- **Starter Pro** → wire auth, billing, backend
 
-If you feel a component needs *too many props* to cover a real product need,
-it likely belongs in **Patterns**, not in UI primitives.
+👉 UI is the layer between **idea** and **real product**
 
-Keeping primitives small makes them easier to understand, reuse, and evolve.
+---
+
+## The mental model
+
+- **Tokens define the system**
+- **Components stay small**
+- **Patterns handle complexity**
+
+If a component becomes complex:
+
+👉 it probably belongs in **Patterns**, not in primitives
 
 ---
 
 ## Component categories
 
-Categories are **descriptive, not prescriptive**.
-They exist to help you navigate the system — not to impose structure.
-
 ### Surfaces
 
-Surfaces group content and establish visual hierarchy.
+Structure your interface and group content.
 
-- **Card** — foundational surface for panels, tiles, and list items
-- **Alert** — feedback surface for system notices and validation results
+- Card
+- Alert
+
+---
 
 ### Actions
 
-Actions trigger user intent and user flows.
+Trigger user intent.
 
-- **Button** — primary action primitive, with variants and sizes
+- Button
+
+---
 
 ### Inputs
 
-Inputs collect user data and support validation patterns.
+Collect and validate user data.
 
-- **Input** — label, helper text, error state, icons, and sizing
+- Input
+
+---
 
 ### Status & metadata
 
-Compact components for categorization and state.
+Display state and labels.
 
-- **Badge** — status, labels, counts, and metadata
+- Badge
 
 ---
 
 ## Composition rules
 
-A few rules help keep the system consistent as it grows:
+Keep your UI scalable:
 
-- Prefer **composition over configuration**
-- Use **semantic tokens** (`bg-card`, `text-muted-foreground`, `border-border`)
-  instead of raw colors
-- Avoid one-off variants; if something repeats, extract a primitive or a pattern
-- If a component is interactive, keep it **semantic**
-  (render as `button` or `a` via `asChild` when needed)
-- Don’t nest interactive targets
-  (one primary clickable element per component boundary)
+- prefer composition over configuration
+- use semantic tokens (`bg-card`, `text-muted-foreground`)
+- avoid one-off variants
+- keep components small and predictable
+- one interaction per component
 
-These constraints reduce UI drift without limiting expressiveness.
+These rules prevent UI drift as your product grows.
 
 ---
 
-## What belongs in Patterns instead
+## When to use Patterns instead
 
-Use **Patterns** when you need:
+Use Patterns when you need:
 
-- multiple components combined with layout rules
-- async states and loading skeletons
-- validation flows (RHF + Zod)
-- reusable feature blocks
-  (Settings panels, pricing cards, authentication forms)
+- full flows (auth, settings, pricing)
+- async states
+- validation logic
+- real product sections
 
-Patterns document **how primitives are used in real products**.
-They are intentionally documented as **guides**, not APIs,
-to preserve flexibility where it matters most.
+👉 Components = building blocks
+👉 Patterns = real product usage
 
 ---
 
-## Start here
-
-If you are new to PyColors UI, start with these primitives:
+## Start with the essentials
 
 <LinkCards>
   <LinkCard
     title="Button"
-    description="Primary action primitive with variants, sizes, and accessibility guidelines."
+    description="Primary action primitive."
     href="/docs/ui/button"
   />
   <LinkCard
     title="Card"
-    description="Surface component for grouping content, actions, and metadata."
+    description="Surface for grouping content."
     href="/docs/ui/card"
   />
   <LinkCard
     title="Input"
-    description="Form input with label, helper text, error states, and icons."
+    description="Form input with validation states."
     href="/docs/ui/input"
   />
   <LinkCard
     title="Badge"
-    description="Small status and metadata label component."
+    description="Status and metadata labels."
     href="/docs/ui/badge"
   />
 </LinkCards>
+
+---
+
+## Why this matters
+
+Most UI systems break when the product grows:
+
+- too many variants
+- inconsistent styles
+- duplicated components
+
+PyColors avoids this by keeping primitives **simple and composable**.
+
+---
+
+## Next step
+
+If you are building a real SaaS:
+
+👉 see how UI connects to auth and billing → `/docs/starter-pro`
 
 </DocsPageShell>

@@ -7,6 +7,7 @@ import {
   ExternalLink,
   LayoutTemplate,
   Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 
 import {
@@ -24,18 +25,18 @@ import {
 } from '@pycolors/ui';
 import { Container } from '@/components/container';
 import { NpmBadges } from '@/components/npm-badges';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: 'Starter Free | PyColors',
   description:
-    'Starter Free gives you a production-shaped SaaS surface with auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B management — mocked by design, ready to wire.',
+    'Starter Free gives you a production-shaped SaaS surface with auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B management — mocked by design, ready to validate and later upgrade.',
   alternates: { canonical: '/starters/free' },
   openGraph: {
     title: 'Starter Free | PyColors',
     description:
-      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to validate and upgrade later.',
     url: '/starters/free',
     images: ['/seo/og-main.png'],
   },
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Starter Free | PyColors',
     description:
-      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to wire.',
+      'A production-shaped Next.js SaaS starter with real screens and UX contracts — mocked by design, ready to validate and upgrade later.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -65,7 +66,7 @@ const INTERNAL = {
   docs: '/docs/starter',
   docsUpgrade: '/docs/starter/upgrade-to-pro',
   upgrade: '/upgrade',
-  access: '/pricing',
+  pricing: '/pricing',
   starterPro: '/starters/pro',
   roadmap: '/roadmap',
 } as const;
@@ -369,59 +370,35 @@ export default function StarterFreePage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Starters', href: '/starters' },
-              { label: 'Starter Free', href: '/starters/free' },
-            ]}
-          />
-        </div>
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-          <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="secondary" className="gap-2">
+        <PageHero
+          badges={[
+            {
+              label: 'Starter Free',
+              variant: 'secondary',
+              icon: (
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Starter Free
-              </Badge>
-
-              <Badge variant="outline">Production-shaped</Badge>
-
-              <Badge variant="outline" className="gap-2">
+              ),
+            },
+            {
+              label: 'Production-shaped',
+              variant: 'outline',
+            },
+            {
+              label: 'Free entry point',
+              variant: 'outline',
+              icon: (
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Free entry point
-              </Badge>
-            </div>
-
-            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Ship a credible SaaS UI fast.{' '}
-              <span className="block text-muted-foreground">
-                Validate the product before wiring the backend.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              Starter Free gives you a production-shaped SaaS surface
-              out of the box: auth UX, dashboard, CRUD screens,
-              settings, billing entrypoints, and B2B member management
-              — mocked by design so you can move fast without backend
-              overhead.
-            </p>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-              Use it to validate the product surface now. Upgrade to
-              Starter Pro when authentication, billing, and the
-              business layer become the real bottleneck.
-            </p>
-
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              ),
+            },
+          ]}
+          title="Validate the SaaS surface before wiring the business layer."
+          subtitle="Starter Free helps you move fast on product shape."
+          description="Starter Free gives you a production-shaped SaaS surface out of the box: auth UX, dashboard, CRUD screens, settings, billing entrypoints, and B2B member management — mocked by design so you can validate faster before auth, billing, and backend become the real bottleneck."
+          actions={
+            <>
               <Button
                 asChild
                 size="lg"
@@ -467,59 +444,71 @@ export default function StarterFreePage() {
                 variant="outline"
                 className="h-11 rounded-xl px-6 text-sm font-medium"
               >
-                <Link href={INTERNAL.docs}>Read the docs</Link>
+                <Link href={INTERNAL.upgrade}>
+                  When should I upgrade?
+                </Link>
               </Button>
-            </div>
+            </>
+          }
+          pills={[
+            'Next.js App Router',
+            'Tailwind v4',
+            'PyColors UI',
+            'Mock data · no backend',
+            'Upgrade-ready when wiring matters',
+          ]}
+          extraClassName="mx-auto max-w-6xl"
+          extra={
+            <>
+              <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
+                Use Starter Free to validate the product now. Move to
+                Starter Pro when auth, billing, and the business layer
+                start slowing you down.
+              </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-              <span>Designed for fast validation</span>
-              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>No backend required</span>
-              <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
-              <span>Upgrade-ready when wiring matters</span>
-            </div>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-2">
-              <Pill>Next.js App Router</Pill>
-              <Pill>Tailwind v4</Pill>
-              <Pill>PyColors UI</Pill>
-              <Pill>Mock data · no backend</Pill>
-              <Pill>Real screens and UX contracts</Pill>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-12 max-w-6xl">
-            <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
-              <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
-                <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-                  </div>
-
-                  <div className="rounded-full border px-3 py-1 text-[11px] text-muted-foreground">
-                    Starter Free preview
-                  </div>
-                </div>
-
-                <div className="overflow-hidden rounded-[18px] border bg-card">
-                  <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_40%)]">
-                    <Image
-                      src="/images/starters/starter-free-hero-pycolors.png"
-                      alt="Starter Free dashboard preview"
-                      fill
-                      priority
-                      className="object-cover object-top"
-                    />
-                  </div>
-                </div>
+              <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                <span>Designed for fast validation</span>
+                <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+                <span>No backend required</span>
+                <span className="hidden h-1 w-1 rounded-full bg-border sm:inline-block" />
+                <span>Clear upgrade path to Pro</span>
               </div>
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/10 to-transparent" />
-            </div>
-          </div>
-        </section>
+              <div className="mx-auto mt-12 max-w-6xl">
+                <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
+                  <div className="rounded-[22px] border bg-muted/30 p-2 sm:p-3">
+                    <div className="mb-3 flex items-center justify-between px-1 sm:px-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+                      </div>
+
+                      <div className="rounded-full border px-3 py-1 text-[11px] text-muted-foreground">
+                        Starter Free preview
+                      </div>
+                    </div>
+
+                    <div className="overflow-hidden rounded-[18px] border bg-card">
+                      <div className="relative aspect-video w-full bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_40%)]">
+                        <Image
+                          src="/images/starters/starter-free-hero-pycolors.png"
+                          alt="Starter Free dashboard preview"
+                          fill
+                          priority
+                          className="object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/10 to-transparent" />
+                </div>
+              </div>
+            </>
+          }
+        />
+
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -551,12 +540,13 @@ export default function StarterFreePage() {
                   <Link href={INTERNAL.patterns}>UI Patterns</Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={INTERNAL.examples}>Examples</Link>
+                  <Link href={INTERNAL.upgrade}>Upgrade path</Link>
                 </Button>
               </div>
             </div>
           </Card>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex items-start gap-3">
@@ -610,6 +600,7 @@ export default function StarterFreePage() {
             </div>
           </Card>
         </section>
+
         <section id="included" className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="What you get"
@@ -647,11 +638,12 @@ export default function StarterFreePage() {
             ))}
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Learn before you wire"
             title="Starter Free works even better when connected to the rest of the ecosystem"
-            description="Use the free starter to validate product shape, then explore patterns, guides, and examples to make your next move obvious."
+            description="Use the free starter to validate product shape, then explore guides, patterns, and the upgrade path to make your next move obvious."
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
@@ -680,15 +672,16 @@ export default function StarterFreePage() {
 
             <ResourceCard
               icon={
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               }
-              title="Examples"
-              description="Explore real SaaS interface directions and what is already available today through Starter Free."
-              href={INTERNAL.examples}
-              cta="See examples"
+              title="Upgrade path"
+              description="See when Starter Free stops being enough and when Starter Pro becomes the right move."
+              href={INTERNAL.upgrade}
+              cta="See upgrade"
             />
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Mocked on purpose"
@@ -734,11 +727,12 @@ export default function StarterFreePage() {
             </Card>
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Free vs Pro"
             title="Starter Free validates the surface. Starter Pro wires the business."
-            description="Starter Free helps you move fast now. Starter Pro is the upgrade path when auth, billing, backend, and launch readiness become your real bottleneck."
+            description="Starter Free helps you move fast now. Upgrade explains when the transition becomes the right move. Pricing is where you buy."
             action={
               <BuyStarterProButton
                 fullWidth={false}
@@ -756,8 +750,10 @@ export default function StarterFreePage() {
                 </div>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  Start with a credible product surface today. Upgrade
-                  when you want the business wiring done for you.
+                  Start with a credible product surface today. Move to
+                  Upgrade when you want to evaluate the transition.
+                  Buy Starter Pro when you are ready for auth,
+                  billing, and launch-ready foundations.
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -776,6 +772,10 @@ export default function StarterFreePage() {
 
                 <Button asChild variant="outline">
                   <Link href={INTERNAL.upgrade}>See Upgrade</Link>
+                </Button>
+
+                <Button asChild variant="outline">
+                  <Link href={INTERNAL.pricing}>View pricing</Link>
                 </Button>
               </div>
             </div>
@@ -814,12 +814,14 @@ export default function StarterFreePage() {
               </Table>
 
               <p className="mt-3 text-xs text-muted-foreground">
-                Starter Free is the entry point. Starter Pro is the
-                shortest path to a monetizable SaaS baseline.
+                Starter Free is the entry point. Upgrade is the
+                transition page. Starter Pro is the shortest path to a
+                monetizable SaaS baseline.
               </p>
             </div>
           </Card>
         </section>
+
         <section className="py-10 sm:py-12">
           <Card className="rounded-[28px] border p-6 sm:p-7">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -947,19 +949,19 @@ pnpm dev`}</pre>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
                 <h2 className="text-lg font-semibold tracking-tight">
-                  Start with the surface. Upgrade when wiring becomes
-                  the bottleneck.{' '}
+                  Start with the surface. Move to Upgrade when wiring
+                  becomes the bottleneck.
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Open the demo, clone the repo, and build on a
-                  credible SaaS baseline now. Upgrade to Starter Pro
-                  when you want auth, billing, and the business layer
-                  already handled.
+                  Open the demo, clone the repo, and validate your
+                  SaaS surface now. When auth, billing, and the
+                  business layer start blocking launch, go to Upgrade,
+                  then move to Starter Pro.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Pill>Real screens</Pill>
                   <Pill>Clear states</Pill>
-                  <Pill>Upgrade path</Pill>
+                  <Pill>Clear upgrade path</Pill>
                 </div>
               </div>
 
@@ -970,22 +972,20 @@ pnpm dev`}</pre>
                   variant="outline"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <a
-                    href={EXTERNAL.demo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    See live demo
-                    <ExternalLink
+                  <Link href={INTERNAL.upgrade}>
+                    See Upgrade
+                    <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </Button>
-                <BuyStarterProButton />
+
+                <BuyStarterProButton label="Buy Starter Pro — 199 €" />
               </div>
             </div>
           </Card>
+
           <p className="mt-4 text-center text-xs text-muted-foreground">
             Follow the setup guide in the docs →{' '}
             <Link

@@ -1,0 +1,235 @@
+---
+title: What is included
+description: See what Starter Pro includes, what is already built, and what you still build yourself.
+---
+
+import Link from 'next/link';
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+
+<DocsPageShell>
+
+<Badge>Starter Pro</Badge>
+
+# What is included in Starter Pro
+
+Starter Pro is a production-ready SaaS foundation built to reduce the most expensive setup work before launch.
+
+This page explains what is already included, what is intentionally not included, and why that distinction matters.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
+
+---
+
+## What is already included
+
+Starter Pro includes the layers that usually delay serious SaaS launches.
+
+### Authentication foundations
+
+- email and password auth
+- Google OAuth
+- GitHub OAuth
+- email verification
+- forgot password
+- reset password
+- password change
+- account lifecycle foundations
+- connected accounts patterns
+- safer provider handling
+- session-aware flows
+
+### Billing foundations
+
+- Stripe Checkout
+- billing portal
+- subscription lifecycle handling
+- invoice-ready flows
+- webhook synchronization
+- plan-aware product logic
+- upgrade-ready monetization surfaces
+
+### Protected app foundations
+
+- protected routes
+- auth-aware navigation
+- settings architecture
+- app shell structure
+- billing-aware areas
+- product-ready dashboard baseline
+
+### Backend foundations
+
+- Prisma-ready structure
+- database-oriented architecture
+- backend-aware product structure
+- server-side integration patterns
+- domain separation patterns
+
+### Delivery foundations
+
+- secure delivery flow
+- controlled post-purchase access
+- private access patterns
+- structured fulfillment approach
+
+---
+
+## What this means in practice
+
+Starter Pro is not just “a template with pages”.
+
+It is a baseline for the systems that most paid products need before launch.
+
+That includes:
+
+- real user access
+- real monetization
+- real protection
+- real product structure
+- real path to delivery
+
+This is where the time savings come from.
+
+---
+
+## What is intentionally not included
+
+Starter Pro is not your finished business.
+
+It does not try to decide your product for you.
+
+You still build:
+
+- your product logic
+- your domain entities
+- your workflows
+- your onboarding
+- your positioning
+- your unique feature set
+
+That is intentional.
+
+If a starter tries to do all of that for you, it usually becomes too abstract, too rigid, or too noisy.
+
+Starter Pro is designed to remove repeated infrastructure work, not replace product judgment.
+
+---
+
+## What you are really buying
+
+You are not buying a finished SaaS.
+
+You are buying a faster path through the layers that are usually:
+
+- repetitive
+- security-sensitive
+- revenue-critical
+- annoying to rebuild
+- expensive to patch later
+
+That is the real meaning of “what is included”.
+
+---
+
+## Included vs not included
+
+### Included
+
+- business-critical foundations
+- auth foundations
+- billing foundations
+- protected app structure
+- backend-ready structure
+- delivery path
+- serious baseline for launch
+
+### Not included
+
+- your niche logic
+- your product strategy
+- your core workflows
+- your market-specific differentiation
+- your final business model decisions
+
+That separation is healthy.
+
+It keeps the starter useful without making it bloated.
+
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
+
+---
+
+## What makes this commercially useful
+
+A lot of products fail because the team spends too long on the same setup work:
+
+- login
+- sessions
+- billing
+- protection
+- subscription rules
+- backend wiring
+
+That work does not usually differentiate the business.
+
+But it still has to be done well.
+
+Starter Pro is useful because it reduces that cost.
+
+---
+
+## The most important thing to understand
+
+Starter Pro is not meant to impress with quantity.
+
+It is meant to remove the right blockers.
+
+The question is not:
+
+> “How much stuff is included?”
+
+The better question is:
+
+> “Does this remove the work that would delay launch?”
+
+For Starter Pro, that answer is yes.
+
+---
+
+## Good mental model
+
+> Included = the layers required to launch seriously.
+> Not included = the parts that make your product yours.
+
+That is the right split.
+
+---
+
+## Next steps
+
+- Getting started → `/docs/starter-pro/getting-started`
+- Why buy instead of building → `/docs/starter-pro/why-buy-instead-of-building`
+- Auth system → `/docs/starter-pro/auth`
+- Billing system → `/docs/starter-pro/billing`
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      View pricing
+    </Link>
+  </Button>
+</div>
+
+</DocsPageShell>

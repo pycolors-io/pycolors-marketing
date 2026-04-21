@@ -1,0 +1,22 @@
+{
+  "title": "UI",
+  "pages": [
+    "index",
+    "why-pycolors-ui",
+    "alert",
+    "badge",
+    "button",
+    "card",
+    "dialog",
+    "dropdown-menu",
+    "empty-state",
+    "input",
+    "pagination",
+    "password-input",
+    "sheet",
+    "skeleton",
+    "table",
+    "tabs",
+    "toast"
+  ]
+}

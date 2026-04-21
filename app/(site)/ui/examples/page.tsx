@@ -10,8 +10,8 @@ import {
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: 'Examples | PyColors',
@@ -282,48 +282,33 @@ function ExampleDirectionCard({
 export default function ExamplesPage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'UI', href: '/ui' },
-              { label: 'Examples', href: '/ui/examples' },
-            ]}
-          />
-        </div>
-
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="secondary" className="gap-2">
+      <div>
+        <PageHero
+          badges={[
+            {
+              label: 'Examples',
+              variant: 'secondary',
+              icon: (
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Examples
-              </Badge>
-              <Badge variant="outline">Product showcase</Badge>
-              <Badge variant="outline">Honest availability</Badge>
-            </div>
-
-            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Production-shaped SaaS interfaces.{' '}
-              <span className="block text-muted-foreground">
-                Built to show what PyColors can support.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              Explore what is available today through Starter Free,
-              and see the product directions PyColors is designed to
-              support across dashboards, billing, teams, analytics,
-              and admin systems.
-            </p>
-
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              ),
+            },
+            {
+              label: 'Product showcase',
+              variant: 'outline',
+            },
+            {
+              label: 'Honest availability',
+              variant: 'outline',
+            },
+          ]}
+          title="Production-shaped SaaS interfaces."
+          subtitle="Built to show what PyColors can support."
+          description="Explore what is available today through Starter Free, and see the product directions PyColors is designed to support across dashboards, billing, teams, analytics, and admin systems."
+          actions={
+            <>
               <Button
                 asChild
                 size="lg"
@@ -351,17 +336,16 @@ export default function ExamplesPage() {
                 fullWidth={false}
                 label="Buy Starter Pro — 199 €"
               />
-            </div>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-2">
-              <Pill>Dashboards</Pill>
-              <Pill>Billing</Pill>
-              <Pill>Teams</Pill>
-              <Pill>Admin</Pill>
-              <Pill>Analytics</Pill>
-            </div>
-          </div>
-        </section>
+            </>
+          }
+          pills={[
+            'Dashboards',
+            'Billing',
+            'Teams',
+            'Admin',
+            'Analytics',
+          ]}
+        />
 
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">

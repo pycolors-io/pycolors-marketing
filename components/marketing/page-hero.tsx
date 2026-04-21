@@ -4,7 +4,7 @@ import { Badge, cn } from '@pycolors/ui';
 type PageHeroBadge = {
   label: string;
   variant?: 'secondary' | 'outline';
-  icon?: React.ComponentType<{ className?: string }>;
+  icon?: React.ReactNode;
 };
 
 export type PageHeroProps = {
@@ -14,8 +14,13 @@ export type PageHeroProps = {
   description?: string;
   actions?: React.ReactNode;
   pills?: string[];
+  extra?: React.ReactNode;
   className?: string;
   contentClassName?: string;
+  badgesClassName?: string;
+  actionsClassName?: string;
+  pillsClassName?: string;
+  extraClassName?: string;
   align?: 'center' | 'left';
   maxWidth?: '3xl' | '4xl' | '5xl';
 };
@@ -47,8 +52,13 @@ export function PageHero({
   description,
   actions,
   pills = [],
+  extra,
   className,
   contentClassName,
+  badgesClassName,
+  actionsClassName,
+  pillsClassName,
+  extraClassName,
   align = 'center',
   maxWidth = '4xl',
 }: PageHeroProps) {
@@ -58,10 +68,11 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-[40px] bg-card px-6 py-12 shadow-lg shadow-black/5 sm:px-8 lg:px-12 lg:py-16',
+        'relative overflow-hidden rounded-[38px] bg-card px-6 py-12 shadow-lg shadow-black/5 sm:px-8 sm:py-14 lg:px-12 lg:py-18',
         className,
       )}
     >
+      {/* Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
 
       <div
@@ -72,79 +83,88 @@ export function PageHero({
           contentClassName,
         )}
       >
-        {badges.length > 0 ? (
+        {/* Badges */}
+        {badges.length > 0 && (
           <div
             className={cn(
               'flex flex-wrap items-center gap-2',
               isCentered ? 'justify-center' : 'justify-start',
+              badgesClassName,
             )}
           >
-            {badges.map((badge) => {
-              const Icon = badge.icon;
-
-              return (
-                <Badge
-                  key={`${badge.label}-${badge.variant ?? 'secondary'}`}
-                  variant={badge.variant ?? 'outline'}
-                  className="gap-2 rounded-full"
-                >
-                  {Icon ? (
-                    <Icon
-                      className="h-3.5 w-3.5"
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                  {badge.label}
-                </Badge>
-              );
-            })}
+            {badges.map((badge) => (
+              <Badge
+                key={`${badge.label}-${badge.variant ?? 'secondary'}`}
+                variant={badge.variant ?? 'outline'}
+                className="gap-2 rounded-full"
+              >
+                {badge.icon ? badge.icon : null}
+                {badge.label}
+              </Badge>
+            ))}
           </div>
-        ) : null}
+        )}
 
-        <h1 className="mt-8 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+        {/* Title */}
+        <h1
+          className={cn(
+            'text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl',
+            badges.length > 0 ? 'mt-8' : 'mt-0',
+          )}
+        >
           {title}
-          {subtitle ? (
-            <span className="block text-muted-foreground">
+          {subtitle && (
+            <span className="mt-2 block text-muted-foreground">
               {subtitle}
             </span>
-          ) : null}
+          )}
         </h1>
 
-        {description ? (
+        {/* Description */}
+        {description && (
           <p
             className={cn(
               'mt-6 text-base leading-8 text-muted-foreground sm:text-lg',
-              isCentered && 'mx-auto max-w-2xl',
+              isCentered && 'mx-auto max-w-3xl',
               !isCentered && 'max-w-3xl',
             )}
           >
             {description}
           </p>
-        ) : null}
+        )}
 
-        {actions ? (
+        {/* Actions */}
+        {actions && (
           <div
             className={cn(
               'mt-8 flex flex-col gap-3 sm:flex-row',
               isCentered ? 'justify-center' : 'justify-start',
+              actionsClassName,
             )}
           >
             {actions}
           </div>
-        ) : null}
+        )}
 
-        {pills.length > 0 ? (
+        {/* Extra (stats, blocks, etc.) */}
+        {extra && (
+          <div className={cn('mt-10', extraClassName)}>{extra}</div>
+        )}
+
+        {/* Pills */}
+        {pills.length > 0 && (
           <div
             className={cn(
               'mt-8 flex flex-wrap gap-2',
               isCentered ? 'justify-center' : 'justify-start',
+              pillsClassName,
             )}
           >
             {pills.map((pill) => (
               <Pill key={pill}>{pill}</Pill>
             ))}
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );

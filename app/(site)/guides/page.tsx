@@ -9,8 +9,8 @@ import {
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: 'Guides | PyColors',
@@ -199,59 +199,38 @@ export default function GuidesPage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Guides', href: '/guides' },
-            ]}
-          />
-        </div>
-
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="secondary" className="gap-2">
+        <PageHero
+          badges={[
+            {
+              label: 'Guides',
+              variant: 'secondary',
+              icon: (
                 <BookOpen
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Guides
-              </Badge>
-              <Badge variant="outline">SaaS knowledge base</Badge>
-              <Badge variant="outline" className="gap-1.5">
+              ),
+            },
+            {
+              label: 'SaaS knowledge base',
+              variant: 'outline',
+            },
+            {
+              label: 'Product-first',
+              variant: 'outline',
+              icon: (
                 <Sparkles
                   className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-                Product-first
-              </Badge>
-            </div>
-
-            <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              SaaS building guides for developers.{' '}
-              <span className="block text-muted-foreground">
-                Learn how stronger products are structured before you
-                build them.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-              Learn how modern SaaS products are designed and
-              structured — from dashboards and authentication to
-              billing, team systems, admin workflows, and
-              production-ready product foundations.
-            </p>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-              The guides are educational on purpose: they help you
-              understand the product logic first, so your UI, starter,
-              and monetization decisions become clearer.
-            </p>
-
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              ),
+            },
+          ]}
+          title="SaaS building guides for developers."
+          subtitle="Learn how stronger products are structured before you build them."
+          description="Learn how modern SaaS products are designed and structured — from dashboards and authentication to billing, team systems, admin workflows, and production-ready product foundations."
+          actions={
+            <>
               <Button
                 asChild
                 size="lg"
@@ -283,17 +262,23 @@ export default function GuidesPage() {
               >
                 <Link href="/ui/patterns">Browse UI Patterns</Link>
               </Button>
-            </div>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-2">
-              <Pill>Architecture</Pill>
-              <Pill>Auth</Pill>
-              <Pill>Billing</Pill>
-              <Pill>B2B systems</Pill>
-              <Pill>Admin UX</Pill>
-            </div>
-          </div>
-        </section>
+            </>
+          }
+          pills={[
+            'Architecture',
+            'Auth',
+            'Billing',
+            'B2B systems',
+            'Admin UX',
+          ]}
+          extra={
+            <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
+              The guides are educational on purpose: they help you
+              understand the product logic first, so your UI, starter,
+              and monetization decisions become clearer.
+            </p>
+          }
+        />
 
         <section className="py-12 sm:py-14 lg:py-16">
           <Card className="rounded-[28px] border p-6 sm:p-7">
