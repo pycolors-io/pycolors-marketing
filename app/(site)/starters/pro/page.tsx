@@ -2,12 +2,13 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import {
-  BadgeCheck,
   Check,
   CreditCard,
+  Download,
   LayoutDashboard,
   Lock,
   Rocket,
+  ShieldCheck,
   Sparkles,
 } from 'lucide-react';
 
@@ -26,14 +27,14 @@ import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title:
-    'Starter Pro — Production-ready Next.js SaaS starter | PyColors',
+    'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
   description:
-    'Starter Pro is a production-ready Next.js SaaS starter with real authentication, real Stripe billing, protected app architecture, and scalable foundations already wired.',
+    'Starter Pro is a production-ready Next.js SaaS starter with real authentication, real Stripe billing, protected app structure, and launch-ready foundations already wired.',
   openGraph: {
     title:
-      'Starter Pro — Production-ready Next.js SaaS starter | PyColors',
+      'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
     description:
-      'Real authentication, real Stripe billing, protected app architecture, and scalable SaaS foundations already wired.',
+      'Launch a real SaaS faster with authentication, Stripe billing, protected app structure, and production-ready foundations already built.',
     url: 'https://pycolors.io/starters/pro',
     siteName: 'PyColors',
     type: 'website',
@@ -42,9 +43,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title:
-      'Starter Pro — Production-ready Next.js SaaS starter | PyColors',
+      'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
     description:
-      'Ship a real SaaS faster with authentication, billing, protected app structure, and scalable foundations already wired.',
+      'Launch a real SaaS faster with authentication, Stripe billing, protected app structure, and production-ready foundations already built.',
     images: ['/seo/twitter-main.png'],
   },
   alternates: {
@@ -53,6 +54,12 @@ export const metadata: Metadata = {
 };
 
 type Feature = {
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+type IncludedItem = {
   title: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -72,87 +79,113 @@ type Faq = {
 const launchPrice = '199 €';
 const regularPrice = '299 €';
 
-const features: Feature[] = [
+const coreFeatures: Feature[] = [
   {
-    title: 'Real authentication flows',
+    title: 'Real authentication already built',
     description:
-      'Email and password, Google and GitHub OAuth, email verification, password reset, account linking, and safer provider management are already wired.',
+      'Email and password, Google and GitHub OAuth, email verification, reset password, account linking, and safer provider handling are already wired.',
     icon: Lock,
   },
   {
-    title: 'Stripe billing already wired',
+    title: 'Stripe billing already integrated',
     description:
-      'Checkout, billing portal flow, webhook synchronization, invoices, subscription state handling, and monetization foundations are already in place.',
+      'Checkout, billing portal, webhook synchronization, invoices, and subscription state handling are already included.',
+    icon: CreditCard,
+  },
+  {
+    title: 'Protected app structure included',
+    description:
+      'Protected routes, billing-aware pages, settings foundations, and a cleaner app structure help you move faster with less rewrite risk.',
+    icon: LayoutDashboard,
+  },
+  {
+    title: 'Built to launch a real SaaS',
+    description:
+      'Starter Pro is shaped for a real commercial product, not just a UI demo. You start from a stronger base and spend your time on product logic and customers.',
+    icon: Rocket,
+  },
+];
+
+const includedItems: IncludedItem[] = [
+  {
+    title: 'Full Starter Pro source code',
+    description:
+      'Get the complete codebase so you can start building your own SaaS immediately.',
+    icon: Download,
+  },
+  {
+    title: 'Real auth flows',
+    description:
+      'Email/password auth, OAuth, email verification, reset password, and account foundations are included.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Real Stripe billing',
+    description:
+      'Checkout, portal, invoices, webhook sync, and subscription lifecycle foundations are already wired.',
     icon: CreditCard,
   },
   {
     title: 'Protected app architecture',
     description:
-      'Protected routes, billing-aware pages, settings foundations, and scalable app structure reduce launch friction and future rewrites.',
+      'Protected pages, settings surfaces, and app-level structure are already in place.',
     icon: LayoutDashboard,
-  },
-  {
-    title: 'Built to become a real SaaS',
-    description:
-      'Starter Pro is structured for commercial products, not just screenshots: cleaner domain boundaries, Prisma-backed foundations, and stronger product evolution paths.',
-    icon: Rocket,
   },
 ];
 
 const comparisonRows: ComparisonRow[] = [
-  { label: 'Landing and app surfaces', free: true, pro: true },
+  { label: 'UI and app surfaces', free: true, pro: true },
   { label: 'Auth screens and UX', free: true, pro: true },
   { label: 'Real email/password auth', free: false, pro: true },
-  { label: 'Google & GitHub OAuth', free: false, pro: true },
+  { label: 'Google and GitHub OAuth', free: false, pro: true },
   {
-    label: 'Email verification and reset password',
+    label: 'Email verification and password reset',
     free: false,
     pro: true,
   },
-  { label: 'Stripe Checkout integration', free: false, pro: true },
+  { label: 'Stripe Checkout', free: false, pro: true },
   { label: 'Billing portal and invoices', free: false, pro: true },
   { label: 'Webhook sync with Prisma', free: false, pro: true },
-  { label: 'Plan gating foundations', free: false, pro: true },
-  { label: 'Protected app architecture', free: 'Partial', pro: true },
+  { label: 'Protected user flows', free: 'Partial', pro: true },
   {
-    label: 'Best use case',
-    free: 'Validate product shape',
-    pro: 'Launch faster',
+    label: 'Best for',
+    free: 'Exploring product shape',
+    pro: 'Launching faster',
   },
 ];
 
 const faqs: Faq[] = [
   {
+    question: 'What do I get after purchase?',
+    answer:
+      'You get the full Starter Pro source code, plus the production-ready SaaS foundations already wired: authentication, Stripe billing, protected app structure, and launch-ready account flows.',
+  },
+  {
     question:
       'Is Starter Pro a real product foundation or just a boilerplate?',
     answer:
-      'Starter Pro is built as a production-shaped SaaS foundation. It includes real auth flows, real Stripe billing, protected app structure, settings patterns, and a stronger commercial baseline.',
-  },
-  {
-    question: 'Who is Starter Pro for?',
-    answer:
-      'It is for developers, indie hackers, freelancers, and technical founders who want to ship faster without rebuilding authentication, billing, and app foundations from scratch.',
+      'Starter Pro is built as a production-ready SaaS foundation. It is designed to help you ship a real commercial product faster, not just preview a UI.',
   },
   {
     question: 'Is Stripe already integrated?',
     answer:
-      'Yes. Stripe Checkout, billing portal flow, webhook synchronization, invoices, and monetization-ready foundations are already included.',
+      'Yes. Stripe Checkout, billing portal flow, invoices, webhook synchronization, and subscription lifecycle foundations are already included.',
   },
   {
-    question: 'Can I use it for a commercial SaaS?',
+    question: 'Can I use Starter Pro for a commercial SaaS?',
     answer:
-      'Yes. Starter Pro is designed to become the base of a real commercial SaaS product, not just a demo project or UI showcase.',
+      'Yes. Starter Pro is designed to become the base of a real SaaS product that you adapt to your own business logic and product direction.',
   },
   {
-    question: 'What do I still need to build myself?',
+    question: 'What still needs to be built by me?',
     answer:
-      'Your unique product logic, domain workflows, onboarding, positioning, and growth. Starter Pro removes repeated foundation work so you can focus on what makes your business valuable.',
+      'Your product-specific logic, domain workflows, onboarding, positioning, and growth system. Starter Pro removes repeated setup work so you can focus on what makes your SaaS valuable.',
   },
   {
     question:
-      'Why buy Starter Pro instead of starting from Starter Free?',
+      'Why buy Starter Pro instead of just using Starter Free?',
     answer:
-      'Starter Free is ideal when you are still exploring product shape. Starter Pro is the right move when auth, billing, and protected app foundations are already the bottleneck and you want to launch sooner.',
+      'Starter Free helps you explore product shape and UX faster. Starter Pro is the right choice when real auth, real billing, and a launch-ready app foundation become the bottleneck.',
   },
 ];
 
@@ -218,7 +251,7 @@ export default function StarterProPage() {
             '@type': 'Product',
             name: 'PyColors Starter Pro',
             description:
-              'Production-ready Next.js SaaS starter with authentication, billing, protected app structure, and scalable architecture.',
+              'Production-ready Next.js SaaS starter with real authentication, Stripe billing, protected app structure, and launch-ready foundations.',
             brand: {
               '@type': 'Brand',
               name: 'PyColors',
@@ -228,7 +261,7 @@ export default function StarterProPage() {
               priceCurrency: 'EUR',
               price: '199',
               availability: 'https://schema.org/InStock',
-              url: 'https://pycolors.io/pricing',
+              url: 'https://pycolors.io/starters/pro',
             },
           }),
         }}
@@ -243,7 +276,7 @@ export default function StarterProPage() {
               variant: 'secondary',
             },
             {
-              label: 'Production-ready',
+              label: 'Launch-ready',
               variant: 'outline',
             },
             {
@@ -257,9 +290,9 @@ export default function StarterProPage() {
               ),
             },
           ]}
-          title="Launch your SaaS with the real foundations already wired."
-          subtitle="Skip months of repeated setup work and focus on what customers pay for."
-          description="Starter Pro is a production-ready Next.js SaaS starter with real authentication, real Stripe billing, protected app structure, and scalable account foundations already integrated so you can ship faster, reduce setup fatigue, and move sooner toward revenue."
+          title="Launch a real SaaS faster with auth and billing already built."
+          subtitle="Skip the slow setup and start from a production-ready Next.js SaaS foundation."
+          description="Starter Pro gives you real authentication, real Stripe billing, protected app structure, and launch-ready account foundations so you can ship, validate, and charge sooner."
           actions={
             <>
               <BuyStarterProButton
@@ -287,20 +320,15 @@ export default function StarterProPage() {
             </>
           }
           pills={[
-            'Real auth and billing included',
-            'Protected app foundations',
-            'Built for commercial SaaS',
+            'Real auth included',
+            'Stripe billing included',
+            'Built to launch faster',
           ]}
           extraClassName="mx-auto max-w-6xl"
           extra={
             <>
-              <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground">
-                Built for developers who want a serious SaaS baseline,
-                not another demo starter that still leaves auth,
-                billing, and product foundations unfinished.
-              </p>
-
-              <ul className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
+              <div className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
+                <CheckItem>Full source code after purchase</CheckItem>
                 <CheckItem>
                   Authentication flows already wired
                 </CheckItem>
@@ -308,12 +336,9 @@ export default function StarterProPage() {
                   Stripe billing already integrated
                 </CheckItem>
                 <CheckItem>
-                  Protected app and settings foundations
+                  Built for a real commercial SaaS
                 </CheckItem>
-                <CheckItem>
-                  Built to become a real commercial SaaS
-                </CheckItem>
-              </ul>
+              </div>
 
               <div className="mx-auto mt-12 max-w-6xl">
                 <div className="relative overflow-hidden rounded-[28px] border bg-background/70 p-3 shadow-2xl shadow-black/10 backdrop-blur sm:p-4">
@@ -352,58 +377,15 @@ export default function StarterProPage() {
       </Container>
 
       <section className="border-b">
-        <Container className="py-16 sm:py-16 lg:py-20">
-          <SectionHeading
-            eyebrow="Why Starter Pro"
-            title="You do not need another starter. You need one that actually gets you to launch."
-            description="Most SaaS starters still leave you rebuilding auth, billing, and protected app foundations. Starter Pro is built to remove that repeated implementation cost so you can spend your time on product, positioning, and customers."
-          />
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: 'Stop rebuilding the same infrastructure',
-                description:
-                  'Authentication, billing, protected pages, settings flows, and product foundations are already structured for you.',
-              },
-              {
-                title: 'Reduce time-to-revenue',
-                description:
-                  'Less time wiring auth and billing means more time shipping the product customers will actually pay for.',
-              },
-              {
-                title: 'Launch with more credibility',
-                description:
-                  'Real billing flows, real auth, and a cleaner foundation help you launch something serious from day one.',
-              },
-            ].map((item) => (
-              <Card key={item.title} className="rounded-2xl border">
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    {item.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    {item.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 sm:py-16 lg:py-20 mx-auto w-full max-w-7xl ">
           <SectionHeading
             eyebrow="What you get"
-            title="Everything essential to launch a real SaaS foundation"
-            description="Starter Pro is focused on the parts that repeatedly slow developers down before launch: auth, billing, protected architecture, and reusable product foundations."
+            title="Everything needed to move faster toward a real SaaS launch"
+            description="Starter Pro is focused on the parts that repeatedly slow developers down before launch: auth, billing, protected architecture, and production-ready app structure."
           />
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {features.map((feature) => {
+            {coreFeatures.map((feature) => {
               const Icon = feature.icon;
 
               return (
@@ -433,13 +415,84 @@ export default function StarterProPage() {
       </section>
 
       <section className="border-b">
+        <Container className="py-16 sm:py-16 lg:py-20  max-w-4xl ">
+          <SectionHeading
+            eyebrow="After purchase"
+            title="What you get immediately"
+            description="No vague promise. You get the actual SaaS foundation needed to ship faster and stop rebuilding the same layers again."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {includedItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <Card key={item.title} className="rounded-2xl border">
+                  <CardHeader className="space-y-4">
+                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-muted/30">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <CardTitle className="text-lg">
+                      {item.title}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent>
+                    <p className="text-sm leading-7 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          <div className="mx-auto mt-10 max-w-4xl rounded-[28px] border bg-muted/20 p-6 sm:p-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <h3 className="text-lg font-semibold tracking-tight">
+                  Included in Starter Pro
+                </h3>
+                <ul className="mt-4 space-y-3">
+                  <CheckItem>Full Starter Pro source code</CheckItem>
+                  <CheckItem>
+                    Real email/password authentication
+                  </CheckItem>
+                  <CheckItem>Google and GitHub OAuth</CheckItem>
+                  <CheckItem>
+                    Email verification and reset password
+                  </CheckItem>
+                  <CheckItem>Stripe Checkout integration</CheckItem>
+                  <CheckItem>Billing portal and invoices</CheckItem>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold tracking-tight">
+                  Also included
+                </h3>
+                <ul className="mt-4 space-y-3">
+                  <CheckItem>Webhook sync with Prisma</CheckItem>
+                  <CheckItem>Protected app structure</CheckItem>
+                  <CheckItem>Settings foundations</CheckItem>
+                  <CheckItem>Launch-ready SaaS baseline</CheckItem>
+                  <CheckItem>Commercial usage rights</CheckItem>
+                  <CheckItem>
+                    Documentation on pycolors.io/docs
+                  </CheckItem>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b">
         <Container className="py-16 sm:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <SectionHeading
               align="left"
               eyebrow="Free vs Pro"
               title="Starter Free helps you explore. Starter Pro helps you launch."
-              description="Keep Free as the entry point. Convert with Pro when you want real authentication, real monetization, and a stronger commercial baseline."
+              description="Use Free to validate product shape faster. Move to Pro when real authentication, real billing, and protected user flows become the bottleneck."
             />
 
             <div className="overflow-hidden rounded-3xl border">
@@ -487,6 +540,13 @@ export default function StarterProPage() {
               </table>
             </div>
           </div>
+
+          <div className="mt-8 flex justify-center">
+            <BuyStarterProButton
+              fullWidth={false}
+              label={`Move to Starter Pro — ${launchPrice}`}
+            />
+          </div>
         </Container>
       </section>
 
@@ -494,8 +554,8 @@ export default function StarterProPage() {
         <Container className="py-16 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Pricing"
-            title="One serious offer. One clear buying decision."
-            description="Do not dilute the launch with too many choices. Starter Pro is the main offer for developers who want to move from product-shaped starter to monetizable SaaS foundation."
+            title="One clear offer for developers ready to launch faster"
+            description="Starter Pro is the main offer for developers who want to stop rebuilding auth and billing and start shipping a monetizable SaaS sooner."
           />
 
           <div className="mx-auto mt-12 max-w-3xl">
@@ -507,8 +567,8 @@ export default function StarterProPage() {
                       Starter Pro
                     </p>
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Production-ready Next.js SaaS starter for
-                      developers who want to launch faster.
+                      Best for developers who want a faster path to
+                      launch.
                     </p>
                   </div>
 
@@ -533,19 +593,27 @@ export default function StarterProPage() {
               <CardContent className="space-y-8">
                 <ul className="grid gap-3 sm:grid-cols-2">
                   <CheckItem>Full Starter Pro source code</CheckItem>
-                  <CheckItem>Authentication flows included</CheckItem>
+                  <CheckItem>Real authentication included</CheckItem>
                   <CheckItem>Stripe billing included</CheckItem>
                   <CheckItem>
                     Protected app foundations included
                   </CheckItem>
-                  <CheckItem>
-                    Commercial access to Starter Pro
-                  </CheckItem>
-                  <CheckItem>Built for real SaaS products</CheckItem>
+                  <CheckItem>Commercial usage included</CheckItem>
+                  <CheckItem>Built to launch faster</CheckItem>
                 </ul>
 
+                <div className="rounded-2xl border bg-muted/20 p-4 text-sm text-muted-foreground">
+                  One-time payment. Instant delivery after purchase.
+                  Built for developers who want to launch faster
+                  without rebuilding auth and billing from scratch.
+                </div>
+
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <BuyStarterProButton fullWidth={false} />
+                  <BuyStarterProButton
+                    fullWidth={false}
+                    label={`Buy Starter Pro — ${launchPrice}`}
+                  />
+
                   <Button
                     asChild
                     variant="outline"
@@ -558,58 +626,13 @@ export default function StarterProPage() {
                   </Button>
                 </div>
 
-                <div className="rounded-2xl border bg-muted/20 p-4 text-sm text-muted-foreground">
-                  Built for developers, indie hackers, freelancers,
-                  and technical founders who care about shipping
-                  revenue faster without rebuilding the same
-                  foundation again.
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Start from a serious SaaS base and keep your time
+                  focused on product logic, onboarding, customers, and
+                  growth.
+                </p>
               </CardContent>
             </Card>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b">
-        <Container className="py-16 sm:py-16 lg:py-20">
-          <SectionHeading
-            eyebrow="Why buy now"
-            title="A faster launch is only valuable if it removes the right work"
-            description="Starter Pro is not about saving a few hours of UI work. It is about removing the repeated implementation cost of auth, billing, and protected app foundations so you can focus on the part customers pay for."
-          />
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: 'Developer ROI',
-                body: 'Avoid losing weeks on repeated infrastructure work and move directly into product features, onboarding, positioning, and growth.',
-              },
-              {
-                title: 'Business ROI',
-                body: 'A product becomes sellable faster when login, billing, and protected flows already exist in a clean foundation.',
-              },
-              {
-                title: 'Architectural ROI',
-                body: 'You start from a structure that can grow into a real SaaS instead of a fragile demo that becomes expensive to refactor later.',
-              },
-            ].map((item) => (
-              <Card key={item.title} className="rounded-2xl border">
-                <CardHeader>
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border bg-muted/30">
-                    <BadgeCheck className="h-5 w-5" />
-                  </div>
-                  <CardTitle className="pt-4 text-lg">
-                    {item.title}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent>
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    {item.body}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </Container>
       </section>
@@ -618,8 +641,8 @@ export default function StarterProPage() {
         <Container className="py-16 sm:py-16 lg:py-20 max-w-5xl">
           <SectionHeading
             eyebrow="FAQ"
-            title="Questions buyers will have before they pay"
-            description="Answer the objections directly. The goal is to reduce friction, not hide it."
+            title="Questions buyers ask before paying"
+            description="Answer the objections clearly. The goal is to reduce friction and make the buying decision easier."
           />
 
           <div className="mt-12 space-y-4">
@@ -647,25 +670,24 @@ export default function StarterProPage() {
                 variant="outline"
                 className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
               >
-                Ready to launch
+                Ready to buy
               </Badge>
 
               <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start from the foundation that gets you to revenue
+                Start from the SaaS foundation that gets you to launch
                 faster.
               </h2>
 
               <p className="mt-4 text-pretty text-sm leading-7 text-muted-foreground sm:text-base">
-                Buy Starter Pro now, launch with a stronger base, and
-                keep your time focused on product, customers, and
-                growth instead of rebuilding the same infrastructure
-                again.
+                Buy Starter Pro now and move faster toward a real
+                product with authentication, billing, and protected
+                app structure already built.
               </p>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <BuyStarterProButton
                   fullWidth={false}
-                  label={`Get Starter Pro — ${launchPrice}`}
+                  label={`Buy Starter Pro — ${launchPrice}`}
                 />
 
                 <Button
@@ -674,7 +696,9 @@ export default function StarterProPage() {
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/upgrade">Compare Free vs Pro</Link>
+                  <Link href="/starters/free">
+                    Compare with Starter Free
+                  </Link>
                 </Button>
               </div>
             </div>
