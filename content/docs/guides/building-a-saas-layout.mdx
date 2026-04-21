@@ -1,76 +1,78 @@
 ---
 title: Building a SaaS layout
-description: How to compose PyColors UI primitives into a real, production-ready SaaS layout.
+description: How to compose PyColors UI primitives into a real SaaS layout with navigation, header, responsive behavior, and scalable product structure.
 ---
 
-## Overview
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge } from "@pycolors/ui";
+
+<DocsPageShell>
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>SaaS layout</Badge>
+</div>
+
+# Build a layout that can survive product growth
 
 Most UI libraries stop at components.
 
-Real SaaS products need **structure**:
-navigation, headers, content areas, responsive behavior, and clear interaction patterns.
+Real SaaS products need structure:
 
-This guide shows **how to compose PyColors UI primitives** into a realistic SaaS layout —
-without locking you into a rigid framework or a one-size-fits-all shell.
+- navigation
+- header
+- content areas
+- responsive behavior
+- clear interaction boundaries
 
-> This is a **guide**, not a fixed API.
-> Layout decisions are intentionally left to product teams.
-
----
-
-## The problem PyColors solves
-
-Building a SaaS layout usually means:
-- a sidebar for navigation
-- a header for context and actions
-- content areas that scale with data
-- responsive behavior (desktop vs mobile)
-
-Many libraries either:
-- don’t address layout at all, or
-- ship a rigid “app shell” that’s hard to customize.
-
-**PyColors takes a different approach.**
+This guide explains how to compose PyColors UI primitives into a **real product layout** without locking your app into a rigid shell.
 
 ---
 
-## Design philosophy
+## The real problem
 
-PyColors UI provides:
-- **UI primitives** (Button, Input, Table, Dialog, …)
-- **Design tokens** (colors, radius, spacing)
-- **Guidance**, not constraints
+A SaaS layout is not just a sidebar plus a header.
 
-What it does **not** provide by default:
-- a mandatory AppShell
-- a fixed sidebar implementation
-- opinionated routing rules
+It needs to support:
 
-This keeps your application:
-- adaptable
-- scalable
-- framework-agnostic
+- product navigation
+- contextual actions
+- dense data views
+- settings flows
+- desktop and mobile behavior
+- growth over time
 
----
+A layout that works for week one often breaks by month three.
 
-## Core primitives used in a SaaS layout
-
-A typical SaaS layout can be built using only these open UI primitives:
-
-- **Button** — actions, navigation triggers
-- **Sheet** — mobile sidebar / drawers
-- **Dropdown Menu** — row actions, user menu
-- **Tabs** — settings sections
-- **Table** — data-heavy views
-- **Dialog** — confirmations and forms
-
-No special “layout components” are required.
+That is why layout should be treated as a **composition problem**, not a component problem.
 
 ---
 
-## Example composition (conceptual)
+## PyColors approach
 
-Below is a **conceptual structure**, not a public API:
+PyColors gives you:
+
+- primitives
+- tokens
+- product guidance
+
+It intentionally does **not** force:
+
+- a mandatory app shell
+- fixed navigation APIs
+- framework-specific layout rules
+- global layout abstractions you do not own
+
+That keeps your product flexible.
+
+---
+
+## Mental model
+
+> Layout is not a component.
+> Layout is a composition of responsibilities.
+
+A simple conceptual model looks like this:
 
 ```tsx
 <AppShell>
@@ -82,12 +84,31 @@ Below is a **conceptual structure**, not a public API:
 </AppShell>
 ```
 
-This illustrates separation of concerns:
+This is not a required API.
+
+It is a useful separation of concerns:
+
 - navigation
-- context (header)
+- context
 - content
 
-How you implement these pieces is up to your product needs.
+---
+
+## Core primitives used in SaaS layouts
+
+A real product layout can be built from a small set of primitives:
+
+- Button → actions and nav triggers
+- Sheet → mobile navigation
+- Dropdown Menu → user menu and row actions
+- Tabs → settings sections
+- Table → data-heavy content
+- Dialog → confirmations and modal flows
+
+This is the key idea:
+
+You do not need “layout magic”.
+You need reliable primitives and good composition.
 
 ---
 
@@ -96,135 +117,166 @@ How you implement these pieces is up to your product needs.
 ### Desktop
 
 On larger screens:
-- the sidebar is always visible
+
+- sidebar stays visible
 - navigation is persistent
-- data tables can use the full height
+- product areas remain easy to scan
+- tables and long views use full height
 
 ### Mobile
 
 On smaller screens:
-- the sidebar is hidden
-- navigation is rendered inside a Sheet
-- the header exposes a menu button
 
-This pattern provides:
-- maximum screen space
-- predictable navigation
-- excellent accessibility
+- sidebar is hidden
+- navigation moves into a Sheet
+- header exposes a menu trigger
+- content gets priority
+
+This pattern is predictable, scalable, and accessible.
 
 ---
 
 ## Header responsibilities
 
-A SaaS header typically contains:
+A SaaS header usually carries:
+
 - page title
 - contextual description
-- primary actions
-- user menu
+- primary action
+- user/account menu
+- mobile nav trigger
 
-Using PyColors primitives:
-- **Button** for actions
-- **Dropdown Menu** for user/account actions
-- **Sheet** trigger for mobile navigation
+Use primitives for each responsibility:
 
-Headers should stay lightweight and context-driven.
+- Button for actions
+- Dropdown Menu for account controls
+- Sheet trigger for mobile nav
+
+Keep headers light.
+
+Headers should provide context, not become control panels.
 
 ---
 
 ## Content areas
 
-Content areas usually fall into two categories:
+Most product pages fall into two groups.
 
-### Data-heavy pages
+### Data-heavy views
+
 - tables
 - filters
 - row actions
 - pagination
+- bulk actions
 
-### Configuration pages
-- forms
+### Configuration views
+
+- settings forms
 - tabs
-- dialogs
 - confirmations
+- dialogs
+- account flows
 
-PyColors UI supports both without changing your layout structure.
-
----
-
-## Example: Projects page
-
-A typical data page combines:
-- **Table** for listing projects
-- **Badge** for status
-- **Dropdown Menu** for row actions
-- **Dialog** for destructive actions
-- **Sheet** for mobile navigation
-
-This mirrors real-world SaaS behavior and scales naturally as features grow.
+A strong SaaS layout supports both without forcing a different shell for each.
 
 ---
 
-## Example: Settings page
+## Example: projects page
 
-A settings page often uses:
-- **Tabs** to separate concerns
-- **Input** and **Password Input** for forms
-- **Dialog** for confirmations
+A realistic data page might combine:
 
-Each section remains isolated while sharing the same layout.
+- Table for the list
+- Badge for status
+- Dropdown Menu for row actions
+- Dialog for destructive confirmation
+- Sheet for mobile navigation
+
+That is how a layout starts supporting real product operations.
+
+---
+
+## Example: settings page
+
+A realistic settings page often combines:
+
+- Tabs to separate concerns
+- Input for editable fields
+- Button for actions
+- Dialog for risky confirmations
+
+The layout stays stable while the content changes.
+
+That is what good product structure looks like.
 
 ---
 
 ## Why this approach scales
 
-This composition-based strategy allows you to:
-- evolve navigation independently
-- add or remove sections without refactoring
-- adapt layouts per product area
-- migrate to monorepos or micro-frontends later
+Composition-based layouts scale better because they let you:
 
-It also keeps your UI library clean and your application logic flexible.
+- evolve navigation independently
+- swap sections without rewriting the shell
+- adapt different product areas
+- support more teams later
+- keep layout ownership inside the app
+
+This is more useful than shipping a rigid “app shell” that becomes expensive to bend.
 
 ---
 
 ## What PyColors intentionally avoids
 
-PyColors UI does not ship:
-- a mandatory application shell
-- framework-specific routing abstractions
-- global layout state management
+PyColors does not ship:
 
-These decisions belong to your product, not the UI library.
+- a mandatory app shell
+- routing-specific layout logic
+- layout state you do not control
+- forced product structure
+
+Those decisions belong to your product.
+
+The UI system should support them, not own them.
 
 ---
 
 ## When to create your own AppShell
 
-You should introduce a custom AppShell when:
-- navigation becomes complex
-- multiple teams work on the same product
-- you want strict layout consistency
+Create a custom AppShell when:
 
-At that point, PyColors UI acts as the foundation —
-not the constraint.
+- navigation becomes complex
+- multiple product areas need consistency
+- several people are working in the same product
+- layout drift starts appearing
+
+That is the right point to formalize your layout.
+
+Not before.
+
+---
+
+## Practical rule
+
+Start with composition.
+
+Introduce your own AppShell only when the repetition becomes real.
+
+That gives you:
+
+- less premature abstraction
+- more product control
+- better long-term structure
 
 ---
 
 ## Summary
 
-- PyColors UI provides primitives, not rigid layouts
 - SaaS layouts are compositions, not components
-- Guides document patterns, not APIs
-- Your product keeps full control over structure and behavior
+- primitives should stay small
+- layout responsibilities should stay separate
+- PyColors provides guidance, not rigid structure
 
-**Build structure deliberately.**
-Let your UI system stay focused.
+Build the layout deliberately.
+Keep the system flexible.
 
----
-
-## Related resources
-
-- UI Components overview
-- Table and data patterns
-- Dialog and Sheet usage
-- Design system tokens
+</DocsPageShell>

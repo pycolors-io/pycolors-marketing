@@ -1,6 +1,6 @@
 ---
 title: Empty, loading, and error states
-description: Designing clear, consistent, and production-ready async states with PyColors UI.
+description: Design clear, consistent, and production-ready async states with PyColors UI primitives.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
@@ -9,49 +9,91 @@ import {
   Alert,
   AlertTitle,
   AlertDescription,
+  Badge,
   Button,
   Card,
   CardContent,
   EmptyState,
   Skeleton,
   Table,
-  TableHeader,
   TableBody,
   TableRow,
-  TableHead,
   TableCell,
-} from '@pycolors/ui';
-
+} from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
 
 <DocsPageShell>
 
-Modern products spend a significant amount of time in **non-happy states**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>Async states</Badge>
+</div>
 
-Data is loading.
+# Async states define product quality
+
+Modern products spend a large part of their life outside the happy path.
+
+Data loads.
 Lists are empty.
-Errors happen.
+Requests fail.
 
-How you handle these states has a direct impact on:
+How you handle these moments directly affects:
+
 - perceived performance
 - user confidence
+- product clarity
 - overall product quality
 
-This guide explains **how to design empty, loading, and error states**
-using PyColors UI primitives — without introducing product logic into UI components.
+This guide explains how to design **loading**, **empty**, and **error** states with PyColors UI primitives.
+
+---
+
+## Why this matters
+
+A product is not judged only by its successful states.
+
+It is also judged by how it behaves when:
+
+- data is still loading
+- nothing exists yet
+- a request fails
+- the user needs guidance
+
+Well-designed async states make the product feel:
+
+- stable
+- intentional
+- trustworthy
+
+Poor async states make even good products feel unfinished.
 
 ---
 
 ## The three async states
 
-Every data-driven UI moves through three distinct states:
+Every data-driven interface moves through three distinct states:
 
 1. **Loading** → data is being fetched
-2. **Empty** → request succeeded, but no data exists
-3. **Error** → request failed or action could not be completed
+2. **Empty** → request succeeded, but there is nothing to show
+3. **Error** → request or action failed
 
-Each state has a **different intent**
-and requires a **different UI response**.
+These states are not interchangeable.
+
+Each has:
+
+- a different meaning
+- a different UX goal
+- a different visual response
+
+---
+
+## Mental model
+
+> **Skeleton = shape**
+> **EmptyState = explanation**
+> **Alert = problem**
+
+Keeping these roles separate is one of the easiest ways to make a product feel more professional.
 
 ---
 
@@ -60,22 +102,34 @@ and requires a **different UI response**.
 ### When to use Skeleton
 
 Use **Skeleton** when:
-- data is being fetched
-- layout is already known
-- content will appear soon
 
-Skeleton preserves layout structure and reduces visual jank.
+- data is loading
+- the layout is already known
+- content is expected soon
 
-### What Skeleton represents
+Skeleton preserves structure and reduces visual jank.
 
-Skeleton is **not content**.
-Skeleton is **not feedback**.
+It helps users understand:
 
-It is a **temporary visual placeholder**.
+> “Something is coming here.”
+
+### What Skeleton is for
+
+Skeleton is:
+
+- a placeholder
+- a layout-preserving state
+- a temporary visual structure
+
+Skeleton is **not**:
+
+- content
+- product feedback
+- an explanation
 
 ---
 
-### Example: Card loading
+### Example: card loading
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -105,7 +159,7 @@ It is a **temporary visual placeholder**.
 
 ---
 
-### Example: Table loading
+### Example: table loading
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -160,17 +214,23 @@ It is a **temporary visual placeholder**.
 ### When to use EmptyState
 
 Use **EmptyState** when:
+
 - the request succeeded
-- there is no data to display
-- the state is valid and expected
+- the result is valid
+- there is nothing to display yet
 
-EmptyState answers a simple question:
+This is not a failure.
 
-> *“Why is this empty — and what can I do next?”*
+This is a real, expected product state.
+
+An EmptyState should answer two questions:
+
+1. **Why is this empty?**
+2. **What can the user do next?**
 
 ---
 
-### Example: Empty section
+### Example: empty section
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -196,7 +256,7 @@ EmptyState answers a simple question:
 
 ---
 
-### Example: Table empty
+### Example: empty table
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -241,15 +301,23 @@ EmptyState answers a simple question:
 ### When to use Alert
 
 Use **Alert** when:
-- an action fails
-- data cannot be loaded
-- the user needs to be informed immediately
 
-Alerts communicate **problems**, not absence.
+- a request fails
+- an action fails
+- the user needs immediate feedback
+- the product cannot proceed as expected
+
+An error state communicates a **problem**.
+
+It should be:
+
+- clear
+- calm
+- actionable
 
 ---
 
-### Example: Inline error
+### Example: inline error
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -279,47 +347,95 @@ Alerts communicate **problems**, not absence.
 
 ## Choosing the right state
 
-A simple decision table:
-
 | Situation | Component |
-|--------|-----------|
+|---|---|
 | Data is loading | Skeleton |
-| Request succeeded, no data | EmptyState |
-| Action or request failed | Alert |
+| Request succeeded, but there is no data | EmptyState |
+| Request or action failed | Alert |
 
-Never mix these states.
+Never blur these roles.
 
----
-
-## UX rules (production-tested)
-
-- Skeleton **never explains** — it only preserves layout
-- EmptyState **always explains** why the state exists
-- Error states should be **clear, calm, and actionable**
-- Avoid flashing between states
-- Prefer consistency over clever animations
-- Replace skeletons quickly once data is ready
+A product feels clearer when each state has one job.
 
 ---
 
-## Anti-patterns to avoid
+## UX rules
 
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Skeleton with explanatory text
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> EmptyState used for errors
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Toast used for critical failures
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Loading spinners replacing entire layouts
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> Complex logic inside UI primitives
+These rules make async states feel more stable in production.
+
+### Loading
+
+- preserve the layout whenever possible
+- use Skeleton when the structure is known
+- avoid replacing the whole page with a spinner
+- remove loading placeholders quickly when data is ready
+
+### Empty
+
+- explain why the section is empty
+- offer a useful next step when relevant
+- do not treat empty as failure
+- keep the tone neutral and helpful
+
+### Error
+
+- say what happened
+- tell the user what they can do next
+- avoid vague system language
+- use inline feedback for blocking problems
 
 ---
 
-## Mental model to keep
+## Production-tested guidance
 
-> **Skeleton = shape**
-> **EmptyState = explanation**
-> **Alert = problem**
+<div className="grid gap-6 sm:grid-cols-2">
+  <div>
+    <h3 className="mb-3 flex items-center text-base font-medium">
+      <XCircle className="mr-2 h-4 w-4 text-destructive" />
+      Avoid
+    </h3>
 
-Keeping these roles distinct is one of the simplest ways
-to make a product feel stable and professional.
+    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
+      <li>Skeleton combined with explanatory copy</li>
+      <li>EmptyState used for real errors</li>
+      <li>Global spinner replacing a stable layout</li>
+      <li>Toast used for a blocking page failure</li>
+      <li>Mixing multiple async states at once</li>
+    </ul>
+  </div>
+
+  <div>
+    <h3 className="mb-3 flex items-center text-base font-medium">
+      <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
+      Prefer
+    </h3>
+
+    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
+      <li>Skeleton when layout is known</li>
+      <li>EmptyState when the result is valid but empty</li>
+      <li>Alert when the user must understand a failure</li>
+      <li>Consistent async behavior across product areas</li>
+      <li>Clear messaging with one role per state</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Why this improves product feel
+
+Good async states do more than fill gaps.
+
+They help the product feel:
+
+- faster
+- calmer
+- more deliberate
+- easier to trust
+
+This is one of the places where product quality becomes visible.
+
+A polished product is often just a product with better non-happy states.
 
 ---
 
@@ -338,7 +454,7 @@ to make a product feel stable and professional.
   />
   <LinkCard
     title="Alert"
-    description="Inline feedback and error messaging."
+    description="Inline feedback for errors and important states."
     href="/docs/ui/alert"
   />
 </LinkCards>
