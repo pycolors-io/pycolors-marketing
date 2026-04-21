@@ -27,6 +27,7 @@ import { UI_VERSION } from '@/lib/version';
 import { NpmBadges } from '@/components/npm-badges';
 import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: {
@@ -358,43 +359,36 @@ export default function HomePage() {
 
       <Container className="py-20 sm:py-20 lg:py-24">
         <div className="mx-auto w-full max-w-6xl">
-          <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary" className="gap-2">
+          <PageHero
+            maxWidth="4xl"
+            badges={[
+              {
+                label: 'Starter Free available now',
+                variant: 'secondary',
+                icon: (
                   <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  Starter Free available now
-                </Badge>
-                <Badge variant="outline">Open-core</Badge>
-                <Badge variant="outline" className="gap-1.5">
+                ),
+              },
+              {
+                label: 'Open-core',
+                variant: 'outline',
+              },
+              {
+                label: 'Product-first SaaS ecosystem',
+                variant: 'outline',
+                icon: (
                   <Sparkles
                     className="h-3.5 w-3.5"
                     aria-hidden="true"
                   />
-                  Product-first SaaS ecosystem
-                </Badge>
-              </div>
-
-              <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Build a credible SaaS faster.{' '}
-                <span className="block text-muted-foreground">
-                  Learn the product, validate the UX, then wire the
-                  business.
-                </span>
-              </h1>
-
-              <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-                PyColors is a production-shaped SaaS ecosystem: guides
-                to learn the product logic, patterns and examples to
-                explore real interfaces, Starter Free to validate
-                quickly, and Starter Pro to move faster when
-                authentication, billing, and delivery become the real
-                bottleneck.
-              </p>
-
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                ),
+              },
+            ]}
+            title="Build a credible SaaS faster."
+            subtitle="Learn the product, validate the UX, then wire the business."
+            description="PyColors is a production-shaped SaaS ecosystem: guides to learn the product logic, patterns and examples to explore real interfaces, Starter Free to validate quickly, and Starter Pro to move faster when authentication, billing, and delivery become the real bottleneck."
+            actions={
+              <>
                 <Button
                   asChild
                   size="lg"
@@ -433,9 +427,18 @@ export default function HomePage() {
                     />
                   </a>
                 </Button>
-              </div>
-
-              <div className="mt-8 grid w-full max-w-3xl gap-3 sm:grid-cols-3 mx-auto">
+              </>
+            }
+            pills={[
+              'Next.js App Router',
+              'Tailwind v4',
+              'Tokens-first',
+              'Docs-first workflow',
+              'Launch-oriented',
+            ]}
+            extraClassName="mx-auto max-w-3xl"
+            extra={
+              <div className="grid w-full gap-3 sm:grid-cols-3">
                 <Stat label="UI baseline" value={`v${UI_VERSION}`} />
                 <Stat
                   label="Starter Free"
@@ -446,17 +449,8 @@ export default function HomePage() {
                   value="Guides → Patterns → Free → Pro"
                 />
               </div>
-
-              <div className="mt-8 flex flex-wrap justify-center gap-2">
-                <TrustPill label="Next.js App Router" />
-                <TrustPill label="Tailwind v4" />
-                <TrustPill label="Tokens-first" />
-                <TrustPill label="Docs-first workflow" />
-                <TrustPill label="Launch-oriented" />
-              </div>
-            </div>
-          </section>
-
+            }
+          />
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="The ecosystem"
@@ -510,7 +504,6 @@ export default function HomePage() {
               />
             </div>
           </section>
-
           <section className="py-8 sm:py-12">
             <Card className="rounded-[28px] p-6 sm:p-7">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -548,7 +541,6 @@ export default function HomePage() {
               </div>
             </Card>
           </section>
-
           <section className="py-8 sm:py-12">
             <SectionHeader
               eyebrow="Foundation"
@@ -589,7 +581,6 @@ export default function HomePage() {
               </div>
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <Card className="rounded-[28px] p-6 sm:p-7">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -735,7 +726,6 @@ pnpm dev`}</pre>
               </div>
             </Card>
           </section>
-
           <section id="what-you-get" className="py-10 sm:py-14">
             <SectionHeader
               eyebrow="Starter Free"
@@ -807,7 +797,6 @@ pnpm dev`}</pre>
               </Card>
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <SectionHeader
               eyebrow="Learn. Explore. Build."
@@ -850,7 +839,6 @@ pnpm dev`}</pre>
               />
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <SectionHeader
               eyebrow="Upgrade path"
@@ -936,7 +924,6 @@ pnpm dev`}</pre>
               </div>
             </Card>
           </section>
-
           <section className="py-10 sm:py-14">
             <SectionHeader
               eyebrow="Pricing preview"
@@ -977,7 +964,6 @@ pnpm dev`}</pre>
               />
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <div className="mx-auto w-full">
               <Card className="rounded-[28px] p-6 sm:p-7">
@@ -1077,7 +1063,6 @@ pnpm dev`}</pre>
               </div>
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <SectionHeader
               eyebrow="Workflow"
@@ -1123,7 +1108,6 @@ pnpm dev`}</pre>
               />
             </div>
           </section>
-
           <section className="py-10 sm:py-14">
             <Card className="rounded-[28px] p-6 sm:p-7">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -1191,7 +1175,6 @@ pnpm dev`}</pre>
               chase trends.
             </p>
           </section>
-
           <section className="pt-4">
             <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
