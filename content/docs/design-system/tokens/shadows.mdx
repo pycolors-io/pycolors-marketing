@@ -1,38 +1,63 @@
 ---
 title: Shadows
-description: Shadow tokens used in PyColors UI. Provides a single, consistent drop-shadow scale for subtle elevation across components.
+description: Shadow tokens used in PyColors UI to create subtle, predictable elevation across surfaces.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-PyColors UI keeps elevation **subtle and purposeful**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Design System</Badge>
+  <Badge>Shadows</Badge>
+</div>
 
-A single drop-shadow scale covers every surface — from compact buttons to floating panels — making depth predictable across light and dark themes.
+# Shadows create depth without noise
+
+PyColors keeps elevation subtle.
+
+A single shadow scale covers the most important surface types:
+
+- controls
+- cards
+- menus
+- modals
+
+The goal is not visual drama.
+
+It is predictable depth.
 
 ---
 
-## Token scale
+## Shadow scale
 
-| Token        | Utility      | Intent                                    |
-|--------------|--------------|-------------------------------------------|
-| `shadow-xs`  | `shadow-xs`  | Micro lift for buttons, pills, inputs     |
-| `shadow-sm`  | `shadow-sm`  | Default cards, dropdown triggers          |
-| `shadow-md`  | `shadow-md`  | Popovers, dropdown content, menus         |
-| `shadow-lg`  | `shadow-lg`  | Modals, floating panels, command palettes |
+| Token | Utility | Typical use |
+|---|---|---|
+| `shadow-xs` | `shadow-xs` | buttons, pills, inputs |
+| `shadow-sm` | `shadow-sm` | default cards and tiles |
+| `shadow-md` | `shadow-md` | menus, popovers, floating surfaces |
+| `shadow-lg` | `shadow-lg` | modals and strong floating layers |
 
-Each step increases blur and spread incrementally (~4px) to preserve soft silhouettes and avoid harsh halos.
-Use `shadow-none` for flat or secondary elements.
+Each step increases elevation gradually.
+
+That keeps the system calm and avoids visual overload.
 
 ---
 
-## Token definition
+## How shadows are used
 
-Shadow tokens are defined in `global.css` and mapped to Tailwind utilities through the PyColors design system theme layer.
+Shadow tokens are defined centrally and mapped into utilities.
 
-Components never define custom `box-shadow` values — they consume semantic shadow tokens instead.
+Components do not invent custom shadow values.
+
+That means depth stays consistent across:
+
+- light mode
+- dark mode
+- different surface types
+- future product areas
 
 ---
 
@@ -43,38 +68,38 @@ Components never define custom `box-shadow` values — they consume semantic sha
     <Preview>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-lg border bg-card p-4 shadow-xs">
-          <div className="text-xs font-medium text-muted-foreground mb-1">
+          <div className="mb-1 text-xs font-medium text-muted-foreground">
             shadow-xs
           </div>
           <div className="text-sm leading-relaxed">
-            Buttons, segmented controls, small interaction chips.
+            Buttons, segmented controls, small chips.
           </div>
         </div>
 
         <div className="rounded-lg border bg-card p-4 shadow-sm">
-          <div className="text-xs font-medium text-muted-foreground mb-1">
+          <div className="mb-1 text-xs font-medium text-muted-foreground">
             shadow-sm
           </div>
           <div className="text-sm leading-relaxed">
-            Default cards or navigation tiles.
+            Default cards and navigation tiles.
           </div>
         </div>
 
         <div className="rounded-lg border bg-card p-4 shadow-md">
-          <div className="text-xs font-medium text-muted-foreground mb-1">
+          <div className="mb-1 text-xs font-medium text-muted-foreground">
             shadow-md
           </div>
           <div className="text-sm leading-relaxed">
-            Popovers, dropdown menus, focused surfaces.
+            Popovers, dropdowns, focused floating surfaces.
           </div>
         </div>
 
         <div className="rounded-lg border bg-card p-4 shadow-lg">
-          <div className="text-xs font-medium text-muted-foreground mb-1">
+          <div className="mb-1 text-xs font-medium text-muted-foreground">
             shadow-lg
           </div>
           <div className="text-sm leading-relaxed">
-            Modals and floating panels that should feel layered.
+            Modals and stronger overlay layers.
           </div>
         </div>
       </div>
@@ -115,29 +140,39 @@ Components never define custom `box-shadow` values — they consume semantic sha
 
 ---
 
-## Usage guidelines
+## Usage guidance
 
-- Pair shadows with the matching radius token
-  (`rounded-md` + `shadow-sm`, `rounded-lg` + `shadow-md`) for cohesive silhouettes.
-- Use **only one shadow per surface**. Stack depth with overlays, spacing, or borders — not multiple shadows.
-- Increase elevation only when interaction or focus requires it.
-- In dark mode, default tokens already reduce alpha to avoid glow — avoid overriding shadow colors.
-- Reset to `shadow-none` for inline or nested surfaces inside another elevated container.
-- Avoid custom `box-shadow` values in components. If a new elevation is required, introduce a token.
+- pair shadow level with the right radius and surface type
+- use one shadow per surface
+- increase elevation only when hierarchy needs it
+- reset to `shadow-none` for flat nested elements
+- avoid custom `box-shadow` values inside components
+
+If a new elevation level becomes necessary, introduce it as a token.
 
 ---
 
-## Related guides
+## Why this matters
+
+Shadows are easy to overuse.
+
+When every surface tries to stand out, nothing feels structured.
+
+A controlled elevation system makes the interface feel more deliberate and easier to scan.
+
+---
+
+## Related
 
 <LinkCards>
   <LinkCard
     title="Radius"
-    description="Corner radius tokens paired with elevation."
+    description="Corner geometry paired with surface elevation."
     href="/docs/design-system/tokens/radius"
   />
   <LinkCard
     title="Colors"
-    description="Semantic color roles used by elevated surfaces."
+    description="Semantic colors used by elevated surfaces."
     href="/docs/design-system/colors"
   />
   <LinkCard
@@ -147,7 +182,7 @@ Components never define custom `box-shadow` values — they consume semantic sha
   />
   <LinkCard
     title="Button"
-    description="Subtle elevation for interactive controls."
+    description="Interactive controls using subtle elevation."
     href="/docs/ui/button"
   />
 </LinkCards>

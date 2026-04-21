@@ -1,124 +1,188 @@
 ---
 title: Design System
-description: Foundations of PyColors UI — tokens, colors, typography, and the principles that keep the system consistent at scale.
+description: The foundations of PyColors UI. Tokens, colors, typography, and the rules that keep the system consistent as products grow.
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { CheckCircle, XCircle } from "lucide-react";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-PyColors UI is not a collection of random components — it’s a **system**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Design System</Badge>
+  <Badge>Foundations</Badge>
+</div>
 
-The design system defines the **rules and foundations** that make every component feel consistent:
-colors, typography, radius, shadows, and the token architecture that ties everything together.
+# Build consistency into the system
 
-If you want PyColors UI to remain clean as your product grows, start here.
+PyColors UI is not a collection of isolated components.
+
+It is a system.
+
+The design system defines the rules that keep the UI coherent across:
+
+- components
+- product surfaces
+- documentation
+- dashboards
+- marketing pages
+
+If you want PyColors UI to remain understandable as the product grows, this is where that consistency starts.
 
 ---
 
-## What the design system solves
+## What this section covers
 
-Most UI inconsistency comes from the same root causes:
+This section explains the foundations behind the interface:
 
-- styles are decided at the component level
-- raw values (hex, px, arbitrary radii) creep into the codebase
-- small “exceptions” accumulate until nothing matches
-- design decisions live in people’s heads, not in the system
+- tokens
+- colors
+- typography
+- visual consistency rules
+- the system logic behind the primitives
 
-PyColors UI prevents that by encoding design decisions into **tokens** and exposing them through **semantic utilities**.
+These pages are not about shipping faster in the first hour.
+
+They are about making sure the system still makes sense after months of product growth.
+
+---
+
+## The problem design systems solve
+
+Most inconsistency comes from the same patterns:
+
+- styles decided locally inside components
+- raw values creeping into the codebase
+- visual exceptions multiplying over time
+- design decisions living in memory instead of the system
+
+That is what design systems prevent.
+
+PyColors does it by encoding decisions into:
+
+- semantic tokens
+- reusable utilities
+- predictable component rules
 
 ---
 
 ## Core principles
 
-### 1) Roles over raw values
+### 1. Roles over raw values
 
-Components should use **roles** (meaning) instead of raw values (appearance).
+Components should use semantic roles instead of raw visual values.
 
-- <CheckCircle className="inline-block mr-2 h-4 w-4 text-success" /> `bg-card`, `text-muted-foreground`, `border-border`
-- <XCircle className="inline-block mr-2 h-4 w-4 text-destructive" /> `#0f172a`, `rgba(...)`, `rounded-[11px]`
+Examples:
 
-Roles keep components stable across themes and brands.
+- `bg-card`
+- `text-muted-foreground`
+- `border-border`
 
-### 2) One source of truth
+Instead of:
 
-Global decisions (radius, elevation, colors) are defined once and consumed everywhere.
-Change the system — the UI updates coherently.
+- hardcoded hex values
+- arbitrary radii
+- one-off shadow definitions
 
-### 3) Predictable composition
+Roles make components easier to theme, maintain, and evolve.
 
-- Tokens define the language
-- Components consume tokens
-- Patterns document real flows
+---
 
-This separation keeps primitives small and reusable, while patterns stay realistic.
+### 2. One source of truth
+
+Global visual decisions should be made once.
+
+That includes things like:
+
+- radius
+- elevation
+- color roles
+- typography hierarchy
+
+When the system changes, the UI should update coherently.
+
+---
+
+### 3. Small primitives, strong foundations
+
+PyColors keeps primitives small on purpose.
+
+That only works because the design system does the heavy lifting underneath.
+
+The more reliable the foundation is, the simpler the components can stay.
 
 ---
 
 ## System layers
 
-### Tokens (atomic decisions)
+### Tokens
 
-Tokens encode the base decisions of the system:
+Tokens are the atomic decisions of the system.
 
-- radius scale
-- shadow scale (elevation)
-- (future) spacing, motion, z-index
+They define things like:
 
-Tokens live in `global.css` and are mapped to Tailwind utilities.
+- radius
+- shadows
+- future visual scales
 
 <LinkCards>
   <LinkCard
     title="Tokens"
-    description="Atomic decisions powering the system (radius, shadows, and more)."
+    description="Atomic decisions that power the visual system."
     href="/docs/design-system/tokens"
   />
   <LinkCard
     title="Radius"
-    description="Corner geometry tokens (rounded-*)."
+    description="Corner geometry used across surfaces and controls."
     href="/docs/design-system/tokens/radius"
   />
   <LinkCard
     title="Shadows"
-    description="Elevation scale for surfaces and floating layers."
+    description="Elevation scale for subtle and predictable depth."
     href="/docs/design-system/tokens/shadows"
   />
 </LinkCards>
 
 ---
 
-### Colors (semantic theming)
+### Colors
 
-Colors are role-based and themeable:
+Colors are semantic and role-based.
 
-- OKLCH-based values for predictable contrast
-- light mode on `:root`, dark mode on `.dark`
-- semantic roles mapped to Tailwind tokens
+They define:
+
+- surfaces
+- text contrast
+- states
+- theming behavior
 
 <LinkCards>
   <LinkCard
     title="Colors"
-    description="Semantic color roles, OKLCH architecture, and theming."
+    description="Semantic color roles and theming architecture."
     href="/docs/design-system/colors"
   />
 </LinkCards>
 
 ---
 
-### Typography (hierarchy and rhythm)
+### Typography
 
-Typography defines readability, hierarchy, and content rhythm:
+Typography defines hierarchy and rhythm across the product.
 
-- headings and type scale
-- text roles (foreground vs muted)
-- consistent metadata styles
+It controls:
+
+- headings
+- body text
+- labels
+- metadata
+- readable structure
 
 <LinkCards>
   <LinkCard
     title="Typography"
-    description="Text scale, roles, and hierarchy for UI and content."
+    description="Hierarchy, roles, and readable text structure."
     href="/docs/design-system/typography"
   />
 </LinkCards>
@@ -127,46 +191,52 @@ Typography defines readability, hierarchy, and content rhythm:
 
 ## How it all connects
 
-A component like Card is simple because the design system does the heavy lifting:
+A component like `Card` stays simple because the design system carries the complexity:
 
-- **colors** define surface roles (`bg-card`, `text-card-foreground`)
-- **tokens** define geometry (`rounded-lg`) and elevation (`shadow-sm`)
-- **typography** defines hierarchy (title vs description vs content)
+- tokens define geometry and depth
+- colors define surface and text roles
+- typography defines structure and hierarchy
 
-This is why PyColors UI scales: components remain small while the system stays expressive.
+This is the reason the system scales.
+
+Components stay small because the foundations are strong.
 
 ---
 
 ## Recommended reading order
 
-If you want to understand the whole system quickly:
+If you want to understand the system quickly, follow this order:
 
-1. **Tokens** → Radius → Shadows
-2. **Colors**
-3. **Typography**
-4. UI Components (Button, Card, Input…)
-5. Patterns (Forms, Layouts, Settings…)
+1. Tokens
+2. Radius
+3. Shadows
+4. Colors
+5. Typography
+6. UI Components
+
+That path gives you the logic before the implementation details.
 
 ---
 
-## Related guides
+## Where this fits in PyColors
 
-<LinkCards>
-  <LinkCard
-    title="Getting Started"
-    description="Set up the project and follow the recommended learning path."
-    href="/docs/getting-started"
-  />
-  <LinkCard
-    title="Why PyColors UI?"
-    description="Philosophy, trade-offs, and system-level decisions."
-    href="/docs"
-  />
-  <LinkCard
-    title="UI Components"
-    description="Primitives that consume the design system."
-    href="/docs/ui"
-  />
-</LinkCards>
+PyColors is structured in layers:
+
+- **Design System** → rules and foundations
+- **UI Components** → primitives
+- **Guides** → composition and UX behavior
+- **Starter Pro** → auth, billing, backend, delivery
+
+The design system is the deepest layer in that stack.
+
+---
+
+## Next step
+
+Start with the foundations:
+
+- Tokens → `/docs/design-system/tokens`
+- Colors → `/docs/design-system/colors`
+- Typography → `/docs/design-system/typography`
 
 </DocsPageShell>

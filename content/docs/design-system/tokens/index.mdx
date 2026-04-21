@@ -5,76 +5,88 @@ description: Atomic design tokens that define the visual foundations of PyColors
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Badge } from "@pycolors/ui";
 
 <DocsPageShell>
 
-Design tokens are the **single source of truth** for PyColors UI’s visual language.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Design System</Badge>
+  <Badge>Tokens</Badge>
+</div>
 
-They define the atomic decisions that every component consumes — ensuring consistency,
-predictability, and safe global evolution of the design system.
+# Tokens make the system coherent
 
-Tokens are **not components** and **not stylesheets**.
-They are **atomic design decisions expressed as variables**.
+Design tokens are the single source of truth for PyColors UI’s visual language.
+
+They encode the atomic decisions that every component consumes.
+
+That is what makes the system:
+
+- consistent
+- predictable
+- easier to evolve globally
+
+Tokens are not components.
+They are not raw stylesheets.
+They are design decisions expressed as variables.
 
 ---
 
-## What are tokens?
+## What tokens are for
 
-A token encodes **meaning**, not appearance.
+A token represents meaning, not a one-off visual choice.
 
-In PyColors UI, tokens represent **roles**, not raw values. They answer questions like:
+In practice, tokens answer questions like:
 
-- *What is the default corner radius of the system?*
-- *How much elevation does a card have?*
-- *How do surfaces visually separate from the background?*
+- what radius should this system use?
+- how much elevation should a card have?
+- how should surfaces feel visually related?
 
-Instead of hard-coding values in components, everything flows from tokens.
+Instead of solving these decisions inside each component, the design system solves them once.
 
 ---
 
 ## System flow
-
-Design decisions become tokens, then utilities, then components:
 
 ```text
 Design decisions
   ↓
 Tokens (CSS variables)
   ↓
-Tailwind utilities (semantic classes)
+Tailwind utilities
   ↓
-UI Components (primitives)
+UI Components
   ↓
-Guides & Patterns (real product UI)
+Guides and product surfaces
 ```
+
+This is why components can stay small while the system still feels expressive.
 
 ---
 
-## Token categories
+## Current token categories
 
 ### Radius
 
-Corner geometry used across the system.
+Corner geometry used across:
 
-- Buttons, inputs, chips
-- Cards and panels
-- Modals and overlays
-
-Radius tokens ensure that all rounded surfaces feel consistent and intentional.
-
-➡️ Defined once, consumed everywhere via `rounded-*` utilities.
+- buttons
+- inputs
+- cards
+- overlays
 
 ### Shadows
 
-Elevation and depth cues.
+Elevation used across:
 
-- Subtle lift for buttons
-- Default elevation for cards
-- Floating layers for popovers and modals
+- controls
+- cards
+- menus
+- modals
 
-Shadow tokens define **how depth works** in both light and dark mode.
+PyColors intentionally starts with a small token surface.
 
-➡️ Never stack shadows — use the scale.
+This keeps the system understandable and avoids token sprawl too early.
 
 ---
 
@@ -82,18 +94,21 @@ Shadow tokens define **how depth works** in both light and dark mode.
 
 Using tokens gives you:
 
-- **Global consistency** across components
-- **Safe refactors** (change one value, update the system)
-- **Predictable theming** (light / dark / brand)
-- **Clear design intent** instead of ad-hoc values
+- global consistency
+- safer refactors
+- more predictable theming
+- clearer design intent
+- less visual drift
 
-Tokens are what allow PyColors UI to scale without visual entropy.
+Without tokens, systems usually accumulate arbitrary local choices.
+
+That is where inconsistency begins.
 
 ---
 
 ## How tokens are used
 
-Tokens are defined in `global.css` and mapped to Tailwind utilities:
+Tokens are defined in CSS and then exposed through utilities.
 
 ```css
 @theme inline {
@@ -102,30 +117,35 @@ Tokens are defined in `global.css` and mapped to Tailwind utilities:
 }
 ```
 
-Components then consume them indirectly:
+Components consume those values indirectly:
 
 ```tsx
 <Card className="rounded-lg shadow-sm bg-card border" />
 ```
 
-No component ever needs to know the actual value.
+The component does not need to know the raw value.
+
+That is the point.
 
 ---
 
-## Extend tokens safely
+## Extending tokens safely
 
-Not everything is tokenized yet — intentionally.
+Not everything is tokenized yet.
 
-PyColors UI starts with a minimal, high-impact token set.
-Spacing, motion, and z-index may be introduced later once patterns stabilize.
+That is intentional.
 
-When your product grows, you can:
+PyColors starts with high-impact foundations first.
 
-- Adjust base tokens (e.g. `--radius`)
-- Introduce new token categories (spacing, motion, z-index)
-- Theme tokens per brand or product
+As the system grows, you can extend tokens into categories such as:
 
-As long as components consume tokens — the system remains stable.
+- spacing
+- motion
+- z-index
+
+The rule stays the same:
+
+add tokens when the system clearly needs them, not preemptively.
 
 ---
 
@@ -146,28 +166,28 @@ As long as components consume tokens — the system remains stable.
 
 ---
 
-## Related guides
+## Related
 
 <LinkCards>
   <LinkCard
     title="Colors"
-    description="Semantic color roles built on OKLCH."
+    description="Semantic color roles built on the same system logic."
     href="/docs/design-system/colors"
   />
   <LinkCard
     title="Typography"
-    description="Text scale, hierarchy, and roles."
+    description="Hierarchy and text roles for product surfaces."
     href="/docs/design-system/typography"
   />
   <LinkCard
     title="UI Components"
-    description="Primitives that consume tokens."
+    description="Primitives that consume the token system."
     href="/docs/ui"
   />
   <LinkCard
-    title="Why PyColors UI?"
-    description="Philosophy and system-level decisions."
-    href="/docs/why-pycolors-ui"
+    title="Why PyColors UI"
+    description="Philosophy and system-level trade-offs."
+    href="/docs/ui/why-pycolors-ui"
   />
 </LinkCards>
 
