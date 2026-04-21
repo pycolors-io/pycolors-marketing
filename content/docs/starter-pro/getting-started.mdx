@@ -1,0 +1,270 @@
+---
+title: Getting started
+description: See how to go from purchase to first local run with Starter Pro, and understand the fastest path from setup to launch.
+---
+
+import Link from 'next/link';
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+
+<DocsPageShell>
+
+<Badge>Starter Pro</Badge>
+
+# Getting started with Starter Pro
+
+Starter Pro is built to shorten the path between:
+
+- buying the product
+- running it locally
+- configuring the foundations
+- shipping your own SaaS faster
+
+This page explains the fastest way to get productive.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
+
+---
+
+## What this page helps you do
+
+- understand the setup path
+- know what to configure first
+- avoid wasting time on non-essential steps
+- move from installation to product work faster
+
+---
+
+## The simple goal
+
+Starter Pro is not meant to be studied for days before use.
+
+The goal is:
+
+1. install
+2. configure core environment variables
+3. run local setup
+4. validate auth and billing foundations
+5. replace branding
+6. start building your real product
+
+That is the shortest serious path.
+
+---
+
+## What you start with
+
+Starter Pro gives you a production-ready baseline that already includes the layers that usually slow SaaS projects down:
+
+- authentication
+- billing
+- protected routes
+- settings
+- dashboard structure
+- backend-ready foundations
+- secure product delivery path
+
+You are not starting from a blank codebase.
+
+You are starting from a product-shaped system that is already much closer to launch.
+
+---
+
+## Recommended setup order
+
+Follow this order if your goal is speed.
+
+### 1. Install dependencies
+
+Start by installing the workspace dependencies.
+
+### 2. Configure local environment
+
+Set the core variables first:
+
+- app URL
+- database URL
+- auth secret
+- optional OAuth providers
+- optional Stripe variables
+- optional email variables
+
+Do not overconfigure too early.
+
+Get the foundation running first.
+
+### 3. Run database setup
+
+Generate the database client, run migrations, and seed local fixtures.
+
+This helps you validate the auth and billing layers faster.
+
+### 4. Start the app
+
+Run the local development server and confirm that the baseline is working.
+
+### 5. Validate the foundations
+
+Before changing product logic, confirm that the important layers behave correctly:
+
+- sign in
+- registration
+- protected routes
+- seeded users
+- billing surfaces
+- settings pages
+
+### 6. Replace branding and product copy
+
+Only after the baseline works should you start replacing:
+
+- product name
+- logo
+- metadata
+- copy
+- navigation labels
+- billing text
+- email sender identity
+
+### 7. Build your real product inside the shell
+
+Now the important part starts:
+
+- your workflows
+- your domain entities
+- your product logic
+- your differentiating features
+
+---
+
+## What to avoid
+
+The most common mistake is trying to redesign everything before the foundations are validated.
+
+Avoid this order:
+
+1. rewrite the whole UI
+2. rename everything
+3. add features immediately
+4. ignore auth and billing validation
+5. discover infrastructure issues later
+
+That path feels productive, but it usually delays launch.
+
+A better rule:
+
+> validate the base first, then customize, then build the product.
+
+---
+
+## Fastest path to value
+
+If your goal is to move fast, focus on this sequence:
+
+- get the app running
+- validate auth
+- validate billing
+- validate protected routes
+- replace branding
+- build your feature layer
+- ship
+
+That is the path with the best speed-to-confidence ratio.
+
+---
+
+## What Starter Pro saves you from
+
+Without a structured starting point, you usually spend the first days or weeks on:
+
+- wiring authentication
+- managing sessions
+- connecting Stripe
+- implementing protected access
+- designing backend structure
+- patching inconsistencies across app flows
+
+Starter Pro is valuable because that work is already much closer to done.
+
+---
+
+## Good mental model
+
+> Do not start by rebuilding the foundation.
+> Start by validating it, then extend it.
+
+That is how Starter Pro pays for itself.
+
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
+
+---
+
+## After setup, what should you work on first?
+
+The best first changes are usually:
+
+- replace branding
+- update metadata
+- define your core domain model
+- add your first real entity
+- connect the first real workflow
+- keep auth and billing intact
+
+Examples:
+
+- projects
+- workspaces
+- reports
+- AI generations
+- CRM records
+- internal operations data
+
+The exact feature does not matter.
+
+What matters is building your product inside the existing structure instead of fighting the structure.
+
+---
+
+## When this becomes worth buying
+
+Starter Pro becomes worth buying the moment your question changes from:
+
+> “Can I prototype something?”
+
+to:
+
+> “How do I launch this without burning time on auth, billing, and setup?”
+
+If that is already your question, the fastest next step is not more reading.
+
+It is moving to Starter Pro.
+
+---
+
+## Next steps
+
+- What is included → `/docs/starter-pro/what-is-included`
+- Why buy instead of building → `/docs/starter-pro/why-buy-instead-of-building`
+- Billing system → `/docs/starter-pro/billing`
+- Backend foundations → `/docs/starter-pro/backend`
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      View pricing
+    </Link>
+  </Button>
+</div>
+
+</DocsPageShell>

@@ -1,79 +1,87 @@
 ---
 title: Billing system (PRO)
-description: Production-ready Stripe integration for real SaaS monetization, subscriptions, and revenue flows.
+description: Production-ready Stripe billing for real SaaS monetization, subscriptions, checkout, and revenue flows.
 ---
 
+import Link from 'next/link';
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge } from "@pycolors/ui";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 
 <DocsPageShell>
 
-# Monetization that actually works
+<Badge>Starter Pro</Badge>
 
-<Badge>Starter PRO</Badge>
+# Billing that turns your product into something you can charge for
 
-Starter Free gives you **billing UI and upgrade flows**.
-Starter PRO gives you **real monetization with Stripe**.
+Starter Free gives you **pricing surfaces and upgrade UX**.
 
-This is not a pricing page.
+Starter Pro gives you **real Stripe billing, subscription handling, webhook synchronization, and plan-aware monetization flows**.
 
-This is your **revenue engine**.
+This is not just a pricing page.
+
+This is the layer that makes your SaaS capable of generating real revenue.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
 
 ---
 
 ## What this includes
 
-The PRO billing system provides a **production-ready Stripe integration**.
+The Starter Pro billing system provides a **production-ready Stripe integration**.
 
 You get:
 
-- Stripe Checkout (hosted, secure)
-- Subscription lifecycle management
-- Billing Portal access (self-service)
-- Webhook synchronization (source of truth)
-- Invoice tracking
-- Plan-based access control
-- Customer + subscription models (Prisma)
+- Stripe Checkout
+- billing portal access
+- subscription lifecycle handling
+- webhook synchronization
+- invoice-ready billing tracking
+- plan-based access logic
+- customer and subscription modeling
 
-Everything is already **wired and structured**.
+Everything is already structured to reduce the work between “I want to charge” and “this is working in production.”
 
 ---
 
 ## Real monetization flow
 
-This is fully functional.
+This billing layer is designed for a real SaaS flow.
 
 ### Upgrade flow
 
-1. User clicks “Upgrade”
-2. Stripe Checkout session is created
-3. User completes payment
-4. Stripe confirms the subscription
-5. Webhook updates your database
-6. UI reflects real billing state
-
----
+1. user clicks upgrade
+2. checkout session is created
+3. payment is completed in Stripe
+4. subscription state is confirmed
+5. webhook sync updates your database
+6. the UI reflects real billing state
 
 ### Subscription lifecycle
 
-Handled out of the box:
+Handled in a real SaaS way:
 
 - trialing
 - active
-- past_due
+- past due
 - canceled
-
----
 
 ### Billing portal
 
-Users can:
+Users can manage their billing without you building all of it yourself.
 
-- update payment method
-- view invoices
-- cancel subscription
+That includes flows such as:
 
-No custom UI required.
+- payment method updates
+- invoice access
+- subscription cancellation
 
 ---
 
@@ -81,183 +89,166 @@ No custom UI required.
 
 Starter Free gives you:
 
-- Pricing page
-- Billing UI
-- Mock upgrade flows
-- Static states
+- pricing pages
+- billing UI
+- upgrade states
+- mock monetization surfaces
 
-PRO adds:
+Starter Pro adds:
 
-- Real Stripe Checkout session
-- Customer creation + mapping
-- Subscription state synchronization
-- Webhook handling (critical layer)
-- Billing portal integration
-- Persistent billing data
+- real Stripe Checkout
+- real customer creation
+- real subscription state handling
+- real webhook sync
+- real portal integration
+- real persistent billing data
+
+> Starter Free simulates monetization.
+> Starter Pro generates real revenue.
 
 ---
 
 ## Why this matters
 
-Billing is the most critical layer in a SaaS.
+Billing is one of the most critical layers in a SaaS.
 
-It handles:
+It controls:
 
 - revenue
 - subscriptions
-- user access
-- product gating
+- access
+- plan gating
+- monetization confidence
 
-Most developers underestimate this.
+Most developers underestimate how much work sits behind “just add Stripe”.
 
-And lose **days or weeks** implementing it safely.
+What usually follows is:
+
+- checkout implementation
+- customer mapping
+- subscription handling
+- webhook verification
+- invoice state logic
+- plan-aware checks across the app
+
+That work is not optional if you want to charge users safely.
 
 ---
 
-## What you avoid building
+## What you avoid building yourself
 
-Without PRO, you need to implement:
+Without Starter Pro, you typically need to implement:
 
 - Stripe Checkout logic
-- Customer ↔ user mapping
-- Subscription lifecycle handling
-- Webhook verification (security-critical)
-- Invoice storage
-- Plan-based access checks
+- customer ↔ user mapping
+- billing state synchronization
+- webhook verification
+- subscription lifecycle handling
+- invoice-related flows
+- plan-aware access checks
 
-This is:
+This layer is:
 
-👉 complex
-👉 error-prone
-👉 revenue-critical
+- revenue-critical
+- easy to break
+- security-sensitive
+- painful to patch later
 
----
-
-## Data model
-
-Billing is structured around real SaaS entities:
-
-- Customer
-- Product
-- Price
-- Subscription
-- Invoice
-
-All synced with Stripe.
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
 
 ---
 
-## Integration with the app
+## How billing connects to the rest of the app
 
-Billing is not isolated.
+Billing is not a separate island.
 
-It connects to:
+It connects directly to:
 
-- Pricing page → checkout
-- Settings → billing portal
-- Dashboard → subscription status
-- Backend → access control
+- pricing pages
+- upgrade CTAs
+- settings
+- subscription status surfaces
+- feature access and gating
+- protected product areas
+
+This is the point where a nice-looking app becomes a real business system.
 
 ---
 
 ## Plan gating
 
-You can:
+Starter Pro gives you the foundations required to:
 
-- restrict features to PRO users
-- check subscription status
+- restrict features by plan
+- check subscription state
 - handle trials
-- block access on failed payments
+- react to failed payments
+- shape access around monetization
 
-This is how SaaS becomes a business.
-
----
-
-## Mental model
-
-> Starter Free → simulate monetization
-> Starter PRO → generate real revenue
+This is how billing starts affecting product behavior in a real SaaS.
 
 ---
 
 ## When you need this
 
-Upgrade when:
+Move to Starter Pro billing when:
 
 - you want to charge users
 - you need subscriptions
-- you prepare monetization
-- your product becomes real
+- your pricing is becoming real
+- mocked billing is slowing you down
+- you want less uncertainty before launch
+
+A simple rule:
+
+Stay on Starter Free when the question is:
+
+> “How should monetization look?”
+
+Move to Starter Pro when the question becomes:
+
+> “How do I start charging users without rebuilding billing from scratch?”
 
 ---
 
 ## The payoff
 
-Instead of building billing:
+Instead of building billing from zero:
 
 - you configure Stripe
-- you plug environment variables
-- you ship
+- you set environment variables
+- you validate the flows
+- you ship sooner
+
+That is the leverage.
 
 ---
 
-## Common concerns
+## Mental model
 
-### “Is Stripe already configured?”
+> Auth lets users access your product.
+> Billing lets your product make money.
 
-The system is ready.
-
-You connect your Stripe account → done.
-
----
-
-### “Is billing synced automatically?”
-
-Yes.
-
-Stripe webhooks ensure your database stays consistent.
+You need both to launch a real SaaS.
 
 ---
 
-### “Can I extend pricing plans?”
+## Next steps
 
-Yes.
+Continue with:
 
-Products and prices are modeled for scalability.
+- Backend foundations → `/docs/starter-pro/backend`
+- Secure delivery → `/docs/starter-pro/delivery`
 
----
-
-### “Do I need to build billing logic myself?”
-
-No.
-
-Core flows are already implemented.
-
----
-
-## Mental model to keep
-
-> Auth lets users access your product
-> Billing lets your product make money
-
-You need both to ship a real SaaS.
-
----
-
-## Next step
-
-You now have:
-
-- Authentication
-- Billing
-
-Next layer:
-
-→ Backend foundations
-→ Organizations / multi-tenant
-
-Or upgrade:
-
-👉 https://pycolors.io/upgrade
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      Compare pricing
+    </Link>
+  </Button>
+</div>
 
 </DocsPageShell>

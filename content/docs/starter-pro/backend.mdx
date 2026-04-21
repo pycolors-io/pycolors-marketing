@@ -1,44 +1,52 @@
 ---
 title: Backend foundations (PRO)
-description: Production-ready backend structure, data modeling, and API foundations for real SaaS applications.
+description: Production-ready backend structure, data modeling, and server-side foundations for real SaaS applications.
 ---
 
+import Link from 'next/link';
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge } from "@pycolors/ui";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 
 <DocsPageShell>
 
-# From UI to real product
+<Badge>Starter Pro</Badge>
 
-<Badge>Starter PRO</Badge>
+# Backend foundations that turn the app into a real product system
 
 Starter Free gives you a **frontend SaaS surface**.
-Starter PRO gives you a **real backend foundation**.
 
-This is where your product becomes **operational**.
+Starter Pro gives you the **backend structure, data model, and server-side foundations needed to run a real product**.
+
+This is where your app stops behaving like a demo and starts behaving like a system.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
 
 ---
 
 ## What this includes
 
-The PRO backend provides a **production-ready structure** for building and scaling a SaaS.
+The Starter Pro backend provides a **production-ready structure** for building and scaling a SaaS.
 
 You get:
 
-- Database schema (Prisma)
-- Production-ready data models
-- API structure (Next.js / Node patterns)
-- Authentication integration (sessions + user context)
-- Billing integration (subscription-aware logic)
-- Organization / membership groundwork
-- Access control patterns
-- Server actions + API routes patterns
+- Prisma schema and models
+- database-ready architecture
+- server-side patterns
+- auth-aware logic
+- billing-aware logic
+- access control foundations
+- domain separation patterns
+- scalable product structure
 
-Everything is designed to be:
-
-👉 consistent
-👉 extensible
-👉 production-minded
+Everything is shaped so you can extend, not reinvent.
 
 ---
 
@@ -47,12 +55,12 @@ Everything is designed to be:
 With backend foundations, you can:
 
 - persist real data
-- connect UI to real users
-- enforce permissions
-- build real product features
-- scale beyond MVP
+- connect features to real users
+- enforce ownership and permissions
+- build real workflows
+- scale beyond static demo states
 
-Without it, your app stays a **demo**.
+Without this layer, the app stays close to a prototype.
 
 ---
 
@@ -60,214 +68,176 @@ Without it, your app stays a **demo**.
 
 Starter Free gives you:
 
-- Mock data
-- Frontend-only flows
-- Static states
-- No persistence
+- mock data
+- frontend-first flows
+- UI validation surfaces
+- no real persistence
 
-PRO adds:
+Starter Pro adds:
 
-- Database integration (Prisma)
-- Real data persistence
-- API contracts
-- Backend structure
-- Auth-aware logic
-- Billing-aware logic
+- real database integration
+- real persistence
+- backend structure
+- real auth-aware rules
+- real billing-aware logic
+- cleaner long-term architecture
+
+> Starter Free gives you the surface.
+> Starter Pro gives you the system underneath.
 
 ---
 
 ## Core architecture
 
-The backend is structured around:
+The backend is structured around three layers.
 
 ### Data layer
 
 - Prisma schema
-- Typed models
-- Migrations-ready structure
-
----
+- typed models
+- migration-ready structure
 
 ### Application layer
 
-- Server actions
-- API routes
-- Domain logic separation
-
----
+- API and server-side patterns
+- domain-oriented structure
+- reusable logic boundaries
 
 ### Integration layer
 
-- Auth (user, session)
-- Billing (subscription, plan)
-- Feature gating
+- auth context
+- billing context
+- product access logic
+- feature gating
+
+That matters because a SaaS is not only screens.
+
+It is rules, data, ownership, and access.
 
 ---
 
 ## Real example
 
-A simple feature like “Projects” becomes:
+A feature such as “Projects” behaves very differently depending on the layer underneath it.
 
-### Without PRO
+### Without Starter Pro
 
-- local state
-- mock data
-- no persistence
+- mock state
+- fake persistence
+- no ownership rules
+- no real access control
 
----
+### With Starter Pro
 
-### With PRO
+- database model
+- real create/update flows
+- user ownership
+- protected access
+- data connected to auth and billing
 
-- database model (`Project`)
-- API or server action (`createProject`)
-- user ownership (`userId`)
-- access control
-- UI synced with real data
-
----
-
-## Organization groundwork
-
-The backend prepares you for:
-
-- multi-user systems
-- team collaboration
-- role-based access
-- invitations (future-ready)
-
-Even if you don’t need it now,
-the structure is already compatible.
+That is the difference between “demo feature” and “real feature”.
 
 ---
 
-## Access control
+## What you avoid building yourself
 
-You can implement:
+Without Starter Pro, you usually need to design and wire:
 
-- user-based access
-- role-based access (RBAC)
-- plan-based access (billing)
+- the schema
+- the persistence model
+- the API structure
+- the auth ↔ data relationship
+- the billing ↔ access relationship
+- the access-control layer
+- the scaling path for future features
 
-Example:
+This is often:
 
-- free users → limited features
-- pro users → full access
+- time-consuming
+- error-prone
+- hard to refactor later
 
----
-
-## How it connects to Auth & Billing
-
-Everything is unified.
-
-### Auth
-
-- user identity
-- session context
-- protected routes
-
----
-
-### Billing
-
-- subscription status
-- plan gating
-- feature access
-
----
-
-### Backend
-
-- enforces rules
-- stores data
-- executes logic
-
----
-
-## Mental model
-
-> Starter Free → UI surface
-> Starter PRO → system underneath
-
----
-
-## What you avoid building
-
-Without PRO, you need to:
-
-- design database schema
-- structure backend logic
-- connect auth to data
-- connect billing to features
-- handle edge cases
-
-This is:
-
-👉 time-consuming
-👉 error-prone
-👉 hard to refactor later
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
 
 ---
 
 ## Why this matters
 
-Most SaaS fail at this step:
+A lot of SaaS projects do not fail because the UI is weak.
 
-- UI looks good
-- but backend is messy
-- logic is duplicated
-- scaling becomes painful
+They fail because:
 
-PRO gives you a **clean foundation from day one**.
+- backend structure is messy
+- rules are duplicated
+- feature access becomes inconsistent
+- auth and billing don’t cleanly connect to product logic
+- scaling becomes expensive too early
+
+Starter Pro gives you a cleaner starting point from day one.
 
 ---
 
 ## When you need this
 
-Upgrade when:
+Move to Starter Pro backend when:
 
 - you need real data
-- you build real features
-- your product grows
-- you want to scale safely
+- you are building real product features
+- mock states are no longer enough
+- you want a more scalable system
+- you want less architectural uncertainty before launch
+
+A simple rule:
+
+Stay on Starter Free when the question is:
+
+> “What should the product do?”
+
+Move to Starter Pro when the question becomes:
+
+> “How do I make this reliable, persistent, and launchable?”
 
 ---
 
 ## The payoff
 
-Instead of designing backend architecture:
+Instead of spending time inventing backend structure:
 
-- you start from a working structure
-- you extend instead of reinventing
-- you ship faster
+- you start from a working baseline
+- you connect auth and billing cleanly
+- you extend faster
+- you ship sooner
+
+That is the leverage.
 
 ---
 
-## Mental model to keep
+## Mental model
 
 > Auth = users
 > Billing = revenue
-> Backend = product
+> Backend = product behavior
 
-You need all three for a real SaaS.
+You need all three for a real SaaS foundation.
 
 ---
 
-## Next step
+## Next steps
 
-You now have:
+Continue with:
 
-- Authentication
-- Billing
-- Backend foundations
+- Secure delivery → `/docs/starter-pro/delivery`
+- Starter Pro overview → `/docs/starter-pro`
 
-You are ready to:
-
-👉 ship a real SaaS
-👉 onboard real users
-👉 generate revenue
-
-Or upgrade:
-
-👉 https://pycolors.io/upgrade
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      Compare pricing
+    </Link>
+  </Button>
+</div>
 
 </DocsPageShell>

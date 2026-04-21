@@ -1,78 +1,92 @@
 ---
 title: Auth system (PRO)
-description: Production-ready authentication with real flows, OAuth, security, and account lifecycle.
+description: Production-ready authentication with real flows, OAuth, session handling, and security foundations for real SaaS products.
 ---
 
+import Link from 'next/link';
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge } from "@pycolors/ui";
+import { Badge, Button } from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 
 <DocsPageShell>
 
-# Authentication that actually works
+<Badge>Starter Pro</Badge>
 
-<Badge>Starter PRO</Badge>
+# Authentication that actually works in a real SaaS
 
-Starter Free gives you **auth UX and flows**.
-Starter PRO gives you **real authentication wiring and security foundations**.
+Starter Free gives you **auth screens and UX states**.
 
-This is not just login.
+Starter Pro gives you **real authentication, real sessions, real providers, and the security foundations required before launch**.
 
-This is the **full authentication lifecycle** of a real SaaS.
+This is not just login UI.
+
+It is the part that turns “auth screens” into a working product system for real users.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+ <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/starters/pro">
+      View Starter Pro
+    </Link>
+  </Button>
+</div>
 
 ---
 
 ## What this includes
 
-The PRO auth system is a **production-ready authentication layer**.
+The Starter Pro auth system is a **production-ready authentication layer**.
 
 You get:
 
-- Email + password authentication
+- email and password authentication
 - Google OAuth
 - GitHub OAuth
-- Email verification flow
-- Forgot / reset password
-- In-session password change
-- Add password for OAuth users
-- Connected accounts management
-- Safe provider disconnect
-- Security activity tracking
-- Rate limiting (database-backed)
+- email verification flow
+- forgot password
+- reset password
+- in-session password change
+- add password for OAuth-only users
+- connected accounts management
+- safer provider disconnect rules
+- security activity patterns
+- rate limiting foundations
 
-Everything is already **structured, integrated, and ready to use**.
+Everything is already structured so you can move from auth UI to real auth behavior faster.
 
 ---
 
-## Real flows (not placeholders)
+## Real flows, not placeholders
 
-This is not UI simulation.
-
-You already have:
+This is not simulated UX.
 
 ### Sign in
 
-- Credentials
+- credentials auth
 - OAuth providers
-- Error handling (invalid credentials, provider mismatch)
+- session-aware behavior
+- real error handling
 
 ### Register
 
-- Account creation
-- Password validation
-- OAuth instant signup
-- Email verification step
+- real account creation
+- password validation
+- provider signup
+- verification-ready flow
 
-### Password reset
+### Password lifecycle
 
-- Secure token system
-- Reset flow
-- Expiration handling
+- forgot password
+- reset password
+- token-based recovery
+- expiration-aware flow
 
 ### Account security
 
-- Connected providers
-- Safe unlink logic
-- Security activity logs
+- connected provider handling
+- safer unlink logic
+- password management
+- account lifecycle structure
 
 ---
 
@@ -80,117 +94,150 @@ You already have:
 
 Starter Free gives you:
 
-- Auth screens
-- UX states
-- Navigation
-- Mock flows
+- auth pages
+- auth UX
+- navigation states
+- product-shaped flows
 
-PRO adds:
+Starter Pro adds:
 
-- Real sessions (Auth.js)
-- Database integration (Prisma)
-- Token lifecycle (verification / reset)
-- OAuth provider wiring
-- Security protections
-- Rate limiting
+- real sessions
+- real providers
+- real token lifecycle
+- real database integration
+- real security foundations
+- real rate-limiting patterns
+
+> Starter Free simulates auth.
+> Starter Pro handles real users.
 
 ---
 
 ## Why this matters
 
-Authentication is not just login.
+Authentication is not just a small feature.
 
 It is:
 
 - your first security layer
-- your first user experience
-- your first production risk
+- your first user trust layer
+- your first major production risk
 
-Most starters stop at UI.
+Most starters stop at screens.
 
 You still have to build:
 
 - token systems
 - provider linking
-- edge cases
+- session behavior
+- auth edge cases
+- safe provider handling
 - security rules
 
-This typically takes **several days or weeks**.
+That is where time disappears before launch.
+
+And that is exactly why Starter Pro exists.
 
 ---
 
-## What you avoid building
+## What you avoid building yourself
 
-Without PRO, you would need to implement:
+Without Starter Pro, you usually have to implement:
 
-- password hashing & validation
-- token lifecycle (verify / reset)
+- password hashing and validation
+- token lifecycle for email verification and reset
 - OAuth linking logic
+- session-aware auth behavior
 - account edge cases
-- safe provider disconnect
-- rate limiting
+- safe provider disconnect logic
+- rate limiting and safer auth handling
 
-PRO removes this entire layer.
+This layer is:
+
+- security-sensitive
+- easy to partially get wrong
+- expensive to rebuild later
+
+<div className="mt-6">
+  <BuyStarterProButton showTrustText />
+</div>
 
 ---
 
-## Mental model
+## How it integrates with the rest of the product
 
-> Starter Free → simulate auth
-> Starter PRO → handle real users
+The auth layer is not isolated.
 
----
+It connects directly to:
 
-## How it integrates
+- protected routes
+- dashboard access
+- settings pages
+- subscription-aware behavior
+- backend ownership rules
 
-No rewrite required.
-
-You keep:
-
-- pages
-- layouts
-- components
-- UI structure
-
-You replace:
-
-- mock auth → real sessions
-- fake states → real data
+That matters because real auth only becomes valuable when it works with the rest of the product.
 
 ---
 
 ## When you need this
 
-Upgrade when:
+Move to Starter Pro auth when:
 
 - users need to sign in for real
-- you onboard real users
+- you want real onboarding
+- you need real sessions
 - you prepare monetization
-- you need production security
+- you want production security, not just auth UI
+
+A good rule is simple:
+
+Stay on Starter Free when your question is:
+
+> “How should auth feel?”
+
+Move to Starter Pro when your question becomes:
+
+> “How do I launch auth without rebuilding the whole lifecycle?”
 
 ---
 
 ## The payoff
 
-Instead of building auth:
+Instead of spending days or weeks wiring auth:
 
 - you configure providers
-- you plug environment variables
-- you ship
+- you connect environment variables
+- you validate flows
+- you ship faster
+
+That is the value.
 
 ---
 
-## Next step
+## Mental model
 
-Authentication is one part of the system.
+> Starter Free gives you the auth surface.
+> Starter Pro gives you the auth system.
+
+---
+
+## Next steps
+
+Authentication is one core layer.
 
 Continue with:
 
-→ Billing
-→ Backend foundations
+- Billing → `/docs/starter-pro/billing`
+- Backend foundations → `/docs/starter-pro/backend`
 
-Or upgrade:
-
-👉 https://pycolors.io/upgrade
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+ <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      Compare pricing
+    </Link>
+  </Button>
+</div>
 
 </DocsPageShell>
