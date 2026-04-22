@@ -457,6 +457,29 @@ export default function PricingPage() {
 
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
+            eyebrow="The real decision"
+            title="You are not buying features. You are removing a bottleneck."
+            description="Starter Pro is valuable when auth, billing, and protected flows start slowing you down."
+            align="center"
+          />
+
+          <div className="mx-auto max-w-3xl">
+            <Card className="rounded-2xl border p-6 text-center">
+              <p className="text-sm leading-7 text-muted-foreground">
+                Most developers don’t struggle with UI. They struggle
+                with everything around it: authentication, billing,
+                security, and subscription logic.
+              </p>
+
+              <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                Starter Pro removes that layer so you can move faster
+                from product to revenue.
+              </p>
+            </Card>
+          </div>
+        </section>
+        <section className="py-12 sm:py-14 lg:py-16">
+          <SectionHeader
             eyebrow="Starter Pro"
             title="What you are actually paying for"
             description="Starter Pro wins when the buyer immediately understands the leverage: less repeated setup, less fragile wiring, and a faster path to a real SaaS launch."
