@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Lock } from 'lucide-react';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
@@ -32,6 +32,7 @@ const GROUPS: Array<{
       { label: 'Starter Pro', href: '/starters/pro' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'UI Library', href: '/ui' },
+      { label: 'Compare Starters', href: '/starters' },
     ],
   },
   {
@@ -121,14 +122,15 @@ export function Footer() {
                 <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
                   Build the product surface first.{' '}
                   <span className="block text-muted-foreground">
-                    Upgrade when the business layer matters.
+                    Upgrade when auth and billing become the
+                    bottleneck.
                   </span>
                 </h2>
 
                 <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-                  Start with Starter Free to validate faster. Move to
-                  Starter Pro when auth, billing, and launch-ready
-                  foundations become the real bottleneck.
+                  Validate faster with Starter Free. Move to Starter
+                  Pro when the business layer becomes the real
+                  bottleneck.
                 </p>
               </div>
 
@@ -138,13 +140,24 @@ export function Footer() {
                   variant="outline"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/starters/free">Starter Free</Link>
+                  <Link href="/starters/free">
+                    Explore Starter Free
+                  </Link>
                 </Button>
 
                 <BuyStarterProButton
                   fullWidth={false}
-                  label="Buy Starter Pro"
+                  label="Buy Starter Pro — 199 €"
                 />
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+                <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>Secure checkout</span>
+                <span>·</span>
+                <span>One-time payment</span>
+                <span>·</span>
+                <span>Instant access after purchase</span>
               </div>
             </div>
           </section>
@@ -157,9 +170,8 @@ export function Footer() {
                 </div>
 
                 <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                  Production-first SaaS system for developers who want
-                  clearer product surfaces, stronger foundations, and
-                  faster paths to launch.
+                  Launch a real SaaS faster with UI, auth, billing,
+                  and production-ready foundations.
                 </p>
               </div>
 
@@ -191,14 +203,14 @@ export function Footer() {
 
           <section className="mt-12 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
             <div className="text-xs text-muted-foreground">
-              © {CURRENT_YEAR} PyColors - UI {UI_VERSION} · App{' '}
+              © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
               {APP_VERSION}
             </div>
 
             <div className="flex items-center justify-center sm:justify-end">
               <ThemeToggle
                 mode="light-dark-system"
-                className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:opacity-100 hover:bg-accent/30"
+                className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
               />
             </div>
           </section>
