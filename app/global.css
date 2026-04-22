@@ -6,7 +6,7 @@
 @import "tw-animate-css";
 
 /* ==========================================================================
-   Fonts — local assets (public/)
+   Fonts
    ========================================================================== */
 
 @font-face {
@@ -26,29 +26,33 @@
 }
 
 /* ==========================================================================
-   Base Layer
+   Root
    ========================================================================== */
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
 
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* ==========================================================================
-   Typography utilities
-   ========================================================================== */
 :root {
   --fd-nav-height: 64px !important;
+  --fd-sidebar-width: 248px;
+  --fd-toc-width: 240px;
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --font-brand: "Graphit", var(--font-sans);
   --font-mono: "Mona Sans", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
 }
 
 .font-brand {
@@ -59,10 +63,7 @@
   font-family: var(--font-sans);
 }
 
-.font-mono {
-  font-family: var(--font-mono);
-}
-
+.font-mono,
 code,
 pre,
 kbd,
@@ -71,36 +72,213 @@ samp {
 }
 
 /* ==========================================================================
-   Fumadocs — Sidebar overrides
+   Fumadocs
+   ========================================================================== */
+
+/* Main docs layout becomes a 3-column grid on desktop */
+#nd-docs-layout {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+display: grid;
+  grid-template-columns: var(--fd-sidebar-width) minmax(0, 1fr);
+  column-gap: 20px;
+
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* ==========================================================================
+   Sidebar
    ========================================================================== */
 
 #nd-sidebar {
-  background-color: transparent;
-  position: fixed;
-  width: var(--fd-sidebar-width, 260px);
+  position: sticky !important;
   top: var(--fd-nav-height);
+  left: auto !important;
+  width: 100% !important;
   height: calc(100vh - var(--fd-nav-height));
-  z-index: 30;
-  border: none;
+  align-self: start;
+
+  border-right: 1px solid color-mix(in oklch, var(--border), transparent 22%);
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--background), white 1%),
+      color-mix(in oklch, var(--background), black 1%)
+    );
+
+  z-index: 20;
 }
 
-a[data-active="true"] {
-  background-color: var(--fd-primary);
-  color: var(--fd-primary-foreground);
+/* cancel Fumadocs fixed offset tricks */
+#nd-sidebar[style] {
+  inset-inline-start: auto !important;
+  inset-inline-end: auto !important;
+  transform: none !important;
 }
 
 [data-sidebar][data-side="left"] {
-  background-color: var(--background);
+  background: transparent;
 }
 
-#nd-docs-layout {
-  @apply bg-background/80 border-x border-border/50;
+/* Inner sidebar scroll only if nav is long */
+#nd-sidebar [data-radix-scroll-area-viewport] {
+  overscroll-behavior: contain;
 }
+
+/* Sidebar items */
+#nd-sidebar a,
+#nd-sidebar button {
+  border-radius: 0.85rem;
+}
+
+#nd-sidebar a[data-active="true"] {
+  background: color-mix(in oklch, var(--primary), transparent 88%);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+#nd-sidebar a:not([data-active="true"]),
+#nd-sidebar button {
+  color: color-mix(in oklch, var(--foreground), transparent 30%);
+}
+
+#nd-sidebar a:hover,
+#nd-sidebar button:hover {
+  background: color-mix(in oklch, var(--foreground), transparent 94%);
+  color: var(--foreground);
+}
+
+/* ==========================================================================
+   Center content
+   ========================================================================== */
+
+.docs-shell {
+  min-width: 0;
+  min-height: calc(100vh - var(--fd-nav-height));
+}
+
+#nd-page {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding-top: 0 !important;
+  padding-inline-end: 0 !important;
+
+  background: transparent;
+  border-left: none;
+  border-right: none;
+}
+
+/* Hide mobile toc bar on desktop shell if not needed visually */
+#nd-tocnav {
+  border-bottom: 1px solid color-mix(in oklch, var(--border), transparent 30%);
+}
+
+/* Main article */
+#nd-page article {
+  width: 100%;
+  max-width: 800px;
+  margin-inline: 0 auto !important;
+
+  padding-top: 2rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  gap: 0.75rem !important;
+}
+
+
+/* remove accidental extra internal wrappers */
+#nd-docs-layout [data-page-container],
+#nd-docs-layout [data-docs-body],
+#nd-docs-layout .fd-page {
+  gap: 0 !important;
+}
+
+/* ==========================================================================
+   TOC
+   ========================================================================== */
+
+#nd-toc {
+  width: 290px!important;
+  height: calc(100vh - var(--fd-nav-height));
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  margin-right: 3rem;
+
+  align-self: start;
+}
+
+#nd-toc > div {
+  width: 100% !important;
+  padding-right: 0 !important;
+}
+
+#nd-toc a {
+  color: color-mix(in oklch, var(--foreground), transparent 35%);
+}
+
+#nd-toc a:hover {
+  color: var(--foreground);
+}
+
+/* ==========================================================================
+   Docs prose
+   ========================================================================== */
+
+.docs-prose {
+  @apply text-foreground;
+}
+
+.docs-prose :where(h1, h2, h3, h4) {
+  letter-spacing: -0.02em;
+}
+
+.docs-prose p {
+  max-width: 72ch;
+}
+
+.docs-prose ul,
+.docs-prose ol {
+  max-width: 72ch;
+}
+
+.docs-prose pre {
+  overflow-x: auto;
+}
+
+.docs-prose .fd-callout,
+.docs-prose [data-callout] {
+  @apply my-6 rounded-2xl border border-border/60 bg-muted/30;
+}
+
+.docs-prose :where(h2, h3, h4) a {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Cards / code polish
+   ========================================================================== */
+
+[data-card] {
+  border-radius: 1.25rem;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 
 .footer {
-  background-color: color-mix(in oklch, var(--background), var(--foreground) 2%);
+  background-color: color-mix(
+    in oklch,
+    var(--background),
+    var(--foreground) 2%
+  );
+  border-top: 1px solid color-mix(in oklch, var(--border), transparent 20%);
 }
-
 
 /* ==========================================================================
    Blog article surface
@@ -195,16 +373,66 @@ a[data-active="true"] {
   @apply my-6 rounded-2xl border border-border/60 bg-muted/30;
 }
 
-/* Better anchor headings inside article */
 .blog-prose :where(h2, h3, h4) a {
   text-decoration: none;
 }
 
-/* Optional: improve code titles if used */
 .blog-prose [data-rehype-pretty-code-title] {
   @apply rounded-t-2xl border border-b-0 border-border/60 bg-muted/40 px-4 py-2 text-xs text-muted-foreground;
 }
 
 .blog-prose [data-rehype-pretty-code-title] + pre {
   @apply mt-0 rounded-t-none;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1279px) {
+  #nd-docs-layout {
+    display: block;
+    max-width: none;
+  }
+
+  #nd-sidebar {
+    position: fixed !important;
+    top: var(--fd-nav-height);
+    left: 0;
+    width: var(--fd-sidebar-width) !important;
+    height: calc(100vh - var(--fd-nav-height));
+  }
+
+  #nd-page article {
+    max-width: 820px;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #nd-toc {
+    position: fixed !important;
+    top: calc(var(--fd-nav-height) + var(--fd-tocnav-height, 0px)) !important;
+    right: 0;
+    width: var(--fd-toc-width);
+  }
+}
+
+@media (max-width: 1023px) {
+  #nd-docs-layout {
+    display: block;
+  }
+
+  #nd-sidebar {
+    display: none !important;
+  }
+
+  #nd-toc {
+    display: none !important;
+  }
+
+  #nd-page article {
+    max-width: 100%;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 }
