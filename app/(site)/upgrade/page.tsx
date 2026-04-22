@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
-  BadgeCheck,
   Check,
   CreditCard,
   Database,
@@ -28,8 +27,8 @@ import {
   TableRow,
 } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: 'Upgrade to Starter Pro | PyColors',
@@ -315,152 +314,50 @@ export default function UpgradePage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: INTERNAL.home },
-              { label: 'Upgrade', href: '/upgrade' },
-            ]}
-          />
-        </div>
-
-        <section className="relative overflow-hidden rounded-[32px] border bg-card px-6 py-10 shadow-xl shadow-black/5 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
-
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium">
-                  Upgrade to Starter Pro
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="rounded-full px-3 py-1 text-xs font-medium"
-                >
-                  Launch offer {PRICING.launch}
-                </Badge>
-              </div>
-
-              <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Your UI is no longer the bottleneck.{' '}
-                <span className="block text-muted-foreground">
-                  Auth and billing are.
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg">
-                Starter Free helps you move fast on product shape.
-                Starter Pro is the upgrade for when you want the
-                business layer already handled: real authentication,
-                real Stripe billing, protected app foundations, and a
-                stronger production baseline.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label={`Buy Starter Pro — ${PRICING.launch}`}
-                />
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.docsStarterPro}>
-                    Read Starter Pro docs
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-2">
-                <Pill>Real auth</Pill>
-                <Pill>Real billing</Pill>
-                <Pill>Protected app structure</Pill>
-                <Pill>Plan gating foundations</Pill>
-                <Pill>Faster time-to-revenue</Pill>
-              </div>
-
-              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-                <CheckItem>
-                  Keep the product-shaped UX direction from Free
-                </CheckItem>
-                <CheckItem>
-                  Stop rebuilding Stripe and auth from scratch
-                </CheckItem>
-                <CheckItem>
-                  Launch from a stronger commercial baseline
-                </CheckItem>
-                <CheckItem>
-                  Focus your time on product, customers, and growth
-                </CheckItem>
-              </ul>
-            </div>
-
-            <div>
-              <Card className="rounded-[28px] border-2 shadow-lg shadow-black/5">
-                <CardHeader className="space-y-5 pb-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-xl font-semibold">
-                        Starter Pro
-                      </p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        The upgrade for developers who want to launch
-                        a real SaaS faster.
-                      </p>
-                    </div>
-                    <Badge className="rounded-full px-3 py-1 text-xs font-medium">
-                      Best
-                    </Badge>
-                  </div>
-
-                  <div className="flex items-end gap-3">
-                    <span className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                      {PRICING.launch}
-                    </span>
-                    <div className="pb-1 text-sm text-muted-foreground">
-                      <span className="mr-2 line-through">
-                        {PRICING.regular}
-                      </span>
-                      launch price
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3 text-sm text-muted-foreground">
-                    {[
-                      'Full Starter Pro source code',
-                      'Authentication system already wired',
-                      'Stripe billing foundations included',
-                      'Protected app architecture included',
-                      'Commercial access to Starter Pro',
-                      'Built for real SaaS products',
-                    ].map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-3"
-                      >
-                        <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <BuyStarterProButton label="Buy Starter Pro" />
-
-                  <p className="text-xs leading-6 text-muted-foreground">
-                    Built for developers, indie hackers, freelancers,
-                    and technical founders who do not want to lose
-                    weeks rebuilding the same infrastructure before
-                    charging their first customers.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          maxWidth="5xl"
+          contentClassName="max-w-5xl"
+          badges={[
+            {
+              label: 'Upgrade to Starter Pro',
+              variant: 'secondary',
+            },
+            {
+              label: `Launch offer ${PRICING.launch}`,
+              variant: 'outline',
+            },
+          ]}
+          title="Your UI is no longer the bottleneck."
+          subtitle="Auth and billing are."
+          description="Starter Free helps you move fast on product shape. Starter Pro is the upgrade for when you want the business layer already handled: real authentication, real Stripe billing, protected app foundations, and a stronger production baseline."
+          actions={
+            <>
+              <BuyStarterProButton
+                fullWidth={false}
+                label={`Buy Starter Pro — ${PRICING.launch}`}
+              />
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-11 rounded-xl px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.docsStarterPro}>
+                  Read Starter Pro docs
+                </Link>
+              </Button>
+            </>
+          }
+          pills={[
+            'Real auth',
+            'Real billing',
+            'Protected app structure',
+            'Plan gating foundations',
+            'Faster time-to-revenue',
+          ]}
+          extraClassName="mx-auto max-w-5xl"
+          extra={undefined}
+        />
 
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
