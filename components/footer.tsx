@@ -109,113 +109,115 @@ function FooterLinkItem(link: FooterLink) {
 
 export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-border bg-background">
-      <Container>
-        <div className="py-16 sm:py-20">
-          <section className="border-b border-border/60 pb-14 sm:pb-16">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="space-y-4">
-                <p className="text-sm font-medium text-muted-foreground">
-                  PyColors
-                </p>
+    <footer className="w-full border-t border-border/60 bg-background">
+      <div className="relative z-10 max-w-fd-container mx-auto">
+        <Container>
+          <div className="py-16 sm:py-20">
+            <section className="border-b border-border/60 pb-14 sm:pb-16">
+              <div className="mx-auto max-w-3xl text-center">
+                <div className="space-y-4">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    PyColors
+                  </p>
 
-                <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                  Build the product surface first.{' '}
-                  <span className="block text-muted-foreground">
-                    Upgrade when auth and billing become the
+                  <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                    Build the product surface first.{' '}
+                    <span className="block text-muted-foreground">
+                      Upgrade when auth and billing become the
+                      bottleneck.
+                    </span>
+                  </h2>
+
+                  <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
+                    Validate faster with Starter Free. Move to Starter
+                    Pro when the business layer becomes the real
                     bottleneck.
-                  </span>
-                </h2>
-
-                <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-                  Validate faster with Starter Free. Move to Starter
-                  Pro when the business layer becomes the real
-                  bottleneck.
-                </p>
-              </div>
-
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
-                >
-                  <Link href="/starters/free">
-                    Explore Starter Free
-                  </Link>
-                </Button>
-
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label="Buy Starter Pro — 199 €"
-                />
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-                <Lock className="h-3.5 w-3.5" aria-hidden="true" />
-                <span>Secure checkout</span>
-                <span>·</span>
-                <span>One-time payment</span>
-                <span>·</span>
-                <span>Instant access after purchase</span>
-              </div>
-            </div>
-          </section>
-
-          <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
-            <div className="space-y-5">
-              <div className="space-y-3">
-                <div className="font-brand text-xl font-semibold tracking-tight">
-                  PyColors
+                  </p>
                 </div>
 
-                <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                  Launch a real SaaS faster with UI, auth, billing,
-                  and production-ready foundations.
-                </p>
+                <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-11 rounded-xl px-6 text-sm font-medium"
+                  >
+                    <Link href="/starters/free">
+                      Explore Starter Free
+                    </Link>
+                  </Button>
+
+                  <BuyStarterProButton
+                    fullWidth={false}
+                    label="Buy Starter Pro — 199 €"
+                  />
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+                  <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>Secure checkout</span>
+                  <span>·</span>
+                  <span>One-time payment</span>
+                  <span>·</span>
+                  <span>Instant access after purchase</span>
+                </div>
               </div>
+            </section>
 
-              <nav
-                className="flex flex-wrap gap-x-4 gap-y-2"
-                aria-label="External links"
-              >
-                {EXTERNAL.map(FooterLinkItem)}
-              </nav>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
-              {GROUPS.map((group) => (
-                <div key={group.title} className="space-y-3">
-                  <div className="text-sm font-medium text-foreground">
-                    {group.title}
+            <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
+              <div className="space-y-5">
+                <div className="space-y-3">
+                  <div className="font-brand text-xl font-semibold tracking-tight">
+                    PyColors
                   </div>
 
-                  <nav
-                    className="flex flex-col gap-2"
-                    aria-label={`${group.title} links`}
-                  >
-                    {group.links.map(FooterLinkItem)}
-                  </nav>
+                  <p className="max-w-sm text-sm leading-7 text-muted-foreground">
+                    Launch a real SaaS faster with UI, auth, billing,
+                    and production-ready foundations.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </section>
 
-          <section className="mt-12 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-            <div className="text-xs text-muted-foreground">
-              © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
-              {APP_VERSION}
-            </div>
+                <nav
+                  className="flex flex-wrap gap-x-4 gap-y-2"
+                  aria-label="External links"
+                >
+                  {EXTERNAL.map(FooterLinkItem)}
+                </nav>
+              </div>
 
-            <div className="flex items-center justify-center sm:justify-end">
-              <ThemeToggle
-                mode="light-dark-system"
-                className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
-              />
-            </div>
-          </section>
-        </div>
-      </Container>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
+                {GROUPS.map((group) => (
+                  <div key={group.title} className="space-y-3">
+                    <div className="text-sm font-medium text-foreground">
+                      {group.title}
+                    </div>
+
+                    <nav
+                      className="flex flex-col gap-2"
+                      aria-label={`${group.title} links`}
+                    >
+                      {group.links.map(FooterLinkItem)}
+                    </nav>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-12 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+              <div className="text-xs text-muted-foreground">
+                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
+                {APP_VERSION}
+              </div>
+
+              <div className="flex items-center justify-center sm:justify-end">
+                <ThemeToggle
+                  mode="light-dark-system"
+                  className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
+                />
+              </div>
+            </section>
+          </div>
+        </Container>
+      </div>
     </footer>
   );
 }
