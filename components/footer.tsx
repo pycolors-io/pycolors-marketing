@@ -211,7 +211,7 @@ export function Footer() {
               <div className="flex items-center justify-center sm:justify-end">
                 <ThemeToggle
                   mode="light-dark-system"
-                  className="inline-flex h-8 items-center rounded-full border border-border/60 bg-background/70 px-1.5 opacity-80 backdrop-blur transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
+                  className="bg-background/70 px-1.5 opacity-80 transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
                 />
               </div>
             </section>
