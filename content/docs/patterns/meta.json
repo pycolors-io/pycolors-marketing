@@ -1,0 +1,9 @@
+{
+  "title": "Patterns",
+  "pages": [
+    "index",
+    "async-actions",
+    "data-table",
+    "overlays"
+  ]
+}

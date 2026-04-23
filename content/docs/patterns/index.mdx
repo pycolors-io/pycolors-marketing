@@ -1,77 +1,152 @@
 ---
 title: Patterns
 description: Opinionated, production-ready feature blocks built from PyColors UI primitives.
+toc: true
+full: false
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
 
-<DocsPageShell>
+## Overview
 
-Patterns are **reusable product-level blocks**.
+Patterns are **reusable product-level blocks** built for real product work.
 
-They go beyond single components and show **how real SaaS features are built**:
-- composition of primitives
-- UX rules and decision points
-- states + feedback
-- accessibility constraints
-- copy/paste-ready examples
+They go beyond isolated components and show **how SaaS features are actually assembled** across UI, behavior, state, and feedback.
 
-Patterns are intentionally **opinionated**.
+<Callout title="Why Patterns exist">
+  Patterns help you move faster with fewer UX mistakes by giving you opinionated,
+  production-shaped feature structures instead of isolated primitives.
+</Callout>
 
----
+## What you get
 
-## How Patterns differ from other sections
+<LinkCards>
+  <LinkCard
+    title="Feature-level structure"
+    description="Complete building blocks instead of isolated UI pieces."
+    href="/docs/patterns"
+  />
+  <LinkCard
+    title="Predictable state handling"
+    description="Clear expectations for loading, empty, success, and error states."
+    href="/docs/patterns/async-actions"
+  />
+  <LinkCard
+    title="Consistent product UX"
+    description="Shared interaction patterns across screens, teams, and flows."
+    href="/docs/patterns/overlays"
+  />
+  <LinkCard
+    title="Copy/paste-ready foundations"
+    description="Production-shaped examples you can adapt quickly."
+    href="/docs/patterns/data-table"
+  />
+</LinkCards>
+
+## Differences
+
+| Section | Best for | Output |
+| --- | --- | --- |
+| **UI Components** | Single reusable primitives | Stateless, token-driven building blocks |
+| **Guides** | Principles and reasoning | Explanations, composition rules, decision frameworks |
+| **Patterns** | Real feature implementation | UI + behavior + state model + product UX |
 
 ### UI Components
+
 - Single primitive
 - Stateless
 - Token-driven
 - Reusable everywhere
 
 ### Guides
+
 - Explanations and principles
 - Composition rules
 - “How to think” and avoid mistakes
 
 ### Patterns
+
 - Feature-level building blocks
 - UI + behavior + state model
-- Real SaaS flows (tables, overlays, mutations)
+- Real SaaS flows such as tables, overlays, and mutations
 - Copy/paste implementations
-
----
 
 ## Available patterns
 
 <LinkCards>
   <LinkCard
     title="Data Table Pattern"
-    description="A SaaS-ready table layout: states, filtering, pagination, and row actions."
+    description="A SaaS-ready table layout with filtering, pagination, row actions, and state handling."
     href="/docs/patterns/data-table"
   />
   <LinkCard
     title="Overlays Pattern"
-    description="Choose the right overlay (Dropdown vs Dialog vs Sheet) with UX + a11y rules."
+    description="Choose the right overlay with stronger UX and accessibility rules."
     href="/docs/patterns/overlays"
   />
   <LinkCard
     title="Async Actions Pattern"
-    description="Mutation UX: toasts, optimistic UI, retry/undo, and error copy guidelines."
+    description="Design better mutation UX with toasts, optimistic UI, retry, undo, and error feedback."
     href="/docs/patterns/async-actions"
   />
 </LinkCards>
 
----
-
-## When to use Patterns
+## When to use
 
 Use Patterns when:
-- you’re building “real features”, not just UI screens
-- you need consistency across multiple pages
-- you want predictable states and feedback
-- accessibility and UX rules matter
 
-Patterns help you ship **faster** without shipping **sloppy**.
+- you’re building **real product features**, not just static screens
+- you need **consistency across multiple pages**
+- you want **predictable UX and feedback**
+- accessibility and interaction rules matter
 
-</DocsPageShell>
+<Callout type="info" title="Good fit">
+  Patterns are most useful when a feature has repeated structure, repeated state
+  logic, or repeated UX decisions across the product.
+</Callout>
+
+## Common mistakes
+
+- building features only with components, without a real product structure
+- ignoring loading, empty, success, and error states
+- making inconsistent UX decisions from page to page
+- rebuilding the same feature flow multiple times
+
+Patterns exist to eliminate these issues early.
+
+## Why it matters
+
+Without Patterns, teams often:
+
+- rebuild the same logic multiple times
+- introduce inconsistent UX
+- slow down as the product grows
+- create fragile feature implementations that are hard to scale
+
+Patterns give you a **shared foundation** to ship faster with less friction.
+
+## Next steps
+
+<LinkCards>
+  <LinkCard
+    title="Explore Data Table"
+    description="Start with a core SaaS pattern used across admin and dashboard products."
+    href="/docs/patterns/data-table"
+  />
+  <LinkCard
+    title="Explore Overlays"
+    description="Improve decisions around dialogs, sheets, dropdowns, and layered interactions."
+    href="/docs/patterns/overlays"
+  />
+  <LinkCard
+    title="Explore Async Actions"
+    description="Handle mutations and user feedback with a more production-ready UX model."
+    href="/docs/patterns/async-actions"
+  />
+</LinkCards>
+
+<Callout title="Build faster with stronger foundations">
+  Use Patterns alongside UI components and Guides, then move to Starter Pro when
+  you want a full production-ready SaaS foundation.
+</Callout>
