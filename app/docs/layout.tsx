@@ -12,29 +12,26 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/docs' },
-
   title: {
     default: 'Docs',
-    template: '%s · Docs · PyColors UI',
+    template: '%s · Docs · PyColors',
   },
   description:
-    'Official documentation for PyColors UI. Components, design tokens, patterns, and best practices to build production-ready SaaS interfaces.',
-
+    'Official PyColors documentation. Build faster with production-shaped SaaS patterns, UI foundations, and Starter Pro guidance.',
   openGraph: {
     type: 'website',
-    siteName: 'PyColors UI',
-    title: 'PyColors UI Documentation',
+    siteName: 'PyColors',
+    title: 'PyColors Documentation',
     description:
-      'Components, tokens, patterns, and best practices for production-ready SaaS interfaces.',
+      'Production-shaped documentation for PyColors, Starter Free, and Starter Pro.',
     url: '/docs',
     images: ['/seo/og-main.png'],
   },
-
   twitter: {
     card: 'summary_large_image',
-    title: 'PyColors UI Documentation',
+    title: 'PyColors Documentation',
     description:
-      'Components, tokens, and patterns for building modern SaaS UIs.',
+      'Production-shaped docs for building SaaS products faster with PyColors.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -42,7 +39,7 @@ export const metadata: Metadata = {
 export default function Layout({
   children,
 }: {
-  children: ReactNode;
+  readonly children: ReactNode;
 }) {
   const docsLinks = getDocsNavLinks();
 
@@ -55,20 +52,23 @@ export default function Layout({
     <>
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
-      <div className="flex min-h-screen flex-col">
-        <div className="flex-1">
-          <DocsLayout
-            tree={source.pageTree}
-            {...baseOptions()}
-            nav={{
-              enabled: true,
-              component: <SiteHeader docsLinks={docsLinks} />,
-            }}
-            sidebar={{ collapsible: false }}
-          >
-            <ToastDocsProvider>{children}</ToastDocsProvider>
-          </DocsLayout>
-        </div>
+      <div className="min-h-screen">
+        <DocsLayout
+          tree={source.pageTree}
+          {...baseOptions()}
+          nav={{
+            enabled: true,
+            component: <SiteHeader docsLinks={docsLinks} />,
+          }}
+          sidebar={{
+            collapsible: false,
+          }}
+        >
+          <ToastDocsProvider>
+            <div className="docs-shell">{children}</div>
+          </ToastDocsProvider>
+        </DocsLayout>
+
         <DocsFooter />
       </div>
     </>
