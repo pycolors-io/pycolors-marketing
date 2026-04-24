@@ -13,6 +13,9 @@ type BuyStarterProButtonProps = {
   size?: 'default' | 'sm' | 'lg' | 'icon';
   variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link';
   label?: string;
+  loadingLabel?: string;
+  trustText?: string;
+  showTrustText?: boolean;
 };
 
 export function BuyStarterProButton({
@@ -20,7 +23,10 @@ export function BuyStarterProButton({
   fullWidth = true,
   size = 'lg',
   variant = 'default',
-  label = 'Buy Starter Pro',
+  label = 'Buy Starter Pro — 199 €',
+  loadingLabel = 'Redirecting to secure checkout...',
+  trustText = 'One-time payment · Instant access after purchase',
+  showTrustText = false,
 }: BuyStarterProButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -36,9 +42,9 @@ export function BuyStarterProButton({
       router.push(url);
     } catch (err) {
       const message =
-        err instanceof Error
+        err instanceof Error && err.message
           ? err.message
-          : 'Unexpected checkout error.';
+          : 'Checkout could not be opened right now. Please try again.';
 
       setError(message);
       setIsLoading(false);
@@ -54,16 +60,17 @@ export function BuyStarterProButton({
         size={size}
         variant={variant}
         className={cn(
-          'h-11 rounded-xl px-6 text-sm font-medium w-full sm:w-full cursor-pointer',
+          'h-11 w-full cursor-pointer rounded-xl px-6 text-sm font-medium',
           fullWidth && 'w-full',
           className,
         )}
         aria-busy={isLoading}
+        aria-live="polite"
       >
         {isLoading ? (
           <>
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-            Redirecting...
+            {loadingLabel}
           </>
         ) : (
           <>
@@ -72,6 +79,10 @@ export function BuyStarterProButton({
           </>
         )}
       </Button>
+
+      {showTrustText ? (
+        <p className="text-xs text-muted-foreground">{trustText}</p>
+      ) : null}
 
       {error ? (
         <p className="text-sm leading-6 text-red-600">{error}</p>
