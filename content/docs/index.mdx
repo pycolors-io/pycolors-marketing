@@ -1,47 +1,57 @@
 ---
 title: PyColors Documentation
-description: From product idea to real SaaS. Validate fast, wire auth and billing, and launch with a production-ready foundation.
+description: From product idea to real SaaS. Validate fast, wire auth and billing, and launch with a production-shaped foundation.
+full: false
+hero: false
+lastUpdated: 2026-04-23
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import { Badge } from "@pycolors/ui";
+import { Cards, Card } from "fumadocs-ui/components/card";
 
-<DocsPageShell>
+<div className="space-y-6">
+  <div className="flex flex-wrap items-center gap-2">
+    <Badge variant="outline">Docs</Badge>
+    <Badge>Production-shaped SaaS</Badge>
+  </div>
 
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">Docs</Badge>
-  <Badge>Production-ready SaaS</Badge>
+  <div>
+    <h1 className="font-brand text-4xl font-semibold tracking-tight sm:text-5xl mb-0">
+      From idea to revenue
+    </h1>
+
+    <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+      Build your SaaS in the right order: validate fast, wire the business layer,
+      then launch with confidence.
+    </p>
+
+    <p className="max-w-3xl text-base leading-7 text-muted-foreground">
+      PyColors helps you skip the phase where authentication, billing, backend structure,
+      and delivery start slowing everything down.
+    </p>
+  </div>
 </div>
-
-# From idea to revenue
-
-Build your SaaS in the right order:
-
-→ validate the product
-→ wire the business layer
-→ launch with confidence
-
-PyColors helps you skip the parts that slow you down.
-
----
 
 ## Start here
 
-<LinkCards>
-  <LinkCard
-    title="Starter Pro"
-    description="Production-ready SaaS foundation with auth, billing, backend, and delivery."
+<Cards>
+  <Card
+    title="Starter Pro overview"
+    description="Production-shaped SaaS foundation with auth, billing, backend, and delivery."
     href="/docs/starter-pro"
   />
-  <LinkCard
-    title="Upgrade to Pro"
-    description="When auth and billing become your bottleneck."
-    href="/upgrade"
+  <Card
+    title="Upgrade path"
+    description="Understand when Starter Free stops being enough and why Pro becomes the faster path."
+    href="/docs/starter-pro/upgrade-from-free"
   />
-</LinkCards>
-
----
+  <Card
+    title="Getting started"
+    description="Run the project locally and understand the core product structure."
+    href="/docs/starter-pro/getting-started"
+  />
+</Cards>
 
 ## The path
 
@@ -50,118 +60,108 @@ PyColors helps you skip the parts that slow you down.
 - build screens
 - test UX
 - shape your product
+- validate demand before heavy wiring
 
-👉 Use Starter Free
-
----
+**Best fit:** Starter Free
 
 ### 2. Wire the business layer
 
 - authentication
 - billing
 - protected routes
-- backend
+- backend structure
+- delivery after purchase
 
-👉 Use Starter Pro
-
----
+**Best fit:** Starter Pro
 
 ### 3. Launch
 
 - real users
 - real payments
-- real product
+- real product operations
+- stronger confidence in production
 
----
+## What you need
 
-## What you need (and where to find it)
-
-<LinkCards>
-  <LinkCard
+<Cards>
+  <Card
     title="What is included"
     description="See exactly what you get with Starter Pro."
     href="/docs/starter-pro/what-is-included"
   />
-  <LinkCard
-    title="Why buy instead of building"
-    description="Understand the real cost of building auth and billing yourself."
+  <Card
+    title="Why buy instead of build"
+    description="Understand the real cost of rebuilding auth and billing yourself."
     href="/docs/starter-pro/why-buy-instead-of-building"
   />
-  <LinkCard
-    title="Getting started"
-    description="Run Starter Pro locally in minutes."
-    href="/docs/starter-pro/getting-started"
+  <Card
+    title="Production checklist"
+    description="Use a clearer launch path before going live."
+    href="/docs/starter-pro/production-checklist"
   />
-</LinkCards>
-
----
+</Cards>
 
 ## Core systems
 
-<LinkCards>
-  <LinkCard
+<Cards>
+  <Card
     title="Authentication"
-    description="Real users, sessions, OAuth, and security."
+    description="Real users, sessions, OAuth, verification, and security."
     href="/docs/starter-pro/auth"
   />
-  <LinkCard
+  <Card
     title="Billing"
-    description="Stripe, subscriptions, invoices, and revenue."
+    description="Stripe, subscriptions, invoices, and revenue flows."
     href="/docs/starter-pro/billing"
   />
-  <LinkCard
+  <Card
     title="Backend"
-    description="Database, API, and product architecture."
+    description="Database, API, business logic, and product structure."
     href="/docs/starter-pro/backend"
   />
-  <LinkCard
+  <Card
     title="Delivery"
-    description="Secure access after purchase."
+    description="Secure product access after purchase."
     href="/docs/starter-pro/delivery"
   />
-</LinkCards>
-
----
+</Cards>
 
 ## Mental model
 
-> Starter Free → validate
-> Starter Pro → monetize
-
----
+> Starter Free helps you validate.
+> Starter Pro helps you launch and monetize with less structural work.
 
 ## Why this exists
 
-Most developers don’t fail at building UI.
+Most developers do not get blocked by the first UI screens.
 
-They fail here:
+They get blocked when the product needs:
 
-- auth takes too long
-- billing is fragile
-- backend becomes messy
-- launch is delayed
+- real authentication
+- billing that does not break
+- protected product flows
+- backend consistency
+- launch confidence
 
-PyColors removes that phase.
-
----
+PyColors exists to reduce that phase.
 
 ## Decision
 
 If your question is:
 
-→ “What should my product look like?”
-Stay on Starter Free
+> “What should my product look like?”
+
+Start with Starter Free.
 
 If your question is:
 
-→ “How do I launch this without losing weeks?”
-Move to Starter Pro
+> “How do I launch this without losing weeks on auth, billing, and structure?”
 
----
+Move to Starter Pro.
 
 ## Next step
 
-👉 **Read Starter Pro overview** → `/docs/starter-pro`
-👉 **Upgrade when ready** → `/upgrade`
+- [Read Starter Pro overview](/docs/starter-pro)
+- [See what is included](/docs/starter-pro/what-is-included)
+- [Upgrade when ready](/upgrade)
 
-</DocsPageShell>
