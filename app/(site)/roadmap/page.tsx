@@ -623,33 +623,117 @@ const items: RoadmapItem[] = [
     milestone: 'Apr 2026',
     tags: ['Docker', 'Database', 'DX', 'Testing'],
   },
-
-  // NOW
   {
-    title: 'Starter Pro post-launch trust hardening',
+    title: 'Pricing route consolidation',
     description:
-      'Strengthen real customer confidence after launch through tighter delivery reliability, clearer support flows, better trust messaging, and stronger edge-case handling across purchase and account journeys.',
-    status: 'Now',
+      'Renamed /access to /pricing across the site, updated internal links, breadcrumbs, sitemap priorities, and commercial references so the buying path is clearer and more aligned with user intent.',
+    status: 'Shipped',
     milestone: 'Apr 2026',
-    tags: ['Starter PRO', 'Post-launch', 'Trust', 'Quality'],
+    tags: ['Pricing', 'Navigation', 'Sales', 'Conversion'],
+    href: '/pricing',
+  },
+  {
+    title: 'PRO waitlist removal',
+    description:
+      'Removed the standalone PRO waitlist page now that Starter Pro is publicly available, simplifying the funnel and reducing outdated launch-era entry points.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Starter PRO', 'Launch', 'Marketing', 'Conversion'],
     href: '/starters/pro',
   },
   {
-    title: 'Sales proof and conversion measurement',
+    title: 'Product menu and navigation upgrade',
     description:
-      'Instrument the funnel from landing pages to checkout, validate conversion behavior, and identify where buyers hesitate across pricing, docs, upgrade, and post-checkout flows.',
+      'Revamped the product menu with icons, descriptions, badges, a Starter Pro offer section, better mobile active states, and clearer desktop/mobile navigation structure.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Navigation', 'Header', 'UX', 'Product discovery'],
+    href: '/',
+  },
+  {
+    title: 'Documentation UX modernization',
+    description:
+      'Added a dedicated docs header, breadcrumb navigation, full-width docs shell, refined sidebar behavior, improved docs footer, previous/next navigation, contextual CTAs, feedback controls, and stronger metadata.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Docs', 'UX', 'Navigation', 'DX'],
+    href: '/docs',
+  },
+  {
+    title: 'Starter Pro documentation clarity pass',
+    description:
+      'Expanded Starter Pro documentation with getting started, why buy, what is included, delivery, and upgrade guidance to reduce buyer uncertainty and make the premium offer easier to evaluate.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Starter PRO', 'Docs', 'Onboarding', 'Trust'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Free-to-Pro conversion messaging refinement',
+    description:
+      'Clarified Starter Free, Upgrade, and Starter Pro messaging across marketing pages so users understand when to validate with Free and when to move to Pro for real auth, billing, and delivery foundations.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: [
+      'Conversion',
+      'Starter Free',
+      'Starter PRO',
+      'Positioning',
+    ],
+    href: '/pricing',
+  },
+  {
+    title: 'Reusable marketing hero system',
+    description:
+      'Unified marketing hero sections through a reusable PageHero component, improving consistency, reducing duplication, and making future conversion page updates easier.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Marketing', 'Components', 'Consistency', 'DX'],
+  },
+  {
+    title: 'Footer, logo, and visual consistency pass',
+    description:
+      'Redesigned the footer, added theme toggle and version display, refined logo styling, improved badge styling, and aligned spacing across pages for a more premium and consistent public surface.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Brand', 'Footer', 'UI Polish', 'Trust'],
+  },
+  {
+    title: 'Design system and patterns docs refinement',
+    description:
+      'Improved UI, design system, guides, and patterns documentation with clearer philosophy, token guidance, component usage, common mistakes, and practical SaaS product examples.',
+    status: 'Shipped',
+    milestone: 'Apr 2026',
+    tags: ['Design System', 'Patterns', 'Guides', 'Docs'],
+    href: '/docs',
+  },
+  // NOW
+  {
+    title: 'Starter Pro sales proof and conversion measurement',
+    description:
+      'Measure the new pricing-centered funnel from product navigation, docs, starters, upgrade pages, and checkout to understand where users hesitate and what improves real purchases.',
     status: 'Now',
     milestone: 'Apr 2026',
     tags: ['Analytics', 'Conversion', 'Sales', 'Growth'],
     href: '/pricing',
   },
   {
-    title: 'Delivery and account recovery reliability',
+    title: 'Starter Pro post-purchase trust hardening',
     description:
-      'Harden claim links, download access, resend access flows, verification, password reset, and account recovery edge cases so the commercial experience feels dependable in real-world use.',
+      'Strengthen claim, download, support, access recovery, delivery docs, and post-checkout reassurance so real customers feel confident after purchase.',
     status: 'Now',
     milestone: 'Apr 2026',
-    tags: ['Delivery', 'Recovery', 'Auth', 'Reliability'],
+    tags: ['Delivery', 'Trust', 'Starter PRO', 'Support'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Commercial proof and authority content',
+    description:
+      'Use blog posts, guides, changelog, roadmap, and documentation updates to prove that PyColors is actively maintained and worth buying as a serious SaaS foundation.',
+    status: 'Now',
+    milestone: 'Apr 2026',
+    tags: ['SEO', 'Authority', 'Content', 'Trust'],
+    href: '/blog',
   },
 
   // NEXT
