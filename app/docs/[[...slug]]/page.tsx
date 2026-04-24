@@ -16,6 +16,32 @@ type MDXContentProps = {
   components?: ReturnType<typeof getMDXComponents>;
 };
 
+function getBreadcrumbs(slug?: string[]) {
+  const items = [{ label: 'Docs', href: '/docs' }];
+
+  if (!slug || slug.length === 0) {
+    return items;
+  }
+
+  let currentPath = '/docs';
+
+  for (const segment of slug) {
+    currentPath += `/${segment}`;
+
+    items.push({
+      label: segment
+        .replaceAll('-', ' ')
+        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      href: currentPath,
+    });
+  }
+
+  return items.map((item, index) => ({
+    ...item,
+    href: index === items.length - 1 ? undefined : item.href,
+  }));
+}
+
 function getFooterCta(slug?: string[]) {
   const path = slug?.join('/') ?? '';
 
@@ -58,6 +84,7 @@ export default async function Page(
 ) {
   const params = await props.params;
   const page = source.getPage(params.slug);
+  const breadcrumbs = getBreadcrumbs(params.slug);
 
   if (!page) notFound();
 
@@ -76,6 +103,7 @@ export default async function Page(
     <DocsPage
       toc={page.data.toc}
       full={page.data.full}
+      breadcrumb={{ enabled: false }}
       footer={{
         enabled: true,
         component: (
@@ -95,6 +123,7 @@ export default async function Page(
             description={page.data.description}
             lastUpdated={formatDate(page.data.lastUpdated)}
             appliesTo={page.data.appliesTo}
+            breadcrumbs={breadcrumbs}
           />
         ) : null}
 
