@@ -58,6 +58,87 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.10.0',
+    title:
+      'Pricing route, product navigation, documentation UX, and Free-to-Pro conversion polish',
+    dateLabel: 'Fri 24 Apr 2026',
+    dateISO: '2026-04-24',
+    status: 'Stable',
+    releaseWeekLabel: 'Apr 2026 (weekly release)',
+    summary:
+      'This release strengthens the commercial surface of PyColors after the Starter Pro launch. It consolidates the premium path around /pricing, removes the old PRO waitlist page, improves product navigation, modernizes the header and footer, expands Starter Pro documentation, and clarifies the Free → Upgrade → Pro journey. The work focuses on reducing buyer confusion, improving documentation discovery, and making pycolors.io feel more coherent, premium, and conversion-ready.',
+    highlights: [
+      {
+        title: 'Pricing is now the primary commercial route',
+        items: [
+          'Renamed /access to /pricing across routes, links, breadcrumbs, sitemap priorities, and commercial references.',
+          'Removed the standalone PRO waitlist page to simplify the launch strategy now that Starter Pro is publicly available.',
+          'Refined pricing, upgrade, starter, and footer messaging around a clearer Free → Pro decision path.',
+          'Improved CTAs so users understand when Starter Free is enough and when Starter Pro becomes the right upgrade.',
+        ],
+      },
+      {
+        title: 'Product navigation and header UX were upgraded',
+        items: [
+          'Revamped the product menu with icons, descriptions, badges, and a dedicated Starter Pro launch offer section.',
+          'Improved desktop and mobile navigation grouping for clearer product discovery.',
+          'Added more accurate mobile active states by matching the most specific route.',
+          'Added scroll-based dynamic header styling and refined spacing, button styling, and CTA affordances.',
+        ],
+      },
+      {
+        title: 'Documentation experience is more premium and usable',
+        items: [
+          'Added a dedicated responsive docs header with navigation, search, theme controls, and mobile menu behavior.',
+          'Improved docs layout flexibility with a dedicated page shell, full-width content support, refined sidebar behavior, and better TOC structure.',
+          'Added breadcrumbs to docs pages so users can better understand where they are in the documentation tree.',
+          'Redesigned docs footer with previous/next navigation, contextual CTAs, feedback controls, grouped links, version display, and theme toggle.',
+        ],
+      },
+      {
+        title:
+          'Starter Pro docs now explain value and delivery better',
+        items: [
+          'Added and refined Starter Pro getting started, why buy, what is included, and delivery documentation.',
+          'Clarified the secure delivery and fulfillment model so buyers better understand how access works after purchase.',
+          'Clarified what Starter Pro includes versus what remains product-specific implementation work.',
+          'Improved upgrade guidance to reduce friction between evaluating Starter Free and choosing Starter Pro.',
+        ],
+      },
+      {
+        title:
+          'UI, patterns, guides, and design system docs were clarified',
+        items: [
+          'Reworked UI docs structure and philosophy content around long-term maintainability, system thinking, and real SaaS usage.',
+          'Refined design system documentation for tokens, colors, typography, radius, shadows, and usage rationale.',
+          'Revamped Patterns docs with clearer value, fit scenarios, common mistakes, and actionable next steps.',
+          'Improved Guides content to emphasize practical SaaS patterns, composition, separation of concerns, and product-focused UX.',
+        ],
+      },
+      {
+        title: 'Brand, footer, and visual consistency improved',
+        items: [
+          'Unified page hero sections with a reusable PageHero component across marketing pages.',
+          'Refactored the homepage hero into a reusable component for better consistency and maintainability.',
+          'Redesigned the footer layout with clearer navigation groups, stronger upgrade CTAs, version display, and theme toggle.',
+          'Updated logo and badge styling for a more modern, theme-aware, and consistent visual system.',
+        ],
+      },
+      {
+        title: 'Commercial funnel is clearer after launch',
+        items: [
+          'The site now points users toward pricing instead of a deprecated access/waitlist model.',
+          'Product discovery, documentation discovery, and premium upgrade paths are more coherent across header, footer, docs, starters, and pricing.',
+          'This release supports the next business objective: improving trust, measuring conversion, and turning Starter Pro traffic into real purchases.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View pricing',
+      href: '/pricing',
+    },
+  },
+  {
     version: 'v1.9.0',
     title:
       'Starter Pro public commercial launch, checkout flow, secure delivery, and conversion hardening',
