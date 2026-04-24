@@ -1,8 +1,10 @@
 import { cn } from '@pycolors/ui';
 
-interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-}
+type ContainerProps = Readonly<
+  React.HTMLAttributes<HTMLDivElement> & {
+    children: React.ReactNode;
+  }
+>;
 
 export function Container({
   className,
@@ -12,7 +14,8 @@ export function Container({
   return (
     <div
       className={cn(
-        'mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8',
+        'mx-auto max-w-360 px-4',
+        'sm:px-6 lg:px-0',
         className,
       )}
       {...props}
