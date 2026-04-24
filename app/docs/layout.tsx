@@ -4,11 +4,11 @@ import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 
 import { getDocsNavLinks, source } from '@/lib/source';
 import { baseOptions } from '@/lib/layout.shared';
-import { SiteHeader } from '@/components/layout/site-header';
 import { ToastDocsProvider } from '@/content/docs/previews/toast-docs-provider';
 import { DocsFooter } from '@/components/docs-footer';
 import { JsonLd } from '@/components/seo/json-ld';
 import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
+import { DocsHeader } from '@/components/docs-header';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/docs' },
@@ -36,6 +36,23 @@ export const metadata: Metadata = {
   },
 };
 
+function SidebarBanner() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-muted/20 p-3">
+      <div className="space-y-1.5">
+        <p className="text-[13px] font-semibold text-foreground">
+          PyColors Docs
+        </p>
+
+        <p className="text-xs leading-5 text-muted-foreground">
+          UI primitives, patterns, and production-ready SaaS
+          foundations.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Layout({
   children,
 }: {
@@ -58,17 +75,17 @@ export default function Layout({
           {...baseOptions()}
           nav={{
             enabled: true,
-            component: <SiteHeader docsLinks={docsLinks} />,
+            component: <DocsHeader docsLinks={docsLinks} />,
           }}
           sidebar={{
             collapsible: false,
+            banner: <SidebarBanner />,
           }}
         >
           <ToastDocsProvider>
             <div className="docs-shell">{children}</div>
           </ToastDocsProvider>
         </DocsLayout>
-
         <DocsFooter />
       </div>
     </>

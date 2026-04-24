@@ -103,7 +103,7 @@ samp {
   border-right: 1px solid color-mix(in oklch, var(--border), transparent 22%);
   background: transparent;
 
-  z-index: 20;
+  z-index: 1;
 }
 
 /* cancel Fumadocs fixed offset tricks */

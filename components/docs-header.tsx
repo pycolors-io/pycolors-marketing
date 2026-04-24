@@ -64,6 +64,18 @@ const DOCS_NAV_ITEMS: DocsNavItem[] = [
   },
 ];
 
+const FEATURED_DOCS_HREFS = [
+  '/docs/starter/installation',
+  '/docs/guides',
+  '/docs/starter/project-structure',
+  '/docs/starter/first-feature',
+  '/docs/starter-pro',
+  '/docs/starter-pro/upgrade-from-free',
+  '/docs/patterns',
+  '/docs/starter/upgrade-to-pro',
+  '/docs/starter-pro/what-is-included',
+] as const;
+
 const HEADER_HEIGHT = 64;
 
 const focusRing =
@@ -124,7 +136,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
   const closeDocsMenuWithDelay = React.useCallback(() => {
     closeDocsTimeoutRef.current = window.setTimeout(() => {
       setIsDocsOpen(false);
-    }, 120);
+    }, 160);
   }, []);
 
   React.useEffect(() => {
@@ -146,6 +158,14 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
       DOCS_NAV_ITEMS.map((item) => item.href),
     );
   }, [pathname]);
+
+  const featuredDocsLinks = React.useMemo(() => {
+    const curated = FEATURED_DOCS_HREFS.map((href) =>
+      docsLinks.find((item) => item.href === href),
+    ).filter(Boolean) as DocsLink[];
+
+    return curated.length > 0 ? curated : docsLinks.slice(0, 7);
+  }, [docsLinks]);
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -271,11 +291,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     };
   }, [isMenuOpen]);
 
-  const featuredDocsLinks = React.useMemo(
-    () => docsLinks.slice(0, 12),
-    [docsLinks],
-  );
-
   return (
     <>
       <header
@@ -340,12 +355,15 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     />
                   </button>
 
+                  <div className="absolute left-0 top-full h-3 w-[38rem]" />
+
                   <div
                     id="docs-menu"
                     role="menu"
                     aria-label="Documentation menu"
+                    onMouseEnter={openDocsMenu}
                     className={cn(
-                      'absolute left-0 top-full mt-2 w-[38rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
+                      'absolute left-0 top-[calc(100%+0.5rem)] w-[38rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
                       isDocsOpen
                         ? 'pointer-events-auto translate-y-0 opacity-100'
                         : 'pointer-events-none translate-y-1 opacity-0',
@@ -410,21 +428,29 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
 
                       <div className="space-y-1">
                         <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                          Popular pages
+                          Quick links
                         </p>
 
-                        <div className="max-h-[15rem] overflow-auto pr-1">
+                        <div className="max-h-60 overflow-auto pr-1">
                           {featuredDocsLinks.map((item) => (
                             <Link
                               key={item.href}
                               href={item.href}
                               role="menuitem"
                               className={cn(
-                                'block rounded-md px-2.5 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent/20 hover:text-foreground',
+                                'group flex items-center justify-between rounded-md px-2.5 py-1.5 text-[13px] transition-colors duration-150',
+                                'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
                                 focusRing,
                               )}
                             >
-                              {item.label}
+                              <span className="truncate">
+                                {item.label}
+                              </span>
+
+                              <ChevronRight
+                                className="h-3 w-3 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60"
+                                aria-hidden="true"
+                              />
                             </Link>
                           ))}
                         </div>
@@ -439,11 +465,16 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           focusRing,
                         )}
                       >
-                        <span className="flex items-center gap-2">
-                          <span className="font-medium text-foreground">
-                            See pricing
+                        <span className="flex min-w-0 items-center gap-2">
+                          <span className="inline-flex shrink-0 rounded-md border border-border/60 bg-background px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                            Pro
                           </span>
-                          <span className="text-[11px] text-muted-foreground">
+
+                          <span className="font-medium text-foreground">
+                            View pricing
+                          </span>
+
+                          <span className="hidden text-[11px] text-muted-foreground lg:inline">
                             Starter Pro from 199 €
                           </span>
                         </span>
@@ -495,11 +526,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     />
                   </Link>
                 </Button>
-
-                <ThemeToggle
-                  mode="light-dark"
-                  className="inline-flex h-9 items-center rounded-md border px-1"
-                />
               </div>
 
               <div className="ml-auto flex items-center gap-2 md:hidden">
