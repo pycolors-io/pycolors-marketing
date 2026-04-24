@@ -21,8 +21,8 @@ import {
 } from 'lucide-react';
 import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
-import { Container } from '@/components/container';
 
+import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
 import {
   PRIMARY_NAV_ITEMS,
@@ -35,9 +35,9 @@ type DocsLink = {
   href: string;
 };
 
-interface SiteHeaderProps {
+type SiteHeaderProps = Readonly<{
   docsLinks?: DocsLink[];
-}
+}>;
 
 type MobileMenuItem = {
   label: string;
@@ -88,6 +88,7 @@ function getActiveProductHref(pathname: string | null) {
   const allItems = PRODUCT_MENU_GROUPS.flatMap(
     (group) => group.items,
   );
+
   return getMostSpecificActiveHref(
     pathname,
     allItems.map((item) => item.href),
@@ -103,15 +104,15 @@ const PRODUCT_MENU_META: Record<
 > = {
   '/starters': {
     icon: Boxes,
-    description: 'Choose the right entry point',
+    description: 'Choose your entry point',
   },
   '/starters/free': {
     icon: Sparkles,
-    description: 'Validate product shape fast',
+    description: 'Validate fast',
   },
   '/starters/pro': {
     icon: Rocket,
-    description: 'Auth, billing, and real SaaS foundations',
+    description: 'Launch with real foundations',
   },
   '/ui': {
     icon: Layers3,
@@ -119,15 +120,17 @@ const PRODUCT_MENU_META: Record<
   },
   '/ui/patterns': {
     icon: LayoutTemplate,
-    description: 'SaaS product surfaces',
+    description: 'Reusable SaaS blocks',
   },
   '/ui/examples': {
     icon: BookOpen,
-    description: 'Real UI usage in context',
+    description: 'See usage in context',
   },
 };
 
-function ProductPill({ children }: { children: React.ReactNode }) {
+function ProductPill({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <span className="inline-flex rounded-full border border-border/60 bg-background/80 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
       {children}
@@ -140,11 +143,13 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isProductsOpen, setIsProductsOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
 
   const openBtnRef = React.useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = React.useRef<HTMLAnchorElement>(null);
   const mobileNavRef = React.useRef<HTMLDialogElement>(null);
   const productsMenuRef = React.useRef<HTMLDivElement>(null);
+  const closeProductsTimeoutRef = React.useRef<number | null>(null);
 
   const closeMenu = React.useCallback(() => {
     setIsMenuOpen(false);
@@ -154,14 +159,40 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     setIsMenuOpen((prev) => !prev);
   }, []);
 
+  const openProductsMenu = React.useCallback(() => {
+    if (closeProductsTimeoutRef.current) {
+      window.clearTimeout(closeProductsTimeoutRef.current);
+    }
+
+    setIsProductsOpen(true);
+  }, []);
+
   const closeProductsMenu = React.useCallback(() => {
+    if (closeProductsTimeoutRef.current) {
+      window.clearTimeout(closeProductsTimeoutRef.current);
+    }
+
     setIsProductsOpen(false);
+  }, []);
+
+  const closeProductsMenuWithDelay = React.useCallback(() => {
+    closeProductsTimeoutRef.current = window.setTimeout(() => {
+      setIsProductsOpen(false);
+    }, 120);
   }, []);
 
   React.useEffect(() => {
     closeMenu();
     closeProductsMenu();
   }, [pathname, closeMenu, closeProductsMenu]);
+
+  React.useEffect(() => {
+    return () => {
+      if (closeProductsTimeoutRef.current) {
+        window.clearTimeout(closeProductsTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const activeHref = React.useMemo(() => {
     if (!pathname) return null;
@@ -189,6 +220,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
     function onPointerDown(event: MouseEvent) {
       const target = event.target as Node | null;
+
       if (!productsMenuRef.current?.contains(target)) {
         closeProductsMenu();
       }
@@ -297,6 +329,19 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     };
   }, [isMenuOpen]);
 
+  React.useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
     const productItems: MobileMenuItem[] =
       PRODUCT_MENU_GROUPS.flatMap((group) =>
@@ -371,21 +416,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const showDocsSearch =
     pathname === '/docs' || pathname.startsWith('/docs/');
 
-  const [scrolled, setScrolled] = React.useState(false);
-
-  React.useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 8);
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
-
   return (
     <>
       <header
@@ -396,233 +426,254 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             : 'border-b border-transparent bg-background/55 backdrop-blur-md',
         )}
       >
-        <a
-          href="#content"
-          className={cn(
-            'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
-            'rounded-md border border-border bg-background px-3 py-2 text-sm',
-            focusRing,
-          )}
-        >
-          Skip to content
-        </a>
-        <Container>
-          <section className="flex h-16 items-center gap-3">
-            <div className="flex shrink-0 items-center gap-3">
-              <Logo />
-            </div>
+        {' '}
+        <div className="relative z-10 mx-auto max-w-fd-container">
+          <a
+            href="#content"
+            className={cn(
+              'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
+              'rounded-md border border-border bg-background px-3 py-2 text-sm',
+              focusRing,
+            )}
+          >
+            Skip to content
+          </a>
 
-            <nav
-              aria-label="Primary"
-              className="ml-4 hidden flex-1 items-center gap-1.5 text-[15px] font-medium md:flex"
-            >
-              <div ref={productsMenuRef} className="relative">
-                <button
-                  type="button"
-                  aria-expanded={isProductsOpen}
-                  aria-haspopup="menu"
-                  aria-controls="products-menu"
-                  onClick={() => setIsProductsOpen((prev) => !prev)}
-                  className={cn(
-                    'inline-flex items-center rounded-xl px-3.5 py-2 transition-all duration-200',
-                    'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
-                    isProductsCurrent &&
-                      'bg-accent/40 text-foreground',
-                    isProductsOpen &&
-                      'bg-accent/40 text-foreground shadow-sm',
-                    focusRing,
-                  )}
-                >
-                  Products
-                  <ChevronDown
-                    aria-hidden="true"
-                    className={cn(
-                      'ml-1.5 h-4 w-4 transition-transform duration-200',
-                      isProductsOpen && 'rotate-180',
-                    )}
-                  />
-                </button>
-
-                <div
-                  id="products-menu"
-                  role="menu"
-                  aria-label="Products"
-                  className={cn(
-                    'absolute left-0 top-full mt-3 w-150 origin-top-left overflow-hidden rounded-[10px] border border-border/70 bg-background shadow-xl shadow-black/10 backdrop-blur-xl transition-all duration-200',
-                    isProductsOpen
-                      ? 'pointer-events-auto translate-y-0 opacity-100'
-                      : 'pointer-events-none translate-y-2 opacity-0',
-                  )}
-                >
-                  <div className="p-2.5">
-                    <div className="grid gap-1.5 md:grid-cols-2">
-                      {PRODUCT_MENU_GROUPS.map((group) => (
-                        <div key={group.title} className="space-y-1">
-                          {group.items.map((item) => {
-                            const isCurrent =
-                              activeProductHref === item.href;
-                            const meta = PRODUCT_MENU_META[item.href];
-                            const Icon = meta?.icon ?? Package2;
-
-                            return (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                role="menuitem"
-                                className={cn(
-                                  'group flex items-start gap-2.5 rounded-[10px] border border-transparent px-2.5 py-2.5 transition-all duration-200',
-                                  isCurrent
-                                    ? 'bg-accent/50 shadow-sm'
-                                    : 'hover:bg-accent/30',
-                                  focusRing,
-                                )}
-                              >
-                                {/* ICON */}
-                                <span
-                                  className={cn(
-                                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-border/50 bg-muted/20 transition-colors',
-                                    isCurrent && 'bg-background',
-                                  )}
-                                >
-                                  <Icon
-                                    className="h-4 w-4 text-muted-foreground"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-
-                                {/* TEXT */}
-                                <span className="min-w-0 flex-1">
-                                  <span className="flex items-center justify-between gap-2">
-                                    <span className="truncate text-sm font-medium text-foreground">
-                                      {item.label}
-                                    </span>
-
-                                    {item.badge ? (
-                                      <span className="inline-flex shrink-0 rounded-[15px]  border border-border/60 bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-                                        {item.badge}
-                                      </span>
-                                    ) : null}
-                                  </span>
-
-                                  {meta?.description && (
-                                    <span className="mt-0.5 block text-[11px] leading-5 text-muted-foreground">
-                                      {meta.description}
-                                    </span>
-                                  )}
-                                </span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* CTA BAR */}
-                  <div className="border-t border-border/60 bg-muted/10 px-2.5 py-2">
-                    <Link
-                      href="/pricing"
-                      className={cn(
-                        'group flex items-center justify-between rounded-lg px-2.5 py-2 text-sm transition-colors hover:bg-accent/30',
-                        focusRing,
-                      )}
-                    >
-                      <span className="flex items-center gap-2.5">
-                        <span className="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-                          New
-                        </span>
-
-                        <span className="text-sm font-medium text-foreground">
-                          Starter Pro · 199 €
-                        </span>
-                      </span>
-
-                      <ChevronRight
-                        className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </div>
-                </div>
+          <Container>
+            <section className="flex h-16 items-center gap-3">
+              <div className="flex shrink-0 items-center gap-3">
+                <Logo />
               </div>
 
-              {PRIMARY_NAV_ITEMS.filter(
-                (item) => item.label !== 'Products',
-              ).map((item) => {
-                const isCurrent = activeHref === item.href;
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-current={isCurrent ? 'page' : undefined}
+              <nav
+                aria-label="Primary"
+                className="ml-4 hidden flex-1 items-center gap-1 text-[13px] font-medium md:flex"
+              >
+                <div
+                  ref={productsMenuRef}
+                  className="relative"
+                  onMouseEnter={openProductsMenu}
+                  onMouseLeave={closeProductsMenuWithDelay}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isProductsOpen}
+                    aria-haspopup="menu"
+                    aria-controls="products-menu"
+                    onClick={() => setIsProductsOpen((prev) => !prev)}
+                    onFocus={openProductsMenu}
                     className={cn(
-                      'rounded-xl px-3.5 py-2 transition-all duration-200',
-                      'text-muted-foreground hover:bg-accent/40 hover:text-foreground',
-                      isCurrent && 'bg-accent/40 text-foreground',
+                      'inline-flex items-center rounded-md px-3 py-1.5 text-[13px] transition-all duration-200',
+                      'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
+                      isProductsCurrent &&
+                        'bg-accent/25 text-foreground',
+                      isProductsOpen &&
+                        'bg-accent/25 text-foreground',
                       focusRing,
                     )}
                   >
-                    {item.label}
+                    Products
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={cn(
+                        'ml-1.5 h-3.5 w-3.5 transition-transform duration-200',
+                        isProductsOpen && 'rotate-180',
+                      )}
+                    />
+                  </button>
+
+                  <div
+                    id="products-menu"
+                    role="menu"
+                    aria-label="Products"
+                    className={cn(
+                      'absolute left-0 top-full mt-2 w-[40rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
+                      isProductsOpen
+                        ? 'pointer-events-auto translate-y-0 opacity-100'
+                        : 'pointer-events-none translate-y-1 opacity-0',
+                    )}
+                  >
+                    <div className="p-2.5">
+                      <div className="grid gap-2 md:grid-cols-2">
+                        {PRODUCT_MENU_GROUPS.map((group) => (
+                          <div
+                            key={group.title}
+                            className="space-y-1"
+                          >
+                            <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                              {group.title}
+                            </p>
+
+                            {group.items.map((item) => {
+                              const isCurrent =
+                                activeProductHref === item.href;
+                              const meta =
+                                PRODUCT_MENU_META[item.href];
+                              const Icon = meta?.icon ?? Package2;
+
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  role="menuitem"
+                                  className={cn(
+                                    'group flex items-start gap-2.5 rounded-lg border border-transparent px-2.5 py-2.5 transition-all duration-150',
+                                    isCurrent
+                                      ? 'bg-accent/35'
+                                      : 'hover:bg-accent/20',
+                                    focusRing,
+                                  )}
+                                >
+                                  <span
+                                    className={cn(
+                                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border/50 bg-background/70 transition-all duration-150',
+                                      'group-hover:border-border group-hover:bg-background group-hover:shadow-sm',
+                                      isCurrent &&
+                                        'border-border bg-background shadow-sm',
+                                    )}
+                                  >
+                                    <Icon
+                                      className={cn(
+                                        'h-3.5 w-3.5 text-muted-foreground transition-all duration-150',
+                                        'group-hover:scale-105 group-hover:text-foreground',
+                                        isCurrent &&
+                                          'text-foreground',
+                                      )}
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+
+                                  <span className="min-w-0 flex-1">
+                                    <span className="flex items-center gap-2">
+                                      <span className="truncate text-[13px] font-medium text-foreground">
+                                        {item.label}
+                                      </span>
+
+                                      {item.badge ? (
+                                        <span className="inline-flex shrink-0 rounded-md border border-border/60 bg-background px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                                          {item.badge}
+                                        </span>
+                                      ) : null}
+                                    </span>
+
+                                    {meta?.description ? (
+                                      <span className="mt-0.5 block text-[11px] leading-4 text-muted-foreground">
+                                        {meta.description}
+                                      </span>
+                                    ) : null}
+                                  </span>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-border/60 bg-muted/10 px-2.5 py-2">
+                      <Link
+                        href="/pricing"
+                        className={cn(
+                          'group flex items-center justify-between rounded-lg px-2.5 py-2 text-[13px] transition-colors hover:bg-accent/20',
+                          focusRing,
+                        )}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="font-medium text-foreground">
+                            See pricing
+                          </span>
+                          <span className="text-[11px] text-muted-foreground">
+                            Starter Pro from 199 €
+                          </span>
+                        </span>
+
+                        <ChevronRight
+                          className="h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-foreground"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {PRIMARY_NAV_ITEMS.filter(
+                  (item) => item.label !== 'Products',
+                ).map((item) => {
+                  const isCurrent = activeHref === item.href;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      className={cn(
+                        'rounded-lg px-3 py-1.5 text-[13px] transition-all duration-200',
+                        'text-muted-foreground hover:bg-accent/30 hover:text-foreground',
+                        isCurrent && 'bg-accent/30 text-foreground',
+                        focusRing,
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              <div className="hidden items-center gap-2 md:flex">
+                {showDocsSearch ? (
+                  <LargeSearchToggle className="w-44 xl:w-52" />
+                ) : null}
+
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-9 rounded-lg px-4 text-[13px] font-medium"
+                >
+                  <Link href="/starters/pro">
+                    Explore Pro
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="h-3.5 w-3.5"
+                    />
                   </Link>
-                );
-              })}
-            </nav>
+                </Button>
+              </div>
 
-            <div className="hidden items-center gap-2 md:flex">
-              {showDocsSearch ? (
-                <LargeSearchToggle className="w-48 xl:w-56" />
-              ) : null}
+              <div className="ml-auto flex items-center gap-2 md:hidden">
+                <ThemeToggle
+                  mode="light-dark"
+                  className="inline-flex h-9 items-center rounded-full border px-1"
+                />
 
-              <Button
-                asChild
-                size="sm"
-                className="h-10 rounded-xl px-6 text-sm font-medium"
-              >
-                <Link href="/starters/pro">
-                  Get Starter Pro
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="h-4 w-4"
-                  />
-                </Link>
-              </Button>
-            </div>
-
-            <div className="ml-auto flex items-center gap-2 md:hidden">
-              <ThemeToggle
-                mode="light-dark"
-                className="inline-flex h-9 items-center rounded-full border px-1"
-              />
-
-              <button
-                ref={openBtnRef}
-                type="button"
-                onClick={toggleMenu}
-                aria-label={
-                  isMenuOpen
-                    ? 'Close navigation menu'
-                    : 'Open navigation menu'
-                }
-                aria-expanded={isMenuOpen}
-                aria-controls="mobile-navigation"
-                className={cn(
-                  'inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background/80',
-                  focusRing,
-                )}
-              >
-                {isMenuOpen ? (
-                  <X aria-hidden="true" className="h-5 w-5" />
-                ) : (
-                  <Menu aria-hidden="true" className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-          </section>
-        </Container>
+                <button
+                  ref={openBtnRef}
+                  type="button"
+                  onClick={toggleMenu}
+                  aria-label={
+                    isMenuOpen
+                      ? 'Close navigation menu'
+                      : 'Open navigation menu'
+                  }
+                  aria-expanded={isMenuOpen}
+                  aria-controls="mobile-navigation"
+                  className={cn(
+                    'inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background/80',
+                    focusRing,
+                  )}
+                >
+                  {isMenuOpen ? (
+                    <X aria-hidden="true" className="h-5 w-5" />
+                  ) : (
+                    <Menu aria-hidden="true" className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </section>
+          </Container>
+        </div>
       </header>
 
-      {isMenuOpen && (
+      {isMenuOpen ? (
         <div className="md:hidden">
           <button
             type="button"
@@ -795,7 +846,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   className="w-full justify-center rounded-xl shadow-sm"
                 >
                   <Link href="/starters/pro" onClick={closeMenu}>
-                    Get Starter Pro
+                    Explore Starter Pro
                     <ArrowRight
                       aria-hidden="true"
                       className="ml-2 h-4 w-4"
@@ -806,7 +857,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             </div>
           </dialog>
         </div>
-      )}
+      ) : null}
     </>
   );
 }
