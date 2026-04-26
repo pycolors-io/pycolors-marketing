@@ -57,7 +57,6 @@ const focusRing =
 const INTERNAL = {
   starterFree: '/starters/free',
   starterPro: '/starters/pro',
-  upgrade: '/upgrade',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
@@ -168,9 +167,9 @@ const faqs = [
   },
 ] as const;
 
-function Pill({ children }: { children: React.ReactNode }) {
+function Pill({ children }: { readonly children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-md border border-border/60 bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
       {children}
     </span>
   );
@@ -183,53 +182,60 @@ function SectionHeader({
   action,
   align = 'left',
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
-  align?: 'left' | 'center';
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
+  readonly align?: 'left' | 'center';
 }) {
   return (
     <div
       className={cn(
-        'mb-6 space-y-3',
+        'mb-8 space-y-3',
         align === 'center'
           ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between',
+          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
       )}
     >
       <div className="space-y-2">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="rounded-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
           >
             {eyebrow}
           </Badge>
         ) : null}
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+
+        <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h2>
+
         {description ? (
-          <p className="text-sm leading-7 text-muted-foreground">
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
       </div>
+
       {align === 'left' && action ? (
-        <div className="sm:self-start">{action}</div>
+        <div className="shrink-0">{action}</div>
       ) : null}
     </div>
   );
 }
 
-function CheckItem({ children }: { children: React.ReactNode }) {
+function CheckItem({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-background">
-        <Check className="h-3.5 w-3.5" />
+    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
+      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-md border border-border/60 bg-background">
+        <Check className="h-3 w-3 text-foreground" />
       </span>
-      <span>{children}</span>
+      <span className="leading-6">{children}</span>
     </li>
   );
 }
@@ -239,17 +245,17 @@ function FeatureCard({
   title,
   description,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly title: string;
+  readonly description: string;
 }) {
   return (
-    <Card className="rounded-2xl border">
+    <Card className="rounded-xl border border-border/60 bg-background shadow-sm">
       <CardHeader className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-muted/30">
-          <Icon className="h-5 w-5" />
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-muted/20">
+          <Icon className="h-4 w-4 text-muted-foreground" />
         </div>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-base">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-sm leading-7 text-muted-foreground">
@@ -264,13 +270,15 @@ function FaqCard({
   question,
   answer,
 }: {
-  question: string;
-  answer: string;
+  readonly question: string;
+  readonly answer: string;
 }) {
   return (
-    <Card className="rounded-2xl border p-5">
+    <Card className="rounded-xl border border-border/60 bg-background p-5 shadow-sm">
       <div className="space-y-2">
-        <div className="text-sm font-medium">{question}</div>
+        <div className="text-sm font-medium text-foreground">
+          {question}
+        </div>
         <p className="text-sm leading-7 text-muted-foreground">
           {answer}
         </p>
@@ -318,7 +326,7 @@ export default function PricingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-md px-6 text-sm font-medium"
               >
                 <Link href={INTERNAL.starterFree}>
                   Explore Starter Free
@@ -335,27 +343,26 @@ export default function PricingPage() {
           extraClassName="mx-auto max-w-5xl"
           extra={
             <div className="grid gap-4 lg:grid-cols-2">
-              <Card className="rounded-[28px] border p-6 shadow-lg shadow-black/5">
+              <Card className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge
-                        variant="secondary"
-                        className="rounded-full"
-                      >
-                        Free entry point
-                      </Badge>
-                    </div>
-                    <h2 className="mt-4 text-xl font-semibold">
+                    <Badge
+                      variant="outline"
+                      className="rounded-md text-[11px]"
+                    >
+                      Free entry point
+                    </Badge>
+
+                    <h2 className="mt-4 text-lg font-semibold tracking-tight">
                       Starter Free
                     </h2>
+
                     <div className="mt-2 text-3xl font-semibold tracking-tight">
-                      <span className="text-4xl font-semibold tracking-tight">
-                        {PRICING.starterFree}
-                      </span>
+                      {PRICING.starterFree}
                     </div>
                   </div>
-                  <Sparkles className="h-5 w-5 text-muted-foreground" />
+
+                  <Sparkles className="h-4 w-4 text-muted-foreground" />
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
@@ -364,36 +371,38 @@ export default function PricingPage() {
                   wiring.
                 </p>
 
-                <div className="mt-5">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="h-11 w-full rounded-xl px-6 text-sm font-medium"
-                  >
-                    <Link href={INTERNAL.starterFree}>
-                      Open Starter Free
-                    </Link>
-                  </Button>
-                </div>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="mt-5 h-10 w-full rounded-md text-sm font-medium"
+                >
+                  <Link href={INTERNAL.starterFree}>
+                    Open Starter Free
+                  </Link>
+                </Button>
               </Card>
 
-              <Card className="rounded-[28px] border-2 p-6 shadow-xl shadow-black/5">
+              <Card className="relative overflow-hidden rounded-2xl border border-foreground/20 bg-background p-6 shadow-sm">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
+
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge className="rounded-full">
+                      <Badge className="rounded-md text-[11px]">
                         Main offer
                       </Badge>
                       <Badge
                         variant="outline"
-                        className="rounded-full"
+                        className="rounded-md text-[11px]"
                       >
                         Best launch choice
                       </Badge>
                     </div>
-                    <h2 className="mt-4 text-xl font-semibold">
+
+                    <h2 className="mt-4 text-lg font-semibold tracking-tight">
                       Starter Pro
                     </h2>
+
                     <div className="mt-2 flex items-end gap-3">
                       <span className="text-4xl font-semibold tracking-tight">
                         {PRICING.starterProLaunch}
@@ -406,7 +415,8 @@ export default function PricingPage() {
                       </span>
                     </div>
                   </div>
-                  <BadgeCheck className="h-5 w-5 text-muted-foreground" />
+
+                  <BadgeCheck className="h-4 w-4 text-muted-foreground" />
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
@@ -464,7 +474,7 @@ export default function PricingPage() {
           />
 
           <div className="mx-auto max-w-3xl">
-            <Card className="rounded-2xl border p-6 text-center">
+            <Card className="rounded-xl border border-border/60 bg-background p-6 text-center shadow-sm">
               <p className="text-sm leading-7 text-muted-foreground">
                 Most developers don’t struggle with UI. They struggle
                 with everything around it: authentication, billing,
@@ -478,6 +488,7 @@ export default function PricingPage() {
             </Card>
           </div>
         </section>
+
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Starter Pro"
@@ -488,7 +499,7 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={focusRing}
+                className={cn('rounded-md', focusRing)}
               >
                 <Link href={INTERNAL.docsStarterPro}>
                   Read Starter Pro docs
@@ -498,20 +509,25 @@ export default function PricingPage() {
           />
 
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <Card className="rounded-[28px] border p-6 sm:p-7">
+            <Card className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm sm:p-7">
               <div className="space-y-8">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full">
+                    <Badge className="rounded-md text-[11px]">
                       Primary commercial offer
                     </Badge>
-                    <Badge variant="outline" className="rounded-full">
+                    <Badge
+                      variant="outline"
+                      className="rounded-md text-[11px]"
+                    >
                       Launch price {PRICING.starterProLaunch}
                     </Badge>
                   </div>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-tight">
+
+                  <h3 className="mt-4 font-brand text-2xl font-semibold tracking-tight">
                     Starter Pro
                   </h3>
+
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
                     A production-ready SaaS foundation for developers
                     who want real authentication, real billing,
@@ -533,11 +549,13 @@ export default function PricingPage() {
               </div>
             </Card>
 
-            <Card className="rounded-[28px] border-2 p-6 shadow-xl shadow-black/5">
+            <Card className="relative overflow-hidden rounded-2xl border border-foreground/20 bg-background p-6 shadow-sm">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
+
               <CardHeader className="space-y-5 px-0 pt-0">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xl font-semibold">
+                    <p className="text-lg font-semibold tracking-tight">
                       Buy Starter Pro
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -545,7 +563,7 @@ export default function PricingPage() {
                       monetizable SaaS.
                     </p>
                   </div>
-                  <CreditCard className="h-5 w-5 text-muted-foreground" />
+                  <CreditCard className="h-4 w-4 text-muted-foreground" />
                 </div>
 
                 <div className="flex items-end gap-3">
@@ -563,7 +581,7 @@ export default function PricingPage() {
 
               <CardContent className="space-y-6 px-0 pb-0">
                 <div className="grid gap-4">
-                  <div className="rounded-2xl border p-4">
+                  <div className="rounded-xl border border-border/60 bg-muted/10 p-4">
                     <p className="text-sm font-medium">Best for</p>
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       Indie hackers, freelancers, and technical
@@ -572,7 +590,7 @@ export default function PricingPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border p-4">
+                  <div className="rounded-xl border border-border/60 bg-muted/10 p-4">
                     <p className="text-sm font-medium">
                       Why it converts
                     </p>
@@ -584,7 +602,7 @@ export default function PricingPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border bg-muted/20 p-4">
+                  <div className="rounded-xl border border-border/60 bg-muted/20 p-4">
                     <p className="text-sm leading-7 text-muted-foreground">
                       One-time payment. Instant delivery after
                       purchase. Built for developers who want to
@@ -602,7 +620,7 @@ export default function PricingPage() {
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-11 rounded-xl text-sm font-medium',
+                      'h-10 rounded-md text-sm font-medium',
                       focusRing,
                     )}
                   >
@@ -636,7 +654,8 @@ export default function PricingPage() {
               description="Use it when building auth, billing, and protected flows starts slowing you down. Starter Pro removes weeks of repeated setup and gives you a production-ready SaaS foundation from day one."
             />
           </div>
-          <div className="mt-8 rounded-2xl border bg-muted/20 p-6 text-center">
+
+          <div className="mt-8 rounded-xl border border-border/60 bg-muted/20 p-6 text-center shadow-sm">
             <p className="text-sm text-muted-foreground">
               Most developers don’t struggle with building features.
             </p>
@@ -661,7 +680,7 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={focusRing}
+                className={cn('rounded-md', focusRing)}
               >
                 <Link href={INTERNAL.docsBackend}>
                   Explore backend docs
@@ -670,7 +689,7 @@ export default function PricingPage() {
             }
           />
 
-          <Card className="rounded-[28px] border p-4 sm:p-6">
+          <Card className="overflow-hidden rounded-2xl border border-border/60 bg-background p-2 shadow-sm sm:p-4">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -728,24 +747,29 @@ export default function PricingPage() {
         </section>
 
         <section className="pt-4">
-          <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
+          <Card className="relative overflow-hidden rounded-2xl border border-border/60 bg-background px-6 py-8 shadow-sm sm:px-8 sm:py-10">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
                 <Badge
                   variant="outline"
-                  className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+                  className="rounded-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
                 >
                   Final CTA
                 </Badge>
-                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+
+                <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
                   Explore for free or buy the upgrade that gets you to
                   launch faster.
                 </h2>
+
                 <p className="text-sm leading-7 text-muted-foreground">
                   Keep the decision simple. Use Starter Free to
                   explore. Buy Starter Pro when you want the business
                   layer already handled.
                 </p>
+
                 <div className="flex flex-wrap gap-2">
                   <Pill>One clear paid path</Pill>
                   <Pill>Real SaaS foundations</Pill>
@@ -761,7 +785,7 @@ export default function PricingPage() {
                   asChild
                   variant="outline"
                   className={cn(
-                    'h-11 rounded-xl text-sm font-medium',
+                    'h-10 rounded-md text-sm font-medium',
                     focusRing,
                   )}
                 >
