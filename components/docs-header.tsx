@@ -297,11 +297,11 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-all duration-300',
           scrolled
-            ? 'border-border/60 bg-background/85 backdrop-blur-xl'
-            : 'border-border/50 bg-background backdrop-blur-md',
+            ? 'border-b border-border/60 bg-background/85 backdrop-blur-xl'
+            : 'border-b border-border/50 bg-background backdrop-blur-md',
         )}
       >
-        <div className="relative z-10 mx-auto max-w-fd-container">
+        <div className="relative z-10 mx-auto max-w-fd-container border-b border-border/30 md:border-b-0">
           <a
             href="#content"
             className={cn(
@@ -312,7 +312,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           >
             Skip to content
           </a>
-
           <Container>
             <section className="flex h-16 items-center gap-3">
               <div className="flex shrink-0 items-center gap-3">
@@ -528,7 +527,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-2 md:hidden">
-                <LargeSearchToggle className="w-44 xl:w-52" />
+                <LargeSearchToggle className="relative z-10" />
                 <button
                   ref={openBtnRef}
                   type="button"
@@ -587,21 +586,27 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
               <div className="space-y-4 px-4 pb-6 pt-4">
-                <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
-                  <div className="space-y-3">
-                    <p className="text-sm font-medium text-foreground">
-                      PyColors Docs
-                    </p>
+                <div className="rounded-2xl border border-white/10 bg-background/60 p-4 shadow-lg shadow-black/[0.04] backdrop-blur-2xl backdrop-saturate-150">
+                  <div className="space-y-4">
+                    <div className="space-y-1.5">
+                      <p className="text-sm font-semibold tracking-tight text-foreground">
+                        PyColors Docs
+                      </p>
 
-                    <p className="text-sm leading-6 text-muted-foreground">
-                      Browse UI, patterns, Starter Free, and Starter
-                      Pro documentation.
-                    </p>
+                      <p className="text-sm leading-6 text-muted-foreground">
+                        Explore UI foundations, product patterns, Starter Free, and
+                        Starter Pro documentation.
+                      </p>
+                    </div>
 
-                    <div className="pt-1">
+                    <div className="flex items-center justify-between gap-3 border-t border-border/30 pt-3">
+                      <span className="text-xs font-medium text-muted-foreground">
+                        Theme
+                      </span>
+
                       <ThemeToggle
                         mode="light-dark"
-                        className="inline-flex h-9 items-center rounded-md border px-1"
+                        className="inline-flex h-9 items-center rounded-full border border-border/50 bg-background/70 px-1 shadow-sm backdrop-blur-md"
                       />
                     </div>
                   </div>
