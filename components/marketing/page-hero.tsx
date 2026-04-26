@@ -25,9 +25,9 @@ export type PageHeroProps = {
   maxWidth?: '3xl' | '4xl' | '5xl';
 };
 
-function Pill({ children }: { readonly children: React.ReactNode }) {
+function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+    <span className="inline-flex items-center rounded-md border border-border/60 bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
       {children}
     </span>
   );
@@ -68,23 +68,29 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-[38px] bg-card px-6 py-12 shadow-lg shadow-black/5 sm:px-8 sm:py-14 lg:px-12 lg:py-18',
+        'relative overflow-hidden rounded-2xl border border-border/60 bg-background px-6 py-14 shadow-sm sm:px-8 sm:py-16 lg:px-12 lg:py-20',
         className,
       )}
     >
-      {/* Background */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_34%)]"
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
 
       <div
         className={cn(
-          'mx-auto',
+          'relative mx-auto',
           maxWidthClass,
           isCentered ? 'text-center' : 'text-left',
           contentClassName,
         )}
       >
-        {/* Badges */}
-        {badges.length > 0 && (
+        {badges.length > 0 ? (
           <div
             className={cn(
               'flex flex-wrap items-center gap-2',
@@ -96,45 +102,43 @@ export function PageHero({
               <Badge
                 key={`${badge.label}-${badge.variant ?? 'secondary'}`}
                 variant={badge.variant ?? 'outline'}
-                className="gap-2 rounded-full"
+                className="gap-1.5 rounded-md px-2.5 py-1 text-[11px] font-medium"
               >
                 {badge.icon ? badge.icon : null}
                 {badge.label}
               </Badge>
             ))}
           </div>
-        )}
+        ) : null}
 
-        {/* Title */}
         <h1
           className={cn(
-            'text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl',
-            badges.length > 0 ? 'mt-8' : 'mt-0',
+            'text-balance font-brand text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[4rem] lg:leading-[1.02]',
+            badges.length > 0 ? 'mt-7' : 'mt-0',
           )}
         >
           {title}
-          {subtitle && (
+
+          {subtitle ? (
             <span className="mt-2 block text-muted-foreground">
               {subtitle}
             </span>
-          )}
+          ) : null}
         </h1>
 
-        {/* Description */}
-        {description && (
+        {description ? (
           <p
             className={cn(
-              'mt-6 text-base leading-8 text-muted-foreground sm:text-lg',
+              'mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base',
               isCentered && 'mx-auto max-w-3xl',
               !isCentered && 'max-w-3xl',
             )}
           >
             {description}
           </p>
-        )}
+        ) : null}
 
-        {/* Actions */}
-        {actions && (
+        {actions ? (
           <div
             className={cn(
               'mt-8 flex flex-col gap-3 sm:flex-row',
@@ -144,18 +148,12 @@ export function PageHero({
           >
             {actions}
           </div>
-        )}
+        ) : null}
 
-        {/* Extra (stats, blocks, etc.) */}
-        {extra && (
-          <div className={cn('mt-10', extraClassName)}>{extra}</div>
-        )}
-
-        {/* Pills */}
-        {pills.length > 0 && (
+        {pills.length > 0 ? (
           <div
             className={cn(
-              'mt-8 flex flex-wrap gap-2',
+              'mt-7 flex flex-wrap gap-2',
               isCentered ? 'justify-center' : 'justify-start',
               pillsClassName,
             )}
@@ -164,7 +162,11 @@ export function PageHero({
               <Pill key={pill}>{pill}</Pill>
             ))}
           </div>
-        )}
+        ) : null}
+
+        {extra ? (
+          <div className={cn('mt-10', extraClassName)}>{extra}</div>
+        ) : null}
       </div>
     </section>
   );
