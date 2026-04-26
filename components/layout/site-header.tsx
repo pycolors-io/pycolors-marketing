@@ -132,7 +132,7 @@ function ProductPill({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <span className="inline-flex rounded-full border border-border/60 bg-background/80 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
+    <span className="inline-flex rounded-md border border-border/60 bg-background/70 px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
       {children}
     </span>
   );
@@ -178,7 +178,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const closeProductsMenuWithDelay = React.useCallback(() => {
     closeProductsTimeoutRef.current = window.setTimeout(() => {
       setIsProductsOpen(false);
-    }, 120);
+    }, 160);
   }, []);
 
   React.useEffect(() => {
@@ -352,10 +352,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           icon: PRODUCT_MENU_META[item.href]?.icon ? (
             React.createElement(PRODUCT_MENU_META[item.href].icon, {
               'aria-hidden': true,
-              className: 'h-4 w-4',
+              className: 'h-3.5 w-3.5',
             })
           ) : (
-            <Package2 aria-hidden="true" className="h-4 w-4" />
+            <Package2 aria-hidden="true" className="h-3.5 w-3.5" />
           ),
         })),
       );
@@ -364,17 +364,19 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: 'Docs',
         href: '/docs',
-        icon: <BookOpen aria-hidden="true" className="h-4 w-4" />,
+        icon: <BookOpen aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
         label: 'Blog',
         href: '/blog',
-        icon: <FileText aria-hidden="true" className="h-4 w-4" />,
+        icon: <FileText aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       ...docsLinks.map((doc) => ({
         label: doc.label,
         href: doc.href,
-        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
+        icon: (
+          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+        ),
       })),
     ];
 
@@ -382,17 +384,19 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: 'GitHub',
         href: 'https://github.com/pycolors',
-        icon: <Github aria-hidden="true" className="h-4 w-4" />,
+        icon: <Github aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
         label: 'Pricing',
         href: '/pricing',
-        icon: <Sparkles aria-hidden="true" className="h-4 w-4" />,
+        icon: <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
         label: 'Changelog',
         href: '/changelog',
-        icon: <ChevronRight aria-hidden="true" className="h-4 w-4" />,
+        icon: (
+          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+        ),
       },
     ];
 
@@ -413,9 +417,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     return getMostSpecificActiveHref(pathname, allMobileHrefs);
   }, [pathname, mobileSections]);
 
-  const showDocsSearch =
-    pathname === '/docs' || pathname.startsWith('/docs/');
-
   return (
     <>
       <header
@@ -426,7 +427,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             : 'border-b border-transparent bg-background/55 backdrop-blur-md',
         )}
       >
-        {' '}
         <div className="relative z-10 mx-auto max-w-fd-container">
           <a
             href="#content"
@@ -482,12 +482,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     />
                   </button>
 
+                  <div className="absolute left-0 top-full h-3 w-[40rem]" />
+
                   <div
                     id="products-menu"
                     role="menu"
                     aria-label="Products"
+                    onMouseEnter={openProductsMenu}
                     className={cn(
-                      'absolute left-0 top-full mt-2 w-[40rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
+                      'absolute left-0 top-[calc(100%+0.5rem)] w-[40rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
                       isProductsOpen
                         ? 'pointer-events-auto translate-y-0 opacity-100'
                         : 'pointer-events-none translate-y-1 opacity-0',
@@ -607,9 +610,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       href={item.href}
                       aria-current={isCurrent ? 'page' : undefined}
                       className={cn(
-                        'rounded-lg px-3 py-1.5 text-[13px] transition-all duration-200',
-                        'text-muted-foreground hover:bg-accent/30 hover:text-foreground',
-                        isCurrent && 'bg-accent/30 text-foreground',
+                        'rounded-md px-3 py-1.5 text-[13px] transition-all duration-200',
+                        'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
+                        isCurrent && 'bg-accent/25 text-foreground',
                         focusRing,
                       )}
                     >
@@ -620,14 +623,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </nav>
 
               <div className="hidden items-center gap-2 md:flex">
-                {showDocsSearch ? (
-                  <LargeSearchToggle className="w-44 xl:w-52" />
-                ) : null}
-
                 <Button
                   asChild
                   size="sm"
-                  className="h-9 rounded-lg px-4 text-[13px] font-medium"
+                  className="h-9 rounded-md px-4 text-[13px] font-medium"
                 >
                   <Link href="/starters/pro">
                     Explore Pro
@@ -640,11 +639,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-2 md:hidden">
-                <ThemeToggle
-                  mode="light-dark"
-                  className="inline-flex h-9 items-center rounded-full border px-1"
-                />
-
                 <button
                   ref={openBtnRef}
                   type="button"
@@ -657,14 +651,14 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-navigation"
                   className={cn(
-                    'inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background/80',
+                    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background/80',
                     focusRing,
                   )}
                 >
                   {isMenuOpen ? (
-                    <X aria-hidden="true" className="h-5 w-5" />
+                    <X aria-hidden="true" className="h-4 w-4" />
                   ) : (
-                    <Menu aria-hidden="true" className="h-5 w-5" />
+                    <Menu aria-hidden="true" className="h-4 w-4" />
                   )}
                 </button>
               </div>
@@ -708,17 +702,36 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               )}
             >
               <div className="px-4 pb-6 pt-4">
-                <div className="flex min-w-0 flex-col gap-6 pb-6">
-                  <div className="rounded-[24px] border border-border/60 bg-muted/20 p-4">
-                    <div className="space-y-3">
-                      <p className="text-sm font-semibold text-foreground">
-                        PyColors
-                      </p>
+                <div className="space-y-5">
+                  <div className="rounded-2xl border border-white/10 bg-background/60 p-4 shadow-lg shadow-black/[0.04] backdrop-blur-2xl backdrop-saturate-150">
+                    <div className="space-y-4">
+                      <div className="space-y-1.5">
+                        <p className="text-sm font-semibold tracking-tight text-foreground">
+                          PyColors
+                        </p>
+
+                        <p className="text-sm leading-6 text-muted-foreground">
+                          Build faster with product-shaped starters,
+                          UI primitives, and production-ready SaaS
+                          foundations.
+                        </p>
+                      </div>
 
                       <div className="flex flex-wrap gap-2">
                         <ProductPill>Products</ProductPill>
                         <ProductPill>Pricing</ProductPill>
                         <ProductPill>Docs</ProductPill>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3 border-t border-border/30 pt-3">
+                        <span className="text-xs font-medium text-muted-foreground">
+                          Theme
+                        </span>
+
+                        <ThemeToggle
+                          mode="light-dark"
+                          className="inline-flex h-9 items-center rounded-full border border-border/50 bg-background/70 px-1 shadow-sm backdrop-blur-md"
+                        />
                       </div>
                     </div>
                   </div>
@@ -726,9 +739,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   {mobileSections.map((section, sectionIndex) => (
                     <section
                       key={section.title}
-                      className="rounded-[24px] border border-border/60 bg-muted/20 p-3"
+                      className="border-t border-border/60 pt-4"
                     >
-                      <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                         {section.title}
                       </p>
 
@@ -765,36 +778,39 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                               }
                               onClick={closeMenu}
                               className={cn(
-                                'group flex items-center justify-between rounded-2xl px-3 py-3 transition-all duration-200',
+                                'group flex items-center justify-between rounded-md px-2.5 py-2 text-sm transition-colors duration-150',
                                 isCurrent
-                                  ? 'bg-accent text-foreground shadow-sm'
-                                  : 'text-muted-foreground hover:bg-background hover:text-foreground',
+                                  ? 'bg-accent/25 text-foreground'
+                                  : 'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
                                 focusRing,
                               )}
                             >
-                              <span className="flex min-w-0 items-center gap-3">
+                              <span className="flex min-w-0 items-center gap-2.5">
                                 <span
                                   aria-hidden="true"
-                                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-border/60 bg-background"
+                                  className={cn(
+                                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border/50 bg-background/70 transition-colors',
+                                    isCurrent && 'bg-background',
+                                  )}
                                 >
                                   {item.icon}
                                 </span>
 
-                                <span className="truncate text-sm font-medium">
+                                <span className="truncate text-[13px] font-medium">
                                   {item.label}
                                 </span>
                               </span>
 
                               <span className="flex items-center gap-2">
                                 {item.badge ? (
-                                  <span className="inline-flex rounded-full border border-border/60 bg-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-foreground">
+                                  <span className="inline-flex rounded-md border border-border/60 bg-background px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
                                     {item.badge}
                                   </span>
                                 ) : null}
 
                                 <ChevronRight
                                   aria-hidden="true"
-                                  className="h-4 w-4 opacity-60 transition-transform duration-200 group-hover:translate-x-0.5"
+                                  className="h-3.5 w-3.5 opacity-50 transition-transform duration-150 group-hover:translate-x-0.5"
                                 />
                               </span>
                             </Link>
@@ -804,37 +820,34 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     </section>
                   ))}
 
-                  <div className="rounded-[24px] border border-border/60 bg-muted/20 p-4">
-                    <p className="text-sm font-semibold text-foreground">
+                  <section className="border-t border-border/60 pt-4">
+                    <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       Why PyColors
                     </p>
 
-                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>
-                        • Build from product surfaces, not isolated UI
-                      </li>
-                      <li>• Validate fast with Starter Free</li>
-                      <li>
-                        • Upgrade when the business layer matters
-                      </li>
-                    </ul>
-
-                    {showDocsSearch ? (
-                      <div className="mt-4">
-                        <LargeSearchToggle className="w-full" />
-                      </div>
-                    ) : null}
-                  </div>
+                    <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
+                      <ul className="space-y-2 text-sm leading-6 text-muted-foreground">
+                        <li>
+                          Build from product surfaces, not isolated
+                          UI.
+                        </li>
+                        <li>Validate fast with Starter Free.</li>
+                        <li>
+                          Upgrade when the business layer matters.
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
 
             <div className="border-t border-border bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full justify-center rounded-xl"
+                  className="w-full justify-center rounded-md"
                 >
                   <Link href="/starters/free" onClick={closeMenu}>
                     Starter Free
@@ -843,7 +856,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
                 <Button
                   asChild
-                  className="w-full justify-center rounded-xl shadow-sm"
+                  className="w-full justify-center rounded-md shadow-sm"
                 >
                   <Link href="/starters/pro" onClick={closeMenu}>
                     Explore Starter Pro
