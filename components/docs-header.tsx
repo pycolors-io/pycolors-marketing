@@ -295,10 +295,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     <>
       <header
         className={cn(
-          'w-full border-b transition-colors duration-200',
+          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
           scrolled
             ? 'border-border/60 bg-background/85 backdrop-blur-xl'
-            : 'border-border/50 bg-background',
+            : 'border-border/50 bg-background backdrop-blur-md',
         )}
       >
         <div className="relative z-10 mx-auto max-w-fd-container">
@@ -511,7 +511,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
 
               <div className="hidden items-center gap-2 md:flex">
                 <LargeSearchToggle className="w-44 xl:w-52" />
-
                 <Button
                   asChild
                   size="sm"
@@ -529,11 +528,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-2 md:hidden">
-                <ThemeToggle
-                  mode="light-dark"
-                  className="inline-flex h-9 items-center rounded-md border px-1"
-                />
-
+                <LargeSearchToggle className="w-44 xl:w-52" />
                 <button
                   ref={openBtnRef}
                   type="button"
@@ -604,7 +599,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     </p>
 
                     <div className="pt-1">
-                      <LargeSearchToggle className="w-full" />
+                      <ThemeToggle
+                        mode="light-dark"
+                        className="inline-flex h-9 items-center rounded-md border px-1"
+                      />
                     </div>
                   </div>
                 </div>
