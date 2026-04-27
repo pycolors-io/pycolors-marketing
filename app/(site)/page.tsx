@@ -72,7 +72,7 @@ const INTERNAL = {
   upgrade: '/upgrade',
   access: '/pricing',
   starterDocs: '/docs/starter',
-  starterUpgradeDocs: '/docs/starter/upgrade-to-pro',
+  starterUpgradeDocs: '/docs/starter/upgrade',
   ui: '/ui',
   patterns: '/ui/patterns',
   examples: '/examples',
