@@ -1,9 +1,15 @@
 ---
 title: Async Actions Pattern
-description: Production-ready mutation UX, toasts, optimistic UI, retry, and undo.
+description: Design reliable mutation UX with optimistic updates, feedback tiers, retry, and undo strategies.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import { CheckCircle, XCircle, RefreshCw } from "lucide-react";
 
 import {
   OptimisticToggleDemo,
@@ -11,114 +17,297 @@ import {
   SaveWithToastDemo,
 } from "../previews/async-actions";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Async actions</Badge>
+</div>
 
-## UX rules (latency, optimistic vs pessimistic)
+## Overview
 
-Async actions are different from async data.
+Async actions are where product quality becomes visible.
 
-- Data loading = **waiting**
-- Mutations = **changing reality**
+Unlike data fetching, actions **change reality**:
 
-Rules:
-- Prefer **instant feedback** over spinners.
-- Optimistic UI is best when the action is **low-risk and reversible**.
-- Pessimistic (wait for server) is best when the action is **high-risk or irreversible**.
+- saving data
+- deleting content
+- triggering business logic
+- updating user state
 
-**Use optimistic UI when**
-- toggles (enable/disable)
-- starring/favoriting
-- lightweight updates that can be reverted
+This guide defines how to handle mutations in a way that feels:
 
-**Use pessimistic UI when**
-- payment
-- destructive deletes without recovery
-- permission-sensitive actions
+- fast
+- reliable
+- understandable
+- production-ready
+
+<Callout title="Key principle">
+  Loading is about waiting.
+  Actions are about trust.
+</Callout>
+
+## What you’ll implement
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Immediate feedback</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      UI responds instantly without blocking the user.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Correct feedback level</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Inline, toast, or blocking depending on risk.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Recovery strategies</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Retry and undo for safe, resilient UX.
+    </CardContent>
+  </Card>
+</div>
+
+
+
+## Mental model
+
+> Actions should feel instant
+> Errors should feel recoverable
+> Nothing should feel broken
+
+## Steps
+
+<Steps>
+
+<Step>
+### Choose optimistic vs pessimistic
+
+Not all actions should behave the same.
+
+#### Use optimistic UI when
+
+- toggles (enable / disable)
+- starring / favoriting
+- reversible updates
+
+#### Use pessimistic UI when
+
+- payments
+- destructive irreversible actions
+- permission-sensitive changes
 
 <OptimisticToggleDemo />
 
----
+<Callout type="info" title="Rule">
+  If you can safely undo it → optimistic
+  If you cannot → wait for server confirmation
+</Callout>
+</Step>
 
-## Feedback tiers (inline, toast, blocking)
+<Step>
+### Apply the right feedback tier
 
-Not every action deserves the same weight.
+Not every action deserves the same UX weight.
 
-### Tier 1 — Inline (preferred)
-Use inline feedback when the result is local and expected:
-- button label changes (“Saving…”)
-- disabled state
-- small inline success text
+<Tabs items={["Inline", "Toast", "Blocking"]}>
+  <Tab value="Inline">
+    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
+      Button state, inline messages, subtle feedback.
+      Best for expected, low-risk actions.
+    </div>
+  </Tab>
 
-### Tier 2 — Toast (non-blocking)
-Use toast when:
-- the user can continue working
-- you want confirmation or error summary
-- you need **Undo** or **Retry**
+  <Tab value="Toast">
+    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
+      Non-blocking confirmation or error with optional undo/retry.
+    </div>
+  </Tab>
+
+  <Tab value="Blocking">
+    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
+      Dialog confirmation for destructive or irreversible actions.
+    </div>
+  </Tab>
+</Tabs>
 
 <SaveWithToastDemo />
+</Step>
 
-### Tier 3 — Blocking (Dialog)
-Use Dialog when:
-- action is destructive
-- action is irreversible
-- user needs to confirm intent
+<Step>
+### Design retry and undo flows
 
-Delete flows often start in a Dialog, then use toast for Undo/Retry.
+Recovery is part of the UX.
+
+#### Retry
+
+- must be explicit
+- must be safe
+- must be idempotent
+
+#### Undo
+
+- works best for destructive actions
+- requires real backend support
+- should be immediate
 
 <DeleteWithUndoToastDemo />
 
----
+<Callout title="Important">
+  Undo is not a UI trick.
+  It must be supported by your backend logic.
+</Callout>
+</Step>
 
-## Retry & undo
+</Steps>
 
-### Retry
-Retry should be:
-- explicit
-- one click
-- safe to run multiple times
+## Feedback tiers
 
-### Undo
-Undo is best for:
-- delete/archive
-- bulk actions
-- destructive operations that are reversible server-side
+| Level | When to use |
+|--|--|
+| Inline | expected, local changes |
+| Toast | non-blocking confirmation or failure |
+| Dialog | destructive or irreversible actions |
 
-Undo is not magic. It requires a real backend capability.
+Never mix roles.
 
----
 
-## Error copy guidelines
 
-Error messages should be:
-- calm
-- specific
-- actionable
+## Error messaging
+
+Good error messages:
+
+- explain what failed
+- suggest what to do next
+- stay calm and clear
+
+### Examples
 
 **Good**
+
 - “Couldn’t save changes. Check your connection and retry.”
 - “Payment failed. Try another card.”
 
 **Bad**
-- “Something went wrong.”
-- “Unknown error.”
 
-Rule: always include **what failed** + **what to do next**.
+- “Something went wrong”
+- “Unknown error”
 
----
+<Callout type="info" title="Rule">
+  Always include: what failed + what to do next
+</Callout>
 
-## Copy/paste examples (3 flows)
 
-### 1) Save (toast + inline state)
-- inline: button shows “Saving…”
-- toast: success or failure with retry
 
-### 2) Delete (confirm dialog → undo toast)
-- dialog: confirm intent
-- toast: “Deleted” + Undo
-- toast error: Retry restore if needed
+## Common patterns
 
-### 3) Optimistic toggle
-- UI flips immediately
-- rollback on error + toast
+### Save flow
 
-</DocsPageShell>
+- inline loading state
+- toast success or error
+- retry on failure
+
+### Delete flow
+
+- confirmation dialog
+- toast with undo
+- retry if restore fails
+
+### Toggle flow
+
+- instant UI change
+- rollback on error
+- toast feedback
+
+
+
+## Decision guide
+
+<div className="mb-2 grid gap-6 md:grid-cols-2">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        <CardTitle className="text-sm">Prefer</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>instant feedback over spinners</li>
+        <li>clear recovery paths</li>
+        <li>consistent feedback levels</li>
+        <li>optimistic updates when safe</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <XCircle className="h-4 w-4 text-destructive" />
+        <CardTitle className="text-sm">Avoid</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>blocking UI for low-risk actions</li>
+        <li>silent failures</li>
+        <li>no retry or undo path</li>
+        <li>inconsistent feedback patterns</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+
+
+## Why this matters
+
+Async actions are one of the biggest trust signals in a product.
+
+Bad mutation UX leads to:
+
+- hesitation
+- repeated clicks
+- confusion
+- lost confidence
+
+Good mutation UX feels:
+
+- fast
+- predictable
+- safe
+
+That is where products start to feel **production-ready**.
+
+
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/guides/forms-with-validation" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Forms with validation
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Apply async patterns to real user input flows.
+    </div>
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Async states
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Handle loading, empty, and error states consistently.
+    </div>
+  </a>
+</div>

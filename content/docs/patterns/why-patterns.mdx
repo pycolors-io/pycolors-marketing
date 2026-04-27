@@ -1,0 +1,289 @@
+---
+title: Why Patterns
+description: Why most SaaS products fail at the feature level—and how patterns fix it.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
+import { ArrowRight, AlertTriangle, CheckCircle, Layers, Workflow, Zap } from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Strategy</Badge>
+</div>
+
+## Most products don’t fail at UI
+
+They fail at the **feature layer**.
+
+Not because buttons are wrong.
+Not because colors are off.
+
+But because:
+
+- features behave inconsistently
+- states are missing or unclear
+- UX decisions change from page to page
+- async flows break under real conditions
+
+<Callout title="Reality">
+  You don’t ship components.
+
+  You ship:
+  - tables with filters
+  - forms with validation
+  - mutations with feedback
+  - dashboards with real data
+
+  That’s where most systems break.
+</Callout>
+
+
+
+## The hidden gap in most UI systems
+
+Most UI libraries stop here:
+
+- buttons
+- inputs
+- cards
+- dialogs
+
+They give you **pieces**.
+
+But they don’t tell you:
+
+- how to structure a data table
+- how to handle loading vs empty vs error
+- how to design mutation UX
+- how to keep behavior consistent across features
+
+So teams end up:
+
+- reinventing the same logic
+- making inconsistent decisions
+- shipping fragile UX
+
+
+
+## What Patterns actually solve
+
+Patterns give you something different:
+
+> A default way to build features that behave correctly.
+
+They combine:
+
+- structure
+- state
+- interaction
+- feedback
+- UX rules
+
+<div className="grid gap-4 md:grid-cols-3">
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Layers className="h-4 w-4 text-primary" />
+        Structure
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm text-muted-foreground">
+        Clear separation between header, content, actions, and data.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Workflow className="h-4 w-4 text-primary" />
+        State
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm text-muted-foreground">
+        Explicit handling of loading, empty, error, and mutation flows.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Zap className="h-4 w-4 text-primary" />
+        Behavior
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm text-muted-foreground">
+        Predictable interactions users can rely on across the product.
+      </div>
+    </CardContent>
+  </Card>
+
+</div>
+
+## Without Patterns
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-base">
+        <AlertTriangle className="h-4 w-4 text-destructive" />
+        What happens
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>every feature is built differently</li>
+        <li>loading / empty / error states are inconsistent</li>
+        <li>UX decisions depend on the developer</li>
+        <li>bugs appear in edge cases</li>
+        <li>features are hard to reuse</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-base">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        What it creates
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>slow product velocity</li>
+        <li>inconsistent UX</li>
+        <li>low user trust</li>
+        <li>technical debt</li>
+        <li>team friction</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+</div>
+
+## With Patterns
+
+Patterns create **predictability at scale**.
+
+- features behave the same way everywhere
+- states are always handled
+- UX decisions are consistent
+- teams move faster
+- users trust the product
+
+<Callout type="info" title="Key shift">
+  Patterns don’t make you faster by giving more components.
+
+  They make you faster by removing decisions.
+</Callout>
+
+## The leverage effect
+
+Patterns are a **force multiplier**.
+
+Instead of:
+
+> building 10 features × 10 different ways
+
+You get:
+
+> 10 features × 1 consistent system
+
+That means:
+
+- less code to maintain
+- fewer UX bugs
+- faster onboarding
+- higher product quality
+
+## Why this matters for SaaS
+
+SaaS products are not static.
+
+They evolve:
+
+- more data
+- more features
+- more users
+- more edge cases
+
+Without Patterns, complexity grows **faster than your system**.
+
+With Patterns, complexity becomes **manageable**.
+
+
+
+## The PyColors approach
+
+PyColors is structured in layers:
+
+| Layer | Role |
+|---|--- |
+| Design System | Visual consistency (tokens, colors, typography) |
+| UI Components | Primitives |
+| Guides | UX reasoning |
+| Patterns | Feature implementation |
+| Starter Pro | Production backend |
+
+Patterns sit exactly where most systems are weak.
+
+
+
+## From UI to product
+
+> Components help you build screens
+> Patterns help you build features
+> Starter Pro helps you launch a business
+
+
+
+## Next step
+
+<div className="grid gap-4 md:grid-cols-2">
+
+  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">
+        Explore Data Table
+      </div>
+      <div className="mt-2 text-sm text-muted-foreground">
+        Understand a core SaaS pattern used in almost every product.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4" />
+  </a>
+
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">
+        Explore Async Actions
+      </div>
+      <div className="mt-2 text-sm text-muted-foreground">
+        Design mutation UX with feedback, retry, and undo.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4" />
+  </a>
+
+</div>
+
+<Callout title="Turn patterns into a real SaaS">
+  Patterns give you the feature layer.
+
+  Starter Pro gives you:
+  - authentication
+  - billing
+  - backend
+  - production flows
+
+  → `/docs/starter-pro`
+</Callout>

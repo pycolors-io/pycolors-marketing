@@ -1,9 +1,29 @@
 ---
 title: Data Table Pattern
-description: A production-ready data table pattern for real SaaS products.
+description: Build production-ready data tables for SaaS dashboards with loading, empty, error, filters, pagination, and row actions.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Filter,
+  ShieldCheck,
+  Table2,
+  XCircle,
+} from "lucide-react";
 
 import {
   DataTableLoading,
@@ -13,147 +33,438 @@ import {
   DataTableRowActionsMenu,
 } from "../previews/data-table";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Data table</Badge>
+</div>
 
-## When to use
+## Overview
 
-Use this pattern when displaying **structured, repeatable data** such as:
+Data tables are a core SaaS dashboard pattern.
 
-- users
-- projects
-- invoices
-- logs
-- subscriptions
+They power admin views, billing screens, customer lists, logs, subscriptions, projects, invoices, and operational workflows. A production-ready table is not only rows and columns. It is a complete interface for understanding, filtering, acting on, and navigating structured data.
 
-This pattern is designed for **admin and SaaS dashboards**,
-not marketing pages or content-heavy layouts.
+Use this pattern when users need to:
 
----
+- scan repeatable records
+- compare structured values
+- filter or search a dataset
+- act on individual rows
+- move through paginated results
+- recover from loading, empty, and error states
 
-## Anatomy
+<Callout title="Why this matters">
+  Tables are where product complexity becomes visible. If loading, filters, row actions, and pagination feel inconsistent, the entire dashboard feels less reliable.
+</Callout>
 
-A production-ready data table is **never just a table**.
+## What you’ll build
 
-It is composed of four distinct areas.
-Each area has a clear responsibility and can evolve independently.
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Table2 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Table anatomy
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Structure the surface into header, toolbar, table, row actions, footer, and states.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-### Header
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Filter className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Controls
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Add search, filters, bulk actions, row actions, and responsive disclosure without crowding the UI.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-Responsible for **context**.
-
-- page title
-- optional description
-- primary actions (Create, Export, Invite…)
-
-The header does not handle data logic.
-
----
-
-### Toolbar
-
-Responsible for **controls**.
-
-- filters
-- search
-- bulk actions
-- view toggles
-
-Toolbars may be inline or progressive (via Sheet).
-
----
-
-### Table
-
-Responsible for **structure and rendering**.
-
-- rows and columns
-- sorting indicators
-- selection state
-- row-level actions
-
-The table never fetches data.
-
----
-
-### Footer
-
-Responsible for **navigation and feedback**.
-
-- pagination
-- item count
-- selection summary
-
-Pagination is always stateless.
-
----
-
-## States
-
-Every data table transitions through states.
-Each state has a **specific UI response**.
-
-### Loading
-
-Use `Skeleton` when:
-
-- data is loading
-- layout is already known
-- content will appear soon
-
-<DataTableLoading />
-
----
-
-### Empty
-
-Use `EmptyState` when:
-
-- request succeeded
-- no data exists
-- the state is valid
-
-<DataTableEmpty />
-
----
-
-### Error
-
-Use `Alert` when:
-
-- data failed to load
-- an action failed
-- the user must be informed
-
-<DataTableError />
-
----
-
-## Variations
-
-### Table with filters
-
-For complex filters, use a **Sheet** to keep the toolbar clean.
-
-<DataTableWithFiltersSheet />
-
----
-
-### Table with row actions
-
-Row actions should be compact and consistent.
-Use **Dropdown Menu** for contextual actions.
-
-<DataTableRowActionsMenu />
-
----
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Production states
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Handle loading, empty, error, pagination, mutation, and recovery states clearly.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Mental model
 
-- Table renders **structure**
-- Pagination renders **navigation**
-- Data layer owns **truth**
-- UI stays **stateless**
+> The table renders structure.
+> The data layer owns truth.
+> The toolbar controls intent.
+> The footer handles navigation.
 
-This separation is what makes the pattern scale.
+| Area | Responsibility |
+| --- | --- |
+| Header | Page context and primary actions |
+| Toolbar | Search, filters, bulk actions, and view controls |
+| Table | Rows, columns, selection, and row rendering |
+| Row actions | Contextual actions for one record |
+| Footer | Pagination, counts, and selection summary |
+| Data layer | Fetching, sorting, filtering, permissions, and mutations |
 
-</DocsPageShell>
+<Callout type="info" title="System rule">
+  A table should not own the data source. Keep fetching, filtering, sorting, permissions, and mutations in the feature layer.
+</Callout>
+
+## Steps
+
+<Steps>
+
+<Step>
+### Define the anatomy
+
+A production table is composed from distinct areas. Each area should evolve independently.
+
+```tsx title="components/projects-table.tsx"
+export function ProjectsTable() {
+  return (
+    <section className="space-y-4">
+      <ProjectsTableHeader />
+      <ProjectsTableToolbar />
+      <ProjectsTableContent />
+      <ProjectsTableFooter />
+    </section>
+  );
+}
+```
+
+This keeps the table flexible when product requirements grow.
+</Step>
+
+<Step>
+### Keep data outside the table
+
+The table should receive data, status, and callbacks. It should not own fetching, permission checks, or mutation rules.
+
+```tsx title="features/projects/projects-table-container.tsx"
+export function ProjectsTableContainer() {
+  const projects = useProjects();
+  const filters = useProjectFilters();
+
+  return (
+    <ProjectsTable
+      data={projects.data}
+      status={projects.status}
+      filters={filters.value}
+      onFiltersChange={filters.setValue}
+      onRetry={projects.refetch}
+    />
+  );
+}
+```
+
+The feature layer owns truth. The table renders the current state.
+</Step>
+
+<Step>
+### Design states before rows
+
+Every table needs explicit loading, empty, and error states.
+
+<Tabs items={["Loading", "Empty", "Error"]}>
+  <Tab value="Loading">
+    <DataTableLoading />
+  </Tab>
+
+  <Tab value="Empty">
+    <DataTableEmpty />
+  </Tab>
+
+  <Tab value="Error">
+    <DataTableError />
+  </Tab>
+</Tabs>
+
+Do not add these states at the end. They define the production feel of the table.
+</Step>
+
+<Step>
+### Add controls deliberately
+
+Filters and row actions should support the task without making the table feel crowded.
+
+Use progressive disclosure:
+
+- inline controls for frequent filters
+- `Sheet` for advanced filters
+- `DropdownMenu` for secondary row actions
+- confirmation or recovery for destructive actions
+
+<Tabs items={["Filters", "Row actions"]}>
+  <Tab value="Filters">
+    <DataTableWithFiltersSheet />
+  </Tab>
+
+  <Tab value="Row actions">
+    <DataTableRowActionsMenu />
+  </Tab>
+</Tabs>
+</Step>
+
+</Steps>
+
+## Anatomy
+
+A scalable table has clear regions.
+
+| Region | What belongs there | What to avoid |
+| --- | --- | --- |
+| Header | title, description, primary action | data fetching logic |
+| Toolbar | search, filters, bulk actions | every possible control at once |
+| Table | rows, columns, selection, row actions | business rules and server logic |
+| Footer | pagination, item count, selected count | hidden navigation state |
+
+<Callout title="Why this matters">
+  When responsibilities are separated, the table can grow without becoming a single fragile component.
+</Callout>
+
+## States
+
+A production table handles more than loading and success.
+
+| State | Component | Goal |
+| --- | --- | --- |
+| Loading | `Skeleton` | Preserve shape while data is expected |
+| Empty | `EmptyState` | Explain valid empty results |
+| Error | `Alert` | Explain failure and recovery |
+| Filtering | Toolbar state | Show active constraints clearly |
+| Mutating | Inline state or toast | Confirm action progress and recovery |
+| Paginating | Footer state | Keep navigation predictable |
+
+Never use the same feedback pattern for every state. Loading data, deleting a row, saving filters, and changing pages are different user experiences.
+
+## Variations
+
+<Tabs items={["Simple", "Filtered", "Operational"]}>
+  <Tab value="Simple">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Simple table
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use when the dataset is small and users only need to scan records.
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>minimal row actions</li>
+        <li>simple pagination</li>
+        <li>clear empty state</li>
+        <li>no advanced filters</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Filtered">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Filtered table
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use when users need to narrow results across dimensions.
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>search input</li>
+        <li>filter sheet</li>
+        <li>active filter summary</li>
+        <li>reset filters action</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Operational">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Operational table
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use when users frequently act on records.
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>row actions</li>
+        <li>bulk actions</li>
+        <li>confirmation dialogs</li>
+        <li>retry and undo flows</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Decision guide
+
+Use this pattern if:
+
+- the page displays structured repeatable data
+- users need to scan, filter, compare, or act on rows
+- the table appears in a dashboard or admin surface
+- loading, empty, and error states matter
+- pagination, row actions, or bulk actions are required
+
+Avoid this pattern if:
+
+- content is editorial or marketing-focused
+- data is better represented as cards, a timeline, or a feed
+- the user only needs a single summary value
+- mobile-first scanning is more important than tabular comparison
+- the table would hide the primary product action
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>explicit loading, empty, and error states</li>
+        <li>controlled pagination and filtering</li>
+        <li>row actions in contextual menus</li>
+        <li>progressive filters for complex datasets</li>
+        <li>clear ownership between data layer and UI</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>fetching data inside a visual table primitive</li>
+        <li>using a table for non-tabular content</li>
+        <li>hiding blocking failures behind only a toast</li>
+        <li>crowding the toolbar with every possible filter</li>
+        <li>destructive row actions without confirmation or recovery</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Production checklist
+
+Before shipping a data table, confirm that:
+
+- loading preserves the expected layout
+- empty state explains the result and next action
+- error state includes recovery or retry
+- pagination is controlled and predictable
+- filters can be cleared
+- active filters are visible
+- row actions are keyboard accessible
+- destructive actions require confirmation or recovery
+- selection state is clear when bulk actions exist
+- mobile behavior is defined
+
+<Callout title="Ready to turn this pattern into a real SaaS surface?">
+  Starter Pro gives you a stronger foundation for production dashboards, protected routes, auth, billing, and backend-backed product flows. → `/docs/starter-pro`
+</Callout>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should the table fetch its own data?">
+    Prefer keeping data fetching outside the table. The table should render data and expose callbacks. The feature layer should own fetching, permissions, filtering, and mutations.
+  </Accordion>
+
+  <Accordion title="When should filters move into a Sheet?">
+    Move filters into a Sheet when the toolbar becomes crowded, filters are secondary, or the mobile experience needs a cleaner interaction model.
+  </Accordion>
+
+  <Accordion title="Should row actions always be in a dropdown?">
+    Use a dropdown for secondary or contextual actions. Keep the primary row action visible only when it is the main reason users visit the table.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Async actions</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design save, delete, retry, undo, and optimistic mutation flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how to communicate async states consistently across product surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Table</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review the primitive used to render structured tabular content.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Place tables inside scalable dashboard layouts with navigation and content structure.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

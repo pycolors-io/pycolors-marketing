@@ -1,152 +1,271 @@
 ---
 title: Patterns
-description: Opinionated, production-ready feature blocks built from PyColors UI primitives.
-toc: true
-full: false
+description: Production-ready feature patterns combining UI, behavior, state, and UX for real SaaS products.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
+import { ArrowRight, Layers, Workflow, ShieldCheck } from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Production UX</Badge>
+</div>
 
 ## Overview
 
-Patterns are **reusable product-level blocks** built for real product work.
+Patterns are where UI becomes product.
 
-They go beyond isolated components and show **how SaaS features are actually assembled** across UI, behavior, state, and feedback.
+They are **opinionated, production-ready feature blocks** that combine:
+
+- UI primitives
+- state handling
+- interaction rules
+- async behavior
+- real SaaS constraints
+
+Instead of assembling everything manually, you start from a **working product structure**.
 
 <Callout title="Why Patterns exist">
-  Patterns help you move faster with fewer UX mistakes by giving you opinionated,
-  production-shaped feature structures instead of isolated primitives.
+  Most UI systems fail at the feature level.
+
+  Components are correct, but:
+  - states are inconsistent
+  - UX decisions vary between pages
+  - async behavior is fragile
+
+  Patterns fix that by giving you a **default way to build features correctly**.
 </Callout>
+
+
 
 ## What you get
 
-<LinkCards>
-  <LinkCard
-    title="Feature-level structure"
-    description="Complete building blocks instead of isolated UI pieces."
-    href="/docs/patterns"
-  />
-  <LinkCard
-    title="Predictable state handling"
-    description="Clear expectations for loading, empty, success, and error states."
-    href="/docs/patterns/async-actions"
-  />
-  <LinkCard
-    title="Consistent product UX"
-    description="Shared interaction patterns across screens, teams, and flows."
-    href="/docs/patterns/overlays"
-  />
-  <LinkCard
-    title="Copy/paste-ready foundations"
-    description="Production-shaped examples you can adapt quickly."
-    href="/docs/patterns/data-table"
-  />
-</LinkCards>
+<div className="grid gap-4 md:grid-cols-3">
 
-## Differences
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <Layers className="h-4 w-4 text-primary" />
+        Feature structure
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Complete building blocks combining layout, actions, and product flows.
+      </div>
+    </CardContent>
+  </Card>
 
-| Section | Best for | Output |
-| --- | --- | --- |
-| **UI Components** | Single reusable primitives | Stateless, token-driven building blocks |
-| **Guides** | Principles and reasoning | Explanations, composition rules, decision frameworks |
-| **Patterns** | Real feature implementation | UI + behavior + state model + product UX |
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <Workflow className="h-4 w-4 text-primary" />
+        State handling
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Clear handling of loading, empty, error, success, and mutation states.
+      </div>
+    </CardContent>
+  </Card>
 
-### UI Components
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <ShieldCheck className="h-4 w-4 text-primary" />
+        Production UX
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Predictable interactions, accessibility rules, and scalable UX decisions.
+      </div>
+    </CardContent>
+  </Card>
 
-- Single primitive
-- Stateless
-- Token-driven
-- Reusable everywhere
+</div>
 
-### Guides
+## Mental model
 
-- Explanations and principles
-- Composition rules
-- “How to think” and avoid mistakes
+> Components render UI
+> Patterns define how features behave
 
-### Patterns
+A Pattern is not just visual.
 
-- Feature-level building blocks
-- UI + behavior + state model
-- Real SaaS flows such as tables, overlays, and mutations
-- Copy/paste implementations
+It includes:
+
+- structure
+- state
+- interaction
+- feedback
+- UX rules
+
+## System positioning
+
+| Layer | Purpose | Output |
+|---|---|---|
+| UI Components | Build primitives | Stateless UI elements |
+| Guides | Explain decisions | UX rules and reasoning |
+| Patterns | Ship features | UI + state + behavior |
+
+<Callout type="info" title="System rule">
+  If a feature has repeated structure or repeated state logic, it should become a Pattern.
+</Callout>
+
+
 
 ## Available patterns
 
-<LinkCards>
-  <LinkCard
-    title="Data Table Pattern"
-    description="A SaaS-ready table layout with filtering, pagination, row actions, and state handling."
-    href="/docs/patterns/data-table"
-  />
-  <LinkCard
-    title="Overlays Pattern"
-    description="Choose the right overlay with stronger UX and accessibility rules."
-    href="/docs/patterns/overlays"
-  />
-  <LinkCard
-    title="Async Actions Pattern"
-    description="Design better mutation UX with toasts, optimistic UI, retry, undo, and error feedback."
-    href="/docs/patterns/async-actions"
-  />
-</LinkCards>
+<div className="grid gap-4 md:grid-cols-2">
 
-## When to use
+  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">
+        Data Table Pattern
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build SaaS-ready tables with filtering, pagination, row actions, and explicit states.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">
+        Overlays Pattern
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose the right overlay (Dialog, Sheet, Dropdown) with strong UX rules.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">
+        Async Actions Pattern
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design mutation flows with optimistic UI, retry, undo, and clear feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+</div>
+
+
+
+## When to use Patterns
 
 Use Patterns when:
 
-- you’re building **real product features**, not just static screens
-- you need **consistency across multiple pages**
-- you want **predictable UX and feedback**
-- accessibility and interaction rules matter
+- you are building real SaaS features
+- async behavior becomes important
+- UX consistency matters across pages
+- multiple developers work on the same feature
+- the same logic appears multiple times
 
-<Callout type="info" title="Good fit">
-  Patterns are most useful when a feature has repeated structure, repeated state
-  logic, or repeated UX decisions across the product.
-</Callout>
+This is the moment where:
+
+> UI stops being screens
+> and starts becoming a system
+
+
 
 ## Common mistakes
 
-- building features only with components, without a real product structure
-- ignoring loading, empty, success, and error states
-- making inconsistent UX decisions from page to page
-- rebuilding the same feature flow multiple times
+<div className="mb-2 grid gap-6 md:grid-cols-2">
 
-Patterns exist to eliminate these issues early.
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-base">Avoid</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>building features only with components</li>
+        <li>ignoring loading, empty, and error states</li>
+        <li>mixing UI, state, and data logic</li>
+        <li>inconsistent UX between pages</li>
+        <li>rebuilding the same feature multiple times</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-## Why it matters
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-base">Prefer</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>feature-level structure</li>
+        <li>explicit async states</li>
+        <li>clear separation of responsibilities</li>
+        <li>predictable UX patterns</li>
+        <li>reusable product logic</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-Without Patterns, teams often:
+</div>
 
-- rebuild the same logic multiple times
-- introduce inconsistent UX
-- slow down as the product grows
-- create fragile feature implementations that are hard to scale
 
-Patterns give you a **shared foundation** to ship faster with less friction.
 
-## Next steps
+## Why this matters
 
-<LinkCards>
-  <LinkCard
-    title="Explore Data Table"
-    description="Start with a core SaaS pattern used across admin and dashboard products."
-    href="/docs/patterns/data-table"
-  />
-  <LinkCard
-    title="Explore Overlays"
-    description="Improve decisions around dialogs, sheets, dropdowns, and layered interactions."
-    href="/docs/patterns/overlays"
-  />
-  <LinkCard
-    title="Explore Async Actions"
-    description="Handle mutations and user feedback with a more production-ready UX model."
-    href="/docs/patterns/async-actions"
-  />
-</LinkCards>
+Patterns are where product quality becomes visible.
+
+Without them:
+
+- features drift
+- UX becomes inconsistent
+- teams slow down
+- bugs multiply in edge cases
+
+With them:
+
+- features feel predictable
+- users trust the product more
+- teams move faster
+- systems scale cleanly
+
+
+
+## Next step
+
+<div className="grid gap-4 md:grid-cols-2">
+
+  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Start with Data Table</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Core SaaS pattern used across dashboards and admin products.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4" />
+  </a>
+
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Handle Async Actions</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design mutation flows with better UX and feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4" />
+  </a>
+
+</div>
 
 <Callout title="Build faster with stronger foundations">
-  Use Patterns alongside UI components and Guides, then move to Starter Pro when
-  you want a full production-ready SaaS foundation.
+  Patterns give you the feature layer.
+  Starter Pro gives you the production backend.
+
+  Together, they turn UI into a real SaaS product.
 </Callout>
