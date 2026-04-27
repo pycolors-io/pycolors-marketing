@@ -1,150 +1,485 @@
 ---
-description: Understand how billing is modeled in Starter Free and where
-  to plug Stripe without rewrites.
-title: Billing concept
+title: Billing Concept
+description: Understand how billing is modeled in Starter Free and where to plug Stripe without rewrites.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  FileText,
+  RefreshCw,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Billing</Badge>
+</div>
 
-Billing is a core SaaS workflow — but also one of the most complex to
-wire.
+## Overview
 
-Starter Free gives you the **complete billing UX surface** while keeping
-implementation intentionally mocked.
+Billing is one of the most important SaaS workflows, but also one of the easiest to wire incorrectly.
 
-------------------------------------------------------------------------
+Starter Free gives you the **complete billing UX surface** while keeping the implementation intentionally mocked.
 
-## You'll learn
+You get the product-facing structure:
 
--   How billing is modeled in the starter
--   What is included vs intentionally missing
--   Where Stripe will plug in later
--   How to avoid common billing mistakes
+- current plan
+- renewal date
+- seats
+- payment method
+- invoice history
+- billing portal entry point
 
-------------------------------------------------------------------------
+But you do not get the billing engine yet.
+
+<Callout title="Core idea">
+  Starter Free models the billing experience. Starter Pro wires the billing business layer.
+</Callout>
 
 ## Billing philosophy
 
 Starter Free ships the **billing surface**, not the billing engine.
 
-Included:
+| Included | Not included |
+| --- | --- |
+| Plan display | Stripe Checkout |
+| Renewal information | Stripe webhooks |
+| Seats concept | subscription lifecycle sync |
+| Invoice history UI | real Stripe invoices |
+| Billing portal entry point | customer portal session creation |
+| Payment method surface | backend billing contracts |
 
--   Plan display
--   Renewal info
--   Seats concept
--   Invoice history UI
--   Billing portal entrypoints
+This separation lets you validate monetization UX before committing to full Stripe architecture.
 
-Not included:
+<Callout type="info" title="Why this matters">
+  Billing is not just a page. It is a revenue workflow. The UI can be mocked early, but the production implementation must be wired carefully.
+</Callout>
 
--   Stripe integration
--   Webhooks
--   Subscription logic
+## What you’ll understand
 
-------------------------------------------------------------------------
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing surface
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Understand the mocked plan, seats, payment method, and portal entry point.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-## Billing route overview
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FileText className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Invoice model
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        See how invoice history is represented before replacing it with Stripe data.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-Location:
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Stripe boundary
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Know where Checkout, Portal, webhooks, and subscription sync plug in later.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-``` bash
-app/billing/page.tsx
+## Mental model
+
+> Billing UI is stable.
+> Billing implementation evolves behind it.
+
+| Layer | Responsibility |
+| --- | --- |
+| UI | Plan, invoices, payment method, seats, portal actions |
+| Backend | Creates checkout and portal sessions |
+| Stripe | Payments, subscriptions, invoices, customer state |
+| Webhooks | Source of truth for lifecycle changes |
+| Database | Stores synchronized billing state for the app |
+
+<Callout title="Production rule">
+  Never treat the billing page as the source of truth. Stripe events and your backend state must drive production billing.
+</Callout>
+
+## Steps
+
+<Steps>
+
+<Step>
+### Understand the billing route
+
+The billing surface lives here:
+
+```txt title="route"
+app/(app)/billing/page.tsx
 ```
 
-Simulates:
+It simulates:
 
--   Current plan
--   Seats
--   Renewal date
--   Payment method
--   Invoice history
--   Portal entrypoints
+- current plan
+- seats
+- renewal date
+- subscription status
+- payment method
+- invoice history
+- billing portal action
 
-------------------------------------------------------------------------
+This route is designed to feel like a real SaaS billing area before backend wiring exists.
+</Step>
 
-## Mocked subscription model
+<Step>
+### Review the mocked subscription model
 
-``` tsx
+Starter Free uses a mocked subscription object.
+
+```tsx title="app/(app)/billing/page.tsx"
 const plan = {
   name: "Pro",
   priceLabel: "€29 / month",
   seats: 10,
   renewalIso: "2026-03-01",
-  status: "active"
+  status: "active",
+};
+```
+
+Later, this should be replaced by your backend subscription state.
+
+```tsx title="app/(app)/billing/page.tsx"
+const plan = await getCurrentSubscription(user.id);
+```
+
+The UI should not need a rewrite when the source changes.
+</Step>
+
+<Step>
+### Replace invoices with Stripe-backed data
+
+Invoice history starts as mock data.
+
+```tsx title="app/(app)/billing/page.tsx"
+const MOCK_INVOICES = [
+  {
+    number: "INV-0001",
+    amountCents: 2900,
+    status: "paid",
+  },
+];
+```
+
+Later, invoices should come from Stripe or from a synchronized invoice table in your database.
+
+```ts title="server/billing/invoices.ts"
+export async function listInvoices(customerId: string) {
+  return stripe.invoices.list({
+    customer: customerId,
+    limit: 10,
+  });
 }
 ```
+</Step>
 
-Later replaced by backend + Stripe API.
+<Step>
+### Wire the billing portal later
 
-------------------------------------------------------------------------
+The frontend should call your backend, not Stripe directly.
 
-## Invoice table
-
-``` tsx
-const MOCK_INVOICES = [
-  { number: "INV-0001", amountCents: 2900, status: "paid" }
-]
-```
-
-Replace with real Stripe invoices later.
-
-------------------------------------------------------------------------
-
-## Stripe integration flow
-
-Backend:
-
-``` bash
+```txt title="endpoint"
 POST /api/billing/portal
 ```
 
-Pseudo code:
+Your backend creates the portal session:
 
-``` ts
+```ts title="app/api/billing/portal/route.ts"
 const session = await stripe.billingPortal.sessions.create({
   customer: stripeCustomerId,
-  return_url: "https://yourapp.com/billing"
-})
+  return_url: "https://yourapp.com/billing",
+});
 ```
 
-Frontend redirect:
+Then the frontend redirects:
 
-``` ts
-window.location.href = session.url
+```ts title="app/billing/page.tsx"
+window.location.href = session.url;
 ```
 
-------------------------------------------------------------------------
+<Callout type="info" title="Security boundary">
+  Stripe secret keys must stay on the server. The browser should only receive a session URL created by your backend.
+</Callout>
+</Step>
 
-## Future lifecycle
+</Steps>
 
-1.  User upgrades plan
-2.  Stripe Checkout opens
-3.  Webhook updates subscription
-4.  App loads updated plan
-5.  Billing page reflects state
+## Stripe lifecycle
 
-------------------------------------------------------------------------
+A production billing system usually follows this flow:
 
-## Common pitfalls
+```txt title="stripe-lifecycle.txt"
+User selects a plan
+  ↓
+Stripe Checkout opens
+  ↓
+Payment or subscription is created
+  ↓
+Stripe sends webhook event
+  ↓
+Backend verifies event
+  ↓
+Database subscription state updates
+  ↓
+App reads updated billing state
+```
 
--   Coupling billing to UI
--   Skipping webhooks
--   Delaying billing architecture
+<Tabs items={["Checkout", "Webhook", "Portal"]}>
+  <Tab value="Checkout">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Checkout starts revenue
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Checkout to create the initial payment or subscription. The frontend should request a checkout session from your backend.
+      </div>
+    </div>
+  </Tab>
 
-------------------------------------------------------------------------
+  <Tab value="Webhook">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Webhooks synchronize truth
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Webhooks keep your app aligned with Stripe when payments succeed, fail, renew, cancel, or change.
+      </div>
+    </div>
+  </Tab>
 
-## Mental model
+  <Tab value="Portal">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Portal manages existing customers
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use the billing portal for payment method updates, invoice access, plan changes, and cancellation flows.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
-Billing UI is stable.\
-Billing implementation evolves behind it.
+## Decision guide
 
-------------------------------------------------------------------------
+Starter Free is enough when:
+
+- you are validating pricing UX
+- you need a credible billing page in a demo
+- you want to show plan, invoice, and payment surfaces
+- you are not accepting real payments yet
+
+Starter Pro becomes the faster path when:
+
+- real payments are required
+- Stripe Checkout must work
+- webhooks must update your app
+- invoices must reflect real customer history
+- subscription status controls product access
+- auth and billing need to work together
+
+<Callout title="Ready to turn billing into revenue?">
+  Starter Free validates UX.
+  Starter Pro lets you **charge customers for real**.
+
+  → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>
+</Callout>
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>keep billing UI separate from Stripe implementation</li>
+        <li>create Checkout and Portal sessions on the server</li>
+        <li>use webhooks as the lifecycle source of truth</li>
+        <li>store synchronized billing state in your app database</li>
+        <li>make billing copy clear, specific, and trustworthy</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>calling Stripe secret APIs from the browser</li>
+        <li>treating UI state as billing truth</li>
+        <li>skipping webhook verification</li>
+        <li>unlocking paid features before backend confirmation</li>
+        <li>hiding payment failures behind vague error messages</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## UX copywriting
+
+Billing pages are high-trust surfaces. Copy should reduce doubt and make money-related actions explicit.
+
+Use clear labels:
+
+- “Manage billing”
+- “View invoices”
+- “Update payment method”
+- “Change plan”
+- “Cancel subscription”
+
+Avoid vague labels:
+
+- “Continue”
+- “Submit”
+- “Open”
+- “Confirm”
+
+<Callout title="Conversion principle">
+  Billing copy should make the next action obvious. Users should never wonder whether they are starting checkout, opening a portal, changing a plan, or cancelling access.
+</Callout>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Why is billing mocked in Starter Free?">
+    Because billing architecture depends on real customer state, Stripe products, webhook handling, and backend contracts. Starter Free focuses on validating the billing surface before wiring the engine.
+  </Accordion>
+
+  <Accordion title="Can I connect Stripe myself?">
+    Yes. Keep Stripe secret logic on the server, create Checkout and Portal sessions through backend endpoints, and use webhooks to update your app state.
+  </Accordion>
+
+  <Accordion title="Should the billing page call Stripe directly?">
+    No. The billing page should call your backend. Your backend should communicate with Stripe and return safe session URLs or synchronized billing data.
+  </Accordion>
+</Accordions>
 
 ## Next steps
 
-→ Deployment
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Deployment</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Deploy the starter and understand what stays mocked before production wiring.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-</DocsPageShell>
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move from mocked billing UX to production-shaped Stripe, auth, backend, and delivery foundations.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro Billing</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review the production billing foundation when you are ready to wire the business layer.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Async Actions Pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design payment, portal, retry, and feedback actions with production-ready UX.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<Callout title="Upgrade when billing becomes real">
+  Starter Free gives you the billing surface.
+  Starter Pro gives you the production-ready business layer: auth, Stripe, backend structure, and secure delivery.
+
+  <a
+    href="/docs/starter-pro"
+    className=" no-underline  hover:underline"
+  >
+    Upgrade to Starter Pro →
+  </a>
+</Callout>

@@ -1,135 +1,306 @@
 ---
 title: Overview
-description: Documentation for the PyColors Starter Free — a production-shaped SaaS surface you can run in minutes.
+description: Starter Free — a production-shaped SaaS surface to validate, demo, and launch faster.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CreditCard,
+  LayoutDashboard,
+  LockKeyhole,
+  Rocket,
+  Settings,
+  Users,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Free</Badge>
+</div>
 
-Starter Free is a **production-shaped Next.js SaaS surface** designed to help you ship faster.
+## Build a real SaaS surface in minutes
 
-You get real screens, real navigation, real states — all mocked by design and ready to wire when your product becomes real.
+Starter Free is a **production-shaped Next.js SaaS surface** designed to help you validate a product idea faster.
 
-This documentation guides you from **first run → understanding → wiring → upgrade path**.
+It is not a blank repo.
+It is not a toy demo.
+It is not a backend-heavy boilerplate.
 
----
+It gives you a credible product interface you can:
 
-## What this starter is
+- run locally in minutes
+- explore like a real app
+- adapt to your own domain
+- present to users, clients, or investors
+
+<Callout title="Core idea">
+  Starter Free gives you the surface of a real SaaS product. You wire the business layer when the product direction is clear.
+</Callout>
+
+## What you get
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LayoutDashboard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Dashboard surface
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Real navigation, page structure, KPIs, cards, and product layout foundations.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Users className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Product flows
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        CRUD-style entity flow, admin surface, members, dialogs, and realistic UX states.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing surface
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Pricing, current plan, invoice history, payment method surface, and portal entry point.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Mental model
+
+> Build the product surface first. Wire the system second.
+
+Starter Free helps you answer:
+
+- does the product feel credible?
+- does the navigation make sense?
+- do the main flows feel complete?
+- can this become a real SaaS?
+
+Starter Pro helps you answer:
+
+- how do users sign in for real?
+- how do customers pay?
+- how do protected routes work?
+- how does backend state replace mocks?
+
+<Tabs items={["Starter Free", "Starter Pro"]}>
+  <Tab value="Starter Free">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Validate the product surface
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Starter Free to shape routes, screens, UX states, product language, and navigation before production wiring.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Starter Pro">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Wire the business layer
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move to Starter Pro when auth, billing, protected routes, backend foundations, and production flows become the blocker.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## What it is
+
+Starter Free is:
+
+- a frontend-first SaaS foundation
+- a production-shaped UI surface
+- a real product structure
+- a validation tool for your idea
+- a fast way to create a credible SaaS demo
 
 Starter Free is not:
 
-- a blank Next.js repo
-- a backend-heavy template
-- a demo full of fake components
+- a complete SaaS backend
+- a fully wired auth system
+- a real Stripe billing engine
+- a database-backed product
+- a fake component playground
 
-It is a **frontend-first SaaS foundation** that gives you:
+<Callout type="info" title="Frontend-first by design">
+  Starter Free keeps auth, billing, and data mocked so you can validate the product before committing to backend complexity.
+</Callout>
 
-- Auth UX
-- Dashboard surface
-- CRUD entity workflow
-- Admin / members surface
-- Billing surface
-- Settings structure
+## Who it is for
 
-All running locally in minutes.
+Use Starter Free if you are:
 
----
+- building a SaaS MVP
+- validating a product idea
+- creating a demo for users or investors
+- designing a product before backend decisions
+- shipping fast with a frontend-first approach
 
-## Who this is for
+It is especially useful when you need a credible product surface before production infrastructure is worth the cost.
 
-Starter Free works best if you are:
+## Documentation path
 
-- Building a SaaS MVP
-- Prototyping a product
-- Pitching an idea
-- Creating a frontend-first startup
-- Preparing a product before wiring backend
+Follow the pages in order.
 
----
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Getting Started</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand what Starter Free gives you, what is mocked, and how to approach it.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-## How to use this documentation
+  <a href="/docs/starter/installation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Installation</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Run the starter locally and validate the main SaaS routes.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-We recommend following the pages **in order**.
+  <a href="/docs/starter/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Project Structure</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how routes, feature components, mock data, and UI primitives are organized.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-The docs are designed as a guided path.
+  <a href="/docs/starter/auth-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <LockKeyhole className="h-4 w-4 text-primary" />
+        Auth Concept
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the auth UX contract before wiring a real provider.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-<LinkCards>
-  <LinkCard
-    title="Getting Started"
-    description="Understand what the starter includes and how to approach it."
-    href="/docs/starter/getting-started"
-  />
-  <LinkCard
-    title="Installation"
-    description="Run the starter locally and explore the app."
-    href="/docs/starter/installation"
-  />
-  <LinkCard
-    title="Project Structure"
-    description="Learn how the codebase is organized."
-    href="/docs/starter/project-structure"
-  />
-  <LinkCard
-    title="Auth concept"
-    description="Understand how authentication is modeled."
-    href="/docs/starter/auth-concept"
-  />
-  <LinkCard
-    title="Billing concept"
-    description="See how monetization is prepared."
-    href="/docs/starter/billing-concept"
-  />
-  <LinkCard
-    title="Deployment"
-    description="Deploy the starter to production."
-    href="/docs/starter/deployment"
-  />
-  <LinkCard
-    title="Upgrade to PRO"
-    description="Know when and how to upgrade safely."
-    href="/docs/starter/upgrade-to-pro"
-  />
-</LinkCards>
+  <a href="/docs/starter/billing-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <CreditCard className="h-4 w-4 text-primary" />
+        Billing Concept
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See how monetization is modeled before Stripe wiring.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
----
+  <a href="/docs/starter/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Rocket className="h-4 w-4 text-primary" />
+        Deployment
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Deploy early and validate the full mocked SaaS surface online.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-## Starter Free philosophy
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30 md:col-span-2">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Settings className="h-4 w-4 text-primary" />
+        Upgrade to Starter Pro
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Know when Starter Free stops being enough and Starter Pro becomes the faster path to launch.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
 
-<Alert>
-  <AlertTitle>Frontend first</AlertTitle>
-  <AlertDescription>
-    The starter focuses on UX and structure first. You wire auth, data, and billing progressively when your product needs it.
-  </AlertDescription>
-</Alert>
+## Upgrade moment
 
-This approach helps you:
-- validate ideas faster
-- avoid premature backend complexity
-- ship demos and MVPs quickly
+Starter Free helps you start fast.
 
----
+Move to Starter Pro when your product needs:
 
-## The upgrade path
+- real authentication
+- Stripe Checkout
+- protected routes
+- backend APIs
+- role-based access
+- production data
 
-Starter Free helps you **start fast**.
+<Callout title="Free to validate. Pro to monetize.">
+  Starter Free proves the product surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, and delivery. → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>
+</Callout>
 
-Later, you may need:
-- production auth wiring
-- Stripe integration
-- role-based permissions
-- multi-organization architecture
+## Why this matters
 
-When that happens, the **PRO version** provides the production foundation.
+Most projects slow down before users ever see the product because:
 
----
+- UX is built too late
+- backend complexity starts too early
+- the product surface is not visible enough
+- billing and auth become blockers before validation
 
-## Next step
+Starter Free fixes that by giving you something real early.
 
-Start with:
-
-→ **Getting Started**
-
-</DocsPageShell>
+<Callout title="Build fast. Validate early. Upgrade when ready.">
+  This is the PyColors path: idea → product surface → validation → production wiring.
+</Callout>

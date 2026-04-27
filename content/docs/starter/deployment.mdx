@@ -1,94 +1,384 @@
 ---
-description: Deploy Starter Free to production and prepare your
-  environment for real users.
 title: Deployment
+description: Deploy Starter Free to production and prepare your environment for real users.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Cloud,
+  GitBranch,
+  Rocket,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Deployment</Badge>
+</div>
 
-Running locally is step one.\
-Deploying early is step two.
+## Overview
 
-------------------------------------------------------------------------
+Running locally is step one. Deploying early is step two.
 
-## You'll learn
+Starter Free is intentionally simple to deploy because it does not require a database, auth secrets, Stripe keys, or backend services yet.
 
--   How to deploy the starter
--   How env variables fit later
--   What to verify after deploy
--   Common deployment pitfalls
+The goal is to get a credible SaaS surface online quickly so you can:
 
-------------------------------------------------------------------------
+- test production builds
+- share a live demo
+- validate product direction
+- prepare the path to real users
 
-## Production checklist
+<Callout title="Deployment principle">
+  Deploy early. Wire progressively. Do not wait for the backend to exist before validating the product surface.
+</Callout>
 
-Test locally:
+## What you’ll do
 
-``` bash
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Validate locally
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Build and run the app locally before deploying.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Cloud className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Deploy to Vercel
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Push the starter to your repository and import it on Vercel.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Rocket className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Verify routes
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Confirm the main SaaS surfaces work in production.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Mental model
+
+> Starter Free deploys as a frontend-first product surface.
+> Production wiring comes later.
+
+| Today | Later |
+| --- | --- |
+| mocked auth | real session provider |
+| mocked billing | Stripe Checkout and Portal |
+| static invoices | synced invoice history |
+| mock data | database-backed records |
+| local UX validation | production user flows |
+
+<Callout type="info" title="No secrets required yet">
+  Starter Free can deploy without `AUTH_SECRET`, `DATABASE_URL`, `STRIPE_SECRET_KEY`, or `STRIPE_WEBHOOK_SECRET` because those systems are intentionally mocked.
+</Callout>
+
+## Steps
+
+<Steps>
+
+<Step>
+### Validate the production build locally
+
+Run the production build before deploying.
+
+```bash title="terminal"
 pnpm build
 pnpm start
 ```
 
-------------------------------------------------------------------------
+Then open:
 
-## Deploy on Vercel
+```txt title="browser"
+http://localhost:3000
+```
 
-Push repo:
+If the app builds and starts locally, you have already caught the most common deployment issue.
+</Step>
 
-``` bash
+<Step>
+### Push to your repository
+
+Create or connect your GitHub repository.
+
+```bash title="terminal"
 git remote remove origin
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
 ```
 
-Import project on Vercel and deploy.
+Use your own repository name and organization.
+</Step>
 
-No environment variables required yet.
+<Step>
+### Import on Vercel
 
-------------------------------------------------------------------------
+On Vercel:
 
-## Verify routes
+1. create a new project
+2. import your repository
+3. keep the detected Next.js settings
+4. deploy
 
--   /login
--   /dashboard
--   /projects
--   /admin
--   /billing
--   /settings
+Starter Free does not require environment variables at this stage.
+</Step>
 
-------------------------------------------------------------------------
+<Step>
+### Verify production routes
 
-## Future env variables
+After deployment, open the main routes:
 
-``` bash
+```txt title="production routes"
+/login
+/register
+/dashboard
+/projects
+/admin
+/billing
+/settings
+```
+
+You should be able to navigate the full mocked SaaS surface.
+</Step>
+
+</Steps>
+
+## Future environment variables
+
+You do not need these variables for Starter Free, but they become relevant when the product moves toward real users.
+
+```bash title=".env.local"
 AUTH_SECRET=
 DATABASE_URL=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 ```
 
-------------------------------------------------------------------------
+<Tabs items={["Auth", "Database", "Stripe"]}>
+  <Tab value="Auth">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Auth variables
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Add auth secrets when sessions, providers, password reset, and protected routes become real.
+      </div>
+    </div>
+  </Tab>
 
-## Common pitfalls
+  <Tab value="Database">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Database variables
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Add a database URL when mocked data becomes persisted product data.
+      </div>
+    </div>
+  </Tab>
 
--   Deploying too late
--   Ignoring production builds
--   Adding env variables too early
+  <Tab value="Stripe">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Stripe variables
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Add Stripe keys and webhook secrets when billing becomes a real revenue workflow.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
-------------------------------------------------------------------------
+## Production checklist
 
-## Mental model
+Before sharing the deployment, confirm that:
 
-Deploy early.\
-Wire progressively.
+- `pnpm build` succeeds locally
+- the deployed app loads without runtime errors
+- auth pages are reachable
+- dashboard pages are reachable
+- project routes work
+- admin, billing, and settings pages render
+- no required environment variable is missing
+- navigation works on desktop and mobile
+- mocked billing and auth are clearly understood as non-production wiring
 
-------------------------------------------------------------------------
+<Callout title="Good deployment signal">
+  If all routes load and the product surface feels coherent, the deployment is ready for demos, validation, and product iteration.
+</Callout>
+
+## Decision guide
+
+Deploy Starter Free when:
+
+- you want to share a demo
+- you need feedback from users or clients
+- you want to validate UX before backend work
+- you want a production URL for your product story
+- you want to catch build issues early
+
+Move to Starter Pro when:
+
+- real users need accounts
+- routes must be protected
+- Stripe must charge customers
+- billing state must unlock features
+- backend data must replace mock data
+- deployment must support production operations
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>deploy early to validate the product surface</li>
+        <li>run `pnpm build` before pushing</li>
+        <li>verify core routes after deployment</li>
+        <li>add secrets only when systems become real</li>
+        <li>upgrade when backend wiring becomes the blocker</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>waiting for backend wiring before deploying</li>
+        <li>skipping production builds locally</li>
+        <li>adding unused environment variables too early</li>
+        <li>assuming mocked billing is production billing</li>
+        <li>sharing a demo before checking all core routes</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Troubleshooting
+
+<Accordions type="single">
+  <Accordion title="The build fails on Vercel but works locally">
+    Reproduce the production build locally first.
+
+```bash title="terminal"
+rm -rf .next
+pnpm install
+pnpm build
+```
+
+    Then check Node.js version, lockfile state, and package manager configuration.
+  </Accordion>
+
+  <Accordion title="A page fails because an environment variable is missing">
+    Starter Free should not require production secrets. If a page fails because of a secret, confirm you did not add real auth, database, or Stripe code before configuring its environment.
+  </Accordion>
+
+  <Accordion title="The deployment shows an old version">
+    Confirm the latest commit was pushed to the branch connected to Vercel. Then redeploy from the Vercel dashboard if needed.
+  </Accordion>
+</Accordions>
 
 ## Next steps
 
-→ Upgrade to PRO
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Know when Starter Free stops being enough and Pro becomes the faster path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-</DocsPageShell>
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move from mocked UX to production-shaped auth, billing, backend, and delivery.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<Callout title="Free to deploy. Pro to launch.">
+  Starter Free gives you a live SaaS surface. Starter Pro gives you the production wiring behind it. → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>
+</Callout>

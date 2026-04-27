@@ -1,149 +1,219 @@
 ---
-description: Understand how authentication is modeled in Starter Free
-  and how to wire it safely to your provider.
-title: Auth concept
+title: Auth Concept
+description: Understand how authentication is modeled in Starter Free and how to wire it safely to your provider.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Auth</Badge>
+</div>
 
-Authentication is the **entry point of every SaaS**.
+## Overview
 
-Starter Free ships a complete **authentication surface**: screens,
-states, validation, flows, and redirects — but no provider.
+Authentication is the **entry point of every SaaS product**.
 
-This separation is intentional.
+Starter Free gives you a complete **authentication surface**:
 
-------------------------------------------------------------------------
+- login
+- register
+- forgot password
+- validation
+- loading states
+- error states
+- redirect flows
 
-## You'll learn
+But **no provider is wired**.
 
--   How auth is modeled in the starter
--   What is included vs intentionally missing
--   Where to plug your auth provider
--   How to avoid common auth mistakes
+This is intentional.
 
-------------------------------------------------------------------------
-
-## The auth philosophy
-
-Starter Free focuses on the **UX contract**, not the implementation.
-
-You keep: - Pages - Forms - Validation - Loading states - Error
-surfaces - Redirect patterns
-
-You swap: - Session provider - Token storage - API calls - Email
-delivery
-
-------------------------------------------------------------------------
-
-## Auth routes overview
-
-Included routes:
-
--   /login
--   /register
--   /forgot-password
-
-------------------------------------------------------------------------
-
-## AuthShell layout
-
-``` tsx
-<AuthShell title="..." description="..." footer={...} />
-```
-
-Provides consistent layout and spacing.
-
-------------------------------------------------------------------------
-
-## Login flow
-
-Location:
-
-``` bash
-app/(auth)/login/page.tsx
-```
-
-Redirect after login:
-
-``` bash
-/dashboard
-```
-
-------------------------------------------------------------------------
-
-## Register flow
-
-Location:
-
-``` bash
-app/(auth)/register/page.tsx
-```
-
-Redirect after signup:
-
-``` bash
-/dashboard
-```
-
-------------------------------------------------------------------------
-
-## Forgot password flow
-
-Location:
-
-``` bash
-app/(auth)/forgot-password/page.tsx
-```
-
-Never reveal if an email exists.
-
-------------------------------------------------------------------------
-
-## Wiring an auth provider
-
-Provider-agnostic:
-
--   Auth.js / NextAuth
--   Clerk
--   Supabase Auth
--   Custom backend
-
-Example:
-
-``` tsx
-await signIn(email, password)
-router.push("/dashboard")
-```
-
-------------------------------------------------------------------------
-
-## Route protection (future)
-
-Protect:
-
-``` bash
-/dashboard
-/projects
-/admin
-/billing
-/settings
-```
-
-------------------------------------------------------------------------
+<Callout title="Core idea">
+  Starter Free defines the **auth UX contract**.
+  You plug in the provider when your product becomes real.
+</Callout>
 
 ## Mental model
 
-Auth UI is stable.\
-Auth implementation is replaceable.
+> Auth UI is stable.
+> Auth implementation is replaceable.
 
-------------------------------------------------------------------------
+| Layer | Responsibility |
+|---|---|
+| UI | Forms, states, validation, feedback |
+| Routing | Redirects, protected pages |
+| Provider | Sessions, tokens, identity |
+| Backend (later) | permissions, roles, access control |
 
-## Next steps
 
-→ Billing concept
 
-</DocsPageShell>
+## What Starter Free gives you
+
+<div className="grid gap-4 md:grid-cols-2">
+
+<Card className="rounded-2xl border-border/60 bg-card/70">
+  <CardHeader>
+    <CardTitle className="text-sm">Included</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul className="space-y-2 text-sm text-muted-foreground">
+      <li>login / register / forgot password screens</li>
+      <li>form validation and error states</li>
+      <li>loading and disabled states</li>
+      <li>redirect flows</li>
+      <li>AuthShell layout</li>
+    </ul>
+  </CardContent>
+</Card>
+
+<Card className="rounded-2xl border-border/60 bg-card/70">
+  <CardHeader>
+    <CardTitle className="text-sm">Not included (on purpose)</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul className="space-y-2 text-sm text-muted-foreground">
+      <li>session management</li>
+      <li>JWT / cookies</li>
+      <li>OAuth providers</li>
+      <li>email delivery</li>
+      <li>password reset backend</li>
+    </ul>
+  </CardContent>
+</Card>
+
+</div>
+
+## Auth routes
+
+```txt title="routes"
+app/(auth)/
+  login/
+  register/
+  forgot-password/
+```
+
+## AuthShell pattern
+
+```tsx title="components/auth/auth-shell.tsx"
+<AuthShell
+  title="Welcome back"
+  description="Sign in to your account"
+  footer={...}
+/>
+```
+
+
+
+## Flows
+
+<Tabs items={["Login", "Register", "Forgot password"]}>
+
+<Tab value="Login">
+
+```txt
+User submits form
+→ validate inputs
+→ call signIn()
+→ redirect to /dashboard
+```
+
+</Tab>
+
+<Tab value="Register">
+
+```txt
+User creates account
+→ validate inputs
+→ call signUp()
+→ redirect to /dashboard
+```
+
+</Tab>
+
+<Tab value="Forgot password">
+
+```txt
+User submits email
+→ always show success state
+→ never reveal if email exists
+```
+
+</Tab>
+
+</Tabs>
+
+
+
+## Wiring your provider
+
+Starter Free is provider-agnostic:
+
+- Auth.js / NextAuth
+- Clerk
+- Supabase Auth
+- Custom backend
+
+```tsx title="auth-action.ts"
+async function onSubmit(values) {
+  await signIn(values.email, values.password);
+  router.push("/dashboard");
+}
+```
+
+
+
+## UX rules
+
+<div className="grid gap-6 md:grid-cols-2">
+
+<Card className="rounded-2xl border-border/60 bg-card/70">
+  <CardHeader>
+    <CardTitle className="text-sm flex items-center gap-2">
+      <CheckCircle className="h-4 w-4 text-primary" />
+      Prefer
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul className="text-sm text-muted-foreground space-y-2">
+      <li>clear error messages</li>
+      <li>disabled submit while loading</li>
+      <li>consistent redirects</li>
+      <li>explicit success states</li>
+    </ul>
+  </CardContent>
+</Card>
+
+<Card className="rounded-2xl border-border/60 bg-card/70">
+  <CardHeader>
+    <CardTitle className="text-sm flex items-center gap-2">
+      <XCircle className="h-4 w-4 text-destructive" />
+      Avoid
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul className="text-sm text-muted-foreground space-y-2">
+      <li>generic errors</li>
+      <li>double submissions</li>
+      <li>no feedback states</li>
+      <li>leaking user existence</li>
+    </ul>
+  </CardContent>
+</Card>
+
+</div>

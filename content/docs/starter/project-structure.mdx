@@ -1,315 +1,547 @@
 ---
-description: Understand how Starter Free is organized so you can extend
-  it without breaking its architecture.
 title: Project Structure
+description: Understand how Starter Free is organized so you can extend it without breaking its architecture.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Alert, AlertTitle, AlertDescription, Badge } from
-"@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  FolderTree,
+  Layers,
+  Puzzle,
+  XCircle,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Structure</Badge>
+</div>
+
+## Overview
 
 Starter Free is structured for **clarity and long-term evolution**.
 
-You are not looking at a demo folder.\
-You are looking at a **production-shaped layout**.
+This is not a demo folder. It is a **production-shaped architecture** designed to help you extend features without turning pages into large, fragile files.
 
-Understanding the structure early prevents messy refactors later.
+Understanding the structure early helps you:
 
-------------------------------------------------------------------------
+- extend features cleanly
+- keep routes readable
+- wire backend progressively
+- avoid refactors caused by mixed responsibilities
 
-## You'll learn
+<Callout title="Key idea">
+  You are not only learning where files live. You are learning how product architecture scales from a mocked SaaS surface to a real product.
+</Callout>
 
--   How the App Router structure is organized
--   Where UI lives vs business logic
--   Where to add new features
--   What not to modify blindly
+## Mental model
 
-------------------------------------------------------------------------
+> Pages define routes.
+> Components define features.
+> UI defines primitives.
 
-## High-level architecture
+| Layer | Responsibility |
+| --- | --- |
+| `app/` | Routing, layouts, and product entry points |
+| `components/` | Feature composition and interaction logic |
+| `@pycolors/ui` | Stateless UI primitives used across the product |
 
-Starter Free follows this mental model:
+<Callout type="info" title="System rule">
+  Keep pages thin. When interaction logic grows, move it into a feature folder.
+</Callout>
 
-> **App Router pages → Feature components → UI primitives**
+## Structure
 
-Separation matters.
+<Files>
+  <Folder name="app" defaultOpen>
+    <Folder name="(auth)" defaultOpen>
+      <Folder name="login">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="register">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="forgot-password">
+        <File name="page.tsx" />
+      </Folder>
+       <File name="layout.tsx" />
+    </Folder>
 
--   Pages define routes and layout
--   Feature components handle interaction
--   UI components remain generic and reusable
+    <Folder name="(app)" defaultOpen>
+      <Folder name="admin">
+        <File name="page.tsx" />
+      </Folder>
 
-------------------------------------------------------------------------
+      <Folder name="billing">
+        <File name="page.tsx" />
+      </Folder>
 
-## Root structure overview
+      <Folder name="dashboard">
+        <File name="page.tsx" />
+      </Folder>
 
-At a high level:
+      <Folder name="projects" defaultOpen>
+        <File name="page.tsx" />
+        <Folder name="[id]">
+          <File name="page.tsx" />
+        </Folder>
+      </Folder>
 
-   - app/
-   - components/
+      <Folder name="settings">
+        <File name="page.tsx" />
+      </Folder>
 
-------------------------------------------------------------------------
+      <File name="layout.tsx" />
+    </Folder>
+  </Folder>
 
-## The `app/` directory
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-table.tsx" />
+      <File name="project-row-actions.tsx" />
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+      <File name="project-types.ts" />
+    </Folder>
 
-This is your routing layer.
+    <Folder name="layout">
+      <File name="page-shell.tsx" />
+    </Folder>
+  </Folder>
+</Files>
 
-Example routes:
-<pre>
-    app/
-      (auth)/
-        login/
-        register/
-        forgot-password/
-      dashboard/
-      projects/
-      admin/
-      billing/
-      settings/
-</pre>
-Key idea:
+This structure is intentionally small. It separates route ownership from feature composition.
 
--   Routes define product surface
--   Layout decisions happen here
--   No heavy business logic
+## Architecture flow
 
-------------------------------------------------------------------------
+```txt title="architecture-flow.txt"
+App Router pages
+  ↓
+Feature components
+  ↓
+PyColors UI primitives
+```
 
-### Auth routes
+A page should describe the product surface. Feature components should own interactions. UI primitives should stay reusable and stateless.
 
-    app/(auth)/
+<Tabs items={["Route", "Feature", "Primitive"]}>
+  <Tab value="Route">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Route layer
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Defines the URL, page-level structure, and high-level composition. It should not become the place where all feature behavior lives.
+      </div>
+    </div>
+  </Tab>
 
-Contains:
+  <Tab value="Feature">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Feature layer
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Owns dialogs, row actions, local state, mock data, and the parts that will later connect to APIs or server actions.
+      </div>
+    </div>
+  </Tab>
 
--   `/login`
--   `/register`
--   `/forgot-password`
+  <Tab value="Primitive">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        UI primitive layer
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Provides reusable building blocks such as Button, Card, Table, Dialog, Sheet, Input, Badge, Alert, and Skeleton.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
-These pages: - Simulate loading - Show form states - Expose UX contracts
+## App directory
 
-They are **ready to wire to any auth provider**.
+The `app/` directory is the routing layer.
 
-------------------------------------------------------------------------
+It defines:
 
-### App routes (main SaaS surface)
+- auth entry points
+- dashboard pages
+- product routes
+- settings and billing surfaces
+- high-level layout composition
 
-    app/dashboard
-    app/projects
-    app/admin
-    app/billing
-    app/settings
+<Files>
+  <Folder name="app" defaultOpen>
+    <Folder name="(auth)" defaultOpen>
+      <Folder name="login">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="register">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="forgot-password">
+        <File name="page.tsx" />
+      </Folder>
+    </Folder>
 
-These routes validate:
+    <Folder name="(app)" defaultOpen>
+      <Folder name="dashboard">
+        <File name="page.tsx" />
+      </Folder>
 
--   Navigation consistency
--   PageShell layout
--   Card-based structure
--   Loading + empty states
--   Dialog patterns
+      <Folder name="projects">
+        <File name="page.tsx" />
+        <Folder name="[id]">
+          <File name="page.tsx" />
+        </Folder>
+      </Folder>
 
-------------------------------------------------------------------------
+      <Folder name="admin">
+        <File name="page.tsx" />
+      </Folder>
 
-## The `components/` directory
+      <Folder name="billing">
+        <File name="page.tsx" />
+      </Folder>
 
-This is where feature logic lives.
+      <Folder name="settings">
+        <File name="page.tsx" />
+      </Folder>
+    </Folder>
+  </Folder>
+</Files>
+<br />
+<Callout title="Page rule">
+  A page should compose the feature. It should not become the feature itself.
+</Callout>
 
-Example:
+## Components directory
 
-    components/
-      projects/
-        project-table.tsx
-        project-row-actions.tsx
-        project-rename-dialog.tsx
-        project-confirm-delete-dialog.tsx
+The `components/` directory contains feature-level building blocks.
 
-This separation is intentional.
+For example, the projects feature keeps table rendering, row actions, dialogs, and mock types together.
 
-### Why it matters
+<Files>
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-table.tsx" />
+      <File name="project-row-actions.tsx" />
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+      <File name="project-types.ts" />
+    </Folder>
+  </Folder>
+</Files>
 
-The page:
+This keeps the route clean:
 
-    app/projects/page.tsx
+```tsx title="app/projects/page.tsx"
+import { ProjectTable } from "@/components/projects/project-table";
 
-Does not implement rename/delete logic directly.
+export default function ProjectsPage() {
+  return <ProjectTable />;
+}
+```
 
-It delegates to:
+And moves feature behavior into the feature folder.
 
-    components/projects/
+```tsx title="components/projects/project-row-actions.tsx"
+export function ProjectRowActions() {
+  return (
+    // dropdown actions, rename dialog, delete confirmation
+    // and later API wiring live here
+    null
+  );
+}
+```
 
-This keeps: - Pages clean - Logic reusable - Code testable later
+## Mock data strategy
 
-------------------------------------------------------------------------
+Mock data lives close to the feature using it.
 
-## Mock data lives with features
+<Files>
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-types.ts" />
+    </Folder>
+  </Folder>
+</Files>
 
-Example:
+<br />
 
-    components/projects/project-types.ts
+```ts title="components/projects/project-types.ts"
+export type Project = {
+  id: string;
+  name: string;
+  status: "active" | "draft" | "archived";
+};
 
-Contains:
+export const MOCK_PROJECTS: Project[] = [
+  {
+    id: "project_1",
+    name: "Acme Dashboard",
+    status: "active",
+  },
+];
+```
 
--   Type definitions
--   MOCK_PROJECTS
+Later, you replace the mock source with:
 
-This keeps mock data close to where it's used.
+- API calls
+- server actions
+- database queries
+- authenticated user data
 
-Later, you replace:
+The UI structure can remain stable.
 
-    MOCK_PROJECTS
+<Callout title="Why this is powerful">
+  Mock data is temporary. Product structure is not. Keep the structure stable and replace the source of truth when the product is ready.
+</Callout>
 
-With:
+## PageShell pattern
 
--   API calls
--   Server actions
--   Database fetches
+Main SaaS pages use a shared shell for consistent page structure.
 
-Without rewriting UI.
-
-------------------------------------------------------------------------
-
-## PageShell abstraction
-
-All main pages use:
-
-``` tsx
+```tsx title="components/layout/page-shell.tsx"
 <PageShell
-  title="..."
-  description="..."
+  title="Projects"
+  description="Manage your product entities."
   actions={...}
   meta={...}
 />
 ```
 
-This ensures:
+Use this pattern to keep:
 
--   Consistent spacing
--   Predictable headers
--   Structured metadata blocks
+- page spacing consistent
+- headers predictable
+- actions aligned
+- metadata structured
 
-Do not bypass this pattern unless necessary.
+Do not bypass it unless the page truly needs a different layout.
 
-------------------------------------------------------------------------
+## Dialog pattern
 
-## Dialog patterns
+Dialogs are isolated from the page and controlled by their parent feature.
 
-Rename and delete use:
+<Files>
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+    </Folder>
+  </Folder>
+</Files>
 
--   `ProjectRenameDialog`
--   `ProjectConfirmDeleteDialog`
+<br />
+Recommended ownership:
 
-Pattern:
+| Concern | Owner |
+| --- | --- |
+| Open state | Parent feature component |
+| Form UI | Dialog component |
+| API call later | Feature/service layer |
+| Visual primitive | `@pycolors/ui` Dialog |
 
--   Dialog is isolated
--   Parent controls open state
--   Side effects handled cleanly
+This makes rename and delete flows easier to wire later without changing page structure.
 
-This scales well when wiring APIs later.
+## Add a new feature
 
-------------------------------------------------------------------------
+Use the existing Projects pattern as your template.
 
-## Where to add a new feature
+<Steps>
+  <Step>
+    ### Add the route
 
-Let's say you want to add:
-
-**Reports**
-
-### Step 1 — Add route
-
-``` bash
-app/reports/page.tsx
+```bash title="terminal"
+mkdir -p app/reports
+touch app/reports/page.tsx
 ```
+  </Step>
 
-### Step 2 — Create feature folder
+  <Step>
+    ### Create the feature folder
 
-``` bash
-components/reports/
+```bash title="terminal"
+mkdir -p components/reports
+touch components/reports/report-table.tsx
+touch components/reports/report-row-actions.tsx
+touch components/reports/report-types.ts
 ```
+  </Step>
 
-### Step 3 — Add table + dialogs
+  <Step>
+    ### Compose the page
 
-Follow the Projects pattern.
+```tsx title="app/reports/page.tsx"
+import { ReportTable } from "@/components/reports/report-table";
 
-Do not copy logic into the page directly.
-
-------------------------------------------------------------------------
-
-## Common pitfalls
-
-### 1. Putting logic directly in pages
-
-Avoid:
-
-``` tsx
-app/projects/page.tsx
+export default function ReportsPage() {
+  return <ReportTable />;
+}
 ```
+  </Step>
+</Steps>
 
-Becoming 500 lines long.
+## Decision guide
 
-Keep logic in `components/feature/`.
+Use the Starter Free structure if:
 
-### 2. Mixing UI and data fetching
+- you want thin route files
+- features need to evolve independently
+- mock data will later become backend data
+- dialogs and row actions need to stay reusable
+- you want a clear path from frontend surface to production wiring
 
-UI components from `@pycolors/ui`:
+Avoid changing the structure if:
 
--   Should remain dumb
--   Should not fetch data
--   Should not contain business rules
+- you have not explored the full vertical slice yet
+- the change only saves a few lines today
+- the route would start owning too much logic
+- UI primitives would start fetching data
+- the mock layer would become scattered globally
 
-### 3. Deleting structure too early
+<div className="mb-2 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-The layout and separation are intentional.
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>feature-based folders</li>
+        <li>thin pages</li>
+        <li>mock data close to the feature</li>
+        <li>isolated dialogs and row actions</li>
+        <li>UI primitives that stay stateless</li>
+      </ul>
+    </CardContent>
 
-Refactor after understanding.
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-------------------------------------------------------------------------
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-## How wiring will work later
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>putting feature logic directly in pages</li>
+        <li>fetching data inside UI primitives</li>
+        <li>placing all mock data in one global file</li>
+        <li>duplicating dialog logic across routes</li>
+        <li>deleting structure before understanding it</li>
+      </ul>
+    </CardContent>
 
-When you connect a backend:
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
--   Replace mock state with fetch
--   Move logic to server actions or API routes
--   Keep dialogs and tables intact
+## Backend wiring later
 
-Structure stays.\
-Implementation changes.
+When you connect a backend, the structure stays familiar.
 
-------------------------------------------------------------------------
+| Today | Later |
+| --- | --- |
+| `MOCK_PROJECTS` | database-backed projects |
+| local dialog state | server action or API mutation |
+| disabled billing portal | Stripe billing portal |
+| mocked auth screens | real auth provider |
+| static members | organization members from backend |
 
-## When to consider PRO
+The goal is not to rewrite the UI. The goal is to replace the data source.
 
-If you need:
+<Callout title="Upgrade when wiring becomes the blocker">
+  Starter Free validates the product surface. Starter Pro wires the business layer with production-shaped auth, billing, backend, and delivery foundations. → `/docs/starter-pro`
+</Callout>
 
--   Production auth wiring
--   Multi-organization logic
--   Role-based permissions
--   Stripe integration patterns
--   Backend contracts
+## Common questions
 
-The PRO version provides that wiring foundation.
+<Accordions type="single">
+  <Accordion title="Why keep feature logic outside the app directory?">
+    The `app/` directory should stay focused on routes and layout composition. Feature folders make behavior easier to reuse, test, and replace later.
+  </Accordion>
 
-Starter Free focuses on surface.
+  <Accordion title="Should mock data live globally?">
+    Usually no. Keeping mock data near the feature makes it easier to replace with backend data later without searching through unrelated files.
+  </Accordion>
 
-------------------------------------------------------------------------
-
-## Mental model to keep
-
-Pages define routes.\
-Components define features.\
-UI defines primitives.
-
-Respect that boundary and your product will scale calmly.
-
-------------------------------------------------------------------------
+  <Accordion title="Can I move features into a features/ directory?">
+    Yes. The important rule is the boundary, not the exact folder name. Keep route files thin and feature behavior grouped.
+  </Accordion>
+</Accordions>
 
 ## Next steps
 
-Continue to:
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter/auth-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth Concept</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand how authentication is modeled before wiring a provider.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-→ Auth concept
+  <a href="/docs/starter/billing-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Billing Concept</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See how monetization surfaces are prepared before Stripe wiring.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-You'll understand how authentication is modeled and how to wire it
-safely.
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Know when Starter Free stops being enough and Pro becomes the faster path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-</DocsPageShell>
+  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Data Table Pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn the production pattern behind the Projects table.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

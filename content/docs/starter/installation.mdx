@@ -3,13 +3,36 @@ title: Installation
 description: Run Starter Free locally in minutes and explore the full SaaS surface.
 full: false
 hero: false
-lastUpdated: "2026-04-23"
+lastUpdated: "2026-04-27"
 appliesTo: Starter Free
 ---
 
-import { Cards, Card } from "fumadocs-ui/components/card";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Code2,
+  MonitorPlay,
+  Rocket,
+  Terminal,
+  Wrench,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter</Badge>
+  <Badge>Free</Badge>
+</div>
 
 ## Overview
 
@@ -17,151 +40,254 @@ Starter Free is designed to get you from zero to a usable SaaS surface in minute
 
 By the end of this guide, you will have a local product environment running with:
 
+- auth screens
 - dashboard
 - projects
 - admin
 - billing
 - settings
-- auth
+
+No database. No Stripe keys. No auth secrets.
+
+Starter Free is intentionally mocked so you can evaluate the product surface before wiring backend services.
 
 <Callout title="What Starter Free is for">
-  Starter Free helps you validate product direction quickly with a
-  production-shaped UI surface, without needing auth, billing, or database
-  setup first.
+  Starter Free helps you validate product direction quickly with a production-shaped UI surface, without needing auth, billing, or database setup first.
 </Callout>
 
 ## What you’ll do
 
-<Cards>
-  <Card
-    title="Run the starter"
-    description="Clone the repository, install dependencies, and start the development server."
-    href="#step-1-clone-the-repository"
-  />
-  <Card
-    title="Validate the install"
-    description="Check the core routes and confirm that the local SaaS surface is working."
-    href="#step-4-validate-the-starter"
-  />
-  <Card
-    title="Start editing"
-    description="Rename the core entity, edit the dashboard, and adapt mock data to your product."
-    href="#first-things-to-try"
-  />
-</Cards>
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Terminal className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Run the starter
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Clone the repository, install dependencies, and start the development server.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <MonitorPlay className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Validate routes
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Check the core product routes and confirm the SaaS surface loads correctly.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Code2 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Start editing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Rename the core entity, edit dashboard copy, and adapt mock data to your product.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Prerequisites
 
 Make sure your environment includes:
 
-- **Node.js ≥ 18**
-- **pnpm**
-- **Git**
+- Node.js 18 or newer
+- pnpm
+- Git
 
 Recommended: use the latest Node.js LTS release.
 
 <Tabs items={["Check versions", "Install pnpm"]}>
   <Tab value="Check versions">
 
-```bash
+```bash title="terminal"
 node -v
 pnpm -v
 git --version
 ```
 
   </Tab>
+
   <Tab value="Install pnpm">
 
-```bash
+```bash title="terminal"
 npm install -g pnpm
 ```
 
   </Tab>
 </Tabs>
 
-## Installation steps
+<Callout type="info" title="Package manager">
+  Starter Free is designed around pnpm. Using npm or yarn can create lockfile and dependency inconsistencies.
+</Callout>
 
-### Step 1: Clone the repository
+## Steps
 
-```bash
+<Steps>
+
+<Step>
+### Clone the repository
+
+Clone the starter and move into the project directory.
+
+```bash title="terminal"
 git clone https://github.com/pycolors-io/pycolors-starter-free.git
 cd pycolors-starter-free
 ```
 
-### Step 2: Install dependencies
+</Step>
 
-```bash
+<Step>
+### Install dependencies
+
+Install the local baseline.
+
+```bash title="terminal"
 pnpm install
 ```
 
-This installs the local baseline, including:
+This installs the starter stack:
 
-- Next.js App Router
-- Tailwind CSS v4
-- PyColors UI
-- TypeScript
-- ESLint
+| Dependency area | Included |
+| --- | --- |
+| Framework | Next.js App Router |
+| Styling | Tailwind CSS v4 |
+| UI | PyColors UI |
+| Language | TypeScript |
+| Quality | ESLint |
 
-### Step 3: Start the development server
+</Step>
 
-```bash
+<Step>
+### Start the development server
+
+Run the app locally.
+
+```bash title="terminal"
 pnpm dev
 ```
 
 Then open:
 
+```txt title="browser"
 http://localhost:3000
+```
 
-You should land on the dashboard.
+You should land on the local Starter Free product surface.
 
-### Step 4: Validate the starter
+</Step>
 
-Open these routes in your browser:
+<Step>
+### Validate the starter
 
-- /login
-- /register
-- /dashboard
-- /projects
-- /admin
-- /billing
-- /settings
+Open the core routes:
 
-If they all load correctly, the installation is complete.
+```txt title="routes"
+/
+/login
+/register
+/dashboard
+/projects
+/admin
+/billing
+/settings
+```
+
+If the routes load correctly and navigation works, the installation is complete.
 
 <Callout type="info" title="Expected behavior">
-Starter Free is intentionally mocked. You should be able to explore screens,
-layouts, and product flows immediately without backend setup or secret configuration.
+  Starter Free is intentionally mocked. You should be able to explore screens, layouts, and product flows immediately without backend setup or secret configuration.
 </Callout>
+</Step>
+
+</Steps>
 
 ## First things to try
 
-### Edit the dashboard title
+Once the app is running, make one small product change before wiring anything.
 
-Open:
+<Tabs items={["Dashboard", "Entity", "Mock data"]}>
+  <Tab value="Dashboard">
 
+Edit the dashboard title.
+
+```txt title="file"
+app/(app)/dashboard/page.tsx
 ```
-app/dashboard/page.tsx
+
+Change the heading text and save. Hot reload should update the browser instantly.
+
+  </Tab>
+
+  <Tab value="Entity">
+
+Rename the core entity.
+
+```txt title="search"
+Projects
 ```
 
-Change the heading text and save.
+The starter is intentionally easy to adapt to your own domain model.
 
-Hot reload should update the browser instantly.
+  </Tab>
 
-### Rename the core entity
+  <Tab value="Mock data">
 
-Search for **Projects** across the repository.
+Update the mock product data.
 
-The starter is intentionally easy to rename to your own domain model.
-
-### Modify mock data
-
-Open:
-
-```
+```txt title="file"
 components/projects/project-types.ts
 ```
 
 Change the mock projects to better match your product direction.
+
+  </Tab>
+</Tabs>
+
+## What you should see
+
+At this point, you should have a local SaaS surface with:
+
+- auth screens
+- dashboard layout
+- CRUD UI
+- admin surface
+- billing surface
+- settings structure
+- hot reload
+
+<Callout title="Good sign">
+  If the UI loads correctly and route navigation works, your setup is valid enough to begin product exploration and UX iteration.
+</Callout>
 
 ## Common pitfalls
 
@@ -170,54 +296,148 @@ Starter Free does not require:
 - database URL
 - auth secrets
 - Stripe keys
+- email provider credentials
+- backend API configuration
 
 Everything is mocked by design.
 
-<Callout title="Good sign">
-If the UI loads correctly and route navigation works, your setup is already valid enough
-to begin product exploration and UX iteration.
-</Callout>
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>use pnpm consistently</li>
+        <li>validate routes before editing</li>
+        <li>change one product surface first</li>
+        <li>keep mock data while exploring UX</li>
+        <li>wire backend only after understanding the flow</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>adding database setup before the UI is understood</li>
+        <li>using npm and pnpm in the same project</li>
+        <li>deleting mocked flows before exploring them</li>
+        <li>rewriting layout before validating product structure</li>
+        <li>treating Starter Free like a complete backend template</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Troubleshooting
 
-### Port already in use
+<Accordions type="single">
+  <Accordion title="Port already in use">
+    Run the development server on another port.
 
-```bash
+```bash title="terminal"
 pnpm dev --port 3001
 ```
+  </Accordion>
 
-### Node version errors
+  <Accordion title="Node version errors">
+    Check your Node.js version.
 
-```bash
+```bash title="terminal"
 node -v
 ```
 
-Upgrade to a current Node.js LTS version, then reinstall dependencies.
+    Upgrade to a current Node.js LTS version, then reinstall dependencies.
+  </Accordion>
 
-### Using npm or yarn by mistake
+  <Accordion title="Using npm or yarn by mistake">
+    Remove npm lockfiles and reinstall with pnpm.
 
-```bash
-rm -rf node_modules package-lock.json
+```bash title="terminal"
+rm -rf node_modules package-lock.json yarn.lock
 pnpm install
 ```
+  </Accordion>
 
-### Build issues after pulling updates
+  <Accordion title="Build issues after pulling updates">
+    Clear local generated state and reinstall dependencies.
 
-```bash
+```bash title="terminal"
 rm -rf node_modules .next
 pnpm install
 pnpm dev
 ```
+  </Accordion>
+</Accordions>
 
-## What you should see
+## Next steps
 
-At this point, you should have a local SaaS surface with:
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Project Structure</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand how the codebase is organized before extending it.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-- auth screens
-- dashboard
-- CRUD UI
-- admin surface
-- billing surface
-- settings structure
+  <a href="/docs/starter/auth-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth Concept</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how authentication is modeled before wiring a provider.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-All running locally with hot reload.
+  <a href="/docs/starter/billing-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Billing Concept</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand how monetization is prepared before Stripe wiring.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Know when Starter Free stops being enough and Pro becomes the faster path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<Callout title="Upgrade when wiring becomes the blocker">
+  Starter Free validates the product surface. Starter Pro wires the business layer with production-shaped auth, billing, backend, and delivery foundations. → `/docs/starter-pro`
+</Callout>
