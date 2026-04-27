@@ -1,49 +1,99 @@
 ---
 title: Radius
 description: Radius tokens used to keep corner geometry consistent across PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Design System - Tokens
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import { CheckCircle, XCircle } from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
   <Badge>Radius</Badge>
 </div>
 
-# Radius controls how the system feels
+## Overview
 
-Corner radius has a strong effect on interface feel.
+Corner radius is one of the strongest visual signals in a UI system.
 
-It influences whether the product appears:
+It directly influences how your product feels:
 
-- sharp
-- soft
-- dense
-- calm
-- premium
-- utilitarian
+- sharp or soft
+- dense or breathable
+- utilitarian or premium
+- rigid or friendly
 
-PyColors defines a small radius scale so corners stay consistent across the system.
+PyColors defines a **small, controlled radius scale** so every surface feels consistent across:
 
----
+- components
+- dashboards
+- forms
+- documentation
+- marketing pages
 
-## Base radius
+<Callout title="Why this matters">
+  Inconsistent radius is one of the fastest ways to break visual coherence. Even small differences create a subtle feeling of “something is off”.
+</Callout>
 
-PyColors starts from one base variable.
+## What you’ll define
 
-```css
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Base radius</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      A single source of truth that controls the global feel of the UI.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Scale</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      A limited set of sizes used across all components.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Usage rules</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Clear constraints to prevent visual drift over time.
+    </CardContent>
+  </Card>
+</div>
+
+## Steps
+
+<Steps>
+
+<Step>
+### Define a base radius
+
+Start from a single variable.
+
+```css title="tokens.css"
 :root {
   --radius: 0.625rem;
 }
 ```
 
-Derived tokens are generated from that base:
+Then derive the full scale from it.
 
-```css
+```css title="tokens.css"
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -52,24 +102,16 @@ Derived tokens are generated from that base:
 }
 ```
 
-That makes it possible to adjust the global feel of the product from one place.
+This allows you to adjust the entire product feel from one place.
 
----
+</Step>
 
-## Radius scale
+<Step>
+### Map radius to Tailwind
 
-| Token | Typical use |
-|------|-------------|
-| --radius-sm | compact controls, pills, dense UI |
-| --radius-md | default interactive elements |
-| --radius-lg | cards and surfaces |
-| --radius-xl | modals and standout containers |
+Expose the tokens through Tailwind so components stay consistent.
 
----
-
-## Tailwind mapping
-
-```ts
+```ts title="tailwind.config.ts"
 borderRadius: {
   sm: "var(--radius-sm)",
   DEFAULT: "var(--radius-md)",
@@ -79,75 +121,126 @@ borderRadius: {
 }
 ```
 
----
+From that point, components only use semantic utilities.
 
-## Example
+</Step>
 
-```tsx
+<Step>
+### Apply consistently in components
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-sm border bg-card p-4 text-sm">rounded-sm</div>
+      <div className="rounded-md border bg-card p-4 text-sm">rounded-md</div>
+      <div className="rounded-lg border bg-card p-4 text-sm">rounded-lg</div>
+      <div className="rounded-xl border bg-card p-4 text-sm">rounded-xl</div>
+    </div>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="components/radius-example.tsx"
 export function RadiusExample() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <div className="rounded-sm border bg-card px-4 py-3 text-sm">
-        <div className="text-xs font-medium text-muted-foreground mb-1">
-          rounded-sm
-        </div>
-        <div>Small radius</div>
+      <div className="rounded-sm border bg-card p-4 text-sm">
+        Small radius
       </div>
 
-      <div className="rounded-md border bg-card px-4 py-3 text-sm">
-        <div className="text-xs font-medium text-muted-foreground mb-1">
-          rounded-md
-        </div>
-        <div>Default radius</div>
+      <div className="rounded-md border bg-card p-4 text-sm">
+        Default radius
       </div>
 
-      <div className="rounded-lg border bg-card px-4 py-3 text-sm">
-        <div className="text-xs font-medium text-muted-foreground mb-1">
-          rounded-lg
-        </div>
-        <div>Large radius</div>
+      <div className="rounded-lg border bg-card p-4 text-sm">
+        Large radius
       </div>
 
-      <div className="rounded-xl border bg-card px-4 py-3 text-sm">
-        <div className="text-xs font-medium text-muted-foreground mb-1">
-          rounded-xl
-        </div>
-        <div>Extra-large radius</div>
+      <div className="rounded-xl border bg-card p-4 text-sm">
+        Extra large radius
       </div>
     </div>
   );
 }
 ```
 
----
+  </Tab>
+</Tabs>
 
-## Usage guidance
+</Step>
 
-- use rounded-md as the default for most controls
-- use rounded-lg for cards and main surfaces
-- use rounded-xl sparingly for standout layers
-- use rounded-sm in denser UI contexts
-- avoid arbitrary radius values inside components
+</Steps>
 
-If a new radius keeps repeating, introduce a token instead of inventing local values.
+## Radius scale
 
----
+| Token | Usage |
+|------|------|
+| `--radius-sm` | dense UI, compact elements |
+| `--radius-md` | default controls |
+| `--radius-lg` | cards and surfaces |
+| `--radius-xl` | modals and standout containers |
 
-## Why this matters
+## Decision guide
 
-Radius seems small, but it is one of the fastest ways for systems to drift.
+Use this system if:
 
-A stable radius scale keeps the product feeling intentional even as more components appear.
+- you want visual consistency across many components
+- you are building dashboards or SaaS products
+- you want predictable theming
+- you want components to stay reusable
 
----
+Avoid local overrides if:
 
-## Related
+- the value is used in multiple places
+- it breaks consistency with existing components
+- it introduces visual noise
+- it does not belong to a reusable pattern
 
-<LinkCards>
-  <LinkCard title="Colors" href="/docs/design-system/colors" />
-  <LinkCard title="Shadows" href="/docs/design-system/tokens/shadows" />
-  <LinkCard title="Card" href="/docs/ui/card" />
-  <LinkCard title="Button" href="/docs/ui/button" />
-</LinkCards>
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        Prefer
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>use semantic radius tokens</li>
+        <li>keep a small controlled scale</li>
+        <li>reuse values across components</li>
+        <li>adjust via base variable</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-</DocsPageShell>
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <XCircle className="h-4 w-4 text-destructive" />
+        Avoid
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>random radius per component</li>
+        <li>mixing multiple visual styles</li>
+        <li>hardcoding values</li>
+        <li>breaking consistency between surfaces</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Why it matters
+
+Radius is subtle, but it shapes perception instantly.
+
+- consistent radius → product feels intentional
+- inconsistent radius → product feels unpolished
+
+Keeping radius controlled ensures your UI stays:
+
+- predictable
+- scalable
+- visually calm

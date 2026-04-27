@@ -1,190 +1,236 @@
 ---
 title: Shadows
 description: Shadow tokens used in PyColors UI to create subtle, predictable elevation across surfaces.
+lastUpdated: "2026-04-27"
+appliesTo: Design System - Tokens
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@pycolors/ui";
+import { CheckCircle, XCircle } from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
   <Badge>Shadows</Badge>
 </div>
 
-# Shadows create depth without noise
+## Overview
 
-PyColors keeps elevation subtle.
+Shadows define **depth and hierarchy** in the interface.
 
-A single shadow scale covers the most important surface types:
+In PyColors, elevation is intentionally subtle. The goal is not visual drama, but **predictable structure**.
 
-- controls
-- cards
-- menus
-- modals
+A controlled shadow system ensures that:
 
-The goal is not visual drama.
+- surfaces feel layered without noise
+- focus states are clear
+- overlays feel intentional
+- the UI remains calm and readable
 
-It is predictable depth.
+<Callout title="Why this matters">
+  When shadows are inconsistent or too strong, interfaces feel noisy and unstructured. A restrained elevation system improves clarity and perceived quality.
+</Callout>
 
----
+## What you’ll define
 
-## Shadow scale
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Elevation scale</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      A small set of shadow levels used across all surfaces.
+    </CardContent>
+  </Card>
 
-| Token | Utility | Typical use |
-|---|---|---|
-| `shadow-xs` | `shadow-xs` | buttons, pills, inputs |
-| `shadow-sm` | `shadow-sm` | default cards and tiles |
-| `shadow-md` | `shadow-md` | menus, popovers, floating surfaces |
-| `shadow-lg` | `shadow-lg` | modals and strong floating layers |
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Usage rules</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Clear constraints to avoid visual noise and inconsistency.
+    </CardContent>
+  </Card>
 
-Each step increases elevation gradually.
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Surface hierarchy</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Define how components relate visually through depth.
+    </CardContent>
+  </Card>
+</div>
 
-That keeps the system calm and avoids visual overload.
+## Steps
 
----
+<Steps>
 
-## How shadows are used
+<Step>
+### Use a limited elevation scale
 
-Shadow tokens are defined centrally and mapped into utilities.
+PyColors defines a small set of shadow tokens:
 
-Components do not invent custom shadow values.
+| Token | Typical use |
+| --- | --- |
+| `shadow-xs` | buttons, inputs, small controls |
+| `shadow-sm` | default cards and surfaces |
+| `shadow-md` | popovers, dropdowns |
+| `shadow-lg` | modals and overlays |
 
-That means depth stays consistent across:
+Each level increases elevation gradually.
 
-- light mode
-- dark mode
-- different surface types
-- future product areas
+</Step>
 
----
-
-## Visual examples
+<Step>
+### Apply shadows consistently
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border bg-card p-4 shadow-xs">
-          <div className="mb-1 text-xs font-medium text-muted-foreground">
-            shadow-xs
-          </div>
-          <div className="text-sm leading-relaxed">
-            Buttons, segmented controls, small chips.
-          </div>
-        </div>
-
-        <div className="rounded-lg border bg-card p-4 shadow-sm">
-          <div className="mb-1 text-xs font-medium text-muted-foreground">
-            shadow-sm
-          </div>
-          <div className="text-sm leading-relaxed">
-            Default cards and navigation tiles.
-          </div>
-        </div>
-
-        <div className="rounded-lg border bg-card p-4 shadow-md">
-          <div className="mb-1 text-xs font-medium text-muted-foreground">
-            shadow-md
-          </div>
-          <div className="text-sm leading-relaxed">
-            Popovers, dropdowns, focused floating surfaces.
-          </div>
-        </div>
-
-        <div className="rounded-lg border bg-card p-4 shadow-lg">
-          <div className="mb-1 text-xs font-medium text-muted-foreground">
-            shadow-lg
-          </div>
-          <div className="text-sm leading-relaxed">
-            Modals and stronger overlay layers.
-          </div>
-        </div>
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-lg border bg-card p-4 shadow-xs">
+        <div className="text-xs text-muted-foreground mb-1">shadow-xs</div>
+        <div className="text-sm">Small controls</div>
       </div>
-    </Preview>
+
+      <div className="rounded-lg border bg-card p-4 shadow-sm">
+        <div className="text-xs text-muted-foreground mb-1">shadow-sm</div>
+        <div className="text-sm">Default cards</div>
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-md">
+        <div className="text-xs text-muted-foreground mb-1">shadow-md</div>
+        <div className="text-sm">Popovers</div>
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-lg">
+        <div className="text-xs text-muted-foreground mb-1">shadow-lg</div>
+        <div className="text-sm">Modals</div>
+      </div>
+    </div>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    export function ShadowsPreview() {
-      const tokens = [
-        { className: "shadow-xs", label: "Buttons, segmented controls" },
-        { className: "shadow-sm", label: "Default cards, nav tiles" },
-        { className: "shadow-md", label: "Popovers, dropdowns" },
-        { className: "shadow-lg", label: "Modals, floating panels" },
-      ];
 
-      return (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {tokens.map((token) => (
-            <div
-              key={token.className}
-              className={`rounded-lg border bg-card p-4 ${token.className}`}
-            >
-              <div className="text-xs font-medium text-muted-foreground mb-1">
-                {token.className}
-              </div>
-              <div className="text-sm leading-relaxed">
-                {token.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    ```
+```tsx title="components/shadow-preview.tsx"
+export function ShadowPreview() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-lg border bg-card p-4 shadow-xs">
+        shadow-xs
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-sm">
+        shadow-sm
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-md">
+        shadow-md
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-lg">
+        shadow-lg
+      </div>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
----
+</Step>
 
-## Usage guidance
+<Step>
+### Avoid custom shadows
 
-- pair shadow level with the right radius and surface type
-- use one shadow per surface
-- increase elevation only when hierarchy needs it
-- reset to `shadow-none` for flat nested elements
-- avoid custom `box-shadow` values inside components
+Do not introduce custom `box-shadow` values inside components.
 
-If a new elevation level becomes necessary, introduce it as a token.
+Instead:
 
----
+- reuse existing tokens
+- extend the system if necessary
+- keep visual hierarchy predictable
 
-## Why this matters
+<Callout type="info" title="System rule">
+  If a new shadow is needed more than once, it should become a token.
+</Callout>
 
-Shadows are easy to overuse.
+</Step>
 
-When every surface tries to stand out, nothing feels structured.
+</Steps>
 
-A controlled elevation system makes the interface feel more deliberate and easier to scan.
+## Decision guide
 
----
+Use this system if:
 
-## Related
+- you need consistent elevation across multiple surfaces
+- you are building dashboards or SaaS products
+- you want predictable layering behavior
+- you want UI clarity without visual overload
 
-<LinkCards>
-  <LinkCard
-    title="Radius"
-    description="Corner geometry paired with surface elevation."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Colors"
-    description="Semantic colors used by elevated surfaces."
-    href="/docs/design-system/colors"
-  />
-  <LinkCard
-    title="Card"
-    description="Primary surface component consuming shadow tokens."
-    href="/docs/ui/card"
-  />
-  <LinkCard
-    title="Button"
-    description="Interactive controls using subtle elevation."
-    href="/docs/ui/button"
-  />
-</LinkCards>
+Avoid if:
 
-</DocsPageShell>
+- the shadow is decorative only
+- it breaks the system scale
+- it duplicates an existing token
+- it creates visual noise
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        Prefer
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>use predefined shadow tokens</li>
+        <li>keep elevation subtle</li>
+        <li>increase depth only when needed</li>
+        <li>align shadow with radius and surface</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2 text-sm">
+        <XCircle className="h-4 w-4 text-destructive" />
+        Avoid
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
+        <li>stacking multiple shadows</li>
+        <li>high contrast or heavy shadows</li>
+        <li>custom box-shadow per component</li>
+        <li>inconsistent elevation levels</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Why it matters
+
+Shadows are one of the fastest ways to break visual consistency.
+
+- too many shadows → noisy UI
+- too strong shadows → cheap look
+- inconsistent shadows → broken hierarchy
+
+A controlled system ensures:
+
+- clarity
+- structure
+- visual calm
+- perceived product quality

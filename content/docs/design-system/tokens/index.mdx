@@ -1,194 +1,442 @@
 ---
 title: Tokens
 description: Atomic design tokens that define the visual foundations of PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Design System - Tokens
+toc: true
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleDot,
+  Layers,
+  Ruler,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
   <Badge>Tokens</Badge>
 </div>
 
-# Tokens make the system coherent
+## Overview
 
-Design tokens are the single source of truth for PyColors UI’s visual language.
+Design tokens are the **single source of truth** for the visual language of PyColors UI.
 
-They encode the atomic decisions that every component consumes.
+They encode small decisions that every component can consume:
 
-That is what makes the system:
+- radius
+- elevation
+- color roles
+- typography roles
+- future motion, spacing, and layering rules
 
-- consistent
-- predictable
-- easier to evolve globally
+Tokens are not components. They are not random CSS values. They are **design decisions expressed as reusable variables**.
 
-Tokens are not components.
-They are not raw stylesheets.
-They are design decisions expressed as variables.
+<Callout title="Why this matters">
+  Without tokens, every component slowly starts making its own visual decisions. That creates drift, makes refactors risky, and weakens the premium feeling of the product over time.
+</Callout>
 
----
+## What tokens control
 
-## What tokens are for
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Ruler className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Geometry
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Radius tokens keep buttons, cards, inputs, and overlays visually related.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-A token represents meaning, not a one-off visual choice.
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Layers className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Elevation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Shadow tokens define calm, predictable depth across cards, menus, and modals.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-In practice, tokens answer questions like:
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Sparkles className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          System intent
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Tokens make design intent explicit so the product can scale without visual drift.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-- what radius should this system use?
-- how much elevation should a card have?
-- how should surfaces feel visually related?
+## Steps
 
-Instead of solving these decisions inside each component, the design system solves them once.
+<Steps>
 
----
+<Step>
+### Start from design decisions
 
-## System flow
+A token exists when a visual decision should be shared by the system.
 
-```text
+Instead of asking every component to decide its own radius, shadow, or surface treatment, PyColors defines those decisions once.
+
+```text title="system-flow.txt"
 Design decisions
   ↓
-Tokens (CSS variables)
+Tokens
   ↓
 Tailwind utilities
   ↓
-UI Components
+UI components
   ↓
-Guides and product surfaces
+Product surfaces
 ```
 
-This is why components can stay small while the system still feels expressive.
+This flow keeps components small while the system stays expressive.
 
----
+</Step>
 
-## Current token categories
+<Step>
+### Define tokens centrally
 
-### Radius
+Tokens are defined as CSS variables and mapped into utilities.
 
-Corner geometry used across:
+```css title="tokens.css"
+:root {
+  --radius: 0.625rem;
+}
 
-- buttons
-- inputs
-- cards
-- overlays
-
-### Shadows
-
-Elevation used across:
-
-- controls
-- cards
-- menus
-- modals
-
-PyColors intentionally starts with a small token surface.
-
-This keeps the system understandable and avoids token sprawl too early.
-
----
-
-## Why tokens matter
-
-Using tokens gives you:
-
-- global consistency
-- safer refactors
-- more predictable theming
-- clearer design intent
-- less visual drift
-
-Without tokens, systems usually accumulate arbitrary local choices.
-
-That is where inconsistency begins.
-
----
-
-## How tokens are used
-
-Tokens are defined in CSS and then exposed through utilities.
-
-```css
 @theme inline {
   --radius-md: calc(var(--radius) - 2px);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 ```
 
-Components consume those values indirectly:
+The raw value stays in the token layer. Components consume the utility.
 
-```tsx
-<Card className="rounded-lg shadow-sm bg-card border" />
+```tsx title="components/product-card.tsx"
+export function ProductCard() {
+  return (
+    <article className="rounded-lg border bg-card p-6 shadow-sm">
+      <h2 className="text-lg font-semibold tracking-tight">
+        Product surface
+      </h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        This surface consumes tokens indirectly through utilities.
+      </p>
+    </article>
+  );
+}
 ```
 
-The component does not need to know the raw value.
+</Step>
 
-That is the point.
+<Step>
+### Extend only when the system needs it
 
----
+Not every visual value needs to become a token on day one.
 
-## Extending tokens safely
+A new token should exist when it:
 
-Not everything is tokenized yet.
+- appears in multiple places
+- expresses a reusable product decision
+- improves theming or consistency
+- reduces duplicated local styling
+- makes future changes safer
 
-That is intentional.
+<Callout type="info" title="System rule">
+  Tokenize repeated design decisions, not one-off visual preferences.
+</Callout>
 
-PyColors starts with high-impact foundations first.
+</Step>
 
-As the system grows, you can extend tokens into categories such as:
+</Steps>
 
-- spacing
-- motion
-- z-index
+## Token categories
 
-The rule stays the same:
+PyColors intentionally starts with a small token surface. That keeps the system understandable and avoids token sprawl too early.
 
-add tokens when the system clearly needs them, not preemptively.
+| Category | Purpose | Current status |
+| --- | --- | --- |
+| Radius | Corner geometry for controls, cards, and overlays | Active |
+| Shadows | Elevation for surfaces and floating layers | Active |
+| Colors | Semantic surface, text, state, and chart roles | Active |
+| Typography | Font roles, hierarchy, labels, and density | Active |
+| Spacing | Product layout rhythm and density | Future |
+| Motion | Transitions, easing, and interaction feel | Future |
+| Z-index | Layering rules for overlays and navigation | Future |
 
----
+<Callout title="Why the surface is intentionally small">
+  A smaller token system is easier to understand, document, and maintain. PyColors adds tokens when they clarify the system, not when they create extra vocabulary.
+</Callout>
+
+## Decision guide
+
+Use a token when:
+
+- the value appears across multiple components
+- changing it globally would be useful
+- the value carries product meaning
+- it improves consistency across light and dark mode
+- it prevents teams from inventing local alternatives
+
+Avoid creating a token when:
+
+- the value is purely decorative
+- it only appears once
+- the name would be vague
+- the token duplicates an existing role
+- it makes the system harder to understand
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>tokens for repeated visual decisions</li>
+        <li>semantic names that describe intent</li>
+        <li>centralized values exposed through utilities</li>
+        <li>small scales that are easy to remember</li>
+        <li>documentation that explains when to use each token</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>tokenizing every one-off value</li>
+        <li>names that describe appearance only</li>
+        <li>duplicating existing semantic roles</li>
+        <li>hardcoding token values inside components</li>
+        <li>adding scales before the product needs them</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Token flow
+
+<Tabs items={["Model", "Component"]}>
+  <Tab value="Model">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="grid gap-4 md:grid-cols-4">
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            1
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Decision
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            The system needs a consistent corner feel.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            2
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Token
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            `--radius-lg` defines the shared geometry.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            3
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Utility
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            `rounded-lg` exposes the token to components.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            4
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Surface
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Cards, dialogs, and panels feel related.
+          </div>
+        </div>
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Component">
+
+```tsx title="components/settings-card.tsx"
+export function SettingsCard() {
+  return (
+    <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
+      <div className="flex items-center gap-2">
+        <CircleDot className="h-4 w-4 text-primary" />
+        <h2 className="text-sm font-medium text-foreground">
+          Workspace settings
+        </h2>
+      </div>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        The component consumes tokens through semantic utilities.
+      </p>
+    </section>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
 
 ## Start here
 
-<LinkCards>
-  <LinkCard
-    title="Radius"
-    description="Corner radius scale used across components and layouts."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Shadows"
-    description="Elevation scale for surfaces and floating layers."
-    href="/docs/design-system/tokens/shadows"
-  />
-</LinkCards>
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/tokens/radius" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Ruler className="h-4 w-4 text-primary" />
+        Radius
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the corner geometry used across controls, cards, and overlays.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
----
+  <a href="/docs/design-system/tokens/shadows" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Layers className="h-4 w-4 text-primary" />
+        Shadows
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how elevation creates calm, predictable depth across surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
 
-## Related
+## Common questions
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic color roles built on the same system logic."
-    href="/docs/design-system/colors"
-  />
-  <LinkCard
-    title="Typography"
-    description="Hierarchy and text roles for product surfaces."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="UI Components"
-    description="Primitives that consume the token system."
-    href="/docs/ui"
-  />
-  <LinkCard
-    title="Why PyColors UI"
-    description="Philosophy and system-level trade-offs."
-    href="/docs/ui/why-pycolors-ui"
-  />
-</LinkCards>
+<Accordions type="single">
+  <Accordion title="Are tokens the same as Tailwind utilities?">
+    No. Tokens define the value and intent. Utilities expose those tokens to components. A component should consume the utility, not hardcode the raw value.
+  </Accordion>
 
-</DocsPageShell>
+  <Accordion title="Should every design value become a token?">
+    No. Tokens should represent repeated system decisions. Tokenizing every value too early creates complexity without improving consistency.
+  </Accordion>
+
+  <Accordion title="Can I customize the token values?">
+    Yes. The goal is to keep the public roles stable while allowing the underlying values to change. This gives you theme flexibility without rewriting components.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/colors" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Colors</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Learn how semantic color roles extend the same token logic across surfaces, text, and states.
+    </div>
+  </a>
+
+  <a href="/docs/design-system/typography" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Typography</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Review hierarchy, font roles, labels, and readable product structure.
+    </div>
+  </a>
+
+  <a href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">UI Components</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Move from foundations to reusable primitives built on the token system.
+    </div>
+  </a>
+
+  <a href="/docs/ui/why-pycolors-ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Why PyColors UI</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Understand the philosophy and trade-offs behind the component system.
+    </div>
+  </a>
+</div>
