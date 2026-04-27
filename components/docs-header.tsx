@@ -72,7 +72,7 @@ const FEATURED_DOCS_HREFS = [
   '/docs/starter-pro',
   '/docs/starter-pro/upgrade-from-free',
   '/docs/patterns',
-  '/docs/starter/upgrade-to-pro',
+  '/docs/starter/upgrade',
   '/docs/starter-pro/what-is-included',
 ] as const;
 
@@ -594,8 +594,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </p>
 
                       <p className="text-sm leading-6 text-muted-foreground">
-                        Explore UI foundations, product patterns, Starter Free, and
-                        Starter Pro documentation.
+                        Explore UI foundations, product patterns,
+                        Starter Free, and Starter Pro documentation.
                       </p>
                     </div>
 

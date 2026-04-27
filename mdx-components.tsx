@@ -148,7 +148,7 @@ export function getMDXComponents(
           id={headingId}
           {...props}
           className={[
-            'group mt-10 scroll-mt-28 border-t border-border/40 pt-6 font-brand text-2xl font-semibold tracking-tight text-foreground sm:text-3xl',
+            'group mt-10 scroll-mt-28 pt-6 font-brand text-2xl font-semibold tracking-tight text-foreground sm:text-3xl',
             className,
           ]
             .filter(Boolean)
@@ -275,7 +275,7 @@ export function getMDXComponents(
     ),
 
     table: (props) => (
-      <div className="my-8 overflow-x-auto rounded-2xl border border-border/60 bg-card">
+      <div className="my-0">
         <table
           {...props}
           className={['w-full text-sm', props.className]

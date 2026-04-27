@@ -334,6 +334,28 @@ div[data-state="open"] + div[role="dialog"] {
   margin-top: 2rem;
 }
 
+[data-rehype-pretty-code-fragment] {
+  @apply my-8 overflow-hidden rounded-2xl border border-border/60 bg-muted/30 shadow-sm;
+}
+
+[data-rehype-pretty-code-fragment] pre {
+  @apply px-5 py-4 text-[13px] leading-6;
+}
+
+[data-rehype-pretty-code-title] {
+  @apply rounded-t-2xl border border-b-0 border-border/60 bg-muted/40 px-4 py-2 text-xs text-muted-foreground;
+}
+
+[data-rehype-pretty-code-title] + pre {
+  @apply mt-0 rounded-t-none;
+}
+
+.highlighted:is(pre *):is(.shiki *):not(.not-fumadocs-codeblock *) {
+  background: color-mix(in oklch, var(--primary), transparent 94%);
+  border-left: 2px solid var(--primary);
+}
+
+
 /* ==========================================================================
    Cards / code polish
    ========================================================================== */
