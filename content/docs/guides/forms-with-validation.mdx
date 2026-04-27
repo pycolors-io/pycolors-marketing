@@ -1,11 +1,14 @@
 ---
 title: Forms with validation
 description: Build accessible, predictable, and production-ready forms using PyColors UI primitives.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
 ---
 
-import * as React from "react";
-
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
   Alert,
   AlertTitle,
@@ -15,176 +18,158 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardTitle,
   Input,
 } from "@pycolors/ui";
-import { Cards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { CheckCircle, XCircle } from "lucide-react";
-
-<DocsPageShell>
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  FileText,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
   <Badge>Forms</Badge>
 </div>
 
-# Build forms that behave predictably
+## Overview
 
-Forms are one of the most fragile parts of a product.
+Forms are one of the most fragile parts of a SaaS product.
 
-They combine:
+They combine user input, validation rules, async submission, accessibility, loading states, and error handling. A good form pattern makes those responsibilities explicit instead of hiding them inside an opaque abstraction.
 
-- user input
-- validation rules
-- async submission
-- accessibility requirements
-- error handling
-
-This guide explains how to build forms with validation using PyColors UI primitives without hiding logic inside opaque abstractions.
-
----
-
-## Why forms fail so often
-
-Forms look simple on the surface.
-
-In practice, they have to coordinate:
-
-- field values
-- validation feedback
-- loading state
-- submission success or failure
-- accessibility and semantics
-
-This is why good form systems are not only about inputs.
-
-They are about **clear responsibilities**.
-
----
-
-## Core principles
-
-Before any tool choice, a few principles matter more than APIs.
-
-### 1. Forms are systems, not components
-
-A form is not a single reusable component.
-
-It is a composition of:
-
-- inputs
-- buttons
-- validation rules
-- submission logic
-- feedback states
-
-Trying to abstract the entire form too early usually creates:
-
-- too many props
-- hidden rules
-- poor debuggability
-- hard-to-reuse abstractions
-
-In PyColors, forms are documented as **patterns**, not primitives.
-
----
-
-### 2. Validation belongs to the data layer
-
-UI components should:
-
-- display values
-- reflect errors
-- show state clearly
-
-They should **not define what is valid**.
-
-Validation rules belong close to:
-
-- your schema
-- your domain model
-- your form logic
-
-The UI consumes the result.
-
----
-
-### 3. Error states should be explicit
-
-Good forms make failure understandable.
-
-That means:
-
-- short field-level error messages
-- clear global feedback for submission errors
-- no hidden failure state
-- no reliance on color alone
-
----
-
-## Recommended minimal stack
-
-This guide uses a minimal, production-friendly setup:
+This guide shows how to build predictable forms using:
 
 - **React Hook Form** for form state
 - **Zod** for schema validation
-- **PyColors UI** for rendering
+- **PyColors UI** for accessible interface primitives
 
-You can swap tools later if needed.
+<Callout title="Why this matters">
+  Forms are where users directly interact with your product logic. If validation, errors, and loading states feel unclear, trust drops quickly.
+</Callout>
 
-The principles remain the same.
+## What you’ll build
 
----
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FileText className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Schema-first validation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Keep validation close to the data model with explicit, reusable rules.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Accessible feedback
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Show field-level errors, global failures, and loading state without relying only on color.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CircleAlert className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Production flow
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Handle async submission, double-click prevention, and form-level errors predictably.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Mental model
 
-> Inputs display state.
-> Schemas define truth.
-> Forms coordinate the flow.
+> Inputs display state. Schemas define truth. Forms coordinate the flow.
 
-Keeping those responsibilities separate makes forms easier to:
+Keep these responsibilities separate:
 
-- reason about
-- debug
-- extend over time
+| Layer | Responsibility |
+| --- | --- |
+| Schema | Defines what valid data means |
+| Form state | Tracks values, errors, dirty state, and submission |
+| UI primitives | Render labels, fields, buttons, and feedback |
+| Submission logic | Calls the server and handles success or failure |
 
----
+<Callout type="info" title="System rule">
+  PyColors form patterns should stay explicit. Avoid abstractions that hide validation, submission, and accessibility responsibilities behind too many props.
+</Callout>
 
-## Example: basic form with validation
+## Steps
 
-We will build a simple form with:
+<Steps>
 
-- required fields
-- inline validation errors
-- disabled submit while loading
-- global error feedback
+<Step>
+### Define the schema
 
----
+Validation rules should live close to the data model, not inside the visual input component.
 
-## Schema
-
-Validation rules come first.
-
-```ts
+```ts title="lib/forms/account-schema.ts"
 import { z } from "zod";
 
-export const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+export const accountFormSchema = z.object({
+  email: z.string().email("Enter a valid email address"),
+  password: z
+    .string()
+    .min(8, "Password must contain at least 8 characters"),
 });
+
+export type AccountFormValues = z.infer<typeof accountFormSchema>;
 ```
 
-This keeps validation explicit and close to the data model.
+This gives you a reusable contract for client-side validation and server-side validation.
+</Step>
 
----
+<Step>
+### Connect React Hook Form
 
-## Form setup
+React Hook Form coordinates field values, validation output, and submission state.
 
-```ts
-import { useForm } from "react-hook-form";
+```tsx title="components/account-form.tsx"
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-const form = useForm({
-  resolver: zodResolver(formSchema),
+import {
+  accountFormSchema,
+  type AccountFormValues,
+} from "@/lib/forms/account-schema";
+
+const form = useForm<AccountFormValues>({
+  resolver: zodResolver(accountFormSchema),
   defaultValues: {
     email: "",
     password: "",
@@ -192,25 +177,22 @@ const form = useForm({
 });
 ```
 
-The form state now handles:
+<Callout type="info" title="Implementation note">
+  Keep default values explicit. It makes the form easier to reason about, test, and reset after successful submission.
+</Callout>
+</Step>
 
-- field values
-- validation output
-- submission state
+<Step>
+### Render fields with explicit errors
 
----
+PyColors UI primitives render the state. They do not own the validation rules.
 
-## Rendering inputs
-
-PyColors Input reflects validation state.
-
-It does not own validation.
-
-```tsx
+```tsx title="components/account-form.tsx"
 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
   <Input
     label="Email"
     type="email"
+    autoComplete="email"
     {...form.register("email")}
     error={form.formState.errors.email?.message}
   />
@@ -218,94 +200,132 @@ It does not own validation.
   <Input
     label="Password"
     type="password"
+    autoComplete="current-password"
     {...form.register("password")}
     error={form.formState.errors.password?.message}
   />
+
+  <Button type="submit" disabled={form.formState.isSubmitting}>
+    {form.formState.isSubmitting ? "Saving…" : "Save changes"}
+  </Button>
 </form>
 ```
 
-This works well because:
+This keeps the component contract simple: the field receives the error message, the form owns validation, and the button reflects submission state.
+</Step>
 
-- errors remain explicit
-- inputs stay focused on rendering
-- validation logic stays outside the primitive
+<Step>
+### Add form-level feedback
 
----
+Some errors are not field errors. Network failures, permission issues, and unexpected server errors need form-level feedback.
 
-## Submit button states
-
-Buttons should reflect form state, not invent it.
-
-```tsx
-<Button
-  type="submit"
-  disabled={form.formState.isSubmitting}
->
-  {form.formState.isSubmitting ? "Saving…" : "Save"}
-</Button>
-```
-
-Practical rules:
-
-- disable submit while submitting
-- avoid double submission
-- use clear loading text
-- do not rely only on animation to show progress
-
----
-
-## Global error feedback
-
-Some failures are not tied to one field:
-
-- network failure
-- permission issues
-- unexpected server errors
-
-Use Alert for those cases.
-
-```tsx
-{formStateError && (
+```tsx title="components/account-form.tsx"
+{formError ? (
   <Alert variant="destructive">
     <AlertTitle>Submission failed</AlertTitle>
-    <AlertDescription>
-      Please try again later.
-    </AlertDescription>
+    <AlertDescription>{formError}</AlertDescription>
   </Alert>
-)}
+) : null}
 ```
 
-Use field-level errors for field problems.
-Use a global error block for form-level problems.
+Use field-level errors for input problems. Use alerts for submission-level problems.
+</Step>
 
----
+</Steps>
 
 ## Full example
 
-```tsx
-function ExampleForm() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Card className="max-w-xl rounded-2xl border-border/60 bg-card/70">
+      <CardHeader>
+        <CardTitle className="text-base">Account settings</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <Input label="Email" type="email" placeholder="you@company.com" />
+          <Input label="Password" type="password" placeholder="••••••••" />
+          <Alert>
+            <AlertTitle>Ready for validation</AlertTitle>
+            <AlertDescription>
+              This preview shows the form surface. The code tab wires validation, errors, and submission state.
+            </AlertDescription>
+          </Alert>
+          <Button>Save changes</Button>
+        </div>
+      </CardContent>
+    </Card>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="components/account-form.tsx"
+"use client";
+
+import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+} from "@pycolors/ui";
+import {
+  accountFormSchema,
+  type AccountFormValues,
+} from "@/lib/forms/account-schema";
+
+export function AccountForm() {
+  const [formError, setFormError] = React.useState<string | null>(null);
+
+  const form = useForm<AccountFormValues>({
+    resolver: zodResolver(accountFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  async function onSubmit(values) {
+  async function onSubmit(values: AccountFormValues) {
+    setFormError(null);
+
     try {
-      await save(values);
+      await saveAccount(values);
+      form.reset(values);
     } catch {
-      setError("Something went wrong");
+      setFormError("We could not save your changes. Please try again.");
     }
   }
 
   return (
-    <Card>
-      <CardHeader>Account settings</CardHeader>
+    <Card className="rounded-2xl border-border/60">
+      <CardHeader>
+        <CardTitle>Account settings</CardTitle>
+      </CardHeader>
+
       <CardContent>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4"
         >
+          {formError ? (
+            <Alert variant="destructive">
+              <AlertTitle>Submission failed</AlertTitle>
+              <AlertDescription>{formError}</AlertDescription>
+            </Alert>
+          ) : null}
+
           <Input
             label="Email"
+            type="email"
+            autoComplete="email"
             {...form.register("email")}
             error={form.formState.errors.email?.message}
           />
@@ -313,6 +333,7 @@ function ExampleForm() {
           <Input
             label="Password"
             type="password"
+            autoComplete="current-password"
             {...form.register("password")}
             error={form.formState.errors.password?.message}
           />
@@ -321,113 +342,167 @@ function ExampleForm() {
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            Save changes
+            {form.formState.isSubmitting
+              ? "Saving…"
+              : "Save changes"}
           </Button>
         </form>
       </CardContent>
     </Card>
   );
 }
+
+async function saveAccount(values: AccountFormValues) {
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  return values;
+}
 ```
 
----
+  </Tab>
+</Tabs>
 
-## UX rules
+## Decision guide
 
-These rules make forms feel more stable in production.
+Use this pattern if:
 
-### Validation
+- the form has real validation rules
+- the form submits data asynchronously
+- users need clear field-level feedback
+- errors must be accessible and explicit
+- the same pattern will appear across product surfaces
 
-- validate at meaningful moments
-- keep messages short and specific
-- keep field-level feedback close to the field
-- make the reason for failure obvious
+Avoid over-abstracting if:
 
-### Submission
+- the form is still changing frequently
+- validation logic is hidden inside UI components
+- a single form component requires many conditional props
+- the abstraction makes debugging harder
+- accessibility behavior becomes implicit
 
-- disable submit while loading
-- avoid duplicate submissions
-- keep button text clear
-- show form-level failure where needed
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-### Accessibility
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>schema-driven validation</li>
+        <li>field-level errors near the field</li>
+        <li>form-level alerts for submission failures</li>
+        <li>clear submit button loading state</li>
+        <li>small, explicit, predictable form structure</li>
+      </ul>
+    </CardContent>
 
-- use visible labels
-- do not rely only on color for errors
-- keep feedback text readable
-- preserve semantic form structure
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
----
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-## Production-tested guidance
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>abstracting the entire form too early</li>
+        <li>hiding validation rules inside UI primitives</li>
+        <li>showing only a toast for blocking form errors</li>
+        <li>allowing duplicate submissions</li>
+        <li>relying only on color to communicate errors</li>
+      </ul>
+    </CardContent>
 
-<div className="grid gap-6 sm:grid-cols-2">
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <XCircle className="mr-2 h-4 w-4 text-destructive" />
-      Avoid
-    </h3>
-
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>Abstracting the entire form into one component</li>
-      <li>Hiding validation rules inside UI primitives</li>
-      <li>Showing only a toast for form failure</li>
-      <li>Submitting while the request is already running</li>
-      <li>Relying only on color to communicate errors</li>
-    </ul>
-  </div>
-
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
-      Prefer
-    </h3>
-
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>Schema-driven validation</li>
-      <li>Field-level errors near the field</li>
-      <li>Form-level alerts for submission issues</li>
-      <li>Clear loading text on the submit button</li>
-      <li>Small, explicit, predictable form structure</li>
-    </ul>
-  </div>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 </div>
 
----
+## Production checklist
 
-## Why this scales better
+Before shipping a form, confirm that:
 
-Predictable forms are easier to:
+- every field has a visible label
+- validation messages are short and specific
+- field errors are displayed near the field
+- submit is disabled while the request is running
+- async errors are visible in the form, not only in a toast
+- keyboard navigation works from start to submit
+- server-side validation mirrors the client contract
 
-- debug
-- evolve
-- hand off to other developers
-- reuse across product areas
+<Callout title="Ready to move this pattern into a real SaaS flow?">
+  Starter Pro includes production-shaped foundations for auth, billing, protected routes, and product flows. → `/docs/starter-pro`
+</Callout>
 
-A clean form system prevents the codebase from filling up with inconsistent one-off form logic.
+## Common questions
 
-That is where long-term product quality starts.
+<Accordions type="single">
+  <Accordion title="Should validation live inside the Input component?">
+    No. The input should render state. The schema and form logic should define what is valid.
+  </Accordion>
 
----
+  <Accordion title="Should every form use React Hook Form and Zod?">
+    Not necessarily. This stack is a strong default, but the principle matters more: keep validation, state, rendering, and submission responsibilities separate.
+  </Accordion>
 
-## Related components and guides
+  <Accordion title="Should I use a toast for form errors?">
+    Use toasts for non-blocking notifications. Use inline alerts for blocking form-level errors so the user can understand what failed in context.
+  </Accordion>
+</Accordions>
 
-<Cards>
-  <LinkCard
-    title="Input"
-    description="Text input with labels, helper text, and error states."
-    href="/docs/ui/input"
-  />
-  <LinkCard
-    title="Alert"
-    description="Inline feedback for blocking or global errors."
-    href="/docs/ui/alert"
-  />
-  <LinkCard
-    title="Empty, loading, and error states"
-    description="Handle async UI states consistently."
-    href="/docs/guides/empty-loading-error"
-  />
-</Cards>
+## Next steps
 
-</DocsPageShell>
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Input</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review labels, helper text, and error states for form fields.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Alert</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use inline feedback for blocking errors and important status messages.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how to communicate async UI states consistently.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move from UI patterns to production-shaped SaaS foundations.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
