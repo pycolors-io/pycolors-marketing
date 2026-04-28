@@ -5,459 +5,557 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
+import {
+  Badge,
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  ChevronRight,
+  CircleDot,
+  ListChecks,
+  Menu,
+  MoreHorizontal,
+  MousePointerClick,
+  Settings2,
+  XCircle,
+} from "lucide-react";
+
+import { ClientOnly } from "../previews/client-only";
+import {
+  CheckboxMenuPreview,
+  RadioMenuPreview,
+} from "../previews/dropdown-menu-previews";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Dropdown Menu</Badge>
+</div>
+
+## Compact actions in context
+
+The **Dropdown Menu** component displays a list of actions inside a floating surface anchored to a trigger.
+
+Use it for:
+
+- row actions
+- account menus
+- editor menus
+- compact command lists
+- secondary actions
+- option selectors
+- small contextual choices
+
+Dropdown Menu is built on **Radix DropdownMenu** and styled with PyColors tokens such as `bg-popover`, `border-border`, and `text-popover-foreground`.
+
+<Callout title="Core idea">
+  Dropdown Menu is for compact contextual actions. It should not become a full workflow surface.
+</Callout>
+
+## Import
+
+```tsx title="dropdown-menu-import.tsx"
+import { DropdownMenu } from "@pycolors/ui";
+```
+
+## Basic usage
+
+Use `DropdownMenuTrigger asChild` with a semantic trigger, usually a Button.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Open menu</Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-dropdown-menu.tsx"
 import {
   Button,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@pycolors/ui";
-
-import { ClientOnly } from "../previews/client-only";
-
-import {
-  CheckboxMenuPreview,
-  RadioMenuPreview,
-} from "../previews/dropdown-menu-previews";
-
-The **Dropdown Menu** component displays a list of actions in a floating surface anchored to a trigger.
-It is built on **Radix UI DropdownMenu** and styled with PyColors tokens (`bg-popover`, `border-border`, `text-popover-foreground`).
-
-Use Dropdown Menu for:
-
-- Row actions (••• menus)
-- Editor/tool menus
-- Compact command lists (rename, duplicate, delete)
-- Option selectors (checkbox/radio groups)
-
-## Import
-
-```tsx
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
 } from "@pycolors/ui";
-```
 
-## Basic usage
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            Open menu
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+export function BasicDropdownMenu() {
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">Open menu</Button>
+        <Button variant="outline" size="sm">
+          Open menu
+        </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
+      <DropdownMenuContent align="start">
         <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+        <DropdownMenuItem className="text-destructive">
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      DropdownMenu,
-      DropdownMenuTrigger,
-      DropdownMenuContent,
-      DropdownMenuItem,
-      DropdownMenuSeparator,
-    } from "@pycolors/ui";
-
-    export function BasicDropdownMenu() {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
-              Open menu
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
+
+<Callout type="info" title="Trigger rule">
+  Prefer `asChild` so the trigger keeps the semantics of the element you pass, such as a real button.
+</Callout>
+
+## When to use Dropdown Menu
+
+Use Dropdown Menu when the actions are secondary, contextual, or compact.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <MoreHorizontal className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Row actions
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for rename, duplicate, archive, export, or delete actions on one record.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Settings2 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Preferences
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use checkbox or radio items for compact option selection.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Menu className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Account menu
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for compact user-level navigation such as profile, settings, or sign out.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Grouping, labels, and shortcuts
 
-Use `DropdownMenuLabel` to title a section, `DropdownMenuGroup` to group items, and `DropdownMenuShortcut` to render right-aligned hints.
+Use labels and groups when a menu has more than one kind of action.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            Actions
-          </Button>
-        </DropdownMenuTrigger>
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Actions</Button>
+      </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start">
-          <DropdownMenuLabel>Project</DropdownMenuLabel>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Project</DropdownMenuLabel>
 
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              Rename
-              <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Duplicate
-              <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Rename<DropdownMenuShortcut>⌘R</DropdownMenuShortcut></DropdownMenuItem>
+          <DropdownMenuItem>Duplicate<DropdownMenuShortcut>⌘D</DropdownMenuShortcut></DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem className="text-destructive">
-            Delete
-            <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        <DropdownMenuItem className="text-destructive">Delete<DropdownMenuShortcut>⌫</DropdownMenuShortcut></DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <DropdownMenuContent>
-      <DropdownMenuLabel>Project</DropdownMenuLabel>
-
-      <DropdownMenuGroup>
-        <DropdownMenuItem>
-          Rename <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-
-      <DropdownMenuSeparator />
-
-      <DropdownMenuItem className="text-destructive">
-        Delete <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      DropdownMenu,
-      DropdownMenuTrigger,
-      DropdownMenuContent,
-      DropdownMenuLabel,
-      DropdownMenuGroup,
-      DropdownMenuItem,
-      DropdownMenuSeparator,
-      DropdownMenuShortcut,
-    } from "@pycolors/ui";
 
-    export function GroupedMenu() {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">Actions</Button>
-          </DropdownMenuTrigger>
+```tsx title="grouped-dropdown-menu.tsx"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from "@pycolors/ui";
 
-          <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Project</DropdownMenuLabel>
+export function GroupedDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Actions
+        </Button>
+      </DropdownMenuTrigger>
 
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                Rename <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Duplicate <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Project</DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            Rename
+            <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Duplicate
+            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
 
-            <DropdownMenuItem className="text-destructive">
-              Delete <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-    ```
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">
+          Delete
+          <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+<Callout type="info" title="Shortcut rule">
+  `DropdownMenuShortcut` is visual. It does not automatically register keyboard shortcuts.
+</Callout>
+
 ## Checkbox items
 
-Interactive checkbox examples must live in a **Client Component** (hooks + event handlers).
-This page renders them via `CheckboxMenuPreview`.
+Use checkbox items for independent toggles.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Interactive examples with state must live in a Client Component.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <ClientOnly>
-        <CheckboxMenuPreview />
-      </ClientOnly>
+   <Preview>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <CheckboxMenuPreview />
+    </ClientOnly>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <DropdownMenuCheckboxItem checked={enabled} onCheckedChange={setEnabled}>
-      Enabled
-    </DropdownMenuCheckboxItem>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    "use client";
 
-    import * as React from "react";
-    import {
-      Button,
-      DropdownMenu,
-      DropdownMenuTrigger,
-      DropdownMenuContent,
-      DropdownMenuCheckboxItem,
-      DropdownMenuSeparator,
-    } from "@pycolors/ui";
+```tsx title="checkbox-menu-preview.tsx"
+"use client";
 
-    export function CheckboxMenuPreview() {
-      const [enabled, setEnabled] = React.useState(true);
-      const [pinned, setPinned] = React.useState(false);
+import * as React from "react";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">Options</Button>
-          </DropdownMenuTrigger>
+export function CheckboxMenuPreview() {
+  const [enabled, setEnabled] = React.useState(true);
+  const [pinned, setPinned] = React.useState(false);
 
-          <DropdownMenuContent align="start">
-            <DropdownMenuCheckboxItem
-              checked={enabled}
-              onCheckedChange={(v) => setEnabled(Boolean(v))}
-            >
-              Enabled
-            </DropdownMenuCheckboxItem>
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Options
+        </Button>
+      </DropdownMenuTrigger>
 
-            <DropdownMenuCheckboxItem
-              checked={pinned}
-              onCheckedChange={(v) => setPinned(Boolean(v))}
-            >
-              Pinned
-            </DropdownMenuCheckboxItem>
+      <DropdownMenuContent align="start">
+        <DropdownMenuCheckboxItem
+          checked={enabled}
+          onCheckedChange={(value) => setEnabled(Boolean(value))}
+        >
+          Enabled
+        </DropdownMenuCheckboxItem>
 
-            <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          checked={pinned}
+          onCheckedChange={(value) => setPinned(Boolean(value))}
+        >
+          Pinned
+        </DropdownMenuCheckboxItem>
 
-            <DropdownMenuCheckboxItem checked disabled>
-              Disabled option
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-    ```
+        <DropdownMenuSeparator />
+
+        <DropdownMenuCheckboxItem checked disabled>
+          Disabled option
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ## Radio group
 
-Same rule: hooks go into a client component (`RadioMenuPreview`).
+Use radio items for exclusive selection.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <RadioMenuPreview />
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <DropdownMenuRadioGroup value={value} onValueChange={setValue}>
-      <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
-      <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
-    </DropdownMenuRadioGroup>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    "use client";
 
-    import * as React from "react";
-    import {
-      Button,
-      DropdownMenu,
-      DropdownMenuTrigger,
-      DropdownMenuContent,
-      DropdownMenuLabel,
-      DropdownMenuRadioGroup,
-      DropdownMenuRadioItem,
-      DropdownMenuSeparator,
-    } from "@pycolors/ui";
+```tsx title="radio-menu-preview.tsx"
+"use client";
 
-    export function RadioMenuPreview() {
-      const [theme, setTheme] = React.useState("system");
+import * as React from "react";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">Theme</Button>
-          </DropdownMenuTrigger>
+export function RadioMenuPreview() {
+  const [theme, setTheme] = React.useState("system");
 
-          <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Theme
+        </Button>
+      </DropdownMenuTrigger>
 
-            <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-              <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+          <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
 
-            <DropdownMenuRadioItem value="contrast" disabled>
-              High contrast (soon)
-            </DropdownMenuRadioItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-    ```
+        <DropdownMenuSeparator />
+
+        <DropdownMenuRadioItem value="contrast" disabled>
+          High contrast (soon)
+        </DropdownMenuRadioItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ## Submenus
 
-Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to nest options.
+Use submenus sparingly.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+They are useful when a single action has a small secondary choice, such as export format.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">More</Button>
-        </DropdownMenuTrigger>
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">More</Button>
+      </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem>Rename</DropdownMenuItem>
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Rename</DropdownMenuItem>
 
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
 
-            <DropdownMenuSubContent>
-              <DropdownMenuItem>PDF</DropdownMenuItem>
-              <DropdownMenuItem>CSV</DropdownMenuItem>
-              <DropdownMenuItem>JSON</DropdownMenuItem>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>PDF</DropdownMenuItem>
+            <DropdownMenuItem>CSV</DropdownMenuItem>
+            <DropdownMenuItem>JSON</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
 
-          <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <DropdownMenuSub>
-      <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
-      <DropdownMenuSubContent>
-        <DropdownMenuItem>PDF</DropdownMenuItem>
-        <DropdownMenuItem>CSV</DropdownMenuItem>
-      </DropdownMenuSubContent>
-    </DropdownMenuSub>
-    ```
+        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      DropdownMenu,
-      DropdownMenuTrigger,
-      DropdownMenuContent,
-      DropdownMenuItem,
-      DropdownMenuSub,
-      DropdownMenuSubTrigger,
-      DropdownMenuSubContent,
-      DropdownMenuSeparator,
-    } from "@pycolors/ui";
 
-    export function SubmenuExample() {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">More</Button>
-          </DropdownMenuTrigger>
+```tsx title="dropdown-submenu.tsx"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
 
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem>Rename</DropdownMenuItem>
+export function DropdownSubmenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          More
+        </Button>
+      </DropdownMenuTrigger>
 
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>PDF</DropdownMenuItem>
-                <DropdownMenuItem>CSV</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Rename</DropdownMenuItem>
 
-            <DropdownMenuSeparator />
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            Export
+          </DropdownMenuSubTrigger>
 
-            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
-    ```
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>PDF</DropdownMenuItem>
+            <DropdownMenuItem>CSV</DropdownMenuItem>
+            <DropdownMenuItem>JSON</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+<Callout title="Submenu rule">
+  Keep submenu depth to one level whenever possible. Deep nested menus are harder to scan and navigate.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Start with the trigger
+
+    Use a clear trigger such as `Actions`, `More`, or an icon button with an accessible label.
+  </Step>
+
+  <Step>
+    ### Keep items action-oriented
+
+    Prefer verb-first labels: Rename, Duplicate, Archive, Export, Delete.
+  </Step>
+
+  <Step>
+    ### Group only when needed
+
+    Use labels and separators to clarify structure, not to decorate the menu.
+  </Step>
+
+  <Step>
+    ### Confirm destructive actions
+
+    A destructive menu item should usually open a Dialog before the final action.
+  </Step>
+
+  <Step>
+    ### Move complex workflows elsewhere
+
+    If the menu contains forms, long content, or multi-step decisions, use Sheet, Dialog, or a page.
+  </Step>
+</Steps>
+
+## Dropdown Menu vs Dialog vs Sheet
+
+| Situation | Use |
+| --- | --- |
+| Row actions | DropdownMenu |
+| Account menu | DropdownMenu |
+| Small preference selector | DropdownMenu |
+| Destructive confirmation | Dialog |
+| Advanced filters | Sheet |
+| Long settings workflow | Sheet or page |
+| Multi-step flow | Page |
+
+<Callout type="info" title="Decision rule">
+  DropdownMenu exposes compact choices. Dialog confirms focused decisions. Sheet handles larger side workflows.
+</Callout>
 
 ## API
 
@@ -466,65 +564,201 @@ Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to
 | Component | Description |
 | --- | --- |
 | `DropdownMenu` | Root container |
-| `DropdownMenuTrigger` | Anchor element (use `asChild` for custom triggers) |
-| `DropdownMenuContent` | Floating surface (supports Radix positioning props) |
+| `DropdownMenuTrigger` | Anchor element, usually with `asChild` |
+| `DropdownMenuContent` | Floating menu surface |
 | `DropdownMenuItem` | Standard action item |
-| `DropdownMenuCheckboxItem` | Toggle item (checked/unchecked) |
+| `DropdownMenuCheckboxItem` | Independent toggle item |
 | `DropdownMenuRadioGroup` | Exclusive selection group |
-| `DropdownMenuRadioItem` | Item within a radio group |
+| `DropdownMenuRadioItem` | Item inside a radio group |
 | `DropdownMenuLabel` | Section label |
 | `DropdownMenuSeparator` | Divider |
-| `DropdownMenuShortcut` | Right-aligned hint (visual only) |
+| `DropdownMenuShortcut` | Right-aligned visual shortcut |
 | `DropdownMenuGroup` | Group wrapper |
 | `DropdownMenuSub` | Submenu root |
 | `DropdownMenuSubTrigger` | Submenu trigger item |
 | `DropdownMenuSubContent` | Submenu surface |
+| `DropdownMenuPortal` | Portal wrapper for menu content |
 
 ### Wrapper additions
 
-- `DropdownMenuItem` supports `{ inset?: boolean }`
-- `DropdownMenuLabel` supports `{ inset?: boolean }`
-- `DropdownMenuSubTrigger` supports `{ inset?: boolean }`
+| Component | Added prop | Purpose |
+| --- | --- | --- |
+| `DropdownMenuItem` | `inset?: boolean` | Align item with indicator spacing |
+| `DropdownMenuLabel` | `inset?: boolean` | Align label with inset items |
+| `DropdownMenuSubTrigger` | `inset?: boolean` | Align submenu trigger with inset items |
 
----
+Dropdown Menu components extend their respective Radix props.
+
+```ts title="dropdown-menu-props.ts"
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>
+```
 
 ## Accessibility
 
-- Radix provides keyboard navigation by default:
-  - **Enter/Space** activates an item
-  - **Arrow keys** navigate
-  - **Esc** closes the menu
-- Prefer `DropdownMenuTrigger asChild` to preserve correct semantics (e.g. a real `<button>`).
-- Avoid placing complex interactive controls (inputs, comboboxes) inside dropdown menus unless necessary.
-- For destructive actions, consider a confirmation dialog.
+Dropdown Menu is built on Radix DropdownMenu primitives.
 
----
+Keyboard support includes:
 
-## Design guidelines
+- Enter or Space activates an item
+- Arrow keys navigate items
+- Escape closes the menu
+- Submenus support keyboard navigation
+- Focus returns to the trigger when closed
 
-- Keep items short and action-oriented (verb-first labels).
-- Use separators to split groups; don’t over-separate.
-- Use `inset` for hierarchical menus or when aligning with item indicators.
-- Use submenus sparingly (depth 1 is usually enough).
+Guidelines:
 
----
+- use `DropdownMenuTrigger asChild` with a semantic trigger
+- provide an `aria-label` for icon-only triggers
+- avoid complex inputs inside dropdown menus
+- do not rely on shortcut text as the only instruction
+- confirm destructive actions in a Dialog when needed
 
-## Related guides
+<Callout title="Accessibility rule">
+  A dropdown menu should be quick to scan and quick to leave. If users need to think, read, or type, use another surface.
+</Callout>
 
-<LinkCards>
-  <LinkCard
-    title="Button"
-    description="Best practices for triggers and actions."
-    href="/docs/ui/button"
-  />
-  <LinkCard
-    title="Sheet"
-    description="Use a sheet for complex multi-step actions."
-    href="/docs/ui/sheet"
-  />
-  <LinkCard
-    title="Accessibility"
-    description="Keyboard and focus patterns used across PyColors UI."
-    href="/docs/guides/accessibility"
-  />
-</LinkCards>
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>short action labels</li>
+        <li>semantic triggers</li>
+        <li>groups only when they improve scanning</li>
+        <li>Dialog confirmation for destructive actions</li>
+        <li>submenus only for small secondary choices</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>long paragraphs inside menus</li>
+        <li>deep nested submenus</li>
+        <li>forms or complex inputs in a dropdown</li>
+        <li>destructive actions with no confirmation</li>
+        <li>using menus for primary actions</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Menu item labels should be short and action-oriented.
+
+<Tabs items={["Good", "Avoid"]}>
+  <Tab value="Good">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Rename</li>
+        <li>Duplicate</li>
+        <li>Archive</li>
+        <li>Export CSV</li>
+        <li>Delete</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Avoid">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Click here to rename this project</li>
+        <li>Make another copy of this project</li>
+        <li>Remove forever immediately</li>
+        <li>Open another complicated flow</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Can a Dropdown Menu contain a form?">
+    Usually no. Use Sheet, Dialog, or a dedicated page for forms. Dropdown menus are best for short actions and compact choices.
+  </Accordion>
+
+  <Accordion title="Should destructive actions live in Dropdown Menu?">
+    The menu can expose the destructive action, but the final confirmation should usually happen in a Dialog.
+  </Accordion>
+
+  <Accordion title="When should I use checkbox or radio menu items?">
+    Use checkbox items for independent toggles. Use radio items when exactly one option should be selected.
+  </Accordion>
+
+  <Accordion title="Are shortcuts automatic?">
+    No. `DropdownMenuShortcut` is visual only. Keyboard shortcut registration must be implemented separately.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use semantic buttons for dropdown triggers and primary actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Dialog</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Dialog to confirm destructive actions from a menu.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Sheet</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Sheet for larger workflows, filters, or details panels.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Overlays pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose between Dropdown Menu, Dialog, and Sheet for product flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

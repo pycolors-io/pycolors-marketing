@@ -5,8 +5,28 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Preview } from "@/components/docs/preview";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  LayoutDashboard,
+  ListFilter,
+  PanelsTopLeft,
+  Settings,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
 
 import {
   Tabs as UITabs,
@@ -15,200 +35,363 @@ import {
   TabsContent as UITabsContent,
 } from "@pycolors/ui";
 
-The **Tabs** component lets users switch between related views without leaving the page.
-It is built on **Radix UI Tabs** and styled with PyColors tokens for consistent theming.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Tabs</Badge>
+</div>
 
-Use Tabs for:
-- Settings sections (Profile / Billing / Security)
-- Dashboards (Overview / Activity / Logs)
-- Compact UIs (filters, panels, segmented content)
+## Switch between related views
+
+The **Tabs** component lets users switch between related views without leaving the page.
+
+Use it for:
+
+- settings sections
+- dashboard views
+- billing sections
+- product panels
+- compact filters
+- segmented content
+- related admin views
+
+Tabs are built on **Radix Tabs** and styled with PyColors tokens for consistent theming, focus states, and interaction behavior.
+
+<Callout title="Core idea">
+  Tabs are for peer views at the same hierarchy level. They should not replace primary navigation.
+</Callout>
 
 ## Import
 
-```tsx
+```tsx title="tabs-import.tsx"
+import { Tabs } from "@pycolors/ui";
+```
+
+## Basic usage
+
+Use Tabs when multiple related views belong inside the same page context.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+    <UITabs defaultValue="account" className="w-full max-w-xl">
+      <UITabsList aria-label="Account tabs">
+        <UITabsTrigger value="account">Account</UITabsTrigger>
+        <UITabsTrigger value="password">Password</UITabsTrigger>
+      </UITabsList>
+
+      <UITabsContent value="account">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Account settings content
+        </div>
+      </UITabsContent>
+
+      <UITabsContent value="password">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Password settings content
+        </div>
+      </UITabsContent>
+    </UITabs>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="settings-tabs.tsx"
 import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
 } from "@pycolors/ui";
-```
 
-## Usage
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <UITabs defaultValue="account" className="w-full max-w-xl">
-        <UITabsList aria-label="Account tabs">
-          <UITabsTrigger value="account">Account</UITabsTrigger>
-          <UITabsTrigger value="password">Password</UITabsTrigger>
-        </UITabsList>
-
-        <UITabsContent value="account">
-          <div className="rounded-md border bg-card p-4 text-sm">
-            Account settings content
-          </div>
-        </UITabsContent>
-
-        <UITabsContent value="password">
-          <div className="rounded-md border bg-card p-4 text-sm">
-            Password settings content
-          </div>
-        </UITabsContent>
-      </UITabs>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Tabs defaultValue="account">
+export function SettingsTabs() {
+  return (
+    <Tabs defaultValue="account" className="w-full max-w-xl">
       <TabsList aria-label="Settings tabs">
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="password">Password</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="account">...</TabsContent>
-      <TabsContent value="password">...</TabsContent>
+      <TabsContent value="account">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Account settings content
+        </div>
+      </TabsContent>
+
+      <TabsContent value="password">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Password settings content
+        </div>
+      </TabsContent>
     </Tabs>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import {
-      Tabs,
-      TabsList,
-      TabsTrigger,
-      TabsContent,
-    } from "@pycolors/ui";
-
-    export function SettingsTabs() {
-      return (
-        <Tabs defaultValue="account" className="w-full max-w-xl">
-          <TabsList aria-label="Settings tabs">
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="password">Password</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="account">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Account settings content
-            </div>
-          </TabsContent>
-
-          <TabsContent value="password">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Password settings content
-            </div>
-          </TabsContent>
-        </Tabs>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
+
+## When to use Tabs
+
+Use Tabs when users switch between related peer sections in the same workflow.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Settings className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Settings sections
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for Profile, Billing, Security, Notifications, and Danger Zone sections.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LayoutDashboard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Dashboard views
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for Overview, Activity, Logs, Usage, or Members inside a dashboard page.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ListFilter className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Compact filters
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for small segmented filters when the choices are few and stable.
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
 ## Sizes
 
 `TabsList` and `TabsTrigger` accept a `size` prop to adapt density.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex flex-col gap-4">
-        <UITabs defaultValue="one">
-          <UITabsList size="sm" aria-label="Small tabs">
-            <UITabsTrigger size="sm" value="one">One</UITabsTrigger>
-            <UITabsTrigger size="sm" value="two">Two</UITabsTrigger>
-          </UITabsList>
+    <div className="flex flex-col gap-4">
+      <UITabs defaultValue="one">
+        <UITabsList size="sm" aria-label="Small tabs">
+          <UITabsTrigger size="sm" value="one">One</UITabsTrigger>
+          <UITabsTrigger size="sm" value="two">Two</UITabsTrigger>
+        </UITabsList>
 
-          <UITabsContent value="one">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Small tabs content
-            </div>
-          </UITabsContent>
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Small tabs content
+          </div>
+        </UITabsContent>
 
-          <UITabsContent value="two">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Small tabs content
-            </div>
-          </UITabsContent>
-        </UITabs>
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Small tabs content
+          </div>
+        </UITabsContent>
+      </UITabs>
 
-        <UITabs defaultValue="one">
-          <UITabsList size="md" aria-label="Medium tabs">
-            <UITabsTrigger size="md" value="one">One</UITabsTrigger>
-            <UITabsTrigger size="md" value="two">Two</UITabsTrigger>
-          </UITabsList>
+      <UITabs defaultValue="one">
+        <UITabsList size="md" aria-label="Medium tabs">
+          <UITabsTrigger size="md" value="one">One</UITabsTrigger>
+          <UITabsTrigger size="md" value="two">Two</UITabsTrigger>
+        </UITabsList>
 
-          <UITabsContent value="one">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Medium tabs content
-            </div>
-          </UITabsContent>
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Medium tabs content
+          </div>
+        </UITabsContent>
 
-          <UITabsContent value="two">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Medium tabs content
-            </div>
-          </UITabsContent>
-        </UITabs>
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Medium tabs content
+          </div>
+        </UITabsContent>
+      </UITabs>
 
-        <UITabs defaultValue="one">
-          <UITabsList size="lg" aria-label="Large tabs">
-            <UITabsTrigger size="lg" value="one">One</UITabsTrigger>
-            <UITabsTrigger size="lg" value="two">Two</UITabsTrigger>
-          </UITabsList>
+      <UITabs defaultValue="one">
+        <UITabsList size="lg" aria-label="Large tabs">
+          <UITabsTrigger size="lg" value="one">One</UITabsTrigger>
+          <UITabsTrigger size="lg" value="two">Two</UITabsTrigger>
+        </UITabsList>
 
-          <UITabsContent value="one">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Large tabs content
-            </div>
-          </UITabsContent>
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Large tabs content
+          </div>
+        </UITabsContent>
 
-          <UITabsContent value="two">
-            <div className="rounded-md border bg-card p-4 text-sm">
-              Large tabs content
-            </div>
-          </UITabsContent>
-        </UITabs>
-      </div>
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Large tabs content
+          </div>
+        </UITabsContent>
+      </UITabs>
+    </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <TabsList size="sm">...</TabsList>
-    <TabsTrigger size="sm" value="...">...</TabsTrigger>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Tabs, TabsList, TabsTrigger } from "@pycolors/ui";
 
-    export function SizedTabsList() {
-      return (
-        <Tabs defaultValue="one">
-          <TabsList size="sm" aria-label="Small tabs">
-            <TabsTrigger size="sm" value="one">One</TabsTrigger>
-            <TabsTrigger size="sm" value="two">Two</TabsTrigger>
-          </TabsList>
-        </Tabs>
-      );
-    }
-    ```
+```tsx title="tabs-sizes.tsx"
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@pycolors/ui";
+
+export function TabsSizes() {
+  return (
+    <Tabs defaultValue="one">
+      <TabsList size="sm" aria-label="Small tabs">
+        <TabsTrigger size="sm" value="one">One</TabsTrigger>
+        <TabsTrigger size="sm" value="two">Two</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="one">
+        Small tabs content
+      </TabsContent>
+
+      <TabsContent value="two">
+        Small tabs content
+      </TabsContent>
+    </Tabs>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available sizes
 
-| Size | Description |
+| Size | Purpose |
 | --- | --- |
-| `sm` | Dense UIs (filters, toolbars) |
+| `sm` | Dense UIs, filters, toolbars |
 | `md` | Default density |
-| `lg` | Comfortable spacing (marketing / onboarding) |
+| `lg` | Comfortable spacing, onboarding, marketing-like surfaces |
+
+<Callout type="info" title="Density rule">
+  Use `sm` for compact product controls, `md` for most product UI, and `lg` only when the tabs need stronger visual presence.
+</Callout>
+
+## Product examples
+
+<Tabs items={["Settings", "Billing", "Dashboard"]}>
+  <Tab value="Settings">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Settings className="h-4 w-4 text-primary" />
+        Settings tabs
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Profile, Organization, Security, Billing, Notifications.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Billing">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <CreditCard className="h-4 w-4 text-primary" />
+        Billing tabs
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Plan, Invoices, Payment method, Usage.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Dashboard">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <LayoutDashboard className="h-4 w-4 text-primary" />
+        Dashboard tabs
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Overview, Activity, Logs, Members.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Use tabs for peer views
+
+    Each tab should represent a related view at the same hierarchy level.
+  </Step>
+
+  <Step>
+    ### Keep labels short
+
+    Prefer labels like Overview, Activity, Billing, Security, Logs, Usage.
+  </Step>
+
+  <Step>
+    ### Limit the number of tabs
+
+    Two to five tabs usually works best. More than that often becomes navigation.
+  </Step>
+
+  <Step>
+    ### Keep important actions visible
+
+    Do not hide critical actions inside a tab if users need them globally.
+  </Step>
+
+  <Step>
+    ### Preserve content structure
+
+    Each tab panel should have a clear heading or section structure when the content is complex.
+  </Step>
+</Steps>
+
+## Tabs vs navigation vs filters
+
+| Situation | Use |
+| --- | --- |
+| Switch between related peer views | Tabs |
+| Move between pages or major product areas | Navigation |
+| Toggle a small state filter | Tabs or segmented control |
+| Select one value inside a form | Radio group |
+| Hide or reveal optional content | Accordion |
+| Switch between unrelated workflows | Page navigation |
+
+<Callout title="Decision rule">
+  If each option is a related view in the same page, use Tabs. If each option is a destination, use navigation.
+</Callout>
 
 ## API
 
@@ -216,54 +399,186 @@ import {
 
 | Component | Description |
 | --- | --- |
-| `Tabs` | Root container (Radix `TabsPrimitive.Root`) |
-| `TabsList` | Trigger list (supports `size`) |
-| `TabsTrigger` | Individual trigger (supports `size`) |
+| `Tabs` | Root container |
+| `TabsList` | Trigger list, supports `size` |
+| `TabsTrigger` | Individual tab trigger, supports `size` |
 | `TabsContent` | Content panel |
 
 ### Props
 
-- `Tabs` extends `TabsPrimitive.TabsProps`
-- `TabsList` extends `TabsPrimitive.TabsListProps` + `{ size?: "sm" | "md" | "lg" }`
-- `TabsTrigger` extends `TabsPrimitive.TabsTriggerProps` + `{ size?: "sm" | "md" | "lg" }`
-- `TabsContent` extends `TabsPrimitive.TabsContentProps`
+| Component | Props |
+| --- | --- |
+| `Tabs` | Extends Radix `TabsPrimitive.TabsProps` |
+| `TabsList` | Extends Radix `TabsPrimitive.TabsListProps` + `{ size?: TabsSize }` |
+| `TabsTrigger` | Extends Radix `TabsPrimitive.TabsTriggerProps` + `{ size?: TabsSize }` |
+| `TabsContent` | Extends Radix `TabsPrimitive.TabsContentProps` |
 
 ## TypeScript types
 
-```ts
+```ts title="tabs-types.ts"
 export type TabsSize = "sm" | "md" | "lg";
 ```
 
 ## Accessibility
 
-- Always provide an `aria-label` on `TabsList` (or associate with a visible heading).
-- Ensure each `TabsTrigger` has clear text (avoid icon-only triggers).
-- Keyboard support is built-in via Radix (Arrow keys to navigate triggers).
-- Keep tab labels short and descriptive.
+Tabs are built on Radix Tabs primitives.
 
-## Design guidelines
+Guidelines:
 
-- Use Tabs when the views are peers (same hierarchy).
-- Don’t hide critical actions behind tabs; keep actions visible in the page header.
-- Prefer 2–5 tabs; more than that usually becomes a navigation problem.
-- Keep content height stable when possible to reduce layout shift.
+- provide an `aria-label` on `TabsList` or associate it with a visible heading
+- keep each `TabsTrigger` clear and text-based when possible
+- avoid icon-only tab triggers unless they have accessible labels
+- keep keyboard navigation predictable
+- ensure tab content is meaningful when reached directly
+- avoid hiding critical product actions behind inactive tabs
 
-## Related guides
+Radix provides keyboard support:
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic tokens used for surfaces and active states."
-    href="/docs/design-system/colors#semantic-tokens"
-  />
-  <LinkCard
-    title="Typography"
-    description="Keep tab labels aligned with the type scale."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="Button"
-    description="Actions that pair with tabbed content."
-    href="/docs/ui/button"
-  />
-</LinkCards>
+- Arrow keys move between triggers
+- Enter or Space activates a trigger depending on activation mode
+- focus management follows tablist semantics
+
+<Callout title="Accessibility rule">
+  A tab label should clearly describe the content it reveals.
+</Callout>
+
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>2–5 related peer views</li>
+        <li>short labels</li>
+        <li>clear `aria-label` on the list</li>
+        <li>stable content layout where possible</li>
+        <li>page-level actions outside the tabs</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>too many tabs</li>
+        <li>unrelated workflows in one tablist</li>
+        <li>icon-only tabs without labels</li>
+        <li>hiding critical actions inside tabs</li>
+        <li>using tabs as global navigation</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Tab labels should be short and familiar.
+
+<Tabs items={["Good", "Avoid"]}>
+  <Tab value="Good">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Overview</li>
+        <li>Activity</li>
+        <li>Billing</li>
+        <li>Security</li>
+        <li>Logs</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Avoid">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Everything about your account</li>
+        <li>Manage your billing details here</li>
+        <li>Things that happened before</li>
+        <li>Other configuration stuff</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should Tabs update the URL?">
+    Sometimes. If users need to share or reload a specific tab, sync tab state at the page or route layer.
+  </Accordion>
+
+  <Accordion title="How many tabs are too many?">
+    More than five usually becomes difficult to scan. Consider navigation, a sidebar, or a settings layout instead.
+  </Accordion>
+
+  <Accordion title="Can tabs contain forms?">
+    Yes. Tabs are common in settings pages. Keep form submission and validation scoped clearly to each panel.
+  </Accordion>
+
+  <Accordion title="Should tabs be used for filters?">
+    Tabs can work for a small set of stable filters. For complex filters, use a toolbar or Sheet.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use buttons for actions that pair with tabbed content.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/card" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Card</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use cards to structure content inside tab panels.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Place tabs inside real product layouts and settings flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible tablists with clear labels and keyboard behavior.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

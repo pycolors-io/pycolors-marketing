@@ -249,10 +249,6 @@ samp {
   gap: 0.75rem !important;
 }
 
-div[data-state="open"] + div[role="dialog"] {
-  margin-top: 5rem !important;
-}
-
 /* remove accidental extra internal wrappers */
 #nd-docs-layout [data-page-container],
 #nd-docs-layout [data-docs-body],
@@ -532,5 +528,9 @@ div[data-state="open"] + div[role="dialog"] {
     max-width: 100%;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+  }
+
+  div[data-state="open"] + div[role="dialog"] {
+    margin-top: 5rem !important;
   }
 }

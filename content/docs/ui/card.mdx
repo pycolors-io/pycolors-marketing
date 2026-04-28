@@ -5,29 +5,70 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  LayoutDashboard,
+  MousePointerClick,
+  PanelsTopLeft,
+  Settings,
+  SquareStack,
+  XCircle,
+} from "lucide-react";
 
-The **Card** component is a foundational surface used to group related content:
-dashboards, pricing blocks, settings panels, and list items.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Card</Badge>
+</div>
 
-It is built on semantic tokens (`bg-card`, `border-border`, `text-card-foreground`) so it stays consistent across themes, and it supports **surface variants** + an optional **interactive** state for hover/focus feedback.
+## Structured surfaces for product UI
+
+The **Card** component is a foundational surface used to group related content, actions, and metadata.
+
+Use it for:
+
+- dashboard tiles
+- pricing blocks
+- settings panels
+- billing summaries
+- feature cards
+- list items
+- empty states
+- account sections
+- product surfaces
+
+Card is built on semantic tokens such as `bg-card`, `border-border`, and `text-card-foreground`, so it stays consistent across light and dark themes.
+
+<Callout title="Core idea">
+  Card creates structure. Use it to group meaningful content, not as decoration.
+</Callout>
 
 ## Import
 
-```tsx
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from from "@pycolors/ui";
+```tsx title="card-import.tsx"
+import { Card } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use Card to group a title, description, content, and optional footer actions.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <Card className="max-w-sm">
@@ -41,70 +82,121 @@ import {
           </div>
         </CardContent>
         <CardFooter className="justify-end gap-2">
-          <Button variant="secondary">Cancel</Button>
+          <Button variant="outline">Cancel</Button>
           <Button>Save</Button>
         </CardFooter>
       </Card>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Card>
+  <Tab value="Code">
+
+```tsx title="account-card.tsx"
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@pycolors/ui";
+
+export function AccountCard() {
+  return (
+    <Card className="max-w-sm">
       <CardHeader>
         <CardTitle>Account</CardTitle>
-        <CardDescription>Manage your profile settings.</CardDescription>
+        <CardDescription>
+          Manage your profile settings.
+        </CardDescription>
       </CardHeader>
 
-      <CardContent>...</CardContent>
+      <CardContent>
+        <div className="text-sm text-muted-foreground">
+          Update personal details, security preferences, and integrations.
+        </div>
+      </CardContent>
 
-      <CardFooter>...</CardFooter>
+      <CardFooter className="justify-end gap-2">
+        <Button variant="secondary">Cancel</Button>
+        <Button>Save</Button>
+      </CardFooter>
     </Card>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      Card,
-      CardHeader,
-      CardTitle,
-      CardDescription,
-      CardContent,
-      CardFooter,
-    } from "@pycolors/ui";
-
-    export default function Demo() {
-      return (
-        <Card className="max-w-sm">
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>Manage your profile settings.</CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <div className="text-sm text-muted-foreground">
-              Update personal details, security preferences, and integrations.
-            </div>
-          </CardContent>
-
-          <CardFooter className="justify-end gap-2">
-            <Button variant="secondary">Cancel</Button>
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
 
+## When to use Card
+
+Use Card when content needs a clear surface, boundary, or grouping.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LayoutDashboard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Dashboards
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for KPI tiles, analytics summaries, and grouped dashboard sections.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Settings className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Settings
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for profile, organization, security, and billing settings panels.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for plan summaries, invoice blocks, and payment method surfaces.
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
 ## Variants
 
-Cards support semantic surface variants. Use them to adjust contrast without changing layout.
+Cards support semantic surface variants.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use variants to adjust contrast without changing layout.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <div className="grid gap-4 sm:grid-cols-3">
@@ -118,136 +210,147 @@ Cards support semantic surface variants. Use them to adjust contrast without cha
         <Card variant="muted">
           <CardHeader>
             <CardTitle>Muted</CardTitle>
-            <CardDescription>Subtle background for secondary panels.</CardDescription>
+            <CardDescription>Subtle secondary surface.</CardDescription>
           </CardHeader>
         </Card>
 
         <Card variant="transparent" className="border-dashed">
           <CardHeader>
             <CardTitle>Transparent</CardTitle>
-            <CardDescription>No background (keeps layout only).</CardDescription>
+            <CardDescription>Layout-only surface.</CardDescription>
           </CardHeader>
         </Card>
       </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Card />
-    <Card variant="muted" />
-    <Card variant="transparent" />
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
 
-    export function CardVariantsExample() {
-      return (
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>Default</CardTitle>
-              <CardDescription>Standard surface.</CardDescription>
-            </CardHeader>
-          </Card>
+```tsx title="card-variants.tsx"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@pycolors/ui";
 
-          <Card variant="muted">
-            <CardHeader>
-              <CardTitle>Muted</CardTitle>
-              <CardDescription>Subtle background.</CardDescription>
-            </CardHeader>
-          </Card>
+export function CardVariants() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-3">
+      <Card>
+        <CardHeader>
+          <CardTitle>Default</CardTitle>
+          <CardDescription>Standard surface.</CardDescription>
+        </CardHeader>
+      </Card>
 
-          <Card variant="transparent">
-            <CardHeader>
-              <CardTitle>Transparent</CardTitle>
-              <CardDescription>No background.</CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-      );
-    }
-    ```
+      <Card variant="muted">
+        <CardHeader>
+          <CardTitle>Muted</CardTitle>
+          <CardDescription>Subtle secondary surface.</CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card variant="transparent" className="border-dashed">
+        <CardHeader>
+          <CardTitle>Transparent</CardTitle>
+          <CardDescription>Layout-only surface.</CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available variants
 
-| Variant | Description |
-|---|---|
-| `default` | Main surface (`bg-card`) |
-| `muted` | Secondary surface (`bg-muted/40`) |
-| `transparent` | No background (`bg-transparent`) |
+| Variant | Purpose |
+| --- | --- |
+| `default` | Main surface using `bg-card` |
+| `muted` | Secondary surface using a softer background |
+| `transparent` | Layout-only container with no filled background |
+
+<Callout type="info" title="Variant rule">
+  Use `default` for primary surfaces, `muted` for secondary groups, and `transparent` when you only need structure.
+</Callout>
 
 ## Interactive cards
 
-Set `interactive` to add hover + focus styles. This is useful for **selectable list rows**, **dashboard tiles**, and **grid cards**.
+Use `interactive` when the whole card behaves like a selectable or navigational surface.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <div className="grid gap-4 sm:grid-cols-2">
         <Card interactive>
           <CardHeader>
             <CardTitle>Clickable card</CardTitle>
-            <CardDescription>Hover / focus to see feedback.</CardDescription>
+            <CardDescription>Hover and focus states communicate interactivity.</CardDescription>
           </CardHeader>
         </Card>
 
         <Card interactive variant="muted">
           <CardHeader>
             <CardTitle>Interactive + muted</CardTitle>
-            <CardDescription>Great for secondary selection items.</CardDescription>
+            <CardDescription>Useful for secondary selection items.</CardDescription>
           </CardHeader>
         </Card>
       </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Card interactive>...</Card>
-    <Card interactive variant="muted">...</Card>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
 
-    export function InteractiveCards() {
-      return (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Card interactive>
-            <CardHeader>
-              <CardTitle>Clickable card</CardTitle>
-              <CardDescription>Hover / focus to see feedback.</CardDescription>
-            </CardHeader>
-          </Card>
+```tsx title="interactive-cards.tsx"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@pycolors/ui";
 
-          <Card interactive variant="muted">
-            <CardHeader>
-              <CardTitle>Interactive + muted</CardTitle>
-              <CardDescription>Great for secondary selection items.</CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-      );
-    }
-    ```
+export function InteractiveCards() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Card interactive>
+        <CardHeader>
+          <CardTitle>Clickable card</CardTitle>
+          <CardDescription>
+            Hover and focus states communicate interactivity.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card interactive variant="muted">
+        <CardHeader>
+          <CardTitle>Interactive + muted</CardTitle>
+          <CardDescription>
+            Useful for secondary selection items.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
-**Recommendation:** if the card is actually a navigation element, prefer `asChild` with a real `<a>` (or `next/link`) so semantics are correct.
+<Callout title="Interaction rule">
+  If the card navigates, render it as a real link using `asChild`. If it performs an action, render it as a button or put a Button inside.
+</Callout>
 
-## As child (Slot)
+## As child
 
-Use `asChild` to render the Card as another element while keeping the Card styling. Perfect for cards that are links.
+Use `asChild` to render Card as another element while preserving Card styling.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+This is useful for link cards.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <Card asChild interactive className="max-w-sm">
@@ -261,93 +364,316 @@ Use `asChild` to render the Card as another element while keeping the Card styli
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Card asChild interactive>
-      <a href="/docs" className="block">...</a>
-    </Card>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
 
-    export function CardAsLink() {
-      return (
-        <Card asChild interactive className="max-w-sm">
-          <a href="/docs" className="block">
-            <CardHeader>
-              <CardTitle>Read the docs</CardTitle>
-              <CardDescription>Go to documentation →</CardDescription>
-            </CardHeader>
-          </a>
-        </Card>
-      );
-    }
-    ```
+```tsx title="card-as-link.tsx"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@pycolors/ui";
+
+export function CardAsLink() {
+  return (
+    <Card asChild interactive className="max-w-sm">
+      <a href="/docs" className="block">
+        <CardHeader>
+          <CardTitle>Read the docs</CardTitle>
+          <CardDescription>Go to documentation →</CardDescription>
+        </CardHeader>
+      </a>
+    </Card>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+## Composition
+
+A Card usually follows this structure:
+
+```tsx title="card-anatomy.tsx"
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+
+  <CardContent>
+    Content
+  </CardContent>
+
+  <CardFooter>
+    Actions
+  </CardFooter>
+</Card>
+```
+
+Use each slot intentionally:
+
+| Slot | Purpose |
+| --- | --- |
+| `CardHeader` | Introduces the surface |
+| `CardTitle` | Names the grouped content |
+| `CardDescription` | Adds short context |
+| `CardContent` | Holds the main body |
+| `CardFooter` | Holds actions or supporting metadata |
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Start with the content group
+
+    Use Card only when the content belongs together.
+  </Step>
+
+  <Step>
+    ### Add a clear title
+
+    Most cards should have a title that explains the purpose of the surface.
+  </Step>
+
+  <Step>
+    ### Keep actions in the footer
+
+    Footer actions make the card easier to scan and keep layout predictable.
+  </Step>
+
+  <Step>
+    ### Use interactivity deliberately
+
+    Interactive cards should be clickable or selectable. Static cards should not have hover affordances.
+  </Step>
+
+  <Step>
+    ### Preserve semantic behavior
+
+    Use `asChild` with a real link for navigational cards.
+  </Step>
+</Steps>
+
+## Card vs section vs list item
+
+| Situation | Use |
+| --- | --- |
+| Grouped content with a visible surface | Card |
+| Large page section with headings | Section |
+| Repeated compact rows | List item |
+| Navigation tile | Card with `asChild` link |
+| KPI or metric | Card |
+| Table data | Table |
+| Temporary status or error | Alert or EmptyState |
+
+<Callout title="Decision rule">
+  Use Card when the surface helps users understand grouping, priority, or interaction.
+</Callout>
+
 ## API
 
-### Props
+### Components
+
+| Component | Description |
+| --- | --- |
+| `Card` | Root surface |
+| `CardHeader` | Header area |
+| `CardTitle` | Card heading |
+| `CardDescription` | Supporting text |
+| `CardContent` | Main content area |
+| `CardFooter` | Footer actions or metadata |
+
+### Card props
 
 | Prop | Type | Default | Description |
-|---|---:|---:|---|
+| --- | --- | --- | --- |
 | `variant` | `CardVariant` | `"default"` | Surface style |
-| `interactive` | `boolean` | `false` | Adds hover + focus-visible feedback |
-| `asChild` | `boolean` | `false` | Render via Radix Slot (link cards, sections, etc.) |
+| `interactive` | `boolean` | `false` | Adds hover and focus-visible feedback |
+| `asChild` | `boolean` | `false` | Render via Radix Slot |
 | `className` | `string` | — | Additional Tailwind classes |
 
-The Card extends standard HTML div props:
+Card extends standard HTML `div` props.
 
-```ts
+```ts title="card-props.ts"
 React.HTMLAttributes<HTMLDivElement>
 ```
 
 ## TypeScript types
 
-```ts
-export type CardVariant = "default" | "muted" | "transparent";
+```ts title="card-types.ts"
+export type CardVariant =
+  | "default"
+  | "muted"
+  | "transparent";
+
 export type CardInteractive = boolean;
 ```
 
 ## Accessibility
 
-- Keep structure consistent: `CardHeader` → title/description → `CardContent` → `CardFooter`.
-- If the Card is clickable, prefer `asChild` with a semantic target (`a`, `button`).
-- Avoid multiple nested interactive elements inside an interactive Card.
-- Ensure focus is visible (enabled automatically via `interactive`).
+Guidelines:
 
-## Design guidelines
+- use meaningful headings inside cards when they introduce a section
+- keep interactive semantics accurate
+- use `asChild` with `a` for navigation
+- use `asChild` with `button` only when the whole card performs an action
+- avoid multiple nested interactive elements inside an interactive card
+- keep focus states visible for interactive cards
+- do not make a card interactive only for visual decoration
 
-- Use Cards for grouping and layout rhythm, not decoration.
-- Use `muted` for secondary surfaces and dense layouts.
-- Use `transparent` for “layout-only” containers (e.g., in a stacked list).
-- Use `interactive` only for selectable / navigational surfaces.
+<Callout title="Accessibility rule">
+  A clickable card should still be a real link or button. Visual interactivity is not enough.
+</Callout>
 
-## Related guides
+## Prefer / avoid
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic surface roles (bg-card, border-border, text-muted-foreground)."
-    href="/docs/design-system/colors#semantic-tokens"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner radius tokens used for cards and surfaces."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Shadows"
-    description="Elevation scale for card surfaces (xs → lg)."
-    href="/docs/design-system/tokens/shadows"
-  />
-  <LinkCard
-    title="Typography"
-    description="Titles, descriptions, and content rhythm inside cards."
-    href="/docs/design-system/typography"
-  />
-</LinkCards>
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>clear grouping</li>
+        <li>consistent card rhythm</li>
+        <li>semantic headings</li>
+        <li>footer actions for card-level actions</li>
+        <li>real link semantics for navigation cards</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>cards used only for decoration</li>
+        <li>too many nested cards</li>
+        <li>interactive styling on static content</li>
+        <li>clickable cards without link or button semantics</li>
+        <li>multiple competing actions inside one clickable card</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Card copy should make the grouped content easy to understand.
+
+<Tabs items={["Title", "Description", "Footer"]}>
+  <Tab value="Title">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Strong title examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Account, Current plan, Recent invoices, Project activity, Team members.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Description">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Description examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Manage profile details and account preferences. Review recent billing activity.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Footer">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Footer action examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Save changes, Manage billing, Invite member, View all invoices.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should every content group be a Card?">
+    No. Use Card when the surface improves grouping, hierarchy, or interaction. Simple sections do not always need a bordered surface.
+  </Accordion>
+
+  <Accordion title="Can a Card be clickable?">
+    Yes. Use `asChild` with a semantic link or button and enable `interactive` for visual feedback.
+  </Accordion>
+
+  <Accordion title="When should I use the muted variant?">
+    Use `muted` for secondary surfaces, dense layouts, or supporting panels where the default card is too visually strong.
+  </Accordion>
+
+  <Accordion title="Can cards contain forms?">
+    Yes. Cards work well for settings forms. Keep labels, validation, and actions clear.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Colors</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Semantic surface roles used by cards.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/design-system/tokens/radius" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Radius</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Corner radius tokens used for card surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/design-system/tokens/shadows" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Shadows</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Elevation scale for cards and floating surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible surfaces with headings, semantics, and focus states.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

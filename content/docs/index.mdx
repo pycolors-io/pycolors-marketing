@@ -28,20 +28,25 @@ import {
   Sparkles,
 } from "lucide-react";
 
-<div className="space-y-6">
-  <div className="flex flex-wrap items-center gap-2">
-    <Badge variant="outline">Docs</Badge>
-    <Badge>Production-shaped SaaS</Badge>
-  </div>
-
-  From product idea to real SaaS
-
-  PyColors helps you build in the right order: validate the product surface,
-  wire the business layer, then launch with more confidence.
-
-  Use the docs to move from UI foundations to production-shaped SaaS systems:
-  authentication, billing, backend structure, secure delivery, and launch readiness.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Docs</Badge>
+  <Badge>Production-shaped SaaS</Badge>
 </div>
+
+## From product idea to real SaaS
+
+PyColors helps you build in the right order:
+
+1. validate the product surface
+2. wire the business layer
+3. launch with stronger foundations
+4. turn product work into revenue faster
+
+This documentation is designed to support one goal:
+
+> help builders move from idea to credible SaaS, then from credible SaaS to a product that can charge customers.
+
+Use these docs to move from UI foundations to production-shaped SaaS systems: authentication, billing, backend structure, secure delivery, and launch readiness.
 
 <Callout title="The PyColors path">
   Starter Free helps you validate. Starter Pro helps you launch, monetize, and reduce the infrastructure work that delays revenue.
@@ -93,7 +98,23 @@ import {
   </a>
 </div>
 
-## The path
+## The business path
+
+PyColors documentation is not only a reference. It is a product path.
+
+It helps reduce the gap between:
+
+- a nice-looking interface
+- a validated product surface
+- a paid SaaS foundation
+- a launch-ready system
+- a product that can support revenue over time
+
+<Callout type="info" title="Strategic goal">
+  The docs should reduce friction, increase trust, and make the upgrade path obvious. Every page should help a serious builder understand why PyColors saves time before launch.
+</Callout>
+
+## The build path
 
 <Tabs items={["Validate", "Wire", "Launch"]}>
   <Tab value="Validate">
@@ -169,7 +190,7 @@ import {
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+  <a href="/docs/starter/upgrade-to-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
     <div>
       <div className="text-sm font-medium text-foreground">Upgrade from Starter Free</div>
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -267,6 +288,28 @@ import {
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 </div>
+
+## Why this matters for revenue
+
+Most SaaS projects do not fail because the first screen was impossible to build.
+
+They slow down when the product needs:
+
+- credible product UX
+- real accounts
+- protected access
+- Stripe billing
+- backend persistence
+- secure delivery
+- launch confidence
+
+PyColors documentation is designed to reduce that delay.
+
+That matters because every week lost to repeated infrastructure work is a week not spent on positioning, distribution, user feedback, and revenue.
+
+<Callout title="Revenue-focused documentation">
+  The docs should help a serious builder trust the system, understand the upgrade path, and choose Starter Pro when infrastructure becomes the bottleneck.
+</Callout>
 
 ## Decision
 

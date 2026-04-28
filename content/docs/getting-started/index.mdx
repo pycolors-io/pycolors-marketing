@@ -1,0 +1,438 @@
+---
+title: Overview
+description: Start with PyColors in the right order. Validate your SaaS surface, understand the system, and move toward a production-ready business foundation.
+lastUpdated: "2026-04-28"
+appliesTo: PyColors
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  Box,
+  CheckCircle,
+  CreditCard,
+  Database,
+  Layers3,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Getting Started</Badge>
+  <Badge>Validate → Wire → Launch</Badge>
+</div>
+
+## Build your SaaS in the right order
+
+PyColors helps you move from **idea** to **credible SaaS product** without spending your best time on the wrong layer too early.
+
+The goal is simple:
+
+1. validate the product surface
+2. build with consistent UI foundations
+3. use patterns for real product behavior
+4. wire auth, billing, backend, and delivery when the business layer becomes the blocker
+5. launch with more confidence
+
+This section gives you the fastest path through the docs.
+
+<Callout title="Core idea">
+  Start with the surface. Validate the product. Upgrade when infrastructure becomes the bottleneck.
+</Callout>
+
+## Choose your path
+
+<Tabs items={["I want to validate", "I want to launch"]}>
+  <Tab value="I want to validate">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Sparkles className="h-4 w-4 text-primary" />
+        Start with Starter Free
+      </div>
+
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose this path when you need a credible product surface before backend complexity.
+      </div>
+
+      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>real SaaS screens</li>
+        <li>dashboard and navigation</li>
+        <li>auth, billing, admin, and settings surfaces</li>
+        <li>mocked data and UI states</li>
+        <li>fast demo and MVP validation</li>
+      </ul>
+
+      <div className="mt-5">
+        <a href="/docs/starter" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
+          Explore Starter Free
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="I want to launch">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Rocket className="h-4 w-4 text-primary" />
+        Move to Starter Pro
+      </div>
+
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose this path when your product needs real users, real payments, protected access, and backend foundations.
+      </div>
+
+      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>real authentication</li>
+        <li>Stripe Checkout and billing portal</li>
+        <li>webhook-driven subscription state</li>
+        <li>Prisma-ready backend foundation</li>
+        <li>secure delivery after purchase</li>
+      </ul>
+
+      <div className="mt-5">
+        <a href="/docs/starter-pro" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
+          Explore Starter Pro
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## What you should do first
+
+<Steps>
+  <Step>
+    ### Understand the product path
+
+    PyColors is not just a UI library.
+
+    It is a path from product validation to SaaS launch:
+
+    - **Design System** gives visual consistency
+    - **UI** gives reusable primitives
+    - **Guides** explain how to compose real interfaces
+    - **Patterns** solve repeated product flows
+    - **Starter Free** validates the surface
+    - **Starter Pro** wires the business layer
+  </Step>
+
+  <Step>
+    ### Run the starter locally
+
+    Start with the product surface.
+
+    Run the app locally, click through the main routes, and understand what is mocked before changing too much.
+  </Step>
+
+  <Step>
+    ### Explore the UI foundations
+
+    Review the primitives that power the product:
+
+    - Button
+    - Input
+    - Card
+    - Badge
+    - Alert
+    - Dialog
+    - Table
+
+    These components keep the product interface consistent as it grows.
+  </Step>
+
+  <Step>
+    ### Learn the patterns
+
+    Patterns show how primitives become real product flows:
+
+    - data tables
+    - overlays
+    - async actions
+    - empty, loading, and error states
+
+    This is where UI becomes product behavior.
+  </Step>
+
+  <Step>
+    ### Upgrade when wiring slows you down
+
+    When the question changes from “what should this product feel like?” to “how do I launch this with real users and payments?”, Starter Pro becomes the faster path.
+  </Step>
+</Steps>
+
+## Fastest path by goal
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Box className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Validate an idea
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Start with Starter Free, adapt the product copy, rename the core entity, and show the app to users.
+      </div>
+      <div className="mt-4">
+        <a href="/docs/starter" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
+          Start with Free
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Layers3 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Build a serious baseline
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use UI, Guides, and Patterns to create consistent product flows before custom logic takes over.
+      </div>
+      <div className="mt-4">
+        <a href="/docs/ui" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
+          Explore UI
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Rocket className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Launch and monetize
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Move to Starter Pro when auth, billing, backend, protected routes, and delivery become the bottleneck.
+      </div>
+      <div className="mt-4">
+        <a href="/docs/starter-pro" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
+          Explore Pro
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
+## Time to first result
+
+| Milestone | Target |
+| --- | --- |
+| Run the project locally | 10 minutes |
+| Understand the main routes | 30 minutes |
+| Adapt the product surface | 1–2 hours |
+| Ship a first demo | Same day |
+| Wire production foundations | When validation is clear |
+| Launch with real auth and billing | Starter Pro path |
+
+<Callout type="info" title="Time-to-value matters">
+  The faster a builder sees a credible product surface, the faster they understand the value of PyColors.
+</Callout>
+
+## Recommended reading order
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/getting-started/installation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Installation</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Set up the project locally and validate that everything runs.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/getting-started/quickstart" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Quickstart</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Explore the app, main surfaces, and first product flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/getting-started/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Project structure</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand where routes, components, features, and product foundations live.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/getting-started/first-feature" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">First feature</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Add your first product feature without breaking the architecture.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+## Free vs Pro decision
+
+| Question | Best path |
+| --- | --- |
+| I need to validate the product surface | Starter Free |
+| I need a credible UI demo | Starter Free |
+| I need real accounts and sessions | Starter Pro |
+| I need Stripe Checkout and billing portal | Starter Pro |
+| I need subscription state to control access | Starter Pro |
+| I need secure delivery after purchase | Starter Pro |
+| I need to reduce launch risk | Starter Pro |
+
+<Callout title="Upgrade when wiring becomes the bottleneck">
+  Starter Free validates your product. Starter Pro wires your business.
+</Callout>
+
+## Revenue-focused mental model
+
+PyColors is designed around a simple business principle:
+
+> Spend less time rebuilding repeated infrastructure. Spend more time on product, positioning, distribution, and customers.
+
+That matters if your goal is to build a serious SaaS business.
+
+The documentation should help every visitor understand:
+
+- what PyColors solves
+- where to start
+- when Free is enough
+- when Pro becomes the faster path
+- why buying the foundation can be higher leverage than rebuilding it
+
+## What to avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>running the project before refactoring</li>
+        <li>understanding the Free → Pro path</li>
+        <li>validating product UX before deep backend work</li>
+        <li>using patterns for repeated product flows</li>
+        <li>upgrading when auth and billing slow launch</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>rewriting everything before understanding the baseline</li>
+        <li>starting with billing before validating the product</li>
+        <li>mixing UI primitives with business logic</li>
+        <li>treating Starter Free as a complete backend</li>
+        <li>waiting too long to deploy and test the product surface</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Free</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Validate a credible SaaS surface with mocked product flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Launch with real auth, billing, backend foundations, protected routes, and delivery.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">UI Components</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Explore the primitives that power real SaaS interfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Patterns</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move from primitives to product-level flows such as tables, overlays, and async actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<Callout title="Build fast. Validate early. Upgrade when ready.">
+  PyColors is built to help you reduce the distance between idea, product, launch, and revenue.
+</Callout>

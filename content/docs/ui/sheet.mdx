@@ -5,16 +5,105 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Filter,
+  LayoutPanelLeft,
+  ListFilter,
+  Menu,
+  PanelRightOpen,
+  PencilLine,
+  Rows3,
+  XCircle,
+} from "lucide-react";
 
-The **Sheet** component is a slide-over panel (a Dialog variant) used for **side panels**, **filters**, **mobile navigation**, and **contextual editing**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Sheet</Badge>
+</div>
 
-It’s built on **Radix Dialog** and uses PyColors semantic tokens (`bg-card`, `border-border`, `text-foreground`) + the motion utilities already configured in the UI.
+## Side workflows without leaving context
+
+The **Sheet** component is a slide-over panel used for side workflows, filters, navigation, and contextual editing.
+
+Use it for:
+
+- advanced filters
+- mobile navigation
+- side editing panels
+- detail panels
+- contextual settings
+- secondary workflows that should preserve page context
+
+Sheet is built on **Radix Dialog** and styled with PyColors semantic tokens such as `bg-card`, `border-border`, and `text-foreground`.
+
+<Callout title="Core idea">
+  Sheet keeps the user in context while exposing a larger secondary workflow.
+</Callout>
 
 ## Import
 
-```tsx
+```tsx title="sheet-import.tsx"
+import { Sheet } from "@pycolors/ui";
+```
+
+## Basic usage
+
+Use Sheet for a side panel that contains a focused but larger workflow than a Dialog.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+   <Preview>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open sheet</Button>
+      </SheetTrigger>
+
+      <SheetContent side="right" className="w-[380px] sm:w-[420px]">
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>
+            Update your account details. Changes are saved on submit.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="you@domain.com" />
+          <Input label="Company" placeholder="PyColors" autoComplete="organization" />
+        </div>
+
+        <SheetFooter className="mt-6">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <Button>Save</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="profile-sheet.tsx"
+"use client";
+
 import {
+  Button,
+  Input,
   Sheet,
   SheetTrigger,
   SheetClose,
@@ -24,289 +113,392 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@pycolors/ui";
-```
 
-## Usage
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <div className="flex flex-wrap gap-2">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Open sheet</Button>
-          </SheetTrigger>
-
-          <SheetContent side="right" className="w-[380px] sm:w-[420px]">
-            <SheetHeader>
-              <SheetTitle>Edit profile</SheetTitle>
-              <SheetDescription>Update your account details. Changes are saved on submit.</SheetDescription>
-            </SheetHeader>
-
-            <div className="mt-6 grid gap-3">
-              <Input label="Name" placeholder="John Doe" />
-              <Input label="Email" placeholder="you@domain.com" />
-              <Input label="Company" placeholder="Acme Inc." autoComplete="organization" />
-            </div>
-
-            <SheetFooter className="mt-6">
-              <SheetClose asChild>
-                <Button variant="secondary">Cancel</Button>
-              </SheetClose>
-              <Button>Save</Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+export function ProfileSheet() {
+  return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">Open sheet</Button>
       </SheetTrigger>
 
-      <SheetContent>
+      <SheetContent side="right" className="w-[380px] sm:w-[420px]">
         <SheetHeader>
-          <SheetTitle>Title</SheetTitle>
-          <SheetDescription>Description</SheetDescription>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>
+            Update your account details. Changes are saved on submit.
+          </SheetDescription>
         </SheetHeader>
 
-        <div className="mt-6">...</div>
+        <div className="mt-6 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="you@domain.com" />
+          <Input label="Company" placeholder="PyColors" autoComplete="organization" />
+        </div>
 
         <SheetFooter className="mt-6">
           <SheetClose asChild>
             <Button variant="secondary">Cancel</Button>
           </SheetClose>
-          <Button>Confirm</Button>
+          <Button>Save</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    "use client";
-
-    import * as React from "react";
-    import {
-      Button,
-      Input,
-      Sheet,
-      SheetTrigger,
-      SheetClose,
-      SheetContent,
-      SheetHeader,
-      SheetFooter,
-      SheetTitle,
-      SheetDescription,
-    } from "@pycolors/ui";
-
-    export function ProfileSheet() {
-      return (
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Open sheet</Button>
-          </SheetTrigger>
-
-          <SheetContent side="right" className="w-[380px] sm:w-[420px]">
-            <SheetHeader>
-              <SheetTitle>Edit profile</SheetTitle>
-              <SheetDescription>Update your account details. Changes are saved on submit.</SheetDescription>
-            </SheetHeader>
-
-            <div className="mt-6 grid gap-3">
-              <Input label="Name" placeholder="Patrice" />
-              <Input label="Email" placeholder="you@domain.com" />
-            </div>
-
-            <SheetFooter className="mt-6">
-              <SheetClose asChild>
-                <Button variant="secondary">Cancel</Button>
-              </SheetClose>
-              <Button>Save</Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
 
-**Notes**
-- `SheetTrigger` should typically be `asChild` to preserve semantics (Button, link, icon button).
-- `SheetClose` can wrap buttons to close without extra state.
+<Callout type="info" title="Trigger rule">
+  Prefer `SheetTrigger asChild` so the trigger keeps the semantics of the element you pass, such as a real Button.
+</Callout>
+
+## When to use Sheet
+
+Use Sheet when the user needs more space than a menu, but should keep page context.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ListFilter className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Filters
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for advanced filters without crowding the toolbar.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <PencilLine className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Side editing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for editing records while keeping the parent page visible.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Menu className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Mobile navigation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use a left sheet for mobile menus and app navigation.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Sides
 
-Sheets support 4 placement options via the `side` prop. Use `right` for common “edit panels”, and `left` for navigation.
+Sheets support four placement options through the `side` prop.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use the placement to match the mental model of the workflow.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <div className="flex flex-wrap gap-2">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Right</Button>
-          </SheetTrigger>
-          <SheetContent side="right">
-            <SheetHeader>
-              <SheetTitle>Right sheet</SheetTitle>
-              <SheetDescription>Default placement.</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+   <Preview>
+    <div className="flex flex-wrap gap-2">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Right</Button>
+        </SheetTrigger>
+        <SheetContent side="right">
+          <SheetHeader>
+            <SheetTitle>Right sheet</SheetTitle>
+            <SheetDescription>Default placement for editing and details.</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
 
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Left</Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <SheetHeader>
-              <SheetTitle>Left sheet</SheetTitle>
-              <SheetDescription>Great for navigation.</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Left</Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Left sheet</SheetTitle>
+            <SheetDescription>Recommended for navigation.</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
 
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Top</Button>
-          </SheetTrigger>
-          <SheetContent side="top">
-            <SheetHeader>
-              <SheetTitle>Top sheet</SheetTitle>
-              <SheetDescription>Useful for quick filters.</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Top</Button>
+        </SheetTrigger>
+        <SheetContent side="top">
+          <SheetHeader>
+            <SheetTitle>Top sheet</SheetTitle>
+            <SheetDescription>Useful for compact global controls.</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
 
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Bottom</Button>
-          </SheetTrigger>
-          <SheetContent side="bottom">
-            <SheetHeader>
-              <SheetTitle>Bottom sheet</SheetTitle>
-              <SheetDescription>Mobile-friendly actions.</SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Bottom</Button>
+        </SheetTrigger>
+        <SheetContent side="bottom">
+          <SheetHeader>
+            <SheetTitle>Bottom sheet</SheetTitle>
+            <SheetDescription>Useful for mobile-first actions.</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <SheetContent side="right" />
-    <SheetContent side="left" />
-    <SheetContent side="top" />
-    <SheetContent side="bottom" />
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Button, Sheet, SheetTrigger, SheetContent } from "@pycolors/ui";
 
-    export function SheetSides() {
-      return (
-        <div className="flex flex-wrap gap-2">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline">Right</Button>
-            </SheetTrigger>
-            <SheetContent side="right">...</SheetContent>
-          </Sheet>
+```tsx title="sheet-sides.tsx"
+import {
+  Button,
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@pycolors/ui";
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline">Left</Button>
-            </SheetTrigger>
-            <SheetContent side="left">...</SheetContent>
-          </Sheet>
-        </div>
-      );
-    }
-    ```
+export function SheetSides() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Right</Button>
+        </SheetTrigger>
+        <SheetContent side="right">
+          <SheetHeader>
+            <SheetTitle>Right sheet</SheetTitle>
+            <SheetDescription>
+              Default placement for editing and details.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Left</Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Left sheet</SheetTitle>
+            <SheetDescription>
+              Recommended for navigation.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+### Placement guidance
+
+| Side | Best for |
+| --- | --- |
+| `right` | Editing, details, contextual panels |
+| `left` | Navigation, app menu, mobile sidebar |
+| `top` | Global filters, announcements, compact controls |
+| `bottom` | Mobile-first actions, quick controls |
+
+<Callout title="Placement rule">
+  Use `right` for editing, `left` for navigation, and `bottom` for mobile-first action panels.
+</Callout>
 
 ## Close behavior
 
-`SheetContent` renders a top-right close button automatically. Use `SheetClose` for explicit close actions in the footer.
+`SheetContent` includes a close button. Use `SheetClose` for explicit footer actions.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">Open</Button>
-        </SheetTrigger>
+   <Preview>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </SheetTrigger>
 
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Confirm</SheetTitle>
-            <SheetDescription>Close via button or ESC.</SheetDescription>
-          </SheetHeader>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Confirm</SheetTitle>
+          <SheetDescription>
+            Close with the button, the close control, or Escape.
+          </SheetDescription>
+        </SheetHeader>
 
-          <div className="mt-6 flex gap-2">
-            <SheetClose asChild>
-              <Button variant="secondary">Cancel</Button>
-            </SheetClose>
-            <SheetClose asChild>
-              <Button>Done</Button>
-            </SheetClose>
-          </div>
-        </SheetContent>
-      </Sheet>
+        <div className="mt-6 flex gap-2">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button>Done</Button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <SheetClose asChild>
-      <Button variant="secondary">Cancel</Button>
-    </SheetClose>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Button, SheetClose } from "@pycolors/ui";
 
-    export function SheetFooterActions() {
-      return (
-        <SheetClose asChild>
-          <Button variant="secondary">Cancel</Button>
-        </SheetClose>
-      );
-    }
-    ```
+```tsx title="sheet-close-actions.tsx"
+import {
+  Button,
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetClose,
+} from "@pycolors/ui";
+
+export function SheetCloseActions() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </SheetTrigger>
+
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Confirm</SheetTitle>
+          <SheetDescription>
+            Close with the button, the close control, or Escape.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 flex gap-2">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button>Done</Button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Choose the right side
+
+    Pick the placement based on the workflow: right for details, left for navigation, bottom for mobile actions.
+  </Step>
+
+  <Step>
+    ### Keep the page context visible
+
+    A sheet should extend the page, not replace it. Avoid using it for flows that need a full page.
+  </Step>
+
+  <Step>
+    ### Provide title and description
+
+    Use `SheetTitle` and `SheetDescription` so users understand the purpose of the panel.
+  </Step>
+
+  <Step>
+    ### Use one primary action
+
+    Most sheets should have one primary action and one secondary close or cancel action.
+  </Step>
+
+  <Step>
+    ### Handle scroll intentionally
+
+    Avoid nested scroll containers. Prefer one clear scrollable region inside the sheet.
+  </Step>
+</Steps>
+
+## Sheet vs Dialog vs Dropdown Menu
+
+| Situation | Use |
+| --- | --- |
+| Advanced filters | Sheet |
+| Side editing panel | Sheet |
+| Mobile navigation | Sheet |
+| Record details panel | Sheet |
+| Short destructive confirmation | Dialog |
+| Small contextual action list | DropdownMenu |
+| Full multi-step workflow | Page |
+
+<Callout type="info" title="Decision rule">
+  Sheet is for side workflows. Dialog is for focused decisions. Dropdown Menu is for compact choices.
+</Callout>
+
 ## API
 
-### Props
+### Components
 
-#### `SheetContent`
+| Component | Description |
+| --- | --- |
+| `Sheet` | Root container |
+| `SheetTrigger` | Trigger element, usually with `asChild` |
+| `SheetClose` | Close control, usually wrapping a Button |
+| `SheetContent` | Slide-over panel surface |
+| `SheetHeader` | Title and description stack helper |
+| `SheetFooter` | Action row helper |
+| `SheetTitle` | Accessible sheet title |
+| `SheetDescription` | Supporting text |
+
+### SheetContent props
 
 | Prop | Type | Default | Description |
-|---|---:|---:|---|
+| --- | --- | --- | --- |
 | `side` | `SheetSide` | `"right"` | Placement of the panel |
 | `className` | `string` | — | Additional Tailwind classes |
-| `...props` | `DialogPrimitive.Content` props | — | All Radix Dialog Content props |
+| `...props` | `DialogPrimitive.Content` props | — | Radix Dialog Content props |
 
 `Sheet`, `SheetTrigger`, and `SheetClose` are re-exports of Radix Dialog primitives and accept their native props.
 
 ## TypeScript types
 
-```ts
+```ts title="sheet-types.ts"
 export type SheetSide = "top" | "bottom" | "left" | "right";
 
 export interface SheetContentProps
@@ -317,40 +509,178 @@ export interface SheetContentProps
 
 ## Accessibility
 
-- Built on Radix Dialog: focus is trapped while open, and focus returns to the trigger on close.
-- Close with **ESC** by default.
-- Prefer `SheetTrigger asChild` to keep correct semantics for the trigger element.
-- Keep a clear title using `SheetTitle` for better screen reader navigation.
-- For destructive flows, consider using a modal Dialog instead of a Sheet.
+Sheet is built on Radix Dialog primitives.
 
-## Design guidelines
+That means:
 
-- Keep sheets **narrow** (e.g. `w-80`–`w-[420px]`) to preserve context.
-- Use `right` for editing, `left` for navigation, `top/bottom` for quick filters.
-- Avoid nesting multiple scroll containers; prefer a single scrollable content region inside the sheet.
-- Use **one primary action** in the footer to reduce decision friction.
+- focus is trapped while open
+- focus returns to the trigger on close
+- Escape closes the sheet by default
+- screen readers receive dialog semantics
+- `SheetTitle` provides the accessible name
 
-## Related guides
+Guidelines:
 
-<LinkCards>
-  <LinkCard
-    title="Button"
-    description="Use Button as the trigger and actions in the footer."
-    href="/docs/ui/button"
-  />
-  <LinkCard
-    title="Input"
-    description="Common inside sheets for edit forms and filters."
-    href="/docs/ui/input"
-  />
-  <LinkCard
-    title="Shadows"
-    description="Sheets use the elevation scale (shadow-lg)."
-    href="/docs/design-system/tokens/shadows"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner radius tokens for surfaces and panels."
-    href="/docs/design-system/tokens/radius"
-  />
-</LinkCards>
+- use `SheetTrigger asChild` with a semantic trigger
+- include a clear `SheetTitle`
+- include a useful `SheetDescription`
+- avoid using Sheet for destructive confirmations
+- avoid nested sheets
+- avoid long multi-step flows inside a sheet
+
+<Callout title="Accessibility rule">
+  A sheet still behaves like a dialog. It needs clear labeling, focus management, and a bounded task.
+</Callout>
+
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>right sheets for editing and details</li>
+        <li>left sheets for navigation</li>
+        <li>clear title and description</li>
+        <li>one primary footer action</li>
+        <li>one intentional scroll region</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>destructive confirmations that should be dialogs</li>
+        <li>full-page workflows squeezed into a panel</li>
+        <li>nested sheets</li>
+        <li>multiple competing primary actions</li>
+        <li>unclear scrolling with nested containers</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Sheet copy should tell users what the panel does and what happens next.
+
+<Tabs items={["Filters", "Edit", "Navigation"]}>
+  <Tab value="Filters">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Filter projects
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Narrow results by status, owner, date, and plan.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Edit">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Edit profile
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Update account details. Changes are saved when you submit.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Navigation">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Navigation
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move between product areas without losing your current context.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Is Sheet different from Dialog?">
+    Sheet is implemented with Dialog primitives, but the interaction model is different. Dialog is for focused modal decisions. Sheet is for side workflows that preserve page context.
+  </Accordion>
+
+  <Accordion title="Should filters use Sheet or Dropdown Menu?">
+    Use Dropdown Menu for a few compact options. Use Sheet when filters are numerous, grouped, or need more explanation.
+  </Accordion>
+
+  <Accordion title="Can a Sheet contain a form?">
+    Yes. Sheets work well for contextual editing and filter forms. For long or multi-step forms, use a dedicated page.
+  </Accordion>
+
+  <Accordion title="Should destructive actions use Sheet?">
+    Usually no. Use Dialog for destructive confirmations because the decision should be focused and explicit.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Button as the trigger and footer action inside sheets.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Input</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Common inside sheets for edit forms and filters.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Dialog</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Dialog for focused confirmations and short modal tasks.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Overlays pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose between Sheet, Dialog, and Dropdown Menu for product flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

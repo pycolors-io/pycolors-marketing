@@ -5,40 +5,71 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
+  Badge,
   Button,
   Card,
   CardContent,
+  CardHeader,
+  CardTitle,
   EmptyState,
   Table,
   TableBody,
+  TableCell,
   TableRow,
-  TableCell
-  } from "@pycolors/ui";
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CalendarDays,
+  CheckCircle,
+  CircleOff,
+  Database,
+  FilterX,
+  FolderPlus,
+  Inbox,
+  LayoutDashboard,
+  XCircle,
+} from "lucide-react";
 
-The **EmptyState** component represents a **valid state with no data**.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>EmptyState</Badge>
+</div>
 
-It explains *why* there is nothing to display and optionally guides the user toward the next action — without introducing product or business logic.
+## Explain valid absence
 
-EmptyState is a **pure UI primitive**: it structures content, nothing more.
+The **EmptyState** component represents a valid state where there is no data to display.
+
+Use it when:
+
+- a list has no items
+- a table has no results
+- a dashboard has no data yet
+- filters return nothing
+- a feature has not been configured
+- a user has not created their first object
+
+EmptyState explains what happened and can guide the user toward the next action.
+
+It is a **pure UI primitive**: it structures content, not product or business logic.
+
+<Callout title="Core idea">
+  Empty is not failure. EmptyState explains a valid absence and helps the user move forward.
+</Callout>
 
 ## Import
 
-```tsx
+```tsx title="empty-state-import.tsx"
 import { EmptyState } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
-Use EmptyState when a screen, section, or list has no content to display, but the application is otherwise in a valid state.
-
-EmptyState should not be used for loading or error states.
-
----
-
-## Basic example
+Use EmptyState when the application is in a valid state, but there is no content yet.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -51,18 +82,86 @@ EmptyState should not be used for loading or error states.
   </Tab>
 
   <Tab value="Code">
-    ```tsx
+
+```tsx title="basic-empty-state.tsx"
+import { EmptyState } from "@pycolors/ui";
+
+export function BasicEmptyState() {
+  return (
     <EmptyState
       title="No projects yet"
       description="Create your first project to get started."
     />
-    ```
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+## When to use EmptyState
+
+Use EmptyState when the request succeeded or the current state is valid, but the result is empty.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FolderPlus className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          First-run states
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use when the user has not created projects, members, records, or resources yet.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FilterX className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Filtered results
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use when filters, search, or query constraints return no matching data.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LayoutDashboard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Product surfaces
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use in dashboards, tables, cards, panels, and feature sections.
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
 ## With action
 
-EmptyState can optionally render a primary action (button or link).
+Use an action when there is a clear next step.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -76,21 +175,27 @@ EmptyState can optionally render a primary action (button or link).
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Button, EmptyState } from "@pycolors/ui";
 
-    export function EmptyStateWithAction() {
-      return (
-        <EmptyState
-          title="No projects yet"
-          description="Projects help you organize your work."
-          action={<Button>Create project</Button>}
-        />
-      );
-    }
-    ```
+```tsx title="empty-state-with-action.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
+
+export function EmptyStateWithAction() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Projects help you organize your work."
+      action={<Button>Create project</Button>}
+    />
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+<Callout type="info" title="Action rule">
+  One clear action is usually enough. Empty states should guide users, not overwhelm them.
+</Callout>
 
 ## With icon
 
@@ -100,21 +205,7 @@ Use the `icon` slot for a simple decorative icon or illustration.
   <Tab value="Preview">
     <Preview>
       <EmptyState
-        icon={
-          <svg
-            className="h-6 w-6"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            aria-hidden="true"
-          >
-            <path d="M3 7h18" />
-            <path d="M7 3v4" />
-            <path d="M17 3v4" />
-            <path d="M5 11h14v10H5z" />
-          </svg>
-        }
+        icon={<CalendarDays className="h-6 w-6" aria-hidden="true" />}
         title="Nothing scheduled"
         description="Create an event to see it appear here."
         action={<Button variant="secondary">Create event</Button>}
@@ -123,20 +214,29 @@ Use the `icon` slot for a simple decorative icon or illustration.
   </Tab>
 
   <Tab value="Code">
-    ```tsx
+
+```tsx title="empty-state-with-icon.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
+import { CalendarDays } from "lucide-react";
+
+export function EmptyStateWithIcon() {
+  return (
     <EmptyState
-      icon={<CalendarIcon className="h-6 w-6" aria-hidden />}
+      icon={<CalendarDays className="h-6 w-6" aria-hidden="true" />}
       title="Nothing scheduled"
       description="Create an event to see it appear here."
       action={<Button variant="secondary">Create event</Button>}
     />
-    ```
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ## Inside a Card
 
-EmptyState composes naturally with surfaces such as `Card`.
+EmptyState composes naturally with surfaces such as Card.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -153,28 +253,30 @@ EmptyState composes naturally with surfaces such as `Card`.
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Card, CardContent, EmptyState } from "@pycolors/ui";
 
-    export function CardEmptyState() {
-      return (
-        <Card>
-          <CardContent className="p-6">
-            <EmptyState
-              title="No data available"
-              description="Metrics will appear once data is collected."
-            />
-          </CardContent>
-        </Card>
-      );
-    }
-    ```
+```tsx title="card-empty-state.tsx"
+import { Card, CardContent, EmptyState } from "@pycolors/ui";
+
+export function CardEmptyState() {
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <EmptyState
+          title="No data available"
+          description="Metrics will appear once data is collected."
+        />
+      </CardContent>
+    </Card>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ## Table empty state
 
-EmptyState works well inside data-heavy components such as `Table` (especially for filtered results).
+Use EmptyState inside a table when a query succeeds but returns no rows.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -186,99 +288,304 @@ EmptyState works well inside data-heavy components such as `Table` (especially f
               <EmptyState
                 title="No results"
                 description="Try adjusting your filters."
-                action={<Button variant="outline" size="sm">Clear filters</Button>}
+                action={
+                  <Button size="sm">
+                    Clear filters
+                  </Button>
+                }
               />
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    </Preview>
+  </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Button, EmptyState, Table, TableBody, TableRow, TableCell } from "@pycolors/ui";
 
-    export function TableEmptyState() {
-      return (
-        <Table>
-          <TableBody>
-            <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={4} className="py-10">
-                <EmptyState
-                  title="No results"
-                  description="Try adjusting your filters."
-                  action={
-                    <Button variant="outline" size="sm">
-                      Clear filters
-                    </Button>
-                  }
-                />
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      );
-    }
-    ```
+```tsx title="table-empty-state.tsx"
+import {
+  Button,
+  EmptyState,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@pycolors/ui";
+
+export function TableEmptyState() {
+  return (
+    <Table>
+      <TableBody>
+        <TableRow className="hover:bg-transparent">
+          <TableCell colSpan={4} className="py-10">
+            <EmptyState
+              title="No results"
+              description="Try adjusting your filters."
+              action={
+                <Button size="sm">
+                  Clear filters
+                </Button>
+              }
+            />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Confirm the state is valid
+
+    Use EmptyState only when the request succeeded or the absence is expected.
+  </Step>
+
+  <Step>
+    ### Explain why it is empty
+
+    The title should name the state. The description should explain what it means.
+  </Step>
+
+  <Step>
+    ### Offer the next step when useful
+
+    Add one action when the user can create, invite, reset filters, or configure something.
+  </Step>
+
+  <Step>
+    ### Match the surrounding surface
+
+    Use EmptyState inside Card, Table, or a section depending on the page structure.
+  </Step>
+
+  <Step>
+    ### Keep product logic outside
+
+    EmptyState does not decide what happens next. The page or feature owns that behavior.
+  </Step>
+</Steps>
+
+## EmptyState vs Skeleton vs Alert
+
+| Situation | Use |
+| --- | --- |
+| Data is loading | Skeleton |
+| Request succeeded but there is no data | EmptyState |
+| Request failed | Alert |
+| User must confirm an action | Dialog |
+| User needs a side workflow | Sheet |
+| Onboarding requires several steps | Dedicated onboarding UI |
+
+<Callout type="info" title="Decision rule">
+  EmptyState explains valid absence. Skeleton represents loading. Alert communicates failure.
+</Callout>
 
 ## API
 
 ### Props
 
-| Prop        | Type               | Required | Description                                   |
-|-------------|--------------------|----------|-----------------------------------------------|
-| `title`     | `string`           | Yes      | Primary message explaining the empty state    |
-| `description` | `string`         | No       | Additional context for the empty state        |
-| `action`    | `React.ReactNode`  | No       | Optional action (button, link, etc.)          |
-| `icon`      | `React.ReactNode`  | No       | Optional icon or illustration                 |
-| `className` | `string`           | No       | Additional Tailwind classes                   |
+| Prop | Type | Required | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | Yes | Primary message explaining the empty state |
+| `description` | `string` | No | Additional context for the empty state |
+| `action` | `React.ReactNode` | No | Optional action |
+| `icon` | `React.ReactNode` | No | Optional decorative icon or illustration |
+| `className` | `string` | No | Additional Tailwind classes |
 
+EmptyState also accepts standard HTML `div` props.
 
-EmptyState also accepts all standard HTML div props:
-
-```ts
+```ts title="empty-state-props.ts"
 React.HTMLAttributes<HTMLDivElement>
+```
+
+## TypeScript types
+
+```ts title="empty-state-types.ts"
+export interface EmptyStateProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+  icon?: React.ReactNode;
+}
 ```
 
 ## Accessibility
 
-- Rendered with `role="status"` to announce informational state changes.
-- Content remains readable without icons.
-- Actions are fully keyboard accessible.
-- No focus is forced when the empty state appears.
-- Avoid using EmptyState to announce errors (use **Alert** for that).
+EmptyState should be readable and understandable without relying on icons.
 
-## Design guidelines
+Guidelines:
 
-- Always explain **why** the state is empty (not just “Nothing here”).
-- Keep titles short and descriptive.
-- Use actions sparingly — **one primary action** is usually enough.
-- Avoid product-specific language inside the component; pages and patterns decide what happens next.
-- Keep the empty state aligned with surrounding density (use `Card` / `Table` wrappers as needed).
+- keep the title clear and descriptive
+- keep icon-only meaning out of the icon
+- mark decorative icons with `aria-hidden="true"`
+- do not force focus when an empty state appears
+- actions should be keyboard accessible
+- do not use EmptyState to announce errors
+- use Alert for failures and blocking problems
 
-## When not to use EmptyState
+<Callout title="Accessibility rule">
+  Empty states should explain themselves through text. Icons can support the message, but they should not carry the meaning alone.
+</Callout>
 
-Do not use EmptyState for:
+## Prefer / avoid
 
-- **Loading states** → use **Skeleton**
-- **Error states** → use **Alert**
-- Onboarding flows (use dedicated onboarding screens)
-- Blocking or modal interactions (use **Dialog** / **Sheet** patterns)
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>clear title and short description</li>
+        <li>one useful action when appropriate</li>
+        <li>different copy for first-run and filtered-empty states</li>
+        <li>icons as supportive decoration</li>
+        <li>consistent placement inside Card or Table surfaces</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-## Related guides
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>using EmptyState for errors</li>
+        <li>using EmptyState while data is still loading</li>
+        <li>vague titles like “Nothing here”</li>
+        <li>multiple competing actions</li>
+        <li>business logic inside the component</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
 
-<LinkCards>
-  <LinkCard
-    title="Skeleton"
-    description="Visual placeholders for loading states."
-    href="/docs/ui/skeleton"
-  />
-  <LinkCard
-    title="Alert"
-    description="Feedback for errors, warnings, and confirmations."
-    href="/docs/ui/alert"
-  />
-</LinkCards>
+## Product copy guidelines
+
+Empty state copy should answer two questions:
+
+1. Why is this empty?
+2. What can the user do next?
+
+<Tabs items={["First-run", "Filtered", "Configured later"]}>
+  <Tab value="First-run">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        No projects yet
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Create your first project to organize your work.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Filtered">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        No results found
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Try adjusting your filters or clearing the current search.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Configured later">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        No metrics available
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Metrics will appear once your app starts receiving data.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should EmptyState be used for errors?">
+    No. Use Alert for errors. EmptyState is for valid absence, not failure.
+  </Accordion>
+
+  <Accordion title="Should EmptyState always have an action?">
+    No. Add an action only when there is a clear next step, such as creating an item or clearing filters.
+  </Accordion>
+
+  <Accordion title="Can EmptyState be used in tables?">
+    Yes. Place it inside a `TableCell` with the correct `colSpan`.
+  </Accordion>
+
+  <Accordion title="Should EmptyState contain product logic?">
+    No. EmptyState renders structure. The page or feature decides what the action does.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/skeleton" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Skeleton</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Skeleton while data is loading.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Alert</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Alert for errors, warnings, and important feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Table</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use EmptyState inside table rows when no records match.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design async states consistently across product surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

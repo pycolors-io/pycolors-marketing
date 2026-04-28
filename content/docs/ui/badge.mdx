@@ -5,70 +5,152 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  Info,
+  Layers3,
+  Tags,
+  XCircle,
+} from "lucide-react";
 
-The **Badge** component is a compact, non-interactive UI primitive used to display short information such as
-status, category, count, or label.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Badge</Badge>
+</div>
 
-Badges are lightweight, semantic, and fully aligned with the PyColors design system tokens.
+## Compact metadata for product interfaces
+
+The **Badge** component is a compact, non-interactive primitive used to display short information.
+
+Use it for:
+
+- status
+- category
+- count
+- plan label
+- metadata
+- product state
+- feature availability
+
+Badges are lightweight, semantic, and aligned with PyColors design system tokens.
+
 They are designed for **metadata**, not actions.
+
+<Callout title="Core idea">
+  A Badge communicates state or context. It should not replace a Button.
+</Callout>
 
 ## Import
 
-```tsx
-import { Badge } from "@pycolors/ui"
+```tsx title="badge-import.tsx"
+import { Badge } from "@pycolors/ui";
 ```
 
 ## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Badge>Default</Badge>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
     <Badge>Default</Badge>
-    ```
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Badge } from "@pycolors/ui";
 
-    export default function Demo() {
-      return <Badge>Default</Badge>;
-    }
-    ```
+```tsx title="basic-badge.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BasicBadge() {
+  return <Badge>Default</Badge>;
+}
+```
+
   </Tab>
 </Tabs>
 
-Badges inherit their colors from semantic tokens and adapt automatically
-to light and dark mode.
+Badges inherit their colors from semantic tokens and adapt to light and dark mode.
+
+## When to use Badge
+
+Use Badge when the label helps the user understand context without adding heavy visual hierarchy.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Tags className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Metadata
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for labels such as category, plan, type, role, or version.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Status
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for small state labels such as active, paid, draft, shipped, or synced.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Layers3 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Grouping
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use to classify content without turning the label into a navigation or action element.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Variants
 
 Use variants to convey meaning or status.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <div className="flex flex-wrap gap-2">
-        <Badge>Default</Badge>
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="muted">Muted</Badge>
-        <Badge variant="outline">Outline</Badge>
-        <Badge variant="success">Success</Badge>
-        <Badge variant="warning">Warning</Badge>
-        <Badge variant="destructive">Destructive</Badge>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+    <div className="flex flex-wrap gap-2">
       <Badge>Default</Badge>
       <Badge variant="secondary">Secondary</Badge>
       <Badge variant="muted">Muted</Badge>
@@ -76,187 +158,220 @@ Use variants to convey meaning or status.
       <Badge variant="success">Success</Badge>
       <Badge variant="warning">Warning</Badge>
       <Badge variant="destructive">Destructive</Badge>
-    ```
+    </div>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Badge } from "@pycolors/ui";
 
-    export default function BadgeVariantsExample() {
-      return (
-        <div className="flex gap-2">
-          <Badge>Default</Badge>
-          <Badge variant="secondary">Secondary</Badge>
-          <Badge variant="muted">Muted</Badge>
-          <Badge variant="outline">Outline</Badge>
-          <Badge variant="success">Success</Badge>
-          <Badge variant="warning">Warning</Badge>
-          <Badge variant="destructive">Error</Badge>
-        </div>
-      );
-    }
-    ```
+```tsx title="badge-variants.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeVariants() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="muted">Muted</Badge>
+      <Badge variant="outline">Outline</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available variants
 
-| Variant       | Description                         |
-|--------------|-------------------------------------|
-| default      | Primary or neutral label            |
-| secondary    | Secondary emphasis                  |
-| muted        | Low-contrast metadata               |
-| outline      | Neutral bordered label              |
-| success      | Positive or completed state         |
-| warning      | Caution or attention required       |
-| destructive  | Error or critical state             |
+| Variant | Purpose |
+| --- | --- |
+| `default` | Primary or neutral label |
+| `secondary` | Supporting information |
+| `muted` | Low-emphasis metadata |
+| `outline` | Neutral bordered label |
+| `success` | Positive or completed state |
+| `warning` | Caution or attention required |
+| `destructive` | Error or critical state |
+
+<Callout type="info" title="Design rule">
+  Prefer `muted` and `outline` for metadata. Reserve semantic state variants for actual product states.
+</Callout>
 
 ## Sizes
 
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <div className="flex items-center gap-2">
-        <Badge size="sm">Small</Badge>
-        <Badge size="md">Default</Badge>
-        <Badge size="lg">Large</Badge>
-      </div>
-    </Preview>
-  </Tab>
+Use size to control density and hierarchy.
 
-  <Tab value="Usage">
-    ```tsx
-    <Badge size="sm">Small</Badge>
-    <Badge size="md">Default</Badge>
-    <Badge size="lg">Large</Badge>
-    ```
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Default</Badge>
+      <Badge size="lg">Large</Badge>
+    </div>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Badge } from "@pycolors/ui";
 
-    export default function BadgeSizes() {
-      return (
-        <div className="flex gap-2">
-          <Badge size="sm">Small</Badge>
-          <Badge size="md">Default</Badge>
-          <Badge size="lg">Large</Badge>
-        </div>
-      );
-    }
-    ```
+```tsx title="badge-sizes.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeSizes() {
+  return (
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Default</Badge>
+      <Badge size="lg">Large</Badge>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available sizes
 
-| Size | Description              |
-|-----|--------------------------|
-| sm  | Compact metadata         |
-| md  | Default badge size       |
-| lg  | Emphasized or prominent  |
+| Size | Purpose |
+| --- | --- |
+| `sm` | Dense metadata, tables, compact lists |
+| `md` | Default badge size |
+| `lg` | Emphasized label or standout metadata |
+
+<Callout title="Density rule">
+  Use `sm` in tables and dense product views. Use `md` for most UI surfaces. Use `lg` sparingly.
+</Callout>
 
 ## With icon
 
-Badges can include icons when needed (status, type, category).
+Badges can include icons when the icon reinforces status, type, or category.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Badge variant="success">
-        <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M5 13l4 4L19 7" />
-        </svg>
-        Active
-      </Badge>
+   <Preview>
+    <Badge variant="success"><CheckCircle className="size-3" aria-hidden="true" />Active</Badge>
     </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Badge variant="success">
-      <CheckIcon className="size-3" />
-      Active
-    </Badge>
-    ```
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Badge } from "@pycolors/ui";
 
-    export default function BadgeWithIcon() {
-      return (
-        <Badge variant="success">
-          <svg className="size-3" viewBox="0 0 24 24">
-            <path d="M5 13l4 4L19 7" />
-          </svg>
-          Active
-        </Badge>
-      );
-    }
-    ```
+```tsx title="badge-with-icon.tsx"
+import { Badge } from "@pycolors/ui";
+import { CheckCircle } from "lucide-react";
+
+export function BadgeWithIcon() {
+  return (
+    <Badge variant="success">
+      <CheckCircle className="size-3" aria-hidden="true" />
+      Active
+    </Badge>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
-## As child (Slot)
+<Callout type="info" title="Icon rule">
+  Icons should reinforce meaning. The text must still explain the state.
+</Callout>
 
-Use `asChild` to render a badge as another element (for example, a link).
+## As child
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use `asChild` when the badge should render as another semantic element.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Badge asChild>
-        <a href="/docs">Docs</a>
-      </Badge>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+   <Preview>
     <Badge asChild>
       <a href="/docs">Docs</a>
     </Badge>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Badge } from "@pycolors/ui";
 
-    export default function BadgeAsChild() {
-      return (
-        <Badge asChild>
-          <a href="/docs">Docs</a>
-        </Badge>
-      );
-    }
-    ```
+```tsx title="badge-as-child.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeAsChild() {
+  return (
+    <Badge asChild>
+      <a href="/docs">Docs</a>
+    </Badge>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+<Callout title="Interaction rule">
+  Only use interactive badges when the underlying element is semantic, such as an anchor or button. If it triggers an important action, use Button instead.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Choose the message
+
+    Decide what the badge communicates: status, category, role, version, count, or plan.
+  </Step>
+
+  <Step>
+    ### Pick the lowest useful emphasis
+
+    Start with `muted` or `outline`. Move to semantic variants only when the state needs clear meaning.
+  </Step>
+
+  <Step>
+    ### Keep the label short
+
+    Badges work best with short labels: one or two words.
+  </Step>
+
+  <Step>
+    ### Avoid turning metadata into actions
+
+    A badge should not become a primary interaction. Use Button for actions.
+  </Step>
+</Steps>
+
+## Badge vs Button vs Alert
+
+| Situation | Use |
+| --- | --- |
+| Show a small status | Badge |
+| Show a category or plan label | Badge |
+| Trigger an action | Button |
+| Show persistent feedback or warning | Alert |
+| Confirm temporary background action | Toast |
+
+<Callout title="Decision rule">
+  Badge communicates context. Button triggers intent. Alert explains important feedback.
+</Callout>
+
 ## API
 
-### Props
-
-| Prop      | Type         | Default   | Description                   |
-|----------|--------------|-----------|-------------------------------|
-| variant  | BadgeVariant | "default" | Visual style                  |
-| size     | BadgeSize    | "md"      | Badge size                    |
-| asChild  | boolean      | false     | Render via Radix Slot         |
-| className| string       | —         | Additional Tailwind classes   |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `BadgeVariant` | `"default"` | Visual style |
+| `size` | `BadgeSize` | `"md"` | Badge size |
+| `asChild` | `boolean` | `false` | Render via Radix Slot |
+| `className` | `string` | — | Additional Tailwind classes |
 
 The Badge extends standard HTML span props:
 
-```ts
+```ts title="badge-props.ts"
 React.HTMLAttributes<HTMLSpanElement>
 ```
 
 ## TypeScript types
 
-```ts
+```ts title="badge-types.ts"
 export type BadgeVariant =
   | "default"
   | "secondary"
@@ -266,42 +381,128 @@ export type BadgeVariant =
   | "warning"
   | "destructive";
 
-export type BadgeSize =
-  | "sm"
-  | "md"
-  | "lg";
+export type BadgeSize = "sm" | "md" | "lg";
 ```
 
 ## Accessibility
 
-- Badges are decorative by default and should not replace buttons.
+- Badges are non-interactive by default.
+- Do not use a badge as a button.
 - Do not rely on color alone to convey meaning.
-- When clickable, use `asChild` with a semantic element (`a`, `button`).
-- Icons must be supplementary and not the sole indicator.
+- Icons must be supplementary, not the only indicator.
+- Use `aria-hidden="true"` for decorative icons.
+- When interactive, use `asChild` with a semantic element such as `a` or `button`.
 
-## Design guidelines
+## Prefer / avoid
 
-- Use `muted` or `outline` for metadata and low-emphasis labels.
-- Use `success`, `warning`, and `destructive` only for status indicators.
-- Avoid overusing badges—prefer clarity over decoration.
-- Keep badge text short (1–2 words whenever possible).
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>short labels</li>
+        <li>semantic variants for real status</li>
+        <li>`muted` or `outline` for metadata</li>
+        <li>icons as supporting context only</li>
+        <li>consistent badge usage across tables and cards</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-## Related guides
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>using badges as primary actions</li>
+        <li>long sentence-like badge text</li>
+        <li>too many badges in one panel</li>
+        <li>color-only meaning</li>
+        <li>inventing one-off badge colors locally</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic color roles used by badges."
-    href="/docs/design-system/colors"
-  />
-  <LinkCard
-    title="Typography"
-    description="Text scale and weight for compact UI labels."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="Button"
-    description="Use buttons for actions, not badges."
-    href="/docs/ui/button"
-  />
-</LinkCards>
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Can a badge be clickable?">
+    Yes, but only when rendered with a semantic element through `asChild`. If it performs a primary action, use Button instead.
+  </Accordion>
+
+  <Accordion title="Should every status use a colored badge?">
+    No. Use semantic color only when the state needs emphasis. For low-priority metadata, prefer `muted` or `outline`.
+  </Accordion>
+
+  <Accordion title="Can badges include icons?">
+    Yes. Icons can reinforce meaning, but the text must still communicate the state.
+  </Accordion>
+
+  <Accordion title="How many badges should a card have?">
+    Use as few as possible. Badges should clarify the interface, not decorate it.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Colors</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Semantic color roles used by badges.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/design-system/typography" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Typography</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Text scale and hierarchy for compact UI labels.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use buttons for actions, not badges.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build clear, accessible labels and status indicators.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

@@ -5,39 +5,65 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
+  Badge,
   Card,
-  CardHeader,
   CardContent,
+  CardHeader,
+  CardTitle,
   Skeleton,
   Table,
   TableBody,
-  TableRow,
   TableCell,
+  TableRow,
 } from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Circle,
+  Clock,
+  LayoutTemplate,
+  Rows3,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
 
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Skeleton</Badge>
+</div>
+
+## Preserve layout while content loads
 
 The **Skeleton** component is a visual placeholder used during loading states.
 
-It helps preserve layout structure, reduce layout shifts, and improve perceived performance —
-without introducing any product or data logic.
+It helps:
 
-Skeleton is a **pure UI primitive**: it renders shapes, nothing more.
+- preserve layout structure
+- reduce layout shift
+- improve perceived performance
+- communicate that content is expected soon
+- keep product surfaces stable while data loads
+
+Skeleton is a **pure UI primitive**. It renders shapes and does not own any loading, fetching, or async logic.
+
+<Callout title="Core idea">
+  Skeleton shows the shape of content that is coming. It is not a message, an explanation, or an error state.
+</Callout>
 
 ## Import
 
-```tsx
-import { Skeleton } from "@pycolors/ui";
+```tsx title="skeleton-import.tsx"
+import { Skeleton, type SkeletonProps } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
 Use Skeleton to temporarily replace content while data is loading.
-
-Skeleton does **not** manage loading state — that responsibility belongs to pages or data layers.
-
-## Basic example
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -50,114 +76,280 @@ Skeleton does **not** manage loading state — that responsibility belongs to pa
   </Tab>
 
   <Tab value="Code">
-```tsx
-<Skeleton className="h-4 w-2/3" />
-<Skeleton className="h-4 w-1/2" />
+
+```tsx title="basic-skeleton.tsx"
+import { Skeleton } from "@pycolors/ui";
+
+export function BasicSkeleton() {
+  return (
+    <div className="space-y-2">
+      <Skeleton className="h-4 w-2/3" />
+      <Skeleton className="h-4 w-1/2" />
+    </div>
+  );
+}
 ```
+
   </Tab>
 </Tabs>
 
+## When to use Skeleton
+
+Use Skeleton when the layout is known and real content is expected soon.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LayoutTemplate className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Known layout
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use when you already know the shape of the final content.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Clock className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Short wait
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for loading content that should appear soon.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Rows3 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Data surfaces
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use in cards, tables, lists, dashboards, and profile sections.
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
 ## Card loading state
 
-Skeleton composes naturally with surface components like **Card**.
+Skeleton composes naturally with surfaces such as Card.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Card>
-        <CardHeader>
-          <Skeleton className="h-5 w-1/3" />
-          <Skeleton className="h-4 w-2/3" />
-        </CardHeader>
-        <CardContent>
-          <Skeleton className="h-24 w-full" />
-        </CardContent>
-      </Card>
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
     </Preview>
   </Tab>
 
   <Tab value="Code">
-```tsx
-<Card>
-  <CardHeader>
-    <Skeleton className="h-5 w-1/3" />
-    <Skeleton className="h-4 w-2/3" />
-  </CardHeader>
-  <CardContent>
-    <Skeleton className="h-24 w-full" />
-  </CardContent>
-</Card>
+
+```tsx title="card-loading-skeleton.tsx"
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Skeleton,
+} from "@pycolors/ui";
+
+export function CardLoadingSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
 ```
+
   </Tab>
 </Tabs>
 
 ## Table loading state
 
-Skeleton works well inside data-heavy components such as **Table**.
+Use Skeleton inside table rows when the table shape is known.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Table>
-        <TableBody>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <TableRow key={i}>
-              <TableCell>
-                <Skeleton className="h-4 w-32" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-24" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-16" />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
     </Preview>
   </Tab>
 
   <Tab value="Code">
-```tsx
-<Table>
-  <TableBody>
-    {Array.from({ length: 3 }).map((_, i) => (
-      <TableRow key={i}>
-        <TableCell>
-          <Skeleton className="h-4 w-32" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-24" />
-        </TableCell>
-        <TableCell>
-          <Skeleton className="h-4 w-16" />
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
+
+```tsx title="table-loading-skeleton.tsx"
+import {
+  Skeleton,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@pycolors/ui";
+
+export function TableLoadingSkeleton() {
+  return (
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
 ```
+
   </Tab>
 </Tabs>
 
 ## Circular skeleton
 
-Use the `circle` prop for avatars or icon placeholders.
+Use `circle` for avatar, icon, or round media placeholders.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
+    <div className="flex items-center gap-3">
       <Skeleton circle className="h-10 w-10" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </div>
     </Preview>
   </Tab>
 
   <Tab value="Code">
-```tsx
-<Skeleton circle className="h-10 w-10" />
+
+```tsx title="circular-skeleton.tsx"
+import { Skeleton } from "@pycolors/ui";
+
+export function CircularSkeleton() {
+  return (
+    <div className="flex items-center gap-3">
+      <Skeleton circle className="h-10 w-10" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </div>
+  );
+}
 ```
+
   </Tab>
 </Tabs>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Match the final content shape
+
+    Skeleton should approximate the content it replaces: text lines, avatars, cards, or rows.
+  </Step>
+
+  <Step>
+    ### Preserve layout height
+
+    Keep the loading state close to the final height to reduce layout shift.
+  </Step>
+
+  <Step>
+    ### Keep it simple
+
+    Prefer a few clear shapes over a detailed fake version of the final UI.
+  </Step>
+
+  <Step>
+    ### Replace quickly when data is ready
+
+    Skeleton is temporary. It should disappear as soon as real content can render.
+  </Step>
+
+  <Step>
+    ### Use another state when loading ends
+
+    Empty, error, and success states need their own UI. Skeleton only represents loading.
+  </Step>
+</Steps>
+
+## Skeleton vs Spinner vs EmptyState vs Alert
+
+| Situation | Use |
+| --- | --- |
+| Layout is known and content is loading | Skeleton |
+| Short unknown background task | Spinner or inline loading |
+| Request succeeded but no data exists | EmptyState |
+| Request failed | Alert |
+| Long-running operation requiring explanation | Dedicated status UI |
+| Blocking app-level loading | Route-level loading UI |
+
+<Callout type="info" title="Decision rule">
+  Use Skeleton for expected content. Use EmptyState for valid absence. Use Alert for failure.
+</Callout>
 
 ## API
 
@@ -165,50 +357,177 @@ Use the `circle` prop for avatars or icon placeholders.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `circle` | boolean | `false` | Renders a circular skeleton (avatar / icon) |
-| `className` | string | — | Additional Tailwind classes |
+| `circle` | `boolean` | `false` | Renders a circular skeleton |
+| `className` | `string` | — | Additional Tailwind classes |
 
-Skeleton also accepts all standard HTML `div` props:
+Skeleton also accepts standard HTML `div` props.
 
-```ts
+```ts title="skeleton-props.ts"
 React.HTMLAttributes<HTMLDivElement>
+```
+
+## TypeScript types
+
+```ts title="skeleton-types.ts"
+export interface SkeletonProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  circle?: boolean;
+}
 ```
 
 ## Accessibility
 
-- Skeleton is rendered with `aria-hidden`
-- It should never receive focus
-- Replace skeletons with real content as soon as data is ready
-- Skeletons are **not announced** to screen readers and should not be used as status messages
+Skeleton is visual only.
 
-## Design guidelines
+Guidelines:
 
-- Match skeleton dimensions to the final content
-- Avoid overly complex skeletons
-- Prefer multiple simple skeletons over one large placeholder
-- Do not animate beyond a subtle pulse — avoid distraction
+- Skeleton should be rendered with `aria-hidden`
+- Skeleton should never receive focus
+- Skeleton should not be used as a status message
+- Do not announce every placeholder to screen readers
+- Provide accessible loading semantics at a higher level when needed
+- Replace skeletons with real content as soon as possible
 
-## When not to use Skeleton
+<Callout title="Accessibility rule">
+  Skeletons describe visual shape for sighted users. They are not content and should not be announced as content.
+</Callout>
 
-Skeleton should **not** be used for:
-- Error states
-- Empty states
-- Long-running background processes
-- Global blocking overlays
+## Prefer / avoid
 
-Use **Alert**, **EmptyState**, or dedicated patterns instead.
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>matching the final content shape</li>
+        <li>simple placeholder geometry</li>
+        <li>stable layout height</li>
+        <li>table skeletons for table rows</li>
+        <li>separate empty and error states</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-## Related guides
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>using Skeleton for errors</li>
+        <li>using Skeleton for empty states</li>
+        <li>overly detailed fake layouts</li>
+        <li>long-running skeletons with no explanation</li>
+        <li>layout shifts between loading and loaded states</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
 
-<LinkCards>
-  <LinkCard
-  title="Empty, loading, and error states"
-    description="Designing consistent async states in real products."
-    href="/docs/guides/empty-loading-error"
-  />
-  <LinkCard
-    title="Data-heavy pages"
-    description="Handling tables, loading, and density at scale."
-    href="/docs/guides/data-heavy-pages"
-  />
-</LinkCards>
+## Product copy guidelines
+
+Skeleton usually does not need copy.
+
+<Tabs items={["Good", "Avoid"]}>
+  <Tab value="Good">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Silent loading shape
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Let the placeholder communicate that content is coming when the wait is short.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Avoid">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Too much loading copy
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Avoid explaining every loading placeholder. Use copy only for longer or unusual waits.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should Skeleton include text for screen readers?">
+    Usually no. Skeleton should be hidden from assistive technologies. If loading status matters, announce it at the parent region level.
+  </Accordion>
+
+  <Accordion title="Should I use Skeleton or a spinner?">
+    Use Skeleton when the final layout is known. Use a spinner or inline loading state when the shape is unknown or the action is small.
+  </Accordion>
+
+  <Accordion title="Can Skeleton be used in tables?">
+    Yes. Use skeleton cells inside table rows to preserve table structure while data loads.
+  </Accordion>
+
+  <Accordion title="How detailed should a skeleton be?">
+    Keep it simple. Match the main structure, not every detail.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design consistent async states across real product surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Table</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Skeleton inside table rows for structured loading states.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/empty-state" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">EmptyState</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use EmptyState when loading succeeded but no data exists.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Alert</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Alert when a request fails or needs important feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

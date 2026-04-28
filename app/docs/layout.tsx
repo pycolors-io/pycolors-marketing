@@ -60,6 +60,13 @@ export default function Layout({
 }) {
   const docsLinks = getDocsNavLinks();
 
+  const docsTree = {
+    ...source.pageTree,
+    children: source.pageTree.children.filter(
+      (item) => item.type !== 'page' || item.url !== '/docs',
+    ),
+  };
+
   const breadcrumb = generateBreadcrumbJsonLd([
     { label: 'Home', href: '/' },
     { label: 'Docs', href: '/docs' },
@@ -71,7 +78,7 @@ export default function Layout({
 
       <div className="min-h-screen">
         <DocsLayout
-          tree={source.pageTree}
+          tree={docsTree}
           {...baseOptions()}
           nav={{
             enabled: true,
