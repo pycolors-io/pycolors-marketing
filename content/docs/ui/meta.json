@@ -4,6 +4,9 @@
     "index",
     "why-pycolors-ui",
 
+    "composition",
+    "accessibility",
+
     "button",
     "input",
     "password-input",
