@@ -144,9 +144,7 @@ export function ProjectsTableWithPagination() {
             <TableHead>Name</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Updated</TableHead>
-            <TableHead className="w-[140px] text-right">
-              Actions
-            </TableHead>
+            <TableHead className="w-35 text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
 
