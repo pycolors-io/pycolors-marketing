@@ -1,71 +1,157 @@
 ---
 title: Button
-description: Action button component used across PyColors UI, built on shadcn/ui. Includes variants, sizes, and best practices.
+description: Action button component used across PyColors UI, built on shadcn/ui. Includes variants, sizes, accessibility, and product usage rules.
 lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  ClockIcon,
+  DotIcon,
+  ExternalLink,
+  MousePointerClick,
+  Plus,
+  ShieldAlert,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
 
-The **Button** component is one of the core interactive elements of PyColors UI.
-It provides consistent styling, variants, accessibility, and flexible composition across marketing pages, dashboards, and applications.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Button</Badge>
+</div>
 
-This implementation extends the **shadcn/ui Button primitive** and is aligned with the PyColors design system (semantic color tokens, radius, shadows, and focus rings).
+## Actions users can trust
+
+The **Button** component is the primary action primitive in PyColors UI.
+
+Use it for:
+
+- submitting forms
+- triggering dialogs
+- opening sheets
+- starting checkout
+- saving changes
+- confirming destructive actions
+- navigating when an element should visually behave like a button
+
+This implementation extends the **shadcn/ui Button primitive** and is aligned with the PyColors design system: semantic color tokens, radius, shadows, and focus rings.
+
+<Callout title="Core idea">
+  Buttons communicate intent. Choose the variant based on action priority, not decoration.
+</Callout>
 
 ## Import
 
-```tsx
+```tsx title="button-import.tsx"
 import { Button } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <Button>Click me</Button>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Button>Click me</Button>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
 
-    export default function Demo() {
-      return <Button>Click me</Button>;
-    }
-    ```
+```tsx title="basic-button.tsx"
+import { Button } from "@pycolors/ui";
+
+export function BasicButton() {
+  return <Button>Click me</Button>;
+}
+```
+
   </Tab>
 </Tabs>
 
-The default button uses the primary semantic color tokens and adapts automatically to light/dark mode.
+The default button uses primary semantic tokens and adapts automatically to light and dark mode.
+
+## When to use Button
+
+Use Button when the user is taking an action.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <MousePointerClick className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Primary actions
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for submit, save, continue, checkout, create, or upgrade actions.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Sparkles className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Secondary actions
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for cancel, view details, learn more, or alternative paths.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <ShieldAlert className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Risky actions
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use destructive styling only for dangerous or irreversible actions.
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
 ## Variants
 
-Buttons support several variants to adapt to different contexts.
+Buttons support variants for action priority and semantic meaning.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex flex-wrap gap-4">
-        <Button variant="default">Default</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="destructive">Destructive</Button>
-        <Button variant="link">Link</Button>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
     <div className="flex flex-wrap gap-4">
       <Button variant="default">Default</Button>
       <Button variant="secondary">Secondary</Button>
@@ -74,421 +160,368 @@ Buttons support several variants to adapt to different contexts.
       <Button variant="destructive">Destructive</Button>
       <Button variant="link">Link</Button>
     </div>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
 
-    export default function ButtonVariantsExample() {
-      return (
-        <div className="flex flex-wrap gap-4">
-          <Button variant="default">Default</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Button variant="link">Link</Button>
-        </div>
-      );
-    }
-    ```
+```tsx title="button-variants.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonVariants() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available variants
 
-| Variant      | Description                          |
-| ------------ | ------------------------------------ |
-| default      | Primary action button, high emphasis |
-| secondary    | Neutral alternative to primary       |
-| outline      | Bordered button for medium emphasis  |
-| ghost        | Minimal UI footprint                 |
-| destructive  | Used for destructive actions         |
-| link         | Text-style button for inline actions |
+| Variant | Purpose |
+| --- | --- |
+| `default` | Primary action, highest emphasis |
+| `secondary` | Neutral alternative action |
+| `outline` | Medium-emphasis action |
+| `ghost` | Low-emphasis action in dense UI |
+| `destructive` | Dangerous or irreversible action |
+| `link` | Text-style inline action |
+
+<Callout type="info" title="Variant rule">
+  A page should usually have one clear primary action. Use secondary, outline, or ghost for supporting actions.
+</Callout>
 
 ## Sizes
 
-The Button supports both regular sizes and icon-only sizes.
+Button supports standard sizes and icon-only sizes.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex items-center gap-4 flex-wrap">
-        <Button size="sm">Small</Button>
-        <Button size="default">Default</Button>
-        <Button size="lg">Large</Button>
-
-        <Button size="icon" aria-label="History">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 1a9 9 0 100 18 9 9 0 000-18zM9 5a1 1 0 012 0v5a1 1 0 01-.293.707l-3 3a1 1 0 11-1.414-1.414L9 9.586V5z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </Button>
-
-        <Button size="icon-sm" aria-label="Small icon button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
-          </svg>
-        </Button>
-
-        <Button size="icon-lg" aria-label="Large icon button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
-          </svg>
-        </Button>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex flex-wrap items-center gap-4">
       <Button size="sm">Small</Button>
       <Button size="default">Default</Button>
       <Button size="lg">Large</Button>
 
       <Button size="icon" aria-label="History">
-        <HistoryIcon className="size-4" aria-hidden="true" />
+        <ClockIcon aria-hidden="true" />
       </Button>
 
       <Button size="icon-sm" aria-label="Small icon button">
-        <Icon aria-hidden="true" />
+       <DotIcon aria-hidden="true" />
       </Button>
 
       <Button size="icon-lg" aria-label="Large icon button">
-        <Icon aria-hidden="true" />
+        <DotIcon aria-hidden="true" />
       </Button>
     </div>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
 
-    export default function ButtonSizesExample() {
-      return (
-        <div className="flex items-center gap-4 flex-wrap">
-          <Button size="sm">Small</Button>
-          <Button size="default">Default</Button>
-          <Button size="lg">Large</Button>
+```tsx title="button-sizes.tsx"
+import { Button } from "@pycolors/ui";
 
-          <Button size="icon" aria-label="History">
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M10 1a9 9 0 100 18 9 9 0 000-18z" />
-            </svg>
-          </Button>
+function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+      <path d="M10 1a9 9 0 100 18 9 9 0 000-18zM9 5a1 1 0 012 0v5a1 1 0 01-.293.707l-3 3a1 1 0 11-1.414-1.414L9 9.586V5z" />
+    </svg>
+  );
+}
 
-          <Button size="icon-sm" aria-label="Small icon button">
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
-            </svg>
-          </Button>
+function DotIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+      <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  );
+}
 
-          <Button size="icon-lg" aria-label="Large icon button">
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
-            </svg>
-          </Button>
-        </div>
-      );
-    }
-    ```
+export function ButtonSizes() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+
+      <Button size="icon" aria-label="History">
+        <ClockIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-sm" aria-label="Small icon button">
+        <DotIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-lg" aria-label="Large icon button">
+        <DotIcon aria-hidden="true" />
+      </Button>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available sizes
 
-| Size      | Description                                  |
-| --------- | -------------------------------------------- |
-| sm        | Compact buttons for dense UIs                |
-| default   | Standard button size                         |
-| lg        | Larger visual weight                         |
-| icon      | Square icon-only button (base)               |
-| icon-sm   | Smaller icon-only button                      |
-| icon-lg   | Larger icon-only button                       |
+| Size | Purpose |
+| --- | --- |
+| `sm` | Compact buttons for dense product UIs |
+| `default` | Standard button size |
+| `lg` | Stronger visual weight |
+| `icon` | Square icon-only button |
+| `icon-sm` | Compact icon-only button |
+| `icon-lg` | Larger icon-only button |
+
+<Callout title="Size rule">
+  Keep button sizes consistent inside the same section. Use `lg` for major CTAs and `sm` for dense product actions.
+</Callout>
 
 ## Disabled state
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use disabled state when an action is unavailable.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex gap-4 flex-wrap">
-        <Button disabled>Disabled</Button>
-        <Button variant="secondary" disabled>
-          Disabled
-        </Button>
-      </div>
+    <div className="flex flex-wrap gap-4">
+      <Button disabled>Disabled</Button>
+      <Button variant="secondary" disabled>Disabled</Button>
+      <Button variant="outline" disabled>Disabled</Button>
+    </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <div className="flex gap-4">
-      <Button disabled>Disabled</Button>
-      <Button variant="secondary" disabled>
-        Disabled
-      </Button>
-    </div>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
 
-    export default function ButtonDisabledExample() {
-      return (
-        <div className="flex gap-4">
-          <Button disabled>Disabled</Button>
-          <Button variant="secondary" disabled>
-            Disabled
-          </Button>
-        </div>
-      );
-    }
-    ```
+```tsx title="button-disabled.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonDisabled() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button disabled>Disabled</Button>
+      <Button variant="secondary" disabled>Disabled</Button>
+      <Button variant="outline" disabled>Disabled</Button>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
-Disabled buttons use reduced opacity and disable pointer events to indicate non-interactivity.
+Disabled buttons use reduced opacity and remove pointer interaction.
 
-## Focus and keyboard
-
-Buttons use a **focus-visible** ring for accessible keyboard navigation.
-The ring is applied only when navigating with the keyboard (Tab / Shift+Tab), not on mouse clicks.
-
-- Keeps focus clear for keyboard users
-- Avoids noisy focus styles for pointer users
-- Uses semantic tokens (`ring-ring`, `border-ring`)
+<Callout type="info" title="UX rule">
+  When disabling a button, make sure the user can understand what is required to enable it.
+</Callout>
 
 ## With icon
 
-Use any icon library (Lucide, Heroicons, custom SVG).
+Use icons when they reinforce the action.
 
-### Icon sizing rule
+The Button applies a default `size-4` to nested SVG icons that do not already have a `size-*` class.
 
-The Button applies a default `size-4` to any nested `<svg>` that does **not** already have a `size-*` class.
-If you want a custom size, set it explicitly:
+<Tabs items={["Leading", "Trailing"]}>
+  <Tab value="Leading">
 
-```tsx
-<Button>
-  <MyIcon className="size-5" aria-hidden="true" />
-  Label
-</Button>
-```
+```tsx title="button-leading-icon.tsx"
+import { Button } from "@pycolors/ui";
+import { Plus } from "lucide-react";
 
-### Leading icon
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Button>
-        <svg
-          className="size-4 mr-2"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          aria-hidden="true"
-        >
-          <path d="M12 5v14m7-7H5" />
-        </svg>
-        Add item
-      </Button>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+export function ButtonLeadingIcon() {
+  return (
     <Button>
-      <PlusIcon className="size-4 mr-2" aria-hidden="true" />
+      <Plus className="mr-2 size-4" aria-hidden="true" />
       Add item
     </Button>
-    ```
+  );
+}
+```
+
   </Tab>
 
-  <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
+  <Tab value="Trailing">
 
-    export default function ButtonWithIconExample() {
-      return (
-        <Button>
-          <svg className="size-4 mr-2" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 5v14m7-7H5" />
-          </svg>
-          Add item
-        </Button>
-      );
-    }
-    ```
-  </Tab>
-</Tabs>
+```tsx title="button-trailing-icon.tsx"
+import { Button } from "@pycolors/ui";
+import { ArrowRight } from "lucide-react";
 
-### Trailing icon
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Button>
-        Continue
-        <svg
-          className="size-4 ml-2"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          aria-hidden="true"
-        >
-          <path d="M9 5l7 7-7 7" />
-        </svg>
-      </Button>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
+export function ButtonTrailingIcon() {
+  return (
     <Button>
       Continue
-      <ArrowRightIcon className="size-4 ml-2" aria-hidden="true" />
+      <ArrowRight className="ml-2 size-4" aria-hidden="true" />
     </Button>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
-
-    export default function ButtonTrailingIconExample() {
-      return (
-        <Button>
-          Continue
-          <svg className="size-4 ml-2" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 5l7 7-7 7" />
-          </svg>
-        </Button>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
 
-## Validation state (aria-invalid)
+<Callout title="Icon rule">
+  Icons should support the label. For icon-only buttons, always provide an `aria-label`.
+</Callout>
 
-The Button supports an invalid visual state via `aria-invalid`.
-This is useful for **submit actions** when the related form is invalid.
+## Validation state
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+The Button supports invalid visual state through `aria-invalid`.
+
+This can be useful for submit actions when the related form is invalid.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex gap-4 flex-wrap">
-        <Button aria-invalid="true">Fix errors</Button>
-        <Button variant="outline" aria-invalid="true">Review</Button>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Button aria-invalid="true">Fix errors</Button>
-    ```
-  </Tab>
-
-  <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
-
-    export default function InvalidButtonExample() {
-      return <Button aria-invalid="true">Fix errors</Button>;
-    }
-    ```
-  </Tab>
-</Tabs>
-
-## As child (Slot)
-
-You can render the button as another component using `asChild`.
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Button asChild>
-        <a href="#docs">Go to docs</a>
+    <div className="flex flex-wrap gap-4">
+      <Button aria-invalid="true">Fix errors</Button>
+      <Button variant="outline" aria-invalid="true">
+        Review
       </Button>
+    </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
+  <Tab value="Code">
+
+```tsx title="button-invalid.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonInvalid() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button aria-invalid="true">Fix errors</Button>
+      <Button variant="outline" aria-invalid="true">
+        Review
+      </Button>
+    </div>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+## As child
+
+Use `asChild` to render the button as another element while preserving button styling.
+
+This is commonly used for links and router components.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
     <Button asChild>
       <a href="#docs">Go to docs</a>
     </Button>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Button } from "@pycolors/ui";
 
-    export default function ButtonAsChildExample() {
-      return (
-        <Button asChild>
-          <a href="#docs">Go to docs</a>
-        </Button>
-      );
-    }
-    ```
+```tsx title="button-as-child.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonAsChild() {
+  return (
+    <Button asChild>
+      <a href="#docs">Go to docs</a>
+    </Button>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
-This allows styling links, router components, or custom components as buttons while maintaining semantics.
+<Callout type="info" title="Semantics rule">
+  If the action navigates, render an anchor or router link. If it submits or mutates state, render a button.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Choose the action priority
+
+    Use `default` for the main action, then choose secondary, outline, or ghost for supporting actions.
+  </Step>
+
+  <Step>
+    ### Use semantic intent
+
+    Use `destructive` only when the action is dangerous or irreversible.
+  </Step>
+
+  <Step>
+    ### Keep labels action-oriented
+
+    Prefer clear verbs such as Save, Continue, Create project, Upgrade, Delete.
+  </Step>
+
+  <Step>
+    ### Pair loading with state
+
+    During async work, disable the button and update the label to show progress.
+  </Step>
+
+  <Step>
+    ### Keep icon-only buttons accessible
+
+    Always provide `aria-label` and mark decorative icons as `aria-hidden`.
+  </Step>
+</Steps>
+
+## Button vs link vs badge
+
+| Situation | Use |
+| --- | --- |
+| Submit a form | Button |
+| Trigger a mutation | Button |
+| Open a Dialog or Sheet | Button |
+| Navigate to another URL | Link styled with `Button asChild` |
+| Show metadata or status | Badge |
+| Inline text navigation | Link |
+| Compact row actions | DropdownMenu trigger button |
+
+<Callout title="Decision rule">
+  Button is for intent. Link is for navigation. Badge is for metadata.
+</Callout>
 
 ## API
 
 ### Props
 
-| Prop      | Type          | Default   | Description                 |
-| --------- | ------------- | --------- | --------------------------- |
-| variant   | ButtonVariant | "default" | Visual style of the button  |
-| size      | ButtonSize    | "default" | Size of the button          |
-| asChild   | boolean       | false     | Render using Radix Slot     |
-| disabled  | boolean       | false     | Disable interaction         |
-| className | string        | —         | Additional Tailwind classes |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `ButtonVariant` | `"default"` | Visual style |
+| `size` | `ButtonSize` | `"default"` | Button size |
+| `asChild` | `boolean` | `false` | Render using Radix Slot |
+| `disabled` | `boolean` | `false` | Disable interaction |
+| `className` | `string` | — | Additional Tailwind classes |
 
-The Button extends the standard HTML button props:
+Button extends standard HTML button props.
 
-```ts
+```ts title="button-props.ts"
 React.ComponentProps<"button">
 ```
 
 ## TypeScript types
 
-These types define the public API for the `variant` and `size` props and remain aligned with the source component.
-
-```ts
+```ts title="button-types.ts"
 export type ButtonVariant =
   | "default"
   | "secondary"
@@ -508,41 +541,156 @@ export type ButtonSize =
 
 ## Accessibility
 
-- Use clear and descriptive labels for button text.
-- Preserve keyboard focus styles (`focus-visible`) for accessible navigation.
-- For icon-only buttons, provide an `aria-label` describing the action.
-- Icons should be marked `aria-hidden` (decorative).
-- Avoid using a Button with only an icon and no accessible label.
+- Use clear, descriptive labels.
+- Preserve keyboard focus styles.
+- Use icon-only buttons only with an accessible `aria-label`.
+- Mark decorative icons with `aria-hidden="true"`.
+- Use `disabled` for unavailable actions.
+- Do not rely on color alone to communicate destructive or invalid state.
+- Use links for navigation and buttons for actions.
 
-## Design guidelines
+<Callout title="Accessibility rule">
+  Every button must have an accessible name. Visible text is best; `aria-label` is required for icon-only buttons.
+</Callout>
 
-- Use `default` for the primary action on a page.
-- Use `secondary` or `outline` for secondary actions.
-- Use `destructive` only for actions that are dangerous or irreversible.
-- Prefer consistent button sizing within a view to preserve rhythm.
-- Use icon-only sizes (`icon-*`) for toolbars and compact actions.
+## Prefer / avoid
 
-## Related guides
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>one clear primary action per section</li>
+        <li>short verb-first labels</li>
+        <li>consistent sizes in the same view</li>
+        <li>`asChild` for links that look like buttons</li>
+        <li>accessible labels for icon-only buttons</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-<LinkCards>
-  <LinkCard
-    title="UI Components"
-    description="Understand how primitives are organized in PyColors UI."
-    href="/docs/ui"
-  />
-  <LinkCard
-    title="Typography"
-    description="Keep button labels aligned with the type scale."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="Colors"
-    description="Semantic color roles used by button variants."
-    href="/docs/design-system/colors"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner radius tokens used by buttons and pills."
-    href="/docs/design-system/tokens/radius"
-  />
-</LinkCards>
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>multiple competing primary buttons</li>
+        <li>destructive styling for non-destructive actions</li>
+        <li>icon-only buttons without labels</li>
+        <li>buttons used as navigation without link semantics</li>
+        <li>vague labels like “OK” or “Submit” when context is unclear</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Button labels should be specific and action-oriented.
+
+<Tabs items={["Good", "Avoid"]}>
+  <Tab value="Good">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Save changes</li>
+        <li>Create project</li>
+        <li>Upgrade to Pro</li>
+        <li>Invite member</li>
+        <li>Delete project</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Avoid">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>OK</li>
+        <li>Submit</li>
+        <li>Click here</li>
+        <li>Do it</li>
+        <li>Proceed with the thing</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should navigation use Button?">
+    Navigation should use links. Use `Button asChild` to style an anchor or router link as a button.
+  </Accordion>
+
+  <Accordion title="How many primary buttons should a page have?">
+    Usually one per major section. Too many primary buttons weaken the hierarchy.
+  </Accordion>
+
+  <Accordion title="When should I use destructive?">
+    Use `destructive` for dangerous or irreversible actions, such as delete, revoke, remove, or cancel subscription.
+  </Accordion>
+
+  <Accordion title="Should disabled buttons explain why they are disabled?">
+    Yes. Use nearby helper text, validation messages, or state copy to explain what is required.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/badge" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Badge</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use badges for metadata and status, not actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Dialog</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use buttons to trigger focused modal tasks and confirmations.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Colors</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Semantic color roles used by button variants.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible actions with clear labels and keyboard support.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

@@ -5,182 +5,319 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { SearchIcon } from "lucide-react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  FileText,
+  FormInput,
+  SearchIcon,
+  ShieldCheck,
+  SlidersHorizontal,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Input</Badge>
+</div>
+
+## Reliable text fields for product forms
 
 The **Input** component is a foundational form control in PyColors UI.
-It is designed to be **accessible by default**, theme-aware, and flexible enough for simple fields or complex form layouts.
+
+Use it for:
+
+- login forms
+- search fields
+- settings forms
+- billing details
+- profile fields
+- admin filters
+- product creation flows
+- validation-driven forms
+
+Input is designed to be accessible by default, theme-aware, and flexible enough for simple fields or production form layouts.
 
 It supports:
-- Labels and required indicators
-- Helper text and validation errors
-- Left and right icons
-- Size variants aligned with the design system
-- Full keyboard and screen-reader support
+
+- labels
+- helper text
+- validation errors
+- left and right icons
+- size variants
+- keyboard and screen-reader support
+
+<Callout title="Core idea">
+  Input collects user data. Validation rules should live in your form or schema layer, not inside the visual primitive.
+</Callout>
 
 ## Import
 
-```tsx
-import { Input } from '@pycolors/ui';
+```tsx title="input-import.tsx"
+import {
+  Input,
+  type InputProps,
+  type InputSize,
+} from "@pycolors/ui";
 ```
 
 ## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use Input when the field is simple and the surrounding context already provides a label.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <Input placeholder="Type something…" />
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Input placeholder="Type something…" />
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Input } from '@pycolors/ui';
 
-    export default function Demo() {
-      return <Input placeholder="Type something…" />;
-    }
-    ```
+```tsx title="basic-input.tsx"
+import { Input } from "@pycolors/ui";
+
+export function BasicInput() {
+  return <Input placeholder="Type something…" />;
+}
+```
+
   </Tab>
 </Tabs>
 
-## With label & helper text
+<Callout type="info" title="Label rule">
+  Placeholder text is not a replacement for a label. Use `label` when the field needs to stand alone.
+</Callout>
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+## With label and helper text
+
+Use `label` and `helperText` to make the field self-explanatory.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Input
-        label="Email"
-        placeholder="you@domain.com"
-        helperText="We’ll never share your email."
-      />
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
     <Input
       label="Email"
       placeholder="you@domain.com"
       helperText="We’ll never share your email."
     />
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Input } from '@pycolors/ui';
 
-    export default function Example() {
-      return (
-        <Input
-          label="Email"
-          placeholder="you@domain.com"
-          helperText="We’ll never share your email."
-        />
-      );
-    }
-    ```
+```tsx title="input-with-label.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputWithLabel() {
+  return (
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      helperText="We’ll never share your email."
+    />
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+## When to use Input
+
+Use Input when the user needs to provide or edit short text-based data.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FormInput className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Forms
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for account, profile, billing, organization, and setup forms.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <SearchIcon className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Search
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use with a leading icon for search, filters, and quick lookup fields.
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Validation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use `error` to show field-level validation feedback clearly.
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
 ## Validation error
 
 When `error` is provided:
-- Error styles are applied
-- `aria-invalid` is set
-- Error text is announced to screen readers
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+- error styles are applied
+- `aria-invalid` is set
+- error text is connected to the field
+- screen readers can access the validation message
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Input
-        label="Email"
-        placeholder="you@domain.com"
-        error="Invalid email address"
-      />
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
     <Input
       label="Email"
       placeholder="you@domain.com"
       error="Invalid email address"
     />
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Input } from '@pycolors/ui';
 
-    export default function ErrorExample() {
-      return (
-        <Input
-          label="Email"
-          placeholder="you@domain.com"
-          error="Invalid email address"
-        />
-      );
-    }
-    ```
+```tsx title="input-error.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputError() {
+  return (
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      error="Invalid email address"
+    />
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+<Callout title="Validation rule">
+  Keep errors short and specific. The user should immediately understand what to fix.
+</Callout>
+
 ## With icons
+
+Use icons when they clarify the field purpose.
 
 ### Left icon
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <Input
         placeholder="Search…"
-        leftIcon={<SearchIcon className="size-4" />}
+        leftIcon={<SearchIcon className="size-4" aria-hidden="true" />}
       />
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
+  <Tab value="Code">
+
+```tsx title="input-left-icon.tsx"
+import { Input } from "@pycolors/ui";
+import { SearchIcon } from "lucide-react";
+
+export function InputLeftIcon() {
+  return (
     <Input
       placeholder="Search…"
-      leftIcon={<SearchIcon className="size-4" />}
+      leftIcon={<SearchIcon className="size-4" aria-hidden="true" />}
     />
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import { Input } from '@pycolors/ui';
-    import { SearchIcon } from "lucide-react";
-
-    export default function IconExample() {
-      return (
-        <Input
-          placeholder="Search…"
-          leftIcon={<SearchIcon className="size-4" />}
-        />
-      );
-    }
-    ```
   </Tab>
 </Tabs>
 
-## Sizes
+### Right icon
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="flex flex-col gap-3 w-80">
+      <Input
+        label="Project"
+        placeholder="Project name"
+        rightIcon={<FileText className="size-4" aria-hidden="true" />}
+      />
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-right-icon.tsx"
+import { Input } from "@pycolors/ui";
+import { FileText } from "lucide-react";
+
+export function InputRightIcon() {
+  return (
+    <Input
+      label="Project"
+      placeholder="Project name"
+      rightIcon={<FileText className="size-4" aria-hidden="true" />}
+    />
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+<Callout type="info" title="Icon rule">
+  Icons should support meaning. Do not rely on an icon as the only label.
+</Callout>
+
+## Sizes
+
+Use size to adapt density across product surfaces.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="flex w-80 flex-col gap-3">
         <Input size="sm" placeholder="Small" />
         <Input size="md" placeholder="Medium" />
         <Input size="lg" placeholder="Large" />
@@ -188,54 +325,110 @@ When `error` is provided:
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Input size="sm" />
-    <Input size="md" />
-    <Input size="lg" />
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Input } from '@pycolors/ui';
 
-    export default function Sizes() {
-      return (
-        <div className="flex flex-col gap-3 w-80">
-          <Input size="sm" placeholder="Small" />
-          <Input size="md" placeholder="Medium" />
-          <Input size="lg" placeholder="Large" />
-        </div>
-      );
-    }
-    ```
+```tsx title="input-sizes.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputSizes() {
+  return (
+    <div className="flex w-80 flex-col gap-3">
+      <Input size="sm" placeholder="Small" />
+      <Input size="md" placeholder="Medium" />
+      <Input size="lg" placeholder="Large" />
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+### Available sizes
+
+| Size | Purpose |
+| --- | --- |
+| `sm` | Dense UIs, tables, filters, compact toolbars |
+| `md` | Default input size |
+| `lg` | Onboarding, auth, marketing-like forms, prominent flows |
+
+<Callout type="info" title="Density rule">
+  Use `md` by default. Use `sm` for dense product surfaces and `lg` when the form needs stronger emphasis.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Start with the field purpose
+
+    Use a clear label when the field must stand alone. Do not rely on placeholder text.
+  </Step>
+
+  <Step>
+    ### Add helper text only when useful
+
+    Helper text should reduce uncertainty, not explain obvious fields.
+  </Step>
+
+  <Step>
+    ### Keep validation close to the field
+
+    Field-level errors should appear directly below the affected input.
+  </Step>
+
+  <Step>
+    ### Use icons sparingly
+
+    Icons work well for search, URL, currency, or domain-specific signals.
+  </Step>
+
+  <Step>
+    ### Keep business rules outside the primitive
+
+    Use Zod, React Hook Form, server validation, or your domain layer for validation logic.
+  </Step>
+</Steps>
+
+## Input vs PasswordInput vs Textarea
+
+| Situation | Use |
+| --- | --- |
+| Short text value | Input |
+| Email, name, slug, URL | Input |
+| Password with reveal toggle | PasswordInput |
+| Long free-form content | Textarea or custom field |
+| Search field | Input with leading icon |
+| Numeric or currency input | Input with domain-specific formatting |
+| Select one from fixed options | Select, RadioGroup, or Tabs depending on UX |
+
+<Callout title="Decision rule">
+  Use Input for short text. Use PasswordInput for secrets. Use a larger field for long content.
+</Callout>
 
 ## API
 
 ### Props
 
-| Prop        | Type                       | Default | Description |
-|-------------|----------------------------|---------|-------------|
-| `label`     | `string`                   | —       | Accessible label above the field |
-| `helperText`| `string`                   | —       | Helper text below the field |
-| `error`     | `string`                   | —       | Validation error message |
-| `leftIcon`  | `React.ReactNode`          | —       | Icon rendered on the left |
-| `rightIcon` | `React.ReactNode`          | —       | Icon rendered on the right |
-| `size`      | `"sm" | "md" | "lg"`       | `"md"`  | Visual density |
-| `className` | `string`                   | —       | Tailwind override |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | — | Accessible label above the field |
+| `helperText` | `string` | — | Helper text below the field |
+| `error` | `string` | — | Validation error message |
+| `leftIcon` | `React.ReactNode` | — | Icon rendered on the left |
+| `rightIcon` | `React.ReactNode` | — | Icon rendered on the right |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Visual density |
+| `className` | `string` | — | Tailwind override |
 
-Extends:
+Input extends standard input props, excluding the native `size` attribute.
 
-```ts
+```ts title="input-props.ts"
 React.InputHTMLAttributes<HTMLInputElement>
 ```
 
 ## TypeScript types
 
-```ts
+```ts title="input-types.ts"
 export type InputSize = "sm" | "md" | "lg";
 
 export interface InputProps
@@ -254,27 +447,170 @@ export interface InputProps
 
 ## Accessibility
 
-- Uses `label` + `htmlFor` for proper field association
-- Automatically manages `aria-describedby`
-- Sets `aria-invalid` when errors are present
-- Preserves focus rings and keyboard navigation
+Input is designed to support accessible form composition.
 
-## Related guides
+Guidelines:
 
-<LinkCards>
-  <LinkCard
-    title="Forms"
-    description="Using Input with React Hook Form + Zod."
-    href="/docs/ui/forms"
-  />
-  <LinkCard
-    title="PasswordInput"
-    description="Secure password fields with toggle."
-    href="/docs/ui/password-input"
-  />
-  <LinkCard
-    title="Typography"
-    description="Labels and helper text on the type scale."
-    href="/docs/design-system/typography"
-  />
-</LinkCards>
+- use a visible `label` when the field needs context
+- do not rely on placeholder text as the only label
+- `error` should set `aria-invalid`
+- helper and error text should be connected through `aria-describedby`
+- decorative icons should use `aria-hidden="true"`
+- keep focus rings visible
+- use appropriate native `type` values, such as `email`, `url`, `tel`, or `search`
+- use `autoComplete` values where relevant
+
+<Callout title="Accessibility rule">
+  Every input needs an accessible name. A visible label is usually the safest choice.
+</Callout>
+
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>visible labels for important fields</li>
+        <li>short helper text</li>
+        <li>specific validation messages</li>
+        <li>semantic input types</li>
+        <li>consistent sizes inside one form</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>placeholder-only fields</li>
+        <li>vague errors like “Invalid”</li>
+        <li>too many icons in one field</li>
+        <li>mixing input sizes randomly</li>
+        <li>putting validation rules inside the UI primitive</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Labels, placeholders, helper text, and errors each have a different job.
+
+<Tabs items={["Labels", "Placeholders", "Errors"]}>
+  <Tab value="Labels">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Label examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Email, Project name, Company, Website, Billing email, Workspace name.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Placeholders">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Placeholder examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        you@domain.com, acme-inc, https://example.com, Search projects…
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Errors">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Error examples
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Enter a valid email address. Project name must be at least 3 characters.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should Input validate values itself?">
+    No. Input displays validation state. Your form, schema, server, or domain layer should define what is valid.
+  </Accordion>
+
+  <Accordion title="Can placeholder text replace a label?">
+    No. Placeholder text disappears while typing and is not enough for accessible form structure.
+  </Accordion>
+
+  <Accordion title="When should I use helper text?">
+    Use helper text when it reduces uncertainty, explains formatting, or clarifies how the value will be used.
+  </Accordion>
+
+  <Accordion title="Can icons be interactive?">
+    If an icon triggers an action, it should be a real button with an accessible label. For password visibility, use PasswordInput.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/guides/forms-with-validation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Forms with validation</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Input with React Hook Form, Zod, and clear validation states.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/password-input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">PasswordInput</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use for secure password fields with reveal toggle behavior.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/design-system/typography" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Typography</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Labels, helper text, and errors aligned with the type scale.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible form controls with labels, descriptions, and errors.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

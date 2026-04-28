@@ -5,59 +5,84 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  Bell,
+  CheckCircle,
+  CircleAlert,
+  Info,
+  MessageSquare,
+  RefreshCcw,
+  ShieldAlert,
+  XCircle,
+} from "lucide-react";
+
 import { ClientOnly } from "../previews/client-only";
-import { ToastTriggerPreview, ToastVariantsPreview } from "../previews/toast-previews";
+import {
+  ToastTriggerPreview,
+  ToastVariantsPreview,
+} from "../previews/toast-previews";
 
-The **Toast** component displays short, non-blocking feedback messages.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Toast</Badge>
+</div>
 
-It confirms actions, communicates results, or provides lightweight system feedback — without interrupting the user flow.
+## Non-blocking feedback for product actions
 
-Toast is intentionally **minimal** in PyColors UI: it provides structure + accessibility, not a full notification system (queues, global store, deduping).
+The **Toast** component displays short, temporary, non-blocking feedback.
+
+Use it to:
+
+- confirm actions
+- summarize background results
+- show short system messages
+- provide lightweight retry or undo feedback
+- acknowledge user intent without interrupting the flow
+
+Toast is intentionally minimal in PyColors UI.
+
+It provides structure and accessibility, not a full notification system with queues, global stores, deduping, or persistent notification history.
+
+<Callout title="Core idea">
+  Toasts are temporary feedback. They should confirm, summarize, or recover — not block the task.
+</Callout>
 
 ## Import
 
-```tsx
-import {
-  Toast,
-  ToastProvider,
-  ToastViewport,
-  ToastTitle,
-  ToastDescription,
-} from from "@pycolors/ui";
+```tsx title="toast-import.tsx"
+import { Toast } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
 Toast is controlled explicitly by the page or component.
-Wrap your app (or a layout subtree) with `ToastProvider` and render **one** `ToastViewport` per scope.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Wrap your app, route, or layout subtree with `ToastProvider`, then render one `ToastViewport` per provider scope.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
-        <ToastTriggerPreview />
-      </ClientOnly>
+   <Preview>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <ToastTriggerPreview />
+    </ClientOnly>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-```tsx
-<ToastProvider>
-  <Button onClick={() => setOpen(true)}>Trigger toast</Button>
-
-  <Toast open={open} onOpenChange={setOpen}>
-    <ToastTitle>Action completed</ToastTitle>
-  </Toast>
-
-  <ToastViewport className="fixed bottom-4 right-4 z-50" />
-</ToastProvider>
-```
-  </Tab>
-
   <Tab value="Code">
-```tsx
+
+```tsx title="toast-example.tsx"
 "use client";
 
 import * as React from "react";
@@ -86,7 +111,9 @@ export function ToastExample() {
         duration={2500}
       >
         <ToastTitle>Changes saved</ToastTitle>
-        <ToastDescription>Your settings were updated.</ToastDescription>
+        <ToastDescription>
+          Your settings were updated.
+        </ToastDescription>
       </Toast>
 
       <ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
@@ -94,24 +121,95 @@ export function ToastExample() {
   );
 }
 ```
+
   </Tab>
 </Tabs>
 
+<Callout type="info" title="Provider rule">
+  Render one `ToastViewport` per provider scope. Avoid rendering a viewport inside every feature component.
+</Callout>
+
+## When to use Toast
+
+Use Toast when feedback should be noticeable but should not interrupt the user.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Confirmation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Confirm that a save, update, archive, or background action completed.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <RefreshCcw className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Retry or undo
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Offer lightweight recovery for reversible actions or failed background updates.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Bell className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          System feedback
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Show short system feedback that does not belong permanently in the page.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
 ## Variants
 
-Toast supports a small set of visual variants. Keep them limited to avoid semantic overload.
+Toast supports a small set of variants.
+
+Keep variants limited to avoid turning every message into an event.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
-        <ToastVariantsPreview />
-      </ClientOnly>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <ToastVariantsPreview />
+    </ClientOnly>
     </Preview>
   </Tab>
 
   <Tab value="Code">
-```tsx
+
+```tsx title="toast-variants.tsx"
 <Toast variant="default">
   <ToastTitle>Default</ToastTitle>
 </Toast>
@@ -126,9 +224,12 @@ Toast supports a small set of visual variants. Keep them limited to avoid semant
 
 <Toast variant="destructive">
   <ToastTitle>Error</ToastTitle>
-  <ToastDescription>Something went wrong.</ToastDescription>
+  <ToastDescription>
+    Something went wrong.
+  </ToastDescription>
 </Toast>
 ```
+
   </Tab>
 </Tabs>
 
@@ -136,24 +237,127 @@ Toast supports a small set of visual variants. Keep them limited to avoid semant
 
 | Variant | Purpose |
 | --- | --- |
-| `default` | Neutral confirmation / info |
+| `default` | Neutral confirmation or information |
 | `success` | Positive confirmation |
 | `warning` | Attention needed, still non-blocking |
-| `destructive` | Error feedback (non-blocking) |
+| `destructive` | Non-blocking error feedback |
 
+<Callout type="info" title="Variant rule">
+  Use `destructive` only for recoverable or non-blocking failures. Use Alert for blocking errors.
+</Callout>
 
 ## With description
 
-Use `ToastDescription` for additional context when needed.
+Use `ToastDescription` when the title alone is not enough.
 
-```tsx
+```tsx title="toast-description.tsx"
 <Toast variant="warning">
   <ToastTitle>Unsaved changes</ToastTitle>
   <ToastDescription>
-    Make sure to save before leaving the page.
+    Save before leaving this page to avoid losing your work.
   </ToastDescription>
 </Toast>
 ```
+
+Keep the description short.
+
+If the message needs more explanation, it probably belongs in an Alert, Dialog, or page section.
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Trigger after the action starts or completes
+
+    Use toast feedback after a meaningful action: saved, archived, restored, copied, failed, or queued.
+  </Step>
+
+  <Step>
+    ### Keep the message short
+
+    Toasts are temporary. The user should understand them in one glance.
+  </Step>
+
+  <Step>
+    ### Use inline state for active work
+
+    For loading or submission, prefer button text such as `Saving…` before showing the final toast.
+  </Step>
+
+  <Step>
+    ### Use recovery actions carefully
+
+    Undo and retry work well for reversible actions, but they require real backend support.
+  </Step>
+</Steps>
+
+## Toast vs Alert vs Dialog
+
+| Situation | Use |
+| --- | --- |
+| Save confirmation | Toast |
+| Copied to clipboard | Toast |
+| Background sync completed | Toast |
+| Blocking page error | Alert |
+| Form-level validation issue | Alert |
+| Destructive confirmation | Dialog |
+| User must choose before continuing | Dialog |
+
+<Callout title="Decision rule">
+  Toast is for feedback after a flow. Alert is for information inside a flow. Dialog is for blocking decisions.
+</Callout>
+
+## Product guidance
+
+<Tabs items={["Save", "Delete", "Retry", "Undo"]}>
+  <Tab value="Save">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        Save confirmation
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use toast after the save completes. Keep loading state inline on the submit button.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Delete">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <ShieldAlert className="h-4 w-4 text-destructive" />
+        Delete flow
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Confirm destructive intent in a Dialog first. Use toast after deletion for confirmation or Undo.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Retry">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <RefreshCcw className="h-4 w-4 text-primary" />
+        Retry flow
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use retry for recoverable background failures. Avoid hiding critical failures only inside a toast.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Undo">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <MessageSquare className="h-4 w-4 text-primary" />
+        Undo flow
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Undo for reversible actions such as archive, delete, remove, or bulk actions when the backend supports restore.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
 ## API
 
@@ -164,12 +368,12 @@ Use `ToastDescription` for additional context when needed.
 | `variant` | `"default" \| "success" \| "warning" \| "destructive"` | `"default"` | Visual style |
 | `open` | `boolean` | — | Controlled open state |
 | `onOpenChange` | `(open: boolean) => void` | — | State handler |
-| `duration` | `number` | Radix default | Auto-close delay (ms) |
-| `className` | `string` | — | Tailwind override |
+| `duration` | `number` | Radix default | Auto-close delay in milliseconds |
+| `className` | `string` | — | Custom Tailwind classes |
 
-Toast extends Radix props:
+Toast extends Radix Toast root props:
 
-```ts
+```ts title="toast-types.ts"
 React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
 ```
 
@@ -177,57 +381,174 @@ React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
 
 Wraps the area where toasts are used.
 
-```tsx
-<ToastProvider>{/* ... */}</ToastProvider>
+```tsx title="toast-provider.tsx"
+<ToastProvider>
+  {/* app or route subtree */}
+</ToastProvider>
 ```
 
 ### ToastViewport
 
-Defines where toasts appear on screen. Render **once** per provider scope.
+Defines where toasts appear on screen.
 
-```tsx
-<ToastViewport className="fixed bottom-4 right-4 z-50" />
+Render one viewport per provider scope.
+
+```tsx title="toast-viewport.tsx"
+<ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
+```
+
+## TypeScript types
+
+```ts title="toast-types.ts"
+export type ToastVariant =
+  | "default"
+  | "success"
+  | "warning"
+  | "destructive";
+
+export interface ToastProps
+  extends React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>,
+    VariantProps<typeof toastVariants> {}
 ```
 
 ## Accessibility
 
-- Built on Radix Toast primitives (keyboard + focus-safe by default).
-- Uses appropriate live regions for announcements.
-- Non-blocking: it should not trap focus or interrupt input.
+- Toast is built on Radix Toast primitives.
+- Toasts should not trap focus.
+- Toasts should not interrupt form input.
+- Toasts are announced as live-region updates.
+- Keep copy short so announcements are understandable.
+- Do not rely on color alone for destructive or warning messages.
+- Do not use Toast as the only place for critical errors.
 
-## Design guidelines
+<Callout title="Accessibility rule">
+  Toasts are helpful when they are brief. Long or critical messages should move into the page with Alert.
+</Callout>
 
-- Keep messages short and explicit.
-- Prefer one toast at a time (avoid stacking).
-- Use `destructive` sparingly, and don’t rely on toasts for critical errors.
-- If a user must act, prefer **Alert** (inline) or **Dialog** (blocking confirmation).
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>short confirmation messages</li>
+        <li>one toast per meaningful action</li>
+        <li>inline loading before toast completion</li>
+        <li>retry or undo only when supported</li>
+        <li>Alert for blocking failures</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>using Toast for field validation</li>
+        <li>hiding blocking errors in Toast only</li>
+        <li>stacking many toasts at once</li>
+        <li>long paragraphs inside toast descriptions</li>
+        <li>using Toast as a notification center</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## When not to use Toast
 
 Do not use Toast for:
-- Blocking errors
-- Field-level form validation
-- Onboarding flows
-- Persistent notification centers
 
-Use **Alert**, **EmptyState**, or dedicated patterns instead.
+- blocking errors
+- field-level validation
+- onboarding flows
+- persistent notification centers
+- payment failures that block progress
+- permission errors that require explanation
+- important messages the user must read before continuing
 
-## Related guides
+Use Alert, EmptyState, Dialog, or a dedicated pattern instead.
 
-<LinkCards>
-  <LinkCard
-    title="Alert"
-    description="Inline feedback and blocking messages."
-    href="/docs/ui/alert"
-  />
-  <LinkCard
-    title="EmptyState"
-    description="Valid empty state with clear guidance."
-    href="/docs/ui/empty-state"
-  />
-  <LinkCard
-    title="Dialog"
-    description="Use a dialog when the user must act."
-    href="/docs/ui/dialog"
-  />
-</LinkCards>
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should Toast handle global notification state?">
+    Not by default. PyColors Toast is intentionally minimal. Add a global store only when your product needs queueing, deduping, persistence, or notification history.
+  </Accordion>
+
+  <Accordion title="Can Toast include actions?">
+    Yes, but keep actions short and recoverable, such as Undo or Retry. If the user must make a decision, use Dialog.
+  </Accordion>
+
+  <Accordion title="Should errors use Toast?">
+    Only non-blocking or recoverable errors. Blocking errors should use Alert in context.
+  </Accordion>
+
+  <Accordion title="How many ToastViewports should I render?">
+    Usually one per app or layout scope. Avoid rendering a viewport in every component.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Alert</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Inline feedback for blocking messages and persistent product states.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Dialog</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Dialog when the user must confirm or complete a focused task.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Async actions pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design save, retry, optimistic UI, undo, and mutation feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible feedback with clear semantics and announcements.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

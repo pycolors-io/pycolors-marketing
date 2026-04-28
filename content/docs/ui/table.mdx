@@ -5,8 +5,16 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
   Table,
   TableHeader,
   TableBody,
@@ -17,63 +25,61 @@ import {
   TableEmpty,
   TableLoading,
 } from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Database,
+  FileText,
+  Filter,
+  LayoutGrid,
+  Rows3,
+  Table2,
+  XCircle,
+} from "lucide-react";
 
-The **Table** component is used to display structured, tabular data such as lists, reports, and admin views.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Table</Badge>
+</div>
 
-It provides:
-- Consistent styling via design tokens
-- Horizontal overflow handling
-- Hover feedback on rows
-- Built-in **empty** and **loading** states
+## Structured data for SaaS interfaces
+
+The **Table** component displays structured, comparable data.
+
+Use it for:
+
+- users
+- projects
+- invoices
+- subscriptions
+- logs
+- reports
+- audit events
+- admin records
+
+Table provides a consistent visual foundation for dense product data:
+
+- semantic table structure
+- design-token styling
+- horizontal overflow handling
+- row hover feedback
+- built-in empty state
+- built-in loading state
+
+<Callout title="Core idea">
+  Use Table when users need to compare structured records across columns. Use cards when the content is more editorial, visual, or action-led.
+</Callout>
 
 ## Import
 
-```tsx
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableCaption,
-  TableEmpty,
-  TableLoading,
-} from "@pycolors/ui";
+```tsx title="table-import.tsx"
+import { Table } from "@pycolors/ui";
 ```
 
 ## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          <TableRow>
-            <TableCell>Jane Doe</TableCell>
-            <TableCell>jane@example.com</TableCell>
-            <TableCell>Admin</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>John Smith</TableCell>
-            <TableCell>john@example.com</TableCell>
-            <TableCell>User</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
     <Table>
       <TableHeader>
         <TableRow>
@@ -82,92 +88,272 @@ import {
           <TableHead>Role</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         <TableRow>
           <TableCell>Jane Doe</TableCell>
           <TableCell>jane@example.com</TableCell>
           <TableCell>Admin</TableCell>
         </TableRow>
+        <TableRow>
+          <TableCell>John Smith</TableCell>
+          <TableCell>john@example.com</TableCell>
+          <TableCell>User</TableCell>
+        </TableRow>
       </TableBody>
     </Table>
-    ```
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import {
-      Table,
-      TableHeader,
-      TableBody,
-      TableRow,
-      TableHead,
-      TableCell,
-    } from "@pycolors/ui";
 
-    export function UsersTable() {
-      return (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>Jane Doe</TableCell>
-              <TableCell>jane@example.com</TableCell>
-              <TableCell>Admin</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      );
-    }
-    ```
+```tsx title="users-table.tsx"
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@pycolors/ui";
+
+export function UsersTable() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        <TableRow>
+          <TableCell>Jane Doe</TableCell>
+          <TableCell>jane@example.com</TableCell>
+          <TableCell>Admin</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>John Smith</TableCell>
+          <TableCell>john@example.com</TableCell>
+          <TableCell>User</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
+## When to use Table
+
+Use Table when the interface needs scanning, comparison, and operational density.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Rows3 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Repeatable records
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for users, projects, invoices, subscriptions, logs, and admin records.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Database className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Comparable data
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use when users compare values across stable columns.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Filter className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Operational views
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use with filters, pagination, row actions, and bulk operations.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
 ## Caption
 
-Use `TableCaption` to provide context or summary.
+Use `TableCaption` when the table needs a concise summary.
 
-```tsx
+```tsx title="table-caption.tsx"
 <Table>
   <TableCaption>List of active users</TableCaption>
-  ...
+  {/* rows */}
 </Table>
 ```
 
+Captions should explain what the table contains, not repeat the page heading.
+
 ## Empty state
 
-`TableEmpty` is useful when no data matches filters.
+Use `TableEmpty` when the request succeeded but no rows are available.
 
-```tsx
+<Tabs items={["Default", "Custom"]}>
+  <Tab value="Default">
+
+```tsx title="table-empty.tsx"
 <TableBody>
   <TableEmpty colSpan={3} />
 </TableBody>
 ```
 
-You can customize the message:
+  </Tab>
 
-```tsx
-<TableEmpty
-  colSpan={3}
-  title="No users found"
-  description="Invite your first user to get started."
-/>
+  <Tab value="Custom">
+
+```tsx title="table-empty-custom.tsx"
+<TableBody>
+  <TableEmpty
+    colSpan={3}
+    title="No users found"
+    description="Invite your first user to get started."
+  />
+</TableBody>
 ```
+
+  </Tab>
+</Tabs>
+
+<Callout type="info" title="Empty state rule">
+  Empty is not an error. Explain why the table is empty and what the user can do next.
+</Callout>
 
 ## Loading state
 
-`TableLoading` displays a centered spinner and message.
+Use `TableLoading` when the table structure is known but the data is still loading.
 
-```tsx
+```tsx title="table-loading.tsx"
 <TableBody>
   <TableLoading colSpan={3} />
 </TableBody>
 ```
+
+Use loading rows instead of removing the table from the page.
+
+This preserves layout and reduces visual jump.
+
+## Table composition
+
+A production table usually belongs inside a larger feature composition.
+
+```tsx title="projects-table-section.tsx"
+export function ProjectsTableSection() {
+  return (
+    <section className="space-y-4">
+      <ProjectsToolbar />
+      <Table>
+        <ProjectsTableHeader />
+        <ProjectsTableBody />
+      </Table>
+      <ProjectsPagination />
+    </section>
+  );
+}
+```
+
+The table renders structure.
+
+The feature layer owns:
+
+- data fetching
+- filters
+- sorting
+- pagination
+- permissions
+- mutations
+- row actions
+
+<Callout title="Architecture rule">
+  The table should not own the data source. Keep fetching, filtering, sorting, and mutations in the feature layer.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Define the columns
+
+    Choose stable columns that help users scan and compare records.
+  </Step>
+
+  <Step>
+    ### Add loading and empty states
+
+    Do not leave the table area blank while waiting for data or when no data exists.
+  </Step>
+
+  <Step>
+    ### Keep row actions compact
+
+    Use a Dropdown Menu for secondary row actions and a Dialog for destructive confirmation.
+  </Step>
+
+  <Step>
+    ### Add pagination when needed
+
+    Use Pagination when the data set is larger than a single page.
+  </Step>
+
+  <Step>
+    ### Move complex behavior into a pattern
+
+    Use the Data Table Pattern when you need filters, actions, pagination, loading, empty, and error states together.
+  </Step>
+</Steps>
+
+## Table vs Card vs Data Table Pattern
+
+| Situation | Use |
+| --- | --- |
+| Structured comparable data | Table |
+| Visual or content-heavy items | Card |
+| Small list with one primary action per item | Card or custom list |
+| Filters, pagination, row actions, states | Data Table Pattern |
+| Timeline or activity feed | Custom list |
+| Mobile-first browsing | Cards or responsive list |
+
+<Callout type="info" title="Decision rule">
+  Table is a primitive. Data Table Pattern is the full product experience around it.
+</Callout>
 
 ## API
 
@@ -176,42 +362,210 @@ You can customize the message:
 | Component | Description |
 | --- | --- |
 | `Table` | Wrapper with border and overflow handling |
-| `TableHeader` | `<thead>` section |
-| `TableBody` | `<tbody>` section |
-| `TableRow` | `<tr>` with hover feedback |
-| `TableHead` | Header cell (`<th>`) |
-| `TableCell` | Data cell (`<td>`) |
+| `TableHeader` | Table header section |
+| `TableBody` | Table body section |
+| `TableRow` | Table row with hover feedback |
+| `TableHead` | Header cell |
+| `TableCell` | Data cell |
 | `TableCaption` | Optional caption |
 | `TableEmpty` | Empty state row |
 | `TableLoading` | Loading state row |
 
-All components extend their respective native HTML element props.
+### TableEmpty props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `colSpan` | `number` | — | Number of columns to span |
+| `title` | `string` | default copy | Empty state title |
+| `description` | `string` | default copy | Empty state description |
+| `className` | `string` | — | Custom classes |
+
+### TableLoading props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `colSpan` | `number` | — | Number of columns to span |
+| `label` | `string` | default copy | Loading message |
+| `className` | `string` | — | Custom classes |
+
+All base table components extend their respective native HTML element props.
+
+```ts title="table-props.ts"
+React.HTMLAttributes<HTMLTableElement>
+React.HTMLAttributes<HTMLTableSectionElement>
+React.HTMLAttributes<HTMLTableRowElement>
+React.ThHTMLAttributes<HTMLTableCellElement>
+React.TdHTMLAttributes<HTMLTableCellElement>
+React.HTMLAttributes<HTMLTableCaptionElement>
+```
 
 ## Accessibility
 
-- Uses semantic table elements (`table`, `thead`, `tbody`, `th`, `td`)
-- Ensure column headers are defined with `TableHead`
-- Keep captions concise and descriptive
-- Avoid interactive elements inside table rows unless necessary
+Tables should preserve semantic structure.
 
-## Design guidelines
+Guidelines:
 
-- Prefer tables for dense, comparable data
-- Keep column count reasonable (3–7 columns)
-- Use empty and loading states instead of conditional rendering gaps
-- Avoid nesting complex layouts inside table cells
+- use `TableHead` for column headers
+- include a caption when the context is not obvious
+- avoid using tables for layout
+- keep cells readable and concise
+- ensure interactive row actions are keyboard accessible
+- avoid making the whole row clickable unless the interaction is clear
+- use visible labels for icon-only row actions
 
-## Related guides
+<Callout title="Accessibility rule">
+  Tables are for tabular data. Do not use table markup only to align content visually.
+</Callout>
 
-<LinkCards>
-  <LinkCard
-    title="Card"
-    description="Use cards to wrap tables in dashboards."
-    href="/docs/ui/card"
-  />
-  <LinkCard
-    title="Typography"
-    description="Text sizes and hierarchy inside tables."
-    href="/docs/design-system/typography"
-  />
-</LinkCards>
+## Prefer / avoid
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>clear column headers</li>
+        <li>reasonable column count</li>
+        <li>empty and loading states</li>
+        <li>Dropdown Menu for row actions</li>
+        <li>Pagination for larger data sets</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>tables for non-tabular content</li>
+        <li>too many columns in narrow layouts</li>
+        <li>blank states while loading</li>
+        <li>complex layouts inside cells</li>
+        <li>data fetching inside the table primitive</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Table labels should be short and scannable.
+
+<Tabs items={["Headers", "Empty", "Loading"]}>
+  <Tab value="Headers">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Column headers
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Prefer concise labels like Name, Email, Role, Status, Amount, Created, Actions.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Empty">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Empty state
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Explain the state and provide a next step: “No users found. Invite your first user to get started.”
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Loading">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Loading state
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Keep the message neutral and short: “Loading data…” or “Loading users…”
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should the Table component fetch data?">
+    No. Table is a rendering primitive. Fetching, filtering, sorting, and pagination should live in the feature layer.
+  </Accordion>
+
+  <Accordion title="When should I use the Data Table Pattern instead?">
+    Use the Data Table Pattern when the table needs filters, loading, empty, error, pagination, row actions, and product-specific behavior together.
+  </Accordion>
+
+  <Accordion title="Can a row be clickable?">
+    Yes, but make the interaction clear and keyboard accessible. Avoid hiding multiple actions behind a single ambiguous row click.
+  </Accordion>
+
+  <Accordion title="How many columns should a table have?">
+    Keep the number reasonable. If the table becomes too wide or hard to scan, move secondary details into a Sheet, Dialog, or detail page.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Data Table Pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build complete SaaS tables with filters, pagination, states, and row actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/dropdown-menu" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Dropdown Menu</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Dropdown Menu for compact row actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/pagination" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Pagination</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Navigate larger data sets with controlled page state.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Handle async table states clearly and consistently.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

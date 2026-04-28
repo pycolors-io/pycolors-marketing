@@ -5,310 +5,453 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle,
+  Info,
+  Megaphone,
+  ShieldAlert,
+  XCircle,
+} from "lucide-react";
 
-The **Alert** component communicates important information to the user: neutral notices, success confirmations, warnings, and critical errors.
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Alert</Badge>
+</div>
 
-- Unlike Toasts, Alerts are **inline and persistent**. They’re built on semantic tokens (`bg-card`, `border-*`, `text-*`) so they remain consistent across themes.
+## Inline feedback for important product states
+
+The **Alert** component communicates important information directly inside the interface.
+
+Use it for:
+
+- neutral notices
+- validation results
+- success confirmations
+- warnings
+- blocking errors
+- system messages
+
+Unlike Toasts, Alerts are **inline and persistent**. They remain visible in context until the user understands or resolves the state.
+
+<Callout title="Core idea">
+  Alerts are for messages that belong in the page. Toasts are for temporary feedback.
+</Callout>
 
 ## Import
 
-```tsx
-import {
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  AlertIndicator,
-  AlertContent,
-  type AlertProps,
-  type AlertVariant,
-} from "@pycolors/ui";
+```tsx title="alert-import.tsx"
+import { Alert } from "@pycolors/ui";
 ```
 
-## Usage
+## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use a neutral Alert for non-critical information.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <Alert className="max-w-xl">
-        <AlertTitle>Heads up</AlertTitle>
-        <AlertDescription>
-          <p>This is a neutral message. Use it for non-critical information.</p>
-        </AlertDescription>
-      </Alert>
+  <Preview>
+    <Alert className="max-w-xl">
+      <AlertTitle>Heads up</AlertTitle>
+      <AlertDescription>
+        This is a neutral message. Use it for non-critical information.
+      </AlertDescription>
+    </Alert>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
+  <Tab value="Code">
+
+```tsx title="basic-alert.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+export function BasicAlert() {
+  return (
     <Alert>
       <AlertTitle>Heads up</AlertTitle>
       <AlertDescription>
-        <p>This is a neutral message.</p>
+        This is a neutral message. Use it for non-critical information.
       </AlertDescription>
     </Alert>
-    ```
-  </Tab>
+  );
+}
+```
 
-  <Tab value="Code">
-    ```tsx
-    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
-
-    export default function Demo() {
-      return (
-        <Alert>
-          <AlertTitle>Heads up</AlertTitle>
-          <AlertDescription>
-            <p>This is a neutral message.</p>
-          </AlertDescription>
-        </Alert>
-      );
-    }
-    ```
   </Tab>
 </Tabs>
 
+<Callout type="info" title="Typography note">
+  Prefer plain text inside `AlertDescription`. Avoid nesting extra paragraph tags when the component already renders text semantics.
+</Callout>
+
+## When to use Alert
+
+Use Alert when the message should remain visible in context.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Info className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Page notice
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Explain something important before the user continues.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Success result
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Confirm that an important action completed successfully.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <ShieldAlert className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Blocking error
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Explain what failed and what the user can do next.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
 ## Variants
 
-Variants reflect the semantic meaning of the message. In PyColors UI, variants are mostly expressed through **border emphasis** and (optionally) indicator color.
+Variants reflect the semantic meaning of the message.
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-    <Preview>
-      <div className="grid gap-4 max-w-xl">
-        <Alert variant="info">
-          <AlertTitle>Info</AlertTitle>
-          <AlertDescription><p>Useful context for the user.</p></AlertDescription>
-        </Alert>
+   <Preview>
+    <div className="grid max-w-xl gap-4">
+      <Alert variant="info">
+        <AlertTitle>Info</AlertTitle>
+        <AlertDescription>
+          Useful context for the user.
+        </AlertDescription>
+      </Alert>
 
-        <Alert variant="success">
-          <AlertTitle>Success</AlertTitle>
-          <AlertDescription><p>Your changes were saved.</p></AlertDescription>
-        </Alert>
+      <Alert variant="success">
+        <AlertTitle>Success</AlertTitle>
+        <AlertDescription>
+          Your changes were saved.
+        </AlertDescription>
+      </Alert>
 
-        <Alert variant="warning">
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription><p>Something may need attention.</p></AlertDescription>
-        </Alert>
+      <Alert variant="warning">
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>
+          Something may need attention.
+        </AlertDescription>
+      </Alert>
 
-        <Alert variant="destructive" ariaLive="assertive">
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription><p>We couldn’t save your changes. Try again.</p></AlertDescription>
-        </Alert>
-      </div>
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          We couldn’t save your changes. Try again.
+        </AlertDescription>
+      </Alert>
+    </div>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
-    <Alert variant="info">...</Alert>
-    <Alert variant="success">...</Alert>
-    <Alert variant="warning">...</Alert>
-    <Alert variant="destructive" ariaLive="assertive">...</Alert>
-    ```
-  </Tab>
-
   <Tab value="Code">
-    ```tsx
-    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
 
-    export default function AlertVariants() {
-      return (
-        <div className="grid gap-4">
-          <Alert variant="info">
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription><p>Useful context for the user.</p></AlertDescription>
-          </Alert>
+```tsx title="alert-variants.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
 
-          <Alert variant="success">
-            <AlertTitle>Success</AlertTitle>
-            <AlertDescription><p>Your changes were saved.</p></AlertDescription>
-          </Alert>
+export function AlertVariants() {
+  return (
+    <div className="grid gap-4">
+      <Alert variant="info">
+        <AlertTitle>Info</AlertTitle>
+        <AlertDescription>
+          Useful context for the user.
+        </AlertDescription>
+      </Alert>
 
-          <Alert variant="warning">
-            <AlertTitle>Warning</AlertTitle>
-            <AlertDescription><p>Something may need attention.</p></AlertDescription>
-          </Alert>
+      <Alert variant="success">
+        <AlertTitle>Success</AlertTitle>
+        <AlertDescription>
+          Your changes were saved.
+        </AlertDescription>
+      </Alert>
 
-          <Alert variant="destructive" ariaLive="assertive">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription><p>We couldn’t save your changes. Try again.</p></AlertDescription>
-          </Alert>
-        </div>
-      );
-    }
-    ```
+      <Alert variant="warning">
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>
+          Something may need attention.
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          We couldn’t save your changes. Try again.
+        </AlertDescription>
+      </Alert>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
 ### Available variants
 
-| Variant        | Purpose                                |
-| -------------- | -------------------------------------- |
-| `default`      | Neutral information                     |
-| `info`         | Neutral information (alias of default) |
-| `success`      | Confirmation / positive feedback        |
-| `warning`      | Risk / attention required               |
-| `destructive`  | Error / critical message                |
+| Variant | Purpose |
+| --- | --- |
+| `default` | Neutral information |
+| `info` | Neutral information, currently aligned with default |
+| `success` | Confirmation or positive feedback |
+| `warning` | Risk or attention required |
+| `destructive` | Error or critical message |
 
-> Note: `default` and `info` intentionally share the same visual style in the current v1 token set.
+<Callout type="info" title="Token behavior">
+  `default` and `info` intentionally share the same visual language in the current v1 token set.
+</Callout>
 
-## Announcements (ariaLive)
+## Announcements with ariaLive
 
-PyColors UI includes an `ariaLive` prop that controls how assistive tech announces updates:
+The `ariaLive` prop controls how assistive technologies announce updates.
 
-- `polite` (default) → non-blocking updates (`role="status"`)
-- `assertive` → critical errors (`role="alert"`)
-- `off` → no announcement
+| Value | Role | Use for |
+| --- | --- | --- |
+| `polite` | `status` | Non-blocking updates |
+| `assertive` | `alert` | Critical errors |
+| `off` | none | Static messages that do not need announcement |
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <div className="grid gap-4 max-w-xl">
-        <Alert ariaLive="polite">
-          <AlertTitle>Status</AlertTitle>
-          <AlertDescription><p>Saved in the background (polite).</p></AlertDescription>
-        </Alert>
+    <div className="grid max-w-xl gap-4">
+      <Alert ariaLive="polite">
+        <AlertTitle>Status</AlertTitle>
+        <AlertDescription>
+          Saved in the background.
+        </AlertDescription>
+      </Alert>
 
-        <Alert variant="destructive" ariaLive="assertive">
-          <AlertTitle>Critical</AlertTitle>
-          <AlertDescription><p>Payment failed. Please retry (assertive).</p></AlertDescription>
-        </Alert>
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Critical</AlertTitle>
+        <AlertDescription>
+          Payment failed. Please retry.
+        </AlertDescription>
+      </Alert>
 
-        <Alert ariaLive="off">
-          <AlertTitle>Silent</AlertTitle>
-          <AlertDescription><p>No live announcement for this message.</p></AlertDescription>
-        </Alert>
-      </div>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Alert ariaLive="polite">...</Alert>
-    <Alert ariaLive="assertive">...</Alert>
-    <Alert ariaLive="off">...</Alert>
-    ```
+      <Alert ariaLive="off">
+        <AlertTitle>Silent</AlertTitle>
+        <AlertDescription>
+          No live announcement for this message.
+        </AlertDescription>
+      </Alert>
+    </div>
+  </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
 
-    export default function AlertAriaLive() {
-      return (
-        <div className="grid gap-4">
-          <Alert ariaLive="polite">
-            <AlertTitle>Status</AlertTitle>
-            <AlertDescription><p>Saved in the background.</p></AlertDescription>
-          </Alert>
+```tsx title="alert-aria-live.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
 
-          <Alert variant="destructive" ariaLive="assertive">
-            <AlertTitle>Critical</AlertTitle>
-            <AlertDescription><p>Payment failed. Please retry.</p></AlertDescription>
-          </Alert>
+export function AlertAriaLive() {
+  return (
+    <div className="grid gap-4">
+      <Alert ariaLive="polite">
+        <AlertTitle>Status</AlertTitle>
+        <AlertDescription>
+          Saved in the background.
+        </AlertDescription>
+      </Alert>
 
-          <Alert ariaLive="off">
-            <AlertTitle>Silent</AlertTitle>
-            <AlertDescription><p>No announcement for this message.</p></AlertDescription>
-          </Alert>
-        </div>
-      );
-    }
-    ```
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Critical</AlertTitle>
+        <AlertDescription>
+          Payment failed. Please retry.
+        </AlertDescription>
+      </Alert>
+
+      <Alert ariaLive="off">
+        <AlertTitle>Silent</AlertTitle>
+        <AlertDescription>
+          No announcement for this message.
+        </AlertDescription>
+      </Alert>
+    </div>
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
-## With indicator (icon)
+<Callout title="Accessibility rule">
+  Use `assertive` only for urgent errors. Overusing assertive announcements creates a noisy experience for screen reader users.
+</Callout>
 
-Use `AlertIndicator` + `AlertContent` to align content. The indicator is positioned absolutely; `AlertContent` adds left padding so the text lines up.
+## With indicator
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use `AlertIndicator` with `AlertContent` when an icon helps reinforce the message.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Alert variant="warning" className="max-w-xl">
-        <AlertIndicator aria-hidden="true">
-          <svg
-            className="size-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 9v4" />
-            <path d="M12 17h.01" />
-            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
-          </svg>
-        </AlertIndicator>
+    <Alert variant="warning" className="max-w-xl">
+      <AlertIndicator aria-hidden="true">
+        <AlertTriangle className="size-5" />
+      </AlertIndicator>
 
-        <AlertContent>
-          <AlertTitle>Check your input</AlertTitle>
-          <AlertDescription>
-            <p>Some fields might be incomplete. Review before submitting.</p>
-          </AlertDescription>
-        </AlertContent>
-      </Alert>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Alert variant="warning">
-      <AlertIndicator aria-hidden="true">...</AlertIndicator>
       <AlertContent>
-        <AlertTitle>...</AlertTitle>
-        <AlertDescription><p>...</p></AlertDescription>
+        <AlertTitle>Check your input</AlertTitle>
+        <AlertDescription>
+          Some fields might be incomplete. Review before submitting.
+        </AlertDescription>
       </AlertContent>
     </Alert>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import {
-      Alert,
-      AlertIndicator,
-      AlertContent,
-      AlertTitle,
-      AlertDescription,
-    } from "@pycolors/ui";
 
-    export default function AlertWithIcon() {
-      return (
-        <Alert variant="warning">
-          <AlertIndicator aria-hidden="true">{/* icon */}</AlertIndicator>
-          <AlertContent>
-            <AlertTitle>Check your input</AlertTitle>
-            <AlertDescription><p>Review before submitting.</p></AlertDescription>
-          </AlertContent>
-        </Alert>
-      );
-    }
-    ```
+```tsx title="alert-with-indicator.tsx"
+import {
+  Alert,
+  AlertIndicator,
+  AlertContent,
+  AlertTitle,
+  AlertDescription,
+} from "@pycolors/ui";
+import { AlertTriangle } from "lucide-react";
+
+export function AlertWithIndicator() {
+  return (
+    <Alert variant="warning">
+      <AlertIndicator aria-hidden="true">
+        <AlertTriangle className="size-5" />
+      </AlertIndicator>
+
+      <AlertContent>
+        <AlertTitle>Check your input</AlertTitle>
+        <AlertDescription>
+          Some fields might be incomplete. Review before submitting.
+        </AlertDescription>
+      </AlertContent>
+    </Alert>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+<Callout type="info" title="Icon rule">
+  If the icon is decorative, add `aria-hidden="true"`. The text must carry the meaning.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Use inline alerts for persistent states
+
+    Use Alert when the message should remain visible near the relevant content.
+  </Step>
+
+  <Step>
+    ### Use the variant that matches meaning
+
+    Choose `success`, `warning`, or `destructive` only when the message carries that semantic intent.
+  </Step>
+
+  <Step>
+    ### Keep copy specific and actionable
+
+    Explain what happened and what the user can do next.
+  </Step>
+
+  <Step>
+    ### Announce only what matters
+
+    Use `polite` for status updates and `assertive` only for critical failures.
+  </Step>
+</Steps>
+
+## Alert vs Toast
+
+| Situation | Use |
+| --- | --- |
+| Blocking page error | Alert |
+| Form-level validation result | Alert |
+| Important persistent notice | Alert |
+| Temporary save confirmation | Toast |
+| Non-blocking background update | Toast |
+| Undo or retry after mutation | Toast |
+
+<Callout title="Decision rule">
+  If the user needs the message to complete the task, use Alert. If the message is temporary confirmation, use Toast.
+</Callout>
 
 ## API
 
-### Props
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `AlertVariant` | `"default"` | Visual semantics |
+| `ariaLive` | `"off" \| "polite" \| "assertive"` | `"polite"` | Assistive announcement behavior |
+| `className` | `string` | — | Custom Tailwind classes |
 
-| Prop       | Type                                              | Default     | Description |
-| ---------- | ------------------------------------------------- | ----------- | ----------- |
-| `variant`  | `AlertVariant`                                     | `"default"` | Visual semantics |
-| `ariaLive` | `"off" \| "polite" \| "assertive"`              | `"polite"`  | Assistive announcement behavior |
-| `className`| `string`                                           | —           | Tailwind override |
+Alert components extend standard HTML props:
 
-The Alert components extend standard HTML props:
-
-```ts
+```ts title="alert-types.ts"
 React.HTMLAttributes<HTMLDivElement>
 ```
 
 ## TypeScript types
 
-Aligned with the source implementation:
-
-```ts
+```ts title="alert-types.ts"
 export type AlertVariant = NonNullable<AlertProps["variant"]>;
 
 export interface AlertProps
@@ -320,41 +463,123 @@ export interface AlertProps
 
 ## Accessibility
 
-- `ariaLive="polite"` renders `role="status"` (recommended for non-blocking updates).
-- `ariaLive="assertive"` renders `role="alert"` (use for critical errors only).
-- `ariaLive="off"` removes live-region announcements (and role).
-- When using `AlertIndicator`, mark purely decorative icons with `aria-hidden="true"`.
+- `ariaLive="polite"` renders `role="status"`.
+- `ariaLive="assertive"` renders `role="alert"`.
+- `ariaLive="off"` removes live-region announcements.
+- Do not rely on color alone to communicate meaning.
+- Decorative indicators should use `aria-hidden="true"`.
+- Keep alert copy clear, short, and actionable.
 
-## Design guidelines
+## Prefer / avoid
 
-- Keep alerts short and actionable.
-- Prefer `success` only after a user action completes.
-- Prefer `warning` when the user can still proceed but should be aware.
-- Use `destructive` for errors that block completion.
-- Don’t overuse `assertive` alerts; they can be disruptive for screen reader users.
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>short and actionable copy</li>
+        <li>inline placement near the issue</li>
+        <li>semantic variants for real states</li>
+        <li>polite announcements by default</li>
+        <li>assertive only for critical errors</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>using alerts for temporary notifications</li>
+        <li>vague copy like “Something went wrong” alone</li>
+        <li>color-only meaning</li>
+        <li>assertive announcements for every message</li>
+        <li>placing blocking alerts far from the task</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-## Related guides
+## Common questions
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic tokens for borders, surfaces, and state colors."
-    href="/docs/design-system/colors#semantic-tokens"
-  />
-  <LinkCard
-    title="Typography"
-    description="Alert title/description rhythm and hierarchy."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="UI Components"
-    description="How primitives are organized in PyColors UI."
-    href="/docs/ui"
-  />
-  <LinkCard
-    title="Patterns"
-    description="Real-world forms and error flows."
-    href="/docs/patterns"
-  />
-</LinkCards>
+<Accordions type="single">
+  <Accordion title="Should success messages use Alert or Toast?">
+    Use Alert when the confirmation must remain visible in context. Use Toast for short-lived confirmations after non-blocking actions.
+  </Accordion>
+
+  <Accordion title="Should every destructive alert use assertive?">
+    No. Use `assertive` only when the message is urgent and the user must know immediately.
+  </Accordion>
+
+  <Accordion title="Can an Alert contain actions?">
+    Yes, but keep actions secondary and focused. If the flow becomes complex, use a dedicated form, Dialog, or page section.
+  </Accordion>
+
+  <Accordion title="Should icons communicate meaning alone?">
+    No. Icons should reinforce meaning. The text must explain the message.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Colors</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Semantic tokens for borders, surfaces, and state colors.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn when to use Alert for async product failures.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/toast" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Toast</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Temporary feedback for non-blocking actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible product feedback with clear semantics and announcements.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

@@ -5,68 +5,66 @@ lastUpdated: "2026-04-28"
 appliesTo: UI
 ---
 
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  ClipboardCheck,
+  FilePenLine,
+  Layers3,
+  MousePointerClick,
+  ShieldAlert,
+  SquareStack,
+  XCircle,
+} from "lucide-react";
 
-The **Dialog** component renders a modal overlay that traps focus and requires an explicit close.
-It is built on **Radix UI Dialog** and styled with PyColors tokens (`bg-card`, `border-border`, `text-card-foreground`).
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Dialog</Badge>
+</div>
 
-Use Dialog for:
-- Confirmations (delete, sign out)
-- Forms (edit profile, create project)
-- Focused tasks that shouldn’t leave the current context
+## Focused modal tasks
+
+The **Dialog** component renders a modal overlay for focused tasks that need the user’s attention.
+
+Use it for:
+
+- confirmations
+- short forms
+- destructive decisions
+- focused create or edit flows
+- tasks that should not navigate away from the current page
+
+Dialog is built on **Radix Dialog** and styled with PyColors tokens such as `bg-card`, `border-border`, and `text-card-foreground`.
+
+<Callout title="Core idea">
+  Dialog is for focused decisions or tasks. If the flow becomes long, navigational, or multi-step, use a Sheet or a dedicated page.
+</Callout>
 
 ## Import
 
-```tsx
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-} from "@pycolors/ui";
+```tsx title="dialog-import.tsx"
+import { Dialog } from "@pycolors/ui";
 ```
 
 ## Basic usage
 
-<Tabs items={["Preview", "Usage", "Code"]}>
+Use Dialog for a focused form or short task that should stay in context.
+
+<Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            Open dialog
-          </Button>
-        </DialogTrigger>
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription> Update your account details. Changes are saved on submit.</DialogDescription>
-          </DialogHeader>
-
-          <div className="mt-4 grid gap-3">
-            <Input label="Name" placeholder="John" />
-            <Input label="Email" placeholder="john-doe@acme.com" />
-          </div>
-
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="secondary">Cancel</Button>
-            </DialogClose>
-            <Button>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </Preview>
-  </Tab>
-
-  <Tab value="Usage">
-    ```tsx
-    <Dialog>
+        <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">Open dialog</Button>
       </DialogTrigger>
@@ -74,10 +72,15 @@ import {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>Update your account details.</DialogDescription>
+          <DialogDescription>
+            Update your account details. Changes are saved on submit.
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-4">...</div>
+        <div className="mt-4 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="patrice@pycolors.com" />
+        </div>
 
         <DialogFooter>
           <DialogClose asChild>
@@ -87,91 +90,132 @@ import {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-    ```
-  </Tab>
-
-  <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      Dialog,
-      DialogTrigger,
-      DialogContent,
-      DialogHeader,
-      DialogFooter,
-      DialogTitle,
-      DialogDescription,
-      DialogClose,
-      Input,
-    } from "@pycolors/ui";
-
-    export function EditProfileDialog() {
-      return (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm">
-              Open dialog
-            </Button>
-          </DialogTrigger>
-
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
-              <DialogDescription>Update your account details. Changes are saved on submit.</DialogDescription>
-            </DialogHeader>
-
-            <div className="mt-4 grid gap-3">
-              <Input label="Name" placeholder="Patrice" />
-              <Input label="Email" placeholder="patrice@pycolors.com" />
-            </div>
-
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="secondary">Cancel</Button>
-              </DialogClose>
-              <Button>Save</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      );
-    }
-    ```
-  </Tab>
-</Tabs>
-
-## With destructive confirmation
-
-Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button, and keep the destructive action explicit.
-
-<Tabs items={["Preview", "Usage", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="destructive" size="sm">
-            Delete…
-          </Button>
-        </DialogTrigger>
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete project</DialogTitle>
-            <DialogDescription>This action can’t be undone. This will permanently delete the project and its data.</DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="secondary">Cancel</Button>
-            </DialogClose>
-            <Button variant="destructive">Delete</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </Preview>
   </Tab>
 
-  <Tab value="Usage">
-    ```tsx
+  <Tab value="Code">
+
+```tsx title="edit-profile-dialog.tsx"
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  Input,
+} from "@pycolors/ui";
+
+export function EditProfileDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">
+          Open dialog
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Update your account details. Changes are saved on submit.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="patrice@pycolors.com" />
+        </div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+## When to use Dialog
+
+Use Dialog when the user must complete, confirm, or cancel a focused task.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ClipboardCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Confirmation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Confirm risky or irreversible actions before they happen.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <FilePenLine className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Short form
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Edit a small piece of data without leaving the current page.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <MousePointerClick className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Focused task
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Keep the user focused on one bounded action with clear choices.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Destructive confirmation
+
+Use Dialog for destructive actions that require explicit user intent.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+   <Preview>
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="destructive" size="sm">Delete…</Button>
@@ -180,7 +224,9 @@ Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete project</DialogTitle>
-          <DialogDescription>This action can’t be undone.</DialogDescription>
+          <DialogDescription>
+            This action can’t be undone. This will permanently delete the project and its data.
+          </DialogDescription>
         </DialogHeader>
 
         <DialogFooter>
@@ -191,53 +237,109 @@ Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button
         </DialogFooter>
       </DialogContent>
     </Dialog>
-    ```
+    </Preview>
   </Tab>
 
   <Tab value="Code">
-    ```tsx
-    import {
-      Button,
-      Dialog,
-      DialogTrigger,
-      DialogContent,
-      DialogHeader,
-      DialogFooter,
-      DialogTitle,
-      DialogDescription,
-      DialogClose,
-    } from "@pycolors/ui";
 
-    export function DeleteDialog() {
-      return (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="destructive" size="sm">
-              Delete…
-            </Button>
-          </DialogTrigger>
+```tsx title="delete-dialog.tsx"
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@pycolors/ui";
 
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete project</DialogTitle>
-              <DialogDescription>
-                This action can’t be undone. This will permanently delete the project and its data.
-              </DialogDescription>
-            </DialogHeader>
+export function DeleteDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="destructive" size="sm">
+          Delete…
+        </Button>
+      </DialogTrigger>
 
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="secondary">Cancel</Button>
-              </DialogClose>
-              <Button variant="destructive">Delete</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      );
-    }
-    ```
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete project</DialogTitle>
+          <DialogDescription>
+            This action can’t be undone. This will permanently delete the project and its data.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button variant="destructive">Delete</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
   </Tab>
 </Tabs>
+
+<Callout title="Destructive flow rule">
+  The destructive action should be explicit, visually distinct, and placed after the safer option.
+</Callout>
+
+## Usage patterns
+
+<Steps>
+  <Step>
+    ### Trigger with a semantic element
+
+    Use `DialogTrigger asChild` with a `Button` or another semantic trigger.
+  </Step>
+
+  <Step>
+    ### Provide clear context
+
+    Every dialog should have a `DialogTitle` and a useful `DialogDescription`.
+  </Step>
+
+  <Step>
+    ### Keep the content focused
+
+    A dialog should usually contain one task, one form, or one decision.
+  </Step>
+
+  <Step>
+    ### Place actions in the footer
+
+    Keep cancel and confirm actions in `DialogFooter` for predictable placement.
+  </Step>
+
+  <Step>
+    ### Close only when the task is complete or canceled
+
+    Do not close the dialog automatically if submission fails. Show the error in context.
+  </Step>
+</Steps>
+
+## Dialog vs Sheet vs Dropdown Menu
+
+| Situation | Use |
+| --- | --- |
+| Confirm destructive action | Dialog |
+| Short focused form | Dialog |
+| Create or edit a small record | Dialog |
+| Advanced filters | Sheet |
+| Side workflow or details panel | Sheet |
+| Row actions or small contextual menu | DropdownMenu |
+| Long multi-step flow | Page or Sheet |
+
+<Callout type="info" title="Decision rule">
+  Dialog blocks the page for one focused task. Sheet extends the page for side workflows. DropdownMenu exposes quick actions.
+</Callout>
 
 ## API
 
@@ -245,49 +347,190 @@ Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button
 
 | Component | Description |
 | --- | --- |
-| `Dialog` | Root container (Radix `DialogPrimitive.Root`) |
-| `DialogTrigger` | Trigger element (use `asChild` for custom triggers) |
-| `DialogContent` | Modal surface + overlay + close button |
-| `DialogHeader` | Title/description stack helper |
-| `DialogFooter` | Action row helper (responsive alignment) |
-| `DialogTitle` | Dialog title (Radix `Title`) |
-| `DialogDescription` | Supporting text (Radix `Description`) |
-| `DialogClose` | Close control (use `asChild` to wrap a button) |
+| `Dialog` | Root container |
+| `DialogTrigger` | Trigger element, usually with `asChild` |
+| `DialogContent` | Modal surface, overlay, and close behavior |
+| `DialogHeader` | Title and description stack helper |
+| `DialogFooter` | Action row helper |
+| `DialogTitle` | Accessible dialog title |
+| `DialogDescription` | Supporting text |
+| `DialogClose` | Close control, usually wrapping a Button with `asChild` |
 
 ### Props
 
-All components extend their respective Radix props.
+Dialog components extend their respective Radix Dialog props.
+
+```ts title="dialog-props.ts"
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Trigger>
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
+```
 
 ## Accessibility
 
-- Radix handles focus trapping and restores focus to the trigger on close.
-- Ensure the dialog has a clear title (`DialogTitle`) and (ideally) a short description.
-- Avoid nesting dialogs. For multi-step flows, consider a **Sheet** or a full page.
-- Keep one primary action and one secondary action in the footer.
+- Dialog is built on Radix Dialog primitives.
+- Focus is trapped inside the dialog while open.
+- Focus is restored to the trigger when the dialog closes.
+- Escape should close the dialog unless the flow requires careful custom handling.
+- Every dialog needs a clear `DialogTitle`.
+- Use `DialogDescription` to explain the task or risk.
+- Avoid nested dialogs.
+- Do not use Dialog for long navigational flows.
 
-## Design guidelines
+<Callout title="Accessibility rule">
+  A dialog without a clear title is not a complete dialog. The title gives assistive technology users the context they need.
+</Callout>
 
-- Keep dialog content focused: one task per dialog.
-- Prefer `max-w-lg` for forms; avoid very wide dialogs.
-- For complex navigation or long content, use **Sheet** instead.
-- Put destructive actions last and style them clearly.
+## Prefer / avoid
 
-## Related guides
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>one task per dialog</li>
+        <li>clear title and short description</li>
+        <li>semantic trigger with `asChild`</li>
+        <li>cancel and confirm actions in the footer</li>
+        <li>inline error feedback for failed submissions</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-<LinkCards>
-  <LinkCard
-    title="Button"
-    description="Actions used inside dialog footers."
-    href="/docs/ui/button"
-  />
-  <LinkCard
-    title="Sheet"
-    description="Use a sheet for larger, non-blocking flows."
-    href="/docs/ui/sheet"
-  />
-  <LinkCard
-    title="Form patterns"
-    description="Recommended layouts for inputs and validation."
-    href="/docs/patterns/forms"
-  />
-</LinkCards>
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>long multi-step workflows</li>
+        <li>nested dialogs</li>
+        <li>dialogs without titles</li>
+        <li>closing on submit errors</li>
+        <li>using Dialog for simple row actions</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Product copy guidelines
+
+Dialog copy should be direct and specific.
+
+<Tabs items={["Create", "Edit", "Delete"]}>
+  <Tab value="Create">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Create project
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Give your project a name. You can change these details later.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Edit">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Edit profile
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Update your account details. Changes are saved when you submit.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Delete">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Delete project
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        This action can’t be undone. This will permanently delete the project and its data.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should forms always use Dialog?">
+    No. Use Dialog for short, focused forms. Use a page or Sheet for long forms, multi-step flows, or workflows that need more space.
+  </Accordion>
+
+  <Accordion title="Can Dialog contain a table?">
+    Usually no. Tables often need space, scanning, and row interaction. Use a page or Sheet instead.
+  </Accordion>
+
+  <Accordion title="Should destructive actions always use Dialog?">
+    Use Dialog when the action is risky, irreversible, or needs explicit confirmation. For reversible actions, a toast with Undo can be enough after a safer interaction.
+  </Accordion>
+
+  <Accordion title="Can I hide the title visually?">
+    You can visually hide a title if the design requires it, but the accessible title still needs to exist.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Actions used inside dialog triggers and footers.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Sheet</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Sheet for larger side workflows, filters, and details panels.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Overlays pattern</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose between Dialog, Sheet, and DropdownMenu for product flows.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Accessibility</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible overlays with focus, keyboard, and semantic structure.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
