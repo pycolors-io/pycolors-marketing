@@ -1,9 +1,10 @@
 ---
 title: Skeleton
 description: Visual placeholder used to represent loading content while preserving layout structure.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import {
   Card,
@@ -16,7 +17,6 @@ import {
   TableCell,
 } from "@pycolors/ui";
 
-<DocsPageShell>
 
 The **Skeleton** component is a visual placeholder used during loading states.
 
@@ -25,23 +25,17 @@ without introducing any product or data logic.
 
 Skeleton is a **pure UI primitive**: it renders shapes, nothing more.
 
----
-
 ## Import
 
 ```tsx
 import { Skeleton } from "@pycolors/ui";
 ```
 
----
-
 ## Usage
 
 Use Skeleton to temporarily replace content while data is loading.
 
 Skeleton does **not** manage loading state — that responsibility belongs to pages or data layers.
-
----
 
 ## Basic example
 
@@ -62,8 +56,6 @@ Skeleton does **not** manage loading state — that responsibility belongs to pa
 ```
   </Tab>
 </Tabs>
-
----
 
 ## Card loading state
 
@@ -98,8 +90,6 @@ Skeleton composes naturally with surface components like **Card**.
 ```
   </Tab>
 </Tabs>
-
----
 
 ## Table loading state
 
@@ -151,8 +141,6 @@ Skeleton works well inside data-heavy components such as **Table**.
   </Tab>
 </Tabs>
 
----
-
 ## Circular skeleton
 
 Use the `circle` prop for avatars or icon placeholders.
@@ -171,8 +159,6 @@ Use the `circle` prop for avatars or icon placeholders.
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Props
@@ -188,8 +174,6 @@ Skeleton also accepts all standard HTML `div` props:
 React.HTMLAttributes<HTMLDivElement>
 ```
 
----
-
 ## Accessibility
 
 - Skeleton is rendered with `aria-hidden`
@@ -197,16 +181,12 @@ React.HTMLAttributes<HTMLDivElement>
 - Replace skeletons with real content as soon as data is ready
 - Skeletons are **not announced** to screen readers and should not be used as status messages
 
----
-
 ## Design guidelines
 
 - Match skeleton dimensions to the final content
 - Avoid overly complex skeletons
 - Prefer multiple simple skeletons over one large placeholder
 - Do not animate beyond a subtle pulse — avoid distraction
-
----
 
 ## When not to use Skeleton
 
@@ -217,8 +197,6 @@ Skeleton should **not** be used for:
 - Global blocking overlays
 
 Use **Alert**, **EmptyState**, or dedicated patterns instead.
-
----
 
 ## Related guides
 
@@ -234,5 +212,3 @@ Use **Alert**, **EmptyState**, or dedicated patterns instead.
     href="/docs/guides/data-heavy-pages"
   />
 </LinkCards>
-
-</DocsPageShell>

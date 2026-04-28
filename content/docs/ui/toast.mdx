@@ -1,6 +1,8 @@
 ---
 title: Toast
 description: Non-blocking feedback messages used to confirm actions or display short system messages.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
@@ -8,15 +10,11 @@ import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/car
 import { ClientOnly } from "../previews/client-only";
 import { ToastTriggerPreview, ToastVariantsPreview } from "../previews/toast-previews";
 
-<DocsPageShell>
-
 The **Toast** component displays short, non-blocking feedback messages.
 
 It confirms actions, communicates results, or provides lightweight system feedback — without interrupting the user flow.
 
 Toast is intentionally **minimal** in PyColors UI: it provides structure + accessibility, not a full notification system (queues, global store, deduping).
-
----
 
 ## Import
 
@@ -29,8 +27,6 @@ import {
   ToastDescription,
 } from from "@pycolors/ui";
 ```
-
----
 
 ## Usage
 
@@ -101,8 +97,6 @@ export function ToastExample() {
   </Tab>
 </Tabs>
 
----
-
 ## Variants
 
 Toast supports a small set of visual variants. Keep them limited to avoid semantic overload.
@@ -147,7 +141,6 @@ Toast supports a small set of visual variants. Keep them limited to avoid semant
 | `warning` | Attention needed, still non-blocking |
 | `destructive` | Error feedback (non-blocking) |
 
----
 
 ## With description
 
@@ -161,8 +154,6 @@ Use `ToastDescription` for additional context when needed.
   </ToastDescription>
 </Toast>
 ```
-
----
 
 ## API
 
@@ -198,15 +189,11 @@ Defines where toasts appear on screen. Render **once** per provider scope.
 <ToastViewport className="fixed bottom-4 right-4 z-50" />
 ```
 
----
-
 ## Accessibility
 
 - Built on Radix Toast primitives (keyboard + focus-safe by default).
 - Uses appropriate live regions for announcements.
 - Non-blocking: it should not trap focus or interrupt input.
-
----
 
 ## Design guidelines
 
@@ -214,8 +201,6 @@ Defines where toasts appear on screen. Render **once** per provider scope.
 - Prefer one toast at a time (avoid stacking).
 - Use `destructive` sparingly, and don’t rely on toasts for critical errors.
 - If a user must act, prefer **Alert** (inline) or **Dialog** (blocking confirmation).
-
----
 
 ## When not to use Toast
 
@@ -226,8 +211,6 @@ Do not use Toast for:
 - Persistent notification centers
 
 Use **Alert**, **EmptyState**, or dedicated patterns instead.
-
----
 
 ## Related guides
 
@@ -248,5 +231,3 @@ Use **Alert**, **EmptyState**, or dedicated patterns instead.
     href="/docs/ui/dialog"
   />
 </LinkCards>
-
-</DocsPageShell>

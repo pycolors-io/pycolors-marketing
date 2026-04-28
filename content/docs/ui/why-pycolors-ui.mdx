@@ -1,218 +1,468 @@
 ---
 title: Why PyColors UI
 description: The philosophy behind PyColors UI. Built for products that evolve, not demos that break.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  Boxes,
+  CheckCircle,
+  Code2,
+  Layers3,
+  Palette,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
   <Badge>Philosophy</Badge>
 </div>
 
-# Built for products that evolve
+## Built for products that evolve
 
-Most UI libraries help you ship fast.
+Most UI libraries help you ship the first screen.
 
-Very few help you **stay consistent as your product grows**.
+PyColors UI is designed to help your product stay coherent after the first screen, the tenth feature, and the first real customer.
 
-PyColors UI is designed for:
+It is built for:
 
-- long-lived SaaS products
-- evolving feature sets
-- teams that care about clarity
+- SaaS dashboards
+- settings pages
+- auth flows
+- billing interfaces
+- admin panels
+- long-lived product surfaces
 
----
+The goal is not to give you the most components.
+
+The goal is to give you a system that remains understandable as your product grows.
+
+<Callout title="Core idea">
+  PyColors UI is not a demo component library. It is a product system for builders who care about clarity, consistency, and long-term control.
+</Callout>
 
 ## The problem
 
-Most projects don’t break at the start.
+Most products do not break at the beginning.
 
 They break later.
 
-You start seeing:
+At first, everything feels manageable. Then the product grows and the UI starts drifting:
 
 - hardcoded colors
 - duplicated components
 - inconsistent spacing
-- unclear design decisions
-- UI drift across features
+- local visual decisions
+- unclear component ownership
+- different pages solving the same problem differently
+- product surfaces that stop feeling related
 
-The issue is not React, Tailwind, or your team.
+The issue is rarely React, Tailwind, or the team.
 
-👉 It’s the absence of a **system**.
-
----
+The issue is the absence of a system.
 
 ## What PyColors UI does differently
 
 PyColors UI is intentionally opinionated.
 
-Not to restrict you.
+Not to limit you.
 
-To remove ambiguity where it matters.
+To remove ambiguity where ambiguity becomes expensive.
 
----
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Palette className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Tokens first
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Components consume semantic roles instead of inventing visual decisions locally.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-## 1. Tokens first
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Boxes className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Small primitives
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        UI components stay predictable. Complex product behavior belongs in Guides and Patterns.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-Design tokens are the foundation.
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Code2 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          You own the code
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Plain React and Tailwind. No black box. No runtime magic. No unnecessary lock-in.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-- colors are semantic roles
-- spacing and radius come from a single source
-- typography follows clear hierarchy
+## Principles
 
-Components do not invent styles.
+<Tabs items={["Tokens", "Primitives", "Patterns"]}>
+  <Tab value="Tokens">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Tokens define the system
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Colors, typography, radius, and shadows are expressed as reusable decisions.
+        Components consume those roles instead of hardcoding local styles.
+      </div>
+    </div>
+  </Tab>
 
-They consume tokens.
+  <Tab value="Primitives">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Components stay small
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Components are building blocks. They should be simple, predictable, accessible,
+        and easy to compose into real product surfaces.
+      </div>
+    </div>
+  </Tab>
 
-👉 Change the system once → everything follows
+  <Tab value="Patterns">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Patterns handle product complexity
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Tables, overlays, forms, async actions, and SaaS layouts belong at the pattern level,
+        where UX behavior and state can be documented clearly.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
----
+## Tokens first
 
-## 2. Components stay small
+Design tokens are the foundation of PyColors UI.
 
-Components are primitives.
+They define the reusable visual decisions that make the system feel coherent:
 
-Not feature-complete abstractions.
+- semantic colors
+- typography roles
+- radius scale
+- shadow scale
+- surface hierarchy
+- readable contrast
 
-- simple
+Components should use utilities such as:
+
+```tsx title="semantic-usage.tsx"
+<div className="rounded-lg border bg-card text-card-foreground">
+  <p className="text-sm text-muted-foreground">
+    Semantic roles keep surfaces coherent.
+  </p>
+</div>
+```
+
+Not local one-off values.
+
+<Callout title="Why this matters">
+  When a component consumes tokens, the system can evolve globally. When a component hardcodes values, the system starts drifting.
+</Callout>
+
+## Components stay small
+
+PyColors UI components are primitives.
+
+They are not meant to solve every product scenario by themselves.
+
+A good primitive should be:
+
 - predictable
-- easy to extend
+- composable
+- accessible
+- token-driven
+- easy to understand
+- easy to override when needed
 
-If something becomes complex:
+If a component starts needing too many product-specific props, the problem probably belongs in a pattern, not in the primitive.
 
-👉 it belongs in **Patterns**, not in UI
+Examples:
 
----
+| Need | Better layer |
+| --- | --- |
+| Button styling | UI component |
+| Form validation flow | Guide |
+| Data table with filters | Pattern |
+| Async mutation with undo | Pattern |
+| SaaS dashboard shell | Guide / Starter |
 
-## 3. You own the code
+## You own the code
 
-No black boxes.
+PyColors UI is designed for teams that want control.
 
-- plain React + Tailwind
-- no runtime magic
-- no lock-in
+It uses:
 
-You copy components into your project.
+- React
+- TypeScript
+- Tailwind CSS
+- semantic tokens
+- accessible primitives
 
-You modify them freely.
+It avoids:
 
-👉 PyColors gives you a starting point — not a framework you depend on
+- hidden runtime magic
+- unnecessary abstraction
+- opaque design decisions
+- framework lock-in beyond the stack you already use
 
----
+This makes the system easier to adapt, audit, and evolve.
 
-## 4. Documentation is part of the system
+## Documentation is part of the product
 
-Docs are not optional.
+Documentation is not an afterthought.
 
-They are part of the product.
+It is part of the system.
 
-- components are explained
-- patterns show real usage
-- decisions are explicit
+PyColors documents:
 
-This reduces:
+- what a component is for
+- when to use it
+- when not to use it
+- how it behaves in real product surfaces
+- how it connects to design system rules
 
-- onboarding time
-- confusion
-- hidden knowledge
+This reduces hidden knowledge and helps the product feel more intentional over time.
 
----
+<Callout type="info" title="Documentation principle">
+  A component without usage guidance is only half a system.
+</Callout>
 
-## 5. Built for real SaaS
+## Built for real SaaS surfaces
 
-PyColors UI is designed for:
+PyColors UI is designed around the surfaces most SaaS products actually need:
 
 - dashboards
-- settings pages
-- authentication flows
-- billing interfaces
-- admin panels
+- settings
+- billing
+- authentication
+- admin tools
+- data tables
+- empty states
+- forms
+- overlays
+- account flows
 
-Not isolated components.
+This is why the docs do not stop at components.
 
-👉 Real product surfaces
+They also include:
 
----
+- Design System foundations
+- Guides
+- Patterns
+- Starter Free
+- Starter Pro
+
+The component layer is only one part of the product system.
 
 ## What this is not
 
 PyColors UI is not:
 
-- a drag-and-drop builder
-- a theme marketplace
-- a monolithic component library
 - a visual editor
+- a no-code builder
+- a drag-and-drop system
+- a theme marketplace
+- a monolithic enterprise framework
+- a replacement for product thinking
 
-If you want abstraction and magic → this is not it.
+It gives you the structure to move faster with more consistency.
 
-If you want control and clarity → it is.
+It does not remove the need to make product decisions.
 
----
+## Tradeoffs
 
-## Trade-offs
+Every good system makes tradeoffs.
 
-This system makes explicit choices:
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          You gain
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>better long-term consistency</li>
+        <li>clearer design decisions</li>
+        <li>easier maintenance</li>
+        <li>less UI drift</li>
+        <li>stronger product readability</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-- slightly slower setup
-- more explicit code
-- fewer hidden abstractions
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          You accept
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>more explicit structure</li>
+        <li>fewer magical abstractions</li>
+        <li>design rules instead of random styling</li>
+        <li>patterns for complex UX instead of oversized primitives</li>
+        <li>ownership of product decisions</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-In exchange:
+## Where this fits in PyColors
 
-- better long-term consistency
-- easier maintenance
-- safer evolution
+PyColors is structured in layers.
 
----
+| Layer | Purpose |
+| --- | --- |
+| Design System | Tokens, colors, typography, radius, shadows |
+| UI Components | Small reusable primitives |
+| Guides | Product composition and UX rules |
+| Patterns | Feature-level product blocks |
+| Starter Free | Validate product surfaces |
+| Starter Pro | Wire auth, billing, backend, and delivery |
 
-## Mental model
+<Callout title="System mental model">
+  Tokens define the system. Components stay small. Patterns handle complexity. Starters connect everything into product foundations.
+</Callout>
 
-> Tokens define the system
-> Components stay small
-> Patterns handle real complexity
+## When PyColors UI is a good fit
 
----
+Use PyColors UI if:
+
+- you are building a SaaS product
+- you care about long-term consistency
+- you want control over your code
+- you prefer explicit architecture over magic
+- you want components that align with docs, guides, and starters
+- you want to build product surfaces, not isolated demos
+
+Do not use it if:
+
+- you want a full no-code builder
+- you want a visual editor
+- you want every product decision made for you
+- you do not want to own the implementation
 
 ## Why it matters
 
 UI is not just visuals.
 
-It is:
+It affects:
 
 - product clarity
 - team velocity
+- user trust
+- onboarding speed
 - long-term maintainability
 
 Without structure, every new feature adds friction.
 
-With a system, your product scales without chaos.
+With a system, your product can grow without becoming chaotic.
 
----
+## Next steps
 
-## Where this fits
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Design System</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the tokens, colors, typography, radius, and shadows behind PyColors UI.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-PyColors UI is one layer of the stack:
+  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Button</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Start with the primitive used for actions, intent, and interaction hierarchy.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-- Starter Free → validate product UI
-- UI components → build consistent interfaces
-- Starter Pro → wire auth, billing, backend
+  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Patterns</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See how primitives become product-level blocks for real SaaS features.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-👉 UI is the bridge between idea and real product
-
----
-
-## Next step
-
-Explore the primitives:
-
-→ `/docs/ui/button`
-→ `/docs/ui/card`
-→ `/docs/ui/input`
-→ `/docs/ui/badge`
-
-</DocsPageShell>
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move from UI foundations to real auth, billing, backend, and delivery.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

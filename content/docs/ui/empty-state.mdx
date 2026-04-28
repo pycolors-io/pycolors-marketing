@@ -1,9 +1,10 @@
 ---
 title: EmptyState
 description: UI primitive used to represent valid empty states with clear messaging and optional actions.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 
 import {
@@ -17,23 +18,17 @@ import {
   TableCell
   } from "@pycolors/ui";
 
-<DocsPageShell>
-
 The **EmptyState** component represents a **valid state with no data**.
 
 It explains *why* there is nothing to display and optionally guides the user toward the next action — without introducing product or business logic.
 
 EmptyState is a **pure UI primitive**: it structures content, nothing more.
 
----
-
 ## Import
 
 ```tsx
 import { EmptyState } from "@pycolors/ui";
 ```
-
----
 
 ## Usage
 
@@ -64,8 +59,6 @@ EmptyState should not be used for loading or error states.
     ```
   </Tab>
 </Tabs>
-
----
 
 ## With action
 
@@ -98,8 +91,6 @@ EmptyState can optionally render a primary action (button or link).
     ```
   </Tab>
 </Tabs>
-
----
 
 ## With icon
 
@@ -143,8 +134,6 @@ Use the `icon` slot for a simple decorative icon or illustration.
   </Tab>
 </Tabs>
 
----
-
 ## Inside a Card
 
 EmptyState composes naturally with surfaces such as `Card`.
@@ -182,8 +171,6 @@ EmptyState composes naturally with surfaces such as `Card`.
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Table empty state
 
@@ -237,8 +224,6 @@ EmptyState works well inside data-heavy components such as `Table` (especially f
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Props
@@ -258,8 +243,6 @@ EmptyState also accepts all standard HTML div props:
 React.HTMLAttributes<HTMLDivElement>
 ```
 
----
-
 ## Accessibility
 
 - Rendered with `role="status"` to announce informational state changes.
@@ -267,8 +250,6 @@ React.HTMLAttributes<HTMLDivElement>
 - Actions are fully keyboard accessible.
 - No focus is forced when the empty state appears.
 - Avoid using EmptyState to announce errors (use **Alert** for that).
-
----
 
 ## Design guidelines
 
@@ -278,8 +259,6 @@ React.HTMLAttributes<HTMLDivElement>
 - Avoid product-specific language inside the component; pages and patterns decide what happens next.
 - Keep the empty state aligned with surrounding density (use `Card` / `Table` wrappers as needed).
 
----
-
 ## When not to use EmptyState
 
 Do not use EmptyState for:
@@ -288,8 +267,6 @@ Do not use EmptyState for:
 - **Error states** → use **Alert**
 - Onboarding flows (use dedicated onboarding screens)
 - Blocking or modal interactions (use **Dialog** / **Sheet** patterns)
-
----
 
 ## Related guides
 
@@ -305,5 +282,3 @@ Do not use EmptyState for:
     href="/docs/ui/alert"
   />
 </LinkCards>
-
-</DocsPageShell>

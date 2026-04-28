@@ -1,13 +1,12 @@
 ---
 title: Input
 description: Core text input component for PyColors UI, with labels, helper text, validation, icons, and accessibility built in.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import { SearchIcon } from "lucide-react";
-
-<DocsPageShell>
 
 The **Input** component is a foundational form control in PyColors UI.
 It is designed to be **accessible by default**, theme-aware, and flexible enough for simple fields or complex form layouts.
@@ -19,15 +18,11 @@ It supports:
 - Size variants aligned with the design system
 - Full keyboard and screen-reader support
 
----
-
 ## Import
 
 ```tsx
 import { Input } from '@pycolors/ui';
 ```
-
----
 
 ## Basic usage
 
@@ -54,8 +49,6 @@ import { Input } from '@pycolors/ui';
     ```
   </Tab>
 </Tabs>
-
----
 
 ## With label & helper text
 
@@ -96,8 +89,6 @@ import { Input } from '@pycolors/ui';
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Validation error
 
@@ -144,8 +135,6 @@ When `error` is provided:
   </Tab>
 </Tabs>
 
----
-
 ## With icons
 
 ### Left icon
@@ -186,8 +175,6 @@ When `error` is provided:
   </Tab>
 </Tabs>
 
----
-
 ## Sizes
 
 <Tabs items={["Preview", "Usage", "Code"]}>
@@ -226,8 +213,6 @@ When `error` is provided:
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Props
@@ -248,8 +233,6 @@ Extends:
 React.InputHTMLAttributes<HTMLInputElement>
 ```
 
----
-
 ## TypeScript types
 
 ```ts
@@ -269,16 +252,12 @@ export interface InputProps
 }
 ```
 
----
-
 ## Accessibility
 
 - Uses `label` + `htmlFor` for proper field association
 - Automatically manages `aria-describedby`
 - Sets `aria-invalid` when errors are present
 - Preserves focus rings and keyboard navigation
-
----
 
 ## Related guides
 
@@ -299,5 +278,3 @@ export interface InputProps
     href="/docs/design-system/typography"
   />
 </LinkCards>
-
-</DocsPageShell>

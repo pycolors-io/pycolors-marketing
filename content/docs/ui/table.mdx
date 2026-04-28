@@ -1,9 +1,10 @@
 ---
 title: Table
 description: Structured data table component with loading and empty states for PyColors UI.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import {
   Table,
@@ -17,8 +18,6 @@ import {
   TableLoading,
 } from "@pycolors/ui";
 
-<DocsPageShell>
-
 The **Table** component is used to display structured, tabular data such as lists, reports, and admin views.
 
 It provides:
@@ -26,8 +25,6 @@ It provides:
 - Horizontal overflow handling
 - Hover feedback on rows
 - Built-in **empty** and **loading** states
-
----
 
 ## Import
 
@@ -44,8 +41,6 @@ import {
   TableLoading,
 } from "@pycolors/ui";
 ```
-
----
 
 ## Basic usage
 
@@ -133,8 +128,6 @@ import {
   </Tab>
 </Tabs>
 
----
-
 ## Caption
 
 Use `TableCaption` to provide context or summary.
@@ -145,8 +138,6 @@ Use `TableCaption` to provide context or summary.
   ...
 </Table>
 ```
-
----
 
 ## Empty state
 
@@ -168,8 +159,6 @@ You can customize the message:
 />
 ```
 
----
-
 ## Loading state
 
 `TableLoading` displays a centered spinner and message.
@@ -179,8 +168,6 @@ You can customize the message:
   <TableLoading colSpan={3} />
 </TableBody>
 ```
-
----
 
 ## API
 
@@ -200,8 +187,6 @@ You can customize the message:
 
 All components extend their respective native HTML element props.
 
----
-
 ## Accessibility
 
 - Uses semantic table elements (`table`, `thead`, `tbody`, `th`, `td`)
@@ -209,16 +194,12 @@ All components extend their respective native HTML element props.
 - Keep captions concise and descriptive
 - Avoid interactive elements inside table rows unless necessary
 
----
-
 ## Design guidelines
 
 - Prefer tables for dense, comparable data
 - Keep column count reasonable (3–7 columns)
 - Use empty and loading states instead of conditional rendering gaps
 - Avoid nesting complex layouts inside table cells
-
----
 
 ## Related guides
 
@@ -234,5 +215,3 @@ All components extend their respective native HTML element props.
     href="/docs/design-system/typography"
   />
 </LinkCards>
-
-</DocsPageShell>

@@ -3,20 +3,25 @@
   "pages": [
     "index",
     "why-pycolors-ui",
-    "alert",
-    "badge",
+
     "button",
+    "input",
+    "password-input",
+
     "card",
+    "alert",
+    "empty-state",
+    "skeleton",
+
+    "badge",
+    "toast",
+
     "dialog",
     "dropdown-menu",
-    "empty-state",
-    "input",
-    "pagination",
-    "password-input",
     "sheet",
-    "skeleton",
+
     "table",
-    "tabs",
-    "toast"
+    "pagination",
+    "tabs"
   ]
 }

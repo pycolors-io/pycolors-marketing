@@ -1,18 +1,15 @@
 ---
 title: Alert
 description: Feedback surface for status messages, validation results, and system notices in PyColors UI.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
-<DocsPageShell>
 
 The **Alert** component communicates important information to the user: neutral notices, success confirmations, warnings, and critical errors.
 
-Unlike Toasts, Alerts are **inline and persistent**. They’re built on semantic tokens (`bg-card`, `border-*`, `text-*`) so they remain consistent across themes.
-
----
+- Unlike Toasts, Alerts are **inline and persistent**. They’re built on semantic tokens (`bg-card`, `border-*`, `text-*`) so they remain consistent across themes.
 
 ## Import
 
@@ -27,8 +24,6 @@ import {
   type AlertVariant,
 } from "@pycolors/ui";
 ```
-
----
 
 ## Usage
 
@@ -72,8 +67,6 @@ import {
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Variants
 
@@ -160,8 +153,6 @@ Variants reflect the semantic meaning of the message. In PyColors UI, variants a
 
 > Note: `default` and `info` intentionally share the same visual style in the current v1 token set.
 
----
-
 ## Announcements (ariaLive)
 
 PyColors UI includes an `ariaLive` prop that controls how assistive tech announces updates:
@@ -227,8 +218,6 @@ PyColors UI includes an `ariaLive` prop that controls how assistive tech announc
     ```
   </Tab>
 </Tabs>
-
----
 
 ## With indicator (icon)
 
@@ -299,8 +288,6 @@ Use `AlertIndicator` + `AlertContent` to align content. The indicator is positio
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Props
@@ -317,8 +304,6 @@ The Alert components extend standard HTML props:
 React.HTMLAttributes<HTMLDivElement>
 ```
 
----
-
 ## TypeScript types
 
 Aligned with the source implementation:
@@ -333,16 +318,12 @@ export interface AlertProps
 }
 ```
 
----
-
 ## Accessibility
 
 - `ariaLive="polite"` renders `role="status"` (recommended for non-blocking updates).
 - `ariaLive="assertive"` renders `role="alert"` (use for critical errors only).
 - `ariaLive="off"` removes live-region announcements (and role).
 - When using `AlertIndicator`, mark purely decorative icons with `aria-hidden="true"`.
-
----
 
 ## Design guidelines
 
@@ -352,7 +333,6 @@ export interface AlertProps
 - Use `destructive` for errors that block completion.
 - Don’t overuse `assertive` alerts; they can be disruptive for screen reader users.
 
----
 
 ## Related guides
 
@@ -378,5 +358,3 @@ export interface AlertProps
     href="/docs/patterns"
   />
 </LinkCards>
-
-</DocsPageShell>
