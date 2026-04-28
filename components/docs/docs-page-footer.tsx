@@ -33,7 +33,7 @@ export function DocsPageFooter({
   >(null);
 
   return (
-    <footer className="mt-24 border-t border-border/50 pt-12">
+    <footer className="mt-5 border-t border-border/50 pt-10">
       {/* =========================
           Prev / Next
       ========================= */}
