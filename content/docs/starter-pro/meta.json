@@ -2,12 +2,13 @@
   "title": "Starter Pro",
   "pages": [
     "index",
-    "what-is-included",
     "why-buy-instead-of-building",
+    "what-is-included",
     "getting-started",
     "auth",
     "billing",
     "backend",
-    "delivery"
+    "delivery",
+    "production-checklist"
   ]
 }

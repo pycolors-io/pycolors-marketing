@@ -1,130 +1,261 @@
 ---
 title: What is included
 description: See what Starter Pro includes, what is already built, and what you still build yourself.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Pro
 ---
 
-import Link from 'next/link';
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge, Button } from "@pycolors/ui";
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  Database,
+  Download,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Included</Badge>
+</div>
 
-<Badge>Starter Pro</Badge>
+## What is included in Starter Pro
 
-# What is included in Starter Pro
+Starter Pro includes the production foundations that usually slow SaaS launches down.
 
-Starter Pro is a production-ready SaaS foundation built to reduce the most expensive setup work before launch.
+It is not a finished SaaS business.
+It is not a generic UI bundle.
+It is not a collection of disconnected demos.
 
-This page explains what is already included, what is intentionally not included, and why that distinction matters.
+It is a **production-ready SaaS foundation** built around the layers most paid products need before launch:
 
+- authentication
+- billing
+- protected routes
+- backend-ready structure
+- secure delivery
+- app foundations
+
+<Callout title="Core idea">
+  Starter Pro includes the infrastructure layer that makes a product launchable. You still build the product logic that makes it valuable.
+</Callout>
+
+<br />
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
   <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/starters/pro">
-      View Starter Pro
+    <Link href="/pricing">
+      View pricing
     </Link>
   </Button>
 </div>
 
----
+## Included systems
 
-## What is already included
+<div className="grid gap-4 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LockKeyhole className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Authentication
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Real account foundations with credentials, OAuth, email verification, reset flows, sessions, and safer account lifecycle handling.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-Starter Pro includes the layers that usually delay serious SaaS launches.
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and billing-aware product behavior.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-### Authentication foundations
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Database className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Backend foundation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Prisma-ready structure, database-oriented architecture, server-side patterns, and clear domain boundaries.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-- email and password auth
-- Google OAuth
-- GitHub OAuth
-- email verification
-- forgot password
-- reset password
-- password change
-- account lifecycle foundations
-- connected accounts patterns
-- safer provider handling
-- session-aware flows
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Download className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Secure delivery
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Controlled post-purchase access, private asset delivery, token-based download flow, and structured fulfillment.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-### Billing foundations
+## Detailed scope
 
-- Stripe Checkout
-- billing portal
-- subscription lifecycle handling
-- invoice-ready flows
-- webhook synchronization
-- plan-aware product logic
-- upgrade-ready monetization surfaces
+<Tabs items={["Auth", "Billing", "Backend", "Delivery"]}>
+  <Tab value="Auth">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Authentication foundations
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>email and password auth</li>
+        <li>Google OAuth</li>
+        <li>GitHub OAuth</li>
+        <li>email verification</li>
+        <li>forgot password</li>
+        <li>reset password</li>
+        <li>password change</li>
+        <li>connected accounts patterns</li>
+        <li>session-aware flows</li>
+      </ul>
+    </div>
+  </Tab>
 
-### Protected app foundations
+  <Tab value="Billing">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Billing foundations
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Stripe Checkout</li>
+        <li>billing portal</li>
+        <li>subscription lifecycle handling</li>
+        <li>invoice-ready flows</li>
+        <li>webhook synchronization</li>
+        <li>plan-aware product logic</li>
+        <li>upgrade-ready monetization surfaces</li>
+      </ul>
+    </div>
+  </Tab>
 
-- protected routes
-- auth-aware navigation
-- settings architecture
-- app shell structure
-- billing-aware areas
-- product-ready dashboard baseline
+  <Tab value="Backend">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Backend foundations
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Prisma-ready structure</li>
+        <li>database-oriented architecture</li>
+        <li>server-side integration patterns</li>
+        <li>auth-aware logic</li>
+        <li>billing-aware logic</li>
+        <li>domain separation patterns</li>
+      </ul>
+    </div>
+  </Tab>
 
-### Backend foundations
+  <Tab value="Delivery">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Delivery foundations
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>secure delivery flow</li>
+        <li>controlled post-purchase access</li>
+        <li>private access patterns</li>
+        <li>token-based download flow</li>
+        <li>structured fulfillment approach</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
 
-- Prisma-ready structure
-- database-oriented architecture
-- backend-aware product structure
-- server-side integration patterns
-- domain separation patterns
+## Included vs not included
 
-### Delivery foundations
+| Included | Not included |
+| --- | --- |
+| auth foundations | your unique product logic |
+| billing foundations | your final product strategy |
+| protected app structure | your niche workflows |
+| backend-ready structure | your market-specific differentiation |
+| delivery path | your customer onboarding strategy |
+| serious baseline for launch | your business model decisions |
 
-- secure delivery flow
-- controlled post-purchase access
-- private access patterns
-- structured fulfillment approach
-
----
+<Callout type="info" title="Healthy separation">
+  Starter Pro removes repeated infrastructure work. It does not replace product judgment.
+</Callout>
 
 ## What this means in practice
 
-Starter Pro is not just “a template with pages”.
+Starter Pro is commercially useful because it removes the systems work that paid products usually need before launch:
 
-It is a baseline for the systems that most paid products need before launch.
+- login
+- sessions
+- billing
+- protection
+- subscription rules
+- backend wiring
+- secure delivery
 
-That includes:
+That work rarely differentiates the business, but it must be done well.
 
-- real user access
-- real monetization
-- real protection
-- real product structure
-- real path to delivery
+Starter Pro gives you a serious baseline so you can focus your time on:
 
-This is where the time savings come from.
+- product value
+- customers
+- positioning
+- workflows
+- differentiation
+- distribution
 
----
-
-## What is intentionally not included
-
-Starter Pro is not your finished business.
-
-It does not try to decide your product for you.
-
-You still build:
-
-- your product logic
-- your domain entities
-- your workflows
-- your onboarding
-- your positioning
-- your unique feature set
-
-That is intentional.
-
-If a starter tries to do all of that for you, it usually becomes too abstract, too rigid, or too noisy.
-
-Starter Pro is designed to remove repeated infrastructure work, not replace product judgment.
-
----
-
-## What you are really buying
+## What you are buying
 
 You are not buying a finished SaaS.
 
@@ -136,93 +267,120 @@ You are buying a faster path through the layers that are usually:
 - annoying to rebuild
 - expensive to patch later
 
-That is the real meaning of “what is included”.
+<Callout title="The better question">
+  The question is not “How much stuff is included?”
 
----
+  The better question is: “Does this remove the work that would delay launch?”
+</Callout>
 
-## Included vs not included
+## Decision guide
 
-### Included
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Starter Pro is for
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-- business-critical foundations
-- auth foundations
-- billing foundations
-- protected app structure
-- backend-ready structure
-- delivery path
-- serious baseline for launch
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>builders ready to wire real auth</li>
+        <li>SaaS products preparing to charge customers</li>
+        <li>teams that want fewer launch blockers</li>
+        <li>developers who want a stronger baseline</li>
+        <li>products that need protected access and billing state</li>
+      </ul>
+    </CardContent>
 
-### Not included
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-- your niche logic
-- your product strategy
-- your core workflows
-- your market-specific differentiation
-- your final business model decisions
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Starter Pro is not for
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-That separation is healthy.
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>outsourcing your entire product strategy</li>
+        <li>replacing your domain model</li>
+        <li>deciding your market positioning</li>
+        <li>automating your customer acquisition</li>
+        <li>shipping without adapting the product to your use case</li>
+      </ul>
+    </CardContent>
 
-It keeps the starter useful without making it bloated.
-
-<div className="mt-6">
-  <BuyStarterProButton showTrustText />
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 </div>
 
----
+## Mental model
 
-## What makes this commercially useful
-
-A lot of products fail because the team spends too long on the same setup work:
-
-- login
-- sessions
-- billing
-- protection
-- subscription rules
-- backend wiring
-
-That work does not usually differentiate the business.
-
-But it still has to be done well.
-
-Starter Pro is useful because it reduces that cost.
-
----
-
-## The most important thing to understand
+> Included = the layers required to launch seriously.
+> Not included = the parts that make your product yours.
 
 Starter Pro is not meant to impress with quantity.
 
 It is meant to remove the right blockers.
 
-The question is not:
-
-> “How much stuff is included?”
-
-The better question is:
-
-> “Does this remove the work that would delay launch?”
-
-For Starter Pro, that answer is yes.
-
----
-
-## Good mental model
-
-> Included = the layers required to launch seriously.
-> Not included = the parts that make your product yours.
-
-That is the right split.
-
----
-
 ## Next steps
 
-- Getting started → `/docs/starter-pro/getting-started`
-- Why buy instead of building → `/docs/starter-pro/why-buy-instead-of-building`
-- Auth system → `/docs/starter-pro/auth`
-- Billing system → `/docs/starter-pro/billing`
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Getting Started</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how to approach Starter Pro and understand the production baseline.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
+  <a href="/docs/starter-pro/why-buy-instead-of-building" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Why buy instead of building</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the real cost of rebuilding auth, billing, and launch foundations.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review the authentication foundation included in Starter Pro.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Billing system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review the billing, invoices, portal, subscriptions, and webhook foundation.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<br />
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
   <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
@@ -232,4 +390,6 @@ That is the right split.
   </Button>
 </div>
 
-</DocsPageShell>
+<Callout title="Build the product. Don’t rebuild the blockers.">
+  Starter Pro gives you the launch foundation so you can spend more time on customers, product, and revenue.
+</Callout>

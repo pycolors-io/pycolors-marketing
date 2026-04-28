@@ -1,245 +1,359 @@
 ---
 title: Why buy instead of building
-description: Understand when buying Starter Pro is a better decision than rebuilding auth, billing, and backend foundations from scratch.
+description: Decide when buying Starter Pro is a higher-leverage move than rebuilding auth, billing, and backend foundations from scratch.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Pro
 ---
 
-import Link from 'next/link';
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge, Button } from "@pycolors/ui";
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@pycolors/ui";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import {
+  ArrowRight,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  LockKeyhole,
+  ShieldCheck,
+  XCircle,
+  Zap,
+} from "lucide-react";
 
-<DocsPageShell>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Decision</Badge>
+</div>
 
-<Badge>Starter Pro</Badge>
+## Build vs buy is a leverage decision
 
-# Why buy Starter Pro instead of rebuilding everything yourself
+You can build authentication, billing, backend structure, and secure delivery yourself.
 
-You can absolutely build auth, billing, backend structure, and delivery yourself.
+The question is not whether you are capable.
 
-The question is not whether it is possible.
+The question is:
 
-The question is whether it is the best use of your time **before launch**.
+> Is rebuilding this the highest-leverage use of your time before launch?
 
-That is the decision this page helps you make.
+Starter Pro exists for the moment when the answer becomes **no**.
 
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
   <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/upgrade">
-      Understand the upgrade
+    <Link href="/docs/starter-pro/what-is-included">
+      See what’s included
     </Link>
   </Button>
 </div>
 
----
+<Callout title="The simple rule">
+  Build your differentiation. Buy the infrastructure that does not differentiate your product.
+</Callout>
 
-## The honest tradeoff
+## The hidden wall before launch
 
-Building from scratch gives you full control.
+Most SaaS projects do not slow down because the first screens are hard.
 
-It also usually means spending real time on layers such as:
+They slow down when the product needs to become real:
 
-- authentication
-- session handling
-- OAuth
-- Stripe checkout
-- subscriptions
-- webhooks
-- protected routes
-- plan gating
-- backend structure
-- delivery flow
+- users need accounts
+- routes need protection
+- customers need to pay
+- Stripe events need to sync
+- billing state needs to unlock access
+- backend structure needs to survive growth
 
-None of these are optional in a serious SaaS.
+This is not “small setup work”.
 
-So the real tradeoff is:
+It is **launch-blocking infrastructure**.
 
-### Build from scratch
+## The real tradeoff
 
-- more control
-- more time spent
-- more edge cases
-- more launch delay
-- more risk of partial implementation
+<Tabs items={["Build from scratch", "Buy Starter Pro"]}>
+  <Tab value="Build from scratch">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Clock className="h-4 w-4 text-muted-foreground" />
+        Build everything yourself
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>full technical control</li>
+        <li>custom architecture from day one</li>
+        <li>deeper learning opportunity</li>
+        <li>longer setup time</li>
+        <li>more auth and billing edge cases</li>
+        <li>higher launch risk if the implementation is partial</li>
+      </ul>
+    </div>
+  </Tab>
 
-### Buy Starter Pro
+  <Tab value="Buy Starter Pro">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Zap className="h-4 w-4 text-primary" />
+        Buy Starter Pro
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>production-shaped baseline immediately</li>
+        <li>less repeated infrastructure work</li>
+        <li>reduced uncertainty before launch</li>
+        <li>faster path to charging customers</li>
+        <li>more time for product, users, and distribution</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
 
-- faster baseline
-- less repeated work
-- less uncertainty
-- shorter path to launch
-- more time for product and distribution
+## Where time disappears
 
----
+Most builders start with:
 
-## The hidden cost of building it all yourself
-
-The danger is not only the code you have to write.
-
-It is also the cost of:
-
-- designing the wrong structure
-- patching auth edge cases later
-- miswiring billing logic
-- underestimating session complexity
-- delaying product feedback
-- shipping later than necessary
-
-That cost is often much larger than the purchase price.
-
----
-
-## Where time usually disappears
-
-Most builders say:
-
-> “I’ll just wire auth and Stripe quickly.”
+> I’ll just wire auth and Stripe quickly.
 
 Then time disappears into:
 
-- provider setup
-- session handling
-- auth state logic
-- reset flows
-- email verification
-- checkout session creation
-- webhook sync
-- subscription state handling
-- access control
-- settings integration
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LockKeyhole className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Auth complexity
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Sessions, OAuth, verification, reset flows, provider rules, account linking, and protected routes.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-This work is not glamorous.
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing risk
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Checkout, portal sessions, invoice history, webhook sync, subscription state, and plan-aware access.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-But it still blocks launch.
-
-That is why buying can be the smarter move.
-
----
-
-## What Starter Pro lets you skip
-
-Starter Pro does not remove product work.
-
-It removes **repeated foundation work**.
-
-That includes the layers that are usually:
-
-- annoying
-- fragile
-- security-sensitive
-- revenue-critical
-- necessary before launch
-
-This is what makes the purchase rational.
-
-Not because you cannot build it.
-
-Because you probably should not spend your best time rebuilding it.
-
-<div className="mt-6">
-  <BuyStarterProButton showTrustText />
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Launch confidence
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Backend boundaries, access control, secure delivery, production state, and fewer fragile edge cases.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 </div>
 
----
+<br />
+<Callout title="Reality check">
+  These systems do not usually differentiate your SaaS. But if they are wrong, they block your launch.
+</Callout>
 
-## When buying is the better decision
+## The hidden cost is delay
 
-Buying Starter Pro is usually the better move when:
+The real cost of building everything yourself is not only code.
 
-- your product direction is already clear
-- you want to launch faster
-- auth and billing are obvious blockers
-- you want less setup uncertainty
-- your main risk is delay, not lack of control
+It is also:
 
-If your current bottleneck is already the business layer, then buying is often the high-leverage choice.
+- delayed user feedback
+- later revenue validation
+- fragile payment logic
+- auth bugs discovered too late
+- less focus on customers and distribution
+- more time spent on work your users do not see
 
----
+That cost is often higher than the purchase price.
 
-## When building it yourself still makes sense
+## What Starter Pro actually skips
 
-Building yourself can still make sense if:
+Starter Pro skips the repeated foundation work:
 
-- you are learning these systems deliberately
-- you want full control for a very custom architecture
-- you are not trying to launch soon
-- your current goal is experimentation, not monetization
+- auth setup
+- OAuth setup
+- email verification
+- password reset
+- route protection
+- Stripe Checkout
+- billing portal
+- webhook synchronization
+- subscription state
+- delivery access
 
-That is a valid path.
+It does not skip the work that makes your product unique:
 
-But it is a different goal.
+- product logic
+- domain model
+- onboarding
+- positioning
+- workflows
+- customer experience
 
-Starter Pro is for people who want a faster path to launch.
+<Callout type="info" title="Important">
+  You are not outsourcing your product. You are buying back the time usually lost to non-differentiating infrastructure.
+</Callout>
 
----
+## Decision guide
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Buy Starter Pro if
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>you want to launch faster</li>
+        <li>auth and billing are blocking progress</li>
+        <li>your product direction is already clear</li>
+        <li>you want less setup risk before going live</li>
+        <li>you want to focus on users, product, and growth</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Build it yourself if
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>you want to learn these systems deeply</li>
+        <li>you need a very custom architecture</li>
+        <li>you are not trying to launch soon</li>
+        <li>launch speed is not your priority</li>
+        <li>your goal is experimentation, not monetization</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Better question to ask
 
 Do not ask:
 
-> “Can I build this myself?”
+> Can I build this?
 
 Ask:
 
-> “Is rebuilding this the thing that will create the most value for my business right now?”
+> Will rebuilding this create more value than launching sooner?
 
-For many SaaS builders, the answer is no.
+That is the real business decision.
 
-That is where Starter Pro becomes the better decision.
+## ROI logic
 
----
+If Starter Pro saves:
 
-## The real business logic
+- a few days, you launch earlier
+- a few weeks, you validate sooner
+- a few mistakes, you avoid costly rewrites
+- one billing bug, you protect revenue trust
 
-If Starter Pro saves even a small number of days or weeks in the layers that block launch, it has already done its job.
+Then it has already done its job.
 
-Because the real value is not code volume.
+<Callout title="What you are really buying">
+  Time, clarity, and a faster path to revenue — not just code.
+</Callout>
 
-It is:
+## Final mental model
 
-- faster execution
-- lower setup risk
-- earlier launch
-- earlier revenue
-- more time for distribution and iteration
-
-That is the actual ROI.
-
----
-
-## Good mental model
-
-> Build your differentiation.
-> Buy the repeated infrastructure.
-
-That is the logic behind Starter Pro.
-
----
-
-## Final decision rule
-
-### Build it yourself if:
-- you want the learning
-- you want the systems challenge
-- you are not in a hurry
-- launch speed is not your priority
-
-### Buy Starter Pro if:
-- you want a serious baseline now
-- you want to launch sooner
-- auth and billing are slowing you down
-- you want to focus on product and customers
-
-That is the cleanest decision rule.
-
----
+> Build what makes your product different.
+> Buy what every serious SaaS has to rebuild.
 
 ## Next steps
 
-- What is included → `/docs/starter-pro/what-is-included`
-- Getting started → `/docs/starter-pro/getting-started`
-- Billing system → `/docs/starter-pro/billing`
-- Backend foundations → `/docs/starter-pro/backend`
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">What is included</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See the exact systems included in Starter Pro.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Getting started</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Start using Starter Pro with a production-ready baseline.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review the auth foundation that Starter Pro removes from your launch path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Billing system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See how Stripe, invoices, subscriptions, and webhooks are structured.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<br />
 
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
@@ -250,4 +364,6 @@ That is the cleanest decision rule.
   </Button>
 </div>
 
-</DocsPageShell>
+<Callout title="Ship sooner. Learn faster. Earn earlier.">
+  The only thing worse than rebuilding everything yourself is shipping too late.
+</Callout>
