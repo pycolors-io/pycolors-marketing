@@ -1,9 +1,10 @@
 ---
 title: Dropdown Menu
 description: Context menu component built on Radix DropdownMenu. Supports groups, submenus, checkbox/radio items, and keyboard shortcuts.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 
 import { Preview } from "@/components/docs/preview";
@@ -22,8 +23,6 @@ import {
   RadioMenuPreview,
 } from "../previews/dropdown-menu-previews";
 
-<DocsPageShell>
-
 The **Dropdown Menu** component displays a list of actions in a floating surface anchored to a trigger.
 It is built on **Radix UI DropdownMenu** and styled with PyColors tokens (`bg-popover`, `border-border`, `text-popover-foreground`).
 
@@ -33,8 +32,6 @@ Use Dropdown Menu for:
 - Editor/tool menus
 - Compact command lists (rename, duplicate, delete)
 - Option selectors (checkbox/radio groups)
-
----
 
 ## Import
 
@@ -56,8 +53,6 @@ import {
   DropdownMenuSubContent,
 } from "@pycolors/ui";
 ```
-
----
 
 ## Basic usage
 
@@ -129,8 +124,6 @@ import {
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Grouping, labels, and shortcuts
 
@@ -237,8 +230,6 @@ Use `DropdownMenuLabel` to title a section, `DropdownMenuGroup` to group items, 
   </Tab>
 </Tabs>
 
----
-
 ## Checkbox items
 
 Interactive checkbox examples must live in a **Client Component** (hooks + event handlers).
@@ -313,8 +304,6 @@ This page renders them via `CheckboxMenuPreview`.
   </Tab>
 </Tabs>
 
----
-
 ## Radio group
 
 Same rule: hooks go into a client component (`RadioMenuPreview`).
@@ -381,8 +370,6 @@ Same rule: hooks go into a client component (`RadioMenuPreview`).
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Submenus
 
@@ -472,8 +459,6 @@ Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Components
@@ -543,5 +528,3 @@ Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to
     href="/docs/guides/accessibility"
   />
 </LinkCards>
-
-</DocsPageShell>

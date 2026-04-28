@@ -1,51 +1,70 @@
 ---
 title: Guides
-description: Production-ready UX guidance for real SaaS products. Learn how to compose PyColors UI primitives into reliable product experiences.
+description: Production-ready UX patterns to turn UI primitives into real SaaS product experiences.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import { CheckCircle, Sparkles } from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
   <Badge>Production UX</Badge>
 </div>
 
-# Build product flows, not just components
+## Overview
 
-PyColors Guides explain **how to use UI primitives in real products**.
+PyColors Guides explain how to move from **UI primitives** to **real product behavior**.
 
 They sit between:
 
 - low-level UI components
-- real product behavior
+- real SaaS product experience
 
-And answer the question:
+And answer one critical question:
 
-> “How do I turn components into a real SaaS experience?”
+> How do you turn components into a product that feels reliable, predictable, and ready for production?
 
----
+<Callout title="Why this matters">
+  Most UI libraries stop at components. Real products fail in composition, not in primitives.
+</Callout>
 
-## What you learn here
+## What you’ll learn
 
-Guides focus on the parts of product development that are rarely documented well:
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Composition</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      How components work together to form real product surfaces.
+    </CardContent>
+  </Card>
 
-- how components work together
-- how UI behaves under real conditions
-- how to handle async states
-- how to design predictable interactions
-- how to structure product surfaces
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Behavior</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      How UI behaves with async data, validation, and user interaction.
+    </CardContent>
+  </Card>
 
-This is where UI becomes **product experience**.
-
----
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Consistency</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      How to keep product UX stable as your app grows.
+    </CardContent>
+  </Card>
+</div>
 
 ## Where Guides fit
 
-PyColors is structured in layers:
+PyColors is structured in layers.
 
 ### UI Components
 
@@ -57,7 +76,7 @@ PyColors is structured in layers:
 
 - composition of primitives
 - UX and behavior rules
-- real-world product scenarios
+- real-world scenarios
 - production constraints
 
 ### Starter Pro
@@ -68,9 +87,9 @@ PyColors is structured in layers:
 - delivery
 - production SaaS foundation
 
-Each layer solves a different problem.
-
----
+<Callout type="info" title="Mental model">
+  Components help you build fast. Guides help you build correctly.
+</Callout>
 
 ## When to use Guides
 
@@ -78,66 +97,118 @@ Use Guides when:
 
 - primitives feel insufficient on their own
 - UX consistency becomes important
-- you start handling async data
-- you want fewer product mistakes
-- your app starts behaving like a real product
+- async data enters the system
+- product behavior becomes complex
+- multiple screens need to stay aligned
 
-This is usually the point where:
+This is the moment where:
 
 > UI stops being screens
-> and starts becoming a system
-
----
+> and becomes a system
 
 ## Available guides
 
-<LinkCards>
-  <LinkCard
-    title="Building a SaaS layout"
-    description="Compose navigation, header, and content areas for a scalable SaaS product."
-    href="/docs/guides/building-a-saas-layout"
-  />
-  <LinkCard
-    title="Empty, loading, and error states"
-    description="Handle async product states clearly and consistently."
-    href="/docs/guides/empty-loading-error"
-  />
-  <LinkCard
-    title="Forms with validation"
-    description="Build predictable, accessible forms with clear validation behavior."
-    href="/docs/guides/forms-with-validation"
-  />
-</LinkCards>
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/guides/building-a-saas-layout" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Building a SaaS layout
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Compose navigation, header, and content areas for a scalable SaaS product.
+    </div>
+  </a>
 
----
+  <a href="/docs/guides/empty-loading-error" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Empty, loading, and error states
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Handle async product states clearly and consistently.
+    </div>
+  </a>
 
-## Mental model
+  <a href="/docs/guides/forms-with-validation" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Forms with validation
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Build predictable, accessible forms with clear validation behavior.
+    </div>
+  </a>
+</div>
 
-> Components define the building blocks.
-> Guides define how they behave in products.
+## Why this layer exists
 
-This layer is what keeps your UI system:
+Most product issues do not come from missing components.
 
-- consistent
-- understandable
-- scalable over time
+They come from:
 
----
+- inconsistent composition
+- unclear interaction patterns
+- poor handling of async states
+- fragile form logic
+- lack of system-level thinking
 
-## Practical rule
+<Callout title="What Guides prevent">
+  Without Guides, you will rebuild the same UX logic repeatedly, with inconsistencies across your product.
+</Callout>
 
-- Use **UI Components** to build pieces
-- Use **Guides** to assemble them correctly
-- Use **Starter Pro** to make the product real (auth, billing, backend)
+## Decision guide
 
----
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        <CardTitle className="text-sm">Use Guides if</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>you are building real product flows</li>
+        <li>you need consistent UX across screens</li>
+        <li>you handle async data or forms</li>
+        <li>your UI is growing beyond simple pages</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-## Next step
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <Sparkles className="h-4 w-4 text-muted-foreground" />
+        <CardTitle className="text-sm">Do not rely only on</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>component-level thinking</li>
+        <li>visual-only decisions</li>
+        <li>one-off UI implementations</li>
+        <li>implicit product behavior</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
 
-If you are building a real SaaS:
+## Next steps
 
-- UI primitives → `/docs/ui`
-- Product composition → you are here
-- Business layer → `/docs/starter-pro`
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      UI Components
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Explore the primitives used to build product interfaces.
+    </div>
+  </a>
 
-</DocsPageShell>
+  <a href="/docs/starter-pro" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">
+      Starter Pro
+    </div>
+    <div className="mt-2 text-sm text-muted-foreground">
+      Move from UI to a real SaaS with auth, billing, and backend.
+    </div>
+  </a>
+</div>

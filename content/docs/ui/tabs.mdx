@@ -1,9 +1,10 @@
 ---
 title: Tabs
 description: Segmented navigation component for switching between related views.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
 import { Preview } from "@/components/docs/preview";
 
@@ -14,8 +15,6 @@ import {
   TabsContent as UITabsContent,
 } from "@pycolors/ui";
 
-<DocsPageShell>
-
 The **Tabs** component lets users switch between related views without leaving the page.
 It is built on **Radix UI Tabs** and styled with PyColors tokens for consistent theming.
 
@@ -23,8 +22,6 @@ Use Tabs for:
 - Settings sections (Profile / Billing / Security)
 - Dashboards (Overview / Activity / Logs)
 - Compact UIs (filters, panels, segmented content)
-
----
 
 ## Import
 
@@ -36,8 +33,6 @@ import {
   TabsContent,
 } from "@pycolors/ui";
 ```
-
----
 
 ## Usage
 
@@ -113,8 +108,6 @@ import {
     ```
   </Tab>
 </Tabs>
-
----
 
 ## Sizes
 
@@ -217,8 +210,6 @@ import {
 | `md` | Default density |
 | `lg` | Comfortable spacing (marketing / onboarding) |
 
----
-
 ## API
 
 ### Components
@@ -237,15 +228,11 @@ import {
 - `TabsTrigger` extends `TabsPrimitive.TabsTriggerProps` + `{ size?: "sm" | "md" | "lg" }`
 - `TabsContent` extends `TabsPrimitive.TabsContentProps`
 
----
-
 ## TypeScript types
 
 ```ts
 export type TabsSize = "sm" | "md" | "lg";
 ```
-
----
 
 ## Accessibility
 
@@ -254,16 +241,12 @@ export type TabsSize = "sm" | "md" | "lg";
 - Keyboard support is built-in via Radix (Arrow keys to navigate triggers).
 - Keep tab labels short and descriptive.
 
----
-
 ## Design guidelines
 
 - Use Tabs when the views are peers (same hierarchy).
 - Don’t hide critical actions behind tabs; keep actions visible in the page header.
 - Prefer 2–5 tabs; more than that usually becomes a navigation problem.
 - Keep content height stable when possible to reduce layout shift.
-
----
 
 ## Related guides
 
@@ -284,5 +267,3 @@ export type TabsSize = "sm" | "md" | "lg";
     href="/docs/ui/button"
   />
 </LinkCards>
-
-</DocsPageShell>

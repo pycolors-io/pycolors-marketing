@@ -2,8 +2,9 @@
   "title": "Patterns",
   "pages": [
     "index",
-    "async-actions",
+    "why-patterns",
     "data-table",
+    "async-actions",
     "overlays"
   ]
 }

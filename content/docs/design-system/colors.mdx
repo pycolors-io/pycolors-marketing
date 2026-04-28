@@ -1,89 +1,86 @@
 ---
 title: Colors
 description: Semantic color roles, theming architecture, and usage guidelines used across PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Design System
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
 
-<DocsPageShell>
+## Overview
 
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">Design System</Badge>
-  <Badge>Colors</Badge>
+Colors in PyColors UI are designed as **semantic product roles**, not decorative values.
+
+The system gives every interface layer a stable meaning: page surfaces, cards, text, actions, states, borders, form controls, sidebars, and charts. Components consume those roles through utilities like `bg-card`, `text-foreground`, `text-muted-foreground`, `bg-primary`, and `border-border` instead of hardcoding visual values locally.
+
+At the end of this page, you will understand how PyColors structures color roles, how light and dark mode remain predictable, and how to apply color decisions without creating theme drift.
+
+<Callout title="Why this matters">
+  Color consistency is one of the fastest signals of product quality. A semantic color system keeps dashboards, marketing pages, documentation, forms, and reusable components visually aligned without forcing every component to reinvent its own palette.
+</Callout>
+
+<div className="not-prose mt-8 grid gap-4 md:grid-cols-3">
+  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
+    <Badge variant="outline">Role first</Badge>
+    <div className="mt-4 text-sm font-medium text-foreground">Describe intent</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Use tokens that explain product meaning: surface, text, action, state, input, and data.
+    </div>
+  </div>
+
+  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
+    <Badge variant="outline">Theme safe</Badge>
+    <div className="mt-4 text-sm font-medium text-foreground">Change centrally</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Map CSS variables into Tailwind utilities so components stay stable when themes evolve.
+    </div>
+  </div>
+
+  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
+    <Badge variant="outline">Production ready</Badge>
+    <div className="mt-4 text-sm font-medium text-foreground">Scale consistently</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Keep reusable components, dashboards, docs, and commercial pages visually coherent.
+    </div>
+  </div>
 </div>
 
-# Colors define meaning before appearance
+## What you’ll do
 
-PyColors UI uses a **semantic color system** built to stay predictable across:
+<Steps>
+  <Step>
+    Understand the semantic role model behind PyColors colors.
+  </Step>
+  <Step>
+    Map CSS variables to Tailwind utilities through the token layer.
+  </Step>
+  <Step>
+    Apply colors in components without raw values or one-off overrides.
+  </Step>
+  <Step>
+    Use decision rules to keep UI colors, state colors, and chart colors separate.
+  </Step>
+</Steps>
 
-- light mode
-- dark mode
-- reusable components
-- dashboards
-- settings pages
-- documentation
-- marketing surfaces
+## Architecture
 
-The goal is simple:
+PyColors uses an **OKLCH-based color system** exposed through CSS variables and mapped into Tailwind semantic utilities.
 
-> components should consume **color roles**, not invent visual values locally.
+OKLCH gives the token layer more predictable control over perceived lightness, contrast, and theme balance than raw RGB or one-off HSL values. That matters when a product must support light mode, dark mode, reusable UI components, long documentation pages, dashboards, settings screens, and commercial surfaces.
 
----
+<Callout type="info" title="Core principle">
+  Components should consume color roles. The token layer should decide how those roles look.
+</Callout>
 
-## Why semantic colors matter
+<Tabs items={["Theme mapping", "Component usage", "Theme values"]}>
+  <Tab value="Theme mapping">
 
-Most UI inconsistency starts when components choose colors directly.
-
-That creates problems like:
-
-- hardcoded values
-- theme drift
-- weak contrast consistency
-- duplicated visual intent
-- surfaces that stop feeling related
-
-PyColors avoids this by exposing **roles**, not raw colors.
-
-That means components use utilities like:
-
-- `bg-card`
-- `text-foreground`
-- `text-muted-foreground`
-- `bg-primary`
-- `border-border`
-
-instead of raw values.
-
-Semantic roles keep the system coherent as the product grows.
-
----
-
-## Color architecture
-
-PyColors uses an **OKLCH-based color system**.
-
-OKLCH is useful because it is more perceptually predictable than raw RGB or HSL when you need:
-
-- reliable contrast
-- better light/dark consistency
-- safer theme adjustments
-- clearer control over visual balance
-
-Core values are defined as CSS variables and then mapped into semantic Tailwind tokens.
-
----
-
-## Theme mapping
-
-The system maps CSS variables into Tailwind theme utilities.
-
-<Tabs items={["Code"]}>
-  <Tab value="Code">
-
-```css
+```css title="tokens.css" {2-11}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -93,306 +90,220 @@ The system maps CSS variables into Tailwind theme utilities.
   --color-primary-foreground: var(--primary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  /* ... */
+  --color-border: var(--border);
+  --color-ring: var(--ring);
 }
 ```
 
   </Tab>
-</Tabs>
 
-This is what allows the whole UI to update coherently when the token layer changes.
+  <Tab value="Component usage">
 
----
-
-## Semantic token roles
-
-PyColors exposes high-level tokens that represent **meaning**, not decoration.
-
-### Surfaces
-
-- `--background`
-- `--foreground`
-- `--card`
-- `--card-foreground`
-- `--popover`
-- `--popover-foreground`
-- `--sidebar`
-- `--sidebar-*`
-
-These roles define how the interface is layered.
-
-### Brand and component roles
-
-- `--primary`
-- `--primary-foreground`
-- `--secondary`
-- `--secondary-foreground`
-- `--accent`
-- `--accent-foreground`
-- `--muted`
-- `--muted-foreground`
-
-These roles help distinguish:
-
-- primary actions
-- secondary emphasis
-- subtle surfaces
-- supporting UI
-
-### State roles
-
-- `--destructive`
-- `--destructive-foreground`
-- `--success`
-- `--success-foreground`
-- `--warning`
-- `--warning-foreground`
-
-These tokens communicate product meaning:
-
-- danger
-- success
-- caution
-
-They should remain consistent across all surfaces.
-
-### Borders, inputs, and focus
-
-- `--border`
-- `--input`
-- `--ring`
-
-These roles keep form elements, containers, and focus states aligned with the rest of the system.
-
-### Charts
-
-- `--chart-1`
-- `--chart-2`
-- `--chart-3`
-- `--chart-4`
-- `--chart-5`
-
-Chart tokens are intentionally separated from UI roles.
-
-That prevents data visualization colors from leaking into interface components.
-
----
-
-## Light and dark mode
-
-PyColors uses CSS variables for both light and dark themes.
-
-Light mode usually lives on `:root`.
-Dark mode is applied with `.dark`.
-
-```css
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  /* ... */
-}
-
-.dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-
-  --primary: oklch(0.92 0.004 286.32);
-  --primary-foreground: oklch(0.21 0.006 285.885);
-  /* ... */
-}
-```
-
-The important idea is not the specific value.
-
-It is the system behavior:
-
-- components remain unchanged
-- color meaning stays stable
-- only the token layer changes underneath
-
----
-
-## Visual palette preview
-
-### Core semantic colors
-
-<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-  <div className="rounded-md border p-4 bg-background text-foreground">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">background</div>
-    <div className="h-10 rounded border bg-background" />
-  </div>
-
-  <div className="rounded-md border p-4 bg-card text-card-foreground">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">card</div>
-    <div className="h-10 rounded border bg-card" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">primary</div>
-    <div className="h-10 rounded bg-primary" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">secondary</div>
-    <div className="h-10 rounded bg-secondary" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">accent</div>
-    <div className="h-10 rounded bg-accent" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">muted</div>
-    <div className="h-10 rounded bg-muted" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">destructive</div>
-    <div className="h-10 rounded bg-destructive" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">success</div>
-    <div className="h-10 rounded bg-success" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">warning</div>
-    <div className="h-10 rounded bg-warning" />
-  </div>
-
-  <div className="rounded-md border p-4">
-    <div className="mb-2 text-xs font-medium text-muted-foreground">border</div>
-    <div className="h-10 rounded border border-border bg-background" />
-  </div>
-</div>
-
----
-
-## Example usage in a component
-
-A component stays simple because the color system already defines what each role means.
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-
-<div className="max-w-lg rounded-lg border bg-card p-4 text-card-foreground">
-  <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
-  <div className="mt-2 text-sm">
-    This card uses semantic color tokens instead of raw values.
-  </div>
-</div>
-
-  </Tab>
-
-  <Tab value="Code">
-
-```tsx
+```tsx title="example-card.tsx" {3-7}
 export function ExampleCard() {
   return (
-    <div className="rounded-lg border bg-card p-4 text-card-foreground">
-      <h2 className="text-sm font-medium text-muted-foreground">Example</h2>
-      <div className="mt-2 text-sm">
-        This card uses semantic color tokens instead of raw values.
-      </div>
+    <div className="rounded-2xl border border-border bg-card p-5 text-card-foreground">
+      <p className="text-sm font-medium text-foreground">Semantic surface</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        This component uses product roles instead of raw color values.
+      </p>
     </div>
   );
 }
 ```
 
   </Tab>
+
+  <Tab value="Theme values">
+
+```css title="themes.css" {1,8}
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+}
+```
+
+  </Tab>
 </Tabs>
 
----
+This keeps the component API stable while allowing the underlying theme to evolve centrally. Components keep the same classes, token meaning stays stable, and the theme layer handles contrast and visual balance.
 
-## Role categories
+## Role model
 
-| Role category | Tokens |
-| --- | --- |
-| Surfaces | `background`, `card`, `popover`, `sidebar` |
-| Text | `foreground`, `muted-foreground`, `card-foreground` |
-| Components | `primary`, `secondary`, `accent`, `muted` |
-| States | `destructive`, `success`, `warning` |
-| Inputs | `border`, `input`, `ring` |
-| Data viz | `chart-1` → `chart-5` |
+PyColors groups colors by product responsibility. This keeps the system easier to reason about and prevents the table of contents from becoming noisy.
 
-This table is useful because it clarifies intent before implementation.
+| Category | Tokens | Used for |
+| --- | --- | --- |
+| Surfaces | `background`, `card`, `popover`, `sidebar` | Page layers, cards, overlays, navigation |
+| Text | `foreground`, `muted-foreground`, `card-foreground` | Primary copy, secondary copy, surface-specific text |
+| Actions | `primary`, `secondary`, `accent`, `muted` | Buttons, emphasis, subtle interaction areas |
+| States | `destructive`, `success`, `warning` | Product feedback, validation, risk, confirmation |
+| Inputs | `border`, `input`, `ring` | Forms, focus states, separators, control outlines |
+| Charts | `chart-1` to `chart-5` | Data visualization only |
 
----
+<Callout title="Why this matters">
+  Separating UI roles from chart roles prevents data visualization colors from leaking into product states. A chart palette should not become the source of truth for buttons, alerts, or destructive actions.
+</Callout>
 
-## Variables reference
+<div className="not-prose mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">background</div>
+    <div className="h-11 rounded-xl border border-border bg-background" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">card</div>
+    <div className="h-11 rounded-xl border border-border bg-card" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">primary</div>
+    <div className="h-11 rounded-xl bg-primary" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">secondary</div>
+    <div className="h-11 rounded-xl bg-secondary" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">accent</div>
+    <div className="h-11 rounded-xl bg-accent" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">muted</div>
+    <div className="h-11 rounded-xl bg-muted" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">destructive</div>
+    <div className="h-11 rounded-xl bg-destructive" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">success</div>
+    <div className="h-11 rounded-xl bg-success" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">warning</div>
+    <div className="h-11 rounded-xl bg-warning" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">border</div>
+    <div className="h-11 rounded-xl border border-border bg-background" />
+  </div>
+</div>
 
-| Token | Purpose |
-| --- | --- |
-| `--background` | Base page surface |
-| `--foreground` | Primary text |
-| `--card` / `--card-foreground` | Card surfaces |
-| `--primary` / `--primary-foreground` | Primary brand/action role |
-| `--secondary` / `--secondary-foreground` | Secondary surfaces |
-| `--muted` / `--muted-foreground` | Low-emphasis UI and text |
-| `--accent` / `--accent-foreground` | Highlights and focus areas |
-| `--destructive` / `--destructive-foreground` | Dangerous actions and states |
-| `--success` / `--success-foreground` | Positive states |
-| `--warning` / `--warning-foreground` | Caution states |
-| `--border` | Borders and separators |
-| `--input` | Form field surface |
-| `--ring` | Focus ring |
-| `--sidebar-*` | Sidebar theming |
-| `--chart-1` → `--chart-5` | Chart palettes |
+## Implementation
 
----
+Use semantic utilities in every reusable component.
 
-## Usage guidelines
+```tsx title="recommended.tsx" {3-8}
+export function ProductNotice() {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5 text-card-foreground">
+      <p className="text-sm font-medium text-foreground">Production-ready surface</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        The visual intent comes from the design system, not from local overrides.
+      </p>
+    </div>
+  );
+}
+```
 
-- always use semantic utilities such as `bg-card` or `text-muted-foreground`
-- never place raw OKLCH or hex values inside reusable components
-- change tokens centrally, not per component
-- keep state roles stable across the product
-- preserve accessible contrast in both light and dark modes
+Avoid raw values inside reusable UI.
 
-If a repeated visual need appears, solve it in the token layer first.
+```tsx title="avoid.tsx" {3-5}
+export function ProductNotice() {
+  return (
+    <div className="rounded-2xl border border-[#e5e7eb] bg-[#ffffff] p-5 text-[#111827]">
+      <p className="text-sm text-[#6b7280]">This creates theme drift.</p>
+    </div>
+  );
+}
+```
 
----
+<Callout type="warn" title="Common pitfall">
+  Do not solve repeated color needs with local overrides. If the same visual intent appears in multiple places, define or adjust the semantic role instead.
+</Callout>
 
-## Common mistakes to avoid
+## Decision guide
 
-- using raw color values inside components
-- mixing semantic roles with one-off overrides
-- treating state colors as decorative accents
-- making each product area invent its own interpretation of “muted” or “accent”
-- reusing chart colors for interface states
+Use PyColors semantic color roles when:
 
-A design system becomes fragile when roles stop meaning the same thing everywhere.
+- the component is reusable
+- the UI must support light and dark mode
+- the surface appears in dashboards, docs, marketing, or settings
+- the same visual meaning should remain stable across the product
+- theme updates should happen centrally
 
----
+Avoid local raw values when:
 
-## Related
+- the component belongs to the design system
+- the value represents a product state
+- the color affects text contrast or focus visibility
+- the color will likely be reused elsewhere
+- the value needs to survive future theme changes
 
-<LinkCards>
-  <LinkCard
-    title="Typography"
-    description="Hierarchy and text roles built on semantic contrast."
-    href="/docs/design-system/typography"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner geometry used across surfaces."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Shadows"
-    description="Elevation scale for surfaces and floating layers."
-    href="/docs/design-system/tokens/shadows"
-  />
-  <LinkCard
-    title="UI Components"
-    description="Primitives that consume semantic roles."
-    href="/docs/ui"
-  />
-</LinkCards>
+<Callout title="Inline CTA">
+  Ready to move from visual consistency to a production-shaped SaaS foundation? Explore <Link href="/docs/starter-pro">Starter Pro</Link> for auth, billing, backend, and delivery patterns built on top of PyColors UI.
+</Callout>
 
-</DocsPageShell>
+## Common mistakes
+
+<Accordions type="single">
+  <Accordion title="Using raw hex values in reusable components">
+    Raw values create theme drift, make dark mode harder to maintain, and hide visual decisions inside component implementation. Prefer utilities such as `bg-card`, `text-muted-foreground`, and `border-border`.
+  </Accordion>
+
+  <Accordion title="Reusing chart colors for product states">
+    Chart colors are for data visualization. Product states such as success, warning, and destructive actions need dedicated semantic roles so feedback stays consistent.
+  </Accordion>
+
+  <Accordion title="Treating accent as decoration">
+    `accent` should communicate intentional emphasis. If every section invents a different accent behavior, the product starts to feel inconsistent.
+  </Accordion>
+
+  <Accordion title="Fixing one screen instead of the token layer">
+    Local fixes solve the current screen but create long-term maintenance cost. If the need repeats, update the semantic role centrally.
+  </Accordion>
+
+  <Accordion title="Skipping contrast checks in dark mode">
+    Every role used for text, actions, inputs, and states must remain readable in both light and dark mode before shipping.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<div className="not-prose grid gap-4 md:grid-cols-2">
+  <Link href="/docs/design-system/typography" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Typography</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Continue with readable hierarchy, rhythm, and semantic text structure.
+    </div>
+  </Link>
+
+  <Link href="/docs/design-system/tokens" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Design tokens</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Understand the token layer that keeps PyColors UI consistent across products.
+    </div>
+  </Link>
+
+  <Link href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">UI components</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      See how primitives consume semantic roles across real product interfaces.
+    </div>
+  </Link>
+
+  <Link href="/docs/starter-pro" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Starter Pro</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Move from UI consistency to production foundations with auth, billing, and backend structure.
+    </div>
+  </Link>
+</div>

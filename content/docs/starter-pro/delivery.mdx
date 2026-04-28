@@ -1,8 +1,8 @@
 ---
-title: Auth system (PRO)
-description: Production-ready authentication with real flows, OAuth, session handling, and security foundations for real SaaS products.
+title: Delivery (PRO)
+description: Instant, secure access to Starter Pro after purchase with controlled delivery and fulfillment flow.
 lastUpdated: "2026-04-28"
-appliesTo: Starter Pro
+appliesTo: Starter Pro - Delivery
 ---
 
 import Link from "next/link";
@@ -22,73 +22,63 @@ import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button
 import {
   ArrowRight,
   CheckCircle,
-  Github,
+  CreditCard,
+  Download,
   KeyRound,
   LockKeyhole,
-  MailCheck,
+  PackageCheck,
   RefreshCcw,
   ShieldCheck,
-  UserRoundCheck,
   XCircle,
 } from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
-  <Badge>Auth</Badge>
+  <Badge>Delivery</Badge>
 </div>
 
-## Authentication that actually ships
+## Secure delivery after purchase
 
-Starter Free gives you **auth screens and UX states**.
+Starter Free gives you a product surface.
 
-Starter Pro gives you **a production-ready authentication system** for real SaaS products:
+Starter Pro gives you a **real paid product flow** with controlled delivery after purchase.
 
-- real users
-- real sessions
-- real providers
-- real token flows
-- real protected routes
-- real account lifecycle foundations
+That matters because a digital product is not only about checkout.
 
-This is the layer that turns login pages into a working product system.
+It is also about what happens immediately after payment:
+
+- access is confirmed
+- delivery is controlled
+- the buyer receives the product
+- the asset is not publicly exposed
+- fulfillment does not rely on manual work
 
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
   <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/getting-started">
-      Setup guide
+    <Link href="/docs/starter-pro/billing">
+      Billing system
     </Link>
   </Button>
 </div>
 
 <Callout title="Core idea">
-  Auth is not UI. Auth is lifecycle, security, state, redirects, provider rules, and trust.
+  Checkout creates the purchase. Delivery completes the product experience.
 </Callout>
 
 ## What this solves
 
-Authentication is usually one of the first serious blockers before launch.
+A paid digital product feels fragile when delivery is manual or exposed through public links.
 
-It looks simple at the UI level:
+Buyers expect:
 
-- login
-- register
-- forgot password
-- OAuth buttons
+- secure payment
+- instant confirmation
+- controlled access
+- reliable download
+- no waiting for manual fulfillment
 
-But production auth also needs:
-
-- password hashing
-- session persistence
-- email verification
-- password reset tokens
-- provider account linking
-- protected route behavior
-- safe disconnect rules
-- rate limiting foundations
-- secure error handling
-
-Starter Pro gives you a structured foundation for that layer so you do not rebuild the full lifecycle from scratch.
+Starter Pro includes the foundations for a post-purchase delivery flow that feels serious, automated, and trustworthy.
 
 ## What is included
 
@@ -97,16 +87,35 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <PackageCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Fulfillment flow
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        A structured flow from successful payment to confirmed product access and download availability.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
           <LockKeyhole className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
-          Credentials auth
+          Controlled access
         </CardTitle>
       </div>
     </CardHeader>
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Email and password authentication with account creation, password validation, password reset, and password change foundations.
+        Backend-controlled download access so paid files are not exposed through permanent public URLs.
       </div>
     </CardContent>
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
@@ -116,16 +125,16 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Github className="h-4 w-4 text-primary" />
+          <KeyRound className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
-          OAuth providers
+          Token-based delivery
         </CardTitle>
       </div>
     </CardHeader>
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Google and GitHub OAuth foundations with connected account patterns and safer provider lifecycle handling.
+        Secure token patterns for download access, expiration, validation, and post-purchase fulfillment.
       </div>
     </CardContent>
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
@@ -135,104 +144,137 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MailCheck className="h-4 w-4 text-primary" />
+          <RefreshCcw className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
-          Verification and tokens
+          Retry-safe operation
         </CardTitle>
       </div>
     </CardHeader>
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Email verification, reset password, token expiration, and recovery flows structured for production use.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Protected foundations
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Session-aware UI, protected routes, auth-aware backend logic, and account safety patterns.
+        Delivery designed around backend confirmation, webhook truth, and resilience against interrupted browser sessions.
       </div>
     </CardContent>
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 </div>
 
-## Auth flows
+## Delivery lifecycle
 
-<Tabs items={["Sign in", "Register", "Password", "Providers"]}>
-  <Tab value="Sign in">
+<Steps>
+  <Step>
+    ### Buyer completes checkout
+
+    Payment happens through Stripe Checkout.
+
+    Checkout is the commercial action, but the browser redirect alone should not be treated as the source of truth.
+  </Step>
+
+  <Step>
+    ### Webhook confirms the purchase
+
+    Stripe sends the confirmed event to your backend.
+
+```txt title="stripe-events.txt"
+checkout.session.completed
+payment_intent.succeeded
+invoice.payment_succeeded
+```
+
+    The backend verifies the event and updates the internal purchase or access state.
+  </Step>
+
+  <Step>
+    ### Access is granted
+
+    The app associates the purchase with the buyer, customer, or user account.
+
+    This is where billing, auth, and backend ownership connect.
+  </Step>
+
+  <Step>
+    ### Download token is created
+
+    A delivery token can be created for controlled access.
+
+```ts title="delivery-token.ts"
+const token = await createDownloadToken({
+  userId,
+  productId: "starter-pro",
+  expiresIn: "24h",
+});
+```
+  </Step>
+
+  <Step>
+    ### Backend serves the asset
+
+    The buyer requests the download through your backend.
+
+    The backend validates access and streams or redirects to a private file source without exposing a permanent public URL.
+  </Step>
+</Steps>
+
+<Callout title="Production rule">
+  Redirects are UX. Webhooks confirm purchase. Backend access controls delivery.
+</Callout>
+
+## Secure delivery model
+
+<Tabs items={["Storage", "Access", "Token", "Download"]}>
+  <Tab value="Storage">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <LockKeyhole className="h-4 w-4 text-primary" />
-        Sign in flow
+        Private storage
       </div>
       <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>email and password sign in</li>
-        <li>OAuth sign in</li>
-        <li>session creation</li>
-        <li>error-aware UX</li>
-        <li>redirect to protected app surface</li>
+        <li>paid files should not live behind public permanent links</li>
+        <li>private storage keeps the asset away from direct exposure</li>
+        <li>backend access can decide who gets the file</li>
       </ul>
     </div>
   </Tab>
 
-  <Tab value="Register">
+  <Tab value="Access">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <UserRoundCheck className="h-4 w-4 text-primary" />
-        Registration flow
+        <ShieldCheck className="h-4 w-4 text-primary" />
+        Access validation
       </div>
       <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>real account creation</li>
-        <li>password validation</li>
-        <li>email verification-ready lifecycle</li>
-        <li>provider signup path</li>
-        <li>session-aware onboarding path</li>
+        <li>validate purchase or entitlement server-side</li>
+        <li>connect access to user or customer identity</li>
+        <li>avoid trusting client-only purchase state</li>
       </ul>
     </div>
   </Tab>
 
-  <Tab value="Password">
+  <Tab value="Token">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <KeyRound className="h-4 w-4 text-primary" />
-        Password lifecycle
+        Delivery token
       </div>
       <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>forgot password request</li>
-        <li>reset password token</li>
-        <li>expiration-aware recovery flow</li>
-        <li>in-session password change</li>
-        <li>add password for OAuth-only users</li>
+        <li>token represents controlled temporary access</li>
+        <li>expiration limits long-term link sharing</li>
+        <li>validation keeps delivery behind backend rules</li>
       </ul>
     </div>
   </Tab>
 
-  <Tab value="Providers">
+  <Tab value="Download">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <RefreshCcw className="h-4 w-4 text-primary" />
-        Connected accounts
+        <Download className="h-4 w-4 text-primary" />
+        Download endpoint
       </div>
       <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>Google account connection</li>
-        <li>GitHub account connection</li>
-        <li>provider linking patterns</li>
-        <li>safe disconnect rules</li>
-        <li>account fallback behavior</li>
+        <li>buyer requests file through the app</li>
+        <li>backend validates token and access</li>
+        <li>asset is delivered without exposing private storage</li>
       </ul>
     </div>
   </Tab>
@@ -242,92 +284,40 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
-| Auth screens | Included | Included |
-| Credentials auth | Mocked | Real |
-| Google OAuth | Not included | Real |
-| GitHub OAuth | Not included | Real |
-| Sessions | Mocked / partial | Real |
-| Email verification | Not included | Real |
-| Forgot password | UI only | Real flow |
-| Reset password | UI only | Token-based |
-| In-session password change | Not included | Included |
-| OAuth account linking | Not included | Included |
-| Safe provider disconnect rules | Not included | Included |
-| Protected routes | Conceptual | Production-ready foundation |
-| Rate limiting foundations | Not included | Included pattern |
+| Product surface | Included | Included |
+| Checkout flow | Not included | Included foundation |
+| Paid access state | Not included | Included foundation |
+| Private file delivery | Not included | Included foundation |
+| Download tokens | Not included | Included pattern |
+| Backend-controlled access | Not included | Included foundation |
+| Manual fulfillment | Required | Avoided |
+| Buyer confidence | Demo-level | Production-oriented |
 
 <Callout title="Simple distinction">
-  Starter Free simulates auth. Starter Pro handles real users.
+  Starter Free validates the product. Starter Pro completes the paid product experience.
 </Callout>
 
-## Data model responsibilities
+## Why this matters
 
-Starter Pro auth is designed around the structures a serious SaaS usually needs.
+Delivery is the final step in the buyer journey.
 
-Typical auth responsibilities include:
+If delivery is slow, manual, fragile, or unclear, the purchase experience feels less trustworthy.
 
-| Area | Purpose |
-| --- | --- |
-| User | Identity, email, profile image, verification state |
-| Account | OAuth provider accounts and account linking |
-| Session | Active user sessions |
-| VerificationToken | Auth.js-compatible verification flows |
-| UserToken | Email verification and password reset lifecycle |
-| AuthAttempt | Audit and rate-limiting foundation |
+A strong delivery system helps you:
 
-<Callout type="info" title="Why this matters">
-  Production auth is not only about signing in. It is about storing enough state to make account lifecycle, recovery, and provider logic safe.
-</Callout>
+- reduce support friction
+- avoid manual fulfillment work
+- protect paid assets
+- improve buyer confidence
+- scale sales without operational drag
 
-## Protected routes
-
-Auth becomes valuable when it protects real product surfaces.
-
-Starter Pro is designed so the auth layer can protect:
-
-- dashboard
-- settings
-- billing
-- admin
-- customer data
-- plan-aware product areas
-
-```txt title="protected-routes.txt"
-/dashboard
-/settings
-/billing
-/admin
-```
-
-A good protected route system should:
-
-- redirect anonymous users
-- preserve safe app boundaries
-- expose session-aware UI
-- avoid leaking private state
-- work with billing and backend ownership rules
-
-## Integration with billing
-
-Auth and billing are connected in a real SaaS.
-
-A customer is not just a payment record. A customer belongs to a user or organization.
-
-That means auth must support:
-
-- account identity
-- customer ownership
-- subscription access
-- billing portal access
-- plan-aware feature gating
-
-<Callout title="Why auth matters for revenue">
-  You cannot reliably charge customers until you can reliably identify them.
+<Callout type="info" title="Buyer trust principle">
+  The buyer should never wonder what happens after payment. Confirmation and access should feel immediate, clear, and controlled.
 </Callout>
 
 ## Security rules
 
-Use these rules when adapting the auth layer.
+Use these rules when adapting the delivery layer.
 
 <div className="mb-10 grid gap-6 md:grid-cols-2">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -343,11 +333,11 @@ Use these rules when adapting the auth layer.
     </CardHeader>
     <CardContent className="pt-0">
       <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>server-side validation for auth actions</li>
-        <li>short-lived tokens for recovery flows</li>
-        <li>generic forgot-password confirmation copy</li>
-        <li>clear session-aware redirects</li>
-        <li>provider disconnect rules that never lock users out</li>
+        <li>private storage for paid files</li>
+        <li>server-side access validation</li>
+        <li>webhook-confirmed purchase state</li>
+        <li>expiring delivery tokens</li>
+        <li>clear post-purchase confirmation copy</li>
       </ul>
     </CardContent>
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
@@ -366,11 +356,11 @@ Use these rules when adapting the auth layer.
     </CardHeader>
     <CardContent className="pt-0">
       <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>revealing whether an email exists</li>
-        <li>allowing users to disconnect their only login method</li>
-        <li>trusting client-side auth state for protected data</li>
-        <li>returning overly specific auth errors</li>
-        <li>mixing auth logic directly into unrelated product components</li>
+        <li>public permanent download links</li>
+        <li>manual fulfillment as the default path</li>
+        <li>trusting only redirect success</li>
+        <li>emailing raw private asset URLs</li>
+        <li>unclear buyer instructions after payment</li>
       </ul>
     </CardContent>
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
@@ -379,65 +369,60 @@ Use these rules when adapting the auth layer.
 
 ## Decision guide
 
-Use Starter Pro auth when:
+Use Starter Pro delivery when:
 
-- real users need accounts
-- sessions must persist
-- OAuth providers matter
-- password reset must work
-- routes need protection
-- billing depends on identity
-- account lifecycle edge cases matter
+- users can buy access
+- paid files must stay private
+- delivery should be automatic
+- buyer access must be controlled
+- fulfillment should not depend on manual work
+- the purchase experience must feel complete
 
-Stay on Starter Free when:
+Starter Free is enough when:
 
-- you are still validating UX
-- you do not need real users yet
-- auth is not blocking progress
-- you are not preparing monetization
-
-<Callout title="Upgrade when auth becomes real">
-  Starter Free helps you design the auth surface. Starter Pro gives you the auth system behind it.
-</Callout>
+- you are only validating product UX
+- no one can buy yet
+- delivery is not part of the product experience
+- manual demos are still acceptable
 
 ## Implementation checklist
 
-Before treating auth as launch-ready, validate:
+Before treating delivery as production-ready, validate:
 
-- credentials sign in
-- OAuth sign in
-- registration
-- email verification
-- forgot password
-- reset password
-- password change
-- protected route redirects
-- session-aware navigation
-- connected account behavior
-- provider disconnect rules
-- billing access ownership
+- checkout completion
+- webhook confirmation
+- purchase-to-access mapping
+- private asset storage
+- token creation
+- token expiration
+- token validation
+- backend download route
+- unauthorized access behavior
+- expired token behavior
+- retry path for interrupted sessions
+- buyer-facing confirmation copy
 
-<Callout type="info" title="Validation principle">
-  Do not customize deeply before validating the default flows. Confirm the foundation first, then adapt the product.
+<Callout title="Delivery validation principle">
+  A paid product is not complete when checkout works. It is complete when the buyer reliably receives controlled access.
 </Callout>
 
 ## Common questions
 
 <Accordions type="single">
-  <Accordion title="Is this just UI around auth?">
-    No. Starter Pro focuses on real auth behavior: sessions, providers, tokens, protected routes, and account lifecycle structure.
+  <Accordion title="Why not just email a public download link?">
+    Public links are easy to share, hard to revoke, and weak for paid product delivery. Backend-controlled access gives you a stronger commercial foundation.
   </Accordion>
 
-  <Accordion title="Can I remove a provider?">
-    Yes. Providers should be treated as configurable entry points. Keep safe account fallback rules if you allow users to disconnect providers.
+  <Accordion title="Why are webhooks part of delivery?">
+    Because browser redirects can be interrupted or faked at the UX level. Webhooks confirm the payment state before access is granted.
   </Accordion>
 
-  <Accordion title="Should billing depend on auth?">
-    Yes. In a SaaS, billing state must be connected to a user, customer, or organization identity. Auth is the foundation for that ownership.
+  <Accordion title="Can delivery work without user accounts?">
+    It can, but accounts make access recovery, support, customer history, and repeat access much cleaner. For a SaaS product, auth and delivery should usually work together.
   </Accordion>
 
-  <Accordion title="Can I replace the auth provider later?">
-    You can, but auth touches many parts of a product. Replace it deliberately and keep the same boundaries around sessions, tokens, and protected access.
+  <Accordion title="Can I replace the storage provider?">
+    Yes. Keep the same boundary: private storage, backend validation, controlled delivery, and no permanent public access to paid assets.
   </Accordion>
 </Accordions>
 
@@ -448,7 +433,7 @@ Before treating auth as launch-ready, validate:
     <div>
       <div className="text-sm font-medium text-foreground">Billing system</div>
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Connect authenticated users to customers, subscriptions, and plan-aware access.
+        Understand how payment and subscription state confirm access.
       </div>
     </div>
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
@@ -458,7 +443,17 @@ Before treating auth as launch-ready, validate:
     <div>
       <div className="text-sm font-medium text-foreground">Backend foundations</div>
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand how auth integrates with data ownership and server-side logic.
+        Review the server-side structure that validates and serves delivery access.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See how buyer identity and sessions support secure delivery.
       </div>
     </div>
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
@@ -473,18 +468,8 @@ Before treating auth as launch-ready, validate:
     </div>
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
-
-  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">What is included</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review the full Starter Pro foundation.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
 </div>
-<br />
+
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
   <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
@@ -494,6 +479,6 @@ Before treating auth as launch-ready, validate:
   </Button>
 </div>
 
-<Callout title="Ship auth once. Ship it right.">
-  The cost of weak auth is usually paid later. Starter Pro helps you avoid that by starting from a stronger foundation.
+<Callout title="Checkout starts the sale. Delivery earns the trust.">
+  Starter Pro gives you the controlled post-purchase flow that makes a paid digital product feel complete.
 </Callout>

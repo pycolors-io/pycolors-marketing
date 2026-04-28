@@ -1,27 +1,22 @@
 ---
 title: Button
 description: Action button component used across PyColors UI, built on shadcn/ui. Includes variants, sizes, and best practices.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
-<DocsPageShell>
 
 The **Button** component is one of the core interactive elements of PyColors UI.
 It provides consistent styling, variants, accessibility, and flexible composition across marketing pages, dashboards, and applications.
 
 This implementation extends the **shadcn/ui Button primitive** and is aligned with the PyColors design system (semantic color tokens, radius, shadows, and focus rings).
 
----
-
 ## Import
 
 ```tsx
 import { Button } from "@pycolors/ui";
 ```
-
----
 
 ## Usage
 
@@ -50,8 +45,6 @@ import { Button } from "@pycolors/ui";
 </Tabs>
 
 The default button uses the primary semantic color tokens and adapts automatically to light/dark mode.
-
----
 
 ## Variants
 
@@ -114,8 +107,6 @@ Buttons support several variants to adapt to different contexts.
 | ghost        | Minimal UI footprint                 |
 | destructive  | Used for destructive actions         |
 | link         | Text-style button for inline actions |
-
----
 
 ## Sizes
 
@@ -237,8 +228,6 @@ The Button supports both regular sizes and icon-only sizes.
 | icon-sm   | Smaller icon-only button                      |
 | icon-lg   | Larger icon-only button                       |
 
----
-
 ## Disabled state
 
 <Tabs items={["Preview", "Usage", "Code"]}>
@@ -284,8 +273,6 @@ The Button supports both regular sizes and icon-only sizes.
 
 Disabled buttons use reduced opacity and disable pointer events to indicate non-interactivity.
 
----
-
 ## Focus and keyboard
 
 Buttons use a **focus-visible** ring for accessible keyboard navigation.
@@ -294,8 +281,6 @@ The ring is applied only when navigating with the keyboard (Tab / Shift+Tab), no
 - Keeps focus clear for keyboard users
 - Avoids noisy focus styles for pointer users
 - Uses semantic tokens (`ring-ring`, `border-ring`)
-
----
 
 ## With icon
 
@@ -411,8 +396,6 @@ If you want a custom size, set it explicitly:
   </Tab>
 </Tabs>
 
----
-
 ## Validation state (aria-invalid)
 
 The Button supports an invalid visual state via `aria-invalid`.
@@ -444,8 +427,6 @@ This is useful for **submit actions** when the related form is invalid.
     ```
   </Tab>
 </Tabs>
-
----
 
 ## As child (Slot)
 
@@ -485,8 +466,6 @@ You can render the button as another component using `asChild`.
 
 This allows styling links, router components, or custom components as buttons while maintaining semantics.
 
----
-
 ## API
 
 ### Props
@@ -504,8 +483,6 @@ The Button extends the standard HTML button props:
 ```ts
 React.ComponentProps<"button">
 ```
-
----
 
 ## TypeScript types
 
@@ -529,8 +506,6 @@ export type ButtonSize =
   | "icon-lg";
 ```
 
----
-
 ## Accessibility
 
 - Use clear and descriptive labels for button text.
@@ -539,8 +514,6 @@ export type ButtonSize =
 - Icons should be marked `aria-hidden` (decorative).
 - Avoid using a Button with only an icon and no accessible label.
 
----
-
 ## Design guidelines
 
 - Use `default` for the primary action on a page.
@@ -548,8 +521,6 @@ export type ButtonSize =
 - Use `destructive` only for actions that are dangerous or irreversible.
 - Prefer consistent button sizing within a view to preserve rhythm.
 - Use icon-only sizes (`icon-*`) for toolbars and compact actions.
-
----
 
 ## Related guides
 
@@ -575,5 +546,3 @@ export type ButtonSize =
     href="/docs/design-system/tokens/radius"
   />
 </LinkCards>
-
-</DocsPageShell>

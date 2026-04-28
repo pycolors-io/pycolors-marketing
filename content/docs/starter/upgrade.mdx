@@ -1,0 +1,358 @@
+---
+title: Upgrade to Starter Pro
+description: Learn when Starter Free reaches its limits, what Starter Pro adds, and how to move from product-shaped validation to a real SaaS foundation.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Free</Badge>
+  <Badge>Starter Pro</Badge>
+</div>
+
+## Overview
+
+Starter Free helps you **validate the product surface**.
+
+Starter Pro helps you **launch the business layer**.
+
+Upgrade when the blocker is no longer the UI, but the production wiring behind it:
+
+- real authentication
+- protected routes
+- Stripe Checkout
+- billing portal
+- webhook-driven billing state
+- backend-ready product structure
+
+<Callout title="Simple rule">
+  Starter Free validates the product. Starter Pro wires the business.
+</Callout>
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+</div>
+
+## The upgrade moment
+
+Starter Free is the right choice when your question is:
+
+> What should the product feel like?
+
+Starter Pro becomes the faster path when your question becomes:
+
+> How do I launch this without spending weeks wiring auth, billing, and protected flows?
+
+That is the moment where staying on mocked foundations starts costing more than upgrading.
+
+## What changes with Pro
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LockKeyhole className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Real auth
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Credentials, OAuth, verification, reset flows, sessions, and safer account foundations.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Real billing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Stripe Checkout, customer portal, invoices, subscriptions, and webhook synchronization.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Protected foundation
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Protected routes, session-aware UI, billing-aware access, and production-ready structure.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Free vs Pro
+
+| Capability | Starter Free | Starter Pro |
+| --- | --- | --- |
+| Product-shaped UI surfaces | Included | Included |
+| Auth screens and UX states | Included | Included + wired |
+| Email and password auth | Mocked | Real |
+| Google and GitHub OAuth | Not included | Real |
+| Email verification | Not included | Real |
+| Password reset and change | Mocked | Real |
+| Stripe Checkout | UI only | Real |
+| Billing portal | UI only | Real |
+| Webhook sync | Not included | Real |
+| Invoices and subscriptions | Mocked | Real |
+| Protected app foundations | Partial | Production-ready |
+| Data layer | Mocked | Real-ready |
+| Best use case | Validate UX | Launch faster |
+
+<Callout title="Free to validate. Pro to launch.">
+  Starter Free helps you shape the product. Starter Pro removes the wiring that delays revenue.
+</Callout>
+
+## When to upgrade
+
+Upgrade when you need:
+
+- real users
+- real sessions
+- real payments
+- protected routes
+- plan-aware product behavior
+- backend-backed data
+- production confidence
+
+Stay on Starter Free when you are still:
+
+- shaping the product
+- validating UX
+- changing the domain model
+- preparing a demo
+- exploring positioning
+
+## What you keep
+
+Upgrade is **incremental**, not destructive.
+
+You keep:
+
+- routes
+- pages
+- components
+- layouts
+- design system
+- product surface
+
+You replace:
+
+- mock auth → real auth
+- mock billing → real Stripe
+- mock access → protected routes
+- mock data → backend-ready data flows
+
+<Callout type="info" title="No wasted work">
+  You are not throwing away Starter Free. You are replacing mocked wiring with production wiring.
+</Callout>
+
+## Upgrade flow
+
+<Steps>
+  <Step>
+    ### Add authentication
+
+    Replace mocked auth UX with real sessions, credentials, OAuth, verification, and reset flows.
+  </Step>
+
+  <Step>
+    ### Protect product routes
+
+    Add session-aware routing for dashboard, projects, admin, billing, and settings.
+  </Step>
+
+  <Step>
+    ### Connect billing
+
+    Wire Stripe Checkout, billing portal, invoices, subscriptions, and webhook sync.
+  </Step>
+
+  <Step>
+    ### Replace mock data
+
+    Move from mocked records to backend-backed product flows.
+  </Step>
+</Steps>
+
+## Why not build it yourself?
+
+You can.
+
+The real question is whether you want to spend days or weeks rebuilding the same launch blockers before you can charge users.
+
+Starter Pro is not about “more code”.
+
+It is about removing the work that usually delays launch:
+
+- auth complexity
+- Stripe complexity
+- webhook reliability
+- route protection
+- billing-state synchronization
+- production setup uncertainty
+
+<Callout title="Time-to-revenue decision">
+  If auth and billing are blocking launch, Starter Pro is not a UI upgrade. It is a business acceleration layer.
+</Callout>
+
+## Decision guide
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Stay on Free if
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>you are still shaping the product</li>
+        <li>you need a credible demo</li>
+        <li>you are validating UX and navigation</li>
+        <li>backend work would slow learning</li>
+        <li>payments are not required yet</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Rocket className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Move to Pro if
+        </CardTitle>
+      </div>
+    </CardHeader>
+
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>you are ready to launch</li>
+        <li>auth is becoming a blocker</li>
+        <li>Stripe must charge customers</li>
+        <li>routes need protection</li>
+        <li>billing state must control access</li>
+      </ul>
+    </CardContent>
+
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Common concerns
+
+<Accordions type="single">
+  <Accordion title="Will I lose my Starter Free work?">
+    No. Starter Pro upgrades the wiring. Your product surface, design system, routes, and components remain useful.
+  </Accordion>
+
+  <Accordion title="Can I upgrade later?">
+    Yes. Starter Free is designed as a validation layer. Starter Pro becomes useful when production wiring becomes the blocker.
+  </Accordion>
+
+  <Accordion title="Do I need to migrate everything at once?">
+    No. Upgrade incrementally: auth first, then protected routes, then billing, then backend data.
+  </Accordion>
+
+  <Accordion title="Why not stay on Starter Free?">
+    You can stay on Free while validating. Once you need real users, real payments, and protected access, mocked foundations become the expensive path.
+  </Accordion>
+</Accordions>
+
+## Ready to move faster?
+
+If you are still exploring, stay on Starter Free.
+
+If the business layer is slowing you down, move to Starter Pro.
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+</div>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro Overview</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the production foundation included in Starter Pro.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">View Pricing</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See the Starter Pro offer and choose when the upgrade makes sense.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+
+<Callout title="Free to validate. Pro to monetize.">
+  Starter Free proves the product surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, and delivery. → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>
+</Callout>

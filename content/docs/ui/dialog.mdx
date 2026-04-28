@@ -1,12 +1,11 @@
 ---
 title: Dialog
 description: Modal dialog component built on Radix Dialog. Use it for confirmations, forms, and focused tasks.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
-<DocsPageShell>
 
 The **Dialog** component renders a modal overlay that traps focus and requires an explicit close.
 It is built on **Radix UI Dialog** and styled with PyColors tokens (`bg-card`, `border-border`, `text-card-foreground`).
@@ -15,8 +14,6 @@ Use Dialog for:
 - Confirmations (delete, sign out)
 - Forms (edit profile, create project)
 - Focused tasks that shouldn’t leave the current context
-
----
 
 ## Import
 
@@ -32,8 +29,6 @@ import {
   DialogClose,
 } from "@pycolors/ui";
 ```
-
----
 
 ## Basic usage
 
@@ -144,8 +139,6 @@ import {
   </Tab>
 </Tabs>
 
----
-
 ## With destructive confirmation
 
 Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button, and keep the destructive action explicit.
@@ -246,8 +239,6 @@ Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Components
@@ -267,8 +258,6 @@ Use a dialog for irreversible actions. Pair `DialogClose` with the cancel button
 
 All components extend their respective Radix props.
 
----
-
 ## Accessibility
 
 - Radix handles focus trapping and restores focus to the trigger on close.
@@ -276,16 +265,12 @@ All components extend their respective Radix props.
 - Avoid nesting dialogs. For multi-step flows, consider a **Sheet** or a full page.
 - Keep one primary action and one secondary action in the footer.
 
----
-
 ## Design guidelines
 
 - Keep dialog content focused: one task per dialog.
 - Prefer `max-w-lg` for forms; avoid very wide dialogs.
 - For complex navigation or long content, use **Sheet** instead.
 - Put destructive actions last and style them clearly.
-
----
 
 ## Related guides
 
@@ -306,5 +291,3 @@ All components extend their respective Radix props.
     href="/docs/patterns/forms"
   />
 </LinkCards>
-
-</DocsPageShell>

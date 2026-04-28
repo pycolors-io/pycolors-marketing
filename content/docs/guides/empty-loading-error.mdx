@@ -1,10 +1,14 @@
 ---
 title: Empty, loading, and error states
 description: Design clear, consistent, and production-ready async states with PyColors UI primitives.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
   Alert,
   AlertTitle,
@@ -13,6 +17,8 @@ import {
   Button,
   Card,
   CardContent,
+  CardHeader,
+  CardTitle,
   EmptyState,
   Skeleton,
   Table,
@@ -20,24 +26,28 @@ import {
   TableRow,
   TableCell,
 } from "@pycolors/ui";
-import { CheckCircle, XCircle } from "lucide-react";
-
-<DocsPageShell>
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  LoaderCircle,
+  SearchX,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
   <Badge>Async states</Badge>
 </div>
 
-# Async states define product quality
+## Overview
 
 Modern products spend a large part of their life outside the happy path.
 
-Data loads.
-Lists are empty.
-Requests fail.
+Data loads. Lists are empty. Requests fail. Actions can be delayed, rejected, retried, or blocked by permissions.
 
-How you handle these moments directly affects:
+How your product handles these moments directly affects:
 
 - perceived performance
 - user confidence
@@ -46,150 +56,136 @@ How you handle these moments directly affects:
 
 This guide explains how to design **loading**, **empty**, and **error** states with PyColors UI primitives.
 
----
+<Callout title="Why this matters">
+  Users do not only judge the successful state. They also judge whether the product feels stable when data is missing, slow, or unavailable.
+</Callout>
 
-## Why this matters
+## What you’ll design
 
-A product is not judged only by its successful states.
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LoaderCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Loading states
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Preserve the expected layout while data is still loading.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-It is also judged by how it behaves when:
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <SearchX className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Empty states
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Explain valid empty results and guide the user toward the next action.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-- data is still loading
-- nothing exists yet
-- a request fails
-- the user needs guidance
-
-Well-designed async states make the product feel:
-
-- stable
-- intentional
-- trustworthy
-
-Poor async states make even good products feel unfinished.
-
----
-
-## The three async states
-
-Every data-driven interface moves through three distinct states:
-
-1. **Loading** → data is being fetched
-2. **Empty** → request succeeded, but there is nothing to show
-3. **Error** → request or action failed
-
-These states are not interchangeable.
-
-Each has:
-
-- a different meaning
-- a different UX goal
-- a different visual response
-
----
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <CircleAlert className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Error states
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Communicate failures calmly, clearly, and with an actionable recovery path.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
 ## Mental model
 
-> **Skeleton = shape**
-> **EmptyState = explanation**
-> **Alert = problem**
+> Skeleton is shape. EmptyState is explanation. Alert is a problem.
 
-Keeping these roles separate is one of the easiest ways to make a product feel more professional.
+Each async state has one job:
 
----
+| State | Component | Meaning |
+| --- | --- | --- |
+| Loading | `Skeleton` | Data is expected soon |
+| Empty | `EmptyState` | The request worked, but there is nothing to show |
+| Error | `Alert` | Something failed and the user needs feedback |
 
-## Loading states → Skeleton
+<Callout type="info" title="System rule">
+  Do not blur async states. A product feels clearer when every state communicates one specific situation.
+</Callout>
 
-### When to use Skeleton
+## Steps
 
-Use **Skeleton** when:
+<Steps>
 
-- data is loading
-- the layout is already known
-- content is expected soon
+<Step>
+### Use Skeleton for loading
 
-Skeleton preserves structure and reduces visual jank.
+Use `Skeleton` when data is loading and the final layout is already known.
 
-It helps users understand:
+Skeleton should preserve shape and reduce layout shift. It should not explain the state.
 
-> “Something is coming here.”
+<Tabs items={["Card", "Table"]}>
+  <Tab value="Card">
 
-### What Skeleton is for
+```tsx title="components/project-card-skeleton.tsx"
+import { Card, CardContent, Skeleton } from "@pycolors/ui";
 
-Skeleton is:
-
-- a placeholder
-- a layout-preserving state
-- a temporary visual structure
-
-Skeleton is **not**:
-
-- content
-- product feedback
-- an explanation
-
----
-
-### Example: card loading
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Card>
-        <CardContent className="space-y-3">
-          <Skeleton className="h-5 w-1/3" />
-          <Skeleton className="h-4 w-2/3" />
-          <Skeleton className="h-24 w-full" />
-        </CardContent>
-      </Card>
-    </Preview>
-  </Tab>
-
-  <Tab value="Code">
-    ```tsx
-    <Card>
-      <CardContent className="space-y-3">
+export function ProjectCardSkeleton() {
+  return (
+    <Card className="rounded-2xl border-border/60">
+      <CardContent className="space-y-3 p-6">
         <Skeleton className="h-5 w-1/3" />
         <Skeleton className="h-4 w-2/3" />
         <Skeleton className="h-24 w-full" />
       </CardContent>
     </Card>
-    ```
-  </Tab>
-</Tabs>
+  );
+}
+```
 
----
-
-### Example: table loading
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Table>
-        <TableBody>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <TableRow key={i}>
-              <TableCell>
-                <Skeleton className="h-4 w-32" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-24" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-16" />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Preview>
   </Tab>
 
-  <Tab value="Code">
-    ```tsx
+  <Tab value="Table">
+
+```tsx title="components/project-table-skeleton.tsx"
+import {
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@pycolors/ui";
+
+export function ProjectTableSkeleton() {
+  return (
     <Table>
       <TableBody>
-        {Array.from({ length: 3 }).map((_, i) => (
-          <TableRow key={i}>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
             <TableCell>
               <Skeleton className="h-4 w-32" />
             </TableCell>
@@ -203,260 +199,259 @@ Skeleton is **not**:
         ))}
       </TableBody>
     </Table>
-    ```
+  );
+}
+```
+
   </Tab>
 </Tabs>
 
----
+</Step>
 
-## Empty states → EmptyState
+<Step>
+### Use EmptyState for valid empty results
 
-### When to use EmptyState
+Use `EmptyState` when the request succeeded but there is nothing to display yet.
 
-Use **EmptyState** when:
+An empty state should answer two questions:
 
-- the request succeeded
-- the result is valid
-- there is nothing to display yet
+- why is this empty?
+- what can the user do next?
 
-This is not a failure.
+```tsx title="components/projects-empty-state.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
 
-This is a real, expected product state.
+export function ProjectsEmptyState() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to start organizing your workspace."
+      action={<Button>Create project</Button>}
+    />
+  );
+}
+```
 
-An EmptyState should answer two questions:
+This is not a failure. It is a real product state.
 
-1. **Why is this empty?**
-2. **What can the user do next?**
+</Step>
 
----
+<Step>
+### Use Alert for errors
 
-### Example: empty section
+Use `Alert` when a request or action fails and the user needs to understand what happened.
 
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
+```tsx title="components/projects-error-state.tsx"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+} from "@pycolors/ui";
+
+export function ProjectsErrorState() {
+  return (
+    <Alert variant="destructive">
+      <AlertTitle>Projects could not be loaded</AlertTitle>
+      <AlertDescription>
+        Check your connection and try again.
+      </AlertDescription>
+      <div className="mt-4">
+        <Button variant="outline">Retry</Button>
+      </div>
+    </Alert>
+  );
+}
+```
+
+Error copy should be calm, specific, and actionable.
+
+</Step>
+
+</Steps>
+
+## Examples
+
+<Tabs items={["Loading", "Empty", "Error"]}>
+  <Tab value="Loading">
+    <Card className="max-w-xl rounded-2xl border-border/60 bg-card/70">
+      <CardContent className="space-y-3 p-6">
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+  </Tab>
+
+  <Tab value="Empty">
+    <div className="max-w-xl rounded-2xl border border-border/60 bg-card p-6">
       <EmptyState
         title="No projects yet"
         description="Create your first project to get started."
         action={<Button>Create project</Button>}
       />
-    </Preview>
+    </div>
   </Tab>
 
-  <Tab value="Code">
-    ```tsx
-    <EmptyState
-      title="No projects yet"
-      description="Create your first project to get started."
-      action={<Button>Create project</Button>}
-    />
-    ```
-  </Tab>
-</Tabs>
-
----
-
-### Example: empty table
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell colSpan={4}>
-              <EmptyState
-                title="No results"
-                description="Try adjusting your filters."
-              />
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </Preview>
-  </Tab>
-
-  <Tab value="Code">
-    ```tsx
-    <Table>
-      <TableBody>
-        <TableRow>
-          <TableCell colSpan={4}>
-            <EmptyState
-              title="No results"
-              description="Try adjusting your filters."
-            />
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-    ```
-  </Tab>
-</Tabs>
-
----
-
-## Error states → Alert
-
-### When to use Alert
-
-Use **Alert** when:
-
-- a request fails
-- an action fails
-- the user needs immediate feedback
-- the product cannot proceed as expected
-
-An error state communicates a **problem**.
-
-It should be:
-
-- clear
-- calm
-- actionable
-
----
-
-### Example: inline error
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-    <Preview>
+  <Tab value="Error">
+    <div className="max-w-xl">
       <Alert variant="destructive">
         <AlertTitle>Something went wrong</AlertTitle>
         <AlertDescription>
           We couldn’t load your projects. Please try again.
         </AlertDescription>
       </Alert>
-    </Preview>
-  </Tab>
-
-  <Tab value="Code">
-    ```tsx
-    <Alert variant="destructive">
-      <AlertTitle>Something went wrong</AlertTitle>
-      <AlertDescription>
-        We couldn’t load your projects. Please try again.
-      </AlertDescription>
-    </Alert>
-    ```
+    </div>
   </Tab>
 </Tabs>
 
----
+## Decision guide
 
-## Choosing the right state
+Use `Skeleton` when:
 
-| Situation | Component |
-|---|---|
-| Data is loading | Skeleton |
-| Request succeeded, but there is no data | EmptyState |
-| Request or action failed | Alert |
+- data is loading
+- the layout is predictable
+- content is expected soon
+- you want to avoid layout shift
 
-Never blur these roles.
+Use `EmptyState` when:
 
-A product feels clearer when each state has one job.
+- the request succeeded
+- the result is valid
+- there is nothing to display
+- the user needs a next step
 
----
+Use `Alert` when:
 
-## UX rules
+- a request failed
+- an action failed
+- the user cannot proceed
+- the product needs to explain a blocking issue
 
-These rules make async states feel more stable in production.
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-### Loading
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Skeleton when layout is known</li>
+        <li>EmptyState when the result is valid but empty</li>
+        <li>Alert when the user must understand a failure</li>
+        <li>consistent async behavior across product areas</li>
+        <li>clear messaging with one role per state</li>
+      </ul>
+    </CardContent>
 
-- preserve the layout whenever possible
-- use Skeleton when the structure is known
-- avoid replacing the whole page with a spinner
-- remove loading placeholders quickly when data is ready
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-### Empty
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-- explain why the section is empty
-- offer a useful next step when relevant
-- do not treat empty as failure
-- keep the tone neutral and helpful
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Skeleton combined with explanatory copy</li>
+        <li>EmptyState used for real errors</li>
+        <li>global spinners replacing stable layouts</li>
+        <li>toasts for blocking page failures</li>
+        <li>mixing multiple async states at once</li>
+      </ul>
+    </CardContent>
 
-### Error
-
-- say what happened
-- tell the user what they can do next
-- avoid vague system language
-- use inline feedback for blocking problems
-
----
-
-## Production-tested guidance
-
-<div className="grid gap-6 sm:grid-cols-2">
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <XCircle className="mr-2 h-4 w-4 text-destructive" />
-      Avoid
-    </h3>
-
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>Skeleton combined with explanatory copy</li>
-      <li>EmptyState used for real errors</li>
-      <li>Global spinner replacing a stable layout</li>
-      <li>Toast used for a blocking page failure</li>
-      <li>Mixing multiple async states at once</li>
-    </ul>
-  </div>
-
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
-      Prefer
-    </h3>
-
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>Skeleton when layout is known</li>
-      <li>EmptyState when the result is valid but empty</li>
-      <li>Alert when the user must understand a failure</li>
-      <li>Consistent async behavior across product areas</li>
-      <li>Clear messaging with one role per state</li>
-    </ul>
-  </div>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 </div>
 
----
+## Production checklist
 
-## Why this improves product feel
+Before shipping async states, confirm that:
 
-Good async states do more than fill gaps.
+- loading states preserve layout when possible
+- empty states explain why nothing is shown
+- empty states offer a useful next action when relevant
+- error states explain what happened
+- blocking failures are visible inline, not only in a toast
+- retry actions are available when recovery is possible
+- copy stays calm, specific, and human
 
-They help the product feel:
+<Callout title="Ready to use these states in real product flows?">
+  Starter Pro gives you production-shaped SaaS foundations where async states matter: auth, billing, protected routes, settings, and product dashboards. → `/docs/starter-pro`
+</Callout>
 
-- faster
-- calmer
-- more deliberate
-- easier to trust
+## Common questions
 
-This is one of the places where product quality becomes visible.
+<Accordions type="single">
+  <Accordion title="Should I use a spinner instead of Skeleton?">
+    Use a spinner when the layout is unknown or the operation is short and isolated. Use Skeleton when the shape of the content is already known.
+  </Accordion>
 
-A polished product is often just a product with better non-happy states.
+  <Accordion title="Is an empty state an error?">
+    No. An empty state means the request succeeded but returned no usable content. Treating it as an error makes the product feel unnecessarily negative.
+  </Accordion>
 
----
+  <Accordion title="Should blocking errors be shown as toasts?">
+    Usually no. Toasts are temporary. Blocking failures should remain visible inline so users can read, understand, and recover.
+  </Accordion>
+</Accordions>
 
-## Related components
+## Next steps
 
-<LinkCards>
-  <LinkCard
-    title="Skeleton"
-    description="Visual placeholders for loading states."
-    href="/docs/ui/skeleton"
-  />
-  <LinkCard
-    title="EmptyState"
-    description="Valid empty states with clear messaging."
-    href="/docs/ui/empty-state"
-  />
-  <LinkCard
-    title="Alert"
-    description="Inline feedback for errors and important states."
-    href="/docs/ui/alert"
-  />
-</LinkCards>
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/skeleton" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Skeleton</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use visual placeholders for loading states that preserve layout.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-</DocsPageShell>
+  <a href="/docs/ui/empty-state" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">EmptyState</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Design valid empty states with clear messaging and next actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Alert</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Communicate blocking problems and important product feedback.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/forms-with-validation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Forms with validation</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Apply the same clarity to form validation, loading, and submission errors.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>

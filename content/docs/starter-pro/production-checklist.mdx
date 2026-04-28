@@ -1,0 +1,547 @@
+---
+title: Production checklist (PRO)
+description: Validate auth, billing, backend, delivery, environment, and launch readiness before shipping Starter Pro to real users.
+lastUpdated: "2026-04-28"
+appliesTo: Starter Pro
+---
+
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import {
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  Database,
+  Download,
+  KeyRound,
+  LockKeyhole,
+  Rocket,
+  Server,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Production</Badge>
+</div>
+
+## Validate the foundation before launch
+
+Starter Pro gives you the production-shaped foundation.
+
+This checklist helps you validate that foundation before exposing the product to real users, real payments, and real customer data.
+
+A launch-ready SaaS should not only “build successfully”.
+
+It should validate:
+
+- authentication
+- billing
+- backend persistence
+- protected routes
+- secure delivery
+- environment variables
+- deployment behavior
+- recovery paths
+- buyer trust
+
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/docs/starter-pro/getting-started">
+      Setup guide
+    </Link>
+  </Button>
+</div>
+
+<Callout title="Production rule">
+  Do not launch because the UI looks finished. Launch when the critical systems behave correctly.
+</Callout>
+
+## What this checklist covers
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <LockKeyhole className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Auth
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Sessions, providers, reset flows, verification, and protected routes.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CreditCard className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Billing
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Checkout, portal, webhooks, invoices, subscriptions, and access.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Server className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Backend
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Database, ownership, migrations, server rules, and product data.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Launch readiness model
+
+> Production readiness is not one check.
+> It is the alignment of identity, payment, data, access, and delivery.
+
+| Layer | Production question |
+| --- | --- |
+| Auth | Can real users sign in safely and recover access? |
+| Billing | Can real customers pay and have state synchronized? |
+| Backend | Can product data persist with ownership and access rules? |
+| Delivery | Can paid access be fulfilled securely after purchase? |
+| Environment | Are production secrets complete and separated from local/test? |
+| Deployment | Does the production build behave like the local validated flow? |
+
+<Callout type="info" title="Go-live principle">
+  A production checklist should verify behavior, not only configuration.
+</Callout>
+
+## Checklist
+
+<Steps>
+  <Step>
+    ### Validate environment variables
+
+    Confirm that local, preview, and production environments are separated.
+
+```bash title=".env.production"
+NEXT_PUBLIC_APP_URL=
+DATABASE_URL=
+AUTH_SECRET=
+
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STARTER_PRO_ONE_TIME=
+
+RESEND_API_KEY=
+AUTH_EMAIL_FROM=
+```
+
+    Production secrets should not reuse local test values unless the system is intentionally still in test mode.
+  </Step>
+
+  <Step>
+    ### Validate authentication
+
+    Test the full auth lifecycle:
+
+    - credentials sign in
+    - OAuth sign in
+    - registration
+    - email verification
+    - forgot password
+    - reset password
+    - password change
+    - protected route redirects
+    - session-aware navigation
+    - connected account behavior
+  </Step>
+
+  <Step>
+    ### Validate billing
+
+    Test the full Stripe lifecycle:
+
+    - checkout session creation
+    - successful payment
+    - canceled payment
+    - billing portal session
+    - webhook signature verification
+    - subscription created event
+    - subscription updated event
+    - subscription canceled event
+    - invoice payment succeeded event
+    - invoice payment failed event
+  </Step>
+
+  <Step>
+    ### Validate backend and access
+
+    Confirm that product data is not only displayed, but protected correctly:
+
+    - migrations run
+    - database client is generated
+    - seed data works only where expected
+    - ownership checks work
+    - protected data requires a session
+    - paid features require valid billing state
+    - server-side rules match UI state
+  </Step>
+
+  <Step>
+    ### Validate secure delivery
+
+    If your product includes paid downloads or fulfillment, test:
+
+    - payment confirmation
+    - purchase-to-access mapping
+    - private asset storage
+    - download token creation
+    - token expiration
+    - unauthorized access behavior
+    - interrupted session recovery
+  </Step>
+
+  <Step>
+    ### Validate production deployment
+
+    Build and deploy intentionally.
+
+```bash title="terminal"
+pnpm build
+pnpm start
+```
+
+    Then validate the production URL:
+
+    - `/login`
+    - `/register`
+    - `/dashboard`
+    - `/billing`
+    - `/settings`
+    - paid access flows
+    - webhook endpoint
+  </Step>
+</Steps>
+
+## Auth checklist
+
+<Tabs items={["Required", "Security", "UX"]}>
+  <Tab value="Required">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <LockKeyhole className="h-4 w-4 text-primary" />
+        Required auth behavior
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>users can register</li>
+        <li>users can sign in</li>
+        <li>users can sign out</li>
+        <li>sessions persist correctly</li>
+        <li>protected routes redirect anonymous users</li>
+        <li>authenticated users cannot access auth pages unnecessarily</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Security">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <ShieldCheck className="h-4 w-4 text-primary" />
+        Auth security checks
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>forgot password does not reveal whether an email exists</li>
+        <li>reset tokens expire</li>
+        <li>provider disconnect cannot lock users out</li>
+        <li>server-side validation exists for auth actions</li>
+        <li>error messages are useful but not overly specific</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="UX">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <KeyRound className="h-4 w-4 text-primary" />
+        Auth UX checks
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>loading states are visible</li>
+        <li>forms disable submit while processing</li>
+        <li>errors are field-level when possible</li>
+        <li>global auth errors are clear and calm</li>
+        <li>success states explain the next step</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Billing checklist
+
+<Tabs items={["Checkout", "Webhooks", "Access"]}>
+  <Tab value="Checkout">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <CreditCard className="h-4 w-4 text-primary" />
+        Checkout checks
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>checkout sessions are created on the server</li>
+        <li>success URL works</li>
+        <li>cancel URL works</li>
+        <li>customer mapping is correct</li>
+        <li>test and production prices are not mixed</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Webhooks">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <ShieldCheck className="h-4 w-4 text-primary" />
+        Webhook checks
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>webhook signatures are verified</li>
+        <li>events are handled idempotently</li>
+        <li>subscription create/update/delete events sync correctly</li>
+        <li>invoice payment events update billing state</li>
+        <li>failed payments show a clear product state</li>
+      </ul>
+    </div>
+  </Tab>
+
+  <Tab value="Access">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        Billing access checks
+      </div>
+      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>paid features require active access</li>
+        <li>canceled subscriptions remove access when appropriate</li>
+        <li>past-due state is handled clearly</li>
+        <li>billing page reflects synchronized backend state</li>
+        <li>portal access is only available to the correct customer</li>
+      </ul>
+    </div>
+  </Tab>
+</Tabs>
+
+## Backend checklist
+
+| Check | Why it matters |
+| --- | --- |
+| Migrations run cleanly | Prevents broken production deploys |
+| Prisma client is generated | Ensures typed database access |
+| Auth models are present | Supports sessions and accounts |
+| Billing models are present | Supports subscriptions and invoices |
+| Ownership checks exist | Protects user data |
+| Plan checks are server-verifiable | Prevents client-only access control |
+| Webhook events are tracked | Reduces duplicate processing risk |
+| Environment-specific data is separated | Avoids mixing test and production |
+
+<Callout title="Backend principle">
+  If a rule affects money, identity, or private data, it should not live only in the frontend.
+</Callout>
+
+## Delivery checklist
+
+Use this if Starter Pro delivery or another paid digital product flow is active.
+
+| Check | Required behavior |
+| --- | --- |
+| Payment is confirmed by webhook | Access is not granted from redirect alone |
+| Download asset is private | No permanent public file URL |
+| Delivery token exists | Access can be controlled |
+| Token expires | Shared links have limited value |
+| Unauthorized access is rejected | Non-buyers cannot download |
+| Expired token path is handled | Buyer has a recovery path |
+| Confirmation copy is clear | Buyer knows what happens next |
+
+## Go / no-go decision
+
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Ready to launch when
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>auth flows pass end-to-end</li>
+        <li>billing webhooks sync state correctly</li>
+        <li>protected routes enforce access</li>
+        <li>database migrations are stable</li>
+        <li>delivery is secure and tested</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Do not launch if
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>checkout works but webhooks are untested</li>
+        <li>access is granted from client state only</li>
+        <li>reset password or verification flows are broken</li>
+        <li>production secrets are incomplete</li>
+        <li>paid files are publicly exposed</li>
+      </ul>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Common mistakes
+
+<Accordions type="single">
+  <Accordion title="Launching after checkout works, but before webhooks are validated">
+    Checkout is not enough. Webhooks synchronize the billing state that your app should trust for subscription and access decisions.
+  </Accordion>
+
+  <Accordion title="Using client-side state for sensitive access checks">
+    Client-side state can guide UI, but sensitive access checks should be server-verifiable.
+  </Accordion>
+
+  <Accordion title="Mixing Stripe test and live configuration">
+    Test and live keys, products, prices, and webhook secrets are separate. Validate the correct environment before going live.
+  </Accordion>
+
+  <Accordion title="Treating delivery as an afterthought">
+    If users buy a digital product, fulfillment is part of the product experience. Checkout is only half of the journey.
+  </Accordion>
+</Accordions>
+
+## Final pre-launch sequence
+
+Before launching, run through this final sequence:
+
+1. deploy to preview
+2. run auth flows
+3. run Stripe test checkout
+4. verify webhook events
+5. confirm database updates
+6. confirm paid access state
+7. test protected routes
+8. test delivery access
+9. review production environment variables
+10. deploy production
+11. run one final smoke test
+
+<Callout title="Launch with confidence">
+  A strong launch is not just a clean UI. It is a product where identity, revenue, data, and access behave correctly together.
+</Callout>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Auth system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Review authentication, sessions, providers, and account lifecycle.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Billing system</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Validate Checkout, portal, webhooks, invoices, and subscription state.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/backend" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Backend foundations</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Validate database, ownership, access rules, and server-side boundaries.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter-pro/delivery" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Secure delivery</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Validate post-purchase access, tokens, private storage, and fulfillment.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
+<br />
+<div className="mt-6 flex flex-col gap-3 sm:flex-row">
+  <BuyStarterProButton fullWidth={false} showTrustText />
+  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
+    <Link href="/pricing">
+      View pricing
+    </Link>
+  </Button>
+</div>
+
+<Callout title="Ready is when the systems agree.">
+  Auth identifies the user. Billing confirms the customer. Backend protects the data. Delivery completes the purchase.
+</Callout>

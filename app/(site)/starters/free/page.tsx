@@ -63,7 +63,7 @@ const INTERNAL = {
   examples: '/examples',
   guides: '/guides',
   docs: '/docs/starter',
-  docsUpgrade: '/docs/starter/upgrade-to-pro',
+  docsUpgrade: '/docs/starter/upgrade',
   access: '/pricing',
   starterPro: '/starters/pro',
   roadmap: '/roadmap',

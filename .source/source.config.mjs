@@ -7,6 +7,7 @@ import {
   frontmatterSchema,
   metaSchema
 } from "fumadocs-mdx/config";
+import { rehypeCode } from "fumadocs-core/mdx-plugins";
 var docsFrontmatterSchema = frontmatterSchema.extend({
   toc: z.boolean().optional(),
   full: z.boolean().optional(),
@@ -56,7 +57,20 @@ var blog = defineCollections({
   }
 });
 var source_config_default = defineConfig({
-  mdxOptions: {}
+  mdxOptions: {
+    rehypePlugins: [
+      [
+        rehypeCode,
+        {
+          themes: {
+            light: "github-light",
+            dark: "github-dark"
+          },
+          defaultLang: "tsx"
+        }
+      ]
+    ]
+  }
 });
 export {
   blog,

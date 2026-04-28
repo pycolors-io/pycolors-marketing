@@ -6,6 +6,7 @@ import {
   frontmatterSchema,
   metaSchema,
 } from 'fumadocs-mdx/config';
+import { rehypeCode } from 'fumadocs-core/mdx-plugins';
 
 // Docs frontmatter schema
 const docsFrontmatterSchema = frontmatterSchema.extend({
@@ -67,5 +68,18 @@ export const blog = defineCollections({
 });
 
 export default defineConfig({
-  mdxOptions: {},
+  mdxOptions: {
+    rehypePlugins: [
+      [
+        rehypeCode,
+        {
+          themes: {
+            light: 'github-light',
+            dark: 'github-dark',
+          },
+          defaultLang: 'tsx',
+        },
+      ],
+    ],
+  },
 });

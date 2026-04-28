@@ -1,11 +1,12 @@
 ---
 title: Pagination
 description: Composable pagination primitives for navigating paged content without routing or data logic.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
 import * as React from "react";
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import {
   Pagination,
   PaginationContent,
@@ -24,8 +25,6 @@ import {
   ProjectsTableWithPagination,
 } from "../previews/pagination-previews";
 
-<DocsPageShell>
-
 The **Pagination** component provides composable UI primitives for navigating paged content.
 
 It is intentionally **dumb**:
@@ -37,8 +36,6 @@ It is intentionally **dumb**:
 
 Pagination is fully controlled by the **page or data layer**.
 The UI only renders navigation.
-
----
 
 ## Import
 
@@ -55,8 +52,6 @@ import {
 } from "@pycolors/ui";
 ```
 
----
-
 ## Usage
 
 Pagination is composed of small building blocks:
@@ -69,8 +64,6 @@ Pagination is composed of small building blocks:
 - **PaginationEllipsis** → compact overflow indicator
 
 Control page state from your page or component.
-
----
 
 ## Basic pagination
 
@@ -130,8 +123,6 @@ function PaginationBasicExample() {
   </Tab>
 </Tabs>
 
----
-
 ## Table + Pagination (mock data)
 
 This example demonstrates a realistic SaaS pattern: a **Table** with a local **Pagination** control.
@@ -166,8 +157,6 @@ type Project = {
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Components
@@ -199,16 +188,12 @@ type Project = {
 - Buttons remain fully keyboard accessible.
 - Ellipsis is non-interactive and screen-reader labeled.
 
----
-
 ## Design guidelines
 
 - Keep pagination UI-only, controlled by the page.
 - Prefer small, consistent page sizes for tables.
 - Use ellipsis for large page counts.
 - Sync with URL and data layers in **guides or patterns**, not inside the component.
-
----
 
 ## When not to use Pagination
 
@@ -219,8 +204,6 @@ Do not use Pagination for:
 - global navigation logic
 
 Those belong in patterns or product-level implementations.
-
----
 
 ## Related guides
 
@@ -236,5 +219,3 @@ Those belong in patterns or product-level implementations.
     href="/docs/guides/building-a-saas-layout"
   />
 </LinkCards>
-
-</DocsPageShell>

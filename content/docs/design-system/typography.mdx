@@ -1,196 +1,169 @@
 ---
 title: Typography
 description: Typography scale, text roles, and hierarchy used across PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Design System
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge } from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
-
-<DocsPageShell>
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
   <Badge>Typography</Badge>
 </div>
 
-# Typography creates structure before decoration
+## Overview
 
-Typography is one of the strongest signals of product quality.
+Typography is one of the strongest signals of product quality. It gives every interface a readable structure before color, spacing, motion, or decoration are added.
 
-It defines:
+PyColors treats typography as a **system**, not as local page styling. The goal is to keep dashboards, documentation, settings pages, marketing sections, forms, and product flows readable and consistent as the product grows.
 
-- readability
-- hierarchy
-- rhythm
-- density
-- interface clarity
+At the end of this page, you will understand how PyColors handles:
 
-PyColors keeps typography simple, semantic, and predictable so the system remains readable across dashboards, docs, settings pages, and product flows.
+- font roles
+- heading hierarchy
+- body text density
+- labels and metadata
+- semantic text roles
+- production usage rules
 
----
+<Callout title="Why this matters">
+  A weak type system makes a product feel unfinished even when the UI components are correct. Stable typography improves scanning, reduces visual noise, and makes the interface feel more deliberate.
+</Callout>
 
-## Why typography matters
+## What you’ll define
 
-Typography is easy to underestimate because it feels invisible when it works.
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-base">Font roles</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Separate UI text, brand accents, and technical values with predictable font variables.
+      </div>
+    </CardContent>
+  </Card>
 
-But when the type system is weak, the product immediately feels:
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-base">Hierarchy</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use a limited heading ladder so pages stay scannable without overloading the table of contents.
+      </div>
+    </CardContent>
+  </Card>
 
-- inconsistent
-- harder to scan
-- more visually noisy
-- less deliberate
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-base">Usage rules</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-sm leading-6 text-muted-foreground">
+        Keep text roles semantic so reusable components stay coherent across light and dark mode.
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
-A strong typography system gives the UI structure before any decorative styling is added.
+## Steps
 
----
+<Steps>
 
-## Font roles
+<Step>
+### Use font roles instead of font choices
 
-PyColors uses a system-friendly font setup exposed through CSS variables.
+PyColors exposes fonts as CSS variables and utilities. Components should depend on the role of the font, not on a hardcoded family.
 
-Common roles are:
-
-- `font-sans` → default UI and content font
-- `font-brand` → optional brand accent font
-- `font-mono` → code, technical values, identifiers
-
-A typical setup looks like this:
-
-```tsx
+```tsx title="app/layout.tsx" {1}
 import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-sans", // highlight
 });
 ```
 
-The important part is not the specific family.
+Common roles are:
 
-It is the role the font plays in the system.
+| Role | Utility | Purpose |
+| --- | --- | --- |
+| UI and content | `font-sans` | Default interface and readable content |
+| Brand accent | `font-brand` | Headings, hero sections, premium identity |
+| Technical values | `font-mono` | Code, IDs, tokens, CLI output |
 
----
+<Callout type="info" title="Implementation note">
+  The exact font family can change over time. The important part is that components keep consuming stable font roles.
+</Callout>
+</Step>
 
-## Default text density
+<Step>
+### Choose density by surface
 
-PyColors keeps defaults simple.
+PyColors keeps text density simple. Product interfaces should stay efficient, while documentation and marketing content should feel easier to read.
 
-- SaaS UI / dashboards → `text-sm`
-- Docs / content / marketing → `text-base`
+| Surface | Default | Reason |
+| --- | --- | --- |
+| SaaS UI and dashboards | `text-sm` | Dense enough for product workflows |
+| Docs, guides, and marketing | `text-base` | More comfortable for reading |
+| Labels and metadata | `text-xs` | Compact context without competing with headings |
 
-This gives you:
+This split keeps dashboards efficient while making documentation feel calm and premium.
+</Step>
 
-- denser interfaces where needed
-- more comfortable reading where content matters
+<Step>
+### Build hierarchy with a limited scale
 
-That split is often enough for most products.
-
----
-
-## Heading hierarchy
-
-Headings should make structure obvious without over-styling the page.
+Headings should make structure obvious without turning every section into a visual event.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-
-<div className="space-y-4">
-  <h1 className="text-4xl font-bold tracking-tight">Heading 1 — Page title</h1>
-  <h2 className="text-3xl font-semibold tracking-tight">Heading 2 — Section title</h2>
-  <h3 className="text-2xl font-semibold tracking-tight">Heading 3 — Subsection</h3>
-  <h4 className="text-xl font-medium tracking-tight">Heading 4 — Minor heading</h4>
-  <h5 className="text-lg font-medium">Heading 5</h5>
-  <h6 className="text-base font-medium">Heading 6</h6>
-</div>
-
+    <div className="space-y-4 rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-4xl font-semibold tracking-tight text-foreground">
+        Page title
+      </div>
+      <div className="text-3xl font-semibold tracking-tight text-foreground">
+        Section title
+      </div>
+      <div className="text-2xl font-semibold tracking-tight text-foreground">
+        Subsection title
+      </div>
+      <div className="text-xl font-medium tracking-tight text-foreground">
+        Minor heading
+      </div>
+      <div className="text-base leading-7 text-muted-foreground">
+        Readable body text with enough rhythm for documentation and product copy.
+      </div>
+    </div>
   </Tab>
 
   <Tab value="Code">
 
-```tsx
+```tsx filename="components/heading-hierarchy.tsx"
 export function HeadingHierarchy() {
   return (
     <div className="space-y-4">
-      <h1 className="text-4xl font-bold tracking-tight">Heading 1</h1>
-      <h2 className="text-3xl font-semibold tracking-tight">Heading 2</h2>
-      <h3 className="text-2xl font-semibold tracking-tight">Heading 3</h3>
-      <h4 className="text-xl font-medium tracking-tight">Heading 4</h4>
-      <h5 className="text-lg font-medium">Heading 5</h5>
-      <h6 className="text-base font-medium">Heading 6</h6>
-    </div>
-  );
-}
-```
-
-  </Tab>
-</Tabs>
-
----
-
-## Labels and metadata
-
-Labels are not headings.
-
-They should stay compact, secondary, and structured.
-
-```tsx
-<p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-  Label / metadata
-</p>
-```
-
-Use this pattern for:
-
-- subtle section labels
-- field context
-- secondary indicators
-- metadata
-- small overlines
-
-Labels help orientation without competing with the main hierarchy.
-
----
-
-## Body text and secondary text
-
-Body text should support clarity, not fight for attention.
-
-<Tabs items={["Preview", "Code"]}>
-  <Tab value="Preview">
-
-<div className="max-w-prose space-y-3">
-  <div className="text-base">
-    Standard body text for documentation, product descriptions, and readable content blocks.
-  </div>
-
-  <div className="text-sm text-muted-foreground">
-    Secondary text for descriptions, helper copy, and contextual information.
-  </div>
-
-  <div className="text-xs text-muted-foreground">
-    Subtle metadata such as timestamps, labels, or supporting details.
-  </div>
-</div>
-
-  </Tab>
-
-  <Tab value="Code">
-
-```tsx
-export function BodyTextExample() {
-  return (
-    <div className="max-w-prose space-y-3">
-      <p className="text-base">
-        Standard body text for readable content.
-      </p>
-      <p className="text-sm text-muted-foreground">
-        Secondary text for descriptions and helper copy.
-      </p>
-      <p className="text-xs text-muted-foreground">
-        Subtle metadata.
+      <h1 className="text-4xl font-semibold tracking-tight">
+        Page title
+      </h1>
+      <h2 className="text-3xl font-semibold tracking-tight">
+        Section title
+      </h2>
+      <h3 className="text-2xl font-semibold tracking-tight">
+        Subsection title
+      </h3>
+      <h4 className="text-xl font-medium tracking-tight">
+        Minor heading
+      </h4>
+      <p className="text-base leading-7 text-muted-foreground">
+        Readable body text.
       </p>
     </div>
   );
@@ -199,132 +172,238 @@ export function BodyTextExample() {
 
   </Tab>
 </Tabs>
+</Step>
 
----
+</Steps>
 
-## Semantic text roles
+## Why it matters
 
-Text should express meaning before visual preference.
+Typography is where product quality becomes visible. Users may not notice the type system directly, but they notice when the product feels harder to scan, less structured, or visually inconsistent.
+
+Without a stable typography system, you will:
+
+- invent heading sizes page by page
+- overuse font weight to create emphasis
+- make dashboards visually noisy
+- reduce trust in product and documentation surfaces
+- make components harder to reuse consistently
+
+With a stable system, every page feels calmer, more intentional, and easier to understand.
+
+<Callout title="Product principle">
+  Typography should reduce cognitive load. It should guide the reader through the product, not compete for attention.
+</Callout>
+
+## Text roles
+
+<Tabs items={["Body", "Labels", "States"]}>
+  <Tab value="Body">
+    <div className="max-w-prose space-y-3 rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-base leading-7 text-foreground">
+        Primary text is used for the main content a user needs to read or act on.
+      </div>
+
+      <div className="text-sm leading-6 text-muted-foreground">
+        Secondary text supports the main message with descriptions, helper copy, and contextual details.
+      </div>
+
+      <div className="text-xs leading-5 text-muted-foreground">
+        Metadata is reserved for timestamps, labels, status hints, and compact secondary information.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Labels">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        Product status
+      </div>
+      <div className="mt-2 text-base font-medium text-foreground">
+        Ready for production review
+      </div>
+      <div className="mt-1 text-sm leading-6 text-muted-foreground">
+        Labels help orientation without becoming headings.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="States">
+    <div className="grid gap-3 sm:grid-cols-3">
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-foreground">Default</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Neutral product information.
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-destructive">
+          Destructive
+        </div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Errors and dangerous actions.
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-primary">Action</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Links and primary intent.
+        </div>
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
 | Role | Utility | Usage |
 | --- | --- | --- |
-| Primary text | `text-foreground` | Main content |
-| Secondary text | `text-muted-foreground` | Descriptions, helper text |
-| Brand / action text | `text-primary` | Links, highlighted actions |
-| Destructive text | `text-destructive` | Errors and dangerous messaging |
+| Primary text | `text-foreground` | Main readable content |
+| Secondary text | `text-muted-foreground` | Descriptions, helper text, supporting copy |
+| Brand or action text | `text-primary` | Links and highlighted actions |
+| Destructive text | `text-destructive` | Errors, deletion flows, dangerous messaging |
+| Technical text | `font-mono` | Code, tokens, identifiers, CLI values |
 
-These roles should stay stable across the product.
+## Usage rules
 
----
+Use typography roles to create consistent product surfaces instead of styling text from scratch each time.
 
-## Font weights
+```tsx filename="components/product-summary.tsx"
+export function ProductSummary() {
+  return (
+    <section className="space-y-2">
+      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        Starter Pro
+      </p>
+      <h2 className="text-2xl font-semibold tracking-tight">
+        Production-shaped SaaS foundation
+      </h2>
+      <p className="max-w-prose text-sm leading-6 text-muted-foreground">
+        Use semantic text roles to keep product copy, labels, and descriptions
+        predictable across reusable surfaces.
+      </p>
+    </section>
+  );
+}
+```
 
-| Weight | Utility | Typical use |
-| --- | --- | --- |
-| 400 | `font-normal` | Body text |
-| 500 | `font-medium` | Labels and compact UI emphasis |
-| 600 | `font-semibold` | Section headings |
-| 700 | `font-bold` | Strong page titles |
+## Decision guide
 
-The goal is not to use every weight everywhere.
+Use this typography system if:
 
-The goal is to keep contrast deliberate.
+- you are building SaaS dashboards, docs, settings, or marketing pages
+- you need consistent hierarchy across multiple product areas
+- you want reusable components to feel coherent without local overrides
+- you care about light and dark mode readability
 
----
+Do not override it if:
 
-## Practical rules
+- the change only solves one local visual preference
+- the same need appears in multiple places and should become a token
+- the new size, weight, or color weakens hierarchy consistency
 
-### Good defaults
+<Callout title="Ready to move from design system to product foundation?">
+  Starter Pro gives you a stronger SaaS baseline with auth, billing, backend structure, and production-shaped flows. → `/docs/starter-pro`
+</Callout>
 
-- use a clear heading ladder
-- keep body text comfortable to read
-- reserve smaller text for metadata and helper copy
-- use muted text for secondary information
-- keep line lengths reasonable in content-heavy surfaces
+## Common mistakes
 
-### Things to avoid
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  {/* Prefer */}
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-- too many font sizes in one surface
-- uppercase body copy
-- random heading sizes between pages
-- relying on color alone for hierarchy
-- using weight as a substitute for structure
+    <CardContent className="pt-0">
+      <ul className="m-0 space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>limited heading sizes</li>
+        <li>semantic text colors</li>
+        <li>muted helper copy</li>
+        <li>labels for metadata</li>
+        <li>reasonable line lengths</li>
+      </ul>
+    </CardContent>
 
----
+    {/* subtle hover glow */}
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-## Production-tested guidance
+  {/* Avoid */}
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <XCircle className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-<div className="grid gap-6 sm:grid-cols-2">
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
-      Prefer
-    </h3>
+    <CardContent>
+      <ul className="m-0 space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>too many font sizes in one panel</li>
+        <li>uppercase long-form copy</li>
+        <li>raw color values for text</li>
+        <li>random heading sizes between pages</li>
+        <li>using weight instead of structure</li>
+      </ul>
+    </CardContent>
 
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>clear hierarchy with limited sizes</li>
-      <li>muted text for descriptions and help text</li>
-      <li>labels for metadata instead of mini-headings</li>
-      <li>semantic text roles over raw color choices</li>
-    </ul>
-  </div>
-
-  <div>
-    <h3 className="mb-3 flex items-center text-base font-medium">
-      <XCircle className="mr-2 h-4 w-4 text-destructive" />
-      Avoid
-    </h3>
-
-    <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-      <li>mixing too many sizes in a single panel</li>
-      <li>uppercase for long-form reading</li>
-      <li>color-only hierarchy</li>
-      <li>inconsistent heading scale between pages</li>
-    </ul>
-  </div>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 </div>
 
----
+<Accordions type="single">
+  <Accordion title="Why not use a larger scale everywhere?">
+    Large scales make landing pages feel expressive, but they can make SaaS products harder to scan. PyColors keeps the default scale restrained so dashboards, docs, and product flows stay predictable.
+  </Accordion>
 
-## Why this matters in products
+  <Accordion title="Should labels be headings?">
+    No. Labels provide context. Headings define structure. Keeping them separate makes content easier to scan and prevents the table of contents from becoming too long.
+  </Accordion>
 
-Typography is one of the places where systems drift first.
+  <Accordion title="Can I customize the font family?">
+    Yes. Keep the same role-based variables and replace the underlying family. Components should continue using `font-sans`, `font-brand`, and `font-mono`.
+  </Accordion>
+</Accordions>
 
-If the hierarchy is unstable:
+## Next steps
 
-- pages feel less intentional
-- components become harder to scan
-- product surfaces lose rhythm
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/colors" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Colors</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Pair typography with semantic color roles for text, surfaces, and states.
+    </div>
+  </a>
 
-If typography stays stable, the whole product feels calmer and more coherent.
+  <a href="/docs/design-system/tokens/radius" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Radius</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Understand how corner geometry supports readable product surfaces.
+    </div>
+  </a>
 
-That is why typography belongs to the design system, not to one-off page styling.
+  <a href="/docs/ui/button" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Button</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      See how typography behaves inside interactive elements.
+    </div>
+  </a>
 
----
-
-## Related
-
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic color roles that work with text hierarchy."
-    href="/docs/design-system/colors"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner geometry used by containers around text."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Button"
-    description="Typography inside interactive elements."
-    href="/docs/ui/button"
-  />
-  <LinkCard
-    title="Input"
-    description="Labels, helper text, and validation copy."
-    href="/docs/ui/input"
-  />
-</LinkCards>
-
-</DocsPageShell>
+  <a href="/docs/ui/input" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="text-sm font-medium text-foreground">Input</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Review labels, helper text, validation copy, and form readability.
+    </div>
+  </a>
+</div>

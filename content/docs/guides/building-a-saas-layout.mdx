@@ -1,282 +1,252 @@
 ---
 title: Building a SaaS layout
-description: How to compose PyColors UI primitives into a real SaaS layout with navigation, header, responsive behavior, and scalable product structure.
+description: Compose PyColors UI primitives into a scalable, production-ready SaaS layout.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import { LayoutDashboard, PanelLeft, Smartphone, Settings, Table, CheckCircle, XCircle } from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
   <Badge>SaaS layout</Badge>
 </div>
 
-# Build a layout that can survive product growth
+## Overview
 
 Most UI libraries stop at components.
 
-Real SaaS products need structure:
+Real SaaS products require structure:
 
 - navigation
 - header
-- content areas
+- content orchestration
 - responsive behavior
-- clear interaction boundaries
+- long-term scalability
 
-This guide explains how to compose PyColors UI primitives into a **real product layout** without locking your app into a rigid shell.
+This guide shows how to compose PyColors primitives into a **real product layout** that survives growth.
 
----
+<Callout title="Core idea">
+  Layout is not a component. It is a composition of responsibilities that evolve over time.
+</Callout>
 
-## The real problem
+## What you’re building
 
-A SaaS layout is not just a sidebar plus a header.
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Navigation</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Persistent sidebar for desktop, adaptive navigation for mobile.
+    </CardContent>
+  </Card>
 
-It needs to support:
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Context</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Header provides page context, actions, and user controls.
+    </CardContent>
+  </Card>
 
-- product navigation
-- contextual actions
-- dense data views
-- settings flows
-- desktop and mobile behavior
-- growth over time
-
-A layout that works for week one often breaks by month three.
-
-That is why layout should be treated as a **composition problem**, not a component problem.
-
----
-
-## PyColors approach
-
-PyColors gives you:
-
-- primitives
-- tokens
-- product guidance
-
-It intentionally does **not** force:
-
-- a mandatory app shell
-- fixed navigation APIs
-- framework-specific layout rules
-- global layout abstractions you do not own
-
-That keeps your product flexible.
-
----
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <CardTitle className="text-sm">Content</CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Flexible surface for data-heavy and configuration views.
+    </CardContent>
+  </Card>
+</div>
 
 ## Mental model
 
-> Layout is not a component.
-> Layout is a composition of responsibilities.
-
-A simple conceptual model looks like this:
-
-```tsx
+```tsx title="conceptual-layout.tsx"
 <AppShell>
-  <AppSidebar />
+  <Sidebar />
   <Main>
-    <AppHeader />
+    <Header />
     <Content />
   </Main>
 </AppShell>
 ```
 
-This is not a required API.
+This is not an API. It is a separation of concerns:
 
-It is a useful separation of concerns:
+- navigation → where users go
+- header → where users understand context
+- content → where users act
 
-- navigation
-- context
-- content
+## Steps
 
----
+<Steps>
 
-## Core primitives used in SaaS layouts
+<Step>
+### Define layout responsibilities
 
-A real product layout can be built from a small set of primitives:
+Do not start with components. Start with responsibilities:
 
-- Button → actions and nav triggers
-- Sheet → mobile navigation
-- Dropdown Menu → user menu and row actions
-- Tabs → settings sections
-- Table → data-heavy content
-- Dialog → confirmations and modal flows
+- navigation (global)
+- context (page-level)
+- content (feature-level)
 
-This is the key idea:
+This prevents premature abstractions.
+</Step>
 
-You do not need “layout magic”.
-You need reliable primitives and good composition.
+<Step>
+### Build desktop-first navigation
 
----
+Desktop layout should:
 
-## Sidebar strategy
+- keep sidebar visible
+- preserve vertical scanning
+- support dense views (tables, dashboards)
 
-### Desktop
+Mobile layout should:
 
-On larger screens:
+- move navigation into a Sheet
+- prioritize content
+- expose navigation via a trigger
+</Step>
 
-- sidebar stays visible
-- navigation is persistent
-- product areas remain easy to scan
-- tables and long views use full height
+<Step>
+### Keep header lightweight
 
-### Mobile
-
-On smaller screens:
-
-- sidebar is hidden
-- navigation moves into a Sheet
-- header exposes a menu trigger
-- content gets priority
-
-This pattern is predictable, scalable, and accessible.
-
----
-
-## Header responsibilities
-
-A SaaS header usually carries:
+Header should contain:
 
 - page title
-- contextual description
+- optional description
 - primary action
-- user/account menu
-- mobile nav trigger
+- user menu
 
-Use primitives for each responsibility:
+Avoid turning the header into a control panel.
+</Step>
 
-- Button for actions
-- Dropdown Menu for account controls
-- Sheet trigger for mobile nav
+<Step>
+### Support multiple content types
 
-Keep headers light.
+Your layout must handle:
 
-Headers should provide context, not become control panels.
+- data views (tables, lists)
+- settings flows (forms, tabs)
+- modal interactions (dialogs)
 
----
+A good layout does not change when content changes.
+</Step>
 
-## Content areas
+</Steps>
 
-Most product pages fall into two groups.
+## Core primitives
 
-### Data-heavy views
+| Primitive | Role |
+|----------|------|
+| Button | actions and triggers |
+| Sheet | mobile navigation |
+| Dropdown Menu | contextual actions |
+| Tabs | settings navigation |
+| Table | structured data |
+| Dialog | confirmations |
 
-- tables
-- filters
-- row actions
-- pagination
-- bulk actions
+<Callout type="info" title="Key principle">
+  You don’t need a “layout system”. You need reliable primitives and good composition.
+</Callout>
 
-### Configuration views
+## Responsive strategy
 
-- settings forms
-- tabs
-- confirmations
-- dialogs
-- account flows
+<Tabs items={["Desktop", "Mobile"]}>
+  <Tab value="Desktop">
+    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
+      Sidebar visible • persistent navigation • dense layout • full-height views
+    </div>
+  </Tab>
 
-A strong SaaS layout supports both without forcing a different shell for each.
+  <Tab value="Mobile">
+    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
+      Sidebar hidden • Sheet navigation • header trigger • content-first layout
+    </div>
+  </Tab>
+</Tabs>
 
----
+## Real product examples
 
-## Example: projects page
+### Data page
 
-A realistic data page might combine:
+- Table
+- Filters
+- Row actions
+- Pagination
 
-- Table for the list
-- Badge for status
-- Dropdown Menu for row actions
-- Dialog for destructive confirmation
-- Sheet for mobile navigation
+### Settings page
 
-That is how a layout starts supporting real product operations.
+- Tabs
+- Forms
+- Dialogs
+- Validation
 
----
+Same layout. Different content.
 
-## Example: settings page
+## Decision guide
 
-A realistic settings page often combines:
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <CheckCircle className="h-4 w-4 text-primary" />
+        <CardTitle className="text-sm">Prefer</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>composition over abstraction</li>
+        <li>clear separation of concerns</li>
+        <li>mobile-first adaptability</li>
+        <li>small reusable primitives</li>
+      </ul>
+    </CardContent>
+  </Card>
 
-- Tabs to separate concerns
-- Input for editable fields
-- Button for actions
-- Dialog for risky confirmations
+  <Card className="rounded-2xl border-border/60 bg-card/70">
+    <CardHeader>
+      <div className="flex items-center gap-2">
+        <XCircle className="h-4 w-4 text-destructive" />
+        <CardTitle className="text-sm">Avoid</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm text-muted-foreground space-y-2">
+        <li>monolithic AppShell too early</li>
+        <li>hardcoded layout logic</li>
+        <li>coupling navigation with content</li>
+        <li>over-engineered abstractions</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
 
-The layout stays stable while the content changes.
+## When to introduce an AppShell
 
-That is what good product structure looks like.
+Create your own AppShell when:
 
----
-
-## Why this approach scales
-
-Composition-based layouts scale better because they let you:
-
-- evolve navigation independently
-- swap sections without rewriting the shell
-- adapt different product areas
-- support more teams later
-- keep layout ownership inside the app
-
-This is more useful than shipping a rigid “app shell” that becomes expensive to bend.
-
----
-
-## What PyColors intentionally avoids
-
-PyColors does not ship:
-
-- a mandatory app shell
-- routing-specific layout logic
-- layout state you do not control
-- forced product structure
-
-Those decisions belong to your product.
-
-The UI system should support them, not own them.
-
----
-
-## When to create your own AppShell
-
-Create a custom AppShell when:
-
-- navigation becomes complex
-- multiple product areas need consistency
-- several people are working in the same product
-- layout drift starts appearing
-
-That is the right point to formalize your layout.
+- layout repetition becomes real
+- multiple teams contribute
+- navigation complexity grows
+- consistency becomes critical
 
 Not before.
 
----
-
-## Practical rule
-
-Start with composition.
-
-Introduce your own AppShell only when the repetition becomes real.
-
-That gives you:
-
-- less premature abstraction
-- more product control
-- better long-term structure
-
----
-
 ## Summary
 
-- SaaS layouts are compositions, not components
-- primitives should stay small
-- layout responsibilities should stay separate
-- PyColors provides guidance, not rigid structure
+- Layout is composition, not a component
+- Keep responsibilities separated
+- Use primitives, not magic abstractions
+- Scale structure only when needed
 
-Build the layout deliberately.
-Keep the system flexible.
-
-</DocsPageShell>
+<Callout title="Next step">
+  Combine this layout with async states and forms to reach production-level UX.
+</Callout>

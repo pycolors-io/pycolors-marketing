@@ -1,12 +1,11 @@
 ---
 title: Badge
 description: Small status and metadata component used to label, categorize, or highlight information in PyColors UI.
+lastUpdated: "2026-04-28"
+appliesTo: UI
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-
-<DocsPageShell>
 
 The **Badge** component is a compact, non-interactive UI primitive used to display short information such as
 status, category, count, or label.
@@ -14,15 +13,11 @@ status, category, count, or label.
 Badges are lightweight, semantic, and fully aligned with the PyColors design system tokens.
 They are designed for **metadata**, not actions.
 
----
-
 ## Import
 
 ```tsx
 import { Badge } from "@pycolors/ui"
 ```
-
----
 
 ## Basic usage
 
@@ -52,8 +47,6 @@ import { Badge } from "@pycolors/ui"
 
 Badges inherit their colors from semantic tokens and adapt automatically
 to light and dark mode.
-
----
 
 ## Variants
 
@@ -119,8 +112,6 @@ Use variants to convey meaning or status.
 | warning      | Caution or attention required       |
 | destructive  | Error or critical state             |
 
----
-
 ## Sizes
 
 <Tabs items={["Preview", "Usage", "Code"]}>
@@ -167,8 +158,6 @@ Use variants to convey meaning or status.
 | md  | Default badge size       |
 | lg  | Emphasized or prominent  |
 
----
-
 ## With icon
 
 Badges can include icons when needed (status, type, category).
@@ -212,8 +201,6 @@ Badges can include icons when needed (status, type, category).
   </Tab>
 </Tabs>
 
----
-
 ## As child (Slot)
 
 Use `asChild` to render a badge as another element (for example, a link).
@@ -250,8 +237,6 @@ Use `asChild` to render a badge as another element (for example, a link).
   </Tab>
 </Tabs>
 
----
-
 ## API
 
 ### Props
@@ -268,8 +253,6 @@ The Badge extends standard HTML span props:
 ```ts
 React.HTMLAttributes<HTMLSpanElement>
 ```
-
----
 
 ## TypeScript types
 
@@ -289,8 +272,6 @@ export type BadgeSize =
   | "lg";
 ```
 
----
-
 ## Accessibility
 
 - Badges are decorative by default and should not replace buttons.
@@ -298,16 +279,12 @@ export type BadgeSize =
 - When clickable, use `asChild` with a semantic element (`a`, `button`).
 - Icons must be supplementary and not the sole indicator.
 
----
-
 ## Design guidelines
 
 - Use `muted` or `outline` for metadata and low-emphasis labels.
 - Use `success`, `warning`, and `destructive` only for status indicators.
 - Avoid overusing badges—prefer clarity over decoration.
 - Keep badge text short (1–2 words whenever possible).
-
----
 
 ## Related guides
 
@@ -328,5 +305,3 @@ export type BadgeSize =
     href="/docs/ui/button"
   />
 </LinkCards>
-
-</DocsPageShell>

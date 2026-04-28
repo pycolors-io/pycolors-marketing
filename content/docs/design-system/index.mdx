@@ -1,242 +1,466 @@
 ---
 title: Design System
 description: The foundations of PyColors UI. Tokens, colors, typography, and the rules that keep the system consistent as products grow.
+lastUpdated: "2026-04-27"
+appliesTo: Design System
 ---
 
-import { DocsPageShell } from "@/components/shells/docs-page-shell";
-import { Cards as LinkCards, Card as LinkCard } from "fumadocs-ui/components/card";
-import { Badge } from "@pycolors/ui";
-
-<DocsPageShell>
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Layers,
+  Palette,
+  PenLine,
+  Sparkles,
+  TriangleAlert,
+} from "lucide-react";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
   <Badge>Foundations</Badge>
 </div>
 
-# Build consistency into the system
+## Overview
 
-PyColors UI is not a collection of isolated components.
+PyColors UI is not a collection of isolated components. It is a **system of visual decisions** designed to keep product interfaces consistent as they grow.
 
-It is a system.
+The design system defines the rules behind:
 
-The design system defines the rules that keep the UI coherent across:
+- reusable components
+- product dashboards
+- documentation pages
+- settings and billing surfaces
+- marketing sections
+- future SaaS templates and starters
 
-- components
-- product surfaces
-- documentation
-- dashboards
-- marketing pages
+The goal is simple: components should stay small because the foundation carries the complexity.
 
-If you want PyColors UI to remain understandable as the product grows, this is where that consistency starts.
+<Callout title="Why this matters">
+  Most product inconsistency does not come from one bad component. It comes from many small local decisions that slowly drift away from each other. PyColors prevents that by moving visual decisions into shared roles, tokens, and rules.
+</Callout>
 
----
+## What you’ll understand
 
-## What this section covers
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Layers className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          System layers
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Understand how tokens, colors, typography, and components work together instead of competing locally.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-This section explains the foundations behind the interface:
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Palette className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Semantic roles
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use meaning-driven utilities such as `bg-card`, `text-muted-foreground`, and `border-border`.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-- tokens
-- colors
-- typography
-- visual consistency rules
-- the system logic behind the primitives
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Sparkles className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Product consistency
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Keep PyColors readable, premium, and trustworthy across docs, dashboards, and commercial pages.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
-These pages are not about shipping faster in the first hour.
+## Steps
 
-They are about making sure the system still makes sense after months of product growth.
+<Steps>
 
----
+<Step>
+### Start with roles, not raw values
 
-## The problem design systems solve
+Components should consume semantic roles instead of hardcoded visual values.
 
-Most inconsistency comes from the same patterns:
+```tsx title="components/product-card.tsx"
+export function ProductCard() {
+  return (
+    <article className="rounded-2xl border border-border bg-card p-6 text-card-foreground">
+      <p className="text-sm text-muted-foreground">
+        Production-shaped SaaS foundation
+      </p>
+      <h2 className="mt-2 text-xl font-semibold tracking-tight">
+        Starter Pro
+      </h2>
+    </article>
+  );
+}
+```
 
-- styles decided locally inside components
-- raw values creeping into the codebase
-- visual exceptions multiplying over time
-- design decisions living in memory instead of the system
+This keeps the component stable when the theme evolves. The component does not need to know the exact color, radius, or contrast value. It only needs to know the role it should express.
 
-That is what design systems prevent.
+| Use | Avoid |
+| --- | --- |
+| `bg-card` | hardcoded hex values |
+| `text-muted-foreground` | one-off opacity values |
+| `border-border` | local border colors |
+| shared radius tokens | arbitrary corner values |
 
-PyColors does it by encoding decisions into:
+</Step>
 
-- semantic tokens
-- reusable utilities
-- predictable component rules
+<Step>
+### Keep one source of truth
 
----
+Global visual decisions should be made once, then reused everywhere.
 
-## Core principles
-
-### 1. Roles over raw values
-
-Components should use semantic roles instead of raw visual values.
-
-Examples:
-
-- `bg-card`
-- `text-muted-foreground`
-- `border-border`
-
-Instead of:
-
-- hardcoded hex values
-- arbitrary radii
-- one-off shadow definitions
-
-Roles make components easier to theme, maintain, and evolve.
-
----
-
-### 2. One source of truth
-
-Global visual decisions should be made once.
-
-That includes things like:
-
-- radius
-- elevation
-- color roles
-- typography hierarchy
-
-When the system changes, the UI should update coherently.
-
----
-
-### 3. Small primitives, strong foundations
-
-PyColors keeps primitives small on purpose.
-
-That only works because the design system does the heavy lifting underneath.
-
-The more reliable the foundation is, the simpler the components can stay.
-
----
-
-## System layers
-
-### Tokens
-
-Tokens are the atomic decisions of the system.
-
-They define things like:
+That includes:
 
 - radius
 - shadows
-- future visual scales
+- color roles
+- typography hierarchy
+- focus states
+- product surface density
 
-<LinkCards>
-  <LinkCard
-    title="Tokens"
-    description="Atomic decisions that power the visual system."
-    href="/docs/design-system/tokens"
-  />
-  <LinkCard
-    title="Radius"
-    description="Corner geometry used across surfaces and controls."
-    href="/docs/design-system/tokens/radius"
-  />
-  <LinkCard
-    title="Shadows"
-    description="Elevation scale for subtle and predictable depth."
-    href="/docs/design-system/tokens/shadows"
-  />
-</LinkCards>
+```css title="styles/globals.css"
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-border: var(--border);
+}
+```
 
----
+<Callout type="info" title="Implementation note">
+  A design system becomes valuable when changing one token updates many surfaces coherently. That is the difference between a theme and a collection of local styles.
+</Callout>
+</Step>
 
-### Colors
+<Step>
+### Build small primitives on strong foundations
 
-Colors are semantic and role-based.
+PyColors primitives stay intentionally small because the system underneath already defines the visual behavior.
 
-They define:
+<Tabs items={["Mental model", "Example"]}>
+  <Tab value="Mental model">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="grid gap-4 md:grid-cols-3">
+        <div>
+          <div className="text-sm font-medium text-foreground">Tokens</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Define geometry, elevation, spacing direction, and future visual scales.
+          </div>
+        </div>
+        <div>
+          <div className="text-sm font-medium text-foreground">Roles</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Define meaning for surfaces, text, borders, states, and actions.
+          </div>
+        </div>
+        <div>
+          <div className="text-sm font-medium text-foreground">Components</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Compose roles into reusable UI primitives and product patterns.
+          </div>
+        </div>
+      </div>
+    </div>
+  </Tab>
 
-- surfaces
-- text contrast
-- states
-- theming behavior
+  <Tab value="Example">
 
-<LinkCards>
-  <LinkCard
-    title="Colors"
-    description="Semantic color roles and theming architecture."
-    href="/docs/design-system/colors"
-  />
-</LinkCards>
+```tsx title="components/settings-panel.tsx"
+export function SettingsPanel() {
+  return (
+    <section className="rounded-2xl border border-border bg-card p-6">
+      <h2 className="text-lg font-semibold tracking-tight">
+        Workspace settings
+      </h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        Manage product configuration from a consistent surface.
+      </p>
+    </section>
+  );
+}
+```
 
----
+  </Tab>
+</Tabs>
+</Step>
 
-### Typography
+</Steps>
 
-Typography defines hierarchy and rhythm across the product.
+## System layers
 
-It controls:
+PyColors is organized as a layered system. Each layer has a clear responsibility and should not replace the layer below it.
 
-- headings
-- body text
-- labels
-- metadata
-- readable structure
+| Layer | Responsibility | Example |
+| --- | --- | --- |
+| Tokens | Atomic visual decisions | radius, shadows, future scales |
+| Colors | Semantic color roles | `background`, `card`, `primary`, `muted` |
+| Typography | Readable hierarchy | headings, body text, labels, metadata |
+| UI components | Reusable primitives | buttons, cards, inputs, dialogs |
+| Product patterns | Composed flows | dashboards, settings, billing, onboarding |
 
-<LinkCards>
-  <LinkCard
-    title="Typography"
-    description="Hierarchy, roles, and readable text structure."
-    href="/docs/design-system/typography"
-  />
-</LinkCards>
+<Callout title="Why this matters">
+  When every layer has a clear responsibility, components become easier to reason about. You know where to change the system instead of patching the symptom locally.
+</Callout>
 
----
+## Decision guide
 
-## How it all connects
+Use the design system when:
 
-A component like `Card` stays simple because the design system carries the complexity:
+- a visual decision appears in more than one place
+- a component needs to support light and dark mode
+- a page must feel coherent with the rest of the product
+- a pattern will be reused in docs, starters, or commercial pages
+- the decision affects trust, readability, or product polish
 
-- tokens define geometry and depth
-- colors define surface and text roles
-- typography defines structure and hierarchy
+Avoid local overrides when:
 
-This is the reason the system scales.
+- the value is purely decorative
+- the same exception already exists elsewhere
+- the change weakens semantic meaning
+- the override makes theming harder
+- the code becomes harder to maintain than the system rule
 
-Components stay small because the foundations are strong.
+<div className="mb-10 grid gap-6 md:grid-cols-2">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <CheckCircle className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Prefer
+        </CardTitle>
+      </div>
+    </CardHeader>
 
----
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>semantic roles over raw values</li>
+        <li>tokens for repeated visual decisions</li>
+        <li>small primitives with predictable behavior</li>
+        <li>centralized color and typography rules</li>
+        <li>documentation that explains system intent</li>
+      </ul>
+    </CardContent>
 
-## Recommended reading order
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
 
-If you want to understand the system quickly, follow this order:
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
+          <TriangleAlert className="h-4 w-4 text-destructive" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Avoid
+        </CardTitle>
+      </div>
+    </CardHeader>
 
-1. Tokens
-2. Radius
-3. Shadows
-4. Colors
-5. Typography
-6. UI Components
+    <CardContent className="pt-0">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>hardcoded colors inside reusable components</li>
+        <li>one-off radius and shadow values</li>
+        <li>local typography scales per page</li>
+        <li>using chart colors as interface states</li>
+        <li>duplicating visual decisions in product areas</li>
+      </ul>
+    </CardContent>
 
-That path gives you the logic before the implementation details.
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
 
----
+## Reading path
 
-## Where this fits in PyColors
+Follow this order to understand the system from the foundation to implementation.
 
-PyColors is structured in layers:
+<div className="grid gap-4">
+  <a href="/docs/design-system/tokens" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">01</Badge>
+        <div className="text-sm font-medium text-foreground">Tokens</div>
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Start with the atomic decisions that power the visual system.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-- **Design System** → rules and foundations
-- **UI Components** → primitives
-- **Guides** → composition and UX behavior
-- **Starter Pro** → auth, billing, backend, delivery
+  <a href="/docs/design-system/tokens/radius" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">02</Badge>
+        <div className="text-sm font-medium text-foreground">Radius</div>
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Learn how corner geometry keeps surfaces and controls consistent.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-The design system is the deepest layer in that stack.
+  <a href="/docs/design-system/tokens/shadows" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">03</Badge>
+        <div className="text-sm font-medium text-foreground">Shadows</div>
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand elevation rules for calm, predictable depth.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
----
+  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">04</Badge>
+        <div className="text-sm font-medium text-foreground">Colors</div>
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use semantic roles for surfaces, text, states, and theming.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-## Next step
+  <a href="/docs/design-system/typography" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">05</Badge>
+        <div className="text-sm font-medium text-foreground">Typography</div>
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Define hierarchy, rhythm, labels, and readable product structure.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
 
-Start with the foundations:
+## Where this fits
 
-- Tokens → `/docs/design-system/tokens`
-- Colors → `/docs/design-system/colors`
-- Typography → `/docs/design-system/typography`
+PyColors is structured in product layers:
 
-</DocsPageShell>
+| Product layer | Purpose |
+| --- | --- |
+| Design System | Rules, tokens, roles, and visual foundations |
+| UI Components | Reusable primitives built on top of the system |
+| Patterns | Composition guidance for real product surfaces |
+| Starter Free | Product-shaped UX for validation |
+| Starter Pro | Production-shaped SaaS foundation with auth, billing, backend, and delivery |
+
+The design system is the deepest layer in that stack. It protects consistency before product complexity increases.
+
+<Callout title="Ready to turn the system into a launch foundation?">
+  Continue from visual foundations to product implementation with Starter Pro. → `/docs/starter-pro`
+</Callout>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Is PyColors UI only a component library?">
+    No. The components are one visible layer. The design system underneath defines the semantic roles, visual rules, and consistency model that make the components scalable.
+  </Accordion>
+
+  <Accordion title="Should every visual decision become a token?">
+    No. Only repeated, meaningful, or system-level decisions should become tokens. A token is useful when it improves consistency, theming, or reuse.
+  </Accordion>
+
+  <Accordion title="Can I customize the system?">
+    Yes. Customize the token layer and keep components consuming semantic roles. That gives you flexibility without losing structural consistency.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system/tokens" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Layers className="h-4 w-4 text-primary" />
+      Tokens
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Start with the atomic visual decisions behind PyColors UI.
+    </div>
+  </a>
+
+  <a href="/docs/design-system/colors" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Palette className="h-4 w-4 text-primary" />
+      Colors
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Learn how semantic colors keep surfaces, text, and states coherent.
+    </div>
+  </a>
+
+  <a href="/docs/design-system/typography" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <PenLine className="h-4 w-4 text-primary" />
+      Typography
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Review hierarchy, labels, density, and readable product copy.
+    </div>
+  </a>
+
+  <a href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Sparkles className="h-4 w-4 text-primary" />
+      UI Components
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Move from foundations to reusable primitives built with PyColors UI.
+    </div>
+  </a>
+</div>

@@ -1,0 +1,340 @@
+---
+title: Accessibility
+description: Build accessible SaaS interfaces with PyColors UI. Practical guidelines for semantics, focus, keyboard navigation, and inclusive UX.
+lastUpdated: "2026-04-27"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Eye,
+  Keyboard,
+  Layers3,
+  MousePointerClick,
+  Type,
+  XCircle,
+} from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Accessibility</Badge>
+</div>
+
+## Accessibility is a product requirement
+
+Accessibility is not a finishing step.
+
+It is part of how your product behaves for real users:
+
+- keyboard users
+- screen reader users
+- low-vision users
+- users on mobile or slow networks
+
+A product that is not accessible is harder to use for everyone.
+
+<Callout title="Core idea">
+  Accessible UI is clearer UI. It improves usability, not just compliance.
+</Callout>
+
+## What PyColors expects
+
+PyColors UI primitives are built to support accessibility.
+
+But primitives are not enough.
+
+You must ensure:
+
+- correct semantics
+- proper labeling
+- predictable focus behavior
+- accessible interactions
+- meaningful feedback
+
+Accessibility happens at the **composition level**, not only inside components.
+
+## The 4 pillars
+
+<div className="grid gap-4 md:grid-cols-4">
+  <Card className="rounded-2xl border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Type className="h-4 w-4" /> Semantics
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Use the right HTML elements for the right purpose.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Keyboard className="h-4 w-4" /> Keyboard
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Everything should be usable without a mouse.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <Eye className="h-4 w-4" /> Perception
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Content must be readable and understandable.
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <MousePointerClick className="h-4 w-4" /> Feedback
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="text-sm text-muted-foreground">
+      Users must understand what is happening.
+    </CardContent>
+  </Card>
+</div>
+
+## Semantics first
+
+Always use the correct HTML element.
+
+### Good
+
+```tsx
+<button>Save</button>
+<a href="/docs">Docs</a>
+<input type="email" />
+```
+
+### Bad
+
+```tsx
+<div onClick={handleClick}>Save</div>
+```
+
+<Callout type="info" title="Rule">
+  If it behaves like a button, use a button.
+</Callout>
+
+## Labels and text
+
+Every interactive element needs a clear label.
+
+### Inputs
+
+```tsx
+<label htmlFor="email">Email</label>
+<input id="email" type="email" />
+```
+
+### Icon buttons
+
+```tsx
+<button aria-label="Open settings">
+  <SettingsIcon />
+</button>
+```
+
+Do not rely only on icons.
+
+## Keyboard navigation
+
+Users must be able to:
+
+- tab through elements
+- trigger actions with Enter or Space
+- close overlays with Escape
+
+### Checklist
+
+- all interactive elements are focusable
+- focus order follows visual order
+- no keyboard traps
+- visible focus state
+
+<Callout title="Focus visibility">
+  Never remove focus outlines unless you replace them with a better visible indicator.
+</Callout>
+
+## Focus management
+
+Focus should move logically.
+
+### Example: dialog
+
+- open → focus moves inside
+- close → focus returns to trigger
+
+This is critical for accessibility.
+
+## Color and contrast
+
+Do not rely on color alone.
+
+### Bad
+
+- red = error
+- green = success
+
+### Better
+
+- icon + text + color
+
+Ensure sufficient contrast between:
+
+- text and background
+- UI elements and surfaces
+
+## Feedback and state
+
+Users must understand:
+
+- loading
+- success
+- error
+
+### Example
+
+```tsx
+<Button disabled>
+  Saving...
+</Button>
+```
+
+```tsx
+<Alert variant="destructive">
+  Payment failed. Try again.
+</Alert>
+```
+
+## Forms
+
+Accessible forms require:
+
+- labels
+- error messages
+- clear validation
+
+### Example
+
+```tsx
+<label>Email</label>
+<input />
+<p role="alert">Invalid email</p>
+```
+
+## Overlays (Dialog, Sheet)
+
+Overlays must:
+
+- trap focus
+- be dismissible via Escape
+- restore focus on close
+
+Use accessible primitives (Radix-based).
+
+## Tables and data
+
+Tables should:
+
+- use proper `<table>` structure
+- include headers
+- support keyboard navigation if interactive
+
+## Composition rules
+
+Accessibility lives in composition.
+
+- UI components should stay simple
+- pages must enforce accessibility rules
+- patterns must define interaction behavior
+
+## Prefer / avoid
+
+<div className="grid gap-6 md:grid-cols-2">
+  <Card className="border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <CheckCircle className="h-4 w-4 text-primary" /> Prefer
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm list-disc pl-5 space-y-2 text-muted-foreground">
+        <li>semantic HTML</li>
+        <li>visible focus states</li>
+        <li>clear labels</li>
+        <li>keyboard support</li>
+      </ul>
+    </CardContent>
+  </Card>
+
+  <Card className="border border-border/60">
+    <CardHeader>
+      <CardTitle className="text-sm flex items-center gap-2">
+        <XCircle className="h-4 w-4 text-destructive" /> Avoid
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ul className="text-sm list-disc pl-5 space-y-2 text-muted-foreground">
+        <li>clickable divs</li>
+        <li>hidden focus</li>
+        <li>icon-only meaning</li>
+        <li>color-only signals</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
+
+## Quick checklist
+
+- all actions are keyboard accessible
+- labels are explicit
+- focus is visible and logical
+- errors are announced
+- UI is understandable without color
+
+<Callout title="Product quality">
+  Accessibility is not extra work. It is part of building a product that works.
+</Callout>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/composition" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Composition</div>
+      <div className="mt-2 text-sm text-muted-foreground">
+        Build scalable UI with proper structure.
+      </div>
+    </div>
+    <ArrowRight className="h-4 w-4" />
+  </a>
+
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-2 text-sm text-muted-foreground">
+        See how accessibility fits real SaaS systems.
+      </div>
+    </div>
+    <ArrowRight className="h-4 w-4" />
+  </a>
+</div>

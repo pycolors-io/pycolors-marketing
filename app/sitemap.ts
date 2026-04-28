@@ -55,7 +55,7 @@ const STATIC_ROUTES = [
 
   // Starter Free docs
   '/docs/starter',
-  '/docs/starter/upgrade-to-pro',
+  '/docs/starter/upgrade',
 
   // 🔥 PRO docs (VERY IMPORTANT)
   '/docs/starter-pro',
