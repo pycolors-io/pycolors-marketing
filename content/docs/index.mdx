@@ -3,12 +3,30 @@ title: PyColors Documentation
 description: From product idea to real SaaS. Validate fast, wire auth and billing, and launch with a production-shaped foundation.
 full: false
 hero: false
-lastUpdated: 2026-04-23
-appliesTo: Starter Free
+lastUpdated: "2026-04-28"
+appliesTo: PyColors
 ---
 
-import { Badge } from "@pycolors/ui";
-import { Cards, Card } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  Box,
+  CreditCard,
+  Database,
+  Layers3,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 
 <div className="space-y-6">
   <div className="flex flex-wrap items-center gap-2">
@@ -16,152 +34,278 @@ import { Cards, Card } from "fumadocs-ui/components/card";
     <Badge>Production-shaped SaaS</Badge>
   </div>
 
-  <div>
-    <h1 className="font-brand text-4xl font-semibold tracking-tight sm:text-5xl mb-0">
-      From idea to revenue
-    </h1>
+  From product idea to real SaaS
 
-    <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-      Build your SaaS in the right order: validate fast, wire the business layer,
-      then launch with confidence.
-    </p>
+  PyColors helps you build in the right order: validate the product surface,
+  wire the business layer, then launch with more confidence.
 
-    <p className="max-w-3xl text-base leading-7 text-muted-foreground">
-      PyColors helps you skip the phase where authentication, billing, backend structure,
-      and delivery start slowing everything down.
-    </p>
-  </div>
+  Use the docs to move from UI foundations to production-shaped SaaS systems:
+  authentication, billing, backend structure, secure delivery, and launch readiness.
 </div>
+
+<Callout title="The PyColors path">
+  Starter Free helps you validate. Starter Pro helps you launch, monetize, and reduce the infrastructure work that delays revenue.
+</Callout>
 
 ## Start here
 
-<Cards>
-  <Card
-    title="Starter Pro overview"
-    description="Production-shaped SaaS foundation with auth, billing, backend, and delivery."
-    href="/docs/starter-pro"
-  />
-  <Card
-    title="Upgrade path"
-    description="Understand when Starter Free stops being enough and why Pro becomes the faster path."
-    href="/docs/starter-pro/upgrade-from-free"
-  />
-  <Card
-    title="Getting started"
-    description="Run the project locally and understand the core product structure."
-    href="/docs/starter-pro/getting-started"
-  />
-</Cards>
+<div className="grid gap-4 md:grid-cols-3">
+  <a href="/docs/starter" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Box className="h-4 w-4 text-primary" />
+      Starter Free
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Validate your SaaS surface with real screens, flows, states, and product structure.
+    </div>
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Explore Free
+      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+    </div>
+  </a>
+
+  <a href="/docs/starter-pro" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Rocket className="h-4 w-4 text-primary" />
+      Starter Pro
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Launch with real auth, billing, backend foundations, protected routes, and delivery.
+    </div>
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Explore Pro
+      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+    </div>
+  </a>
+
+  <a href="/docs/starter-pro/production-checklist" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <ShieldCheck className="h-4 w-4 text-primary" />
+      Production checklist
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Validate auth, billing, backend, delivery, and deployment before launch.
+    </div>
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Check readiness
+      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+    </div>
+  </a>
+</div>
 
 ## The path
 
-### 1. Validate fast
+<Tabs items={["Validate", "Wire", "Launch"]}>
+  <Tab value="Validate">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Sparkles className="h-4 w-4 text-primary" />
+        Validate the product surface
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Start with Starter Free when you need screens, navigation, UX states,
+        product flows, and a credible SaaS surface before heavy wiring.
+      </div>
+    </div>
+  </Tab>
 
-- build screens
-- test UX
-- shape your product
-- validate demand before heavy wiring
+  <Tab value="Wire">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Layers3 className="h-4 w-4 text-primary" />
+        Wire the business layer
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Move to Starter Pro when auth, billing, protected routes, backend
+        persistence, and secure delivery become the work slowing launch.
+      </div>
+    </div>
+  </Tab>
 
-**Best fit:** Starter Free
+  <Tab value="Launch">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Rocket className="h-4 w-4 text-primary" />
+        Launch with confidence
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Validate the production checklist, confirm real users and real payments,
+        then ship the first version of your SaaS with stronger foundations.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
 
-### 2. Wire the business layer
+## Choose your next move
 
-- authentication
-- billing
-- protected routes
-- backend structure
-- delivery after purchase
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro/why-buy-instead-of-building" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Why buy instead of building</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, and backend foundations.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-**Best fit:** Starter Pro
+  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">What is included</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        See exactly what Starter Pro includes and what you still build yourself.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-### 3. Launch
+  <a href="/docs/starter-pro/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Getting started with Pro</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Go from purchase to first local run and understand the fastest setup path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-- real users
-- real payments
-- real product operations
-- stronger confidence in production
-
-## What you need
-
-<Cards>
-  <Card
-    title="What is included"
-    description="See exactly what you get with Starter Pro."
-    href="/docs/starter-pro/what-is-included"
-  />
-  <Card
-    title="Why buy instead of build"
-    description="Understand the real cost of rebuilding auth and billing yourself."
-    href="/docs/starter-pro/why-buy-instead-of-building"
-  />
-  <Card
-    title="Production checklist"
-    description="Use a clearer launch path before going live."
-    href="/docs/starter-pro/production-checklist"
-  />
-</Cards>
+  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Upgrade from Starter Free</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Know when mocked foundations stop being enough and Pro becomes the faster path.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
 
 ## Core systems
 
-<Cards>
-  <Card
-    title="Authentication"
-    description="Real users, sessions, OAuth, verification, and security."
-    href="/docs/starter-pro/auth"
-  />
-  <Card
-    title="Billing"
-    description="Stripe, subscriptions, invoices, and revenue flows."
-    href="/docs/starter-pro/billing"
-  />
-  <Card
-    title="Backend"
-    description="Database, API, business logic, and product structure."
-    href="/docs/starter-pro/backend"
-  />
-  <Card
-    title="Delivery"
-    description="Secure product access after purchase."
-    href="/docs/starter-pro/delivery"
-  />
-</Cards>
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro/auth" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <LockKeyhole className="h-4 w-4 text-primary" />
+      Authentication
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Real users, sessions, OAuth, verification, password recovery, and protected account foundations.
+    </div>
+  </a>
 
-## Mental model
+  <a href="/docs/starter-pro/billing" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <CreditCard className="h-4 w-4 text-primary" />
+      Billing
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Stripe Checkout, billing portal, subscriptions, invoices, webhooks, and plan-aware access.
+    </div>
+  </a>
 
-> Starter Free helps you validate.
-> Starter Pro helps you launch and monetize with less structural work.
+  <a href="/docs/starter-pro/backend" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Database className="h-4 w-4 text-primary" />
+      Backend
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Database-ready structure, Prisma foundations, ownership rules, server boundaries, and product data.
+    </div>
+  </a>
 
-## Why this exists
+  <a href="/docs/starter-pro/delivery" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <ShieldCheck className="h-4 w-4 text-primary" />
+      Secure delivery
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Controlled post-purchase access, private assets, token-based downloads, and fulfillment flow.
+    </div>
+  </a>
+</div>
 
-Most developers do not get blocked by the first UI screens.
+## Foundations
 
-They get blocked when the product needs:
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/design-system" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Design System</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand tokens, colors, typography, radius, shadows, and consistency rules.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-- real authentication
-- billing that does not break
-- protected product flows
-- backend consistency
-- launch confidence
+  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">UI Components</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Explore PyColors UI primitives used to build dashboards, forms, overlays, and product surfaces.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
-PyColors exists to reduce that phase.
+  <a href="/docs/guides" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Guides</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Compose primitives into real SaaS layouts, forms, async states, and production UX.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Patterns</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use opinionated product-level blocks for data tables, overlays, and async actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
 
 ## Decision
 
 If your question is:
 
-> “What should my product look like?”
+> What should my product look and feel like?
 
-Start with Starter Free.
+Start with **Starter Free**.
 
 If your question is:
 
-> “How do I launch this without losing weeks on auth, billing, and structure?”
+> How do I launch this without losing weeks to auth, billing, backend, and delivery?
 
-Move to Starter Pro.
+Move to **Starter Pro**.
+
+<Callout title="Build fast. Validate early. Upgrade when ready.">
+  PyColors is designed around a simple path: idea → product surface → validation → production wiring → launch.
+</Callout>
 
 ## Next step
 
-- [Read Starter Pro overview](/docs/starter-pro)
-- [See what is included](/docs/starter-pro/what-is-included)
-- [Upgrade when ready](/upgrade)
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Read Starter Pro overview</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Understand the production layer that turns a product-shaped app into a real SaaS.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
 
+  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">View pricing</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Compare Starter Free and Starter Pro when you are ready to move faster.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
