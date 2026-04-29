@@ -58,13 +58,13 @@ Card is built on semantic tokens such as `bg-card`, `border-border`, and `text-c
   Card creates structure. Use it to group meaningful content, not as decoration.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="card-import.tsx"
 import { Card } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Card to group a title, description, content, and optional footer actions.
 
@@ -190,7 +190,7 @@ Use Card when content needs a clear surface, boundary, or grouping.
   </Card>
 </div>
 
-## Variants
+### Variants
 
 Cards support semantic surface variants.
 
@@ -344,7 +344,7 @@ export function InteractiveCards() {
   If the card navigates, render it as a real link using `asChild`. If it performs an action, render it as a button or put a Button inside.
 </Callout>
 
-## As child
+### With icon
 
 Use `asChild` to render Card as another element while preserving Card styling.
 
@@ -422,7 +422,7 @@ Use each slot intentionally:
 | `CardContent` | Holds the main body |
 | `CardFooter` | Holds actions or supporting metadata |
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -500,7 +500,7 @@ Card extends standard HTML `div` props.
 React.HTMLAttributes<HTMLDivElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="card-types.ts"
 export type CardVariant =
@@ -511,7 +511,7 @@ export type CardVariant =
 export type CardInteractive = boolean;
 ```
 
-## Accessibility
+### Accessibility
 
 Guidelines:
 

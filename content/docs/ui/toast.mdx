@@ -59,13 +59,13 @@ It provides structure and accessibility, not a full notification system with que
   Toasts are temporary feedback. They should confirm, summarize, or recover — not block the task.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="toast-import.tsx"
 import { Toast } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Toast is controlled explicitly by the page or component.
 
@@ -192,7 +192,7 @@ Use Toast when feedback should be noticeable but should not interrupt the user.
   </Card>
 </div>
 
-## Variants
+### Variants
 
 Toast supports a small set of variants.
 
@@ -263,7 +263,7 @@ Keep the description short.
 
 If the message needs more explanation, it probably belongs in an Alert, Dialog, or page section.
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -397,7 +397,7 @@ Render one viewport per provider scope.
 <ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="toast-types.ts"
 export type ToastVariant =
@@ -411,7 +411,7 @@ export interface ToastProps
     VariantProps<typeof toastVariants> {}
 ```
 
-## Accessibility
+### Accessibility
 
 - Toast is built on Radix Toast primitives.
 - Toasts should not trap focus.

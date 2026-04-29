@@ -55,13 +55,13 @@ This implementation extends the **shadcn/ui Button primitive** and is aligned wi
   Buttons communicate intent. Choose the variant based on action priority, not decoration.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="button-import.tsx"
 import { Button } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -145,7 +145,7 @@ Use Button when the user is taking an action.
   </Card>
 </div>
 
-## Variants
+### Variants
 
 Buttons support variants for action priority and semantic meaning.
 
@@ -200,7 +200,7 @@ export function ButtonVariants() {
   A page should usually have one clear primary action. Use secondary, outline, or ghost for supporting actions.
 </Callout>
 
-## Sizes
+### Sizes
 
 Button supports standard sizes and icon-only sizes.
 
@@ -289,7 +289,7 @@ export function ButtonSizes() {
   Keep button sizes consistent inside the same section. Use `lg` for major CTAs and `sm` for dense product actions.
 </Callout>
 
-## Disabled state
+### Disabled state
 
 Use disabled state when an action is unavailable.
 
@@ -329,7 +329,7 @@ Disabled buttons use reduced opacity and remove pointer interaction.
   When disabling a button, make sure the user can understand what is required to enable it.
 </Callout>
 
-## With icon
+### With icon
 
 Use icons when they reinforce the action.
 
@@ -377,7 +377,7 @@ export function ButtonTrailingIcon() {
   Icons should support the label. For icon-only buttons, always provide an `aria-label`.
 </Callout>
 
-## Validation state
+### Validation state
 
 The Button supports invalid visual state through `aria-invalid`.
 
@@ -415,7 +415,7 @@ export function ButtonInvalid() {
   </Tab>
 </Tabs>
 
-## As child
+### With icon
 
 Use `asChild` to render the button as another element while preserving button styling.
 
@@ -451,7 +451,7 @@ export function ButtonAsChild() {
   If the action navigates, render an anchor or router link. If it submits or mutates state, render a button.
 </Callout>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -485,7 +485,7 @@ export function ButtonAsChild() {
   </Step>
 </Steps>
 
-## Button vs link vs badge
+### Button vs link vs badge
 
 | Situation | Use |
 | --- | --- |
@@ -519,7 +519,7 @@ Button extends standard HTML button props.
 React.ComponentProps<"button">
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="button-types.ts"
 export type ButtonVariant =
@@ -539,7 +539,7 @@ export type ButtonSize =
   | "icon-lg";
 ```
 
-## Accessibility
+### Accessibility
 
 - Use clear, descriptive labels.
 - Preserve keyboard focus styles.

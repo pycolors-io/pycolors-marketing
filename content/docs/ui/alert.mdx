@@ -50,13 +50,13 @@ Unlike Toasts, Alerts are **inline and persistent**. They remain visible in cont
   Alerts are for messages that belong in the page. Toasts are for temporary feedback.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="alert-import.tsx"
 import { Alert } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use a neutral Alert for non-critical information.
 
@@ -159,7 +159,7 @@ Use Alert when the message should remain visible in context.
   </Card>
 </div>
 
-## Variants
+### Variants
 
 Variants reflect the semantic meaning of the message.
 
@@ -392,7 +392,7 @@ export function AlertWithIndicator() {
   If the icon is decorative, add `aria-hidden="true"`. The text must carry the meaning.
 </Callout>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -449,7 +449,7 @@ Alert components extend standard HTML props:
 React.HTMLAttributes<HTMLDivElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="alert-types.ts"
 export type AlertVariant = NonNullable<AlertProps["variant"]>;
@@ -461,7 +461,7 @@ export interface AlertProps
 }
 ```
 
-## Accessibility
+### Accessibility
 
 - `ariaLive="polite"` renders `role="status"`.
 - `ariaLive="assertive"` renders `role="alert"`.

@@ -32,7 +32,7 @@ import {
   <Badge>Composition</Badge>
 </div>
 
-## Compose product surfaces from small primitives
+### Compose product surfaces from small primitives
 
 PyColors UI components are intentionally small.
 
@@ -57,7 +57,7 @@ The goal is to compose smaller primitives into interfaces that remain understand
   Components should stay small. Product meaning comes from composition.
 </Callout>
 
-## Why composition matters
+### Why composition matters
 
 Most UI systems start clean and become fragile later.
 
@@ -136,7 +136,7 @@ PyColors uses a layered mental model.
   If the component describes visual structure, keep it in UI. If it describes product behavior, move it into Guides or Patterns.
 </Callout>
 
-## Composition principles
+### Composition principles
 
 <div className="grid gap-4 md:grid-cols-3">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -197,7 +197,7 @@ PyColors uses a layered mental model.
   </Card>
 </div>
 
-## Page composition
+### Page composition
 
 A production SaaS page usually has four responsibilities.
 
@@ -212,7 +212,15 @@ This keeps the page readable.
 
 The page coordinates product intent. Components render the pieces.
 
-## Example: settings page
+## Examples
+These examples illustrate how composition turns small UI primitives into real product surfaces.
+
+Each example highlights how structure, state, and user intent are organized to create interfaces that are scalable, predictable, and easy to maintain.
+
+Do not focus on the components alone. Focus on how the page coordinates behavior.
+
+
+### Example: settings page
 
 A settings page is not one component.
 
@@ -256,7 +264,7 @@ This page uses primitives, but the product meaning comes from the composition:
 - dialogs confirm destructive actions
 - alerts communicate blocking states
 
-## Example: billing panel
+### Example: billing panel
 
 Billing UI needs clear hierarchy because it affects trust and revenue.
 
@@ -289,7 +297,7 @@ The product layer decides:
 - what copy reassures the user
 - when access should be gated
 
-## Example: data-heavy page
+### Example: data-heavy page
 
 Data-heavy pages should not make the table responsible for everything.
 
@@ -321,7 +329,7 @@ The page coordinates:
   A table should not own your product flow. It should render structured data inside a larger page composition.
 </Callout>
 
-## Composition workflow
+### Composition workflow
 
 <Steps>
   <Step>
@@ -357,7 +365,7 @@ The page coordinates:
   </Step>
 </Steps>
 
-## When to extract a component
+### When to extract a component
 
 Extract a component when:
 
@@ -377,7 +385,7 @@ Do not extract when:
   Extract for clarity, not for cleverness.
 </Callout>
 
-## When to create a Pattern
+### When to create a Pattern
 
 Create a Pattern when the repeated need includes behavior.
 
@@ -393,7 +401,7 @@ Examples:
 
 A pattern can include multiple primitives, state rules, copywriting rules, and accessibility guidance.
 
-## Prefer / avoid
+### Prefer / avoid
 
 <div className="mb-10 grid gap-6 md:grid-cols-2">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -443,7 +451,7 @@ A pattern can include multiple primitives, state rules, copywriting rules, and a
   </Card>
 </div>
 
-## Composition checklist
+### Composition checklist
 
 Before shipping a composed UI surface, confirm:
 

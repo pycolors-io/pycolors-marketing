@@ -51,13 +51,13 @@ Dialog is built on **Radix Dialog** and styled with PyColors tokens such as `bg-
   Dialog is for focused decisions or tasks. If the flow becomes long, navigational, or multi-step, use a Sheet or a dedicated page.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="dialog-import.tsx"
 import { Dialog } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Dialog for a focused form or short task that should stay in context.
 
@@ -291,7 +291,7 @@ export function DeleteDialog() {
   The destructive action should be explicit, visually distinct, and placed after the safer option.
 </Callout>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -356,7 +356,7 @@ export function DeleteDialog() {
 | `DialogDescription` | Supporting text |
 | `DialogClose` | Close control, usually wrapping a Button with `asChild` |
 
-### Props
+#### Props
 
 Dialog components extend their respective Radix Dialog props.
 
@@ -367,7 +367,7 @@ React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
 ```
 
-## Accessibility
+### Accessibility
 
 - Dialog is built on Radix Dialog primitives.
 - Focus is trapped inside the dialog while open.

@@ -61,13 +61,13 @@ It is a **pure UI primitive**: it structures content, not product or business lo
   Empty is not failure. EmptyState explains a valid absence and helps the user move forward.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="empty-state-import.tsx"
 import { EmptyState } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use EmptyState when the application is in a valid state, but there is no content yet.
 
@@ -197,7 +197,7 @@ export function EmptyStateWithAction() {
   One clear action is usually enough. Empty states should guide users, not overwhelm them.
 </Callout>
 
-## With icon
+### With icon
 
 Use the `icon` slot for a simple decorative icon or illustration.
 
@@ -339,7 +339,7 @@ export function TableEmptyState() {
   </Tab>
 </Tabs>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -390,7 +390,7 @@ export function TableEmptyState() {
 
 ## API
 
-### Props
+#### Props
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
@@ -406,7 +406,7 @@ EmptyState also accepts standard HTML `div` props.
 React.HTMLAttributes<HTMLDivElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="empty-state-types.ts"
 export interface EmptyStateProps
@@ -418,7 +418,7 @@ export interface EmptyStateProps
 }
 ```
 
-## Accessibility
+### Accessibility
 
 EmptyState should be readable and understandable without relying on icons.
 

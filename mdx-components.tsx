@@ -170,7 +170,7 @@ export function getMDXComponents(
           id={headingId}
           {...props}
           className={[
-            'group mt-8 scroll-mt-28 text-xl font-semibold tracking-tight text-foreground',
+            'group mt-8 scroll-mt-24 pt-4 font-brand text-xl font-semibold tracking-tight text-foreground sm:text-2xl',
             className,
           ]
             .filter(Boolean)
