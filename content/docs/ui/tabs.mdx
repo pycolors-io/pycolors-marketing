@@ -60,13 +60,13 @@ Tabs are built on **Radix Tabs** and styled with PyColors tokens for consistent 
   Tabs are for peer views at the same hierarchy level. They should not replace primary navigation.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="tabs-import.tsx"
 import { Tabs } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Tabs when multiple related views belong inside the same page context.
 
@@ -191,7 +191,7 @@ Use Tabs when users switch between related peer sections in the same workflow.
   </Card>
 </div>
 
-## Sizes
+### Sizes
 
 `TabsList` and `TabsTrigger` accept a `size` prop to adapt density.
 
@@ -344,7 +344,7 @@ export function TabsSizes() {
   </Tab>
 </Tabs>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -404,7 +404,7 @@ export function TabsSizes() {
 | `TabsTrigger` | Individual tab trigger, supports `size` |
 | `TabsContent` | Content panel |
 
-### Props
+#### Props
 
 | Component | Props |
 | --- | --- |
@@ -413,13 +413,13 @@ export function TabsSizes() {
 | `TabsTrigger` | Extends Radix `TabsPrimitive.TabsTriggerProps` + `{ size?: TabsSize }` |
 | `TabsContent` | Extends Radix `TabsPrimitive.TabsContentProps` |
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="tabs-types.ts"
 export type TabsSize = "sm" | "md" | "lg";
 ```
 
-## Accessibility
+### Accessibility
 
 Tabs are built on Radix Tabs primitives.
 

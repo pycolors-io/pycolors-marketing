@@ -67,13 +67,13 @@ The page or data layer owns the logic. The UI renders navigation.
   Pagination should render page navigation, not own the data model.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="pagination-import.tsx"
 import { Pagination } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Pagination is composed from small primitives:
 
@@ -278,7 +278,7 @@ The returned tokens can represent:
 
 This keeps rendering logic clean while keeping Pagination controlled.
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -356,7 +356,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 | `page` | `number` | Current page |
 | `totalPages` | `number` | Total number of pages |
 
-## Accessibility
+### Accessibility
 
 Pagination should be understandable and keyboard accessible.
 

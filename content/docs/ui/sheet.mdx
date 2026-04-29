@@ -53,13 +53,13 @@ Sheet is built on **Radix Dialog** and styled with PyColors semantic tokens such
   Sheet keeps the user in context while exposing a larger secondary workflow.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="sheet-import.tsx"
 import { Sheet } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Sheet for a side panel that contains a focused but larger workflow than a Dialog.
 
@@ -421,7 +421,7 @@ export function SheetCloseActions() {
   </Tab>
 </Tabs>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -496,7 +496,7 @@ export function SheetCloseActions() {
 
 `Sheet`, `SheetTrigger`, and `SheetClose` are re-exports of Radix Dialog primitives and accept their native props.
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="sheet-types.ts"
 export type SheetSide = "top" | "bottom" | "left" | "right";
@@ -507,7 +507,7 @@ export interface SheetContentProps
 }
 ```
 
-## Accessibility
+### Accessibility
 
 Sheet is built on Radix Dialog primitives.
 

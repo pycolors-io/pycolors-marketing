@@ -48,7 +48,7 @@ A product that is not accessible is harder to use for everyone.
   Accessible UI is clearer UI. It improves usability, not just compliance.
 </Callout>
 
-## What PyColors expects
+### What PyColors expects
 
 PyColors UI primitives are built to support accessibility.
 
@@ -64,7 +64,7 @@ You must ensure:
 
 Accessibility happens at the **composition level**, not only inside components.
 
-## The 4 pillars
+### The 4 pillars
 
 <div className="grid gap-4 md:grid-cols-4">
   <Card className="rounded-2xl border border-border/60">
@@ -112,7 +112,7 @@ Accessibility happens at the **composition level**, not only inside components.
   </Card>
 </div>
 
-## Semantics first
+### Semantics first
 
 Always use the correct HTML element.
 
@@ -134,7 +134,7 @@ Always use the correct HTML element.
   If it behaves like a button, use a button.
 </Callout>
 
-## Labels and text
+### Labels and text
 
 Every interactive element needs a clear label.
 
@@ -155,7 +155,7 @@ Every interactive element needs a clear label.
 
 Do not rely only on icons.
 
-## Keyboard navigation
+### Keyboard navigation
 
 Users must be able to:
 
@@ -163,7 +163,7 @@ Users must be able to:
 - trigger actions with Enter or Space
 - close overlays with Escape
 
-### Checklist
+## Checklist
 
 - all interactive elements are focusable
 - focus order follows visual order
@@ -174,7 +174,7 @@ Users must be able to:
   Never remove focus outlines unless you replace them with a better visible indicator.
 </Callout>
 
-## Focus management
+### Focus management
 
 Focus should move logically.
 
@@ -185,7 +185,7 @@ Focus should move logically.
 
 This is critical for accessibility.
 
-## Color and contrast
+### Color and contrast
 
 Do not rely on color alone.
 
@@ -203,7 +203,7 @@ Ensure sufficient contrast between:
 - text and background
 - UI elements and surfaces
 
-## Feedback and state
+### Feedback and state
 
 Users must understand:
 
@@ -225,7 +225,7 @@ Users must understand:
 </Alert>
 ```
 
-## Forms
+### Forms
 
 Accessible forms require:
 
@@ -241,7 +241,7 @@ Accessible forms require:
 <p role="alert">Invalid email</p>
 ```
 
-## Overlays (Dialog, Sheet)
+### Overlays (Dialog, Sheet)
 
 Overlays must:
 
@@ -251,7 +251,7 @@ Overlays must:
 
 Use accessible primitives (Radix-based).
 
-## Tables and data
+### Tables and data
 
 Tables should:
 
@@ -259,7 +259,7 @@ Tables should:
 - include headers
 - support keyboard navigation if interactive
 
-## Composition rules
+### Composition rules
 
 Accessibility lives in composition.
 

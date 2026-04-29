@@ -63,7 +63,7 @@ It supports:
   Input collects user data. Validation rules should live in your form or schema layer, not inside the visual primitive.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="input-import.tsx"
 import {
@@ -73,7 +73,7 @@ import {
 } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Input when the field is simple and the surrounding context already provides a label.
 
@@ -238,7 +238,7 @@ export function InputError() {
   Keep errors short and specific. The user should immediately understand what to fix.
 </Callout>
 
-## With icons
+### With icons
 
 Use icons when they clarify the field purpose.
 
@@ -310,7 +310,7 @@ export function InputRightIcon() {
   Icons should support meaning. Do not rely on an icon as the only label.
 </Callout>
 
-## Sizes
+### Sizes
 
 Use size to adapt density across product surfaces.
 
@@ -356,7 +356,7 @@ export function InputSizes() {
   Use `md` by default. Use `sm` for dense product surfaces and `lg` when the form needs stronger emphasis.
 </Callout>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -408,7 +408,7 @@ export function InputSizes() {
 
 ## API
 
-### Props
+#### Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -426,7 +426,7 @@ Input extends standard input props, excluding the native `size` attribute.
 React.InputHTMLAttributes<HTMLInputElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="input-types.ts"
 export type InputSize = "sm" | "md" | "lg";
@@ -445,7 +445,7 @@ export interface InputProps
 }
 ```
 
-## Accessibility
+### Accessibility
 
 Input is designed to support accessible form composition.
 

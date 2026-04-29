@@ -53,13 +53,13 @@ They are designed for **metadata**, not actions.
   A Badge communicates state or context. It should not replace a Button.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="badge-import.tsx"
 import { Badge } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -144,7 +144,7 @@ Use Badge when the label helps the user understand context without adding heavy 
   </Card>
 </div>
 
-## Variants
+### Variants
 
 Use variants to convey meaning or status.
 
@@ -200,7 +200,7 @@ export function BadgeVariants() {
   Prefer `muted` and `outline` for metadata. Reserve semantic state variants for actual product states.
 </Callout>
 
-## Sizes
+### Sizes
 
 Use size to control density and hierarchy.
 
@@ -244,7 +244,7 @@ export function BadgeSizes() {
   Use `sm` in tables and dense product views. Use `md` for most UI surfaces. Use `lg` sparingly.
 </Callout>
 
-## With icon
+### With icon
 
 Badges can include icons when the icon reinforces status, type, or category.
 
@@ -278,7 +278,7 @@ export function BadgeWithIcon() {
   Icons should reinforce meaning. The text must still explain the state.
 </Callout>
 
-## As child
+### With icon
 
 Use `asChild` when the badge should render as another semantic element.
 
@@ -312,7 +312,7 @@ export function BadgeAsChild() {
   Only use interactive badges when the underlying element is semantic, such as an anchor or button. If it triggers an important action, use Button instead.
 </Callout>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -369,7 +369,7 @@ The Badge extends standard HTML span props:
 React.HTMLAttributes<HTMLSpanElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="badge-types.ts"
 export type BadgeVariant =
@@ -384,7 +384,7 @@ export type BadgeVariant =
 export type BadgeSize = "sm" | "md" | "lg";
 ```
 
-## Accessibility
+### Accessibility
 
 - Badges are non-interactive by default.
 - Do not use a badge as a button.

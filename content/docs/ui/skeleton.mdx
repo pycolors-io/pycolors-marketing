@@ -55,13 +55,13 @@ Skeleton is a **pure UI primitive**. It renders shapes and does not own any load
   Skeleton shows the shape of content that is coming. It is not a message, an explanation, or an error state.
 </Callout>
 
-## Import
+### Import
 
 ```tsx title="skeleton-import.tsx"
 import { Skeleton, type SkeletonProps } from "@pycolors/ui";
 ```
 
-## Basic usage
+### Basic usage
 
 Use Skeleton to temporarily replace content while data is loading.
 
@@ -302,7 +302,7 @@ export function CircularSkeleton() {
   </Tab>
 </Tabs>
 
-## Usage patterns
+### Usage patterns
 
 <Steps>
   <Step>
@@ -353,7 +353,7 @@ export function CircularSkeleton() {
 
 ## API
 
-### Props
+#### Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -366,7 +366,7 @@ Skeleton also accepts standard HTML `div` props.
 React.HTMLAttributes<HTMLDivElement>
 ```
 
-## TypeScript types
+### TypeScript types
 
 ```ts title="skeleton-types.ts"
 export interface SkeletonProps
@@ -375,7 +375,7 @@ export interface SkeletonProps
 }
 ```
 
-## Accessibility
+### Accessibility
 
 Skeleton is visual only.
 
