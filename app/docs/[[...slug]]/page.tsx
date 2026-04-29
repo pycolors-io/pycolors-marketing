@@ -99,9 +99,11 @@ export default async function Page(
     currentUrl,
   );
 
+  const toc = page.data.toc.filter((item) => item.depth <= 2);
+
   return (
     <DocsPage
-      toc={page.data.toc}
+      toc={toc}
       full={page.data.full}
       breadcrumb={{ enabled: false }}
       footer={{

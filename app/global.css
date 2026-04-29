@@ -99,11 +99,10 @@ samp {
   width: 100% !important;
   height: calc(100vh - var(--fd-nav-height));
   align-self: start;
-
-  border-right: 1px solid color-mix(in oklch, var(--border), transparent 22%);
   background: transparent;
 
   z-index: 1;
+  border-right: none;
 }
 
 /* cancel Fumadocs fixed offset tricks */
@@ -282,6 +281,19 @@ samp {
 
 #nd-toc a:hover {
   color: var(--foreground);
+}
+
+#nd-toc [role="none"] {
+  display: none !important;
+}
+
+#nd-toc a[data-active="true"] {
+  color: hsl(var(--primary)) !important;
+  font-weight: 500;
+}
+
+#nd-toc a[data-active="false"] {
+  opacity: 0.75;
 }
 
 /* ==========================================================================
