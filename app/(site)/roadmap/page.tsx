@@ -33,6 +33,7 @@ type Milestone =
   | 'Feb 2026'
   | 'Mar 2026'
   | 'Apr 2026'
+  | 'May 2026'
   | 'H1 2026';
 
 type RoadmapItem = {
@@ -88,6 +89,12 @@ const milestones: Array<{
     title: 'April 2026',
     subtitle:
       'Turn Starter Pro from a strong launch candidate into a real commercial product: public availability, purchase flow, secure delivery, pricing clarity, and stronger post-purchase trust.',
+  },
+  {
+    id: 'May 2026',
+    title: 'May 2026',
+    subtitle:
+      'Turn documentation into a premium product surface: clearer navigation, stronger SaaS guidance, deeper Starter Free and Starter Pro docs, and a more obvious upgrade path.',
   },
   {
     id: 'H1 2026',
@@ -707,33 +714,123 @@ const items: RoadmapItem[] = [
     tags: ['Design System', 'Patterns', 'Guides', 'Docs'],
     href: '/docs',
   },
+  {
+    title: 'Premium docs navigation and header system',
+    description:
+      'Refined the docs header, mobile navigation, search access, theme toggle placement, sidebar hierarchy, fixed header behavior, and responsive layout polish for a more premium documentation experience.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Navigation', 'Mobile', 'UX'],
+    href: '/docs',
+  },
+  {
+    title: 'Focused docs reading experience',
+    description:
+      'Improved table of contents behavior, heading hierarchy, active and focused states, sidebar clarity, responsive dialog spacing, table styling, and root docs navigation filtering.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'TOC', 'Accessibility', 'DX'],
+    href: '/docs',
+  },
+  {
+    title: 'Code block rendering upgrade',
+    description:
+      'Added rehype-pretty-code support and improved code block styling, titles, fragments, headings, tables, and technical readability across documentation pages.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Code', 'MDX', 'DX'],
+    href: '/docs',
+  },
+  {
+    title: 'Starter Free documentation refinement',
+    description:
+      'Expanded Starter Free docs with clearer onboarding, product-surface evaluation, mocked-vs-wired explanations, next-step guidance, checklists, and a stronger upgrade path to Starter Pro.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Starter Free', 'Docs', 'Onboarding', 'Upgrade'],
+    href: '/docs/starter',
+  },
+  {
+    title: 'Starter Pro production documentation expansion',
+    description:
+      'Revamped Starter Pro docs around production readiness, auth, billing, backend, delivery, upgrade timing, implementation steps, decision guides, and buyer confidence.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Starter PRO', 'Docs', 'Production', 'Trust'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Design system documentation clarity pass',
+    description:
+      'Reworked design system docs around semantic color roles, token-driven architecture, typography, radius, shadows, usage rationale, visual consistency, and common pitfalls.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Design System', 'Tokens', 'Docs', 'UI'],
+    href: '/docs/design-system',
+  },
+  {
+    title: 'UI composition and accessibility docs',
+    description:
+      'Added and refined UI documentation for composition, accessibility, component usage, decision rules, prefer/avoid guidance, and scalable SaaS interface patterns.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['UI', 'Accessibility', 'Composition', 'Docs'],
+    href: '/docs/ui',
+  },
+  {
+    title: 'Guides and Patterns documentation expansion',
+    description:
+      'Expanded guides and patterns with clearer SaaS mental models, async action guidance, data table structure, overlay usage, forms, validation, production checklists, and next-step navigation.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Guides', 'Patterns', 'SaaS', 'Docs'],
+    href: '/docs/patterns',
+  },
+  {
+    title: 'SaaS value and Free-to-Pro clarity',
+    description:
+      'Improved docs messaging to explain how PyColors helps builders move from idea to revenue-generating SaaS, while making the Starter Free to Starter Pro upgrade path more visible.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Conversion', 'Starter PRO', 'Positioning', 'Docs'],
+    href: '/pricing',
+  },
+  {
+    title: 'Marketing and pricing polish',
+    description:
+      'Refined hero section styling, pricing UI hierarchy, card consistency, badge and button styling, accessibility, and layout details to improve perceived quality and commercial clarity.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Marketing', 'Pricing', 'UI Polish', 'Conversion'],
+    href: '/pricing',
+  },
   // NOW
   {
-    title: 'Starter Pro sales proof and conversion measurement',
+    title: 'Starter Pro conversion instrumentation',
     description:
-      'Measure the new pricing-centered funnel from product navigation, docs, starters, upgrade pages, and checkout to understand where users hesitate and what improves real purchases.',
+      'Measure the docs-to-pricing-to-checkout funnel more precisely across Starter Free, Starter Pro, upgrade pages, pricing, and post-purchase access flows.',
     status: 'Now',
-    milestone: 'Apr 2026',
+    milestone: 'May 2026',
     tags: ['Analytics', 'Conversion', 'Sales', 'Growth'],
     href: '/pricing',
   },
   {
-    title: 'Starter Pro post-purchase trust hardening',
+    title: 'Starter Pro sales proof and trust content',
     description:
-      'Strengthen claim, download, support, access recovery, delivery docs, and post-checkout reassurance so real customers feel confident after purchase.',
+      'Add stronger proof around why Starter Pro saves time: implementation comparisons, real architecture explanations, buyer reassurance, launch checklists, and authority content.',
     status: 'Now',
-    milestone: 'Apr 2026',
-    tags: ['Delivery', 'Trust', 'Starter PRO', 'Support'],
-    href: '/docs/starter-pro',
+    milestone: 'May 2026',
+    tags: ['Trust', 'Content', 'Starter PRO', 'Sales'],
+    href: '/starters/pro',
   },
   {
-    title: 'Commercial proof and authority content',
+    title: 'Documentation-to-product conversion loop',
     description:
-      'Use blog posts, guides, changelog, roadmap, and documentation updates to prove that PyColors is actively maintained and worth buying as a serious SaaS foundation.',
+      'Use the improved docs as a conversion surface by connecting guides, patterns, Starter Free evaluation, Starter Pro value, pricing, and checkout more intentionally.',
     status: 'Now',
-    milestone: 'Apr 2026',
-    tags: ['SEO', 'Authority', 'Content', 'Trust'],
-    href: '/blog',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Conversion', 'SEO', 'Product'],
+    href: '/docs',
   },
 
   // NEXT

@@ -58,6 +58,95 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.11.0',
+    title:
+      'Premium documentation system, docs navigation polish, SaaS guides expansion, and stronger Free-to-Pro clarity',
+    dateLabel: 'Fri 1 May 2026',
+    dateISO: '2026-05-01',
+    status: 'Stable',
+    releaseWeekLabel: 'May 2026 (weekly release)',
+    summary:
+      'This release turns the PyColors documentation into a much stronger product surface. It refines the docs header, mobile navigation, sidebar, table of contents, code block rendering, and content hierarchy while deeply expanding Starter Free, Starter Pro, UI, Design System, Guides, and Patterns documentation. The focus is clear: make PyColors easier to understand, more premium to evaluate, and more convincing as a SaaS foundation users can trust before upgrading to Starter Pro.',
+    highlights: [
+      {
+        title: 'Docs navigation and header UX are more premium',
+        items: [
+          'Refined the docs header with fixed positioning, improved backdrop blur, cleaner borders, and better visibility while scrolling.',
+          'Improved mobile navigation with clearer product context, better spacing, stronger sectioning, and integrated theme controls.',
+          'Rearranged mobile header actions by moving the theme toggle into the mobile menu and prioritizing search access in the header.',
+          'Refined search and theme toggle alignment, icon sizing, border radius, padding, and interaction clarity across docs navigation.',
+        ],
+      },
+      {
+        title: 'Sidebar, TOC, and layout clarity improved',
+        items: [
+          'Improved the docs sidebar hierarchy with clearer section descriptions and stronger visual guidance.',
+          'Excluded the root docs page from the navigation tree to avoid redundant entries and make the docs structure easier to scan.',
+          'Limited the table of contents depth to keep pages focused and easier to navigate.',
+          'Improved heading spacing, focused states, active TOC styling, responsive dialog spacing, and table action-column styling.',
+        ],
+      },
+      {
+        title: 'Code blocks and reading experience upgraded',
+        items: [
+          'Added rehype-pretty-code support for cleaner, more readable code examples.',
+          'Improved code block styling, fragment rendering, code titles, headings, tables, and docs typography.',
+          'Updated featured docs links and layout polish so technical pages feel more consistent and credible.',
+        ],
+      },
+      {
+        title:
+          'Starter Free docs now explain the evaluation path better',
+        items: [
+          'Refactored Starter Free documentation into a clearer onboarding path from idea validation to product-shaped UX.',
+          'Clarified what is included, what is mocked, and what remains backend-specific implementation work.',
+          'Added richer explanations, callouts, checklists, last-updated signals, and next-step guidance.',
+          'Strengthened the upgrade path so users understand when Starter Free is enough and when Starter Pro becomes the right move.',
+        ],
+      },
+      {
+        title: 'Starter Pro docs are now more production-focused',
+        items: [
+          'Revamped Starter Pro documentation across auth, billing, backend, delivery, and production-readiness topics.',
+          'Added clearer decision guides, implementation steps, comparison tables, production checklists, and common questions.',
+          'Updated the Starter Pro upgrade documentation to a simpler path with more actionable content.',
+          'Clarified why buying Starter Pro is faster than rebuilding auth, billing, backend, and delivery foundations from scratch.',
+        ],
+      },
+      {
+        title:
+          'Design system, UI, guides, and patterns docs expanded',
+        items: [
+          'Refactored design system docs around semantic roles, token-driven architecture, colors, typography, radius, shadows, and usage rules.',
+          'Expanded UI documentation with stronger product usage guidance, accessibility notes, composition principles, prefer/avoid sections, and decision rules.',
+          'Revamped Guides content around production-ready SaaS patterns, navigation, async states, forms, validation, accessibility, and separation of concerns.',
+          'Expanded Patterns docs with clearer mental models, decision guides, practical checklists, async actions, data tables, overlays, and next-step navigation.',
+        ],
+      },
+      {
+        title: 'Marketing and pricing surfaces were polished',
+        items: [
+          'Refined hero section styling, spacing, gradients, border treatments, and typography for a more cohesive marketing experience.',
+          'Improved pricing UI clarity with more consistent cards, badges, buttons, typing, and action paths.',
+          'Reduced visual noise and simplified styling in footer and layout areas to avoid unnecessary stacking and spacing issues.',
+          'Strengthened SaaS value messaging and made the Free-to-Pro upgrade path more obvious across documentation and product pages.',
+        ],
+      },
+      {
+        title: 'Documentation now supports conversion better',
+        items: [
+          'The docs now explain not only how PyColors works, but why it matters for shipping SaaS products faster.',
+          'The upgrade path from Starter Free to Starter Pro is clearer, more practical, and better connected to real business value.',
+          'This release improves trust, onboarding, perceived quality, and buyer confidence before users reach pricing or checkout.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read the docs',
+      href: '/docs',
+    },
+  },
+  {
     version: 'v1.10.0',
     title:
       'Pricing route, product navigation, documentation UX, and Free-to-Pro conversion polish',
