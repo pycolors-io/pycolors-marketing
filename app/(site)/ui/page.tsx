@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  BadgeCheck,
   ExternalLink,
   Layers3,
   Rocket,
@@ -41,7 +40,7 @@ const focusRing =
 
 function Pill({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
       {label}
     </span>
   );
@@ -49,7 +48,7 @@ function Pill({ label }: { label: string }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border/70 bg-background/70 px-4 py-4 backdrop-blur">
+    <div className="rounded-[5px] border border-border-subtle bg-surface px-4 py-4 shadow-soft">
       <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>
@@ -77,7 +76,7 @@ function SectionHeader({
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
           >
             {eyebrow}
           </Badge>
@@ -109,9 +108,9 @@ function ValueCard({
   description: string;
 }) {
   return (
-    <Card className="rounded-[28px] border border-border/70 p-6 shadow-black/5">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft transition-colors hover:border-border">
       <div className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-muted/20">
+        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-muted-foreground">
           <Icon className="h-5 w-5" />
         </div>
 
@@ -144,13 +143,16 @@ function SurfaceCard({
   isExternal?: boolean;
 }) {
   return (
-    <Card className="rounded-[28px] border border-border/70 p-5 shadow-black/5">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border">
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-3">
           <div className="text-sm font-semibold text-foreground">
             {title}
           </div>
-          <Badge variant="outline" className="text-[11px]">
+          <Badge
+            variant="outline"
+            className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
+          >
             {tag}
           </Badge>
         </div>
@@ -164,7 +166,7 @@ function SurfaceCard({
             asChild
             size="sm"
             variant="outline"
-            className="rounded-xl"
+            className="rounded-[5px]"
           >
             {isExternal ? (
               <a
@@ -207,7 +209,7 @@ function ComponentCard({
     <Link
       href={href}
       className={cn(
-        'group rounded-[24px] border border-border/70 bg-card p-5 transition-all duration-200 hover:bg-accent/30 hover:shadow-sm',
+        'group rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-elevated',
         focusRing,
       )}
     >
@@ -217,7 +219,7 @@ function ComponentCard({
             {name}
           </div>
 
-          <span className="inline-flex rounded-full border border-border/60 bg-muted/20 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+          <span className="inline-flex rounded-[5px] border border-success-border-subtle bg-success-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-success">
             Stable
           </span>
         </div>
@@ -344,14 +346,14 @@ export default function UiPage() {
 
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
-      <div>
+      <div className="mx-auto max-w-6xl">
         <PageHero
           badges={[
             {
               label: `${versionLabel} · stable baseline`,
               variant: 'secondary',
               icon: (
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
               ),
             },
             {
@@ -373,7 +375,7 @@ export default function UiPage() {
               <Button
                 asChild
                 size="lg"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/docs/ui">
                   Browse components
@@ -388,7 +390,7 @@ export default function UiPage() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/starters/free">See Starter Free</Link>
               </Button>
@@ -397,7 +399,7 @@ export default function UiPage() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/upgrade">
                   When should I upgrade?
@@ -437,7 +439,7 @@ export default function UiPage() {
                   rel="noreferrer noopener"
                   aria-label="Open the PyColors UI repository on GitHub"
                   className={cn(
-                    'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                    'inline-flex items-center gap-1.5 rounded-[5px] text-xs text-muted-foreground transition-colors hover:text-foreground',
                     focusRing,
                   )}
                 >
@@ -453,119 +455,63 @@ export default function UiPage() {
         />
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <Card className="rounded-[32px] border border-border/70 p-7 shadow-black/5">
-              <div className="space-y-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="rounded-full">
-                    @pycolors/ui
-                  </Badge>
-                  <Badge variant="secondary" className="rounded-full">
-                    Foundation layer
-                  </Badge>
-                </div>
-
-                <div className="space-y-3">
-                  <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                    A better starting point than rebuilding product UI
-                    from scratch.
-                  </h2>
-
-                  <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                    PyColors UI is built for the work that usually
-                    gets repeated badly: states, consistency,
-                    accessible interactions, documentation, and
-                    product surfaces that need to feel credible early.
-                  </p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-border/70 bg-muted/20 p-4">
-                    <p className="text-sm font-medium text-foreground">
-                      Use the UI directly
-                    </p>
-                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                      Browse the docs, install the package, copy a
-                      component, and start building the screen you
-                      actually need.
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl border border-border/70 bg-muted/20 p-4">
-                    <p className="text-sm font-medium text-foreground">
-                      See it inside a product
-                    </p>
-                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                      Starter Free shows how the UI behaves inside
-                      auth flows, settings, data screens, admin
-                      surfaces, and real product states.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <NpmBadges packageName="@pycolors/ui" size="sm" />
-                  <span className="text-xs text-muted-foreground">
-                    Versioned · documented · actively maintained
-                  </span>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="rounded-[32px] border-2 border-border p-7 shadow-xl shadow-black/5">
-              <div className="space-y-5">
-                <Badge
-                  variant="outline"
-                  className="gap-2 rounded-full"
-                >
-                  <BadgeCheck
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                  Recommended path
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-7 shadow-soft">
+            <div className="space-y-5">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className="rounded-[5px]">
+                  @pycolors/ui
                 </Badge>
+                <Badge variant="secondary" className="rounded-[5px]">
+                  Foundation layer
+                </Badge>
+              </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold tracking-tight">
-                    UI → Starter Free → Upgrade → Starter Pro
-                  </h3>
+              <div className="space-y-3">
+                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                  A better starting point than rebuilding product UI
+                  from scratch.
+                </h2>
 
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    The UI gives you the foundation. Starter Free
-                    validates the product surface. Upgrade helps you
-                    decide when wiring becomes the bottleneck. Starter
-                    Pro is the fastest path to a launch-ready SaaS.
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-                  <Button asChild className="w-full rounded-xl">
-                    <Link href="/starters/free">
-                      Start with Starter Free
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </Button>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full rounded-xl"
-                  >
-                    <Link href="/upgrade">See when to upgrade</Link>
-                  </Button>
-                </div>
-
-                <p className="text-xs text-muted-foreground">
-                  Most developers do not need a full SaaS backend on
-                  day one. The real challenge is knowing when the UI
-                  is no longer the bottleneck.
+                <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
+                  PyColors UI is built for the work that usually gets
+                  repeated badly: states, consistency, accessible
+                  interactions, documentation, and product surfaces
+                  that need to feel credible early.
                 </p>
               </div>
-            </Card>
-          </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
+                  <p className="text-sm font-medium text-foreground">
+                    Use the UI directly
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Browse the docs, install the package, copy a
+                    component, and start building the screen you
+                    actually need.
+                  </p>
+                </div>
+
+                <div className="rounded-[5px] border border-platform-border-subtle bg-platform-muted p-4">
+                  <p className="text-sm font-medium text-foreground">
+                    See it inside a product
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Starter Free shows how the UI behaves inside auth
+                    flows, settings, data screens, admin surfaces, and
+                    real product states.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <NpmBadges packageName="@pycolors/ui" size="sm" />
+                <span className="text-xs text-muted-foreground">
+                  Versioned · documented · actively maintained
+                </span>
+              </div>
+            </div>
+          </Card>
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
@@ -626,7 +572,7 @@ export default function UiPage() {
               <Button
                 asChild
                 variant="outline"
-                className="rounded-xl"
+                className="rounded-[5px]"
               >
                 <Link href="/docs/ui">See all components</Link>
               </Button>
@@ -650,7 +596,7 @@ export default function UiPage() {
             <Link
               href="/roadmap"
               className={cn(
-                'rounded-sm underline underline-offset-4 hover:text-foreground',
+                'rounded-[5px] underline underline-offset-4 hover:text-foreground',
                 focusRing,
               )}
             >
@@ -661,12 +607,12 @@ export default function UiPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <Card className="rounded-[36px] border border-border/70 p-7 shadow-black/5 sm:p-8">
+          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-7 shadow-medium sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
               <div className="max-w-2xl space-y-4">
                 <Badge
                   variant="outline"
-                  className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+                  className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
                 >
                   Next step
                 </Badge>
@@ -690,7 +636,7 @@ export default function UiPage() {
               </div>
 
               <div className="flex flex-col gap-3 lg:min-w-[260px]">
-                <Button asChild className="rounded-xl">
+                <Button asChild className="rounded-[5px]">
                   <Link href="/docs/ui">
                     Browse components
                     <ArrowRight
@@ -703,7 +649,7 @@ export default function UiPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="rounded-xl"
+                  className="rounded-[5px]"
                 >
                   <Link href="/starters/free">
                     Start with Starter Free
@@ -713,7 +659,7 @@ export default function UiPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="rounded-xl"
+                  className="rounded-[5px]"
                 >
                   <Link href="/upgrade">See Upgrade</Link>
                 </Button>
