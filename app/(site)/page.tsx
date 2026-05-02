@@ -14,6 +14,7 @@ import {
   Badge,
   Button,
   Card,
+  CardContent,
   Table,
   TableBody,
   TableCell,
@@ -60,17 +61,12 @@ const focusRing =
 const EXTERNAL = {
   starterRepo: 'https://github.com/pycolors-io/pycolors-starter-free',
   starterDemo: 'https://starter-demo.pycolors.io',
-  naAiBuy:
-    'https://pycolors.gumroad.com/l/na-ai-nextjs-landing?layout=profile',
-  naAiDemo: 'https://na-ai-landing-template.vercel.app',
 } as const;
 
 const INTERNAL = {
-  starters: '/starters',
   starterFree: '/starters/free',
-  starterPro: '/starter-pro',
-  upgrade: '/upgrade',
-  access: '/pricing',
+  starterPro: '/starters/pro',
+  pricing: '/pricing',
   starterDocs: '/docs/starter',
   starterUpgradeDocs: '/docs/starter/upgrade',
   ui: '/ui',
@@ -78,8 +74,6 @@ const INTERNAL = {
   examples: '/examples',
   guides: '/guides',
   uiDocs: '/docs/ui',
-  templates: '/templates',
-  templateNaAi: '/templates/na-ai',
   roadmap: '/roadmap',
   changelog: '/changelog',
   openSource: '/open-source',
@@ -90,7 +84,7 @@ const INTERNAL = {
 
 const starterSurfaces = [
   {
-    title: '/login + /register + /forgot',
+    title: '/login + /register',
     desc: 'Auth UX with clean loading, error, and success states.',
     tag: 'Auth',
   },
@@ -101,7 +95,7 @@ const starterSurfaces = [
   },
   {
     title: '/projects',
-    desc: 'A core entity surface with table, CRUD dialogs, and empty states.',
+    desc: 'A core entity surface with tables, CRUD dialogs, and empty states.',
     tag: 'CRUD',
   },
   {
@@ -111,28 +105,28 @@ const starterSurfaces = [
   },
   {
     title: '/billing',
-    desc: 'Billing entrypoints and subscription surfaces designed to evolve toward real monetization.',
+    desc: 'Billing entrypoints and subscription surfaces designed for monetization.',
     tag: 'Billing',
   },
   {
     title: '/admin',
-    desc: 'Members, roles, and invitations UI for stronger B2B product credibility.',
+    desc: 'Members, roles, and invitations UI for stronger B2B credibility.',
     tag: 'B2B',
   },
 ] as const;
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-card px-4 py-3">
+    <div className="rounded-[5px] border border-border-subtle bg-surface px-4 py-3 shadow-soft">
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="mt-1 text-sm font-semibold">{value}</div>
     </div>
   );
 }
 
-function TrustPill({ label }: { label: string }) {
+function Pill({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {label}
     </span>
   );
@@ -154,17 +148,17 @@ function SectionHeader({
   return (
     <div
       className={cn(
-        'mb-6 space-y-3',
+        'mb-8 space-y-3',
         align === 'center'
           ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between',
+          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
       )}
     >
-      <div className="space-y-2">
+      <div className="space-y-3">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
           >
             {eyebrow}
           </Badge>
@@ -175,19 +169,82 @@ function SectionHeader({
         </h2>
 
         {description ? (
-          <p className="text-sm leading-7 text-muted-foreground">
+          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
       </div>
 
-      {align === 'left' && action ? (
-        <div className="sm:self-start">{action}</div>
-      ) : null}
-      {align === 'center' && action ? (
-        <div className="flex justify-center">{action}</div>
+      {action ? (
+        <div
+          className={
+            align === 'center' ? 'flex justify-center' : 'shrink-0'
+          }
+        >
+          {action}
+        </div>
       ) : null}
     </div>
+  );
+}
+
+function ProductCard({
+  title,
+  description,
+  href,
+  badge,
+  eyebrow,
+  cta,
+  highlight = false,
+}: {
+  title: string;
+  description: string;
+  href: string;
+  badge: string;
+  eyebrow: string;
+  cta: string;
+  highlight?: boolean;
+}) {
+  return (
+    <Card
+      className={cn(
+        'flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft transition-colors hover:border-border',
+        highlight &&
+          'border-pro-border-subtle bg-pro-surface shadow-medium',
+      )}
+    >
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-muted-foreground">
+            {eyebrow}
+          </span>
+          <Badge
+            variant={highlight ? 'secondary' : 'outline'}
+            className="rounded-[5px] text-xs"
+          >
+            {badge}
+          </Badge>
+        </div>
+
+        <h3 className="text-lg font-semibold tracking-tight">
+          {title}
+        </h3>
+
+        <p className="text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </div>
+
+      <div className="mt-5">
+        <Button
+          asChild
+          className="w-full rounded-[5px]"
+          variant={highlight ? 'default' : 'outline'}
+        >
+          <Link href={href}>{cta}</Link>
+        </Button>
+      </div>
+    </Card>
   );
 }
 
@@ -197,149 +254,38 @@ function StepCard({
   description,
   href,
   cta,
-  variant = 'outline',
+  highlight = false,
 }: {
   step: string;
   title: string;
   description: string;
   href: string;
   cta: string;
-  variant?: 'default' | 'outline' | 'secondary';
-}) {
-  return (
-    <Card className="rounded-2xl p-5">
-      <div className="space-y-2">
-        <div className="text-xs text-muted-foreground">{step}</div>
-        <div className="text-sm font-medium">{title}</div>
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
-        <div className="pt-2">
-          <Button asChild size="sm" variant={variant}>
-            <Link href={href}>{cta}</Link>
-          </Button>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-function ProductCard({
-  title,
-  description,
-  href,
-  badge,
-  badgeVariant = 'secondary',
-  cta,
-  ctaVariant = 'default',
-  eyebrow,
-}: {
-  title: string;
-  description: string;
-  href: string;
-  badge?: string;
-  badgeVariant?: 'secondary' | 'outline';
-  cta: string;
-  ctaVariant?: 'default' | 'outline' | 'secondary';
-  eyebrow?: string;
-}) {
-  return (
-    <Card className="flex h-full flex-col justify-between rounded-2xl p-6">
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          {eyebrow ? (
-            <span className="text-xs text-muted-foreground">
-              {eyebrow}
-            </span>
-          ) : null}
-          {badge ? (
-            <Badge variant={badgeVariant} className="text-xs">
-              {badge}
-            </Badge>
-          ) : null}
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold tracking-tight">
-            {title}
-          </h3>
-
-          <p className="text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-5">
-        <Button asChild className="w-full" variant={ctaVariant}>
-          <Link href={href}>{cta}</Link>
-        </Button>
-      </div>
-    </Card>
-  );
-}
-
-function PricingPreviewCard({
-  title,
-  price,
-  badge,
-  description,
-  href,
-  cta,
-  footnote,
-  highlight = false,
-}: {
-  title: string;
-  price: string;
-  badge?: string;
-  description: string;
-  href: string;
-  cta: string;
-  footnote?: string;
   highlight?: boolean;
 }) {
   return (
     <Card
       className={cn(
-        'flex h-full flex-col justify-between rounded-2xl p-6',
-        highlight && 'border-foreground/15 shadow-sm shadow-black/5',
+        'rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft',
+        highlight && 'border-pro-border-subtle bg-pro-surface',
       )}
     >
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold tracking-tight">
-            {title}
-          </h3>
-          {badge ? (
-            <Badge
-              variant={highlight ? 'secondary' : 'outline'}
-              className="text-xs"
-            >
-              {badge}
-            </Badge>
-          ) : null}
+        <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+          {step}
         </div>
 
-        <div className="text-3xl font-semibold tracking-tight">
-          {price}
-        </div>
+        <div className="text-sm font-medium">{title}</div>
 
         <p className="text-sm leading-7 text-muted-foreground">
           {description}
         </p>
 
-        {footnote ? (
-          <p className="text-xs leading-6 text-muted-foreground">
-            {footnote}
-          </p>
-        ) : null}
-      </div>
-
-      <div className="mt-5">
         <Button
           asChild
-          className="w-full"
+          size="sm"
           variant={highlight ? 'default' : 'outline'}
+          className="rounded-[5px]"
         >
           <Link href={href}>{cta}</Link>
         </Button>
@@ -366,11 +312,11 @@ export default function HomePage() {
                 label: 'Starter Free available now',
                 variant: 'secondary',
                 icon: (
-                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                 ),
               },
               {
-                label: 'Open-core',
+                label: 'Starter Pro launch offer',
                 variant: 'outline',
               },
               {
@@ -385,14 +331,14 @@ export default function HomePage() {
               },
             ]}
             title="Build a credible SaaS faster."
-            subtitle="Learn the product, validate the UX, then wire the business."
-            description="PyColors is a production-shaped SaaS ecosystem: guides to learn the product logic, patterns and examples to explore real interfaces, Starter Free to validate quickly, and Starter Pro to move faster when authentication, billing, and delivery become the real bottleneck."
+            subtitle="Validate the product surface first. Wire the business when it matters."
+            description="PyColors helps developers move from product idea to credible SaaS faster: guides to understand the logic, patterns to structure the interface, Starter Free to validate the product surface, and Starter Pro to launch with auth and billing already wired."
             actions={
               <>
                 <Button
                   asChild
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
                   <Link href={INTERNAL.starterFree}>
                     Start with Starter Free
@@ -412,7 +358,7 @@ export default function HomePage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
                   <a
                     href={EXTERNAL.starterDemo}
@@ -432,116 +378,155 @@ export default function HomePage() {
             pills={[
               'Next.js App Router',
               'Tailwind v4',
-              'Tokens-first',
-              'Docs-first workflow',
+              'Docs-first',
+              'Production-shaped UX',
               'Launch-oriented',
             ]}
             extraClassName="mx-auto max-w-3xl"
             extra={
               <div className="grid w-full gap-3 sm:grid-cols-3">
                 <Stat label="UI baseline" value={`v${UI_VERSION}`} />
-                <Stat
-                  label="Starter Free"
-                  value="Real screens · Runnable today"
-                />
-                <Stat
-                  label="Path"
-                  value="Guides → Patterns → Free → Pro"
-                />
+                <Stat label="Starter Free" value="Runnable today" />
+                <Stat label="Path" value="Free → Pro" />
               </div>
             }
           />
+
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="The ecosystem"
-              title="Four layers that turn isolated UI work into a real SaaS path"
-              description="PyColors is designed as a progression from understanding product logic to validating the product surface and upgrading when the business layer matters."
+              title="A focused path from idea to launch-ready SaaS"
+              description="PyColors is not just components. It is a product path built around learning, validating, and launching faster."
             />
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <ProductCard
                 title="Guides"
                 badge="Learn"
-                badgeVariant="outline"
                 eyebrow="Knowledge layer"
-                description="Learn the product logic behind dashboards, auth, billing, teams, admin systems, and real SaaS UX."
+                description="Understand dashboards, auth, billing, teams, admin systems, and product structure before implementation."
                 href={INTERNAL.guides}
                 cta="Read guides"
-                ctaVariant="outline"
               />
 
               <ProductCard
                 title="Patterns"
-                badge="Explore"
-                badgeVariant="outline"
+                badge="Structure"
                 eyebrow="Interface layer"
-                description="Move from primitives to production-shaped product surfaces built for real SaaS workflows."
+                description="Move from primitives to production-shaped surfaces designed for real SaaS workflows."
                 href={INTERNAL.patterns}
                 cta="Browse patterns"
-                ctaVariant="outline"
-              />
-
-              <ProductCard
-                title="Examples"
-                badge="Showcase"
-                badgeVariant="outline"
-                eyebrow="Product layer"
-                description="Explore real SaaS interface directions and what is already available today through Starter Free."
-                href={INTERNAL.examples}
-                cta="See examples"
-                ctaVariant="outline"
               />
 
               <ProductCard
                 title="Starter Free"
                 badge="Free"
-                badgeVariant="secondary"
-                eyebrow="Runnable layer"
-                description="A production-shaped SaaS surface with auth UX, dashboard, CRUD, settings, billing entrypoints, and admin flows."
+                eyebrow="Validation layer"
+                description="Run a credible SaaS surface with auth UX, dashboard, CRUD, settings, billing, and admin flows."
                 href={INTERNAL.starterFree}
                 cta="Open Starter Free"
-                ctaVariant="secondary"
+                highlight
+              />
+
+              <ProductCard
+                title="Starter Pro"
+                badge="Paid"
+                eyebrow="Launch layer"
+                description="Upgrade when real authentication, Stripe billing, and protected app architecture become the blocker."
+                href={INTERNAL.starterPro}
+                cta="See Starter Pro"
+                highlight
               />
             </div>
           </section>
-          <section className="py-8 sm:py-12">
-            <Card className="rounded-[28px] p-6 sm:p-7">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="outline" className="gap-2">
-                      <Layers3
-                        className="h-3.5 w-3.5"
-                        aria-hidden="true"
-                      />
-                      The path
-                    </Badge>
+
+          <section className="py-10 sm:py-12">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-6 sm:p-7">
+                <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+                  <div className="space-y-5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
+                      >
+                        The path
+                      </Badge>
+
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        Free → Pro
+                      </Badge>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h2 className="text-balance text-2xl font-semibold tracking-tight">
+                        Keep the decision simple.
+                      </h2>
+
+                      <p className="max-w-md text-sm leading-7 text-muted-foreground">
+                        Start with Starter Free when you need speed
+                        and validation. Move to Starter Pro when
+                        wiring auth, billing, and protected flows
+                        becomes the bottleneck.
+                      </p>
+                    </div>
                   </div>
 
-                  <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                    PyColors is built as a progression: learn with
-                    guides, explore with patterns and examples,
-                    validate with Starter Free, then move to Starter
-                    Pro when auth, billing, secure delivery, and
-                    backend foundations become the blocker to launch.
-                  </p>
-                </div>
+                  <div className="space-y-5">
+                    <p className="text-sm leading-7 text-muted-foreground">
+                      The homepage should make one thing obvious:
+                      PyColors helps builders avoid wasting time on
+                      the wrong layer too early. Validate the product
+                      first. Pay for the business wiring when the
+                      product is ready to launch.
+                    </p>
 
-                <div className="flex flex-wrap gap-2 sm:min-w-[240px] sm:justify-end">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={INTERNAL.guides}>Guides</Link>
-                  </Button>
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={INTERNAL.patterns}>Patterns</Link>
-                  </Button>
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={INTERNAL.access}>Pricing</Link>
-                  </Button>
+                    <div className="flex flex-wrap gap-2">
+                      <Pill label="No backend required to start" />
+                      <Pill label="Mocked by design" />
+                      <Pill label="Upgrade-ready" />
+                      <Pill label="Real auth in Pro" />
+                      <Pill label="Stripe billing in Pro" />
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        <Link href={INTERNAL.guides}>Guides</Link>
+                      </Button>
+
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        <Link href={INTERNAL.patterns}>Patterns</Link>
+                      </Button>
+
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        <Link href={INTERNAL.pricing}>Pricing</Link>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </Card>
           </section>
-          <section className="py-8 sm:py-12">
+
+          <section className="py-10 sm:py-12">
             <SectionHeader
               eyebrow="Foundation"
               title="PyColors UI is the base layer of the ecosystem"
@@ -550,11 +535,16 @@ export default function HomePage() {
 
             <div className="flex flex-col items-center gap-4 text-center">
               <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="secondary">Open source</Badge>
-                <Badge variant="outline">npm package</Badge>
+                <Badge variant="secondary" className="rounded-[5px]">
+                  Open source
+                </Badge>
+
+                <Badge variant="outline" className="rounded-[5px]">
+                  npm package
+                </Badge>
               </div>
 
-              <p className="max-w-xl text-sm text-muted-foreground leading-7">
+              <p className="max-w-xl text-sm leading-7 text-muted-foreground">
                 PyColors UI gives you the primitives. Patterns give
                 you product logic. Starter Free gives you a runnable
                 SaaS surface. Starter Pro gives you the business layer
@@ -566,103 +556,138 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-wrap justify-center gap-2">
-                <Button asChild size="sm" variant="outline">
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
                   <Link href={INTERNAL.ui}>Explore UI system</Link>
                 </Button>
-                <Button asChild size="sm" variant="outline">
+
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
                   <Link href={INTERNAL.patterns}>UI patterns</Link>
                 </Button>
-                <Button asChild size="sm" variant="outline">
+
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
                   <Link href={INTERNAL.uiDocs}>UI docs</Link>
                 </Button>
-                <Button asChild size="sm" variant="outline">
+
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
                   <Link href={INTERNAL.openSource}>Open source</Link>
                 </Button>
               </div>
             </div>
           </section>
-          <section className="py-10 sm:py-14">
-            <Card className="rounded-[28px] p-6 sm:p-7">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary" className="gap-2">
-                      <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      Starter Free
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      Clone → install → run
-                    </Badge>
-                  </div>
 
-                  <h2 className="text-lg font-semibold tracking-tight">
-                    Start building today
-                  </h2>
-                  <p className="text-sm text-muted-foreground leading-7">
-                    Run Starter Free locally and explore a credible
-                    SaaS surface before wiring backend, auth, or
-                    billing.
-                  </p>
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="Starter Free"
+              title="Start building today"
+              description="Run Starter Free locally and explore a credible SaaS surface before wiring backend, auth, or billing."
+            />
 
-                  <p className="text-xs text-muted-foreground">
-                    Fast path: run → open dashboard → inspect surfaces
-                    → adapt your product copy → wire later.
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <TrustPill label="Instant UI surface" />
-                    <TrustPill label="Mock data" />
-                    <TrustPill label="No backend required" />
-                    <TrustPill label="Upgrade-ready" />
-                  </div>
-
-                  <div className="pt-2 flex flex-wrap gap-2">
-                    <Button asChild size="sm" variant="secondary">
-                      <Link href={INTERNAL.starterFree}>
-                        Starter Free details
-                      </Link>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <a
-                        href={EXTERNAL.starterDemo}
-                        target="_blank"
-                        rel="noreferrer noopener"
+            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-6 sm:p-7">
+                <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+                  <div className="space-y-5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="rounded-[5px]"
                       >
-                        Open live demo
-                        <Eye
-                          className="ml-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    </Button>
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={INTERNAL.starterDocs}>
-                        Read starter docs
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
+                        Starter Free
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        Clone → install → run
+                      </Badge>
+                    </div>
 
-                <div className="w-full sm:max-w-md">
-                  <div className="overflow-hidden rounded-xl border border-border bg-card">
-                    <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="inline-flex h-2 w-2 rounded-full bg-rose-500"
-                          aria-hidden="true"
-                        />
-                        <span
-                          className="inline-flex h-2 w-2 rounded-full bg-amber-500"
-                          aria-hidden="true"
-                        />
-                        <span
-                          className="inline-flex h-2 w-2 rounded-full bg-emerald-500"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-2 text-xs text-muted-foreground">
-                          terminal
-                        </span>
-                      </div>
+                    <h2 className="text-2xl font-semibold tracking-tight">
+                      Validate the product surface before
+                      infrastructure.
+                    </h2>
+
+                    <p className="text-sm leading-7 text-muted-foreground">
+                      Starter Free gives you auth UX, dashboard, CRUD,
+                      settings, billing entrypoints, and admin flows
+                      with mock data — so you can validate the product
+                      before backend complexity slows you down.
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      <Pill label="Mock data" />
+                      <Pill label="No database" />
+                      <Pill label="No API required" />
+                      <Pill label="Upgrade-ready" />
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="rounded-[5px]"
+                      >
+                        <Link href={INTERNAL.starterFree}>
+                          Starter Free details
+                        </Link>
+                      </Button>
+
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        <a
+                          href={EXTERNAL.starterDemo}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          Open live demo
+                          <Eye
+                            className="ml-2 h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      </Button>
+
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        <Link href={INTERNAL.starterDocs}>
+                          Starter docs
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-background">
+                    <div className="flex items-center justify-between border-b border-border-subtle bg-surface-muted px-4 py-2">
+                      <span className="text-xs text-muted-foreground">
+                        terminal
+                      </span>
 
                       <a
                         href={EXTERNAL.starterRepo}
@@ -670,7 +695,7 @@ export default function HomePage() {
                         rel="noreferrer noopener"
                         aria-label="Open the Starter Free repository on GitHub"
                         className={cn(
-                          'inline-flex items-center gap-1.5 rounded-sm text-xs text-muted-foreground transition-colors hover:text-foreground',
+                          'inline-flex items-center gap-1.5 rounded-[5px] text-xs text-muted-foreground transition-colors hover:text-foreground',
                           focusRing,
                         )}
                       >
@@ -682,171 +707,72 @@ export default function HomePage() {
                       </a>
                     </div>
 
-                    <div className="px-4 py-4">
+                    <div className="p-4">
                       <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`git clone https://github.com/pycolors-io/pycolors-starter-free.git
 cd pycolors-starter-free
 pnpm install
 pnpm dev`}</pre>
 
-                      <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+                      <div className="mt-3 rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-2 text-xs text-muted-foreground">
                         Then open{' '}
                         <span className="font-mono text-foreground">
                           http://localhost:3000
                         </span>
                       </div>
-
-                      <div className="mt-3 rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
-                        Docs:{' '}
-                        <Link
-                          href={INTERNAL.starterDocs}
-                          className="font-mono text-foreground underline underline-offset-4"
-                        >
-                          {INTERNAL.starterDocs}
-                        </Link>
-                      </div>
                     </div>
                   </div>
-
-                  <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Prefer a hosted preview?</span>
-                    <a
-                      href={EXTERNAL.starterDemo}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={cn(
-                        'inline-flex items-center gap-1.5 rounded-sm underline-offset-4 hover:text-foreground hover:underline',
-                        focusRing,
-                      )}
-                    >
-                      Open live demo
-                      <Eye className="h-4 w-4" aria-hidden="true" />
-                    </a>
-                  </div>
                 </div>
-              </div>
+              </CardContent>
             </Card>
           </section>
-          <section id="what-you-get" className="py-10 sm:py-14">
+
+          <section
+            id="what-you-get"
+            className="py-12 sm:py-14 lg:py-16"
+          >
             <SectionHeader
-              eyebrow="Starter Free"
-              title="What you get with Starter Free"
+              eyebrow="Product surfaces"
+              title="What Starter Free gives you"
               description="Not feature noise. Product surfaces users expect on day one."
             />
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {starterSurfaces.map((s) => (
-                <Card key={s.title} className="rounded-2xl p-5">
+              {starterSurfaces.map((surface) => (
+                <Card
+                  key={surface.title}
+                  className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border"
+                >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-3">
                       <div className="text-sm font-medium">
-                        {s.title}
+                        {surface.title}
                       </div>
-                      <Badge variant="outline" className="text-xs">
-                        {s.tag}
+
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px] text-xs"
+                      >
+                        {surface.tag}
                       </Badge>
                     </div>
+
                     <p className="text-sm leading-7 text-muted-foreground">
-                      {s.desc}
+                      {surface.desc}
                     </p>
                   </div>
                 </Card>
               ))}
             </div>
-
-            <div className="mx-auto mt-6 w-full">
-              <Card className="rounded-[28px] p-6 sm:p-7">
-                <div className="flex items-start gap-3">
-                  <span className="mt-0.5 inline-flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                    <BadgeCheck
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </span>
-
-                  <div className="space-y-1">
-                    <div className="text-sm font-medium">
-                      Built on PyColors UI
-                    </div>
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      Starter Free ships with the same PyColors UI
-                      primitives you can use independently: buttons,
-                      cards, badges, dialogs, sheets, tabs, toasts,
-                      tables, pagination, skeletons, empty states, and
-                      an accessible password input.
-                    </p>
-
-                    <div className="pt-2 flex flex-wrap gap-2">
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={INTERNAL.ui}>
-                          Explore PyColors UI
-                        </Link>
-                      </Button>
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={INTERNAL.patterns}>
-                          Browse UI patterns
-                        </Link>
-                      </Button>
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={INTERNAL.starterDocs}>
-                          Read starter docs
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
           </section>
-          <section className="py-10 sm:py-14">
-            <SectionHeader
-              eyebrow="Learn. Explore. Build."
-              title="The fastest path is not guessing. It is understanding the product surface first."
-              description="Education, exploration, validation, then monetization."
-            />
 
-            <div className="grid gap-4 lg:grid-cols-3">
-              <ProductCard
-                title="Guides"
-                badge="Knowledge"
-                badgeVariant="outline"
-                eyebrow="Learn the logic"
-                description="Read focused SaaS guides covering dashboards, auth, billing, teams, admin systems, and product structure."
-                href={INTERNAL.guides}
-                cta="Read guides"
-                ctaVariant="outline"
-              />
-
-              <ProductCard
-                title="Examples"
-                badge="Showcase"
-                badgeVariant="outline"
-                eyebrow="Explore interfaces"
-                description="See real SaaS surface directions and how PyColors is designed to support modern product workflows."
-                href={INTERNAL.examples}
-                cta="Explore examples"
-                ctaVariant="outline"
-              />
-
-              <ProductCard
-                title="Pricing"
-                badge="Decision page"
-                badgeVariant="outline"
-                eyebrow="Choose your path"
-                description="Understand the free entry point, Starter Pro, and the logic behind upgrading when business wiring starts to matter."
-                href={INTERNAL.access}
-                cta="View pricing"
-                ctaVariant="secondary"
-              />
-            </div>
-          </section>
-          <section className="py-10 sm:py-14">
+          <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Upgrade path"
               title="Starter Free validates the product. Starter Pro wires the business."
-              description="Starter Free is the surface. Starter Pro is the upgrade when auth, billing, backend, and delivery become the bottleneck."
+              description="Starter Free is the surface. Starter Pro is the upgrade when auth, billing, backend, and protected flows become the bottleneck."
               action={
-                <Button asChild variant="secondary">
-                  <Link href={INTERNAL.upgrade}>
+                <Button asChild className="rounded-[5px]">
+                  <Link href={INTERNAL.starterPro}>
                     Explore Starter Pro
                     <ArrowRight
                       className="ml-2 h-4 w-4"
@@ -858,7 +784,7 @@ pnpm dev`}</pre>
               align="left"
             />
 
-            <Card className="rounded-[28px] p-6 sm:p-7">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-4 shadow-soft sm:p-6">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -908,15 +834,25 @@ pnpm dev`}</pre>
               </Table>
 
               <div className="mt-5 flex flex-wrap gap-3">
-                <Button asChild variant="secondary">
+                <Button asChild className="rounded-[5px]">
                   <Link href={INTERNAL.starterPro}>
                     See Starter Pro
                   </Link>
                 </Button>
-                <Button asChild variant="outline">
-                  <Link href={INTERNAL.access}>View pricing</Link>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
+                  <Link href={INTERNAL.pricing}>View pricing</Link>
                 </Button>
-                <Button asChild variant="outline">
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
                   <Link href={INTERNAL.starterUpgradeDocs}>
                     Read migration guide
                   </Link>
@@ -924,146 +860,8 @@ pnpm dev`}</pre>
               </div>
             </Card>
           </section>
-          <section className="py-10 sm:py-14">
-            <SectionHeader
-              eyebrow="Pricing preview"
-              title="A premium ecosystem shaped around leverage, not clutter"
-              description="Start free, upgrade to Starter Pro when the business layer matters, and expand into other premium assets when they fit your workflow."
-            />
 
-            <div className="grid gap-4 lg:grid-cols-3">
-              <PricingPreviewCard
-                title="Starter Free"
-                price="Free"
-                badge="Available now"
-                description="A production-shaped SaaS surface for validating product direction quickly."
-                href={INTERNAL.starterFree}
-                cta="Open Starter Free"
-                footnote="Best entry point for product exploration and UX validation."
-              />
-
-              <PricingPreviewCard
-                title="Starter Pro"
-                price="199 €"
-                badge="Main offer"
-                description="A launch-ready SaaS foundation with real auth, real billing, backend foundations, and secure delivery."
-                href={INTERNAL.access}
-                cta="View Starter Pro pricing"
-                footnote="Best choice when the business layer becomes the blocker."
-                highlight
-              />
-
-              <PricingPreviewCard
-                title="Templates"
-                price="From 49 €"
-                badge="Complementary"
-                description="Premium frontend assets for teams who want polished marketing or product surfaces faster."
-                href={INTERNAL.templates}
-                cta="Browse templates"
-                footnote="A complementary layer, not the main entry point."
-              />
-            </div>
-          </section>
-          <section className="py-10 sm:py-14">
-            <div className="mx-auto w-full">
-              <Card className="rounded-[28px] p-6 sm:p-7">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="secondary" className="gap-2">
-                        <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                        Featured premium template
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        Available today
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        49 $
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-semibold tracking-tight">
-                      NA-AI — Premium Landing Page
-                    </h3>
-
-                    <p className="max-w-xl text-sm leading-7 text-muted-foreground">
-                      A premium landing page template for AI and SaaS
-                      products with real sections, pricing toggle,
-                      integrations, dark/light mode, and polished
-                      production UI.
-                    </p>
-
-                    <p className="text-xs text-muted-foreground">
-                      Frontend-only by design. A fast path for
-                      shipping a polished marketing surface.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col gap-2 sm:min-w-[220px] sm:items-end">
-                    <Button asChild className={cn(focusRing)}>
-                      <Link href={INTERNAL.templateNaAi}>
-                        View NA-AI details
-                        <ArrowRight
-                          className="ml-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </Button>
-
-                    <Button
-                      asChild
-                      variant="secondary"
-                      className={cn(focusRing)}
-                    >
-                      <a
-                        href={EXTERNAL.naAiBuy}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        aria-label="Buy NA-AI on Gumroad (opens in a new tab)"
-                      >
-                        Get it on Gumroad
-                        <ExternalLink
-                          className="ml-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    </Button>
-
-                    <a
-                      href={EXTERNAL.naAiDemo}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={cn(
-                        'mt-1 inline-flex items-center rounded-sm text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline',
-                        focusRing,
-                      )}
-                    >
-                      View live demo
-                      <Eye
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </Card>
-
-              <p className="mt-3 text-center text-xs text-muted-foreground">
-                Templates are a complementary premium layer. Starter
-                Free remains the main entry point, and Starter Pro
-                remains the main upgrade path for business wiring.
-              </p>
-
-              <div className="mt-3 flex justify-center">
-                <Button asChild size="sm" variant="outline">
-                  <Link href={INTERNAL.templates}>
-                    Browse all templates
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </section>
-          <section className="py-10 sm:py-14">
+          <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Workflow"
               title="Adopt progressively, without lock-in"
@@ -1074,124 +872,149 @@ pnpm dev`}</pre>
               <StepCard
                 step="Step 01"
                 title="Learn with Guides"
-                description="Understand the product logic behind dashboards, auth, billing, teams, and admin systems."
+                description="Understand dashboards, auth, billing, teams, and admin systems."
                 href={INTERNAL.guides}
                 cta="Read guides"
-                variant="outline"
               />
 
               <StepCard
                 step="Step 02"
-                title="Explore Patterns & Examples"
+                title="Explore Patterns"
                 description="Study production-shaped surfaces before deciding how your product should feel."
-                href={INTERNAL.examples}
-                cta="See examples"
-                variant="outline"
+                href={INTERNAL.patterns}
+                cta="Browse patterns"
               />
 
               <StepCard
                 step="Step 03"
-                title="Validate with Starter Free"
+                title="Validate with Free"
                 description="Run a credible SaaS surface locally and prove the UX before wiring the business layer."
                 href={INTERNAL.starterFree}
-                cta="Open Starter Free"
-                variant="secondary"
+                cta="Open Free"
+                highlight
               />
 
               <StepCard
                 step="Step 04"
-                title="Upgrade when wiring slows you down"
+                title="Upgrade to Pro"
                 description="Move to Starter Pro when auth, billing, backend, and delivery become the blocker."
-                href={INTERNAL.access}
+                href={INTERNAL.pricing}
                 cta="View pricing"
-                variant="outline"
+                highlight
               />
             </div>
           </section>
-          <section className="py-10 sm:py-14">
-            <Card className="rounded-[28px] p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    Built in public. Structured for the long term.
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Public roadmap, changelog, open source
-                    foundations, guides, examples, patterns, and a
-                    docs-first workflow.
-                  </p>
-                </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href={INTERNAL.guides}>Guides</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href={INTERNAL.examples}>Examples</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href={INTERNAL.changelog}>Changelog</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={cn(focusRing)}
-                  >
-                    <Link href={INTERNAL.roadmap}>Roadmap</Link>
-                  </Button>
+          <section className="py-12 sm:py-14 lg:py-16">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-6 sm:p-7">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="space-y-3">
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      Built in public
+                    </Badge>
+
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      Structured for the long term.
+                    </h3>
+
+                    <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                      Public roadmap, changelog, open source
+                      foundations, guides, examples, patterns, and a
+                      docs-first workflow.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href={INTERNAL.changelog}>Changelog</Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href={INTERNAL.roadmap}>Roadmap</Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href={INTERNAL.openSource}>
+                        Open source
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </Card>
 
             <div className="mt-4 flex flex-wrap justify-center gap-2">
-              <Button asChild size="sm" variant="outline">
-                <Link href={INTERNAL.openSource}>Open source</Link>
-              </Button>
-              <Button asChild size="sm" variant="outline">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="rounded-[5px]"
+              >
                 <Link href={INTERNAL.license}>License</Link>
               </Button>
-              <Button asChild size="sm" variant="outline">
+
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="rounded-[5px]"
+              >
                 <Link href={INTERNAL.terms}>Terms</Link>
               </Button>
-              <Button asChild size="sm" variant="outline">
+
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="rounded-[5px]"
+              >
                 <Link href={INTERNAL.privacy}>Privacy</Link>
               </Button>
             </div>
-
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              PyColors is designed to compound over time — not to
-              chase trends.
-            </p>
           </section>
+
           <section className="pt-4">
-            <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
+            <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 <div className="max-w-2xl space-y-3">
-                  <h2 className="text-lg font-semibold tracking-tight">
+                  <Badge
+                    variant="outline"
+                    className="rounded-[5px] border-pro-border bg-pro-surface-muted"
+                  >
+                    Next step
+                  </Badge>
+
+                  <h2 className="text-2xl font-semibold tracking-tight">
                     Start with Free today. Upgrade when your SaaS
-                    becomes real.{' '}
+                    becomes real.
                   </h2>
-                  <p className="text-sm text-muted-foreground">
+
+                  <p className="text-sm leading-7 text-muted-foreground">
                     Learn the product logic, validate the UX with
                     Starter Free, then move to Starter Pro when you
                     want the business layer handled.
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <TrustPill label="Guides first" />
-                    <TrustPill label="Starter Free today" />
-                    <TrustPill label="Starter Pro when ready" />
+
+                  <div className="flex flex-wrap gap-2">
+                    <Pill label="Guides first" />
+                    <Pill label="Starter Free today" />
+                    <Pill label="Starter Pro when ready" />
                   </div>
                 </div>
 
@@ -1200,15 +1023,15 @@ pnpm dev`}</pre>
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-11 rounded-xl text-sm font-medium',
+                      'h-11 rounded-[5px] text-sm font-medium',
                       focusRing,
                     )}
                   >
-                    <Link href="/starters/free">
-                      {' '}
+                    <Link href={INTERNAL.starterFree}>
                       Start with Starter Free
                     </Link>
                   </Button>
+
                   <BuyStarterProButton />
                 </div>
               </div>
