@@ -127,7 +127,14 @@ export default function Layout({
           </noscript>
         ) : null}
 
-        <RootProvider>{children}</RootProvider>
+        <RootProvider
+          theme={{
+            defaultTheme: 'dark',
+            enableSystem: false,
+          }}
+        >
+          {children}
+        </RootProvider>
       </body>
     </html>
   );
