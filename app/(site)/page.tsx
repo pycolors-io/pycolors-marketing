@@ -2,10 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  BadgeCheck,
   ExternalLink,
   Eye,
-  Layers3,
   Sparkles,
 } from 'lucide-react';
 
