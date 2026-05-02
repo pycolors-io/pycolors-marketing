@@ -3,34 +3,32 @@
 import Link from 'next/link';
 import { cn } from '@pycolors/ui';
 
+const BRAND = '#6A30D4';
+const BRAND_LIGHT = '#8B5CF6';
+const BRAND_SOFT = '#A371F7';
+const BRAND_DARK = '#0B0B10';
+
 function Logomark() {
   return (
-    <span
-      className={cn(
-        'relative inline-flex h-7 w-7 items-center justify-center rounded-md',
-        'bg-foreground text-background',
-        'transition-all duration-200 ease-out',
-        'group-hover:scale-[1.02] group-active:scale-[0.98]',
-      )}
+    <svg
+      viewBox="0 0 40 40"
+      className="h-6 w-6 shrink-0"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <span className="pointer-events-none absolute inset-0 rounded-md bg-foreground/20 opacity-0 blur-[6px] transition-opacity duration-200 group-hover:opacity-40" />
+      {/* top crystal */}
+      <path d="M20 4L30 18H10L20 4Z" fill={BRAND} />
 
-      <svg
-        viewBox="0 0 24 24"
-        className="relative h-3.75 w-3.75 transition-transform duration-200 group-hover:scale-[1.03]"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M8 18V6H12.8C15.1 6 17 7.8 17 10C17 12.2 15.1 14 12.8 14H8"
-          stroke="currentColor"
-          strokeWidth="2.15"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
+      {/* bottom crystal */}
+      <path d="M20 36L10 22H30L20 36Z" fill={BRAND_LIGHT} />
+
+      {/* center cut */}
+      <path d="M20 11L25 20L20 29L15 20L20 11Z" fill={BRAND_DARK} />
+
+      {/* subtle center detail */}
+      <circle cx="20" cy="20" r="1.15" fill={BRAND_SOFT} />
+    </svg>
   );
 }
 
@@ -38,12 +36,11 @@ function Wordmark() {
   return (
     <span
       className={cn(
-        'text-[14px] font-semibold tracking-tight text-foreground',
-        'transition-all duration-200',
-        'group-hover:opacity-90',
+        'select-none font-sans text-[15px] font-semibold leading-none tracking-[-0.05em]',
+        'text-foreground antialiased',
       )}
     >
-      PyColors
+      pycolors
     </span>
   );
 }
@@ -51,12 +48,11 @@ function Wordmark() {
 export function Logo() {
   return (
     <Link
-      href="/"
-      aria-label="PyColors — Build production-ready SaaS faster"
+      href="/docs"
+      aria-label="PyColors Docs"
       className={cn(
-        'group inline-flex items-center gap-2',
-        'transition-all duration-150',
-        'hover:opacity-90 active:scale-[0.99]',
+        'group inline-flex items-center gap-2.5',
+        'transition-opacity duration-200 hover:opacity-90',
       )}
     >
       <Logomark />
