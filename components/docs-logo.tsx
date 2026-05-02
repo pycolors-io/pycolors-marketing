@@ -17,16 +17,12 @@ function Logomark() {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* top crystal */}
       <path d="M20 4L30 18H10L20 4Z" fill={BRAND} />
 
-      {/* bottom crystal */}
       <path d="M20 36L10 22H30L20 36Z" fill={BRAND_LIGHT} />
 
-      {/* center cut */}
       <path d="M20 11L25 20L20 29L15 20L20 11Z" fill={BRAND_DARK} />
 
-      {/* subtle center detail */}
       <circle cx="20" cy="20" r="1.15" fill={BRAND_SOFT} />
     </svg>
   );
@@ -41,11 +37,14 @@ function Wordmark() {
       )}
     >
       pycolors
+      <span className="ml-1" style={{ color: BRAND }}>
+        /docs
+      </span>
     </span>
   );
 }
 
-export function Logo() {
+export function DocsLogo() {
   return (
     <Link
       href="/docs"

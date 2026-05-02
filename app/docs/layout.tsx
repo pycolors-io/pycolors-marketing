@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 function SidebarBanner() {
   return (
-    <div className="rounded-2xl border border-border/60 bg-muted/20 p-3">
+    <div className="rounded-[5px] border border-border/60 bg-muted/20 p-3">
       <div className="space-y-1.5">
         <p className="text-[13px] font-semibold text-foreground">
           PyColors Docs

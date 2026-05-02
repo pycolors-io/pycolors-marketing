@@ -101,7 +101,7 @@ export function DocsPageFooter({
             </p>
 
             {/* Feedback inline */}
-            <div className="flex items-center gap-2 pt-2">
+            {/* <div className="flex items-center gap-2 pt-2">
               <span className="text-xs text-muted-foreground">
                 Was this helpful?
               </span>
@@ -129,17 +129,17 @@ export function DocsPageFooter({
               >
                 <ThumbsDown className="h-3 w-3" />
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* CTA */}
           <div className="flex shrink-0">
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-all hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-xl border border-border-subtle bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-soft transition-all hover:bg-brand-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {ctaLabel}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </div>

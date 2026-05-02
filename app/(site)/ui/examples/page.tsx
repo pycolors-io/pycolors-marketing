@@ -95,12 +95,33 @@ const exampleDirections: ExampleDirection[] = [
   },
 ];
 
+const steps = [
+  {
+    eyebrow: 'Step 01',
+    title: 'Explore real product surfaces',
+    description:
+      'See how dashboards, billing pages, team systems, and admin surfaces feel when the product is structured and credible.',
+  },
+  {
+    eyebrow: 'Step 02',
+    title: 'Start from a runnable baseline',
+    description:
+      'Use Starter Free to move from inspiration to a real SaaS surface without starting from scratch.',
+  },
+  {
+    eyebrow: 'Step 03',
+    title: 'Upgrade when wiring matters',
+    description:
+      'Move to Starter Pro when auth, billing, backend foundations, and production wiring become the real blocker to launch.',
+  },
+] as const;
+
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
       {children}
     </span>
   );
@@ -121,17 +142,18 @@ function SectionHeader({
 }) {
   return (
     <div
-      className={`mb-6 space-y-3 ${
+      className={cn(
+        'mb-8 space-y-3',
         align === 'center'
           ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'
-      }`}
+          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
+      )}
     >
-      <div className="space-y-2">
+      <div className="space-y-3">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
           >
             {eyebrow}
           </Badge>
@@ -142,7 +164,7 @@ function SectionHeader({
         </h2>
 
         {description ? (
-          <p className="text-sm leading-7 text-muted-foreground">
+          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
@@ -157,69 +179,90 @@ function SectionHeader({
 
 function AvailableNowCard() {
   return (
-    <Card className="rounded-[28px] border p-6 sm:p-7">
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{AVAILABLE_NOW.tag}</Badge>
-            <Badge variant="outline">Starter Free</Badge>
-            <Badge variant="outline">Production-shaped</Badge>
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-6 sm:p-7">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary" className="rounded-[5px]">
+                {AVAILABLE_NOW.tag}
+              </Badge>
+
+              <Badge variant="outline" className="rounded-[5px]">
+                Starter Free
+              </Badge>
+
+              <Badge variant="outline" className="rounded-[5px]">
+                Production-shaped
+              </Badge>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-2xl font-semibold tracking-tight">
+                {AVAILABLE_NOW.title}
+              </h3>
+
+              <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                {AVAILABLE_NOW.description}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <Pill>Dashboard</Pill>
+              <Pill>Auth UX</Pill>
+              <Pill>CRUD patterns</Pill>
+              <Pill>Billing entrypoints</Pill>
+              <Pill>Admin surfaces</Pill>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
-              {AVAILABLE_NOW.title}
-            </h3>
+          <div className="flex flex-col gap-3 lg:items-end">
+            <Button
+              asChild
+              className="h-10 w-full rounded-[5px] text-sm lg:w-[220px]"
+            >
+              <a
+                href={AVAILABLE_NOW.demoHref}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Open the Starter Free live demo"
+              >
+                Open live demo
+                <Eye className="ml-2 h-4 w-4" aria-hidden="true" />
+              </a>
+            </Button>
 
-            <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-              {AVAILABLE_NOW.description}
-            </p>
-          </div>
+            <Button
+              asChild
+              variant="outline"
+              className="h-10 w-full rounded-[5px] text-sm lg:w-[220px]"
+            >
+              <a
+                href={AVAILABLE_NOW.repoHref}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Open the Starter Free GitHub repository"
+              >
+                View GitHub repo
+                <ExternalLink
+                  className="ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </a>
+            </Button>
 
-          <div className="flex flex-wrap gap-2">
-            <Pill>Dashboard</Pill>
-            <Pill>Auth UX</Pill>
-            <Pill>CRUD patterns</Pill>
-            <Pill>Billing entrypoints</Pill>
-            <Pill>Admin surfaces</Pill>
+            <Button
+              asChild
+              variant="outline"
+              className="h-10 w-full rounded-[5px] text-sm lg:w-[220px]"
+            >
+              <Link href="/starters/free">
+                Read Starter Free details
+              </Link>
+            </Button>
           </div>
         </div>
-
-        <div className="flex min-w-[220px] flex-col gap-2">
-          <Button asChild>
-            <a
-              href={AVAILABLE_NOW.demoHref}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Open the Starter Free live demo"
-            >
-              Open live demo
-              <Eye className="ml-2 h-4 w-4" aria-hidden="true" />
-            </a>
-          </Button>
-
-          <Button asChild variant="secondary">
-            <a
-              href={AVAILABLE_NOW.repoHref}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Open the Starter Free GitHub repository"
-            >
-              View GitHub repo
-              <ExternalLink
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
-            </a>
-          </Button>
-
-          <Button asChild variant="outline">
-            <Link href="/starters/free">
-              Read Starter Free details
-            </Link>
-          </Button>
-        </div>
-      </div>
+      </CardContent>
     </Card>
   );
 }
@@ -231,11 +274,14 @@ function ExampleDirectionCard({
   category,
 }: ExampleDirection) {
   return (
-    <Card className="flex h-full flex-col justify-between rounded-2xl border">
+    <Card className="flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border">
       <CardContent className="flex h-full flex-col justify-between p-6">
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <Badge variant="outline" className="text-xs">
+            <Badge
+              variant="outline"
+              className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-xs"
+            >
               {tag}
             </Badge>
 
@@ -260,7 +306,7 @@ function ExampleDirectionCard({
             asChild
             size="sm"
             variant="outline"
-            className="flex-1"
+            className="flex-1 rounded-[5px]"
           >
             <Link href="/starters/free">Starter Free</Link>
           </Button>
@@ -269,7 +315,7 @@ function ExampleDirectionCard({
             asChild
             size="sm"
             variant="outline"
-            className="flex-1"
+            className="flex-1 rounded-[5px]"
           >
             <Link href="/ui/patterns">Browse patterns</Link>
           </Button>
@@ -282,7 +328,7 @@ function ExampleDirectionCard({
 export default function ExamplesPage() {
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
-      <div>
+      <div className="mx-auto max-w-6xl">
         <PageHero
           badges={[
             {
@@ -312,7 +358,7 @@ export default function ExamplesPage() {
               <Button
                 asChild
                 size="lg"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/starters/free">
                   Start with Starter Free
@@ -325,9 +371,9 @@ export default function ExamplesPage() {
 
               <Button
                 asChild
-                variant="secondary"
+                variant="outline"
                 size="lg"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/ui/patterns">Browse UI patterns</Link>
               </Button>
@@ -347,38 +393,80 @@ export default function ExamplesPage() {
           ]}
         />
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <Card className="rounded-[28px] border p-6 sm:p-7">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="gap-2">
-                    <Layers3
-                      className="h-3.5 w-3.5"
-                      aria-hidden="true"
-                    />
-                    Why examples matter
-                  </Badge>
+        <section className="py-10 sm:py-12">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+            <CardContent className="p-6 sm:p-7">
+              <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+                <div className="space-y-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
+                    >
+                      Why examples matter
+                    </Badge>
+
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      Product proof
+                    </Badge>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h2 className="text-balance text-2xl font-semibold tracking-tight">
+                      Examples turn product direction into something
+                      visible.
+                    </h2>
+
+                    <p className="max-w-md text-sm leading-7 text-muted-foreground">
+                      Components explain the building blocks. Patterns
+                      explain the interface logic. Examples show what
+                      a real SaaS can feel like.
+                    </p>
+                  </div>
                 </div>
 
-                <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                  Components explain the building blocks. Patterns
-                  explain the interface logic. Examples show what a
-                  real product can feel like. This page separates what
-                  is already available from the product directions
-                  PyColors is designed to support next.
-                </p>
-              </div>
+                <div className="space-y-5">
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    This page separates what is already available from
+                    the product directions PyColors is designed to
+                    support next, so builders can evaluate the
+                    ecosystem honestly before moving toward Starter
+                    Free or Starter Pro.
+                  </p>
 
-              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/guides">Read guides</Link>
-                </Button>
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/pricing">View pricing</Link>
-                </Button>
+                  <div className="flex flex-wrap gap-2">
+                    <Pill>Runnable example</Pill>
+                    <Pill>Product-shaped UX</Pill>
+                    <Pill>Honest availability</Pill>
+                    <Pill>Upgrade path</Pill>
+                    <Pill>Conversion-aware</Pill>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href="/guides">Read guides</Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href="/pricing">View pricing</Link>
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </CardContent>
           </Card>
         </section>
 
@@ -398,7 +486,12 @@ export default function ExamplesPage() {
             title="Where the ecosystem is designed to go next"
             description="These are not random inspiration cards. They reflect the kinds of SaaS products PyColors patterns and starters are built to support."
             action={
-              <Button asChild size="sm" variant="outline">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="rounded-[5px]"
+              >
                 <Link href="/starters/pro">Explore Starter Pro</Link>
               </Button>
             }
@@ -422,66 +515,49 @@ export default function ExamplesPage() {
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
-            <Card className="rounded-2xl border p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 01
-                </div>
-                <div className="text-sm font-medium">
-                  Explore real product surfaces
-                </div>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  See how dashboards, billing pages, team systems, and
-                  admin surfaces can look when the product feels
-                  structured and credible.
-                </p>
-              </div>
-            </Card>
+            {steps.map((step) => (
+              <Card
+                key={step.eyebrow}
+                className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft"
+              >
+                <div className="space-y-2">
+                  <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                    {step.eyebrow}
+                  </div>
 
-            <Card className="rounded-2xl border p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 02
-                </div>
-                <div className="text-sm font-medium">
-                  Start from a runnable baseline
-                </div>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Use Starter Free to move from inspiration to a real
-                  SaaS surface without starting from scratch.
-                </p>
-              </div>
-            </Card>
+                  <div className="text-sm font-medium">
+                    {step.title}
+                  </div>
 
-            <Card className="rounded-2xl border p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 03
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    {step.description}
+                  </p>
                 </div>
-                <div className="text-sm font-medium">
-                  Upgrade when wiring matters
-                </div>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Move to Starter Pro when auth, billing, backend
-                  foundations, and production wiring become the real
-                  blocker to launch.
-                </p>
-              </div>
-            </Card>
+              </Card>
+            ))}
           </div>
         </section>
 
         <section className="pt-4">
-          <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
+          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
-                <h2 className="text-lg font-semibold tracking-tight">
-                  Build your own SaaS faster
+                <Badge
+                  variant="outline"
+                  className="rounded-[5px] border-pro-border bg-pro-surface-muted"
+                >
+                  Next step
+                </Badge>
+
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  Build your own SaaS faster.
                 </h2>
-                <p className="text-sm text-muted-foreground">
+
+                <p className="text-sm leading-7 text-muted-foreground">
                   Use Starter Free to begin with a production-shaped
                   SaaS surface today, then move to Starter Pro when
-                  the business layer needs to be wired.
+                  authentication, billing, and protected product flows
+                  need to be wired.
                 </p>
               </div>
 
@@ -490,12 +566,13 @@ export default function ExamplesPage() {
                   asChild
                   variant="outline"
                   className={cn(
-                    'h-11 rounded-xl text-sm font-medium',
+                    'h-11 rounded-[5px] text-sm font-medium',
                     focusRing,
                   )}
                 >
                   <Link href="/starters/free">Starter Free</Link>
                 </Button>
+
                 <BuyStarterProButton />
               </div>
             </div>

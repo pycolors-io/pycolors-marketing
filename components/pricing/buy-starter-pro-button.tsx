@@ -29,6 +29,7 @@ export function BuyStarterProButton({
   showTrustText = false,
 }: BuyStarterProButtonProps) {
   const router = useRouter();
+
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -60,8 +61,26 @@ export function BuyStarterProButton({
         size={size}
         variant={variant}
         className={cn(
-          'h-11 w-full cursor-pointer rounded-xl px-6 text-sm font-medium',
+          'h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer ',
+          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
           fullWidth && 'w-full',
+          variant === 'default' && [
+            'border border-transparent',
+            'bg-primary text-primary-foreground',
+            'shadow-soft',
+            'hover:bg-brand-primary-hover',
+            'hover:shadow-medium',
+          ],
+          variant === 'outline' && [
+            'border border-border-subtle',
+            'bg-background',
+            'hover:bg-surface-muted',
+          ],
+          variant === 'secondary' && [
+            'border border-border-subtle',
+            'bg-surface-muted',
+            'hover:bg-surface',
+          ],
           className,
         )}
         aria-busy={isLoading}
@@ -69,13 +88,19 @@ export function BuyStarterProButton({
       >
         {isLoading ? (
           <>
-            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+            <LoaderCircle
+              className="mr-2 h-4 w-4 animate-spin"
+              aria-hidden="true"
+            />
             {loadingLabel}
           </>
         ) : (
           <>
             {label}
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight
+              className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
           </>
         )}
       </Button>
@@ -85,7 +110,7 @@ export function BuyStarterProButton({
       ) : null}
 
       {error ? (
-        <p className="text-sm leading-6 text-red-600">{error}</p>
+        <p className="text-sm leading-6 text-destructive">{error}</p>
       ) : null}
     </div>
   );

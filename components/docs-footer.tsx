@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
+import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -39,7 +39,7 @@ const GROUPS: Array<{
     links: [
       { label: 'Docs', href: '/docs' },
       { label: 'Guides', href: '/guides' },
-      { label: 'Patterns', href: '/docs/patterns' },
+      { label: 'Patterns', href: '/ui/patterns' },
       { label: 'Blog', href: '/blog' },
     ],
   },
@@ -71,6 +71,11 @@ const EXTERNAL: FooterLink[] = [
 ];
 
 function FooterLinkItem(link: FooterLink) {
+  const className = cn(
+    'inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground',
+    focusRing,
+  );
+
   if (link.external) {
     return (
       <a
@@ -81,10 +86,7 @@ function FooterLinkItem(link: FooterLink) {
         aria-label={
           link.ariaLabel ?? `${link.label} (opens in a new tab)`
         }
-        className={cn(
-          'inline-flex items-center gap-1 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground',
-          focusRing,
-        )}
+        className={className}
       >
         {link.label}
         <ExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -93,14 +95,7 @@ function FooterLinkItem(link: FooterLink) {
   }
 
   return (
-    <Link
-      key={link.label}
-      href={link.href}
-      className={cn(
-        'inline-block rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground',
-        focusRing,
-      )}
-    >
+    <Link key={link.label} href={link.href} className={className}>
       {link.label}
     </Link>
   );
@@ -108,14 +103,14 @@ function FooterLinkItem(link: FooterLink) {
 
 export function DocsFooter() {
   return (
-    <footer className="w-full border-t border-border/60 bg-background">
-      <div className="relative z-10 max-w-fd-container mx-auto">
+    <footer className="w-full border-t border-border-subtle bg-background">
+      <div className="max-w-fd-container mx-auto">
         <Container>
           <div className="py-16 sm:py-20">
-            <section className="grid gap-10 lg:grid-cols-[1.05fr_1.4fr]">
+            <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <div className="font-brand text-xl font-semibold tracking-tight">
+                  <div className="font-sans text-xl font-semibold tracking-tight">
                     PyColors
                   </div>
 
@@ -152,7 +147,7 @@ export function DocsFooter() {
               </div>
             </section>
 
-            <section className="mt-10 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+            <section className="mt-12 flex flex-col gap-4 border-t border-border-subtle pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <div className="text-xs text-muted-foreground">
                 © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
                 {APP_VERSION}
@@ -160,8 +155,25 @@ export function DocsFooter() {
 
               <div className="flex items-center justify-center sm:justify-end">
                 <ThemeToggle
-                  mode="light-dark-system"
-                  className="bg-background/70 px-1.5 opacity-80 transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
+                  mode="light-dark"
+                  className={cn(
+                    'h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm',
+                    'rounded-[20px]',
+                    'px-1',
+                    'shadow-sm',
+                    'opacity-80 transition-all duration-200 ease-out',
+                    'hover:border-border hover:bg-accent/30 hover:opacity-100',
+                    'cursor-pointer',
+
+                    '[&_button]:h-6.5',
+                    '[&_button]:w-6.5',
+                    '[&_button]:rounded-[4px]',
+                    '[&_button]:bg-transparent',
+                    '[&_button]:transition-all',
+                    '[&_button]:duration-200',
+                    '[&_button:hover]:bg-accent/50',
+                    '[&_button]:cursor-pointer',
+                  )}
                 />
               </div>
             </section>

@@ -57,15 +57,15 @@ function Section({
   return (
     <section
       id={id}
-      className="scroll-mt-28 border-t border-border/60 py-10 sm:py-12"
+      className="scroll-mt-28 border-t border-border-subtle py-10 sm:py-12"
     >
-      <div className="mb-5 space-y-1 sm:mb-6">
-        <h2 className="font-brand text-lg font-semibold tracking-tight">
+      <div className="mb-6 space-y-2">
+        <h2 className="font-brand text-xl font-semibold tracking-tight">
           {title}
         </h2>
 
         {description ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
@@ -86,12 +86,21 @@ function ChecklistCard({
   items: string[];
 }) {
   return (
-    <Card className="p-5">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
       <div className="space-y-3">
-        <div className="text-sm font-medium">{title}</div>
+        <div className="text-sm font-medium text-foreground">
+          {title}
+        </div>
+
         <ul className="space-y-2 text-sm text-muted-foreground">
           {items.map((item) => (
-            <li key={item}>• {item}</li>
+            <li key={item} className="flex gap-2">
+              <span
+                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                aria-hidden="true"
+              />
+              <span>{item}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -136,7 +145,7 @@ export default function GuideProductionReadySaaSStarterPage() {
           className="scroll-mt-28 py-10 sm:py-12"
         >
           <div className="space-y-6">
-            <Alert>
+            <Alert className="rounded-[5px] border border-pro-border-subtle bg-pro-surface shadow-soft">
               <AlertTitle>Core idea</AlertTitle>
               <AlertDescription>
                 A production-ready SaaS starter is not valuable
@@ -320,7 +329,7 @@ export default function GuideProductionReadySaaSStarterPage() {
             system for the public site and the authenticated app.
           </p>
 
-          <Card className="p-4">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
             <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`app/
   (marketing)/
   login/
@@ -648,9 +657,9 @@ export default function GuideProductionReadySaaSStarterPage() {
 
         <section
           id="mental-model"
-          className="scroll-mt-28 border-t border-border/60 py-8 sm:py-10"
+          className="scroll-mt-28 border-t border-border-subtle py-8 sm:py-10"
         >
-          <Alert>
+          <Alert className="rounded-[5px] border border-pro-border-subtle bg-pro-surface shadow-soft">
             <AlertTitle>Mental model to keep</AlertTitle>
             <AlertDescription>
               If a feature does not help developers ship faster,
@@ -662,15 +671,15 @@ export default function GuideProductionReadySaaSStarterPage() {
 
         <section
           id="next-steps"
-          className="scroll-mt-28 border-t border-border/60 py-8 sm:py-10"
+          className="scroll-mt-28 border-t border-border-subtle py-8 sm:py-10"
         >
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
+          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-6 shadow-medium sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-2xl space-y-2">
                 <h2 className="font-brand text-lg font-semibold tracking-tight">
                   Start from a stronger foundation
                 </h2>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm leading-7 text-muted-foreground">
                   Use Starter Free to begin with a production-shaped
                   SaaS surface. Upgrade when billing, auth wiring, and
                   deeper business logic become the bottleneck.
@@ -678,15 +687,19 @@ export default function GuideProductionReadySaaSStarterPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button asChild>
+                <Button asChild className="rounded-[5px]">
                   <Link href="/starters/free">
                     Start with Starter Free
                   </Link>
                 </Button>
 
-                <Button asChild variant="secondary">
-                  <Link href="/upgrade">
-                    Explore PRO
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
+                  <Link href="/starters/pro">
+                    Explore Starter Pro
                     <ArrowRight
                       className="ml-2 h-4 w-4"
                       aria-hidden="true"

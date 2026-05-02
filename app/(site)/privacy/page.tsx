@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ArrowRight,
+  Scale,
   ShieldCheck,
   Sparkles,
-  Scale,
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
@@ -40,6 +40,8 @@ const COMPANY = {
   country: 'France',
 };
 
+const LAST_UPDATED = 'March 7, 2026';
+
 function Section({
   title,
   children,
@@ -48,20 +50,48 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <Card className="p-6 sm:p-7">
-      <h2 className="font-brand text-lg font-semibold tracking-tight">
-        {title}
-      </h2>
-      <div className="mt-3 space-y-3 text-sm text-muted-foreground leading-relaxed">
-        {children}
-      </div>
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-6 sm:p-7">
+        <h2 className="font-brand text-lg font-semibold tracking-tight">
+          {title}
+        </h2>
+
+        <div className="mt-3 space-y-3 text-sm leading-7 text-muted-foreground">
+          {children}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function PrincipleCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-5">
+        <div className="inline-flex items-center gap-2 text-sm font-medium">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-primary">
+            <Icon className="h-4 w-4" aria-hidden="true" />
+          </span>
+          {title}
+        </div>
+
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </CardContent>
     </Card>
   );
 }
 
 export default function PrivacyPage() {
-  const LAST_UPDATED = 'March 7, 2026';
-
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
@@ -73,10 +103,14 @@ export default function PrivacyPage() {
             ]}
           />
         </div>
+
         <header className="mx-auto w-full max-w-4xl text-center">
           <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+            <Badge
+              variant="secondary"
+              className="gap-2 rounded-[5px]"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               Privacy & data
             </Badge>
           </div>
@@ -85,7 +119,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
             This policy explains what personal data PyColors may
             collect, how it is used, when it is shared, and what
             choices and rights you may have.
@@ -98,36 +132,23 @@ export default function PrivacyPage() {
 
         <section className="mx-auto mt-10 w-full max-w-6xl">
           <div className="grid gap-4 sm:grid-cols-3">
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                Minimal collection
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                We aim to collect only the data needed to operate,
-                improve, secure, and commercialize the business.
-              </p>
-            </Card>
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <Scale className="h-4 w-4" aria-hidden="true" />
-                Legitimate use
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Data is used for product operations, analytics,
-                communication, support, billing, and growth.
-              </p>
-            </Card>
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-                Growth-ready privacy
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Written to support a modern international SaaS and
-                digital product business.
-              </p>
-            </Card>
+            <PrincipleCard
+              icon={ShieldCheck}
+              title="Minimal collection"
+              description="We aim to collect only the data needed to operate, improve, secure, and commercialize the business."
+            />
+
+            <PrincipleCard
+              icon={Scale}
+              title="Legitimate use"
+              description="Data is used for product operations, analytics, communication, support, billing, and growth."
+            />
+
+            <PrincipleCard
+              icon={Sparkles}
+              title="Growth-ready privacy"
+              description="Written to support a modern international SaaS and digital product business."
+            />
           </div>
         </section>
 
@@ -139,9 +160,10 @@ export default function PrivacyPage() {
               <span className="font-medium text-foreground">
                 {COMPANY.name}
               </span>
-              ,
-              {` ${COMPANY.addressLine1}, ${COMPANY.postalCode}, ${COMPANY.country}.`}
+              , {COMPANY.addressLine1}, {COMPANY.postalCode},{' '}
+              {COMPANY.country}.
             </p>
+
             <p>
               Privacy requests can be sent to{' '}
               <a
@@ -156,7 +178,7 @@ export default function PrivacyPage() {
 
           <Section title="2. What this policy covers">
             <p>This policy covers personal data processed through:</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 the public website, documentation, guides, examples,
                 and related public content at pycolors.io;
@@ -175,6 +197,7 @@ export default function PrivacyPage() {
                 or member services operated by PyColors.
               </li>
             </ul>
+
             <p>
               Third-party platforms such as Gumroad, Stripe, Google,
               Vercel, and SendGrid may also process personal data
@@ -183,7 +206,7 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="3. Data we may collect">
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 <span className="font-medium text-foreground">
                   Contact data
@@ -227,7 +250,7 @@ export default function PrivacyPage() {
 
           <Section title="4. How we collect data">
             <p>We may collect data:</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 directly from you when you contact us, join a
                 waitlist, request access, or make a purchase;
@@ -246,7 +269,7 @@ export default function PrivacyPage() {
 
           <Section title="5. Why we use personal data">
             <p>We may use personal data to:</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 operate, maintain, and secure the website and product
                 infrastructure;
@@ -286,7 +309,8 @@ export default function PrivacyPage() {
               Depending on the context, we process personal data on
               one or more of the following legal bases:
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+
+            <ul className="list-disc space-y-1 pl-5">
               <li>your consent, where required;</li>
               <li>
                 performance of a contract or steps taken at your
@@ -298,6 +322,7 @@ export default function PrivacyPage() {
               </li>
               <li>compliance with legal obligations.</li>
             </ul>
+
             <p>
               <span className="font-medium text-foreground">
                 Legal review recommended:
@@ -313,8 +338,10 @@ export default function PrivacyPage() {
               site functionality, analytics, performance monitoring,
               conversion measurement, and abuse prevention.
             </p>
+
             <p>Current tools and providers may include:</p>
-            <ul className="list-disc pl-5 space-y-1">
+
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 Vercel for hosting and infrastructure-related
                 telemetry;
@@ -328,11 +355,13 @@ export default function PrivacyPage() {
                 for site operation or future account access.
               </li>
             </ul>
+
             <p>
               Where legally required, optional analytics or
               non-essential cookies should only be activated after
               appropriate consent.
             </p>
+
             <p>
               <span className="font-medium text-foreground">
                 Legal / implementation review recommended:
@@ -348,7 +377,8 @@ export default function PrivacyPage() {
               Payments are processed by third-party providers rather
               than directly by PyColors.
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 <span className="font-medium text-foreground">
                   Gumroad
@@ -364,6 +394,7 @@ export default function PrivacyPage() {
                 subscriptions, invoices, and billing operations.
               </li>
             </ul>
+
             <p>
               We may receive transaction-related information from
               those providers, such as purchase confirmation, billing
@@ -380,6 +411,7 @@ export default function PrivacyPage() {
               operational, onboarding, support, or product-related
               emails.
             </p>
+
             <p>
               Email delivery may be handled through{' '}
               <span className="font-medium text-foreground">
@@ -387,6 +419,7 @@ export default function PrivacyPage() {
               </span>
               .
             </p>
+
             <p>
               Marketing emails, if later introduced, should include
               clear unsubscribe options where required by law.
@@ -398,18 +431,21 @@ export default function PrivacyPage() {
               We may share personal data with service providers only
               where reasonably necessary to operate the business.
             </p>
+
             <p>These may include providers for:</p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>hosting and infrastructure (such as Vercel);</li>
-              <li>analytics (such as Google Analytics);</li>
+
+            <ul className="list-disc space-y-1 pl-5">
+              <li>hosting and infrastructure, such as Vercel;</li>
+              <li>analytics, such as Google Analytics;</li>
               <li>
-                commerce and payments (such as Gumroad and Stripe);
+                commerce and payments, such as Gumroad and Stripe;
               </li>
               <li>
-                email delivery and communication (such as SendGrid);
+                email delivery and communication, such as SendGrid;
               </li>
               <li>security, logging, or operational support.</li>
             </ul>
+
             <p>
               We do not sell personal data in the ordinary meaning of
               that term.
@@ -423,11 +459,13 @@ export default function PrivacyPage() {
               processed outside your country of residence, including
               outside the European Economic Area.
             </p>
+
             <p>
               Where required, we aim to rely on appropriate transfer
               mechanisms such as contractual safeguards provided by
               the relevant vendor.
             </p>
+
             <p>
               <span className="font-medium text-foreground">
                 Legal review recommended:
@@ -444,7 +482,8 @@ export default function PrivacyPage() {
               including support, security, contractual, tax, legal,
               and accounting needs.
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 contact messages may be retained to manage ongoing
                 conversations or support history;
@@ -475,6 +514,7 @@ export default function PrivacyPage() {
               to protect personal data, but no method of transmission
               or storage is completely secure.
             </p>
+
             <p>
               You should also protect your own devices, credentials,
               and project environments when using PyColors products.
@@ -488,6 +528,7 @@ export default function PrivacyPage() {
               portability, and withdrawal of consent where consent is
               the basis for processing.
             </p>
+
             <p>
               To exercise your rights, contact{' '}
               <a
@@ -498,6 +539,7 @@ export default function PrivacyPage() {
               </a>
               .
             </p>
+
             <p>
               You may also have the right to lodge a complaint with a
               data protection authority.
@@ -520,37 +562,51 @@ export default function PrivacyPage() {
               providers, new premium features, or new account and
               subscription models.
             </p>
+
             <p>
               The “Last updated” date reflects the current version.
             </p>
           </Section>
 
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-sm text-muted-foreground">
-                Need rules for commercial usage and purchases?
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-medium">
+            <CardContent className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    Need rules for commercial usage and purchases?
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Review the terms and license scope.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px]"
+                  >
+                    <Link href="/terms">
+                      Terms
+                      <ArrowRight
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </Button>
+
+                  <Button asChild className="rounded-[5px]">
+                    <Link href="/license">
+                      License
+                      <ArrowRight
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Button asChild variant="outline">
-                  <Link href="/terms">
-                    Terms
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/license">
-                    License
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            </CardContent>
           </Card>
         </section>
       </div>
