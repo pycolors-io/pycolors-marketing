@@ -19,7 +19,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
-import { Logo } from '@/components/logo';
+import { DocsLogo } from '@/components/docs-logo';
 
 type DocsLink = Readonly<{
   label: string;
@@ -136,7 +136,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
   const closeDocsMenuWithDelay = React.useCallback(() => {
     closeDocsTimeoutRef.current = window.setTimeout(() => {
       setIsDocsOpen(false);
-    }, 160);
+    }, 140);
   }, []);
 
   React.useEffect(() => {
@@ -297,25 +297,26 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-all duration-300',
           scrolled
-            ? 'border-b border-border/60 bg-background/85 backdrop-blur-xl'
-            : 'border-b border-border/50 bg-background backdrop-blur-md',
+            ? 'border-b border-border-subtle bg-background/88 backdrop-blur-xl'
+            : 'border-b border-border-subtle/60 bg-background/78 backdrop-blur-md',
         )}
       >
-        <div className="relative z-10 mx-auto max-w-fd-container border-b border-border/30 md:border-b-0">
+        <div className="relative z-10 mx-auto max-w-fd-container">
           <a
             href="#content"
             className={cn(
               'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
-              'rounded-md border border-border bg-background px-3 py-2 text-sm',
+              'rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm',
               focusRing,
             )}
           >
             Skip to content
           </a>
+
           <Container>
             <section className="flex h-16 items-center gap-3">
               <div className="flex shrink-0 items-center gap-3">
-                <Logo />
+                <DocsLogo />
               </div>
 
               <nav
@@ -336,11 +337,12 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     onClick={() => setIsDocsOpen((prev) => !prev)}
                     onFocus={openDocsMenu}
                     className={cn(
-                      'inline-flex items-center rounded-md px-3 py-1.5 text-[13px] transition-colors duration-150',
-                      'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
+                      'inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150',
+                      'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
                       activeHref === '/docs' &&
-                        'bg-accent/25 text-foreground',
-                      isDocsOpen && 'bg-accent/25 text-foreground',
+                        'bg-surface-muted text-foreground',
+                      isDocsOpen &&
+                        'bg-surface-muted text-foreground',
                       focusRing,
                     )}
                   >
@@ -362,7 +364,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     aria-label="Documentation menu"
                     onMouseEnter={openDocsMenu}
                     className={cn(
-                      'absolute left-0 top-[calc(100%+0.5rem)] w-[38rem] origin-top-left overflow-hidden rounded-xl border border-border/70 bg-background shadow-2xl shadow-black/10 backdrop-blur-xl transition-all duration-150',
+                      'absolute left-0 top-[calc(100%+0.5rem)] w-[38rem] origin-top-left overflow-hidden rounded-[5px]',
+                      'border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150',
                       isDocsOpen
                         ? 'pointer-events-auto translate-y-0 opacity-100'
                         : 'pointer-events-none translate-y-1 opacity-0',
@@ -384,27 +387,26 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                               href={item.href}
                               role="menuitem"
                               className={cn(
-                                'group flex items-start gap-2.5 rounded-lg px-2.5 py-2.5 transition-colors duration-150',
+                                'group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150',
                                 isCurrent
-                                  ? 'bg-accent/35 text-foreground'
-                                  : 'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
+                                  ? 'border-border-subtle bg-surface-muted text-foreground'
+                                  : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
                                 focusRing,
                               )}
                             >
                               <span
                                 className={cn(
-                                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border/50 bg-background/70 transition-all duration-150',
-                                  'group-hover:border-border group-hover:bg-background group-hover:shadow-sm',
-                                  isCurrent &&
-                                    'border-border bg-background shadow-sm',
+                                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150',
+                                  'group-hover:bg-background',
+                                  isCurrent && 'bg-background',
                                 )}
                               >
                                 <Icon
                                   aria-hidden="true"
                                   className={cn(
-                                    'h-3.5 w-3.5 text-muted-foreground transition-all duration-150',
-                                    'group-hover:scale-105 group-hover:text-foreground',
-                                    isCurrent && 'text-foreground',
+                                    'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
+                                    'group-hover:text-primary',
+                                    isCurrent && 'text-primary',
                                   )}
                                 />
                               </span>
@@ -437,8 +439,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                               href={item.href}
                               role="menuitem"
                               className={cn(
-                                'group flex items-center justify-between rounded-md px-2.5 py-1.5 text-[13px] transition-colors duration-150',
-                                'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
+                                'group flex items-center justify-between rounded-[5px] px-2.5 py-1.5 text-[13px] transition-colors duration-150',
+                                'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
                                 focusRing,
                               )}
                             >
@@ -456,16 +458,16 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </div>
                     </div>
 
-                    <div className="border-t border-border/60 bg-muted/10 px-2.5 py-2">
+                    <div className="border-t border-border-subtle bg-surface-muted px-2.5 py-2">
                       <Link
                         href="/pricing"
                         className={cn(
-                          'group flex items-center justify-between rounded-lg px-2.5 py-2 text-[13px] transition-colors hover:bg-accent/20',
+                          'group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-[13px] transition-colors hover:bg-surface',
                           focusRing,
                         )}
                       >
                         <span className="flex min-w-0 items-center gap-2">
-                          <span className="inline-flex shrink-0 rounded-md border border-border/60 bg-background px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                          <span className="inline-flex shrink-0 rounded-[5px] border border-border-subtle bg-surface px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
                             Pro
                           </span>
 
@@ -496,9 +498,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       href={item.href}
                       aria-current={isCurrent ? 'page' : undefined}
                       className={cn(
-                        'rounded-md px-3 py-1.5 text-[13px] transition-colors duration-150',
-                        'text-muted-foreground hover:bg-accent/20 hover:text-foreground',
-                        isCurrent && 'bg-accent/25 text-foreground',
+                        'rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150',
+                        'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                        isCurrent &&
+                          'bg-surface-muted text-foreground',
                         focusRing,
                       )}
                     >
@@ -509,12 +512,13 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               </nav>
 
               <div className="hidden items-center gap-2 md:flex">
-                <LargeSearchToggle className="w-44 xl:w-52" />
+                <LargeSearchToggle className="w-44 xl:w-52 rounded-[5px]" />
+
                 <Button
                   asChild
                   size="sm"
                   variant="outline"
-                  className="h-9 rounded-md px-3.5 text-[13px] font-medium"
+                  className="h-9 rounded-[5px] px-3.5 text-[13px] font-medium"
                 >
                   <Link href="/starters/pro">
                     Explore Pro
@@ -527,7 +531,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-2 md:hidden">
-                <LargeSearchToggle className="relative z-10" />
+                <LargeSearchToggle className="relative z-10 rounded-[5px]" />
+
                 <button
                   ref={openBtnRef}
                   type="button"
@@ -540,7 +545,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-docs-navigation"
                   className={cn(
-                    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background/80',
+                    'inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface',
                     focusRing,
                   )}
                 >
@@ -572,7 +577,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             open
             aria-labelledby="mobile-docs-navigation-title"
             className={cn(
-              'fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border bg-background p-0 text-inherit',
+              'fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border-subtle bg-background p-0 text-inherit',
               'backdrop:hidden',
             )}
             style={{
@@ -586,7 +591,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
               <div className="space-y-4 px-4 pb-6 pt-4">
-                <div className="rounded-2xl border border-white/10 bg-background/60 p-4 shadow-lg shadow-black/[0.04] backdrop-blur-2xl backdrop-saturate-150">
+                <div className="rounded-[5px] border border-border-subtle bg-surface p-4 shadow-soft">
                   <div className="space-y-4">
                     <div className="space-y-1.5">
                       <p className="text-sm font-semibold tracking-tight text-foreground">
@@ -599,14 +604,14 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between gap-3 border-t border-border/30 pt-3">
+                    <div className="flex items-center justify-between gap-3 border-t border-border-subtle pt-3">
                       <span className="text-xs font-medium text-muted-foreground">
                         Theme
                       </span>
 
                       <ThemeToggle
                         mode="light-dark"
-                        className="inline-flex h-9 items-center rounded-full border border-border/50 bg-background/70 px-1 shadow-sm backdrop-blur-md"
+                        className="inline-flex h-9 items-center rounded-[5px] border border-border-subtle bg-surface-muted px-1 shadow-soft"
                       />
                     </div>
                   </div>
@@ -630,10 +635,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         aria-current={isCurrent ? 'page' : undefined}
                         onClick={closeMenu}
                         className={cn(
-                          'group flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 px-3 py-2.5 text-sm transition-colors duration-150',
+                          'group flex items-center justify-between rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5 text-sm shadow-soft transition-colors duration-150',
                           isCurrent
                             ? 'text-foreground'
-                            : 'text-muted-foreground hover:bg-background hover:text-foreground',
+                            : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
                           focusRing,
                         )}
                       >
@@ -641,11 +646,11 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           <span
                             aria-hidden="true"
                             className={cn(
-                              'flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border/50 bg-background/70 transition-colors',
+                              'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted transition-colors',
                               isCurrent && 'bg-background',
                             )}
                           >
-                            <Icon className="h-3.5 w-3.5" />
+                            <Icon className="h-3.5 w-3.5 text-primary" />
                           </span>
 
                           <span className="min-w-0">
@@ -671,7 +676,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                 </nav>
 
                 {docsLinks.length > 0 ? (
-                  <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+                  <div className="rounded-[5px] border border-border-subtle bg-surface p-3 shadow-soft">
                     <p className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       All docs
                     </p>
@@ -686,7 +691,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           href={item.href}
                           onClick={closeMenu}
                           className={cn(
-                            'rounded-md px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground',
+                            'rounded-[5px] px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground',
                             focusRing,
                           )}
                         >
@@ -699,10 +704,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               </div>
             </div>
 
-            <div className="border-t border-border bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
+            <div className="border-t border-border-subtle bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
               <Button
                 asChild
-                className="w-full justify-center rounded-md"
+                className="w-full justify-center rounded-[5px]"
               >
                 <Link href="/starters/pro" onClick={closeMenu}>
                   Explore Starter Pro
