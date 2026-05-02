@@ -27,7 +27,7 @@ export type PageHeroProps = {
 
 function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <span className="inline-flex items-center rounded-md border border-border/60 bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
+    <span className="inline-flex items-center rounded-md border border-border-subtle bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
       {children}
     </span>
   );
@@ -68,18 +68,20 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-border/60 bg-background px-6 py-14 shadow-sm sm:px-8 sm:py-16 lg:px-12 lg:py-20',
+        'relative overflow-hidden bg-background/80 px-6 py-14 backdrop-blur sm:px-8 sm:py-16 lg:px-12 lg:py-20',
         className,
       )}
     >
+      {/* subtle premium glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_34%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_96%),transparent_42%)]"
       />
 
+      {/* top separator */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
       />
 
       <div
@@ -102,7 +104,7 @@ export function PageHero({
               <Badge
                 key={`${badge.label}-${badge.variant ?? 'secondary'}`}
                 variant={badge.variant ?? 'outline'}
-                className="gap-1.5 rounded-md px-2.5 py-1 text-[11px] font-medium"
+                className="gap-1.5 rounded-md border-border-subtle px-2.5 py-1 text-[11px] font-medium"
               >
                 {badge.icon ? badge.icon : null}
                 {badge.label}
@@ -113,14 +115,14 @@ export function PageHero({
 
         <h1
           className={cn(
-            'text-balance font-brand text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[4rem] lg:leading-[1.02]',
+            'text-balance font-brand text-4xl font-semibold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[4rem] lg:leading-[0.98]',
             badges.length > 0 ? 'mt-7' : 'mt-0',
           )}
         >
           {title}
 
           {subtitle ? (
-            <span className="mt-2 block text-muted-foreground">
+            <span className="mt-3 block text-muted-foreground">
               {subtitle}
             </span>
           ) : null}
@@ -130,8 +132,7 @@ export function PageHero({
           <p
             className={cn(
               'mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base',
-              isCentered && 'mx-auto max-w-3xl',
-              !isCentered && 'max-w-3xl',
+              isCentered ? 'mx-auto max-w-3xl' : 'max-w-3xl',
             )}
           >
             {description}
