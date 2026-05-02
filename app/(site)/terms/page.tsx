@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { Container } from '@/components/container';
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
@@ -38,8 +38,9 @@ const COMPANY = {
   addressLine1: '6 rue d’Armaillé',
   postalCode: '75017 Paris',
   country: 'France',
-  jurisdiction: 'France',
 };
+
+const LAST_UPDATED = 'March 7, 2026';
 
 function Section({
   title,
@@ -49,20 +50,48 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <Card className="p-6 sm:p-7">
-      <h2 className="font-brand text-lg font-semibold tracking-tight">
-        {title}
-      </h2>
-      <div className="mt-3 space-y-3 text-sm text-muted-foreground leading-relaxed">
-        {children}
-      </div>
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-6 sm:p-7">
+        <h2 className="font-brand text-lg font-semibold tracking-tight">
+          {title}
+        </h2>
+
+        <div className="mt-3 space-y-3 text-sm leading-7 text-muted-foreground">
+          {children}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function PrincipleCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-5">
+        <div className="inline-flex items-center gap-2 text-sm font-medium">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-primary">
+            <Icon className="h-4 w-4" aria-hidden="true" />
+          </span>
+          {title}
+        </div>
+
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </CardContent>
     </Card>
   );
 }
 
 export default function TermsPage() {
-  const LAST_UPDATED = 'March 7, 2026';
-
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
@@ -74,10 +103,14 @@ export default function TermsPage() {
             ]}
           />
         </div>
+
         <header className="mx-auto w-full max-w-4xl text-center">
           <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+            <Badge
+              variant="secondary"
+              className="gap-2 rounded-[5px]"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               Terms & commercial rules
             </Badge>
           </div>
@@ -86,10 +119,10 @@ export default function TermsPage() {
             Terms of Service
           </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
             These Terms govern access to the PyColors website,
             documentation, public repository ecosystem, premium
-            templates, future PRO products, bundled offers, and any
+            templates, future PRO products, bundled offers, and
             related commercial services made available by Py Colors
             SASU.
           </p>
@@ -101,36 +134,21 @@ export default function TermsPage() {
 
         <section className="mx-auto mt-10 w-full max-w-6xl">
           <div className="grid gap-4 sm:grid-cols-3">
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <Scale className="h-4 w-4" aria-hidden="true" />
-                Product clarity
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Separate rules for open-source repositories,
-                templates, and premium access.
-              </p>
-            </Card>
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                Commercial trust
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Clear expectations around payments, accounts,
-                licenses, and acceptable use.
-              </p>
-            </Card>
-            <Card className="p-5">
-              <div className="inline-flex items-center gap-2 text-sm font-medium">
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-                Scalable structure
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Written for a growing international SaaS and digital
-                product business.
-              </p>
-            </Card>
+            <PrincipleCard
+              icon={Scale}
+              title="Product clarity"
+              description="Separate rules for open-source repositories, templates, and premium access."
+            />
+            <PrincipleCard
+              icon={ShieldCheck}
+              title="Commercial trust"
+              description="Clear expectations around payments, accounts, licenses, and acceptable use."
+            />
+            <PrincipleCard
+              icon={Sparkles}
+              title="Scalable structure"
+              description="Written for a growing international SaaS and digital product business."
+            />
           </div>
         </section>
 
@@ -158,7 +176,7 @@ export default function TermsPage() {
 
           <Section title="2. Scope of these Terms">
             <p>These Terms apply to:</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>the public website at pycolors.io;</li>
               <li>
                 documentation, guides, examples, changelogs, roadmaps,
@@ -200,7 +218,7 @@ export default function TermsPage() {
               PyColors may offer different categories of products and
               access models. They do not all work the same way.
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 <span className="font-medium text-foreground">
                   Open-source repositories
@@ -236,7 +254,7 @@ export default function TermsPage() {
               Certain current or future features may require an
               account, login, invite, or paid access.
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 You must provide accurate and current information.
               </li>
@@ -332,7 +350,7 @@ export default function TermsPage() {
               Payments may be processed by third-party providers such
               as Gumroad or Stripe, depending on the product.
             </p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 You agree to provide valid payment information where
                 required.
@@ -398,7 +416,7 @@ export default function TermsPage() {
 
           <Section title="12. Acceptable use">
             <p>You must not:</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc space-y-1 pl-5">
               <li>
                 resell, redistribute, leak, or share paid source code,
                 premium assets, private materials, or premium access
@@ -548,32 +566,45 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-sm text-muted-foreground">
-                Need product usage details?
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-medium">
+            <CardContent className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    Need product usage details?
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Review licensing scope and privacy policy.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px]"
+                  >
+                    <Link href="/license">
+                      License
+                      <ArrowRight
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </Button>
+
+                  <Button asChild className="rounded-[5px]">
+                    <Link href="/privacy">
+                      Privacy Policy
+                      <ArrowRight
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Button asChild variant="outline">
-                  <Link href="/license">
-                    License
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/privacy">
-                    Privacy Policy
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            </CardContent>
           </Card>
         </section>
       </div>
