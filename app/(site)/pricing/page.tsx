@@ -169,7 +169,7 @@ const faqs = [
 
 function Pill({ children }: { readonly children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-md border border-border/60 bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
       {children}
     </span>
   );
@@ -197,11 +197,11 @@ function SectionHeader({
           : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
       )}
     >
-      <div className="space-y-2">
+      <div className="space-y-3">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
+            className="rounded-[5px] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
           >
             {eyebrow}
           </Badge>
@@ -232,7 +232,7 @@ function CheckItem({
 }) {
   return (
     <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-md border border-border/60 bg-background">
+      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
         <Check className="h-3 w-3 text-foreground" />
       </span>
       <span className="leading-6">{children}</span>
@@ -250,9 +250,9 @@ function FeatureCard({
   readonly description: string;
 }) {
   return (
-    <Card className="rounded-xl border border-border/60 bg-background shadow-sm">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
       <CardHeader className="space-y-4">
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-muted/20">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
           <Icon className="h-4 w-4 text-muted-foreground" />
         </div>
         <CardTitle className="text-base">{title}</CardTitle>
@@ -274,7 +274,7 @@ function FaqCard({
   readonly answer: string;
 }) {
   return (
-    <Card className="rounded-xl border border-border/60 bg-background p-5 shadow-sm">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
       <div className="space-y-2">
         <div className="text-sm font-medium text-foreground">
           {question}
@@ -326,7 +326,7 @@ export default function PricingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-11 rounded-md px-6 text-sm font-medium"
+                className="group h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href={INTERNAL.starterFree}>
                   Explore Starter Free
@@ -343,12 +343,12 @@ export default function PricingPage() {
           extraClassName="mx-auto max-w-5xl"
           extra={
             <div className="grid gap-4 lg:grid-cols-2">
-              <Card className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm">
+              <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <Badge
                       variant="outline"
-                      className="rounded-md text-[11px]"
+                      className="rounded-[5px] text-[11px]"
                     >
                       Free entry point
                     </Badge>
@@ -374,7 +374,7 @@ export default function PricingPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="mt-5 h-10 w-full rounded-md text-sm font-medium"
+                  className="mt-5 h-10 w-full rounded-[5px] text-sm font-medium"
                 >
                   <Link href={INTERNAL.starterFree}>
                     Open Starter Free
@@ -382,18 +382,18 @@ export default function PricingPage() {
                 </Button>
               </Card>
 
-              <Card className="relative overflow-hidden rounded-2xl border border-foreground/20 bg-background p-6 shadow-sm">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
+              <Card className="relative overflow-hidden rounded-[5px] border border-pro-border bg-pro-surface p-6 shadow-medium">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge className="rounded-md text-[11px]">
+                      <Badge className="rounded-[5px] text-[11px]">
                         Main offer
                       </Badge>
                       <Badge
                         variant="outline"
-                        className="rounded-md text-[11px]"
+                        className="rounded-[5px] border-pro-border-subtle text-[11px]"
                       >
                         Best launch choice
                       </Badge>
@@ -446,46 +446,24 @@ export default function PricingPage() {
             align="center"
           />
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             <FeatureCard
               icon={Zap}
               title="Use Free to explore product shape"
               description="Choose Starter Free when speed of exploration matters more than real auth, real billing, and business infrastructure."
             />
+
             <FeatureCard
               icon={Lock}
               title="Buy Pro when auth and billing slow you down"
               description="Once product direction is clear, rebuilding secure auth and billing yourself usually costs more than the upgrade."
             />
+
             <FeatureCard
               icon={Rocket}
               title="Launch sooner with the paid layer"
               description="Starter Pro removes repeated foundation work so you can focus on product logic, onboarding, and growth."
             />
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="The real decision"
-            title="You are not buying features. You are removing a bottleneck."
-            description="Starter Pro is valuable when auth, billing, and protected flows start slowing you down."
-            align="center"
-          />
-
-          <div className="mx-auto max-w-3xl">
-            <Card className="rounded-xl border border-border/60 bg-background p-6 text-center shadow-sm">
-              <p className="text-sm leading-7 text-muted-foreground">
-                Most developers don’t struggle with UI. They struggle
-                with everything around it: authentication, billing,
-                security, and subscription logic.
-              </p>
-
-              <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                Starter Pro removes that layer so you can move faster
-                from product to revenue.
-              </p>
-            </Card>
           </div>
         </section>
 
@@ -499,7 +477,7 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-md', focusRing)}
+                className={cn('rounded-[5px]', focusRing)}
               >
                 <Link href={INTERNAL.docsStarterPro}>
                   Read Starter Pro docs
@@ -509,16 +487,16 @@ export default function PricingPage() {
           />
 
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <Card className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm sm:p-7">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
               <div className="space-y-8">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-md text-[11px]">
+                    <Badge className="rounded-[5px] text-[11px]">
                       Primary commercial offer
                     </Badge>
                     <Badge
                       variant="outline"
-                      className="rounded-md text-[11px]"
+                      className="rounded-[5px] text-[11px]"
                     >
                       Launch price {PRICING.starterProLaunch}
                     </Badge>
@@ -549,8 +527,8 @@ export default function PricingPage() {
               </div>
             </Card>
 
-            <Card className="relative overflow-hidden rounded-2xl border border-foreground/20 bg-background p-6 shadow-sm">
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/30 to-transparent" />
+            <Card className="relative overflow-hidden rounded-[5px] border border-pro-border bg-pro-surface p-6 shadow-medium">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
               <CardHeader className="space-y-5 px-0 pt-0">
                 <div className="flex items-center justify-between gap-3">
@@ -581,7 +559,7 @@ export default function PricingPage() {
 
               <CardContent className="space-y-6 px-0 pb-0">
                 <div className="grid gap-4">
-                  <div className="rounded-xl border border-border/60 bg-muted/10 p-4">
+                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                     <p className="text-sm font-medium">Best for</p>
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       Indie hackers, freelancers, and technical
@@ -590,7 +568,7 @@ export default function PricingPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-border/60 bg-muted/10 p-4">
+                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                     <p className="text-sm font-medium">
                       Why it converts
                     </p>
@@ -602,7 +580,7 @@ export default function PricingPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-border/60 bg-muted/20 p-4">
+                  <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
                     <p className="text-sm leading-7 text-muted-foreground">
                       One-time payment. Instant delivery after
                       purchase. Built for developers who want to
@@ -620,7 +598,7 @@ export default function PricingPage() {
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-10 rounded-md text-sm font-medium',
+                      'h-10 rounded-[5px] text-sm font-medium',
                       focusRing,
                     )}
                   >
@@ -636,42 +614,6 @@ export default function PricingPage() {
 
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
-            eyebrow="What changes"
-            title="Starter Free helps you explore. Starter Pro helps you launch."
-            description="That difference should feel obvious before the visitor even reaches the comparison table."
-          />
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <FeatureCard
-              icon={Sparkles}
-              title="Starter Free"
-              description="Use it to validate UX, explore routes, test screens, and shape the product surface. No backend, no auth, no billing — just the fastest way to understand what you are building."
-            />
-
-            <FeatureCard
-              icon={ShieldCheck}
-              title="Starter Pro"
-              description="Use it when building auth, billing, and protected flows starts slowing you down. Starter Pro removes weeks of repeated setup and gives you a production-ready SaaS foundation from day one."
-            />
-          </div>
-
-          <div className="mt-8 rounded-xl border border-border/60 bg-muted/20 p-6 text-center shadow-sm">
-            <p className="text-sm text-muted-foreground">
-              Most developers don’t struggle with building features.
-            </p>
-            <p className="mt-2 text-sm font-medium text-foreground">
-              They lose time wiring auth, billing, and protected
-              flows.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Starter Pro removes that layer so you can focus on what
-              actually matters: your product.
-            </p>
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
             eyebrow="Comparison"
             title="Compare the only decision that matters right now"
             description="Do not create too many premium choices too early. The real decision is simple: stay on Free or move to Pro."
@@ -680,7 +622,7 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-md', focusRing)}
+                className={cn('rounded-[5px]', focusRing)}
               >
                 <Link href={INTERNAL.docsBackend}>
                   Explore backend docs
@@ -689,7 +631,7 @@ export default function PricingPage() {
             }
           />
 
-          <Card className="overflow-hidden rounded-2xl border border-border/60 bg-background p-2 shadow-sm sm:p-4">
+          <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface p-2 shadow-soft sm:p-4">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -747,14 +689,14 @@ export default function PricingPage() {
         </section>
 
         <section className="pt-4">
-          <Card className="relative overflow-hidden rounded-2xl border border-border/60 bg-background px-6 py-8 shadow-sm sm:px-8 sm:py-10">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+          <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
                 <Badge
                   variant="outline"
-                  className="rounded-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
+                  className="rounded-[5px] border-pro-border bg-pro-surface-muted px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
                 >
                   Final CTA
                 </Badge>
@@ -785,7 +727,7 @@ export default function PricingPage() {
                   asChild
                   variant="outline"
                   className={cn(
-                    'h-10 rounded-md text-sm font-medium',
+                    'h-10 rounded-[5px] text-sm font-medium',
                     focusRing,
                   )}
                 >
