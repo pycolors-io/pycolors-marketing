@@ -72,6 +72,11 @@ const EXTERNAL: FooterLink[] = [
 ];
 
 function FooterLinkItem(link: FooterLink) {
+  const className = cn(
+    'inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground',
+    focusRing,
+  );
+
   if (link.external) {
     return (
       <a
@@ -82,10 +87,7 @@ function FooterLinkItem(link: FooterLink) {
         aria-label={
           link.ariaLabel ?? `${link.label} (opens in a new tab)`
         }
-        className={cn(
-          'inline-flex items-center gap-1 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground',
-          focusRing,
-        )}
+        className={className}
       >
         {link.label}
         <ExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -94,14 +96,7 @@ function FooterLinkItem(link: FooterLink) {
   }
 
   return (
-    <Link
-      key={link.label}
-      href={link.href}
-      className={cn(
-        'inline-block rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground',
-        focusRing,
-      )}
-    >
+    <Link key={link.label} href={link.href} className={className}>
       {link.label}
     </Link>
   );
@@ -109,37 +104,34 @@ function FooterLinkItem(link: FooterLink) {
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-border/60 bg-background">
+    <footer className="w-full border-t border-border-subtle bg-background">
       <div className="max-w-fd-container mx-auto">
         <Container>
           <div className="py-16 sm:py-20">
-            <section className="border-b border-border/60 pb-14 sm:pb-16">
-              <div className="mx-auto max-w-3xl text-center">
-                <div className="space-y-4">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    PyColors
-                  </p>
+            <section className="border-b border-border-subtle pb-14 sm:pb-16">
+              <div className="mx-auto max-w-4xl text-center">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                  PyColors
+                </p>
 
-                  <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                    Build the product surface first.{' '}
-                    <span className="block text-muted-foreground">
-                      Upgrade when auth and billing become the
-                      bottleneck.
-                    </span>
-                  </h2>
+                <h2 className="mt-4 text-balance text-xl font-semibold tracking-tight sm:text-4xl">
+                  Build the product surface first.
+                  <span className="block text-muted-foreground">
+                    Upgrade when wiring becomes the bottleneck.
+                  </span>
+                </h2>
 
-                  <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-                    Validate faster with Starter Free. Move to Starter
-                    Pro when the business layer becomes the real
-                    bottleneck.
-                  </p>
-                </div>
+                <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
+                  Validate faster with Starter Free. Move to Starter
+                  Pro when authentication, billing, and launch-ready
+                  foundations become the real blocker.
+                </p>
 
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                   <Button
                     asChild
                     variant="outline"
-                    className="h-11 rounded-xl px-6 text-sm font-medium"
+                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
                   >
                     <Link href="/starters/free">
                       Explore Starter Free
@@ -166,13 +158,14 @@ export function Footer() {
             <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <div className="font-brand text-xl font-semibold tracking-tight">
+                  <div className="font-sans text-xl font-semibold tracking-tight">
                     PyColors
                   </div>
 
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                    Launch a real SaaS faster with UI, auth, billing,
-                    and production-ready foundations.
+                    A premium SaaS developer platform for shipping
+                    credible product surfaces, UI foundations, and
+                    launch-ready starters faster.
                   </p>
                 </div>
 
@@ -202,7 +195,7 @@ export function Footer() {
               </div>
             </section>
 
-            <section className="mt-12 flex flex-col gap-4 border-t border-border/60 pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+            <section className="mt-12 flex flex-col gap-4 border-t border-border-subtle pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <div className="text-xs text-muted-foreground">
                 © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
                 {APP_VERSION}
@@ -210,8 +203,25 @@ export function Footer() {
 
               <div className="flex items-center justify-center sm:justify-end">
                 <ThemeToggle
-                  mode="light-dark-system"
-                  className="bg-background/70 px-1.5 opacity-80 transition-all duration-200 hover:bg-accent/30 hover:opacity-100"
+                  mode="light-dark"
+                  className={cn(
+                    'h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm',
+                    'rounded-[20px]',
+                    'px-1',
+                    'shadow-sm',
+                    'opacity-80 transition-all duration-200 ease-out',
+                    'hover:border-border hover:bg-accent/30 hover:opacity-100',
+                    'cursor-pointer',
+
+                    '[&_button]:h-6.5',
+                    '[&_button]:w-6.5',
+                    '[&_button]:rounded-[4px]',
+                    '[&_button]:bg-transparent',
+                    '[&_button]:transition-all',
+                    '[&_button]:duration-200',
+                    '[&_button:hover]:bg-accent/50',
+                    '[&_button]:cursor-pointer',
+                  )}
                 />
               </div>
             </section>
