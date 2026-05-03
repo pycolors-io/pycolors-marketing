@@ -12,7 +12,7 @@ function Logomark() {
   return (
     <svg
       viewBox="0 0 40 40"
-      className="h-6 w-6 shrink-0"
+      className="h-8 w-8 shrink-0"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -32,7 +32,7 @@ function Wordmark() {
   return (
     <span
       className={cn(
-        'select-none font-sans text-[15px] font-semibold leading-none tracking-[-0.05em]',
+        'select-none font-sans text-[16px] font-semibold leading-none tracking-[-0.05em]',
         'text-foreground antialiased',
       )}
     >
@@ -50,7 +50,7 @@ export function DocsLogo() {
       href="/docs"
       aria-label="PyColors Docs"
       className={cn(
-        'group inline-flex items-center gap-2.5',
+        'group inline-flex items-center gap-0.5',
         'transition-opacity duration-200 hover:opacity-90',
       )}
     >
