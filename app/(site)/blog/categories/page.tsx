@@ -65,7 +65,7 @@ export default function BlogCategoriesPage() {
   const categories = getAllCategories();
 
   return (
-    <Container className="py-20 sm:py-20 lg:py-24">
+    <Container className="py-18">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <Breadcrumb

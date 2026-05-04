@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const articleJsonLd = generateArticleJsonLd(post);
 
   return (
-    <Container className="py-20 sm:py-20 lg:py-24">
+    <Container className="py-18">
       <JsonLd id="article-jsonld" data={articleJsonLd} />
 
       <div className="mx-auto max-w-6xl">
