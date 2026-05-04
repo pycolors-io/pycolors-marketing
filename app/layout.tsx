@@ -27,9 +27,11 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png', sizes: '64x64' },
     ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
