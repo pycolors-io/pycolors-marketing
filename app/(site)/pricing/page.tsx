@@ -317,9 +317,8 @@ export default function PricingPage() {
           subtitle="Starter Free helps you explore. Starter Pro helps you ship and charge sooner."
           description="Starter Pro gives you real authentication, real Stripe billing, protected app structure, and a production-ready SaaS foundation without rebuilding the same business layer again."
           actions={
-            <>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
               <BuyStarterProButton
-                fullWidth={false}
                 label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
               />
               <Button
@@ -332,7 +331,7 @@ export default function PricingPage() {
                   Explore Starter Free
                 </Link>
               </Button>
-            </>
+            </div>
           }
           pills={[
             'Real auth included',

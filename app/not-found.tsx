@@ -5,6 +5,7 @@ import {
   ArrowRight,
   BookOpen,
   Compass,
+  ExternalLink,
   Layers3,
   LifeBuoy,
   Rocket,
@@ -61,6 +62,14 @@ const quickLinks: QuickLink[] = [
     badge: 'Learn',
   },
   {
+    title: 'Guides',
+    description:
+      'Learn the product logic behind dashboards, auth, billing, teams, and SaaS foundations.',
+    href: '/guides',
+    icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
+    badge: 'Learn',
+  },
+  {
     title: 'Patterns',
     description:
       'Explore production-shaped UI and SaaS patterns built on the system.',
@@ -76,12 +85,12 @@ export default function NotFound() {
       <SiteHeader />
 
       <main id="content" className="flex-1 pt-16 text-foreground">
-        <Container className="py-16 sm:py-20 lg:py-24">
+        <Container className="py-20 sm:py-20 lg:py-24">
           <section className="mx-auto max-w-5xl text-center">
             <div className="flex justify-center">
               <Badge
-                variant="secondary"
-                className="gap-2 rounded-full px-3 py-1"
+                variant="outline"
+                className="gap-2 rounded-[5px] border-border-subtle bg-surface-muted px-3 py-1"
               >
                 <span
                   className="inline-flex h-1.5 w-1.5 rounded-full bg-warning"
@@ -92,27 +101,27 @@ export default function NotFound() {
             </div>
 
             <h1 className="mt-5 text-balance font-brand text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              This page does not exist anymore.
+              This page is no longer part of the current PyColors
+              path.
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-              The link may be outdated, moved, or no longer part of
-              the current product structure. The fastest way back into
-              PyColors is through the core product paths below.
+              The link may be outdated, moved, or removed as the
+              product structure evolved. Use the core paths below to
+              get back to the fastest route: validate with Starter
+              Free, upgrade with Starter Pro, or continue through docs
+              and patterns.
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button
                 asChild
                 size="lg"
-                className="min-w-[220px] rounded-xl"
+                className="h-11 min-w-55 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/starters/free">
                   Start with Starter Free
-                  <Rocket
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <Rocket className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
@@ -120,25 +129,57 @@ export default function NotFound() {
                 fullWidth={false}
                 label="Buy Starter Pro — 199 €"
               />
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-11 min-w-45 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href="/docs">Browse docs</Link>
+              </Button>
             </div>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
-              <Badge variant="outline">Starter Free</Badge>
-              <Badge variant="outline">Starter Pro</Badge>
-              <Badge variant="outline">Pricing</Badge>
-              <Badge variant="outline">Docs</Badge>
-              <Badge variant="outline">Patterns</Badge>
+            <div className="mt-5 flex flex-wrap justify-center gap-2">
+              <Badge variant="outline" className="rounded-[5px]">
+                Starter Free
+              </Badge>
+              <Badge variant="outline" className="rounded-[5px]">
+                Starter Pro
+              </Badge>
+              <Badge variant="outline" className="rounded-[5px]">
+                Pricing
+              </Badge>
+              <Badge variant="outline" className="rounded-[5px]">
+                Docs
+              </Badge>
+              <Badge variant="outline" className="rounded-[5px]">
+                Guides
+              </Badge>
+              <Badge variant="outline" className="rounded-[5px]">
+                Patterns
+              </Badge>
             </div>
           </section>
 
-          <section className="mx-auto mt-12 max-w-6xl">
-            <div className="mb-6 text-center">
-              <h2 className="font-brand text-lg font-semibold tracking-tight sm:text-xl">
+          <section className="mx-auto mt-14 max-w-6xl">
+            <div className="mb-8 text-center">
+              <Badge
+                variant="outline"
+                className="rounded-[5px] border-border-subtle bg-surface-muted"
+              >
                 Best next steps
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Choose the path that gets you back into the product
+              </Badge>
+
+              <h2 className="mt-4 font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
+                Choose the path that gets you back into PyColors
                 fastest.
+              </h2>
+
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
+                PyColors is structured around a simple progression:
+                learn, explore, validate, then upgrade when the
+                business layer matters.
               </p>
             </div>
 
@@ -151,10 +192,9 @@ export default function NotFound() {
                 >
                   <Card
                     className={cn(
-                      'h-full rounded-2xl border-border/70 p-5 transition-all',
-                      'hover:-translate-y-0.5 hover:border-border hover:bg-accent/20',
+                      'h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted',
                       item.featured &&
-                        'border-primary/30 bg-accent/10',
+                        'border-pro-border-subtle bg-pro-surface shadow-medium',
                     )}
                   >
                     <div className="flex h-full flex-col">
@@ -162,8 +202,9 @@ export default function NotFound() {
                         <div className="flex items-start gap-3">
                           <div
                             className={cn(
-                              'mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl border bg-background',
-                              item.featured && 'border-primary/30',
+                              'inline-flex h-6 w-6 items-center justify-center    text-muted-foreground',
+                              item.featured &&
+                                'border-pro-border-subtle text-primary',
                             )}
                           >
                             {item.icon}
@@ -173,7 +214,8 @@ export default function NotFound() {
                             <div className="text-sm font-semibold sm:text-base">
                               {item.title}
                             </div>
-                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+
+                            <p className="mt-1 text-sm leading-7 text-muted-foreground">
                               {item.description}
                             </p>
                           </div>
@@ -182,9 +224,9 @@ export default function NotFound() {
                         {item.badge ? (
                           <Badge
                             variant={
-                              item.featured ? 'default' : 'secondary'
+                              item.featured ? 'secondary' : 'outline'
                             }
-                            className="shrink-0 text-[11px]"
+                            className="shrink-0 rounded-[5px] text-[11px]"
                           >
                             {item.badge}
                           </Badge>
@@ -194,7 +236,7 @@ export default function NotFound() {
                       <div className="mt-5 flex items-center text-sm font-medium text-foreground">
                         Open page
                         <ArrowRight
-                          className="ml-2 h-4 w-4"
+                          className="h-4 w-4"
                           aria-hidden="true"
                         />
                       </div>
@@ -206,41 +248,67 @@ export default function NotFound() {
           </section>
 
           <section className="mx-auto mt-10 max-w-6xl">
-            <Card className="rounded-2xl border-border/70 p-6 sm:p-7">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                <div className="space-y-2 text-left">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                <div className="space-y-3">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <Sparkles
-                      className="h-4 w-4"
+                      className="h-4 w-4 text-primary"
                       aria-hidden="true"
                     />
                     A better fallback than a dead end
                   </div>
 
-                  <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                  <h2 className="text-2xl font-semibold tracking-tight">
+                    Get back to the product path.
+                  </h2>
+                </div>
+
+                <div className="space-y-5">
+                  <p className="text-sm leading-7 text-muted-foreground">
                     PyColors is structured as a product ecosystem: use
                     Starter Free to begin, Starter Pro when the
                     business layer matters, pricing to make the buying
                     decision, docs to learn, and patterns to explore
                     implementation direction.
                   </p>
-                </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild variant="outline">
-                    <Link href="/docs">Browse docs</Link>
-                  </Button>
+                  <div className="flex flex-wrap gap-3 border-t border-border-subtle pt-5">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href="/docs">Browse docs</Link>
+                    </Button>
 
-                  <Button asChild variant="secondary">
-                    <Link href="/ui/patterns">Explore patterns</Link>
-                  </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      <Link href="/ui/patterns">
+                        Explore patterns
+                      </Link>
+                    </Button>
+
+                    <Button asChild className="rounded-[5px]">
+                      <Link href="/pricing">
+                        View pricing
+                        <ArrowRight
+                          className="h-4 w-4"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
           </section>
 
           <section className="mx-auto mt-8 max-w-6xl">
-            <Card className="rounded-2xl border-border/70 p-6 sm:p-7">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-2 text-left">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
@@ -258,7 +326,11 @@ export default function NotFound() {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Button asChild variant="outline">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px]"
+                  >
                     <a
                       href="https://github.com/pycolors-io/pycolors-marketing/issues"
                       target="_blank"
@@ -266,14 +338,22 @@ export default function NotFound() {
                       aria-label="Report an issue on the PyColors marketing repository"
                     >
                       Report issue
+                      <ExternalLink
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
                     </a>
                   </Button>
 
-                  <Button asChild variant="secondary">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px]"
+                  >
                     <Link href="/changelog">
                       Latest updates
                       <ArrowRight
-                        className="ml-2 h-4 w-4"
+                        className="h-4 w-4"
                         aria-hidden="true"
                       />
                     </Link>

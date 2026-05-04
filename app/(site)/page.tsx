@@ -332,25 +332,23 @@ export default function HomePage() {
             subtitle="Validate the product surface first. Wire the business when it matters."
             description="PyColors helps developers move from product idea to credible SaaS faster: guides to understand the logic, patterns to structure the interface, Starter Free to validate the product surface, and Starter Pro to launch with auth and billing already wired."
             actions={
-              <>
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <Button
                   asChild
+                  variant="outline"
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
                   <Link href={INTERNAL.starterFree}>
                     Start with Starter Free
                     <ArrowRight
-                      className="ml-2 h-4 w-4"
+                      className="h-4 w-4"
                       aria-hidden="true"
                     />
                   </Link>
                 </Button>
 
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label="Buy Starter Pro — 199 €"
-                />
+                <BuyStarterProButton fullWidth={true} />
 
                 <Button
                   asChild
@@ -365,13 +363,10 @@ export default function HomePage() {
                     aria-label="Open the Starter Free live demo"
                   >
                     View live demo
-                    <Eye
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
+                    <Eye className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </Button>
-              </>
+              </div>
             }
             pills={[
               'Next.js App Router',
@@ -1016,7 +1011,7 @@ pnpm dev`}</pre>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:min-w-[240px]">
+                <div className="flex flex-col gap-3 sm:min-w-60">
                   <Button
                     asChild
                     variant="outline"
