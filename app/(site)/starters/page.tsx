@@ -320,9 +320,8 @@ const journey = [
 export default function StartersPage() {
   return (
     <main className="bg-background text-foreground">
-      <Container className="relative py-20 sm:py-20 lg:py-24">
+      <Container className="py-18">
         <div className="pointer-events-none absolute left-1/2 top-20 -z-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-[5px] bg-primary/10 blur-3xl" />
-
         <div className="mx-auto max-w-6xl">
           <PageHero
             badges={[

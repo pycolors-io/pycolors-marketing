@@ -301,7 +301,7 @@ export default function HomePage() {
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
 
-      <Container className="py-20 sm:py-20 lg:py-24">
+      <Container className="py-18">
         <div className="mx-auto w-full max-w-6xl">
           <PageHero
             maxWidth="4xl"

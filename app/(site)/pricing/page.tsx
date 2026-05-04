@@ -289,7 +289,7 @@ function FaqCard({
 
 export default function PricingPage() {
   return (
-    <Container className="py-20 sm:py-20 lg:py-24">
+    <Container className="py-18">
       <div className="mx-auto max-w-6xl">
         <PageHero
           maxWidth="5xl"

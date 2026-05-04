@@ -244,7 +244,7 @@ function ProofPill({ children }: { children: React.ReactNode }) {
 
 export default function StarterFreePage() {
   return (
-    <Container className="py-20 sm:py-24">
+    <Container className="py-18">
       <div className="mx-auto max-w-6xl">
         <PageHero
           badges={[
