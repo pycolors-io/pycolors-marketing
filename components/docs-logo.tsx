@@ -36,7 +36,7 @@ function Wordmark() {
         'text-foreground antialiased',
       )}
     >
-      pycolors
+      pycolors{' '}
       <span className="ml-1" style={{ color: BRAND }}>
         /docs
       </span>

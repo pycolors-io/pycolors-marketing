@@ -48,7 +48,7 @@ function Wordmark() {
 export function Logo() {
   return (
     <Link
-      href="/docs"
+      href="/"
       aria-label="PyColors Docs"
       className={cn(
         'group inline-flex items-center gap-0.5',
