@@ -98,7 +98,7 @@ export function BuyStarterProButton({
           <>
             {label}
             <ArrowRight
-              className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
               aria-hidden="true"
             />
           </>
