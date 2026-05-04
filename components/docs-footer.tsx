@@ -7,6 +7,7 @@ import { Container } from '@/components/container';
 import { cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+import { Logo } from './logo';
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -110,8 +111,8 @@ export function DocsFooter() {
             <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <div className="font-sans text-xl font-semibold tracking-tight">
-                    PyColors
+                  <div>
+                    <Logo />
                   </div>
 
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
