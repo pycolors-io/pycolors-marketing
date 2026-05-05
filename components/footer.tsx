@@ -116,7 +116,7 @@ export function Footer() {
                 </p>
 
                 <h2 className="mt-4 text-balance text-xl font-semibold tracking-tight sm:text-4xl">
-                  Build the product surface first.
+                  Build the product surface first.{' '}
                   <span className="block text-muted-foreground">
                     Upgrade when wiring becomes the bottleneck.
                   </span>
@@ -129,20 +129,19 @@ export function Footer() {
                 </p>
 
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                  >
-                    <Link href="/starters/free">
-                      Explore Starter Free
-                    </Link>
-                  </Button>
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                    >
+                      <Link href="/starters/free">
+                        Explore Starter Free
+                      </Link>
+                    </Button>
 
-                  <BuyStarterProButton
-                    fullWidth={false}
-                    label="Buy Starter Pro — 199 €"
-                  />
+                    <BuyStarterProButton />
+                  </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
