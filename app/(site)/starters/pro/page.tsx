@@ -3,10 +3,14 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import {
   Check,
+  Code2,
   CreditCard,
+  Database,
   Download,
+  GitBranch,
   LayoutDashboard,
   Lock,
+  Mail,
   Rocket,
   ShieldCheck,
   Sparkles,
@@ -30,12 +34,12 @@ export const metadata: Metadata = {
   title:
     'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
   description:
-    'Starter Pro is a production-ready Next.js SaaS starter with real authentication, real Stripe billing, protected app structure, and launch-ready foundations already wired.',
+    'Starter Pro is a production-ready Next.js SaaS starter with real authentication, Stripe billing, protected app architecture, Prisma foundations, and launch-ready SaaS flows already wired.',
   openGraph: {
     title:
       'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
     description:
-      'Launch a real SaaS faster with authentication, Stripe billing, protected app structure, and production-ready foundations already built.',
+      'Launch a real SaaS faster with authentication, Stripe billing, protected app architecture, and production-ready foundations already built.',
     url: 'https://pycolors.io/starters/pro',
     siteName: 'PyColors',
     type: 'website',
@@ -46,7 +50,7 @@ export const metadata: Metadata = {
     title:
       'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
     description:
-      'Launch a real SaaS faster with authentication, Stripe billing, protected app structure, and production-ready foundations already built.',
+      'Launch a real SaaS faster with authentication, Stripe billing, protected app architecture, and production-ready foundations already built.',
     images: ['/seo/twitter-main.png'],
   },
   alternates: {
@@ -57,29 +61,41 @@ export const metadata: Metadata = {
 const launchPrice = '199 €';
 const regularPrice = '299 €';
 
+const INTERNAL = {
+  pricing: '/pricing',
+  starterFree: '/starters/free',
+  docsStarterPro: '/docs/starter-pro',
+  docsBilling: '/docs/starter-pro/billing',
+  docsBackend: '/docs/starter-pro/backend',
+  changelog: '/changelog',
+  roadmap: '/roadmap',
+  license: '/license',
+  terms: '/terms',
+} as const;
+
 const coreFeatures = [
   {
-    title: 'Real authentication already built',
+    title: 'Real authentication already wired',
     description:
-      'Email/password auth, Google and GitHub OAuth, email verification, password reset, sessions, account linking, and production-ready auth foundations.',
+      'Email/password auth, Google and GitHub OAuth, email verification, password reset, sessions, protected routes, and account foundations are already included.',
     icon: Lock,
   },
   {
     title: 'Stripe billing already integrated',
     description:
-      'Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle handling are already wired.',
+      'Checkout, billing portal, invoices, webhook synchronization, subscription lifecycle handling, and billing-aware UI states are part of the foundation.',
     icon: CreditCard,
   },
   {
     title: 'Protected SaaS app architecture',
     description:
-      'Protected routes, account structure, settings, billing-aware flows, and scalable SaaS foundations included.',
+      'Protected routes, account areas, settings, billing flows, app shell, and scalable product structure are shaped for a real SaaS product.',
     icon: LayoutDashboard,
   },
   {
-    title: 'Built to launch real products',
+    title: 'Built to reduce launch friction',
     description:
-      'Starter Pro is shaped for real SaaS execution, not just interface demos or generic boilerplates.',
+      'Starter Pro removes repeated foundation work so you can focus on product logic, onboarding, positioning, customers, and growth.',
     icon: Rocket,
   },
 ] as const;
@@ -88,45 +104,145 @@ const includedItems = [
   {
     title: 'Full Starter Pro source code',
     description:
-      'Own the complete codebase and adapt it to your own SaaS product.',
+      'Get the complete codebase and adapt it to your own commercial SaaS product.',
     icon: Download,
   },
   {
-    title: 'Production auth flows',
+    title: 'Auth foundation',
     description:
-      'Real authentication flows with protected sessions and provider support.',
+      'Real authentication flows with providers, protected sessions, verification, and recovery flows.',
     icon: ShieldCheck,
   },
   {
-    title: 'Production billing flows',
+    title: 'Billing foundation',
     description:
-      'Real monetization foundations already connected to Stripe.',
+      'Stripe Checkout, portal, invoices, lifecycle logic, and webhook synchronization.',
     icon: CreditCard,
   },
   {
-    title: 'Launch-ready structure',
+    title: 'Database foundation',
     description:
-      'A scalable baseline focused on faster execution and reduced rewrite risk.',
-    icon: LayoutDashboard,
+      'Prisma and PostgreSQL foundations ready for real product data and SaaS growth.',
+    icon: Database,
   },
 ] as const;
 
-const comparisonRows = [
-  { label: 'UI and app surfaces', free: 'Included', pro: 'Included' },
-  { label: 'Auth UX screens', free: 'Included', pro: 'Included' },
-  { label: 'Real authentication', free: 'No', pro: 'Included' },
-  { label: 'OAuth providers', free: 'No', pro: 'Included' },
-  { label: 'Stripe billing', free: 'No', pro: 'Included' },
-  { label: 'Webhook sync', free: 'No', pro: 'Included' },
+const trustItems = [
   {
-    label: 'Protected architecture',
+    title: 'Production-shaped scope',
+    description:
+      'Focused on the expensive SaaS wiring behind the UI: auth, billing, database, protected flows, and account structure.',
+    icon: Code2,
+  },
+  {
+    title: 'Documentation-first',
+    description:
+      'Starter Pro is supported by implementation docs so buyers understand what is included and how to extend it.',
+    icon: Mail,
+  },
+  {
+    title: 'Actively maintained',
+    description:
+      'PyColors ships with changelog updates, roadmap direction, and a long-term ecosystem vision.',
+    icon: GitBranch,
+  },
+] as const;
+
+const stackItems = [
+  'Next.js',
+  'React',
+  'TypeScript',
+  'Tailwind CSS',
+  'Prisma',
+  'PostgreSQL',
+  'Stripe',
+  'Vercel',
+] as const;
+
+const includedChecklist = [
+  'Full Starter Pro source code',
+  'Production-ready Next.js App Router architecture',
+  'Strict TypeScript setup',
+  'Tailwind CSS foundation',
+  'Email/password authentication',
+  'Google and GitHub OAuth',
+  'Email verification',
+  'Reset password flow',
+  'Session management',
+  'Protected routes',
+  'Stripe Checkout integration',
+  'Stripe billing portal',
+  'Invoices and billing history UI',
+  'Webhook synchronization with Prisma',
+  'Subscription lifecycle handling',
+  'Dashboard, settings, billing, and admin surfaces',
+  'Plan gating and feature access control',
+  'Prisma schema and PostgreSQL setup',
+  'Zod validation and React Hook Form integration',
+  'Environment configuration foundations',
+  'Commercial usage rights',
+] as const;
+
+const comparisonRows = [
+  {
+    label: 'Product-shaped SaaS UI',
+    free: 'Included',
+    pro: 'Included',
+  },
+  {
+    label: 'Dashboard, settings, billing screens',
+    free: 'Included',
+    pro: 'Included + production wiring',
+  },
+  {
+    label: 'Auth UX screens',
+    free: 'Included',
+    pro: 'Included + real auth',
+  },
+  {
+    label: 'Email/password auth',
+    free: 'Mock/demo only',
+    pro: 'Included',
+  },
+  {
+    label: 'OAuth providers',
+    free: 'No',
+    pro: 'Google + GitHub',
+  },
+  {
+    label: 'Protected routes and sessions',
     free: 'Partial',
+    pro: 'Included',
+  },
+  {
+    label: 'Stripe Checkout',
+    free: 'No',
+    pro: 'Included',
+  },
+  {
+    label: 'Billing portal',
+    free: 'No',
+    pro: 'Included',
+  },
+  {
+    label: 'Webhook sync',
+    free: 'No',
+    pro: 'Included',
+  },
+  {
+    label: 'Database foundation',
+    free: 'No',
+    pro: 'Prisma + PostgreSQL',
+  },
+  {
+    label: 'Commercial usage',
+    free: 'Review license',
     pro: 'Included',
   },
   {
     label: 'Best use case',
     free: 'Validate UX',
-    pro: 'Launch faster',
+    pro: 'Launch and charge faster',
   },
 ] as const;
 
@@ -134,27 +250,32 @@ const faqs = [
   {
     question: 'What do I get after purchase?',
     answer:
-      'You receive the full Starter Pro source code with authentication, billing, protected app flows, and launch-ready SaaS foundations already wired.',
+      'You receive the full Starter Pro source code with authentication, Stripe billing, protected app flows, Prisma foundations, and launch-ready SaaS surfaces already wired.',
   },
   {
     question: 'Is Starter Pro production-ready?',
     answer:
-      'Starter Pro is designed as a real SaaS foundation intended to accelerate production launches and reduce repeated setup work.',
+      'Yes. Starter Pro is designed as a real SaaS foundation, not a static UI demo. You still need to add your own product logic, but the repeated business layer is already shaped.',
   },
   {
     question: 'Is Stripe already integrated?',
     answer:
-      'Yes. Stripe Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle flows are already included.',
+      'Yes. Stripe Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle flows are included.',
   },
   {
     question: 'Can I use it commercially?',
     answer:
-      'Yes. Starter Pro is built to become the foundation of your own commercial SaaS product.',
+      'Yes. Starter Pro includes commercial usage rights. Review the license and terms before production use.',
   },
   {
     question: 'Why buy Starter Pro instead of using Starter Free?',
     answer:
-      'Starter Free validates product shape faster. Starter Pro removes the backend, auth, and billing bottlenecks that slow real launches.',
+      'Starter Free helps you validate product shape. Starter Pro removes the auth, billing, database, and protected architecture bottlenecks that slow real SaaS launches.',
+  },
+  {
+    question: 'Will the price stay at 199 €?',
+    answer:
+      'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
   },
 ] as const;
 
@@ -162,13 +283,21 @@ function SectionHeading({
   eyebrow,
   title,
   description,
+  align = 'center',
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly align?: 'center' | 'left';
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
+    <div
+      className={cn(
+        align === 'center'
+          ? 'mx-auto max-w-3xl text-center'
+          : 'max-w-3xl text-left',
+      )}
+    >
       {eyebrow ? (
         <Badge
           variant="outline"
@@ -191,15 +320,54 @@ function SectionHeading({
   );
 }
 
-function CheckItem({ children }: { children: React.ReactNode }) {
+function CheckItem({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return (
     <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-surface">
-        <Check className="h-3.5 w-3.5" />
+      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
+        <Check className="h-3.5 w-3.5 text-foreground" />
       </span>
-
-      <span>{children}</span>
+      <span className="leading-6">{children}</span>
     </li>
+  );
+}
+
+function Pill({ children }: { readonly children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+      {children}
+    </span>
+  );
+}
+
+function FeatureCard({
+  title,
+  description,
+  icon: Icon,
+}: {
+  readonly title: string;
+  readonly description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardHeader className="space-y-4">
+        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+          <Icon className="h-5 w-5 text-muted-foreground" />
+        </div>
+
+        <CardTitle className="text-lg">{title}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p className="text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -209,17 +377,14 @@ export default function StarterProPage() {
       <Container className="py-18">
         <div className="mx-auto max-w-6xl">
           <PageHero
+            maxWidth="5xl"
             badges={[
               {
                 label: 'Starter Pro',
                 variant: 'secondary',
               },
               {
-                label: 'Launch-ready',
-                variant: 'outline',
-              },
-              {
-                label: `Launch offer ${launchPrice}`,
+                label: `Launch price ${launchPrice}`,
                 variant: 'outline',
                 icon: (
                   <Sparkles
@@ -228,16 +393,17 @@ export default function StarterProPage() {
                   />
                 ),
               },
+              {
+                label: `${regularPrice} regular price`,
+                variant: 'outline',
+              },
             ]}
-            title="Launch a real SaaS faster with auth and billing already built."
-            subtitle="Skip repetitive setup work and start from a production-ready SaaS baseline."
-            description="Starter Pro gives you real authentication, real Stripe billing, protected SaaS structure, and launch-ready account foundations already wired."
+            title="Stop rebuilding auth and billing. Start closer to launch."
+            subtitle="A production-ready Next.js SaaS starter with the business layer already wired."
+            description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
             actions={
-              <>
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+                <BuyStarterProButton />
 
                 <Button
                   asChild
@@ -245,7 +411,7 @@ export default function StarterProPage() {
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
-                  <Link href="/pricing">View pricing</Link>
+                  <Link href={INTERNAL.pricing}>View pricing</Link>
                 </Button>
 
                 <Button
@@ -254,26 +420,26 @@ export default function StarterProPage() {
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
-                  <Link href="/docs/starter-pro">Read docs</Link>
+                  <Link href={INTERNAL.docsStarterPro}>
+                    Read docs
+                  </Link>
                 </Button>
-              </>
+              </div>
             }
             pills={[
-              'Real auth included',
-              'Stripe billing included',
-              'Protected app architecture',
-              'Production-ready SaaS baseline',
+              'One-time payment',
+              'Instant access',
+              'Commercial usage',
+              'Built for real SaaS',
             ]}
             extraClassName="mx-auto max-w-6xl"
             extra={
               <>
-                <div className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
-                  <CheckItem>Full source code included</CheckItem>
-                  <CheckItem>Production auth already wired</CheckItem>
-                  <CheckItem>Stripe monetization included</CheckItem>
-                  <CheckItem>
-                    Built for commercial SaaS products
-                  </CheckItem>
+                <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
+                  <CheckItem>Full source code</CheckItem>
+                  <CheckItem>Real auth wired</CheckItem>
+                  <CheckItem>Stripe billing wired</CheckItem>
+                  <CheckItem>Protected SaaS app</CheckItem>
                 </div>
 
                 <div className="mx-auto mt-12 max-w-6xl">
@@ -282,7 +448,6 @@ export default function StarterProPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="h-2 w-2 rounded-full bg-primary" />
-
                           <span className="text-xs font-medium">
                             Starter Pro
                           </span>
@@ -312,156 +477,137 @@ export default function StarterProPage() {
       </Container>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <SectionHeading
-              eyebrow="What you get"
-              title="Everything needed to move faster toward a real SaaS launch"
-              description="Starter Pro focuses on the layers that repeatedly slow developers down before launch."
+              eyebrow="Why it exists"
+              title="Most SaaS starters stop at UI. Starter Pro wires the expensive part."
+              description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, and all the small decisions needed before a SaaS can charge customers."
             />
 
             <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {coreFeatures.map((feature) => {
-                const Icon = feature.icon;
-
-                return (
-                  <Card
-                    key={feature.title}
-                    className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
-                  >
-                    <CardHeader className="space-y-4">
-                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-                        <Icon className="h-5 w-5" />
-                      </div>
-
-                      <CardTitle className="text-xl">
-                        {feature.title}
-                      </CardTitle>
-                    </CardHeader>
-
-                    <CardContent>
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        {feature.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+              {coreFeatures.map((feature) => (
+                <FeatureCard key={feature.title} {...feature} />
+              ))}
             </div>
           </div>
         </Container>
       </section>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <SectionHeading
+                align="left"
+                eyebrow="What you actually get"
+                title="A complete SaaS foundation you can own, modify, and launch from."
+                description="Starter Pro is designed to reduce repeated implementation cost. You still build your product, but you do not start from a blank auth, billing, database, and protected app setup."
+              />
+
+              <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {includedChecklist.map((item) => (
+                    <CheckItem key={item}>{item}</CheckItem>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
             <SectionHeading
               eyebrow="After purchase"
               title="What you get immediately"
-              description="No vague promises. Real launch-ready SaaS foundations already wired."
+              description="Clear scope, instant delivery, and real SaaS foundations already wired."
             />
 
             <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {includedItems.map((item) => {
-                const Icon = item.icon;
+              {includedItems.map((item) => (
+                <FeatureCard key={item.title} {...item} />
+              ))}
+            </div>
 
-                return (
-                  <Card
-                    key={item.title}
-                    className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
-                  >
-                    <CardHeader className="space-y-4">
-                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-                        <Icon className="h-5 w-5" />
-                      </div>
-
-                      <CardTitle className="text-lg">
-                        {item.title}
-                      </CardTitle>
-                    </CardHeader>
-
-                    <CardContent>
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+            <div className="mt-8 flex justify-center">
+              <BuyStarterProButton
+                fullWidth={false}
+                label={`Buy Starter Pro — ${launchPrice}`}
+              />
             </div>
           </div>
         </Container>
       </section>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
-          <div className="mx-auto max-w-5xl rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-8">
-            <div className="grid gap-8 md:grid-cols-2">
-              <div>
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
-                >
-                  Included in Starter Pro
-                </Badge>
-
-                <h3 className="mt-5 text-xl font-semibold tracking-tight">
-                  The core SaaS foundation
-                </h3>
-
-                <ul className="mt-5 space-y-3">
-                  <CheckItem>Full Starter Pro source code</CheckItem>
-                  <CheckItem>
-                    Real email/password authentication
-                  </CheckItem>
-                  <CheckItem>Google and GitHub OAuth</CheckItem>
-                  <CheckItem>
-                    Email verification and reset password
-                  </CheckItem>
-                  <CheckItem>Stripe Checkout integration</CheckItem>
-                  <CheckItem>Billing portal and invoices</CheckItem>
-                </ul>
-              </div>
-
-              <div>
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-success-border-subtle bg-success-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
-                >
-                  Also included
-                </Badge>
-
-                <h3 className="mt-5 text-xl font-semibold tracking-tight">
-                  Launch-ready product structure
-                </h3>
-
-                <ul className="mt-5 space-y-3">
-                  <CheckItem>Webhook sync with Prisma</CheckItem>
-                  <CheckItem>Protected app structure</CheckItem>
-                  <CheckItem>Settings foundations</CheckItem>
-                  <CheckItem>Launch-ready SaaS baseline</CheckItem>
-                  <CheckItem>Commercial usage rights</CheckItem>
-                  <CheckItem>
-                    Documentation on pycolors.io/docs
-                  </CheckItem>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <SectionHeading
-                  eyebrow="Free vs Pro"
-                  title="Starter Free explores. Starter Pro launches."
-                  description="Use Free to validate product UX faster. Move to Pro when auth, billing, and protected architecture become the bottleneck."
-                />
+            <SectionHeading
+              eyebrow="Trust"
+              title="Built to feel like a serious product foundation."
+              description="Early buyers need confidence. Starter Pro makes the scope, stack, maintenance, and production intent explicit."
+            />
+
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {trustItems.map((item) => (
+                <FeatureCard key={item.title} {...item} />
+              ))}
+            </div>
+
+            <Card className="mt-6 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    Built with the stack developers already trust
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Modern SaaS foundations using familiar production
+                    tools.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {stackItems.map((item) => (
+                    <Pill key={item}>{item}</Pill>
+                  ))}
+                </div>
               </div>
+            </Card>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 rounded-[5px] text-sm font-medium"
+              >
+                <Link href={INTERNAL.changelog}>View changelog</Link>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 rounded-[5px] text-sm font-medium"
+              >
+                <Link href={INTERNAL.roadmap}>View roadmap</Link>
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <SectionHeading
+                align="left"
+                eyebrow="Free vs Pro"
+                title="Starter Free validates the surface. Starter Pro wires the business."
+                description="Use Free to explore product UX. Move to Pro when auth, billing, protected architecture, and database foundations become the bottleneck."
+              />
 
               <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
                 <table className="w-full border-collapse text-left text-sm">
@@ -488,7 +634,9 @@ export default function StarterProPage() {
                             'border-b border-border-subtle',
                         )}
                       >
-                        <td className="px-5 py-4">{row.label}</td>
+                        <td className="px-5 py-4 font-medium">
+                          {row.label}
+                        </td>
 
                         <td className="px-5 py-4 text-muted-foreground">
                           {row.free}
@@ -504,20 +652,26 @@ export default function StarterProPage() {
               </div>
             </div>
 
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-col items-center gap-3">
               <BuyStarterProButton
                 fullWidth={false}
                 label={`Move to Starter Pro — ${launchPrice}`}
               />
+              <p className="max-w-xl text-center text-xs leading-6 text-muted-foreground">
+                Choose Pro when the cost of rebuilding the foundation
+                is higher than the price of skipping it.
+              </p>
             </div>
           </div>
         </Container>
       </section>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-3xl">
-            <Card className="rounded-[5px] border border-pro-border bg-pro-surface shadow-medium">
+            <Card className="relative overflow-hidden rounded-[5px] border border-pro-border bg-pro-surface shadow-medium">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
+
               <CardHeader className="space-y-6 pb-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
@@ -531,7 +685,7 @@ export default function StarterProPage() {
                   </div>
 
                   <Badge className="rounded-[5px]">
-                    Best launch offer
+                    Best launch path
                   </Badge>
                 </div>
 
@@ -543,7 +697,7 @@ export default function StarterProPage() {
                   <div className="pb-1 text-sm text-muted-foreground">
                     <span className="mr-2 line-through">
                       {regularPrice}
-                    </span>
+                    </span>{' '}
                     one-time payment
                   </div>
                 </div>
@@ -557,14 +711,23 @@ export default function StarterProPage() {
                   <CheckItem>
                     Protected architecture included
                   </CheckItem>
+                  <CheckItem>
+                    Prisma + PostgreSQL foundation
+                  </CheckItem>
                   <CheckItem>Commercial usage rights</CheckItem>
-                  <CheckItem>Launch-ready SaaS baseline</CheckItem>
                 </ul>
 
-                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 text-sm text-muted-foreground">
-                  One-time payment. Instant delivery after purchase.
-                  Built for developers who want to stop rebuilding
-                  SaaS infrastructure repeatedly.
+                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 text-sm leading-7 text-muted-foreground">
+                  Current launch price:{' '}
+                  <span className="font-medium text-foreground">
+                    {launchPrice}
+                  </span>
+                  . Regular price planned at{' '}
+                  <span className="font-medium text-foreground">
+                    {regularPrice}
+                  </span>
+                  . One-time payment with instant delivery after
+                  purchase.
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
@@ -579,25 +742,45 @@ export default function StarterProPage() {
                     size="lg"
                     className="h-11 rounded-[5px] px-6 text-sm font-medium"
                   >
-                    <Link href="/docs/starter-pro">Read docs</Link>
+                    <Link href={INTERNAL.docsStarterPro}>
+                      Read docs
+                    </Link>
                   </Button>
                 </div>
               </CardContent>
             </Card>
+
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              Legal scope and usage terms are governed by{' '}
+              <Link
+                href={INTERNAL.license}
+                className="underline underline-offset-4"
+              >
+                /license
+              </Link>{' '}
+              and{' '}
+              <Link
+                href={INTERNAL.terms}
+                className="underline underline-offset-4"
+              >
+                /terms
+              </Link>
+              .
+            </p>
           </div>
         </Container>
       </section>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 sm:py-16 lg:py-20">
+        <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
             <SectionHeading
               eyebrow="FAQ"
               title="Questions buyers ask before paying"
-              description="Reduce friction. Increase trust. Make the decision easier."
+              description="Reduce friction, increase trust, and make the decision easier before checkout."
             />
 
-            <div className="mt-12 space-y-4">
+            <div className="mt-12 grid gap-4 lg:grid-cols-2">
               {faqs.map((faq) => (
                 <Card
                   key={faq.question}
@@ -620,26 +803,33 @@ export default function StarterProPage() {
       </section>
 
       <section>
-        <Container className="py-16 sm:py-16 lg:py-24">
+        <Container className="py-16 lg:py-24">
           <div className="mx-auto max-w-6xl rounded-[5px] border border-pro-border bg-pro-surface px-6 py-10 shadow-medium sm:px-10 sm:py-14">
             <div className="mx-auto max-w-3xl text-center">
               <Badge
                 variant="outline"
                 className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
               >
-                Ready to launch
+                Final decision
               </Badge>
 
               <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start from the SaaS foundation that gets you to market
-                faster.
+                Start from the SaaS foundation. Spend your time on the
+                product.
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                Buy Starter Pro and focus your time on product logic,
-                onboarding, growth, and customers instead of
-                rebuilding auth and billing infrastructure again.
+                Buy Starter Pro when authentication, billing,
+                protected routes, and SaaS infrastructure should
+                already be handled.
               </p>
+
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                <Pill>Launch price {launchPrice}</Pill>
+                <Pill>One-time payment</Pill>
+                <Pill>Instant access</Pill>
+                <Pill>Commercial usage</Pill>
+              </div>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <BuyStarterProButton
@@ -653,7 +843,7 @@ export default function StarterProPage() {
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
-                  <Link href="/starters/free">
+                  <Link href={INTERNAL.starterFree}>
                     Compare with Starter Free
                   </Link>
                 </Button>
