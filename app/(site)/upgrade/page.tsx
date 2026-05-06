@@ -55,13 +55,11 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
-  home: '/',
-  starters: '/starters',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
-  access: '/pricing',
+  pricing: '/pricing',
   license: '/license',
   terms: '/terms',
 } as const;
@@ -201,7 +199,7 @@ const faqs = [
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {children}
     </span>
   );
@@ -223,32 +221,35 @@ function SectionHeader({
   return (
     <div
       className={cn(
-        'mb-6 space-y-3',
+        'mb-8 space-y-3',
         align === 'center'
           ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between',
+          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
       )}
     >
-      <div className="space-y-2">
+      <div className="space-y-3">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
           >
             {eyebrow}
           </Badge>
         ) : null}
+
         <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h2>
+
         {description ? (
-          <p className="text-sm leading-7 text-muted-foreground">
+          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
       </div>
+
       {align === 'left' && action ? (
-        <div className="sm:self-start">{action}</div>
+        <div className="shrink-0">{action}</div>
       ) : null}
     </div>
   );
@@ -256,11 +257,11 @@ function SectionHeader({
 
 function CheckItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border bg-background">
-        <Check className="h-3.5 w-3.5" />
+    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
+      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
+        <Check className="h-3 w-3 text-foreground" />
       </span>
-      <span>{children}</span>
+      <span className="leading-6">{children}</span>
     </li>
   );
 }
@@ -275,13 +276,15 @@ function ValueCard({
   description: string;
 }) {
   return (
-    <Card className="rounded-2xl border">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
       <CardHeader className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-muted/30">
-          <Icon className="h-5 w-5" />
+        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-primary">
+          <Icon className="h-4 w-4" />
         </div>
+
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
+
       <CardContent>
         <p className="text-sm leading-7 text-muted-foreground">
           {description}
@@ -299,9 +302,12 @@ function FaqCard({
   answer: string;
 }) {
   return (
-    <Card className="rounded-2xl border p-5">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
       <div className="space-y-2">
-        <div className="text-sm font-medium">{question}</div>
+        <div className="text-sm font-medium text-foreground">
+          {question}
+        </div>
+
         <p className="text-sm leading-7 text-muted-foreground">
           {answer}
         </p>
@@ -325,6 +331,12 @@ export default function UpgradePage() {
             {
               label: `Launch offer ${PRICING.launch}`,
               variant: 'outline',
+              icon: (
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
             },
           ]}
           title="Your UI is no longer the bottleneck."
@@ -336,11 +348,12 @@ export default function UpgradePage() {
                 fullWidth={false}
                 label={`Buy Starter Pro — ${PRICING.launch}`}
               />
+
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-11 rounded-xl px-6 text-sm font-medium"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href={INTERNAL.docsStarterPro}>
                   Read Starter Pro docs
@@ -355,33 +368,33 @@ export default function UpgradePage() {
             'Plan gating foundations',
             'Faster time-to-revenue',
           ]}
-          extraClassName="mx-auto max-w-5xl"
-          extra={undefined}
         />
 
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Core message"
             title="Starter Free proves the surface. Starter Pro wires the business."
-            description="This page should not read like a feature dump. It should make the buying decision obvious: stay on Free when you are still exploring, upgrade to Pro when the cost of wiring auth and billing yourself becomes higher than the price of the product."
+            description="Stay on Free when you are still exploring. Upgrade to Pro when the cost of wiring auth, billing, and protected flows yourself becomes higher than the price of the product."
             align="center"
           />
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             <ValueCard
               icon={Zap}
               title="Reduce time-to-revenue"
-              description="The point of the upgrade is not more interface polish. It is removing the repeated work that stands between your product and its first paying users."
+              description="The upgrade is not about adding more interface polish. It removes the repeated work that stands between your product and its first paying users."
             />
+
             <ValueCard
               icon={Shield}
               title="Launch with more confidence"
-              description="Authentication, billing, security-sensitive flows, and protected app patterns are the layers that create launch anxiety when they are still incomplete."
+              description="Authentication, billing, security-sensitive flows, and protected app patterns create launch anxiety when they are still incomplete."
             />
+
             <ValueCard
               icon={Sparkles}
-              title="Focus on what actually differentiates you"
-              description="Your value is in your product, your workflow, your insight, and your positioning. Not in spending more weekends rebuilding OAuth and checkout flows."
+              title="Focus on what differentiates you"
+              description="Your value is in your product, workflow, insight, and positioning — not in spending weekends rebuilding OAuth and checkout flows."
             />
           </div>
         </section>
@@ -389,14 +402,14 @@ export default function UpgradePage() {
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="What you unlock"
-            title="The upgrade gives you the layers that usually slow serious SaaS launches down"
+            title="The layers that usually slow serious SaaS launches down"
             description="Starter Pro is valuable because it removes expensive implementation work in the areas that are hardest to get right quickly."
             action={
               <Button
                 asChild
                 size="sm"
                 variant="outline"
-                className={focusRing}
+                className={cn('rounded-[5px]', focusRing)}
               >
                 <Link href={INTERNAL.docsBackend}>
                   Explore technical docs
@@ -405,7 +418,7 @@ export default function UpgradePage() {
             }
           />
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {included.map((item) => (
               <ValueCard
                 key={item.title}
@@ -421,20 +434,22 @@ export default function UpgradePage() {
           <SectionHeader
             eyebrow="Already built"
             title="This is not a promise page. Core foundations already exist."
-            description="Ultra-conversion requires credibility. Show that Starter Pro is not speculative: major pieces are already implemented."
+            description="Ultra-conversion requires credibility. Starter Pro should feel like leverage, not risk."
           />
 
-          <Card className="rounded-[28px] border p-6 sm:p-7">
-            <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
               <div>
-                <div className="mb-4 flex items-center gap-2">
-                  <Badge variant="outline" className="rounded-full">
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="rounded-[5px]">
                     Implemented
                   </Badge>
+
                   <p className="text-sm font-medium">
                     Production-critical systems already in place
                   </p>
                 </div>
+
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {proofPoints.map((item) => (
                     <CheckItem key={item}>{item}</CheckItem>
@@ -442,26 +457,28 @@ export default function UpgradePage() {
                 </ul>
               </div>
 
-              <div className="rounded-2xl border bg-muted/20 p-5">
+              <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-5">
                 <h3 className="text-base font-medium">
                   What this means for the buyer
                 </h3>
+
                 <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
                   <p>
                     You are not buying a vague roadmap. You are buying
                     an accelerator for the exact layers that
                     repeatedly delay SaaS launches.
                   </p>
+
                   <p>
                     The upgrade is credible because the foundation is
                     already there: auth flows, billing flows,
                     subscription state, invoices, rate limiting,
-                    protected app architecture, and the product
-                    structure needed to extend it.
+                    protected app architecture, and product structure.
                   </p>
+
                   <p>
                     This reduces purchase anxiety and makes the offer
-                    feel like leverage, not risk.
+                    feel like leverage.
                   </p>
                 </div>
               </div>
@@ -472,14 +489,14 @@ export default function UpgradePage() {
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Free vs Pro"
-            title="Keep Free for exploration. Choose Pro when you want a shorter path to revenue."
+            title="Keep Free for exploration. Choose Pro for a shorter path to revenue."
             description="Do not frame Pro as more stuff. Frame it as less friction, less uncertainty, and less repeated engineering work."
             action={
               <Button
                 asChild
                 size="sm"
                 variant="outline"
-                className={focusRing}
+                className={cn('rounded-[5px]', focusRing)}
               >
                 <Link href={INTERNAL.starterFree}>
                   Open Starter Free
@@ -488,7 +505,7 @@ export default function UpgradePage() {
             }
           />
 
-          <Card className="rounded-[28px] border p-4 sm:p-6">
+          <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface p-2 shadow-soft sm:p-4">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -503,15 +520,18 @@ export default function UpgradePage() {
                   </TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
                 {comparisonRows.map((row) => (
                   <TableRow key={row.capability}>
                     <TableCell className="font-medium">
                       {row.capability}
                     </TableCell>
+
                     <TableCell className="text-muted-foreground">
                       {row.free}
                     </TableCell>
+
                     <TableCell className="text-muted-foreground">
                       {row.pro}
                     </TableCell>
@@ -531,19 +551,23 @@ export default function UpgradePage() {
           />
 
           <div className="mx-auto max-w-3xl">
-            <Card className="rounded-[28px] border-2 shadow-xl shadow-black/5">
-              <CardHeader className="space-y-5 pb-6">
+            <Card className="relative overflow-hidden rounded-[5px] border border-primary/30 bg-surface p-6 shadow-medium sm:p-7">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+              <CardHeader className="space-y-5 px-0 pt-0">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-xl font-semibold">
                       Upgrade to Starter Pro
                     </p>
+
                     <p className="mt-1 text-sm text-muted-foreground">
                       The fastest path from product-shaped starter to
                       a monetizable SaaS baseline.
                     </p>
                   </div>
-                  <Badge className="rounded-full px-3 py-1 text-xs font-medium">
+
+                  <Badge className="rounded-[5px] px-3 py-1 text-xs font-medium">
                     Launch offer
                   </Badge>
                 </div>
@@ -552,6 +576,7 @@ export default function UpgradePage() {
                   <span className="text-4xl font-semibold tracking-tight sm:text-5xl">
                     {PRICING.launch}
                   </span>
+
                   <div className="pb-1 text-sm text-muted-foreground">
                     <span className="mr-2 line-through">
                       {PRICING.regular}
@@ -561,12 +586,13 @@ export default function UpgradePage() {
                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-8">
+              <CardContent className="space-y-8 px-0 pb-0">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border p-4">
+                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                     <p className="text-sm font-medium">
                       What you get
                     </p>
+
                     <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                       <li>Real auth foundations</li>
                       <li>Real Stripe billing</li>
@@ -575,10 +601,11 @@ export default function UpgradePage() {
                     </ul>
                   </div>
 
-                  <div className="rounded-2xl border p-4">
+                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                     <p className="text-sm font-medium">
                       What you avoid
                     </p>
+
                     <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                       <li>Rebuilding OAuth and sessions</li>
                       <li>Rewiring Checkout and webhooks</li>
@@ -591,14 +618,15 @@ export default function UpgradePage() {
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <BuyStarterProButton
                     fullWidth={false}
-                    label="Buy Starter Pro now"
+                    label={`Buy Starter Pro — ${PRICING.launch}`}
                   />
+
                   <Button
                     asChild
                     size="lg"
                     variant="outline"
                     className={cn(
-                      'h-11 rounded-xl px-6 text-sm font-medium',
+                      'h-11 rounded-[5px] px-6 text-sm font-medium',
                       focusRing,
                     )}
                   >
@@ -637,25 +665,30 @@ export default function UpgradePage() {
         </section>
 
         <section className="pt-4">
-          <Card className="rounded-[32px] border bg-card px-6 py-8 shadow-lg shadow-black/5 sm:px-8 sm:py-10">
+          <Card className="relative overflow-hidden rounded-[5px] border border-primary/30 bg-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-2xl space-y-3">
                 <Badge
                   variant="outline"
-                  className="rounded-full px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+                  className="rounded-[5px] border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
                 >
                   Final CTA
                 </Badge>
+
                 <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
                   Start with Free. Upgrade when building the business
                   layer starts wasting your time.
                 </h2>
+
                 <p className="text-sm leading-7 text-muted-foreground">
                   Starter Free is still the right move when you are
                   exploring. Starter Pro is the right move when you
                   are serious about launching and do not want auth and
                   billing to keep delaying the business.
                 </p>
+
                 <div className="flex flex-wrap gap-2">
                   <Pill>Revenue-focused upgrade</Pill>
                   <Pill>Production-ready baseline</Pill>
@@ -663,13 +696,16 @@ export default function UpgradePage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 sm:min-w-[240px]">
-                <BuyStarterProButton label="Upgrade to Starter Pro" />
+              <div className="flex flex-col gap-3 sm:min-w-60">
+                <BuyStarterProButton
+                  label={`Upgrade to Starter Pro — ${PRICING.launch}`}
+                />
+
                 <Button
                   asChild
                   variant="outline"
                   className={cn(
-                    'h-11 rounded-xl text-sm font-medium',
+                    'h-11 rounded-[5px] text-sm font-medium',
                     focusRing,
                   )}
                 >
@@ -684,7 +720,7 @@ export default function UpgradePage() {
           <p className="mt-4 text-center text-xs text-muted-foreground">
             Legal scope and usage terms are governed by{' '}
             <Link
-              href={INTERNAL.access}
+              href={INTERNAL.pricing}
               className="underline underline-offset-4"
             >
               /pricing

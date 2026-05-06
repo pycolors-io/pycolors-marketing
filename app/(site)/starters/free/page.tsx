@@ -7,10 +7,8 @@ import {
   Check,
   ExternalLink,
   LayoutTemplate,
-  Lock,
   Rocket,
   Sparkles,
-  Zap,
 } from 'lucide-react';
 
 import {
@@ -60,11 +58,9 @@ const EXTERNAL = {
 
 const INTERNAL = {
   docs: '/docs/starter',
-  pricing: '/pricing',
   starterPro: '/starters/pro',
   guides: '/guides',
   patterns: '/ui/patterns',
-  examples: '/examples',
   docsUpgrade: '/docs/starter/upgrade',
 } as const;
 
@@ -72,6 +68,7 @@ const productSurfaces = [
   {
     title: '/login + /register',
     badge: 'Auth UX',
+    image: '/images/starters/free/free-auth-pycolors.png',
     subtitle:
       'Production-shaped authentication screens that help your SaaS feel credible before real auth is wired.',
     points: [
@@ -85,6 +82,7 @@ const productSurfaces = [
   {
     title: '/dashboard',
     badge: 'Product credibility',
+    image: '/images/starters/free/free-dashboard-page-pycolors.png',
     subtitle:
       'A structured dashboard designed to communicate product value immediately.',
     points: [
@@ -98,6 +96,7 @@ const productSurfaces = [
   {
     title: '/projects',
     badge: 'CRUD surface',
+    image: '/images/starters/free/free-projects-pycolors.png',
     subtitle:
       'Reusable CRUD patterns adapted to modern SaaS products and internal tools.',
     points: ['Tables', 'Dialogs', 'Actions', 'Entity flows'],
@@ -106,6 +105,7 @@ const productSurfaces = [
   {
     title: '/settings',
     badge: 'Trust',
+    image: '/images/starters/free/free-settings-pycolors.png',
     subtitle:
       'Settings surfaces that make your product feel mature and account-ready.',
     points: [
@@ -119,6 +119,7 @@ const productSurfaces = [
   {
     title: '/billing',
     badge: 'Monetization',
+    image: '/images/starters/free/free-billing-pycolors.png',
     subtitle:
       'Billing entrypoints designed before Stripe wiring, so the paid path is visible early.',
     points: [
@@ -132,6 +133,7 @@ const productSurfaces = [
   {
     title: '/admin',
     badge: 'B2B-ready',
+    image: '/images/starters/free/free-admin-pycolors.png',
     subtitle:
       'Team and member management surfaces for B2B SaaS credibility.',
     points: [
@@ -208,15 +210,37 @@ function SurfaceCard({
   badge,
   points,
   href,
+  image,
 }: {
   readonly title: string;
   readonly subtitle: string;
   readonly badge: string;
   readonly points: readonly string[];
   readonly href: string;
+  readonly image: string;
 }) {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border">
+    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated">
+      <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-medium text-foreground">
+            {title}
+          </p>
+
+          <span className="text-[11px] text-muted-foreground">
+            {badge}
+          </span>
+        </div>
+      </div>
+      <div className="relative aspect-16/10 overflow-hidden border-b border-border-subtle bg-background">
+        <Image
+          src={image}
+          alt={`${title} surface preview`}
+          fill
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </div>
       <CardContent className="p-6">
         <div className="space-y-5">
           <div className="flex flex-wrap items-center gap-2">
@@ -359,19 +383,24 @@ export default function StarterFreePage() {
                       </div>
 
                       <div className="rounded-[5px] border border-border-subtle px-3 py-1 text-[11px] text-muted-foreground">
-                        Starter Free preview
+                        Starter Free product surface
                       </div>
                     </div>
                   </div>
 
-                  <div className="relative aspect-video w-full bg-background">
+                  <div className="group relative aspect-video w-full overflow-hidden bg-background">
                     <Image
-                      src="/images/starters/starter-free-hero-pycolors.png"
-                      alt="Starter Free preview"
+                      src="/images/starters/free/starter-free-pycolors-hero.png"
+                      alt="Starter Free SaaS product surface preview"
                       fill
                       priority
-                      className="object-cover object-top"
+                      sizes="(min-width: 1024px) 960px, 100vw"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.012]"
                     />
+
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.12),transparent_35%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/50 to-transparent" />
                   </div>
                 </div>
               </div>
@@ -531,6 +560,7 @@ export default function StarterFreePage() {
                 subtitle={surface.subtitle}
                 points={surface.points}
                 href={surface.href}
+                image={surface.image}
               />
             ))}
           </div>

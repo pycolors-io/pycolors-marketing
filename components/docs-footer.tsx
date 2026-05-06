@@ -30,9 +30,9 @@ const GROUPS: Array<{
     links: [
       { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starter Pro', href: '/starters/pro' },
+      { label: 'Upgrade', href: '/upgrade' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'UI Library', href: '/ui' },
-      { label: 'Compare Starters', href: '/starters' },
+      { label: 'Starters', href: '/starters' },
     ],
   },
   {
@@ -40,15 +40,23 @@ const GROUPS: Array<{
     links: [
       { label: 'Docs', href: '/docs' },
       { label: 'Guides', href: '/guides' },
+      { label: 'UI Library', href: '/ui' },
       { label: 'Patterns', href: '/ui/patterns' },
       { label: 'Blog', href: '/blog' },
     ],
   },
   {
-    title: 'Trust',
+    title: 'Company',
     links: [
+      { label: 'About', href: '/about' },
+      { label: 'Open Source', href: '/open-source' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
       { label: 'License', href: '/license' },
       { label: 'Terms', href: '/terms' },
       { label: 'Privacy', href: '/privacy' },
@@ -130,7 +138,7 @@ export function DocsFooter() {
                 </nav>
               </div>
 
-              <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
                 {GROUPS.map((group) => (
                   <div key={group.title} className="space-y-3">
                     <div className="text-sm font-medium text-foreground">
