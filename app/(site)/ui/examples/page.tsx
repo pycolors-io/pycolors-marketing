@@ -299,7 +299,6 @@ function AvailableNowCard() {
 function ExampleDirectionCard({
   title,
   description,
-  tag,
   category,
   icon: Icon,
 }: ExampleDirection) {
