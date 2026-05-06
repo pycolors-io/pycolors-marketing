@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
+  Check,
   ExternalLink,
   Eye,
   Sparkles,
@@ -80,6 +81,8 @@ const INTERNAL = {
   privacy: '/privacy',
 } as const;
 
+const launchPrice = '199 €';
+
 const starterSurfaces = [
   {
     title: '/login + /register',
@@ -113,7 +116,31 @@ const starterSurfaces = [
   },
 ] as const;
 
-function Stat({ label, value }: { label: string; value: string }) {
+const trustItems = [
+  {
+    title: 'Clear product scope',
+    description:
+      'Starter Free validates the SaaS surface. Starter Pro wires real auth, billing, protected routes, and backend foundations.',
+  },
+  {
+    title: 'Built with trusted tools',
+    description:
+      'Next.js App Router, TypeScript, Tailwind, Prisma, PostgreSQL, Stripe, and Vercel-oriented foundations.',
+  },
+  {
+    title: 'Documentation-first',
+    description:
+      'Guides, patterns, examples, docs, changelog, and roadmap support the product instead of leaving buyers guessing.',
+  },
+] as const;
+
+function Stat({
+  label,
+  value,
+}: {
+  readonly label: string;
+  readonly value: string;
+}) {
   return (
     <div className="rounded-[5px] border border-border-subtle bg-surface px-4 py-3 shadow-soft">
       <div className="text-xs text-muted-foreground">{label}</div>
@@ -122,7 +149,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Pill({ label }: { label: string }) {
+function Pill({ label }: { readonly label: string }) {
   return (
     <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {label}
@@ -137,11 +164,11 @@ function SectionHeader({
   action,
   align = 'center',
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
-  align?: 'left' | 'center';
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
+  readonly align?: 'left' | 'center';
 }) {
   return (
     <div
@@ -195,13 +222,13 @@ function ProductCard({
   cta,
   highlight = false,
 }: {
-  title: string;
-  description: string;
-  href: string;
-  badge: string;
-  eyebrow: string;
-  cta: string;
-  highlight?: boolean;
+  readonly title: string;
+  readonly description: string;
+  readonly href: string;
+  readonly badge: string;
+  readonly eyebrow: string;
+  readonly cta: string;
+  readonly highlight?: boolean;
 }) {
   return (
     <Card
@@ -254,12 +281,12 @@ function StepCard({
   cta,
   highlight = false,
 }: {
-  step: string;
-  title: string;
-  description: string;
-  href: string;
-  cta: string;
-  highlight?: boolean;
+  readonly step: string;
+  readonly title: string;
+  readonly description: string;
+  readonly href: string;
+  readonly cta: string;
+  readonly highlight?: boolean;
 }) {
   return (
     <Card
@@ -314,7 +341,7 @@ export default function HomePage() {
                 ),
               },
               {
-                label: 'Starter Pro launch offer',
+                label: `Starter Pro ${launchPrice}`,
                 variant: 'outline',
               },
               {
@@ -348,7 +375,7 @@ export default function HomePage() {
                   </Link>
                 </Button>
 
-                <BuyStarterProButton fullWidth={true} />
+                <BuyStarterProButton />
 
                 <Button
                   asChild
@@ -384,7 +411,6 @@ export default function HomePage() {
               </div>
             }
           />
-
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="The ecosystem"
@@ -432,7 +458,6 @@ export default function HomePage() {
               />
             </div>
           </section>
-
           <section className="py-10 sm:py-12">
             <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
               <CardContent className="p-6 sm:p-7">
@@ -470,7 +495,6 @@ export default function HomePage() {
 
                   <div className="space-y-5">
                     <p className="text-sm leading-7 text-muted-foreground">
-                      The homepage should make one thing obvious:
                       PyColors helps builders avoid wasting time on
                       the wrong layer too early. Validate the product
                       first. Pay for the business wiring when the
@@ -518,7 +542,6 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </section>
-
           <section className="py-10 sm:py-12">
             <SectionHeader
               eyebrow="Foundation"
@@ -587,7 +610,6 @@ export default function HomePage() {
               </div>
             </div>
           </section>
-
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Starter Free"
@@ -718,7 +740,6 @@ pnpm dev`}</pre>
               </CardContent>
             </Card>
           </section>
-
           <section
             id="what-you-get"
             className="py-12 sm:py-14 lg:py-16"
@@ -758,6 +779,65 @@ pnpm dev`}</pre>
             </div>
           </section>
 
+          <section className="py-12 sm:py-14 lg:py-16">
+            <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-background shadow-soft">
+              <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+                <div className="border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r">
+                  <div className="flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+
+                    <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                      Built for SaaS products
+                    </span>
+                  </div>
+
+                  <h2 className="mt-5 max-w-lg text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                    Start simple.
+                    <br />
+                    Upgrade when the business layer matters.
+                  </h2>
+
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
+                    PyColors gives developers a clearer path from
+                    product validation to production-ready SaaS
+                    foundations.
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <Pill label="Starter Free" />
+                    <Pill label="Starter Pro" />
+                    <Pill label="Auth" />
+                    <Pill label="Billing" />
+                  </div>
+                </div>
+
+                <div className="divide-y divide-border-subtle">
+                  {trustItems.map((item) => (
+                    <div
+                      key={item.title}
+                      className="px-6 py-5 transition-colors hover:bg-surface-muted/30"
+                    >
+                      <p className="text-sm font-medium text-foreground">
+                        {item.title}
+                      </p>
+
+                      <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 border-t border-border-subtle bg-surface-muted/20 px-6 py-4">
+                <Pill label="Auth.js" />
+                <Pill label="Stripe" />
+                <Pill label="Protected routes" />
+                <Pill label="Docs-first" />
+                <Pill label="Public roadmap" />
+              </div>
+            </Card>
+          </section>
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Upgrade path"
@@ -853,7 +933,6 @@ pnpm dev`}</pre>
               </div>
             </Card>
           </section>
-
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Workflow"
@@ -897,7 +976,6 @@ pnpm dev`}</pre>
               />
             </div>
           </section>
-
           <section className="py-12 sm:py-14 lg:py-16">
             <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
               <CardContent className="p-6 sm:p-7">
@@ -981,7 +1059,6 @@ pnpm dev`}</pre>
               </Button>
             </div>
           </section>
-
           <section className="pt-4">
             <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
@@ -1008,6 +1085,7 @@ pnpm dev`}</pre>
                     <Pill label="Guides first" />
                     <Pill label="Starter Free today" />
                     <Pill label="Starter Pro when ready" />
+                    <Pill label={`Launch price ${launchPrice}`} />
                   </div>
                 </div>
 
@@ -1025,7 +1103,9 @@ pnpm dev`}</pre>
                     </Link>
                   </Button>
 
-                  <BuyStarterProButton />
+                  <BuyStarterProButton
+                    label={`Buy Starter Pro — ${launchPrice}`}
+                  />
                 </div>
               </div>
             </Card>

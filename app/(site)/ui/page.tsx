@@ -2,8 +2,12 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
+  Check,
+  CreditCard,
   ExternalLink,
   Layers3,
+  LayoutDashboard,
+  Lock,
   Rocket,
   Sparkles,
 } from 'lucide-react';
@@ -13,11 +17,12 @@ import { UI_VERSION, formatVersion } from '@/lib/version';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { NpmBadges } from '@/components/npm-badges';
 import { PageHero } from '@/components/marketing/page-hero';
+import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
   title: 'UI | PyColors',
   description:
-    'PyColors UI is a documentation-first design system built to help developers ship real SaaS products faster — with semantic tokens, accessible primitives, and product-shaped UI foundations.',
+    'PyColors UI is a documentation-first design system built to help developers ship real SaaS products faster with semantic tokens, accessible primitives, and product-shaped UI foundations.',
   alternates: { canonical: '/ui' },
   openGraph: {
     title: 'UI | PyColors',
@@ -38,7 +43,9 @@ export const metadata: Metadata = {
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
-function Pill({ label }: { label: string }) {
+const launchPrice = '199 €';
+
+function Pill({ label }: { readonly label: string }) {
   return (
     <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
       {label}
@@ -46,7 +53,28 @@ function Pill({ label }: { label: string }) {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function CheckItem({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
+  return (
+    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
+      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
+        <Check className="h-3 w-3 text-foreground" />
+      </span>
+      <span className="leading-6">{children}</span>
+    </li>
+  );
+}
+
+function Stat({
+  label,
+  value,
+}: {
+  readonly label: string;
+  readonly value: string;
+}) {
   return (
     <div className="rounded-[5px] border border-border-subtle bg-surface px-4 py-4 shadow-soft">
       <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
@@ -65,10 +93,10 @@ function SectionHeader({
   description,
   action,
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
 }) {
   return (
     <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -93,7 +121,9 @@ function SectionHeader({
         ) : null}
       </div>
 
-      {action ? <div className="sm:self-start">{action}</div> : null}
+      {action ? (
+        <div className="shrink-0 sm:self-start">{action}</div>
+      ) : null}
     </div>
   );
 }
@@ -103,9 +133,9 @@ function ValueCard({
   title,
   description,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly title: string;
+  readonly description: string;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft transition-colors hover:border-border">
@@ -135,12 +165,12 @@ function SurfaceCard({
   cta,
   isExternal = false,
 }: {
-  title: string;
-  tag: string;
-  desc: string;
-  href: string;
-  cta: string;
-  isExternal?: boolean;
+  readonly title: string;
+  readonly tag: string;
+  readonly desc: string;
+  readonly href: string;
+  readonly cta: string;
+  readonly isExternal?: boolean;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border">
@@ -161,36 +191,30 @@ function SurfaceCard({
           {desc}
         </p>
 
-        <div>
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="rounded-[5px]"
-          >
-            {isExternal ? (
-              <a
-                href={href}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {cta}
-                <ExternalLink
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-              </a>
-            ) : (
-              <Link href={href}>
-                {cta}
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-              </Link>
-            )}
-          </Button>
-        </div>
+        <Button
+          asChild
+          size="sm"
+          variant="outline"
+          className="rounded-[5px]"
+        >
+          {isExternal ? (
+            <a href={href} target="_blank" rel="noreferrer noopener">
+              {cta}
+              <ExternalLink
+                className="ml-2 h-4 w-4"
+                aria-hidden="true"
+              />
+            </a>
+          ) : (
+            <Link href={href}>
+              {cta}
+              <ArrowRight
+                className="ml-2 h-4 w-4"
+                aria-hidden="true"
+              />
+            </Link>
+          )}
+        </Button>
       </div>
     </Card>
   );
@@ -201,9 +225,9 @@ function ComponentCard({
   desc,
   href,
 }: {
-  name: string;
-  desc: string;
-  href: string;
+  readonly name: string;
+  readonly desc: string;
+  readonly href: string;
 }) {
   return (
     <Link
@@ -240,7 +264,7 @@ const proofPoints = [
   {
     title: 'Built for real product surfaces',
     description:
-      'PyColors UI is designed for auth flows, dashboard states, settings, billing entrypoints, admin patterns, and the screens users actually judge.',
+      'PyColors UI is designed for auth flows, dashboards, settings, billing entrypoints, admin patterns, and the screens users actually judge.',
     icon: Layers3,
   },
   {
@@ -250,9 +274,9 @@ const proofPoints = [
     icon: Sparkles,
   },
   {
-    title: 'A clearer path to launch',
+    title: 'Connected to a SaaS funnel',
     description:
-      'The UI layer gives you speed now. Starter Free proves the product surface. Upgrade helps you decide when the business layer starts to matter.',
+      'Use the UI as the foundation, Starter Free as the product surface, and Starter Pro when auth and billing become the bottleneck.',
     icon: Rocket,
   },
 ] as const;
@@ -302,8 +326,8 @@ const surfaces = [
     title: 'Upgrade moment',
     tag: 'Decision',
     desc: 'Understand when UI stops being enough and when auth, billing, backend, and protected product flows become the real bottleneck.',
-    href: '/upgrade',
-    cta: 'Read upgrade guide',
+    href: '/starters/pro',
+    cta: 'See Starter Pro',
     isExternal: false,
   },
 ] as const;
@@ -348,6 +372,7 @@ export default function UiPage() {
     <Container className="py-18">
       <div className="mx-auto max-w-6xl">
         <PageHero
+          maxWidth="5xl"
           badges={[
             {
               label: `${versionLabel} · stable baseline`,
@@ -366,12 +391,16 @@ export default function UiPage() {
                 />
               ),
             },
+            {
+              label: 'SaaS-oriented',
+              variant: 'outline',
+            },
           ]}
-          title="A premium UI foundation for real SaaS products."
-          subtitle="Start with the interface. Validate the product. Upgrade when wiring starts to matter."
-          description="PyColors UI gives developers a clearer starting point for product-shaped interfaces: accessible primitives, semantic tokens, and documentation that supports real implementation work instead of just showcasing components."
+          title="A UI foundation that leads to real SaaS products."
+          subtitle="Build credible interfaces first. Validate with Starter Free. Upgrade when auth and billing become the bottleneck."
+          description="PyColors UI gives developers a serious foundation for product-shaped interfaces: accessible primitives, semantic tokens, consistent states, and documentation that connects naturally to Starter Free and Starter Pro."
           actions={
-            <>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
               <Button
                 asChild
                 size="lg"
@@ -395,41 +424,22 @@ export default function UiPage() {
                 <Link href="/starters/free">See Starter Free</Link>
               </Button>
 
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/upgrade">
-                  When should I upgrade?
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-            </>
+              <BuyStarterProButton />
+            </div>
           }
           extra={
             <>
               <div className="mx-auto grid w-full max-w-3xl gap-3 sm:grid-cols-3">
                 <Stat label="Current version" value={versionLabel} />
-                <Stat
-                  label="Workflow"
-                  value="UI → Starter Free → Upgrade"
-                />
-                <Stat
-                  label="Positioning"
-                  value="Open source → SaaS system"
-                />
+                <Stat label="Workflow" value="UI → Free → Pro" />
+                <Stat label="Goal" value="SaaS launch path" />
               </div>
 
               <div className="mt-8 flex flex-wrap justify-center gap-2">
                 <Pill label="Semantic tokens" />
                 <Pill label="Accessible primitives" />
-                <Pill label="Product states included" />
-                <Pill label="SaaS-oriented" />
+                <Pill label="Product states" />
+                <Pill label="Starter-ready" />
               </div>
 
               <div className="mt-6 flex justify-center">
@@ -468,38 +478,46 @@ export default function UiPage() {
 
               <div className="space-y-3">
                 <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  A better starting point than rebuilding product UI
-                  from scratch.
+                  The open-source layer that proves the quality of the
+                  whole PyColors ecosystem.
                 </h2>
 
                 <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                  PyColors UI is built for the work that usually gets
-                  repeated badly: states, consistency, accessible
-                  interactions, documentation, and product surfaces
-                  that need to feel credible early.
+                  PyColors UI should make the product feel credible
+                  before the backend is finished. It creates the
+                  visual and interaction baseline used by the docs,
+                  Starter Free, and Starter Pro.
                 </p>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-3">
                 <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                   <p className="text-sm font-medium text-foreground">
-                    Use the UI directly
+                    Use UI directly
                   </p>
                   <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Browse the docs, install the package, copy a
-                    component, and start building the screen you
-                    actually need.
+                    Browse docs, install the package, and build
+                    consistent SaaS interfaces faster.
                   </p>
                 </div>
 
                 <div className="rounded-[5px] border border-platform-border-subtle bg-platform-muted p-4">
                   <p className="text-sm font-medium text-foreground">
-                    See it inside a product
+                    Validate with Free
                   </p>
                   <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Starter Free shows how the UI behaves inside auth
-                    flows, settings, data screens, admin surfaces, and
-                    real product states.
+                    See the UI inside auth flows, settings,
+                    dashboards, billing screens, and admin surfaces.
+                  </p>
+                </div>
+
+                <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
+                  <p className="text-sm font-medium text-foreground">
+                    Upgrade with Pro
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Move to real auth, Stripe billing, protected
+                    routes, Prisma, and launch-ready SaaS foundations.
                   </p>
                 </div>
               </div>
@@ -518,7 +536,7 @@ export default function UiPage() {
           <SectionHeader
             eyebrow="Why this matters"
             title="A UI system should shorten the path to a credible product."
-            description="The value is not just in the components. The value is in moving faster toward something users can trust."
+            description="The value is not only in components. The value is in making the product feel coherent, trustworthy, and ready to evolve."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -531,21 +549,13 @@ export default function UiPage() {
               />
             ))}
           </div>
-
-          <div className="mt-6 text-sm text-muted-foreground">
-            Most developers do not need a full SaaS backend on day
-            one.
-            <br />
-            The real challenge is knowing when the UI is no longer the
-            bottleneck.
-          </div>
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeader
             eyebrow="What you can ship"
-            title="Real product surfaces, not just component demos."
-            description="This is where PyColors becomes more credible than a generic UI kit."
+            title="Real product surfaces, not isolated component demos."
+            description="This is where PyColors becomes more valuable than a generic UI kit: the components are shown inside SaaS flows."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -566,7 +576,7 @@ export default function UiPage() {
         <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeader
             eyebrow="Component proof"
-            title={`A strong baseline in ${versionLabel}`}
+            title={`A stronger baseline in ${versionLabel}`}
             description="Enough depth to start quickly, enough quality to support real product work."
             action={
               <Button
@@ -589,21 +599,89 @@ export default function UiPage() {
               />
             ))}
           </div>
+        </section>
 
-          <div className="mt-5 text-xs text-muted-foreground">
-            Patterns, starters, and future premium product surfaces
-            are tracked through the{' '}
-            <Link
-              href="/roadmap"
-              className={cn(
-                'rounded-[5px] underline underline-offset-4 hover:text-foreground',
-                focusRing,
-              )}
-            >
-              roadmap
-            </Link>
-            .
-          </div>
+        <section className="py-14 sm:py-16 lg:py-20">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-7 shadow-soft sm:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+              <div className="space-y-4">
+                <Badge
+                  variant="outline"
+                  className="rounded-[5px] border-success-border-subtle bg-success-muted"
+                >
+                  Conversion path
+                </Badge>
+
+                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                  UI gives trust. Starter Free validates. Starter Pro
+                  launches.
+                </h2>
+
+                <p className="text-sm leading-7 text-muted-foreground">
+                  The page should not stop at open source. It should
+                  make the commercial path obvious without forcing the
+                  buyer too early.
+                </p>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
+                  <Layers3 className="h-4 w-4 text-muted-foreground" />
+                  <p className="mt-4 text-sm font-medium">
+                    1. Build UI
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Use primitives, tokens, docs, and product
+                    patterns.
+                  </p>
+                </div>
+
+                <div className="rounded-[5px] border border-success-border-subtle bg-success-muted p-4">
+                  <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
+                  <p className="mt-4 text-sm font-medium">
+                    2. Validate UX
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Use Starter Free to test dashboards, settings, and
+                    flows.
+                  </p>
+                </div>
+
+                <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
+                  <CreditCard className="h-4 w-4 text-muted-foreground" />
+                  <p className="mt-4 text-sm font-medium">
+                    3. Launch Pro
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Buy Pro when auth, billing, and protected routes
+                    block launch.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row ">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+                <Button asChild className="h-11 rounded-[5px] px-6">
+                  <Link href="/docs/ui">
+                    Browse components
+                    <ArrowRight
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-11 rounded-[5px] px-6"
+                >
+                  <Link href="/starters/free">Open Starter Free</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
@@ -618,24 +696,26 @@ export default function UiPage() {
                 </Badge>
 
                 <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Build the UI first. Decide later when to upgrade.
+                  Start with UI. Move to Pro when the business layer
+                  becomes the blocker.
                 </h2>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  PyColors UI is the foundation. Starter Free proves
-                  the experience. Upgrade helps you decide when the
-                  business layer becomes the real blocker.
+                  PyColors UI creates the product language. Starter
+                  Pro turns that product surface into a stronger SaaS
+                  baseline with real authentication, Stripe billing,
+                  and protected architecture.
                 </p>
 
-                <div className="flex flex-wrap gap-2">
-                  <Pill label="Docs-first" />
-                  <Pill label="Open source" />
-                  <Pill label="Product-oriented" />
-                  <Pill label="Launch-aware" />
-                </div>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  <CheckItem>Real authentication in Pro</CheckItem>
+                  <CheckItem>Stripe billing in Pro</CheckItem>
+                  <CheckItem>Protected routes in Pro</CheckItem>
+                  <CheckItem>Prisma foundation in Pro</CheckItem>
+                </ul>
               </div>
 
-              <div className="flex flex-col gap-3 lg:min-w-[260px]">
+              <div className="flex flex-col gap-3 lg:min-w-65">
                 <Button asChild className="rounded-[5px]">
                   <Link href="/docs/ui">
                     Browse components
@@ -656,13 +736,9 @@ export default function UiPage() {
                   </Link>
                 </Button>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  className="rounded-[5px]"
-                >
-                  <Link href="/upgrade">See Upgrade</Link>
-                </Button>
+                <BuyStarterProButton
+                  label={`Buy Starter Pro — ${launchPrice}`}
+                />
               </div>
             </div>
           </Card>
