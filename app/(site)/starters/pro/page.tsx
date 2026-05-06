@@ -65,6 +65,7 @@ const INTERNAL = {
   pricing: '/pricing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
+  docsAuth: '/docs/starter-pro/auth',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
   changelog: '/changelog',
@@ -72,6 +73,30 @@ const INTERNAL = {
   license: '/license',
   terms: '/terms',
 } as const;
+
+const screenshots = [
+  {
+    title: 'Authentication flow',
+    description:
+      'Real sign-in, account access, verification, and protected session flows.',
+    image: '/images/starters/pro-auth-pycolors.png',
+    href: INTERNAL.docsAuth,
+  },
+  {
+    title: 'Billing foundation',
+    description:
+      'Stripe-oriented pricing, billing states, invoices, and customer portal entrypoints.',
+    image: '/images/starters/pro-billing-pycolors.png',
+    href: INTERNAL.docsBilling,
+  },
+  {
+    title: 'Protected app surface',
+    description:
+      'Dashboard, settings, account areas, and protected product structure.',
+    image: '/images/starters/pro-dashboard-pycolors.png',
+    href: INTERNAL.docsBackend,
+  },
+] as const;
 
 const coreFeatures = [
   {
@@ -371,6 +396,65 @@ function FeatureCard({
   );
 }
 
+function ScreenshotCard({
+  title,
+  description,
+  image,
+  href,
+}: {
+  readonly title: string;
+  readonly description: string;
+  readonly image: string;
+  readonly href: string;
+}) {
+  return (
+    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated">
+      <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-medium text-foreground">
+            {title}
+          </p>
+
+          <span className="text-[11px] text-muted-foreground">
+            Pro surface
+          </span>
+        </div>
+      </div>
+
+      <div className="relative aspect-16/10 overflow-hidden border-b border-border-subtle bg-background">
+        <Image
+          src={image}
+          alt={`${title} screenshot`}
+          fill
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
+          sizes="(min-width: 1024px) 33vw, 100vw"
+        />
+      </div>
+
+      <CardContent className="space-y-4 p-5">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-foreground">
+            {title}
+          </p>
+
+          <p className="text-sm leading-7 text-muted-foreground">
+            {description}
+          </p>
+        </div>
+
+        <Button
+          asChild
+          size="sm"
+          variant="outline"
+          className="rounded-[5px]"
+        >
+          <Link href={href}>View implementation details</Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
@@ -454,19 +538,24 @@ export default function StarterProPage() {
                         </div>
 
                         <span className="text-[11px] text-muted-foreground">
-                          Production SaaS preview
+                          Protected SaaS foundation
                         </span>
                       </div>
                     </div>
 
-                    <div className="relative aspect-video overflow-hidden bg-background">
+                    <div className="group relative aspect-video overflow-hidden bg-background">
                       <Image
-                        src="/images/starters/starter-pro-hero-pycolors.png"
-                        alt="Starter Pro dashboard preview"
+                        src="/images/starters/starter-pro-pycolors-hero.png"
+                        alt="Starter Pro protected SaaS dashboard preview"
                         fill
                         priority
-                        className="object-cover object-top"
+                        sizes="(min-width: 1024px) 960px, 100vw"
+                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.012]"
                       />
+
+                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.14),transparent_35%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/50 to-transparent" />
                     </div>
                   </div>
                 </div>
@@ -488,6 +577,30 @@ export default function StarterProPage() {
             <div className="mt-12 grid gap-4 md:grid-cols-2">
               {coreFeatures.map((feature) => (
                 <FeatureCard key={feature.title} {...feature} />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Product proof"
+              title="Focused screenshots for the business layer."
+              description="Starter Pro should not feel like a screenshot gallery. It shows the surfaces that matter most when a SaaS becomes real: auth, billing, and protected application structure."
+            />
+
+            <div className="mt-12 grid gap-4 lg:grid-cols-3">
+              {screenshots.map((screenshot) => (
+                <ScreenshotCard
+                  key={screenshot.title}
+                  title={screenshot.title}
+                  description={screenshot.description}
+                  image={screenshot.image}
+                  href={screenshot.href}
+                />
               ))}
             </div>
           </div>
