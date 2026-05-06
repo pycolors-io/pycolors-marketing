@@ -1022,13 +1022,13 @@ const CHANGELOG: ChangelogItem[] = [
 function StatusPill({ status }: { status: ChangelogStatus }) {
   const tone =
     status === 'Stable'
-      ? 'bg-success'
+      ? 'bg-primary'
       : status === 'Beta'
-        ? 'bg-warning'
+        ? 'bg-primary/70'
         : 'bg-muted-foreground';
 
   return (
-    <Badge variant="secondary" className="gap-2">
+    <Badge variant="outline" className="gap-2 rounded-[5px]">
       <span
         className={cn('inline-flex h-1.5 w-1.5 rounded-full', tone)}
       />
@@ -1040,13 +1040,11 @@ function StatusPill({ status }: { status: ChangelogStatus }) {
 function TimelineDot() {
   return (
     <div className="relative flex h-9 w-9 items-center justify-center">
-      <div className="absolute inset-0 rounded-full border bg-card shadow-sm" />
-      <div className="relative rounded-full border bg-background p-1.5">
-        <CheckCircle2
-          className="h-4 w-4 text-foreground"
-          aria-hidden="true"
-        />
-      </div>
+      <div className="absolute inset-0 rounded-[5px] border border-border-subtle bg-surface shadow-soft" />
+      <CheckCircle2
+        className="relative h-4 w-4 text-primary"
+        aria-hidden="true"
+      />
     </div>
   );
 }
@@ -1064,10 +1062,13 @@ export default function ChangelogPage() {
           />
         </div>
 
-        <header className="mx-auto w-full max-w-4xl text-center">
+        <header className="mx-auto max-w-4xl text-center">
           <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+            <Badge
+              variant="secondary"
+              className="gap-2 rounded-[5px]"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               Ecosystem updates
             </Badge>
           </div>
@@ -1076,51 +1077,58 @@ export default function ChangelogPage() {
             Changelog
           </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
             Product updates across PyColors: UI, Starters, Templates,
-            docs, and commercial product growth. Clear versions,
-            stable conventions, and documentation-first releases.
+            docs, and commercial product growth.
           </p>
 
-          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
             Changelog entries reflect shipped work and public-facing
-            release notes. For future direction, packaging, pricing,
-            or launch intent, use the roadmap, access, and upgrade
-            pages.
+            release notes. For future direction, use the roadmap and
+            pricing pages.
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button asChild>
+            <Button asChild className="rounded-[5px]">
               <Link href="/docs">Read the docs</Link>
             </Button>
-            <Button asChild variant="outline">
+
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-[5px]"
+            >
               <Link href="/roadmap">View roadmap</Link>
             </Button>
-            <Button asChild variant="outline">
+
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-[5px]"
+            >
               <Link href="/pricing">View pricing</Link>
             </Button>
           </div>
         </header>
 
         <section className="mx-auto mt-10 w-full">
-          <div className="rounded-2xl border bg-muted/20 p-4 sm:p-5">
-            <p className="text-sm text-muted-foreground">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
+            <p className="text-sm leading-7 text-muted-foreground">
               <span className="font-medium text-foreground">
-                Release philosophy
+                Release philosophy.
               </span>{' '}
               PyColors ships in public through release-driven
               iterations. The changelog records shipped work. The
-              roadmap tracks priority direction. The access and
-              upgrade pages define the premium path more clearly than
-              the changelog does.
+              roadmap tracks direction. Pricing defines the commercial
+              path.
             </p>
-          </div>
+          </Card>
         </section>
 
         <section className="mx-auto mt-10 w-full max-w-6xl">
           <div className="relative">
             <div
-              className="absolute left-4 top-0 h-full w-px bg-border/70 sm:left-[18px]"
+              className="absolute left-4 top-0 h-full w-px bg-border-subtle sm:left-[18px]"
               aria-hidden="true"
             />
 
@@ -1134,41 +1142,36 @@ export default function ChangelogPage() {
                     <TimelineDot />
                   </div>
 
-                  <Card className="overflow-hidden">
-                    <CardHeader className="border-b bg-card/60">
-                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                        <div className="space-y-2">
+                  <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+                    <CardHeader className="border-b border-border-subtle bg-surface-muted">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="space-y-3">
                           <div className="flex flex-wrap items-center gap-2">
                             <Badge
                               variant="secondary"
-                              className="font-medium"
+                              className="rounded-[5px] font-medium"
                             >
                               {entry.version}
                             </Badge>
+
                             <StatusPill status={entry.status} />
                           </div>
 
-                          <div className="space-y-1">
+                          <div className="space-y-2">
                             <h2 className="font-brand text-xl font-semibold tracking-tight">
                               {entry.title}
                             </h2>
 
                             <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                               <span className="inline-flex items-center gap-1.5">
-                                <Calendar
-                                  className="h-4 w-4"
-                                  aria-hidden="true"
-                                />
+                                <Calendar className="h-4 w-4" />
                                 <time dateTime={entry.dateISO}>
                                   {entry.dateLabel}
                                 </time>
                               </span>
 
                               <span className="inline-flex items-center gap-1.5">
-                                <Tag
-                                  className="h-4 w-4"
-                                  aria-hidden="true"
-                                />
+                                <Tag className="h-4 w-4" />
                                 {entry.releaseWeekLabel}
                               </span>
                             </div>
@@ -1179,14 +1182,11 @@ export default function ChangelogPage() {
                           <Button
                             asChild
                             variant="outline"
-                            className="sm:mt-1"
+                            className="rounded-[5px] sm:mt-1"
                           >
                             <Link href={entry.cta.href}>
                               {entry.cta.label}
-                              <ArrowRight
-                                className="ml-2 h-4 w-4"
-                                aria-hidden="true"
-                              />
+                              <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                           </Button>
                         ) : null}
@@ -1194,7 +1194,7 @@ export default function ChangelogPage() {
                     </CardHeader>
 
                     <CardContent className="space-y-6 p-6">
-                      <p className="max-w-3xl text-pretty text-sm text-muted-foreground sm:text-base">
+                      <p className="max-w-3xl text-pretty text-sm leading-7 text-muted-foreground sm:text-base">
                         {entry.summary}
                       </p>
 
@@ -1202,18 +1202,16 @@ export default function ChangelogPage() {
                         {entry.highlights.map((block) => (
                           <div
                             key={block.title}
-                            className="space-y-2"
+                            className="space-y-3"
                           >
                             <h3 className="text-sm font-semibold tracking-tight">
                               {block.title}
                             </h3>
-                            <ul className="space-y-2 text-sm text-muted-foreground">
+
+                            <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
                               {block.items.map((it) => (
                                 <li key={it} className="flex gap-2">
-                                  <span
-                                    className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
-                                    aria-hidden="true"
-                                  />
+                                  <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                                   <span className="text-pretty">
                                     {it}
                                   </span>
@@ -1224,30 +1222,31 @@ export default function ChangelogPage() {
                         ))}
                       </div>
 
-                      <div className="rounded-xl border bg-muted/30 p-4">
-                        <p className="text-sm text-muted-foreground">
+                      <Card className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 shadow-none">
+                        <p className="text-sm leading-7 text-muted-foreground">
                           <span className="font-medium text-foreground">
-                            Strategy
+                            Strategy.
                           </span>{' '}
-                          Weekly releases build trust. Even when the
-                          larger premium system is still evolving, we
-                          ship usable foundations, document what is
-                          real, and keep product direction visible
-                          through roadmap and offer pages.
+                          Weekly releases build trust. PyColors ships
+                          usable foundations, documents what is real,
+                          and keeps product direction visible through
+                          roadmap and offer pages.
                         </p>
-                      </div>
+                      </Card>
 
                       <div className="flex flex-col gap-2 sm:flex-row">
-                        <Button asChild>
+                        <Button asChild className="rounded-[5px]">
                           <Link href="/docs/ui">
                             Browse components
-                            <ArrowRight
-                              className="ml-2 h-4 w-4"
-                              aria-hidden="true"
-                            />
+                            <ArrowRight className="ml-2 h-4 w-4" />
                           </Link>
                         </Button>
-                        <Button asChild variant="outline">
+
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="rounded-[5px]"
+                        >
                           <Link href="/docs">Read docs</Link>
                         </Button>
                       </div>
@@ -1258,11 +1257,10 @@ export default function ChangelogPage() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs text-muted-foreground">
+          <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">
             Changelog entries reflect shipped work. Internal tasks,
             strategy changes, and in-progress commercial scope may be
-            grouped, summarized, or represented more fully on the
-            roadmap and offer pages.
+            grouped or summarized.
           </p>
         </section>
       </div>
