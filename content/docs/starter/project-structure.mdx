@@ -48,7 +48,7 @@ Understanding the structure early helps you:
   You are not only learning where files live. You are learning how product architecture scales from a mocked SaaS surface to a real product.
 </Callout>
 
-## Mental model
+### Mental model
 
 > Pages define routes.
 > Components define features.
@@ -64,7 +64,7 @@ Understanding the structure early helps you:
   Keep pages thin. When interaction logic grows, move it into a feature folder.
 </Callout>
 
-## Structure
+### Structure
 
 <Files>
   <Folder name="app" defaultOpen>
@@ -126,7 +126,7 @@ Understanding the structure early helps you:
 
 This structure is intentionally small. It separates route ownership from feature composition.
 
-## Architecture flow
+### Architecture flow
 
 ```txt title="architecture-flow.txt"
 App Router pages
@@ -173,7 +173,7 @@ A page should describe the product surface. Feature components should own intera
   </Tab>
 </Tabs>
 
-## App directory
+### App directory
 
 The `app/` directory is the routing layer.
 
@@ -230,7 +230,7 @@ It defines:
   A page should compose the feature. It should not become the feature itself.
 </Callout>
 
-## Components directory
+### Components directory
 
 The `components/` directory contains feature-level building blocks.
 
@@ -313,7 +313,7 @@ The UI structure can remain stable.
   Mock data is temporary. Product structure is not. Keep the structure stable and replace the source of truth when the product is ready.
 </Callout>
 
-## PageShell pattern
+### PageShell pattern
 
 Main SaaS pages use a shared shell for consistent page structure.
 
@@ -398,7 +398,7 @@ export default function ReportsPage() {
   </Step>
 </Steps>
 
-## Decision guide
+### Decision guide
 
 Use the Starter Free structure if:
 
@@ -468,7 +468,7 @@ Avoid changing the structure if:
   </Card>
 </div>
 
-## Backend wiring later
+### Backend wiring later
 
 When you connect a backend, the structure stays familiar.
 
@@ -486,7 +486,7 @@ The goal is not to rewrite the UI. The goal is to replace the data source.
   Starter Free validates the product surface. Starter Pro wires the business layer with production-shaped auth, billing, backend, and delivery foundations. → `/docs/starter-pro`
 </Callout>
 
-## Common questions
+### Common questions
 
 <Accordions type="single">
   <Accordion title="Why keep feature logic outside the app directory?">
