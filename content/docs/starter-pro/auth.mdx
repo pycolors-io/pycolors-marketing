@@ -37,7 +37,7 @@ import {
   <Badge>Auth</Badge>
 </div>
 
-## Authentication that actually ships
+### Authentication that actually ships
 
 Starter Free gives you **auth screens and UX states**.
 
@@ -65,7 +65,7 @@ This is the layer that turns login pages into a working product system.
   Auth is not UI. Auth is lifecycle, security, state, redirects, provider rules, and trust.
 </Callout>
 
-## What this solves
+### What this solves
 
 Authentication is usually one of the first serious blockers before launch.
 
@@ -170,7 +170,7 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
   </Card>
 </div>
 
-## Auth flows
+### Auth flows
 
 <Tabs items={["Sign in", "Register", "Password", "Providers"]}>
   <Tab value="Sign in">
@@ -238,7 +238,9 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
   </Tab>
 </Tabs>
 
-## Starter Free vs Starter Pro
+## Comparison
+
+###  Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -260,7 +262,9 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
   Starter Free simulates auth. Starter Pro handles real users.
 </Callout>
 
-## Data model responsibilities
+## Architecture
+
+### Data model responsibilities
 
 Starter Pro auth is designed around the structures a serious SaaS usually needs.
 
@@ -279,7 +283,7 @@ Typical auth responsibilities include:
   Production auth is not only about signing in. It is about storing enough state to make account lifecycle, recovery, and provider logic safe.
 </Callout>
 
-## Protected routes
+### Protected routes
 
 Auth becomes valuable when it protects real product surfaces.
 
@@ -307,7 +311,7 @@ A good protected route system should:
 - avoid leaking private state
 - work with billing and backend ownership rules
 
-## Integration with billing
+### Integration with billing
 
 Auth and billing are connected in a real SaaS.
 
@@ -377,7 +381,7 @@ Use these rules when adapting the auth layer.
   </Card>
 </div>
 
-## Decision guide
+### Decision guide
 
 Use Starter Pro auth when:
 
@@ -400,7 +404,7 @@ Stay on Starter Free when:
   Starter Free helps you design the auth surface. Starter Pro gives you the auth system behind it.
 </Callout>
 
-## Implementation checklist
+### Implementation checklist
 
 Before treating auth as launch-ready, validate:
 

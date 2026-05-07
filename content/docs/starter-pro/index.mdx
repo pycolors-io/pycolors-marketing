@@ -31,7 +31,7 @@ import {
   <Badge>Pro</Badge>
 </div>
 
-## Turn a product-shaped app into a real SaaS
+### Turn a product-shaped app into a real SaaS
 
 Starter Pro is the production layer that helps you move from **validated UI** to **real SaaS infrastructure**.
 
@@ -50,10 +50,13 @@ It is not just more UI. It is the layer that removes the engineering work that u
 
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      Compare pricing
-    </Link>
+
+  <Button
+    asChild
+    variant="outline"
+    className="h-11 rounded-xl px-6 text-sm font-medium no-underline"
+  >
+    <Link href="/pricing">Compare pricing</Link>
   </Button>
 </div>
 
@@ -61,7 +64,7 @@ It is not just more UI. It is the layer that removes the engineering work that u
   Starter Free validates the product. Starter Pro wires the business.
 </Callout>
 
-## What Starter Pro solves
+### What Starter Pro solves
 
 Most SaaS projects slow down at the same point:
 
@@ -76,7 +79,7 @@ That phase is:
 
 Starter Pro exists to reduce that repeated implementation cost so you can spend more time on product differentiation.
 
-## What you get
+## What Starter Pro includes
 
 <div className="grid gap-4 md:grid-cols-2">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -85,16 +88,20 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
           <LockKeyhole className="h-4 w-4 text-primary" />
         </div>
+
         <CardTitle className="text-sm font-semibold tracking-tight">
           Authentication
         </CardTitle>
       </div>
     </CardHeader>
+
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Email/password auth, OAuth, email verification, password reset, session-aware flows, and safer account foundations.
+        Email/password auth, OAuth, email verification, password
+        reset, session-aware flows, and safer account foundations.
       </div>
     </CardContent>
+
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 
@@ -104,16 +111,20 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
           <CreditCard className="h-4 w-4 text-primary" />
         </div>
+
         <CardTitle className="text-sm font-semibold tracking-tight">
           Billing
         </CardTitle>
       </div>
     </CardHeader>
+
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and plan-aware product behavior.
+        Stripe Checkout, billing portal, subscriptions, invoices,
+        webhook synchronization, and plan-aware product behavior.
       </div>
     </CardContent>
+
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 
@@ -123,16 +134,20 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
           <Database className="h-4 w-4 text-primary" />
         </div>
+
         <CardTitle className="text-sm font-semibold tracking-tight">
           Backend foundation
         </CardTitle>
       </div>
     </CardHeader>
+
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Database-ready structure, Prisma models, server-side patterns, auth-aware logic, and billing-aware boundaries.
+        Database-ready structure, Prisma models, server-side patterns,
+        auth-aware logic, and billing-aware boundaries.
       </div>
     </CardContent>
+
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 
@@ -142,21 +157,27 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
           <Download className="h-4 w-4 text-primary" />
         </div>
+
         <CardTitle className="text-sm font-semibold tracking-tight">
           Secure delivery
         </CardTitle>
       </div>
     </CardHeader>
+
     <CardContent className="pt-0">
       <div className="text-sm leading-6 text-muted-foreground">
-        Private asset delivery, secure access after purchase, token-based download flow, and controlled fulfillment.
+        Private asset delivery, secure access after purchase,
+        token-based download flow, and controlled fulfillment.
       </div>
     </CardContent>
+
     <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 </div>
 
 ## Free vs Pro
+
+### Capability comparison
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -175,10 +196,14 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 | Best use case | Validate UX | Launch faster |
 
 <Callout title="Free to validate. Pro to monetize.">
-  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, and delivery.
+  Starter Free proves the surface. Starter Pro helps you charge
+  customers with production-shaped auth, billing, backend, and
+  delivery.
 </Callout>
 
-## When Pro is the right move
+## Upgrade strategy
+
+### When Pro is the right move
 
 You likely need Starter Pro when:
 
@@ -196,8 +221,10 @@ You likely need Starter Pro when:
       <div className="text-sm font-medium text-foreground">
         Stay on Starter Free when you are validating.
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Free while you are shaping routes, screens, copy, product flows, and the core value proposition.
+        Use Free while you are shaping routes, screens, copy,
+        product flows, and the core value proposition.
       </div>
     </div>
   </Tab>
@@ -207,14 +234,17 @@ You likely need Starter Pro when:
       <div className="text-sm font-medium text-foreground">
         Move to Starter Pro when wiring becomes the blocker.
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Pro when auth, billing, protected routes, backend contracts, and production confidence become the work slowing launch.
+        Use Pro when auth, billing, protected routes, backend
+        contracts, and production confidence become the work
+        slowing launch.
       </div>
     </div>
   </Tab>
 </Tabs>
 
-## Builder path
+### Builder path
 
 Most builders follow this path:
 
@@ -234,7 +264,7 @@ and:
 
 > this can become a real SaaS business
 
-## What you still build
+### What you still build
 
 Starter Pro is a foundation, not your final product.
 
@@ -249,7 +279,9 @@ You still own:
 
 That is the point. Starter Pro removes repeated infrastructure work so you can focus on what customers actually pay for.
 
-## The real value
+## Why Starter Pro exists
+
+### The real value
 
 You are not buying “more code”.
 
@@ -262,66 +294,93 @@ You are buying:
 - faster path to revenue
 
 <Callout title="Time-to-revenue decision">
-  Starter Free proves your product can exist. Starter Pro makes it able to generate revenue.
+  Starter Free proves your product can exist. Starter Pro makes
+  it able to generate revenue.
 </Callout>
 
 ## Explore the system
 
 <div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+  <a
+    href="/docs/starter-pro/auth"
+    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
+  >
     <div>
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <LockKeyhole className="h-4 w-4 text-primary" />
         Authentication
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explore users, sessions, OAuth, verification, and account lifecycle foundations.
+        Explore users, sessions, OAuth, verification, and account
+        lifecycle foundations.
       </div>
     </div>
+
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+  <a
+    href="/docs/starter-pro/billing"
+    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
+  >
     <div>
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <CreditCard className="h-4 w-4 text-primary" />
         Billing
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand Stripe Checkout, portal, invoices, subscriptions, and webhook sync.
+        Understand Stripe Checkout, portal, invoices,
+        subscriptions, and webhook sync.
       </div>
     </div>
+
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/starter-pro/backend" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+  <a
+    href="/docs/starter-pro/backend"
+    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
+  >
     <div>
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <Database className="h-4 w-4 text-primary" />
         Backend
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review database-ready structure, Prisma models, and server-side boundaries.
+        Review database-ready structure, Prisma models, and
+        server-side boundaries.
       </div>
     </div>
+
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/starter-pro/delivery" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+  <a
+    href="/docs/starter-pro/delivery"
+    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
+  >
     <div>
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <Download className="h-4 w-4 text-primary" />
         Delivery
       </div>
+
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how secure product access and private asset delivery work after purchase.
+        Learn how secure product access and private asset delivery
+        work after purchase.
       </div>
     </div>
+
     <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 </div>
 
-## Ready to launch faster?
+## Next steps
+
+### Ready to launch faster?
 
 If you are still exploring, start with Starter Free.
 
@@ -329,13 +388,17 @@ If the business layer is slowing you down, move to Starter Pro.
 
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      Compare pricing
-    </Link>
+
+  <Button
+    asChild
+    variant="outline"
+    className="h-11 rounded-xl px-6 text-sm font-medium no-underline"
+  >
+    <Link href="/pricing">Compare pricing</Link>
   </Button>
 </div>
 
 <Callout title="Build the product. Don’t rebuild the blockers.">
-  Starter Pro gives you the production foundation so you can spend more time on customers, product, and revenue.
+  Starter Pro gives you the production foundation so you can
+  spend more time on customers, product, and revenue.
 </Callout>

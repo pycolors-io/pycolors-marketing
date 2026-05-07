@@ -36,7 +36,7 @@ import {
   <Badge>Billing</Badge>
 </div>
 
-## Billing that turns your product into a business
+### Billing that turns your product into a business
 
 Starter Free gives you **pricing surfaces and billing UX**.
 
@@ -67,7 +67,7 @@ It is the layer that makes your SaaS capable of generating real revenue.
   Billing is not UI. Billing is payment state, customer ownership, webhook truth, and product access.
 </Callout>
 
-## What this solves
+### What this solves
 
 Most teams underestimate what “add Stripe” means.
 
@@ -85,7 +85,9 @@ A real SaaS billing layer needs:
 
 Starter Pro gives you a structured foundation for that layer so billing can become a product system, not a fragile afterthought.
 
-## What is included
+## Included foundations
+
+### Real monetization flows
 
 <div className="grid gap-4 md:grid-cols-2">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -230,7 +232,7 @@ invoice.payment_failed
   Redirects are UX. Webhooks are truth.
 </Callout>
 
-## Real monetization flows
+## Comparison
 
 <Tabs items={["Checkout", "Portal", "Webhooks", "Access"]}>
   <Tab value="Checkout">
@@ -294,7 +296,7 @@ invoice.payment_failed
   </Tab>
 </Tabs>
 
-## Starter Free vs Starter Pro
+### Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -313,7 +315,9 @@ invoice.payment_failed
   Starter Free simulates monetization. Starter Pro gives you the billing layer required to charge customers.
 </Callout>
 
-## Data model responsibilities
+## Architecture
+
+### Data model responsibilities
 
 Billing needs enough structure to represent customer and subscription state inside your app.
 
@@ -332,7 +336,7 @@ Typical responsibilities include:
   Stripe is the payment source. Your app still needs synchronized billing state to protect access and render product UI correctly.
 </Callout>
 
-## Plan gating
+### Plan gating
 
 Billing becomes valuable when it controls product behavior.
 
@@ -406,7 +410,7 @@ Use these rules when adapting the billing layer.
   </Card>
 </div>
 
-## Decision guide
+### Decision guide
 
 Use Starter Pro billing when:
 
@@ -428,7 +432,7 @@ Stay on Starter Free when:
   Starter Free helps you shape monetization. Starter Pro gives you the billing layer required to charge customers.
 </Callout>
 
-## Implementation checklist
+### Implementation checklist
 
 Before treating billing as launch-ready, validate:
 
