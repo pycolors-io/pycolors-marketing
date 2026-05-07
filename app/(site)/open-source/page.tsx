@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
-  ExternalLink,
   ArrowRight,
+  ExternalLink,
   GitBranch,
   ShieldCheck,
   Sparkles,
@@ -104,7 +104,7 @@ const repos: Repo[] = [
     category: 'Website',
     name: 'pycolors-marketing',
     description:
-      'The marketing + docs site (Next.js + Fumadocs) — public mirror of the ecosystem website.',
+      'The marketing + docs site built with Next.js and Fumadocs — public mirror of the ecosystem website.',
     href: 'https://github.com/pycolors-io/pycolors-marketing',
     badge: 'Site',
   },
@@ -112,7 +112,7 @@ const repos: Repo[] = [
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {children}
     </span>
   );
@@ -128,47 +128,56 @@ function SectionHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-5 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
-      <div className="space-y-1">
-        <h2 className="font-brand text-lg font-semibold tracking-tight">
+    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="space-y-2">
+        <h2 className="font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h2>
+
         {description ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
       </div>
-      {action ? <div className="sm:self-start">{action}</div> : null}
+
+      {action ? <div className="shrink-0">{action}</div> : null}
     </div>
   );
 }
 
 function RepoCard({ repo }: { repo: Repo }) {
   return (
-    <Card className="p-5">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0 space-y-2">
+    <Card className="h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border">
+      <div className="flex h-full flex-col justify-between gap-5">
+        <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="outline" className="text-xs">
+            <Badge
+              variant="outline"
+              className="rounded-[5px] text-xs"
+            >
               {repo.category}
             </Badge>
+
             {repo.badge ? (
-              <Badge variant="secondary" className="text-xs">
+              <Badge
+                variant="secondary"
+                className="rounded-[5px] text-xs"
+              >
                 {repo.badge}
               </Badge>
             ) : null}
           </div>
 
-          <div className="text-sm font-medium">{repo.name}</div>
-          <p
-            className={cn(
-              'min-h-16 text-sm leading-relaxed text-muted-foreground',
-              'line-clamp-3',
-            )}
-          >
-            {repo.description}
-          </p>
+          <div className="space-y-2">
+            <div className="text-sm font-semibold tracking-tight">
+              {repo.name}
+            </div>
+
+            <p className="text-sm leading-7 text-muted-foreground">
+              {repo.description}
+            </p>
+          </div>
         </div>
 
         <a
@@ -176,11 +185,11 @@ function RepoCard({ repo }: { repo: Repo }) {
           target="_blank"
           rel="noreferrer noopener"
           className={cn(
-            'inline-flex shrink-0 items-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-semibold',
-            'transition-colors hover:bg-accent hover:text-accent-foreground',
+            'inline-flex w-fit items-center gap-1.5 rounded-[5px] border border-border-subtle px-3 py-2 text-xs font-medium',
+            'transition-colors hover:border-border hover:bg-accent/20 hover:text-foreground',
             focusRing,
           )}
-          aria-label={`Open ${repo.name} on GitHub (opens in a new tab)`}
+          aria-label={`Open ${repo.name} on GitHub`}
         >
           GitHub
           <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -200,14 +209,16 @@ function ModelCard({
   description: string;
 }) {
   return (
-    <Card className="p-5">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
       <div className="flex items-start gap-3">
-        <span className="mt-0.5 inline-flex size-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="mt-0.5 inline-flex  items-center justify-center text-primary">
           {icon}
         </span>
+
         <div className="space-y-1">
           <div className="text-sm font-medium">{title}</div>
-          <p className="text-sm leading-relaxed text-muted-foreground">
+
+          <p className="text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         </div>
@@ -217,12 +228,16 @@ function ModelCard({
 }
 
 export default function OpenSourcePage() {
-  const core = repos.filter((r) => r.category === 'Core foundations');
-  const tooling = repos.filter(
-    (r) => r.category === 'Developer tooling',
+  const core = repos.filter(
+    (repo) => repo.category === 'Core foundations',
   );
-  const starters = repos.filter((r) => r.category === 'Starters');
-  const website = repos.filter((r) => r.category === 'Website');
+  const tooling = repos.filter(
+    (repo) => repo.category === 'Developer tooling',
+  );
+  const starters = repos.filter(
+    (repo) => repo.category === 'Starters',
+  );
+  const website = repos.filter((repo) => repo.category === 'Website');
 
   return (
     <Container className="py-18">
@@ -236,133 +251,151 @@ export default function OpenSourcePage() {
           />
         </div>
 
-        <header className="flex flex-col items-center gap-6 text-center">
+        <header className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <Badge variant="secondary" className="gap-2">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <Badge
+              variant="secondary"
+              className="gap-2 rounded-[5px]"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               Built in public
             </Badge>
-            <Badge variant="outline">Open by default</Badge>
-            <Pill>Trust + adoption</Pill>
+
+            <Badge variant="outline" className="rounded-[5px]">
+              Open-core
+            </Badge>
+
+            <Badge variant="outline" className="rounded-[5px]">
+              Trust + adoption
+            </Badge>
           </div>
 
           <div className="space-y-4">
             <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Open-source foundations
-              <span className="block font-bold">
-                behind PyColors.
-              </span>
+              Open-source foundations behind PyColors.
             </h1>
 
-            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              PyColors is built as an ecosystem: UI system, tokens,
-              starters, and developer tooling — designed to help you
-              ship real SaaS faster with predictable foundations.
+            <p className="mx-auto max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
+              PyColors is built as an open-core SaaS ecosystem: UI
+              system, tokens, starters, and developer tooling designed
+              to help developers ship credible SaaS products faster.
             </p>
 
-            <p className="mx-auto max-w-3xl text-balance text-xs text-muted-foreground">
-              Open-source is the foundation layer of the PyColors
-              open-core strategy. Premium products exist to accelerate
-              execution, not to create lock-in.
+            <p className="mx-auto max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
+              Open-source is the foundation layer. Premium products
+              exist to accelerate execution when auth, billing,
+              delivery, and production wiring become the bottleneck.
             </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild>
+            <Button asChild className="rounded-[5px]">
               <Link href="/ui">
                 Explore UI
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
 
-            <Button asChild variant="outline">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-[5px]"
+            >
               <Link href="/starters/free">Try Starter Free</Link>
             </Button>
 
-            <Button asChild variant="secondary">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-[5px]"
+            >
               <Link href="/pricing">View pricing</Link>
             </Button>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 pt-2">
-            <Pill>Open core</Pill>
+            <Pill>Open foundations</Pill>
             <Pill>Docs-first</Pill>
-            <Pill>Shipping weekly</Pill>
-            <Pill>Stable foundations</Pill>
-            <Pill>Premium path stays clear</Pill>
+            <Pill>Weekly shipping</Pill>
+            <Pill>Free → Pro path</Pill>
           </div>
         </header>
 
-        <section className="py-10 sm:py-12">
+        <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             title="Why open-source"
-            description="Open-source is a trust layer, an adoption path, and the foundation of the PyColors open-core strategy."
+            description="Open-source is the trust layer of PyColors. It lets developers inspect the foundations, adopt progressively, and upgrade only when premium acceleration creates real leverage."
           />
 
           <div className="grid gap-4 sm:grid-cols-3">
             <ModelCard
-              icon={
-                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-              }
+              icon={<ShieldCheck className="h-4 w-4" />}
               title="Trust"
-              description="See the foundations. No black boxes, no vague promises — predictable primitives and product surfaces you can inspect."
+              description="See the foundations. Inspect the primitives, tokens, tooling, and starter structure before you commit."
             />
 
             <ModelCard
-              icon={
-                <GitBranch className="h-4 w-4" aria-hidden="true" />
-              }
+              icon={<GitBranch className="h-4 w-4" />}
               title="Adoption"
-              description="Clone, run, and evaluate quickly. Start with the open layer before deciding whether premium acceleration is worth it."
+              description="Clone, run, test, and evaluate quickly. Start with the open layer before choosing a paid path."
             />
 
             <ModelCard
-              icon={
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-              }
+              icon={<Sparkles className="h-4 w-4" />}
               title="Velocity"
-              description="Production-shaped foundations reduce guesswork. You ship faster and keep consistency as the product grows."
+              description="Production-shaped foundations reduce repeated setup work and keep your product direction coherent."
             />
           </div>
         </section>
 
-        <section className="py-8 sm:py-10">
+        <section className="py-10 sm:py-12">
           <SectionHeader
             title="Open-core strategy"
-            description="The ecosystem is open-source first. Commercial layers exist to accelerate execution, not to blur ownership or licensing boundaries."
+            description="The ecosystem stays clear: open foundations for adoption, premium acceleration for builders who want to move faster."
             action={
-              <Button asChild size="sm" variant="outline">
-                <Link href="/upgrade">See Upgrade to PRO</Link>
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="rounded-[5px]"
+              >
+                <Link href="/pricing">View pricing</Link>
               </Button>
             }
           />
 
-          <Card className="p-6 sm:p-7">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className="text-xs">
-                Transparency
+              <Badge
+                variant="outline"
+                className="rounded-[5px] text-xs"
+              >
+                Transparent model
               </Badge>
-              <Badge variant="secondary" className="text-xs">
+
+              <Badge
+                variant="secondary"
+                className="rounded-[5px] text-xs"
+              >
                 Open foundations → paid acceleration
               </Badge>
+
               <Pill>Adopt progressively</Pill>
             </div>
 
-            <div className="w-full overflow-hidden rounded-xl border border-border">
+            <div className="overflow-hidden rounded-[5px] border border-border-subtle">
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead className="w-1/2">
-                      Open-source (available now)
+                      Open-source foundation
                     </TableHead>
                     <TableHead className="w-1/2">
-                      Premium acceleration (planned / evolving)
+                      Premium acceleration
                     </TableHead>
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
                   <TableRow>
                     <TableCell>
@@ -376,14 +409,15 @@ export default function OpenSourcePage() {
                         </div>
                       </div>
                     </TableCell>
+
                     <TableCell>
                       <div className="space-y-1">
                         <div className="text-sm font-medium">
-                          UI PRO
+                          Premium product surfaces
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          Premium product patterns and higher-level
-                          SaaS surfaces.
+                          Higher-level SaaS patterns, starters, and
+                          production-focused assets.
                         </div>
                       </div>
                     </TableCell>
@@ -396,19 +430,21 @@ export default function OpenSourcePage() {
                           Starter Free
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          A real SaaS surface with mocked data — built
-                          to validate UX fast.
+                          A runnable SaaS surface with mocked data —
+                          built to validate UX fast.
                         </div>
                       </div>
                     </TableCell>
+
                     <TableCell>
                       <div className="space-y-1">
                         <div className="text-sm font-medium">
-                          Starter PRO
+                          Starter Pro
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          Auth, billing, backend foundations, and
-                          deployment guidance.
+                          Real auth, Stripe billing, protected app
+                          structure, delivery, and backend
+                          foundations.
                         </div>
                       </div>
                     </TableCell>
@@ -421,19 +457,20 @@ export default function OpenSourcePage() {
                           Developer tooling
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          Shared linting and TypeScript configs to
-                          keep codebases aligned.
+                          Shared ESLint and TypeScript configs to keep
+                          projects aligned.
                         </div>
                       </div>
                     </TableCell>
+
                     <TableCell>
                       <div className="space-y-1">
                         <div className="text-sm font-medium">
-                          All-In Access
+                          Future premium layers
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          The premium long-term path for builders who
-                          want the full ecosystem.
+                          Blocks, templates, stronger SaaS
+                          foundations, and commercial acceleration.
                         </div>
                       </div>
                     </TableCell>
@@ -442,146 +479,131 @@ export default function OpenSourcePage() {
               </Table>
             </div>
 
-            <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+            <div className="mt-4 space-y-2 text-xs leading-6 text-muted-foreground">
               <p>
-                The goal is simple: inspect the foundations openly,
-                adopt progressively, and upgrade only when the next
-                layer creates real leverage.
-              </p>
-              <p>
-                Public repositories are governed by their respective
-                repository licenses. Premium products, commercial
-                access, private releases, and brand assets remain
-                subject to separate commercial terms.
+                Public repositories are governed by their repository
+                licenses. Premium products, commercial access, private
+                releases, and brand assets remain subject to separate
+                commercial terms.
               </p>
             </div>
           </Card>
         </section>
 
-        <section className="py-10 sm:py-12">
+        <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             title="Repositories"
-            description="Public repos you can clone today. Each one maps to a clear role in the ecosystem."
+            description="Public repositories you can inspect, clone, and use today. Each one maps to a clear role in the PyColors ecosystem."
           />
 
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <div className="text-sm font-semibold">
-                  Foundations
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  UI, tokens, and tooling that power the ecosystem.
-                </p>
-              </div>
-              <Badge variant="default" className="text-xs">
-                Core
-              </Badge>
-            </div>
-
-            <div className="mt-5 grid gap-4 lg:grid-cols-2">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
+          <div className="space-y-6">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                <div>
                   <div className="text-sm font-semibold">
-                    Core foundations
+                    Foundations
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    UI + tokens
-                  </Badge>
+                  <p className="text-sm text-muted-foreground">
+                    UI, tokens, and tooling that power the ecosystem.
+                  </p>
                 </div>
+
+                <Badge
+                  variant="secondary"
+                  className="rounded-[5px] text-xs"
+                >
+                  Core
+                </Badge>
+              </div>
+
+              <div className="mt-5 grid gap-4 lg:grid-cols-2">
                 {core.map((repo) => (
                   <RepoCard key={repo.name} repo={repo} />
                 ))}
-              </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-semibold">
-                    Developer tooling
-                  </div>
-                  <Badge variant="outline" className="text-xs">
-                    DX
-                  </Badge>
-                </div>
                 {tooling.map((repo) => (
                   <RepoCard key={repo.name} repo={repo} />
                 ))}
               </div>
-            </div>
-          </Card>
+            </Card>
 
-          <Card className="mt-6 p-6 sm:p-7">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <div className="text-sm font-semibold">Products</div>
-                <p className="text-sm text-muted-foreground">
-                  Runnable entry points and the public website.
-                </p>
-              </div>
-              <Badge variant="default" className="text-xs">
-                Adoption
-              </Badge>
-            </div>
-
-            <div className="mt-5 grid gap-4 lg:grid-cols-2">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                <div>
                   <div className="text-sm font-semibold">
-                    Starters
+                    Products
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    Main entry point
-                  </Badge>
+                  <p className="text-sm text-muted-foreground">
+                    Runnable entry points and the public website.
+                  </p>
                 </div>
+
+                <Badge
+                  variant="secondary"
+                  className="rounded-[5px] text-xs"
+                >
+                  Adoption
+                </Badge>
+              </div>
+
+              <div className="mt-5 grid gap-4 lg:grid-cols-2">
                 {starters.map((repo) => (
                   <RepoCard key={repo.name} repo={repo} />
                 ))}
-              </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-semibold">Website</div>
-                  <Badge variant="outline" className="text-xs">
-                    Marketing + docs
-                  </Badge>
-                </div>
                 {website.map((repo) => (
                   <RepoCard key={repo.name} repo={repo} />
                 ))}
               </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
         </section>
 
-        <section className="mx-auto mt-10 w-full max-w-6xl">
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
+        <section className="pt-4">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-3">
+                <Badge variant="outline" className="rounded-[5px]">
                   Recommended path
+                </Badge>
+
+                <h2 className="font-brand text-2xl font-semibold tracking-tight">
+                  Start open. Validate fast. Upgrade when it matters.
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  Start with open foundations, validate the starter
-                  surface, then move to premium access only when
-                  leverage matters.
+
+                <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                  Use PyColors UI as the foundation, Starter Free to
+                  validate the product surface, and Starter Pro when
+                  real authentication, billing, and protected app
+                  architecture become the bottleneck.
                 </p>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Pill>UI → foundation</Pill>
-                  <Pill>Starter Free → validate UX</Pill>
-                  <Pill>Access → premium path</Pill>
+                  <Pill>Starter Free → validation</Pill>
+                  <Pill>Starter Pro → business layer</Pill>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href="/ui">UI</Link>
-                </Button>
-                <Button asChild variant="outline">
+              <div className="flex flex-col gap-3 sm:min-w-60">
+                <Button asChild className="rounded-[5px]">
                   <Link href="/starters/free">Starter Free</Link>
                 </Button>
-                <Button asChild variant="secondary">
-                  <Link href="/pricing">Access</Link>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
+                  <Link href="/starters/pro">Starter Pro</Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
+                  <Link href="/pricing">Pricing</Link>
                 </Button>
               </div>
             </div>
