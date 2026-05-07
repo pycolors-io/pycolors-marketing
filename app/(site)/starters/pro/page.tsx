@@ -545,7 +545,7 @@ export default function StarterProPage() {
 
                     <div className="group relative aspect-video overflow-hidden bg-background">
                       <Image
-                        src="/images/starters/starter-pro-pycolors-hero.png"
+                        src="/images/starters/pro/starter-pro-pycolors-hero.png"
                         alt="Starter Pro protected SaaS dashboard preview"
                         fill
                         priority

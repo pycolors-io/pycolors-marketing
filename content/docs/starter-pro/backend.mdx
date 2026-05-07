@@ -38,7 +38,7 @@ import {
   <Badge>Backend</Badge>
 </div>
 
-## Backend foundations that make the product real
+### Backend foundations that make the product real
 
 Starter Free gives you a **frontend SaaS surface**.
 
@@ -66,7 +66,7 @@ This is where your app stops behaving like a demo and starts behaving like a sys
   A SaaS is not only screens. It is data, rules, ownership, access, billing state, and server-side boundaries.
 </Callout>
 
-## What this solves
+### What this solves
 
 A lot of SaaS products do not fail because the UI is weak.
 
@@ -161,7 +161,7 @@ Starter Pro gives you a structured foundation so backend work can scale with the
   </Card>
 </div>
 
-## Architecture layers
+### Architecture layers
 
 Starter Pro backend foundations are organized around clear responsibilities.
 
@@ -235,7 +235,7 @@ Starter Pro backend foundations are organized around clear responsibilities.
   Keep product rules close to the backend. UI can reflect access, but sensitive logic should be server-verifiable.
 </Callout>
 
-## Starter Free vs Starter Pro
+### Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -253,7 +253,9 @@ Starter Pro backend foundations are organized around clear responsibilities.
   Starter Free gives you the surface. Starter Pro gives you the system underneath.
 </Callout>
 
-## Data model responsibilities
+## Architecture
+
+### Data model responsibilities
 
 A real SaaS backend needs models that represent the business layer, not only UI data.
 
@@ -276,7 +278,7 @@ Starter Pro is designed around responsibilities such as:
   A SaaS backend is not only CRUD. It is the place where identity, revenue, ownership, and product behavior meet.
 </Callout>
 
-## Feature example
+### Feature example
 
 A feature such as `Projects` behaves very differently depending on the backend layer underneath it.
 
@@ -364,7 +366,7 @@ export function canAccessProject(projectOwnerId: string, userId: string) {
   </Step>
 </Steps>
 
-## What you avoid building yourself
+### What you avoid building yourself
 
 Without Starter Pro, you usually need to design and wire:
 
@@ -380,7 +382,7 @@ Without Starter Pro, you usually need to design and wire:
 
 This is often time-consuming, easy to duplicate, and expensive to refactor later.
 
-## Backend rules
+### Backend rules
 
 Use these rules when extending the backend.
 
@@ -432,7 +434,7 @@ Use these rules when extending the backend.
   </Card>
 </div>
 
-## Decision guide
+### Decision guide
 
 Use Starter Pro backend when:
 
@@ -454,7 +456,7 @@ Stay on Starter Free when:
   Starter Free helps you validate the product surface. Starter Pro gives you the backend foundation that makes the product launchable.
 </Callout>
 
-## Production checklist
+### Production checklist
 
 Before treating the backend as launch-ready, validate:
 

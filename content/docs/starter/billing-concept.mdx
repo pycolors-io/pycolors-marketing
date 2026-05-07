@@ -71,7 +71,7 @@ This separation lets you validate monetization UX before committing to full Stri
   Billing is not just a page. It is a revenue workflow. The UI can be mocked early, but the production implementation must be wired carefully.
 </Callout>
 
-## What you’ll understand
+### What you’ll understand
 
 <div className="grid gap-4 md:grid-cols-3">
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -132,7 +132,7 @@ This separation lets you validate monetization UX before committing to full Stri
   </Card>
 </div>
 
-## Mental model
+### Mental model
 
 > Billing UI is stable.
 > Billing implementation evolves behind it.
@@ -149,7 +149,7 @@ This separation lets you validate monetization UX before committing to full Stri
   Never treat the billing page as the source of truth. Stripe events and your backend state must drive production billing.
 </Callout>
 
-## Steps
+### Steps
 
 <Steps>
 
@@ -412,7 +412,7 @@ Avoid vague labels:
   Billing copy should make the next action obvious. Users should never wonder whether they are starting checkout, opening a portal, changing a plan, or cancelling access.
 </Callout>
 
-## Common questions
+### Common questions
 
 <Accordions type="single">
   <Accordion title="Why is billing mocked in Starter Free?">
