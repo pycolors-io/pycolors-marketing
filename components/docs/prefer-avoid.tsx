@@ -4,15 +4,20 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 import { cn } from '@pycolors/ui';
 
 type PreferAvoidProps = Readonly<{
-  prefer: readonly React.ReactNode[];
-  avoid: readonly React.ReactNode[];
+  prefer: readonly string[];
+  avoid: readonly string[];
   className?: string;
 }>;
 
 type PanelProps = Readonly<{
   tone: 'prefer' | 'avoid';
   title: string;
-  items: readonly React.ReactNode[];
+  items: readonly string[];
+}>;
+
+type StatusIconProps = Readonly<{
+  tone: 'prefer' | 'avoid';
+  icon: React.ElementType;
 }>;
 
 export function PreferAvoid({
@@ -46,18 +51,18 @@ function Panel({ tone, title, items }: PanelProps) {
         )}
       />
 
-      <div className="grid h-12 grid-cols-[20px_1fr] items-center gap-2 border-b border-border/40 bg-muted/18 px-3.5">
+      <div className="grid h-14 grid-cols-[20px_1fr] items-center gap-2 border-b border-border/40 bg-muted/18 px-3.5">
         <StatusIcon tone={tone} icon={Icon} />
 
-        <h3 className="m-0 translate-y-px text-[14px] font-semibold leading-none tracking-tight text-foreground mt-3">
+        <h3 className="m-0 translate-y-px text-[13px] font-semibold leading-none tracking-tight text-foreground mt-2">
           {title}
         </h3>
       </div>
 
       <ul className="m-0 divide-y divide-border/35">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <li
-            key={`${tone}-${index}`}
+            key={item}
             className="grid grid-cols-[20px_1fr] items-start gap-2.5 px-3.5 py-2.5 text-[13px] leading-5 text-muted-foreground"
           >
             <Icon
@@ -68,18 +73,13 @@ function Panel({ tone, title, items }: PanelProps) {
               aria-hidden="true"
             />
 
-            <span className="min-w-0">{item}</span>
+            <span className="min-w-0">{renderInlineCode(item)}</span>
           </li>
         ))}
       </ul>
     </section>
   );
 }
-
-type StatusIconProps = Readonly<{
-  tone: 'prefer' | 'avoid';
-  icon: React.ElementType;
-}>;
 
 function StatusIcon({ tone, icon: Icon }: StatusIconProps) {
   const isPrefer = tone === 'prefer';
@@ -104,4 +104,20 @@ function StatusIcon({ tone, icon: Icon }: StatusIconProps) {
       <Icon className="relative z-1 size-3.25" aria-hidden="true" />
     </span>
   );
+}
+
+function renderInlineCode(value: string) {
+  const parts = value.split(/(`[^`]+`)/g);
+
+  return parts.map((part, index) => {
+    if (part.startsWith('`') && part.endsWith('`')) {
+      return (
+        <code key={`${part}-${index}`}>{part.slice(1, -1)}</code>
+      );
+    }
+
+    return (
+      <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>
+    );
+  });
 }
