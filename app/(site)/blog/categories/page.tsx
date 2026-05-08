@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowRight, Layers3, Sparkles } from 'lucide-react';
 
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 import {
@@ -34,9 +34,20 @@ export const metadata: Metadata = {
   },
 };
 
-function Pill({ children }: { children: React.ReactNode }) {
+const focusRing =
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span
+      className={cn(
+        'inline-flex items-center rounded-[5px]',
+        'border border-border-subtle',
+        'bg-background/50',
+        'px-2.5 py-1',
+        'text-[11px] font-medium text-muted-foreground',
+      )}
+    >
       {children}
     </span>
   );
@@ -45,17 +56,20 @@ function Pill({ children }: { children: React.ReactNode }) {
 function SectionHeader({
   title,
   description,
-}: {
+}: Readonly<{
   title: string;
   description?: string;
-}) {
+}>) {
   return (
-    <div className="mb-5 space-y-1 sm:mb-6">
-      <h2 className="font-brand text-lg font-semibold tracking-tight">
+    <div className="mb-10 space-y-3">
+      <h2 className="font-brand text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
         {title}
       </h2>
+
       {description ? (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
+          {description}
+        </p>
       ) : null}
     </div>
   );
@@ -65,9 +79,14 @@ export default function BlogCategoriesPage() {
   const categories = getAllCategories();
 
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
+    <Container className="py-16 sm:py-20">
+      <div className="relative mx-auto max-w-6xl">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_95%),transparent_60%)]"
+        />
+
+        <div className="mb-10">
           <Breadcrumb
             items={[
               { label: 'Home', href: '/' },
@@ -77,102 +96,192 @@ export default function BlogCategoriesPage() {
           />
         </div>
 
-        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <Badge variant="secondary" className="gap-2">
-              <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />
-              Categories
-            </Badge>
-            <Badge variant="outline">Blog taxonomy</Badge>
-            <Badge variant="outline" className="gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Product-first
-            </Badge>
-          </div>
+        <header className="mx-auto mb-20 max-w-5xl">
+          <div className="space-y-10 text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Badge
+                variant="secondary"
+                className={cn(
+                  'gap-1.5 rounded-[5px]',
+                  'border border-border-subtle',
+                  'bg-surface-muted/80',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />
+                Categories
+              </Badge>
 
-          <div className="space-y-4">
-            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Explore blog categories
-              <span className="block font-bold">
-                by product surface and technical domain.
-              </span>
-            </h1>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'rounded-[5px]',
+                  'border-border-subtle',
+                  'bg-background/60',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                Blog taxonomy
+              </Badge>
 
-            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Browse PyColors writing by topic to go deeper into SaaS
-              architecture, product UX, implementation patterns, and
-              technical decisions.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild>
-              <Link href="/blog">
-                Back to Blog
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
+              <Badge
+                variant="outline"
+                className={cn(
+                  'gap-1.5 rounded-[5px]',
+                  'border-border-subtle',
+                  'bg-background/60',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                <Sparkles
+                  className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-              </Link>
-            </Button>
+                Product-first
+              </Badge>
+            </div>
 
-            <Button asChild variant="secondary">
-              <Link href="/guides">Browse Guides</Link>
-            </Button>
-          </div>
+            <div className="mx-auto max-w-4xl space-y-6">
+              <h1
+                className={cn(
+                  'text-balance',
+                  'font-brand',
+                  'text-4xl font-semibold',
+                  'tracking-[-0.05em]',
+                  'text-foreground',
+                  'sm:text-5xl',
+                  'lg:text-[4.5rem]',
+                  'lg:leading-[0.95]',
+                )}
+              >
+                Explore blog categories
+                <span className="block text-muted-foreground">
+                  by product surface and technical domain.
+                </span>
+              </h1>
 
-          <div className="flex flex-wrap justify-center gap-2 pt-1">
-            <Pill>SaaS Architecture</Pill>
-            <Pill>Billing</Pill>
-            <Pill>Next.js</Pill>
-            <Pill>Design Systems</Pill>
+              <p
+                className={cn(
+                  'mx-auto max-w-3xl',
+                  'text-balance',
+                  'text-[16px] leading-8',
+                  'text-muted-foreground',
+                  'sm:text-lg',
+                )}
+              >
+                Browse PyColors writing by topic to go deeper into
+                SaaS architecture, product UX, implementation
+                patterns, frontend systems, and production-ready
+                engineering decisions.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button
+                asChild
+                className={cn('rounded-[5px]', focusRing)}
+              >
+                <Link href="/blog">
+                  Back to Blog
+                  <ArrowRight
+                    className="h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                className={cn('rounded-[5px]', focusRing)}
+              >
+                <Link href="/guides">Browse Guides</Link>
+              </Button>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 pt-1">
+              <Pill>SaaS Architecture</Pill>
+              <Pill>Billing</Pill>
+              <Pill>Next.js</Pill>
+              <Pill>Design Systems</Pill>
+              <Pill>Product Engineering</Pill>
+            </div>
           </div>
         </header>
 
-        <section className="py-10 sm:py-12">
+        <section className="mx-auto max-w-5xl py-4">
           <SectionHeader
             title="All categories"
-            description="Each category groups articles around the same product logic or implementation domain."
+            description="Each category groups articles around the same implementation logic, product surface, or engineering concern."
           />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => {
               const posts = getPostsByCategory(category);
 
               return (
                 <Card
                   key={category}
-                  className="flex h-full flex-col justify-between p-6"
+                  className={cn(
+                    'group relative flex h-full flex-col justify-between overflow-hidden rounded-[5px]',
+                    'border border-border-subtle',
+                    'bg-background/45',
+                    'p-6 backdrop-blur-sm',
+                    'transition-all duration-200',
+                    'hover:border-border',
+                    'hover:bg-background/65',
+                  )}
                 >
-                  <div className="space-y-4">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                  />
+
+                  <div className="space-y-5">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline">{category}</Badge>
-                      <Badge variant="secondary">
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        {category}
+                      </Badge>
+
+                      <Badge
+                        variant="secondary"
+                        className="rounded-[5px]"
+                      >
                         {posts.length} article
                         {posts.length > 1 ? 's' : ''}
                       </Badge>
                     </div>
 
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    <p className="text-sm leading-7 text-muted-foreground">
                       Explore articles related to{' '}
                       {category.toLowerCase()} and adjacent
-                      implementation decisions.
+                      implementation decisions across SaaS product
+                      engineering.
                     </p>
                   </div>
 
-                  <div className="mt-6">
+                  <div className="mt-8">
                     <Button
                       asChild
                       size="sm"
                       variant="outline"
-                      className="w-full"
+                      className={cn(
+                        'w-full rounded-[5px]',
+                        focusRing,
+                      )}
                     >
                       <Link
                         href={`/blog/categories/${normalizeTaxonomy(category)}`}
                       >
                         View category
                         <ArrowRight
-                          className="ml-2 h-4 w-4"
+                          className="h-4 w-4"
                           aria-hidden="true"
                         />
                       </Link>

@@ -1,15 +1,21 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Button } from '@pycolors/ui';
+import { Check, Copy, Linkedin, Twitter } from 'lucide-react';
+
+import { Button, cn } from '@pycolors/ui';
 
 type ShareArticleProps = {
-  title: string;
-  url: string;
+  readonly title: string;
+  readonly url: string;
 };
+
+const focusRing =
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 function getAbsoluteUrl(url: string) {
   if (typeof window === 'undefined') return url;
+
   return url.startsWith('http')
     ? url
     : new URL(url, window.location.origin).toString();
@@ -66,25 +72,36 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Button asChild variant="outline" size="sm">
+      <Button
+        asChild
+        variant="outline"
+        size="sm"
+        className={cn('rounded-[5px]', focusRing)}
+      >
         <a
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded.url}`}
           target="_blank"
           rel="noreferrer noopener"
           aria-label="Share this article on LinkedIn"
         >
-          Share on LinkedIn
+          <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />
+          LinkedIn
         </a>
       </Button>
 
-      <Button asChild variant="outline" size="sm">
+      <Button
+        asChild
+        variant="outline"
+        size="sm"
+        className={cn('rounded-[5px]', focusRing)}
+      >
         <a
           href={`https://twitter.com/intent/tweet?text=${encoded.title}&url=${encoded.url}`}
           target="_blank"
           rel="noreferrer noopener"
           aria-label="Share this article on X"
         >
-          Share on X
+          <Twitter className="h-3.5 w-3.5" aria-hidden="true" />X
         </a>
       </Button>
 
@@ -93,8 +110,14 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         size="sm"
         onClick={copyLink}
         aria-live="polite"
+        className={cn('rounded-[5px]', focusRing)}
       >
-        {copied ? 'Copied' : 'Copy link'}
+        {copied ? (
+          <Check className="h-3.5 w-3.5" aria-hidden="true" />
+        ) : (
+          <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+        )}
+        {copied ? 'Copied' : 'Copy'}
       </Button>
     </div>
   );

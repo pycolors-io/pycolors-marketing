@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default function BlogLayout({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   return children;
 }
