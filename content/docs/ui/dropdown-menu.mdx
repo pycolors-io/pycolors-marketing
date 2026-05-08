@@ -34,6 +34,7 @@ import {
   Settings2,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 import { ClientOnly } from "../previews/client-only";
 import {
@@ -622,53 +623,22 @@ Guidelines:
 
 ## Prefer / avoid
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>short action labels</li>
-        <li>semantic triggers</li>
-        <li>groups only when they improve scanning</li>
-        <li>Dialog confirmation for destructive actions</li>
-        <li>submenus only for small secondary choices</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>long paragraphs inside menus</li>
-        <li>deep nested submenus</li>
-        <li>forms or complex inputs in a dropdown</li>
-        <li>destructive actions with no confirmation</li>
-        <li>using menus for primary actions</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'short action labels',
+    'semantic triggers',
+    'groups only when they improve scanning',
+    'Dialog confirmation for destructive actions',
+    'submenus only for small secondary choices',
+  ]}
+  avoid={[
+    'long paragraphs inside menus',
+    'deep nested submenus',
+    'forms or complex inputs in a dropdown',
+    'destructive actions with no confirmation',
+    'using menus for primary actions',
+  ]}
+/>
 
 ## Product copy guidelines
 
