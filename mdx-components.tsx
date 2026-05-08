@@ -273,36 +273,71 @@ export function getMDXComponents(
           .join(' ')}
       />
     ),
-
-    table: (props) => (
-      <div className="my-0">
+    table: ({ className, ...props }) => (
+      <div className="my-4 w-full overflow-x-auto">
         <table
           {...props}
-          className={['w-full text-sm', props.className]
+          className={[
+            'w-full min-w-max border-collapse text-sm',
+            className,
+          ]
             .filter(Boolean)
             .join(' ')}
         />
       </div>
     ),
 
-    th: (props) => (
-      <th
+    thead: ({ className, ...props }) => (
+      <thead
         {...props}
         className={[
-          'border-b border-border/60 bg-muted/40 px-4 py-3 text-left font-medium text-foreground',
-          props.className,
+          'border-b border-border/60 bg-muted/[0.55]',
+          className,
         ]
           .filter(Boolean)
           .join(' ')}
       />
     ),
 
-    td: (props) => (
+    tbody: ({ className, ...props }) => (
+      <tbody
+        {...props}
+        className={['[&_tr:nth-child(even)]:bg-muted/18', className]
+          .filter(Boolean)
+          .join(' ')}
+      />
+    ),
+
+    tr: ({ className, ...props }) => (
+      <tr
+        {...props}
+        className={[
+          'border-b border-border/4ro0 transition-colors',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      />
+    ),
+
+    th: ({ className, ...props }) => (
+      <th
+        {...props}
+        className={[
+          'whitespace-nowrap px-3 py-2.5 text-left text-[13px] font-medium text-foreground',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      />
+    ),
+
+    td: ({ className, ...props }) => (
       <td
         {...props}
         className={[
-          'border-b border-border/40 px-4 py-3 align-top text-muted-foreground',
-          props.className,
+          'px-3 py-2.5 align-top text-[13px] leading-6 text-muted-foreground',
+          className,
         ]
           .filter(Boolean)
           .join(' ')}
