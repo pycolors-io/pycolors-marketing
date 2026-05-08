@@ -58,6 +58,103 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.12.0',
+    title:
+      'Premium brand system, SaaS token architecture, marketing polish, and stronger Starter Free-to-Pro conversion',
+    dateLabel: 'Fri 8 May 2026',
+    dateISO: '2026-05-08',
+    status: 'Stable',
+    releaseWeekLabel: 'May 2026 (weekly release)',
+    summary:
+      'This release strengthens PyColors as a premium SaaS developer platform. It refines the visual identity, introduces a richer token architecture, improves marketing consistency, clarifies Starter Free and Starter Pro upgrade paths, adds stronger product screenshots, and makes the pricing, homepage, roadmap, changelog, docs, footer, header, and starter pages feel more cohesive, credible, and conversion-ready.',
+    highlights: [
+      {
+        title: 'Premium brand and token system upgraded',
+        items: [
+          'Expanded the design token system with richer semantic colors, surfaces, borders, shadows, brand roles, state roles, and Tailwind mappings.',
+          'Introduced a stronger violet-first SaaS foundation with clearer support for premium, platform, success, accent, and elevated UI states.',
+          'Refined typography by removing the Graphit font, standardizing Mona Sans, and improving logo and wordmark presentation.',
+          'Standardized border radius usage across the marketing site for a sharper, more consistent premium product feel.',
+        ],
+      },
+      {
+        title: 'Marketing UI is more coherent and accessible',
+        items: [
+          'Improved button styling, transitions, focus states, error colors, icon accessibility, and CTA consistency.',
+          'Unified card, badge, border, background, hover, and shadow treatments across pricing, starters, guides, legal, open-source, about, roadmap, changelog, and upgrade pages.',
+          'Refined PageHero styling with better spacing, gradients, borders, badge hierarchy, and typography rhythm.',
+          'Enforced a consistent dark theme experience by disabling system theme detection.',
+        ],
+      },
+      {
+        title: 'Homepage and product path clarified',
+        items: [
+          'Revamped the homepage structure and copy to focus on the path from Starter Free validation to Starter Pro launch readiness.',
+          'Removed legacy pricing, template, and example noise to make the core product journey easier to understand.',
+          'Clarified the progression across UI, Guides, Patterns, Starter Free, Starter Pro, pricing, and upgrade surfaces.',
+          'Improved onboarding and progressive adoption messaging so visitors understand where to start and when to upgrade.',
+        ],
+      },
+      {
+        title:
+          'Pricing and upgrade surfaces are more conversion-focused',
+        items: [
+          'Refined the pricing page to better explain Starter Pro as a production-ready SaaS foundation with auth, billing, database, and commercial usage.',
+          'Added stronger SaaS trust messaging, stack clarity, launch pricing details, FAQ improvements, and buyer reassurance.',
+          'Simplified redundant sections to reduce cognitive load and keep attention on the Free versus Pro decision.',
+          'Improved the upgrade page with clearer value propositions, product differentiation, accessibility, and CTA clarity.',
+        ],
+      },
+      {
+        title: 'Starter pages now show stronger product proof',
+        items: [
+          'Added business-focused screenshots to the Starter Pro page for authentication, billing, and protected app structure.',
+          'Enhanced the Starter Free page with visual product previews that better communicate available screens and validation surfaces.',
+          'Refined starter page cards, badges, screenshots, CTAs, and comparison messaging for clearer Free-to-Pro positioning.',
+          'Made the distinction between mocked validation surfaces and production-ready wiring more explicit across starter marketing pages.',
+        ],
+      },
+      {
+        title: 'Navigation, header, footer, and logo system improved',
+        items: [
+          'Refined the site header with updated colors, borders, hover states, menu behavior, and clearer product descriptions.',
+          'Added a Guides link to the main navigation and improved product menu clarity.',
+          'Introduced a dedicated docs logo component and refreshed the main brand logo with a reusable Logo component.',
+          'Reorganized footer links into clearer groups including Upgrade, About, Open Source, and legal sections.',
+        ],
+      },
+      {
+        title: 'Docs maintainability and rendering improved',
+        items: [
+          'Improved MDX table rendering with better structure, responsiveness, and consistent styling.',
+          'Introduced and reused a shared PreferAvoid component across UI documentation to reduce duplication and improve consistency.',
+          'Added inline code rendering support for guideline text in Prefer/Avoid sections.',
+          'Standardized documentation heading hierarchy for cleaner structure and better long-term maintainability.',
+        ],
+      },
+      {
+        title: 'Roadmap and changelog clarity improved',
+        items: [
+          'Refined changelog UI with cleaner badges, cards, spacing, color usage, and release note readability.',
+          'Improved roadmap UX with clearer milestones, condensed descriptions, stronger visual structure, and more actionable commercial priorities.',
+          'Better aligned release notes and roadmap content with the current priority: trust, conversion, Starter Pro proof, and product credibility.',
+        ],
+      },
+      {
+        title: 'Project hygiene improved',
+        items: [
+          'Expanded .gitignore coverage for generated Fumadocs source files, local artifacts, IDE files, and tool-generated outputs.',
+          'Refactored layout wrapper typing to enforce readonly children and improve type-safety.',
+          'Centralized logo usage and simplified repeated layout patterns for easier future maintenance.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View pricing',
+      href: '/pricing',
+    },
+  },
+  {
     version: 'v1.11.0',
     title:
       'Premium documentation system, docs navigation polish, SaaS guides expansion, and stronger Free-to-Pro clarity',

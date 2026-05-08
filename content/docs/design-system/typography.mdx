@@ -11,6 +11,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -307,60 +308,22 @@ Do not override it if:
 
 ## Common mistakes
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  {/* Prefer */}
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>limited heading sizes</li>
-        <li>semantic text colors</li>
-        <li>muted helper copy</li>
-        <li>labels for metadata</li>
-        <li>reasonable line lengths</li>
-      </ul>
-    </CardContent>
-
-    {/* subtle hover glow */}
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  {/* Avoid */}
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent>
-      <ul className="m-0 space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>too many font sizes in one panel</li>
-        <li>uppercase long-form copy</li>
-        <li>raw color values for text</li>
-        <li>random heading sizes between pages</li>
-        <li>using weight instead of structure</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'limited heading sizes',
+    'semantic text colors',
+    'muted helper copy',
+    'labels for metadata',
+    'reasonable line lengths',
+  ]}
+  avoid={[
+    'too many font sizes in one panel',
+    'uppercase long-form copy',
+    'raw color values for text',
+    'random heading sizes between pages',
+    'using weight instead of structure',
+  ]}
+/>
 
 <Accordions type="single">
   <Accordion title="Why not use a larger scale everywhere?">

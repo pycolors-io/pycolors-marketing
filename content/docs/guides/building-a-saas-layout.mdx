@@ -10,6 +10,7 @@ import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
 import { LayoutDashboard, PanelLeft, Smartphone, Settings, Table, CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -193,41 +194,20 @@ Same layout. Different content.
 
 ## Decision guide
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        <CardTitle className="text-sm">Prefer</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>composition over abstraction</li>
-        <li>clear separation of concerns</li>
-        <li>mobile-first adaptability</li>
-        <li>small reusable primitives</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <XCircle className="h-4 w-4 text-destructive" />
-        <CardTitle className="text-sm">Avoid</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>monolithic AppShell too early</li>
-        <li>hardcoded layout logic</li>
-        <li>coupling navigation with content</li>
-        <li>over-engineered abstractions</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'composition over abstraction',
+    'clear separation of concerns',
+    'mobile-first adaptability',
+    'small reusable primitives',
+  ]}
+  avoid={[
+    'monolithic AppShell too early',
+    'hardcoded layout logic',
+    'coupling navigation with content',
+    'over-engineered abstractions',
+  ]}
+/>
 
 ## When to introduce an AppShell
 

@@ -29,6 +29,7 @@ import {
   ShieldCheck,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -379,57 +380,24 @@ Avoid over-abstracting if:
 - the abstraction makes debugging harder
 - accessibility behavior becomes implicit
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
 
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>schema-driven validation</li>
-        <li>field-level errors near the field</li>
-        <li>form-level alerts for submission failures</li>
-        <li>clear submit button loading state</li>
-        <li>small, explicit, predictable form structure</li>
-      </ul>
-    </CardContent>
 
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>abstracting the entire form too early</li>
-        <li>hiding validation rules inside UI primitives</li>
-        <li>showing only a toast for blocking form errors</li>
-        <li>allowing duplicate submissions</li>
-        <li>relying only on color to communicate errors</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'schema-driven validation',
+    'field-level errors near the field',
+    'form-level alerts for submission failures',
+    'clear submit button loading state',
+    'small, explicit, predictable form structure',
+  ]}
+  avoid={[
+    'abstracting the entire form too early',
+    'hiding validation rules inside UI primitives',
+    'showing only a toast for blocking form errors',
+    'allowing duplicate submissions',
+    'relying only on color to communicate errors',
+  ]}
+/>
 
 ## Production checklist
 

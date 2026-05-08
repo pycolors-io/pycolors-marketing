@@ -3,15 +3,16 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   BookOpen,
-  Sparkles,
   PenTool,
+  Sparkles,
 } from 'lucide-react';
 
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
 import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { BlogList } from '@/components/blog/blog-list';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import { PageHero } from '@/components/marketing/page-hero';
+import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import {
   getAllCategories,
   getAllPosts,
@@ -42,9 +43,12 @@ export const metadata: Metadata = {
   },
 };
 
-function Pill({ children }: { children: React.ReactNode }) {
+const focusRing =
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+function Pill({ children }: { readonly children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {children}
     </span>
   );
@@ -55,24 +59,52 @@ function SectionHeader({
   description,
   action,
 }: {
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-5 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
-      <div className="space-y-1">
-        <h2 className="font-brand text-lg font-semibold tracking-tight">
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="space-y-2">
+        <h2 className="font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h2>
+
         {description ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
             {description}
           </p>
         ) : null}
       </div>
-      {action ? <div className="sm:self-start">{action}</div> : null}
+
+      {action ? <div className="shrink-0">{action}</div> : null}
     </div>
+  );
+}
+
+function StepCard({
+  step,
+  title,
+  description,
+}: {
+  readonly step: string;
+  readonly title: string;
+  readonly description: string;
+}) {
+  return (
+    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
+      <div className="space-y-3">
+        <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+          {step}
+        </div>
+
+        <div className="text-sm font-medium">{title}</div>
+
+        <p className="text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </div>
+    </Card>
   );
 }
 
@@ -85,114 +117,163 @@ export default function BlogPage() {
   return (
     <Container className="py-18">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
-            ]}
-          />
-        </div>
-
-        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <Badge variant="secondary" className="gap-2">
-              <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-              Blog
-            </Badge>
-            <Badge variant="outline">Technical writing</Badge>
-            <Badge variant="outline" className="gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Product-first
-            </Badge>
-          </div>
-
-          <div className="space-y-4">
-            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Technical articles for developers
-              <span className="block font-bold">
-                building real SaaS products with better structure.
-              </span>
-            </h1>
-
-            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Real implementation notes, architecture decisions, UX
-              tradeoffs, and lessons learned while building PyColors.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild>
-              <Link href="/starters/free">
-                Start with Starter Free
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
+        <PageHero
+          maxWidth="5xl"
+          badges={[
+            {
+              label: 'Blog',
+              variant: 'secondary',
+              icon: (
+                <BookOpen
+                  className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
-              </Link>
-            </Button>
+              ),
+            },
+            {
+              label: 'Technical writing',
+              variant: 'outline',
+            },
+            {
+              label: 'Product-first',
+              variant: 'outline',
+              icon: (
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
+            },
+          ]}
+          title="Technical articles for developers"
+          subtitle="building real SaaS products with better structure."
+          description="The PyColors blog turns real product work into useful technical content: SaaS architecture, Next.js decisions, design systems, billing, product surfaces, and production-ready implementation tradeoffs."
+          actions={
+            <>
+              <Button
+                asChild
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href="/starters/free">
+                  Start with Starter Free
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
 
-            <Button asChild variant="secondary">
-              <Link href="/guides">Browse Guides</Link>
-            </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href="/guides">Browse Guides</Link>
+              </Button>
 
-            <Button asChild variant="outline">
-              <Link href="/ui/patterns">Browse UI Patterns</Link>
-            </Button>
-          </div>
+              <BuyStarterProButton
+                fullWidth={false}
+                label="Buy Starter Pro — 199 €"
+              />
+            </>
+          }
+          pills={[
+            'Next.js',
+            'SaaS Architecture',
+            'Billing',
+            'Design Systems',
+            'Product UX',
+          ]}
+        />
 
-          <div className="flex flex-wrap justify-center gap-2 pt-1">
-            <Pill>Next.js</Pill>
-            <Pill>SaaS Architecture</Pill>
-            <Pill>Billing</Pill>
-            <Pill>Design Systems</Pill>
-            <Pill>Product UX</Pill>
-          </div>
-        </header>
+        <section className="py-10 sm:py-12">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+            <CardContent className="p-6 sm:p-7">
+              <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge
+                      variant="outline"
+                      className="gap-2 rounded-[5px]"
+                    >
+                      <PenTool
+                        className="h-3.5 w-3.5"
+                        aria-hidden="true"
+                      />
+                      Why this blog exists
+                    </Badge>
+                  </div>
 
-        <section className="py-4 sm:py-6">
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="gap-2">
-                    <PenTool
-                      className="h-3.5 w-3.5"
-                      aria-hidden="true"
-                    />
-                    Why this blog exists
-                  </Badge>
+                  <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                    Real implementation work turned into durable
+                    technical content.
+                  </h2>
                 </div>
 
-                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                  This blog turns real implementation work into useful
-                  technical content. The goal is not generic
-                  tutorials. The goal is to document concrete
-                  decisions around SaaS architecture, product
-                  surfaces, UI systems, and production-ready
-                  tradeoffs.
-                </p>
-              </div>
+                <div className="space-y-4">
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    This blog is not built for generic tutorials. It
+                    documents concrete decisions around SaaS
+                    architecture, product surfaces, UI systems,
+                    business wiring, and production-ready tradeoffs
+                    while building the PyColors ecosystem.
+                  </p>
 
-              <div className="flex flex-wrap gap-2 sm:min-w-[220px] sm:justify-end">
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/guides">View Guides</Link>
-                </Button>
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/upgrade">Explore PRO</Link>
-                </Button>
+                  <div className="flex flex-wrap gap-2">
+                    <Pill>Product engineering</Pill>
+                    <Pill>Architecture notes</Pill>
+                    <Pill>Conversion lessons</Pill>
+                    <Pill>Docs-first thinking</Pill>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-4">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className={cn('rounded-[5px]', focusRing)}
+                    >
+                      <Link href="/guides">View Guides</Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className={cn('rounded-[5px]', focusRing)}
+                    >
+                      <Link href="/ui/patterns">Browse Patterns</Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className={cn('rounded-[5px]', focusRing)}
+                    >
+                      <Link href="/upgrade">Explore Upgrade</Link>
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </CardContent>
           </Card>
         </section>
 
         {featuredPosts.length > 0 ? (
-          <section className="py-10 sm:py-12">
+          <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               title="Featured articles"
               description="Start with the highest-signal articles connected to real product and engineering decisions."
               action={
-                <Button asChild size="sm" variant="outline">
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className={cn('rounded-[5px]', focusRing)}
+                >
                   <Link href="/starters">Explore Starters</Link>
                 </Button>
               }
@@ -202,12 +283,17 @@ export default function BlogPage() {
           </section>
         ) : null}
 
-        <section className="py-10 sm:py-12">
+        <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             title="Latest articles"
             description="Focused content for the product surfaces and implementation decisions that matter most."
             action={
-              <Button asChild size="sm" variant="outline">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className={cn('rounded-[5px]', focusRing)}
+              >
                 <Link href="/docs/starter">Starter docs</Link>
               </Button>
             }
@@ -219,88 +305,71 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <section className="py-8 sm:py-10">
+        <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             title="How the blog fits the PyColors path"
             description="The blog builds authority, clarifies the product logic, and naturally bridges education to implementation."
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
-            <Card className="p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 01
-                </div>
-                <div className="text-sm font-medium">
-                  Learn from real decisions
-                </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Use articles to understand how strong SaaS products
-                  are structured across auth, billing, UI systems,
-                  settings, and dashboard surfaces.
-                </p>
-              </div>
-            </Card>
+            <StepCard
+              step="Step 01"
+              title="Learn from real decisions"
+              description="Use articles to understand how strong SaaS products are structured across auth, billing, UI systems, settings, and dashboard surfaces."
+            />
 
-            <Card className="p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 02
-                </div>
-                <div className="text-sm font-medium">
-                  Move from concept to pattern
-                </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Connect the article logic to examples, guides, and
-                  reusable UI patterns built around the same product
-                  surfaces.
-                </p>
-              </div>
-            </Card>
+            <StepCard
+              step="Step 02"
+              title="Move from concept to pattern"
+              description="Connect the article logic to examples, guides, and reusable UI patterns built around the same product surfaces."
+            />
 
-            <Card className="p-5">
-              <div className="space-y-2">
-                <div className="text-xs text-muted-foreground">
-                  Step 03
-                </div>
-                <div className="text-sm font-medium">
-                  Build faster with PyColors
-                </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Start with Starter Free, then move to PRO or
-                  advanced blocks when architecture and business
-                  wiring become the bottleneck.
-                </p>
-              </div>
-            </Card>
+            <StepCard
+              step="Step 03"
+              title="Build faster with PyColors"
+              description="Start with Starter Free, then move to Starter Pro when architecture, authentication, billing, and business wiring become the bottleneck."
+            />
           </div>
         </section>
 
-        <section className="mt-20">
-          <Card className="flex flex-col gap-6 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div className="max-w-md space-y-2">
-              <h2 className="font-brand text-lg font-semibold tracking-tight">
-                Turn reading into implementation leverage
-              </h2>
+        <section className="pt-4">
+          <Card className="rounded-[5px] border border-border-subtle bg-surface px-6 py-8 shadow-soft sm:px-8 sm:py-10">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-2xl space-y-3">
+                <Badge variant="outline" className="rounded-[5px]">
+                  Next step
+                </Badge>
 
-              <p className="text-sm text-muted-foreground">
-                Use the blog to understand the reasoning, then use
-                PyColors to ship the product surface faster.
-              </p>
-            </div>
+                <h2 className="font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
+                  Turn reading into implementation leverage.
+                </h2>
 
-            <div className="flex flex-wrap gap-3">
-              <Button asChild>
-                <Link href="/starters/free">Starter Free</Link>
-              </Button>
+                <p className="text-sm leading-7 text-muted-foreground">
+                  Use the blog to understand the reasoning, then use
+                  PyColors to ship the product surface faster.
+                </p>
 
-              <Button asChild variant="secondary">
-                <Link href="/upgrade">Explore PRO</Link>
-              </Button>
+                <div className="flex flex-wrap gap-2">
+                  <Pill>Read the logic</Pill>
+                  <Pill>Validate with Free</Pill>
+                  <Pill>Upgrade when ready</Pill>
+                </div>
+              </div>
 
-              <Button asChild variant="outline">
-                <Link href="/guides">Read Guides</Link>
-              </Button>
+              <div className="flex flex-col gap-3 sm:min-w-60">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={cn(
+                    'h-11 rounded-[5px] text-sm font-medium',
+                    focusRing,
+                  )}
+                >
+                  <Link href="/starters/free">Starter Free</Link>
+                </Button>
+
+                <BuyStarterProButton />
+              </div>
             </div>
           </Card>
         </section>

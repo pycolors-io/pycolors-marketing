@@ -9,6 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 import {
   OverlayDecisionDemo,
@@ -195,43 +196,21 @@ Avoid misuse when:
 - overlays replace clear page structure
 - multiple overlays stack unnecessarily
 
-<div className="mb-2 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        Prefer
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-        <li>one overlay per interaction</li>
-        <li>clear user intent</li>
-        <li>accessible focus handling</li>
-        <li>progressive disclosure</li>
-      </ul>
-    </CardContent>
-  </Card>
 
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base flex items-center gap-2">
-        <XCircle className="h-4 w-4 text-destructive" />
-        Avoid
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-        <li>stacking multiple overlays</li>
-        <li>using Dialog for navigation</li>
-        <li>using Dropdown for forms</li>
-        <li>implicit destructive actions</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
-
-
+<PreferAvoid
+  prefer={[
+    'one overlay per interaction',
+    'clear user intent',
+    'accessible focus handling',
+    'progressive disclosure',
+]}
+  avoid={[
+    'stacking multiple overlays',
+    'using Dialog for navigation',
+    'using Dropdown for forms',
+    'implicit destructive actions',
+  ]}
+/>
 
 ## Why this matters
 

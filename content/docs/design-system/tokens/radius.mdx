@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -196,41 +197,21 @@ Avoid local overrides if:
 - it introduces visual noise
 - it does not belong to a reusable pattern
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        Prefer
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>use semantic radius tokens</li>
-        <li>keep a small controlled scale</li>
-        <li>reuse values across components</li>
-        <li>adjust via base variable</li>
-      </ul>
-    </CardContent>
-  </Card>
 
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <XCircle className="h-4 w-4 text-destructive" />
-        Avoid
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>random radius per component</li>
-        <li>mixing multiple visual styles</li>
-        <li>hardcoding values</li>
-        <li>breaking consistency between surfaces</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'use semantic radius tokens',
+    'keep a small controlled scale',
+    'reuse values across components',
+    'adjust via base variable',
+  ]}
+  avoid={[
+    'random radius per component',
+    'mixing multiple visual styles',
+    'hardcoding values',
+    'breaking consistency between surfaces',
+  ]}
+/>
 
 ## Why it matters
 

@@ -33,6 +33,7 @@ import {
   Table2,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 import {
   PaginationBasicExample,
@@ -376,51 +377,22 @@ Guidelines:
 
 ## Prefer / avoid
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>controlled page state</li>
-        <li>disabled unavailable controls</li>
-        <li>ellipsis for large page counts</li>
-        <li>URL sync in the route layer when needed</li>
-        <li>clear loading and empty states around paged data</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>fetching data inside Pagination</li>
-        <li>rendering every page for large ranges</li>
-        <li>clickable ellipsis</li>
-        <li>pagination for tiny data sets</li>
-        <li>using pagination for feed-style discovery</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'controlled page state',
+    'disabled unavailable controls',
+    'ellipsis for large page counts',
+    'URL sync in the route layer when needed',
+    'clear loading and empty states around paged data',
+  ]}
+  avoid={[
+    'fetching data inside Pagination',
+    'rendering every page for large ranges',
+    'clickable ellipsis',
+    'pagination for tiny data sets',
+    'using pagination for feed-style discovery',
+  ]}
+/>
 
 ## Product copy guidelines
 
