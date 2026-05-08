@@ -28,6 +28,7 @@ import {
   Sparkles,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Getting Started</Badge>
@@ -343,51 +344,22 @@ The documentation should help every visitor understand:
 
 ## What to avoid
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>running the project before refactoring</li>
-        <li>understanding the Free → Pro path</li>
-        <li>validating product UX before deep backend work</li>
-        <li>using patterns for repeated product flows</li>
-        <li>upgrading when auth and billing slow launch</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>rewriting everything before understanding the baseline</li>
-        <li>starting with billing before validating the product</li>
-        <li>mixing UI primitives with business logic</li>
-        <li>treating Starter Free as a complete backend</li>
-        <li>waiting too long to deploy and test the product surface</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'running the project before refactoring',
+    'understanding the Free → Pro path',
+    'validating product UX before deep backend work',
+    'using patterns for repeated product flows',
+    'upgrading when auth and billing slow launch',
+  ]}
+  avoid={[
+    'rewriting everything before understanding the baseline',
+    'starting with billing before validating the product',
+    'mixing UI primitives with business logic',
+    'treating Starter Free as a complete backend',
+    'waiting too long to deploy and test the product surface',
+  ]}
+/>
 
 ## Next steps
 

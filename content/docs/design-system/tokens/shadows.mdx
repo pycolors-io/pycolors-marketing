@@ -16,6 +16,7 @@ import {
   CardContent,
 } from "@pycolors/ui";
 import { CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -184,41 +185,20 @@ Avoid if:
 - it duplicates an existing token
 - it creates visual noise
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        Prefer
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>use predefined shadow tokens</li>
-        <li>keep elevation subtle</li>
-        <li>increase depth only when needed</li>
-        <li>align shadow with radius and surface</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <XCircle className="h-4 w-4 text-destructive" />
-        Avoid
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>stacking multiple shadows</li>
-        <li>high contrast or heavy shadows</li>
-        <li>custom box-shadow per component</li>
-        <li>inconsistent elevation levels</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'use predefined shadow tokens',
+    'keep elevation subtle',
+    'increase depth only when needed',
+    'align shadow with radius and surface',
+  ]}
+  avoid={[
+    'stacking multiple shadows',
+    'high contrast or heavy shadows',
+    'custom box-shadow per component',
+    'inconsistent elevation levels',
+  ]}
+/>
 
 ## Why it matters
 

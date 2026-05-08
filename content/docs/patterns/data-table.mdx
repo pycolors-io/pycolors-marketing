@@ -24,6 +24,7 @@ import {
   Table2,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 import {
   DataTableLoading,
@@ -338,57 +339,22 @@ Avoid this pattern if:
 - mobile-first scanning is more important than tabular comparison
 - the table would hide the primary product action
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>explicit loading, empty, and error states</li>
-        <li>controlled pagination and filtering</li>
-        <li>row actions in contextual menus</li>
-        <li>progressive filters for complex datasets</li>
-        <li>clear ownership between data layer and UI</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>fetching data inside a visual table primitive</li>
-        <li>using a table for non-tabular content</li>
-        <li>hiding blocking failures behind only a toast</li>
-        <li>crowding the toolbar with every possible filter</li>
-        <li>destructive row actions without confirmation or recovery</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'explicit loading, empty, and error states',
+    'controlled pagination and filtering',
+    'row actions in contextual menus',
+    'progressive filters for complex datasets',
+    'clear ownership between data layer and UI',
+  ]}
+  avoid={[
+    'fetching data inside a visual table primitive',
+    'using a table for non-tabular content',
+    'hiding blocking failures behind only a toast',
+    'crowding the toolbar with every possible filter',
+    'destructive row actions without confirmation or recovery',
+  ]}
+/>
 
 ## Production checklist
 

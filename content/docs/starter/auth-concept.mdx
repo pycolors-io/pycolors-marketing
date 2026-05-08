@@ -20,6 +20,7 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -180,40 +181,18 @@ async function onSubmit(values) {
 
 ## UX rules
 
-<div className="grid gap-6 md:grid-cols-2">
 
-<Card className="rounded-2xl border-border/60 bg-card/70">
-  <CardHeader>
-    <CardTitle className="text-sm flex items-center gap-2">
-      <CheckCircle className="h-4 w-4 text-primary" />
-      Prefer
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
-    <ul className="text-sm text-muted-foreground space-y-2">
-      <li>clear error messages</li>
-      <li>disabled submit while loading</li>
-      <li>consistent redirects</li>
-      <li>explicit success states</li>
-    </ul>
-  </CardContent>
-</Card>
-
-<Card className="rounded-2xl border-border/60 bg-card/70">
-  <CardHeader>
-    <CardTitle className="text-sm flex items-center gap-2">
-      <XCircle className="h-4 w-4 text-destructive" />
-      Avoid
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
-    <ul className="text-sm text-muted-foreground space-y-2">
-      <li>generic errors</li>
-      <li>double submissions</li>
-      <li>no feedback states</li>
-      <li>leaking user existence</li>
-    </ul>
-  </CardContent>
-</Card>
-
-</div>
+<PreferAvoid
+  prefer={[
+    'clear error messages',
+    'disabled submit while loading',
+    'consistent redirects',
+    'explicit success states',
+  ]}
+  avoid={[
+    'generic errors',
+    'double submissions',
+    'no feedback states',
+    'leaking user existence',
+  ]}
+/>

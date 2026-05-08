@@ -10,6 +10,7 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
 import { CheckCircle, XCircle, RefreshCw } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 import {
   OptimisticToggleDemo,
@@ -231,43 +232,20 @@ Good error messages:
 
 ## Decision guide
 
-<div className="mb-2 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        <CardTitle className="text-sm">Prefer</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>instant feedback over spinners</li>
-        <li>clear recovery paths</li>
-        <li>consistent feedback levels</li>
-        <li>optimistic updates when safe</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <XCircle className="h-4 w-4 text-destructive" />
-        <CardTitle className="text-sm">Avoid</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>blocking UI for low-risk actions</li>
-        <li>silent failures</li>
-        <li>no retry or undo path</li>
-        <li>inconsistent feedback patterns</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
-
-
+<PreferAvoid
+  prefer={[
+    'instant feedback over spinners',
+    'clear recovery paths',
+    'consistent feedback levels',
+    'optimistic updates when safe',
+  ]}
+  avoid={[
+    'blocking UI for low-risk actions',
+    'silent failures',
+    'no retry or undo path',
+    'inconsistent feedback patterns',
+  ]}
+/>
 
 ## Why this matters
 

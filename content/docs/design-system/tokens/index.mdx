@@ -25,6 +25,7 @@ import {
   Sparkles,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -230,57 +231,23 @@ Avoid creating a token when:
 - the token duplicates an existing role
 - it makes the system harder to understand
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
 
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>tokens for repeated visual decisions</li>
-        <li>semantic names that describe intent</li>
-        <li>centralized values exposed through utilities</li>
-        <li>small scales that are easy to remember</li>
-        <li>documentation that explains when to use each token</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>tokenizing every one-off value</li>
-        <li>names that describe appearance only</li>
-        <li>duplicating existing semantic roles</li>
-        <li>hardcoding token values inside components</li>
-        <li>adding scales before the product needs them</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'tokens for repeated visual decisions',
+    'semantic names that describe intent',
+    'centralized values exposed through utilities',
+    'small scales that are easy to remember',
+    'documentation that explains when to use each token',
+  ]}
+  avoid={[
+    'tokenizing every one-off value',
+    'names that describe appearance only',
+    'duplicating existing semantic roles',
+    'hardcoding token values inside components',
+    'adding scales before the product needs them',
+  ]}
+/>
 
 ## Token flow
 

@@ -27,6 +27,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -337,57 +338,22 @@ Move to Starter Pro when you need:
 - role-based access control
 - production delivery
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>explore the full vertical slice first</li>
-        <li>adapt one domain entity before rewriting structure</li>
-        <li>keep mock data while validating UX</li>
-        <li>wire backend only when the product direction is clear</li>
-        <li>upgrade when auth, billing, and data become the blocker</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>treating Starter Free like a complete SaaS backend</li>
-        <li>rewriting the structure before understanding it</li>
-        <li>mixing UI and business logic too early</li>
-        <li>removing product surfaces before testing the full flow</li>
-        <li>adding backend complexity before validating the product</li>
-      </ul>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'explore the full vertical slice first',
+    'adapt one domain entity before rewriting structure',
+    'keep mock data while validating UX',
+    'wire backend only when the product direction is clear',
+    'upgrade when auth, billing, and data become the blocker',
+  ]}
+  avoid={[
+    'treating Starter Free like a complete SaaS backend',
+    'rewriting the structure before understanding it',
+    'mixing UI and business logic too early',
+    'removing product surfaces before testing the full flow',
+    'adding backend complexity before validating the product',
+  ]}
+/>
 
 ## First run path
 
