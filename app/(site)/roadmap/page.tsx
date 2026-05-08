@@ -114,7 +114,7 @@ const milestones: Array<{
     id: 'May 2026',
     title: 'May 2026',
     subtitle:
-      'Turn documentation into a premium product surface with clearer navigation and stronger upgrade paths.',
+      'Turn documentation, branding, tokens, starters, pricing, and upgrade paths into a more premium and conversion-ready product surface.',
   },
   {
     id: 'H1 2026',
@@ -354,6 +354,15 @@ const items: RoadmapItem[] = [
     milestone: 'May 2026',
     tags: ['Marketing', 'Pricing', 'Conversion'],
     href: '/pricing',
+  },
+  {
+    title: 'Premium brand, token, and conversion polish',
+    description:
+      'Refined the PyColors brand system, token architecture, homepage, pricing, upgrade path, starter pages, screenshots, headers, footers, changelog, and roadmap for a more cohesive premium SaaS platform experience.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Brand', 'Tokens', 'Conversion'],
+    href: '/changelog',
   },
   {
     title: 'Starter Pro conversion instrumentation',
