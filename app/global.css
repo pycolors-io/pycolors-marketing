@@ -403,30 +403,30 @@ span[data-slot="badge"] {
 
 .blog-prose :where(h1, h2, h3, h4) {
   font-family: var(--font-brand);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   color: var(--foreground);
 }
 
 .blog-prose h2 {
-  @apply mt-16 scroll-m-24 border-t border-border-subtle pt-12 text-3xl font-semibold tracking-[-0.04em];
+  @apply mt-12 scroll-m-24 border-t border-border-subtle pt-9 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl;
 }
 
 .blog-prose h3 {
-  @apply mt-12 scroll-m-24 text-2xl font-semibold tracking-[-0.035em];
+  @apply mt-9 scroll-m-24 text-xl font-semibold tracking-[-0.03em] sm:text-2xl;
 }
 
 .blog-prose h4 {
-  @apply mt-9 scroll-m-24 text-lg font-semibold tracking-[-0.025em];
+  @apply mt-7 scroll-m-24 text-base font-semibold tracking-[-0.02em];
 }
 
 .blog-prose p {
-  @apply max-w-[72ch] text-[15px] leading-8 text-muted-foreground sm:text-base;
+  @apply max-w-[72ch] text-[15px] leading-7 text-muted-foreground sm:text-base;
 }
 
 @media (min-width: 1024px) {
   .blog-prose p {
-    font-size: 17px;
-    line-height: 1.9;
+    font-size: 16px;
+    line-height: 1.75;
   }
 }
 
@@ -452,19 +452,19 @@ span[data-slot="badge"] {
 
 .blog-prose ul,
 .blog-prose ol {
-  @apply my-8 max-w-[72ch] pl-5 text-[15px] text-muted-foreground sm:text-base;
+  @apply my-6 max-w-[72ch] pl-5 text-[15px] text-muted-foreground sm:text-base;
 }
 
 @media (min-width: 1024px) {
   .blog-prose ul,
   .blog-prose ol {
-    font-size: 17px;
-    line-height: 1.9;
+    font-size: 16px;
+    line-height: 1.75;
   }
 }
 
 .blog-prose li {
-  @apply my-2.5 leading-8;
+  @apply my-1.5 leading-7;
 }
 
 .blog-prose li::marker {
@@ -472,17 +472,17 @@ span[data-slot="badge"] {
 }
 
 .blog-prose hr {
-  @apply my-16 border-border-subtle;
+  @apply my-12 border-border-subtle;
 }
 
 .blog-prose blockquote {
-  @apply my-10 max-w-[72ch] border-l border-border-subtle pl-5 text-[15px] italic leading-8 text-muted-foreground sm:text-base;
+  @apply my-8 max-w-[72ch] border-l border-border-subtle pl-5 text-[15px] italic leading-7 text-muted-foreground sm:text-base;
 }
 
 @media (min-width: 1024px) {
   .blog-prose blockquote {
-    font-size: 17px;
-    line-height: 1.9;
+    font-size: 16px;
+    line-height: 1.75;
   }
 }
 
@@ -491,7 +491,7 @@ span[data-slot="badge"] {
 }
 
 .blog-prose table {
-  @apply my-10 w-full overflow-hidden rounded-[5px] border border-border-subtle text-sm;
+  @apply my-8 w-full overflow-hidden rounded-[5px] border border-border-subtle text-sm;
 }
 
 .blog-prose thead {
@@ -515,12 +515,12 @@ span[data-slot="badge"] {
 }
 
 .blog-prose img {
-  @apply my-10 rounded-[5px] border border-border-subtle;
+  @apply my-8 rounded-[5px] border border-border-subtle;
 }
 
 .blog-prose .fd-callout,
 .blog-prose [data-callout] {
-  @apply my-10 rounded-[5px] border border-border-subtle bg-background/40;
+  @apply my-8 rounded-[5px] border border-border-subtle bg-background/40;
 }
 
 .blog-prose :where(h2, h3, h4) a {
@@ -528,7 +528,7 @@ span[data-slot="badge"] {
 }
 
 .blog-prose [data-rehype-pretty-code-fragment] {
-  @apply my-10 overflow-hidden rounded-[5px] border border-border-subtle bg-surface-muted;
+  @apply my-8 overflow-hidden rounded-[5px] border border-border-subtle bg-surface-muted;
 }
 
 .blog-prose [data-rehype-pretty-code-fragment] pre {

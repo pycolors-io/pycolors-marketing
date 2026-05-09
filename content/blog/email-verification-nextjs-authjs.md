@@ -15,7 +15,7 @@ featured: true
 readingTime: 10 min read
 cover: /seo/blog/og-blog-saas.png
 cta:
-  label: Get the production-ready starter
+  label: Explore Starters
   href: /starters
   variant: pro
 ---
