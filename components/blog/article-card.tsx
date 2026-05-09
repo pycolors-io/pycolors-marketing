@@ -1,42 +1,60 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock3 } from 'lucide-react';
 
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { formatDate } from '@/lib/blog/utils';
 import { BlogPost } from '@/types/blog';
 
 type ArticleCardProps = {
-  post: BlogPost;
+  readonly post: BlogPost;
 };
+
+const focusRing =
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <Card className="flex h-full flex-col justify-between p-6">
-      <div className="space-y-4">
+    <Card className="group flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-elevated">
+      <div className="space-y-5">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="outline" className="text-xs">
+          <Badge
+            variant="outline"
+            className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
+          >
             {post.category}
           </Badge>
+
           {post.featured ? (
-            <Badge variant="secondary" className="text-xs">
+            <Badge className="rounded-[5px] text-[11px]">
               Featured
             </Badge>
           ) : null}
         </div>
 
-        <div className="space-y-2">
-          <h3 className="font-brand text-base font-semibold tracking-tight">
-            {post.title}
+        <div className="space-y-2.5">
+          <h3 className="font-brand text-base font-semibold leading-snug tracking-tight text-foreground">
+            <Link
+              href={post.url}
+              className={cn('outline-none', focusRing)}
+            >
+              {post.title}
+            </Link>
           </h3>
 
-          <p className="text-sm leading-relaxed text-muted-foreground">
+          <p className="line-clamp-3 text-sm leading-7 text-muted-foreground">
             {post.description}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           <span>{formatDate(post.date)}</span>
-          {post.readingTime ? <span>{post.readingTime}</span> : null}
+
+          {post.readingTime ? (
+            <span className="inline-flex items-center gap-1.5">
+              <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
+              {post.readingTime}
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -45,7 +63,10 @@ export function ArticleCard({ post }: ArticleCardProps) {
           asChild
           size="sm"
           variant="outline"
-          className="w-full"
+          className={cn(
+            'h-9 w-full rounded-[5px] text-xs font-medium transition-colors group-hover:border-primary/40',
+            focusRing,
+          )}
         >
           <Link href={post.url}>
             Read article

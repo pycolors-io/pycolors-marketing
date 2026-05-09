@@ -1,5 +1,5 @@
 type AuthorBadgeProps = {
-  name: string;
+  readonly name: string;
 };
 
 export function AuthorBadge({ name }: AuthorBadgeProps) {
@@ -9,9 +9,10 @@ export function AuthorBadge({ name }: AuthorBadgeProps) {
     .slice(0, 2)
     .join('')
     .toUpperCase();
+
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full border bg-muted text-sm font-semibold">
+      <div className="flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-sm font-semibold text-foreground shadow-soft">
         {initials}
       </div>
 

@@ -15,7 +15,7 @@ featured: true
 readingTime: 10 min read
 cover: /seo/blog/og-blog-saas.png
 cta:
-  label: Get the production-ready starter
+  label: Explore Starters
   href: /starters
   variant: pro
 ---
@@ -40,8 +40,6 @@ In this guide, you’ll learn how to implement a **production-ready email verifi
 
 This is the exact architecture used in the PyColors Starter Pro.
 
----
-
 ## What We’re Building
 
 A complete email verification flow:
@@ -51,8 +49,6 @@ A complete email verification flow:
 3. User clicks a secure token link
 4. Token is validated
 5. Account is marked as verified
-
----
 
 ## Why Email Verification Matters in SaaS
 
@@ -64,8 +60,6 @@ In a real SaaS, email verification impacts:
 - support workflows
 
 If you skip it early, you’ll pay for it later.
-
----
 
 ## Step 1 — Extend Your Database Schema
 
@@ -99,8 +93,6 @@ enum TokenType {
 }
 ```
 
----
-
 ## Step 2 — Generate a Verification Token
 
 ```ts
@@ -110,8 +102,6 @@ export function generateToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 ```
-
----
 
 ## Step 3 — Store Token
 
@@ -125,8 +115,6 @@ await prisma.userToken.create({
   },
 });
 ```
-
----
 
 ## Step 4 — Send Email
 
@@ -143,8 +131,6 @@ await resend.emails.send({
 });
 ```
 
----
-
 ## Step 5 — Verify Token
 
 ```ts
@@ -156,8 +142,6 @@ if (!tokenRecord || tokenRecord.expiresAt < new Date()) {
   throw new Error("Invalid or expired token");
 }
 ```
-
----
 
 ## Step 6 — Mark Verified
 
@@ -172,8 +156,6 @@ await prisma.userToken.delete({
 });
 ```
 
----
-
 ## Step 7 — Protect App
 
 ```ts
@@ -182,8 +164,6 @@ if (!user.emailVerified) {
 }
 ```
 
----
-
 ## Common Mistakes
 
 - no expiration
@@ -191,13 +171,9 @@ if (!user.emailVerified) {
 - weak tokens
 - blocking login too early
 
----
-
 ## Want This Already Built?
 
 👉 https://pycolors.io/starters
-
----
 
 ## Final Thoughts
 

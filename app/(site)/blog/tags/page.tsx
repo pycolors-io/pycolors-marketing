@@ -2,7 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowRight, Hash, Sparkles } from 'lucide-react';
 
-import { Badge, Button, Card } from '@pycolors/ui';
+import { Badge, Button, Card, cn } from '@pycolors/ui';
+
 import { Container } from '@/components/container';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
@@ -35,9 +36,20 @@ export const metadata: Metadata = {
   },
 };
 
-function Pill({ children }: { children: React.ReactNode }) {
+const focusRing =
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
+    <span
+      className={cn(
+        'inline-flex items-center rounded-[5px]',
+        'border border-border-subtle',
+        'bg-background/50',
+        'px-2.5 py-1',
+        'text-[11px] font-medium text-muted-foreground',
+      )}
+    >
       {children}
     </span>
   );
@@ -46,17 +58,20 @@ function Pill({ children }: { children: React.ReactNode }) {
 function SectionHeader({
   title,
   description,
-}: {
+}: Readonly<{
   title: string;
   description?: string;
-}) {
+}>) {
   return (
-    <div className="mb-5 space-y-1 sm:mb-6">
-      <h2 className="font-brand text-lg font-semibold tracking-tight">
+    <div className="mb-10 space-y-3">
+      <h2 className="font-brand text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
         {title}
       </h2>
+
       {description ? (
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
+          {description}
+        </p>
       ) : null}
     </div>
   );
@@ -66,9 +81,14 @@ export default function BlogTagsPage() {
   const tags = getAllTags();
 
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
+    <Container className="py-16 sm:py-20">
+      <div className="relative mx-auto max-w-6xl">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+        />
+
+        <div className="mb-10">
           <Breadcrumb
             items={[
               { label: 'Home', href: '/' },
@@ -78,69 +98,134 @@ export default function BlogTagsPage() {
           />
         </div>
 
-        {/* HERO */}
+        <header className="mx-auto mb-20 max-w-5xl">
+          <div className="space-y-10 text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Badge
+                variant="secondary"
+                className={cn(
+                  'gap-1.5 rounded-[5px]',
+                  'border border-border-subtle',
+                  'bg-surface-muted/80',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                <Hash className="h-3.5 w-3.5" aria-hidden="true" />
+                Tags
+              </Badge>
 
-        <header className="mb-14 flex flex-col items-center gap-6 text-center sm:mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <Badge variant="secondary" className="gap-2">
-              <Hash className="h-3.5 w-3.5" aria-hidden="true" />
-              Tags
-            </Badge>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'rounded-[5px]',
+                  'border-border-subtle',
+                  'bg-background/60',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                Topic navigation
+              </Badge>
 
-            <Badge variant="outline">Topic navigation</Badge>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'gap-1.5 rounded-[5px]',
+                  'border-border-subtle',
+                  'bg-background/60',
+                  'px-2.5 py-1',
+                  'text-[11px] font-medium',
+                )}
+              >
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+                Developer knowledge
+              </Badge>
+            </div>
 
-            <Badge variant="outline" className="gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Developer knowledge
-            </Badge>
-          </div>
+            <div className="mx-auto max-w-4xl space-y-6">
+              <h1
+                className={cn(
+                  'text-balance',
+                  'font-brand',
+                  'text-4xl font-semibold',
+                  'tracking-[-0.05em]',
+                  'text-foreground',
+                  'sm:text-5xl',
+                  'lg:text-[4.5rem]',
+                  'lg:leading-[0.95]',
+                )}
+              >
+                Explore blog topics
+                <span className="block text-muted-foreground">
+                  across SaaS, engineering, and product design.
+                </span>
+              </h1>
 
-          <div className="space-y-4">
-            <h1 className="font-brand text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Explore blog topics
-              <span className="block font-bold">
-                across SaaS, engineering, and product design.
-              </span>
-            </h1>
+              <p
+                className={cn(
+                  'mx-auto max-w-3xl',
+                  'text-balance',
+                  'text-[16px] leading-8',
+                  'text-muted-foreground',
+                  'sm:text-lg',
+                )}
+              >
+                Tags help you explore specific technical ideas across
+                multiple articles — from Next.js architecture and SaaS
+                billing to UI systems, developer experience, and
+                product strategy.
+              </p>
+            </div>
 
-            <p className="mx-auto max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-              Tags help you explore specific technical ideas across
-              multiple articles — from Next.js architecture and SaaS
-              billing to UI systems and product strategy.
-            </p>
-          </div>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button
+                asChild
+                className={cn('rounded-[5px]', focusRing)}
+              >
+                <Link href="/blog">
+                  Back to Blog
+                  <ArrowRight
+                    className="ml-2 h-4 w-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild>
-              <Link href="/blog">
-                Back to Blog
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+              <Button
+                asChild
+                variant="outline"
+                className={cn('rounded-[5px]', focusRing)}
+              >
+                <Link href="/guides">Browse Guides</Link>
+              </Button>
 
-            <Button asChild variant="secondary">
-              <Link href="/guides">Browse Guides</Link>
-            </Button>
+              <Button
+                asChild
+                variant="outline"
+                className={cn('rounded-[5px]', focusRing)}
+              >
+                <Link href="/starters/free">Starter Free</Link>
+              </Button>
+            </div>
 
-            <Button asChild variant="outline">
-              <Link href="/starters/free">Starter Free</Link>
-            </Button>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 pt-1">
-            <Pill>SaaS</Pill>
-            <Pill>Next.js</Pill>
-            <Pill>Product UX</Pill>
-            <Pill>Design Systems</Pill>
+            <div className="flex flex-wrap justify-center gap-2 pt-1">
+              <Pill>SaaS</Pill>
+              <Pill>Next.js</Pill>
+              <Pill>Product UX</Pill>
+              <Pill>Design Systems</Pill>
+              <Pill>Architecture</Pill>
+            </div>
           </div>
         </header>
 
-        {/* TAG GRID */}
-
-        <section className="py-10 sm:py-12">
+        <section className="mx-auto max-w-5xl py-6 sm:py-8">
           <SectionHeader
             title="All tags"
-            description="Each tag groups articles referencing the same implementation topic."
+            description="Each tag groups articles connected to the same implementation topic, product concern, or engineering pattern."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -150,30 +235,58 @@ export default function BlogTagsPage() {
               return (
                 <Card
                   key={tag}
-                  className="flex h-full flex-col justify-between p-6"
-                >
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline">#{tag}</Badge>
+                  className={cn(
+                    'group flex h-full flex-col justify-between',
+                    'rounded-[5px]',
+                    'border border-border-subtle',
+                    'bg-background/45',
+                    'p-6 backdrop-blur-sm',
+                    'transition-all duration-200',
 
-                      <Badge variant="secondary">
+                    // subtle premium tint
+                    'hover:border-primary/20',
+                    'hover:bg-[color-mix(in_oklch,var(--primary),var(--background)_96%)]',
+                  )}
+                >
+                  <div className="space-y-5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'rounded-[5px]',
+                          'border-primary/15',
+                          'bg-[color-mix(in_oklch,var(--primary),transparent_96%)]',
+                          'text-foreground',
+                        )}
+                      >
+                        #{tag}
+                      </Badge>
+
+                      <Badge
+                        variant="secondary"
+                        className="rounded-[5px]"
+                      >
                         {posts.length} article
                         {posts.length > 1 ? 's' : ''}
                       </Badge>
                     </div>
 
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    <p className="text-sm leading-7 text-muted-foreground sm:text-[15px]">
                       Articles connected to the {tag} topic and
-                      related implementation patterns.
+                      adjacent implementation decisions across SaaS,
+                      frontend architecture, and product engineering.
                     </p>
                   </div>
 
-                  <div className="mt-6">
+                  <div className="mt-8">
                     <Button
                       asChild
                       size="sm"
                       variant="outline"
-                      className="w-full"
+                      className={cn(
+                        'w-full rounded-[5px]',
+                        focusRing,
+                      )}
                     >
                       <Link
                         href={`/blog/tags/${normalizeTaxonomy(tag)}`}
