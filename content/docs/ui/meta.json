@@ -9,6 +9,8 @@
 
     "button",
     "input",
+    "textarea",
+    "checkbox",
     "password-input",
 
     "card",
@@ -25,6 +27,7 @@
 
     "tabs",
     "table",
-    "pagination"
+    "pagination",
+    "separator"
   ]
 }
