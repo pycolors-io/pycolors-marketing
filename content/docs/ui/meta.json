@@ -9,6 +9,8 @@
 
     "button",
     "input",
+    "textarea",
+    "checkbox",
     "password-input",
 
     "card",
@@ -23,8 +25,9 @@
     "dropdown-menu",
     "sheet",
 
+    "tabs",
     "table",
     "pagination",
-    "tabs"
+    "separator"
   ]
 }
