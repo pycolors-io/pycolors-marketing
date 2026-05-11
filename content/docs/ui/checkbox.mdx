@@ -1,0 +1,793 @@
+---
+title: Checkbox
+description: Boolean selection control for settings, forms, filters, consent, and multi-select product flows in PyColors UI.
+lastUpdated: "2026-05-11"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Filter,
+  ListChecks,
+  Settings2,
+  ShieldCheck,
+  SlidersHorizontal,
+  SquareCheck,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Checkbox</Badge>
+</div>
+
+### Boolean choices for forms and product settings
+
+The **Checkbox** component lets users select one or more options from a list, confirm a setting, or opt into a specific condition.
+
+Use it for:
+
+- settings toggles that can be selected independently
+- multi-select filters
+- terms, consent, and confirmation fields
+- grouped preferences
+- checklist-style product flows
+- optional form choices
+
+Checkbox is built on **Radix Checkbox** and styled with PyColors semantic tokens such as `border-input`, `bg-background`, `text-foreground`, and `ring-ring`.
+
+<Callout title="Core idea">
+  Checkbox is for explicit selection. Use it when each option can be independently checked or unchecked.
+</Callout>
+
+### Import
+
+```tsx title="checkbox-import.tsx"
+import { Checkbox } from "@pycolors/ui";
+```
+
+### Basic usage
+
+Use a Checkbox with a label when the user needs to enable or select one option.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <CheckboxField>
+        <Checkbox id="analytics" />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="analytics">
+            Enable analytics
+          </CheckboxLabel>
+          <CheckboxDescription>
+            Collect product usage data to improve the dashboard experience.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-checkbox.tsx"
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function BasicCheckbox() {
+  return (
+    <CheckboxField>
+      <Checkbox id="analytics" />
+      <CheckboxContent>
+        <CheckboxLabel htmlFor="analytics">
+          Enable analytics
+        </CheckboxLabel>
+        <CheckboxDescription>
+          Collect product usage data to improve the dashboard experience.
+        </CheckboxDescription>
+      </CheckboxContent>
+    </CheckboxField>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+<Callout type="info" title="Label rule">
+  Always connect the visible label with the checkbox using `htmlFor` and `id`, unless the label wraps the control directly.
+</Callout>
+
+## When to use Checkbox
+
+Use Checkbox when options are independent and the user can select multiple choices.
+
+<div className="grid gap-4 md:grid-cols-3">
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Settings2 className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Settings
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for independent preferences, options, and account settings.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <Filter className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Filters
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for multi-select filters where several values can apply at once.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+
+  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+          <ShieldCheck className="h-4 w-4 text-primary" />
+        </div>
+        <CardTitle className="text-sm font-semibold tracking-tight">
+          Consent
+        </CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-0">
+      <div className="text-sm leading-6 text-muted-foreground">
+        Use for terms, confirmations, and explicit opt-in choices.
+      </div>
+    </CardContent>
+    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+  </Card>
+</div>
+
+## Checked state
+
+Use `defaultChecked` for uncontrolled checkboxes and `checked` with `onCheckedChange` for controlled product state.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid max-w-xl gap-4">
+        <CheckboxField>
+          <Checkbox id="checked-example" defaultChecked />
+          <CheckboxContent>
+            <CheckboxLabel htmlFor="checked-example">
+              Enabled by default
+            </CheckboxLabel>
+            <CheckboxDescription>
+              This option starts checked and can be changed by the user.
+            </CheckboxDescription>
+          </CheckboxContent>
+        </CheckboxField>
+
+        <CheckboxField>
+          <Checkbox id="unchecked-example" />
+          <CheckboxContent>
+            <CheckboxLabel htmlFor="unchecked-example">
+              Optional setting
+            </CheckboxLabel>
+            <CheckboxDescription>
+              This option starts unchecked.
+            </CheckboxDescription>
+          </CheckboxContent>
+        </CheckboxField>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="checkbox-states.tsx"
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function CheckboxStates() {
+  return (
+    <div className="grid gap-4">
+      <CheckboxField>
+        <Checkbox id="checked-example" defaultChecked />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="checked-example">
+            Enabled by default
+          </CheckboxLabel>
+          <CheckboxDescription>
+            This option starts checked and can be changed by the user.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+
+      <CheckboxField>
+        <Checkbox id="unchecked-example" />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="unchecked-example">
+            Optional setting
+          </CheckboxLabel>
+          <CheckboxDescription>
+            This option starts unchecked.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+    </div>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+## Controlled checkbox
+
+Use a controlled Checkbox when the checked value drives application state.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <CheckboxField>
+        <Checkbox id="controlled-example" checked />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="controlled-example">
+            Include Starter Pro wiring
+          </CheckboxLabel>
+          <CheckboxDescription>
+            Add auth, billing, and protected route foundations to the setup.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="controlled-checkbox.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function ControlledCheckbox() {
+  const [checked, setChecked] = React.useState(true);
+
+  return (
+    <CheckboxField>
+      <Checkbox
+        id="starter-pro"
+        checked={checked}
+        onCheckedChange={(value) => setChecked(value === true)}
+      />
+      <CheckboxContent>
+        <CheckboxLabel htmlFor="starter-pro">
+          Include Starter Pro wiring
+        </CheckboxLabel>
+        <CheckboxDescription>
+          Add auth, billing, and protected route foundations to the setup.
+        </CheckboxDescription>
+      </CheckboxContent>
+    </CheckboxField>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+<Callout title="State rule">
+  Radix Checkbox can return `true`, `false`, or `"indeterminate"`. Convert the value intentionally when your app expects a boolean.
+</Callout>
+
+## Indeterminate state
+
+Use the indeterminate state for parent checkboxes when only some child items are selected.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid max-w-xl gap-4">
+        <CheckboxField>
+          <Checkbox id="all-features" checked="indeterminate" />
+          <CheckboxContent>
+            <CheckboxLabel htmlFor="all-features">
+              Select all features
+            </CheckboxLabel>
+            <CheckboxDescription>
+              Some features are currently selected.
+            </CheckboxDescription>
+          </CheckboxContent>
+        </CheckboxField>
+
+        <div className="ml-7 grid gap-3 border-l border-border/60 pl-4">
+          <CheckboxField>
+            <Checkbox id="feature-auth" defaultChecked />
+            <CheckboxLabel htmlFor="feature-auth">Authentication</CheckboxLabel>
+          </CheckboxField>
+
+          <CheckboxField>
+            <Checkbox id="feature-billing" />
+            <CheckboxLabel htmlFor="feature-billing">Billing</CheckboxLabel>
+          </CheckboxField>
+
+          <CheckboxField>
+            <Checkbox id="feature-dashboard" defaultChecked />
+            <CheckboxLabel htmlFor="feature-dashboard">Dashboard</CheckboxLabel>
+          </CheckboxField>
+        </div>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="indeterminate-checkbox.tsx"
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function IndeterminateCheckbox() {
+  return (
+    <div className="grid gap-4">
+      <CheckboxField>
+        <Checkbox id="all-features" checked="indeterminate" />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="all-features">
+            Select all features
+          </CheckboxLabel>
+          <CheckboxDescription>
+            Some features are currently selected.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+
+      <div className="ml-7 grid gap-3 border-l border-border/60 pl-4">
+        <CheckboxField>
+          <Checkbox id="feature-auth" defaultChecked />
+          <CheckboxLabel htmlFor="feature-auth">Authentication</CheckboxLabel>
+        </CheckboxField>
+
+        <CheckboxField>
+          <Checkbox id="feature-billing" />
+          <CheckboxLabel htmlFor="feature-billing">Billing</CheckboxLabel>
+        </CheckboxField>
+
+        <CheckboxField>
+          <Checkbox id="feature-dashboard" defaultChecked />
+          <CheckboxLabel htmlFor="feature-dashboard">Dashboard</CheckboxLabel>
+        </CheckboxField>
+      </div>
+    </div>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+## Disabled state
+
+Use disabled checkboxes only when the option cannot currently be changed.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <div className="grid max-w-xl gap-4">
+        <CheckboxField>
+          <Checkbox id="disabled-unchecked" disabled />
+          <CheckboxContent>
+            <CheckboxLabel htmlFor="disabled-unchecked">
+              Enterprise-only option
+            </CheckboxLabel>
+            <CheckboxDescription>
+              This option is unavailable on the current plan.
+            </CheckboxDescription>
+          </CheckboxContent>
+        </CheckboxField>
+
+        <CheckboxField>
+          <Checkbox id="disabled-checked" defaultChecked disabled />
+          <CheckboxContent>
+            <CheckboxLabel htmlFor="disabled-checked">
+              Required security baseline
+            </CheckboxLabel>
+            <CheckboxDescription>
+              This setting is enabled by default and cannot be changed.
+            </CheckboxDescription>
+          </CheckboxContent>
+        </CheckboxField>
+      </div>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="disabled-checkbox.tsx"
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function DisabledCheckbox() {
+  return (
+    <div className="grid gap-4">
+      <CheckboxField>
+        <Checkbox id="disabled-unchecked" disabled />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="disabled-unchecked">
+            Enterprise-only option
+          </CheckboxLabel>
+          <CheckboxDescription>
+            This option is unavailable on the current plan.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+
+      <CheckboxField>
+        <Checkbox id="disabled-checked" defaultChecked disabled />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="disabled-checked">
+            Required security baseline
+          </CheckboxLabel>
+          <CheckboxDescription>
+            This setting is enabled by default and cannot be changed.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+    </div>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+<Callout type="info" title="Disabled copy">
+  When a disabled option may frustrate users, explain why it is unavailable and what unlocks it.
+</Callout>
+
+## Form validation
+
+Use `aria-invalid` and supporting error copy when a required checkbox is not selected.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <CheckboxField>
+        <Checkbox id="terms" aria-invalid="true" />
+        <CheckboxContent>
+          <CheckboxLabel htmlFor="terms">
+            I agree to the terms
+          </CheckboxLabel>
+          <CheckboxDescription className="text-destructive">
+            You must accept the terms before continuing.
+          </CheckboxDescription>
+        </CheckboxContent>
+      </CheckboxField>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="checkbox-validation.tsx"
+import {
+  Checkbox,
+  CheckboxField,
+  CheckboxContent,
+  CheckboxLabel,
+  CheckboxDescription,
+} from "@pycolors/ui";
+
+export function CheckboxValidation() {
+  return (
+    <CheckboxField>
+      <Checkbox id="terms" aria-invalid="true" />
+      <CheckboxContent>
+        <CheckboxLabel htmlFor="terms">
+          I agree to the terms
+        </CheckboxLabel>
+        <CheckboxDescription className="text-destructive">
+          You must accept the terms before continuing.
+        </CheckboxDescription>
+      </CheckboxContent>
+    </CheckboxField>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+### Usage patterns
+
+<Steps>
+  <Step>
+    ### Use checkboxes for independent options
+
+    Each checkbox should represent one choice that can be selected without forcing a mutually exclusive decision.
+  </Step>
+
+  <Step>
+    ### Keep labels clear and specific
+
+    The label should explain exactly what gets enabled, selected, or confirmed.
+  </Step>
+
+  <Step>
+    ### Add descriptions for important consequences
+
+    Use `CheckboxDescription` when the choice affects privacy, billing, delivery, visibility, or access.
+  </Step>
+
+  <Step>
+    ### Handle indeterminate state intentionally
+
+    Use `"indeterminate"` only when representing a mixed group state.
+  </Step>
+
+  <Step>
+    ### Validate required confirmations
+
+    For required consent or terms fields, show a direct error message near the checkbox.
+  </Step>
+</Steps>
+
+## Checkbox vs Switch vs Radio Group
+
+| Situation | Use |
+| --- | --- |
+| Multiple independent selections | Checkbox |
+| Required consent or confirmation | Checkbox |
+| Parent selection with mixed children | Checkbox with indeterminate state |
+| Immediate on/off setting | Switch |
+| One choice from a mutually exclusive group | Radio Group |
+| Small menu action list | Dropdown Menu |
+
+<Callout title="Decision rule">
+  Use Checkbox for selection, Switch for immediate enablement, and Radio Group for one exclusive choice.
+</Callout>
+
+## API
+
+### Components
+
+| Component | Description |
+| --- | --- |
+| `Checkbox` | Root checkbox control built on Radix Checkbox |
+| `CheckboxField` | Layout helper for checkbox rows |
+| `CheckboxContent` | Text stack helper for label and description |
+| `CheckboxLabel` | Accessible label helper |
+| `CheckboxDescription` | Supporting text helper |
+
+### Checkbox props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean \| "indeterminate"` | — | Controlled checked state |
+| `defaultChecked` | `boolean \| "indeterminate"` | — | Initial uncontrolled checked state |
+| `onCheckedChange` | `(checked) => void` | — | Called when the checked state changes |
+| `disabled` | `boolean` | `false` | Disables the checkbox |
+| `required` | `boolean` | `false` | Marks the checkbox as required |
+| `name` | `string` | — | Form field name |
+| `value` | `string` | — | Submitted form value |
+| `className` | `string` | — | Additional Tailwind classes |
+
+`Checkbox` extends Radix Checkbox Root props.
+
+### TypeScript types
+
+```ts title="checkbox-types.ts"
+export type CheckboxProps = React.ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Root
+>;
+
+const Checkbox = React.forwardRef<
+  React.ComponentRef<typeof CheckboxPrimitive.Root>,
+  CheckboxProps
+>((props, ref) => {
+  // ...
+});
+```
+
+### Accessibility
+
+Checkbox is built on Radix Checkbox primitives.
+
+That means:
+
+- keyboard interaction is handled
+- checked and indeterminate states are exposed to assistive technologies
+- disabled state is exposed correctly
+- focus styling uses PyColors ring tokens
+- form usage works through native form semantics
+
+Guidelines:
+
+- provide a visible label for every checkbox
+- connect labels using `htmlFor` and `id`
+- use descriptions for choices with consequences
+- do not rely on color alone for validation states
+- use `aria-invalid` for invalid required confirmations
+- keep checkbox labels short and action-oriented
+
+<Callout title="Accessibility rule">
+  A checkbox needs a clear accessible name. The label should make sense even when read without surrounding context.
+</Callout>
+
+## Prefer / avoid
+
+<PreferAvoid
+  prefer={[
+    'clear labels connected with htmlFor and id',
+    'checkboxes for independent multi-select choices',
+    'descriptions for privacy, billing, or access impact',
+    'indeterminate state for mixed parent selection',
+    'visible validation copy for required confirmations',
+  ]}
+  avoid={[
+    'using checkbox for mutually exclusive choices',
+    'using checkbox as an immediate setting when switch is clearer',
+    'labels that only say “Yes” or “Enable”',
+    'disabled options without explanation',
+    'color-only error communication',
+  ]}
+/>
+
+## Product copy guidelines
+
+Checkbox copy should describe the selected outcome, not the UI control.
+
+<Tabs items={["Settings", "Filters", "Consent"]}>
+  <Tab value="Settings">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Send weekly product summary
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Receive a short email with usage, billing, and workspace activity.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Filters">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Show production-ready templates only
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Hide mock-only examples from the template gallery.
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="Consent">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        I agree to receive delivery emails
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Required to send product access, download links, and order recovery messages.
+      </div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should settings use Checkbox or Switch?">
+    Use Checkbox when the user is selecting an option as part of a larger form. Use Switch when the setting changes immediately and behaves like an on/off control.
+  </Accordion>
+
+  <Accordion title="When should I use indeterminate?">
+    Use indeterminate when a parent checkbox represents a group where only some child items are selected.
+  </Accordion>
+
+  <Accordion title="Can Checkbox be used inside forms?">
+    Yes. Use `name`, `value`, `required`, and validation copy when the checkbox participates in form submission.
+  </Accordion>
+
+  <Accordion title="Should every checkbox have a description?">
+    No. Use descriptions only when the choice needs clarification or has consequences. Simple choices can use only a label.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui/input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Input</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Input for single-line form fields next to checkbox-based settings.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/textarea" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Textarea</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Textarea for longer notes, messages, and feedback forms.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/ui/separator" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Separator</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Use Separator to structure grouped checkbox sections and forms.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/guides/forms" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
+    <div>
+      <div className="text-sm font-medium text-foreground">Forms guide</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Build accessible forms with labels, descriptions, validation, and clear actions.
+      </div>
+    </div>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+</div>
