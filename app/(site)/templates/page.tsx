@@ -3,572 +3,751 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   Boxes,
+  Check,
+  CreditCard,
+  ExternalLink,
+  FileText,
   LayoutTemplate,
+  LifeBuoy,
+  PackageCheck,
+  Rocket,
+  ShieldCheck,
   Sparkles,
   Workflow,
-  ShieldCheck,
-  FileText,
   Zap,
-  ExternalLink,
-  PackageCheck,
-  CreditCard,
-  LifeBuoy,
-  Eye,
 } from 'lucide-react';
 
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  cn,
+} from '@pycolors/ui';
+
 import { Container } from '@/components/container';
-import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
+import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Templates',
+  title: 'Templates — Premium Next.js SaaS templates | PyColors',
   description:
-    'Premium templates built on PyColors UI — production-ready layouts that help you ship SaaS faster with clean structure, tokens, and docs.',
-  alternates: { canonical: '/templates' },
+    'Premium Next.js templates for SaaS, AI, analytics, and developer products. Full source code, commercial usage, modern UI, SEO foundations, and instant delivery after purchase.',
+  alternates: {
+    canonical: 'https://pycolors.io/templates',
+  },
   openGraph: {
-    title: 'Templates · PyColors',
+    title: 'Templates — Premium Next.js SaaS templates | PyColors',
     description:
-      'Premium templates built on PyColors UI — production-ready layouts that help you ship SaaS faster with clean structure, tokens, and docs.',
-    url: '/templates',
+      'Launch polished SaaS and AI pages faster with premium Next.js templates, full source code, commercial usage, and instant delivery.',
+    url: 'https://pycolors.io/templates',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Templates · PyColors',
+    title: 'Templates — Premium Next.js SaaS templates | PyColors',
     description:
-      'Premium templates built on PyColors UI — production-ready layouts that help you ship SaaS faster.',
+      'Premium Next.js templates for SaaS, AI, analytics, and developer products.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
-const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
-
-type TemplateStatus = 'Available' | 'Early' | 'Planned';
+type TemplateStatus = 'Available' | 'Coming soon';
 
 type Template = {
-  name: string;
-  description: string;
-  status: TemplateStatus;
-  href: string;
-  tags: string[];
-  priceLabel?: string;
-  demoUrl?: string;
-  buyUrl?: string;
-  includes?: string[];
-  migrationNote?: string;
+  readonly name: string;
+  readonly description: string;
+  readonly status: TemplateStatus;
+  readonly href: string;
+  readonly tags: readonly string[];
+  readonly priceLabel: string;
+  readonly demoUrl?: string;
+  readonly buyHref?: string;
+  readonly includes: readonly string[];
+  readonly note: string;
 };
 
-const templates: Template[] = [
+const templates: readonly Template[] = [
   {
-    name: 'NA-AI Landing Page',
+    name: 'NA-AI Landing',
     description:
-      'A commercial landing page template for AI and SaaS products. Designed for clarity, conversion, and real-world usage.',
-    status: 'Early',
-    href: '/templates/na-ai',
-    tags: ['Landing', 'SaaS', 'Next.js', 'Tailwind'],
-    demoUrl: 'https://na-ai-landing-template.vercel.app/',
-    buyUrl: 'https://pycolors.gumroad.com',
-    priceLabel: 'Premium',
+      'Premium AI/SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing, FAQ, SEO foundations, and commercial-ready structure.',
+    status: 'Available',
+    href: '/templates/na-ai-landing',
+    tags: ['AI', 'Landing page', 'Next.js', 'Tailwind', 'SaaS'],
+    priceLabel: '49 €',
+    demoUrl: 'https://na-ai-landing-template.vercel.app',
+    buyHref: '/api/checkout/na-ai-landing',
     includes: [
-      'Clean sections + real navigation patterns',
-      'Tokens + spacing conventions aligned with PyColors UI direction',
-      'README + setup steps + structure you can extend',
+      'Complete Next.js landing page source code',
+      'Dark/light mode, pricing, FAQ, testimonials, analytics sections',
+      'Commercial usage for personal and client projects',
     ],
-    migrationNote:
-      'Usable today — progressive alignment with PyColors UI continues.',
+    note: 'Sold directly by PyColors with instant access after purchase.',
   },
 ];
 
 const principles = [
   {
-    title: 'Production-first',
+    title: 'Built for real launches',
     description:
-      'Opinionated starting points meant for real products — not demo-only kits.',
-    icon: <Workflow className="h-4 w-4" aria-hidden="true" />,
+      'Templates are shaped for commercial products, not just portfolio screenshots.',
+    icon: Rocket,
   },
   {
-    title: 'Built on PyColors UI direction',
+    title: 'Production-minded structure',
     description:
-      'Semantic tokens, consistent structure, docs-first mindset — designed to scale.',
-    icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
+      'Clean sections, predictable conventions, and code you can extend without fighting the template.',
+    icon: Workflow,
   },
   {
-    title: 'Blocks → Templates → Products',
+    title: 'Part of the PyColors ecosystem',
     description:
-      'Templates evolve into sellable, product-grade packaging with repeatable launches.',
-    icon: <Boxes className="h-4 w-4" aria-hidden="true" />,
+      'Templates connect naturally with PyColors UI, Starter Free, Starter Pro, docs, and future bundles.',
+    icon: Boxes,
   },
-];
+] as const;
 
-const trust = [
+const valueItems = [
   {
-    title: 'Structured & documented',
+    title: 'Full source code',
     description:
-      'Each template ships with a README, setup steps, and a predictable project structure.',
-    icon: <FileText className="h-4 w-4" aria-hidden="true" />,
+      'Own the code, customize the design, adapt the sections, and deploy with your preferred workflow.',
+    icon: PackageCheck,
   },
   {
-    title: 'Accessibility & tokens',
+    title: 'Commercial usage',
     description:
-      'Sane defaults (focus states, spacing, semantics) so you ship without rebuilding foundations.',
-    icon: <ShieldCheck className="h-4 w-4" aria-hidden="true" />,
+      'Use templates for your own projects or client work according to the PyColors license.',
+    icon: CreditCard,
+  },
+  {
+    title: 'SEO-ready baseline',
+    description:
+      'Metadata, page structure, and marketing sections are designed to support a serious launch.',
+    icon: FileText,
   },
   {
     title: 'Fast integration',
     description:
-      'Drop into a real Next.js app quickly, then adapt to your brand and constraints.',
-    icon: <Zap className="h-4 w-4" aria-hidden="true" />,
+      'Start from a polished baseline instead of rebuilding hero, pricing, FAQ, testimonials, and UI states.',
+    icon: Zap,
   },
-];
+] as const;
 
-const whatYouGet = [
+const ecosystemRows = [
   {
-    title: 'Production layout',
-    description:
-      'Real sections, real navigation patterns, and sensible UI density — built for shipping.',
-    icon: <PackageCheck className="h-4 w-4" aria-hidden="true" />,
+    product: 'Templates',
+    bestFor:
+      'Launching focused SaaS, AI, or marketing pages quickly.',
+    label: 'Explore NA-AI Landing',
+    href: '/templates/na-ai-landing',
   },
   {
-    title: 'Commercial-ready',
-    description:
-      'License guidance, packaging mindset, and a structure designed for distribution.',
-    icon: <CreditCard className="h-4 w-4" aria-hidden="true" />,
+    product: 'PyColors UI',
+    bestFor:
+      'Building consistent SaaS interfaces with production-ready React primitives.',
+    label: 'Browse UI components',
+    href: '/ui',
   },
   {
-    title: 'Support path',
-    description:
-      'Issues/requests tracked publicly so improvements are transparent and prioritized.',
-    icon: <LifeBuoy className="h-4 w-4" aria-hidden="true" />,
+    product: 'Starter Free',
+    bestFor: 'Validating SaaS UX surfaces before backend complexity.',
+    label: 'See Starter Free',
+    href: '/starters/free',
   },
-];
+  {
+    product: 'Starter Pro',
+    bestFor:
+      'Launching with auth, billing, protected routes, and database foundations.',
+    label: 'Upgrade to Pro',
+    href: '/starters/pro',
+  },
+] as const;
 
-function Pill({ label }: { label: string }) {
+const trustItems = [
+  {
+    title: 'Direct PyColors checkout',
+    description:
+      'No marketplace dependency. Purchase, access, and delivery stay inside the PyColors product experience.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Clear upgrade path',
+    description:
+      'Use templates for focused pages, then move to Starter Pro when auth, billing, and app foundations matter.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Actively maintained',
+    description:
+      'Templates improve progressively with the PyColors design system, changelog, and roadmap.',
+    icon: LifeBuoy,
+  },
+] as const;
+
+function SectionHeading({
+  eyebrow,
+  title,
+  description,
+  align = 'center',
+}: {
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly align?: 'center' | 'left';
+}) {
   return (
-    <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-      {label}
+    <div
+      className={cn(
+        align === 'center'
+          ? 'mx-auto max-w-3xl text-center'
+          : 'max-w-3xl text-left',
+      )}
+    >
+      {eyebrow ? (
+        <Badge
+          variant="outline"
+          className="rounded-[5px] border-border-subtle bg-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
+        >
+          {eyebrow}
+        </Badge>
+      ) : null}
+
+      <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+        {title}
+      </h2>
+
+      {description ? (
+        <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
+          {description}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function CheckItem({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
+  return (
+    <li className="flex items-start gap-3 text-sm text-muted-foreground">
+      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
+        <Check className="h-3.5 w-3.5 text-foreground" />
+      </span>
+      <span className="leading-6">{children}</span>
+    </li>
+  );
+}
+
+function Pill({ children }: { readonly children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+      {children}
     </span>
   );
 }
 
-function StatusBadge({ status }: { status: TemplateStatus }) {
-  const variant =
-    status === 'Available'
-      ? 'secondary'
-      : status === 'Early'
-        ? 'outline'
-        : 'outline';
-
-  const label =
-    status === 'Available'
-      ? 'Available'
-      : status === 'Early'
-        ? 'Early access'
-        : 'Planned';
-
+function FeatureCard({
+  title,
+  description,
+  icon: Icon,
+}: {
+  readonly title: string;
+  readonly description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+}) {
   return (
-    <Badge variant={variant} className="text-[11px]">
-      {label}
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardHeader className="space-y-4">
+        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+          <Icon className="h-5 w-5 text-muted-foreground" />
+        </div>
+
+        <CardTitle className="text-lg">{title}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p className="text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function StatusBadge({
+  status,
+}: {
+  readonly status: TemplateStatus;
+}) {
+  return (
+    <Badge
+      variant={status === 'Available' ? 'secondary' : 'outline'}
+      className="rounded-[5px] text-[11px]"
+    >
+      {status}
     </Badge>
   );
 }
 
-function TemplateCard({ t }: { t: Template }) {
+function TemplateCard({ template }: { readonly template: Template }) {
   return (
-    <Card className="p-6 sm:p-7">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-brand text-lg font-semibold tracking-tight">
-              {t.name}
-            </h3>
-            <StatusBadge status={t.status} />
-            {t.priceLabel ? <Pill label={t.priceLabel} /> : null}
+    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated">
+      <CardContent className="p-6 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <StatusBadge status={template.status} />
+              <Badge
+                variant="outline"
+                className="rounded-[5px] text-[11px]"
+              >
+                {template.priceLabel}
+              </Badge>
+              <Badge
+                variant="outline"
+                className="rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
+              >
+                Instant access
+              </Badge>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold tracking-tight">
+                {template.name}
+              </h3>
+
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
+                {template.description}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {template.tags.map((tag) => (
+                <Pill key={tag}>{tag}</Pill>
+              ))}
+            </div>
+
+            <ul className="grid gap-3 sm:grid-cols-3">
+              {template.includes.map((item) => (
+                <CheckItem key={item}>{item}</CheckItem>
+              ))}
+            </ul>
+
+            <p className="text-xs leading-6 text-muted-foreground">
+              <span className="font-medium text-foreground">
+                Delivery:
+              </span>{' '}
+              {template.note}
+            </p>
           </div>
 
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {t.description}
-          </p>
-        </div>
+          <div className="flex w-full flex-col gap-3 lg:w-60">
+            {template.buyHref ? (
+              <Button
+                asChild
+                size="lg"
+                className="h-11 rounded-[5px] px-6"
+              >
+                <Link href={template.buyHref}>
+                  Buy now
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            ) : null}
 
-        <div className="hidden sm:block">
-          <LayoutTemplate
-            className="h-5 w-5 text-muted-foreground"
-            aria-hidden="true"
-          />
-        </div>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        {t.tags.map((tag) => (
-          <Pill key={tag} label={tag} />
-        ))}
-      </div>
-
-      {t.includes?.length ? (
-        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-          {t.includes.slice(0, 3).map((it) => (
-            <li key={it} className="flex gap-2">
-              <span
-                className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
-                aria-hidden="true"
-              />
-              <span className="text-pretty">{it}</span>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-
-      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-        <Button asChild className={cn(focusRing)}>
-          <Link href={t.href}>
-            View details{' '}
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
-        </Button>
-
-        {t.demoUrl ? (
-          <Button asChild variant="outline" className={cn(focusRing)}>
-            <a
-              href={t.demoUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label={`Open ${t.name} demo (opens in a new tab)`}
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="h-11 rounded-[5px] px-6"
             >
-              Live demo{' '}
-              <Eye className="ml-2 h-4 w-4" aria-hidden="true" />
-            </a>
-          </Button>
-        ) : null}
+              <Link href={template.href}>View details</Link>
+            </Button>
 
-        {t.buyUrl ? (
-          <Button
-            asChild
-            variant="secondary"
-            className={cn(focusRing)}
-          >
-            <a
-              href={t.buyUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label={`Buy ${t.name} (opens in a new tab)`}
-            >
-              Get it{' '}
-              <ExternalLink
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
-            </a>
-          </Button>
-        ) : null}
-      </div>
-
-      {t.migrationNote ? (
-        <p className="mt-4 text-xs text-muted-foreground">
-          <span className="font-medium text-foreground">Status:</span>{' '}
-          {t.migrationNote}
-        </p>
-      ) : null}
+            {template.demoUrl ? (
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-11 rounded-[5px] px-6"
+              >
+                <a
+                  href={template.demoUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Live demo
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 }
 
 export default function TemplatesPage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Templates', href: '/templates' },
+    <main className="bg-background text-foreground">
+      <Container className="py-18">
+        <div className="mx-auto max-w-6xl">
+
+
+          <PageHero
+            maxWidth="5xl"
+            badges={[
+              {
+                label: 'Templates',
+                variant: 'secondary',
+              },
+              {
+                label: 'Premium Next.js products',
+                variant: 'outline',
+                icon: (
+                  <LayoutTemplate
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
+                  />
+                ),
+              },
+              {
+                label: 'Instant delivery',
+                variant: 'outline',
+              },
+            ]}
+            title="Launch polished SaaS pages without starting from a blank canvas."
+            subtitle="Premium templates for AI, SaaS, and developer products."
+            description="PyColors templates give you complete, commercial-ready source code with clean structure, modern UI, SEO foundations, and a direct upgrade path into the PyColors ecosystem."
+            actions={
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-11 rounded-[5px] px-6"
+                >
+                  <Link href="/templates/na-ai-landing">
+                    Explore NA-AI Landing
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-11 rounded-[5px] px-6"
+                >
+                  <Link href="/starters/pro">See Starter Pro</Link>
+                </Button>
+              </div>
+            }
+            pills={[
+              'One-time payment',
+              'Commercial usage',
+              'Full source code',
+              'SEO-ready baseline',
+              'Built for real launches',
             ]}
           />
         </div>
+      </Container>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Why templates"
+              title="Focused products for faster launches."
+              description="Templates are the fastest entry point into the PyColors ecosystem: smaller than Starter Pro, more complete than a component block, and designed for builders who need a polished page today."
+            />
 
-        <header className="mx-auto w-full max-w-4xl text-center">
-          <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Premium templates
-            </Badge>
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {principles.map((item) => (
+                <FeatureCard key={item.title} {...item} />
+              ))}
+            </div>
           </div>
+        </Container>
+      </section>
+      <section
+        id="templates"
+        className="border-t border-border-subtle"
+      >
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <SectionHeading
+                align="left"
+                eyebrow="Available now"
+                title="Premium templates"
+                description="Start with a commercial-ready page, then customize the product story, visuals, and sections for your own launch."
+              />
 
-          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            Ship SaaS faster with templates
-          </h1>
+              <div className="text-sm text-muted-foreground">
+                {templates.length} template
+                {templates.length === 1 ? '' : 's'}
+              </div>
+            </div>
 
-          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm text-muted-foreground sm:text-base">
-            Production-ready layouts built on the PyColors UI
-            direction — designed to reduce setup time, keep structure
-            clean, and avoid design debt.
-          </p>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button asChild className={cn(focusRing)}>
-              <Link href="#templates">
-                Browse templates{' '}
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
+            <div className="mt-10 grid gap-4">
+              {templates.map((template) => (
+                <TemplateCard
+                  key={template.name}
+                  template={template}
                 />
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              variant="outline"
-              className={cn(focusRing)}
-            >
-              <Link href="/ui">See the UI foundation</Link>
-            </Button>
-
-            <Button
-              asChild
-              variant="secondary"
-              className={cn(focusRing)}
-            >
-              <a
-                href="https://pycolors.gumroad.com"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Open PyColors on Gumroad (opens in a new tab)"
-              >
-                Get on Gumroad{' '}
-                <ExternalLink
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-              </a>
-            </Button>
+              ))}
+            </div>
           </div>
+        </Container>
+      </section>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <SectionHeading
+                align="left"
+                eyebrow="What you get"
+                title="A practical template package, not just a visual mockup."
+                description="Every template should reduce real launch friction: page structure, UI polish, responsive sections, SEO foundations, license clarity, and source code you can own."
+              />
 
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-xs text-muted-foreground">
-            Templates are designed for real deployment — not
-            screenshots.
-          </p>
-        </header>
-
-        <section className="mx-auto mt-10 w-full max-w-6xl">
-          <div className="grid gap-4 sm:grid-cols-3">
-            {principles.map((p) => (
-              <Card key={p.title} className="p-5">
-                <div className="inline-flex items-center gap-2 text-sm font-medium">
-                  {p.icon}
-                  {p.title}
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {p.description}
-                </p>
-              </Card>
-            ))}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {valueItems.map((item) => (
+                  <FeatureCard key={item.title} {...item} />
+                ))}
+              </div>
+            </div>
           </div>
-        </section>
+        </Container>
+      </section>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Trust"
+              title="Sold directly by PyColors."
+              description="The goal is to keep discovery, checkout, delivery, updates, and support inside the PyColors experience — without sending buyers to an external marketplace."
+            />
 
-        <section className="mx-auto mt-10 w-full">
-          <Card className="p-6 sm:p-7">
-            <div className="space-y-2">
-              <h2 className="font-brand text-lg font-semibold tracking-tight">
-                What you get (practical, not marketing)
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Clean structure, predictable conventions, and a path
-                to ship quickly without rebuilding foundations.
-              </p>
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {trustItems.map((item) => (
+                <FeatureCard key={item.title} {...item} />
+              ))}
             </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {whatYouGet.map((t) => (
-                <div key={t.title} className="space-y-2">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    {t.icon}
-                    {t.title}
+            <Card className="mt-6 rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-6 sm:p-7">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-3xl">
+                    <p className="text-sm font-medium text-foreground">
+                      Templates are one layer of the PyColors product
+                      ladder.
+                    </p>
+
+                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                      Buy a focused landing page when you need speed.
+                      Choose Starter Pro when you need the full SaaS
+                      foundation with authentication, billing,
+                      protected routes, and production wiring.
+                    </p>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t.description}
-                  </p>
-                </div>
-              ))}
-            </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {trust.map((t) => (
-                <div key={t.title} className="space-y-2">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    {t.icon}
-                    {t.title}
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-10 rounded-[5px]"
+                    >
+                      <Link href="/starters/pro">
+                        View Starter Pro
+                      </Link>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-10 rounded-[5px]"
+                    >
+                      <Link href="/pricing">View pricing</Link>
+                    </Button>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t.description}
-                  </p>
                 </div>
-              ))}
-            </div>
+              </CardContent>
+            </Card>
+          </div>
+        </Container>
+      </section>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button
-                asChild
-                variant="outline"
-                className={cn(focusRing)}
-              >
-                <Link href="/license">
-                  License details{' '}
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <SectionHeading
+                align="left"
+                eyebrow="Ecosystem"
+                title="Choose the right PyColors product for your stage."
+                description="Start with focused templates, validate UX with Starter Free, then move to Starter Pro when the business layer becomes the bottleneck."
+              />
 
-              <Button
-                asChild
-                variant="secondary"
-                className={cn(focusRing)}
-              >
-                <Link href="/docs">
-                  Read the docs{' '}
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-            </div>
-          </Card>
-        </section>
+              <div className="space-y-4">
+                {ecosystemRows.map((row) => (
+                  <Card
+                    key={row.product}
+                    className="group rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated"
+                  >
+                    <CardContent className="p-5 sm:p-6">
+                      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                        <div className="space-y-3">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <div className="text-base font-medium tracking-tight">
+                              {row.product}
+                            </div>
 
-        <section className="mx-auto mt-10 w-full">
-          <Card className="p-6 sm:p-7">
-            <div className="space-y-2">
-              <h2 className="font-brand text-lg font-semibold tracking-tight">
-                License snapshot
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Keep this section short and confidence-building. Full
-                details live on the License page.
-              </p>
-            </div>
+                            {row.product === 'Starter Pro' ? (
+                              <Badge
+                                variant="outline"
+                                className="rounded-[5px] border-pro-border bg-pro-surface-muted text-[11px]"
+                              >
+                                Production-ready
+                              </Badge>
+                            ) : null}
 
-            <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-              {[
-                'Use in commercial projects (details in License).',
-                'Clear distribution rules for templates/starter packaging.',
-                'Updates shipped progressively with roadmap visibility.',
-              ].map((it) => (
-                <li key={it} className="flex gap-2">
-                  <span
-                    className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/60"
-                    aria-hidden="true"
-                  />
-                  <span className="text-pretty">{it}</span>
-                </li>
-              ))}
-            </ul>
+                            {row.product === 'Templates' ? (
+                              <Badge
+                                variant="outline"
+                                className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
+                              >
+                                Fast launch
+                              </Badge>
+                            ) : null}
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild className={cn(focusRing)}>
-                <Link href="/license">
-                  Read license{' '}
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className={cn(focusRing)}
-              >
-                <Link href="/ui">UI foundation</Link>
-              </Button>
-            </div>
-          </Card>
-        </section>
+                            {row.product === 'Starter Free' ? (
+                              <Badge
+                                variant="outline"
+                                className="rounded-[5px] text-[11px]"
+                              >
+                                Free
+                              </Badge>
+                            ) : null}
 
-        <section
-          id="templates"
-          className="mx-auto mt-10 w-full space-y-4"
-        >
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 className="font-brand text-lg font-semibold tracking-tight">
-                Available templates
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Designed for shipping today, improved progressively.
-              </p>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              {templates.length} template
-              {templates.length === 1 ? '' : 's'}
+                            {row.product === 'PyColors UI' ? (
+                              <Badge
+                                variant="outline"
+                                className="rounded-[5px] text-[11px]"
+                              >
+                                Open source
+                              </Badge>
+                            ) : null}
+                          </div>
+
+                          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                            {row.bestFor}
+                          </p>
+                        </div>
+
+                        <div className="flex shrink-0">
+                          <Button
+                            asChild
+                            size="sm"
+                            variant="outline"
+                            className="rounded-[5px]"
+                          >
+                            <Link href={row.href}>
+                              {row.label}
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
+        </Container>
+      </section>
+      <section>
+        <Container className="py-16 lg:py-24">
+          <div className="mx-auto max-w-6xl rounded-[5px] border border-pro-border bg-pro-surface px-6 py-10 shadow-medium sm:px-10 sm:py-14">
+            <div className="mx-auto max-w-3xl text-center">
+              <Badge
+                variant="outline"
+                className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
+              >
+                Build faster
+              </Badge>
 
-          <div className="grid gap-4">
-            {templates.map((t) => (
-              <TemplateCard key={t.name} t={t} />
-            ))}
-          </div>
+              <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                Start with a polished template. Upgrade when the
+                business layer becomes the bottleneck.
+              </h2>
 
-          <p className="text-xs text-muted-foreground">
-            Each template includes a README, setup steps, and a clean
-            structure — built for real deployment.
-          </p>
-        </section>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
+                Use PyColors templates to ship focused pages fast.
+                Move to Starter Pro when authentication, billing,
+                protected routes, and production SaaS architecture
+                should already be handled.
+              </p>
 
-        <section className="mx-auto mt-10 w-full">
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <div className="text-sm font-medium">
-                  Want to influence what ships next?
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Requests and issues help prioritize templates,
-                  blocks, and future commercial releases.
-                </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                <Pill>Templates from 49 €</Pill>
+                <Pill>Starter Pro from 199 €</Pill>
+                <Pill>Instant access</Pill>
+                <Pill>Commercial usage</Pill>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <Button
                   asChild
-                  variant="outline"
-                  className={cn(focusRing)}
+                  size="lg"
+                  className="h-11 rounded-[5px] px-6"
                 >
-                  <a
-                    href="https://github.com/pycolors-io/pycolors-ui/issues"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label="Open PyColors UI issues on GitHub (opens in a new tab)"
-                  >
-                    Open an issue{' '}
-                    <ExternalLink
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </a>
+                  <Link href="/templates/na-ai-landing">
+                    Explore NA-AI Landing
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </Button>
 
-                <Button asChild className={cn(focusRing)}>
-                  <Link href="/changelog">
-                    View changelog{' '}
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-11 rounded-[5px] px-6"
+                >
+                  <Link href="/starters/pro">See Starter Pro</Link>
                 </Button>
               </div>
             </div>
-          </Card>
+          </div>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Templates ship progressively — early releases improve fast
-            as PyColors UI evolves.
+            Legal scope and usage terms are governed by{' '}
+            <Link
+              href="/license"
+              className="underline underline-offset-4"
+            >
+              /license
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="/terms"
+              className="underline underline-offset-4"
+            >
+              /terms
+            </Link>
+            .
           </p>
-        </section>
-      </div>
-    </Container>
+        </Container>
+      </section>
+    </main>
   );
 }
