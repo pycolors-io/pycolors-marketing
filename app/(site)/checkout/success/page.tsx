@@ -24,10 +24,22 @@ type CheckoutSuccessPageProps = {
   }>;
 };
 
+type CheckoutSessionResponse = {
+  ok: true;
+  session: {
+    id: string;
+    status: string | null;
+    paymentStatus: string | null;
+    productSlug: string | null;
+    productName: string;
+    customerEmail: string | null;
+    amountTotal: number;
+    currency: string;
+  };
+};
+
 function formatSessionReference(sessionId?: string) {
-  if (!sessionId) {
-    return null;
-  }
+  if (!sessionId) return null;
 
   if (sessionId.length <= 28) {
     return sessionId;
@@ -36,35 +48,109 @@ function formatSessionReference(sessionId?: string) {
   return `${sessionId.slice(0, 14)}...${sessionId.slice(-10)}`;
 }
 
+function formatAmount(amountTotal: number, currency: string) {
+  return new Intl.NumberFormat('en', {
+    style: 'currency',
+    currency: currency.toUpperCase(),
+  }).format(amountTotal / 100);
+}
+
+function getProductDocsHref(productSlug: string | null) {
+  switch (productSlug) {
+    case 'starter-pro':
+      return '/docs/starter-pro';
+
+    case 'na-ai-landing':
+      return '/templates/na-ai';
+
+    default:
+      return '/docs';
+  }
+}
+
+function getProductAccessHref() {
+  return '/orders/recover';
+}
+
+async function getCheckoutSession(
+  sessionId: string,
+): Promise<CheckoutSessionResponse | null> {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
+  }
+
+  const response = await fetch(
+    `${apiBaseUrl}/api/v1/checkout/sessions/${sessionId}`,
+    {
+      cache: 'no-store',
+    },
+  );
+
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as CheckoutSessionResponse;
+
+  return data.ok ? data : null;
+}
+
 export default async function CheckoutSuccessPage({
   searchParams,
 }: CheckoutSuccessPageProps) {
   const { session_id } = await searchParams;
+
   const shortReference = formatSessionReference(session_id);
+
+  const result = session_id
+    ? await getCheckoutSession(session_id)
+    : null;
+
+  const productName =
+    result?.session.productName ?? 'your PyColors product';
+
+  const productSlug = result?.session.productSlug ?? null;
+
+  const customerEmail = result?.session.customerEmail ?? null;
+
+  const amountLabel = result
+    ? formatAmount(
+        result.session.amountTotal,
+        result.session.currency,
+      )
+    : null;
+
+  const docsHref = getProductDocsHref(productSlug);
+  const accessHref = getProductAccessHref();
+
+  const supportSubject = encodeURIComponent(
+    `${productName} order help`,
+  );
 
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
-      <div className="overflow-hidden rounded-4xl border bg-card shadow-xl shadow-black/5">
+      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className="rounded-full px-3 py-1 text-xs font-medium">
               Payment received
             </Badge>
+
             <Badge
               variant="outline"
               className="rounded-full px-3 py-1 text-xs font-medium"
             >
-              Starter Pro order confirmed
+              Order confirmed
             </Badge>
           </div>
 
           <h1 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            Your Starter Pro purchase is confirmed.
+            Your purchase is confirmed.
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            Your payment was completed successfully. We are now
-            processing your Starter Pro access and preparing delivery.
+            Your payment for <b>{productName}</b> was completed
+            successfully. We are now preparing your secure delivery.
             If everything is configured correctly, your access email
             should arrive shortly with your secure claim link.
           </p>
@@ -86,10 +172,12 @@ export default async function CheckoutSuccessPage({
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <CreditCard className="mt-0.5 h-5 w-5 text-muted-foreground" />
+
                   <div>
                     <p className="text-sm font-medium">
                       Payment status
                     </p>
+
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your checkout completed successfully and your
                       order has been accepted for delivery.
@@ -101,10 +189,12 @@ export default async function CheckoutSuccessPage({
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
+
                   <div>
                     <p className="text-sm font-medium">
                       Access email
                     </p>
+
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your access email should arrive shortly once
                       delivery is completed. Keep this page available
@@ -117,14 +207,15 @@ export default async function CheckoutSuccessPage({
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <FileText className="mt-0.5 h-5 w-5 text-muted-foreground" />
+
                   <div>
                     <p className="text-sm font-medium">
                       What you receive
                     </p>
+
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your email contains your secure claim link and
-                      the next step to download your Starter Pro
-                      package.
+                      the next step to download your package.
                     </p>
                   </div>
                 </div>
@@ -136,8 +227,8 @@ export default async function CheckoutSuccessPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/docs/starter-pro">
-                    Read Starter Pro docs
+                  <Link href={accessHref}>
+                    Access your product
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -148,14 +239,14 @@ export default async function CheckoutSuccessPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/orders/recover">Recover access</Link>
+                  <Link href={docsHref}>Read documentation</Link>
                 </Button>
               </div>
 
               <p className="text-xs leading-6 text-muted-foreground">
                 If your delivery email does not arrive after a
                 reasonable delay, contact support and include your
-                order reference so we can help faster.
+                checkout reference so we can help faster.
               </p>
             </CardContent>
           </Card>
@@ -171,15 +262,45 @@ export default async function CheckoutSuccessPage({
               <CardContent className="space-y-4 text-sm text-muted-foreground">
                 <div className="flex items-start justify-between gap-4">
                   <span>Status</span>
+
                   <span className="inline-flex items-center gap-2 font-medium text-foreground">
                     <BadgeCheck className="h-4 w-4" />
                     Payment received
                   </span>
                 </div>
 
+                <div className="flex items-start justify-between gap-4">
+                  <span>Product</span>
+
+                  <span className="text-right text-foreground">
+                    {productName}
+                  </span>
+                </div>
+
+                {amountLabel ? (
+                  <div className="flex items-start justify-between gap-4">
+                    <span>Amount</span>
+
+                    <span className="text-right text-foreground">
+                      {amountLabel}
+                    </span>
+                  </div>
+                ) : null}
+
+                {customerEmail ? (
+                  <div className="flex items-start justify-between gap-4">
+                    <span>Customer</span>
+
+                    <span className="text-right text-foreground">
+                      {customerEmail}
+                    </span>
+                  </div>
+                ) : null}
+
                 {shortReference ? (
                   <div className="flex items-start justify-between gap-4">
                     <span>Checkout reference</span>
+
                     <span
                       className="max-w-[220px] break-all text-right font-mono text-foreground"
                       title={session_id}
@@ -201,6 +322,7 @@ export default async function CheckoutSuccessPage({
               <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
                 <div className="flex items-start gap-3">
                   <Shield className="mt-0.5 h-5 w-5 shrink-0" />
+
                   <p>
                     Your purchase is verified through Stripe and
                     processed through a protected backend flow.
@@ -209,6 +331,7 @@ export default async function CheckoutSuccessPage({
 
                 <div className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-5 w-5 shrink-0" />
+
                   <p>
                     You receive an access email containing your secure
                     claim link and delivery instructions.
@@ -217,6 +340,7 @@ export default async function CheckoutSuccessPage({
 
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
+
                   <p>
                     If anything looks wrong, contact support with your
                     checkout reference for faster help.
@@ -231,7 +355,9 @@ export default async function CheckoutSuccessPage({
                 variant="outline"
                 className="rounded-xl"
               >
-                <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20order%20help">
+                <Link
+                  href={`mailto:support@pycolors.io?subject=${supportSubject}`}
+                >
                   Contact support
                 </Link>
               </Button>
