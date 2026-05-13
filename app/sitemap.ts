@@ -10,44 +10,43 @@ import {
 const BASE_URL = 'https://pycolors.io';
 
 /**
- * Core pages = acquisition + conversion
- * Order matters for reasoning, not for sitemap output
+ * Core pages = acquisition + conversion.
+ * Order matters for reasoning, not for sitemap output.
  */
 const STATIC_ROUTES = [
   // Root
   '',
 
-  // 🔥 CONVERSION CORE
-  '/starters/free',
+  // Conversion core
+  '/templates/na-ai-landing',
   '/starters/pro',
-  '/upgrade',
   '/pricing',
+  '/upgrade',
+  '/starters/free',
 
-  // 🔥 ACQUISITION CORE
+  // Acquisition core
+  '/templates',
   '/guides',
   '/blog',
   '/ui',
-  '/templates',
 
   // Product
   '/starters',
 
   // UI ecosystem
   '/ui/patterns',
+  '/ui/examples',
 
   // Exploration
   '/examples',
 
-  // Guides (SEO pages)
+  // Guides
   '/guides/build-saas-nextjs',
   '/guides/saas-dashboard-design',
   '/guides/saas-auth-flows',
   '/guides/saas-billing-ux',
   '/guides/saas-organizations',
   '/guides/saas-admin-panels',
-
-  // Templates
-  '/templates/na-ai',
 
   // Docs
   '/docs',
@@ -57,7 +56,7 @@ const STATIC_ROUTES = [
   '/docs/starter',
   '/docs/starter/upgrade',
 
-  // 🔥 PRO docs (VERY IMPORTANT)
+  // Starter Pro docs
   '/docs/starter-pro',
   '/docs/starter-pro/overview',
   '/docs/starter-pro/upgrade',
@@ -83,27 +82,31 @@ const STATIC_ROUTES = [
 ] as const;
 
 /**
- * PRIORITY = BUSINESS VALUE
+ * Priority = business value.
  */
 function getPriority(route: string): number {
   if (route === '') return 1.0;
 
-  // 🔥 MONEY PAGES
-  if (['/starters/free', '/upgrade', '/pricing'].includes(route)) {
+  if (
+    [
+      '/templates/na-ai-landing',
+      '/starters/pro',
+      '/pricing',
+      '/upgrade',
+      '/starters/free',
+    ].includes(route)
+  ) {
     return 0.95;
   }
 
-  // 🔥 TRAFFIC → CONVERSION PAGES
-  if (['/guides', '/blog', '/ui', '/templates'].includes(route)) {
+  if (['/templates', '/guides', '/blog', '/ui'].includes(route)) {
     return 0.9;
   }
 
-  // 🔥 DEEP CONTENT (SEO)
   if (route.startsWith('/guides/') || route.startsWith('/blog/')) {
     return 0.85;
   }
 
-  // 🔥 DOCS (conversion support)
   if (route.startsWith('/docs/starter-pro')) {
     return 0.85;
   }
@@ -112,16 +115,15 @@ function getPriority(route: string): number {
     return 0.75;
   }
 
-  // Product exploration
   if (
     route === '/starters' ||
     route === '/ui/patterns' ||
+    route === '/ui/examples' ||
     route === '/examples'
   ) {
     return 0.8;
   }
 
-  // Trust / support
   if (
     ['/roadmap', '/changelog', '/about', '/open-source'].includes(
       route,
@@ -134,19 +136,21 @@ function getPriority(route: string): number {
 }
 
 /**
- * CHANGE FREQUENCY = UPDATE STRATEGY
+ * Change frequency = update strategy.
  */
 function getChangeFrequency(
   route: string,
 ): 'daily' | 'weekly' | 'monthly' | 'yearly' {
   if (route === '') return 'weekly';
 
-  // 🔥 FAST EVOLVING
   if (
     [
+      '/templates/na-ai-landing',
+      '/templates',
+      '/starters/pro',
+      '/starters/free',
       '/upgrade',
       '/pricing',
-      '/starters/free',
       '/roadmap',
       '/changelog',
       '/blog',
@@ -155,12 +159,10 @@ function getChangeFrequency(
     return 'weekly';
   }
 
-  // 🔥 SEO CONTENT
   if (route.startsWith('/guides/') || route.startsWith('/blog/')) {
     return 'monthly';
   }
 
-  // Docs evolve regularly
   if (route.startsWith('/docs/')) {
     return 'monthly';
   }
@@ -180,24 +182,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const blogPosts = getAllPosts().map((post) => ({
-    url: `${BASE_URL}${post.url}`,
-    lastModified: post.date ? new Date(post.date) : now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.85,
-  }));
+  const blogPosts: MetadataRoute.Sitemap = getAllPosts().map(
+    (post) => ({
+      url: `${BASE_URL}${post.url}`,
+      lastModified: post.date ? new Date(post.date) : now,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    }),
+  );
 
-  const blogCategories = getAllCategories().map((category) => ({
-    url: `${BASE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
-    lastModified: now,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
+  const blogCategories: MetadataRoute.Sitemap =
+    getAllCategories().map((category) => ({
+      url: `${BASE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }));
 
-  const blogTags = getAllTags().map((tag) => ({
+  const blogTags: MetadataRoute.Sitemap = getAllTags().map((tag) => ({
     url: `${BASE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
     lastModified: now,
-    changeFrequency: 'monthly' as const,
+    changeFrequency: 'monthly',
     priority: 0.6,
   }));
 
@@ -208,7 +213,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogTags,
   ];
 
-  // Remove duplicates
   return Array.from(
     new Map(entries.map((entry) => [entry.url, entry])).values(),
   );
