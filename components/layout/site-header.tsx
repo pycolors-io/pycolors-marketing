@@ -57,6 +57,7 @@ const focusRing =
 
 function matchPathname(pathname: string, href: string) {
   if (href === '/') return pathname === '/';
+
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -99,31 +100,48 @@ const PRODUCT_MENU_META: Record<
   {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     description: string;
+    tone?: 'default' | 'platform' | 'pro' | 'success';
   }
 > = {
+  '/templates': {
+    icon: LayoutTemplate,
+    description: 'Premium product templates',
+    tone: 'success',
+  },
+  '/templates/na-ai-landing': {
+    icon: Sparkles,
+    description: 'AI/SaaS landing page template',
+    tone: 'success',
+  },
   '/starters': {
     icon: Boxes,
     description: 'Compare Free and Pro',
+    tone: 'pro',
   },
   '/starters/free': {
-    icon: Sparkles,
+    icon: Layers3,
     description: 'Validate product UX fast',
+    tone: 'pro',
   },
   '/starters/pro': {
     icon: Rocket,
     description: 'Launch with auth and billing',
+    tone: 'pro',
   },
   '/ui': {
-    icon: Layers3,
-    description: 'Tokens and primitives',
+    icon: Package2,
+    description: 'Production-ready primitives',
+    tone: 'platform',
   },
   '/ui/patterns': {
     icon: LayoutTemplate,
     description: 'Production-shaped SaaS surfaces',
+    tone: 'platform',
   },
   '/ui/examples': {
     icon: BookOpen,
     description: 'See usage in context',
+    tone: 'platform',
   },
 };
 
@@ -247,6 +265,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         e.preventDefault();
         closeMenu();
         openBtnRef.current?.focus();
+
         return;
       }
 
@@ -343,19 +362,17 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
     const productItems: MobileMenuItem[] =
       PRODUCT_MENU_GROUPS.flatMap((group) =>
-        group.items.map((item) => ({
-          label: item.label,
-          href: item.href,
-          badge: item.badge,
-          icon: PRODUCT_MENU_META[item.href]?.icon ? (
-            React.createElement(PRODUCT_MENU_META[item.href].icon, {
-              'aria-hidden': true,
-              className: 'h-3.5 w-3.5',
-            })
-          ) : (
-            <Package2 aria-hidden="true" className="h-3.5 w-3.5" />
-          ),
-        })),
+        group.items.map((item) => {
+          const meta = PRODUCT_MENU_META[item.href];
+          const Icon = meta?.icon ?? Package2;
+
+          return {
+            label: item.label,
+            href: item.href,
+            badge: item.badge,
+            icon: <Icon aria-hidden="true" className="h-3.5 w-3.5" />,
+          };
+        }),
       );
 
     const resourceItems: MobileMenuItem[] = [
@@ -483,7 +500,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     />
                   </button>
 
-                  <div className="absolute left-0 top-full h-3 w-[40rem]" />
+                  <div className="absolute left-0 top-full h-3 w-[48rem]" />
 
                   <div
                     id="products-menu"
@@ -491,7 +508,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     aria-label="Products"
                     onMouseEnter={openProductsMenu}
                     className={cn(
-                      'absolute left-0 top-[calc(100%+0.5rem)] w-[40rem] origin-top-left overflow-hidden rounded-[5px]',
+                      'absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]',
                       'border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150',
                       isProductsOpen
                         ? 'pointer-events-auto translate-y-0 opacity-100'
@@ -499,7 +516,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     )}
                   >
                     <div className="p-2.5">
-                      <div className="grid gap-2 md:grid-cols-2">
+                      <div className="grid gap-2 md:grid-cols-3">
                         {PRODUCT_MENU_GROUPS.map((group) => (
                           <div
                             key={group.title}
@@ -531,16 +548,27 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                 >
                                   <span
                                     className={cn(
-                                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150',
+                                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border bg-surface transition-colors duration-150',
                                       'group-hover:bg-background',
                                       isCurrent && 'bg-background',
+                                      meta?.tone === 'pro' &&
+                                        'border-pro-border-subtle bg-pro-surface-muted',
+                                      meta?.tone === 'platform' &&
+                                        'border-platform-border-subtle bg-platform-muted',
+                                      meta?.tone === 'success' &&
+                                        'border-success-border-subtle bg-success-muted',
+                                      !meta?.tone &&
+                                        'border-border-subtle',
                                     )}
                                   >
                                     <Icon
                                       className={cn(
                                         'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
-                                        'group-hover:text-primary',
-                                        isCurrent && 'text-primary',
+                                        'group-hover:text-foreground',
+                                        isCurrent &&
+                                          'text-foreground',
+                                        meta?.tone === 'pro' &&
+                                          'group-hover:text-primary',
                                       )}
                                       aria-hidden="true"
                                     />
@@ -559,11 +587,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                       ) : null}
                                     </span>
 
-                                    {meta?.description ? (
-                                      <span className="mt-0.5 block text-[11px] leading-4 text-muted-foreground">
-                                        {meta.description}
-                                      </span>
-                                    ) : null}
+                                    <span className="mt-0.5 block text-[11px] leading-4 text-muted-foreground">
+                                      {item.description ??
+                                        meta?.description}
+                                    </span>
                                   </span>
                                 </Link>
                               );
@@ -586,7 +613,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                             See pricing
                           </span>
                           <span className="text-[11px] text-muted-foreground">
-                            Starter Pro from 199 €
+                            Templates from 49 € · Starter Pro from 199
+                            €
                           </span>
                         </span>
 
@@ -712,16 +740,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         </p>
 
                         <p className="text-sm leading-6 text-muted-foreground">
-                          Build faster with product-shaped starters,
-                          UI primitives, and production-ready SaaS
-                          foundations.
+                          Build faster with templates, UI primitives,
+                          and production-ready SaaS foundations.
                         </p>
                       </div>
 
                       <div className="flex flex-wrap gap-2">
-                        <ProductPill>Products</ProductPill>
-                        <ProductPill>Pricing</ProductPill>
-                        <ProductPill>Docs</ProductPill>
+                        <ProductPill>Templates</ProductPill>
+                        <ProductPill>Starters</ProductPill>
+                        <ProductPill>UI</ProductPill>
                       </div>
 
                       <div className="flex items-center justify-between gap-3 border-t border-border-subtle pt-3">
@@ -829,12 +856,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                       <ul className="space-y-2 text-sm leading-6 text-muted-foreground">
                         <li>
-                          Build from product surfaces, not isolated
-                          UI.
+                          Launch faster with focused product
+                          templates.
                         </li>
-                        <li>Validate fast with Starter Free.</li>
                         <li>
-                          Upgrade when the business layer matters.
+                          Validate product surfaces with Starter Free.
+                        </li>
+                        <li>
+                          Upgrade when auth and billing become the
+                          bottleneck.
                         </li>
                       </ul>
                     </div>
@@ -850,8 +880,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   variant="outline"
                   className="w-full justify-center rounded-[5px]"
                 >
-                  <Link href="/starters/free" onClick={closeMenu}>
-                    Starter Free
+                  <Link
+                    href="/templates/na-ai-landing"
+                    onClick={closeMenu}
+                  >
+                    NA-AI Landing
                   </Link>
                 </Button>
 
