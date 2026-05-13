@@ -41,9 +41,7 @@ type CheckoutSessionResponse = {
 function formatSessionReference(sessionId?: string) {
   if (!sessionId) return null;
 
-  if (sessionId.length <= 28) {
-    return sessionId;
-  }
+  if (sessionId.length <= 28) return sessionId;
 
   return `${sessionId.slice(0, 14)}...${sessionId.slice(-10)}`;
 }
@@ -59,17 +57,11 @@ function getProductDocsHref(productSlug: string | null) {
   switch (productSlug) {
     case 'starter-pro':
       return '/docs/starter-pro';
-
     case 'na-ai-landing':
       return '/templates/na-ai';
-
     default:
       return '/docs';
   }
-}
-
-function getProductAccessHref() {
-  return '/orders/recover';
 }
 
 async function getCheckoutSession(
@@ -78,21 +70,33 @@ async function getCheckoutSession(
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!apiBaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
+    console.error(
+      '[checkout/success] Missing NEXT_PUBLIC_API_BASE_URL.',
+    );
+    return null;
   }
 
-  const response = await fetch(
-    `${apiBaseUrl}/api/v1/checkout/sessions/${sessionId}`,
-    {
-      cache: 'no-store',
-    },
-  );
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/checkout/sessions/${sessionId}`,
+      {
+        cache: 'no-store',
+      },
+    );
 
-  if (!response.ok) return null;
+    if (!response.ok) return null;
 
-  const data = (await response.json()) as CheckoutSessionResponse;
+    const data = (await response.json()) as CheckoutSessionResponse;
 
-  return data.ok ? data : null;
+    return data.ok ? data : null;
+  } catch {
+    if (process.env.NODE_ENV === 'development') {
+      console.info(
+        '[checkout/success] checkout session API unavailable.',
+      );
+    }
+    return null;
+  }
 }
 
 export default async function CheckoutSuccessPage({
@@ -121,8 +125,6 @@ export default async function CheckoutSuccessPage({
     : null;
 
   const docsHref = getProductDocsHref(productSlug);
-  const accessHref = getProductAccessHref();
-
   const supportSubject = encodeURIComponent(
     `${productName} order help`,
   );
@@ -149,10 +151,9 @@ export default async function CheckoutSuccessPage({
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            Your payment for <b>{productName}</b> was completed
-            successfully. We are now preparing your secure delivery.
-            If everything is configured correctly, your access email
-            should arrive shortly with your secure claim link.
+            Your payment for {productName} was completed successfully.
+            We are now preparing your secure delivery. Your access
+            email should arrive shortly with your secure claim link.
           </p>
         </div>
 
@@ -169,15 +170,28 @@ export default async function CheckoutSuccessPage({
             </CardHeader>
 
             <CardContent className="space-y-6">
+              {!result ? (
+                <div className="rounded-2xl border bg-muted/20 p-4">
+                  <p className="text-sm font-medium">
+                    Confirmation details unavailable
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Your payment was redirected successfully, but we
+                    could not fetch the checkout details right now.
+                    This can happen locally if the API server is not
+                    running. Your delivery email is still handled by
+                    the webhook flow.
+                  </p>
+                </div>
+              ) : null}
+
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <CreditCard className="mt-0.5 h-5 w-5 text-muted-foreground" />
-
                   <div>
                     <p className="text-sm font-medium">
                       Payment status
                     </p>
-
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your checkout completed successfully and your
                       order has been accepted for delivery.
@@ -189,12 +203,10 @@ export default async function CheckoutSuccessPage({
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
-
                   <div>
                     <p className="text-sm font-medium">
                       Access email
                     </p>
-
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your access email should arrive shortly once
                       delivery is completed. Keep this page available
@@ -207,12 +219,10 @@ export default async function CheckoutSuccessPage({
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <div className="flex items-start gap-3">
                   <FileText className="mt-0.5 h-5 w-5 text-muted-foreground" />
-
                   <div>
                     <p className="text-sm font-medium">
                       What you receive
                     </p>
-
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       Your email contains your secure claim link and
                       the next step to download your package.
@@ -227,7 +237,7 @@ export default async function CheckoutSuccessPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href={accessHref}>
+                  <Link href="/orders/recover">
                     Access your product
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>

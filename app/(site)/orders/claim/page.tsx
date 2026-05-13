@@ -89,21 +89,29 @@ async function getClaim(
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!apiBaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
+    console.error('[orders/claim] Missing NEXT_PUBLIC_API_BASE_URL.');
+    return null;
   }
 
-  const response = await fetch(
-    `${apiBaseUrl}/api/v1/claims/${token}`,
-    {
-      cache: 'no-store',
-    },
-  );
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/claims/${token}`,
+      {
+        cache: 'no-store',
+      },
+    );
 
-  if (!response.ok) return null;
+    if (!response.ok) return null;
 
-  const data = (await response.json()) as ClaimResponse;
+    const data = (await response.json()) as ClaimResponse;
 
-  return data.ok ? data : null;
+    return data.ok ? data : null;
+  } catch {
+    if (process.env.NODE_ENV === 'development') {
+      console.info('[orders/claim] claim API unavailable.');
+    }
+    return null;
+  }
 }
 
 export default async function ClaimOrderPage({
@@ -136,8 +144,8 @@ export default async function ClaimOrderPage({
   if (!result) {
     return (
       <StatusShell
-        title="Access link expired or invalid"
-        description="This link is no longer valid. If you purchased a PyColors product recently, contact support and include your order email so we can re-issue your access link."
+        title="Access link unavailable"
+        description="We could not verify this access link right now. The delivery service may be temporarily unavailable, expired, or invalid. Please try again shortly or contact support with your purchase email."
       >
         <div className="flex flex-wrap gap-3">
           <Button asChild>
@@ -146,7 +154,7 @@ export default async function ClaimOrderPage({
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/pricing">Back to pricing</Link>
+            <Link href="/orders/recover">Recover access</Link>
           </Button>
         </div>
       </StatusShell>
@@ -265,7 +273,9 @@ export default async function ClaimOrderPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href={productPageHref}>View product</Link>
+                  <Link href={productPageHref}>
+                    View product page
+                  </Link>
                 </Button>
               </div>
 
