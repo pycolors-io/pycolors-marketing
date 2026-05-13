@@ -117,13 +117,18 @@ const included = [
   'TypeScript setup',
   'Tailwind CSS v4 styling',
   'shadcn/ui + Radix UI primitives',
+  'Framer Motion animations',
+  'Data-driven architecture with TypeScript config files',
   'Dark and light mode',
-  'Hero, feature sections, integrations, testimonials, FAQ',
-  'Pricing comparison with monthly/yearly toggle',
+  'Hero, feature sections, integrations, testimonials, and FAQ',
+  'AI-native, security, and revenue insight sections',
+  'Pricing section with monthly/yearly toggle',
+  'Pricing comparison table',
   'Analytics-style sections with charts',
   'Frontend contact/sales form structure',
-  'SEO baseline with metadata, sitemap, and robots',
+  'SEO baseline with Open Graph, sitemap, and robots',
   'Responsive marketing layout',
+  'Setup documentation included',
   'Commercial usage for personal and client projects',
 ] as const;
 
@@ -137,7 +142,7 @@ const notIncluded = [
 ] as const;
 
 const stack = [
-  'Next.js App Router',
+  'Next.js 16+ App Router',
   'React',
   'TypeScript',
   'Tailwind CSS v4',
@@ -193,16 +198,21 @@ const faqs = [
     answer:
       'Yes. Commercial usage is included for personal and client projects, as long as you do not resell or redistribute the template source code itself.',
   },
-  {
-    question: 'Is the template connected to PyColors UI?',
-    answer:
-      'The template follows the PyColors product direction and will progressively align with PyColors UI components and tokens as the ecosystem evolves.',
-  },
+  // {
+  //   question: 'Is the template connected to PyColors UI?',
+  //   answer:
+  //     'The template follows the PyColors product direction and will progressively align with PyColors UI components and tokens as the ecosystem evolves.',
+  // },
   {
     question:
       'What should I choose between this template and Starter Pro?',
     answer:
       'Choose NA-AI Landing when you need a polished marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.',
+  },
+  {
+    question: 'What do I receive after purchase?',
+    answer:
+      'You receive a ZIP package containing the full source code and setup documentation, ready to run locally and deploy on Vercel or a similar platform.',
   },
 ] as const;
 
@@ -370,7 +380,7 @@ export default function NaAiTemplatePage() {
             ]}
             title="Launch a premium AI landing page faster."
             subtitle="A Next.js template built for AI, analytics, and SaaS products."
-            description="NA-AI Landing gives you a polished, conversion-ready marketing page with modern sections, pricing, FAQ, testimonials, charts, responsive design, dark mode, and SEO foundations — so you can validate and sell without rebuilding the page from scratch."
+            description="NA-AI Landing helps you launch a premium AI or SaaS landing page in hours — with production-ready Next.js code, clean architecture, scalable content structure, polished UI, dark mode, SEO foundations, and commercial usage included."
             actions={
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <BuyProductButton
