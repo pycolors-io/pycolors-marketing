@@ -38,14 +38,14 @@ export const metadata: Metadata = {
 
 function SidebarBanner() {
   return (
-    <div className="rounded-[5px] border border-border/60 bg-muted/20 p-3">
-      <div className="space-y-1.5">
-        <p className="text-[13px] font-semibold text-foreground">
-          PyColors Docs
-        </p>
+    <div className="rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5">
+      <div className="space-y-1">
+        <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+          PyColors
+        </div>
 
         <p className="text-xs leading-5 text-muted-foreground">
-          UI primitives, patterns, and production-ready SaaS
+          Templates, UI primitives, and production-ready SaaS
           foundations.
         </p>
       </div>
