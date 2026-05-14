@@ -408,7 +408,7 @@ span[data-slot="badge"] {
 }
 
 .blog-prose h2 {
-  @apply mt-12 scroll-m-24 border-t border-border-subtle pt-9 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl;
+  @apply mt-10 scroll-m-24 pt-4 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl;
 }
 
 .blog-prose h3 {
