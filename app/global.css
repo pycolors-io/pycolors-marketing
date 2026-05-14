@@ -71,57 +71,124 @@ span[data-slot="badge"] {
 }
 
 /* ==========================================================================
-   Fumadocs
+   Fumadocs layout
    ========================================================================== */
 
-/* Main docs layout becomes a 3-column grid on desktop */
 #nd-docs-layout {
-  padding-inline-start: 0 !important;
-  padding-inline-end: 0 !important;
-  display: grid;
-  grid-template-columns: var(--fd-sidebar-width) minmax(0, 1fr);
-  column-gap: 20px;
-  padding: 0;
   width: 100%;
   max-width: 1440px;
   margin-inline: auto;
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+}
+
+/* Desktop docs shell */
+@media (min-width: 1024px) {
+  #nd-docs-layout {
+    display: grid;
+    grid-template-columns: var(--fd-sidebar-width) minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 0;
+  }
+
+  #nd-sidebar {
+    position: sticky !important;
+    top: var(--fd-nav-height);
+    left: auto !important;
+    width: 100% !important;
+    height: calc(100vh - var(--fd-nav-height));
+    align-self: start;
+    background: transparent;
+    z-index: 1;
+    border-right: none;
+  }
+
+  #nd-sidebar[style] {
+    inset-inline-start: auto !important;
+    inset-inline-end: auto !important;
+    transform: none !important;
+  }
+
+  #nd-page {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    padding-inline-end: 0 !important;
+    background: transparent;
+    border-left: none;
+    border-right: none;
+  }
+
+  #nd-page article {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: 0 auto !important;
+    padding-top: 5.5rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 3rem;
+    gap: 0.75rem !important;
+  }
+
+  #nd-toc {
+    width: 290px !important;
+    height: calc(100vh - var(--fd-nav-height));
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    margin-right: 3rem;
+    align-self: start;
+  }
+}
+
+/* Mobile / tablet */
+@media (max-width: 1023px) {
+  #nd-docs-layout {
+    display: block;
+    max-width: none;
+  }
+
+  #nd-sidebar {
+    width: auto !important;
+    height: auto;
+    background: var(--background);
+  }
+
+  #nd-page {
+    width: 100% !important;
+    max-width: none !important;
+    padding-inline: 0 !important;
+  }
+
+  #nd-page article {
+    width: 100%;
+    max-width: none;
+    padding-top: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 2.5rem;
+    padding-inline: 1rem !important;
+  }
+
+  #nd-toc {
+    width: auto !important;
+    margin-right: 0;
+    padding: 0;
+  }
 }
 
 /* ==========================================================================
    Sidebar
    ========================================================================== */
 
-#nd-sidebar {
-  position: sticky !important;
-  top: var(--fd-nav-height);
-  left: auto !important;
-  width: 100% !important;
-  height: calc(100vh - var(--fd-nav-height));
-  align-self: start;
-  background: transparent;
-
-  z-index: 1;
-  border-right: none;
-}
-
-/* cancel Fumadocs fixed offset tricks */
-#nd-sidebar[style] {
-  inset-inline-start: auto !important;
-  inset-inline-end: auto !important;
-  transform: none !important;
-}
-
 [data-sidebar][data-side="left"] {
   background: transparent;
 }
 
-/* Inner sidebar scroll only if nav is long */
 #nd-sidebar [data-radix-scroll-area-viewport] {
   overscroll-behavior: contain;
 }
-/* ================================
-   Sidebar base
-================================ */
 
 #nd-sidebar a,
 #nd-sidebar button {
@@ -130,18 +197,10 @@ span[data-slot="badge"] {
   transition: all 0.15s ease;
 }
 
-/* ================================
-   Default state
-================================ */
-
 #nd-sidebar a:not([data-active="true"]),
 #nd-sidebar button {
   color: color-mix(in oklch, var(--foreground), transparent 40%);
 }
-
-/* ================================
-   Hover (léger comme Vercel)
-================================ */
 
 #nd-sidebar a:hover,
 #nd-sidebar button:hover {
@@ -150,17 +209,12 @@ span[data-slot="badge"] {
   cursor: pointer;
 }
 
-/* ================================
-   Active item (page courante)
-================================ */
-
 #nd-sidebar a[data-active="true"] {
   color: var(--foreground);
   font-weight: normal;
   background: color-mix(in oklch, var(--primary), transparent 92%);
 }
 
-/* Ligne active à gauche (signature premium) */
 #nd-sidebar a[data-active="true"]::before {
   content: "";
   position: absolute;
@@ -172,24 +226,15 @@ span[data-slot="badge"] {
   background: var(--primary);
 }
 
-/* ================================
-   Parent actif (section ouverte)
-================================ */
-
 #nd-sidebar button[data-state="open"] {
   color: var(--foreground);
   font-weight: 500;
 }
 
-/* ================================
-   Nested indentation improvement
-================================ */
-
 #nd-sidebar [data-state] > div a {
   padding-left: 1.75rem;
 }
 
-/* Ligne verticale guide (comme Vercel) */
 #nd-sidebar [data-state] > div {
   position: relative;
 }
@@ -213,19 +258,6 @@ span[data-slot="badge"] {
   min-height: calc(100vh - var(--fd-nav-height));
 }
 
-#nd-page {
-  display: block !important;
-  width: 100% !important;
-  max-width: none !important;
-  padding-top: 0 !important;
-  padding-inline-end: 0 !important;
-
-  background: transparent;
-  border-left: none;
-  border-right: none;
-}
-
-/* Hide mobile toc bar on desktop shell if not needed visually */
 #nd-tocnav {
   border-bottom: 1px solid color-mix(in oklch, var(--border), transparent 30%);
   inset-inline-start: auto !important;
@@ -233,21 +265,6 @@ span[data-slot="badge"] {
   width: 100% !important;
 }
 
-/* Main article */
-#nd-page article {
-  width: 100%;
-  max-width: 800px;
-  margin-inline: 0 auto !important;
-
-  padding-top: 5.5rem !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-bottom: 3rem;
-
-  gap: 0.75rem !important;
-}
-
-/* remove accidental extra internal wrappers */
 #nd-docs-layout [data-page-container],
 #nd-docs-layout [data-docs-body],
 #nd-docs-layout .fd-page {
@@ -257,17 +274,6 @@ span[data-slot="badge"] {
 /* ==========================================================================
    TOC
    ========================================================================== */
-
-#nd-toc {
-  width: 290px!important;
-  height: calc(100vh - var(--fd-nav-height));
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  margin-right: 3rem;
-
-  align-self: start;
-}
 
 #nd-toc > div {
   width: 100% !important;
@@ -287,7 +293,7 @@ span[data-slot="badge"] {
 }
 
 #nd-toc a[data-active="true"] {
-  color: hsl(var(--primary)) !important;
+  color: var(--primary) !important;
   font-weight: 500;
 }
 
@@ -315,10 +321,7 @@ span[data-slot="badge"] {
   letter-spacing: -0.02em;
 }
 
-.docs-prose p {
-  max-width: 72ch;
-}
-
+.docs-prose p,
 .docs-prose ul,
 .docs-prose ol {
   max-width: 72ch;
@@ -341,6 +344,10 @@ span[data-slot="badge"] {
   margin-top: 2rem;
 }
 
+/* ==========================================================================
+   Code blocks
+   ========================================================================== */
+
 [data-rehype-pretty-code-fragment] {
   @apply my-8 overflow-hidden border border-border/60 bg-muted/30 shadow-sm;
 }
@@ -361,7 +368,6 @@ span[data-slot="badge"] {
   background: color-mix(in oklch, var(--primary), transparent 94%);
   border-left: 2px solid var(--primary);
 }
-
 
 /* ==========================================================================
    Cards / code polish

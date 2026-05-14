@@ -121,7 +121,7 @@ export function DocsFooter() {
       <div className="mx-auto max-w-fd-container">
         <Container>
           <div className="py-12 sm:py-16">
-            <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
+            <section className="grid gap-12 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
                   <Logo />
@@ -140,7 +140,6 @@ export function DocsFooter() {
                   {EXTERNAL.map(FooterLinkItem)}
                 </nav>
               </div>
-
               <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
                 {GROUPS.map((group) => (
                   <div key={group.title} className="space-y-3">

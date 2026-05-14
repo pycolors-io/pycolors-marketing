@@ -8,7 +8,9 @@ import {
   BookOpen,
   ChevronDown,
   ChevronRight,
+  Code2,
   Layers3,
+  LayoutTemplate,
   Menu,
   Rocket,
   Sparkles,
@@ -33,8 +35,8 @@ type DocsHeaderProps = Readonly<{
 type DocsNavItem = Readonly<{
   label: string;
   href: string;
-  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  description?: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  description: string;
 }>;
 
 const DOCS_NAV_ITEMS: DocsNavItem[] = [
@@ -45,13 +47,25 @@ const DOCS_NAV_ITEMS: DocsNavItem[] = [
     description: 'Start here',
   },
   {
-    label: 'UI',
-    href: '/docs/ui',
-    icon: Layers3,
-    description: 'Primitives and tokens',
+    label: 'Templates',
+    href: '/docs/templates/na-ai-landing',
+    icon: LayoutTemplate,
+    description: 'Launch pages',
   },
   {
-    label: 'Starter',
+    label: 'UI',
+    href: '/docs/ui',
+    icon: Code2,
+    description: 'Primitives',
+  },
+  {
+    label: 'Patterns',
+    href: '/docs/patterns',
+    icon: Layers3,
+    description: 'Product flows',
+  },
+  {
+    label: 'Starter Free',
     href: '/docs/starter',
     icon: Sparkles,
     description: 'Validate fast',
@@ -60,20 +74,17 @@ const DOCS_NAV_ITEMS: DocsNavItem[] = [
     label: 'Starter Pro',
     href: '/docs/starter-pro',
     icon: Rocket,
-    description: 'Production foundations',
+    description: 'Auth and billing',
   },
 ];
 
 const FEATURED_DOCS_HREFS = [
-  '/docs/starter/installation',
-  '/docs/guides',
-  '/docs/starter/project-structure',
-  '/docs/starter/first-feature',
-  '/docs/starter-pro',
-  '/docs/starter-pro/upgrade-from-free',
-  '/docs/patterns',
+  '/docs/getting-started',
+  '/docs/templates/na-ai-landing/project-structure',
   '/docs/starter/upgrade',
   '/docs/starter-pro/what-is-included',
+  '/docs/starter-pro/billing',
+  '/docs/starter-pro/backend',
 ] as const;
 
 const HEADER_HEIGHT = 64;
@@ -164,7 +175,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
       docsLinks.find((item) => item.href === href),
     ).filter(Boolean) as DocsLink[];
 
-    return curated.length > 0 ? curated : docsLinks.slice(0, 7);
+    return curated.length > 0 ? curated : docsLinks.slice(0, 8);
   }, [docsLinks]);
 
   React.useEffect(() => {
@@ -339,9 +350,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     className={cn(
                       'inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150',
                       'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
-                      activeHref === '/docs' &&
-                        'bg-surface-muted text-foreground',
-                      isDocsOpen &&
+                      (activeHref === '/docs' || isDocsOpen) &&
                         'bg-surface-muted text-foreground',
                       focusRing,
                     )}
@@ -356,83 +365,82 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     />
                   </button>
 
-                  <div className="absolute left-0 top-full h-3 w-[38rem]" />
-
+                  <div className="absolute left-0 top-full h-3 w-[48rem]" />
                   <div
                     id="docs-menu"
                     role="menu"
                     aria-label="Documentation menu"
                     onMouseEnter={openDocsMenu}
                     className={cn(
-                      'absolute left-0 top-[calc(100%+0.5rem)] w-[38rem] origin-top-left overflow-hidden rounded-[5px]',
+                      'absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]',
                       'border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150',
                       isDocsOpen
                         ? 'pointer-events-auto translate-y-0 opacity-100'
                         : 'pointer-events-none translate-y-1 opacity-0',
                     )}
                   >
-                    <div className="grid gap-3 p-3 md:grid-cols-[0.95fr_1.05fr]">
+                    <div className="grid gap-3 p-3 md:grid-cols-[1.25fr_0.95fr]">
                       <div className="space-y-1">
                         <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                           Sections
                         </p>
 
-                        {DOCS_NAV_ITEMS.map((item) => {
-                          const Icon = item.icon ?? BookOpen;
-                          const isCurrent = activeHref === item.href;
+                        <div className="grid gap-1 sm:grid-cols-2">
+                          {DOCS_NAV_ITEMS.map((item) => {
+                            const Icon = item.icon;
+                            const isCurrent =
+                              activeHref === item.href;
 
-                          return (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              role="menuitem"
-                              className={cn(
-                                'group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150',
-                                isCurrent
-                                  ? 'border-border-subtle bg-surface-muted text-foreground'
-                                  : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
-                                focusRing,
-                              )}
-                            >
-                              <span
+                            return (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                role="menuitem"
                                 className={cn(
-                                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150',
-                                  'group-hover:bg-background',
-                                  isCurrent && 'bg-background',
+                                  'group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150',
+                                  isCurrent
+                                    ? 'border-border-subtle bg-surface-muted text-foreground'
+                                    : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                                  focusRing,
                                 )}
                               >
-                                <Icon
-                                  aria-hidden="true"
+                                <span
                                   className={cn(
-                                    'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
-                                    'group-hover:text-primary',
-                                    isCurrent && 'text-primary',
+                                    'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150',
+                                    'group-hover:bg-background',
+                                    isCurrent && 'bg-background',
                                   )}
-                                />
-                              </span>
-
-                              <span className="min-w-0">
-                                <span className="block truncate text-[13px] font-medium">
-                                  {item.label}
+                                >
+                                  <Icon
+                                    aria-hidden="true"
+                                    className={cn(
+                                      'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
+                                      'group-hover:text-foreground',
+                                      isCurrent && 'text-foreground',
+                                    )}
+                                  />
                                 </span>
 
-                                {item.description ? (
-                                  <span className="mt-0.5 block truncate text-[11px] leading-4 text-muted-foreground">
+                                <span className="min-w-0">
+                                  <span className="block truncate text-[13px] font-medium">
+                                    {item.label}
+                                  </span>
+
+                                  <span className="mt-0.5 block text-[11px] leading-4 text-muted-foreground">
                                     {item.description}
                                   </span>
-                                ) : null}
-                              </span>
-                            </Link>
-                          );
-                        })}
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
                       </div>
-
                       <div className="space-y-1">
                         <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                           Quick links
                         </p>
 
-                        <div className="max-h-60 overflow-auto pr-1">
+                        <div className="max-h-80 overflow-auto pr-1">
                           {featuredDocsLinks.map((item) => (
                             <Link
                               key={item.href}
@@ -458,26 +466,24 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </div>
                     </div>
 
-                    <div className="border-t border-border-subtle bg-surface-muted px-2.5 py-2">
+                    <div className="flex items-center justify-between gap-3 border-t border-border-subtle bg-surface-muted px-3 py-2">
                       <Link
                         href="/pricing"
                         className={cn(
-                          'group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-[13px] transition-colors hover:bg-surface',
+                          'group flex min-w-0 items-center gap-2 rounded-[5px] px-2 py-1.5 text-[13px] transition-colors hover:bg-surface',
                           focusRing,
                         )}
                       >
-                        <span className="flex min-w-0 items-center gap-2">
-                          <span className="inline-flex shrink-0 rounded-[5px] border border-border-subtle bg-surface px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
-                            Pro
-                          </span>
+                        <span className="inline-flex shrink-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+                          Pro
+                        </span>
 
-                          <span className="font-medium text-foreground">
-                            View pricing
-                          </span>
+                        <span className="font-medium text-foreground">
+                          View pricing
+                        </span>
 
-                          <span className="hidden text-[11px] text-muted-foreground lg:inline">
-                            Starter Pro from 199 €
-                          </span>
+                        <span className="hidden text-[11px] text-muted-foreground lg:inline">
+                          Templates from 49 € · Starter Pro from 199 €
                         </span>
 
                         <ChevronRight
@@ -591,16 +597,16 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
               <div className="space-y-4 px-4 pb-6 pt-4">
-                <div className="rounded-[5px] border border-border-subtle bg-surface p-4 shadow-soft">
+                <div className="rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5">
                   <div className="space-y-4">
-                    <div className="space-y-1.5">
-                      <p className="text-sm font-semibold tracking-tight text-foreground">
-                        PyColors Docs
-                      </p>
+                    <div className="space-y-1">
+                      <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                        PyColors
+                      </div>
 
-                      <p className="text-sm leading-6 text-muted-foreground">
-                        Explore UI foundations, product patterns,
-                        Starter Free, and Starter Pro documentation.
+                      <p className="text-xs leading-5 text-muted-foreground">
+                        Templates, UI primitives, and production-ready
+                        SaaS foundations.
                       </p>
                     </div>
 
@@ -623,7 +629,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                 >
                   {DOCS_NAV_ITEMS.map((item, index) => {
                     const isCurrent = activeHref === item.href;
-                    const Icon = item.icon ?? BookOpen;
+                    const Icon = item.icon;
 
                     return (
                       <Link
@@ -650,7 +656,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                               isCurrent && 'bg-background',
                             )}
                           >
-                            <Icon className="h-3.5 w-3.5 text-primary" />
+                            <Icon className="h-3.5 w-3.5 text-muted-foreground" />
                           </span>
 
                           <span className="min-w-0">
@@ -658,11 +664,9 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                               {item.label}
                             </span>
 
-                            {item.description ? (
-                              <span className="mt-0.5 block truncate text-[11px] text-muted-foreground">
-                                {item.description}
-                              </span>
-                            ) : null}
+                            <span className="mt-0.5 block truncate text-[11px] text-muted-foreground">
+                              {item.description}
+                            </span>
                           </span>
                         </span>
 
