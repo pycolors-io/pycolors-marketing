@@ -1,0 +1,96 @@
+---
+title: Templates
+description: Premium product templates built with PyColors UI and PyColors Tokens. Launch focused marketing pages faster without rebuilding the foundation.
+lastUpdated: "2026-05-14"
+appliesTo: Templates
+---
+
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { ArrowRight, Boxes, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Templates</Badge>
+  <Badge>Premium product surfaces</Badge>
+</div>
+
+## Launch the page before rebuilding the platform
+
+PyColors templates are focused product surfaces for builders who need to ship a credible page quickly.
+
+They are designed for AI and SaaS launches, product validation, agency work, polished marketing pages, and fast commercial experiments.
+
+Templates are intentionally narrower than starters. A template helps you launch the public surface. A starter helps you build the product foundation behind it.
+
+<Callout title="Core idea">
+  Templates are the fastest path to a polished public page. Starters are the path to a full SaaS product foundation.
+</Callout>
+
+## Product ladder
+
+<Tabs items={["Templates", "Starter Free", "Starter Pro"]}>
+  <Tab value="Templates">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">Launch the offer</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.</div>
+    </div>
+  </Tab>
+  <Tab value="Starter Free">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">Validate the product surface</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked app flows.</div>
+    </div>
+  </Tab>
+  <Tab value="Starter Pro">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">Wire the business layer</div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and launch-ready SaaS wiring.</div>
+    </div>
+  </Tab>
+</Tabs>
+
+## Available templates
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+      <Sparkles className="h-4 w-4 text-primary" />
+      NA-AI Landing
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">Premium Next.js landing page for AI products, SaaS tools, and analytics platforms.</div>
+    <div className="mt-4 flex flex-wrap gap-2">
+      <Badge variant="outline">49 €</Badge>
+      <Badge variant="outline">Next.js</Badge>
+      <Badge variant="outline">PyColors UI</Badge>
+    </div>
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">Read docs <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" /></div>
+  </a>
+
+  <Card className="rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm">
+    <CardHeader className="pb-3">
+      <div className="flex items-center gap-2"><LayoutTemplate className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">More templates</CardTitle></div>
+    </CardHeader>
+    <CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Future templates will follow the same product-first approach: focused, documented, and powered by PyColors foundations.</CardContent>
+  </Card>
+</div>
+
+## How templates fit into PyColors
+
+| Need | Product |
+| --- | --- |
+| Launch a marketing page | Template |
+| Validate SaaS UX | Starter Free |
+| Wire auth, billing, protected routes, and database foundations | Starter Pro |
+
+<Callout type="info" title="Decision rule">
+  Choose a template when the page is the bottleneck. Choose Starter Pro when the business layer is the bottleneck.
+</Callout>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">NA-AI Landing</div><div className="mt-2 text-sm leading-6 text-muted-foreground">See what is included, how it is structured, and how to customize it.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Pricing</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Compare NA-AI Landing, Starter Free, and Starter Pro.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+</div>

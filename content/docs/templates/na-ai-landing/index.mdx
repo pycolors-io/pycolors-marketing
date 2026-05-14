@@ -1,0 +1,146 @@
+---
+title: Overview
+description: Premium Next.js landing page for AI products, SaaS tools, and analytics platforms. Built with PyColors UI, PyColors Tokens, and a data-driven content structure.
+lastUpdated: "2026-05-14"
+appliesTo: NA-AI Landing
+---
+
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { ArrowRight, BarChart3, CheckCircle, Code2, LayoutTemplate, Package, Rocket, ShieldCheck, Sparkles, XCircle } from "lucide-react";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Templates</Badge>
+  <Badge>NA-AI Landing</Badge>
+</div>
+
+## Launch a premium AI landing page faster
+
+NA-AI Landing is a polished, production-ready frontend marketing template for AI startups, SaaS founders, analytics platforms, agencies, and indie makers.
+
+It gives you the public product surface first: premium hero, AI analytics feature sections, revenue and metric visuals, integrations, pricing, testimonials, FAQ, contact form, dark and light mode, SEO-ready metadata, and data-driven content files.
+
+This is not a full SaaS app. It is a focused landing page foundation designed to help you launch, validate, and present your offer faster.
+
+<Callout title="Core idea">
+  NA-AI Landing helps you launch the marketing layer. Starter Pro helps you wire the SaaS business layer.
+</Callout>
+
+<br />
+
+<div className="mt-8 flex flex-col gap-1">
+  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <BuyProductButton
+      productSlug="na-ai-landing"
+      label="Get NA-AI Landing — €49"
+      fullWidth={false}
+      showTrustText={false}
+      className="h-11 px-6 text-sm font-medium"
+    />
+
+    <Button
+      asChild
+      variant="outline"
+      className="h-11 px-5 text-sm font-medium no-underline"
+    >
+      <Link href="/templates/na-ai-landing">
+        View details
+      </Link>
+    </Button>
+  </div>
+
+  <span className="text-xs text-muted-foreground">
+    Pay once. Download instantly. Use commercially.
+  </span>
+</div>
+
+## What is included
+
+<div className="grid gap-4 md:grid-cols-2">
+  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><LayoutTemplate className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Premium landing page</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Hero, feature cards, metrics, integrations, pricing, testimonials, FAQ, CTA, and contact sections.</CardContent></Card>
+  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><Code2 className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Modern frontend stack</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Next.js 16+ App Router, TypeScript, Tailwind CSS v4, Framer Motion, Recharts, and Lucide icons.</CardContent></Card>
+  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Powered by PyColors</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Built with PyColors UI and PyColors Tokens for consistent surfaces, spacing, themes, and reusable primitives.</CardContent></Card>
+  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><BarChart3 className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Data-driven content</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Most content is controlled from <code>src/@data</code>, so you can customize the page without digging through every component.</CardContent></Card>
+</div>
+
+## Built with
+
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js 16+ App Router |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Design system | PyColors UI |
+| Tokens | PyColors Tokens |
+| UI primitives | Radix UI |
+| Animations | Framer Motion |
+| Charts | Recharts |
+| Icons | Lucide React |
+| Fonts | Plus Jakarta Sans, JetBrains Mono |
+| Theme | next-themes |
+
+## Important scope
+
+NA-AI Landing is a static frontend landing page.
+
+It does not include backend, authentication, database, payments, CMS, user dashboard, or email delivery.
+
+You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stripe, or any backend/API.
+
+<Callout type="info" title="Scope boundary">
+  NA-AI Landing is the marketing surface. For auth, billing, protected routes, and SaaS app foundations, use Starter Pro.
+</Callout>
+
+## Data-driven sections
+
+| Section | File |
+| --- | --- |
+| Hero | `src/@data/hero.ts` |
+| Features | `src/@data/features.ts` |
+| Integrations | `src/@data/integrations.ts` |
+| Pricing | `src/@data/pricing.ts` |
+| Pricing Table | `src/@data/pricing-table.ts` |
+| Testimonials | `src/@data/customers.ts` |
+| FAQ | `src/@data/faq.ts` |
+| CTA | `src/@data/cta.ts` |
+| Contact | `src/@data/contact.ts` |
+| Footer | `src/@data/footer.ts` |
+| Navbar | `src/@data/navbar.ts` |
+
+## Included vs not included
+
+<PreferAvoid
+  preferTitle="Included"
+  avoidTitle="Not included"
+  prefer={[
+    'full Next.js project structure',
+    'premium landing page sections',
+    'PyColors UI integration',
+    'PyColors Tokens integration',
+    'dark and light mode support',
+    'Recharts visualizations',
+    'SEO metadata configuration',
+    'sitemap and robots setup',
+    'commercial usage license',
+  ]}
+  avoid={[
+    'backend API',
+    'database schema',
+    'authentication system',
+    'Stripe payments',
+    'user dashboard',
+    'CMS integration',
+    'email delivery infrastructure',
+  ]}
+/>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing/setup" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Setup</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Install dependencies, run locally, and build the template.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+  <a href="/docs/templates/na-ai-landing/customization" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Customization</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Customize content, branding, sections, pricing, SEO, and assets.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+</div>

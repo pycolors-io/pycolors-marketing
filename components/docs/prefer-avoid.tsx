@@ -6,6 +6,8 @@ import { cn } from '@pycolors/ui';
 type PreferAvoidProps = Readonly<{
   prefer: readonly string[];
   avoid: readonly string[];
+  preferTitle?: string;
+  avoidTitle?: string;
   className?: string;
 }>;
 
@@ -23,12 +25,15 @@ type StatusIconProps = Readonly<{
 export function PreferAvoid({
   prefer,
   avoid,
+  preferTitle = 'Prefer',
+  avoidTitle = 'Avoid',
   className,
 }: PreferAvoidProps) {
   return (
     <div className={cn('my-8 grid gap-3 md:grid-cols-2', className)}>
-      <Panel tone="prefer" title="Prefer" items={prefer} />
-      <Panel tone="avoid" title="Avoid" items={avoid} />
+      <Panel tone="prefer" title={preferTitle} items={prefer} />
+
+      <Panel tone="avoid" title={avoidTitle} items={avoid} />
     </div>
   );
 }
@@ -40,8 +45,8 @@ function Panel({ tone, title, items }: PanelProps) {
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-[5px] border bg-card/70',
-        'border-border/60 shadow-[0_1px_0_rgba(255,255,255,0.03)]',
+        'relative overflow-hidden rounded-[5px] border bg-card',
+        'border-border-subtle shadow-soft',
       )}
     >
       <div
@@ -51,19 +56,29 @@ function Panel({ tone, title, items }: PanelProps) {
         )}
       />
 
-      <div className="grid h-14 grid-cols-[20px_1fr] items-center gap-2 border-b border-border/40 bg-muted/18 px-3.5">
+      <header
+        className={cn(
+          'grid h-14 grid-cols-[20px_1fr] items-center gap-2',
+          'border-b border-border-subtle',
+          'bg-muted/20 px-3.5',
+        )}
+      >
         <StatusIcon tone={tone} icon={Icon} />
 
-        <h3 className="m-0 translate-y-px text-[13px] font-semibold leading-none tracking-tight text-foreground mt-2">
+        <h3 className="m-0 translate-y-px text-[13px] font-semibold tracking-tight text-foreground mt-2">
           {title}
         </h3>
-      </div>
+      </header>
 
-      <ul className="m-0 divide-y divide-border/35">
+      <ul className="m-0 divide-y divide-border-subtle">
         {items.map((item) => (
           <li
             key={item}
-            className="grid grid-cols-[20px_1fr] items-start gap-2.5 px-3.5 py-2.5 text-[13px] leading-5 text-muted-foreground"
+            className={cn(
+              'grid grid-cols-[20px_1fr] items-start gap-2.5',
+              'px-3.5 py-2.5',
+              'text-[13px] leading-5 text-muted-foreground',
+            )}
           >
             <Icon
               className={cn(
@@ -112,7 +127,16 @@ function renderInlineCode(value: string) {
   return parts.map((part, index) => {
     if (part.startsWith('`') && part.endsWith('`')) {
       return (
-        <code key={`${part}-${index}`}>{part.slice(1, -1)}</code>
+        <code
+          key={`${part}-${index}`}
+          className={cn(
+            'rounded-[4px] border border-border-subtle',
+            'bg-muted/40 px-1 py-0.5',
+            'font-mono text-[12px] text-foreground',
+          )}
+        >
+          {part.slice(1, -1)}
+        </code>
       );
     }
 

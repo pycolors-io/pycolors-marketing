@@ -1,0 +1,11 @@
+{
+  "title": "NA-AI Landing",
+  "pages": [
+    "index",
+    "setup",
+    "customization",
+    "project-structure",
+    "deployment",
+    "license"
+  ]
+}

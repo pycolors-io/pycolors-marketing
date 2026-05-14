@@ -1,0 +1,175 @@
+---
+title: Customization
+description: Customize NA-AI Landing content, branding, pricing, sections, SEO, and assets using its data-driven structure.
+lastUpdated: "2026-05-14"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Customization</Badge></div>
+
+## Customize without rewriting every component
+
+NA-AI Landing is data-driven by design. Most product copy and section content lives in:
+
+```txt
+src/@data
+```
+
+This makes the template easier to adapt because you can update the product story first, then adjust layout and visuals only where needed.
+
+<Callout title="Core idea">
+  Start by changing the data, not the components. Rewrite the product story before you rewrite the UI.
+</Callout>
+
+## Recommended customization order
+
+<Steps>
+  <Step>
+  ### Update site settings
+Edit `src/config/site.ts` for product name, tagline, site URL, SEO title, and social preview settings.
+</Step>
+  <Step>
+  ### Update core content
+Edit files under `src/@data`, starting with hero, features, pricing, testimonials, FAQ, CTA, and contact.
+</Step>
+
+  <Step>
+  ### Replace assets
+Update logo, icons, Open Graph images, Twitter images, and manifest assets.
+</Step>
+
+  <Step>
+  ### Adjust branding
+Update fonts, token usage, theme settings, and product-specific visuals only after the content direction is clear.
+</Step>
+
+  <Step>
+  ### Test and deploy
+Run the build, inspect both themes, and test responsive layouts before deployment.
+</Step>
+
+</Steps>
+
+## Data files
+
+| Section | File |
+| --- | --- |
+| Hero | `src/@data/hero.ts` |
+| Features | `src/@data/features.ts` |
+| Integrations | `src/@data/integrations.ts` |
+| Pricing | `src/@data/pricing.ts` |
+| Pricing Table | `src/@data/pricing-table.ts` |
+| Testimonials | `src/@data/customers.ts` |
+| FAQ | `src/@data/faq.ts` |
+| CTA | `src/@data/cta.ts` |
+| Contact | `src/@data/contact.ts` |
+| Footer | `src/@data/footer.ts` |
+| Navbar | `src/@data/navbar.ts` |
+
+## Site configuration
+
+Edit:
+
+```txt
+src/config/site.ts
+```
+
+Use it to update product name, tagline, site URL, SEO title, SEO description, Open Graph image, and Twitter image.
+
+<Callout type="info" title="SEO rule">
+  Update the site URL and social preview assets before deploying publicly.
+</Callout>
+
+## Branding and tokens
+
+NA-AI Landing uses:
+
+```txt
+@pycolors/ui
+@pycolors/tokens
+```
+
+The shared tokens provide a stable visual foundation for colors, surfaces, borders, radius, shadows, focus states, and dark/light mode.
+
+<Callout title="Design rule">
+  Prefer semantic tokens over raw color values. It keeps the page consistent across light and dark mode.
+</Callout>
+
+## Content strategy
+
+<PreferAvoid
+  prefer={[
+    'clear product promise',
+    'specific AI or SaaS use case',
+    'short feature labels',
+    'proof-oriented sections',
+    'pricing aligned with your offer',
+  ]}
+  avoid={[
+    'generic AI buzzwords',
+    'changing every component first',
+    'too many competing CTAs',
+    'removing trust sections',
+    'publishing with default SEO assets',
+  ]}
+/>
+
+## Customize pricing
+
+Pricing content is split across:
+
+```txt
+src/@data/pricing.ts
+src/@data/pricing-table.ts
+```
+
+Use it to update plan names, monthly/yearly pricing, comparison rows, feature availability, CTA labels, and positioning copy.
+
+<Callout title="Pricing rule">
+  Pricing should clarify the buying decision, not just list features.
+</Callout>
+
+## Customize SEO and assets
+
+Update social preview images:
+
+```txt
+public/seo/og-main.jpg
+public/seo/twitter-main.jpg
+```
+
+Update icons:
+
+```txt
+public/icons
+```
+
+Update manifest:
+
+```txt
+public/manifest.webmanifest
+```
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Can I use this for a non-AI SaaS?">Yes. NA-AI is optimized for AI and analytics positioning, but the structure works well for many B2B SaaS products.</Accordion>
+  <Accordion title="Can I add a backend later?">Yes. Keep API logic outside the presentational section components and connect forms or analytics through dedicated modules.</Accordion>
+  <Accordion title="Should I replace PyColors UI?">Usually no. Keep PyColors UI and tokens unless you have a strong reason to rebuild the UI foundation.</Accordion>
+  <Accordion title="Can I remove sections?">Yes. Remove sections only after checking that the page still explains the offer, proof, pricing, objections, and next action clearly.</Accordion>
+</Accordions>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Project Structure</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Understand where content, sections, layout, config, and assets live.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+  <a href="/docs/templates/na-ai-landing/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Deployment</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Deploy your customized landing page to production.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+</div>

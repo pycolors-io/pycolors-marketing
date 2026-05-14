@@ -1,70 +1,90 @@
 ---
-title: Overview
-description: Start with PyColors in the right order. Validate your SaaS surface, understand the system, and move toward a production-ready business foundation.
-lastUpdated: "2026-04-28"
+title: Getting Started
+description: Start with PyColors in the right order. Launch a template, validate your SaaS surface, understand the system, and move toward a production-ready business foundation.
+lastUpdated: "2026-05-14"
 appliesTo: PyColors
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge } from "@pycolors/ui";
 import {
   ArrowRight,
   Box,
-  CheckCircle,
-  CreditCard,
-  Database,
+  Code2,
   Layers3,
-  LockKeyhole,
+  LayoutTemplate,
   Rocket,
-  ShieldCheck,
   Sparkles,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { ReadingOrder } from "@/components/docs/reading-order";
 
 <div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">Getting Started</Badge>
-  <Badge>Validate → Wire → Launch</Badge>
+  <Badge variant="outline">PyColors Docs</Badge>
+  <Badge>Template → Validate → Wire → Launch</Badge>
 </div>
 
 ## Build your SaaS in the right order
 
-PyColors helps you move from **idea** to **credible SaaS product** without spending your best time on the wrong layer too early.
+PyColors helps developers move from **idea** to **credible SaaS product** without spending their best time on the wrong layer too early.
 
-The goal is simple:
+The product path is simple:
 
-1. validate the product surface
-2. build with consistent UI foundations
-3. use patterns for real product behavior
-4. wire auth, billing, backend, and delivery when the business layer becomes the blocker
-5. launch with more confidence
+1. launch the marketing page when you need a public offer
+2. validate the SaaS surface before backend complexity
+3. build with consistent UI foundations
+4. use patterns for repeated product behavior
+5. wire auth, billing, backend, and delivery when the business layer becomes the blocker
+6. launch with more confidence
 
-This section gives you the fastest path through the docs.
+This page gives you the fastest path through the PyColors documentation.
 
 <Callout title="Core idea">
-  Start with the surface. Validate the product. Upgrade when infrastructure becomes the bottleneck.
+  Launch the page. Validate the product surface. Upgrade when infrastructure becomes the bottleneck.
 </Callout>
 
 ## Choose your path
 
-<Tabs items={["I want to validate", "I want to launch"]}>
-  <Tab value="I want to validate">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
+<Tabs items={["I need a landing page", "I want to validate", "I want to launch"]}>
+  <Tab value="I need a landing page">
+    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Sparkles className="h-4 w-4 text-primary" />
-        Start with Starter Free
+        <LayoutTemplate className="h-4 w-4 text-primary" />
+        <span>Start with NA-AI Landing</span>
       </div>
 
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose this path when you need a credible product surface before backend complexity.
+        Choose this path when you need a polished AI or SaaS marketing page before building the full product.
+      </div>
+
+      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>premium AI/SaaS landing page</li>
+        <li>data-driven content structure</li>
+        <li>pricing, FAQ, integrations, testimonials, and contact sections</li>
+        <li>dark/light mode and SEO baseline</li>
+        <li>powered by PyColors UI and PyColors Tokens</li>
+      </ul>
+
+      <div className="mt-5">
+        <a href="/docs/templates/na-ai-landing" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
+          Explore NA-AI Landing
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </Tab>
+
+  <Tab value="I want to validate">
+    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <Sparkles className="h-4 w-4 text-primary" />
+        <span>Start with Starter Free</span>
+      </div>
+
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Choose this path when you need a credible SaaS product surface before backend complexity.
       </div>
 
       <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
@@ -85,10 +105,10 @@ This section gives you the fastest path through the docs.
   </Tab>
 
   <Tab value="I want to launch">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
       <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <Rocket className="h-4 w-4 text-primary" />
-        Move to Starter Pro
+        <span>Move to Starter Pro</span>
       </div>
 
       <div className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -117,26 +137,35 @@ This section gives you the fastest path through the docs.
 
 <Steps>
   <Step>
-    ### Understand the product path
+    ### Understand the product ladder
 
     PyColors is not just a UI library.
 
-    It is a path from product validation to SaaS launch:
+    It is a path from public offer to product validation to SaaS launch:
 
+    - **Templates** help you launch focused marketing pages quickly
     - **Design System** gives visual consistency
     - **UI** gives reusable primitives
     - **Guides** explain how to compose real interfaces
     - **Patterns** solve repeated product flows
-    - **Starter Free** validates the surface
+    - **Starter Free** validates the product surface
     - **Starter Pro** wires the business layer
   </Step>
 
   <Step>
-    ### Run the starter locally
+    ### Pick the right starting point
+
+    Use the product that matches your current bottleneck.
+
+    Start with a template if you need a public offer. Start with Starter Free if you need product validation. Move to Starter Pro if auth and billing are already the blocker.
+  </Step>
+
+  <Step>
+    ### Run the project locally
 
     Start with the product surface.
 
-    Run the app locally, click through the main routes, and understand what is mocked before changing too much.
+    Run the app locally, click through the main routes, and understand what is already shaped before changing too much.
   </Step>
 
   <Step>
@@ -163,7 +192,9 @@ This section gives you the fastest path through the docs.
     - data tables
     - overlays
     - async actions
-    - empty, loading, and error states
+    - empty states
+    - loading states
+    - error states
 
     This is where UI becomes product behavior.
   </Step>
@@ -177,85 +208,128 @@ This section gives you the fastest path through the docs.
 
 ## Fastest path by goal
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Box className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Validate an idea
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Start with Starter Free, adapt the product copy, rename the core entity, and show the app to users.
-      </div>
-      <div className="mt-4">
-        <a href="/docs/starter" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
-          Start with Free
-          <ArrowRight className="h-3.5 w-3.5" />
-        </a>
-      </div>
-    </CardContent>
-  </Card>
+<div className="not-prose my-8 grid gap-4 md:grid-cols-3">
+  <a href="/docs/templates/na-ai-landing" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <div className="flex items-center gap-2">
+      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-muted/30">
+        <LayoutTemplate className="h-4 w-4 text-primary" />
+      </span>
+      <span className="text-sm font-semibold tracking-tight text-foreground">
+        Launch a landing page
+      </span>
+    </div>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Layers3 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Build a serious baseline
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use UI, Guides, and Patterns to create consistent product flows before custom logic takes over.
-      </div>
-      <div className="mt-4">
-        <a href="/docs/ui" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
+    <div className="mt-3 text-sm leading-6 text-muted-foreground">
+      Start with NA-AI Landing when you need a premium AI or SaaS page before the full product is ready.
+    </div>
+
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Explore template
+      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+    </div>
+  </a>
+
+  <a href="/docs/starter" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <div className="flex items-center gap-2">
+      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-muted/30">
+        <Box className="h-4 w-4 text-primary" />
+      </span>
+      <span className="text-sm font-semibold tracking-tight text-foreground">
+        Validate an idea
+      </span>
+    </div>
+
+    <div className="mt-3 text-sm leading-6 text-muted-foreground">
+      Start with Starter Free, adapt the product copy, rename the core entity, and show the app to users.
+    </div>
+
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Start with Free
+      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+    </div>
+  </a>
+
+  <a href="/docs/starter-pro" className="group block rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
+    <div className="flex items-center gap-2">
+      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted">
+        <Rocket className="h-4 w-4 text-primary" />
+      </span>
+      <span className="text-sm font-semibold tracking-tight text-foreground">
+        Launch and monetize
+      </span>
+    </div>
+
+    <div className="mt-3 text-sm leading-6 text-muted-foreground">
+      Move to Starter Pro when auth, billing, backend, protected routes, and delivery become the bottleneck.
+    </div>
+
+    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+      Explore Pro
+      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+    </div>
+  </a>
+</div>
+
+## The PyColors system
+
+<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
+  <a href="/docs/ui" className="group relative block overflow-hidden rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <div className="absolute inset-x-0 top-0 h-px bg-primary/40" />
+
+    <div className="flex items-start gap-4">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-primary/15 bg-primary/[0.06]">
+        <Code2 className="h-4 w-4 text-primary" />
+      </span>
+
+      <span className="min-w-0">
+        <span className="block text-sm font-semibold tracking-tight text-foreground">
+          PyColors UI
+        </span>
+
+        <span className="mt-1.5 block text-sm leading-6 text-muted-foreground">
+          Reusable primitives for serious SaaS interfaces: buttons, cards, inputs, badges, tables, dialogs, sheets, and more.
+        </span>
+
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
           Explore UI
-          <ArrowRight className="h-3.5 w-3.5" />
-        </a>
-      </div>
-    </CardContent>
-  </Card>
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </span>
+    </div>
+  </a>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Rocket className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Launch and monetize
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Move to Starter Pro when auth, billing, backend, protected routes, and delivery become the bottleneck.
-      </div>
-      <div className="mt-4">
-        <a href="/docs/starter-pro" className="inline-flex items-center gap-1 text-xs font-medium text-foreground no-underline">
-          Explore Pro
-          <ArrowRight className="h-3.5 w-3.5" />
-        </a>
-      </div>
-    </CardContent>
-  </Card>
+  <a href="/docs/patterns" className="group relative block overflow-hidden rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <div className="absolute inset-x-0 top-0 h-px bg-primary/40" />
+
+    <div className="flex items-start gap-4">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-primary/15 bg-primary/[0.06]">
+        <Layers3 className="h-4 w-4 text-primary" />
+      </span>
+
+      <span className="min-w-0">
+        <span className="block text-sm font-semibold tracking-tight text-foreground">
+          Patterns
+        </span>
+
+        <span className="mt-1.5 block text-sm leading-6 text-muted-foreground">
+          Product-level flows built from primitives: data tables, overlays, async feedback, empty states, and real SaaS behaviors.
+        </span>
+
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+          Explore patterns
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </span>
+    </div>
+  </a>
 </div>
 
 ## Time to first result
 
 | Milestone | Target |
 | --- | --- |
-| Run the project locally | 10 minutes |
+| Open the docs and choose a path | 5 minutes |
+| Run a project locally | 10 minutes |
 | Understand the main routes | 30 minutes |
 | Adapt the product surface | 1–2 hours |
 | Ship a first demo | Same day |
@@ -268,52 +342,46 @@ This section gives you the fastest path through the docs.
 
 ## Recommended reading order
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/getting-started/installation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Installation</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Set up the project locally and validate that everything runs.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/getting-started/quickstart" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Quickstart</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explore the app, main surfaces, and first product flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/getting-started/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Project structure</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand where routes, components, features, and product foundations live.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/getting-started/first-feature" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">First feature</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Add your first product feature without breaking the architecture.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<ReadingOrder
+  items={[
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Start with a production-shaped AI and SaaS landing page built with PyColors UI and Tokens.',
+    },
+    {
+      title: 'Why PyColors UI',
+      href: '/docs/ui/why-pycolors-ui',
+      description:
+        'Understand the principles behind the PyColors design system and SaaS-focused UI approach.',
+    },
+    {
+      title: 'Project structure',
+      href: '/docs/starter/project-structure',
+      description:
+        'Learn how routes, components, content, and product foundations are organized.',
+    },
+    {
+      title: 'Starter Free',
+      href: '/docs/starter',
+      description:
+        'Validate product ideas with a credible SaaS surface and frontend-first product flows.',
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Production-ready foundations with authentication, billing, protected routes, and backend wiring.',
+    },
+  ]}
+/>
 
 ## Free vs Pro decision
 
 | Question | Best path |
 | --- | --- |
+| I need a public marketing page | NA-AI Landing |
 | I need to validate the product surface | Starter Free |
 | I need a credible UI demo | Starter Free |
 | I need real accounts and sessions | Starter Pro |
@@ -323,7 +391,7 @@ This section gives you the fastest path through the docs.
 | I need to reduce launch risk | Starter Pro |
 
 <Callout title="Upgrade when wiring becomes the bottleneck">
-  Starter Free validates your product. Starter Pro wires your business.
+  Templates launch your offer. Starter Free validates your product. Starter Pro wires your business.
 </Callout>
 
 ## Revenue-focused mental model
@@ -338,6 +406,7 @@ The documentation should help every visitor understand:
 
 - what PyColors solves
 - where to start
+- when a template is enough
 - when Free is enough
 - when Pro becomes the faster path
 - why buying the foundation can be higher leverage than rebuilding it
@@ -346,62 +415,64 @@ The documentation should help every visitor understand:
 
 <PreferAvoid
   prefer={[
-    'running the project before refactoring',
-    'understanding the Free → Pro path',
-    'validating product UX before deep backend work',
-    'using patterns for repeated product flows',
-    'upgrading when auth and billing slow launch',
+    "choosing the right product for the current bottleneck",
+    "running the project before refactoring",
+    "understanding the Template → Free → Pro path",
+    "validating product UX before deep backend work",
+    "using patterns for repeated product flows",
+    "upgrading when auth and billing slow launch",
   ]}
   avoid={[
-    'rewriting everything before understanding the baseline',
-    'starting with billing before validating the product',
-    'mixing UI primitives with business logic',
-    'treating Starter Free as a complete backend',
-    'waiting too long to deploy and test the product surface',
+    "rewriting everything before understanding the baseline",
+    "starting with billing before validating the product",
+    "mixing UI primitives with business logic",
+    "treating Starter Free as a complete backend",
+    "using a template when you need real auth and billing",
+    "waiting too long to deploy and test the product surface",
   ]}
 />
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Free</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <span>
+      <span className="block text-sm font-medium text-foreground">NA-AI Landing</span>
+      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+        Launch a premium AI/SaaS landing page powered by PyColors UI.
+      </span>
+    </span>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+  </a>
+
+  <a href="/docs/starter" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <span>
+      <span className="block text-sm font-medium text-foreground">Starter Free</span>
+      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
         Validate a credible SaaS surface with mocked product flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+      </span>
+    </span>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
+    <span>
+      <span className="block text-sm font-medium text-foreground">Starter Pro</span>
+      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
         Launch with real auth, billing, backend foundations, protected routes, and delivery.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+      </span>
+    </span>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 
-  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">UI Components</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
+    <span>
+      <span className="block text-sm font-medium text-foreground">UI Components</span>
+      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
         Explore the primitives that power real SaaS interfaces.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Patterns</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from primitives to product-level flows such as tables, overlays, and async actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+      </span>
+    </span>
+    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
   </a>
 </div>
 
