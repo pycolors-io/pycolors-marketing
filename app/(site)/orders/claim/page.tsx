@@ -40,7 +40,7 @@ function getProductPageHref(productSlug: string | null) {
     case 'starter-pro':
       return '/starter-pro';
     case 'na-ai-landing':
-      return '/templates/na-ai';
+      return '/templates/na-ai-landing';
     default:
       return '/pricing';
   }
