@@ -59,7 +59,7 @@ const focusRing =
 const EXTERNAL = {
   starterRepo: 'https://github.com/pycolors-io/pycolors-starter-free',
   starterDemo: 'https://starter-demo.pycolors.io',
-  naAiDemo: 'https://na-ai-landing.vercel.app/',
+  naAiDemo: 'https://na-ai.pycolors.io',
 } as const;
 
 const INTERNAL = {
