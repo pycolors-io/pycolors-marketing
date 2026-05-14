@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ArrowRight,
+  CreditCard,
+  FileText,
   Scale,
   ShieldCheck,
   Sparkles,
@@ -12,43 +14,46 @@ import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Terms',
+  title: 'Terms | PyColors',
   description:
-    'Terms of Service for PyColors covering website usage, public repositories, premium templates, future PRO products, payments, subscriptions, accounts, and commercial usage.',
-  alternates: { canonical: '/terms' },
+    'Terms of Service for PyColors covering website usage, public repositories, premium templates, Starter Free, Starter Pro, payments, accounts, and commercial usage.',
+  alternates: {
+    canonical: 'https://pycolors.io/terms',
+  },
   openGraph: {
-    title: 'Terms · PyColors',
+    title: 'Terms | PyColors',
     description:
-      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, future SaaS offers, and commercial usage rules.',
-    url: '/terms',
+      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, Starter Free, Starter Pro, and commercial usage rules.',
+    url: 'https://pycolors.io/terms',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Terms · PyColors',
+    title: 'Terms | PyColors',
     description:
-      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, future SaaS offers, and commercial usage rules.',
+      'Terms of Service for PyColors products, digital downloads, templates, starters, and commercial usage.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
 const COMPANY = {
   name: 'Py Colors SASU',
-  email: 'legal@pycolors.io',
+  email: 'contact@pycolors.io',
   addressLine1: '6 rue d’Armaillé',
   postalCode: '75017 Paris',
   country: 'France',
 };
 
-const LAST_UPDATED = 'March 7, 2026';
+const LAST_UPDATED = 'May 14, 2026';
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+type SectionProps = {
+  readonly title: string;
+  readonly children: React.ReactNode;
+};
+
+function Section({ title, children }: SectionProps) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
       <CardContent className="p-6 sm:p-7">
@@ -69,9 +74,9 @@ function PrincipleCard({
   title,
   description,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly title: string;
+  readonly description: string;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
@@ -121,9 +126,9 @@ export default function TermsPage() {
 
           <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
             These Terms govern access to the PyColors website,
-            documentation, public repository ecosystem, premium
-            templates, future PRO products, bundled offers, and
-            related commercial services made available by Py Colors
+            documentation, public repositories, Starter Free, premium
+            templates, Starter Pro, checkout flows, digital downloads,
+            and related commercial products operated by Py Colors
             SASU.
           </p>
 
@@ -136,18 +141,20 @@ export default function TermsPage() {
           <div className="grid gap-4 sm:grid-cols-3">
             <PrincipleCard
               icon={Scale}
-              title="Product clarity"
-              description="Separate rules for open-source repositories, templates, and premium access."
+              title="Clear product scope"
+              description="Separate rules for open-source packages, free starters, paid templates, and commercial source-code products."
             />
+
             <PrincipleCard
               icon={ShieldCheck}
               title="Commercial trust"
-              description="Clear expectations around payments, accounts, licenses, and acceptable use."
+              description="Clear expectations around payments, access, licenses, usage rights, and redistribution restrictions."
             />
+
             <PrincipleCard
               icon={Sparkles}
-              title="Scalable structure"
-              description="Written for a growing international SaaS and digital product business."
+              title="Built for growth"
+              description="Terms designed for a growing developer platform selling templates, starters, and SaaS foundations."
             />
           </div>
         </section>
@@ -162,8 +169,10 @@ export default function TermsPage() {
               , located at {COMPANY.addressLine1},{' '}
               {COMPANY.postalCode}, {COMPANY.country}.
             </p>
+
             <p>
-              For legal or commercial questions, you can contact us at{' '}
+              Product, licensing, commercial usage, and support
+              questions can be sent to{' '}
               <a
                 className="underline underline-offset-4 hover:text-foreground"
                 href={`mailto:${COMPANY.email}`}
@@ -176,218 +185,237 @@ export default function TermsPage() {
 
           <Section title="2. Scope of these Terms">
             <p>These Terms apply to:</p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>the public website at pycolors.io;</li>
               <li>
-                documentation, guides, examples, changelogs, roadmaps,
-                and public content;
+                documentation, guides, blog posts, examples,
+                changelogs, and roadmaps;
               </li>
               <li>
-                the public repository ecosystem and public mirrors
-                published by or for PyColors;
+                public repositories and public mirrors published by
+                PyColors;
               </li>
-              <li>premium templates sold by PyColors;</li>
+              <li>Starter Free and other free PyColors resources;</li>
+              <li>premium templates, including NA-AI Landing;</li>
               <li>
-                future commercial products such as UI PRO, Starter
-                PRO, bundled access, subscriptions, and related
-                premium drops;
+                Starter Pro and other paid source-code products;
               </li>
               <li>
-                any waitlist, account area, support interaction, or
-                purchase flow operated by or for PyColors.
+                checkout flows, downloads, order recovery, and
+                customer support interactions.
               </li>
             </ul>
           </Section>
 
           <Section title="3. Acceptance of the Terms">
             <p>
-              By accessing the website, browsing public content,
-              downloading an open-source resource, joining a waitlist,
-              creating an account, purchasing a product, or using any
-              PyColors commercial offer, you agree to these Terms.
+              By accessing the website, browsing content, downloading
+              a resource, using a public repository, purchasing a
+              product, or using any PyColors commercial offer, you
+              agree to these Terms.
             </p>
+
             <p>
-              If you are using PyColors on behalf of a company,
-              client, or other legal entity, you represent that you
-              have authority to bind that entity to these Terms.
+              If you use PyColors on behalf of a company, client, or
+              other legal entity, you represent that you have
+              authority to bind that entity to these Terms.
             </p>
           </Section>
 
           <Section title="4. Product categories">
             <p>
-              PyColors may offer different categories of products and
-              access models. They do not all work the same way.
+              PyColors offers different product categories. They do
+              not all include the same rights, support, updates, or
+              technical scope.
             </p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
                 <span className="font-medium text-foreground">
-                  Open-source repositories
+                  Open-source packages
                 </span>{' '}
-                are governed by their repository license for the
-                repository scope.
+                are governed by their repository license.
+              </li>
+              <li>
+                <span className="font-medium text-foreground">
+                  Starter Free
+                </span>{' '}
+                is a free product for SaaS UX validation and learning.
               </li>
               <li>
                 <span className="font-medium text-foreground">
                   Premium templates
                 </span>{' '}
-                are commercial digital products delivered as code or
-                assets.
+                are paid frontend templates delivered as digital
+                source-code products.
               </li>
               <li>
                 <span className="font-medium text-foreground">
-                  PRO products and bundle offers
+                  Starter Pro
                 </span>{' '}
-                may include one-time purchases, subscriptions,
-                seat-based access, bundled access, or update-based
-                entitlements.
+                is a paid SaaS foundation with commercial source-code
+                access.
               </li>
             </ul>
+
             <p>
-              The specific commercial scope of a product or offer is
-              defined on the applicable sales page, access page,
-              checkout page, invoice, or order flow.
+              The specific scope of a product is defined on the
+              applicable product page, pricing page, checkout page,
+              invoice, download page, or written order terms.
             </p>
           </Section>
 
           <Section title="5. Accounts and access">
             <p>
-              Certain current or future features may require an
-              account, login, invite, or paid access.
+              Certain features may require a checkout session, order
+              claim flow, download token, account, login, or email
+              access.
             </p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
                 You must provide accurate and current information.
               </li>
               <li>
-                You are responsible for maintaining the
-                confidentiality of your credentials.
+                You are responsible for maintaining access to the
+                email address used for purchase.
               </li>
               <li>
-                You are responsible for activity occurring under your
-                account, unless caused by our own fault.
+                You are responsible for activity under your account or
+                access link unless caused by our own fault.
               </li>
               <li>
-                We may suspend or restrict access if we reasonably
-                believe there is misuse, fraud, abuse, non-payment,
-                security risk, or violation of these Terms.
+                We may restrict access if we reasonably believe there
+                is fraud, abuse, non-payment, security risk, or
+                violation of these Terms.
               </li>
             </ul>
           </Section>
 
-          <Section title="6. Open-source repositories">
+          <Section title="6. Open-source packages and public repositories">
             <p>
-              PyColors UI, tokens, tooling, Starter Free, and public
-              mirrors may be available as open-source or public
-              repositories.
+              Public repositories such as PyColors UI, PyColors
+              Tokens, Starter Free, and related mirrors may be
+              available as open-source or public repositories.
             </p>
+
             <p>
               Their use is governed by the license included in the
               relevant repository. These Terms still apply to your use
-              of the website, branding, waitlists, account-related
-              features, and any commercial services surrounding those
-              repositories.
+              of the website, branding, documentation, commercial
+              pages, support, and any paid products connected to the
+              ecosystem.
             </p>
+
             <p>
-              Open-source availability does not grant rights over
-              premium products, paid source code, private
-              repositories, brand assets, or future commercial offers
+              Open-source availability does not grant rights to paid
+              products, private repositories, premium downloads,
+              private assets, Starter Pro, or future commercial offers
               unless explicitly stated.
             </p>
           </Section>
 
           <Section title="7. Premium templates">
             <p>
-              PyColors may sell premium templates, including the
-              current Gumroad product{' '}
+              Premium templates, including{' '}
               <span className="font-medium text-foreground">
-                NA-AI — Premium AI Analytics Landing Page (Next.js)
+                NA-AI Landing
               </span>
-              .
+              , are commercial digital products delivered
+              electronically.
             </p>
+
             <p>
-              Premium templates are digital products delivered
-              electronically. Unless explicitly stated, they are
-              frontend-focused codebases and do not include hosted
-              services, backend logic, authentication, database
-              infrastructure, or ongoing custom development.
+              Unless explicitly stated otherwise, premium templates
+              are frontend-focused codebases. They do not include
+              backend APIs, authentication, database infrastructure,
+              Stripe payments, CMS integration, managed hosting, or
+              custom implementation work.
             </p>
+
             <p>
-              Your use of a premium template is subject to the{' '}
+              Your use of premium templates is subject to the{' '}
               <Link
                 className="underline underline-offset-4 hover:text-foreground"
                 href="/license"
               >
                 License
               </Link>{' '}
-              page and any product-specific license terms shown at
-              checkout.
+              page and any product-specific terms shown during
+              checkout or delivery.
             </p>
           </Section>
 
-          <Section title="8. PRO products, access plans, and subscriptions">
+          <Section title="8. Starter Pro">
             <p>
-              PyColors may introduce premium products and access plans
-              such as UI PRO, Starter PRO, All-In Access,
-              subscriptions, member-only access, or future commercial
-              drops.
+              Starter Pro is a paid source-code product designed to
+              help developers launch a real SaaS faster with
+              production-oriented foundations.
             </p>
+
             <p>
-              These offers may include recurring billing, update
-              access windows, private repositories, premium
-              documentation, support tiers, seat limits, usage limits,
-              or bundle entitlements.
+              Starter Pro may include authentication, Stripe billing,
+              protected app architecture, database foundations,
+              delivery flows, and documentation depending on the
+              version and offer purchased.
             </p>
+
             <p>
-              Specific commercial terms displayed on a product page,
-              access page, pricing page, checkout page, invoice, or
-              order form supplement these Terms and control for the
-              relevant product or offer.
+              Starter Pro is not a finished SaaS business. You remain
+              responsible for your own product logic, customer
+              onboarding, compliance, security review, deployment,
+              monitoring, copy, positioning, and market-specific
+              workflows.
             </p>
           </Section>
 
           <Section title="9. Payments, taxes, and billing providers">
             <p>
               Payments may be processed by third-party providers such
-              as Gumroad or Stripe, depending on the product.
+              as Stripe or another checkout provider used by PyColors.
             </p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
                 You agree to provide valid payment information where
                 required.
               </li>
               <li>
-                You authorize the relevant billing provider to charge
-                the applicable price, taxes, and recurring fees if the
-                product or plan is subscription-based.
+                You authorize the billing provider to charge the
+                applicable price and taxes.
               </li>
               <li>Taxes may be added where required by law.</li>
               <li>
-                Billing operations, card processing, fraud checks, and
-                payment disputes may be handled by the relevant
-                payment platform.
+                Card processing, fraud checks, chargebacks, disputes,
+                and payment security may be handled by the relevant
+                payment provider.
               </li>
             </ul>
           </Section>
 
-          <Section title="10. Refunds and cancellations">
+          <Section title="10. Digital delivery, refunds, and cancellations">
             <p>
-              Because many PyColors products are digital products
-              delivered immediately, refunds may be limited or
-              unavailable.
+              PyColors paid products are digital products that may be
+              delivered immediately after purchase through a download,
+              claim page, private access flow, or email-based recovery
+              flow.
             </p>
+
             <p>
-              For the current Gumroad template, the checkout terms
-              currently state:{' '}
-              <span className="font-medium text-foreground">
-                no refunds allowed
-              </span>
-              .
+              Because digital products can be accessed immediately,
+              refunds may be limited or unavailable unless required by
+              applicable law or explicitly stated on the product page,
+              checkout page, or order terms.
             </p>
+
             <p>
-              For future products, subscriptions, or bundles, the
-              refund and cancellation rules shown on the relevant
-              checkout, order, pricing, or access page will apply.
+              For subscriptions or access plans introduced in the
+              future, cancellation and renewal terms will be shown on
+              the relevant pricing page, checkout page, order form, or
+              account area.
             </p>
+
             <p>
               Nothing in these Terms excludes mandatory consumer
               rights that cannot be waived under applicable law.
@@ -399,75 +427,86 @@ export default function TermsPage() {
               PyColors products are licensed, not sold, except to the
               limited extent required by applicable law.
             </p>
+
             <p>
-              Py Colors SASU retains all right, title, and interest in
-              and to the website, products, source materials,
-              documentation, public and private product packaging,
-              brand identity, trademarks, and related intellectual
-              property, except for third-party components governed by
-              their own licenses.
+              Py Colors SASU retains all rights, title, and interest
+              in the website, products, source materials,
+              documentation, private product packaging, brand
+              identity, trademarks, logos, product names, and related
+              intellectual property.
             </p>
+
             <p>
-              Purchasing a product or access plan does not transfer
-              ownership of the product itself or permit redistribution
-              beyond the granted license.
+              Purchasing a product does not transfer ownership of the
+              product itself and does not permit redistribution,
+              resale, sublicensing, or publication beyond the license
+              granted for that product.
             </p>
           </Section>
 
           <Section title="12. Acceptable use">
             <p>You must not:</p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
-                resell, redistribute, leak, or share paid source code,
-                premium assets, private materials, or premium access
-                in violation of the applicable license;
+                resell, redistribute, leak, publish, or share paid
+                source code, premium assets, private files, or
+                download links in violation of the applicable license;
+              </li>
+              <li>
+                create competing commercial templates, starters, UI
+                kits, boilerplates, or downloadable products
+                substantially based on paid PyColors products;
               </li>
               <li>
                 use the website or products for unlawful, fraudulent,
-                or abusive activity;
+                abusive, or harmful activity;
               </li>
               <li>
                 attempt to interfere with platform security,
                 availability, or integrity;
               </li>
               <li>
-                scrape, crawl, or automate access to the website in a
-                way that harms operations or bypasses access controls;
+                scrape, crawl, or automate access in a way that harms
+                operations or bypasses access controls;
               </li>
               <li>
                 misrepresent PyColors products as your own framework,
                 toolkit, starter, or commercial package for resale;
               </li>
               <li>
-                use PyColors brand assets, product naming, or
-                positioning in a way that implies official affiliation
-                or endorsement without permission.
+                use PyColors branding in a way that implies
+                partnership, endorsement, or official origin without
+                permission.
               </li>
             </ul>
           </Section>
 
           <Section title="13. Third-party services">
             <p>
-              PyColors may rely on third-party services including
-              hosting, analytics, payments, email delivery, and other
-              operational providers.
+              PyColors may rely on third-party services for hosting,
+              payments, analytics, email delivery, storage,
+              deployment, and operations.
             </p>
+
             <p>
-              Your use of features connected to those providers may
+              Your use of features connected to those services may
               also be subject to the relevant third-party terms and
               policies.
             </p>
           </Section>
 
-          <Section title="14. Availability and changes">
+          <Section title="14. Availability and product changes">
             <p>
-              We may update, improve, suspend, replace, or remove any
-              part of the website, public content, product lineup,
-              pricing, features, roadmap, or access model at any time.
+              We may update, improve, suspend, replace, rename,
+              repackage, or remove parts of the website,
+              documentation, pricing, products, product lineup,
+              roadmap, or access model at any time.
             </p>
+
             <p>
-              We aim for continuity and clarity, but we do not
-              guarantee that every free, public, or future feature
+              We aim to maintain continuity and clarity, but we do not
+              guarantee that every free, public, or commercial feature
               will remain available indefinitely in the same form.
             </p>
           </Section>
@@ -484,10 +523,11 @@ export default function TermsPage() {
               </span>{' '}
               basis, except where otherwise required by law.
             </p>
+
             <p>
-              You are responsible for evaluating whether a product or
-              access plan is suitable for your technical, legal,
-              operational, security, accessibility, and compliance
+              You are responsible for evaluating whether a product is
+              suitable for your technical, legal, operational,
+              security, accessibility, compliance, and business
               requirements.
             </p>
           </Section>
@@ -501,33 +541,34 @@ export default function TermsPage() {
               goodwill arising from or related to your use of the
               website or products.
             </p>
+
             <p>
               To the maximum extent permitted by law, our aggregate
-              liability for any claim related to paid products or paid
-              access will not exceed the amount you paid to us for the
-              specific product or offer giving rise to the claim
-              during the twelve months preceding the event.
+              liability for any claim related to a paid product will
+              not exceed the amount you paid to us for the specific
+              product or offer giving rise to the claim during the
+              twelve months preceding the event.
             </p>
+
             <p>
-              <span className="font-medium text-foreground">
-                Legal review recommended:
-              </span>{' '}
-              this limitation clause should be reviewed by counsel for
-              enforceability in your main markets.
+              Some jurisdictions do not allow certain limitations of
+              liability. In that case, the limitation applies only to
+              the maximum extent permitted by applicable law.
             </p>
           </Section>
 
           <Section title="17. Termination">
             <p>
               We may suspend or terminate access to the website,
-              account areas, premium resources, or future commercial
-              services if you materially breach these Terms or the
-              applicable license.
+              account areas, downloads, premium resources, or future
+              commercial services if you materially breach these Terms
+              or the applicable license.
             </p>
+
             <p>
               Sections relating to intellectual property, payment
-              obligations, disclaimers, liability, and governing law
-              will survive termination where applicable.
+              obligations, restrictions, disclaimers, liability, and
+              governing law will survive termination where applicable.
             </p>
           </Section>
 
@@ -539,18 +580,11 @@ export default function TermsPage() {
               </span>
               , without regard to conflict-of-law principles.
             </p>
+
             <p>
               PyColors may be used internationally, but you are
               responsible for complying with local laws applicable to
               your own business and use case.
-            </p>
-            <p>
-              <span className="font-medium text-foreground">
-                Legal review recommended:
-              </span>{' '}
-              choose whether you want a specific court venue clause or
-              a mediation / arbitration clause for international B2B
-              disputes.
             </p>
           </Section>
 
@@ -559,26 +593,37 @@ export default function TermsPage() {
               We may update these Terms from time to time. The “Last
               updated” date reflects the current version.
             </p>
+
             <p>
-              Material changes may also be reflected through the
-              relevant sales page, access page, or checkout flow for
-              the applicable product or offer.
+              Product-specific pages, pricing pages, checkout pages,
+              invoices, or written commercial agreements may include
+              additional or more specific terms for the relevant
+              product.
             </p>
           </Section>
 
           <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-medium">
             <CardContent className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
-                  <p className="text-sm font-medium text-foreground">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+                    <FileText
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <p className="mt-5 text-sm font-medium text-foreground">
                     Need product usage details?
                   </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Review licensing scope and privacy policy.
+
+                  <p className="mt-1 text-sm leading-7 text-muted-foreground">
+                    Review the license, pricing, and privacy policy
+                    before using PyColors products in production.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row lg:justify-end">
                   <Button
                     asChild
                     variant="outline"
@@ -586,6 +631,20 @@ export default function TermsPage() {
                   >
                     <Link href="/license">
                       License
+                      <ArrowRight
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </Button>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px]"
+                  >
+                    <Link href="/pricing">
+                      Pricing
                       <ArrowRight
                         className="h-4 w-4"
                         aria-hidden="true"
@@ -606,6 +665,53 @@ export default function TermsPage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+            <CardContent className="p-6 sm:p-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
+                    <CreditCard
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    Product, billing, or license question?
+                  </div>
+
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Contact PyColors at{' '}
+                    <a
+                      className="underline underline-offset-4 hover:text-foreground"
+                      href={`mailto:${COMPANY.email}`}
+                    >
+                      {COMPANY.email}
+                    </a>
+                    .
+                  </p>
+                </div>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-[5px]"
+                >
+                  <a href={`mailto:${COMPANY.email}`}>
+                    Contact
+                    <ArrowRight
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <p className="text-center text-xs leading-6 text-muted-foreground">
+            Product-specific license files, checkout terms, invoices,
+            and written commercial agreements may define additional or
+            more specific rights.
+          </p>
         </section>
       </div>
     </Container>
