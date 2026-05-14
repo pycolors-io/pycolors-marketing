@@ -7,6 +7,7 @@ import {
   CreditCard,
   Database,
   GitBranch,
+  LayoutTemplate,
   Lock,
   Mail,
   Rocket,
@@ -30,27 +31,34 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
-  title: 'Pricing | PyColors',
+  title: 'Pricing — Templates, Starter Free & Starter Pro | PyColors',
   description:
-    'Start free or buy Starter Pro to launch a real SaaS faster with authentication, Stripe billing, protected routes, and production-ready foundations already wired.',
-  alternates: { canonical: '/pricing' },
+    'Choose the right PyColors product: premium Next.js templates for fast launches, Starter Free for SaaS UX validation, or Starter Pro for real auth, Stripe billing, protected routes, and production-ready foundations.',
+  alternates: {
+    canonical: 'https://pycolors.io/pricing',
+  },
   openGraph: {
-    title: 'Pricing | PyColors',
+    title:
+      'Pricing — Templates, Starter Free & Starter Pro | PyColors',
     description:
-      'Start free or buy Starter Pro to launch faster with real auth, real billing, and a stronger SaaS foundation.',
-    url: '/pricing',
+      'Start with a template, validate with Starter Free, or buy Starter Pro when auth, billing, and protected SaaS architecture should already be wired.',
+    url: 'https://pycolors.io/pricing',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pricing | PyColors',
+    title:
+      'Pricing — Templates, Starter Free & Starter Pro | PyColors',
     description:
-      'Start free or buy Starter Pro to launch faster with real auth, real billing, and a stronger SaaS foundation.',
+      'Choose the right PyColors product for your launch: templates, Starter Free, or Starter Pro.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -59,6 +67,8 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
+  templates: '/templates',
+  templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
   starterPro: '/starters/pro',
   docsStarterPro: '/docs/starter-pro',
@@ -71,6 +81,8 @@ const INTERNAL = {
 } as const;
 
 const PRICING = {
+  naAiLanding: '49 €',
+  naAiLandingRegular: '79 €',
   starterFree: 'Free',
   starterProLaunch: '199 €',
   starterProRegular: '299 €',
@@ -101,62 +113,80 @@ const starterProIncludes = [
 
 const comparisonRows = [
   {
+    feature: 'Focused marketing page',
+    template: 'Included',
+    free: 'No',
+    pro: 'No',
+  },
+  {
     feature: 'Product-shaped SaaS UI',
+    template: 'Landing only',
     free: 'Included',
     pro: 'Included',
   },
   {
     feature: 'Dashboard, settings, billing screens',
+    template: 'No',
     free: 'Included',
     pro: 'Included + production wiring',
   },
   {
     feature: 'Auth screens and UX',
+    template: 'No',
     free: 'Included',
     pro: 'Included + real auth',
   },
   {
     feature: 'Email/password auth',
+    template: 'No',
     free: 'Mock/demo only',
     pro: 'Included',
   },
   {
     feature: 'Google and GitHub OAuth',
+    template: 'No',
     free: 'No',
     pro: 'Included',
   },
   {
     feature: 'Protected routes and sessions',
+    template: 'No',
     free: 'Partial',
     pro: 'Included',
   },
   {
     feature: 'Stripe Checkout',
+    template: 'No',
     free: 'No',
     pro: 'Included',
   },
   {
     feature: 'Billing portal',
+    template: 'No',
     free: 'No',
     pro: 'Included',
   },
   {
     feature: 'Webhooks + Prisma sync',
+    template: 'No',
     free: 'No',
     pro: 'Included',
   },
   {
     feature: 'Database foundation',
+    template: 'No',
     free: 'No',
     pro: 'Prisma + PostgreSQL',
   },
   {
     feature: 'Commercial usage',
+    template: 'Included',
     free: 'Review license',
     pro: 'Included',
   },
   {
     feature: 'Best for',
+    template: 'Launching a polished landing page',
     free: 'Exploring and validating UX',
     pro: 'Launching and charging faster',
   },
@@ -202,6 +232,11 @@ const stackItems = [
 
 const faqs = [
   {
+    question: 'Should I buy NA-AI Landing or Starter Pro?',
+    answer:
+      'Choose NA-AI Landing when you need a polished frontend marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.',
+  },
+  {
     question: 'Is Starter Pro production-ready?',
     answer:
       'Yes. Starter Pro is designed as a real SaaS foundation with authentication, billing, protected app architecture, database foundations, and commercial product surfaces already wired.',
@@ -212,22 +247,17 @@ const faqs = [
       'Because auth, billing, protected routes, account flows, and webhook synchronization are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
   },
   {
-    question: 'Is the backend included?',
+    question: 'Is the backend included in Starter Pro?',
     answer:
       'Yes. Starter Pro includes the foundation for authentication, billing, Prisma, PostgreSQL, protected routes, and business wiring needed for a real SaaS product.',
   },
   {
-    question: 'Can I use Starter Pro for a commercial project?',
+    question: 'Can I use PyColors products for commercial projects?',
     answer:
-      'Yes. Starter Pro includes commercial usage rights. You should still review the license and terms before using it in production.',
+      'Yes. Paid PyColors products include commercial usage rights. You should still review the license and terms before using them in production.',
   },
   {
-    question: 'Should I start with Starter Free or Starter Pro?',
-    answer:
-      'Use Starter Free if you are validating the product surface. Choose Starter Pro if you already know you need real auth, Stripe billing, protected app structure, and a faster launch path.',
-  },
-  {
-    question: 'Will the price stay at 199 €?',
+    question: 'Will the Starter Pro price stay at 199 €?',
     answer:
       'No. 199 € is the current launch price. The regular price is planned at 299 € as the product matures and more production features are added.',
   },
@@ -321,8 +351,10 @@ function FeatureCard({
         <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
           <Icon className="h-4 w-4 text-muted-foreground" />
         </div>
+
         <CardTitle className="text-base">{title}</CardTitle>
       </CardHeader>
+
       <CardContent>
         <p className="text-sm leading-7 text-muted-foreground">
           {description}
@@ -365,7 +397,17 @@ export default function PricingPage() {
               variant: 'secondary',
             },
             {
-              label: `Launch price ${PRICING.starterProLaunch}`,
+              label: `Templates from ${PRICING.naAiLanding}`,
+              variant: 'outline',
+              icon: (
+                <LayoutTemplate
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
+            },
+            {
+              label: `Starter Pro ${PRICING.starterProLaunch}`,
               variant: 'outline',
               icon: (
                 <Sparkles
@@ -374,19 +416,26 @@ export default function PricingPage() {
                 />
               ),
             },
-            {
-              label: `${PRICING.starterProRegular} regular price`,
-              variant: 'outline',
-            },
           ]}
-          title="Launch faster with the SaaS foundation already wired."
-          subtitle="Start free to explore. Upgrade when auth, billing, and protected architecture become the bottleneck."
-          description="Starter Pro gives you the expensive SaaS wiring developers rebuild again and again: real authentication, Stripe billing, protected routes, Prisma foundations, and production-shaped app surfaces."
+          title="Choose the right PyColors product for your launch."
+          subtitle="Start with a template, validate with Starter Free, or buy Starter Pro when the SaaS foundation should already be wired."
+          description="PyColors gives you a simple product ladder: focused templates for fast marketing pages, Starter Free for product-surface validation, and Starter Pro for real authentication, Stripe billing, protected routes, and production-ready SaaS foundations."
           actions={
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+              <Button
+                asChild
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.templateNaAi}>
+                  View NA-AI Landing
+                </Link>
+              </Button>
+
               <BuyStarterProButton
                 label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
               />
+
               <Button
                 asChild
                 size="lg"
@@ -403,11 +452,64 @@ export default function PricingPage() {
             'One-time payment',
             'Instant access',
             'Commercial usage',
-            'Built for real SaaS',
+            'Built for real launches',
           ]}
-          extraClassName="mx-auto max-w-5xl"
+          extraClassName="mx-auto max-w-6xl"
           extra={
-            <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="grid gap-4 lg:grid-cols-3">
+              <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px] text-[11px]"
+                    >
+                      Fast launch
+                    </Badge>
+
+                    <h2 className="mt-4 text-lg font-semibold tracking-tight">
+                      NA-AI Landing
+                    </h2>
+
+                    <div className="mt-2 flex items-end gap-2">
+                      <span className="text-3xl font-semibold tracking-tight">
+                        {PRICING.naAiLanding}
+                      </span>
+
+                      <span className="pb-1 text-sm text-muted-foreground">
+                        <span className="mr-1 line-through">
+                          {PRICING.naAiLandingRegular}
+                        </span>
+                        launch
+                      </span>
+                    </div>
+                  </div>
+
+                  <LayoutTemplate className="h-4 w-4 text-muted-foreground" />
+                </div>
+
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  A premium AI/SaaS landing page template for
+                  launching and validating your offer quickly.
+                </p>
+
+                <ul className="mt-5 space-y-2">
+                  <CheckItem>Full source code</CheckItem>
+                  <CheckItem>Commercial usage</CheckItem>
+                  <CheckItem>SEO-ready frontend page</CheckItem>
+                </ul>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="mt-6 h-10 w-full rounded-[5px] text-sm font-medium"
+                >
+                  <Link href={INTERNAL.templateNaAi}>
+                    View template
+                  </Link>
+                </Button>
+              </Card>
+
               <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -427,13 +529,12 @@ export default function PricingPage() {
                     </div>
                   </div>
 
-                  <Sparkles className="h-4 w-4 text-muted-foreground" />
+                  <Zap className="h-4 w-4 text-muted-foreground" />
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Explore the product surface, UI direction,
-                  dashboards, settings, and SaaS patterns before
-                  committing to the paid business wiring.
+                  Explore product surfaces, dashboards, settings, and
+                  SaaS UX before committing to production wiring.
                 </p>
 
                 <ul className="mt-5 space-y-2">
@@ -462,12 +563,6 @@ export default function PricingPage() {
                       <Badge className="rounded-[5px] text-[11px]">
                         Best launch path
                       </Badge>
-                      <Badge
-                        variant="outline"
-                        className="rounded-[5px] border-pro-border-subtle text-[11px]"
-                      >
-                        Save repeated setup time
-                      </Badge>
                     </div>
 
                     <h2 className="mt-4 text-lg font-semibold tracking-tight">
@@ -478,11 +573,12 @@ export default function PricingPage() {
                       <span className="text-4xl font-semibold tracking-tight">
                         {PRICING.starterProLaunch}
                       </span>
+
                       <span className="pb-1 text-sm text-muted-foreground">
                         <span className="mr-2 line-through">
                           {PRICING.starterProRegular}
-                        </span>{' '}
-                        launch price
+                        </span>
+                        launch
                       </span>
                     </div>
                   </div>
@@ -491,27 +587,22 @@ export default function PricingPage() {
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Buy Starter Pro when you want to stop rebuilding
-                  authentication, Stripe billing, protected routes,
-                  and SaaS account foundations from scratch.
+                  Stop rebuilding authentication, Stripe billing,
+                  protected routes, and SaaS account foundations from
+                  scratch.
                 </p>
 
-                <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                <ul className="mt-5 grid gap-2">
                   <CheckItem>Real authentication</CheckItem>
                   <CheckItem>Stripe billing</CheckItem>
-                  <CheckItem>Protected app</CheckItem>
-                  <CheckItem>Prisma foundation</CheckItem>
+                  <CheckItem>Protected app architecture</CheckItem>
                 </ul>
 
-                <div className="mt-6 space-y-3">
+                <div className="mt-6">
                   <BuyStarterProButton
                     fullWidth={false}
                     label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    One-time payment · Instant access after purchase ·
-                    Commercial usage included
-                  </p>
                 </div>
               </Card>
             </div>
@@ -543,6 +634,7 @@ export default function PricingPage() {
                 <p className="text-sm font-medium text-foreground">
                   Built with the stack developers already trust
                 </p>
+
                 <p className="mt-1 text-sm text-muted-foreground">
                   Modern SaaS foundations using familiar production
                   tools.
@@ -561,12 +653,18 @@ export default function PricingPage() {
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Decision"
-            title="The only choice is Free vs Pro."
-            description="Starter Free is for exploring the product surface. Starter Pro is for developers who want the business layer already handled."
+            title="Choose by stage, not by feature count."
+            description="Templates launch the offer. Starter Free validates the SaaS surface. Starter Pro wires the business layer when you are ready to charge."
             align="center"
           />
 
           <div className="grid gap-4 md:grid-cols-3">
+            <FeatureCard
+              icon={LayoutTemplate}
+              title="Use templates to launch"
+              description="Choose a template when you need a polished landing page, clear offer, and fast path to a public launch."
+            />
+
             <FeatureCard
               icon={Zap}
               title="Use Free to validate"
@@ -574,15 +672,9 @@ export default function PricingPage() {
             />
 
             <FeatureCard
-              icon={Lock}
-              title="Upgrade when wiring slows you down"
-              description="Move to Starter Pro when auth, billing, sessions, protected routes, and database foundations become the bottleneck."
-            />
-
-            <FeatureCard
               icon={Rocket}
-              title="Launch with less repeated work"
-              description="Starter Pro gives you the commercial foundation so you can focus on product logic, onboarding, customers, and growth."
+              title="Use Pro to charge faster"
+              description="Choose Starter Pro when auth, billing, sessions, protected routes, and database foundations become the bottleneck."
             />
           </div>
         </section>
@@ -614,6 +706,7 @@ export default function PricingPage() {
                     <Badge className="rounded-[5px] text-[11px]">
                       Paid foundation
                     </Badge>
+
                     <Badge
                       variant="outline"
                       className="rounded-[5px] text-[11px]"
@@ -638,6 +731,7 @@ export default function PricingPage() {
                   <p className="text-sm font-medium text-foreground">
                     Included in Starter Pro
                   </p>
+
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                     {starterProIncludes.map((item) => (
                       <CheckItem key={item}>{item}</CheckItem>
@@ -656,11 +750,13 @@ export default function PricingPage() {
                     <p className="text-lg font-semibold tracking-tight">
                       Buy Starter Pro
                     </p>
+
                     <p className="mt-1 text-sm text-muted-foreground">
                       The faster path from validated surface to
                       monetizable SaaS.
                     </p>
                   </div>
+
                   <CreditCard className="h-4 w-4 text-muted-foreground" />
                 </div>
 
@@ -668,6 +764,7 @@ export default function PricingPage() {
                   <span className="text-4xl font-semibold tracking-tight sm:text-5xl">
                     {PRICING.starterProLaunch}
                   </span>
+
                   <div className="pb-1 text-sm text-muted-foreground">
                     <span className="mr-2 line-through">
                       {PRICING.starterProRegular}
@@ -681,6 +778,7 @@ export default function PricingPage() {
                 <div className="grid gap-4">
                   <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                     <p className="text-sm font-medium">Best for</p>
+
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       Indie hackers, freelancers, product engineers,
                       and technical founders who want to stop
@@ -693,6 +791,7 @@ export default function PricingPage() {
                     <p className="text-sm font-medium">
                       Why it is worth paying for
                     </p>
+
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       The cost is lower than the time usually spent
                       wiring auth, billing, protected flows, Stripe
@@ -720,6 +819,7 @@ export default function PricingPage() {
                   <BuyStarterProButton
                     label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                   />
+
                   <Button
                     asChild
                     variant="outline"
@@ -741,8 +841,8 @@ export default function PricingPage() {
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Comparison"
-            title="Free validates the surface. Pro wires the business."
-            description="Make the upgrade obvious: Free helps you see the product. Pro helps you ship, protect, bill, and launch."
+            title="Templates launch the page. Free validates the product. Pro wires the business."
+            description="Make the decision simple: choose the product that matches your current bottleneck."
             action={
               <Button
                 asChild
@@ -761,24 +861,34 @@ export default function PricingPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[42%]">Feature</TableHead>
-                  <TableHead className="w-[29%]">
+                  <TableHead className="w-[34%]">Feature</TableHead>
+                  <TableHead className="w-[22%]">
+                    NA-AI Landing
+                  </TableHead>
+                  <TableHead className="w-[22%]">
                     Starter Free
                   </TableHead>
-                  <TableHead className="w-[29%]">
+                  <TableHead className="w-[22%]">
                     Starter Pro
                   </TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
                 {comparisonRows.map((row) => (
                   <TableRow key={row.feature}>
                     <TableCell className="font-medium">
                       {row.feature}
                     </TableCell>
+
+                    <TableCell className="text-muted-foreground">
+                      {row.template}
+                    </TableCell>
+
                     <TableCell className="text-muted-foreground">
                       {row.free}
                     </TableCell>
+
                     <TableCell className="font-medium text-foreground">
                       {row.pro}
                     </TableCell>
@@ -793,6 +903,7 @@ export default function PricingPage() {
               fullWidth={false}
               label={`Move to Starter Pro — ${PRICING.starterProLaunch}`}
             />
+
             <p className="text-center text-xs text-muted-foreground">
               Choose Pro when the cost of rebuilding the foundation is
               higher than the price of skipping it.
@@ -803,7 +914,7 @@ export default function PricingPage() {
         <section className="py-12 sm:py-14 lg:py-16">
           <SectionHeader
             eyebrow="Proof of seriousness"
-            title="A maintained product, not a one-off template."
+            title="A maintained product ecosystem, not a one-off template."
             description="For early buyers, trust comes from product discipline: docs, changelog, roadmap, clear scope, and an active ecosystem."
           />
 
@@ -811,13 +922,13 @@ export default function PricingPage() {
             <FeatureCard
               icon={ShieldCheck}
               title="Clear product scope"
-              description="Starter Pro explains what is included, what is wired, and where the foundation stops so you can make a clean buying decision."
+              description="PyColors explains what is included, what is wired, and where each product stops so you can make a clean buying decision."
             />
 
             <FeatureCard
               icon={Database}
               title="Real SaaS infrastructure"
-              description="The paid foundation includes database, billing, protected app structure, and lifecycle flows instead of only static screens."
+              description="Starter Pro includes database, billing, protected app structure, and lifecycle flows instead of only static screens."
             />
 
             <FeatureCard
@@ -838,6 +949,7 @@ export default function PricingPage() {
             >
               <Link href={INTERNAL.changelog}>View changelog</Link>
             </Button>
+
             <Button
               asChild
               variant="outline"
@@ -883,21 +995,23 @@ export default function PricingPage() {
                 </Badge>
 
                 <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Stop rebuilding the SaaS foundation. Start building
-                  the product.
+                  Launch the page. Validate the surface. Wire the
+                  business when it matters.
                 </h2>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  Use Starter Free to explore the surface. Buy Starter
-                  Pro when auth, billing, protected routes, and the
-                  business layer should already be handled.
+                  Use NA-AI Landing for a polished marketing page,
+                  Starter Free to explore the product surface, and
+                  Starter Pro when auth, billing, protected routes,
+                  and the SaaS business layer should already be
+                  handled.
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Pill>Launch price {PRICING.starterProLaunch}</Pill>
+                  <Pill>Templates from {PRICING.naAiLanding}</Pill>
+                  <Pill>Starter Pro {PRICING.starterProLaunch}</Pill>
                   <Pill>One-time payment</Pill>
                   <Pill>Instant access</Pill>
-                  <Pill>Commercial usage</Pill>
                 </div>
               </div>
 
@@ -905,6 +1019,7 @@ export default function PricingPage() {
                 <BuyStarterProButton
                   label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                 />
+
                 <Button
                   asChild
                   variant="outline"
@@ -913,8 +1028,8 @@ export default function PricingPage() {
                     focusRing,
                   )}
                 >
-                  <Link href={INTERNAL.starterFree}>
-                    Explore Starter Free
+                  <Link href={INTERNAL.templateNaAi}>
+                    View NA-AI Landing
                   </Link>
                 </Button>
               </div>

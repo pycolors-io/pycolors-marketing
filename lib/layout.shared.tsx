@@ -30,13 +30,39 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
     title: 'Starters',
     items: [
-      { label: 'Compare Starters', href: '/starters' },
+      {
+        label: 'Starter Pro',
+        href: '/starters/pro',
+        description: 'Launch with auth and billing',
+        badge: '199 €',
+      },
       {
         label: 'Starter Free',
         href: '/starters/free',
+        description: 'Validate product UX fast',
         badge: 'Free',
       },
-      { label: 'Starter Pro', href: '/starters/pro', badge: '199 €' },
+      {
+        label: 'Compare Starters',
+        href: '/starters',
+        description: 'Choose the right SaaS foundation',
+      },
+    ],
+  },
+  {
+    title: 'Templates',
+    items: [
+      {
+        label: 'NA-AI Landing',
+        href: '/templates/na-ai-landing',
+        description: 'AI/SaaS landing page template',
+        badge: '49 €',
+      },
+      {
+        label: 'All templates',
+        href: '/templates',
+        description: 'Browse premium Next.js templates',
+      },
     ],
   },
   {
@@ -45,14 +71,17 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
       {
         label: 'UI Library',
         href: '/ui',
+        description: 'Production-ready React primitives',
       },
       {
         label: 'Patterns',
         href: '/ui/patterns',
+        description: 'SaaS surfaces and product patterns',
       },
       {
         label: 'Examples',
         href: '/ui/examples',
+        description: 'See components in context',
       },
     ],
   },
@@ -78,6 +107,5 @@ export function baseOptions(): BaseLayoutProps {
     },
     searchToggle: { enabled: false },
     themeSwitch: { enabled: false },
-    // links: layoutLinks,
   };
 }

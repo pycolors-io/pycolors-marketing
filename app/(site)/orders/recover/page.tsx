@@ -17,9 +17,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  Input,
 } from '@pycolors/ui';
 
-import { recoverStarterProAccess } from '@/lib/api/client';
+import { recoverCommerceAccess } from '@/lib/api/client';
 
 export default function RecoverOrderPage() {
   const [email, setEmail] = React.useState('');
@@ -36,10 +37,9 @@ export default function RecoverOrderPage() {
       setIsLoading(true);
       setError(null);
 
-      await recoverStarterProAccess({ email });
+      await recoverCommerceAccess({ email });
 
       setDone(true);
-      setIsLoading(false);
     } catch (err) {
       const message =
         err instanceof Error
@@ -47,13 +47,14 @@ export default function RecoverOrderPage() {
           : 'Unable to resend access link.';
 
       setError(message);
+    } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <main className="mx-auto max-w-5xl mt-10 px-6 py-16 sm:py-20">
-      <div className="overflow-hidden rounded-4xl border bg-card shadow-xl shadow-black/5">
+    <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className="rounded-full px-3 py-1 text-xs font-medium">
@@ -63,7 +64,7 @@ export default function RecoverOrderPage() {
               variant="outline"
               className="rounded-full px-3 py-1 text-xs font-medium"
             >
-              Starter Pro support
+              Product access support
             </Badge>
           </div>
 
@@ -73,8 +74,8 @@ export default function RecoverOrderPage() {
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
             If you completed your purchase but did not receive your
-            Starter Pro access email, you can request a new secure
-            access link here.
+            access email, you can request a new secure access link
+            here.
           </p>
         </div>
 
@@ -109,27 +110,19 @@ export default function RecoverOrderPage() {
               ) : (
                 <>
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="email"
-                        className="text-sm font-medium"
-                      >
-                        Purchase email
-                      </label>
-
-                      <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        value={email}
-                        onChange={(event) =>
-                          setEmail(event.target.value)
-                        }
-                        placeholder="you@example.com"
-                        className="h-11 w-full rounded-xl border bg-background px-4 text-sm outline-none transition focus:border-foreground/30"
-                      />
-                    </div>
+                    <Input
+                      id="email"
+                      type="email"
+                      name="email"
+                      required
+                      value={email}
+                      onChange={(event) =>
+                        setEmail(event.target.value)
+                      }
+                      label="Purchase email"
+                      placeholder="you@example.com"
+                      size="lg"
+                    />
 
                     <Button
                       type="submit"
@@ -147,7 +140,7 @@ export default function RecoverOrderPage() {
                   </form>
 
                   {error ? (
-                    <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                    <div className="rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
                       {error}
                     </div>
                   ) : null}
@@ -220,7 +213,7 @@ export default function RecoverOrderPage() {
                     variant="outline"
                     className="rounded-xl"
                   >
-                    <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20access%20recovery">
+                    <Link href="mailto:support@pycolors.io?subject=PyColors%20access%20recovery">
                       Contact support
                     </Link>
                   </Button>

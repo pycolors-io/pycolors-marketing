@@ -7,6 +7,7 @@ import {
   Lock,
   Rocket,
   Shield,
+  ShieldCheck,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -26,27 +27,34 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Upgrade to Starter Pro | PyColors',
+  title:
+    'Upgrade to Starter Pro — Auth, Billing & SaaS Foundations | PyColors',
   description:
-    'Upgrade from Starter Free to Starter Pro and get real authentication, real billing, protected app foundations, and a production-ready SaaS baseline.',
-  alternates: { canonical: '/upgrade' },
+    'Upgrade from Starter Free to Starter Pro and get real authentication, Stripe billing, protected routes, Prisma foundations, and production-ready SaaS wiring.',
+  alternates: {
+    canonical: 'https://pycolors.io/upgrade',
+  },
   openGraph: {
-    title: 'Upgrade to Starter Pro | PyColors',
+    title:
+      'Upgrade to Starter Pro — Auth, Billing & SaaS Foundations | PyColors',
     description:
-      'Stop rebuilding auth and billing. Upgrade to a production-ready SaaS foundation.',
-    url: '/upgrade',
+      'Move from product-surface validation to a production-ready SaaS foundation with authentication, billing, protected routes, and database foundations already wired.',
+    url: 'https://pycolors.io/upgrade',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Upgrade to Starter Pro | PyColors',
     description:
-      'From product-shaped UI to a real SaaS foundation with authentication, billing, and scalable architecture.',
+      'Stop rebuilding auth and billing. Upgrade to a production-ready SaaS foundation.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -56,10 +64,13 @@ const focusRing =
 
 const INTERNAL = {
   starterFree: '/starters/free',
+  starterPro: '/starters/pro',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
   pricing: '/pricing',
+  roadmap: '/roadmap',
+  changelog: '/changelog',
   license: '/license',
   terms: '/terms',
 } as const;
@@ -69,135 +80,177 @@ const PRICING = {
   regular: '299 €',
 } as const;
 
-const included = [
+const valueCards = [
   {
-    title: 'Authentication that is actually usable in production',
+    title: 'Reduce time-to-revenue',
     description:
-      'Email and password, Google and GitHub OAuth, email verification, password reset, password change, connected accounts, safer provider disconnect, and rate limiting foundations.',
+      'Starter Pro removes the repeated work between a validated SaaS surface and the moment you can safely charge customers.',
+    icon: Zap,
+  },
+  {
+    title: 'Launch with stronger foundations',
+    description:
+      'Auth, billing, protected routes, account flows, and database structure are already shaped for a real SaaS product.',
+    icon: Shield,
+  },
+  {
+    title: 'Focus on product, not plumbing',
+    description:
+      'Spend more time on product logic, onboarding, positioning, customers, and growth — less time wiring generic SaaS infrastructure.',
+    icon: Sparkles,
+  },
+] as const;
+
+const unlockedLayers = [
+  {
+    title: 'Real authentication',
+    description:
+      'Email/password auth, Google and GitHub OAuth, verification, password reset, sessions, protected routes, and account foundations.',
     icon: Lock,
   },
   {
-    title: 'Billing that gets you to monetization faster',
+    title: 'Stripe billing foundation',
     description:
-      'Stripe Checkout, billing portal flow, invoices, subscription sync, webhook handling, and plan-aware app foundations already wired.',
+      'Checkout, billing portal, invoices, subscription state, lifecycle handling, and webhook synchronization with Prisma.',
     icon: CreditCard,
   },
   {
-    title: 'Protected app and data foundations',
+    title: 'Protected SaaS architecture',
     description:
-      'App, auth, and billing domains are clearly separated so the starter can grow into a real commercial SaaS instead of collapsing into glue code.',
+      'Protected routes, app shell, account areas, settings, billing screens, plan-aware UI states, and scalable product structure.',
     icon: Database,
   },
   {
-    title: 'A stronger baseline for launch and scale',
+    title: 'Production-shaped baseline',
     description:
-      'Settings architecture, protected routes, reusable server patterns, Prisma-backed structure, and production-shaped navigation ready to extend.',
+      'Environment configuration, Prisma schema, PostgreSQL foundations, Zod validation, reusable server patterns, and launch-ready structure.',
     icon: Rocket,
   },
 ] as const;
 
 const proofPoints = [
-  'Credentials authentication',
+  'Email/password authentication',
   'Google and GitHub OAuth',
   'Email verification flow',
   'Forgot and reset password',
-  'In-session password change',
-  'Connected accounts management',
-  'Safer provider disconnect protection',
-  'Auth rate limiting',
-  'Stripe Checkout integration',
-  'Billing portal flow',
-  'Webhook sync with Prisma',
-  'Invoices and subscription state',
+  'Session management',
+  'Protected routes',
+  'Connected accounts foundations',
+  'Provider disconnect safeguards',
+  'Stripe Checkout',
+  'Stripe billing portal',
+  'Webhook synchronization',
+  'Invoices and billing history',
+  'Subscription lifecycle handling',
+  'Plan-aware UI states',
+  'Prisma + PostgreSQL foundations',
+  'Commercial usage rights',
 ] as const;
 
 const comparisonRows = [
   {
-    capability: 'Landing, app shell, settings UI',
+    capability: 'Product-shaped SaaS UI',
     free: 'Included',
     pro: 'Included',
   },
   {
-    capability: 'Auth screens and flows UI',
+    capability: 'Dashboard, settings, billing screens',
     free: 'Included',
-    pro: 'Included + wired',
+    pro: 'Included + production wiring',
   },
   {
-    capability: 'Email/password auth',
-    free: 'Mock / surface only',
-    pro: 'Real',
+    capability: 'Auth screens and UX',
+    free: 'Included',
+    pro: 'Included + real auth',
+  },
+  {
+    capability: 'Email/password authentication',
+    free: 'Mock/demo only',
+    pro: 'Included',
   },
   {
     capability: 'Google and GitHub OAuth',
     free: 'No',
-    pro: 'Real',
+    pro: 'Included',
   },
   {
-    capability: 'Email verification and reset password',
-    free: 'No',
-    pro: 'Real',
+    capability: 'Protected routes and sessions',
+    free: 'Partial',
+    pro: 'Included',
   },
   {
-    capability: 'Stripe Checkout and billing portal',
-    free: 'UI only',
-    pro: 'Real',
-  },
-  {
-    capability: 'Webhooks, invoices, subscriptions',
-    free: 'No',
-    pro: 'Real',
-  },
-  {
-    capability: 'Plan gating foundations',
+    capability: 'Stripe Checkout',
     free: 'No',
     pro: 'Included',
   },
   {
-    capability: 'Protected app architecture',
-    free: 'Partial',
-    pro: 'Production-shaped',
+    capability: 'Billing portal',
+    free: 'No',
+    pro: 'Included',
   },
   {
-    capability: 'Time-to-revenue',
-    free: 'Longer path',
-    pro: 'Faster path',
+    capability: 'Webhooks + Prisma sync',
+    free: 'No',
+    pro: 'Included',
   },
+  {
+    capability: 'Database foundation',
+    free: 'No',
+    pro: 'Prisma + PostgreSQL',
+  },
+  {
+    capability: 'Best use case',
+    free: 'Validate UX',
+    pro: 'Launch and charge faster',
+  },
+] as const;
+
+const stackItems = [
+  'Next.js',
+  'React',
+  'TypeScript',
+  'Tailwind CSS',
+  'Prisma',
+  'PostgreSQL',
+  'Stripe',
+  'Vercel',
 ] as const;
 
 const faqs = [
   {
     question: 'Who should upgrade to Starter Pro?',
     answer:
-      'Upgrade when the bottleneck is no longer UI speed but business wiring: authentication, billing, protected routes, security flows, and launch readiness.',
+      'Upgrade when the bottleneck is no longer UI speed but business wiring: authentication, billing, protected routes, database foundations, and launch readiness.',
   },
   {
-    question: 'What is the biggest difference between Free and Pro?',
+    question:
+      'What is the biggest difference between Starter Free and Starter Pro?',
     answer:
-      'Starter Free helps you validate product shape. Starter Pro handles the revenue-critical and security-critical foundations that usually slow real SaaS launches down.',
+      'Starter Free helps you validate product shape. Starter Pro wires the revenue-critical and security-critical foundations that usually slow real SaaS launches down.',
   },
   {
-    question: 'Is this meant for a real commercial SaaS?',
+    question: 'Is Starter Pro production-ready?',
     answer:
-      'Yes. Starter Pro is designed to become the base of a real product, not just a demo repository or a UI showcase.',
+      'Yes. Starter Pro is designed as a real SaaS foundation. You still need to add your product-specific logic, but auth, billing, protected app structure, and database foundations are already shaped.',
   },
   {
     question: 'Will I still need to build things myself?',
     answer:
-      'Yes. You still build your unique product logic, workflows, and market-specific features. Starter Pro removes repeated foundation work so you can focus on what differentiates your business.',
+      'Yes. You still build your unique workflows, features, onboarding, and product logic. Starter Pro removes repeated foundation work so you can focus on what differentiates the business.',
   },
   {
     question: 'What does the launch offer include?',
     answer:
-      'The launch offer gives you commercial access to Starter Pro at 199 € instead of 299 €, with the core auth, billing, and protected app foundations already wired.',
+      'The launch offer gives you commercial access to Starter Pro at 199 € instead of the planned regular price of 299 €, with the core auth, billing, protected app, and database foundations included.',
   },
   {
     question: 'Where do I find the legal and usage scope?',
     answer:
-      'Use /pricing for the commercial overview and /license and /terms for the governing legal scope.',
+      'The commercial overview lives on /pricing. Legal scope and product usage are governed by /license and /terms.',
   },
 ] as const;
 
-function Pill({ children }: { children: React.ReactNode }) {
+function Pill({ children }: { readonly children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {children}
@@ -212,11 +265,11 @@ function SectionHeader({
   action,
   align = 'left',
 }: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
-  align?: 'left' | 'center';
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
+  readonly align?: 'left' | 'center';
 }) {
   return (
     <div
@@ -255,7 +308,11 @@ function SectionHeader({
   );
 }
 
-function CheckItem({ children }: { children: React.ReactNode }) {
+function CheckItem({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return (
     <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
       <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
@@ -271,14 +328,14 @@ function ValueCard({
   title,
   description,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly title: string;
+  readonly description: string;
 }) {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border hover:bg-surface-elevated">
       <CardHeader className="space-y-4">
-        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-primary">
+        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-muted-foreground">
           <Icon className="h-4 w-4" />
         </div>
 
@@ -298,8 +355,8 @@ function FaqCard({
   question,
   answer,
 }: {
-  question: string;
-  answer: string;
+  readonly question: string;
+  readonly answer: string;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
@@ -318,431 +375,508 @@ function FaqCard({
 
 export default function UpgradePage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <PageHero
-          maxWidth="5xl"
-          contentClassName="max-w-5xl"
-          badges={[
-            {
-              label: 'Upgrade to Starter Pro',
-              variant: 'secondary',
-            },
-            {
-              label: `Launch offer ${PRICING.launch}`,
-              variant: 'outline',
-              icon: (
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              ),
-            },
-          ]}
-          title="Your UI is no longer the bottleneck."
-          subtitle="Auth and billing are."
-          description="Starter Free helps you move fast on product shape. Starter Pro is the upgrade for when you want the business layer already handled: real authentication, real Stripe billing, protected app foundations, and a stronger production baseline."
-          actions={
-            <>
-              <BuyStarterProButton
-                fullWidth={false}
-                label={`Buy Starter Pro — ${PRICING.launch}`}
-              />
-
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href={INTERNAL.docsStarterPro}>
-                  Read Starter Pro docs
-                </Link>
-              </Button>
-            </>
-          }
-          pills={[
-            'Real auth',
-            'Real billing',
-            'Protected app structure',
-            'Plan gating foundations',
-            'Faster time-to-revenue',
-          ]}
-        />
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="Core message"
-            title="Starter Free proves the surface. Starter Pro wires the business."
-            description="Stay on Free when you are still exploring. Upgrade to Pro when the cost of wiring auth, billing, and protected flows yourself becomes higher than the price of the product."
-            align="center"
-          />
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <ValueCard
-              icon={Zap}
-              title="Reduce time-to-revenue"
-              description="The upgrade is not about adding more interface polish. It removes the repeated work that stands between your product and its first paying users."
-            />
-
-            <ValueCard
-              icon={Shield}
-              title="Launch with more confidence"
-              description="Authentication, billing, security-sensitive flows, and protected app patterns create launch anxiety when they are still incomplete."
-            />
-
-            <ValueCard
-              icon={Sparkles}
-              title="Focus on what differentiates you"
-              description="Your value is in your product, workflow, insight, and positioning — not in spending weekends rebuilding OAuth and checkout flows."
-            />
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="What you unlock"
-            title="The layers that usually slow serious SaaS launches down"
-            description="Starter Pro is valuable because it removes expensive implementation work in the areas that are hardest to get right quickly."
-            action={
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
-              >
-                <Link href={INTERNAL.docsBackend}>
-                  Explore technical docs
-                </Link>
-              </Button>
-            }
-          />
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {included.map((item) => (
-              <ValueCard
-                key={item.title}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="Already built"
-            title="This is not a promise page. Core foundations already exist."
-            description="Ultra-conversion requires credibility. Starter Pro should feel like leverage, not risk."
-          />
-
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
-            <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-              <div>
-                <div className="mb-4 flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="rounded-[5px]">
-                    Implemented
-                  </Badge>
-
-                  <p className="text-sm font-medium">
-                    Production-critical systems already in place
-                  </p>
-                </div>
-
-                <ul className="grid gap-3 sm:grid-cols-2">
-                  {proofPoints.map((item) => (
-                    <CheckItem key={item}>{item}</CheckItem>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-5">
-                <h3 className="text-base font-medium">
-                  What this means for the buyer
-                </h3>
-
-                <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
-                  <p>
-                    You are not buying a vague roadmap. You are buying
-                    an accelerator for the exact layers that
-                    repeatedly delay SaaS launches.
-                  </p>
-
-                  <p>
-                    The upgrade is credible because the foundation is
-                    already there: auth flows, billing flows,
-                    subscription state, invoices, rate limiting,
-                    protected app architecture, and product structure.
-                  </p>
-
-                  <p>
-                    This reduces purchase anxiety and makes the offer
-                    feel like leverage.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="Free vs Pro"
-            title="Keep Free for exploration. Choose Pro for a shorter path to revenue."
-            description="Do not frame Pro as more stuff. Frame it as less friction, less uncertainty, and less repeated engineering work."
-            action={
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
-              >
-                <Link href={INTERNAL.starterFree}>
-                  Open Starter Free
-                </Link>
-              </Button>
-            }
-          />
-
-          <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface p-2 shadow-soft sm:p-4">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[34%]">
-                    Capability
-                  </TableHead>
-                  <TableHead className="w-[33%]">
-                    Starter Free
-                  </TableHead>
-                  <TableHead className="w-[33%]">
-                    Starter Pro
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {comparisonRows.map((row) => (
-                  <TableRow key={row.capability}>
-                    <TableCell className="font-medium">
-                      {row.capability}
-                    </TableCell>
-
-                    <TableCell className="text-muted-foreground">
-                      {row.free}
-                    </TableCell>
-
-                    <TableCell className="text-muted-foreground">
-                      {row.pro}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="Pricing logic"
-            title="One serious upgrade offer. No unnecessary pricing confusion."
-            description="The upgrade page should convert to Starter Pro first. This page exists to make that decision obvious."
-            align="center"
-          />
-
-          <div className="mx-auto max-w-3xl">
-            <Card className="relative overflow-hidden rounded-[5px] border border-primary/30 bg-surface p-6 shadow-medium sm:p-7">
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
-              <CardHeader className="space-y-5 px-0 pt-0">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xl font-semibold">
-                      Upgrade to Starter Pro
-                    </p>
-
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      The fastest path from product-shaped starter to
-                      a monetizable SaaS baseline.
-                    </p>
-                  </div>
-
-                  <Badge className="rounded-[5px] px-3 py-1 text-xs font-medium">
-                    Launch offer
-                  </Badge>
-                </div>
-
-                <div className="flex items-end gap-3">
-                  <span className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                    {PRICING.launch}
-                  </span>
-
-                  <div className="pb-1 text-sm text-muted-foreground">
-                    <span className="mr-2 line-through">
-                      {PRICING.regular}
-                    </span>
-                    one-time price
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-8 px-0 pb-0">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                    <p className="text-sm font-medium">
-                      What you get
-                    </p>
-
-                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>Real auth foundations</li>
-                      <li>Real Stripe billing</li>
-                      <li>Protected app architecture</li>
-                      <li>Commercial access to Starter Pro</li>
-                    </ul>
-                  </div>
-
-                  <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                    <p className="text-sm font-medium">
-                      What you avoid
-                    </p>
-
-                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>Rebuilding OAuth and sessions</li>
-                      <li>Rewiring Checkout and webhooks</li>
-                      <li>Patchwork billing logic</li>
-                      <li>Fragile launch foundations</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <BuyStarterProButton
-                    fullWidth={false}
-                    label={`Buy Starter Pro — ${PRICING.launch}`}
+    <main className="bg-background text-foreground">
+      <Container className="py-18">
+        <div className="mx-auto max-w-6xl">
+          <PageHero
+            maxWidth="5xl"
+            badges={[
+              {
+                label: 'Upgrade to Starter Pro',
+                variant: 'secondary',
+              },
+              {
+                label: `Launch offer ${PRICING.launch}`,
+                variant: 'outline',
+                icon: (
+                  <Sparkles
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
                   />
-
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className={cn(
-                      'h-11 rounded-[5px] px-6 text-sm font-medium',
-                      focusRing,
-                    )}
-                  >
-                    <Link href={INTERNAL.docsBilling}>
-                      Review billing docs
-                    </Link>
-                  </Button>
-                </div>
-
-                <p className="text-xs leading-6 text-muted-foreground">
-                  Keep the first purchase decision simple. Starter Pro
-                  is the primary commercial upgrade when the business
-                  layer becomes the bottleneck.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="FAQ"
-            title="Answer the objections before they cost you the sale"
-            description="Most upgrade friction comes from ambiguity. Be direct and remove uncertainty."
-          />
-
-          <div className="grid gap-4 lg:grid-cols-2">
-            {faqs.map((faq) => (
-              <FaqCard
-                key={faq.question}
-                question={faq.question}
-                answer={faq.answer}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="pt-4">
-          <Card className="relative overflow-hidden rounded-[5px] border border-primary/30 bg-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="max-w-2xl space-y-3">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-                >
-                  Final CTA
-                </Badge>
-
-                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Start with Free. Upgrade when building the business
-                  layer starts wasting your time.
-                </h2>
-
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Starter Free is still the right move when you are
-                  exploring. Starter Pro is the right move when you
-                  are serious about launching and do not want auth and
-                  billing to keep delaying the business.
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  <Pill>Revenue-focused upgrade</Pill>
-                  <Pill>Production-ready baseline</Pill>
-                  <Pill>Built for real SaaS</Pill>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:min-w-60">
+                ),
+              },
+              {
+                label: `${PRICING.regular} regular price`,
+                variant: 'outline',
+              },
+            ]}
+            title="Starter Free validates the product."
+            subtitle="Starter Pro wires the business."
+            description="Upgrade when authentication, Stripe billing, protected routes, database foundations, and SaaS account flows should already be handled. Starter Pro turns a product-shaped surface into a stronger foundation for launching and charging faster."
+            actions={
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <BuyStarterProButton
-                  label={`Upgrade to Starter Pro — ${PRICING.launch}`}
+                  fullWidth={false}
+                  label={`Buy Starter Pro — ${PRICING.launch}`}
                 />
 
                 <Button
                   asChild
+                  size="lg"
                   variant="outline"
-                  className={cn(
-                    'h-11 rounded-[5px] text-sm font-medium',
-                    focusRing,
-                  )}
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
+                  <Link href={INTERNAL.docsStarterPro}>
+                    Read Starter Pro docs
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
+                  <Link href={INTERNAL.pricing}>Compare pricing</Link>
+                </Button>
+              </div>
+            }
+            pills={[
+              'Real authentication',
+              'Stripe billing',
+              'Protected app',
+              'Prisma foundation',
+              'Commercial usage',
+            ]}
+            extraClassName="mx-auto max-w-5xl"
+            extra={
+              <Card className="mt-10 overflow-hidden rounded-[5px] border border-pro-border bg-pro-surface shadow-medium">
+                <CardContent className="p-0">
+                  <div className="grid divide-y divide-pro-border-subtle lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+                    {[
+                      {
+                        label: 'Current launch price',
+                        value: PRICING.launch,
+                        description: `Regular price planned at ${PRICING.regular}`,
+                      },
+                      {
+                        label: 'Best for',
+                        value: 'Real SaaS launch',
+                        description:
+                          'When auth and billing should not delay you',
+                      },
+                      {
+                        label: 'Delivery',
+                        value: 'Instant access',
+                        description:
+                          'One-time payment with commercial usage',
+                      },
+                    ].map((item) => (
+                      <div key={item.label} className="p-5 sm:p-6">
+                        <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                          {item.label}
+                        </p>
+                        <p className="mt-2 text-xl font-semibold tracking-tight">
+                          {item.value}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            }
+          />
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="Why upgrade"
+              title="The upgrade is not more UI. It is less launch friction."
+              description="Starter Free is useful when you are still shaping the product. Starter Pro becomes valuable when the same foundation work starts blocking revenue."
+              align="center"
+            />
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {valueCards.map((item) => (
+                <ValueCard key={item.title} {...item} />
+              ))}
+            </div>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="What you unlock"
+              title="The layers that usually slow serious SaaS launches down."
+              description="Starter Pro is valuable because it gives you a stronger baseline for the parts that are expensive to rebuild repeatedly."
+              action={
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className={cn('rounded-[5px]', focusRing)}
+                >
+                  <Link href={INTERNAL.docsBackend}>
+                    Explore technical docs
+                  </Link>
+                </Button>
+              }
+            />
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {unlockedLayers.map((item) => (
+                <ValueCard key={item.title} {...item} />
+              ))}
+            </div>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="Product proof"
+              title="Core foundations already exist."
+              description="The upgrade should feel like leverage, not risk. Starter Pro makes the production-critical scope explicit."
+            />
+
+            <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-0">
+                <div className="grid lg:grid-cols-[1fr_0.9fr]">
+                  <div className="p-6 sm:p-7">
+                    <div className="mb-5 flex flex-wrap items-center gap-2">
+                      <Badge className="rounded-[5px]">
+                        Included foundations
+                      </Badge>
+
+                      <Badge
+                        variant="outline"
+                        className="rounded-[5px]"
+                      >
+                        Production-shaped scope
+                      </Badge>
+                    </div>
+
+                    <ul className="grid gap-3 sm:grid-cols-2">
+                      {proofPoints.map((item) => (
+                        <CheckItem key={item}>{item}</CheckItem>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="border-t border-border-subtle bg-surface-muted/50 p-6 sm:p-7 lg:border-l lg:border-t-0">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-background">
+                      <ShieldCheck className="h-4 w-4 text-muted-foreground" />
+                    </div>
+
+                    <h3 className="mt-5 text-xl font-semibold tracking-tight">
+                      Built to reduce purchase anxiety.
+                    </h3>
+
+                    <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
+                      <p>
+                        You are not buying a vague roadmap. You are
+                        buying an accelerator for the layers that
+                        repeatedly delay SaaS launches.
+                      </p>
+
+                      <p>
+                        The value is in the foundation: auth flows,
+                        billing flows, subscription state, invoices,
+                        protected architecture, and product structure.
+                      </p>
+
+                      <p>
+                        That makes Starter Pro a leverage purchase,
+                        not another template gamble.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="Free vs Pro"
+              title="Keep Free for exploration. Choose Pro for launch readiness."
+              description="Do not think of Pro as more screens. Think of it as less uncertainty and less repeated engineering work."
+              action={
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className={cn('rounded-[5px]', focusRing)}
                 >
                   <Link href={INTERNAL.starterFree}>
                     Open Starter Free
                   </Link>
                 </Button>
-              </div>
-            </div>
-          </Card>
+              }
+            />
 
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            Legal scope and usage terms are governed by{' '}
-            <Link
-              href={INTERNAL.pricing}
-              className="underline underline-offset-4"
-            >
-              /pricing
-            </Link>
-            ,{' '}
-            <Link
-              href={INTERNAL.license}
-              className="underline underline-offset-4"
-            >
-              /license
-            </Link>{' '}
-            and{' '}
-            <Link
-              href={INTERNAL.terms}
-              className="underline underline-offset-4"
-            >
-              /terms
-            </Link>
-            .
-          </p>
-        </section>
-      </div>
-    </Container>
+            <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface p-2 shadow-soft sm:p-4">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[34%]">
+                      Capability
+                    </TableHead>
+                    <TableHead className="w-[33%]">
+                      Starter Free
+                    </TableHead>
+                    <TableHead className="w-[33%]">
+                      Starter Pro
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                  {comparisonRows.map((row) => (
+                    <TableRow key={row.capability}>
+                      <TableCell className="font-medium">
+                        {row.capability}
+                      </TableCell>
+
+                      <TableCell className="text-muted-foreground">
+                        {row.free}
+                      </TableCell>
+
+                      <TableCell className="font-medium text-foreground">
+                        {row.pro}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Card>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="Pricing logic"
+              title="One serious upgrade. No unnecessary pricing confusion."
+              description="This page exists to make the Starter Pro decision obvious when the business layer becomes the bottleneck."
+              align="center"
+            />
+
+            <div className="mx-auto max-w-3xl">
+              <Card className="relative overflow-hidden rounded-[5px] border border-pro-border bg-pro-surface p-6 shadow-medium sm:p-7">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+                <CardHeader className="space-y-5 px-0 pt-0">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xl font-semibold">
+                        Starter Pro
+                      </p>
+
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        The faster path from validated surface to
+                        monetizable SaaS.
+                      </p>
+                    </div>
+
+                    <Badge className="rounded-[5px] px-3 py-1 text-xs font-medium">
+                      Launch offer
+                    </Badge>
+                  </div>
+
+                  <div className="flex items-end gap-3">
+                    <span className="text-4xl font-semibold tracking-tight sm:text-5xl">
+                      {PRICING.launch}
+                    </span>
+
+                    <div className="pb-1 text-sm text-muted-foreground">
+                      <span className="mr-2 line-through">
+                        {PRICING.regular}
+                      </span>
+                      one-time payment
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="space-y-8 px-0 pb-0">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
+                      <p className="text-sm font-medium">
+                        What you get
+                      </p>
+
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        <li>Real auth foundations</li>
+                        <li>Stripe billing foundations</li>
+                        <li>Protected app architecture</li>
+                        <li>Commercial usage rights</li>
+                      </ul>
+                    </div>
+
+                    <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
+                      <p className="text-sm font-medium">
+                        What you avoid
+                      </p>
+
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        <li>Rebuilding OAuth and sessions</li>
+                        <li>Rewiring checkout and webhooks</li>
+                        <li>Fragile billing state</li>
+                        <li>Delayed launch foundations</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <BuyStarterProButton
+                      fullWidth={false}
+                      label={`Buy Starter Pro — ${PRICING.launch}`}
+                    />
+
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className={cn(
+                        'h-11 rounded-[5px] px-6 text-sm font-medium',
+                        focusRing,
+                      )}
+                    >
+                      <Link href={INTERNAL.docsBilling}>
+                        Review billing docs
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <p className="text-xs leading-6 text-muted-foreground">
+                    Keep the first purchase decision simple. Starter
+                    Pro is the primary commercial upgrade when the
+                    business layer becomes the bottleneck.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+              <CardContent className="p-6 sm:p-7">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
+                      Production-ready stack
+                    </Badge>
+
+                    <h2 className="mt-5 text-2xl font-semibold tracking-tight">
+                      Built with modern SaaS foundations.
+                    </h2>
+
+                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                      Starter Pro uses a focused, production-shaped
+                      stack for authentication, billing, database
+                      workflows, deployment, and scalable product
+                      development.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 lg:max-w-md lg:justify-end">
+                    {stackItems.map((item) => (
+                      <Pill key={item}>{item}</Pill>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="py-12 sm:py-14 lg:py-16">
+            <SectionHeader
+              eyebrow="FAQ"
+              title="Answer the objections before they cost the sale."
+              description="Most upgrade friction comes from ambiguity. The page should make the scope, value, and next step obvious."
+            />
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {faqs.map((faq) => (
+                <FaqCard
+                  key={faq.question}
+                  question={faq.question}
+                  answer={faq.answer}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="pt-4">
+            <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="max-w-2xl space-y-3">
+                  <Badge
+                    variant="outline"
+                    className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+                  >
+                    Final decision
+                  </Badge>
+
+                  <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                    Upgrade when auth and billing should no longer
+                    slow the business down.
+                  </h2>
+
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    Starter Free is still the right move when you are
+                    exploring. Starter Pro is the right move when you
+                    are serious about launching with the business
+                    layer already handled.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Pill>Revenue-focused upgrade</Pill>
+                    <Pill>Production-ready baseline</Pill>
+                    <Pill>Built for real SaaS</Pill>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:min-w-60">
+                  <BuyStarterProButton
+                    label={`Upgrade to Starter Pro — ${PRICING.launch}`}
+                  />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className={cn(
+                      'h-11 rounded-[5px] text-sm font-medium',
+                      focusRing,
+                    )}
+                  >
+                    <Link href={INTERNAL.starterFree}>
+                      Open Starter Free
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              Legal scope and usage terms are governed by{' '}
+              <Link
+                href={INTERNAL.pricing}
+                className="underline underline-offset-4"
+              >
+                /pricing
+              </Link>
+              ,{' '}
+              <Link
+                href={INTERNAL.license}
+                className="underline underline-offset-4"
+              >
+                /license
+              </Link>{' '}
+              and{' '}
+              <Link
+                href={INTERNAL.terms}
+                className="underline underline-offset-4"
+              >
+                /terms
+              </Link>
+              .
+            </p>
+          </section>
+        </div>
+      </Container>
+    </main>
   );
 }

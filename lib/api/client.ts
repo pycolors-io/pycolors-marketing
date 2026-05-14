@@ -12,19 +12,17 @@ async function parseJson<T>(response: Response): Promise<T | null> {
   return (await response.json().catch(() => null)) as T | null;
 }
 
-export async function createStarterProCheckout(input?: {
+export async function createCheckoutSession(input: {
+  productSlug: string;
   email?: string;
 }) {
-  const response = await fetch(
-    `${API_BASE_URL}/api/v1/checkout/starter-pro`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(input ?? {}),
+  const response = await fetch(`${API_BASE_URL}/api/v1/checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(input),
+  });
 
   const data = await parseJson<{
     url?: string;
@@ -40,7 +38,17 @@ export async function createStarterProCheckout(input?: {
   return data.url;
 }
 
-export async function recoverStarterProAccess(input: {
+/**
+ * Legacy helper kept for backward compatibility.
+ */
+export function createStarterProCheckout(input?: { email?: string }) {
+  return createCheckoutSession({
+    productSlug: 'starter-pro',
+    email: input?.email,
+  });
+}
+
+export async function recoverCommerceAccess(input: {
   email: string;
 }) {
   const response = await fetch(
@@ -61,4 +69,11 @@ export async function recoverStarterProAccess(input: {
   }
 
   return data;
+}
+
+/**
+ * Legacy helper kept for backward compatibility.
+ */
+export function recoverStarterProAccess(input: { email: string }) {
+  return recoverCommerceAccess(input);
 }

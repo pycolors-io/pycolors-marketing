@@ -18,7 +18,7 @@ import {
 export default function CheckoutCancelPage() {
   return (
     <main className="mx-auto mt-10 max-w-4xl px-6 py-16 sm:py-20">
-      <div className="overflow-hidden rounded-[32px] border bg-card shadow-xl shadow-black/5">
+      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
             <Badge
@@ -27,6 +27,7 @@ export default function CheckoutCancelPage() {
             >
               Checkout canceled
             </Badge>
+
             <Badge className="rounded-full px-3 py-1 text-xs font-medium">
               No payment captured
             </Badge>
@@ -38,7 +39,7 @@ export default function CheckoutCancelPage() {
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
             No payment was captured and no order was created. You can
-            return to Starter Pro pricing, review the offer again, and
+            return to PyColors pricing, review the product again, and
             restart checkout whenever you are ready.
           </p>
         </div>
@@ -60,17 +61,17 @@ export default function CheckoutCancelPage() {
                 <p className="text-sm font-medium">What happened</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
                   The payment flow was interrupted before completion.
-                  Your card was not charged and your Starter Pro
-                  access was not issued.
+                  Your card was not charged and your product access
+                  was not issued.
                 </p>
               </div>
 
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <p className="text-sm font-medium">What to do next</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  Return to the pricing page, review Starter Pro
-                  again, and restart checkout when you want to
-                  continue.
+                  Return to the pricing page, review the available
+                  PyColors products, and restart checkout when you
+                  want to continue.
                 </p>
               </div>
 
@@ -92,7 +93,7 @@ export default function CheckoutCancelPage() {
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/starters/pro">Review Starter Pro</Link>
+                  <Link href="/starters">Explore products</Link>
                 </Button>
               </div>
 
@@ -151,7 +152,7 @@ export default function CheckoutCancelPage() {
                   variant="outline"
                   className="w-full rounded-xl"
                 >
-                  <Link href="/docs/starter-pro">Read the docs</Link>
+                  <Link href="/starters">Browse starters</Link>
                 </Button>
 
                 <Button
@@ -159,7 +160,7 @@ export default function CheckoutCancelPage() {
                   variant="outline"
                   className="w-full rounded-xl"
                 >
-                  <Link href="/upgrade">Compare Free vs Pro</Link>
+                  <Link href="/templates">Browse templates</Link>
                 </Button>
 
                 <Button
@@ -167,7 +168,7 @@ export default function CheckoutCancelPage() {
                   variant="ghost"
                   className="w-full rounded-xl"
                 >
-                  <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20checkout%20question">
+                  <Link href="mailto:support@pycolors.io?subject=PyColors%20checkout%20question">
                     Contact support
                   </Link>
                 </Button>

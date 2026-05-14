@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
+import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 import { Logo } from './logo';
 
 const focusRing =
@@ -28,26 +28,28 @@ const GROUPS: Array<{
   {
     title: 'Products',
     links: [
-      { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starter Pro', href: '/starters/pro' },
-      { label: 'Upgrade', href: '/upgrade' },
-      { label: 'Pricing', href: '/pricing' },
+      { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starters', href: '/starters' },
+      { label: 'Templates', href: '/templates' },
+      { label: 'NA-AI Landing', href: '/templates/na-ai-landing' },
+      { label: 'Pricing', href: '/pricing' },
     ],
   },
   {
-    title: 'Resources',
+    title: 'Platform',
     links: [
+      { label: 'PyColors UI', href: '/ui' },
+      { label: 'Patterns', href: '/ui/patterns' },
+      { label: 'Examples', href: '/ui/examples' },
       { label: 'Docs', href: '/docs' },
       { label: 'Guides', href: '/guides' },
-      { label: 'UI Library', href: '/ui' },
-      { label: 'Patterns', href: '/ui/patterns' },
-      { label: 'Blog', href: '/blog' },
     ],
   },
   {
     title: 'Company',
     links: [
+      { label: 'Blog', href: '/blog' },
       { label: 'About', href: '/about' },
       { label: 'Open Source', href: '/open-source' },
       { label: 'Changelog', href: '/changelog' },
@@ -81,7 +83,7 @@ const EXTERNAL: FooterLink[] = [
 
 function FooterLinkItem(link: FooterLink) {
   const className = cn(
-    'inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground',
+    'inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground',
     focusRing,
   );
 
@@ -113,20 +115,18 @@ function FooterLinkItem(link: FooterLink) {
 export function DocsFooter() {
   return (
     <footer className="w-full border-t border-border-subtle bg-background">
-      <div className="max-w-fd-container mx-auto">
+      <div className="mx-auto max-w-fd-container">
         <Container>
           <div className="py-16 sm:py-20">
             <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <div>
-                    <Logo />
-                  </div>
+                  <Logo />
 
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                    Documentation for building production-shaped SaaS
-                    products faster with UI, patterns, and stronger
-                    starter foundations.
+                    Documentation for building with PyColors UI,
+                    templates, product surfaces, and production-ready
+                    SaaS starter foundations.
                   </p>
                 </div>
 
@@ -167,13 +167,10 @@ export function DocsFooter() {
                   mode="light-dark"
                   className={cn(
                     'h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm',
-                    'rounded-[20px]',
-                    'px-1',
-                    'shadow-sm',
+                    'rounded-[20px] px-1 shadow-sm',
                     'opacity-80 transition-all duration-200 ease-out',
                     'hover:border-border hover:bg-accent/30 hover:opacity-100',
                     'cursor-pointer',
-
                     '[&_button]:h-6.5',
                     '[&_button]:w-6.5',
                     '[&_button]:rounded-[4px]',

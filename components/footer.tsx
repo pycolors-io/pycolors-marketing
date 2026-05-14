@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { ExternalLink, Lock } from 'lucide-react';
+import { ExternalLink, LayoutTemplate, Lock } from 'lucide-react';
+import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 import { Logo } from './logo';
 
 const focusRing =
@@ -29,26 +29,28 @@ const GROUPS: Array<{
   {
     title: 'Products',
     links: [
-      { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starter Pro', href: '/starters/pro' },
-      { label: 'Upgrade', href: '/upgrade' },
-      { label: 'Pricing', href: '/pricing' },
+      { label: 'Starter Free', href: '/starters/free' },
       { label: 'Starters', href: '/starters' },
+      { label: 'Templates', href: '/templates' },
+      { label: 'NA-AI Landing', href: '/templates/na-ai-landing' },
+      { label: 'Pricing', href: '/pricing' },
     ],
   },
   {
-    title: 'Resources',
+    title: 'Platform',
     links: [
+      { label: 'PyColors UI', href: '/ui' },
+      { label: 'Patterns', href: '/ui/patterns' },
+      { label: 'Examples', href: '/ui/examples' },
       { label: 'Docs', href: '/docs' },
       { label: 'Guides', href: '/guides' },
-      { label: 'UI Library', href: '/ui' },
-      { label: 'Patterns', href: '/ui/patterns' },
-      { label: 'Blog', href: '/blog' },
     ],
   },
   {
     title: 'Company',
     links: [
+      { label: 'Blog', href: '/blog' },
       { label: 'About', href: '/about' },
       { label: 'Open Source', href: '/open-source' },
       { label: 'Changelog', href: '/changelog' },
@@ -82,7 +84,7 @@ const EXTERNAL: FooterLink[] = [
 
 function FooterLinkItem(link: FooterLink) {
   const className = cn(
-    'inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground',
+    'inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground',
     focusRing,
   );
 
@@ -114,7 +116,7 @@ function FooterLinkItem(link: FooterLink) {
 export function Footer() {
   return (
     <footer className="w-full border-t border-border-subtle bg-background">
-      <div className="max-w-fd-container mx-auto">
+      <div className="mx-auto max-w-fd-container">
         <Container>
           <div className="py-16 sm:py-20">
             <section className="border-b border-border-subtle pb-14 sm:pb-16">
@@ -124,39 +126,52 @@ export function Footer() {
                 </p>
 
                 <h2 className="mt-4 text-balance text-xl font-semibold tracking-tight sm:text-4xl">
-                  Build the product surface first.{' '}
+                  Launch the page. Validate the product.{' '}
                   <span className="block text-muted-foreground">
-                    Upgrade when wiring becomes the bottleneck.
+                    Wire the business when it matters.
                   </span>
                 </h2>
 
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-                  Validate faster with Starter Free. Move to Starter
-                  Pro when authentication, billing, and launch-ready
-                  foundations become the real blocker.
+                  Start with a premium template, validate with Starter
+                  Free, then move to Starter Pro when authentication,
+                  billing, and protected SaaS foundations should
+                  already be handled.
                 </p>
 
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                    >
-                      <Link href="/starters/free">
-                        Explore Starter Free
-                      </Link>
-                    </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                  >
+                    <Link href="/templates/na-ai-landing">
+                      <LayoutTemplate
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      NA-AI Landing
+                    </Link>
+                  </Button>
 
-                    <BuyStarterProButton />
-                  </div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                  >
+                    <Link href="/starters/free">Starter Free</Link>
+                  </Button>
+
+                  <BuyStarterProButton fullWidth={false} />
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
                   <Lock className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Secure checkout</span>
                   <span>·</span>
-                  <span>One-time payment</span>
+                  <span>Templates from 49 €</span>
+                  <span>·</span>
+                  <span>Starter Pro 199 €</span>
                   <span>·</span>
                   <span>Instant access after purchase</span>
                 </div>
@@ -166,13 +181,12 @@ export function Footer() {
             <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <div>
-                    <Logo />
-                  </div>
+                  <Logo />
+
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                    A premium SaaS developer platform for shipping
-                    credible product surfaces, UI foundations, and
-                    launch-ready starters faster.
+                    A premium developer platform for building SaaS
+                    products with templates, UI systems, and
+                    production-ready foundations.
                   </p>
                 </div>
 
@@ -213,13 +227,10 @@ export function Footer() {
                   mode="light-dark"
                   className={cn(
                     'h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm',
-                    'rounded-[20px]',
-                    'px-1',
-                    'shadow-sm',
+                    'rounded-[20px] px-1 shadow-sm',
                     'opacity-80 transition-all duration-200 ease-out',
                     'hover:border-border hover:bg-accent/30 hover:opacity-100',
                     'cursor-pointer',
-
                     '[&_button]:h-6.5',
                     '[&_button]:w-6.5',
                     '[&_button]:rounded-[4px]',

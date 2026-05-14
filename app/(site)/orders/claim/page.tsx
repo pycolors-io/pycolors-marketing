@@ -27,12 +27,24 @@ type ClaimOrderPageProps = {
 type ClaimResponse = {
   ok: true;
   claim: {
+    productSlug: string | null;
     productName: string;
     orderReference: string;
     customerEmail: string;
     paidAt: string | null;
   };
 };
+
+function getProductPageHref(productSlug: string | null) {
+  switch (productSlug) {
+    case 'starter-pro':
+      return '/starter-pro';
+    case 'na-ai-landing':
+      return '/templates/na-ai';
+    default:
+      return '/pricing';
+  }
+}
 
 function StatusShell({
   title,
@@ -45,7 +57,7 @@ function StatusShell({
 }) {
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
-      <div className="overflow-hidden rounded-4xl border bg-card shadow-xl shadow-black/5">
+      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8">
           <Badge
             variant="outline"
@@ -77,27 +89,29 @@ async function getClaim(
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!apiBaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
-  }
-
-  const response = await fetch(
-    `${apiBaseUrl}/api/v1/claims/${token}`,
-    {
-      cache: 'no-store',
-    },
-  );
-
-  if (!response.ok) {
+    console.error('[orders/claim] Missing NEXT_PUBLIC_API_BASE_URL.');
     return null;
   }
 
-  const data = (await response.json()) as ClaimResponse;
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/claims/${token}`,
+      {
+        cache: 'no-store',
+      },
+    );
 
-  if (!data.ok) {
+    if (!response.ok) return null;
+
+    const data = (await response.json()) as ClaimResponse;
+
+    return data.ok ? data : null;
+  } catch {
+    if (process.env.NODE_ENV === 'development') {
+      console.info('[orders/claim] claim API unavailable.');
+    }
     return null;
   }
-
-  return data;
 }
 
 export default async function ClaimOrderPage({
@@ -130,25 +144,30 @@ export default async function ClaimOrderPage({
   if (!result) {
     return (
       <StatusShell
-        title="Access link expired or invalid"
-        description="This link is no longer valid. If you purchased Starter Pro recently, contact support and include your order email so we can re-issue your access link."
+        title="Access link unavailable"
+        description="We could not verify this access link right now. The delivery service may be temporarily unavailable, expired, or invalid. Please try again shortly or contact support with your purchase email."
       >
         <div className="flex flex-wrap gap-3">
           <Button asChild>
-            <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20access%20help">
+            <Link href="mailto:support@pycolors.io?subject=PyColors%20access%20help">
               Contact support
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/pricing">Back to pricing</Link>
+            <Link href="/orders/recover">Recover access</Link>
           </Button>
         </div>
       </StatusShell>
     );
   }
 
-  const { productName, orderReference, customerEmail, paidAt } =
-    result.claim;
+  const {
+    productSlug,
+    productName,
+    orderReference,
+    customerEmail,
+    paidAt,
+  } = result.claim;
 
   const formattedPaidAt = paidAt
     ? new Intl.DateTimeFormat('en', {
@@ -158,11 +177,19 @@ export default async function ClaimOrderPage({
       }).format(new Date(paidAt))
     : null;
 
-  const downloadUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/downloads/${token}`;
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
+  }
+
+  const downloadUrl = `${apiBaseUrl}/api/v1/downloads/${token}`;
+  const productPageHref = getProductPageHref(productSlug);
+  const supportSubject = encodeURIComponent(`${productName} support`);
 
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
-      <div className="overflow-hidden rounded-4xl border bg-card shadow-xl shadow-black/5">
+      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className="rounded-full px-3 py-1 text-xs font-medium">
@@ -172,12 +199,12 @@ export default async function ClaimOrderPage({
               variant="outline"
               className="rounded-full px-3 py-1 text-xs font-medium"
             >
-              Starter Pro delivery
+              Digital product delivery
             </Badge>
           </div>
 
           <h1 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            Your Starter Pro access is ready.
+            Your access is ready.
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
@@ -195,7 +222,7 @@ export default async function ClaimOrderPage({
               </div>
 
               <CardTitle className="text-2xl">
-                Download Starter Pro
+                Download {productName}
               </CardTitle>
             </CardHeader>
 
@@ -221,7 +248,7 @@ export default async function ClaimOrderPage({
                     </p>
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       This download link is tied to your purchase
-                      entitlement and is delivered through a protected
+                      entitlement and delivered through a protected
                       token flow.
                     </p>
                   </div>
@@ -235,7 +262,7 @@ export default async function ClaimOrderPage({
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
                   <Link href={downloadUrl}>
-                    Download Starter Pro
+                    Download package
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -246,7 +273,9 @@ export default async function ClaimOrderPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/docs/starter-pro">Read the docs</Link>
+                  <Link href={productPageHref}>
+                    View product page
+                  </Link>
                 </Button>
               </div>
 
@@ -319,8 +348,8 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <Package className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    Read the Starter Pro documentation before wiring
-                    Stripe, auth, or production envs.
+                    Review the product page and documentation before
+                    customizing or deploying your package.
                   </p>
                 </div>
 
@@ -340,7 +369,9 @@ export default async function ClaimOrderPage({
                 variant="outline"
                 className="rounded-xl"
               >
-                <Link href="mailto:support@pycolors.io?subject=Starter%20Pro%20support">
+                <Link
+                  href={`mailto:support@pycolors.io?subject=${supportSubject}`}
+                >
                   Contact support
                 </Link>
               </Button>
