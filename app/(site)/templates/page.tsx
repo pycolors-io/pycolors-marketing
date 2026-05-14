@@ -79,7 +79,7 @@ const templates: readonly Template[] = [
     href: '/templates/na-ai-landing',
     tags: ['AI', 'Landing page', 'Next.js', 'Tailwind', 'SaaS'],
     priceLabel: '49 €',
-    demoUrl: 'https://na-ai-landing-template.vercel.app',
+    demoUrl: 'https://na-ai.pycolors.io',
     buyHref: '/api/checkout/na-ai-landing',
     includes: [
       'Complete Next.js landing page source code',
@@ -400,8 +400,6 @@ export default function TemplatesPage() {
     <main className="bg-background text-foreground">
       <Container className="py-18">
         <div className="mx-auto max-w-6xl">
-
-
           <PageHero
             maxWidth="5xl"
             badges={[

@@ -31,9 +31,13 @@ const GROUPS: Array<{
     links: [
       { label: 'Starter Pro', href: '/starters/pro' },
       { label: 'Starter Free', href: '/starters/free' },
-      { label: 'Starters', href: '/starters' },
+      { label: 'Compare Starters', href: '/starters' },
+      { label: 'Upgrade', href: '/upgrade' },
       { label: 'Templates', href: '/templates' },
-      { label: 'NA-AI Landing', href: '/templates/na-ai-landing' },
+      {
+        label: 'NA-AI Landing',
+        href: '/templates/na-ai-landing',
+      },
       { label: 'Pricing', href: '/pricing' },
     ],
   },
@@ -48,18 +52,18 @@ const GROUPS: Array<{
     ],
   },
   {
-    title: 'Company',
+    title: 'Resources',
     links: [
       { label: 'Blog', href: '/blog' },
-      { label: 'About', href: '/about' },
-      { label: 'Open Source', href: '/open-source' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Open Source', href: '/open-source' },
     ],
   },
   {
-    title: 'Legal',
+    title: 'Company',
     links: [
+      { label: 'About', href: '/about' },
       { label: 'License', href: '/license' },
       { label: 'Terms', href: '/terms' },
       { label: 'Privacy', href: '/privacy' },
@@ -118,7 +122,7 @@ export function Footer() {
     <footer className="w-full border-t border-border-subtle bg-background">
       <div className="mx-auto max-w-fd-container">
         <Container>
-          <div className="py-16 sm:py-20">
+          <div className="py-12 sm:py-16">
             <section className="border-b border-border-subtle pb-14 sm:pb-16">
               <div className="mx-auto max-w-4xl text-center">
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">

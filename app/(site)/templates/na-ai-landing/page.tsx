@@ -69,7 +69,7 @@ const PRODUCT = {
   name: 'NA-AI Landing',
   price: '49 €',
   regularPrice: '79 €',
-  demoUrl: 'https://na-ai-landing.vercel.app/',
+  demoUrl: 'https://na-ai.pycolors.io',
 } as const;
 
 const SCREENSHOTS = [

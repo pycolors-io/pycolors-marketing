@@ -30,9 +30,13 @@ const GROUPS: Array<{
     links: [
       { label: 'Starter Pro', href: '/starters/pro' },
       { label: 'Starter Free', href: '/starters/free' },
-      { label: 'Starters', href: '/starters' },
+      { label: 'Compare Starters', href: '/starters' },
+      { label: 'Upgrade', href: '/upgrade' },
       { label: 'Templates', href: '/templates' },
-      { label: 'NA-AI Landing', href: '/templates/na-ai-landing' },
+      {
+        label: 'NA-AI Landing',
+        href: '/templates/na-ai-landing',
+      },
       { label: 'Pricing', href: '/pricing' },
     ],
   },
@@ -47,18 +51,18 @@ const GROUPS: Array<{
     ],
   },
   {
-    title: 'Company',
+    title: 'Resources',
     links: [
       { label: 'Blog', href: '/blog' },
-      { label: 'About', href: '/about' },
-      { label: 'Open Source', href: '/open-source' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Open Source', href: '/open-source' },
     ],
   },
   {
-    title: 'Legal',
+    title: 'Company',
     links: [
+      { label: 'About', href: '/about' },
       { label: 'License', href: '/license' },
       { label: 'Terms', href: '/terms' },
       { label: 'Privacy', href: '/privacy' },
@@ -80,7 +84,6 @@ const EXTERNAL: FooterLink[] = [
     ariaLabel: 'Open PyColors Starter Free repository on GitHub',
   },
 ];
-
 function FooterLinkItem(link: FooterLink) {
   const className = cn(
     'inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground',
@@ -117,7 +120,7 @@ export function DocsFooter() {
     <footer className="w-full border-t border-border-subtle bg-background">
       <div className="mx-auto max-w-fd-container">
         <Container>
-          <div className="py-16 sm:py-20">
+          <div className="py-12 sm:py-16">
             <section className="grid gap-12 pt-12 sm:pt-14 lg:grid-cols-[1.1fr_1.4fr]">
               <div className="space-y-5">
                 <div className="space-y-3">
