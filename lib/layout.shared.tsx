@@ -53,15 +53,15 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
     title: 'Templates',
     items: [
       {
+        label: 'All templates',
+        href: '/templates',
+        description: 'Browse premium Next.js templates',
+      },
+      {
         label: 'NA-AI Landing',
         href: '/templates/na-ai-landing',
         description: 'AI/SaaS landing page template',
         badge: '49 €',
-      },
-      {
-        label: 'All templates',
-        href: '/templates',
-        description: 'Browse premium Next.js templates',
       },
     ],
   },
@@ -71,12 +71,12 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
       {
         label: 'UI Library',
         href: '/ui',
-        description: 'Production-ready React primitives',
+        description: 'Production-ready primitives',
       },
       {
         label: 'Patterns',
         href: '/ui/patterns',
-        description: 'SaaS surfaces and product patterns',
+        description: 'SaaS product patterns',
       },
       {
         label: 'Examples',
