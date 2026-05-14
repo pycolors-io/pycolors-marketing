@@ -1,0 +1,142 @@
+---
+title: Deployment
+description: Deploy NA-AI Landing to production with Vercel or another hosting platform.
+lastUpdated: "2026-05-14"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Deployment</Badge></div>
+
+## Deploy the landing page
+
+NA-AI Landing is a standard Next.js project and can be deployed on Vercel or any platform that supports Next.js.
+
+Recommended platform: Vercel.
+
+Also compatible with Netlify, Render, AWS Amplify, and self-hosted Node.js environments.
+
+<Callout title="Core idea">
+  Deploy after you update the product copy, SEO metadata, social images, and site URL.
+</Callout>
+
+## Pre-deploy checklist
+
+<PreferAvoid
+  preferTitle="Confirm before deploy"
+  avoidTitle="Avoid shipping with"
+  prefer={[
+    'site URL updated',
+    'SEO title and description updated',
+    'Open Graph image replaced',
+    'Twitter image replaced',
+    'favicon and manifest updated',
+    'production build passes',
+  ]}
+  avoid={[
+    'default product copy',
+    'placeholder pricing',
+    'missing social images',
+    'incorrect canonical URL',
+    'broken contact flow expectations',
+    'untested mobile layout',
+  ]}
+/>
+
+## Deploy on Vercel
+
+<Steps>
+
+  <Step>
+  ### Push the project to GitHub
+```bash title="terminal"
+git init
+git add .
+git commit -m "Initial NA-AI Landing setup"
+git branch -M main
+git remote add origin <your-repository-url>
+git push -u origin main
+```
+</Step>
+  <Step>
+  ### Import the project in Vercel
+Import the GitHub repository and select the Next.js framework preset.
+</Step>
+  <Step>
+  ### Configure build settings
+```txt title="vercel"
+Install Command: pnpm install
+Build Command: pnpm build
+Output: .next
+```
+</Step>
+  <Step>
+  ### Deploy
+Trigger the first production deployment and verify the page loads correctly.
+</Step>
+  <Step>
+  ### Add a custom domain
+Add your product domain or subdomain in the Vercel project settings.
+</Step>
+</Steps>
+
+## Domain strategy
+
+For a premium product or demo, prefer a branded domain.
+
+Examples:
+
+```txt
+yourproduct.com
+app.yourproduct.com
+demo.yourproduct.com
+```
+
+For PyColors-owned demos, a branded subdomain such as this is stronger than a raw Vercel deployment URL:
+
+```txt
+na-ai.pycolors.io
+```
+
+<Callout type="info" title="Perception rule">
+  A custom domain makes the product feel intentional. A raw deployment URL often feels like a preview.
+</Callout>
+
+## SEO checks
+
+Update:
+
+```txt
+src/config/site.ts
+```
+
+Update social assets:
+
+```txt
+public/seo/og-main.jpg
+public/seo/twitter-main.jpg
+```
+
+Check canonical URL, Open Graph image, Twitter card image, title, description, sitemap URL, and robots configuration.
+
+## Contact form note
+
+The contact form is frontend-only by default.
+
+Before promising lead capture, connect it to an API route, backend, form provider, CRM endpoint, email service, or server action.
+
+<Callout title="Do not overpromise">
+  If the form is not connected yet, make the CTA behavior clear or connect it before launch.
+</Callout>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing/customization" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Customization</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Review content, branding, SEO, pricing, and section customization.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+  <a href="/docs/templates/na-ai-landing/license" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">License</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Understand commercial usage, redistribution limits, and license boundaries.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+</div>

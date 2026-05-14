@@ -1,0 +1,177 @@
+---
+title: Setup
+description: Install, run, and build NA-AI Landing locally after purchase.
+lastUpdated: "2026-05-14"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Setup</Badge></div>
+
+## Run NA-AI Landing locally
+
+After purchase, you receive a ZIP package containing the full source code and documentation.
+
+The template is designed to work as a standalone project, outside the PyColors monorepo, after ZIP download, on Vercel, and in production environments.
+
+<Callout title="Core idea">
+  The template should be runnable, inspectable, and customizable without requiring access to the private PyColors monorepo.
+</Callout>
+
+## Requirements
+
+| Tool | Recommended |
+| --- | --- |
+| Node.js | 20+ |
+| Package manager | pnpm |
+| Framework | Next.js 16+ |
+| Deployment | Vercel |
+
+## Quick start
+
+<Steps>
+  <Step>
+    ### Unzip the package
+
+```bash title="terminal"
+unzip na-ai-landing.zip
+cd na-ai-landing
+```
+  </Step>
+  <Step>
+    ### Install dependencies
+
+```bash title="terminal"
+pnpm install
+```
+  </Step>
+  <Step>
+    ### Run the development server
+
+```bash title="terminal"
+pnpm dev
+```
+
+Open:
+
+```txt title="browser"
+http://localhost:3000
+```
+  </Step>
+  <Step>
+    ### Build for production
+
+```bash title="terminal"
+pnpm build
+```
+  </Step>
+  <Step>
+    ### Start the production server
+
+```bash title="terminal"
+pnpm start
+```
+  </Step>
+</Steps>
+
+## Scripts
+
+| Command | Purpose |
+| --- | --- |
+| `pnpm install` | Install project dependencies |
+| `pnpm dev` | Run the local development server |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start the production server |
+
+## Environment variables
+
+NA-AI Landing is frontend-only by design.
+
+It does not require environment variables for authentication, database, Stripe, email, or CMS.
+
+You may add your own variables later if you connect APIs, forms, analytics, or backend services.
+
+<Callout type="info" title="Frontend-only">
+  No backend configuration is required to run the base template.
+</Callout>
+
+## Verify PyColors packages
+
+NA-AI Landing uses the public PyColors packages:
+
+```txt title="packages"
+@pycolors/ui
+@pycolors/tokens
+```
+
+The global stylesheet imports the shared token package:
+
+```css title="globals.css"
+@import "@pycolors/tokens/tokens.css";
+@import "tailwindcss";
+```
+
+Tailwind CSS v4 also scans the installed UI package:
+
+```css title="globals.css"
+@source "../../node_modules/@pycolors/ui";
+```
+
+## Setup checklist
+
+<PreferAvoid
+  preferTitle="Confirm working setup"
+  avoidTitle="Avoid early changes"
+  prefer={[
+    'dependencies install successfully',
+    'local server starts',
+    'homepage renders correctly',
+    'dark and light mode work properly',
+    'production build passes',
+  ]}
+  avoid={[
+    'deleting data files before reading them',
+    'changing token imports too early',
+    'rewriting layouts before updating copy',
+    'adding backend logic inside section components',
+    'removing SEO assets before replacing them',
+  ]}
+/>
+
+## Common issues
+
+<Accordions type="single">
+  <Accordion title="Styles look incomplete">
+    Check that the global stylesheet imports PyColors Tokens and that
+    Tailwind scans `@pycolors/ui`.
+  </Accordion>
+
+  <Accordion title="The project builds locally but not on Vercel">
+    Confirm your package manager and Node.js version match the expected
+    runtime. Ensure the project is deployed from the root folder
+    containing the Next.js app.
+  </Accordion>
+
+  <Accordion title="I want to connect a backend">
+    The base template is frontend-only. Keep backend logic outside the
+    presentational section components.
+  </Accordion>
+</Accordions>
+
+<br />
+<Callout title="Architecture rule">
+  Landing page sections should stay presentational. Put API wiring, form handling, and service integration in dedicated modules.
+</Callout>
+
+## Next steps
+
+<div className="grid gap-4 md:grid-cols-2">
+  <a href="/docs/templates/na-ai-landing/customization" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Customization</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Update content, branding, sections, SEO, and assets.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+  <a href="/docs/templates/na-ai-landing/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Deployment</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Deploy the template to Vercel and connect a production domain.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
+</div>

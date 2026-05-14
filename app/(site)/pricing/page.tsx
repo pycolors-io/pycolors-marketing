@@ -35,6 +35,7 @@ import {
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+import { BuyProductButton } from '@/components/pricing/buy-product-button';
 
 export const metadata: Metadata = {
   title: 'Pricing — Templates, Starter Free & Starter Pro | PyColors',
@@ -67,10 +68,8 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
-  templates: '/templates',
   templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
-  starterPro: '/starters/pro',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
@@ -82,7 +81,6 @@ const INTERNAL = {
 
 const PRICING = {
   naAiLanding: '49 €',
-  naAiLandingRegular: '79 €',
   starterFree: 'Free',
   starterProLaunch: '199 €',
   starterProRegular: '299 €',
@@ -237,19 +235,20 @@ const faqs = [
       'Choose NA-AI Landing when you need a polished frontend marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.',
   },
   {
+    question: 'Is NA-AI Landing a full SaaS app?',
+    answer:
+      'No. NA-AI Landing is a frontend marketing template. It focuses on the public landing page, not authentication, billing, database, or backend logic.',
+  },
+  {
     question: 'Is Starter Pro production-ready?',
     answer:
       'Yes. Starter Pro is designed as a real SaaS foundation with authentication, billing, protected app architecture, database foundations, and commercial product surfaces already wired.',
   },
   {
-    question: 'Why should I buy this instead of building it myself?',
+    question:
+      'Why should I buy Starter Pro instead of building it myself?',
     answer:
       'Because auth, billing, protected routes, account flows, and webhook synchronization are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
-  },
-  {
-    question: 'Is the backend included in Starter Pro?',
-    answer:
-      'Yes. Starter Pro includes the foundation for authentication, billing, Prisma, PostgreSQL, protected routes, and business wiring needed for a real SaaS product.',
   },
   {
     question: 'Can I use PyColors products for commercial projects?',
@@ -377,6 +376,7 @@ function FaqCard({
         <div className="text-sm font-medium text-foreground">
           {question}
         </div>
+
         <p className="text-sm leading-7 text-muted-foreground">
           {answer}
         </p>
@@ -397,7 +397,7 @@ export default function PricingPage() {
               variant: 'secondary',
             },
             {
-              label: `Templates from ${PRICING.naAiLanding}`,
+              label: `NA-AI Landing ${PRICING.naAiLanding}`,
               variant: 'outline',
               icon: (
                 <LayoutTemplate
@@ -422,15 +422,12 @@ export default function PricingPage() {
           description="PyColors gives you a simple product ladder: focused templates for fast marketing pages, Starter Free for product-surface validation, and Starter Pro for real authentication, Stripe billing, protected routes, and production-ready SaaS foundations."
           actions={
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href={INTERNAL.templateNaAi}>
-                  View NA-AI Landing
-                </Link>
-              </Button>
+              <BuyProductButton
+                productSlug="na-ai-landing"
+                label={`Buy NA-AI Landing — ${PRICING.naAiLanding}`}
+                fullWidth={false}
+                variant="outline"
+              />
 
               <BuyStarterProButton
                 label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
@@ -471,17 +468,8 @@ export default function PricingPage() {
                       NA-AI Landing
                     </h2>
 
-                    <div className="mt-2 flex items-end gap-2">
-                      <span className="text-3xl font-semibold tracking-tight">
-                        {PRICING.naAiLanding}
-                      </span>
-
-                      <span className="pb-1 text-sm text-muted-foreground">
-                        <span className="mr-1 line-through">
-                          {PRICING.naAiLandingRegular}
-                        </span>
-                        launch
-                      </span>
+                    <div className="mt-2 text-3xl font-semibold tracking-tight">
+                      {PRICING.naAiLanding}
                     </div>
                   </div>
 
@@ -499,15 +487,25 @@ export default function PricingPage() {
                   <CheckItem>SEO-ready frontend page</CheckItem>
                 </ul>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  className="mt-6 h-10 w-full rounded-[5px] text-sm font-medium"
-                >
-                  <Link href={INTERNAL.templateNaAi}>
-                    View template
-                  </Link>
-                </Button>
+                <div className="mt-6 grid gap-2">
+                  <BuyProductButton
+                    productSlug="na-ai-landing"
+                    label={`Buy NA-AI Landing — ${PRICING.naAiLanding}`}
+                    size="sm"
+                    fullWidth
+                    className="h-10"
+                  />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-10 w-full rounded-[5px] text-sm font-medium"
+                  >
+                    <Link href={INTERNAL.templateNaAi}>
+                      View details
+                    </Link>
+                  </Button>
+                </div>
               </Card>
 
               <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft">
@@ -1008,30 +1006,24 @@ export default function PricingPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Pill>Templates from {PRICING.naAiLanding}</Pill>
+                  <Pill>NA-AI Landing {PRICING.naAiLanding}</Pill>
                   <Pill>Starter Pro {PRICING.starterProLaunch}</Pill>
                   <Pill>One-time payment</Pill>
                   <Pill>Instant access</Pill>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 sm:min-w-[260px]">
+              <div className="flex flex-col gap-3 sm:min-w-65">
                 <BuyStarterProButton
                   label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                 />
 
-                <Button
-                  asChild
+                <BuyProductButton
+                  productSlug="na-ai-landing"
+                  label={`Buy NA-AI Landing — ${PRICING.naAiLanding}`}
                   variant="outline"
-                  className={cn(
-                    'h-10 rounded-[5px] text-sm font-medium',
-                    focusRing,
-                  )}
-                >
-                  <Link href={INTERNAL.templateNaAi}>
-                    View NA-AI Landing
-                  </Link>
-                </Button>
+                  fullWidth
+                />
               </div>
             </div>
           </Card>

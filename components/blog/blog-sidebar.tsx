@@ -83,8 +83,8 @@ export function BlogSidebar({ categories, tags }: BlogSidebarProps) {
         </div>
       </SidebarSection>
 
-      {/* <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-medium">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-medium">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="space-y-4">
           <Badge
@@ -132,7 +132,7 @@ export function BlogSidebar({ categories, tags }: BlogSidebarProps) {
             </Button>
           </div>
         </div>
-      </Card> */}
+      </Card>
     </aside>
   );
 }

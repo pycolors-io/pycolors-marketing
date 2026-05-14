@@ -274,17 +274,15 @@ export function getMDXComponents(
       />
     ),
     table: ({ className, ...props }) => (
-      <div className="my-4 w-full overflow-x-auto">
-        <table
-          {...props}
-          className={[
-            'w-full min-w-max border-collapse text-sm',
-            className,
-          ]
-            .filter(Boolean)
-            .join(' ')}
-        />
-      </div>
+      <table
+        {...props}
+        className={[
+          'w-full min-w-max border-collapse text-sm',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      />
     ),
 
     thead: ({ className, ...props }) => (

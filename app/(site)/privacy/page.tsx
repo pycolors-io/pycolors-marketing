@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ArrowRight,
+  Cookie,
+  CreditCard,
+  Database,
+  FileText,
   Scale,
   ShieldCheck,
   Sparkles,
@@ -12,42 +16,46 @@ import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Privacy',
+  title: 'Privacy | PyColors',
   description:
-    'Privacy Policy for PyColors covering website visitors, documentation users, waitlists, product inquiries, analytics, premium purchases, future accounts, and international users.',
-  alternates: { canonical: '/privacy' },
+    'Privacy Policy for PyColors covering website visitors, documentation users, product purchases, analytics, support, digital delivery, and future account features.',
+  alternates: {
+    canonical: 'https://pycolors.io/privacy',
+  },
   openGraph: {
-    title: 'Privacy · PyColors',
+    title: 'Privacy | PyColors',
     description:
-      'Learn how PyColors collects, uses, stores, and protects personal data across its website, public content, digital products, and future premium services.',
-    url: '/privacy',
+      'Learn how PyColors collects, uses, stores, and protects personal data across its website, documentation, digital products, checkout flows, and support operations.',
+    url: 'https://pycolors.io/privacy',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Privacy · PyColors',
+    title: 'Privacy | PyColors',
     description:
-      'Learn how PyColors collects, uses, stores, and protects personal data across its website, public content, digital products, and future premium services.',
+      'Learn how PyColors handles data across its website, products, checkout flows, and support operations.',
     images: ['/seo/twitter-main.png'],
   },
 };
 
 const COMPANY = {
   name: 'Py Colors SASU',
-  email: 'legal@pycolors.io',
+  email: 'contact@pycolors.io',
   addressLine1: '6 rue d’Armaillé',
   postalCode: '75017 Paris',
   country: 'France',
 };
 
-const LAST_UPDATED = 'March 7, 2026';
+const LAST_UPDATED = 'May 14, 2026';
 
 function Section({
   title,
   children,
 }: {
-  title: string;
-  children: React.ReactNode;
+  readonly title: string;
+  readonly children: React.ReactNode;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
@@ -69,9 +77,9 @@ function PrincipleCard({
   title,
   description,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly title: string;
+  readonly description: string;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
@@ -120,9 +128,11 @@ export default function PrivacyPage() {
           </h1>
 
           <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-            This policy explains what personal data PyColors may
-            collect, how it is used, when it is shared, and what
-            choices and rights you may have.
+            This Privacy Policy explains what personal data PyColors
+            may collect, how it is used, when it may be shared, and
+            what rights you may have when using the website,
+            documentation, products, checkout flows, downloads, and
+            support channels.
           </p>
 
           <p className="mt-3 text-xs text-muted-foreground">
@@ -135,19 +145,19 @@ export default function PrivacyPage() {
             <PrincipleCard
               icon={ShieldCheck}
               title="Minimal collection"
-              description="We aim to collect only the data needed to operate, improve, secure, and commercialize the business."
+              description="PyColors aims to collect only the data needed to operate, secure, improve, and sell its products."
             />
 
             <PrincipleCard
               icon={Scale}
-              title="Legitimate use"
-              description="Data is used for product operations, analytics, communication, support, billing, and growth."
+              title="Clear purpose"
+              description="Data is used for product delivery, support, analytics, billing, fraud prevention, and legal obligations."
             />
 
             <PrincipleCard
               icon={Sparkles}
-              title="Growth-ready privacy"
-              description="Written to support a modern international SaaS and digital product business."
+              title="Product-ready privacy"
+              description="Structured for a growing developer platform selling templates, starters, and SaaS foundations."
             />
           </div>
         </section>
@@ -165,7 +175,8 @@ export default function PrivacyPage() {
             </p>
 
             <p>
-              Privacy requests can be sent to{' '}
+              Privacy, product, commercial usage, and support requests
+              can be sent to{' '}
               <a
                 className="underline underline-offset-4 hover:text-foreground"
                 href={`mailto:${COMPANY.email}`}
@@ -178,30 +189,35 @@ export default function PrivacyPage() {
 
           <Section title="2. What this policy covers">
             <p>This policy covers personal data processed through:</p>
+
             <ul className="list-disc space-y-1 pl-5">
+              <li>the public website at pycolors.io;</li>
               <li>
-                the public website, documentation, guides, examples,
-                and related public content at pycolors.io;
+                documentation, guides, examples, blog posts, roadmap,
+                and changelog pages;
               </li>
               <li>
-                waitlists, contact forms, email communications, and
-                product inquiries;
-              </li>
-              <li>analytics and cookies used on the website;</li>
-              <li>
-                premium product purchases and billing-related
-                workflows;
+                contact forms, support requests, product inquiries,
+                and email communications;
               </li>
               <li>
-                future accounts, premium access areas, subscriptions,
-                or member services operated by PyColors.
+                analytics and technical measurement used to improve
+                the website and products;
+              </li>
+              <li>
+                premium product purchases, checkout flows, invoices,
+                order recovery, and digital delivery;
+              </li>
+              <li>
+                future account areas, customer portals, download
+                pages, or premium access systems operated by PyColors.
               </li>
             </ul>
 
             <p>
-              Third-party platforms such as Gumroad, Stripe, Google,
-              Vercel, and SendGrid may also process personal data
-              under their own privacy policies.
+              Third-party providers used for payments, hosting,
+              analytics, email, or storage may also process personal
+              data under their own privacy policies.
             </p>
           </Section>
 
@@ -212,102 +228,114 @@ export default function PrivacyPage() {
                   Contact data
                 </span>{' '}
                 such as name, email address, company name, and the
-                content of messages you send to us.
+                content of messages you send.
               </li>
+
               <li>
                 <span className="font-medium text-foreground">
                   Usage data
                 </span>{' '}
                 such as pages viewed, browser type, device type,
-                referrer, approximate region, interactions, and basic
-                event analytics.
+                referral source, approximate region, interactions, and
+                analytics events.
               </li>
+
               <li>
                 <span className="font-medium text-foreground">
                   Transaction data
                 </span>{' '}
-                such as purchase status, product purchased, billing
-                metadata, order-related identifiers, and purchase
-                confirmation details provided by payment platforms.
+                such as product purchased, order status, billing
+                metadata, invoice information, tax-related metadata,
+                payment provider identifiers, and download or claim
+                status.
               </li>
+
               <li>
                 <span className="font-medium text-foreground">
-                  Account data
+                  Account or access data
                 </span>{' '}
-                for future premium or SaaS features, such as login
-                identifiers, role information, subscription status, or
-                workspace-related metadata.
+                such as login identifiers, customer identifiers, role
+                information, product entitlement, access token state,
+                or subscription status if account features are used.
               </li>
+
               <li>
                 <span className="font-medium text-foreground">
                   Technical and security data
                 </span>{' '}
-                such as logs, IP-related security signals, abuse
-                prevention data, and operational diagnostics.
+                such as logs, IP-related security signals, error
+                diagnostics, anti-abuse signals, and operational
+                telemetry.
               </li>
             </ul>
           </Section>
 
           <Section title="4. How we collect data">
             <p>We may collect data:</p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
-                directly from you when you contact us, join a
-                waitlist, request access, or make a purchase;
-              </li>
-              <li>automatically when you browse the website;</li>
-              <li>
-                from payment and commerce providers when a transaction
-                is completed or attempted;
+                directly from you when you contact us, request
+                support, or make a purchase;
               </li>
               <li>
-                from analytics, hosting, email, or infrastructure
-                providers used to operate the business.
+                automatically when you browse the website or interact
+                with product pages;
+              </li>
+              <li>
+                from payment and commerce providers when a checkout,
+                payment, refund, invoice, or dispute is created;
+              </li>
+              <li>
+                from hosting, analytics, email, storage, or
+                infrastructure providers used to operate PyColors.
               </li>
             </ul>
           </Section>
 
           <Section title="5. Why we use personal data">
             <p>We may use personal data to:</p>
+
             <ul className="list-disc space-y-1 pl-5">
               <li>
                 operate, maintain, and secure the website and product
                 infrastructure;
               </li>
               <li>
-                deliver open-source resources, digital products, and
-                future premium access;
+                deliver digital products, downloads, order access, and
+                customer support;
               </li>
               <li>
-                process purchases, billing operations, and order
-                follow-up;
+                process purchases, taxes, invoices, refunds, disputes,
+                and billing operations;
               </li>
               <li>
-                respond to inquiries, provide support, and manage
-                customer relationships;
+                respond to inquiries and manage customer
+                relationships;
               </li>
               <li>
-                improve messaging, conversion flows, feature
-                prioritization, documentation, and product quality;
+                improve messaging, conversion flows, documentation,
+                product quality, and roadmap decisions;
               </li>
               <li>
-                measure demand, interest, and growth across the
-                PyColors ecosystem;
+                measure demand, traffic, product interest, and growth
+                across the PyColors ecosystem;
               </li>
               <li>
-                prevent fraud, abuse, unauthorized sharing, and misuse
-                of paid products;
+                prevent fraud, abuse, unauthorized sharing, license
+                misuse, and security risks;
               </li>
               <li>
-                comply with legal, accounting, and tax obligations.
+                comply with legal, tax, accounting, and business
+                obligations.
               </li>
             </ul>
           </Section>
 
           <Section title="6. Legal bases">
             <p>
-              Depending on the context, we process personal data on
-              one or more of the following legal bases:
+              Depending on the context, PyColors may process personal
+              data based on:
             </p>
 
             <ul className="list-disc space-y-1 pl-5">
@@ -317,29 +345,24 @@ export default function PrivacyPage() {
                 request before entering into a contract;
               </li>
               <li>
-                our legitimate interests, including operating,
-                securing, improving, and commercializing the business;
+                legitimate interests, including operating, securing,
+                improving, and commercializing PyColors;
               </li>
-              <li>compliance with legal obligations.</li>
+              <li>
+                compliance with legal obligations, including tax,
+                accounting, and fraud prevention requirements.
+              </li>
             </ul>
-
-            <p>
-              <span className="font-medium text-foreground">
-                Legal review recommended:
-              </span>{' '}
-              if you later add marketing automation, retargeting, or
-              complex ad attribution, this section should be expanded.
-            </p>
           </Section>
 
           <Section title="7. Cookies and analytics">
             <p>
               PyColors may use cookies or similar technologies for
               site functionality, analytics, performance monitoring,
-              conversion measurement, and abuse prevention.
+              conversion measurement, security, and abuse prevention.
             </p>
 
-            <p>Current tools and providers may include:</p>
+            <p>Current or future tools may include:</p>
 
             <ul className="list-disc space-y-1 pl-5">
               <li>
@@ -347,12 +370,12 @@ export default function PrivacyPage() {
                 telemetry;
               </li>
               <li>
-                Google Analytics for website analytics and traffic
-                measurement;
+                Google Analytics or similar analytics tools for
+                traffic and product measurement;
               </li>
               <li>
-                other strictly necessary technical cookies required
-                for site operation or future account access.
+                strictly necessary cookies or storage required for
+                checkout, account access, download flows, or security.
               </li>
             </ul>
 
@@ -360,15 +383,6 @@ export default function PrivacyPage() {
               Where legally required, optional analytics or
               non-essential cookies should only be activated after
               appropriate consent.
-            </p>
-
-            <p>
-              <span className="font-medium text-foreground">
-                Legal / implementation review recommended:
-              </span>{' '}
-              if Google Analytics is active for EU users, the cookie
-              banner and consent mode should match actual
-              implementation.
             </p>
           </Section>
 
@@ -381,69 +395,84 @@ export default function PrivacyPage() {
             <ul className="list-disc space-y-1 pl-5">
               <li>
                 <span className="font-medium text-foreground">
-                  Gumroad
-                </span>{' '}
-                currently processes the purchase of the NA-AI premium
-                landing page template.
-              </li>
-              <li>
-                <span className="font-medium text-foreground">
                   Stripe
                 </span>{' '}
-                may process current or future premium purchases,
-                subscriptions, invoices, and billing operations.
+                may process product purchases, invoices, payment
+                status, customer records, taxes, refunds, and
+                disputes.
+              </li>
+
+              <li>
+                Other payment or commerce providers may be used for
+                specific products, historical purchases, or future
+                commercial offers.
               </li>
             </ul>
 
             <p>
-              We may receive transaction-related information from
-              those providers, such as purchase confirmation, billing
-              status, country, tax data, or refund/dispute status. We
-              do not store full payment card numbers on PyColors
-              servers.
+              PyColors may receive transaction-related information
+              from those providers, such as purchase confirmation,
+              billing status, country, tax data, invoice data, refund
+              state, dispute status, and product entitlement. PyColors
+              does not store full payment card numbers on its servers.
             </p>
           </Section>
 
-          <Section title="9. Email communications">
+          <Section title="9. Digital delivery and downloads">
             <p>
-              If you contact us, join a waitlist, request access, or
-              purchase a product, we may send transactional,
-              operational, onboarding, support, or product-related
-              emails.
+              Paid products may be delivered through claim pages,
+              download links, access tokens, customer emails, private
+              storage, or order recovery flows.
             </p>
 
             <p>
-              Email delivery may be handled through{' '}
-              <span className="font-medium text-foreground">
-                SendGrid
-              </span>
-              .
-            </p>
-
-            <p>
-              Marketing emails, if later introduced, should include
-              clear unsubscribe options where required by law.
+              To provide and protect digital delivery, PyColors may
+              process order identifiers, customer email, product
+              entitlement, download token status, access logs, and
+              related security signals.
             </p>
           </Section>
 
-          <Section title="10. Data sharing">
+          <Section title="10. Email communications">
+            <p>
+              If you contact PyColors, purchase a product, request
+              support, or use a product access flow, we may send
+              transactional, operational, onboarding, support,
+              security, billing, or product-related emails.
+            </p>
+
+            <p>
+              Email delivery may be handled by third-party email
+              providers. Marketing emails, if introduced, should
+              include unsubscribe options where required by law.
+            </p>
+          </Section>
+
+          <Section title="11. Data sharing">
             <p>
               We may share personal data with service providers only
-              where reasonably necessary to operate the business.
+              where reasonably necessary to operate PyColors.
             </p>
 
-            <p>These may include providers for:</p>
+            <p>These providers may include:</p>
 
             <ul className="list-disc space-y-1 pl-5">
-              <li>hosting and infrastructure, such as Vercel;</li>
-              <li>analytics, such as Google Analytics;</li>
               <li>
-                commerce and payments, such as Gumroad and Stripe;
+                hosting and deployment providers, such as Vercel;
               </li>
               <li>
-                email delivery and communication, such as SendGrid;
+                analytics providers, such as Google Analytics or
+                similar tools;
               </li>
-              <li>security, logging, or operational support.</li>
+              <li>payment and billing providers, such as Stripe;</li>
+              <li>email delivery and communication providers;</li>
+              <li>
+                storage, logging, security, and operational providers;
+              </li>
+              <li>
+                professional advisors where required for accounting,
+                legal, tax, or compliance purposes.
+              </li>
             </ul>
 
             <p>
@@ -452,76 +481,72 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section title="11. International data transfers">
+          <Section title="12. International data transfers">
             <p>
-              Because PyColors serves international users and relies
-              on global service providers, personal data may be
-              processed outside your country of residence, including
-              outside the European Economic Area.
+              PyColors is based in France and may serve users
+              internationally. Some service providers may process data
+              outside your country of residence, including outside the
+              European Economic Area.
             </p>
 
             <p>
-              Where required, we aim to rely on appropriate transfer
-              mechanisms such as contractual safeguards provided by
-              the relevant vendor.
-            </p>
-
-            <p>
-              <span className="font-medium text-foreground">
-                Legal review recommended:
-              </span>{' '}
-              if you want strong GDPR positioning, add a more precise
-              list of transfer safeguards per vendor.
+              Where required, PyColors aims to rely on appropriate
+              transfer mechanisms such as contractual safeguards
+              provided by the relevant vendor.
             </p>
           </Section>
 
-          <Section title="12. Retention">
+          <Section title="13. Retention">
             <p>
               We retain personal data only for as long as reasonably
               necessary for the purposes described in this policy,
               including support, security, contractual, tax, legal,
-              and accounting needs.
+              accounting, and anti-fraud needs.
             </p>
 
             <ul className="list-disc space-y-1 pl-5">
               <li>
-                contact messages may be retained to manage ongoing
-                conversations or support history;
-              </li>
-              <li>
-                waitlist and access-request data may be retained to
-                manage launch communications and access planning;
+                contact messages may be retained to manage support and
+                customer history;
               </li>
               <li>
                 transaction records may be retained for accounting,
-                fraud prevention, and legal compliance;
+                tax, fraud prevention, and legal compliance;
+              </li>
+              <li>
+                download and access data may be retained to provide
+                order recovery and protect paid products;
               </li>
               <li>
                 analytics data may be retained according to the
                 settings of the applicable analytics provider;
               </li>
               <li>
-                future account data may be retained while an account
-                or subscription remains active and for a reasonable
-                period afterward.
+                account or entitlement data may be retained while
+                access remains active and for a reasonable period
+                afterward.
               </li>
             </ul>
           </Section>
 
-          <Section title="13. Security">
+          <Section title="14. Security">
             <p>
               We use reasonable technical and organizational measures
-              to protect personal data, but no method of transmission
-              or storage is completely secure.
+              to protect personal data, including access controls,
+              secure providers, operational monitoring, and security
+              practices appropriate for a small digital product
+              business.
             </p>
 
             <p>
-              You should also protect your own devices, credentials,
-              and project environments when using PyColors products.
+              No method of transmission or storage is completely
+              secure. You should also protect your own devices,
+              credentials, deployment environments, and downloaded
+              source code.
             </p>
           </Section>
 
-          <Section title="14. Your rights">
+          <Section title="15. Your rights">
             <p>
               Depending on your location, you may have rights such as
               access, correction, deletion, restriction, objection,
@@ -546,7 +571,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section title="15. Children">
+          <Section title="16. Children">
             <p>
               PyColors products and services are intended for
               professionals, founders, developers, agencies, product
@@ -555,12 +580,12 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section title="16. Changes to this policy">
+          <Section title="17. Changes to this policy">
             <p>
               We may update this Privacy Policy from time to time to
-              reflect product evolution, legal requirements, new
-              providers, new premium features, or new account and
-              subscription models.
+              reflect product evolution, legal requirements, provider
+              changes, new checkout flows, new account features, or
+              new commercial products.
             </p>
 
             <p>
@@ -570,17 +595,26 @@ export default function PrivacyPage() {
 
           <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-medium">
             <CardContent className="p-6 sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
-                  <p className="text-sm font-medium text-foreground">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+                    <FileText
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <p className="mt-5 text-sm font-medium text-foreground">
                     Need rules for commercial usage and purchases?
                   </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Review the terms and license scope.
+
+                  <p className="mt-1 text-sm leading-7 text-muted-foreground">
+                    Review the Terms and License pages before using
+                    PyColors products in production or client work.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row lg:justify-end">
                   <Button
                     asChild
                     variant="outline"
@@ -608,6 +642,60 @@ export default function PrivacyPage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+            <CardContent className="p-6 sm:p-7">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
+                    <Cookie
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    Cookies
+                  </div>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    Used for functionality, analytics, security, and
+                    future access flows where applicable.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
+                    <CreditCard
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    Payments
+                  </div>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    Payment data is processed by third-party providers
+                    such as Stripe.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
+                    <Database
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    Access data
+                  </div>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    Order, entitlement, and download data may be used
+                    to deliver paid products securely.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <p className="text-center text-xs leading-6 text-muted-foreground">
+            Product-specific checkout pages, invoices, license files,
+            and written agreements may include additional or more
+            specific information.
+          </p>
         </section>
       </div>
     </Container>
