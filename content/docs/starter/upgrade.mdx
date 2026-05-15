@@ -22,12 +22,14 @@ import {
   ArrowRight,
   CheckCircle,
   CreditCard,
+  Layers3,
   LockKeyhole,
   Rocket,
   ShieldCheck,
   Sparkles,
   XCircle,
 } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Free</Badge>
@@ -299,7 +301,7 @@ It is about removing the work that usually delays launch:
   </Card>
 </div>
 
-### Common concerns
+## Common concerns
 
 <Accordions type="single">
   <Accordion title="Will I lose my Starter Free work?">
@@ -331,27 +333,27 @@ If the business layer is slowing you down, move to Starter Pro.
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro Overview</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the production foundation included in Starter Pro.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">View Pricing</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See the Starter Pro offer and choose when the upgrade makes sense.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Starter Pro overview',
+      href: '/docs/starter-pro',
+      description:
+        'Understand the production-ready foundation included in Starter Pro.',
+      icon: Layers3,
+      tone: 'platform',
+    },
+    {
+      title: 'View pricing',
+      href: '/pricing',
+      description:
+        'Review the Starter Pro offer and decide when the upgrade becomes the higher-leverage path.',
+      icon: CreditCard,
+      tone: 'primary',
+    },
+  ]}
+/>
 
 <Callout title="Free to validate. Pro to monetize.">
   Starter Free proves the product surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, and delivery. → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>

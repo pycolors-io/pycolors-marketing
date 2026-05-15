@@ -18,14 +18,16 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  ArrowUpRight,
   CheckCircle,
   Cloud,
-  GitBranch,
+  Layers3,
   Rocket,
   ShieldCheck,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -323,27 +325,28 @@ pnpm build
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Know when Starter Free stops being enough and Pro becomes the faster path.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from mocked UX to production-shaped auth, billing, backend, and delivery.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Upgrade to Starter Pro',
+      href: '/docs/starter/upgrade',
+      description:
+        'Know when Starter Free stops being enough and Starter Pro becomes the faster path to launch.',
+      icon: ArrowUpRight,
+      badge: 'Pro',
+      tone: 'primary',
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Move from mocked UX to production-shaped auth, billing, backend, and secure delivery foundations.',
+      icon: Layers3,
+      tone: 'platform',
+    },
+  ]}
+/>
 
 <Callout title="Free to deploy. Pro to launch.">
   Starter Free gives you a live SaaS surface. Starter Pro gives you the production wiring behind it. → <a href="/pricing" className="font-medium underline underline-offset-4">Upgrade to Starter Pro</a>
