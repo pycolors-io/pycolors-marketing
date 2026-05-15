@@ -16,13 +16,18 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  ArrowUpRight,
+  Compass,
   CreditCard,
+  FolderTree,
   LayoutDashboard,
   LockKeyhole,
   Rocket,
   Settings,
+  Terminal,
   Users,
 } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -189,89 +194,62 @@ It is especially useful when you need a credible product surface before producti
 
 Follow the pages in order.
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Getting Started</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand what Starter Free gives you, what is mocked, and how to approach it.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/installation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Installation</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Run the starter locally and validate the main SaaS routes.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/project-structure" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Project Structure</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how routes, feature components, mock data, and UI primitives are organized.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/auth-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Auth Concept
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the auth UX contract before wiring a real provider.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/billing-concept" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Billing Concept
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See how monetization is modeled before Stripe wiring.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Rocket className="h-4 w-4 text-primary" />
-        Deployment
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Deploy early and validate the full mocked SaaS surface online.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30 md:col-span-2">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Settings className="h-4 w-4 text-primary" />
-        Upgrade to Starter Pro
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Know when Starter Free stops being enough and Starter Pro becomes the faster path to launch.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="steps"
+  items={[
+    {
+      title: 'Getting started',
+      href: '/docs/starter/getting-started',
+      description:
+        'Understand what Starter Free includes, what is mocked, and how to approach the starter.',
+      icon: Compass,
+    },
+    {
+      title: 'Installation',
+      href: '/docs/starter/installation',
+      description:
+        'Run the starter locally and validate the main SaaS routes and UI flows.',
+      icon: Terminal,
+    },
+    {
+      title: 'Project structure',
+      href: '/docs/starter/project-structure',
+      description:
+        'Learn how routes, feature components, mock data, and UI primitives are organized.',
+      icon: FolderTree,
+    },
+    {
+      title: 'Authentication concept',
+      href: '/docs/starter/auth-concept',
+      description:
+        'Understand the authentication UX contract before wiring a real provider.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing concept',
+      href: '/docs/starter/billing-concept',
+      description:
+        'See how monetization and subscription state are modeled before Stripe integration.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Deployment',
+      href: '/docs/starter/deployment',
+      description:
+        'Deploy early and validate the complete mocked SaaS surface online.',
+      icon: Rocket,
+    },
+    {
+      title: 'Upgrade to Starter Pro',
+      href: '/docs/starter/upgrade',
+      description:
+        'Know when Starter Free stops being enough and Starter Pro becomes the faster launch path.',
+      icon: ArrowUpRight,
+      badge: 'Pro',
+      tone: 'primary',
+    },
+  ]}
+/>
 
 ## Upgrade moment
 

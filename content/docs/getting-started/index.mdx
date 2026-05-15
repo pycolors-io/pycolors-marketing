@@ -19,7 +19,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
-import { ReadingOrder } from "@/components/docs/reading-order";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">PyColors Docs</Badge>
@@ -342,7 +342,8 @@ This page gives you the fastest path through the PyColors documentation.
 
 ## Recommended reading order
 
-<ReadingOrder
+<DocsLinks
+  variant="steps"
   items={[
     {
       title: 'NA-AI Landing',

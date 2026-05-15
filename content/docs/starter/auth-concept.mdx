@@ -62,43 +62,26 @@ This is intentional.
 | Provider | Sessions, tokens, identity |
 | Backend (later) | permissions, roles, access control |
 
-
-
 ## What Starter Free gives you
 
-<div className="grid gap-4 md:grid-cols-2">
-
-<Card className="rounded-2xl border-border/60 bg-card/70">
-  <CardHeader>
-    <CardTitle className="text-sm">Included</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <ul className="space-y-2 text-sm text-muted-foreground">
-      <li>login / register / forgot password screens</li>
-      <li>form validation and error states</li>
-      <li>loading and disabled states</li>
-      <li>redirect flows</li>
-      <li>AuthShell layout</li>
-    </ul>
-  </CardContent>
-</Card>
-
-<Card className="rounded-2xl border-border/60 bg-card/70">
-  <CardHeader>
-    <CardTitle className="text-sm">Not included (on purpose)</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <ul className="space-y-2 text-sm text-muted-foreground">
-      <li>session management</li>
-      <li>JWT / cookies</li>
-      <li>OAuth providers</li>
-      <li>email delivery</li>
-      <li>password reset backend</li>
-    </ul>
-  </CardContent>
-</Card>
-
-</div>
+<PreferAvoid
+  preferTitle="Included"
+  avoidTitle="Not included (on purpose)"
+  prefer={[
+    'login / register / forgot password screens',
+    'form validation and error states',
+    'loading and disabled states',
+    'redirect flows',
+    'AuthShell layout',
+  ]}
+  avoid={[
+    'session management',
+    'JWT / cookies',
+    'OAuth providers',
+    'email delivery',
+    'password reset backend',
+  ]}
+/>
 
 ## Auth routes
 

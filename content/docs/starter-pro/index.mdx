@@ -25,6 +25,7 @@ import {
   LockKeyhole,
   ShieldCheck,
 } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -300,83 +301,39 @@ You are buying:
 
 ## Explore the system
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a
-    href="/docs/starter-pro/auth"
-    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
-  >
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Authentication
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explore users, sessions, OAuth, verification, and account
-        lifecycle foundations.
-      </div>
-    </div>
-
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a
-    href="/docs/starter-pro/billing"
-    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
-  >
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Billing
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand Stripe Checkout, portal, invoices,
-        subscriptions, and webhook sync.
-      </div>
-    </div>
-
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a
-    href="/docs/starter-pro/backend"
-    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
-  >
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Database className="h-4 w-4 text-primary" />
-        Backend
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review database-ready structure, Prisma models, and
-        server-side boundaries.
-      </div>
-    </div>
-
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a
-    href="/docs/starter-pro/delivery"
-    className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"
-  >
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Download className="h-4 w-4 text-primary" />
-        Delivery
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how secure product access and private asset delivery
-        work after purchase.
-      </div>
-    </div>
-
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Authentication',
+      href: '/docs/starter-pro/auth',
+      description:
+        'Understand users, sessions, OAuth, verification, recovery, and account lifecycle foundations.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Review Stripe Checkout, customer portal, subscriptions, invoices, and webhook-driven state synchronization.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend',
+      href: '/docs/starter-pro/backend',
+      description:
+        'Explore database-ready structure, Prisma models, ownership checks, and server-side boundaries.',
+      icon: Database,
+    },
+    {
+      title: 'Delivery',
+      href: '/docs/starter-pro/delivery',
+      description:
+        'Learn how secure product access, private storage, and post-purchase delivery work.',
+      icon: Download,
+    },
+  ]}
+/>
 
 ## Next steps
 

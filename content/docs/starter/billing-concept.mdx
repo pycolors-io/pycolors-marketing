@@ -18,14 +18,18 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  ArrowUpRight,
   CheckCircle,
   CreditCard,
   FileText,
+  LoaderCircle,
   RefreshCw,
+  Rocket,
   ShieldCheck,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -396,47 +400,41 @@ Avoid vague labels:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter/deployment" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Deployment</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Deploy the starter and understand what stays mocked before production wiring.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Upgrade to Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from mocked billing UX to production-shaped Stripe, auth, backend, and delivery foundations.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro Billing</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review the production billing foundation when you are ready to wire the business layer.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Async Actions Pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design payment, portal, retry, and feedback actions with production-ready UX.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Deployment',
+      href: '/docs/starter/deployment',
+      description:
+        'Deploy the starter and understand what stays mocked before production wiring.',
+      icon: Rocket,
+    },
+    {
+      title: 'Upgrade to Starter Pro',
+      href: '/docs/starter/upgrade',
+      description:
+        'Move from mocked billing UX to production-shaped auth, billing, backend, and delivery foundations.',
+      icon: ArrowUpRight,
+      badge: 'Pro',
+      tone: 'primary',
+    },
+    {
+      title: 'Starter Pro billing',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Review the production billing foundation when you are ready to wire the business layer.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Async actions pattern',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Design payment, portal, retry, and feedback actions with production-ready UX.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>
 
 <Callout title="Upgrade when billing becomes real">
   Starter Free gives you the billing surface.
