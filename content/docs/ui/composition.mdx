@@ -20,12 +20,17 @@ import {
   CheckCircle,
   Layers3,
   LayoutDashboard,
+  LayoutTemplate,
   PanelTop,
+  PanelsTopLeft,
+  Rocket,
   Rows3,
   ShieldCheck,
   Sparkles,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -403,53 +408,22 @@ A pattern can include multiple primitives, state rules, copywriting rules, and a
 
 ### Prefer / avoid
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>small primitives with clear responsibility</li>
-        <li>page-level composition for product meaning</li>
-        <li>patterns for repeated behavior</li>
-        <li>semantic tokens over raw values</li>
-        <li>explicit structure over hidden magic</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>giant configurable components</li>
-        <li>business logic inside primitives</li>
-        <li>duplicated product flows across pages</li>
-        <li>custom styles that bypass tokens</li>
-        <li>abstracting before the pattern is clear</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'small primitives with clear responsibility',
+    'page-level composition for product meaning',
+    'patterns for repeated behavior',
+    'semantic tokens over raw values',
+    'explicit structure over hidden magic',
+  ]}
+  avoid={[
+    'giant configurable components',
+    'business logic inside primitives',
+    'duplicated product flows across pages',
+    'custom styles that bypass tokens',
+    'abstracting before the pattern is clear',
+  ]}
+/>
 
 ### Composition checklist
 
@@ -471,44 +445,37 @@ Before shipping a composed UI surface, confirm:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/why-pycolors-ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Why PyColors UI</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the philosophy behind small primitives and product-level patterns.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Patterns</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from components to production-ready feature blocks.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Compose primitives into real dashboard structure.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See how UI composition connects to auth, billing, backend, and production flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Why PyColors UI',
+      href: '/docs/ui/why-pycolors-ui',
+      description:
+        'Understand the philosophy behind small primitives and product-level patterns.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'Move from components to production-ready feature blocks.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Compose primitives into real dashboard structure.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'See how UI composition connects to auth, billing, backend, and production flows.',
+      icon: Rocket,
+    },
+  ]}
+/>

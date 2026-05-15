@@ -274,15 +274,32 @@ export function getMDXComponents(
       />
     ),
     table: ({ className, ...props }) => (
-      <table
-        {...props}
-        className={[
-          'w-full min-w-max border-collapse text-sm',
-          className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      />
+      <div className="not-prose relative my-6 overflow-x-auto rounded-[0px] border border-border-subtle bg-card shadow-soft">
+        <table
+          {...props}
+          className={[
+            'w-full min-w-160 border-collapse text-sm',
+            '[&_thead]:border-b [&_thead]:border-border-subtle',
+            '[&_tbody_tr]:border-b [&_tbody_tr]:border-border-subtle',
+            '[&_tbody_tr:last-child]:border-b-0',
+            '[&_th]:h-11 [&_th]:px-4 [&_th]:text-left',
+            '[&_th]:align-middle [&_th]:font-medium',
+            '[&_th]:text-foreground [&_th]:whitespace-nowrap',
+            '[&_td]:p-4 [&_td]:align-middle',
+            '[&_td]:text-muted-foreground',
+            '[&_tr]:transition-colors',
+            '[&_tbody_tr:hover]:bg-muted/20',
+            '[&_code]:whitespace-nowrap',
+            '[&_thead]:bg-muted/20',
+            '[&_th]:text-[13px]',
+            '[&_td]:leading-6',
+            '[&_td]:text-[13px]',
+            className,
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
+      </div>
     ),
 
     thead: ({ className, ...props }) => (

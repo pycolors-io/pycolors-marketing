@@ -21,10 +21,14 @@ import {
   Eye,
   Keyboard,
   Layers3,
+  LayoutTemplate,
   MousePointerClick,
+  Rocket,
   Type,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -269,39 +273,22 @@ Accessibility lives in composition.
 
 ## Prefer / avoid
 
-<div className="grid gap-6 md:grid-cols-2">
-  <Card className="border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-primary" /> Prefer
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm list-disc pl-5 space-y-2 text-muted-foreground">
-        <li>semantic HTML</li>
-        <li>visible focus states</li>
-        <li>clear labels</li>
-        <li>keyboard support</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <XCircle className="h-4 w-4 text-destructive" /> Avoid
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm list-disc pl-5 space-y-2 text-muted-foreground">
-        <li>clickable divs</li>
-        <li>hidden focus</li>
-        <li>icon-only meaning</li>
-        <li>color-only signals</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    'semantic HTML',
+    'visible focus states',
+    'clear labels',
+    'keyboard support',
+  ]}
+  avoid={[
+    'clickable divs',
+    'hidden focus',
+    'icon-only meaning',
+    'color-only signals',
+  ]}
+/>
 
 ## Quick checklist
 
@@ -317,24 +304,23 @@ Accessibility lives in composition.
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/composition" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Composition</div>
-      <div className="mt-2 text-sm text-muted-foreground">
-        Build scalable UI with proper structure.
-      </div>
-    </div>
-    <ArrowRight className="h-4 w-4" />
-  </a>
-
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro</div>
-      <div className="mt-2 text-sm text-muted-foreground">
-        See how accessibility fits real SaaS systems.
-      </div>
-    </div>
-    <ArrowRight className="h-4 w-4" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Composition',
+      href: '/docs/ui/composition',
+      description:
+        'Build scalable UI with proper structure.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'See how accessibility fits real SaaS systems.',
+      icon: Rocket,
+    },
+  ]}
+/>

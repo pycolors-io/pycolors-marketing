@@ -22,14 +22,19 @@ import {
   AlignLeft,
   ArrowRight,
   CheckCircle,
+  ClipboardCheck,
   FileText,
+  FormInput,
   MessageSquareText,
+  MousePointerClick,
+  PanelsTopLeft,
   PencilLine,
   Rows3,
   TextCursorInput,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -163,7 +168,7 @@ Use Textarea when one line is not enough for the task.
   </Card>
 </div>
 
-## Helper text
+### Helper text
 
 Use helper text to explain what kind of answer is expected.
 
@@ -203,7 +208,7 @@ export function TextareaHelperText() {
   Helper text should reduce uncertainty. Keep it short, concrete, and connected to the task.
 </Callout>
 
-## Error state
+### Error state
 
 Use the `error` prop for validation errors. It automatically sets `aria-invalid`, `aria-errormessage`, and error styling.
 
@@ -243,7 +248,7 @@ export function TextareaError() {
   Error text should explain what failed and how to fix it. Avoid vague messages like “Invalid value”.
 </Callout>
 
-## Required fields
+### Required fields
 
 Use `required` for mandatory fields. The label displays a destructive asterisk and the textarea receives `aria-required`.
 
@@ -351,7 +356,7 @@ export function TextareaSizes() {
 | `md` | Default forms and settings pages |
 | `lg` | Long descriptions, prompts, support messages |
 
-## Resize behavior
+### Resize behavior
 
 The `resize` prop controls how users can resize the field.
 
@@ -576,7 +581,7 @@ export function PromptTextarea() {
 | `helperText` | `string` | — | Supporting text shown when there is no error |
 | `error` | `string` | — | Error text and validation styling |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | Design-system size |
-| `resize` | `"none" \| "vertical" \| "horizontal" \| "both"` | `"vertical"` | Native resize behavior |
+| `resize` | `"none" \| "vertical" \| horizontal" \| "both"` | `"vertical"` | Native resize behavior |
 | `className` | `string` | — | Additional Tailwind classes |
 | `...props` | `React.TextareaHTMLAttributes<HTMLTextAreaElement>` | — | Native textarea attributes |
 
@@ -655,44 +660,37 @@ export interface TextareaProps
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Input</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Input for short one-line values such as names, URLs, and search queries.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Pair Textarea with clear submit, save, or feedback actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Sheet</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Textarea inside side panels for notes, filters, and contextual editing.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/forms" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Forms guide</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how to compose labels, helper text, validation, and actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Input',
+      href: '/docs/ui/input',
+      description:
+        'Use Input for short one-line values such as names, URLs, and search queries.',
+      icon: FormInput,
+    },
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Pair Textarea with clear submit, save, or feedback actions.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Sheet',
+      href: '/docs/ui/sheet',
+      description:
+        'Use Textarea inside side panels for notes, filters, and contextual editing.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Forms guide',
+      href: '/docs/guides/forms',
+      description:
+        'Learn how to compose labels, helper text, validation, and actions.',
+      icon: ClipboardCheck,
+    },
+  ]}
+/>

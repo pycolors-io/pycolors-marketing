@@ -20,12 +20,16 @@ import {
   CheckCircle,
   Code2,
   Layers3,
+  LayoutTemplate,
+  MousePointerClick,
   Palette,
+  Rocket,
   ShieldCheck,
   Sparkles,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -397,44 +401,37 @@ With a system, your product can grow without becoming chaotic.
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/design-system" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Design System</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the tokens, colors, typography, radius, and shadows behind PyColors UI.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Start with the primitive used for actions, intent, and interaction hierarchy.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Patterns</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See how primitives become product-level blocks for real SaaS features.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starter Pro</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from UI foundations to real auth, billing, backend, and delivery.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Design System',
+      href: '/docs/design-system',
+      description:
+        'Understand the tokens, colors, typography, radius, and shadows behind PyColors UI.',
+      icon: Palette,
+    },
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Start with the primitive used for actions, intent, and interaction hierarchy.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'See how primitives become product-level blocks for real SaaS features.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Move from UI foundations to real auth, billing, backend, and delivery.',
+      icon: Rocket,
+    },
+  ]}
+/>

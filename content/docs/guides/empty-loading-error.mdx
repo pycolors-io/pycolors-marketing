@@ -20,22 +20,28 @@ import {
   CardHeader,
   CardTitle,
   EmptyState,
+  Inbox,
   Skeleton,
+  Rows3,
   Table,
   TableBody,
   TableRow,
   TableCell,
 } from "@pycolors/ui";
 import {
+  AlertTriangle,
   ArrowRight,
   CheckCircle,
   CircleAlert,
+  FormInput,
+  LayoutTemplate,
   LoaderCircle,
   SearchX,
   ShieldCheck,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -122,7 +128,7 @@ This guide explains how to design **loading**, **empty**, and **error** states w
   </Card>
 </div>
 
-## Mental model
+### Mental model
 
 > Skeleton is shape. EmptyState is explanation. Alert is a problem.
 
@@ -346,7 +352,7 @@ Use `Alert` when:
   ]}
 />
 
-## Production checklist
+##ction checklist
 
 Before shipping async states, confirm that:
 
@@ -380,44 +386,37 @@ Before shipping async states, confirm that:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/skeleton" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Skeleton</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use visual placeholders for loading states that preserve layout.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/empty-state" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">EmptyState</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design valid empty states with clear messaging and next actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Alert</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Communicate blocking problems and important product feedback.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/forms-with-validation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Forms with validation</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Apply the same clarity to form validation, loading, and submission errors.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Skeleton',
+      href: '/docs/ui/skeleton',
+      description:
+        'Use visual placeholders for loading states that preserve layout.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'EmptyState',
+      href: '/docs/ui/empty-state',
+      description:
+        'Design valid empty states with clear messaging and next actions.',
+      icon: SearchX,
+    },
+    {
+      title: 'Alert',
+      href: '/docs/ui/alert',
+      description:
+        'Communicate blocking problems and important product feedback.',
+      icon: AlertTriangle,
+    },
+    {
+      title: 'Forms with validation',
+      href: '/docs/guides/forms-with-validation',
+      description:
+        'Apply the same clarity to form validation, loading, and submission errors.',
+      icon: FormInput,
+    },
+  ]}
+/>

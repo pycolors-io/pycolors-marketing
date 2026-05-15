@@ -9,8 +9,9 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { CheckCircle, XCircle, RefreshCw } from "lucide-react";
+import { CheckCircle, XCircle, FormInput, LoaderCircle, RefreshCw } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 import {
   OptimisticToggleDemo,
@@ -79,7 +80,7 @@ This guide defines how to handle mutations in a way that feels:
 
 
 
-## Mental model
+### Mental model
 
 > Actions should feel instant
 > Errors should feel recoverable
@@ -181,8 +182,7 @@ Recovery is part of the UX.
 Never mix roles.
 
 
-
-## Error messaging
+### Error messaging
 
 Good error messages:
 
@@ -192,15 +192,18 @@ Good error messages:
 
 ### Examples
 
-**Good**
-
-- “Couldn’t save changes. Check your connection and retry.”
-- “Payment failed. Try another card.”
-
-**Bad**
-
-- “Something went wrong”
-- “Unknown error”
+<PreferAvoid
+  preferTitle="Good"
+  avoidTitle="Bad"
+  prefer={[
+    '“Couldn’t save changes. Check your connection and retry.”',
+    '“Payment failed. Try another card.”',
+  ]}
+  avoid={[
+    '“Something went wrong”',
+    '“Unknown error”',
+  ]}
+/>
 
 <Callout type="info" title="Rule">
   Always include: what failed + what to do next
@@ -228,8 +231,6 @@ Good error messages:
 - rollback on error
 - toast feedback
 
-
-
 ## Decision guide
 
 <PreferAvoid
@@ -247,7 +248,7 @@ Good error messages:
   ]}
 />
 
-## Why this matters
+### Why this matters
 
 Async actions are one of the biggest trust signals in a product.
 
@@ -266,26 +267,25 @@ Good mutation UX feels:
 
 That is where products start to feel **production-ready**.
 
-
-
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/guides/forms-with-validation" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Forms with validation
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Apply async patterns to real user input flows.
-    </div>
-  </a>
-
-  <a href="/docs/guides/empty-loading-error" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Async states
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Handle loading, empty, and error states consistently.
-    </div>
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Forms with validation',
+      href: '/docs/guides/forms-with-validation',
+      description:
+        'Apply async patterns to real user input flows.',
+      icon: FormInput,
+    },
+    {
+      title: 'Async states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Handle loading, empty, and error states consistently.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>
