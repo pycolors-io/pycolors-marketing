@@ -15,6 +15,7 @@ type DocsLinksItem = Readonly<{
   icon?: React.ElementType;
   eyebrow?: string;
   badge?: string;
+  badges?: readonly string[];
   external?: boolean;
   tone?: DocsLinksTone;
 }>;
@@ -80,7 +81,7 @@ export function DocsLinks({
               'overflow-hidden rounded-[5px]',
               'border border-border-subtle bg-card shadow-soft',
             ],
-        isCompact && 'my-6',
+        isCompact && 'my-2',
         className,
       )}
     >
@@ -184,9 +185,7 @@ function DocsLinksItemRow({
           </span>
 
           {item.badge ? (
-            <span className="rounded-full border border-border-subtle bg-muted/30 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-              {item.badge}
-            </span>
+            <DocsLinksBadge>{item.badge}</DocsLinksBadge>
           ) : null}
         </span>
 
@@ -198,6 +197,14 @@ function DocsLinksItemRow({
             )}
           >
             {item.description}
+          </span>
+        ) : null}
+
+        {item.badges?.length ? (
+          <span className="mt-3 flex flex-wrap gap-1.5">
+            {item.badges.map((badge) => (
+              <DocsLinksBadge key={badge}>{badge}</DocsLinksBadge>
+            ))}
           </span>
         ) : null}
       </span>
@@ -236,5 +243,24 @@ function DocsLinksItemRow({
     <Link href={item.href} className={className}>
       {content}
     </Link>
+  );
+}
+
+type DocsLinksBadgeProps = Readonly<{
+  children: React.ReactNode;
+}>;
+
+function DocsLinksBadge({ children }: DocsLinksBadgeProps) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center rounded-full',
+        'border border-border-subtle bg-muted/30',
+        'px-2 py-0.5',
+        'text-[11px] font-medium leading-4 text-muted-foreground',
+      )}
+    >
+      {children}
+    </span>
   );
 }

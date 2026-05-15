@@ -365,6 +365,42 @@ const items: RoadmapItem[] = [
     href: '/changelog',
   },
   {
+    title: 'NA-AI Landing commercial template',
+    description:
+      'Integrated NA-AI Landing as a premium AI SaaS landing page product with docs, license, demo, pricing, and purchase flow.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Templates', 'NA-AI', 'Monetization'],
+    href: '/templates/na-ai-landing',
+  },
+  {
+    title: 'Multi-product commerce foundation',
+    description:
+      'Generalized checkout, customer access, recovery, delivery, and product messaging for multiple premium digital products.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Commerce', 'Delivery', 'Monetization'],
+    href: '/pricing',
+  },
+  {
+    title: 'Templates documentation system',
+    description:
+      'Added template docs, NA-AI Landing guides, licensing guidance, customization docs, and clearer product selection paths.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Templates', 'Onboarding'],
+    href: '/docs/templates/na-ai-landing',
+  },
+  {
+    title: 'Blog editorial UX polish',
+    description:
+      'Refined blog layout, prose, metadata, sharing, accessibility, and reading flow to support authority-building content.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Blog', 'SEO', 'Authority'],
+    href: '/blog',
+  },
+  {
     title: 'Starter Pro conversion instrumentation',
     description:
       'Measure the docs-to-pricing-to-checkout funnel across Starter Free, Starter Pro, pricing, upgrade, and post-purchase access.',
@@ -444,12 +480,12 @@ const items: RoadmapItem[] = [
     tags: ['Blocks', 'Marketing'],
   },
   {
-    title: 'Templates line v1',
+    title: 'Templates line v2',
     description:
-      'Expand premium templates with landing and dashboard directions built on PyColors UI.',
-    status: 'Later',
+      'Expand beyond NA-AI Landing with more premium landing pages, dashboard templates, blocks, and productized demo experiences.',
+    status: 'Next',
     milestone: 'H1 2026',
-    tags: ['Templates', 'Monetization'],
+    tags: ['Templates', 'Blocks', 'Monetization'],
   },
 ];
 

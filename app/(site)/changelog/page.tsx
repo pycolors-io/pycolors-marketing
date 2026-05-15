@@ -58,6 +58,96 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.13.0',
+    title:
+      'NA-AI Landing launch, multi-product commerce, templates funnel, docs system cleanup, and blog polish',
+    dateLabel: 'Fri 15 May 2026',
+    dateISO: '2026-05-15',
+    status: 'Stable',
+    releaseWeekLabel: 'May 2026 (weekly release)',
+    summary:
+      'This release expands PyColors from a Starter-focused platform into a broader commercial product ecosystem. It introduces NA-AI Landing as a purchasable premium template, improves the templates funnel, strengthens product discovery, generalizes the commercial purchase and delivery experience for multiple digital products, and improves documentation, legal pages, blog reading, pricing, homepage, footer, and product navigation. The focus is clear: create a stronger product ladder from templates to UI to Starter Free to Starter Pro.',
+    highlights: [
+      {
+        title:
+          'NA-AI Landing is now part of the PyColors product line',
+        items: [
+          'Integrated NA-AI Landing as a production-ready AI SaaS landing page template.',
+          'Aligned the template with the PyColors UI system for better consistency, maintainability, and product quality.',
+          'Improved accessibility, theming, responsive behavior, visual polish, and content structure across the template experience.',
+          'Expanded documentation and licensing guidance so customers better understand setup, customization, commercial usage, and product boundaries.',
+        ],
+      },
+      {
+        title: 'Commerce now supports multiple digital products',
+        items: [
+          'Added NA-AI Landing as a new purchasable product in the PyColors catalog.',
+          'Generalized checkout, post-purchase access, recovery, and delivery flows so PyColors can support more than one premium product.',
+          'Improved purchase flow reliability with clearer product-specific messaging and safer fallback behavior.',
+          'Reduced product-specific duplication to make future premium templates and starters easier to launch and maintain.',
+        ],
+      },
+      {
+        title: 'Digital product delivery is more repeatable',
+        items: [
+          'Introduced a more flexible private delivery resolver for purchased digital products.',
+          'Unified customer access and recovery flows across premium products.',
+          'Added reusable customer email flows for digital product delivery and recovery.',
+          'Added internal release tooling to make premium product packaging and delivery more repeatable.',
+        ],
+      },
+      {
+        title: 'Templates funnel and purchase path improved',
+        items: [
+          'Revamped the templates experience with a dedicated NA-AI Landing product page and clearer premium positioning.',
+          'Introduced a sticky purchase CTA to keep the buying action visible at key decision moments.',
+          'Updated pricing, homepage, footer, product menu, sitemap, and template links to present NA-AI Landing as a real commercial product.',
+          'Replaced weaker template navigation points with more direct purchase actions where conversion matters most.',
+        ],
+      },
+      {
+        title:
+          'Marketing pages now explain the product ladder better',
+        items: [
+          'Refined the homepage around a clearer product-led flow: templates, UI, Starter Free, and Starter Pro.',
+          'Expanded pricing to support a three-product structure: templates, Starter Free, and Starter Pro.',
+          'Improved upgrade page messaging to focus on production SaaS value, business foundations, and clearer Free-to-Pro differentiation.',
+          'Updated footer links, menu order, product descriptions, and demo URLs to better reflect the current commercial ecosystem.',
+        ],
+      },
+      {
+        title: 'Docs system is cleaner and more scalable',
+        items: [
+          'Added template documentation, including NA-AI Landing customization, deployment, and licensing guidance.',
+          'Refined getting started docs to clarify when to use templates, Starter Free, Starter Pro, and UI primitives.',
+          'Introduced reusable documentation link and guidance components to reduce repetitive markup and improve consistency.',
+          'Improved docs navigation, sidebar content, menu hierarchy, responsiveness, tables, accordions, and reading flow.',
+        ],
+      },
+      {
+        title: 'Blog reading experience improved',
+        items: [
+          'Refactored blog UI for clearer spacing, stronger editorial surfaces, better badge and card styling, and improved sectioning.',
+          'Removed in-article “On This Page” navigation to simplify article reading.',
+          'Refined prose typography, article metadata, sharing actions, navigation UI, focus states, and rounded-corner consistency.',
+          'Improved accessibility and engagement across blog surfaces.',
+        ],
+      },
+      {
+        title: 'Legal and trust surfaces updated',
+        items: [
+          'Updated license, privacy, and terms pages to reflect templates, Starter Free, Starter Pro, commercial usage, data practices, and support boundaries.',
+          'Clarified product scope and buyer expectations across legal pages.',
+          'Improved transparency for customers evaluating commercial products before purchase.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'View templates',
+      href: '/templates',
+    },
+  },
+  {
     version: 'v1.12.0',
     title:
       'Premium brand system, SaaS token architecture, marketing polish, and stronger Starter Free-to-Pro conversion',

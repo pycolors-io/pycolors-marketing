@@ -24,15 +24,20 @@ import {
 import {
   ArrowRight,
   CheckCircle,
+  ClipboardCheck,
   Filter,
+  FormInput,
+  Minus,
   ListChecks,
   Settings2,
   ShieldCheck,
   SlidersHorizontal,
   SquareCheck,
+  TextCursorInput,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -183,7 +188,7 @@ Use Checkbox when options are independent and the user can select multiple choic
   </Card>
 </div>
 
-## Checked state
+### Checked state
 
 Use `defaultChecked` for uncontrolled checkboxes and `checked` with `onCheckedChange` for controlled product state.
 
@@ -263,7 +268,7 @@ export function CheckboxStates() {
   </Tab>
 </Tabs>
 
-## Controlled checkbox
+### Controlled checkbox
 
 Use a controlled Checkbox when the checked value drives application state.
 
@@ -328,7 +333,7 @@ export function ControlledCheckbox() {
   Radix Checkbox can return `true`, `false`, or `"indeterminate"`. Convert the value intentionally when your app expects a boolean.
 </Callout>
 
-## Indeterminate state
+### Indeterminate state
 
 Use the indeterminate state for parent checkboxes when only some child items are selected.
 
@@ -418,7 +423,7 @@ export function IndeterminateCheckbox() {
   </Tab>
 </Tabs>
 
-## Disabled state
+### Disabled state
 
 Use disabled checkboxes only when the option cannot currently be changed.
 
@@ -502,7 +507,7 @@ export function DisabledCheckbox() {
   When a disabled option may frustrate users, explain why it is unavailable and what unlocks it.
 </Callout>
 
-## Form validation
+### Form validation
 
 Use `aria-invalid` and supporting error copy when a required checkbox is not selected.
 
@@ -689,7 +694,7 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Checkbox copy should describe the selected outcome, not the UI control.
 
@@ -750,44 +755,37 @@ Checkbox copy should describe the selected outcome, not the UI control.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Input</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Input for single-line form fields next to checkbox-based settings.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/textarea" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Textarea</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Textarea for longer notes, messages, and feedback forms.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/separator" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Separator</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Separator to structure grouped checkbox sections and forms.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/forms" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Forms guide</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible forms with labels, descriptions, validation, and clear actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Input',
+      href: '/docs/ui/input',
+      description:
+        'Use Input for single-line form fields next to checkbox-based settings.',
+      icon: FormInput,
+    },
+    {
+      title: 'Textarea',
+      href: '/docs/ui/textarea',
+      description:
+        'Use Textarea for longer notes, messages, and feedback forms.',
+      icon: TextCursorInput,
+    },
+    {
+      title: 'Separator',
+      href: '/docs/ui/separator',
+      description:
+        'Use Separator to structure grouped checkbox sections and forms.',
+      icon: Minus,
+    },
+    {
+      title: 'Forms guide',
+      href: '/docs/guides/forms',
+      description:
+        'Build accessible forms with labels, descriptions, validation, and clear actions.',
+      icon: ClipboardCheck,
+    },
+  ]}
+/>

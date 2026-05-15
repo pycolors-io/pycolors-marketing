@@ -18,11 +18,16 @@ import {
 import {
   ArrowRight,
   GitBranch,
+  History,
+  Layers3,
+  LayoutTemplate,
+  Map,
   PackageCheck,
   RefreshCcw,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Reference</Badge>
@@ -316,44 +321,37 @@ Internal information stays private:
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/changelog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Changelog</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Follow weekly ecosystem updates across PyColors.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/roadmap" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Roadmap</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See what is coming next across the ecosystem.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">UI docs</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explore PyColors UI components and design system foundations.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/starters" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Starters</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Compare Starter Free and Starter Pro foundations.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Changelog',
+      href: '/changelog',
+      description:
+        'Follow weekly ecosystem updates across PyColors.',
+      icon: History,
+    },
+    {
+      title: 'Roadmap',
+      href: '/roadmap',
+      description:
+        'See what is planned next across the ecosystem.',
+      icon: Map,
+    },
+    {
+      title: 'UI docs',
+      href: '/docs/ui',
+      description:
+        'Explore PyColors UI components and design system foundations.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starters',
+      href: '/starters',
+      description:
+        'Compare Starter Free and Starter Pro foundations.',
+      icon: Layers3,
+    },
+  ]}
+/>

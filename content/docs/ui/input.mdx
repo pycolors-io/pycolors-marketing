@@ -17,17 +17,22 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  Accessibility,
   ArrowRight,
   CheckCircle,
   CircleAlert,
+  ClipboardCheck,
   FileText,
   FormInput,
+  KeyRound,
   SearchIcon,
   ShieldCheck,
   SlidersHorizontal,
+  Type,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -484,7 +489,7 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Labels, placeholders, helper text, and errors each have a different job.
 
@@ -545,44 +550,37 @@ Labels, placeholders, helper text, and errors each have a different job.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/guides/forms-with-validation" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Forms with validation</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Input with React Hook Form, Zod, and clear validation states.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/password-input" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">PasswordInput</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use for secure password fields with reveal toggle behavior.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/design-system/typography" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Typography</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Labels, helper text, and errors aligned with the type scale.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible form controls with labels, descriptions, and errors.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Forms with validation',
+      href: '/docs/guides/forms-with-validation',
+      description:
+        'Use Input with React Hook Form, Zod, and clear validation states.',
+      icon: ClipboardCheck,
+    },
+    {
+      title: 'PasswordInput',
+      href: '/docs/ui/password-input',
+      description:
+        'Use for secure password fields with reveal toggle behavior.',
+      icon: KeyRound,
+    },
+    {
+      title: 'Typography',
+      href: '/docs/design-system/typography',
+      description:
+        'Labels, helper text, and errors aligned with the type scale.',
+      icon: Type,
+    },
+    {
+      title: 'Accessibility',
+      href: '/docs/ui/accessibility',
+      description:
+        'Build accessible form controls with labels, descriptions, and errors.',
+      icon: Accessibility,
+    },
+  ]}
+/>

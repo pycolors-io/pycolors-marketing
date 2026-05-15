@@ -7,7 +7,9 @@ appliesTo: Guides
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { CheckCircle, Sparkles } from "lucide-react";
+import { AlertCircle, CheckCircle, Component, FormInput, PanelsTopLeft, Rocket, Sparkles } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -62,24 +64,24 @@ And answer one critical question:
   </Card>
 </div>
 
-## Where Guides fit
+### Where Guides fit
 
 PyColors is structured in layers.
 
-### UI Components
+#### UI Components
 
 - small, reusable primitives
 - token-driven
 - implementation-level building blocks
 
-### Guides
+#### Guides
 
 - composition of primitives
 - UX and behavior rules
 - real-world scenarios
 - production constraints
 
-### Starter Pro
+#### Starter Pro
 
 - authentication
 - billing
@@ -106,38 +108,37 @@ This is the moment where:
 > UI stops being screens
 > and becomes a system
 
-## Available guides
+### Available guides
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/guides/building-a-saas-layout" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Building a SaaS layout
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Compose navigation, header, and content areas for a scalable SaaS product.
-    </div>
-  </a>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Compose navigation, header, and content areas for a scalable SaaS product.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Empty, loading, and error states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Handle async product states clearly and consistently.',
+      icon: AlertCircle,
+    },
+    {
+      title: 'Forms with validation',
+      href: '/docs/guides/forms-with-validation',
+      description:
+        'Build predictable, accessible forms with clear validation behavior.',
+      icon: FormInput,
+    },
+  ]}
+/>
 
-  <a href="/docs/guides/empty-loading-error" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Empty, loading, and error states
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Handle async product states clearly and consistently.
-    </div>
-  </a>
-
-  <a href="/docs/guides/forms-with-validation" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Forms with validation
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Build predictable, accessible forms with clear validation behavior.
-    </div>
-  </a>
-</div>
-
-## Why this layer exists
+### Why this layer exists
 
 Most product issues do not come from missing components.
 
@@ -155,60 +156,42 @@ They come from:
 
 ## Decision guide
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        <CardTitle className="text-sm">Use Guides if</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>you are building real product flows</li>
-        <li>you need consistent UX across screens</li>
-        <li>you handle async data or forms</li>
-        <li>your UI is growing beyond simple pages</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <div className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-muted-foreground" />
-        <CardTitle className="text-sm">Do not rely only on</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>component-level thinking</li>
-        <li>visual-only decisions</li>
-        <li>one-off UI implementations</li>
-        <li>implicit product behavior</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+<PreferAvoid
+  preferTitle="Use Guides if"
+  avoidTitle="Do not rely only on"
+  prefer={[
+    'you are building real product flows',
+    'you need consistent UX across screens',
+    'you handle async data or forms',
+    'your UI is growing beyond simple pages',
+  ]}
+  avoid={[
+    'component-level thinking',
+    'visual-only decisions',
+    'one-off UI implementations',
+    'implicit product behavior',
+  ]}
+/>
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      UI Components
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Explore the primitives used to build product interfaces.
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">
-      Starter Pro
-    </div>
-    <div className="mt-2 text-sm text-muted-foreground">
-      Move from UI to a real SaaS with auth, billing, and backend.
-    </div>
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'UI Components',
+      href: '/docs/ui',
+      description:
+        'Explore the primitives used to build product interfaces.',
+      icon: Component,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Move from UI to a real SaaS with auth, billing, and backend.',
+      icon: Rocket,
+    },
+  ]}
+/>

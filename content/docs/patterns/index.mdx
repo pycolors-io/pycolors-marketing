@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Patterns
 description: Production-ready feature patterns combining UI, behavior, state, and UX for real SaaS products.
 lastUpdated: "2026-04-27"
 appliesTo: Patterns
@@ -7,7 +7,9 @@ appliesTo: Patterns
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
-import { ArrowRight, Layers, Workflow, ShieldCheck } from "lucide-react";
+import { ArrowRight, Layers, Workflow, Layers3, LoaderCircle, ShieldCheck, Table2 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Patterns</Badge>
@@ -117,52 +119,37 @@ It includes:
 </Callout>
 
 
+### Available patterns
 
-## Available patterns
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Data Table Pattern',
+      href: '/docs/patterns/data-table',
+      description:
+        'Build SaaS-ready tables with filtering, pagination, row actions, and explicit states.',
+      icon: Table2,
+    },
+    {
+      title: 'Overlays Pattern',
+      href: '/docs/patterns/overlays',
+      description:
+        'Choose the right overlay (Dialog, Sheet, Dropdown) with strong UX rules.',
+      icon: Layers3,
+    },
+    {
+      title: 'Async Actions Pattern',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Design mutation flows with optimistic UI, retry, undo, and clear feedback.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>
 
-<div className="grid gap-4 md:grid-cols-2">
-
-  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">
-        Data Table Pattern
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build SaaS-ready tables with filtering, pagination, row actions, and explicit states.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">
-        Overlays Pattern
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose the right overlay (Dialog, Sheet, Dropdown) with strong UX rules.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">
-        Async Actions Pattern
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design mutation flows with optimistic UI, retry, undo, and clear feedback.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-</div>
-
-
-
-## When to use Patterns
+### When to use Patterns
 
 Use Patterns when:
 
@@ -178,46 +165,28 @@ This is the moment where:
 > and starts becoming a system
 
 
-
 ## Common mistakes
 
-<div className="mb-2 grid gap-6 md:grid-cols-2">
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    'feature-level structure',
+    'explicit async states',
+    'clear separation of responsibilities',
+    'predictable UX patterns',
+    'reusable product logic',
+  ]}
+  avoid={[
+    'building features only with components',
+    'ignoring loading, empty, and error states',
+    'mixing UI, state, and data logic',
+    'inconsistent UX between pages',
+    'rebuilding the same feature multiple times',
+  ]}
+/>
 
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base">Avoid</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>building features only with components</li>
-        <li>ignoring loading, empty, and error states</li>
-        <li>mixing UI, state, and data logic</li>
-        <li>inconsistent UX between pages</li>
-        <li>rebuilding the same feature multiple times</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base">Prefer</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>feature-level structure</li>
-        <li>explicit async states</li>
-        <li>clear separation of responsibilities</li>
-        <li>predictable UX patterns</li>
-        <li>reusable product logic</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-</div>
-
-
-
-## Why this matters
+### Why this matters
 
 Patterns are where product quality becomes visible.
 
@@ -235,33 +204,28 @@ With them:
 - teams move faster
 - systems scale cleanly
 
-
-
 ## Next step
 
-<div className="grid gap-4 md:grid-cols-2">
-
-  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Start with Data Table</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Core SaaS pattern used across dashboards and admin products.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4" />
-  </a>
-
-  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Handle Async Actions</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design mutation flows with better UX and feedback.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4" />
-  </a>
-
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Start with Data Table',
+      href: '/docs/patterns/data-table',
+      description:
+        'Core SaaS pattern used across dashboards and admin products.',
+      icon: Table2,
+    },
+    {
+      title: 'Handle Async Actions',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Design mutation flows with better UX, loading states, and feedback.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>
 
 <Callout title="Build faster with stronger foundations">
   Patterns give you the feature layer.

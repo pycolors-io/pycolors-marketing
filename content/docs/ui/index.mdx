@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  AlertTriangle,
   ArrowRight,
   Bell,
   Box,
@@ -23,7 +24,10 @@ import {
   CreditCard,
   FormInput,
   Layers3,
+  LayoutTemplate,
+  MenuSquare,
   MousePointerClick,
+  PanelsTopLeft,
   PanelTop,
   ShieldCheck,
   Sparkles,
@@ -31,6 +35,8 @@ import {
   Tags,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -59,7 +65,7 @@ It is a component foundation for products that need to evolve without becoming i
   UI components are the lowest product layer. They should stay small, token-driven, and predictable.
 </Callout>
 
-## Where UI fits
+### Where UI fits
 
 PyColors is organized as a product system, not only a component library.
 
@@ -120,7 +126,7 @@ PyColors is organized as a product system, not only a component library.
   </Tab>
 </Tabs>
 
-## Mental model
+### Mental model
 
 > Tokens define the system.
 > Components stay small.
@@ -134,161 +140,81 @@ If a primitive starts carrying too much product logic, the abstraction is probab
 
 ## Start with the essentials
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/button" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <MousePointerClick className="h-4 w-4 text-primary" />
-      Button
-    </div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      The action primitive used for intent, hierarchy, submission, and navigation.
-    </div>
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Open component
-      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-    </div>
-  </a>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'The action primitive used for intent, hierarchy, submission, and navigation.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Card',
+      href: '/docs/ui/card',
+      description:
+        'The primary surface primitive for grouping content, metrics, sections, and product panels.',
+      icon: PanelTop,
+    },
+    {
+      title: 'Input',
+      href: '/docs/ui/input',
+      description:
+        'The form primitive for labels, values, helper text, and validation states.',
+      icon: FormInput,
+    },
+    {
+      title: 'Badge',
+      href: '/docs/ui/badge',
+      description:
+        'Compact metadata and status labels used to clarify information without becoming actions.',
+      icon: Tags,
+    },
+  ]}
+/>
 
-  <a href="/docs/ui/card" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <PanelTop className="h-4 w-4 text-primary" />
-      Card
-    </div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      The primary surface primitive for grouping content, metrics, sections, and product panels.
-    </div>
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Open component
-      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-    </div>
-  </a>
+### Component categories
 
-  <a href="/docs/ui/input" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <FormInput className="h-4 w-4 text-primary" />
-      Input
-    </div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      The form primitive for labels, values, helper text, and validation states.
-    </div>
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Open component
-      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-    </div>
-  </a>
-
-  <a href="/docs/ui/badge" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <Tags className="h-4 w-4 text-primary" />
-      Badge
-    </div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Compact metadata and status labels used to clarify information without becoming actions.
-    </div>
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Open component
-      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-    </div>
-  </a>
-</div>
-
-## Component categories
-
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Box className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Surfaces
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use surfaces to group content, create hierarchy, and communicate structure.
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Badge variant="outline">Card</Badge>
-        <Badge variant="outline">Alert</Badge>
-        <Badge variant="outline">EmptyState</Badge>
-        <Badge variant="outline">Skeleton</Badge>
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MousePointerClick className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Actions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use action primitives to represent user intent and interaction hierarchy.
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Badge variant="outline">Button</Badge>
-        <Badge variant="outline">DropdownMenu</Badge>
-        <Badge variant="outline">Dialog</Badge>
-        <Badge variant="outline">Sheet</Badge>
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <FormInput className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Inputs
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use inputs to collect values, communicate validation, and support form workflows.
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Badge variant="outline">Input</Badge>
-        <Badge variant="outline">PasswordInput</Badge>
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Table2 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Data and navigation
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use data primitives for tables, paging, tabs, and product navigation states.
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Badge variant="outline">Table</Badge>
-        <Badge variant="outline">Pagination</Badge>
-        <Badge variant="outline">Tabs</Badge>
-        <Badge variant="outline">Toast</Badge>
-      </div>
-    </CardContent>
-  </Card>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Surfaces',
+      href: '/docs/ui',
+      description:
+        'Use surfaces to group content, create hierarchy, and communicate structure.',
+      icon: Box,
+      badges: ['Card', 'Alert', 'EmptyState', 'Skeleton'],
+    },
+    {
+      title: 'Actions',
+      href: '/docs/ui/button',
+      description:
+        'Use action primitives to represent user intent and interaction hierarchy.',
+      icon: MousePointerClick,
+      badges: ['Button', 'DropdownMenu', 'Dialog', 'Sheet'],
+    },
+    {
+      title: 'Inputs',
+      href: '/docs/ui/input',
+      description:
+        'Use inputs to collect values, communicate validation, and support form workflows.',
+      icon: FormInput,
+      badges: ['Input', 'PasswordInput'],
+    },
+    {
+      title: 'Data and navigation',
+      href: '/docs/ui/table',
+      description:
+        'Use data primitives for tables, paging, tabs, and product navigation states.',
+      icon: Table2,
+      badges: ['Table', 'Pagination', 'Tabs', 'Toast'],
+    },
+  ]}
+/>
 
 ## Composition rules
 
@@ -347,119 +273,82 @@ Use a Pattern when you need a product behavior.
 
 ## What to avoid
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>small primitives</li>
-        <li>semantic tokens</li>
-        <li>composition-first APIs</li>
-        <li>clear accessibility defaults</li>
-        <li>patterns for complex flows</li>
-      </ul>
-    </CardContent>
-  </Card>
+<PreferAvoid
+  prefer={[
+    'small primitives',
+    'semantic tokens',
+    'composition-first APIs',
+    'clear accessibility defaults',
+    'patterns for complex flows',
+  ]}
+  avoid={[
+    'hardcoded one-off styles',
+    'giant components with too many variants',
+    'business logic inside primitives',
+    'using badges as buttons',
+    'duplicating the same product flow repeatedly',
+  ]}
+/>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>hardcoded one-off styles</li>
-        <li>giant components with too many variants</li>
-        <li>business logic inside primitives</li>
-        <li>using badges as buttons</li>
-        <li>duplicating the same product flow repeatedly</li>
-      </ul>
-    </CardContent>
-  </Card>
-</div>
+### Explore core components
 
-## Explore all components
-
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Alert</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Inline feedback for important messages, errors, and blocking states.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Dialog</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Focused modal tasks such as confirmations, create flows, and short forms.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/dropdown-menu" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Dropdown Menu</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Contextual actions, row actions, and compact menu choices.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Sheet</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Side panels for filters, mobile navigation, details, and progressive workflows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Action hierarchy, intent, loading states, and interaction patterns.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Input',
+      href: '/docs/ui/input',
+      description:
+        'Accessible form primitives with validation and consistent UX behavior.',
+      icon: FormInput,
+    },
+    {
+      title: 'Card',
+      href: '/docs/ui/card',
+      description:
+        'Surface primitives used to structure dashboards and product interfaces.',
+      icon: PanelTop,
+    },
+    {
+      title: 'Dialog',
+      href: '/docs/ui/dialog',
+      description:
+        'Focused modal flows for confirmations, forms, and product actions.',
+      icon: PanelsTopLeft,
+    },
+  ]}
+/>
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/why-pycolors-ui" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Why PyColors UI</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the product philosophy behind the component system.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Patterns</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move from primitives to reusable feature-level product blocks.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="compact"
+  tone="platform"
+  items={[
+    {
+      title: 'Why PyColors UI',
+      href: '/docs/ui/why-pycolors-ui',
+      description:
+        'Understand the product philosophy behind the component system.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'Move from primitives to reusable feature-level product blocks.',
+      icon: LayoutTemplate,
+    },
+  ]}
+/>
 
 <Callout title="Build the primitive once. Compose the product many times.">
   PyColors UI is designed to keep your components simple while your SaaS grows in complexity.
