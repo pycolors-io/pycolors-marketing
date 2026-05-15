@@ -8,8 +8,9 @@ appliesTo: NA-AI Landing
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Palette, Scale, XCircle } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Deployment</Badge></div>
 
@@ -136,7 +137,22 @@ Before promising lead capture, connect it to an API route, backend, form provide
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing/customization" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Customization</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Review content, branding, SEO, pricing, and section customization.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-  <a href="/docs/templates/na-ai-landing/license" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">License</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Understand commercial usage, redistribution limits, and license boundaries.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Customization',
+      href: '/docs/templates/na-ai-landing/customization',
+      description:
+        'Review content, branding, SEO metadata, pricing, and section customization.',
+      icon: Palette,
+    },
+    {
+      title: 'License',
+      href: '/docs/templates/na-ai-landing/license',
+      description:
+        'Understand commercial usage, redistribution limits, and license boundaries.',
+      icon: Scale,
+    },
+  ]}
+/>

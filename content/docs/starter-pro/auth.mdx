@@ -22,15 +22,20 @@ import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button
 import {
   ArrowRight,
   CheckCircle,
+  CreditCard,
+  Database,
   Github,
   KeyRound,
   LockKeyhole,
   MailCheck,
+  Package,
   RefreshCcw,
   ShieldCheck,
   UserRoundCheck,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
@@ -331,55 +336,24 @@ That means auth must support:
 
 ## Security rules
 
-Use these rules when adapting the auth layer.
+Use these rules when adapting the authentication layer.
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>server-side validation for auth actions</li>
-        <li>short-lived tokens for recovery flows</li>
-        <li>generic forgot-password confirmation copy</li>
-        <li>clear session-aware redirects</li>
-        <li>provider disconnect rules that never lock users out</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>revealing whether an email exists</li>
-        <li>allowing users to disconnect their only login method</li>
-        <li>trusting client-side auth state for protected data</li>
-        <li>returning overly specific auth errors</li>
-        <li>mixing auth logic directly into unrelated product components</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'server-side validation for authentication actions',
+    'short-lived tokens for recovery flows',
+    'generic forgot-password confirmation copy',
+    'clear session-aware redirects',
+    'provider disconnect rules that never lock users out',
+  ]}
+  avoid={[
+    'revealing whether an email exists',
+    'allowing users to disconnect their only login method',
+    'trusting client-side authentication state for protected data',
+    'returning overly specific authentication errors',
+    'mixing authentication logic into unrelated product components',
+  ]}
+/>
 
 ### Decision guide
 
@@ -447,47 +421,40 @@ Before treating auth as launch-ready, validate:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Billing system</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Connect authenticated users to customers, subscriptions, and plan-aware access.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Billing system',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Connect authenticated users to customers, subscriptions, and plan-aware access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend foundations',
+      href: '/docs/starter-pro/backend',
+      description:
+        'Understand how authentication integrates with data ownership and server-side logic.',
+      icon: Database,
+    },
+    {
+      title: 'Production checklist',
+      href: '/docs/starter-pro/production-checklist',
+      description:
+        'Validate authentication, billing, backend, and delivery before launch.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'What is included',
+      href: '/docs/starter-pro/what-is-included',
+      description:
+        'Review the full Starter Pro foundation.',
+      icon: Package,
+    },
+  ]}
+/>
 
-  <a href="/docs/starter-pro/backend" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Backend foundations</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand how auth integrates with data ownership and server-side logic.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/production-checklist" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Production checklist</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Validate auth, billing, backend, and delivery before launch.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">What is included</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review the full Starter Pro foundation.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
 <br />
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />

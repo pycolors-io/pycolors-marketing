@@ -23,10 +23,14 @@ import {
   Clock,
   CreditCard,
   LockKeyhole,
+  Package,
+  Rocket,
   ShieldCheck,
   XCircle,
   Zap,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
@@ -234,53 +238,24 @@ It does not skip the work that makes your product unique:
 
 ## Decision guide
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Buy Starter Pro if
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>you want to launch faster</li>
-        <li>auth and billing are blocking progress</li>
-        <li>your product direction is already clear</li>
-        <li>you want less setup risk before going live</li>
-        <li>you want to focus on users, product, and growth</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Build it yourself if
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>you want to learn these systems deeply</li>
-        <li>you need a very custom architecture</li>
-        <li>you are not trying to launch soon</li>
-        <li>launch speed is not your priority</li>
-        <li>your goal is experimentation, not monetization</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  preferTitle="Buy Starter Pro if"
+  avoidTitle="Build it yourself if"
+  prefer={[
+    'you want to launch faster',
+    'authentication and billing are blocking progress',
+    'your product direction is already clear',
+    'you want less setup risk before going live',
+    'you want to focus on users, product, and growth',
+  ]}
+  avoid={[
+    'you want to learn these systems deeply',
+    'you need a highly custom architecture',
+    'you are not trying to launch soon',
+    'launch speed is not your priority',
+    'your goal is experimentation rather than monetization',
+  ]}
+/>
 
 ### Better question to ask
 
@@ -316,47 +291,39 @@ Then it has already done its job.
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">What is included</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See the exact systems included in Starter Pro.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/getting-started" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Getting started</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Start using Starter Pro with a production-ready baseline.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Auth system</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review the auth foundation that Starter Pro removes from your launch path.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Billing system</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        See how Stripe, invoices, subscriptions, and webhooks are structured.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'What is included',
+      href: '/docs/starter-pro/what-is-included',
+      description:
+        'Review the exact systems, foundations, and production-ready layers included in Starter Pro.',
+      icon: Package,
+    },
+    {
+      title: 'Getting started',
+      href: '/docs/starter-pro/getting-started',
+      description:
+        'Set up Starter Pro locally and start from a production-ready baseline.',
+      icon: Rocket,
+    },
+    {
+      title: 'Authentication system',
+      href: '/docs/starter-pro/auth',
+      description:
+        'Explore sessions, OAuth, verification, recovery flows, and protected access foundations.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing system',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Understand Stripe Checkout, subscriptions, invoices, customer portal, and webhook synchronization.',
+      icon: CreditCard,
+    },
+  ]}
+/>
 
 <br />
 

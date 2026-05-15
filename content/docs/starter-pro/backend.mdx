@@ -24,6 +24,7 @@ import {
   CheckCircle,
   CreditCard,
   Database,
+  Download,
   GitBranch,
   KeyRound,
   Layers3,
@@ -32,6 +33,8 @@ import {
   ShieldCheck,
   XCircle,
 } from "lucide-react";
+import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
@@ -386,53 +389,22 @@ This is often time-consuming, easy to duplicate, and expensive to refactor later
 
 Use these rules when extending the backend.
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CheckCircle className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Prefer
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>clear domain boundaries</li>
-        <li>server-verifiable ownership checks</li>
-        <li>centralized plan access logic</li>
-        <li>database models that reflect product behavior</li>
-        <li>backend helpers for repeated rules</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <XCircle className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Avoid
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>putting access rules only in the UI</li>
-        <li>duplicating ownership checks across components</li>
-        <li>mixing billing logic into unrelated features</li>
-        <li>treating mock data like production data</li>
-        <li>adding domain models without access rules</li>
-      </ul>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<PreferAvoid
+  prefer={[
+    'clear domain boundaries',
+    'server-verifiable ownership checks',
+    'centralized plan access logic',
+    'database models that reflect product behavior',
+    'backend helpers for repeated rules',
+  ]}
+  avoid={[
+    'putting access rules only in the UI',
+    'duplicating ownership checks across components',
+    'mixing billing logic into unrelated features',
+    'treating mock data like production data',
+    'adding domain models without access rules',
+  ]}
+/>
 
 ### Decision guide
 
@@ -500,47 +472,40 @@ Before treating the backend as launch-ready, validate:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro/delivery" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Secure delivery</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how backend ownership and billing state can unlock secure product delivery.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Secure delivery',
+      href: '/docs/starter-pro/delivery',
+      description:
+        'Learn how backend ownership and billing state can unlock secure product delivery.',
+      icon: Download,
+    },
+    {
+      title: 'Billing system',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Review how subscription state and customer ownership connect to backend rules.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Authentication system',
+      href: '/docs/starter-pro/auth',
+      description:
+        'Understand how users, sessions, and identity connect to product data.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Production checklist',
+      href: '/docs/starter-pro/production-checklist',
+      description:
+        'Validate authentication, billing, backend, and delivery before launch.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
-  <a href="/docs/starter-pro/billing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Billing system</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Review how subscription state and customer ownership connect to backend rules.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/auth" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Auth system</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand how users, sessions, and identity connect to product data.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro/production-checklist" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Production checklist</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Validate auth, billing, backend, and delivery before launch.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
 <br />
 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
   <BuyStarterProButton fullWidth={false} showTrustText />

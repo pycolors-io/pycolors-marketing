@@ -9,7 +9,8 @@ import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, Boxes, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeEuro, Boxes, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Templates</Badge>
@@ -90,7 +91,22 @@ Templates are intentionally narrower than starters. A template helps you launch 
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">NA-AI Landing</div><div className="mt-2 text-sm leading-6 text-muted-foreground">See what is included, how it is structured, and how to customize it.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Pricing</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Compare NA-AI Landing, Starter Free, and Starter Pro.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'See what is included, how the template is structured, and how to customize it.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Pricing',
+      href: '/pricing',
+      description:
+        'Compare NA-AI Landing, Starter Free, and Starter Pro.',
+      icon: BadgeEuro,
+    },
+  ]}
+/>

@@ -11,7 +11,8 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
-import { ArrowRight, BarChart3, CheckCircle, Code2, LayoutTemplate, Package, Rocket, ShieldCheck, Sparkles, XCircle } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle, Code2, LayoutTemplate, Package, Palette, Rocket, ShieldCheck, Sparkles, Terminal, XCircle } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Templates</Badge>
@@ -140,7 +141,22 @@ You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stri
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing/setup" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Setup</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Install dependencies, run locally, and build the template.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-  <a href="/docs/templates/na-ai-landing/customization" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Customization</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Customize content, branding, sections, pricing, SEO, and assets.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-</div>
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'Setup',
+      href: '/docs/templates/na-ai-landing/setup',
+      description:
+        'Install dependencies, run the template locally, and validate the production build.',
+      icon: Terminal,
+    },
+    {
+      title: 'Customization',
+      href: '/docs/templates/na-ai-landing/customization',
+      description:
+        'Customize branding, content, sections, pricing, SEO metadata, and assets.',
+      icon: Palette,
+    },
+  ]}
+/>
