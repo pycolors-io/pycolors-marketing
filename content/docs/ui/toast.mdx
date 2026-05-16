@@ -17,17 +17,20 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  Accessibility,
   ArrowRight,
   Bell,
   CheckCircle,
   CircleAlert,
   Info,
   MessageSquare,
+  PanelTop,
   RefreshCcw,
   ShieldAlert,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 import { ClientOnly } from "../previews/client-only";
 import {
@@ -247,7 +250,7 @@ Keep variants limited to avoid turning every message into an event.
   Use `destructive` only for recoverable or non-blocking failures. Use Alert for blocking errors.
 </Callout>
 
-## With description
+### With description
 
 Use `ToastDescription` when the title alone is not enough.
 
@@ -268,25 +271,25 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
 
 <Steps>
   <Step>
-    ### Trigger after the action starts or completes
+    #### Trigger after the action starts or completes
 
     Use toast feedback after a meaningful action: saved, archived, restored, copied, failed, or queued.
   </Step>
 
   <Step>
-    ### Keep the message short
+    #### Keep the message short
 
     Toasts are temporary. The user should understand them in one glance.
   </Step>
 
   <Step>
-    ### Use inline state for active work
+    #### Use inline state for active work
 
     For loading or submission, prefer button text such as `Saving…` before showing the final toast.
   </Step>
 
   <Step>
-    ### Use recovery actions carefully
+    #### Use recovery actions carefully
 
     Undo and retry work well for reversible actions, but they require real backend support.
   </Step>
@@ -308,7 +311,7 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
   Toast is for feedback after a flow. Alert is for information inside a flow. Dialog is for blocking decisions.
 </Callout>
 
-## Product guidance
+### Product guidance
 
 <Tabs items={["Save", "Delete", "Retry", "Undo"]}>
   <Tab value="Save">
@@ -361,8 +364,6 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
 </Tabs>
 
 ## API
-
-### Toast
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -445,7 +446,7 @@ export interface ToastProps
   ]}
 />
 
-## When not to use Toast
+### When not to use Toast
 
 Do not use Toast for:
 
@@ -481,44 +482,37 @@ Use Alert, EmptyState, Dialog, or a dedicated pattern instead.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Alert</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Inline feedback for blocking messages and persistent product states.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Dialog</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Dialog when the user must confirm or complete a focused task.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/async-actions" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Async actions pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design save, retry, optimistic UI, undo, and mutation feedback.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible feedback with clear semantics and announcements.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Alert',
+      href: '/docs/ui/alert',
+      description:
+        'Inline feedback for blocking messages and persistent product states.',
+      icon: CircleAlert,
+    },
+    {
+      title: 'Dialog',
+      href: '/docs/ui/dialog',
+      description:
+        'Use Dialog when the user must confirm or complete a focused task.',
+      icon: PanelTop,
+    },
+    {
+      title: 'Async actions pattern',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Design save, retry, optimistic UI, undo, and mutation feedback.',
+      icon: RefreshCcw,
+    },
+    {
+      title: 'Accessibility',
+      href: '/docs/ui/accessibility',
+      description:
+        'Build accessible feedback with clear semantics and announcements.',
+      icon: Accessibility,
+    },
+  ]}
+/>

@@ -62,7 +62,7 @@ The goal is to compose smaller primitives into interfaces that remain understand
   Components should stay small. Product meaning comes from composition.
 </Callout>
 
-### Why composition matters
+## Why composition matters
 
 Most UI systems start clean and become fragile later.
 
@@ -338,33 +338,31 @@ The page coordinates:
 
 <Steps>
   <Step>
-    ### Start with the user goal
+    #### Start with the user goal
 
-    Define what the page helps the user do.
-
-    Good composition starts with purpose, not components.
+    Define what the page helps the user do. Good composition starts with purpose, not components.
   </Step>
 
   <Step>
-    ### Choose the page structure
+    #### Choose the page structure
 
     Decide the major regions: header, content, controls, feedback, overlays.
   </Step>
 
   <Step>
-    ### Use primitives for each responsibility
+    #### Use primitives for each responsibility
 
     Use Button for actions, Card for surfaces, Input for values, Badge for metadata, and Alert for blocking feedback.
   </Step>
 
   <Step>
-    ### Move repeated behavior into Patterns
+    #### Move repeated behavior into Patterns
 
     If multiple pages repeat the same flow, document it as a pattern.
   </Step>
 
   <Step>
-    ### Keep business logic outside UI primitives
+    #### Keep business logic outside UI primitives
 
     Auth, billing, permissions, data fetching, and backend rules should not live inside low-level UI components.
   </Step>

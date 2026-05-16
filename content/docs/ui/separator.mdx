@@ -21,15 +21,20 @@ import {
   ArrowRight,
   Columns3,
   LayoutList,
+  LayoutTemplate,
   ListTree,
   Minus,
+  Palette,
+  PanelsTopLeft,
   PanelTop,
   Rows3,
   SplitSquareVertical,
+  Tags,
   XCircle,
   CheckCircle,
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -194,7 +199,7 @@ Use Separator when spacing alone is not enough to communicate grouping.
   </Card>
 </div>
 
-## Orientation
+### Orientation
 
 Separator supports horizontal and vertical orientation.
 
@@ -388,8 +393,6 @@ export function SemanticSeparator() {
   Most separators should stay decorative. Use semantic separators only when the boundary itself helps describe the structure.
 </Callout>
 
-## Product examples
-
 ### Settings card
 
 <Tabs items={["Preview", "Code"]}>
@@ -532,25 +535,25 @@ export function MetadataSeparator() {
 
 <Steps>
   <Step>
-    ### Start with spacing
+    #### Start with spacing
 
     Use spacing first. Add Separator only when visual grouping is still unclear.
   </Step>
 
   <Step>
-    ### Keep dividers subtle
+    #### Keep dividers subtle
 
     Use semantic border tokens. Avoid strong colors unless the divider is part of a very specific branded surface.
   </Step>
 
   <Step>
-    ### Pick the right orientation
+    #### Pick the right orientation
 
     Use horizontal dividers for stacked content and vertical dividers for compact rows.
   </Step>
 
   <Step>
-    ### Avoid over-fragmenting the page
+    #### Avoid over-fragmenting the page
 
     Too many separators make the UI feel heavy and harder to scan.
   </Step>
@@ -644,44 +647,37 @@ export interface SeparatorProps
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/card" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Card</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Card when content needs its own surface and boundary.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Colors</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Semantic tokens for borders, surfaces, and layout dividers.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/badge" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Badge</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Pair badges with separators in metadata and compact status rows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Layout pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build clearer page structure with spacing, surfaces, and dividers.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Card',
+      href: '/docs/ui/card',
+      description:
+        'Use Card when content needs its own surface and boundary.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Colors',
+      href: '/docs/design-system/colors',
+      description:
+        'Semantic tokens for borders, surfaces, and layout dividers.',
+      icon: Palette,
+    },
+    {
+      title: 'Badge',
+      href: '/docs/ui/badge',
+      description:
+        'Pair badges with separators in metadata and compact status rows.',
+      icon: Tags,
+    },
+    {
+      title: 'Layout pattern',
+      href: '/docs/patterns/layout',
+      description:
+        'Build clearer page structure with spacing, surfaces, and dividers.',
+      icon: LayoutTemplate,
+    },
+  ]}
+/>

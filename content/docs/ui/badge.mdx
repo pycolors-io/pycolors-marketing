@@ -1,7 +1,7 @@
 ---
 title: Badge
 description: Small status and metadata component used to label, categorize, or highlight information in PyColors UI.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-05-16"
 appliesTo: UI
 ---
 
@@ -17,15 +17,18 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  Accessibility,
   ArrowRight,
   CheckCircle,
-  CircleAlert,
   Info,
+  MousePointerClick,
+  Palette,
   Layers3,
   Tags,
-  XCircle,
+  Type,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -87,10 +90,10 @@ Badges inherit their colors from semantic tokens and adapt to light and dark mod
 Use Badge when the label helps the user understand context without adding heavy visual hierarchy.
 
 <div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+  <Card className="group relative overflow-hidden rounded-[5px] border border-border-subtle bg-card shadow-soft transition-all duration-200 hover:border-border-strong hover:shadow-medium">
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+        <div className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-primary/10">
           <Tags className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
@@ -103,13 +106,12 @@ Use Badge when the label helps the user understand context without adding heavy 
         Use for labels such as category, plan, type, role, or version.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+  <Card className="group relative overflow-hidden rounded-[5px] border border-border-subtle bg-card shadow-soft transition-all duration-200 hover:border-border-strong hover:shadow-medium">
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+        <div className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-primary/10">
           <CheckCircle className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
@@ -122,13 +124,12 @@ Use Badge when the label helps the user understand context without adding heavy 
         Use for small state labels such as active, paid, draft, shipped, or synced.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
+  <Card className="group relative overflow-hidden rounded-[5px] border border-border-subtle bg-card shadow-soft transition-all duration-200 hover:border-border-strong hover:shadow-medium">
     <CardHeader className="pb-3">
       <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+        <div className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-primary/10">
           <Layers3 className="h-4 w-4 text-primary" />
         </div>
         <CardTitle className="text-sm font-semibold tracking-tight">
@@ -141,7 +142,6 @@ Use Badge when the label helps the user understand context without adding heavy 
         Use to classify content without turning the label into a navigation or action element.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
   </Card>
 </div>
 
@@ -245,24 +245,22 @@ export function BadgeSizes() {
   Use `sm` in tables and dense product views. Use `md` for most UI surfaces. Use `lg` sparingly.
 </Callout>
 
-### With icon
+### With left icon
 
-Badges can include icons when the icon reinforces status, type, or category.
+Badges can include a left icon when the icon reinforces status, type, or category.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-   <Preview>
-    <Badge variant="success"><CheckCircle className="size-3" aria-hidden="true" />Active</Badge>
-    </Preview>
+    <Badge><CheckCircle className="size-3" aria-hidden="true" />Active</Badge>
   </Tab>
 
   <Tab value="Code">
 
-```tsx title="badge-with-icon.tsx"
+```tsx title="badge-with-left-icon.tsx"
 import { Badge } from "@pycolors/ui";
 import { CheckCircle } from "lucide-react";
 
-export function BadgeWithIcon() {
+export function BadgeWithLeftIcon() {
   return (
     <Badge variant="success">
       <CheckCircle className="size-3" aria-hidden="true" />
@@ -279,17 +277,47 @@ export function BadgeWithIcon() {
   Icons should reinforce meaning. The text must still explain the state.
 </Callout>
 
-### With icon
+### With right icon
+
+Use a right icon when the badge points to a related surface, external context, or lightweight next step.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Badge variant="outline">Docs<ArrowRight className="size-3" aria-hidden="true" /></Badge>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-with-right-icon.tsx"
+import { Badge } from "@pycolors/ui";
+import { ArrowRight } from "lucide-react";
+
+export function BadgeWithRightIcon() {
+  return (
+    <Badge variant="outline">
+      Docs
+      <ArrowRight className="size-3" aria-hidden="true" />
+    </Badge>
+  );
+}
+```
+
+  </Tab>
+</Tabs>
+
+<Callout title="Placement rule">
+  Use left icons for state or identity. Use right icons for direction, continuation, or linked context.
+</Callout>
+
+### As child
 
 Use `asChild` when the badge should render as another semantic element.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-   <Preview>
     <Badge asChild>
       <a href="/docs">Docs</a>
     </Badge>
-    </Preview>
   </Tab>
 
   <Tab value="Code">
@@ -317,25 +345,25 @@ export function BadgeAsChild() {
 
 <Steps>
   <Step>
-    ### Choose the message
+    #### Choose the message
 
     Decide what the badge communicates: status, category, role, version, count, or plan.
   </Step>
 
   <Step>
-    ### Pick the lowest useful emphasis
+    #### Pick the lowest useful emphasis
 
     Start with `muted` or `outline`. Move to semantic variants only when the state needs clear meaning.
   </Step>
 
   <Step>
-    ### Keep the label short
+    #### Keep the label short
 
     Badges work best with short labels: one or two words.
   </Step>
 
   <Step>
-    ### Avoid turning metadata into actions
+    #### Avoid turning metadata into actions
 
     A badge should not become a primary interaction. Use Button for actions.
   </Step>
@@ -398,18 +426,18 @@ export type BadgeSize = "sm" | "md" | "lg";
 
 <PreferAvoid
   prefer={[
-    'short labels<',
-    'semantic variants for real status<',
-    '`muted` or `outline` for metadata<',
-    'icons as supporting context only<',
-    'consistent badge usage across tables and cards<',
+    "short labels",
+    "semantic variants for real status",
+    "`muted` or `outline` for metadata",
+    "icons as supporting context only",
+    "consistent badge usage across tables and cards",
   ]}
   avoid={[
-    'using badges as primary actions',
-    'long sentence-like badge text',
-    'too many badges in one panel',
-    'color-only meaning',
-    'inventing one-off badge colors locally',
+    "using badges as primary actions",
+    "long sentence-like badge text",
+    "too many badges in one panel",
+    "color-only meaning",
+    "inventing one-off badge colors locally",
   ]}
 />
 
@@ -428,6 +456,10 @@ export type BadgeSize = "sm" | "md" | "lg";
     Yes. Icons can reinforce meaning, but the text must still communicate the state.
   </Accordion>
 
+  <Accordion title="Should icons appear on the left or the right?">
+    Use left icons for state, identity, or category. Use right icons for direction, continuation, or linked context.
+  </Accordion>
+
   <Accordion title="How many badges should a card have?">
     Use as few as possible. Badges should clarify the interface, not decorate it.
   </Accordion>
@@ -435,44 +467,33 @@ export type BadgeSize = "sm" | "md" | "lg";
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/design-system/colors" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Colors</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Semantic color roles used by badges.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/design-system/typography" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Typography</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Text scale and hierarchy for compact UI labels.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use buttons for actions, not badges.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build clear, accessible labels and status indicators.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Colors",
+      href: "/docs/design-system/colors",
+      description: "Semantic color roles used by badges.",
+      icon: Palette,
+    },
+    {
+      title: "Typography",
+      href: "/docs/design-system/typography",
+      description: "Text scale and hierarchy for compact UI labels.",
+      icon: Type,
+    },
+    {
+      title: "Button",
+      href: "/docs/ui/button",
+      description: "Use buttons for actions, not badges.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description: "Build clear, accessible labels and status indicators.",
+      icon: Accessibility,
+    },
+  ]}
+/>

@@ -26,15 +26,20 @@ import {
   ArrowRight,
   CalendarDays,
   CheckCircle,
+  CircleAlert,
   CircleOff,
   Database,
   FilterX,
   FolderPlus,
   Inbox,
+  LoaderCircle,
   LayoutDashboard,
+  LayoutTemplate,
+  Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -160,7 +165,7 @@ Use EmptyState when the request succeeded or the current state is valid, but the
   </Card>
 </div>
 
-## With action
+### With action
 
 Use an action when there is a clear next step.
 
@@ -235,7 +240,7 @@ export function EmptyStateWithIcon() {
   </Tab>
 </Tabs>
 
-## Inside a Card
+### Inside a Card
 
 EmptyState composes naturally with surfaces such as Card.
 
@@ -275,7 +280,7 @@ export function CardEmptyState() {
   </Tab>
 </Tabs>
 
-## Table empty state
+### Table empty state
 
 Use EmptyState inside a table when a query succeeds but returns no rows.
 
@@ -344,31 +349,31 @@ export function TableEmptyState() {
 
 <Steps>
   <Step>
-    ### Confirm the state is valid
+    #### Confirm the state is valid
 
     Use EmptyState only when the request succeeded or the absence is expected.
   </Step>
 
   <Step>
-    ### Explain why it is empty
+    #### Explain why it is empty
 
     The title should name the state. The description should explain what it means.
   </Step>
 
   <Step>
-    ### Offer the next step when useful
+    #### Offer the next step when useful
 
     Add one action when the user can create, invite, reset filters, or configure something.
   </Step>
 
   <Step>
-    ### Match the surrounding surface
+    #### Match the surrounding surface
 
     Use EmptyState inside Card, Table, or a section depending on the page structure.
   </Step>
 
   <Step>
-    ### Keep product logic outside
+    #### Keep product logic outside
 
     EmptyState does not decide what happens next. The page or feature owns that behavior.
   </Step>
@@ -456,7 +461,7 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Empty state copy should answer two questions:
 
@@ -520,44 +525,37 @@ Empty state copy should answer two questions:
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/skeleton" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Skeleton</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Skeleton while data is loading.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/alert" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Alert</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Alert for errors, warnings, and important feedback.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Table</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use EmptyState inside table rows when no records match.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Design async states consistently across product surfaces.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Skeleton',
+      href: '/docs/ui/skeleton',
+      description:
+        'Use Skeleton while data is loading.',
+      icon: LoaderCircle,
+    },
+    {
+      title: 'Alert',
+      href: '/docs/ui/alert',
+      description:
+        'Use Alert for errors, warnings, and important feedback.',
+      icon: CircleAlert,
+    },
+    {
+      title: 'Table',
+      href: '/docs/ui/table',
+      description:
+        'Use EmptyState inside table rows when no records match.',
+      icon: Table2,
+    },
+    {
+      title: 'Empty, loading, and error states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Design async states consistently across product surfaces.',
+      icon: LayoutTemplate,
+    },
+  ]}
+/>

@@ -107,7 +107,7 @@ export function BasicInput() {
   Placeholder text is not a replacement for a label. Use `label` when the field needs to stand alone.
 </Callout>
 
-## With label and helper text
+### With label and helper text
 
 Use `label` and `helperText` to make the field self-explanatory.
 
@@ -201,7 +201,7 @@ Use Input when the user needs to provide or edit short text-based data.
   </Card>
 </div>
 
-## Validation error
+### Validation error
 
 When `error` is provided:
 
@@ -366,31 +366,31 @@ export function InputSizes() {
 
 <Steps>
   <Step>
-    ### Start with the field purpose
+    #### Start with the field purpose
 
     Use a clear label when the field must stand alone. Do not rely on placeholder text.
   </Step>
 
   <Step>
-    ### Add helper text only when useful
+    #### Add helper text only when useful
 
     Helper text should reduce uncertainty, not explain obvious fields.
   </Step>
 
   <Step>
-    ### Keep validation close to the field
+    #### Keep validation close to the field
 
     Field-level errors should appear directly below the affected input.
   </Step>
 
   <Step>
-    ### Use icons sparingly
+    #### Use icons sparingly
 
     Icons work well for search, URL, currency, or domain-specific signals.
   </Step>
 
   <Step>
-    ### Keep business rules outside the primitive
+    #### Keep business rules outside the primitive
 
     Use Zod, React Hook Form, server validation, or your domain layer for validation logic.
   </Step>

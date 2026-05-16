@@ -27,14 +27,18 @@ import {
   CheckCircle,
   ChevronRight,
   CircleDot,
+  Layers3,
   ListChecks,
   Menu,
   MoreHorizontal,
   MousePointerClick,
+  PanelTop,
+  PanelsTopLeft,
   Settings2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 import { ClientOnly } from "../previews/client-only";
 import {
@@ -199,7 +203,7 @@ Use Dropdown Menu when the actions are secondary, contextual, or compact.
   </Card>
 </div>
 
-## Grouping, labels, and shortcuts
+### Grouping, labels, and shortcuts
 
 Use labels and groups when a menu has more than one kind of action.
 
@@ -283,7 +287,7 @@ export function GroupedDropdownMenu() {
   `DropdownMenuShortcut` is visual. It does not automatically register keyboard shortcuts.
 </Callout>
 
-## Checkbox items
+### Checkbox items
 
 Use checkbox items for independent toggles.
 
@@ -354,7 +358,7 @@ export function CheckboxMenuPreview() {
   </Tab>
 </Tabs>
 
-## Radio group
+### Radio group
 
 Use radio items for exclusive selection.
 
@@ -416,7 +420,7 @@ export function RadioMenuPreview() {
   </Tab>
 </Tabs>
 
-## Submenus
+### Submenus
 
 Use submenus sparingly.
 
@@ -512,31 +516,31 @@ export function DropdownSubmenu() {
 
 <Steps>
   <Step>
-    ### Start with the trigger
+    #### Start with the trigger
 
     Use a clear trigger such as `Actions`, `More`, or an icon button with an accessible label.
   </Step>
 
   <Step>
-    ### Keep items action-oriented
+    #### Keep items action-oriented
 
     Prefer verb-first labels: Rename, Duplicate, Archive, Export, Delete.
   </Step>
 
   <Step>
-    ### Group only when needed
+    #### Group only when needed
 
     Use labels and separators to clarify structure, not to decorate the menu.
   </Step>
 
   <Step>
-    ### Confirm destructive actions
+    #### Confirm destructive actions
 
     A destructive menu item should usually open a Dialog before the final action.
   </Step>
 
   <Step>
-    ### Move complex workflows elsewhere
+    #### Move complex workflows elsewhere
 
     If the menu contains forms, long content, or multi-step decisions, use Sheet, Dialog, or a page.
   </Step>
@@ -559,8 +563,6 @@ export function DropdownSubmenu() {
 </Callout>
 
 ## API
-
-### Components
 
 | Component | Description |
 | --- | --- |
@@ -640,7 +642,7 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Menu item labels should be short and action-oriented.
 
@@ -691,44 +693,37 @@ Menu item labels should be short and action-oriented.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use semantic buttons for dropdown triggers and primary actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/dialog" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Dialog</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Dialog to confirm destructive actions from a menu.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Sheet</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Sheet for larger workflows, filters, or details panels.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Overlays pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose between Dropdown Menu, Dialog, and Sheet for product flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Use semantic buttons for dropdown triggers and primary actions.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Dialog',
+      href: '/docs/ui/dialog',
+      description:
+        'Use Dialog to confirm destructive actions from a menu.',
+      icon: PanelTop,
+    },
+    {
+      title: 'Sheet',
+      href: '/docs/ui/sheet',
+      description:
+        'Use Sheet for larger workflows, filters, or details panels.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Overlays pattern',
+      href: '/docs/patterns/overlays',
+      description:
+        'Choose between Dropdown Menu, Dialog, and Sheet for product flows.',
+      icon: Layers3,
+    },
+  ]}
+/>

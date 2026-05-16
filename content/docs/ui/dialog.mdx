@@ -11,23 +11,35 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
   Badge,
+  Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
 } from "@pycolors/ui";
 import {
-  ArrowRight,
+  Accessibility,
   CheckCircle,
   ClipboardCheck,
   FilePenLine,
   Layers3,
   MousePointerClick,
+  PanelsTopLeft,
   ShieldAlert,
   SquareStack,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -55,7 +67,16 @@ Dialog is built on **Radix Dialog** and styled with PyColors tokens such as `bg-
 ### Import
 
 ```tsx title="dialog-import.tsx"
-import { Dialog } from "@pycolors/ui";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
 ```
 
 ### Basic usage
@@ -65,32 +86,30 @@ Use Dialog for a focused form or short task that should stay in context.
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
-        <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">Open dialog</Button>
-      </DialogTrigger>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">Open dialog</Button>
+        </DialogTrigger>
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Update your account details. Changes are saved on submit.
-          </DialogDescription>
-        </DialogHeader>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>{"Update your account details. Changes are saved on submit."}</DialogDescription>
+          </DialogHeader>
 
-        <div className="mt-4 grid gap-3">
-          <Input label="Name" placeholder="Patrice" />
-          <Input label="Email" placeholder="patrice@pycolors.com" />
-        </div>
+          <div className="mt-4 grid gap-3">
+            <Input label="Name" placeholder="Patrice" />
+            <Input label="Email" placeholder="patrice@pycolors.com" />
+          </div>
 
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
-          </DialogClose>
-          <Button>Save</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </DialogClose>
+            <Button>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Preview>
   </Tab>
 
@@ -100,13 +119,13 @@ Use Dialog for a focused form or short task that should stay in context.
 import {
   Button,
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
   DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   Input,
 } from "@pycolors/ui";
 
@@ -168,7 +187,7 @@ Use Dialog when the user must complete, confirm, or cancel a focused task.
         Confirm risky or irreversible actions before they happen.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
   </Card>
 
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -187,7 +206,7 @@ Use Dialog when the user must complete, confirm, or cancel a focused task.
         Edit a small piece of data without leaving the current page.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
   </Card>
 
   <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
@@ -206,38 +225,36 @@ Use Dialog when the user must complete, confirm, or cancel a focused task.
         Keep the user focused on one bounded action with clear choices.
       </div>
     </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
+    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
   </Card>
 </div>
 
-## Destructive confirmation
+### Destructive confirmation
 
 Use Dialog for destructive actions that require explicit user intent.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
-   <Preview>
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="destructive" size="sm">Delete…</Button>
-      </DialogTrigger>
+    <Preview>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive" size="sm">Delete…</Button>
+        </DialogTrigger>
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Delete project</DialogTitle>
-          <DialogDescription>
-            This action can’t be undone. This will permanently delete the project and its data.
-          </DialogDescription>
-        </DialogHeader>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete project</DialogTitle>
+            <DialogDescription>{"This action can’t be undone. This will permanently delete the project and its data."}</DialogDescription>
+          </DialogHeader>
 
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
-          </DialogClose>
-          <Button variant="destructive">Delete</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Cancel</Button>
+            </DialogClose>
+            <Button variant="destructive">Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Preview>
   </Tab>
 
@@ -247,13 +264,13 @@ Use Dialog for destructive actions that require explicit user intent.
 import {
   Button,
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
   DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@pycolors/ui";
 
 export function DeleteDialog() {
@@ -296,31 +313,31 @@ export function DeleteDialog() {
 
 <Steps>
   <Step>
-    ### Trigger with a semantic element
+    #### Trigger with a semantic element
 
     Use `DialogTrigger asChild` with a `Button` or another semantic trigger.
   </Step>
 
   <Step>
-    ### Provide clear context
+    #### Provide clear context
 
     Every dialog should have a `DialogTitle` and a useful `DialogDescription`.
   </Step>
 
   <Step>
-    ### Keep the content focused
+    #### Keep the content focused
 
     A dialog should usually contain one task, one form, or one decision.
   </Step>
 
   <Step>
-    ### Place actions in the footer
+    #### Place actions in the footer
 
     Keep cancel and confirm actions in `DialogFooter` for predictable placement.
   </Step>
 
   <Step>
-    ### Close only when the task is complete or canceled
+    #### Close only when the task is complete or canceled
 
     Do not close the dialog automatically if submission fails. Show the error in context.
   </Step>
@@ -344,7 +361,7 @@ export function DeleteDialog() {
 
 ## API
 
-### Components
+#### Components
 
 | Component | Description |
 | --- | --- |
@@ -387,22 +404,22 @@ React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
 
 <PreferAvoid
   prefer={[
-    'one task per dialog',
-    'clear title and short description',
-    'semantic trigger with `asChild`',
-    'cancel and confirm actions in the footer',
-    'inline error feedback for failed submissions',
+    "one task per dialog",
+    "clear title and short description",
+    "semantic trigger with `asChild`",
+    "cancel and confirm actions in the footer",
+    "inline error feedback for failed submissions",
   ]}
   avoid={[
-    'long multi-step workflows',
-    'nested dialogs',
-    'dialogs without titles',
-    'closing on submit errors',
-    'using Dialog for simple row actions',
+    "long multi-step workflows",
+    "nested dialogs",
+    "dialogs without titles",
+    "closing on submit errors",
+    "using Dialog for simple row actions",
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Dialog copy should be direct and specific.
 
@@ -463,44 +480,37 @@ Dialog copy should be direct and specific.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Actions used inside dialog triggers and footers.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/sheet" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Sheet</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Sheet for larger side workflows, filters, and details panels.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/overlays" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Overlays pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose between Dialog, Sheet, and DropdownMenu for product flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible overlays with focus, keyboard, and semantic structure.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Button",
+      href: "/docs/ui/button",
+      description:
+        "Actions used inside dialog triggers and footers.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Use Sheet for larger side workflows, filters, and details panels.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Overlays pattern",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choose between Dialog, Sheet, and DropdownMenu for product flows.",
+      icon: Layers3,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Build accessible overlays with focus, keyboard, and semantic structure.",
+      icon: Accessibility,
+    },
+  ]}
+/>

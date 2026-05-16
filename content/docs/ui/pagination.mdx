@@ -29,11 +29,14 @@ import {
   ArrowRight,
   CheckCircle,
   Database,
+  LayoutTemplate,
+  LoaderCircle,
   Rows3,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 import {
   PaginationBasicExample,
@@ -219,7 +222,7 @@ Use Pagination when users need controlled access to a finite set of pages.
   </Card>
 </div>
 
-## Table + Pagination
+### Table + Pagination
 
 This example demonstrates a common SaaS pattern: a Table with local Pagination control.
 
@@ -260,7 +263,7 @@ const pageProjects = projects.slice(
   Pagination should receive state and callbacks. The feature layer should own the data source, filters, sorting, and URL sync.
 </Callout>
 
-## buildPaginationRange
+### buildPaginationRange
 
 Use `buildPaginationRange` to generate compact page tokens with ellipsis.
 
@@ -283,31 +286,31 @@ This keeps rendering logic clean while keeping Pagination controlled.
 
 <Steps>
   <Step>
-    ### Keep page state outside the component
+    #### Keep page state outside the component
 
     Store `page`, `pageSize`, and `totalPages` in the page, feature hook, or data layer.
   </Step>
 
   <Step>
-    ### Disable impossible navigation
+    #### Disable impossible navigation
 
     Disable Previous on the first page and Next on the last page.
   </Step>
 
   <Step>
-    ### Use ellipsis for large page counts
+    #### Use ellipsis for large page counts
 
     Avoid rendering dozens of page links. Compact large ranges with ellipsis.
   </Step>
 
   <Step>
-    ### Sync URL only at the product layer
+    #### Sync URL only at the product layer
 
     URL syncing belongs to your page or routing layer, not the UI primitive.
   </Step>
 
   <Step>
-    ### Pair with loading and empty states
+    #### Pair with loading and empty states
 
     Pagination should work with Table, loading states, empty states, and filters as one product pattern.
   </Step>
@@ -330,8 +333,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 
 ## API
 
-### Components
-
+#### Component
 | Component | Description |
 | --- | --- |
 | `Pagination` | Wrapper `nav` element with pagination semantics |
@@ -342,7 +344,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 | `PaginationNext` | Next button |
 | `PaginationEllipsis` | Visual overflow indicator |
 
-### PaginationLink props
+#### PaginationLink props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -350,7 +352,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 | `size` | `string` | `"icon-sm"` | Maps to Button sizes |
 | `className` | `string` | — | Additional Tailwind classes |
 
-### buildPaginationRange options
+#### buildPaginationRange options
 
 | Option | Type | Description |
 | --- | --- | --- |
@@ -394,7 +396,7 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Pagination labels should be short and predictable.
 
@@ -455,44 +457,37 @@ Pagination labels should be short and predictable.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Table</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Render structured data that often pairs with Pagination.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Data Table Pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Combine table, filters, states, actions, and pagination into a full SaaS pattern.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Place pagination inside real dashboard layouts.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Handle async states around paged data.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Table',
+      href: '/docs/ui/table',
+      description:
+        'Render structured data that often pairs with Pagination.',
+      icon: Table2,
+    },
+    {
+      title: 'Data Table Pattern',
+      href: '/docs/patterns/data-table',
+      description:
+        'Combine table, filters, states, actions, and pagination into a full SaaS pattern.',
+      icon: Rows3,
+    },
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Place pagination inside real dashboard layouts.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Empty, loading, and error states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Handle async states around paged data.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>

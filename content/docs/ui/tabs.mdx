@@ -17,11 +17,14 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  Accessibility,
   ArrowRight,
   CheckCircle,
   CreditCard,
   LayoutDashboard,
+  LayoutTemplate,
   ListFilter,
+  MousePointerClick,
   PanelsTopLeft,
   Settings,
   ShieldCheck,
@@ -35,6 +38,7 @@ import {
   TabsContent as UITabsContent,
 } from "@pycolors/ui";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -305,7 +309,7 @@ export function TabsSizes() {
   Use `sm` for compact product controls, `md` for most product UI, and `lg` only when the tabs need stronger visual presence.
 </Callout>
 
-## Product examples
+### Product examples
 
 <Tabs items={["Settings", "Billing", "Dashboard"]}>
   <Tab value="Settings">
@@ -349,31 +353,31 @@ export function TabsSizes() {
 
 <Steps>
   <Step>
-    ### Use tabs for peer views
+    #### Use tabs for peer views
 
     Each tab should represent a related view at the same hierarchy level.
   </Step>
 
   <Step>
-    ### Keep labels short
+    #### Keep labels short
 
     Prefer labels like Overview, Activity, Billing, Security, Logs, Usage.
   </Step>
 
   <Step>
-    ### Limit the number of tabs
+    #### Limit the number of tabs
 
     Two to five tabs usually works best. More than that often becomes navigation.
   </Step>
 
   <Step>
-    ### Keep important actions visible
+    #### Keep important actions visible
 
     Do not hide critical actions inside a tab if users need them globally.
   </Step>
 
   <Step>
-    ### Preserve content structure
+    #### Preserve content structure
 
     Each tab panel should have a clear heading or section structure when the content is complex.
   </Step>
@@ -395,8 +399,6 @@ export function TabsSizes() {
 </Callout>
 
 ## API
-
-### Components
 
 | Component | Description |
 | --- | --- |
@@ -462,7 +464,7 @@ Radix provides keyboard support:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Tab labels should be short and familiar.
 
@@ -513,44 +515,37 @@ Tab labels should be short and familiar.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use buttons for actions that pair with tabbed content.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/card" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Card</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use cards to structure content inside tab panels.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Place tabs inside real product layouts and settings flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible tablists with clear labels and keyboard behavior.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Use buttons for actions that pair with tabbed content.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Card',
+      href: '/docs/ui/card',
+      description:
+        'Use cards to structure content inside tab panels.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Place tabs inside real product layouts and settings flows.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Accessibility',
+      href: '/docs/ui/accessibility',
+      description:
+        'Build accessible tablists with clear labels and keyboard behavior.',
+      icon: Accessibility,
+    },
+  ]}
+/>
