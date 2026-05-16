@@ -11,6 +11,16 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
+import {
+  Blocks,
+  CircleDot,
+  Layers3,
+  Palette,
+  Sparkles,
+  Type,
+} from 'lucide-react';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 ## Overview
 
@@ -24,50 +34,51 @@ At the end of this page, you will understand how PyColors structures color roles
   Color consistency is one of the fastest signals of product quality. A semantic color system keeps dashboards, marketing pages, documentation, forms, and reusable components visually aligned without forcing every component to reinvent its own palette.
 </Callout>
 
-<div className="not-prose mt-8 grid gap-4 md:grid-cols-3">
-  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
-    <Badge variant="outline">Role first</Badge>
-    <div className="mt-4 text-sm font-medium text-foreground">Describe intent</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Use tokens that explain product meaning: surface, text, action, state, input, and data.
-    </div>
-  </div>
+### Principles
 
-  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
-    <Badge variant="outline">Theme safe</Badge>
-    <div className="mt-4 text-sm font-medium text-foreground">Change centrally</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Map CSS variables into Tailwind utilities so components stay stable when themes evolve.
-    </div>
-  </div>
-
-  <div className="rounded-2xl border border-border/60 bg-card p-5 text-card-foreground shadow-sm">
-    <Badge variant="outline">Production ready</Badge>
-    <div className="mt-4 text-sm font-medium text-foreground">Scale consistently</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Keep reusable components, dashboards, docs, and commercial pages visually coherent.
-    </div>
-  </div>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      eyebrow: 'Role first',
+      title: 'Describe intent',
+      description:
+        'Use tokens that explain product meaning: surface, text, action, state, input, and data.',
+     },
+    {
+      eyebrow: 'Theme safe',
+      title: 'Change centrally',
+      description:
+        'Map CSS variables into Tailwind utilities so components stay stable when themes evolve.',
+     },
+    {
+      eyebrow: 'Production ready',
+      title: 'Scale consistently',
+      description:
+        'Keep reusable components, dashboards, docs, and commercial pages visually coherent.',
+     },
+  ]}
+/>
 
 ## What you’ll do
 
 <Steps>
   <Step>
-    Understand the semantic role model behind PyColors colors.
+   #### Understand the semantic role model behind PyColors colors.
   </Step>
   <Step>
-    Map CSS variables to Tailwind utilities through the token layer.
+    #### Map CSS variables to Tailwind utilities through the token layer.
   </Step>
   <Step>
-    Apply colors in components without raw values or one-off overrides.
+    #### Apply colors in components without raw values or one-off overrides.
   </Step>
   <Step>
-    Use decision rules to keep UI colors, state colors, and chart colors separate.
+    #### Use decision rules to keep UI colors, state colors, and chart colors separate.
   </Step>
 </Steps>
 
-## Architecture
+### Architecture
 
 PyColors uses an **OKLCH-based color system** exposed through CSS variables and mapped into Tailwind semantic utilities.
 
@@ -278,32 +289,37 @@ Avoid local raw values when:
 
 ## Next steps
 
-<div className="not-prose grid gap-4 md:grid-cols-2">
-  <Link href="/docs/design-system/typography" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Typography</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Continue with readable hierarchy, rhythm, and semantic text structure.
-    </div>
-  </Link>
-
-  <Link href="/docs/design-system/tokens" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Design tokens</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Understand the token layer that keeps PyColors UI consistent across products.
-    </div>
-  </Link>
-
-  <Link href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">UI components</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      See how primitives consume semantic roles across real product interfaces.
-    </div>
-  </Link>
-
-  <Link href="/docs/starter-pro" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition-colors hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground group-hover:underline group-hover:underline-offset-4">Starter Pro</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Move from UI consistency to production foundations with auth, billing, and backend structure.
-    </div>
-  </Link>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Typography',
+      href: '/docs/design-system/typography',
+      description:
+        'Continue with readable hierarchy, rhythm, and semantic text structure.',
+      icon: Type,
+    },
+    {
+      title: 'Design tokens',
+      href: '/docs/design-system/tokens',
+      description:
+        'Understand the token layer that keeps PyColors UI consistent across products.',
+      icon: Layers3,
+    },
+    {
+      title: 'UI components',
+      href: '/docs/ui',
+      description:
+        'See how primitives consume semantic roles across real product interfaces.',
+      icon: Blocks,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Move from UI consistency to production foundations with auth, billing, and backend structure.',
+      icon: Sparkles,
+    },
+  ]}
+/>

@@ -15,8 +15,9 @@ import {
   CardTitle,
   CardContent,
 } from "@pycolors/ui";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, Layers3, PanelsTopLeft, ShieldCheck, XCircle } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -40,36 +41,32 @@ A controlled shadow system ensures that:
   When shadows are inconsistent or too strong, interfaces feel noisy and unstructured. A restrained elevation system improves clarity and perceived quality.
 </Callout>
 
-## What you’ll define
+### What you’ll define
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Elevation scale</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      A small set of shadow levels used across all surfaces.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Usage rules</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Clear constraints to avoid visual noise and inconsistency.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Surface hierarchy</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Define how components relate visually through depth.
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Elevation scale',
+      description:
+        'A small set of shadow levels used across all surfaces.',
+      icon: Layers3,
+    },
+    {
+      title: 'Usage rules',
+      description:
+        'Clear constraints to avoid visual noise and inconsistency.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Surface hierarchy',
+      description:
+        'Define how components relate visually through depth.',
+      icon: PanelsTopLeft,
+    },
+  ]}
+/>
 
 ## Steps
 

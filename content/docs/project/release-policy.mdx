@@ -28,6 +28,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Reference</Badge>
@@ -51,45 +52,24 @@ That separation lets PyColors publish precise package updates while communicatin
 
 ## Release model
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <PackageCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Packages
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Public packages use Semantic Versioning and Changesets so technical changes stay precise and traceable.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Sparkles className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Ecosystem
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        The website communicates product progress through a weekly release narrative across UI, starters, templates, docs, and platform layers.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Packages',
+      description:
+        'Public packages use Semantic Versioning and Changesets so technical changes stay precise and traceable.',
+      icon: PackageCheck,
+    },
+    {
+      title: 'Ecosystem',
+      description:
+        'Weekly releases communicate progress across UI, starters, templates, docs, and platform layers.',
+      icon: Sparkles,
+    },
+  ]}
+/>
 
 ## Package versioning
 

@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -70,51 +71,36 @@ Accessibility happens at the **composition level**, not only inside components.
 
 ### The 4 pillars
 
-<div className="grid gap-4 md:grid-cols-4">
-  <Card className="rounded-2xl border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Type className="h-4 w-4" /> Semantics
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Use the right HTML elements for the right purpose.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Keyboard className="h-4 w-4" /> Keyboard
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Everything should be usable without a mouse.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Eye className="h-4 w-4" /> Perception
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Content must be readable and understandable.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <MousePointerClick className="h-4 w-4" /> Feedback
-      </CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Users must understand what is happening.
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={4}
+  tone="platform"
+  items={[
+    {
+      title: 'Semantics',
+      description:
+        'Use the right HTML elements for the right purpose.',
+      icon: Type,
+    },
+    {
+      title: 'Keyboard',
+      description:
+        'Everything should be usable without a mouse.',
+      icon: Keyboard,
+    },
+    {
+      title: 'Perception',
+      description:
+        'Content must be readable and understandable.',
+      icon: Eye,
+    },
+    {
+      title: 'Feedback',
+      description:
+        'Users must understand what is happening.',
+      icon: MousePointerClick,
+    },
+  ]}
+/>
 
 ### Semantics first
 

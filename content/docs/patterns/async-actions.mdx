@@ -9,9 +9,10 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { CheckCircle, XCircle, FormInput, LoaderCircle, RefreshCw } from "lucide-react";
+import { CheckCircle, XCircle, FormInput, LoaderCircle, MessageSquareWarning, RefreshCw, RotateCcw, Zap } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 import {
   OptimisticToggleDemo,
@@ -49,36 +50,30 @@ This guide defines how to handle mutations in a way that feels:
 
 ## What you’ll implement
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Immediate feedback</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      UI responds instantly without blocking the user.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Correct feedback level</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Inline, toast, or blocking depending on risk.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Recovery strategies</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Retry and undo for safe, resilient UX.
-    </CardContent>
-  </Card>
-</div>
-
-
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Immediate feedback',
+      description:
+        'Respond instantly to user actions without blocking the workflow.',
+      icon: Zap,
+    },
+    {
+      title: 'Correct feedback level',
+      description:
+        'Choose inline, toast, or blocking feedback depending on user risk.',
+      icon: MessageSquareWarning,
+    },
+    {
+      title: 'Recovery strategies',
+      description:
+        'Support retry, undo, and resilient recovery flows for safer UX.',
+      icon: RotateCcw,
+    },
+  ]}
+/>
 
 ### Mental model
 

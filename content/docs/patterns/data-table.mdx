@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 import {
   DataTableLoading,
@@ -64,64 +65,30 @@ Use this pattern when users need to:
 
 ## What you’ll build
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Table2 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Table anatomy
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Structure the surface into header, toolbar, table, row actions, footer, and states.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Filter className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Controls
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Add search, filters, bulk actions, row actions, and responsive disclosure without crowding the UI.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Production states
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Handle loading, empty, error, pagination, mutation, and recovery states clearly.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Table anatomy',
+      description:
+        'Structure the surface into header, toolbar, table, row actions, footer, and async states.',
+      icon: Table2,
+    },
+    {
+      title: 'Controls',
+      description:
+        'Add search, filters, bulk actions, and responsive row controls without crowding the UI.',
+      icon: Filter,
+    },
+    {
+      title: 'Production states',
+      description:
+        'Handle loading, empty, error, pagination, mutation, and recovery states clearly.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ## Mental model
 

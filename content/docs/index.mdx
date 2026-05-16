@@ -11,7 +11,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
 import {
-  ArrowRight,
+  Blocks,
   Box,
   Code2,
   CreditCard,
@@ -23,6 +23,8 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Docs</Badge>
@@ -52,57 +54,44 @@ Use these docs to understand the PyColors ecosystem: templates, UI foundations, 
 
 ## Start here
 
-<div className="not-prose my-8 grid gap-4 md:grid-cols-3">
-  <a href="/docs/templates/na-ai-landing" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <LayoutTemplate className="h-4 w-4 text-primary" />
-      <span>NA-AI Landing</span>
-    </div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Launch a premium AI or SaaS landing page powered by PyColors UI and PyColors Tokens.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starter Free',
+      href: '/docs/starter',
+      description:
+        'Validate your SaaS surface with real screens, flows, states, navigation, and product structure.',
+      icon: Box,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Launch with real auth, billing, backend foundations, protected routes, and delivery.',
+      icon: Rocket,
+      tone: 'primary',
+      badge: 'Pro',
+    },
+    {
+      title: 'PyColors UI',
+      href: '/docs/ui',
+      description:
+        'Start from reusable SaaS primitives before composing product-level patterns.',
+      icon: Code2,
+    },
+  ]}
+/>
 
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Launch a premium AI or SaaS landing page powered by PyColors UI and PyColors Tokens.
-    </div>
-
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Explore template
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-
-  <a href="/docs/starter" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <Box className="h-4 w-4 text-primary" />
-      <span>Starter Free</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Validate your SaaS surface with real screens, flows, states, navigation, and product structure.
-    </div>
-
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Explore Free
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro" className="group block rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <Rocket className="h-4 w-4 text-primary" />
-      <span>Starter Pro</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Launch with real auth, billing, backend foundations, protected routes, and delivery.
-    </div>
-
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Explore Pro
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-</div>
-
-## The business path
+### The business path
 
 PyColors documentation is not only a reference. It is a product path.
 
@@ -118,7 +107,7 @@ It helps reduce the gap between:
   The docs should reduce friction, increase trust, and make the upgrade path obvious. Every page should help a serious builder understand why PyColors saves time before launch.
 </Callout>
 
-## The build path
+### The build path
 
 <Tabs items={["Launch the page", "Validate", "Wire", "Launch"]}>
   <Tab value="Launch the page">
@@ -176,139 +165,116 @@ It helps reduce the gap between:
 
 ## Choose your next move
 
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/getting-started" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Getting Started</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Choose the right PyColors path: template, Starter Free, Starter Pro, UI, or Patterns.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Getting Started',
+      href: '/docs/getting-started',
+      description:
+        'Choose the right PyColors path: template, Starter Free, Starter Pro, UI, or Patterns.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Why buy instead of building',
+      href: '/docs/starter-pro/why-buy-instead-of-building',
+      description:
+        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, and backend foundations.',
+      icon: Rocket,
+      tone: 'primary',
+    },
+    {
+      title: 'What is included',
+      href: '/docs/starter-pro/what-is-included',
+      description:
+        'See exactly what Starter Pro includes and what you still build yourself.',
+      icon: Blocks,
+    },
+    {
+      title: 'Upgrade from Starter Free',
+      href: '/docs/starter/upgrade',
+      description:
+        'Know when mocked foundations stop being enough and Pro becomes the faster path.',
+      icon: Layers3,
+      tone: 'primary',
+    },
+  ]}
+/>
 
-  <a href="/docs/starter-pro/why-buy-instead-of-building" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Why buy instead of building</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, and backend foundations.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
+### Core systems
 
-  <a href="/docs/starter-pro/what-is-included" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">What is included</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        See exactly what Starter Pro includes and what you still build yourself.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      href: '/docs/starter-pro/auth',
+      description:
+        'Real users, sessions, OAuth, verification, password recovery, and protected account foundations.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Stripe Checkout, billing portal, subscriptions, invoices, webhooks, and plan-aware access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend',
+      href: '/docs/starter-pro/backend',
+      description:
+        'Database-ready structure, Prisma foundations, ownership rules, server boundaries, and product data.',
+      icon: Database,
+    },
+    {
+      title: 'Secure delivery',
+      href: '/docs/starter-pro/delivery',
+      description:
+        'Controlled post-purchase access, private assets, token-based downloads, and fulfillment flow.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
-  <a href="/docs/starter/upgrade" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Upgrade from Starter Free</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Know when mocked foundations stop being enough and Pro becomes the faster path.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+### Foundations
 
-## Core systems
-
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/starter-pro/auth" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <LockKeyhole className="h-4 w-4 text-primary" />
-      <span>Authentication</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Real users, sessions, OAuth, verification, password recovery, and protected account foundations.
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro/billing" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <CreditCard className="h-4 w-4 text-primary" />
-      <span>Billing</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Stripe Checkout, billing portal, subscriptions, invoices, webhooks, and plan-aware access.
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro/backend" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <Database className="h-4 w-4 text-primary" />
-      <span>Backend</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Database-ready structure, Prisma foundations, ownership rules, server boundaries, and product data.
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro/delivery" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <ShieldCheck className="h-4 w-4 text-primary" />
-      <span>Secure delivery</span>
-    </div>
-
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Controlled post-purchase access, private assets, token-based downloads, and fulfillment flow.
-    </div>
-  </a>
-</div>
-
-## Foundations
-
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Templates</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Launch focused marketing pages with production-ready frontend foundations.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/design-system" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Design System</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Understand tokens, colors, typography, radius, shadows, and consistency rules.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">UI Components</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Explore PyColors UI primitives used to build dashboards, forms, overlays, and product surfaces.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Patterns</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Use product-level blocks for data tables, overlays, async actions, and real SaaS behavior.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Templates',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Launch focused marketing pages with production-ready frontend foundations.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Design System',
+      href: '/docs/design-system',
+      description:
+        'Understand tokens, colors, typography, radius, shadows, and consistency rules.',
+      icon: Sparkles,
+    },
+    {
+      title: 'UI Components',
+      href: '/docs/ui',
+      description:
+        'Explore PyColors UI primitives used to build dashboards, forms, overlays, and product surfaces.',
+      icon: Code2,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'Use product-level blocks for data tables, overlays, async actions, and real SaaS behavior.',
+      icon: Layers3,
+    },
+  ]}
+/>
 
 ## Why this matters for revenue
 
@@ -332,25 +298,33 @@ That matters because every week lost to repeated infrastructure work is a week n
   The docs should help a serious builder trust the system, understand the upgrade path, and choose Starter Pro when infrastructure becomes the bottleneck.
 </Callout>
 
-## Decision
+### Decision
 
-If your question is:
-
-> What should my offer look like publicly?
-
-Start with **NA-AI Landing**.
-
-If your question is:
-
-> What should my product look and feel like?
-
-Start with **Starter Free**.
-
-If your question is:
-
-> How do I launch this without losing weeks to auth, billing, backend, and delivery?
-
-Move to **Starter Pro**.
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      eyebrow: 'Public offer',
+      title: 'Start with NA-AI Landing',
+      description:
+        'Use this path when the question is what your offer should look like publicly.',
+    },
+    {
+      eyebrow: 'Product surface',
+      title: 'Start with Starter Free',
+      description:
+        'Use this path when the question is what your product should look and feel like.',
+    },
+    {
+      eyebrow: 'Production wiring',
+      title: 'Move to Starter Pro',
+      description:
+        'Use this path when auth, billing, backend, and delivery would slow the launch.',
+      tone: 'primary',
+    },
+  ]}
+/>
 
 <Callout title="Build fast. Validate early. Upgrade when ready.">
   PyColors is designed around a simple path: idea → public offer → product surface → validation → production wiring → launch.
@@ -358,24 +332,24 @@ Move to **Starter Pro**.
 
 ## Next step
 
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/getting-started" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Read Getting Started</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Choose the right starting point and understand the Template → Free → Pro path.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/pricing" className="group flex items-start justify-between gap-6 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
-    <span>
-      <span className="block text-sm font-medium text-foreground">View pricing</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Compare templates, Starter Free, and Starter Pro when you are ready to move faster.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Read Getting Started',
+      href: '/docs/getting-started',
+      description:
+        'Choose the right starting point and understand the Template → Free → Pro path.',
+      icon: Sparkles,
+    },
+    {
+      title: 'View pricing',
+      href: '/pricing',
+      description:
+        'Compare templates, Starter Free, and Starter Pro when you are ready to move faster.',
+      icon: CreditCard,
+      tone: 'primary',
+    },
+  ]}
+/>

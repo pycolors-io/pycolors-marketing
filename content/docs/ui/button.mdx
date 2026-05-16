@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -95,61 +96,31 @@ The default button uses primary semantic tokens and adapts automatically to ligh
 
 Use Button when the user is taking an action.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MousePointerClick className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Primary actions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for submit, save, continue, checkout, create, or upgrade actions.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Sparkles className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Secondary actions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for cancel, view details, learn more, or alternative paths.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-destructive/10">
-          <ShieldAlert className="h-4 w-4 text-destructive" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Risky actions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use destructive styling only for dangerous or irreversible actions.
-      </div>
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Primary actions',
+      description:
+        'Use for submit, save, continue, checkout, create, or upgrade actions.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Secondary actions',
+      description:
+        'Use for cancel, view details, learn more, or alternative paths.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Risky actions',
+      description:
+        'Use destructive styling only for dangerous or irreversible actions.',
+      icon: ShieldAlert,
+      tone: 'danger',
+    },
+  ]}
+/>
 
 ### Variants
 
