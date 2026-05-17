@@ -109,10 +109,10 @@ function DocsFeatureGridCard({
   return (
     <section
       className={cn(
-        'group relative overflow-hidden rounded-[5px]',
-        'border border-border-subtle bg-card p-4 shadow-soft',
+        'group relative overflow-hidden ',
+        'border border-border-subtle bg-card p-4 ',
         'transition-colors duration-200',
-        'hover:border-border hover:bg-muted/[0.18]',
+        'hover:border-border hover:bg-muted/18',
         'sm:p-5',
       )}
     >
@@ -140,7 +140,7 @@ function DocsFeatureGridCard({
         <div
           className={cn(
             'mb-4 flex size-8 items-center justify-center rounded-[5px]',
-            'border shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
+            'border',
             styles.icon,
           )}
           aria-hidden="true"

@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -175,58 +176,30 @@ export function ProfileSheet() {
 
 Use Sheet when the user needs more space than a menu, but should keep page context.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ListFilter className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">Filters</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for advanced filters without crowding the toolbar.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <PencilLine className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">Side editing</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for editing records while keeping the parent page visible.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Menu className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">Mobile navigation</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use a left sheet for mobile menus and app navigation.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition group-hover:opacity-100" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Filters',
+      description:
+        'Use for advanced filters without crowding the toolbar.',
+      icon: ListFilter,
+    },
+    {
+      title: 'Side editing',
+      description:
+        'Use for editing records while keeping the parent page visible.',
+      icon: PencilLine,
+    },
+    {
+      title: 'Mobile navigation',
+      description:
+        'Use a left sheet for mobile menus and app navigation.',
+      icon: Menu,
+    },
+  ]}
+/>
 
 ### Sides
 
@@ -482,6 +455,7 @@ export function SheetCloseActions() {
 
 ## API
 
+#### Component
 | Component | Description |
 | --- | --- |
 | `Sheet` | Root container |
@@ -493,7 +467,7 @@ export function SheetCloseActions() {
 | `SheetTitle` | Accessible sheet title |
 | `SheetDescription` | Supporting text |
 
-### SheetContent props
+#### SheetContent props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |

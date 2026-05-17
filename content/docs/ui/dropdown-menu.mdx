@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 import { ClientOnly } from "../previews/client-only";
 import {
@@ -144,64 +145,30 @@ export function BasicDropdownMenu() {
 
 Use Dropdown Menu when the actions are secondary, contextual, or compact.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MoreHorizontal className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Row actions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for rename, duplicate, archive, export, or delete actions on one record.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Settings2 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Preferences
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use checkbox or radio items for compact option selection.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Menu className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Account menu
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for compact user-level navigation such as profile, settings, or sign out.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Row actions',
+      description:
+        'Use for rename, duplicate, archive, export, or delete actions on one record.',
+      icon: MoreHorizontal,
+    },
+    {
+      title: 'Preferences',
+      description:
+        'Use checkbox or radio items for compact option selection.',
+      icon: Settings2,
+    },
+    {
+      title: 'Account menu',
+      description:
+        'Use for compact user-level navigation such as profile, settings, or sign out.',
+      icon: Menu,
+    },
+  ]}
+/>
 
 ### Grouping, labels, and shortcuts
 
@@ -564,6 +531,7 @@ export function DropdownSubmenu() {
 
 ## API
 
+#### Component
 | Component | Description |
 | --- | --- |
 | `DropdownMenu` | Root container |
@@ -582,7 +550,7 @@ export function DropdownSubmenu() {
 | `DropdownMenuSubContent` | Submenu surface |
 | `DropdownMenuPortal` | Portal wrapper for menu content |
 
-### Wrapper additions
+#### Wrapper additions
 
 | Component | Added prop | Purpose |
 | --- | --- | --- |
