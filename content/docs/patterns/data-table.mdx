@@ -25,11 +25,13 @@ import {
   PanelsTopLeft,
   ShieldCheck,
   Table2,
+  Workflow,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 import {
   DataTableLoading,
@@ -239,58 +241,67 @@ Never use the same feedback pattern for every state. Loading data, deleting a ro
 
 ## Variations
 
-<Tabs items={["Simple", "Filtered", "Operational"]}>
-  <Tab value="Simple">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Simple table
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use when the dataset is small and users only need to scan records.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>minimal row actions</li>
-        <li>simple pagination</li>
-        <li>clear empty state</li>
-        <li>no advanced filters</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Simple',
+      title: 'Simple table',
+      icon: Table2,
+      description: (
+        <>
+          <p>
+            Use when the dataset is small and users mainly need to scan records.
+          </p>
 
-  <Tab value="Filtered">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Filtered table
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use when users need to narrow results across dimensions.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>search input</li>
-        <li>filter sheet</li>
-        <li>active filter summary</li>
-        <li>reset filters action</li>
-      </ul>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Minimal row actions</Badge>
+            <Badge variant="outline">Simple pagination</Badge>
+            <Badge variant="outline">Clear empty state</Badge>
+            <Badge variant="outline">No advanced filters</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Filtered',
+      title: 'Filtered table',
+      icon: Filter,
+      description: (
+        <>
+          <p>
+            Use when users need to narrow results across multiple dimensions.
+          </p>
 
-  <Tab value="Operational">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Operational table
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use when users frequently act on records.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>row actions</li>
-        <li>bulk actions</li>
-        <li>confirmation dialogs</li>
-        <li>retry and undo flows</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Search input</Badge>
+            <Badge variant="outline">Filter sheet</Badge>
+            <Badge variant="outline">Active filter summary</Badge>
+            <Badge variant="outline">Reset filters action</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Operational',
+      title: 'Operational table',
+      icon: Workflow,
+      description: (
+        <>
+          <p>
+            Use when users frequently perform actions directly on records.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Row actions</Badge>
+            <Badge variant="outline">Bulk actions</Badge>
+            <Badge variant="outline">Confirmation dialogs</Badge>
+            <Badge variant="outline">Retry and undo flows</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Decision guide
 

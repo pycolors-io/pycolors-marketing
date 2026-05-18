@@ -26,11 +26,14 @@ import {
   RefreshCw,
   Rocket,
   ShieldCheck,
+  WalletCards,
+  Webhook,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -249,40 +252,67 @@ Database subscription state updates
 App reads updated billing state
 ```
 
-<Tabs items={["Checkout", "Webhook", "Portal"]}>
-  <Tab value="Checkout">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Checkout starts revenue
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Checkout to create the initial payment or subscription. The frontend should request a checkout session from your backend.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Checkout',
+      title: 'Checkout starts revenue',
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Checkout creates the initial payment or subscription flow between your product and Stripe.
+          </p>
 
-  <Tab value="Webhook">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Webhooks synchronize truth
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Webhooks keep your app aligned with Stripe when payments succeed, fail, renew, cancel, or change.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Checkout session</Badge>
+            <Badge variant="outline">Subscription creation</Badge>
+            <Badge variant="outline">Backend endpoint</Badge>
+            <Badge variant="outline">Payment initiation</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Webhook',
+      title: 'Webhooks synchronize truth',
+      icon: Webhook,
+      description: (
+        <>
+          <p>
+            Webhooks keep your application aligned with Stripe billing events and subscription state.
+          </p>
 
-  <Tab value="Portal">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Portal manages existing customers
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use the billing portal for payment method updates, invoice access, plan changes, and cancellation flows.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Payment success</Badge>
+            <Badge variant="outline">Renewals</Badge>
+            <Badge variant="outline">Subscription changes</Badge>
+            <Badge variant="outline">Cancellation events</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Portal',
+      title: 'Portal manages customers',
+      icon: WalletCards,
+      description: (
+        <>
+          <p>
+            The billing portal handles customer self-service flows without rebuilding billing management UI.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Payment methods</Badge>
+            <Badge variant="outline">Invoices</Badge>
+            <Badge variant="outline">Plan changes</Badge>
+            <Badge variant="outline">Cancellation flows</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Decision guide
 

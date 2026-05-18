@@ -20,17 +20,21 @@ import {
 import {
   ArrowRight,
   ArrowUpRight,
+  Boxes,
   CheckCircle,
   CreditCard,
   FolderTree,
   Layers,
+  Layers3,
   LockKeyhole,
   Puzzle,
+  Route,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -144,40 +148,70 @@ PyColors UI primitives
 
 A page should describe the product surface. Feature components should own interactions. UI primitives should stay reusable and stateless.
 
-<Tabs items={["Route", "Feature", "Primitive"]}>
-  <Tab value="Route">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Route layer
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Defines the URL, page-level structure, and high-level composition. It should not become the place where all feature behavior lives.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Route',
+      title: 'Route layer',
+      icon: Route,
+      description: (
+        <>
+          <p>
+            The route layer defines URLs, page structure, layout composition, and high-level orchestration.
+          </p>
 
-  <Tab value="Feature">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Feature layer
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Owns dialogs, row actions, local state, mock data, and the parts that will later connect to APIs or server actions.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Page structure</Badge>
+            <Badge variant="outline">Layouts</Badge>
+            <Badge variant="outline">Navigation</Badge>
+            <Badge variant="outline">Route composition</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Feature',
+      title: 'Feature layer',
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The feature layer owns product behavior, local state, dialogs, actions, and future API integration boundaries.
+          </p>
 
-  <Tab value="Primitive">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        UI primitive layer
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Provides reusable building blocks such as Button, Card, Table, Dialog, Sheet, Input, Badge, Alert, and Skeleton.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Dialogs</Badge>
+            <Badge variant="outline">Row actions</Badge>
+            <Badge variant="outline">Local state</Badge>
+            <Badge variant="outline">Mock data</Badge>
+            <Badge variant="outline">Server integration</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Primitive',
+      title: 'UI primitive layer',
+      icon: Boxes,
+      description: (
+        <>
+          <p>
+            UI primitives provide reusable building blocks that stay small, predictable, and composable.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Button</Badge>
+            <Badge variant="outline">Card</Badge>
+            <Badge variant="outline">Table</Badge>
+            <Badge variant="outline">Dialog</Badge>
+            <Badge variant="outline">Sheet</Badge>
+            <Badge variant="outline">Input</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ### App directory
 

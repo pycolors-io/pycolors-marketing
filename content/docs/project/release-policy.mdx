@@ -26,9 +26,12 @@ import {
   RefreshCcw,
   ShieldCheck,
   Sparkles,
+  TriangleAlert,
+  Wrench,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Reference</Badge>
@@ -89,40 +92,49 @@ Examples:
 2.0.0 → breaking changes
 ```
 
-<Tabs items={["Patch", "Minor", "Major"]}>
-  <Tab value="Patch">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Patch release
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use for bug fixes, documentation fixes, small polish, and safe internal improvements.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Minor">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Minor release
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use for new components, new APIs, new exports, or backward-compatible product additions.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Major">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Major release
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use for breaking API changes, removed exports, migration-required behavior, or incompatible design system updates.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Patch',
+      title: 'Patch release',
+      icon: Wrench,
+      description: (
+        <>
+          <p>
+            Use for bug fixes, documentation fixes, small polish,
+            and safe internal improvements.
+          </p>
+        </>
+      ),
+    },
+    {
+      value: 'Minor',
+      title: 'Minor release',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Use for new components, new APIs, new exports,
+            or backward-compatible product additions.
+          </p>
+        </>
+      ),
+    },
+    {
+      value: 'Major',
+      title: 'Major release',
+      icon: TriangleAlert,
+      description: (
+        <>
+          <p>
+            Use for breaking API changes, removed exports,
+            migration-required behavior, or incompatible design system updates.
+          </p>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Source of truth
 

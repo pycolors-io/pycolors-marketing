@@ -32,6 +32,7 @@ import {
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 import { ClientOnly } from "../previews/client-only";
 import {
@@ -281,55 +282,78 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
 
 ### Product guidance
 
-<Tabs items={["Save", "Delete", "Retry", "Undo"]}>
-  <Tab value="Save">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        Save confirmation
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use toast after the save completes. Keep loading state inline on the submit button.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Save',
+      title: 'Save confirmation',
+      icon: CheckCircle,
+      description: (
+        <>
+          <p>
+            Use toast feedback after the save completes.
+            Keep loading state inline on the submit button.
+          </p>
 
-  <Tab value="Delete">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <ShieldAlert className="h-4 w-4 text-destructive" />
-        Delete flow
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Confirm destructive intent in a Dialog first. Use toast after deletion for confirmation or Undo.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Changes saved successfully.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Delete',
+      title: 'Delete flow',
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Confirm destructive intent in a Dialog first.
+            Use toast feedback afterward for confirmation or Undo.
+          </p>
 
-  <Tab value="Retry">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <RefreshCcw className="h-4 w-4 text-primary" />
-        Retry flow
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use retry for recoverable background failures. Avoid hiding critical failures only inside a toast.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            Project deleted.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Retry',
+      title: 'Retry flow',
+      icon: RefreshCcw,
+      description: (
+        <>
+          <p>
+            Use retry for recoverable background failures.
+            Avoid hiding critical failures only inside toast notifications.
+          </p>
 
-  <Tab value="Undo">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <MessageSquare className="h-4 w-4 text-primary" />
-        Undo flow
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Undo for reversible actions such as archive, delete, remove, or bulk actions when the backend supports restore.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Failed to sync data. Try again.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Undo',
+      title: 'Undo flow',
+      icon: MessageSquare,
+      description: (
+        <>
+          <p>
+            Use Undo for reversible actions such as archive,
+            remove, delete, or bulk actions.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Member removed. Undo
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## API
 

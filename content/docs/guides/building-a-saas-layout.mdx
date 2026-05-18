@@ -9,9 +9,10 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { Blocks, LayoutDashboard, LayoutPanelTop, PanelLeft, PanelsTopLeft, Smartphone, Settings, Table, CheckCircle, XCircle } from "lucide-react";
+import { Blocks, LayoutDashboard, LayoutPanelTop, Monitor, PanelLeft, PanelsTopLeft, Smartphone, Settings, Table, CheckCircle, XCircle } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -157,19 +158,48 @@ A good layout does not change when content changes.
 
 ### Responsive strategy
 
-<Tabs items={["Desktop", "Mobile"]}>
-  <Tab value="Desktop">
-    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
-      Sidebar visible • persistent navigation • dense layout • full-height views
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Desktop',
+      title: 'Desktop layout',
+      icon: Monitor,
+      description: (
+        <>
+          <p>
+            Desktop layouts prioritize persistent navigation and higher information density.
+          </p>
 
-  <Tab value="Mobile">
-    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
-      Sidebar hidden • Sheet navigation • header trigger • content-first layout
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Sidebar visible</Badge>
+            <Badge variant="outline">Persistent navigation</Badge>
+            <Badge variant="outline">Dense layout</Badge>
+            <Badge variant="outline">Full-height views</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Mobile',
+      title: 'Mobile layout',
+      icon: Smartphone,
+      description: (
+        <>
+          <p>
+            Mobile layouts prioritize focused content and progressive navigation disclosure.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Sidebar hidden</Badge>
+            <Badge variant="outline">Sheet navigation</Badge>
+            <Badge variant="outline">Header trigger</Badge>
+            <Badge variant="outline">Content-first layout</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ### Real product examples
 

@@ -65,12 +65,12 @@ function Panel({ tone, title, items }: PanelProps) {
       >
         <StatusIcon tone={tone} icon={Icon} />
 
-        <h3 className="m-0 translate-y-px text-[13px] font-semibold tracking-tight text-foreground mt-2">
+        <h3 className="m-0 translate-y-px text-[14px] font-semibold tracking-tight text-foreground mt-2">
           {title}
         </h3>
       </header>
 
-      <ul className="m-0 divide-y divide-border-subtle">
+      <ul className="docs-list-none m-0 divide-y divide-border-subtle">
         {items.map((item) => (
           <li
             key={item}

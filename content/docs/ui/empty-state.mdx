@@ -24,6 +24,7 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  BarChart3,
   CalendarDays,
   CheckCircle,
   CircleAlert,
@@ -35,12 +36,14 @@ import {
   LoaderCircle,
   LayoutDashboard,
   LayoutTemplate,
+  SearchX,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -438,40 +441,58 @@ Empty state copy should answer two questions:
 1. Why is this empty?
 2. What can the user do next?
 
-<Tabs items={["First-run", "Filtered", "Configured later"]}>
-  <Tab value="First-run">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        No projects yet
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Create your first project to organize your work.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'First-run',
+      title: 'No projects yet',
+      icon: FolderPlus,
+      description: (
+        <>
+          <p>
+            Use first-run empty states when the user has not created any data yet.
+          </p>
 
-  <Tab value="Filtered">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        No results found
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Try adjusting your filters or clearing the current search.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Create your first project to organize your work.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Filtered',
+      title: 'No results found',
+      icon: SearchX,
+      description: (
+        <>
+          <p>
+            Explain that filters or search constraints removed the current results.
+          </p>
 
-  <Tab value="Configured later">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        No metrics available
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Metrics will appear once your app starts receiving data.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Try adjusting your filters or clearing the current search.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Configured later',
+      title: 'No metrics available',
+      icon: BarChart3,
+      description: (
+        <>
+          <p>
+            Use delayed-state messaging when data depends on future activity or integrations.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Metrics will appear once your app starts receiving data.
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

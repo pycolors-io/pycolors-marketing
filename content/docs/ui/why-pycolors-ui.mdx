@@ -20,6 +20,7 @@ import {
   CheckCircle,
   Code2,
   Layers3,
+  LayoutDashboard,
   LayoutTemplate,
   MousePointerClick,
   Palette,
@@ -31,6 +32,7 @@ import {
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -113,43 +115,31 @@ To remove ambiguity where ambiguity becomes expensive.
 
 ### Principles
 
-<Tabs items={["Tokens", "Primitives", "Patterns"]}>
-  <Tab value="Tokens">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Tokens define the system
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Colors, typography, radius, and shadows are expressed as reusable decisions.
-        Components consume those roles instead of hardcoding local styles.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Primitives">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Components stay small
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Components are building blocks. They should be simple, predictable, accessible,
-        and easy to compose into real product surfaces.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Patterns">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Patterns handle product complexity
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Tables, overlays, forms, async actions, and SaaS layouts belong at the pattern level,
-        where UX behavior and state can be documented clearly.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Tokens',
+      title: 'Tokens define the system',
+      icon: Palette,
+      description:
+        'Colors, typography, radius, and shadows are expressed as reusable decisions. Components consume those roles instead of hardcoding local styles.',
+    },
+    {
+      value: 'Primitives',
+      title: 'Components stay small',
+      icon: Boxes,
+      description:
+        'Components are building blocks. They should be simple, predictable, accessible, and easy to compose into real product surfaces.',
+    },
+    {
+      value: 'Patterns',
+      title: 'Patterns handle product complexity',
+      icon: LayoutDashboard,
+      description:
+        'Tables, overlays, forms, async actions, and SaaS layouts belong at the pattern level, where UX behavior and state can be documented clearly.',
+    },
+  ]}
+/>
 
 ### Tokens first
 

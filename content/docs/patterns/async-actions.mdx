@@ -9,10 +9,11 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Steps, Step } from "fumadocs-ui/components/steps";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { CheckCircle, XCircle, FormInput, LoaderCircle, MessageSquareWarning, RefreshCw, RotateCcw, Zap } from "lucide-react";
+import { CheckCircle, Bell, FormInput, LoaderCircle, MessageSquareWarning, RefreshCw, RotateCcw, ShieldAlert, XCircle, Zap } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 import {
   OptimisticToggleDemo,
@@ -115,28 +116,72 @@ Not all actions should behave the same.
 
 Not every action deserves the same UX weight.
 
-<Tabs items={["Inline", "Toast", "Blocking"]}>
-  <Tab value="Inline">
-    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
-      Button state, inline messages, subtle feedback.
-      Best for expected, low-risk actions.
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Inline',
+      title: 'Inline feedback',
+      icon: FormInput,
+      description: (
+        <>
+          <p>
+            Inline feedback keeps users in flow and close to the affected element.
+          </p>
 
-  <Tab value="Toast">
-    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
-      Non-blocking confirmation or error with optional undo/retry.
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Button state</Badge>
+            <Badge variant="outline">Inline messages</Badge>
+            <Badge variant="outline">Subtle feedback</Badge>
+            <Badge variant="outline">Low-risk actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Toast',
+      title: 'Toast feedback',
+      icon: Bell,
+      description: (
+        <>
+          <p>
+            Toasts communicate short-lived system feedback without interrupting the workflow.
+          </p>
 
-  <Tab value="Blocking">
-    <div className="rounded-2xl border border-border/60 bg-card p-6 text-sm text-muted-foreground">
-      Dialog confirmation for destructive or irreversible actions.
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Non-blocking</Badge>
+            <Badge variant="outline">Undo</Badge>
+            <Badge variant="outline">Retry</Badge>
+            <Badge variant="outline">Background actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Blocking',
+      title: 'Blocking feedback',
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Blocking feedback requires explicit confirmation before continuing.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Confirmation dialog</Badge>
+            <Badge variant="outline">Destructive actions</Badge>
+            <Badge variant="outline">Irreversible changes</Badge>
+            <Badge variant="outline">High-risk flows</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 <SaveWithToastDemo />
+
+<br />
+
 </Step>
 
 <Step>

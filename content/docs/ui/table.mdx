@@ -29,9 +29,11 @@ import {
   ArrowRight,
   CheckCircle,
   ChevronRightSquare,
+  Columns3,
   Database,
   FileText,
   Filter,
+  Inbox,
   LayoutGrid,
   LoaderCircle,
   MenuSquare,
@@ -42,6 +44,7 @@ import {
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -411,40 +414,62 @@ Guidelines:
 
 Table labels should be short and scannable.
 
-<Tabs items={["Headers", "Empty", "Loading"]}>
-  <Tab value="Headers">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Column headers
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Prefer concise labels like Name, Email, Role, Status, Amount, Created, Actions.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Headers',
+      title: 'Column headers',
+      icon: Columns3,
+      description: (
+        <>
+          <p>
+            Prefer concise labels such as{' '}
+            <code>Name</code>, <code>Email</code>,{' '}
+            <code>Role</code>, <code>Status</code>,{' '}
+            <code>Amount</code>, <code>Created</code>, and{' '}
+            <code>Actions</code>.
+          </p>
 
-  <Tab value="Empty">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Empty state
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explain the state and provide a next step: “No users found. Invite your first user to get started.”
-      </div>
-    </div>
-  </Tab>
+          <p className="mt-3">
+            Headers should stay short, stable, and easy to scan across dense tables.
+          </p>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: 'Empty state',
+      icon: Inbox,
+      description: (
+        <>
+          <p>
+            Explain the state clearly and provide a next step.
+          </p>
 
-  <Tab value="Loading">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Loading state
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Keep the message neutral and short: “Loading data…” or “Loading users…”
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “No users found. Invite your first user to get started.”
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Loading',
+      title: 'Loading state',
+      icon: LoaderCircle,
+      description: (
+        <>
+          <p>
+            Keep loading copy short, neutral, and predictable.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “Loading data…” or “Loading users…”
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

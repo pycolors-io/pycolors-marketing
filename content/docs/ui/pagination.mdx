@@ -28,16 +28,19 @@ import {
 import {
   ArrowRight,
   CheckCircle,
+  ChevronRight,
   Database,
   LayoutTemplate,
   LoaderCircle,
   Rows3,
+  SearchX,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 import {
   PaginationBasicExample,
@@ -369,40 +372,61 @@ Guidelines:
 
 Pagination labels should be short and predictable.
 
-<Tabs items={["Controls", "Counts", "Empty"]}>
-  <Tab value="Controls">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Previous / Next
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use familiar labels. Avoid clever wording for core navigation.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Controls',
+      title: 'Previous / Next',
+      icon: ChevronRight,
+      description: (
+        <>
+          <p>
+            Use familiar labels for core navigation.
+            Avoid clever wording or ambiguous actions.
+          </p>
 
-  <Tab value="Counts">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Showing 1–10 of 48
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        If your table needs stronger context, show the range near the pagination controls.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Previous · Next
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Counts',
+      title: 'Showing 1–10 of 48',
+      icon: Rows3,
+      description: (
+        <>
+          <p>
+            If the table needs stronger context,
+            show the current range near pagination controls.
+          </p>
 
-  <Tab value="Empty">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        No results found
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        When filters remove all results, show an empty state and a reset action instead of useless pagination.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Showing 1–10 of 48
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: 'No results found',
+      icon: SearchX,
+      description: (
+        <>
+          <p>
+            When filters remove all results,
+            show a meaningful empty state and a reset action.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            No results found. Clear filters and try again.
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

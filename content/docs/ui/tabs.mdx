@@ -40,6 +40,7 @@ import {
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -281,43 +282,68 @@ export function TabsSizes() {
 
 ### Product examples
 
-<Tabs items={["Settings", "Billing", "Dashboard"]}>
-  <Tab value="Settings">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Settings className="h-4 w-4 text-primary" />
-        Settings tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Profile, Organization, Security, Billing, Notifications.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Settings',
+      title: 'Settings tabs',
+      icon: Settings,
+      description: (
+        <>
+          <p>
+            Use tabs to separate stable configuration areas inside settings surfaces.
+          </p>
 
-  <Tab value="Billing">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Billing tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Plan, Invoices, Payment method, Usage.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Profile</Badge>
+            <Badge variant="outline">Organization</Badge>
+            <Badge variant="outline">Security</Badge>
+            <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">Notifications</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Billing',
+      title: 'Billing tabs',
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing surfaces often group related financial and subscription information.
+          </p>
 
-  <Tab value="Dashboard">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LayoutDashboard className="h-4 w-4 text-primary" />
-        Dashboard tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Overview, Activity, Logs, Members.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Plan</Badge>
+            <Badge variant="outline">Invoices</Badge>
+            <Badge variant="outline">Payment method</Badge>
+            <Badge variant="outline">Usage</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Dashboard',
+      title: 'Dashboard tabs',
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            Dashboard tabs help organize operational views without creating route overload.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Overview</Badge>
+            <Badge variant="outline">Activity</Badge>
+            <Badge variant="outline">Logs</Badge>
+            <Badge variant="outline">Members</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ### Usage patterns
 

@@ -33,12 +33,14 @@ import {
   ListFilter,
   Menu,
   MousePointerClick,
+  PanelLeft,
   PanelTop,
   PencilLine,
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -536,40 +538,58 @@ Guidelines:
 
 Sheet copy should tell users what the panel does and what happens next.
 
-<Tabs items={["Filters", "Edit", "Navigation"]}>
-  <Tab value="Filters">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Filter projects
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Narrow results by status, owner, date, and plan.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Filters',
+      title: 'Filter projects',
+      icon: ListFilter,
+      description: (
+        <>
+          <p>
+            Filtering should reduce noise without overwhelming the interface.
+          </p>
 
-  <Tab value="Edit">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Edit profile
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Update account details. Changes are saved when you submit.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Narrow results by status, owner, date, and plan.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Edit',
+      title: 'Edit profile',
+      icon: PencilLine,
+      description: (
+        <>
+          <p>
+            Side editing keeps the parent surface visible while updating focused data.
+          </p>
 
-  <Tab value="Navigation">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Navigation
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move between product areas without losing your current context.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Update account details. Changes are saved when you submit.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Navigation',
+      title: 'Navigation',
+      icon: PanelLeft,
+      description: (
+        <>
+          <p>
+            Navigation should preserve orientation and reduce context switching.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Move between product areas without losing your current context.
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

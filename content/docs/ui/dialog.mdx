@@ -31,9 +31,11 @@ import {
   CheckCircle,
   ClipboardCheck,
   FilePenLine,
+  FolderPlus,
   Layers3,
   MousePointerClick,
   PanelsTopLeft,
+  PencilLine,
   ShieldAlert,
   SquareStack,
   XCircle,
@@ -41,6 +43,7 @@ import {
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -390,40 +393,58 @@ React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
 
 Dialog copy should be direct and specific.
 
-<Tabs items={["Create", "Edit", "Delete"]}>
-  <Tab value="Create">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Create project
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Give your project a name. You can change these details later.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Create',
+      title: 'Create project',
+      icon: FolderPlus,
+      description: (
+        <>
+          <p>
+            Creation flows should feel lightweight, guided, and reversible.
+          </p>
 
-  <Tab value="Edit">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Edit profile
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Update your account details. Changes are saved when you submit.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Give your project a name. You can change these details later.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Edit',
+      title: 'Edit profile',
+      icon: PencilLine,
+      description: (
+        <>
+          <p>
+            Editing flows should communicate persistence and reduce ambiguity.
+          </p>
 
-  <Tab value="Delete">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Delete project
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        This action can’t be undone. This will permanently delete the project and its data.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Update your account details. Changes are saved when you submit.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Delete',
+      title: 'Delete project',
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Destructive flows should clearly communicate risk and permanence.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            This action can’t be undone. This will permanently delete the project and its data.
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

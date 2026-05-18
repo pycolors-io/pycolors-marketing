@@ -24,11 +24,13 @@ import {
   LockKeyhole,
   Rocket,
   Settings,
+  Sparkles,
   Terminal,
   Users,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -99,29 +101,44 @@ Starter Pro helps you answer:
 - how do protected routes work?
 - how does backend state replace mocks?
 
-<Tabs items={["Starter Free", "Starter Pro"]}>
-  <Tab value="Starter Free">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Validate the product surface
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Starter Free to shape routes, screens, UX states, product language, and navigation before production wiring.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Starter Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Wire the business layer
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move to Starter Pro when auth, billing, protected routes, backend foundations, and production flows become the blocker.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Free',
+      title: 'Validate the product surface',
+      href: '/docs/starter',
+      icon: Sparkles,
+      description:
+        'Use Starter Free to shape routes, screens, UX states, product language, and navigation before production wiring.',
+      items: [
+        'real SaaS screens',
+        'dashboard and navigation',
+        'mocked UI states',
+        'fast MVP validation',
+        'frontend-first iteration',
+      ],
+      cta: 'Explore Starter Free →',
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Wire the business layer',
+      href: '/docs/starter-pro',
+      icon: Rocket,
+      tone: 'pro',
+      description:
+        'Move to Starter Pro when auth, billing, protected routes, backend foundations, and production flows become the blocker.',
+      items: [
+        'real authentication',
+        'Stripe billing',
+        'protected routes',
+        'backend foundations',
+        'production-ready flows',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ## What it is
 
