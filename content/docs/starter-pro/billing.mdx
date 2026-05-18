@@ -1,27 +1,15 @@
 ---
 title: Billing system (PRO)
 description: Production-ready Stripe billing for real SaaS monetization, subscriptions, checkout, and revenue flows.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   CreditCard,
   Database,
   Download,
@@ -30,18 +18,20 @@ import {
   LockKeyhole,
   RefreshCcw,
   ShieldCheck,
-  Sparkles,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Billing</Badge>
 </div>
 
-### Billing that turns your product into a business
+## Billing that turns your product into a business
 
 Starter Free gives you **pricing surfaces and billing UX**.
 
@@ -59,14 +49,14 @@ This is not just a pricing page.
 
 It is the layer that makes your SaaS capable of generating real revenue.
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/getting-started">
-      Setup guide
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Revenue starts when billing is real."
+  description="Starter Pro helps you move from pricing UI to a production-oriented billing system that can actually charge customers."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
 
 <Callout title="Core idea">
   Billing is not UI. Billing is payment state, customer ownership, webhook truth, and product access.
@@ -90,87 +80,38 @@ A real SaaS billing layer needs:
 
 Starter Pro gives you a structured foundation for that layer so billing can become a product system, not a fragile afterthought.
 
-## Included foundations
+### Included foundations
 
-### Real monetization flows
-
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Stripe Checkout
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Server-created checkout sessions, upgrade entry points, and a clean path from pricing intent to payment.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <RefreshCcw className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Webhook synchronization
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Stripe events synchronized into your app state so subscriptions, invoices, and access stay aligned.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <FileText className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Invoices and subscriptions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Invoice-ready tracking, subscription lifecycle handling, status surfaces, and billing history foundations.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Plan-aware access
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Billing-aware product logic so access can reflect plan, status, subscription, and customer state.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Stripe Checkout',
+      description:
+        'Server-created checkout sessions, upgrade entry points, and a clean path from pricing intent to payment.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Webhook synchronization',
+      description:
+        'Stripe events synchronized into your app state so subscriptions, invoices, and access stay aligned.',
+      icon: RefreshCcw,
+    },
+    {
+      title: 'Invoices and subscriptions',
+      description:
+        'Invoice-ready tracking, subscription lifecycle handling, status surfaces, and billing history foundations.',
+      icon: FileText,
+    },
+    {
+      title: 'Plan-aware access',
+      description:
+        'Billing-aware product logic so access can reflect plan, status, subscription, and customer state.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ## Billing lifecycle
 
@@ -190,7 +131,8 @@ Starter Pro gives you a structured foundation for that layer so billing can beco
   <Step>
     ### Backend creates Checkout session
 
-    The browser should not create Stripe sessions directly. Your backend creates the Checkout session using server-side Stripe keys.
+    The browser should not create Stripe sessions directly.
+    Your backend creates the Checkout session using server-side Stripe keys.
 
 ```ts title="server/billing/create-checkout-session.ts"
 const session = await stripe.checkout.sessions.create({
@@ -214,7 +156,8 @@ const session = await stripe.checkout.sessions.create({
   <Step>
     ### Webhook updates app state
 
-    Webhooks are the synchronization layer. They verify what actually happened in Stripe and update your database.
+    Webhooks are the synchronization layer.
+    They verify what actually happened in Stripe and update your database.
 
 ```txt title="webhook-events.txt"
 checkout.session.completed
@@ -237,71 +180,68 @@ invoice.payment_failed
   Redirects are UX. Webhooks are truth.
 </Callout>
 
-## Comparison
+### Billing flows
 
-<Tabs items={["Checkout", "Portal", "Webhooks", "Access"]}>
-  <Tab value="Checkout">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Checkout flow
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>upgrade CTA triggers backend session creation</li>
-        <li>Stripe Checkout handles payment</li>
-        <li>success and cancel URLs return users to the app</li>
-        <li>webhook confirms the actual state</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Checkout',
+      title: 'Checkout starts revenue',
+      icon: CreditCard,
+      description:
+        'Checkout creates the initial payment or subscription flow between your product and Stripe.',
+      items: [
+        'upgrade CTA triggers backend session creation',
+        'Stripe Checkout handles payment',
+        'success and cancel URLs return users to the app',
+        'webhook confirms the actual state',
+      ],
+    },
+    {
+      eyebrow: 'Portal',
+      title: 'Portal manages existing customers',
+      icon: KeyRound,
+      description:
+        'The billing portal handles customer self-service flows without rebuilding billing management UI.',
+      items: [
+        'payment method updates',
+        'invoice access',
+        'subscription management',
+        'cancellation flows',
+        'plan changes',
+      ],
+    },
+    {
+      eyebrow: 'Webhooks',
+      title: 'Webhooks synchronize truth',
+      icon: RefreshCcw,
+      description:
+        'Webhooks keep your application aligned with Stripe billing events and subscription state.',
+      items: [
+        'verified Stripe event handling',
+        'subscription status updates',
+        'invoice state updates',
+        'idempotent event handling patterns',
+      ],
+    },
+    {
+      eyebrow: 'Access',
+      title: 'Plan-aware product access',
+      icon: ShieldCheck,
+      description:
+        'Billing becomes product infrastructure when subscription state controls feature access.',
+      items: [
+        'feature gates by plan',
+        'subscription status checks',
+        'past due and canceled handling',
+        'billing-aware dashboard surfaces',
+      ],
+    },
+  ]}
+/>
 
-  <Tab value="Portal">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <KeyRound className="h-4 w-4 text-primary" />
-        Billing portal
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>payment method updates</li>
-        <li>invoice access</li>
-        <li>subscription management</li>
-        <li>cancellation and plan changes</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Webhooks">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <RefreshCcw className="h-4 w-4 text-primary" />
-        Webhook sync
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>verified Stripe event handling</li>
-        <li>subscription status updates</li>
-        <li>invoice state updates</li>
-        <li>idempotent event handling patterns</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Access">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Plan-aware access
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>feature gates by plan</li>
-        <li>subscription status checks</li>
-        <li>past due and canceled handling</li>
-        <li>billing-aware dashboard surfaces</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
-
-### Starter Free vs Starter Pro
+## Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -317,7 +257,8 @@ invoice.payment_failed
 | Revenue readiness | Demo only | Production-oriented |
 
 <Callout title="Simple distinction">
-  Starter Free simulates monetization. Starter Pro gives you the billing layer required to charge customers.
+  Starter Free simulates monetization.
+  Starter Pro gives you the billing layer required to charge customers.
 </Callout>
 
 ## Architecture
@@ -338,7 +279,8 @@ Typical responsibilities include:
 | WebhookEvent | Tracks processed Stripe events for reliability |
 
 <Callout type="info" title="Why this matters">
-  Stripe is the payment source. Your app still needs synchronized billing state to protect access and render product UI correctly.
+  Stripe is the payment source.
+  Your app still needs synchronized billing state to protect access and render product UI correctly.
 </Callout>
 
 ### Plan gating
@@ -363,7 +305,7 @@ export function canAccessProFeature(subscriptionStatus: string) {
 
 Keep plan logic clear, centralized, and server-verifiable.
 
-## Security rules
+### Security rules
 
 Use these rules when adapting the billing layer.
 
@@ -384,26 +326,48 @@ Use these rules when adapting the billing layer.
   ]}
 />
 
-### Decision guide
+## Decision guide
 
-Use Starter Pro billing when:
-
-- you want to charge users
-- Stripe Checkout must work
-- subscription status controls access
-- invoice history matters
-- webhooks need to sync state
-- billing is blocking launch confidence
-
-Stay on Starter Free when:
-
-- you are validating pricing UX
-- billing is still mocked
-- you do not accept payments yet
-- your product is not ready to monetize
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Use Starter Pro when billing becomes real',
+      href: '/docs/starter-pro/getting-started',
+      icon: CreditCard,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when charging users becomes part of your launch plan and billing can no longer stay mocked.',
+      items: [
+        'you want to charge users',
+        'Stripe Checkout must work',
+        'subscription status controls access',
+        'invoice history matters',
+        'webhooks need to sync state',
+        'billing is blocking launch confidence',
+      ],
+      cta: 'Start setup →',
+    },
+    {
+      eyebrow: 'Starter Free',
+      title: 'Stay on Free while validating pricing UX',
+      icon: FileText,
+      description:
+        'Stay on Starter Free while your monetization flow is still a product surface and not a real payment system.',
+      items: [
+        'you are validating pricing UX',
+        'billing is still mocked',
+        'you do not accept payments yet',
+        'your product is not ready to monetize',
+      ],
+    },
+  ]}
+/>
 
 <Callout title="Upgrade when billing becomes real">
-  Starter Free helps you shape monetization. Starter Pro gives you the billing layer required to charge customers.
+  Starter Free helps you shape monetization.
+  Starter Pro gives you the billing layer required to charge customers.
 </Callout>
 
 ### Implementation checklist
@@ -426,7 +390,8 @@ Before treating billing as launch-ready, validate:
 - user-facing billing error copy
 
 <Callout type="info" title="Validation principle">
-  Do not trust billing until you validate the full lifecycle: checkout, webhook, database sync, and product access.
+  Do not trust billing until you validate the full lifecycle:
+  checkout, webhook, database sync, and product access.
 </Callout>
 
 ## Common questions
@@ -448,6 +413,15 @@ Before treating billing as launch-ready, validate:
     Redirects are not enough. Webhooks tell your application what actually happened inside Stripe after payment, renewal, cancellation, or failure.
   </Accordion>
 </Accordions>
+
+<DocsUpgradeCTA
+  title="Move from pricing UI to real revenue infrastructure."
+  description="Starter Pro helps you wire Checkout, Portal, webhooks, subscription state, and plan-aware access from a stronger baseline."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
 ## Next steps
 
@@ -484,17 +458,3 @@ Before treating billing as launch-ready, validate:
     },
   ]}
 />
-
-<br />
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Revenue starts when billing is real.">
-  Starter Pro helps you move from pricing UI to a production-oriented billing system that can actually charge customers.
-</Callout>

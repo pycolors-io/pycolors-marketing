@@ -1,42 +1,34 @@
 ---
 title: What is included
 description: See what Starter Pro includes, what is already built, and what you still build yourself.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   CreditCard,
   Database,
   Download,
   LockKeyhole,
+  Package,
   Rocket,
   Scale,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Included</Badge>
 </div>
 
-### What is included in Starter Pro
+## What is included in Starter Pro
 
 Starter Pro includes the production foundations that usually slow SaaS launches down.
 
@@ -54,189 +46,167 @@ It is a **production-ready SaaS foundation** built around the layers most paid p
 - app foundations
 
 <Callout title="Core idea">
-  Starter Pro includes the infrastructure layer that makes a product launchable. You still build the product logic that makes it valuable.
+  Starter Pro includes the infrastructure layer that makes a product launchable.
+  You still build the product logic that makes it valuable.
 </Callout>
 
-<br />
+<DocsUpgradeCTA
+  title="Build the product. Don’t rebuild the blockers."
+  description="Starter Pro gives you the launch foundation so you can spend more time on customers, product, and revenue."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
+### Included systems
 
-## Included systems
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      description:
+        'Real account foundations with credentials, OAuth, email verification, reset flows, sessions, and safer account lifecycle handling.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and billing-aware product behavior.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend foundation',
+      description:
+        'Prisma-ready structure, database-oriented architecture, server-side patterns, and clear domain boundaries.',
+      icon: Database,
+    },
+    {
+      title: 'Secure delivery',
+      description:
+        'Controlled post-purchase access, private asset delivery, token-based download flow, and structured fulfillment.',
+      icon: Download,
+    },
+  ]}
+/>
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Authentication
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Real account foundations with credentials, OAuth, email verification, reset flows, sessions, and safer account lifecycle handling.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+## Detailed scope
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and billing-aware product behavior.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Authentication',
+      title: 'Real auth foundations',
+      icon: LockKeyhole,
+      description:
+        'Authentication foundations required before a SaaS product can safely launch.',
+      items: [
+        'email and password auth',
+        'Google OAuth',
+        'GitHub OAuth',
+        'email verification',
+        'forgot password',
+        'reset password',
+        'password change',
+        'connected accounts patterns',
+        'session-aware flows',
+      ],
+    },
+    {
+      eyebrow: 'Billing',
+      title: 'Revenue foundations',
+      icon: CreditCard,
+      tone: 'platform',
+      description:
+        'Stripe foundations for subscriptions, invoices, and monetization flows.',
+      items: [
+        'Stripe Checkout',
+        'billing portal',
+        'subscription lifecycle handling',
+        'invoice-ready flows',
+        'webhook synchronization',
+        'plan-aware product logic',
+        'upgrade-ready monetization surfaces',
+      ],
+    },
+    {
+      eyebrow: 'Backend',
+      title: 'Backend-ready structure',
+      icon: Database,
+      description:
+        'A backend-oriented structure designed for long-term product evolution.',
+      items: [
+        'Prisma-ready structure',
+        'database-oriented architecture',
+        'server-side integration patterns',
+        'auth-aware logic',
+        'billing-aware logic',
+        'domain separation patterns',
+      ],
+    },
+    {
+      eyebrow: 'Delivery',
+      title: 'Secure fulfillment flow',
+      icon: Download,
+      description:
+        'Production-minded delivery and post-purchase access foundations.',
+      items: [
+        'secure delivery flow',
+        'controlled post-purchase access',
+        'private access patterns',
+        'token-based download flow',
+        'structured fulfillment approach',
+      ],
+    },
+  ]}
+/>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Database className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Backend foundation
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Prisma-ready structure, database-oriented architecture, server-side patterns, and clear domain boundaries.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+### Scope boundaries
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Download className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Secure delivery
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Controlled post-purchase access, private asset delivery, token-based download flow, and structured fulfillment.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
-
-### Detailed scope
-
-<Tabs items={["Auth", "Billing", "Backend", "Delivery"]}>
-  <Tab value="Auth">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Authentication foundations
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>email and password auth</li>
-        <li>Google OAuth</li>
-        <li>GitHub OAuth</li>
-        <li>email verification</li>
-        <li>forgot password</li>
-        <li>reset password</li>
-        <li>password change</li>
-        <li>connected accounts patterns</li>
-        <li>session-aware flows</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Billing">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Billing foundations
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>Stripe Checkout</li>
-        <li>billing portal</li>
-        <li>subscription lifecycle handling</li>
-        <li>invoice-ready flows</li>
-        <li>webhook synchronization</li>
-        <li>plan-aware product logic</li>
-        <li>upgrade-ready monetization surfaces</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Backend">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Backend foundations
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>Prisma-ready structure</li>
-        <li>database-oriented architecture</li>
-        <li>server-side integration patterns</li>
-        <li>auth-aware logic</li>
-        <li>billing-aware logic</li>
-        <li>domain separation patterns</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Delivery">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Delivery foundations
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>secure delivery flow</li>
-        <li>controlled post-purchase access</li>
-        <li>private access patterns</li>
-        <li>token-based download flow</li>
-        <li>structured fulfillment approach</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
-
-## Scope boundaries
-
-### Included vs not included
-
-| Included | Not included |
-| --- | --- |
-| auth foundations | your unique product logic |
-| billing foundations | your final product strategy |
-| protected app structure | your niche workflows |
-| backend-ready structure | your market-specific differentiation |
-| delivery path | your customer onboarding strategy |
-| serious baseline for launch | your business model decisions |
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Included',
+      title: 'Launch foundations',
+      tone: 'platform',
+      description:
+        'Starter Pro removes repeated infrastructure work that serious SaaS products usually need before launch.',
+      items: [
+        'auth foundations',
+        'billing foundations',
+        'protected app structure',
+        'backend-ready structure',
+        'delivery path',
+        'serious baseline for launch',
+      ],
+    },
+    {
+      eyebrow: 'Not included',
+      title: 'Your differentiation',
+      description:
+        'You still own the parts that make the product unique and commercially valuable.',
+      items: [
+        'your unique product logic',
+        'your final product strategy',
+        'your niche workflows',
+        'your market differentiation',
+        'your onboarding experience',
+        'your business decisions',
+      ],
+    },
+  ]}
+/>
 
 <Callout type="info" title="Healthy separation">
-  Starter Pro removes repeated infrastructure work. It does not replace product judgment.
+  Starter Pro removes repeated infrastructure work.
+  It does not replace product judgment.
 </Callout>
 
-### What this means in practice
+## What this means in practice
 
 Starter Pro is commercially useful because it removes the systems work that paid products usually need before launch:
 
@@ -274,7 +244,8 @@ You are buying a faster path through the layers that are usually:
 <Callout title="The better question">
   The question is not “How much stuff is included?”
 
-  The better question is: “Does this remove the work that would delay launch?”
+  The better question is:
+  “Does this remove the work that would delay launch?”
 </Callout>
 
 ## Decision guide
@@ -298,7 +269,7 @@ You are buying a faster path through the layers that are usually:
   ]}
 />
 
-### Mental model
+## Mental model
 
 > Included = the layers required to launch seriously.
 > Not included = the parts that make your product yours.
@@ -306,6 +277,15 @@ You are buying a faster path through the layers that are usually:
 Starter Pro is not meant to impress with quantity.
 
 It is meant to remove the right blockers.
+
+<DocsUpgradeCTA
+  title="Launch with a stronger baseline."
+  description="Starter Pro removes repeated infrastructure work so you can focus earlier on customers, product value, and revenue."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>
 
 ## Next steps
 
@@ -342,18 +322,3 @@ It is meant to remove the right blockers.
     },
   ]}
 />
-
-<br />
-
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Build the product. Don’t rebuild the blockers.">
-  Starter Pro gives you the launch foundation so you can spend more time on customers, product, and revenue.
-</Callout>

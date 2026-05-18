@@ -1,7 +1,7 @@
 ---
 title: Templates
 description: Premium product templates built with PyColors UI and PyColors Tokens. Launch focused marketing pages faster without rebuilding the foundation.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: Templates
 ---
 
@@ -11,6 +11,7 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import { ArrowRight, BadgeEuro, Boxes, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Templates</Badge>
@@ -31,26 +32,60 @@ Templates are intentionally narrower than starters. A template helps you launch 
 
 ## Product ladder
 
-<Tabs items={["Templates", "Starter Free", "Starter Pro"]}>
-  <Tab value="Templates">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Launch the offer</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.</div>
-    </div>
-  </Tab>
-  <Tab value="Starter Free">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Validate the product surface</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked app flows.</div>
-    </div>
-  </Tab>
-  <Tab value="Starter Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Wire the business layer</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and launch-ready SaaS wiring.</div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Templates',
+      title: 'Launch the offer',
+      href: '/templates',
+      icon: LayoutTemplate,
+      description:
+        'Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.',
+      items: [
+        'premium landing pages',
+        'marketing-first surfaces',
+        'SEO baseline',
+        'launch-ready presentation',
+        'fast publishing workflow',
+      ],
+      cta: 'Explore Templates →',
+    },
+    {
+      eyebrow: 'Starter Free',
+      title: 'Validate the product surface',
+      href: '/starters/free',
+      icon: Sparkles,
+      description:
+        'Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked product flows.',
+      items: [
+        'dashboard structure',
+        'settings and billing surfaces',
+        'mocked app flows',
+        'product UX validation',
+        'rapid MVP iteration',
+      ],
+      cta: 'Explore Starter Free →',
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Wire the business layer',
+      href: '/starters/pro',
+      icon: Rocket,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and production-ready SaaS wiring.',
+      items: [
+        'real authentication',
+        'Stripe billing',
+        'protected routes',
+        'database foundations',
+        'launch-ready SaaS infrastructure',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ## Available templates
 

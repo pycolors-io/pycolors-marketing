@@ -1,27 +1,14 @@
 ---
 title: Auth system (PRO)
 description: Production-ready authentication with real flows, OAuth, session handling, and security foundations for real SaaS products.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   CreditCard,
   Database,
   Github,
@@ -32,17 +19,20 @@ import {
   RefreshCcw,
   ShieldCheck,
   UserRoundCheck,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Auth</Badge>
 </div>
 
-### Authentication that actually ships
+## Authentication that actually ships
 
 Starter Free gives you **auth screens and UX states**.
 
@@ -57,20 +47,20 @@ Starter Pro gives you **a production-ready authentication system** for real SaaS
 
 This is the layer that turns login pages into a working product system.
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/getting-started">
-      Setup guide
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Ship auth once. Ship it right."
+  description="The cost of weak auth is usually paid later. Starter Pro helps you avoid that by starting from a stronger foundation."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
 
 <Callout title="Core idea">
   Auth is not UI. Auth is lifecycle, security, state, redirects, provider rules, and trust.
 </Callout>
 
-### What this solves
+## What this solves
 
 Authentication is usually one of the first serious blockers before launch.
 
@@ -95,157 +85,104 @@ But production auth also needs:
 
 Starter Pro gives you a structured foundation for that layer so you do not rebuild the full lifecycle from scratch.
 
-## What is included
+### What is included
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Credentials auth
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Email and password authentication with account creation, password validation, password reset, and password change foundations.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Github className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          OAuth providers
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Google and GitHub OAuth foundations with connected account patterns and safer provider lifecycle handling.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MailCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Verification and tokens
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Email verification, reset password, token expiration, and recovery flows structured for production use.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Protected foundations
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Session-aware UI, protected routes, auth-aware backend logic, and account safety patterns.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Credentials auth',
+      description:
+        'Email and password authentication with account creation, password validation, password reset, and password change foundations.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'OAuth providers',
+      description:
+        'Google and GitHub OAuth foundations with connected account patterns and safer provider lifecycle handling.',
+      icon: Github,
+    },
+    {
+      title: 'Verification and tokens',
+      description:
+        'Email verification, reset password, token expiration, and recovery flows structured for production use.',
+      icon: MailCheck,
+    },
+    {
+      title: 'Protected foundations',
+      description:
+        'Session-aware UI, protected routes, auth-aware backend logic, and account safety patterns.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ### Auth flows
 
-<Tabs items={["Sign in", "Register", "Password", "Providers"]}>
-  <Tab value="Sign in">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Sign in flow
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>email and password sign in</li>
-        <li>OAuth sign in</li>
-        <li>session creation</li>
-        <li>error-aware UX</li>
-        <li>redirect to protected app surface</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Sign in',
+      title: 'Sign in flow',
+      icon: LockKeyhole,
+      description:
+        'A production sign-in flow needs more than a form. It needs state, errors, redirects, and session creation.',
+      items: [
+        'email and password sign in',
+        'OAuth sign in',
+        'session creation',
+        'error-aware UX',
+        'redirect to protected app surface',
+      ],
+    },
+    {
+      eyebrow: 'Register',
+      title: 'Registration flow',
+      icon: UserRoundCheck,
+      description:
+        'Registration turns anonymous users into real accounts with a lifecycle that can support verification and onboarding.',
+      items: [
+        'real account creation',
+        'password validation',
+        'email verification-ready lifecycle',
+        'provider signup path',
+        'session-aware onboarding path',
+      ],
+    },
+    {
+      eyebrow: 'Password',
+      title: 'Password lifecycle',
+      icon: KeyRound,
+      description:
+        'Password flows need secure recovery, expiration-aware tokens, and clear account safety rules.',
+      items: [
+        'forgot password request',
+        'reset password token',
+        'expiration-aware recovery flow',
+        'in-session password change',
+        'add password for OAuth-only users',
+      ],
+    },
+    {
+      eyebrow: 'Providers',
+      title: 'Connected accounts',
+      icon: RefreshCcw,
+      description:
+        'Provider flows need connection, linking, disconnect, and fallback behavior so users do not get locked out.',
+      items: [
+        'Google account connection',
+        'GitHub account connection',
+        'provider linking patterns',
+        'safe disconnect rules',
+        'account fallback behavior',
+      ],
+    },
+  ]}
+/>
 
-  <Tab value="Register">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <UserRoundCheck className="h-4 w-4 text-primary" />
-        Registration flow
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>real account creation</li>
-        <li>password validation</li>
-        <li>email verification-ready lifecycle</li>
-        <li>provider signup path</li>
-        <li>session-aware onboarding path</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Password">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <KeyRound className="h-4 w-4 text-primary" />
-        Password lifecycle
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>forgot password request</li>
-        <li>reset password token</li>
-        <li>expiration-aware recovery flow</li>
-        <li>in-session password change</li>
-        <li>add password for OAuth-only users</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Providers">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <RefreshCcw className="h-4 w-4 text-primary" />
-        Connected accounts
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>Google account connection</li>
-        <li>GitHub account connection</li>
-        <li>provider linking patterns</li>
-        <li>safe disconnect rules</li>
-        <li>account fallback behavior</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
-
-## Comparison
-
-###  Starter Free vs Starter Pro
+## Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -334,7 +271,7 @@ That means auth must support:
   You cannot reliably charge customers until you can reliably identify them.
 </Callout>
 
-## Security rules
+### Security rules
 
 Use these rules when adapting the authentication layer.
 
@@ -355,24 +292,45 @@ Use these rules when adapting the authentication layer.
   ]}
 />
 
-### Decision guide
+## Decision guide
 
-Use Starter Pro auth when:
-
-- real users need accounts
-- sessions must persist
-- OAuth providers matter
-- password reset must work
-- routes need protection
-- billing depends on identity
-- account lifecycle edge cases matter
-
-Stay on Starter Free when:
-
-- you are still validating UX
-- you do not need real users yet
-- auth is not blocking progress
-- you are not preparing monetization
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Use Starter Pro auth when auth becomes real',
+      href: '/docs/starter-pro/getting-started',
+      icon: ShieldCheck,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when authentication is part of the launch foundation and not only a mocked screen.',
+      items: [
+        'real users need accounts',
+        'sessions must persist',
+        'OAuth providers matter',
+        'password reset must work',
+        'routes need protection',
+        'billing depends on identity',
+        'account lifecycle edge cases matter',
+      ],
+      cta: 'Start setup →',
+    },
+    {
+      eyebrow: 'Starter Free',
+      title: 'Stay on Free while validating UX',
+      icon: UserRoundCheck,
+      description:
+        'Stay on Starter Free when you are still testing the product surface and do not need real users yet.',
+      items: [
+        'you are still validating UX',
+        'you do not need real users yet',
+        'auth is not blocking progress',
+        'you are not preparing monetization',
+      ],
+    },
+  ]}
+/>
 
 <Callout title="Upgrade when auth becomes real">
   Starter Free helps you design the auth surface. Starter Pro gives you the auth system behind it.
@@ -396,7 +354,8 @@ Before treating auth as launch-ready, validate:
 - billing access ownership
 
 <Callout type="info" title="Validation principle">
-  Do not customize deeply before validating the default flows. Confirm the foundation first, then adapt the product.
+  Do not customize deeply before validating the default flows.
+  Confirm the foundation first, then adapt the product.
 </Callout>
 
 ## Common questions
@@ -418,6 +377,15 @@ Before treating auth as launch-ready, validate:
     You can, but auth touches many parts of a product. Replace it deliberately and keep the same boundaries around sessions, tokens, and protected access.
   </Accordion>
 </Accordions>
+
+<DocsUpgradeCTA
+  title="Authentication is launch infrastructure."
+  description="Move to Starter Pro when login pages need to become a secure account system with sessions, providers, recovery, and protected access."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
 ## Next steps
 
@@ -454,17 +422,3 @@ Before treating auth as launch-ready, validate:
     },
   ]}
 />
-
-<br />
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Ship auth once. Ship it right.">
-  The cost of weak auth is usually paid later. Starter Pro helps you avoid that by starting from a stronger foundation.
-</Callout>

@@ -1,44 +1,33 @@
 ---
 title: Why buy instead of building
 description: Decide when buying Starter Pro is a higher-leverage move than rebuilding auth, billing, and backend foundations from scratch.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   Clock,
   CreditCard,
   LockKeyhole,
   Package,
   Rocket,
   ShieldCheck,
-  XCircle,
   Zap,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Decision</Badge>
 </div>
 
-### Build vs buy is a leverage decision
+## Build vs buy is a leverage decision
 
 You can build authentication, billing, backend structure, and secure delivery yourself.
 
@@ -48,22 +37,20 @@ The question is:
 
 > Is rebuilding this the highest-leverage use of your time before launch?
 
-Starter Pro exists for the moment when the answer becomes **no**.
-
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/what-is-included">
-      See what’s included
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Starter Pro exists for the moment when the answer becomes no."
+  description="Move to production-ready auth, billing, protected routes, and backend foundations when mocked flows stop being enough."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/what-is-included"
+  secondaryLabel="See what’s included"
+/>
 
 <Callout title="The simple rule">
   Build your differentiation. Buy the infrastructure that does not differentiate your product.
 </Callout>
 
-### The hidden wall before launch
+## The hidden wall before launch
 
 Most SaaS projects do not slow down because the first screens are hard.
 
@@ -80,44 +67,45 @@ This is not “small setup work”.
 
 It is **launch-blocking infrastructure**.
 
-## Tradeoff
-
 ### The real tradeoff
 
-<Tabs items={["Build from scratch", "Buy Starter Pro"]}>
-  <Tab value="Build from scratch">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Clock className="h-4 w-4 text-muted-foreground" />
-        Build everything yourself
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>full technical control</li>
-        <li>custom architecture from day one</li>
-        <li>deeper learning opportunity</li>
-        <li>longer setup time</li>
-        <li>more auth and billing edge cases</li>
-        <li>higher launch risk if the implementation is partial</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Buy Starter Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Zap className="h-4 w-4 text-primary" />
-        Buy Starter Pro
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>production-shaped baseline immediately</li>
-        <li>less repeated infrastructure work</li>
-        <li>reduced uncertainty before launch</li>
-        <li>faster path to charging customers</li>
-        <li>more time for product, users, and distribution</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Build from scratch',
+      title: 'Own everything yourself',
+      icon: Clock,
+      description:
+        'Build the entire SaaS foundation internally when you want maximum architectural ownership from day one.',
+      items: [
+        'full technical control',
+        'custom architecture',
+        'deeper learning opportunity',
+        'longer setup time',
+        'more auth and billing edge cases',
+        'higher launch risk if implementation stays partial',
+      ],
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Start from a production-ready baseline',
+      href: '/docs/starter-pro',
+      icon: Zap,
+      tone: 'pro',
+      description:
+        'Use Starter Pro to reduce repeated infrastructure work and focus earlier on product, users, and revenue.',
+      items: [
+        'production-shaped foundation immediately',
+        'less repeated infrastructure work',
+        'reduced launch uncertainty',
+        'faster path to charging customers',
+        'more time for product and distribution',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ### Where time disappears
 
@@ -125,7 +113,7 @@ Most builders start with:
 
 > I’ll just wire auth and Stripe quickly.
 
-Then time disappears into:
+Then time disappears into auth, billing, and launch-readiness work that looks small from the outside but becomes expensive near release.
 
 <DocsFeatureGrid
   columns={3}
@@ -152,13 +140,9 @@ Then time disappears into:
   ]}
 />
 
-<br />
-
 <Callout title="Reality check">
   These systems do not usually differentiate your SaaS. But if they are wrong, they block your launch.
 </Callout>
-
-## Cost of delay
 
 ### The hidden cost is delay
 
@@ -175,7 +159,7 @@ It is also:
 
 That cost is often higher than the purchase price.
 
-### What Starter Pro actually skips
+## What Starter Pro actually skips
 
 Starter Pro skips the repeated foundation work:
 
@@ -251,10 +235,18 @@ Then it has already done its job.
   Time, clarity, and a faster path to revenue — not just code.
 </Callout>
 
-### Final mental model
+## Final mental model
 
-> Build what makes your product different.
-> Buy what every serious SaaS has to rebuild.
+> Build what makes your product different. Buy what every serious SaaS has to rebuild.
+
+<DocsUpgradeCTA
+  title="Ship sooner. Learn faster. Earn earlier."
+  description="The only thing worse than rebuilding everything yourself is shipping too late."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
 ## Next steps
 
@@ -291,18 +283,3 @@ Then it has already done its job.
     },
   ]}
 />
-
-<br />
-
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Ship sooner. Learn faster. Earn earlier.">
-  The only thing worse than rebuilding everything yourself is shipping too late.
-</Callout>

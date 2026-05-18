@@ -1,7 +1,7 @@
 ---
 title: Typography
 description: Typography scale, text roles, and hierarchy used across PyColors UI.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Design System
 ---
 
@@ -116,23 +116,25 @@ This split keeps dashboards efficient while making documentation feel calm and p
 
 Headings should make structure obvious without turning every section into a visual event.
 
-<Tabs items={["Preview", "Code"]}>
+<Tabs items={['Preview', 'Code']}>
   <Tab value="Preview">
-    <div className="space-y-4 rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-4xl font-semibold tracking-tight text-foreground">
-        Page title
-      </div>
-      <div className="text-3xl font-semibold tracking-tight text-foreground">
-        Section title
-      </div>
-      <div className="text-2xl font-semibold tracking-tight text-foreground">
-        Subsection title
-      </div>
-      <div className="text-xl font-medium tracking-tight text-foreground">
-        Minor heading
-      </div>
-      <div className="text-base leading-7 text-muted-foreground">
-        Readable body text with enough rhythm for documentation and product copy.
+    <div className="not-prose rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
+      <div className="space-y-4">
+        <div className="text-4xl font-semibold tracking-tight text-foreground">
+          Page title
+        </div>
+        <div className="text-3xl font-semibold tracking-tight text-foreground">
+          Section title
+        </div>
+        <div className="text-2xl font-semibold tracking-tight text-foreground">
+          Subsection title
+        </div>
+        <div className="text-xl font-medium tracking-tight text-foreground">
+          Minor heading
+        </div>
+        <div className="text-base leading-7 text-muted-foreground">
+          Readable body text with enough rhythm for documentation and product copy.
+        </div>
       </div>
     </div>
   </Tab>
@@ -165,6 +167,7 @@ export function HeadingHierarchy() {
 
   </Tab>
 </Tabs>
+
 </Step>
 
 </Steps>
