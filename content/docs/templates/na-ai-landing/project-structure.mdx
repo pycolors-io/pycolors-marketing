@@ -12,8 +12,10 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
 import {
+  Database,
   Boxes,
   FolderTree,
+  Layers3,
   LayoutTemplate,
   Palette,
   Rocket,
@@ -60,7 +62,7 @@ before touching the visual implementation.
   The template is designed so product content can evolve without constantly rewriting the visual foundation.
 </Callout>
 
-## Architecture overview
+### Architecture overview
 
 <DocsFeatureGrid
   columns={2}
@@ -163,7 +165,7 @@ before touching the visual implementation.
   </Folder>
 </Files>
 
-## Architecture flow
+### Architecture flow
 
 ```txt title="architecture-flow.txt"
 src/@data
@@ -180,26 +182,78 @@ components/layout
     {
       value: 'Data',
       title: 'Data layer',
-      description:
-        'Owns content, lists, pricing values, nav labels, FAQ items, testimonials, and section configuration.',
+      icon: Database,
+      description: (
+        <>
+          <p>
+            The data layer owns structured content, pricing values, navigation labels, FAQ items, testimonials, and section configuration.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Content ownership</Badge>
+            <Badge variant="outline">Pricing configuration</Badge>
+            <Badge variant="outline">Navigation structure</Badge>
+            <Badge variant="outline">FAQ and testimonials</Badge>
+          </div>
+        </>
+      ),
     },
     {
       value: 'Sections',
       title: 'Section layer',
-      description:
-        'Renders the product blocks that compose the landing page experience.',
+      icon: LayoutTemplate,
+      description: (
+        <>
+          <p>
+            The section layer renders the product blocks that compose the landing page experience and conversion flow.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Hero sections</Badge>
+            <Badge variant="outline">Pricing sections</Badge>
+            <Badge variant="outline">Feature blocks</Badge>
+            <Badge variant="outline">Conversion surfaces</Badge>
+          </div>
+        </>
+      ),
     },
     {
       value: 'Layout',
       title: 'Layout layer',
-      description:
-        'Owns navbar, footer, section framing, theme provider, and global structure.',
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The layout layer controls navbar, footer, section framing, theme provider, and shared page composition.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Navbar</Badge>
+            <Badge variant="outline">Footer</Badge>
+            <Badge variant="outline">Theme provider</Badge>
+            <Badge variant="outline">Global layout</Badge>
+          </div>
+        </>
+      ),
     },
     {
       value: 'UI',
       title: 'UI primitives',
-      description:
-        'Shared primitives come from @pycolors/ui while visual consistency comes from @pycolors/tokens.',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            UI primitives come from <code>@pycolors/ui</code> while visual consistency comes from <code>@pycolors/tokens</code>.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Semantic tokens</Badge>
+            <Badge variant="outline">Shared primitives</Badge>
+            <Badge variant="outline">Consistent spacing</Badge>
+            <Badge variant="outline">Light and dark mode</Badge>
+          </div>
+        </>
+      ),
     },
   ]}
 />
@@ -275,7 +329,7 @@ export default function Page() {
   ]}
 />
 
-## Why this structure scales
+### Why this structure scales
 
 As landing pages grow, problems usually come from unclear boundaries:
 
