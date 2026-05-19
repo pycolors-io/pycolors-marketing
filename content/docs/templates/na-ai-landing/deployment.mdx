@@ -1,30 +1,91 @@
 ---
 title: Deployment
 description: Deploy NA-AI Landing to production with Vercel or another hosting platform.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, Palette, Scale, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { Badge } from "@pycolors/ui";
+import {
+  Globe,
+  Palette,
+  Rocket,
+  Search,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
-<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Deployment</Badge></div>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Deployment</Badge>
+</div>
 
-## Deploy the landing page
+## Deploy the landing page to production
 
-NA-AI Landing is a standard Next.js project and can be deployed on Vercel or any platform that supports Next.js.
+NA-AI Landing is a standard Next.js project and can be deployed on:
+
+- Vercel
+- Netlify
+- Render
+- AWS Amplify
+- self-hosted Node.js environments
 
 Recommended platform: Vercel.
 
-Also compatible with Netlify, Render, AWS Amplify, and self-hosted Node.js environments.
+The deployment flow is intentionally simple so you can move from customization to production quickly.
+
+<DocsUpgradeCTA
+  title="Launch the marketing surface fast."
+  description="NA-AI Landing is optimized for fast deployment, premium presentation, and clean production delivery on modern Next.js hosting platforms."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
 
 <Callout title="Core idea">
-  Deploy after you update the product copy, SEO metadata, social images, and site URL.
+  Deploy after updating the product copy, SEO metadata, social preview assets, and site URL.
 </Callout>
+
+### Production readiness
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Next.js-ready deployment',
+      icon: Rocket,
+      description:
+        'NA-AI Landing ships as a standard App Router project compatible with modern deployment platforms.',
+    },
+    {
+      title: 'SEO foundations included',
+      icon: Search,
+      description:
+        'Metadata, sitemap, robots configuration, and social preview assets are already structured.',
+    },
+    {
+      title: 'Custom domain support',
+      icon: Globe,
+      description:
+        'Deploy behind a branded domain or subdomain for stronger product perception.',
+    },
+    {
+      title: 'Frontend-first architecture',
+      icon: Sparkles,
+      description:
+        'The template works without backend configuration or infrastructure setup.',
+    },
+  ]}
+/>
 
 ## Pre-deploy checklist
 
@@ -52,9 +113,9 @@ Also compatible with Netlify, Render, AWS Amplify, and self-hosted Node.js envir
 ## Deploy on Vercel
 
 <Steps>
-
   <Step>
-  ### Push the project to GitHub
+    ### Push the project to GitHub
+
 ```bash title="terminal"
 git init
 git add .
@@ -63,77 +124,144 @@ git branch -M main
 git remote add origin <your-repository-url>
 git push -u origin main
 ```
-</Step>
+  </Step>
+
   <Step>
-  ### Import the project in Vercel
-Import the GitHub repository and select the Next.js framework preset.
-</Step>
+    ### Import the project into Vercel
+
+    Import the GitHub repository and select the Next.js framework preset.
+  </Step>
+
   <Step>
-  ### Configure build settings
-```txt title="vercel"
+    ### Configure build settings
+
+```txt title="vercel-settings"
 Install Command: pnpm install
 Build Command: pnpm build
 Output: .next
 ```
-</Step>
+  </Step>
+
   <Step>
-  ### Deploy
-Trigger the first production deployment and verify the page loads correctly.
-</Step>
+    ### Trigger the deployment
+
+    Run the first production deployment and validate the page behavior on the generated deployment URL.
+  </Step>
+
   <Step>
-  ### Add a custom domain
-Add your product domain or subdomain in the Vercel project settings.
-</Step>
+    ### Add a custom domain
+
+    Connect your product domain or subdomain from the Vercel project settings.
+  </Step>
 </Steps>
 
-## Domain strategy
+### Domain strategy
 
-For a premium product or demo, prefer a branded domain.
+For premium products, prefer a branded domain or subdomain.
 
 Examples:
 
-```txt
+```txt title="domains"
 yourproduct.com
 app.yourproduct.com
 demo.yourproduct.com
 ```
 
-For PyColors-owned demos, a branded subdomain such as this is stronger than a raw Vercel deployment URL:
+For PyColors-owned demos, a branded subdomain such as this creates stronger perception than a raw deployment URL:
 
-```txt
+```txt title="example"
 na-ai.pycolors.io
 ```
 
 <Callout type="info" title="Perception rule">
-  A custom domain makes the product feel intentional. A raw deployment URL often feels like a preview.
+  A custom domain makes the product feel intentional. Raw deployment URLs often feel temporary or unfinished.
 </Callout>
 
-## SEO checks
+## SEO validation
 
 Update:
 
-```txt
+```txt title="path"
 src/config/site.ts
 ```
 
 Update social assets:
 
-```txt
+```txt title="seo-assets"
 public/seo/og-main.jpg
 public/seo/twitter-main.jpg
 ```
 
-Check canonical URL, Open Graph image, Twitter card image, title, description, sitemap URL, and robots configuration.
+Before launch, validate:
 
-## Contact form note
+- canonical URL
+- Open Graph image
+- Twitter card image
+- SEO title
+- SEO description
+- sitemap URL
+- robots configuration
+
+<Callout title="SEO principle">
+  The first public deployment is often the first indexed version. Validate metadata before sharing the product publicly.
+</Callout>
+
+### Contact form note
 
 The contact form is frontend-only by default.
 
-Before promising lead capture, connect it to an API route, backend, form provider, CRM endpoint, email service, or server action.
+Before promising lead capture, connect it to:
+
+- API routes
+- backend endpoints
+- CRM integrations
+- email services
+- form providers
+- server actions
 
 <Callout title="Do not overpromise">
-  If the form is not connected yet, make the CTA behavior clear or connect it before launch.
+  If the form is not connected yet, make the CTA behavior explicit or connect the form before launch.
 </Callout>
+
+### Production validation
+
+Before sharing the landing page publicly:
+
+1. test both themes
+2. validate responsive layouts
+3. confirm navigation links
+4. inspect Lighthouse performance
+5. validate metadata previews
+6. confirm form behavior
+7. review pricing and CTA copy
+8. test the production domain
+
+A landing page feels premium when the experience is consistent across devices, previews, and entry points.
+
+<Callout title="Launch principle">
+  A production deployment is not only about availability. It is about credibility, clarity, and trust.
+</Callout>
+
+## Common deployment mistakes
+
+<PreferAvoid
+  preferTitle="Prefer this approach"
+  avoidTitle="Avoid this approach"
+  prefer={[
+    'deploy from the root Next.js project',
+    'validate metadata before sharing publicly',
+    'use a branded domain',
+    'run a production build locally first',
+    'replace placeholder assets before launch',
+  ]}
+  avoid={[
+    'deploying unfinished copy',
+    'sharing raw preview URLs as the main product URL',
+    'forgetting social preview images',
+    'publishing without responsive testing',
+    'connecting forms without validation or spam protection',
+  ]}
+/>
 
 ## Next steps
 
@@ -144,7 +272,7 @@ Before promising lead capture, connect it to an API route, backend, form provide
       title: 'Customization',
       href: '/docs/templates/na-ai-landing/customization',
       description:
-        'Review content, branding, SEO metadata, pricing, and section customization.',
+        'Review branding, sections, SEO metadata, pricing, and content customization.',
       icon: Palette,
     },
     {
@@ -152,7 +280,7 @@ Before promising lead capture, connect it to an API route, backend, form provide
       href: '/docs/templates/na-ai-landing/license',
       description:
         'Understand commercial usage, redistribution limits, and license boundaries.',
-      icon: Scale,
+      icon: ShieldCheck,
     },
   ]}
 />

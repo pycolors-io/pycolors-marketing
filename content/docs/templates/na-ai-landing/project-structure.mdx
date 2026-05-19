@@ -1,7 +1,7 @@
 ---
 title: Project Structure
 description: Understand how NA-AI Landing is organized so you can customize it without breaking the architecture.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
@@ -10,24 +10,88 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { File, Folder, Files } from "fumadocs-ui/components/files";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, Palette, Rocket, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { Badge } from "@pycolors/ui";
+import {
+  Boxes,
+  FolderTree,
+  LayoutTemplate,
+  Palette,
+  Rocket,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
-<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Structure</Badge></div>
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Structure</Badge>
+</div>
 
-## Overview
+## Understand the architecture before rewriting the UI
 
 NA-AI Landing is organized around a simple separation:
 
 > Data controls content. Sections render product blocks. Layout components frame the page. PyColors UI provides primitives.
 
-This keeps customization clean. You can update most copy and content from `src/@data` before touching section components.
+This keeps customization clean, predictable, and easier to maintain as the landing page evolves.
+
+Most product content can be updated from:
+
+```txt
+src/@data
+```
+
+before touching the visual implementation.
+
+<DocsUpgradeCTA
+  title="The structure is optimized for fast iteration."
+  description="NA-AI Landing separates content, sections, layout, and UI primitives so you can customize positioning and branding without rebuilding the foundation."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
 
 <Callout title="Key idea">
-  The template is designed so product content can change without rewriting the visual foundation.
+  The template is designed so product content can evolve without constantly rewriting the visual foundation.
 </Callout>
+
+## Architecture overview
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Data-driven structure',
+      icon: FolderTree,
+      description:
+        'Content, pricing, navigation, FAQ, testimonials, and CTA copy live in centralized data files.',
+    },
+    {
+      title: 'Composable sections',
+      icon: LayoutTemplate,
+      description:
+        'Landing page blocks are isolated into reusable presentational sections.',
+    },
+    {
+      title: 'Shared UI primitives',
+      icon: Boxes,
+      description:
+        'The visual layer is powered by PyColors UI and semantic design tokens.',
+    },
+    {
+      title: 'Fast customization workflow',
+      icon: Sparkles,
+      description:
+        'The architecture prioritizes quick branding, positioning, and product iteration.',
+    },
+  ]}
+/>
 
 ## Structure
 
@@ -48,6 +112,7 @@ This keeps customization clean. You can update most copy and content from `src/@
       <File name="pricing-table.ts" />
       <File name="pricing.ts" />
     </Folder>
+
     <Folder name="app" defaultOpen>
       <File name="globals.css" />
       <File name="layout.tsx" />
@@ -56,14 +121,46 @@ This keeps customization clean. You can update most copy and content from `src/@
       <File name="robots.ts" />
       <File name="sitemap.ts" />
     </Folder>
+
     <Folder name="components" defaultOpen>
-      <Folder name="layout"><File name="footer.tsx" /><File name="na-ai-logo.tsx" /><File name="navbar.tsx" /><File name="section-header.tsx" /><File name="theme-provider.tsx" /><File name="toggle-theme.tsx" /></Folder>
-      <Folder name="sections"><Folder name="features" /><Folder name="hero" /><File name="contact.tsx" /><File name="cta.tsx" /><File name="customers.tsx" /><File name="faq.tsx" /><File name="integrations.tsx" /><File name="pricing-table.tsx" /><File name="pricing.tsx" /></Folder>
-      <Folder name="ui"><File name="browser-window.tsx" /></Folder>
+      <Folder name="layout">
+        <File name="footer.tsx" />
+        <File name="na-ai-logo.tsx" />
+        <File name="navbar.tsx" />
+        <File name="section-header.tsx" />
+        <File name="theme-provider.tsx" />
+        <File name="toggle-theme.tsx" />
+      </Folder>
+
+      <Folder name="sections">
+        <Folder name="features" />
+        <Folder name="hero" />
+        <File name="contact.tsx" />
+        <File name="cta.tsx" />
+        <File name="customers.tsx" />
+        <File name="faq.tsx" />
+        <File name="integrations.tsx" />
+        <File name="pricing-table.tsx" />
+        <File name="pricing.tsx" />
+      </Folder>
+
+      <Folder name="ui">
+        <File name="browser-window.tsx" />
+      </Folder>
     </Folder>
-    <Folder name="config"><File name="fonts.ts" /><File name="site.ts" /></Folder>
+
+    <Folder name="config">
+      <File name="fonts.ts" />
+      <File name="site.ts" />
+    </Folder>
   </Folder>
-  <Folder name="public" defaultOpen><Folder name="icons" /><Folder name="na-ai" /><Folder name="seo" /><File name="manifest.webmanifest" /></Folder>
+
+  <Folder name="public" defaultOpen>
+    <Folder name="icons" />
+    <Folder name="na-ai" />
+    <Folder name="seo" />
+    <File name="manifest.webmanifest" />
+  </Folder>
 </Files>
 
 ## Architecture flow
@@ -78,12 +175,34 @@ components/layout
 @pycolors/ui + @pycolors/tokens
 ```
 
-<Tabs items={["Data", "Sections", "Layout", "UI"]}>
-  <Tab value="Data"><div className="rounded-2xl border border-border/60 bg-card p-6"><div className="text-sm font-medium text-foreground">Data layer</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Owns content, lists, pricing values, nav labels, FAQ items, testimonials, and section configuration.</div></div></Tab>
-  <Tab value="Sections"><div className="rounded-2xl border border-border/60 bg-card p-6"><div className="text-sm font-medium text-foreground">Section layer</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Renders the product blocks that make the landing page.</div></div></Tab>
-  <Tab value="Layout"><div className="rounded-2xl border border-border/60 bg-card p-6"><div className="text-sm font-medium text-foreground">Layout layer</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Owns navbar, footer, section headers, theme provider, and logo.</div></div></Tab>
-  <Tab value="UI"><div className="rounded-2xl border border-border/60 bg-card p-6"><div className="text-sm font-medium text-foreground">UI primitives</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Shared primitives come from @pycolors/ui and visual decisions come from @pycolors/tokens.</div></div></Tab>
-</Tabs>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Data',
+      title: 'Data layer',
+      description:
+        'Owns content, lists, pricing values, nav labels, FAQ items, testimonials, and section configuration.',
+    },
+    {
+      value: 'Sections',
+      title: 'Section layer',
+      description:
+        'Renders the product blocks that compose the landing page experience.',
+    },
+    {
+      value: 'Layout',
+      title: 'Layout layer',
+      description:
+        'Owns navbar, footer, section framing, theme provider, and global structure.',
+    },
+    {
+      value: 'UI',
+      title: 'UI primitives',
+      description:
+        'Shared primitives come from @pycolors/ui while visual consistency comes from @pycolors/tokens.',
+    },
+  ]}
+/>
 
 ## Data directory
 
@@ -99,29 +218,34 @@ components/layout
 | `contact.ts` | Contact form copy and goal options |
 | `cta.ts` | Final conversion section |
 | `navbar.ts` | Navigation links |
-| `footer.ts` | Footer links and copy |
+| `footer.ts` | Footer links and footer copy |
 
 <Callout title="Customization rule">
-  Change data first. Edit section components only when the structure no longer supports your content.
+  Change data first. Edit section components only when the current structure no longer supports the product story.
 </Callout>
 
 ## Add a new section
 
 <Steps>
   <Step>
-  ### Create the data file
+    ### Create the data file
+
 ```bash title="terminal"
 touch src/@data/use-cases.ts
 ```
-</Step>
+  </Step>
+
   <Step>
-  ### Create the section component
+    ### Create the section component
+
 ```bash title="terminal"
 touch src/components/sections/use-cases.tsx
 ```
-</Step>
+  </Step>
+
   <Step>
-  ### Compose it in the page
+    ### Compose the section inside the page
+
 ```tsx title="src/app/page.tsx"
 import { UseCasesSection } from "@/components/sections/use-cases";
 
@@ -129,10 +253,10 @@ export default function Page() {
   return <UseCasesSection />;
 }
 ```
-</Step>
+  </Step>
 </Steps>
 
-## Prefer / avoid
+## Recommended architecture rules
 
 <PreferAvoid
   prefer={[
@@ -151,13 +275,41 @@ export default function Page() {
   ]}
 />
 
+## Why this structure scales
+
+As landing pages grow, problems usually come from unclear boundaries:
+
+- copy mixed with layout logic
+- duplicated sections
+- inconsistent spacing
+- scattered pricing values
+- disconnected SEO assets
+- uncontrolled visual overrides
+
+This structure reduces those problems by keeping responsibilities separate from the beginning.
+
+<Callout title="Scaling principle">
+  A good landing page architecture should make iteration cheaper over time, not more fragile.
+</Callout>
+
 ## Common questions
 
 <Accordions type="single">
-  <Accordion title="Why keep content in src/@data?">It makes the landing page easier to customize and keeps section components focused on presentation.</Accordion>
-  <Accordion title="Can I move data elsewhere?">Yes, but keep the same separation: content should stay separate from presentational components.</Accordion>
-  <Accordion title="Can I connect a CMS?">Yes. Replace the data source with CMS data gradually, while keeping the section components stable.</Accordion>
-  <Accordion title="Can I remove PyColors UI?">You can, but it is not recommended unless you want to rebuild the UI foundation yourself.</Accordion>
+  <Accordion title="Why keep content in src/@data?">
+    It keeps section components focused on presentation and makes the landing page easier to customize quickly.
+  </Accordion>
+
+  <Accordion title="Can I move data elsewhere?">
+    Yes. Keep the same separation: content should stay independent from presentational components.
+  </Accordion>
+
+  <Accordion title="Can I connect a CMS?">
+    Yes. Replace the local data source gradually while keeping section components stable.
+  </Accordion>
+
+  <Accordion title="Can I remove PyColors UI?">
+    You can, but it is usually not recommended unless you want to rebuild the UI foundation yourself.
+  </Accordion>
 </Accordions>
 
 ## Next steps
@@ -169,7 +321,7 @@ export default function Page() {
       title: 'Customization',
       href: '/docs/templates/na-ai-landing/customization',
       description:
-        'Learn how to update copy, sections, branding, SEO metadata, and assets.',
+        'Update copy, sections, branding, SEO metadata, and assets.',
       icon: Palette,
     },
     {

@@ -1,39 +1,111 @@
 ---
 title: License
 description: Understand the commercial usage scope, redistribution limits, and support boundaries for NA-AI Landing.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { Badge } from "@pycolors/ui";
+import {
+  ArrowRight,
+  Briefcase,
+  FileText,
+  Scale,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 
-<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>License</Badge></div>
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+import { DocsLinks } from "@/components/docs/docs-links";
 
-## Commercial usage
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>License</Badge>
+</div>
+
+## Commercial usage for real projects
 
 NA-AI Landing is a paid template with commercial usage rights depending on the license included with your purchase.
 
-The template is designed for personal projects, commercial projects, client work, product landing pages, agency delivery, and SaaS or AI marketing pages.
+The template is designed for:
+
+- personal projects
+- commercial products
+- SaaS marketing pages
+- AI product launches
+- agency delivery
+- client work
+- startup validation
+
+<DocsUpgradeCTA
+  title="Use the template to ship products, not resell the source."
+  description="NA-AI Landing is licensed for building and launching real projects while protecting the source code from redistribution as a competing product."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/license"
+  secondaryLabel="PyColors license"
+/>
 
 <Callout title="Core idea">
   You can use the template to build and ship projects. You cannot resell, redistribute, or publish the source code as a competing template.
 </Callout>
 
+### License foundations
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Commercial usage',
+      icon: Briefcase,
+      description:
+        'Use the template for commercial SaaS products, client work, and marketing websites depending on your purchased license.',
+    },
+    {
+      title: 'Protected redistribution',
+      icon: ShieldCheck,
+      description:
+        'The source code cannot be redistributed, resold, sublicensed, or published as a competing template.',
+    },
+    {
+      title: 'Source access',
+      icon: FileText,
+      description:
+        'The delivered ZIP package includes the source code and documentation required to customize and deploy the template.',
+    },
+    {
+      title: 'Long-term project usage',
+      icon: Sparkles,
+      description:
+        'The template is intended to help builders launch and evolve real products faster.',
+    },
+  ]}
+/>
+
 ## Common license scope
 
 Always review the `LICENSE` file included in your purchased package.
 
-Common license terms may include:
+Common license models may include:
 
-- single project license
+- single-project license
 - multi-project license
-- extended/commercial license
+- extended commercial license
 
-The governing terms are the license included in your delivered ZIP and the legal pages on PyColors.
+The governing terms are:
+
+- the LICENSE file delivered with the ZIP package
+- the legal pages published on PyColors
+
+<Callout type="info" title="Legal rule">
+  If there is any difference between summaries and the shipped LICENSE file, the LICENSE file governs usage.
+</Callout>
 
 ## Allowed vs not allowed
 
@@ -60,48 +132,122 @@ The governing terms are the license included in your delivered ZIP and the legal
 
 ## What the license does not include
 
-The template does not include backend implementation, authentication, database, Stripe payments, CMS integration, email delivery, custom implementation work, or guaranteed third-party service configuration.
+NA-AI Landing does not include:
 
-If you need auth, billing, protected routes, and backend-ready foundations, review Starter Pro.
+- backend implementation
+- authentication
+- database foundations
+- Stripe billing
+- CMS integration
+- email infrastructure
+- custom implementation work
+- guaranteed third-party service configuration
 
-<Callout type="info" title="Product boundary">
-  NA-AI Landing is the frontend marketing layer. It is not a full SaaS application.
+If you need:
+
+- authentication
+- billing
+- protected routes
+- backend-ready SaaS foundations
+
+review Starter Pro.
+
+<Callout title="Product boundary">
+  NA-AI Landing is the frontend marketing layer. It is not a complete SaaS application.
 </Callout>
 
-## Support
+### Support scope
 
-For support, use the official support channel provided after purchase.
+Official support focuses on:
 
-Support generally focuses on accessing the purchased package, installation and setup questions, template usage clarification, documentation clarification, and issues related to the delivered source code.
+- package access
+- installation questions
+- setup clarification
+- documentation clarification
+- delivered source code issues
 
-Support does not generally include building your custom backend, rewriting the design for your brand, integrating third-party services for you, creating custom features, or debugging unrelated infrastructure.
+Support generally does not include:
 
-## Versioning policy
+- building custom backends
+- rewriting the design for your brand
+- integrating third-party services for you
+- creating custom features
+- debugging unrelated infrastructure
+
+### Versioning policy
 
 NA-AI Landing follows Semantic Versioning.
 
 | Version | Meaning |
 | --- | --- |
-| Patch `1.0.x` | Bug fixes, visual polish, minor improvements |
-| Minor `1.x.0` | New sections, components, or backward-compatible features |
-| Major `x.0.0` | Breaking changes affecting structure, APIs, or configuration |
+| Patch `1.0.x` | Bug fixes, visual polish, and minor improvements |
+| Minor `1.x.0` | New sections, components, or backward-compatible additions |
+| Major `x.0.0` | Breaking changes affecting structure, configuration, or architecture |
 
-## Legal links
+<Callout title="Versioning principle">
+  Semantic Versioning helps keep updates predictable as the template evolves.
+</Callout>
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/license" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">PyColors License</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Review the broader PyColors license scope and usage terms.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-  <a href="/terms" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30"><div><div className="text-sm font-medium text-foreground">Terms</div><div className="mt-2 text-sm leading-6 text-muted-foreground">Review legal terms governing purchase, access, and usage.</div></div><ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" /></a>
-</div>
+### Legal links
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: 'PyColors License',
+      href: '/license',
+      description:
+        'Review the broader PyColors license scope and usage terms.',
+      icon: Scale,
+    },
+    {
+      title: 'Terms',
+      href: '/terms',
+      description:
+        'Review legal terms governing purchase, access, and usage.',
+      icon: FileText,
+    },
+  ]}
+/>
 
 ## Common questions
 
 <Accordions type="single">
-  <Accordion title="Can I use NA-AI Landing for client work?">Yes, if your license allows commercial and client usage. Review the LICENSE file included after purchase.</Accordion>
-  <Accordion title="Can I resell the template after modifying it?">No. You cannot resell, redistribute, sublicense, or publish the source code as a competing template.</Accordion>
-  <Accordion title="Can I connect it to my backend?">Yes. You can connect the frontend to your own backend, CMS, analytics, form provider, or payment flow.</Accordion>
-  <Accordion title="Does the template include Stripe payments?">No. NA-AI Landing is frontend-only. Use Starter Pro if you need billing foundations.</Accordion>
+  <Accordion title="Can I use NA-AI Landing for client work?">
+    Yes, if your license allows commercial and client usage. Review the LICENSE file included after purchase.
+  </Accordion>
+
+  <Accordion title="Can I resell the template after modifying it?">
+    No. You cannot resell, redistribute, sublicense, or publish the source code as a competing template.
+  </Accordion>
+
+  <Accordion title="Can I connect it to my backend?">
+    Yes. You can connect the frontend to your own backend, CMS, analytics, form provider, or payment flow.
+  </Accordion>
+
+  <Accordion title="Does the template include Stripe payments?">
+    No. NA-AI Landing is frontend-only. Use Starter Pro if you need billing foundations.
+  </Accordion>
 </Accordions>
 
+## Practical usage examples
+
+Examples that are generally acceptable depending on the license:
+
+- launching your SaaS marketing site
+- building a startup landing page
+- shipping a client website
+- adapting the visuals and branding
+- integrating APIs and analytics
+- deploying the final website publicly
+
+Examples that are generally not allowed:
+
+- selling the template source code
+- republishing the ZIP package
+- distributing the source publicly
+- turning the source into a competing template business
+
 <Callout title="Ship the project, not the source as a product.">
-  The license is designed to let you build real projects while protecting the template from redistribution.
+  The license is designed to help you build real products while protecting the template from redistribution.
 </Callout>

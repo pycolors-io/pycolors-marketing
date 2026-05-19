@@ -1,7 +1,7 @@
 ---
 title: Customization
 description: Customize NA-AI Landing content, branding, pricing, sections, SEO, and assets using its data-driven structure.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
@@ -9,22 +9,50 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, FolderTree, Rocket, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
-import { DocsLinks } from "@/components/docs/docs-links";
+import { Badge } from "@pycolors/ui";
+import {
+  FolderTree,
+  Palette,
+  Rocket,
+  Search,
+  Sparkles,
+} from "lucide-react";
 
-<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Customization</Badge></div>
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Customization</Badge>
+</div>
 
 ## Customize without rewriting every component
 
-NA-AI Landing is data-driven by design. Most product copy and section content lives in:
+NA-AI Landing is data-driven by design.
+
+Most product copy and section content lives in:
 
 ```txt
 src/@data
 ```
 
-This makes the template easier to adapt because you can update the product story first, then adjust layout and visuals only where needed.
+This makes the template easier to adapt because you can:
+
+- update the product story first
+- validate positioning quickly
+- change pricing and messaging centrally
+- avoid rewriting every component early
+
+<DocsUpgradeCTA
+  title="Change the story before changing the UI."
+  description="NA-AI Landing is structured so branding, pricing, testimonials, and SEO can evolve through centralized data files instead of scattered component rewrites."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/project-structure"
+  secondaryLabel="Project structure"
+/>
 
 <Callout title="Core idea">
   Start by changing the data, not the components. Rewrite the product story before you rewrite the UI.
@@ -34,32 +62,109 @@ This makes the template easier to adapt because you can update the product story
 
 <Steps>
   <Step>
-  ### Update site settings
-Edit `src/config/site.ts` for product name, tagline, site URL, SEO title, and social preview settings.
-</Step>
-  <Step>
-  ### Update core content
-Edit files under `src/@data`, starting with hero, features, pricing, testimonials, FAQ, CTA, and contact.
-</Step>
+    ### Update site settings
+
+    Edit:
+
+```txt title="path"
+src/config/site.ts
+```
+
+    Update:
+
+    - product name
+    - tagline
+    - site URL
+    - SEO title
+    - social preview configuration
+  </Step>
 
   <Step>
-  ### Replace assets
-Update logo, icons, Open Graph images, Twitter images, and manifest assets.
-</Step>
+    ### Update core content
+
+    Edit the files under:
+
+```txt title="path"
+src/@data
+```
+
+    Start with:
+
+    - hero
+    - features
+    - pricing
+    - testimonials
+    - FAQ
+    - CTA
+    - contact
+  </Step>
 
   <Step>
-  ### Adjust branding
-Update fonts, token usage, theme settings, and product-specific visuals only after the content direction is clear.
-</Step>
+    ### Replace assets
+
+    Update:
+
+    - logo
+    - icons
+    - Open Graph images
+    - Twitter preview images
+    - manifest assets
+  </Step>
 
   <Step>
-  ### Test and deploy
-Run the build, inspect both themes, and test responsive layouts before deployment.
-</Step>
+    ### Adjust branding
 
+    Update:
+
+    - fonts
+    - token usage
+    - theme settings
+    - product visuals
+
+    Do this only after the content direction becomes clear.
+  </Step>
+
+  <Step>
+    ### Test and deploy
+
+    Run the production build, inspect both themes, and validate responsive layouts before deployment.
+  </Step>
 </Steps>
 
-## Data files
+## Customization foundations
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Centralized content',
+      icon: FolderTree,
+      description:
+        'Most sections are controlled through dedicated data files instead of deeply nested components.',
+    },
+    {
+      title: 'SEO-ready structure',
+      icon: Search,
+      description:
+        'Metadata, Open Graph assets, Twitter previews, sitemap, and robots configuration are easy to customize.',
+    },
+    {
+      title: 'PyColors design foundation',
+      icon: Palette,
+      description:
+        'Shared tokens and UI primitives provide a stable visual baseline across light and dark mode.',
+    },
+    {
+      title: 'Fast launch workflow',
+      icon: Sparkles,
+      description:
+        'The structure prioritizes fast iteration on positioning, pricing, branding, and product messaging.',
+    },
+  ]}
+/>
+
+### Data files
 
 | Section | File |
 | --- | --- |
@@ -75,33 +180,49 @@ Run the build, inspect both themes, and test responsive layouts before deploymen
 | Footer | `src/@data/footer.ts` |
 | Navbar | `src/@data/navbar.ts` |
 
-## Site configuration
+### Site configuration
 
 Edit:
 
-```txt
+```txt title="path"
 src/config/site.ts
 ```
 
-Use it to update product name, tagline, site URL, SEO title, SEO description, Open Graph image, and Twitter image.
+Use it to update:
+
+- product name
+- tagline
+- site URL
+- SEO title
+- SEO description
+- Open Graph image
+- Twitter image
 
 <Callout type="info" title="SEO rule">
   Update the site URL and social preview assets before deploying publicly.
 </Callout>
 
-## Branding and tokens
+### Branding and tokens
 
 NA-AI Landing uses:
 
-```txt
+```txt title="packages"
 @pycolors/ui
 @pycolors/tokens
 ```
 
-The shared tokens provide a stable visual foundation for colors, surfaces, borders, radius, shadows, focus states, and dark/light mode.
+The shared tokens provide a stable visual foundation for:
+
+- colors
+- surfaces
+- borders
+- radius
+- shadows
+- focus states
+- dark and light mode
 
 <Callout title="Design rule">
-  Prefer semantic tokens over raw color values. It keeps the page consistent across light and dark mode.
+  Prefer semantic tokens over raw color values. This keeps the page visually consistent across themes.
 </Callout>
 
 ## Content strategy
@@ -123,49 +244,85 @@ The shared tokens provide a stable visual foundation for colors, surfaces, borde
   ]}
 />
 
-## Customize pricing
+### Customize pricing
 
 Pricing content is split across:
 
-```txt
+```txt title="pricing-files"
 src/@data/pricing.ts
 src/@data/pricing-table.ts
 ```
 
-Use it to update plan names, monthly/yearly pricing, comparison rows, feature availability, CTA labels, and positioning copy.
+Use it to update:
+
+- plan names
+- monthly and yearly pricing
+- comparison rows
+- feature availability
+- CTA labels
+- positioning copy
 
 <Callout title="Pricing rule">
-  Pricing should clarify the buying decision, not just list features.
+  Pricing should clarify the buying decision, not only list features.
 </Callout>
 
-## Customize SEO and assets
+### Customize SEO and assets
 
 Update social preview images:
 
-```txt
+```txt title="seo-assets"
 public/seo/og-main.jpg
 public/seo/twitter-main.jpg
 ```
 
 Update icons:
 
-```txt
+```txt title="icons"
 public/icons
 ```
 
-Update manifest:
+Update the web manifest:
 
-```txt
+```txt title="manifest"
 public/manifest.webmanifest
 ```
+
+### Recommended workflow
+
+A high-leverage customization path usually looks like this:
+
+1. define positioning
+2. update hero and pricing
+3. replace branding assets
+4. adjust proof and testimonials
+5. validate SEO metadata
+6. refine layout and visuals
+7. deploy publicly
+
+This keeps the launch process focused on clarity and conversion before visual overengineering.
+
+<Callout title="Positioning principle">
+  A landing page becomes valuable when the offer is clear, believable, and easy to understand quickly.
+</Callout>
 
 ## Common questions
 
 <Accordions type="single">
-  <Accordion title="Can I use this for a non-AI SaaS?">Yes. NA-AI is optimized for AI and analytics positioning, but the structure works well for many B2B SaaS products.</Accordion>
-  <Accordion title="Can I add a backend later?">Yes. Keep API logic outside the presentational section components and connect forms or analytics through dedicated modules.</Accordion>
-  <Accordion title="Should I replace PyColors UI?">Usually no. Keep PyColors UI and tokens unless you have a strong reason to rebuild the UI foundation.</Accordion>
-  <Accordion title="Can I remove sections?">Yes. Remove sections only after checking that the page still explains the offer, proof, pricing, objections, and next action clearly.</Accordion>
+  <Accordion title="Can I use this for a non-AI SaaS?">
+    Yes. NA-AI Landing is optimized for AI and analytics positioning, but the structure works well for many B2B SaaS products.
+  </Accordion>
+
+  <Accordion title="Can I add a backend later?">
+    Yes. Keep API logic outside the presentational section components and connect forms or analytics through dedicated modules.
+  </Accordion>
+
+  <Accordion title="Should I replace PyColors UI?">
+    Usually no. Keep PyColors UI and tokens unless you have a strong reason to rebuild the UI foundation.
+  </Accordion>
+
+  <Accordion title="Can I remove sections?">
+    Yes. Remove sections only after checking that the page still explains the offer, proof, pricing, objections, and next action clearly.
+  </Accordion>
 </Accordions>
 
 ## Next steps

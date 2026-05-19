@@ -1,31 +1,56 @@
 ---
 title: Setup
 description: Install, run, and build NA-AI Landing locally after purchase.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, CheckCircle, Palette, Rocket, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
-import { DocsLinks } from "@/components/docs/docs-links";
+import { Badge } from "@pycolors/ui";
+import {
+  Palette,
+  Rocket,
+  Terminal,
+} from "lucide-react";
 
-<div className="flex flex-wrap items-center gap-2"><Badge variant="outline">NA-AI Landing</Badge><Badge>Setup</Badge></div>
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Setup</Badge>
+</div>
 
 ## Run NA-AI Landing locally
 
 After purchase, you receive a ZIP package containing the full source code and documentation.
 
-The template is designed to work as a standalone project, outside the PyColors monorepo, after ZIP download, on Vercel, and in production environments.
+The template is designed to work:
+
+- as a standalone project
+- outside the private PyColors monorepo
+- after ZIP download
+- on Vercel
+- in production environments
+
+<DocsUpgradeCTA
+  title="Go from ZIP download to running app quickly."
+  description="NA-AI Landing is designed to be runnable, inspectable, and customizable without requiring access to the private PyColors monorepo."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
 
 <Callout title="Core idea">
   The template should be runnable, inspectable, and customizable without requiring access to the private PyColors monorepo.
 </Callout>
 
-## Requirements
+### Requirements
 
 | Tool | Recommended |
 | --- | --- |
@@ -45,6 +70,7 @@ unzip na-ai-landing.zip
 cd na-ai-landing
 ```
   </Step>
+
   <Step>
     ### Install dependencies
 
@@ -52,6 +78,7 @@ cd na-ai-landing
 pnpm install
 ```
   </Step>
+
   <Step>
     ### Run the development server
 
@@ -65,6 +92,7 @@ Open:
 http://localhost:3000
 ```
   </Step>
+
   <Step>
     ### Build for production
 
@@ -72,6 +100,7 @@ http://localhost:3000
 pnpm build
 ```
   </Step>
+
   <Step>
     ### Start the production server
 
@@ -80,6 +109,39 @@ pnpm start
 ```
   </Step>
 </Steps>
+
+### Included setup foundations
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Standalone structure',
+      icon: Terminal,
+      description:
+        'The template runs independently after ZIP extraction without requiring the private PyColors monorepo.',
+    },
+    {
+      title: 'Production-ready frontend stack',
+      icon: Rocket,
+      description:
+        'Next.js 16+, TypeScript, Tailwind CSS v4, PyColors UI, and PyColors Tokens configured together.',
+    },
+    {
+      title: 'Frontend-only setup',
+      icon: Palette,
+      description:
+        'No authentication, Stripe, database, or backend configuration is required to run the base template.',
+    },
+    {
+      title: 'Deployment-ready baseline',
+      icon: Rocket,
+      description:
+        'Optimized for Vercel deployment and production-oriented frontend workflows.',
+    },
+  ]}
+/>
 
 ## Scripts
 
@@ -94,15 +156,26 @@ pnpm start
 
 NA-AI Landing is frontend-only by design.
 
-It does not require environment variables for authentication, database, Stripe, email, or CMS.
+It does not require environment variables for:
 
-You may add your own variables later if you connect APIs, forms, analytics, or backend services.
+- authentication
+- database
+- Stripe
+- email
+- CMS
+
+You can add your own variables later if you connect:
+
+- APIs
+- forms
+- analytics
+- backend services
 
 <Callout type="info" title="Frontend-only">
   No backend configuration is required to run the base template.
 </Callout>
 
-## Verify PyColors packages
+### Verify PyColors packages
 
 NA-AI Landing uses the public PyColors packages:
 
@@ -145,30 +218,44 @@ Tailwind CSS v4 also scans the installed UI package:
   ]}
 />
 
+### Recommended workflow
+
+A high-leverage setup path usually looks like this:
+
+1. install dependencies
+2. run the template locally
+3. validate production build
+4. update branding and copy
+5. customize data files
+6. connect APIs only if needed
+7. deploy publicly
+
+This reduces unnecessary complexity early in the project lifecycle.
+
+<Callout title="Architecture rule">
+  Landing page sections should stay presentational.
+  Put API wiring, form handling, and service integration in dedicated modules.
+</Callout>
+
 ## Common issues
 
 <Accordions type="single">
   <Accordion title="Styles look incomplete">
-    Check that the global stylesheet imports PyColors Tokens and that
-    Tailwind scans `@pycolors/ui`.
+    Check that the global stylesheet imports PyColors Tokens and that Tailwind scans `@pycolors/ui`.
   </Accordion>
 
   <Accordion title="The project builds locally but not on Vercel">
-    Confirm your package manager and Node.js version match the expected
-    runtime. Ensure the project is deployed from the root folder
-    containing the Next.js app.
+    Confirm your package manager and Node.js version match the expected runtime. Ensure the project is deployed from the root folder containing the Next.js app.
   </Accordion>
 
   <Accordion title="I want to connect a backend">
-    The base template is frontend-only. Keep backend logic outside the
-    presentational section components.
+    The base template is frontend-only. Keep backend logic outside the presentational section components.
+  </Accordion>
+
+  <Accordion title="Can I use another package manager?">
+    Yes, but the default setup and documentation are optimized around pnpm workflows.
   </Accordion>
 </Accordions>
-
-<br />
-<Callout title="Architecture rule">
-  Landing page sections should stay presentational. Put API wiring, form handling, and service integration in dedicated modules.
-</Callout>
 
 ## Next steps
 
