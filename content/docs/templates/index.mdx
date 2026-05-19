@@ -1,16 +1,23 @@
 ---
 title: Templates
 description: Premium product templates built with PyColors UI and PyColors Tokens. Launch focused marketing pages faster without rebuilding the foundation.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-19"
 appliesTo: Templates
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { ArrowRight, BadgeEuro, Boxes, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+import { Badge } from "@pycolors/ui";
+import {
+  BadgeEuro,
+  LayoutTemplate,
+  Rocket,
+  Sparkles,
+} from "lucide-react";
+
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Templates</Badge>
@@ -21,63 +28,169 @@ import { DocsLinks } from "@/components/docs/docs-links";
 
 PyColors templates are focused product surfaces for builders who need to ship a credible page quickly.
 
-They are designed for AI and SaaS launches, product validation, agency work, polished marketing pages, and fast commercial experiments.
+They are designed for:
 
-Templates are intentionally narrower than starters. A template helps you launch the public surface. A starter helps you build the product foundation behind it.
+- AI launches
+- SaaS marketing pages
+- product validation
+- agency delivery
+- polished commercial surfaces
+- rapid go-to-market experiments
+
+Templates are intentionally narrower than starters.
+
+A template helps you launch the public surface.
+A starter helps you build the product foundation behind it.
+
+<DocsUpgradeCTA
+  title="Launch the page first."
+  description="Templates help you publish a premium public surface quickly without rebuilding a marketing foundation from scratch."
+  productSlug="templates"
+  buyLabel="Explore templates"
+  secondaryHref="/starters"
+  secondaryLabel="Compare starters"
+/>
 
 <Callout title="Core idea">
-  Templates are the fastest path to a polished public page. Starters are the path to a full SaaS product foundation.
+  Templates are the fastest path to a polished public page.
+  Starters are the path to a full SaaS product foundation.
 </Callout>
 
-## Product ladder
+### Product ladder
 
-<Tabs items={["Templates", "Starter Free", "Starter Pro"]}>
-  <Tab value="Templates">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Launch the offer</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.</div>
-    </div>
-  </Tab>
-  <Tab value="Starter Free">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Validate the product surface</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked app flows.</div>
-    </div>
-  </Tab>
-  <Tab value="Starter Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">Wire the business layer</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and launch-ready SaaS wiring.</div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Templates',
+      title: 'Launch the offer',
+      href: '/templates',
+      icon: LayoutTemplate,
+      description:
+        'Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.',
+      items: [
+        'premium landing pages',
+        'marketing-first surfaces',
+        'SEO baseline',
+        'launch-ready presentation',
+        'fast publishing workflow',
+      ],
+      cta: 'Explore Templates →',
+    },
+    {
+      eyebrow: 'Starter Free',
+      title: 'Validate the product surface',
+      href: '/starters/free',
+      icon: Sparkles,
+      description:
+        'Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked product flows.',
+      items: [
+        'dashboard structure',
+        'settings and billing surfaces',
+        'mocked app flows',
+        'product UX validation',
+        'rapid MVP iteration',
+      ],
+      cta: 'Explore Starter Free →',
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Wire the business layer',
+      href: '/starters/pro',
+      icon: Rocket,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and production-ready SaaS wiring.',
+      items: [
+        'real authentication',
+        'Stripe billing',
+        'protected routes',
+        'database foundations',
+        'launch-ready SaaS infrastructure',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
-## Available templates
+## Why templates exist
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing" className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 no-underline shadow-sm transition hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md">
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-      <Sparkles className="h-4 w-4 text-primary" />
-      NA-AI Landing
-    </div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">Premium Next.js landing page for AI products, SaaS tools, and analytics platforms.</div>
-    <div className="mt-4 flex flex-wrap gap-2">
-      <Badge variant="outline">49 €</Badge>
-      <Badge variant="outline">Next.js</Badge>
-      <Badge variant="outline">PyColors UI</Badge>
-    </div>
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">Read docs <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" /></div>
-  </a>
+Templates are optimized for the public layer of a product.
 
-  <Card className="rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2"><LayoutTemplate className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">More templates</CardTitle></div>
-    </CardHeader>
-    <CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Future templates will follow the same product-first approach: focused, documented, and powered by PyColors foundations.</CardContent>
-  </Card>
-</div>
+That usually means:
 
-## How templates fit into PyColors
+- homepage
+- hero section
+- pricing
+- FAQ
+- feature presentation
+- conversion-focused sections
+- responsive layouts
+- SEO-oriented structure
+
+They help you move faster when the bottleneck is:
+
+- presenting the offer
+- publishing credibility
+- improving perception
+- launching publicly
+- testing positioning
+
+<Callout type="info" title="Decision rule">
+  Choose a template when the page is the bottleneck.
+  Choose Starter Pro when the business layer is the bottleneck.
+</Callout>
+
+### Available templates
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      icon: Sparkles,
+      description:
+        'Premium Next.js landing page for AI products, SaaS tools, and analytics platforms.',
+      badges: ['49 €', 'Next.js', 'PyColors UI'],
+    },
+    {
+      title: 'More templates coming',
+      icon: LayoutTemplate,
+      description:
+        'Future templates will follow the same product-first approach: focused, documented, and powered by PyColors foundations.',
+    },
+  ]}
+/>
+
+## What templates include
+
+Templates focus on the marketing layer and launch surface.
+
+Typical foundations include:
+
+- responsive layouts
+- premium hero sections
+- product positioning blocks
+- pricing sections
+- feature grids
+- CTA structure
+- SEO-ready metadata
+- reusable UI sections
+- PyColors Tokens integration
+- PyColors UI integration
+
+Templates intentionally avoid trying to become full SaaS products.
+
+That separation keeps them:
+
+- faster to customize
+- easier to understand
+- easier to publish
+- more focused commercially
+
+### How templates fit into PyColors
 
 | Need | Product |
 | --- | --- |
@@ -85,8 +198,20 @@ Templates are intentionally narrower than starters. A template helps you launch 
 | Validate SaaS UX | Starter Free |
 | Wire auth, billing, protected routes, and database foundations | Starter Pro |
 
-<Callout type="info" title="Decision rule">
-  Choose a template when the page is the bottleneck. Choose Starter Pro when the business layer is the bottleneck.
+### Recommended path
+
+A common progression looks like this:
+
+1. launch a template publicly
+2. validate positioning and demand
+3. move into Starter Free for product UX
+4. move into Starter Pro for real auth and billing
+5. scale the business layer
+
+This keeps the product evolution aligned with the actual bottleneck instead of prematurely building infrastructure.
+
+<Callout title="The goal is leverage">
+  Templates reduce repeated marketing work so you can focus on positioning, product clarity, and launch speed.
 </Callout>
 
 ## Next steps
@@ -107,6 +232,20 @@ Templates are intentionally narrower than starters. A template helps you launch 
       description:
         'Compare NA-AI Landing, Starter Free, and Starter Pro.',
       icon: BadgeEuro,
+    },
+    {
+      title: 'Starter Free',
+      href: '/starters/free',
+      description:
+        'Validate dashboards, settings, billing surfaces, and SaaS UX flows.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/starters/pro',
+      description:
+        'Move into authentication, billing, protected routes, and backend foundations.',
+      icon: Rocket,
     },
   ]}
 />

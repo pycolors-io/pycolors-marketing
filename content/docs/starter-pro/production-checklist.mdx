@@ -1,26 +1,15 @@
 ---
 title: Production checklist (PRO)
 description: Validate auth, billing, backend, delivery, environment, and launch readiness before shipping Starter Pro to real users.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
   CheckCircle,
   CreditCard,
   Database,
@@ -30,17 +19,20 @@ import {
   Rocket,
   Server,
   ShieldCheck,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Production</Badge>
 </div>
 
-### Validate the foundation before launch
+## Validate the foundation before launch
 
 Starter Pro gives you the production-shaped foundation.
 
@@ -60,81 +52,47 @@ It should validate:
 - recovery paths
 - buyer trust
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/getting-started">
-      Setup guide
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Ready is when the systems agree."
+  description="Auth identifies the user. Billing confirms the customer. Backend protects the data. Delivery completes the purchase."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
 
 <Callout title="Production rule">
   Do not launch because the UI looks finished. Launch when the critical systems behave correctly.
 </Callout>
 
-### What this checklist covers
+## What this checklist covers
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Auth
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Sessions, providers, reset flows, verification, and protected routes.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Auth',
+      description:
+        'Sessions, providers, reset flows, verification, and protected routes.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Checkout, portal, webhooks, invoices, subscriptions, and access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend',
+      description:
+        'Database, ownership, migrations, server rules, and product data.',
+      icon: Server,
+    },
+  ]}
+/>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Checkout, portal, webhooks, invoices, subscriptions, and access.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Server className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Backend
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Database, ownership, migrations, server rules, and product data.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
-
-## Launch readiness model
+### Launch readiness model
 
 > Production readiness is not one check.
 > It is the alignment of identity, payment, data, access, and delivery.
@@ -152,7 +110,7 @@ It should validate:
   A production checklist should verify behavior, not only configuration.
 </Callout>
 
-### Checklist
+## Checklist
 
 <Steps>
   <Step>
@@ -265,112 +223,108 @@ pnpm start
   </Step>
 </Steps>
 
-## Auth checklist
+### Auth checklist
 
-<Tabs items={["Required", "Security", "UX"]}>
-  <Tab value="Required">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Required auth behavior
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>users can register</li>
-        <li>users can sign in</li>
-        <li>users can sign out</li>
-        <li>sessions persist correctly</li>
-        <li>protected routes redirect anonymous users</li>
-        <li>authenticated users cannot access auth pages unnecessarily</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Required',
+      title: 'Required auth behavior',
+      icon: LockKeyhole,
+      description:
+        'Confirm that authentication works end-to-end for real users before launch.',
+      items: [
+        'users can register',
+        'users can sign in',
+        'users can sign out',
+        'sessions persist correctly',
+        'protected routes redirect anonymous users',
+        'authenticated users do not need unnecessary auth pages',
+      ],
+    },
+    {
+      eyebrow: 'Security',
+      title: 'Auth security checks',
+      icon: ShieldCheck,
+      description:
+        'Validate recovery, provider, and error behavior before the product reaches real users.',
+      items: [
+        'forgot password does not reveal whether an email exists',
+        'reset tokens expire',
+        'provider disconnect cannot lock users out',
+        'server-side validation exists for auth actions',
+        'error messages are useful but not overly specific',
+      ],
+    },
+    {
+      eyebrow: 'UX',
+      title: 'Auth UX checks',
+      icon: KeyRound,
+      description:
+        'Auth should feel calm, predictable, and clear across loading, error, and success states.',
+      items: [
+        'loading states are visible',
+        'forms disable submit while processing',
+        'errors are field-level when possible',
+        'global auth errors are clear and calm',
+        'success states explain the next step',
+      ],
+    },
+  ]}
+/>
 
-  <Tab value="Security">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Auth security checks
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>forgot password does not reveal whether an email exists</li>
-        <li>reset tokens expire</li>
-        <li>provider disconnect cannot lock users out</li>
-        <li>server-side validation exists for auth actions</li>
-        <li>error messages are useful but not overly specific</li>
-      </ul>
-    </div>
-  </Tab>
+### Billing checklist
 
-  <Tab value="UX">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <KeyRound className="h-4 w-4 text-primary" />
-        Auth UX checks
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>loading states are visible</li>
-        <li>forms disable submit while processing</li>
-        <li>errors are field-level when possible</li>
-        <li>global auth errors are clear and calm</li>
-        <li>success states explain the next step</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Checkout',
+      title: 'Checkout checks',
+      icon: CreditCard,
+      description:
+        'Validate payment entry points and Stripe session creation before production use.',
+      items: [
+        'checkout sessions are created on the server',
+        'success URL works',
+        'cancel URL works',
+        'customer mapping is correct',
+        'test and production prices are not mixed',
+      ],
+    },
+    {
+      eyebrow: 'Webhooks',
+      title: 'Webhook checks',
+      icon: ShieldCheck,
+      description:
+        'Webhook state should be verified, idempotent, and reflected correctly in your app.',
+      items: [
+        'webhook signatures are verified',
+        'events are handled idempotently',
+        'subscription create/update/delete events sync correctly',
+        'invoice payment events update billing state',
+        'failed payments show a clear product state',
+      ],
+    },
+    {
+      eyebrow: 'Access',
+      title: 'Billing access checks',
+      icon: CheckCircle,
+      description:
+        'Paid access should depend on synchronized backend billing state, not only client UI.',
+      items: [
+        'paid features require active access',
+        'canceled subscriptions remove access when appropriate',
+        'past-due state is handled clearly',
+        'billing page reflects synchronized backend state',
+        'portal access is only available to the correct customer',
+      ],
+    },
+  ]}
+/>
 
-## Billing checklist
-
-<Tabs items={["Checkout", "Webhooks", "Access"]}>
-  <Tab value="Checkout">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Checkout checks
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>checkout sessions are created on the server</li>
-        <li>success URL works</li>
-        <li>cancel URL works</li>
-        <li>customer mapping is correct</li>
-        <li>test and production prices are not mixed</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Webhooks">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Webhook checks
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>webhook signatures are verified</li>
-        <li>events are handled idempotently</li>
-        <li>subscription create/update/delete events sync correctly</li>
-        <li>invoice payment events update billing state</li>
-        <li>failed payments show a clear product state</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Access">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        Billing access checks
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>paid features require active access</li>
-        <li>canceled subscriptions remove access when appropriate</li>
-        <li>past-due state is handled clearly</li>
-        <li>billing page reflects synchronized backend state</li>
-        <li>portal access is only available to the correct customer</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
-
-## Backend checklist
+### Backend checklist
 
 | Check | Why it matters |
 | --- | --- |
@@ -387,7 +341,7 @@ pnpm start
   If a rule affects money, identity, or private data, it should not live only in the frontend.
 </Callout>
 
-## Delivery checklist
+### Delivery checklist
 
 Use this if Starter Pro delivery or another paid digital product flow is active.
 
@@ -459,8 +413,18 @@ Before launching, run through this final sequence:
 11. run one final smoke test
 
 <Callout title="Launch with confidence">
-  A strong launch is not just a clean UI. It is a product where identity, revenue, data, and access behave correctly together.
+  A strong launch is not just a clean UI.
+  It is a product where identity, revenue, data, and access behave correctly together.
 </Callout>
+
+<DocsUpgradeCTA
+  title="Launch when the critical systems agree."
+  description="Starter Pro gives you the foundation, but production readiness comes from validating auth, billing, backend, delivery, and deployment together."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
 ## Next steps
 
@@ -497,16 +461,3 @@ Before launching, run through this final sequence:
     },
   ]}
 />
-<br />
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Ready is when the systems agree.">
-  Auth identifies the user. Billing confirms the customer. Backend protects the data. Delivery completes the purchase.
-</Callout>

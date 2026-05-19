@@ -18,14 +18,20 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  Blocks,
   CheckCircle,
   CircleDot,
+  Layers3,
   Layers,
   Ruler,
+  Palette,
   Sparkles,
+  Type,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -50,66 +56,32 @@ Tokens are not components. They are not random CSS values. They are **design dec
   Without tokens, every component slowly starts making its own visual decisions. That creates drift, makes refactors risky, and weakens the premium feeling of the product over time.
 </Callout>
 
-## What tokens control
+### What tokens control
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Ruler className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Geometry
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Radius tokens keep buttons, cards, inputs, and overlays visually related.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Layers className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Elevation
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Shadow tokens define calm, predictable depth across cards, menus, and modals.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Sparkles className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          System intent
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Tokens make design intent explicit so the product can scale without visual drift.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Geometry',
+      description:
+        'Radius tokens keep buttons, cards, inputs, and overlays visually related.',
+      icon: Ruler,
+    },
+    {
+      title: 'Elevation',
+      description:
+        'Shadow tokens define calm, predictable depth across cards, menus, and modals.',
+      icon: Layers3,
+    },
+    {
+      title: 'System intent',
+      description:
+        'Tokens make design intent explicit so the product can scale without visual drift.',
+      icon: Sparkles,
+    },
+  ]}
+/>
 
 ## Steps
 
@@ -249,7 +221,7 @@ Avoid creating a token when:
   ]}
 />
 
-## Token flow
+### Token flow
 
 <Tabs items={["Model", "Component"]}>
   <Tab value="Model">
@@ -331,33 +303,26 @@ export function SettingsCard() {
 
 ## Start here
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/design-system/tokens/radius" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Ruler className="h-4 w-4 text-primary" />
-        Radius
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Understand the corner geometry used across controls, cards, and overlays.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/design-system/tokens/shadows" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Layers className="h-4 w-4 text-primary" />
-        Shadows
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Learn how elevation creates calm, predictable depth across surfaces.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="compact"
+  tone="platform"
+  items={[
+    {
+      title: 'Radius',
+      href: '/docs/design-system/tokens/radius',
+      description:
+        'Understand the corner geometry used across controls, cards, and overlays.',
+      icon: Ruler,
+    },
+    {
+      title: 'Shadows',
+      href: '/docs/design-system/tokens/shadows',
+      description:
+        'Learn how elevation creates calm, predictable depth across surfaces.',
+      icon: Layers3,
+    },
+  ]}
+/>
 
 ## Common questions
 
@@ -377,32 +342,37 @@ export function SettingsCard() {
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/design-system/colors" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Colors</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Learn how semantic color roles extend the same token logic across surfaces, text, and states.
-    </div>
-  </a>
-
-  <a href="/docs/design-system/typography" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Typography</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Review hierarchy, font roles, labels, and readable product structure.
-    </div>
-  </a>
-
-  <a href="/docs/ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">UI Components</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Move from foundations to reusable primitives built on the token system.
-    </div>
-  </a>
-
-  <a href="/docs/ui/why-pycolors-ui" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Why PyColors UI</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Understand the philosophy and trade-offs behind the component system.
-    </div>
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Colors',
+      href: '/docs/design-system/colors',
+      description:
+        'Learn how semantic color roles extend the same token logic across surfaces, text, and states.',
+      icon: Palette,
+    },
+    {
+      title: 'Typography',
+      href: '/docs/design-system/typography',
+      description:
+        'Review hierarchy, font roles, labels, and readable product structure.',
+      icon: Type,
+    },
+    {
+      title: 'UI Components',
+      href: '/docs/ui',
+      description:
+        'Move from foundations to reusable primitives built on the token system.',
+      icon: Blocks,
+    },
+    {
+      title: 'Why PyColors UI',
+      href: '/docs/ui/why-pycolors-ui',
+      description:
+        'Understand the philosophy and trade-offs behind the component system.',
+      icon: Sparkles,
+    },
+  ]}
+/>

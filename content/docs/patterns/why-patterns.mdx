@@ -9,6 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
 import { ArrowRight, AlertTriangle, CheckCircle, Layers, LoaderCircle, Table2, Workflow, Zap } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Patterns</Badge>
@@ -83,51 +84,30 @@ They combine:
 - feedback
 - UX rules
 
-<div className="grid gap-4 md:grid-cols-3">
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Layers className="h-4 w-4 text-primary" />
-        Structure
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm text-muted-foreground">
-        Clear separation between header, content, actions, and data.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Workflow className="h-4 w-4 text-primary" />
-        State
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm text-muted-foreground">
-        Explicit handling of loading, empty, error, and mutation flows.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm flex items-center gap-2">
-        <Zap className="h-4 w-4 text-primary" />
-        Behavior
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm text-muted-foreground">
-        Predictable interactions users can rely on across the product.
-      </div>
-    </CardContent>
-  </Card>
-
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Structure',
+      description:
+        'Clear separation between header, content, actions, and data surfaces.',
+      icon: Layers,
+    },
+    {
+      title: 'State',
+      description:
+        'Explicit handling of loading, empty, error, and mutation flows.',
+      icon: Workflow,
+    },
+    {
+      title: 'Behavior',
+      description:
+        'Predictable interactions users can rely on consistently across the product.',
+      icon: Zap,
+    },
+  ]}
+/>
 
 ### Without Patterns
 

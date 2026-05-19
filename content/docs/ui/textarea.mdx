@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -109,64 +110,30 @@ export function BasicTextarea() {
 
 Use Textarea when one line is not enough for the task.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <MessageSquareText className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Feedback
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Capture user feedback, support details, and product requests.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <FileText className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Descriptions
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Let users describe projects, products, workspaces, or templates.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <PencilLine className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Notes
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Store internal notes, onboarding context, or review comments.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Feedback',
+      description:
+        'Capture user feedback, support details, and product requests.',
+      icon: MessageSquareText,
+    },
+    {
+      title: 'Descriptions',
+      description:
+        'Let users describe projects, products, workspaces, or templates.',
+      icon: FileText,
+    },
+    {
+      title: 'Notes',
+      description:
+        'Store internal notes, onboarding context, or review comments.',
+      icon: PencilLine,
+    },
+  ]}
+/>
 
 ### Helper text
 
@@ -419,8 +386,6 @@ export function TextareaResize() {
   Prefer `vertical` for most product forms. Avoid horizontal resize in constrained layouts.
 </Callout>
 
-## Product examples
-
 ### Feedback form
 
 <Tabs items={["Preview", "Code"]}>
@@ -527,31 +492,31 @@ export function PromptTextarea() {
 
 <Steps>
   <Step>
-    ### Use Textarea for longer answers
+    #### Use Textarea for longer answers
 
     Use Input for short values. Use Textarea when the user needs to provide context, explanation, or multi-line content.
   </Step>
 
   <Step>
-    ### Keep labels explicit
+    #### Keep labels explicit
 
     The label should describe the content expected from the user, not the UI element itself.
   </Step>
 
   <Step>
-    ### Add helper text for complex fields
+    #### Add helper text for complex fields
 
     Use helper text when the field needs examples, constraints, or formatting guidance.
   </Step>
 
   <Step>
-    ### Validate with actionable errors
+    #### Validate with actionable errors
 
     Error messages should explain what to change, not just that the value is invalid.
   </Step>
 
   <Step>
-    ### Choose resize intentionally
+    #### Choose resize intentionally
 
     Use vertical resize for flexible content. Use no resize for controlled surfaces like sheets and compact cards.
   </Step>

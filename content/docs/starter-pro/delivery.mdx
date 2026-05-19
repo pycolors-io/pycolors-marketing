@@ -1,27 +1,15 @@
 ---
 title: Delivery (PRO)
 description: Instant, secure access to Starter Pro after purchase with controlled delivery and fulfillment flow.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro - Delivery
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   CreditCard,
   Database,
   Download,
@@ -30,17 +18,20 @@ import {
   PackageCheck,
   RefreshCcw,
   ShieldCheck,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Delivery</Badge>
 </div>
 
-### Secure delivery after purchase
+## Secure delivery after purchase
 
 Starter Free gives you a product surface.
 
@@ -56,14 +47,14 @@ It is also about what happens immediately after payment:
 - the asset is not publicly exposed
 - fulfillment does not rely on manual work
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/billing">
-      Billing system
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Checkout starts the sale. Delivery earns the trust."
+  description="Starter Pro gives you the controlled post-purchase flow that makes a paid digital product feel complete."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/billing"
+  secondaryLabel="Billing system"
+/>
 
 <Callout title="Core idea">
   Checkout creates the purchase. Delivery completes the product experience.
@@ -83,85 +74,38 @@ Buyers expect:
 
 Starter Pro includes the foundations for a post-purchase delivery flow that feels serious, automated, and trustworthy.
 
-## Included foundations
+### Included foundations
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <PackageCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Fulfillment flow
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        A structured flow from successful payment to confirmed product access and download availability.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Controlled access
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Backend-controlled download access so paid files are not exposed through permanent public URLs.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <KeyRound className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Token-based delivery
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Secure token patterns for download access, expiration, validation, and post-purchase fulfillment.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <RefreshCcw className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Retry-safe operation
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Delivery designed around backend confirmation, webhook truth, and resilience against interrupted browser sessions.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Fulfillment flow',
+      description:
+        'A structured flow from successful payment to confirmed product access and download availability.',
+      icon: PackageCheck,
+    },
+    {
+      title: 'Controlled access',
+      description:
+        'Backend-controlled download access so paid files are not exposed through permanent public URLs.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Token-based delivery',
+      description:
+        'Secure token patterns for download access, expiration, validation, and post-purchase fulfillment.',
+      icon: KeyRound,
+    },
+    {
+      title: 'Retry-safe operation',
+      description:
+        'Delivery designed around backend confirmation, webhook truth, and resilience against interrupted browser sessions.',
+      icon: RefreshCcw,
+    },
+  ]}
+/>
 
 ## Delivery lifecycle
 
@@ -225,65 +169,61 @@ const token = await createDownloadToken({
 
 ### Secure delivery model
 
-<Tabs items={["Storage", "Access", "Token", "Download"]}>
-  <Tab value="Storage">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Private storage
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>paid files should not live behind public permanent links</li>
-        <li>private storage keeps the asset away from direct exposure</li>
-        <li>backend access can decide who gets the file</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Storage',
+      title: 'Private storage',
+      icon: LockKeyhole,
+      description:
+        'Paid files should stay away from public permanent URLs and direct exposure.',
+      items: [
+        'paid files should not live behind public permanent links',
+        'private storage keeps the asset away from direct exposure',
+        'backend access can decide who gets the file',
+      ],
+    },
+    {
+      eyebrow: 'Access',
+      title: 'Access validation',
+      icon: ShieldCheck,
+      description:
+        'Delivery access should be validated on the server from confirmed purchase or entitlement state.',
+      items: [
+        'validate purchase or entitlement server-side',
+        'connect access to user or customer identity',
+        'avoid trusting client-only purchase state',
+      ],
+    },
+    {
+      eyebrow: 'Token',
+      title: 'Delivery token',
+      icon: KeyRound,
+      description:
+        'Tokens provide temporary, controlled delivery without exposing long-lived private asset links.',
+      items: [
+        'token represents controlled temporary access',
+        'expiration limits long-term link sharing',
+        'validation keeps delivery behind backend rules',
+      ],
+    },
+    {
+      eyebrow: 'Download',
+      title: 'Download endpoint',
+      icon: Download,
+      description:
+        'The download route becomes the controlled boundary between buyer access and private storage.',
+      items: [
+        'buyer requests file through the app',
+        'backend validates token and access',
+        'asset is delivered without exposing private storage',
+      ],
+    },
+  ]}
+/>
 
-  <Tab value="Access">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Access validation
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>validate purchase or entitlement server-side</li>
-        <li>connect access to user or customer identity</li>
-        <li>avoid trusting client-only purchase state</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Token">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <KeyRound className="h-4 w-4 text-primary" />
-        Delivery token
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>token represents controlled temporary access</li>
-        <li>expiration limits long-term link sharing</li>
-        <li>validation keeps delivery behind backend rules</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Download">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Download className="h-4 w-4 text-primary" />
-        Download endpoint
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>buyer requests file through the app</li>
-        <li>backend validates token and access</li>
-        <li>asset is delivered without exposing private storage</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
-
-### Starter Free vs Starter Pro
+## Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -315,10 +255,9 @@ A strong delivery system helps you:
 - scale sales without operational drag
 
 <Callout type="info" title="Buyer trust principle">
-  The buyer should never wonder what happens after payment. Confirmation and access should feel immediate, clear, and controlled.
+  The buyer should never wonder what happens after payment.
+  Confirmation and access should feel immediate, clear, and controlled.
 </Callout>
-
-## Security and validation
 
 ### Security rules
 
@@ -341,25 +280,46 @@ Use these rules when adapting the delivery layer.
   ]}
 />
 
-### Decision guide
+## Decision guide
 
-Use Starter Pro delivery when:
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Use Starter Pro when delivery becomes real',
+      href: '/docs/starter-pro/getting-started',
+      icon: PackageCheck,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when paid access, private assets, and automated fulfillment become part of the product experience.',
+      items: [
+        'users can buy access',
+        'paid files must stay private',
+        'delivery should be automatic',
+        'buyer access must be controlled',
+        'fulfillment should not depend on manual work',
+        'the purchase experience must feel complete',
+      ],
+      cta: 'Start setup →',
+    },
+    {
+      eyebrow: 'Starter Free',
+      title: 'Stay on Free while validating UX',
+      icon: Download,
+      description:
+        'Stay on Starter Free when no one can buy yet and delivery is not part of the customer experience.',
+      items: [
+        'you are only validating product UX',
+        'no one can buy yet',
+        'delivery is not part of the product experience',
+        'manual demos are still acceptable',
+      ],
+    },
+  ]}
+/>
 
-- users can buy access
-- paid files must stay private
-- delivery should be automatic
-- buyer access must be controlled
-- fulfillment should not depend on manual work
-- the purchase experience must feel complete
-
-Starter Free is enough when:
-
-- you are only validating product UX
-- no one can buy yet
-- delivery is not part of the product experience
-- manual demos are still acceptable
-
-## Implementation checklist
+### Implementation checklist
 
 Before treating delivery as production-ready, validate:
 
@@ -377,7 +337,8 @@ Before treating delivery as production-ready, validate:
 - buyer-facing confirmation copy
 
 <Callout title="Delivery validation principle">
-  A paid product is not complete when checkout works. It is complete when the buyer reliably receives controlled access.
+  A paid product is not complete when checkout works.
+  It is complete when the buyer reliably receives controlled access.
 </Callout>
 
 ## Common questions
@@ -399,6 +360,15 @@ Before treating delivery as production-ready, validate:
     Yes. Keep the same boundary: private storage, backend validation, controlled delivery, and no permanent public access to paid assets.
   </Accordion>
 </Accordions>
+
+<DocsUpgradeCTA
+  title="Complete the paid product experience."
+  description="Starter Pro helps connect checkout, webhook truth, backend access, and controlled delivery into one serious purchase flow."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
 
 ## Next steps
 
@@ -435,17 +405,3 @@ Before treating delivery as production-ready, validate:
     },
   ]}
 />
-
-
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Checkout starts the sale. Delivery earns the trust.">
-  Starter Pro gives you the controlled post-purchase flow that makes a paid digital product feel complete.
-</Callout>

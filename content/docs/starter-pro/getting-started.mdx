@@ -1,45 +1,34 @@
 ---
 title: Getting started
 description: See how to go from purchase to first local run with Starter Pro, and understand the fastest path from setup to launch.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
-  CheckCircle,
   CreditCard,
   Database,
   LockKeyhole,
   Package,
   Rocket,
   Scale,
-  Settings,
-  ShieldCheck,
-  XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Setup</Badge>
 </div>
 
-### Get from purchase to product work faster
+## Get from purchase to product work faster
 
 Starter Pro is built to shorten the path between:
 
@@ -53,20 +42,22 @@ The goal is not to study the codebase for days.
 
 The goal is to get the production baseline running, confirm the important systems, then start building your product on top of it.
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/docs/starter-pro/what-is-included">
-      See what’s included
-    </Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Validate the foundation. Then build the product."
+  description="Starter Pro gives you the launch baseline so your first serious work can be product work, not infrastructure work."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/what-is-included"
+  secondaryLabel="See what’s included"
+/>
 
 <Callout title="Core setup principle">
-  Validate the foundation first. Customize second. Build your product third.
+  Validate the foundation first.
+  Customize second.
+  Build your product third.
 </Callout>
 
-### What this page helps you do
+## What this page helps you do
 
 By the end of this page, you should understand:
 
@@ -93,7 +84,9 @@ You are not starting from a blank codebase.
 You are starting from a product-shaped system that is already much closer to launch.
 
 <Callout type="info" title="Important">
-  The fastest path is not rewriting everything. The fastest path is validating what already exists, then replacing only what belongs to your product.
+  The fastest path is not rewriting everything.
+
+  The fastest path is validating what already exists, then replacing only what belongs to your product.
 </Callout>
 
 ## Setup flow
@@ -102,13 +95,15 @@ You are starting from a product-shaped system that is already much closer to lau
   <Step>
     ### Install dependencies
 
-    Start by installing the workspace dependencies.
-
 ```bash title="terminal"
 pnpm install
 ```
 
-    This gives you the local baseline required to run the app, generate the database client, and start validating the system.
+    Start by installing the workspace dependencies.
+
+    This gives you the local baseline required to run the app,
+    generate the database client,
+    and validate the foundation.
   </Step>
 
   <Step>
@@ -122,7 +117,7 @@ DATABASE_URL=
 AUTH_SECRET=
 ```
 
-    Add optional variables only when you are ready to validate those systems:
+    Add optional variables only when you are ready to validate those systems.
 
 ```bash title=".env.local"
 AUTH_GITHUB_ID=
@@ -138,13 +133,13 @@ RESEND_API_KEY=
 AUTH_EMAIL_FROM=
 ```
 
-    Do not overconfigure too early. Get the baseline running first.
+    Do not overconfigure too early.
+
+    Get the baseline running first.
   </Step>
 
   <Step>
     ### Run database setup
-
-    Generate the database client, run migrations, and seed local fixtures.
 
 ```bash title="terminal"
 pnpm db:generate
@@ -152,19 +147,22 @@ pnpm db:migrate
 pnpm db:seed
 ```
 
-    This helps you validate auth, users, billing surfaces, and local development flows faster.
+    Generate the database client,
+    run migrations,
+    and seed local fixtures.
+
+    This helps you validate auth,
+    users,
+    billing surfaces,
+    and local development flows faster.
   </Step>
 
   <Step>
     ### Start the app
 
-    Run the development server.
-
 ```bash title="terminal"
 pnpm dev
 ```
-
-    Then open:
 
 ```txt title="browser"
 http://localhost:3000
@@ -221,59 +219,56 @@ http://localhost:3000
   </Step>
 </Steps>
 
-## Validation
+## Validation priorities
 
-### What to validate first
-
-<Tabs items={["Auth", "Billing", "Backend"]}>
-  <Tab value="Auth">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Authentication validation
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>sign in works locally</li>
-        <li>registration flow is reachable</li>
-        <li>protected routes redirect correctly</li>
-        <li>session-aware UI behaves as expected</li>
-        <li>password and provider flows are understood</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Billing">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Billing validation
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>billing page renders correctly</li>
-        <li>checkout flow is understood</li>
-        <li>portal flow is understood</li>
-        <li>subscription state model is clear</li>
-        <li>webhook responsibilities are understood</li>
-      </ul>
-    </div>
-  </Tab>
-
-  <Tab value="Backend">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Database className="h-4 w-4 text-primary" />
-        Backend validation
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>database client is generated</li>
-        <li>migrations run locally</li>
-        <li>seed data exists</li>
-        <li>server-side boundaries are understood</li>
-        <li>domain-specific additions have a clear place</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Authentication',
+      title: 'Validate auth first',
+      icon: LockKeyhole,
+      description:
+        'Confirm that the authentication foundation behaves correctly before product customization.',
+      items: [
+        'sign in works locally',
+        'registration flow is reachable',
+        'protected routes redirect correctly',
+        'session-aware UI behaves correctly',
+        'provider and password flows are understood',
+      ],
+    },
+    {
+      eyebrow: 'Billing',
+      title: 'Validate billing flows',
+      icon: CreditCard,
+      tone: 'platform',
+      description:
+        'Understand how billing flows work before integrating real production billing.',
+      items: [
+        'billing page renders correctly',
+        'checkout flow is understood',
+        'portal flow is understood',
+        'subscription state is clear',
+        'webhook responsibilities are understood',
+      ],
+    },
+    {
+      eyebrow: 'Backend',
+      title: 'Validate the backend baseline',
+      icon: Database,
+      description:
+        'Confirm the backend-oriented structure is ready before domain customization.',
+      items: [
+        'database client is generated',
+        'migrations run locally',
+        'seed data exists',
+        'server-side boundaries are understood',
+        'domain additions have a clear place',
+      ],
+    },
+  ]}
+/>
 
 ### What to avoid
 
@@ -332,7 +327,7 @@ This gives you the best speed-to-confidence ratio.
   Starter Pro pays for itself when you avoid rebuilding the foundation and start building what customers actually care about.
 </Callout>
 
-## First product changes
+### First product changes
 
 After setup, the best first changes are usually:
 
@@ -352,9 +347,11 @@ Examples:
 - CRM records
 - internal operations data
 
-The exact feature does not matter. What matters is building your product inside the existing structure instead of fighting it.
+The exact feature does not matter.
 
-### When it becomes worth buying
+What matters is building your product inside the existing structure instead of fighting it.
+
+## When it becomes worth buying
 
 Starter Pro becomes worth buying when your question changes from:
 
@@ -367,6 +364,31 @@ to:
 If that is already your question, the fastest next step is not more setup research.
 
 It is moving to Starter Pro and building on the baseline.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Production baseline',
+      description:
+        'Start from a product-shaped SaaS foundation instead of rebuilding the infrastructure layer.',
+      icon: Rocket,
+    },
+    {
+      title: 'Launch confidence',
+      description:
+        'Validate authentication, billing, protected routes, and backend structure earlier.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Higher-leverage work',
+      description:
+        'Spend more time on customers, product logic, workflows, and distribution.',
+      icon: CreditCard,
+    },
+  ]}
+/>
 
 ## Next steps
 
@@ -403,17 +425,3 @@ It is moving to Starter Pro and building on the baseline.
     },
   ]}
 />
-
-<br />
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-  <Button asChild variant="outline" className="h-11 rounded-xl px-6 text-sm font-medium no-underline">
-    <Link href="/pricing">
-      View pricing
-    </Link>
-  </Button>
-</div>
-
-<Callout title="Validate the foundation. Then build the product.">
-  Starter Pro gives you the launch baseline so your first serious work can be product work, not infrastructure work.
-</Callout>

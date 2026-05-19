@@ -23,9 +23,12 @@ import {
   Database,
   Download,
   LockKeyhole,
+  Rocket,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -216,34 +219,44 @@ You likely need Starter Pro when:
 - mock data needs to become backend data
 - you want less uncertainty before launch
 
-<Tabs items={["Stay on Free", "Move to Pro"]}>
-  <Tab value="Stay on Free">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Stay on Starter Free when you are validating.
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Free while you are shaping routes, screens, copy,
-        product flows, and the core value proposition.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Move to Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Move to Starter Pro when wiring becomes the blocker.
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Pro when auth, billing, protected routes, backend
-        contracts, and production confidence become the work
-        slowing launch.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Free',
+      title: 'Stay on Free while validating',
+      href: '/docs/starter',
+      icon: Sparkles,
+      description:
+        'Use Starter Free while shaping routes, screens, copy, product flows, and the core value proposition.',
+      items: [
+        'dashboard and navigation',
+        'mocked product states',
+        'rapid UX iteration',
+        'frontend-first validation',
+        'fast MVP exploration',
+      ],
+      cta: 'Explore Starter Free →',
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Move to Pro when wiring becomes the blocker',
+      href: '/docs/starter-pro',
+      icon: Rocket,
+      tone: 'pro',
+      description:
+        'Use Starter Pro when auth, billing, protected routes, backend contracts, and production confidence become the work slowing launch.',
+      items: [
+        'real authentication',
+        'Stripe billing',
+        'protected routes',
+        'backend foundations',
+        'production-ready workflows',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ### Builder path
 

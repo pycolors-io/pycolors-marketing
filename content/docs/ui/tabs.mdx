@@ -17,11 +17,14 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 import {
+  Accessibility,
   ArrowRight,
   CheckCircle,
   CreditCard,
   LayoutDashboard,
+  LayoutTemplate,
   ListFilter,
+  MousePointerClick,
   PanelsTopLeft,
   Settings,
   ShieldCheck,
@@ -35,6 +38,9 @@ import {
   TabsContent as UITabsContent,
 } from "@pycolors/ui";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -136,61 +142,30 @@ export function SettingsTabs() {
 
 Use Tabs when users switch between related peer sections in the same workflow.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Settings className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Settings sections
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for Profile, Billing, Security, Notifications, and Danger Zone sections.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LayoutDashboard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Dashboard views
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for Overview, Activity, Logs, Usage, or Members inside a dashboard page.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ListFilter className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Compact filters
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for small segmented filters when the choices are few and stable.
-      </div>
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Settings sections',
+      description:
+        'Use for Profile, Billing, Security, Notifications, and Danger Zone sections.',
+      icon: Settings,
+    },
+    {
+      title: 'Dashboard views',
+      description:
+        'Use for Overview, Activity, Logs, Usage, or Members inside a dashboard page.',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Compact filters',
+      description:
+        'Use for small segmented filters when the choices are few and stable.',
+      icon: ListFilter,
+    },
+  ]}
+/>
 
 ### Sizes
 
@@ -305,75 +280,100 @@ export function TabsSizes() {
   Use `sm` for compact product controls, `md` for most product UI, and `lg` only when the tabs need stronger visual presence.
 </Callout>
 
-## Product examples
+### Product examples
 
-<Tabs items={["Settings", "Billing", "Dashboard"]}>
-  <Tab value="Settings">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Settings className="h-4 w-4 text-primary" />
-        Settings tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Profile, Organization, Security, Billing, Notifications.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Settings',
+      title: 'Settings tabs',
+      icon: Settings,
+      description: (
+        <>
+          <p>
+            Use tabs to separate stable configuration areas inside settings surfaces.
+          </p>
 
-  <Tab value="Billing">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Billing tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Plan, Invoices, Payment method, Usage.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Profile</Badge>
+            <Badge variant="outline">Organization</Badge>
+            <Badge variant="outline">Security</Badge>
+            <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">Notifications</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Billing',
+      title: 'Billing tabs',
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing surfaces often group related financial and subscription information.
+          </p>
 
-  <Tab value="Dashboard">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LayoutDashboard className="h-4 w-4 text-primary" />
-        Dashboard tabs
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Overview, Activity, Logs, Members.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Plan</Badge>
+            <Badge variant="outline">Invoices</Badge>
+            <Badge variant="outline">Payment method</Badge>
+            <Badge variant="outline">Usage</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Dashboard',
+      title: 'Dashboard tabs',
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            Dashboard tabs help organize operational views without creating route overload.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Overview</Badge>
+            <Badge variant="outline">Activity</Badge>
+            <Badge variant="outline">Logs</Badge>
+            <Badge variant="outline">Members</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ### Usage patterns
 
 <Steps>
   <Step>
-    ### Use tabs for peer views
+    #### Use tabs for peer views
 
     Each tab should represent a related view at the same hierarchy level.
   </Step>
 
   <Step>
-    ### Keep labels short
+    #### Keep labels short
 
     Prefer labels like Overview, Activity, Billing, Security, Logs, Usage.
   </Step>
 
   <Step>
-    ### Limit the number of tabs
+    #### Limit the number of tabs
 
     Two to five tabs usually works best. More than that often becomes navigation.
   </Step>
 
   <Step>
-    ### Keep important actions visible
+    #### Keep important actions visible
 
     Do not hide critical actions inside a tab if users need them globally.
   </Step>
 
   <Step>
-    ### Preserve content structure
+    #### Preserve content structure
 
     Each tab panel should have a clear heading or section structure when the content is complex.
   </Step>
@@ -396,8 +396,7 @@ export function TabsSizes() {
 
 ## API
 
-### Components
-
+#### Component
 | Component | Description |
 | --- | --- |
 | `Tabs` | Root container |
@@ -462,7 +461,7 @@ Radix provides keyboard support:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Tab labels should be short and familiar.
 
@@ -513,44 +512,37 @@ Tab labels should be short and familiar.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/button" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Button</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use buttons for actions that pair with tabbed content.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/card" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Card</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use cards to structure content inside tab panels.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Place tabs inside real product layouts and settings flows.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/accessibility" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Accessibility</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build accessible tablists with clear labels and keyboard behavior.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'Use buttons for actions that pair with tabbed content.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Card',
+      href: '/docs/ui/card',
+      description:
+        'Use cards to structure content inside tab panels.',
+      icon: PanelsTopLeft,
+    },
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Place tabs inside real product layouts and settings flows.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Accessibility',
+      href: '/docs/ui/accessibility',
+      description:
+        'Build accessible tablists with clear labels and keyboard behavior.',
+      icon: Accessibility,
+    },
+  ]}
+/>

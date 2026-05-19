@@ -1,7 +1,7 @@
 ---
 title: Typography
 description: Typography scale, text roles, and hierarchy used across PyColors UI.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Design System
 ---
 
@@ -10,8 +10,10 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, FormInput, ListTree, MousePointerClick, Palette, Ruler, ShieldCheck, Type, XCircle } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -39,40 +41,30 @@ At the end of this page, you will understand how PyColors handles:
 
 ## What you’ll define
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base">Font roles</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Separate UI text, brand accents, and technical values with predictable font variables.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base">Hierarchy</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use a limited heading ladder so pages stay scannable without overloading the table of contents.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-base">Usage rules</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Keep text roles semantic so reusable components stay coherent across light and dark mode.
-      </div>
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Font roles',
+      description:
+        'Separate UI text, brand accents, and technical values with predictable font variables.',
+      icon: Type,
+    },
+    {
+      title: 'Hierarchy',
+      description:
+        'Use a limited heading ladder so pages stay scannable without overloading the table of contents.',
+      icon: ListTree,
+    },
+    {
+      title: 'Usage rules',
+      description:
+        'Keep text roles semantic so reusable components stay coherent across light and dark mode.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ## Steps
 
@@ -124,23 +116,25 @@ This split keeps dashboards efficient while making documentation feel calm and p
 
 Headings should make structure obvious without turning every section into a visual event.
 
-<Tabs items={["Preview", "Code"]}>
+<Tabs items={['Preview', 'Code']}>
   <Tab value="Preview">
-    <div className="space-y-4 rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-4xl font-semibold tracking-tight text-foreground">
-        Page title
-      </div>
-      <div className="text-3xl font-semibold tracking-tight text-foreground">
-        Section title
-      </div>
-      <div className="text-2xl font-semibold tracking-tight text-foreground">
-        Subsection title
-      </div>
-      <div className="text-xl font-medium tracking-tight text-foreground">
-        Minor heading
-      </div>
-      <div className="text-base leading-7 text-muted-foreground">
-        Readable body text with enough rhythm for documentation and product copy.
+    <div className="not-prose rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
+      <div className="space-y-4">
+        <div className="text-4xl font-semibold tracking-tight text-foreground">
+          Page title
+        </div>
+        <div className="text-3xl font-semibold tracking-tight text-foreground">
+          Section title
+        </div>
+        <div className="text-2xl font-semibold tracking-tight text-foreground">
+          Subsection title
+        </div>
+        <div className="text-xl font-medium tracking-tight text-foreground">
+          Minor heading
+        </div>
+        <div className="text-base leading-7 text-muted-foreground">
+          Readable body text with enough rhythm for documentation and product copy.
+        </div>
       </div>
     </div>
   </Tab>
@@ -173,6 +167,7 @@ export function HeadingHierarchy() {
 
   </Tab>
 </Tabs>
+
 </Step>
 
 </Steps>
@@ -195,7 +190,7 @@ With a stable system, every page feels calmer, more intentional, and easier to u
   Typography should reduce cognitive load. It should guide the reader through the product, not compete for attention.
 </Callout>
 
-## Text roles
+### Text roles
 
 <Tabs items={["Body", "Labels", "States"]}>
   <Tab value="Body">
@@ -264,7 +259,7 @@ With a stable system, every page feels calmer, more intentional, and easier to u
 | Destructive text | `text-destructive` | Errors, deletion flows, dangerous messaging |
 | Technical text | `font-mono` | Code, tokens, identifiers, CLI values |
 
-## Usage rules
+### Usage rules
 
 Use typography roles to create consistent product surfaces instead of styling text from scratch each time.
 
@@ -341,32 +336,37 @@ Do not override it if:
 
 ## Next steps
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/design-system/colors" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Colors</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Pair typography with semantic color roles for text, surfaces, and states.
-    </div>
-  </a>
-
-  <a href="/docs/design-system/tokens/radius" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Radius</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Understand how corner geometry supports readable product surfaces.
-    </div>
-  </a>
-
-  <a href="/docs/ui/button" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Button</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      See how typography behaves inside interactive elements.
-    </div>
-  </a>
-
-  <a href="/docs/ui/input" className="group rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div className="text-sm font-medium text-foreground">Input</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Review labels, helper text, validation copy, and form readability.
-    </div>
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Colors',
+      href: '/docs/design-system/colors',
+      description:
+        'Pair typography with semantic color roles for text, surfaces, and states.',
+      icon: Palette,
+    },
+    {
+      title: 'Radius',
+      href: '/docs/design-system/tokens/radius',
+      description:
+        'Understand how corner geometry supports readable product surfaces.',
+      icon: Ruler,
+    },
+    {
+      title: 'Button',
+      href: '/docs/ui/button',
+      description:
+        'See how typography behaves inside interactive elements.',
+      icon: MousePointerClick,
+    },
+    {
+      title: 'Input',
+      href: '/docs/ui/input',
+      description:
+        'Review labels, helper text, validation copy, and form readability.',
+      icon: FormInput,
+    },
+  ]}
+/>

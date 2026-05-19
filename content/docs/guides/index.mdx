@@ -7,9 +7,10 @@ appliesTo: Guides
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
-import { AlertCircle, CheckCircle, Component, FormInput, PanelsTopLeft, Rocket, Sparkles } from "lucide-react";
+import { AlertCircle, CheckCircle, Component, FormInput, Layers3, PanelsTopLeft, Rocket, ShieldCheck, Sparkles } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Guides</Badge>
@@ -35,34 +36,30 @@ And answer one critical question:
 
 ## What you’ll learn
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Composition</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      How components work together to form real product surfaces.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Behavior</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      How UI behaves with async data, validation, and user interaction.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm">Consistency</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      How to keep product UX stable as your app grows.
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Composition',
+      description:
+        'Learn how primitives combine into real product surfaces, layouts, and reusable SaaS flows.',
+      icon: Layers3,
+    },
+    {
+      title: 'Behavior',
+      description:
+        'Understand async states, validation, interactions, overlays, and user feedback patterns.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Consistency',
+      description:
+        'Keep UX, semantics, spacing, and product behavior stable as the system grows.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ### Where Guides fit
 

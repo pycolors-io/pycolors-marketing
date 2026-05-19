@@ -28,15 +28,23 @@ import {
 import {
   ArrowRight,
   CheckCircle,
+  ChevronRightSquare,
+  Columns3,
   Database,
   FileText,
   Filter,
+  Inbox,
   LayoutGrid,
+  LoaderCircle,
+  MenuSquare,
   Rows3,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -152,66 +160,31 @@ export function UsersTable() {
 
 Use Table when the interface needs scanning, comparison, and operational density.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Rows3 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Repeatable records
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for users, projects, invoices, subscriptions, logs, and admin records.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Database className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Comparable data
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use when users compare values across stable columns.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Filter className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Operational views
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use with filters, pagination, row actions, and bulk operations.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
-
-## Caption
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Repeatable records',
+      description:
+        'Use for users, projects, invoices, subscriptions, logs, and admin records.',
+      icon: Rows3,
+    },
+    {
+      title: 'Comparable data',
+      description:
+        'Use when users compare values across stable columns.',
+      icon: Database,
+    },
+    {
+      title: 'Operational views',
+      description:
+        'Use with filters, pagination, row actions, and bulk operations.',
+      icon: Filter,
+    },
+  ]}
+/>
+### Caption
 
 Use `TableCaption` when the table needs a concise summary.
 
@@ -224,7 +197,7 @@ Use `TableCaption` when the table needs a concise summary.
 
 Captions should explain what the table contains, not repeat the page heading.
 
-## Empty state
+### Empty state
 
 Use `TableEmpty` when the request succeeded but no rows are available.
 
@@ -258,7 +231,7 @@ Use `TableEmpty` when the request succeeded but no rows are available.
   Empty is not an error. Explain why the table is empty and what the user can do next.
 </Callout>
 
-## Loading state
+### Loading state
 
 Use `TableLoading` when the table structure is known but the data is still loading.
 
@@ -272,7 +245,7 @@ Use loading rows instead of removing the table from the page.
 
 This preserves layout and reduces visual jump.
 
-## Table composition
+### Table composition
 
 A production table usually belongs inside a larger feature composition.
 
@@ -311,31 +284,31 @@ The feature layer owns:
 
 <Steps>
   <Step>
-    ### Define the columns
+    #### Define the columns
 
     Choose stable columns that help users scan and compare records.
   </Step>
 
   <Step>
-    ### Add loading and empty states
+    #### Add loading and empty states
 
     Do not leave the table area blank while waiting for data or when no data exists.
   </Step>
 
   <Step>
-    ### Keep row actions compact
+    #### Keep row actions compact
 
     Use a Dropdown Menu for secondary row actions and a Dialog for destructive confirmation.
   </Step>
 
   <Step>
-    ### Add pagination when needed
+    #### Add pagination when needed
 
     Use Pagination when the data set is larger than a single page.
   </Step>
 
   <Step>
-    ### Move complex behavior into a pattern
+    #### Move complex behavior into a pattern
 
     Use the Data Table Pattern when you need filters, actions, pagination, loading, empty, and error states together.
   </Step>
@@ -358,7 +331,7 @@ The feature layer owns:
 
 ## API
 
-### Components
+#### Component
 
 | Component | Description |
 | --- | --- |
@@ -372,7 +345,7 @@ The feature layer owns:
 | `TableEmpty` | Empty state row |
 | `TableLoading` | Loading state row |
 
-### TableEmpty props
+#### TableEmpty props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -381,7 +354,7 @@ The feature layer owns:
 | `description` | `string` | default copy | Empty state description |
 | `className` | `string` | — | Custom classes |
 
-### TableLoading props
+#### TableLoading props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -437,44 +410,66 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Table labels should be short and scannable.
 
-<Tabs items={["Headers", "Empty", "Loading"]}>
-  <Tab value="Headers">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Column headers
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Prefer concise labels like Name, Email, Role, Status, Amount, Created, Actions.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Headers',
+      title: 'Column headers',
+      icon: Columns3,
+      description: (
+        <>
+          <p>
+            Prefer concise labels such as{' '}
+            <code>Name</code>, <code>Email</code>,{' '}
+            <code>Role</code>, <code>Status</code>,{' '}
+            <code>Amount</code>, <code>Created</code>, and{' '}
+            <code>Actions</code>.
+          </p>
 
-  <Tab value="Empty">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Empty state
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Explain the state and provide a next step: “No users found. Invite your first user to get started.”
-      </div>
-    </div>
-  </Tab>
+          <p className="mt-3">
+            Headers should stay short, stable, and easy to scan across dense tables.
+          </p>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: 'Empty state',
+      icon: Inbox,
+      description: (
+        <>
+          <p>
+            Explain the state clearly and provide a next step.
+          </p>
 
-  <Tab value="Loading">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Loading state
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Keep the message neutral and short: “Loading data…” or “Loading users…”
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “No users found. Invite your first user to get started.”
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Loading',
+      title: 'Loading state',
+      icon: LoaderCircle,
+      description: (
+        <>
+          <p>
+            Keep loading copy short, neutral, and predictable.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “Loading data…” or “Loading users…”
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 
@@ -498,44 +493,37 @@ Table labels should be short and scannable.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Data Table Pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Build complete SaaS tables with filters, pagination, states, and row actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/dropdown-menu" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Dropdown Menu</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Dropdown Menu for compact row actions.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui/pagination" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Pagination</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Navigate larger data sets with controlled page state.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Handle async table states clearly and consistently.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Data Table Pattern',
+      href: '/docs/patterns/data-table',
+      description:
+        'Build complete SaaS tables with filters, pagination, states, and row actions.',
+      icon: Table2,
+    },
+    {
+      title: 'Dropdown Menu',
+      href: '/docs/ui/dropdown-menu',
+      description:
+        'Use Dropdown Menu for compact row actions.',
+      icon: MenuSquare,
+    },
+    {
+      title: 'Pagination',
+      href: '/docs/ui/pagination',
+      description:
+        'Navigate larger data sets with controlled page state.',
+      icon: ChevronRightSquare,
+    },
+    {
+      title: 'Empty, loading, and error states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Handle async table states clearly and consistently.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>

@@ -20,6 +20,7 @@ import {
   CheckCircle,
   Code2,
   Layers3,
+  LayoutDashboard,
   LayoutTemplate,
   MousePointerClick,
   Palette,
@@ -30,6 +31,8 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -81,110 +84,62 @@ The issue is the absence of a system.
 
 ## What PyColors UI does differently
 
-PyColors UI is intentionally opinionated.
-
-Not to limit you.
+PyColors UI is intentionally opinionated. Not to limit you.
 
 To remove ambiguity where ambiguity becomes expensive.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Palette className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Tokens first
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Components consume semantic roles instead of inventing visual decisions locally.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Boxes className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Small primitives
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        UI components stay predictable. Complex product behavior belongs in Guides and Patterns.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Code2 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          You own the code
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Plain React and Tailwind. No black box. No runtime magic. No unnecessary lock-in.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Tokens first',
+      description:
+        'Components consume semantic roles instead of inventing visual decisions locally.',
+      icon: Palette,
+    },
+    {
+      title: 'Small primitives',
+      description:
+        'UI components stay predictable. Complex product behavior belongs in Guides and Patterns.',
+      icon: Boxes,
+    },
+    {
+      title: 'You own the code',
+      description:
+        'Plain React and Tailwind. No black box. No runtime magic. No unnecessary lock-in.',
+      icon: Code2,
+    },
+  ]}
+/>
 
 ### Principles
 
-<Tabs items={["Tokens", "Primitives", "Patterns"]}>
-  <Tab value="Tokens">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Tokens define the system
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Colors, typography, radius, and shadows are expressed as reusable decisions.
-        Components consume those roles instead of hardcoding local styles.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Primitives">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Components stay small
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Components are building blocks. They should be simple, predictable, accessible,
-        and easy to compose into real product surfaces.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Patterns">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Patterns handle product complexity
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Tables, overlays, forms, async actions, and SaaS layouts belong at the pattern level,
-        where UX behavior and state can be documented clearly.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Tokens',
+      title: 'Tokens define the system',
+      icon: Palette,
+      description:
+        'Colors, typography, radius, and shadows are expressed as reusable decisions. Components consume those roles instead of hardcoding local styles.',
+    },
+    {
+      value: 'Primitives',
+      title: 'Components stay small',
+      icon: Boxes,
+      description:
+        'Components are building blocks. They should be simple, predictable, accessible, and easy to compose into real product surfaces.',
+    },
+    {
+      value: 'Patterns',
+      title: 'Patterns handle product complexity',
+      icon: LayoutDashboard,
+      description:
+        'Tables, overlays, forms, async actions, and SaaS layouts belong at the pattern level, where UX behavior and state can be documented clearly.',
+    },
+  ]}
+/>
 
 ### Tokens first
 

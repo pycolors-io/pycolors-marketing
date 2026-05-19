@@ -24,10 +24,13 @@ import {
   LockKeyhole,
   Rocket,
   Settings,
+  Sparkles,
   Terminal,
   Users,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -55,64 +58,30 @@ It gives you a credible product interface you can:
 
 ## What you get
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LayoutDashboard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Dashboard surface
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Real navigation, page structure, KPIs, cards, and product layout foundations.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Users className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Product flows
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        CRUD-style entity flow, admin surface, members, dialogs, and realistic UX states.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing surface
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Pricing, current plan, invoice history, payment method surface, and portal entry point.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Dashboard surface',
+      description:
+        'Real navigation, page structure, KPIs, cards, and product layout foundations.',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Product flows',
+      description:
+        'CRUD-style entity flows, admin surfaces, members, dialogs, and realistic UX states.',
+      icon: Users,
+    },
+    {
+      title: 'Billing surface',
+      description:
+        'Pricing, current plan, invoice history, payment method surfaces, and billing entry points.',
+      icon: CreditCard,
+    },
+  ]}
+/>
 
 ## Mental model
 
@@ -132,29 +101,44 @@ Starter Pro helps you answer:
 - how do protected routes work?
 - how does backend state replace mocks?
 
-<Tabs items={["Starter Free", "Starter Pro"]}>
-  <Tab value="Starter Free">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Validate the product surface
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Starter Free to shape routes, screens, UX states, product language, and navigation before production wiring.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Starter Pro">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Wire the business layer
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move to Starter Pro when auth, billing, protected routes, backend foundations, and production flows become the blocker.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Starter Free',
+      title: 'Validate the product surface',
+      href: '/docs/starter',
+      icon: Sparkles,
+      description:
+        'Use Starter Free to shape routes, screens, UX states, product language, and navigation before production wiring.',
+      items: [
+        'real SaaS screens',
+        'dashboard and navigation',
+        'mocked UI states',
+        'fast MVP validation',
+        'frontend-first iteration',
+      ],
+      cta: 'Explore Starter Free →',
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Wire the business layer',
+      href: '/docs/starter-pro',
+      icon: Rocket,
+      tone: 'pro',
+      description:
+        'Move to Starter Pro when auth, billing, protected routes, backend foundations, and production flows become the blocker.',
+      items: [
+        'real authentication',
+        'Stripe billing',
+        'protected routes',
+        'backend foundations',
+        'production-ready flows',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ## What it is
 

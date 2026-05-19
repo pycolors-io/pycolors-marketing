@@ -26,10 +26,14 @@ import {
   RefreshCw,
   Rocket,
   ShieldCheck,
+  WalletCards,
+  Webhook,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -78,64 +82,30 @@ This separation lets you validate monetization UX before committing to full Stri
 
 ### What you’ll understand
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing surface
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Understand the mocked plan, seats, payment method, and portal entry point.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <FileText className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Invoice model
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        See how invoice history is represented before replacing it with Stripe data.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Stripe boundary
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Know where Checkout, Portal, webhooks, and subscription sync plug in later.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Billing surface',
+      description:
+        'Understand the mocked plan, seats, payment method, and billing entry points.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Invoice model',
+      description:
+        'See how invoice history is represented before replacing it with real Stripe data.',
+      icon: FileText,
+    },
+    {
+      title: 'Stripe boundary',
+      description:
+        'Know where Checkout, Portal, webhooks, and subscription sync connect later.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ### Mental model
 
@@ -282,40 +252,67 @@ Database subscription state updates
 App reads updated billing state
 ```
 
-<Tabs items={["Checkout", "Webhook", "Portal"]}>
-  <Tab value="Checkout">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Checkout starts revenue
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use Checkout to create the initial payment or subscription. The frontend should request a checkout session from your backend.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Checkout',
+      title: 'Checkout starts revenue',
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Checkout creates the initial payment or subscription flow between your product and Stripe.
+          </p>
 
-  <Tab value="Webhook">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Webhooks synchronize truth
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Webhooks keep your app aligned with Stripe when payments succeed, fail, renew, cancel, or change.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Checkout session</Badge>
+            <Badge variant="outline">Subscription creation</Badge>
+            <Badge variant="outline">Backend endpoint</Badge>
+            <Badge variant="outline">Payment initiation</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Webhook',
+      title: 'Webhooks synchronize truth',
+      icon: Webhook,
+      description: (
+        <>
+          <p>
+            Webhooks keep your application aligned with Stripe billing events and subscription state.
+          </p>
 
-  <Tab value="Portal">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Portal manages existing customers
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use the billing portal for payment method updates, invoice access, plan changes, and cancellation flows.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Payment success</Badge>
+            <Badge variant="outline">Renewals</Badge>
+            <Badge variant="outline">Subscription changes</Badge>
+            <Badge variant="outline">Cancellation events</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Portal',
+      title: 'Portal manages customers',
+      icon: WalletCards,
+      description: (
+        <>
+          <p>
+            The billing portal handles customer self-service flows without rebuilding billing management UI.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Payment methods</Badge>
+            <Badge variant="outline">Invoices</Badge>
+            <Badge variant="outline">Plan changes</Badge>
+            <Badge variant="outline">Cancellation flows</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Decision guide
 

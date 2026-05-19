@@ -17,6 +17,7 @@ import {
 } from "@pycolors/ui";
 import {
   ArrowRight,
+  Boxes,
   CheckCircle,
   Layers3,
   LayoutDashboard,
@@ -31,6 +32,8 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -62,7 +65,7 @@ The goal is to compose smaller primitives into interfaces that remain understand
   Components should stay small. Product meaning comes from composition.
 </Callout>
 
-### Why composition matters
+## Why composition matters
 
 Most UI systems start clean and become fragile later.
 
@@ -86,56 +89,67 @@ It lets you keep primitives reusable while still building real SaaS experiences.
 
 PyColors uses a layered mental model.
 
-<Tabs items={["Primitive", "Pattern", "Product"]}>
-  <Tab value="Primitive">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Primitive
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        A small reusable component with one clear responsibility.
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Badge variant="outline">Button</Badge>
-        <Badge variant="outline">Card</Badge>
-        <Badge variant="outline">Input</Badge>
-        <Badge variant="outline">Badge</Badge>
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Primitive',
+      title: 'Primitive',
+      icon: Boxes,
+      description: (
+        <>
+          <p>
+            A small reusable component with one clear responsibility.
+          </p>
 
-  <Tab value="Pattern">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Pattern
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        A reusable product behavior made from multiple primitives, state, and UX rules.
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Badge variant="outline">Data table</Badge>
-        <Badge variant="outline">Overlays</Badge>
-        <Badge variant="outline">Async actions</Badge>
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Button</Badge>
+            <Badge variant="outline">Card</Badge>
+            <Badge variant="outline">Input</Badge>
+            <Badge variant="outline">Badge</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Pattern',
+      title: 'Pattern',
+      icon: LayoutTemplate,
+      description: (
+        <>
+          <p>
+            A reusable product behavior made from multiple primitives,
+            state, and UX rules.
+          </p>
 
-  <Tab value="Product">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Product surface
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        A real feature or page where UI, copy, data, auth, billing, and product decisions meet.
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Badge variant="outline">Dashboard</Badge>
-        <Badge variant="outline">Billing</Badge>
-        <Badge variant="outline">Settings</Badge>
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Data table</Badge>
+            <Badge variant="outline">Overlays</Badge>
+            <Badge variant="outline">Async actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Product',
+      title: 'Product surface',
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            A real feature or page where UI, copy, data, auth, billing,
+            and product decisions meet.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Dashboard</Badge>
+            <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">Settings</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 <Callout type="info" title="Rule of thumb">
   If the component describes visual structure, keep it in UI. If it describes product behavior, move it into Guides or Patterns.
@@ -143,64 +157,30 @@ PyColors uses a layered mental model.
 
 ### Composition principles
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Layers3 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Structure first
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Start with page structure, hierarchy, and content purpose before styling details.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Sparkles className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Meaning over decoration
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use components to communicate product intent, not to decorate every surface.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Clear ownership
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        UI renders state. Product logic, auth, billing, and backend rules live outside primitives.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Structure first',
+      description:
+        'Start with page structure, hierarchy, and content purpose before styling details.',
+      icon: Layers3,
+    },
+    {
+      title: 'Meaning over decoration',
+      description:
+        'Use components to communicate product intent instead of decorating every surface.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Clear ownership',
+      description:
+        'UI renders state. Product logic, auth, billing, and backend rules live outside primitives.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
 ### Page composition
 
@@ -338,33 +318,31 @@ The page coordinates:
 
 <Steps>
   <Step>
-    ### Start with the user goal
+    #### Start with the user goal
 
-    Define what the page helps the user do.
-
-    Good composition starts with purpose, not components.
+    Define what the page helps the user do. Good composition starts with purpose, not components.
   </Step>
 
   <Step>
-    ### Choose the page structure
+    #### Choose the page structure
 
     Decide the major regions: header, content, controls, feedback, overlays.
   </Step>
 
   <Step>
-    ### Use primitives for each responsibility
+    #### Use primitives for each responsibility
 
     Use Button for actions, Card for surfaces, Input for values, Badge for metadata, and Alert for blocking feedback.
   </Step>
 
   <Step>
-    ### Move repeated behavior into Patterns
+    #### Move repeated behavior into Patterns
 
     If multiple pages repeat the same flow, document it as a pattern.
   </Step>
 
   <Step>
-    ### Keep business logic outside UI primitives
+    #### Keep business logic outside UI primitives
 
     Auth, billing, permissions, data fetching, and backend rules should not live inside low-level UI components.
   </Step>

@@ -32,6 +32,8 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
@@ -58,66 +60,32 @@ The goal is simple:
 
 ## What you’ll learn
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LayoutDashboard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Product surface
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Understand the screens, layouts, states, and flows included in Starter Free.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Product surface',
+      description:
+        'Understand the screens, layouts, states, and flows included in Starter Free.',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Fast validation',
+      description:
+        'Adapt the starter into a first vertical slice without rebuilding the product surface.',
+      icon: Rocket,
+    },
+    {
+      title: 'Upgrade path',
+      description:
+        'Know what is mocked, what is production-ready, and when Starter Pro becomes the next step.',
+      icon: LockKeyhole,
+    },
+  ]}
+/>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Rocket className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Fast validation
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Learn how to adapt the starter into a first vertical slice quickly.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Upgrade path
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Know what is mocked, what is real, and when Starter Pro becomes the right next step.
-      </div>
-    </CardContent>
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
-
-## Mental model
+### Mental model
 
 > Starter Free is a UX contract, not a full backend implementation.
 
@@ -242,66 +210,72 @@ This is enough to create a credible demo or first MVP surface.
 
 ## What Starter Free solves
 
-<Tabs items={["Auth", "Product", "Business"]}>
-  <Tab value="Auth">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LockKeyhole className="h-4 w-4 text-primary" />
-        Auth UX
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Starter Free includes the screens and interaction states you need to model authentication before wiring a provider.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>`/login`</li>
-        <li>`/register`</li>
-        <li>`/forgot-password`</li>
-        <li>disabled and error-ready forms</li>
-        <li>password input with visibility toggle</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Auth',
+      title: 'Auth UX',
+      icon: LockKeyhole,
+      description: (
+        <>
+          <p>
+            Starter Free includes the screens and interaction states needed to model authentication before wiring a provider.
+          </p>
 
-  <Tab value="Product">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LayoutDashboard className="h-4 w-4 text-primary" />
-        Product surface
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        The starter gives you a real app shell, dashboard structure, CRUD surface, dialogs, details pages, and navigation.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>dashboard layout</li>
-        <li>projects table</li>
-        <li>row actions</li>
-        <li>details page</li>
-        <li>empty, loading, and confirmation states</li>
-      </ul>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">/login</Badge>
+            <Badge variant="outline">/register</Badge>
+            <Badge variant="outline">/forgot-password</Badge>
+            <Badge variant="outline">Error-ready forms</Badge>
+            <Badge variant="outline">Password visibility toggle</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Product',
+      title: 'Product surface',
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            The starter provides a real app shell, dashboard structure, CRUD surface, dialogs, details pages, and navigation.
+          </p>
 
-  <Tab value="Business">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <CreditCard className="h-4 w-4 text-primary" />
-        Business-ready surfaces
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Starter Free includes mocked billing, admin, members, and settings surfaces so your product already feels commercial.
-      </div>
-      <ul className="mt-4 m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>billing overview</li>
-        <li>invoice table</li>
-        <li>members list</li>
-        <li>invite workflow</li>
-        <li>settings tabs</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Dashboard layout</Badge>
+            <Badge variant="outline">Projects table</Badge>
+            <Badge variant="outline">Row actions</Badge>
+            <Badge variant="outline">Details page</Badge>
+            <Badge variant="outline">UI states</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Business',
+      title: 'Business-ready surfaces',
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Starter Free includes mocked billing, admin, members, and settings surfaces so the product already feels commercial.
+          </p>
 
-## What you can ship quickly
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Billing overview</Badge>
+            <Badge variant="outline">Invoice table</Badge>
+            <Badge variant="outline">Members list</Badge>
+            <Badge variant="outline">Invite workflow</Badge>
+            <Badge variant="outline">Settings tabs</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### What you can ship quickly
 
 After installation, you can produce a credible first version by changing:
 
@@ -359,7 +333,7 @@ Move to Starter Pro when you need:
   ]}
 />
 
-## First run path
+### First run path
 
 Follow this sequence after cloning:
 

@@ -6,11 +6,10 @@ appliesTo: PyColors
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Badge } from "@pycolors/ui";
 import {
-  ArrowRight,
   Box,
   Code2,
   Layers3,
@@ -18,8 +17,10 @@ import {
   Rocket,
   Sparkles,
 } from "lucide-react";
-import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">PyColors Docs</Badge>
@@ -45,93 +46,101 @@ This page gives you the fastest path through the PyColors documentation.
   Launch the page. Validate the product surface. Upgrade when infrastructure becomes the bottleneck.
 </Callout>
 
-## Choose your path
+### Choose your starting point
 
-<Tabs items={["I need a landing page", "I want to validate", "I want to launch"]}>
-  <Tab value="I need a landing page">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LayoutTemplate className="h-4 w-4 text-primary" />
-        <span>Start with NA-AI Landing</span>
-      </div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+      {
+      title: 'PyColors UI',
+      href: '/docs/ui',
+      description:
+        'Start from reusable SaaS primitives before composing product-level patterns.',
+      icon: Code2,
+    },
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Launch a premium AI or SaaS marketing presence before the full product is ready.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starter Free',
+      href: '/docs/starter',
+      description:
+        'Validate a credible SaaS product surface before backend complexity.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Launch with authentication, billing, backend foundations, and protected flows.',
+      icon: Rocket,
+      tone: 'primary',
+    },
+  ]}
+/>
 
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose this path when you need a polished AI or SaaS marketing page before building the full product.
-      </div>
 
-      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>premium AI/SaaS landing page</li>
-        <li>data-driven content structure</li>
-        <li>pricing, FAQ, integrations, testimonials, and contact sections</li>
-        <li>dark/light mode and SEO baseline</li>
-        <li>powered by PyColors UI and PyColors Tokens</li>
-      </ul>
+### Choose by intent
 
-      <div className="mt-5">
-        <a href="/docs/templates/na-ai-landing" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
-          Explore NA-AI Landing
-          <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="I want to validate">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Sparkles className="h-4 w-4 text-primary" />
-        <span>Start with Starter Free</span>
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose this path when you need a credible SaaS product surface before backend complexity.
-      </div>
-
-      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>real SaaS screens</li>
-        <li>dashboard and navigation</li>
-        <li>auth, billing, admin, and settings surfaces</li>
-        <li>mocked data and UI states</li>
-        <li>fast demo and MVP validation</li>
-      </ul>
-
-      <div className="mt-5">
-        <a href="/docs/starter" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
-          Explore Starter Free
-          <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="I want to launch">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Rocket className="h-4 w-4 text-primary" />
-        <span>Move to Starter Pro</span>
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Choose this path when your product needs real users, real payments, protected access, and backend foundations.
-      </div>
-
-      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>real authentication</li>
-        <li>Stripe Checkout and billing portal</li>
-        <li>webhook-driven subscription state</li>
-        <li>Prisma-ready backend foundation</li>
-        <li>secure delivery after purchase</li>
-      </ul>
-
-      <div className="mt-5">
-        <a href="/docs/starter-pro" className="inline-flex items-center gap-1 text-sm font-medium text-foreground no-underline">
-          Explore Starter Pro
-          <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Launch a page',
+      title: 'Start with NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Choose this path when you need a polished AI or SaaS marketing page before building the full product.',
+      icon: LayoutTemplate,
+      items: [
+        'premium AI/SaaS landing page',
+        'data-driven content structure',
+        'pricing, FAQ, integrations, testimonials, and contact sections',
+        'dark/light mode and SEO baseline',
+        'powered by PyColors UI and PyColors Tokens',
+      ],
+      cta: 'Explore template →',
+    },
+    {
+      eyebrow: 'Validate a product',
+      title: 'Start with Starter Free',
+      href: '/docs/starter',
+      description:
+        'Choose this path when you need a credible SaaS product surface before backend complexity.',
+      icon: Sparkles,
+      items: [
+        'real SaaS screens',
+        'dashboard and navigation',
+        'auth, billing, admin, and settings surfaces',
+        'mocked data and UI states',
+        'fast demo and MVP validation',
+      ],
+      cta: 'Explore Free →',
+    },
+    {
+      eyebrow: 'Launch a business',
+      title: 'Move to Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Choose this path when your product needs real users, real payments, protected access, and backend foundations.',
+      icon: Rocket,
+      tone: 'pro',
+      items: [
+        'real authentication',
+        'Stripe Checkout and billing portal',
+        'webhook-driven subscription state',
+        'Prisma-ready backend foundation',
+        'secure delivery after purchase',
+      ],
+      cta: 'Explore Pro →',
+    },
+  ]}
+/>
 
 ## What you should do first
 
@@ -139,9 +148,7 @@ This page gives you the fastest path through the PyColors documentation.
   <Step>
     ### Understand the product ladder
 
-    PyColors is not just a UI library.
-
-    It is a path from public offer to product validation to SaaS launch:
+    PyColors is not just a UI library. It is a path from public offer to product validation to SaaS launch:
 
     - **Templates** help you launch focused marketing pages quickly
     - **Design System** gives visual consistency
@@ -171,15 +178,7 @@ This page gives you the fastest path through the PyColors documentation.
   <Step>
     ### Explore the UI foundations
 
-    Review the primitives that power the product:
-
-    - Button
-    - Input
-    - Card
-    - Badge
-    - Alert
-    - Dialog
-    - Table
+    Review the primitives that power the product: Button, Input, Card, Badge, Alert, Dialog, and Table.
 
     These components keep the product interface consistent as it grows.
   </Step>
@@ -187,14 +186,7 @@ This page gives you the fastest path through the PyColors documentation.
   <Step>
     ### Learn the patterns
 
-    Patterns show how primitives become real product flows:
-
-    - data tables
-    - overlays
-    - async actions
-    - empty states
-    - loading states
-    - error states
+    Patterns show how primitives become real product flows: data tables, overlays, async actions, empty states, loading states, and error states.
 
     This is where UI becomes product behavior.
   </Step>
@@ -206,123 +198,56 @@ This page gives you the fastest path through the PyColors documentation.
   </Step>
 </Steps>
 
-## Fastest path by goal
+### Fastest path by goal
 
-<div className="not-prose my-8 grid gap-4 md:grid-cols-3">
-  <a href="/docs/templates/na-ai-landing" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2">
-      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-muted/30">
-        <LayoutTemplate className="h-4 w-4 text-primary" />
-      </span>
-      <span className="text-sm font-semibold tracking-tight text-foreground">
-        Launch a landing page
-      </span>
-    </div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Launch a landing page',
+      description:
+        'Start with a premium AI or SaaS marketing surface before the full product is ready.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Validate an idea',
+      description:
+        'Adapt Starter Free, rename the core entity, and test the product experience quickly.',
+      icon: Box,
+    },
+    {
+      title: 'Launch and monetize',
+      description:
+        'Move to Starter Pro when authentication, billing, backend, and delivery become the bottleneck.',
+      icon: Rocket,
+      tone: 'primary',
+    },
+  ]}
+/>
 
-    <div className="mt-3 text-sm leading-6 text-muted-foreground">
-      Start with NA-AI Landing when you need a premium AI or SaaS page before the full product is ready.
-    </div>
+### The PyColors system
 
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Explore template
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-
-  <a href="/docs/starter" className="group block rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="flex items-center gap-2">
-      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-border-subtle bg-muted/30">
-        <Box className="h-4 w-4 text-primary" />
-      </span>
-      <span className="text-sm font-semibold tracking-tight text-foreground">
-        Validate an idea
-      </span>
-    </div>
-
-    <div className="mt-3 text-sm leading-6 text-muted-foreground">
-      Start with Starter Free, adapt the product copy, rename the core entity, and show the app to users.
-    </div>
-
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Start with Free
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-
-  <a href="/docs/starter-pro" className="group block rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
-    <div className="flex items-center gap-2">
-      <span className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted">
-        <Rocket className="h-4 w-4 text-primary" />
-      </span>
-      <span className="text-sm font-semibold tracking-tight text-foreground">
-        Launch and monetize
-      </span>
-    </div>
-
-    <div className="mt-3 text-sm leading-6 text-muted-foreground">
-      Move to Starter Pro when auth, billing, backend, protected routes, and delivery become the bottleneck.
-    </div>
-
-    <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-      Explore Pro
-      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-    </div>
-  </a>
-</div>
-
-## The PyColors system
-
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui" className="group relative block overflow-hidden rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="absolute inset-x-0 top-0 h-px bg-primary/40" />
-
-    <div className="flex items-start gap-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-primary/15 bg-primary/[0.06]">
-        <Code2 className="h-4 w-4 text-primary" />
-      </span>
-
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold tracking-tight text-foreground">
-          PyColors UI
-        </span>
-
-        <span className="mt-1.5 block text-sm leading-6 text-muted-foreground">
-          Reusable primitives for serious SaaS interfaces: buttons, cards, inputs, badges, tables, dialogs, sheets, and more.
-        </span>
-
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-          Explore UI
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-        </span>
-      </span>
-    </div>
-  </a>
-
-  <a href="/docs/patterns" className="group relative block overflow-hidden rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <div className="absolute inset-x-0 top-0 h-px bg-primary/40" />
-
-    <div className="flex items-start gap-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] border border-primary/15 bg-primary/[0.06]">
-        <Layers3 className="h-4 w-4 text-primary" />
-      </span>
-
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold tracking-tight text-foreground">
-          Patterns
-        </span>
-
-        <span className="mt-1.5 block text-sm leading-6 text-muted-foreground">
-          Product-level flows built from primitives: data tables, overlays, async feedback, empty states, and real SaaS behaviors.
-        </span>
-
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-          Explore patterns
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-        </span>
-      </span>
-    </div>
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'PyColors UI',
+      href: '/docs/ui',
+      description:
+        'Reusable primitives for serious SaaS interfaces: buttons, cards, inputs, badges, tables, dialogs, sheets, and more.',
+      icon: Code2,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'Product-level flows built from primitives: data tables, overlays, async feedback, empty states, and real SaaS behaviors.',
+      icon: Layers3,
+    },
+  ]}
+/>
 
 ## Time to first result
 
@@ -340,10 +265,11 @@ This page gives you the fastest path through the PyColors documentation.
   The faster a builder sees a credible product surface, the faster they understand the value of PyColors.
 </Callout>
 
-## Recommended reading order
+### Recommended reading order
 
 <DocsLinks
   variant="steps"
+  tone="platform"
   items={[
     {
       title: 'NA-AI Landing',
@@ -416,66 +342,60 @@ The documentation should help every visitor understand:
 
 <PreferAvoid
   prefer={[
-    "choosing the right product for the current bottleneck",
-    "running the project before refactoring",
-    "understanding the Template → Free → Pro path",
-    "validating product UX before deep backend work",
-    "using patterns for repeated product flows",
-    "upgrading when auth and billing slow launch",
+    'choosing the right product for the current bottleneck',
+    'running the project before refactoring',
+    'understanding the Template → Free → Pro path',
+    'validating product UX before deep backend work',
+    'using patterns for repeated product flows',
+    'upgrading when auth and billing slow launch',
   ]}
   avoid={[
-    "rewriting everything before understanding the baseline",
-    "starting with billing before validating the product",
-    "mixing UI primitives with business logic",
-    "treating Starter Free as a complete backend",
-    "using a template when you need real auth and billing",
-    "waiting too long to deploy and test the product surface",
+    'rewriting everything before understanding the baseline',
+    'starting with billing before validating the product',
+    'mixing UI primitives with business logic',
+    'treating Starter Free as a complete backend',
+    'using a template when you need real auth and billing',
+    'waiting too long to deploy and test the product surface',
   ]}
 />
 
 ## Next steps
 
-<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
-  <a href="/docs/templates/na-ai-landing" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">NA-AI Landing</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Launch a premium AI/SaaS landing page powered by PyColors UI.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Starter Free</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Validate a credible SaaS surface with mocked product flows.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/starter-pro" className="group flex items-start justify-between gap-6 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 no-underline shadow-soft transition-colors hover:border-pro-border">
-    <span>
-      <span className="block text-sm font-medium text-foreground">Starter Pro</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Launch with real auth, billing, backend foundations, protected routes, and delivery.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/ui" className="group flex items-start justify-between gap-6 rounded-[5px] border border-border-subtle bg-card p-5 no-underline shadow-soft transition-colors hover:border-border hover:bg-muted/25">
-    <span>
-      <span className="block text-sm font-medium text-foreground">UI Components</span>
-      <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-        Explore the primitives that power real SaaS interfaces.
-      </span>
-    </span>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      description:
+        'Launch a premium AI and SaaS marketing experience.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Starter Free',
+      href: '/docs/starter',
+      description:
+        'Validate the SaaS product surface before backend wiring.',
+      icon: Box,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/docs/starter-pro',
+      description:
+        'Move to production auth, billing, backend, and protected flows.',
+      icon: Rocket,
+      tone: 'primary',
+    },
+    {
+      title: 'UI Components',
+      href: '/docs/ui',
+      description:
+        'Explore the primitives behind modern SaaS interfaces.',
+      icon: Code2,
+    },
+  ]}
+/>
 
 <Callout title="Build fast. Validate early. Upgrade when ready.">
   PyColors is built to help you reduce the distance between idea, product, launch, and revenue.

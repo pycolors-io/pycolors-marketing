@@ -10,6 +10,7 @@ import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
 import { ArrowRight, Layers, Workflow, Layers3, LoaderCircle, ShieldCheck, Table2 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Patterns</Badge>
@@ -41,57 +42,34 @@ Instead of assembling everything manually, you start from a **working product st
   Patterns fix that by giving you a **default way to build features correctly**.
 </Callout>
 
-
-
 ## What you get
 
-<div className="grid gap-4 md:grid-cols-3">
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Feature structure',
+      description:
+        'Complete building blocks combining layout, actions, and real product flows.',
+      icon: Layers,
+    },
+    {
+      title: 'State handling',
+      description:
+        'Clear handling of loading, empty, error, success, and mutation states.',
+      icon: Workflow,
+    },
+    {
+      title: 'Production UX',
+      description:
+        'Predictable interactions, accessibility rules, and scalable UX decisions.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
 
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <Layers className="h-4 w-4 text-primary" />
-        Feature structure
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Complete building blocks combining layout, actions, and product flows.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <Workflow className="h-4 w-4 text-primary" />
-        State handling
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Clear handling of loading, empty, error, success, and mutation states.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-sm">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Production UX
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-sm leading-6 text-muted-foreground">
-        Predictable interactions, accessibility rules, and scalable UX decisions.
-      </div>
-    </CardContent>
-  </Card>
-
-</div>
-
-## Mental model
+### Mental model
 
 > Components render UI
 > Patterns define how features behave

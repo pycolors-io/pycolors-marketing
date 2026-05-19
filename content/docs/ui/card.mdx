@@ -24,6 +24,8 @@ import {
   ArrowRight,
   CheckCircle,
   CreditCard,
+  FileText,
+  Heading1,
   Layers3,
   LayoutDashboard,
   MousePointerClick,
@@ -36,6 +38,8 @@ import {
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -140,61 +144,30 @@ export function AccountCard() {
 
 Use Card when content needs a clear surface, boundary, or grouping.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LayoutDashboard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Dashboards
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for KPI tiles, analytics summaries, and grouped dashboard sections.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Settings className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Settings
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for profile, organization, security, and billing settings panels.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use for plan summaries, invoice blocks, and payment method surfaces.
-      </div>
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Dashboards',
+      description:
+        'Use for KPI tiles, analytics summaries, and grouped dashboard sections.',
+      icon: LayoutDashboard,
+    },
+    {
+      title: 'Settings',
+      description:
+        'Use for profile, organization, security, and billing settings panels.',
+      icon: Settings,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Use for plan summaries, invoice blocks, and payment method surfaces.',
+      icon: CreditCard,
+    },
+  ]}
+/>
 
 ### Variants
 
@@ -397,7 +370,7 @@ export function CardAsLink() {
   </Tab>
 </Tabs>
 
-## Composition
+### Composition
 
 A Card usually follows this structure:
 
@@ -432,31 +405,31 @@ Use each slot intentionally:
 
 <Steps>
   <Step>
-    ### Start with the content group
+    #### Start with the content group
 
     Use Card only when the content belongs together.
   </Step>
 
   <Step>
-    ### Add a clear title
+    #### Add a clear title
 
     Most cards should have a title that explains the purpose of the surface.
   </Step>
 
   <Step>
-    ### Keep actions in the footer
+    #### Keep actions in the footer
 
     Footer actions make the card easier to scan and keep layout predictable.
   </Step>
 
   <Step>
-    ### Use interactivity deliberately
+    #### Use interactivity deliberately
 
     Interactive cards should be clickable or selectable. Static cards should not have hover affordances.
   </Step>
 
   <Step>
-    ### Preserve semantic behavior
+    #### Preserve semantic behavior
 
     Use `asChild` with a real link for navigational cards.
   </Step>
@@ -480,7 +453,7 @@ Use each slot intentionally:
 
 ## API
 
-### Components
+#### Components
 
 | Component | Description |
 | --- | --- |
@@ -491,7 +464,7 @@ Use each slot intentionally:
 | `CardContent` | Main content area |
 | `CardFooter` | Footer actions or metadata |
 
-### Card props
+#### Card props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -556,40 +529,71 @@ Guidelines:
 
 Card copy should make the grouped content easy to understand.
 
-<Tabs items={["Title", "Description", "Footer"]}>
-  <Tab value="Title">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Strong title examples
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Account, Current plan, Recent invoices, Project activity, Team members.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Title',
+      title: 'Strong title examples',
+      icon: Heading1,
+      description: (
+        <>
+          <p>
+            Titles should describe the surface immediately without extra wording.
+          </p>
 
-  <Tab value="Description">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Description examples
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Manage profile details and account preferences. Review recent billing activity.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Account</Badge>
+            <Badge variant="outline">Current plan</Badge>
+            <Badge variant="outline">Recent invoices</Badge>
+            <Badge variant="outline">Project activity</Badge>
+            <Badge variant="outline">Team members</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Description',
+      title: 'Description examples',
+      icon: FileText,
+      description: (
+        <>
+          <p>
+            Descriptions should provide context, not repeat the title.
+          </p>
 
-  <Tab value="Footer">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Footer action examples
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Save changes, Manage billing, Invite member, View all invoices.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 space-y-2">
+            <div className="rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+              Manage profile details and account preferences.
+            </div>
+
+            <div className="rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+              Review recent billing activity.
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Footer',
+      title: 'Footer action examples',
+      icon: MousePointerClick,
+      description: (
+        <>
+          <p>
+            Footer actions should stay clear, actionable, and easy to scan.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="outline">Save changes</Badge>
+            <Badge variant="outline">Manage billing</Badge>
+            <Badge variant="outline">Invite member</Badge>
+            <Badge variant="outline">View all invoices</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 

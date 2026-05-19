@@ -28,12 +28,19 @@ import {
 import {
   ArrowRight,
   CheckCircle,
+  ChevronRight,
   Database,
+  LayoutTemplate,
+  LoaderCircle,
   Rows3,
+  SearchX,
   Table2,
   XCircle,
 } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
 import {
   PaginationBasicExample,
@@ -163,63 +170,31 @@ export function PaginationBasicExample() {
 
 Use Pagination when users need controlled access to a finite set of pages.
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Table2 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Tables
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use pagination when dense tables need stable page navigation.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Database className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Paged data
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use when the backend or data layer exposes page-based navigation.
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Rows3 className="h-4 w-4 text-primary" />
-        </div>
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Search results
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Use when results are finite and users need predictable navigation.
-      </div>
-    </CardContent>
-  </Card>
-</div>
-
-## Table + Pagination
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Tables',
+      description:
+        'Use pagination when dense tables need stable page navigation.',
+      icon: Table2,
+    },
+    {
+      title: 'Paged data',
+      description:
+        'Use when the backend or data layer exposes page-based navigation.',
+      icon: Database,
+    },
+    {
+      title: 'Search results',
+      description:
+        'Use when results are finite and users need predictable navigation.',
+      icon: Rows3,
+    },
+  ]}
+/>
+### Table + Pagination
 
 This example demonstrates a common SaaS pattern: a Table with local Pagination control.
 
@@ -260,7 +235,7 @@ const pageProjects = projects.slice(
   Pagination should receive state and callbacks. The feature layer should own the data source, filters, sorting, and URL sync.
 </Callout>
 
-## buildPaginationRange
+### buildPaginationRange
 
 Use `buildPaginationRange` to generate compact page tokens with ellipsis.
 
@@ -283,31 +258,31 @@ This keeps rendering logic clean while keeping Pagination controlled.
 
 <Steps>
   <Step>
-    ### Keep page state outside the component
+    #### Keep page state outside the component
 
     Store `page`, `pageSize`, and `totalPages` in the page, feature hook, or data layer.
   </Step>
 
   <Step>
-    ### Disable impossible navigation
+    #### Disable impossible navigation
 
     Disable Previous on the first page and Next on the last page.
   </Step>
 
   <Step>
-    ### Use ellipsis for large page counts
+    #### Use ellipsis for large page counts
 
     Avoid rendering dozens of page links. Compact large ranges with ellipsis.
   </Step>
 
   <Step>
-    ### Sync URL only at the product layer
+    #### Sync URL only at the product layer
 
     URL syncing belongs to your page or routing layer, not the UI primitive.
   </Step>
 
   <Step>
-    ### Pair with loading and empty states
+    #### Pair with loading and empty states
 
     Pagination should work with Table, loading states, empty states, and filters as one product pattern.
   </Step>
@@ -330,8 +305,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 
 ## API
 
-### Components
-
+#### Component
 | Component | Description |
 | --- | --- |
 | `Pagination` | Wrapper `nav` element with pagination semantics |
@@ -342,7 +316,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 | `PaginationNext` | Next button |
 | `PaginationEllipsis` | Visual overflow indicator |
 
-### PaginationLink props
+#### PaginationLink props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -350,7 +324,7 @@ This keeps rendering logic clean while keeping Pagination controlled.
 | `size` | `string` | `"icon-sm"` | Maps to Button sizes |
 | `className` | `string` | — | Additional Tailwind classes |
 
-### buildPaginationRange options
+#### buildPaginationRange options
 
 | Option | Type | Description |
 | --- | --- | --- |
@@ -394,44 +368,65 @@ Guidelines:
   ]}
 />
 
-## Product copy guidelines
+### Product copy guidelines
 
 Pagination labels should be short and predictable.
 
-<Tabs items={["Controls", "Counts", "Empty"]}>
-  <Tab value="Controls">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Previous / Next
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Use familiar labels. Avoid clever wording for core navigation.
-      </div>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Controls',
+      title: 'Previous / Next',
+      icon: ChevronRight,
+      description: (
+        <>
+          <p>
+            Use familiar labels for core navigation.
+            Avoid clever wording or ambiguous actions.
+          </p>
 
-  <Tab value="Counts">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Showing 1–10 of 48
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        If your table needs stronger context, show the range near the pagination controls.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Previous · Next
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Counts',
+      title: 'Showing 1–10 of 48',
+      icon: Rows3,
+      description: (
+        <>
+          <p>
+            If the table needs stronger context,
+            show the current range near pagination controls.
+          </p>
 
-  <Tab value="Empty">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        No results found
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        When filters remove all results, show an empty state and a reset action instead of useless pagination.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Showing 1–10 of 48
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: 'No results found',
+      icon: SearchX,
+      description: (
+        <>
+          <p>
+            When filters remove all results,
+            show a meaningful empty state and a reset action.
+          </p>
+
+          <div className="mt-3 rounded-[5px] border border-border-subtle bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            No results found. Clear filters and try again.
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 
@@ -455,44 +450,37 @@ Pagination labels should be short and predictable.
 
 ## Related
 
-<div className="grid gap-4 md:grid-cols-2">
-  <a href="/docs/ui/table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Table</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Render structured data that often pairs with Pagination.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/patterns/data-table" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Data Table Pattern</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Combine table, filters, states, actions, and pagination into a full SaaS pattern.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/building-a-saas-layout" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Building a SaaS layout</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Place pagination inside real dashboard layouts.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-
-  <a href="/docs/guides/empty-loading-error" className="group flex items-start justify-between gap-6 rounded-2xl border border-border/60 bg-card p-5 no-underline transition hover:border-foreground/20 hover:bg-muted/30">
-    <div>
-      <div className="text-sm font-medium text-foreground">Empty, loading, and error states</div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Handle async states around paged data.
-      </div>
-    </div>
-    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
-  </a>
-</div>
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: 'Table',
+      href: '/docs/ui/table',
+      description:
+        'Render structured data that often pairs with Pagination.',
+      icon: Table2,
+    },
+    {
+      title: 'Data Table Pattern',
+      href: '/docs/patterns/data-table',
+      description:
+        'Combine table, filters, states, actions, and pagination into a full SaaS pattern.',
+      icon: Rows3,
+    },
+    {
+      title: 'Building a SaaS layout',
+      href: '/docs/guides/building-a-saas-layout',
+      description:
+        'Place pagination inside real dashboard layouts.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Empty, loading, and error states',
+      href: '/docs/guides/empty-loading-error',
+      description:
+        'Handle async states around paged data.',
+      icon: LoaderCircle,
+    },
+  ]}
+/>

@@ -1,18 +1,27 @@
 ---
 title: Overview
 description: Premium Next.js landing page for AI products, SaaS tools, and analytics platforms. Built with PyColors UI, PyColors Tokens, and a data-driven content structure.
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: NA-AI Landing
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { Badge } from "@pycolors/ui";
+import {
+  BarChart3,
+  Code2,
+  LayoutTemplate,
+  Palette,
+  Rocket,
+  Sparkles,
+  Terminal,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
-import { ArrowRight, BarChart3, CheckCircle, Code2, LayoutTemplate, Package, Palette, Rocket, ShieldCheck, Sparkles, Terminal, XCircle } from "lucide-react";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Templates</Badge>
@@ -21,54 +30,80 @@ import { DocsLinks } from "@/components/docs/docs-links";
 
 ## Launch a premium AI landing page faster
 
-NA-AI Landing is a polished, production-ready frontend marketing template for AI startups, SaaS founders, analytics platforms, agencies, and indie makers.
+NA-AI Landing is a polished, production-ready frontend marketing template for:
 
-It gives you the public product surface first: premium hero, AI analytics feature sections, revenue and metric visuals, integrations, pricing, testimonials, FAQ, contact form, dark and light mode, SEO-ready metadata, and data-driven content files.
+- AI startups
+- SaaS founders
+- analytics platforms
+- agencies
+- indie makers
 
-This is not a full SaaS app. It is a focused landing page foundation designed to help you launch, validate, and present your offer faster.
+It gives you the public product surface first:
+
+- premium hero
+- AI analytics sections
+- metric visualizations
+- integrations
+- pricing
+- testimonials
+- FAQ
+- contact form
+- dark and light mode
+- SEO-ready metadata
+- data-driven content structure
+
+This is not a full SaaS app.
+
+It is a focused landing page foundation designed to help you launch, validate, and present your offer faster.
+
+<DocsUpgradeCTA
+  title="Launch the marketing layer faster."
+  description="NA-AI Landing gives you a premium public product surface without rebuilding a modern frontend marketing foundation from scratch."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/templates/na-ai-landing"
+  secondaryLabel="View details"
+/>
 
 <Callout title="Core idea">
-  NA-AI Landing helps you launch the marketing layer. Starter Pro helps you wire the SaaS business layer.
+  NA-AI Landing helps you launch the marketing layer.
+  Starter Pro helps you wire the SaaS business layer.
 </Callout>
-
-<br />
-
-<div className="mt-8 flex flex-col gap-1">
-  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-    <BuyProductButton
-      productSlug="na-ai-landing"
-      label="Get NA-AI Landing — €49"
-      fullWidth={false}
-      showTrustText={false}
-      className="h-11 px-6 text-sm font-medium"
-    />
-
-    <Button
-      asChild
-      variant="outline"
-      className="h-11 px-5 text-sm font-medium no-underline"
-    >
-      <Link href="/templates/na-ai-landing">
-        View details
-      </Link>
-    </Button>
-  </div>
-
-  <span className="text-xs text-muted-foreground">
-    Pay once. Download instantly. Use commercially.
-  </span>
-</div>
 
 ## What is included
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><LayoutTemplate className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Premium landing page</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Hero, feature cards, metrics, integrations, pricing, testimonials, FAQ, CTA, and contact sections.</CardContent></Card>
-  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><Code2 className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Modern frontend stack</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Next.js 16+ App Router, TypeScript, Tailwind CSS v4, Framer Motion, Recharts, and Lucide icons.</CardContent></Card>
-  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Powered by PyColors</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Built with PyColors UI and PyColors Tokens for consistent surfaces, spacing, themes, and reusable primitives.</CardContent></Card>
-  <Card className="rounded-2xl border border-border/60 bg-card shadow-sm"><CardHeader className="pb-3"><div className="flex items-center gap-2"><BarChart3 className="h-4 w-4 text-primary" /><CardTitle className="text-sm font-semibold tracking-tight">Data-driven content</CardTitle></div></CardHeader><CardContent className="pt-0 text-sm leading-6 text-muted-foreground">Most content is controlled from <code>src/@data</code>, so you can customize the page without digging through every component.</CardContent></Card>
-</div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Premium landing page',
+      icon: LayoutTemplate,
+      description:
+        'Hero, feature cards, metrics, integrations, pricing, testimonials, FAQ, CTA, and contact sections.',
+    },
+    {
+      title: 'Modern frontend stack',
+      icon: Code2,
+      description:
+        'Next.js 16+ App Router, TypeScript, Tailwind CSS v4, Framer Motion, Recharts, and Lucide icons.',
+    },
+    {
+      title: 'Powered by PyColors',
+      icon: Sparkles,
+      description:
+        'Built with PyColors UI and PyColors Tokens for consistent surfaces, spacing, themes, and reusable primitives.',
+    },
+    {
+      title: 'Data-driven content',
+      icon: BarChart3,
+      description:
+        'Most content is controlled from src/@data so you can customize the page without digging through every component.',
+    },
+  ]}
+/>
 
-## Built with
+### Built with
 
 | Layer | Technology |
 | --- | --- |
@@ -88,15 +123,35 @@ This is not a full SaaS app. It is a focused landing page foundation designed to
 
 NA-AI Landing is a static frontend landing page.
 
-It does not include backend, authentication, database, payments, CMS, user dashboard, or email delivery.
+It does not include:
 
-You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stripe, or any backend/API.
+- backend
+- authentication
+- database
+- payments
+- CMS
+- user dashboard
+- email delivery
+
+You can connect it to:
+
+- Node.js
+- NestJS
+- Django
+- Laravel
+- Supabase
+- Firebase
+- Stripe
+- any backend or API stack
 
 <Callout type="info" title="Scope boundary">
-  NA-AI Landing is the marketing surface. For auth, billing, protected routes, and SaaS app foundations, use Starter Pro.
+  NA-AI Landing is the marketing surface.
+  For auth, billing, protected routes, and SaaS app foundations, use Starter Pro.
 </Callout>
 
-## Data-driven sections
+## Data-driven structure
+
+Most sections are controlled from dedicated content files.
 
 | Section | File |
 | --- | --- |
@@ -111,6 +166,10 @@ You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stri
 | Contact | `src/@data/contact.ts` |
 | Footer | `src/@data/footer.ts` |
 | Navbar | `src/@data/navbar.ts` |
+
+This structure keeps customization faster and more maintainable.
+
+Instead of editing multiple sections manually, most marketing content can be updated from centralized data files.
 
 ## Included vs not included
 
@@ -139,6 +198,24 @@ You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stri
   ]}
 />
 
+### Recommended workflow
+
+A high-leverage path usually looks like this:
+
+1. customize branding
+2. update positioning
+3. edit the data files
+4. deploy the landing page
+5. validate demand publicly
+6. connect Starter Free or Starter Pro later if needed
+
+This helps you validate the market before rebuilding infrastructure too early.
+
+<Callout title="Templates are focused intentionally">
+  The goal is not to become a full SaaS product immediately.
+  The goal is to launch a credible public surface faster.
+</Callout>
+
 ## Next steps
 
 <DocsLinks
@@ -157,6 +234,20 @@ You can connect it to Node.js, NestJS, Django, Laravel, Supabase, Firebase, Stri
       description:
         'Customize branding, content, sections, pricing, SEO metadata, and assets.',
       icon: Palette,
+    },
+    {
+      title: 'Starter Free',
+      href: '/starters/free',
+      description:
+        'Validate SaaS UX, dashboards, settings, and mocked product flows.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Starter Pro',
+      href: '/starters/pro',
+      description:
+        'Move into authentication, billing, protected routes, and backend foundations.',
+      icon: Rocket,
     },
   ]}
 />

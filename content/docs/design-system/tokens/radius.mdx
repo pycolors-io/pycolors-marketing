@@ -15,8 +15,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@pycolors/ui";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, ListChecks, SlidersHorizontal, Ruler, XCircle } from "lucide-react";
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Design System</Badge>
@@ -46,36 +47,32 @@ PyColors defines a **small, controlled radius scale** so every surface feels con
   Inconsistent radius is one of the fastest ways to break visual coherence. Even small differences create a subtle feeling of “something is off”.
 </Callout>
 
-## What you’ll define
+### What you’ll define
 
-<div className="grid gap-4 md:grid-cols-3">
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Base radius</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      A single source of truth that controls the global feel of the UI.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Scale</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      A limited set of sizes used across all components.
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="text-sm font-semibold">Usage rules</CardTitle>
-    </CardHeader>
-    <CardContent className="text-sm text-muted-foreground">
-      Clear constraints to prevent visual drift over time.
-    </CardContent>
-  </Card>
-</div>
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Base radius',
+      description:
+        'A single source of truth that controls the global feel of the UI.',
+      icon: Ruler,
+    },
+    {
+      title: 'Scale',
+      description:
+        'A limited set of sizes used across all components.',
+      icon: SlidersHorizontal,
+    },
+    {
+      title: 'Usage rules',
+      description:
+        'Clear constraints to prevent visual drift over time.',
+      icon: ListChecks,
+    },
+  ]}
+/>
 
 ## Steps
 
