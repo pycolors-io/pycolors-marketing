@@ -120,7 +120,7 @@ span[data-slot="badge"] {
     border-right: none;
   }
 
-  #nd-page article {
+  #nd-page > article {
     width: 100%;
     max-width: 800px;
     margin-inline: 0 auto !important;
@@ -142,6 +142,32 @@ span[data-slot="badge"] {
   }
 }
 
+
+.docs-prose ul {
+  margin-block: 1.25rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.docs-prose ul > li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--muted-foreground);
+}
+
+.docs-prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8rem;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--primary), transparent 30%);
+}
+
 /* Mobile / tablet */
 @media (max-width: 1023px) {
   #nd-docs-layout {
@@ -161,7 +187,7 @@ span[data-slot="badge"] {
     padding-inline: 0 !important;
   }
 
-  #nd-page article {
+  #nd-page > article {
     width: 100%;
     max-width: none;
     padding-top: 1rem !important;
@@ -321,10 +347,89 @@ span[data-slot="badge"] {
   letter-spacing: -0.02em;
 }
 
-.docs-prose p,
+.docs-prose .fd-steps h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  padding-top: 0;
+}
+
+/* ==========================================================================
+   Docs prose lists
+   ========================================================================== */
+
 .docs-prose ul,
 .docs-prose ol {
+  margin-block: 1rem 1.25rem;
   max-width: 72ch;
+  padding-left: 0;
+  list-style: none;
+
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.docs-prose ul > li,
+.docs-prose ol > li {
+  position: relative;
+  margin-block: 0.25rem;
+  padding-left: 1rem;
+}
+
+.docs-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+
+  background: color-mix(
+    in oklch,
+    var(--foreground),
+    transparent 52%
+  );
+}
+
+.docs-prose ol {
+  counter-reset: docs-list;
+}
+
+.docs-prose ol > li {
+  counter-increment: docs-list;
+  padding-left: 1.5rem;
+}
+
+.docs-prose ol > li::before {
+  content: counter(docs-list) ".";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  color: color-mix(
+    in oklch,
+    var(--foreground),
+    transparent 45%
+  );
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+
+.docs-prose .docs-list-none {
+  margin: 0;
+  max-width: none;
+  padding-left: 0;
+  list-style: none;
+}
+
+.docs-prose .docs-list-none > li::before {
+  content: none;
 }
 
 .docs-prose pre {
@@ -343,6 +448,156 @@ span[data-slot="badge"] {
 .docs-prose > *:last-child {
   margin-top: 2rem;
 }
+
+/* ==========================================================================
+   Fumadocs callouts
+   ========================================================================== */
+
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card'] {
+  margin-block: 1.5rem;
+  gap: 0.75rem;
+
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+
+  background: var(--card);
+  padding: 1rem;
+
+  color: var(--foreground);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Left accent line */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  > div[role='none'] {
+  width: 2px;
+  align-self: stretch;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--callout-color), transparent 30%);
+}
+
+/* Icon */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  > svg {
+  margin-top: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+
+  fill: color-mix(in oklch, var(--callout-color), transparent 86%);
+  color: color-mix(in oklch, var(--callout-color), transparent 8%);
+}
+
+/* Title */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  p.font-medium {
+  margin: 0 !important;
+
+  color: var(--foreground);
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+/* Content */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  .prose-no-margin {
+  color: var(--muted-foreground);
+}
+
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  .prose-no-margin
+  p {
+  margin: 0;
+  max-width: 72ch;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Links */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  a {
+  color: var(--foreground);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--callout-color),
+    transparent 55%
+  );
+  text-underline-offset: 4px;
+}
+
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  a:hover {
+  color: var(--foreground);
+  text-decoration-color: var(--callout-color);
+}
+
+/* Lists */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  ul,
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  ol {
+  margin-block: 0.5rem 0;
+  padding-left: 1.1rem;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  li {
+  margin-block: 0.25rem;
+}
+
+/* Inline code */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  code:not(pre code) {
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--surface-muted);
+  padding: 0.125rem 0.35rem;
+
+  color: var(--foreground);
+
+  font-size: 0.85em;
+}
+
+/* Avoid nested prose spacing issues */
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  .prose-no-margin
+  > *:first-child {
+  margin-top: 0;
+}
+
+.docs-prose
+  div[style*='--callout-color'][class*='bg-fd-card']
+  .prose-no-margin
+  > *:last-child {
+  margin-bottom: 0;
+}
+
 
 /* ==========================================================================
    Fumadocs accordions

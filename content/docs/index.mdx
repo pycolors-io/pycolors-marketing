@@ -3,12 +3,11 @@ title: PyColors Documentation
 description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth and billing, and ship with production-shaped foundations.
 full: false
 hero: false
-lastUpdated: "2026-05-14"
+lastUpdated: "2026-05-18"
 appliesTo: PyColors
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
 import {
   Blocks,
@@ -23,6 +22,9 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
 
@@ -46,7 +48,18 @@ This documentation is designed for one goal:
 
 > help builders move from idea to credible SaaS, then from credible SaaS to a product that can charge customers.
 
-Use these docs to understand the PyColors ecosystem: templates, UI foundations, product patterns, Starter Free, Starter Pro, authentication, billing, backend structure, secure delivery, and launch readiness.
+Use these docs to understand the PyColors ecosystem:
+
+- templates
+- UI foundations
+- product patterns
+- Starter Free
+- Starter Pro
+- authentication
+- billing
+- backend structure
+- secure delivery
+- launch readiness
 
 <Callout title="The PyColors path">
   Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, and reduce the infrastructure work that delays revenue.
@@ -109,59 +122,86 @@ It helps reduce the gap between:
 
 ### The build path
 
-<Tabs items={["Launch the page", "Validate", "Wire", "Launch"]}>
-  <Tab value="Launch the page">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <LayoutTemplate className="h-4 w-4 text-primary" />
-        <span>Launch a focused marketing page</span>
-      </div>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Launch',
+      title: 'Launch a focused marketing page',
+      icon: LayoutTemplate,
+      description: (
+        <>
+          <p>
+            Start with NA-AI Landing when you need a public offer, polished positioning, responsive sections, pricing, FAQ, and SEO-ready structure before the full product is ready.
+          </p>
 
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Start with NA-AI Landing when you need a public offer, polished positioning, responsive sections, pricing, FAQ, and SEO-ready structure before the full product is ready.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Marketing page</Badge>
+            <Badge variant="outline">Pricing</Badge>
+            <Badge variant="outline">FAQ</Badge>
+            <Badge variant="outline">SEO baseline</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Validate',
+      title: 'Validate the product surface',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Start with Starter Free when you need screens, navigation, UX states, product flows, and a credible SaaS surface before heavy wiring.
+          </p>
 
-  <Tab value="Validate">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Sparkles className="h-4 w-4 text-primary" />
-        <span>Validate the product surface</span>
-      </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Dashboard</Badge>
+            <Badge variant="outline">Settings</Badge>
+            <Badge variant="outline">Mocked flows</Badge>
+            <Badge variant="outline">Product UX</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Wire',
+      title: 'Wire the business layer',
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            Move to Starter Pro when auth, billing, protected routes, backend persistence, and secure delivery become the work slowing launch.
+          </p>
 
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Start with Starter Free when you need screens, navigation, UX states, product flows, and a credible SaaS surface before heavy wiring.
-      </div>
-    </div>
-  </Tab>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Auth</Badge>
+            <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">Backend</Badge>
+            <Badge variant="outline">Protected routes</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Ship',
+      title: 'Launch with confidence',
+      icon: Rocket,
+      description: (
+        <>
+          <p>
+            Validate the production checklist, confirm real users and real payments, then ship the first version of your SaaS with stronger foundations.
+          </p>
 
-  <Tab value="Wire">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Layers3 className="h-4 w-4 text-primary" />
-        <span>Wire the business layer</span>
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Move to Starter Pro when auth, billing, protected routes, backend persistence, and secure delivery become the work slowing launch.
-      </div>
-    </div>
-  </Tab>
-
-  <Tab value="Launch">
-    <div className="rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
-      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-        <Rocket className="h-4 w-4 text-primary" />
-        <span>Launch with confidence</span>
-      </div>
-
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Validate the production checklist, confirm real users and real payments, then ship the first version of your SaaS with stronger foundations.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Production checklist</Badge>
+            <Badge variant="outline">Real users</Badge>
+            <Badge variant="outline">Real payments</Badge>
+            <Badge variant="outline">Launch readiness</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Choose your next move
 
@@ -298,30 +338,56 @@ That matters because every week lost to repeated infrastructure work is a week n
   The docs should help a serious builder trust the system, understand the upgrade path, and choose Starter Pro when infrastructure becomes the bottleneck.
 </Callout>
 
-### Decision
+## Decision
 
-<DocsFeatureGrid
+<DocsDecisionGrid
   columns={3}
-  tone="platform"
   items={[
     {
       eyebrow: 'Public offer',
       title: 'Start with NA-AI Landing',
+      href: '/docs/templates/na-ai-landing',
+      icon: LayoutTemplate,
       description:
         'Use this path when the question is what your offer should look like publicly.',
+      items: [
+        'landing page',
+        'pricing',
+        'FAQ',
+        'SEO baseline',
+      ],
+      cta: 'Explore template →',
     },
     {
       eyebrow: 'Product surface',
       title: 'Start with Starter Free',
+      href: '/docs/starter',
+      icon: Sparkles,
       description:
         'Use this path when the question is what your product should look and feel like.',
+      items: [
+        'dashboard',
+        'settings',
+        'billing surfaces',
+        'mocked flows',
+      ],
+      cta: 'Explore Free →',
     },
     {
       eyebrow: 'Production wiring',
       title: 'Move to Starter Pro',
+      href: '/docs/starter-pro',
+      icon: Rocket,
+      tone: 'pro',
       description:
         'Use this path when auth, billing, backend, and delivery would slow the launch.',
-      tone: 'primary',
+      items: [
+        'real auth',
+        'Stripe billing',
+        'backend-ready structure',
+        'protected access',
+      ],
+      cta: 'Explore Pro →',
     },
   ]}
 />
