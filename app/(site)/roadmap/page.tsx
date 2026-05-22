@@ -401,6 +401,33 @@ const items: RoadmapItem[] = [
     href: '/blog',
   },
   {
+    title: 'Reusable docs component system',
+    description:
+      'Unified documentation pages around reusable feature grids, CTA blocks, concept tabs, decision grids, related links, steps, and clearer heading hierarchy.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Components', 'DX'],
+    href: '/docs',
+  },
+  {
+    title: 'NA-AI Landing documentation expansion',
+    description:
+      'Expanded setup, customization, deployment, project structure, license guidance, and production-readiness documentation for the NA-AI Landing template.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Templates', 'NA-AI', 'Docs'],
+    href: '/docs/templates/na-ai-landing',
+  },
+  {
+    title: 'Documentation decision surfaces',
+    description:
+      'Added clearer concept tabs and decision grids to help users compare product paths and understand when to use templates, UI, Starter Free, or Starter Pro.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Docs', 'Conversion', 'Product'],
+    href: '/docs',
+  },
+  {
     title: 'Starter Pro conversion instrumentation',
     description:
       'Measure the docs-to-pricing-to-checkout funnel across Starter Free, Starter Pro, pricing, upgrade, and post-purchase access.',
@@ -421,9 +448,9 @@ const items: RoadmapItem[] = [
   {
     title: 'Documentation-to-product conversion loop',
     description:
-      'Connect guides, patterns, Starter Free evaluation, Starter Pro value, pricing, and checkout more intentionally.',
-    status: 'Now',
-    milestone: 'May 2026',
+      'Connect guides, patterns, Starter Free evaluation, Starter Pro value, pricing, and checkout more intentionally with measurable conversion events.',
+    status: 'Next',
+    milestone: 'H1 2026',
     tags: ['Docs', 'Conversion', 'SEO'],
     href: '/docs',
   },
