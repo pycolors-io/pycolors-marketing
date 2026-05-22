@@ -58,6 +58,71 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.14.0',
+    title:
+      'Documentation system consolidation, reusable docs components, NA-AI guidance, and clearer product decision paths',
+    dateLabel: 'Fri 22 May 2026',
+    dateISO: '2026-05-22',
+    status: 'Stable',
+    releaseWeekLabel: 'May 2026 (weekly release)',
+    summary:
+      'This release strengthens PyColors as a documentation-first SaaS platform. It consolidates the documentation UI around reusable grids, CTAs, related links, concept tabs, decision surfaces, improved steps, clearer heading hierarchy, and better NA-AI Landing guidance. The focus is to make docs more scalable, easier to maintain, more premium to read, and more effective at moving users from understanding to product decision.',
+    highlights: [
+      {
+        title: 'Documentation UI is now more unified',
+        items: [
+          'Unified docs steps, heading levels, section hierarchy, and related-link patterns across UI documentation.',
+          'Replaced hardcoded related-link grids with reusable components for more consistent cross-linking.',
+          'Improved icon placement guidance and made related patterns easier to discover.',
+        ],
+      },
+      {
+        title: 'Reusable docs components reduce repetition',
+        items: [
+          'Introduced reusable feature grid patterns for concepts, principles, feature lists, and system overviews.',
+          'Replaced repetitive card-based layouts with configurable documentation components.',
+          'Improved long-term maintainability by reducing duplicated MDX markup across docs pages.',
+        ],
+      },
+      {
+        title: 'Concept tabs and decision grids improve scanning',
+        items: [
+          'Replaced legacy tab usage with richer concept tabs and decision grids.',
+          'Improved accessibility, icon consistency, and content structure across decision-oriented docs sections.',
+          'Made product paths easier to compare when users evaluate templates, UI, Starter Free, and Starter Pro.',
+        ],
+      },
+      {
+        title: 'Upgrade and CTA surfaces are cleaner',
+        items: [
+          'Replaced ad-hoc upgrade callouts with reusable CTA components.',
+          'Standardized upgrade prompts across Starter Pro docs and template documentation.',
+          'Made product benefits and next steps more structured, scannable, and conversion-ready.',
+        ],
+      },
+      {
+        title: 'NA-AI Landing docs are more complete',
+        items: [
+          'Expanded NA-AI Landing documentation for setup, customization, deployment, project structure, and license usage.',
+          'Clarified the data-driven architecture, recommended workflow, separation of concerns, and production readiness.',
+          'Improved onboarding so customers can adapt and launch the template with less friction.',
+        ],
+      },
+      {
+        title: 'Docs readability and navigation improved',
+        items: [
+          'Improved list styling, callout styling, prose structure, and docs reading rhythm.',
+          'Added clearer next-step guidance through concept tabs and decision grids.',
+          'Made documentation surfaces feel more premium, coherent, and product-led.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read the docs',
+      href: '/docs',
+    },
+  },
+  {
     version: 'v1.13.0',
     title:
       'NA-AI Landing launch, multi-product commerce, templates funnel, docs system cleanup, and blog polish',
