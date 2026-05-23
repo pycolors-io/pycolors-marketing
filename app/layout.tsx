@@ -12,6 +12,7 @@ import {
   SITE_DEFAULT_OG_IMAGE,
   SITE_DEFAULT_TWITTER_IMAGE,
 } from '@/lib/seo/website';
+import { PrivacyConsentBanner } from '@/components/privacy/privacy-consent-banner';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -136,6 +137,7 @@ export default function Layout({
           }}
         >
           {children}
+          <PrivacyConsentBanner />
         </RootProvider>
       </body>
     </html>
