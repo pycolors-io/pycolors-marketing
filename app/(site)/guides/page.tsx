@@ -13,22 +13,26 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Guides | PyColors',
+  title: 'Next.js SaaS Architecture Guides',
   description:
-    'SaaS building guides for developers. Learn how to design and ship production-ready SaaS products with clearer product surfaces, stronger UX, and better system design.',
-  alternates: { canonical: '/guides' },
+    'Guides for building modern Next.js SaaS products with stronger architecture, authentication systems, billing flows, admin panels, UI patterns, and production-ready product foundations.',
+  alternates: {
+    canonical: '/guides',
+  },
+
   openGraph: {
-    title: 'Guides | PyColors',
+    title: 'Next.js SaaS Architecture Guides',
     description:
-      'SaaS building guides for developers. Learn how to design and ship production-ready SaaS products with clearer product surfaces, stronger UX, and better system design.',
+      'Learn how modern SaaS products are structured across dashboards, authentication, billing systems, admin workflows, product UX, and production-ready Next.js architecture.',
     url: '/guides',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Guides | PyColors',
+    title: 'Next.js SaaS Architecture Guides',
     description:
-      'SaaS building guides for developers. Learn how to design and ship production-ready SaaS products with clearer product surfaces, stronger UX, and better system design.',
+      'Guides for SaaS architecture, billing, authentication, UI systems, and modern Next.js product engineering.',
     images: ['/seo/twitter-main.png'],
   },
 };

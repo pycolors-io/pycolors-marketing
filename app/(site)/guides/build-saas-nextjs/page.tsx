@@ -18,22 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title: 'How to build a SaaS with Next.js',
+  title: 'How to Build a Next.js SaaS Application',
   description:
-    'Learn how to build a modern SaaS with Next.js: product surface, architecture, authentication, billing, dashboards, and team systems.',
-  alternates: { canonical: '/guides/build-saas-nextjs' },
+    'Learn how to build a modern Next.js SaaS application with authentication, billing systems, dashboards, organizations, admin panels, product architecture, and production-ready foundations.',
+  alternates: {
+    canonical: '/guides/build-saas-nextjs',
+  },
+
   openGraph: {
-    title: 'How to build a SaaS with Next.js · PyColors',
+    title: 'How to Build a Next.js SaaS Application',
     description:
-      'Learn how to build a modern SaaS with Next.js: product surface, architecture, authentication, billing, dashboards, and team systems.',
+      'Learn how modern SaaS products are built with Next.js across authentication, billing, dashboards, organizations, admin systems, and production-ready architecture.',
     url: '/guides/build-saas-nextjs',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'How to build a SaaS with Next.js · PyColors',
+    title: 'How to Build a Next.js SaaS Application',
     description:
-      'Learn how to build a modern SaaS with Next.js: product surface, architecture, authentication, billing, dashboards, and team systems.',
+      'A practical guide to building modern SaaS products with Next.js, auth, billing, dashboards, and production-ready architecture.',
     images: ['/seo/twitter-main.png'],
   },
 };

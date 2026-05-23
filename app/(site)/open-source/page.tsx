@@ -24,22 +24,26 @@ import {
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Open Source',
+  title: 'Open-Source SaaS UI & Developer Tools',
   description:
-    'PyColors is built in public. Explore the open-source foundations behind PyColors UI, tokens, starters, and developer tooling.',
-  alternates: { canonical: '/open-source' },
+    'Explore the open-source foundations behind PyColors: SaaS UI systems, semantic tokens, Starter Free, TypeScript tooling, ESLint configs, and production-shaped developer infrastructure.',
+  alternates: {
+    canonical: '/open-source',
+  },
+
   openGraph: {
-    title: 'Open Source · PyColors',
+    title: 'Open-Source SaaS UI & Developer Tools',
     description:
-      'Explore PyColors open-source foundations: UI system, tokens, starters, and developer tooling — built for shipping real SaaS.',
+      'Discover the open-core foundations behind PyColors across UI systems, tokens, SaaS starters, developer tooling, and production-ready Next.js infrastructure.',
     url: '/open-source',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Open Source · PyColors',
+    title: 'Open-Source SaaS UI & Developer Tools',
     description:
-      'Explore PyColors open-source foundations: UI system, tokens, starters, and developer tooling — built for shipping real SaaS.',
+      'Open-core foundations for modern SaaS products: UI systems, starters, tokens, and developer tooling.',
     images: ['/seo/twitter-main.png'],
   },
 };

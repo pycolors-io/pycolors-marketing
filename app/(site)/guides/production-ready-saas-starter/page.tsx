@@ -18,27 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title:
-    'What a Production-Ready SaaS Starter Should Actually Include',
+  title: 'What a Production-Ready SaaS Starter Should Include',
   description:
-    'A practical guide to what a production-ready SaaS starter should include: auth, layout, settings, billing entry points, dashboard structure, and a coherent UI foundation.',
+    'Learn what a production-ready SaaS starter should include: authentication, dashboards, settings, billing entry points, UI systems, scalable architecture, and production-shaped product foundations.',
   alternates: {
     canonical: '/guides/production-ready-saas-starter',
   },
+
   openGraph: {
-    title:
-      'What a Production-Ready SaaS Starter Should Actually Include · PyColors',
+    title: 'What a Production-Ready SaaS Starter Should Include',
     description:
-      'A practical guide to what a production-ready SaaS starter should include: auth, layout, settings, billing entry points, dashboard structure, and a coherent UI foundation.',
+      'A practical guide to authentication, dashboard structure, billing systems, settings architecture, UI foundations, and production-ready SaaS starter design.',
     url: '/guides/production-ready-saas-starter',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title:
-      'What a Production-Ready SaaS Starter Should Actually Include · PyColors',
+    title: 'What a Production-Ready SaaS Starter Should Include',
     description:
-      'A practical guide to what a production-ready SaaS starter should include: auth, layout, settings, billing entry points, dashboard structure, and a coherent UI foundation.',
+      'Learn the foundations behind a real production-ready SaaS starter for modern Next.js applications.',
     images: ['/seo/twitter-main.png'],
   },
 };

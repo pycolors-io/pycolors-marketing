@@ -18,22 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title: 'Authentication flows for SaaS',
+  title: 'Authentication Architecture for SaaS Applications',
   description:
-    'Learn how to design authentication flows for SaaS: login, register, password reset, email verification, protected routes, sessions, and common mistakes.',
-  alternates: { canonical: '/guides/saas-auth-flows' },
+    'Learn how modern SaaS authentication systems are designed across login, registration, password reset, email verification, OAuth, sessions, protected routes, and production-ready auth UX.',
+  alternates: {
+    canonical: '/guides/saas-auth-flows',
+  },
+
   openGraph: {
-    title: 'Authentication flows for SaaS · PyColors',
+    title: 'Authentication Architecture for SaaS Applications',
     description:
-      'Learn how to design authentication flows for SaaS: login, register, password reset, email verification, protected routes, sessions, and common mistakes.',
+      'A practical guide to SaaS authentication architecture covering login flows, sessions, OAuth, route protection, email verification, and production-ready auth UX.',
     url: '/guides/saas-auth-flows',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Authentication flows for SaaS · PyColors',
+    title: 'Authentication Architecture for SaaS Applications',
     description:
-      'Learn how to design authentication flows for SaaS: login, register, password reset, email verification, protected routes, sessions, and common mistakes.',
+      'Learn how modern SaaS authentication systems are designed across sessions, OAuth, route protection, and production-ready auth UX.',
     images: ['/seo/twitter-main.png'],
   },
 };

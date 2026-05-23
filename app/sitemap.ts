@@ -10,37 +10,48 @@ import {
 const BASE_URL = 'https://pycolors.io';
 
 /**
- * Core pages = acquisition + conversion.
- * Order matters for reasoning, not for sitemap output.
+ * Core acquisition + conversion routes.
+ * Ordered intentionally for maintainability.
  */
 const STATIC_ROUTES = [
-  // Root
+  /**
+   * Root
+   */
   '',
 
-  // Conversion core
+  /**
+   * Conversion
+   */
   '/templates/na-ai-landing',
   '/starters/pro',
   '/pricing',
   '/upgrade',
   '/starters/free',
 
-  // Acquisition core
+  /**
+   * Acquisition
+   */
   '/templates',
   '/guides',
   '/blog',
   '/ui',
 
-  // Product
+  /**
+   * Product ecosystem
+   */
   '/starters',
+  '/open-source',
 
-  // UI ecosystem
+  /**
+   * UI ecosystem
+   */
   '/ui/patterns',
   '/ui/examples',
 
-  // Exploration
-  '/examples',
-
-  // Guides
+  /**
+   * Guides
+   */
+  '/guides/production-ready-saas-starter',
   '/guides/build-saas-nextjs',
   '/guides/saas-dashboard-design',
   '/guides/saas-auth-flows',
@@ -48,45 +59,62 @@ const STATIC_ROUTES = [
   '/guides/saas-organizations',
   '/guides/saas-admin-panels',
 
-  // Docs
+  /**
+   * Documentation
+   */
   '/docs',
   '/docs/ui',
 
-  // Starter Free docs
+  /**
+   * Starter Free docs
+   */
   '/docs/starter',
   '/docs/starter/upgrade',
 
-  // Starter Pro docs
+  /**
+   * Starter Pro docs
+   */
   '/docs/starter-pro',
   '/docs/starter-pro/overview',
   '/docs/starter-pro/upgrade',
   '/docs/starter-pro/billing',
   '/docs/starter-pro/backend',
 
-  // Trust
+  /**
+   * Product transparency
+   */
   '/roadmap',
   '/changelog',
 
-  // Legal
+  /**
+   * Trust / legal
+   */
   '/license',
   '/terms',
   '/privacy',
 
-  // Company
+  /**
+   * Company
+   */
   '/about',
-  '/open-source',
 
-  // Blog taxonomies
+  /**
+   * Blog taxonomy
+   */
   '/blog/categories',
   '/blog/tags',
 ] as const;
 
 /**
- * Priority = business value.
+ * Sitemap priorities.
+ * Signals relative business + SEO importance.
  */
 function getPriority(route: string): number {
-  if (route === '') return 1.0;
+  if (route === '') return 1;
 
+  /**
+   * Core conversion pages
+   */
   if (
     [
       '/templates/na-ai-landing',
@@ -99,35 +127,60 @@ function getPriority(route: string): number {
     return 0.95;
   }
 
+  /**
+   * Core acquisition pages
+   */
   if (['/templates', '/guides', '/blog', '/ui'].includes(route)) {
     return 0.9;
   }
 
+  /**
+   * High-value educational content
+   */
   if (route.startsWith('/guides/') || route.startsWith('/blog/')) {
     return 0.85;
   }
 
+  /**
+   * Premium docs
+   */
   if (route.startsWith('/docs/starter-pro')) {
     return 0.85;
   }
 
+  /**
+   * Documentation
+   */
   if (route.startsWith('/docs/')) {
     return 0.75;
   }
 
+  /**
+   * Product ecosystem pages
+   */
   if (
-    route === '/starters' ||
-    route === '/ui/patterns' ||
-    route === '/ui/examples' ||
-    route === '/examples'
+    [
+      '/starters',
+      '/ui/examples',
+      '/ui/patterns',
+      '/open-source',
+    ].includes(route)
   ) {
     return 0.8;
   }
 
+  /**
+   * Trust + company
+   */
   if (
-    ['/roadmap', '/changelog', '/about', '/open-source'].includes(
-      route,
-    )
+    [
+      '/roadmap',
+      '/changelog',
+      '/about',
+      '/license',
+      '/terms',
+      '/privacy',
+    ].includes(route)
   ) {
     return 0.7;
   }
@@ -136,13 +189,17 @@ function getPriority(route: string): number {
 }
 
 /**
- * Change frequency = update strategy.
+ * Change frequency strategy.
+ * Helps search engines understand update cadence.
  */
 function getChangeFrequency(
   route: string,
 ): 'daily' | 'weekly' | 'monthly' | 'yearly' {
   if (route === '') return 'weekly';
 
+  /**
+   * Frequently evolving pages
+   */
   if (
     [
       '/templates/na-ai-landing',
@@ -154,15 +211,22 @@ function getChangeFrequency(
       '/roadmap',
       '/changelog',
       '/blog',
+      '/open-source',
     ].includes(route)
   ) {
     return 'weekly';
   }
 
+  /**
+   * Editorial content
+   */
   if (route.startsWith('/guides/') || route.startsWith('/blog/')) {
     return 'monthly';
   }
 
+  /**
+   * Documentation
+   */
   if (route.startsWith('/docs/')) {
     return 'monthly';
   }
@@ -173,6 +237,9 @@ function getChangeFrequency(
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
+  /**
+   * Static routes
+   */
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map(
     (route) => ({
       url: `${BASE_URL}${route}`,
@@ -182,6 +249,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  /**
+   * Blog posts
+   */
   const blogPosts: MetadataRoute.Sitemap = getAllPosts().map(
     (post) => ({
       url: `${BASE_URL}${post.url}`,
@@ -191,6 +261,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  /**
+   * Blog categories
+   */
   const blogCategories: MetadataRoute.Sitemap =
     getAllCategories().map((category) => ({
       url: `${BASE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
@@ -199,6 +272,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }));
 
+  /**
+   * Blog tags
+   */
   const blogTags: MetadataRoute.Sitemap = getAllTags().map((tag) => ({
     url: `${BASE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
     lastModified: now,
@@ -206,6 +282,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  /**
+   * Merge + dedupe
+   */
   const entries = [
     ...staticEntries,
     ...blogPosts,

@@ -25,22 +25,28 @@ import {
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About PyColors',
   description:
-    'Learn what PyColors is, why it exists, and how the ecosystem helps developers learn, validate, and ship real SaaS products faster.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'About · PyColors',
-    description:
-      'Learn what PyColors is, why it exists, and how the ecosystem helps developers learn, validate, and ship real SaaS products faster.',
-    url: '/about',
-    images: ['/seo/og-main.png'],
+    'Learn how PyColors helps developers build credible SaaS products faster with production-ready UI systems, SaaS starters, patterns, and documentation-first workflows.',
+  alternates: {
+    canonical: '/about',
   },
+
+  openGraph: {
+    title: 'About PyColors — Premium SaaS UI System & Starters',
+    description:
+      'Learn how PyColors helps developers build credible SaaS products faster with production-ready UI systems, SaaS starters, patterns, and documentation-first workflows.',
+    url: '/about',
+    siteName: 'PyColors',
+    images: ['/seo/og-main.png'],
+    type: 'website',
+  },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'About · PyColors',
+    title: 'About PyColors — Premium SaaS UI System & Starters',
     description:
-      'Learn what PyColors is, why it exists, and how the ecosystem helps developers learn, validate, and ship real SaaS products faster.',
+      'Learn how PyColors helps developers build credible SaaS products faster with production-ready UI systems, SaaS starters, patterns, and documentation-first workflows.',
     images: ['/seo/twitter-main.png'],
   },
 };

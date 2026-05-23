@@ -19,22 +19,28 @@ import {
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Changelog',
+  title: 'Next.js SaaS Product Changelog',
   description:
-    'Release notes and product updates for the PyColors ecosystem: UI, Starters, docs, templates, and commercial product growth. Predictable releases, stable conventions, and documentation-first shipping.',
-  alternates: { canonical: '/changelog' },
+    'Release notes and product updates for the PyColors ecosystem covering Next.js SaaS starters, UI systems, templates, documentation, developer tooling, and production-ready platform evolution.',
+  alternates: {
+    canonical: '/changelog',
+  },
+
   openGraph: {
-    title: 'Changelog · PyColors',
+    title: 'Next.js SaaS Product Changelog',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, docs, templates, and commercial product growth. Predictable releases and documentation-first shipping.',
+      'Explore PyColors release notes across SaaS starters, UI systems, templates, documentation, developer tooling, and production-ready product evolution.',
     url: '/changelog',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Changelog · PyColors',
+    title: 'Next.js SaaS Product Changelog',
     description:
-      'Release notes and product updates across PyColors: UI, Starters, docs, templates, and commercial product growth.',
+      'Release notes and product updates for the PyColors SaaS ecosystem, UI systems, templates, starters, and developer tooling.',
     images: ['/seo/twitter-main.png'],
   },
 };

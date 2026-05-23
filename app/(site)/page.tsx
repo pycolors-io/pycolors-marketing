@@ -28,27 +28,31 @@ import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'PyColors — Ship SaaS products faster',
+    absolute:
+      'Next.js SaaS UI System, Templates & Starters · PyColors',
   },
   description:
-    'PyColors helps developers ship credible SaaS products faster with premium templates, PyColors UI, Starter Free, and Starter Pro.',
+    'PyColors helps developers build and launch modern Next.js SaaS products faster with a production-ready UI system, premium templates, Starter Free, and Starter Pro with authentication, Stripe billing, Prisma, and SaaS foundations.',
   alternates: {
     canonical: 'https://pycolors.io',
   },
+
   openGraph: {
-    title: 'PyColors — Ship SaaS products faster',
+    title: 'Next.js SaaS UI System, Templates & Starters · PyColors',
+
     description:
-      'Start with a template, validate with Starter Free, or buy Starter Pro when auth, billing, and SaaS foundations should already be wired.',
+      'Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, billing, Prisma, and protected app architecture.',
     url: 'https://pycolors.io',
     siteName: 'PyColors',
-    images: ['/seo/og-main.png'],
     type: 'website',
+    images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'PyColors — Ship SaaS products faster',
+    title: 'Next.js SaaS UI System, Templates & Starters · PyColors',
     description:
-      'Premium templates, UI primitives, Starter Free, and Starter Pro for modern SaaS builders.',
+      'Build modern SaaS products faster with premium templates, production-ready UI systems, Starter Free, and Starter Pro.',
     images: ['/seo/twitter-main.png'],
   },
 };

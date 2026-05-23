@@ -7,7 +7,6 @@ import {
   ExternalLink,
   Layers3,
   LayoutDashboard,
-  Lock,
   Rocket,
   Sparkles,
 } from 'lucide-react';
@@ -20,22 +19,28 @@ import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
-  title: 'UI | PyColors',
+  title: 'Next.js SaaS UI System',
   description:
-    'PyColors UI is a documentation-first design system built to help developers ship real SaaS products faster with semantic tokens, accessible primitives, and product-shaped UI foundations.',
-  alternates: { canonical: '/ui' },
+    'Documentation-first UI system for Next.js SaaS products. Accessible primitives, semantic tokens, product-shaped components, and production-ready foundations built for modern SaaS applications.',
+  alternates: {
+    canonical: '/ui',
+  },
+
   openGraph: {
-    title: 'UI | PyColors',
+    title: 'Next.js SaaS UI System',
     description:
-      'A premium UI foundation built to help developers ship real SaaS products faster.',
+      'Production-ready UI system for Next.js SaaS products with semantic tokens, accessible primitives, dashboards, auth flows, billing surfaces, and product-oriented foundations.',
     url: '/ui',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'UI | PyColors',
+    title: 'Next.js SaaS UI System',
     description:
-      'A premium UI foundation built to help developers ship real SaaS products faster.',
+      'A documentation-first UI system built for modern SaaS products and real product workflows.',
     images: ['/seo/twitter-main.png'],
   },
 };

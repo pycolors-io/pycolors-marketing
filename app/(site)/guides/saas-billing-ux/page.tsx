@@ -18,22 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title: 'SaaS billing UX best practices',
+  title: 'Billing Architecture & UX for SaaS Applications',
   description:
-    'Learn how to design SaaS billing UX: pricing visibility, plan states, usage metrics, invoices, upgrades, portals, and common billing mistakes.',
-  alternates: { canonical: '/guides/saas-billing-ux' },
+    'Learn how modern SaaS billing systems are designed across pricing visibility, subscriptions, usage metrics, invoices, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.',
+  alternates: {
+    canonical: '/guides/saas-billing-ux',
+  },
+
   openGraph: {
-    title: 'SaaS billing UX best practices · PyColors',
+    title: 'Billing Architecture & UX for SaaS Applications',
     description:
-      'Learn how to design SaaS billing UX: pricing visibility, plan states, usage metrics, invoices, upgrades, portals, and common billing mistakes.',
+      'A practical guide to SaaS billing architecture covering subscriptions, invoices, usage metrics, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.',
     url: '/guides/saas-billing-ux',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'SaaS billing UX best practices · PyColors',
+    title: 'Billing Architecture & UX for SaaS Applications',
     description:
-      'Learn how to design SaaS billing UX: pricing visibility, plan states, usage metrics, invoices, upgrades, portals, and common billing mistakes.',
+      'Learn how modern SaaS billing systems are designed across subscriptions, pricing UX, invoices, usage metrics, and payment recovery.',
     images: ['/seo/twitter-main.png'],
   },
 };

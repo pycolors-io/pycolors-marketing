@@ -14,26 +14,29 @@ import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'License | PyColors',
+  title: 'Commercial License for SaaS Templates & Starters',
   description:
-    'Licensing information for PyColors products, including open-source packages, Starter Free, Starter Pro, premium templates, and commercial usage rights.',
+    'Understand the commercial licensing terms for PyColors templates, Starter Free, Starter Pro, UI systems, open-source repositories, and production-ready SaaS products.',
   alternates: {
-    canonical: 'https://pycolors.io/license',
+    canonical: '/license',
   },
+
   openGraph: {
-    title: 'License | PyColors',
+    title: 'Commercial License for SaaS Templates & Starters',
     description:
-      'Understand how PyColors products can be used across open-source packages, free starters, premium templates, Starter Pro, and commercial projects.',
-    url: 'https://pycolors.io/license',
+      'Learn how PyColors products can be used across open-source repositories, premium templates, Starter Free, Starter Pro, commercial SaaS products, and client work.',
+    url: '/license',
     siteName: 'PyColors',
     type: 'website',
+
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'License | PyColors',
+    title: 'Commercial License for SaaS Templates & Starters',
     description:
-      'Understand how PyColors products can be used across open-source packages, premium templates, Starter Pro, and commercial projects.',
+      'Commercial licensing for PyColors SaaS templates, starters, UI systems, and production-ready developer products.',
     images: ['/seo/twitter-main.png'],
   },
 };

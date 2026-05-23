@@ -31,26 +31,28 @@ import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Templates — Premium Next.js SaaS templates | PyColors',
+  title: 'Next.js SaaS Templates',
   description:
-    'Premium Next.js templates for SaaS, AI, analytics, and developer products. Full source code, commercial usage, modern UI, SEO foundations, and instant delivery after purchase.',
+    'Premium Next.js SaaS templates for AI products, analytics platforms, developer tools, and startup launches. Full source code, commercial usage, SEO foundations, and production-shaped UI built for modern SaaS applications.',
   alternates: {
-    canonical: 'https://pycolors.io/templates',
+    canonical: '/templates',
   },
   openGraph: {
-    title: 'Templates — Premium Next.js SaaS templates | PyColors',
+    title: 'Next.js SaaS Templates',
+
     description:
-      'Launch polished SaaS and AI pages faster with premium Next.js templates, full source code, commercial usage, and instant delivery.',
-    url: 'https://pycolors.io/templates',
+      'Launch polished SaaS and AI products faster with premium Next.js templates, production-ready UI, SEO foundations, and commercial-ready source code.',
+    url: '/templates',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Templates — Premium Next.js SaaS templates | PyColors',
+    title: 'Next.js SaaS Templates',
     description:
-      'Premium Next.js templates for SaaS, AI, analytics, and developer products.',
+      'Premium templates built for modern SaaS, AI, analytics, and developer products.',
     images: ['/seo/twitter-main.png'],
   },
 };

@@ -14,26 +14,28 @@ import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Terms | PyColors',
+  title: 'Terms of Service for SaaS Products & Templates',
   description:
-    'Terms of Service for PyColors covering website usage, public repositories, premium templates, Starter Free, Starter Pro, payments, accounts, and commercial usage.',
+    'Terms of Service for PyColors covering SaaS products, templates, Starter Free, Starter Pro, public repositories, payments, licensing, digital downloads, and commercial usage.',
   alternates: {
-    canonical: 'https://pycolors.io/terms',
+    canonical: '/terms',
   },
+
   openGraph: {
-    title: 'Terms | PyColors',
+    title: 'Terms of Service for SaaS Products & Templates',
     description:
-      'Terms of Service for the PyColors ecosystem, including public repositories, digital products, Starter Free, Starter Pro, and commercial usage rules.',
-    url: 'https://pycolors.io/terms',
+      'Review the Terms of Service governing PyColors templates, SaaS starters, open-source repositories, digital products, payments, licensing, and commercial usage.',
+    url: '/terms',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Terms | PyColors',
+    title: 'Terms of Service for SaaS Products & Templates',
     description:
-      'Terms of Service for PyColors products, digital downloads, templates, starters, and commercial usage.',
+      'Terms governing PyColors SaaS products, templates, developer tools, licensing, payments, and commercial usage.',
     images: ['/seo/twitter-main.png'],
   },
 };

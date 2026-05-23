@@ -18,22 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title: 'Admin panels for SaaS products',
+  title: 'Admin Panel Architecture for SaaS Applications',
   description:
-    'Learn how to design admin panels for SaaS products: moderation tools, roles, permissions, audit logs, operational workflows, and common admin UX mistakes.',
-  alternates: { canonical: '/guides/saas-admin-panels' },
+    'Learn how to design admin panels for SaaS applications with moderation tools, permissions, audit logs, operational queues, destructive actions, and production-ready admin UX patterns.',
+  alternates: {
+    canonical: '/guides/saas-admin-panels',
+  },
+
   openGraph: {
-    title: 'Admin panels for SaaS products · PyColors',
+    title: 'Admin Panel Architecture for SaaS Applications',
     description:
-      'Learn how to design admin panels for SaaS products: moderation tools, roles, permissions, audit logs, operational workflows, and common admin UX mistakes.',
+      'A practical guide to SaaS admin panel architecture covering moderation systems, operational workflows, permissions, audit logs, and production-ready admin UX.',
     url: '/guides/saas-admin-panels',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Admin panels for SaaS products · PyColors',
+    title: 'Admin Panel Architecture for SaaS Applications',
     description:
-      'Learn how to design admin panels for SaaS products: moderation tools, roles, permissions, audit logs, operational workflows, and common admin UX mistakes.',
+      'Learn how modern SaaS admin panels are designed across moderation, permissions, operational queues, and audit systems.',
     images: ['/seo/twitter-main.png'],
   },
 };

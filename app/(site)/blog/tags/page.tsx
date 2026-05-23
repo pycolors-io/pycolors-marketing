@@ -14,24 +14,26 @@ import {
 } from '@/lib/blog/utils';
 
 export const metadata: Metadata = {
-  title: 'Blog Tags',
+  title: 'Next.js SaaS Engineering Topics',
   description:
-    'Browse PyColors blog articles by tags including SaaS architecture, Next.js, product UX, billing, and design systems.',
+    'Explore technical topics across Next.js SaaS architecture, authentication, billing systems, UI engineering, product UX, developer experience, and production-ready implementation patterns.',
   alternates: {
     canonical: '/blog/tags',
   },
+
   openGraph: {
-    title: 'Blog Tags · PyColors',
+    title: 'Next.js SaaS Engineering Topics',
     description:
-      'Browse PyColors blog articles by tags including SaaS architecture, Next.js, product UX, billing, and design systems.',
+      'Browse technical topics covering SaaS architecture, billing, UI systems, developer experience, and modern Next.js engineering.',
     url: '/blog/tags',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog Tags · PyColors',
+    title: 'Next.js SaaS Engineering Topics',
     description:
-      'Browse PyColors blog articles by tags including SaaS architecture, Next.js, product UX, billing, and design systems.',
+      'Technical topics across SaaS architecture, UI systems, billing, and modern Next.js engineering.',
     images: ['/seo/twitter-main.png'],
   },
 };

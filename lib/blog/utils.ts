@@ -34,9 +34,9 @@ export function getAllPosts(): BlogPost[] {
         slug,
         url: page.url,
         title,
-        description: page.data.description ?? '',
+        description: String(page.data.description ?? ''),
         author: String(page.data.author ?? ''),
-        category: String(page.data.category ?? ''),
+        category: String(page.data.category ?? '').trim(),
         tags,
         date: String(page.data.date ?? ''),
         featured: Boolean(page.data.featured),
@@ -75,8 +75,7 @@ export function getPostBySlug(slug: string) {
 }
 
 export function getPostMetaBySlug(slug: string): BlogPost | null {
-  const posts = getAllPosts();
-  return posts.find((post) => post.slug === slug) ?? null;
+  return getAllPosts().find((post) => post.slug === slug) ?? null;
 }
 
 export function getFeaturedPosts(limit = 3): BlogPost[] {
@@ -86,15 +85,24 @@ export function getFeaturedPosts(limit = 3): BlogPost[] {
 }
 
 export function getAllCategories(): string[] {
-  const posts = getAllPosts();
-
-  return [...new Set(posts.map((post) => post.category))].sort();
+  return [
+    ...new Set(
+      getAllPosts()
+        .map((post) => post.category.trim())
+        .filter(Boolean),
+    ),
+  ].sort((a, b) => a.localeCompare(b));
 }
 
 export function getAllTags(): string[] {
-  const posts = getAllPosts();
-
-  return [...new Set(posts.flatMap((post) => post.tags))].sort();
+  return [
+    ...new Set(
+      getAllPosts()
+        .flatMap((post) => post.tags)
+        .map((tag) => tag.trim())
+        .filter(Boolean),
+    ),
+  ].sort((a, b) => a.localeCompare(b));
 }
 
 export function getPostsByCategory(category: string): BlogPost[] {

@@ -21,24 +21,28 @@ import {
 } from '@/lib/blog/utils';
 
 export const metadata: Metadata = {
-  title: 'Blog',
+  title: 'Next.js SaaS Engineering Blog',
   description:
-    'Technical articles from PyColors about SaaS architecture, product UX, Next.js, design systems, and production-ready implementation decisions.',
+    'Technical articles about Next.js SaaS architecture, authentication, billing systems, UI engineering, design systems, product UX, and production-ready implementation decisions.',
   alternates: {
     canonical: '/blog',
   },
+
   openGraph: {
-    title: 'Blog · PyColors',
+    title: 'Next.js SaaS Engineering Blog',
     description:
-      'Technical articles from PyColors about SaaS architecture, product UX, Next.js, design systems, and production-ready implementation decisions.',
+      'Technical writing from PyColors about SaaS architecture, UI systems, billing flows, product UX, and production-ready Next.js engineering.',
     url: '/blog',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog · PyColors',
+    title: 'Next.js SaaS Engineering Blog',
     description:
-      'Technical articles from PyColors about SaaS architecture, product UX, Next.js, design systems, and production-ready implementation decisions.',
+      'Technical articles about SaaS architecture, UI systems, billing, product UX, and modern Next.js engineering.',
     images: ['/seo/twitter-main.png'],
   },
 };
