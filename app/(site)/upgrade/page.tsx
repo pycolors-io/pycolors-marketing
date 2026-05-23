@@ -33,28 +33,28 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title:
-    'Upgrade to Starter Pro — Auth, Billing & SaaS Foundations | PyColors',
+  title: 'Next.js SaaS Auth & Billing Starter',
   description:
-    'Upgrade from Starter Free to Starter Pro and get real authentication, Stripe billing, protected routes, Prisma foundations, and production-ready SaaS wiring.',
+    'Production-ready Next.js SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, subscription flows, and launch-ready business infrastructure.',
   alternates: {
-    canonical: 'https://pycolors.io/upgrade',
+    canonical: '/upgrade',
   },
+
   openGraph: {
-    title:
-      'Upgrade to Starter Pro — Auth, Billing & SaaS Foundations | PyColors',
+    title: 'Next.js SaaS Auth & Billing Starter',
     description:
-      'Move from product-surface validation to a production-ready SaaS foundation with authentication, billing, protected routes, and database foundations already wired.',
-    url: 'https://pycolors.io/upgrade',
+      'Upgrade from Starter Free to a production-ready SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, and launch-ready architecture.',
+    url: '/upgrade',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Upgrade to Starter Pro | PyColors',
+    title: 'Next.js SaaS Auth & Billing Starter',
     description:
-      'Stop rebuilding auth and billing. Upgrade to a production-ready SaaS foundation.',
+      'Production-ready SaaS auth, billing, and business foundations for modern Next.js applications.',
     images: ['/seo/twitter-main.png'],
   },
 };

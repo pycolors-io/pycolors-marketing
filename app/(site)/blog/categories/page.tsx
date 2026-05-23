@@ -12,24 +12,26 @@ import {
 } from '@/lib/blog/utils';
 
 export const metadata: Metadata = {
-  title: 'Blog Categories',
+  title: 'Next.js SaaS Engineering Categories',
   description:
-    'Browse PyColors blog categories across SaaS architecture, product UX, Next.js, billing, design systems, and implementation patterns.',
+    'Browse engineering categories across Next.js SaaS architecture, billing systems, authentication, UI engineering, product UX, design systems, and production-ready implementation patterns.',
   alternates: {
     canonical: '/blog/categories',
   },
+
   openGraph: {
-    title: 'Blog Categories · PyColors',
+    title: 'Next.js SaaS Engineering Categories',
     description:
-      'Browse PyColors blog categories across SaaS architecture, product UX, Next.js, billing, design systems, and implementation patterns.',
+      'Explore engineering categories covering SaaS architecture, UI systems, billing flows, developer experience, and production-ready Next.js implementation patterns.',
     url: '/blog/categories',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog Categories · PyColors',
+    title: 'Next.js SaaS Engineering Categories',
     description:
-      'Browse PyColors blog categories across SaaS architecture, product UX, Next.js, billing, design systems, and implementation patterns.',
+      'Engineering categories across SaaS architecture, UI systems, billing, product UX, and modern Next.js development.',
     images: ['/seo/twitter-main.png'],
   },
 };

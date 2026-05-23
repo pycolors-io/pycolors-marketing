@@ -11,27 +11,31 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 import { DocsHeader } from '@/components/docs-header';
 
 export const metadata: Metadata = {
-  alternates: { canonical: '/docs' },
+  alternates: {
+    canonical: '/docs',
+  },
   title: {
-    default: 'Docs',
+    default: 'Next.js SaaS Documentation',
     template: '%s · Docs · PyColors',
   },
   description:
-    'Official PyColors documentation. Build faster with production-shaped SaaS patterns, UI foundations, and Starter Pro guidance.',
+    'Official PyColors documentation for building modern Next.js SaaS products with UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready architecture.',
+
   openGraph: {
     type: 'website',
     siteName: 'PyColors',
-    title: 'PyColors Documentation',
+    title: 'Next.js SaaS Documentation',
     description:
-      'Production-shaped documentation for PyColors, Starter Free, and Starter Pro.',
+      'Official PyColors docs for UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready Next.js architecture.',
     url: '/docs',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'PyColors Documentation',
+    title: 'Next.js SaaS Documentation',
     description:
-      'Production-shaped docs for building SaaS products faster with PyColors.',
+      'Documentation for building modern Next.js SaaS products faster with PyColors.',
     images: ['/seo/twitter-main.png'],
   },
 };

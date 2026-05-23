@@ -31,22 +31,28 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Starter Free | PyColors',
+  title: 'Free Next.js SaaS Starter',
   description:
-    'Production-shaped SaaS starter built for fast product validation. Real screens, realistic UX contracts, mocked by design, ready to wire or upgrade to Starter Pro.',
-  alternates: { canonical: '/starters/free' },
+    'Production-shaped free SaaS starter for Next.js. Validate dashboards, authentication UX, billing screens, CRUD flows, and SaaS product surfaces before wiring the backend.',
+  alternates: {
+    canonical: '/starters/free',
+  },
+
   openGraph: {
-    title: 'Starter Free | PyColors',
+    title: 'Free Next.js SaaS Starter — PyColors',
     description:
-      'Validate your SaaS UX before backend complexity. Production-shaped Next.js starter with auth UX, dashboard, CRUD, settings, billing and admin surfaces.',
+      'Validate your SaaS UX before backend complexity. Production-ready Next.js starter with dashboards, auth UX, CRUD patterns, billing screens, admin surfaces, and upgrade-ready architecture.',
     url: '/starters/free',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Starter Free | PyColors',
+    title: 'Free Next.js SaaS Starter — PyColors',
     description:
-      'Validate your SaaS UX before backend complexity, then upgrade when auth and billing become the bottleneck.',
+      'Production-shaped SaaS starter built for fast product validation and modern Next.js applications.',
     images: ['/seo/twitter-main.png'],
   },
 };

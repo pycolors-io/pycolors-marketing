@@ -31,30 +31,29 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title:
-    'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
+  title: 'Next.js SaaS Starter with Auth & Billing',
   description:
-    'Starter Pro is a production-ready Next.js SaaS starter with real authentication, Stripe billing, protected app architecture, Prisma foundations, and launch-ready SaaS flows already wired.',
+    'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and launch-ready SaaS architecture already wired.',
+  alternates: {
+    canonical: '/starters/pro',
+  },
+
   openGraph: {
-    title:
-      'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
+    title: 'Next.js SaaS Starter with Auth & Billing — PyColors',
     description:
-      'Launch a real SaaS faster with authentication, Stripe billing, protected app architecture, and production-ready foundations already built.',
-    url: 'https://pycolors.io/starters/pro',
+      'Launch a real SaaS faster with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and production-ready foundations already wired.',
+    url: '/starters/pro',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title:
-      'Starter Pro — Next.js SaaS starter with auth and billing | PyColors',
+    title: 'Next.js SaaS Starter with Auth & Billing — PyColors',
     description:
-      'Launch a real SaaS faster with authentication, Stripe billing, protected app architecture, and production-ready foundations already built.',
+      'Production-ready SaaS starter built for modern Next.js applications and faster product launches.',
     images: ['/seo/twitter-main.png'],
-  },
-  alternates: {
-    canonical: 'https://pycolors.io/starters/pro',
   },
 };
 

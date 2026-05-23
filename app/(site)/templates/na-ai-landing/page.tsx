@@ -38,28 +38,28 @@ import { BuyProductButton } from '@/components/pricing/buy-product-button';
 import { TemplateStickyCta } from '@/components/templates/template-sticky-cta';
 
 export const metadata: Metadata = {
-  title:
-    'NA-AI Landing — Next.js AI SaaS Landing Page Template | PyColors',
+  title: 'AI SaaS Landing Page Template for Next.js',
   description:
-    'Premium Next.js landing page template for AI, analytics, and SaaS products. Includes Tailwind CSS, shadcn/ui, charts, pricing, FAQ, SEO baseline, dark mode, and commercial license.',
+    'Premium AI SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing sections, FAQ, dark mode, SEO foundations, and commercial-ready source code.',
   alternates: {
-    canonical: 'https://pycolors.io/templates/na-ai-landing',
+    canonical: '/templates/na-ai-landing',
   },
+
   openGraph: {
-    title:
-      'NA-AI Landing — Next.js AI SaaS Landing Page Template | PyColors',
+    title: 'AI SaaS Landing Page Template for Next.js',
     description:
-      'Launch a polished AI/SaaS landing page faster with complete source code, modern UI, SEO foundations, and commercial usage.',
-    url: 'https://pycolors.io/templates/na-ai-landing',
+      'Launch a polished AI or SaaS landing page faster with modern Next.js architecture, production-ready UI, SEO foundations, and commercial-ready source code.',
+    url: '/templates/na-ai-landing',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'NA-AI Landing — Next.js AI SaaS Template',
+    title: 'AI SaaS Landing Page Template for Next.js',
     description:
-      'A premium AI/SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, and commercial-ready structure.',
+      'Premium AI and SaaS landing page template built for modern product launches.',
     images: ['/seo/twitter-main.png'],
   },
 };

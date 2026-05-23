@@ -26,22 +26,30 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Starters | PyColors',
+  title: 'SaaS Starters for Next.js',
+
   description:
-    'Production-first SaaS starters built on PyColors UI. Start free to validate your SaaS surface, then upgrade to Starter Pro for real authentication, Stripe billing, protected architecture, and launch-ready foundations.',
-  alternates: { canonical: '/starters' },
+    'Production-ready SaaS starters for Next.js. Validate your product with Starter Free, then upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and launch-ready architecture.',
+
+  alternates: {
+    canonical: '/starters',
+  },
+
   openGraph: {
-    title: 'Starters | PyColors',
+    title: 'SaaS Starters for Next.js — PyColors',
     description:
-      'Start free to validate your SaaS surface. Upgrade to Starter Pro when auth, billing, and protected architecture become the bottleneck.',
+      'Validate your SaaS product with Starter Free. Upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and production-ready foundations.',
     url: '/starters',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Starters | PyColors',
+    title: 'SaaS Starters for Next.js — PyColors',
     description:
-      'Validate first with Starter Free. Launch faster with Starter Pro.',
+      'Production-ready SaaS starters built for modern Next.js products.',
     images: ['/seo/twitter-main.png'],
   },
 };

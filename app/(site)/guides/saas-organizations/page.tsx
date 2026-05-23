@@ -18,22 +18,26 @@ import {
 } from '@pycolors/ui';
 
 export const metadata: Metadata = {
-  title: 'Team & organization systems for SaaS',
+  title: 'Team & Organization Architecture for SaaS Applications',
   description:
-    'Learn how to design team and organization systems for SaaS: members, roles, invitations, org switching, permissions, seat billing, and common UX mistakes.',
-  alternates: { canonical: '/guides/saas-organizations' },
+    'Learn how modern SaaS team and organization systems are designed across memberships, roles, invitations, permissions, organization switching, seat billing, and production-ready collaboration UX.',
+  alternates: {
+    canonical: '/guides/saas-organizations',
+  },
+
   openGraph: {
-    title: 'Team & organization systems for SaaS · PyColors',
+    title: 'Team & Organization Architecture for SaaS Applications',
     description:
-      'Learn how to design team and organization systems for SaaS: members, roles, invitations, org switching, permissions, seat billing, and common UX mistakes.',
+      'A practical guide to SaaS organization architecture covering memberships, roles, invitations, permissions, org switching, seat billing, and production-ready collaboration systems.',
     url: '/guides/saas-organizations',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Team & organization systems for SaaS · PyColors',
+    title: 'Team & Organization Architecture for SaaS Applications',
     description:
-      'Learn how to design team and organization systems for SaaS: members, roles, invitations, org switching, permissions, seat billing, and common UX mistakes.',
+      'Learn how modern SaaS collaboration systems are designed across memberships, permissions, org switching, and seat billing.',
     images: ['/seo/twitter-main.png'],
   },
 };

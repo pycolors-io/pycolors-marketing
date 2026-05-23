@@ -38,28 +38,28 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
 
 export const metadata: Metadata = {
-  title: 'Pricing — Templates, Starter Free & Starter Pro | PyColors',
+  title: 'Next.js SaaS Pricing',
   description:
-    'Choose the right PyColors product: premium Next.js templates for fast launches, Starter Free for SaaS UX validation, or Starter Pro for real auth, Stripe billing, protected routes, and production-ready foundations.',
+    'Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with authentication, Stripe billing, Prisma, PostgreSQL, and production-ready foundations.',
   alternates: {
-    canonical: 'https://pycolors.io/pricing',
+    canonical: '/pricing',
   },
+
   openGraph: {
-    title:
-      'Pricing — Templates, Starter Free & Starter Pro | PyColors',
+    title: 'Next.js SaaS Pricing',
     description:
-      'Start with a template, validate with Starter Free, or buy Starter Pro when auth, billing, and protected SaaS architecture should already be wired.',
-    url: 'https://pycolors.io/pricing',
+      'Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, billing, dashboards, and production-ready architecture.',
+    url: '/pricing',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title:
-      'Pricing — Templates, Starter Free & Starter Pro | PyColors',
+    title: 'Next.js SaaS Pricing',
     description:
-      'Choose the right PyColors product for your launch: templates, Starter Free, or Starter Pro.',
+      'Compare PyColors products for building and launching modern SaaS applications faster.',
     images: ['/seo/twitter-main.png'],
   },
 };

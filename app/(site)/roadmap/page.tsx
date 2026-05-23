@@ -6,22 +6,28 @@ import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Roadmap',
+  title: 'Next.js SaaS Product Roadmap',
   description:
-    'Public roadmap for the PyColors ecosystem: UI, Blog, Starters, documentation, and commercial product growth.',
-  alternates: { canonical: '/roadmap' },
+    'Public roadmap for the PyColors ecosystem covering Next.js SaaS starters, UI systems, documentation, templates, developer tooling, product architecture, and commercial platform evolution.',
+  alternates: {
+    canonical: '/roadmap',
+  },
+
   openGraph: {
-    title: 'Roadmap · PyColors',
+    title: 'Next.js SaaS Product Roadmap',
     description:
-      'A release-driven roadmap for PyColors across UI, Starters, docs, conversion, and commercial product growth.',
+      'Explore the public PyColors roadmap across SaaS starters, UI systems, templates, documentation, developer tooling, and platform growth.',
     url: '/roadmap',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Roadmap · PyColors',
+    title: 'Next.js SaaS Product Roadmap',
     description:
-      'A release-driven roadmap for PyColors across UI, Starters, docs, conversion, and commercial product growth.',
+      'Public roadmap for the PyColors SaaS ecosystem, UI systems, templates, starters, and developer tooling.',
     images: ['/seo/twitter-main.png'],
   },
 };

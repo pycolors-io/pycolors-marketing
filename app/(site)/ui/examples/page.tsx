@@ -19,22 +19,28 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'Examples | PyColors',
+  title: 'Next.js SaaS Examples',
   description:
-    'Explore production-shaped SaaS interfaces built with PyColors. See what is available today through Starter Free and the product directions the ecosystem is designed to support.',
-  alternates: { canonical: '/examples' },
+    'Explore production-shaped Next.js SaaS examples built with PyColors. Discover dashboards, billing flows, admin panels, team management, analytics surfaces, and runnable SaaS product experiences.',
+  alternates: {
+    canonical: '/examples',
+  },
+
   openGraph: {
-    title: 'Examples | PyColors',
+    title: 'Next.js SaaS Examples',
     description:
-      'Explore production-shaped SaaS interfaces built with PyColors. See what is available today and where the ecosystem can take your product next.',
+      'Production-ready SaaS examples for Next.js applications with dashboards, billing, analytics, admin systems, and product-oriented workflows.',
     url: '/examples',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Examples | PyColors',
+    title: 'Next.js SaaS Examples',
     description:
-      'Explore production-shaped SaaS interfaces built with PyColors. See what is available today and where the ecosystem can take your product next.',
+      'Explore production-shaped SaaS examples built for modern Next.js applications.',
     images: ['/seo/twitter-main.png'],
   },
 };

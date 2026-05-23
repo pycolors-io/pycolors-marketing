@@ -3,13 +3,8 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   Check,
-  CreditCard,
   ExternalLink,
-  LayoutDashboard,
-  Lock,
-  Settings,
   Sparkles,
-  Users,
 } from 'lucide-react';
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
@@ -18,22 +13,28 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 import { PageHero } from '@/components/marketing/page-hero';
 
 export const metadata: Metadata = {
-  title: 'SaaS Patterns | PyColors',
+  title: 'Next.js SaaS UI Patterns',
   description:
-    'Production-shaped SaaS patterns built with PyColors UI. Explore dashboards, billing, settings, teams, analytics, and admin surfaces designed to move from interface logic to real product structure.',
-  alternates: { canonical: '/ui/patterns' },
+    'Production-shaped SaaS UI patterns for Next.js applications. Explore dashboards, billing pages, settings, admin surfaces, team management, and product-oriented workflows built with PyColors UI.',
+  alternates: {
+    canonical: '/ui/patterns',
+  },
+
   openGraph: {
-    title: 'SaaS Patterns | PyColors',
+    title: 'Next.js SaaS UI Patterns',
     description:
-      'Production-shaped SaaS patterns built with PyColors UI. Explore dashboards, billing, settings, teams, analytics, and admin surfaces.',
+      'Explore production-ready SaaS UI patterns for dashboards, billing, settings, admin panels, protected apps, and product workflows.',
     url: '/ui/patterns',
+    siteName: 'PyColors',
+    type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'SaaS Patterns | PyColors',
+    title: 'Next.js SaaS UI Patterns',
     description:
-      'Production-shaped SaaS patterns built with PyColors UI. Explore dashboards, billing, settings, teams, analytics, and admin surfaces.',
+      'Production-shaped UI patterns built for modern Next.js SaaS applications.',
     images: ['/seo/twitter-main.png'],
   },
 };

@@ -16,26 +16,28 @@ import { Badge, Button, Card, CardContent } from '@pycolors/ui';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Privacy | PyColors',
+  title: 'Privacy Policy for SaaS Products & Developer Tools',
   description:
-    'Privacy Policy for PyColors covering website visitors, documentation users, product purchases, analytics, support, digital delivery, and future account features.',
+    'Learn how PyColors collects, uses, stores, and protects data across SaaS products, developer tools, templates, starters, checkout flows, analytics, downloads, and support operations.',
   alternates: {
-    canonical: 'https://pycolors.io/privacy',
+    canonical: '/privacy',
   },
+
   openGraph: {
-    title: 'Privacy | PyColors',
+    title: 'Privacy Policy for SaaS Products & Developer Tools',
     description:
-      'Learn how PyColors collects, uses, stores, and protects personal data across its website, documentation, digital products, checkout flows, and support operations.',
-    url: 'https://pycolors.io/privacy',
+      'Understand how PyColors handles privacy, analytics, payments, digital delivery, support, account systems, and developer platform operations.',
+    url: '/privacy',
     siteName: 'PyColors',
     type: 'website',
     images: ['/seo/og-main.png'],
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Privacy | PyColors',
+    title: 'Privacy Policy for SaaS Products & Developer Tools',
     description:
-      'Learn how PyColors handles data across its website, products, checkout flows, and support operations.',
+      'Privacy and data handling for PyColors SaaS products, templates, starters, developer tools, and checkout systems.',
     images: ['/seo/twitter-main.png'],
   },
 };
