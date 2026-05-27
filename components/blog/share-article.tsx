@@ -13,18 +13,21 @@ type ShareArticleProps = {
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
-function getAbsoluteUrl(url: string) {
-  if (typeof window === 'undefined') return url;
+function getShareUrl(url: string) {
+  if (url.startsWith('http')) return url;
 
-  return url.startsWith('http')
-    ? url
-    : new URL(url, window.location.origin).toString();
+  const siteUrl =
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ??
+    'https://pycolors.io';
+
+  return `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`;
 }
 
 export function ShareArticle({ title, url }: ShareArticleProps) {
   const [copied, setCopied] = useState(false);
+  const [copiedPost, setCopiedPost] = useState(false);
 
-  const absoluteUrl = useMemo(() => getAbsoluteUrl(url), [url]);
+  const absoluteUrl = useMemo(() => getShareUrl(url), [url]);
 
   const encoded = useMemo(
     () => ({
@@ -34,39 +37,39 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
     [title, absoluteUrl],
   );
 
-  useEffect(() => {
-    if (!copied) return;
+  const shareText = useMemo(
+    () => `${title}\n\n${absoluteUrl}`,
+    [title, absoluteUrl],
+  );
 
-    const timeout = window.setTimeout(() => {
+  useEffect(() => {
+    if (!copied && !copiedPost) return;
+
+    const timeout = globalThis.setTimeout(() => {
       setCopied(false);
+      setCopiedPost(false);
     }, 2000);
 
-    return () => window.clearTimeout(timeout);
-  }, [copied]);
+    return () => globalThis.clearTimeout(timeout);
+  }, [copied, copiedPost]);
 
   async function copyLink() {
     try {
-      if (
-        typeof navigator !== 'undefined' &&
-        navigator.clipboard &&
-        window.isSecureContext
-      ) {
-        await navigator.clipboard.writeText(absoluteUrl);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = absoluteUrl;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-      }
+      await navigator.clipboard.writeText(absoluteUrl);
 
       setCopied(true);
     } catch (error) {
       console.error('Failed to copy article URL:', error);
+    }
+  }
+
+  async function copyPost() {
+    try {
+      await navigator.clipboard.writeText(shareText);
+
+      setCopiedPost(true);
+    } catch (error) {
+      console.error('Failed to copy share post:', error);
     }
   }
 
@@ -108,6 +111,22 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
       <Button
         variant="outline"
         size="sm"
+        onClick={copyPost}
+        aria-live="polite"
+        className={cn('rounded-[5px]', focusRing)}
+      >
+        {copiedPost ? (
+          <Check className="h-3.5 w-3.5" aria-hidden="true" />
+        ) : (
+          <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+        )}
+
+        {copiedPost ? 'Post copied' : 'Copy post'}
+      </Button>
+
+      <Button
+        variant="outline"
+        size="sm"
         onClick={copyLink}
         aria-live="polite"
         className={cn('rounded-[5px]', focusRing)}
@@ -117,7 +136,8 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         ) : (
           <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         )}
-        {copied ? 'Copied' : 'Copy'}
+
+        {copied ? 'Copied' : 'Copy link'}
       </Button>
     </div>
   );

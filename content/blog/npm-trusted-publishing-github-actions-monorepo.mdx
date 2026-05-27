@@ -1,0 +1,562 @@
+---
+title: "Fixing npm Trusted Publishing in a pnpm Monorepo"
+description: "How to fix npm Trusted Publishing failures with GitHub Actions, Changesets, pnpm, and Node.js in a modern Next.js monorepo."
+author: Patrice Parny
+date: "2026-05-26"
+category: "Architecture"
+tags:
+  - npm
+  - github-actions
+  - changesets
+  - pnpm
+  - monorepo
+featured: true
+readingTime: 14 min read
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Start building
+  href: /starters
+  variant: free
+---
+
+## Hook
+
+I hit one of the most frustrating CI/CD problems while publishing a package from a modern pnpm monorepo.
+
+Everything looked correct.
+
+The workflow passed.
+OIDC was detected.
+Changesets worked.
+The package already existed on npm.
+
+And yet publishing kept failing with this:
+
+```bash
+E404 Not Found - PUT https://registry.npmjs.org/@pycolors%2ftokens - Not found
+```
+
+Before that, I was also hitting:
+
+```bash
+EOTP This operation requires a one-time password from your authenticator.
+```
+
+The worst part?
+
+The errors were misleading.
+
+The actual issue was not the package itself.
+
+It was the migration from legacy `NPM_TOKEN` publishing to npm Trusted Publishing (OIDC) with GitHub Actions.
+
+Here’s the full production-ready setup that finally fixed it.
+
+---
+
+## Context
+
+This happened while publishing packages inside the PyColors ecosystem:
+
+- Next.js 15
+- pnpm workspaces
+- Turborepo
+- Changesets
+- GitHub Actions
+- npm Trusted Publishing
+- TypeScript
+- Node.js 22
+
+The monorepo contains multiple packages:
+
+```txt
+@pycolors/ui
+@pycolors/tokens
+@pycolors/eslint-config
+@pycolors/typescript-config
+```
+
+The release pipeline automatically publishes unpublished packages to npm using Changesets.
+
+---
+
+## The Problem
+
+The original workflow used a classic npm token:
+
+```yml
+env:
+  NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}"
+```
+
+This worked for a while.
+
+Then npm started failing with:
+
+```bash
+EOTP This operation requires a one-time password from your authenticator.
+```
+
+I switched to npm Trusted Publishing with OIDC.
+
+GitHub Actions then detected OIDC correctly:
+
+```bash
+No NPM_TOKEN found, but OIDC is available - using npm trusted publishing
+```
+
+But publishing still failed:
+
+```bash
+E404 Not Found - PUT https://registry.npmjs.org/@pycolors%2ftokens - Not found
+```
+
+The package already existed on npm:
+
+```bash
+npm view @pycolors/tokens version
+
+# 1.1.0
+```
+
+Local version:
+
+```json
+{
+  "name": "@pycolors/tokens",
+  "version": "1.2.0"
+}
+```
+
+So why was npm saying the package was "not found"?
+
+---
+
+## Why This Error Is So Confusing
+
+This is not a normal 404.
+
+With npm Trusted Publishing, npm sometimes returns:
+
+```bash
+E404
+```
+
+when the OIDC authentication chain is invalid.
+
+That means:
+
+- wrong workflow filename
+- unsupported Node/npm version
+- Trusted Publisher mismatch
+- workflow not authorized
+- package not linked correctly
+
+The error message hides the real cause.
+
+This makes debugging painful.
+
+---
+
+## Root Cause
+
+I actually had **multiple problems at the same time**.
+
+### 1. Wrong Trusted Publisher Workflow Filename
+
+I initially configured:
+
+```txt
+.github/workflows/release.yml
+```
+
+But npm expects:
+
+```txt
+release.yml
+```
+
+Only the filename.
+
+Not the full path.
+
+---
+
+### 2. Node.js / npm Version Too Old
+
+Trusted Publishing requires recent tooling.
+
+I was using:
+
+```yml
+node-version: 20
+```
+
+npm Trusted Publishing behaves inconsistently with older npm versions.
+
+After upgrading:
+
+```yml
+node-version: 22.14.0
+```
+
+and:
+
+```yml
+- run: npm install -g npm@latest
+```
+
+everything started working correctly.
+
+---
+
+### 3. GitHub Workflow Was Ignored
+
+My `.gitignore` contained this:
+
+```bash
+.github/
+**/.github/
+```
+
+Which meant:
+
+- workflows were not versioned
+- CI changes were not tracked
+- workflows were inconsistently deployed
+
+This is a terrible idea for modern SaaS infrastructure.
+
+---
+
+### 4. Trusted Publisher Was Configured on the Wrong Repository
+
+This one is subtle.
+
+My package repository metadata pointed to:
+
+```json
+"repository": {
+  "url": "https://github.com/pycolors-io/pycolors-tokens"
+}
+```
+
+But the actual publishing workflow runs from:
+
+```txt
+pycolors-io/pycolors
+```
+
+Trusted Publishing must point to the repository that executes the workflow.
+
+Not the mirror repository.
+
+---
+
+## The Solution
+
+Here’s the final production-ready setup.
+
+---
+
+## Step 1 — Configure npm Trusted Publishing
+
+On npm:
+
+```txt
+@pycolors/tokens
+→ Settings
+→ Trusted Publisher
+```
+
+Add:
+
+```txt
+Organization or user: pycolors-io
+Repository: pycolors
+Workflow filename: release.yml
+Environment: leave empty
+Allowed actions: Allow npm publish
+```
+
+Important:
+
+```txt
+Workflow filename = release.yml
+```
+
+NOT:
+
+```txt
+.github/workflows/release.yml
+```
+
+---
+
+## Step 2 — Remove Legacy NPM_TOKEN Publishing
+
+Delete this entirely:
+
+```yml
+NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}"
+```
+
+Also remove:
+
+```yml
+- name: "Test npm auth"
+  run: npm whoami
+```
+
+OIDC does not use npm tokens.
+
+---
+
+## Step 3 — Enable OIDC Permissions
+
+Your workflow must contain:
+
+```yml
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+```
+
+The critical permission is:
+
+```yml
+id-token: write
+```
+
+Without it, OIDC cannot work.
+
+---
+
+## Step 4 — Upgrade Node.js and npm
+
+This part matters more than most developers realize.
+
+Use Node.js 22+:
+
+```yml
+- name: "Setup Node"
+  uses: actions/setup-node@v4
+  with:
+    node-version: 22.14.0
+    registry-url: "https://registry.npmjs.org"
+    cache: "pnpm"
+```
+
+Then immediately upgrade npm:
+
+```yml
+- name: "Upgrade npm"
+  run: npm install -g npm@latest
+```
+
+---
+
+## Step 5 — Use Changesets with OIDC
+
+Final publishing step:
+
+```yml
+- name: "Version or Publish (Changesets)"
+  uses: changesets/action@v1
+  with:
+    version: "pnpm -w changeset version"
+    publish: "pnpm -w changeset publish"
+    title: "chore(release): version packages"
+    commit: "chore(release): version packages"
+  env:
+    GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
+```
+
+No npm token needed.
+
+---
+
+## Final Working Workflow
+
+```yml
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+steps:
+  - uses: actions/checkout@v4
+
+  - uses: pnpm/action-setup@v4
+    with:
+      run_install: false
+
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 22.14.0
+      registry-url: "https://registry.npmjs.org"
+      cache: "pnpm"
+
+  - run: npm install -g npm@latest
+
+  - run: pnpm install --frozen-lockfile
+
+  - run: pnpm -w build
+
+  - uses: changesets/action@v1
+    with:
+      version: "pnpm -w changeset version"
+      publish: "pnpm -w changeset publish"
+```
+
+---
+
+## Before / After
+
+### Before
+
+- OTP failures
+- Broken CI publishing
+- Manual npm tokens
+- Misleading E404 errors
+- Security risks
+- Inconsistent workflow tracking
+
+### After
+
+- Zero npm tokens
+- Fully automated publishing
+- Modern OIDC authentication
+- Secure GitHub Actions pipeline
+- Production-ready monorepo releases
+- Cleaner infrastructure
+
+---
+
+## Lessons Learned
+
+### 1. npm Errors Can Be Extremely Misleading
+
+This:
+
+```bash
+E404 Not Found
+```
+
+did not actually mean the package was missing.
+
+It meant the OIDC authorization chain was invalid.
+
+---
+
+### 2. Modern CI/CD Requires Modern Node/npm Versions
+
+A lot of developers upgrade frameworks but forget infrastructure tooling.
+
+npm Trusted Publishing is evolving quickly.
+
+Old npm versions can fail in strange ways.
+
+---
+
+### 3. `.github/` Should Usually Be Versioned
+
+Ignoring GitHub workflows is an anti-pattern for modern SaaS teams.
+
+Your CI/CD pipeline is part of your product infrastructure.
+
+Treat it like production code.
+
+---
+
+### 4. Monorepo Mirrors Add Complexity
+
+When using public mirrors:
+
+```txt
+pycolors-tokens
+pycolors-ui
+```
+
+you must clearly separate:
+
+- repository metadata
+- actual publishing repository
+- CI execution source
+
+Otherwise authentication becomes confusing.
+
+---
+
+## SaaS / Builder Insight
+
+This problem is exactly why infrastructure maturity matters in SaaS products.
+
+Most developers think shipping faster only means:
+
+- UI speed
+- coding faster
+- AI tooling
+
+But operational reliability matters just as much.
+
+Broken release pipelines destroy momentum.
+
+A modern SaaS stack is not just:
+
+- Next.js
+- Tailwind
+- Prisma
+- Stripe
+
+It’s also:
+
+- reproducible CI/CD
+- automated publishing
+- secure package distribution
+- scalable monorepo workflows
+
+The teams that ship consistently are the teams that reduce infrastructure friction early.
+
+---
+
+## Upgrade Path
+
+As your SaaS ecosystem grows:
+
+- multiple packages
+- design systems
+- starters
+- templates
+- shared configs
+
+release automation becomes critical.
+
+This is exactly why production-ready SaaS starters matter.
+
+The difference between:
+
+```txt
+"it works locally"
+```
+
+and:
+
+```txt
+"this scales operationally"
+```
+
+is where real engineering leverage happens.
+
+PyColors focuses heavily on this layer:
+
+- production-ready monorepos
+- modern CI/CD
+- scalable package architecture
+- SaaS infrastructure defaults
+- premium developer workflows
+
+Because shipping is not enough.
+
+You need to keep shipping reliably.

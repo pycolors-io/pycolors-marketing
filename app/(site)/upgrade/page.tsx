@@ -29,8 +29,8 @@ import {
 } from '@pycolors/ui';
 
 import { Container } from '@/components/container';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Auth & Billing Starter',
@@ -39,7 +39,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/upgrade',
   },
-
   openGraph: {
     title: 'Next.js SaaS Auth & Billing Starter',
     description:
@@ -49,7 +48,6 @@ export const metadata: Metadata = {
     type: 'website',
     images: ['/seo/og-main.png'],
   },
-
   twitter: {
     card: 'summary_large_image',
     title: 'Next.js SaaS Auth & Billing Starter',
@@ -69,8 +67,6 @@ const INTERNAL = {
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
   pricing: '/pricing',
-  roadmap: '/roadmap',
-  changelog: '/changelog',
   license: '/license',
   terms: '/terms',
 } as const;
@@ -82,21 +78,21 @@ const PRICING = {
 
 const valueCards = [
   {
-    title: 'Reduce time-to-revenue',
+    title: 'Launch faster',
     description:
-      'Starter Pro removes the repeated work between a validated SaaS surface and the moment you can safely charge customers.',
+      'Move from validated product surface to revenue-ready SaaS without rebuilding the same foundations.',
     icon: Zap,
   },
   {
-    title: 'Launch with stronger foundations',
+    title: 'Ship with confidence',
     description:
-      'Auth, billing, protected routes, account flows, and database structure are already shaped for a real SaaS product.',
+      'Authentication, billing, protected routes, account flows, and database structure are already shaped.',
     icon: Shield,
   },
   {
-    title: 'Focus on product, not plumbing',
+    title: 'Focus on the product',
     description:
-      'Spend more time on product logic, onboarding, positioning, customers, and growth — less time wiring generic SaaS infrastructure.',
+      'Spend time on onboarding, positioning, customers, and growth — not generic SaaS plumbing.',
     icon: Sparkles,
   },
 ] as const;
@@ -105,25 +101,25 @@ const unlockedLayers = [
   {
     title: 'Real authentication',
     description:
-      'Email/password auth, Google and GitHub OAuth, verification, password reset, sessions, protected routes, and account foundations.',
+      'Email/password, Google and GitHub OAuth, verification, reset flows, sessions, and protected routes.',
     icon: Lock,
   },
   {
-    title: 'Stripe billing foundation',
+    title: 'Stripe billing',
     description:
-      'Checkout, billing portal, invoices, subscription state, lifecycle handling, and webhook synchronization with Prisma.',
+      'Checkout, billing portal, invoices, subscription state, lifecycle flows, and webhook synchronization.',
     icon: CreditCard,
   },
   {
-    title: 'Protected SaaS architecture',
+    title: 'Protected app architecture',
     description:
-      'Protected routes, app shell, account areas, settings, billing screens, plan-aware UI states, and scalable product structure.',
+      'Account areas, protected layouts, plan-aware states, settings, billing screens, and scalable structure.',
     icon: Database,
   },
   {
-    title: 'Production-shaped baseline',
+    title: 'Production baseline',
     description:
-      'Environment configuration, Prisma schema, PostgreSQL foundations, Zod validation, reusable server patterns, and launch-ready structure.',
+      'Environment setup, Prisma schema, PostgreSQL foundations, validation, and reusable server patterns.',
     icon: Rocket,
   },
 ] as const;
@@ -220,28 +216,28 @@ const faqs = [
   {
     question: 'Who should upgrade to Starter Pro?',
     answer:
-      'Upgrade when the bottleneck is no longer UI speed but business wiring: authentication, billing, protected routes, database foundations, and launch readiness.',
+      'Upgrade when you are ready to move beyond product shape and need authentication, billing, protected routes, database foundations, and launch-ready infrastructure.',
   },
   {
     question:
       'What is the biggest difference between Starter Free and Starter Pro?',
     answer:
-      'Starter Free helps you validate product shape. Starter Pro wires the revenue-critical and security-critical foundations that usually slow real SaaS launches down.',
+      'Starter Free helps you validate the SaaS surface. Starter Pro wires the revenue-critical and security-critical layers required to launch and charge faster.',
   },
   {
     question: 'Is Starter Pro production-ready?',
     answer:
-      'Yes. Starter Pro is designed as a real SaaS foundation. You still need to add your product-specific logic, but auth, billing, protected app structure, and database foundations are already shaped.',
+      'Yes. Starter Pro is designed as a real SaaS foundation. You still add your product-specific logic, but the core auth, billing, protected app structure, and database foundations are already shaped.',
   },
   {
     question: 'Will I still need to build things myself?',
     answer:
-      'Yes. You still build your unique workflows, features, onboarding, and product logic. Starter Pro removes repeated foundation work so you can focus on what differentiates the business.',
+      'Yes. You still build your unique product, onboarding, workflows, and business logic. Starter Pro removes repeated foundation work.',
   },
   {
     question: 'What does the launch offer include?',
     answer:
-      'The launch offer gives you commercial access to Starter Pro at 199 € instead of the planned regular price of 299 €, with the core auth, billing, protected app, and database foundations included.',
+      'The launch offer gives you commercial access to Starter Pro at 199 € instead of the planned regular price of 299 €.',
   },
   {
     question: 'Where do I find the legal and usage scope?',
@@ -333,7 +329,7 @@ function ValueCard({
   readonly description: string;
 }) {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border hover:bg-surface-elevated">
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-pro-border-subtle hover:bg-surface-elevated">
       <CardHeader className="space-y-4">
         <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-muted-foreground">
           <Icon className="h-4 w-4" />
@@ -382,7 +378,7 @@ export default function UpgradePage() {
             maxWidth="5xl"
             badges={[
               {
-                label: 'Upgrade to Starter Pro',
+                label: 'Starter Pro',
                 variant: 'secondary',
               },
               {
@@ -400,9 +396,9 @@ export default function UpgradePage() {
                 variant: 'outline',
               },
             ]}
-            title="Starter Free validates the product."
-            subtitle="Starter Pro wires the business."
-            description="Upgrade when authentication, Stripe billing, protected routes, database foundations, and SaaS account flows should already be handled. Starter Pro turns a product-shaped surface into a stronger foundation for launching and charging faster."
+            title="Ship a real SaaS product faster."
+            subtitle="Auth, billing, database, and protected app foundations — already wired."
+            description="Upgrade from Starter Free when the business layer should no longer slow you down. Starter Pro gives you the revenue-critical and security-critical foundations needed to launch and charge faster."
             actions={
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <BuyStarterProButton
@@ -417,7 +413,7 @@ export default function UpgradePage() {
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
                   <Link href={INTERNAL.docsStarterPro}>
-                    Read Starter Pro docs
+                    Read docs
                   </Link>
                 </Button>
 
@@ -434,7 +430,7 @@ export default function UpgradePage() {
             pills={[
               'Real authentication',
               'Stripe billing',
-              'Protected app',
+              'Protected routes',
               'Prisma foundation',
               'Commercial usage',
             ]}
@@ -445,7 +441,7 @@ export default function UpgradePage() {
                   <div className="grid divide-y divide-pro-border-subtle lg:grid-cols-3 lg:divide-x lg:divide-y-0">
                     {[
                       {
-                        label: 'Current launch price',
+                        label: 'Launch price',
                         value: PRICING.launch,
                         description: `Regular price planned at ${PRICING.regular}`,
                       },
@@ -456,8 +452,8 @@ export default function UpgradePage() {
                           'When auth and billing should not delay you',
                       },
                       {
-                        label: 'Delivery',
-                        value: 'Instant access',
+                        label: 'Access',
+                        value: 'Instant',
                         description:
                           'One-time payment with commercial usage',
                       },
@@ -483,8 +479,8 @@ export default function UpgradePage() {
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Why upgrade"
-              title="The upgrade is not more UI. It is less launch friction."
-              description="Starter Free is useful when you are still shaping the product. Starter Pro becomes valuable when the same foundation work starts blocking revenue."
+              title="Less launch friction. More product momentum."
+              description="Starter Free is for shaping the product. Starter Pro is for launching the business layer."
               align="center"
             />
 
@@ -498,8 +494,8 @@ export default function UpgradePage() {
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="What you unlock"
-              title="The layers that usually slow serious SaaS launches down."
-              description="Starter Pro is valuable because it gives you a stronger baseline for the parts that are expensive to rebuild repeatedly."
+              title="The foundations that usually slow SaaS launches down."
+              description="Starter Pro gives you a stronger baseline for the parts that are expensive to rebuild repeatedly."
               action={
                 <Button
                   asChild
@@ -524,7 +520,7 @@ export default function UpgradePage() {
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Product proof"
-              title="Core foundations already exist."
+              title="Core production layers are already shaped."
               description="The upgrade should feel like leverage, not risk. Starter Pro makes the production-critical scope explicit."
             />
 
@@ -558,24 +554,24 @@ export default function UpgradePage() {
                     </div>
 
                     <h3 className="mt-5 text-xl font-semibold tracking-tight">
-                      Built to reduce purchase anxiety.
+                      Built to reduce launch risk.
                     </h3>
 
                     <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
                       <p>
                         You are not buying a vague roadmap. You are
-                        buying an accelerator for the layers that
-                        repeatedly delay SaaS launches.
+                        buying leverage on the layers that repeatedly
+                        delay SaaS launches.
                       </p>
 
                       <p>
-                        The value is in the foundation: auth flows,
-                        billing flows, subscription state, invoices,
-                        protected architecture, and product structure.
+                        Auth flows, billing flows, subscription state,
+                        invoices, protected architecture, and product
+                        structure are already shaped.
                       </p>
 
                       <p>
-                        That makes Starter Pro a leverage purchase,
+                        That makes Starter Pro a foundation upgrade,
                         not another template gamble.
                       </p>
                     </div>
@@ -588,7 +584,7 @@ export default function UpgradePage() {
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="Free vs Pro"
-              title="Keep Free for exploration. Choose Pro for launch readiness."
+              title="Explore with Free. Launch with Pro."
               description="Do not think of Pro as more screens. Think of it as less uncertainty and less repeated engineering work."
               action={
                 <Button
@@ -643,9 +639,9 @@ export default function UpgradePage() {
 
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
-              eyebrow="Pricing logic"
-              title="One serious upgrade. No unnecessary pricing confusion."
-              description="This page exists to make the Starter Pro decision obvious when the business layer becomes the bottleneck."
+              eyebrow="Pricing"
+              title="One upgrade. Clear value."
+              description="Starter Pro is the primary commercial upgrade when the business layer becomes the bottleneck."
               align="center"
             />
 
@@ -661,8 +657,7 @@ export default function UpgradePage() {
                       </p>
 
                       <p className="mt-1 text-sm text-muted-foreground">
-                        The faster path from validated surface to
-                        monetizable SaaS.
+                        From validated surface to monetizable SaaS.
                       </p>
                     </div>
 
@@ -737,8 +732,9 @@ export default function UpgradePage() {
 
                   <p className="text-xs leading-6 text-muted-foreground">
                     Keep the first purchase decision simple. Starter
-                    Pro is the primary commercial upgrade when the
-                    business layer becomes the bottleneck.
+                    Pro is the primary commercial upgrade when auth,
+                    billing, and protected architecture should no
+                    longer slow the business down.
                   </p>
                 </CardContent>
               </Card>
@@ -782,8 +778,8 @@ export default function UpgradePage() {
           <section className="py-12 sm:py-14 lg:py-16">
             <SectionHeader
               eyebrow="FAQ"
-              title="Answer the objections before they cost the sale."
-              description="Most upgrade friction comes from ambiguity. The page should make the scope, value, and next step obvious."
+              title="Clear scope. Clear decision."
+              description="Most upgrade friction comes from ambiguity. This page makes the value, scope, and next step obvious."
             />
 
             <div className="grid gap-4 lg:grid-cols-2">
@@ -816,10 +812,9 @@ export default function UpgradePage() {
                   </h2>
 
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Starter Free is still the right move when you are
-                    exploring. Starter Pro is the right move when you
-                    are serious about launching with the business
-                    layer already handled.
+                    Starter Free is right when you are exploring.
+                    Starter Pro is right when you are serious about
+                    launching with the business layer already handled.
                   </p>
 
                   <div className="flex flex-wrap gap-2">
@@ -856,21 +851,20 @@ export default function UpgradePage() {
                 href={INTERNAL.pricing}
                 className="underline underline-offset-4"
               >
-                /pricing
-              </Link>
-              ,{' '}
+                pricing
+              </Link>{' '}
               <Link
                 href={INTERNAL.license}
                 className="underline underline-offset-4"
               >
-                /license
+                license
               </Link>{' '}
               and{' '}
               <Link
                 href={INTERNAL.terms}
                 className="underline underline-offset-4"
               >
-                /terms
+                terms
               </Link>
               .
             </p>
