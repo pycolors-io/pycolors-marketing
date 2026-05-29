@@ -1,15 +1,26 @@
 ---
 title: Overlays Pattern
-description: Choose the right overlay (Dropdown, Dialog, Sheet) with production UX rules and accessible defaults.
-lastUpdated: "2026-04-27"
+description: Choose the right overlay (DropdownMenu, Dialog, Sheet) with production-ready UX rules, accessibility defaults, and scalable interaction patterns.
+lastUpdated: "2026-05-18"
 appliesTo: Patterns
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
-import { CheckCircle, XCircle } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { Badge } from "@pycolors/ui";
+import {
+  CheckCircle,
+  LayoutPanelTop,
+  PanelRight,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 import {
   OverlayDecisionDemo,
@@ -23,34 +34,149 @@ import {
   <Badge>Overlays</Badge>
 </div>
 
-## Overview
+## Overlays define interaction quality
 
 Overlays are not just UI components.
 
-They define **how users interact with actions, decisions, and workflows**.
+They define how users interact with:
 
-Choosing the wrong overlay leads to:
+- workflows
+- actions
+- confirmations
+- navigation
+- product state
+- contextual decisions
+
+Choosing the wrong overlay creates:
 
 - broken flows
-- poor accessibility
-- confusion in user intent
-- inconsistent product behavior
+- accessibility problems
+- unclear user intent
+- inconsistent interaction patterns
+- fragile UX behavior
 
-Choosing the right one makes interactions feel **fast, clear, and intentional**.
+Choosing the right one makes the product feel:
+
+- faster
+- safer
+- clearer
+- more intentional
 
 <Callout title="Mental model">
   Overlays are interaction contracts, not visual components.
 </Callout>
 
+### Overlay system
 
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Dropdown',
+      title: 'DropdownMenu',
+      icon: LayoutPanelTop,
+      description: (
+        <>
+          <p>
+            Lightweight contextual actions that should remain fast, compact, and close to the trigger.
+          </p>
 
-## Decision matrix
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Row actions</Badge>
+            <Badge variant="outline">Quick actions</Badge>
+            <Badge variant="outline">Compact menus</Badge>
+            <Badge variant="outline">Contextual actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Dialog',
+      title: 'Dialog',
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Focused blocking interactions that require explicit user attention before continuing.
+          </p>
 
-| Overlay | Best for | Avoid when |
-|---|---|---|
-| **DropdownMenu** | Quick contextual actions (row actions, small choices) | Forms, confirmations, long content |
-| **Dialog** | Focused task that blocks the page (create, edit, confirm) | Long workflows, navigation panels |
-| **Sheet** | Side workflows (filters, panels, mobile nav) | Destructive confirmations, small binary actions |
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Create flows</Badge>
+            <Badge variant="outline">Edit forms</Badge>
+            <Badge variant="outline">Confirmations</Badge>
+            <Badge variant="outline">Critical actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Sheet',
+      title: 'Sheet',
+      icon: PanelRight,
+      description: (
+        <>
+          <p>
+            Progressive disclosure for filters, mobile navigation, side panels, and secondary workflows.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Filters</Badge>
+            <Badge variant="outline">Mobile navigation</Badge>
+            <Badge variant="outline">Side workflows</Badge>
+            <Badge variant="outline">Progressive disclosure</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### Decision matrix
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Micro interactions',
+      title: 'Use DropdownMenu',
+      icon: LayoutPanelTop,
+      description:
+        'Use DropdownMenu for compact contextual actions that should stay lightweight and fast.',
+      items: [
+        'row actions',
+        'quick contextual choices',
+        'compact menus',
+        'non-blocking actions',
+      ],
+    },
+    {
+      eyebrow: 'Focused tasks',
+      title: 'Use Dialog',
+      icon: ShieldCheck,
+      tone: 'pro',
+      description:
+        'Use Dialog when the user must complete or cancel a focused interaction intentionally.',
+      items: [
+        'forms',
+        'create flows',
+        'edit flows',
+        'destructive confirmations',
+      ],
+    },
+    {
+      eyebrow: 'Side workflows',
+      title: 'Use Sheet',
+      icon: PanelRight,
+      description:
+        'Use Sheet for secondary workflows that should stay connected to the current page.',
+      items: [
+        'filters',
+        'mobile navigation',
+        'configuration panels',
+        'secondary workflows',
+      ],
+    },
+  ]}
+/>
 
 ### Rule of thumb
 
@@ -62,72 +188,100 @@ Choosing the right one makes interactions feel **fast, clear, and intentional**.
 
 ## Core UX rules
 
-### Focus & keyboard
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Focus management',
+      description:
+        'Trap focus correctly, restore focus to the trigger, and support complete keyboard navigation.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Scroll behavior',
+      description:
+        'Lock background scrolling while preserving internal overlay scrolling.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Interaction clarity',
+      description:
+        'Use explicit actions, predictable closing behavior, and intentional workflow boundaries.',
+      icon: CheckCircle,
+    },
+  ]}
+/>
+
+### Focus and keyboard
 
 - Trap focus in Dialog and Sheet
-- Restore focus to trigger on close
+- Restore focus to the trigger on close
 - Support Escape to close safely
 - Ensure full keyboard navigation
 
 ### Scroll behavior
 
-- Lock page scroll when Dialog/Sheet is open
+- Lock page scroll when Dialog or Sheet is open
 - Allow scrolling inside the overlay
-- Avoid double scroll containers
+- Avoid nested scroll containers
 
 ### Layering
 
-- Avoid deep nesting (Dropdown → Dialog is acceptable, keep rare)
-- Ensure overlays stack correctly (z-index / portals)
+- Avoid deep overlay nesting
+- Dropdown → Dialog is acceptable when intentional
+- Ensure overlays stack correctly with portals and z-index
 
 ### Closing behavior
 
-- Always provide explicit actions: **Cancel / Save**
+- Always provide explicit actions such as **Cancel** and **Save**
 - Do not auto-close on error
 - Require confirmation for destructive actions
 
-
+<Callout type="info" title="Production rule">
+  Overlay quality directly affects product trust. Weak focus handling and inconsistent interaction patterns immediately make the UI feel fragile.
+</Callout>
 
 ## Common flows
+
 ### Create flow → Dialog
 
-Use Dialog when the user starts a task and must complete or cancel it.
+Use Dialog when the user starts a focused task that must be completed or canceled intentionally.
 
 <DialogCreateDemo />
-<br />
-### Filters / side workflow → Sheet
 
-Use Sheet for progressive disclosure.
+<br />
+
+### Filters and side workflow → Sheet
+
+Use Sheet for progressive disclosure and secondary workflows that should stay connected to the current page.
 
 <SheetFiltersDemo />
 
-
 <br />
-### Row actions → Dropdown
 
-Use DropdownMenu for contextual actions.
+### Row actions → DropdownMenu
+
+Use DropdownMenu for contextual actions that should remain lightweight and fast.
 
 <DropdownRowActionsDemo />
-
-
 
 ## Accessibility checklist
 
 Before shipping overlays:
 
-- Dialog / Sheet has a visible or accessible title
+- Dialog and Sheet have a visible or accessible title
 - Focus is trapped correctly
 - Focus returns to trigger on close
 - Escape closes safely
 - Buttons have clear labels
 - Icon-only triggers include `aria-label`
 - Dropdown items are keyboard accessible
+- Overlay state changes are predictable
 
-<Callout type="info" title="Production rule">
+<Callout title="Accessibility is infrastructure">
   Accessibility is not optional for overlays. It defines whether the interaction is usable at all.
 </Callout>
-
-
 
 ## Examples
 
@@ -144,10 +298,12 @@ Before shipping overlays:
   <DialogContent>
     <DialogHeader>
       <DialogTitle>Create project</DialogTitle>
+
       <DialogDescription>
         Give it a name and status.
       </DialogDescription>
     </DialogHeader>
+
     {/* form */}
   </DialogContent>
 </Dialog>
@@ -160,16 +316,20 @@ Before shipping overlays:
 ```tsx title="filters-sheet.tsx"
 <Sheet>
   <SheetTrigger asChild>
-    <Button variant="outline">Filters</Button>
+    <Button variant="outline">
+      Filters
+    </Button>
   </SheetTrigger>
 
   <SheetContent>
     <SheetHeader>
       <SheetTitle>Filters</SheetTitle>
+
       <SheetDescription>
         Narrow results and apply advanced options.
       </SheetDescription>
     </SheetHeader>
+
     {/* filters */}
   </SheetContent>
 </Sheet>
@@ -179,23 +339,7 @@ Before shipping overlays:
 
 </Tabs>
 
-
-
 ## Decision guide
-
-Use this pattern if:
-
-- users need contextual actions
-- workflows require focus or blocking
-- navigation or filters need progressive disclosure
-- accessibility and keyboard navigation matter
-
-Avoid misuse when:
-
-- a simple inline action is enough
-- overlays replace clear page structure
-- multiple overlays stack unnecessarily
-
 
 <PreferAvoid
   prefer={[
@@ -203,12 +347,14 @@ Avoid misuse when:
     'clear user intent',
     'accessible focus handling',
     'progressive disclosure',
-]}
+    'predictable closing behavior',
+  ]}
   avoid={[
     'stacking multiple overlays',
     'using Dialog for navigation',
-    'using Dropdown for forms',
+    'using DropdownMenu for forms',
     'implicit destructive actions',
+    'breaking keyboard navigation',
   ]}
 />
 
@@ -216,12 +362,21 @@ Avoid misuse when:
 
 Overlays are where interaction quality becomes visible.
 
-A good overlay system makes your product feel:
+A strong overlay system makes the product feel:
 
 - faster
 - safer
 - clearer
 - more deliberate
+- more production-ready
 
-A bad one makes everything feel fragile.
+A weak overlay system makes the entire product feel fragile.
 
+<DocsUpgradeCTA
+  title="Build overlays that feel production-ready."
+  description="PyColors Patterns help standardize accessibility, interaction quality, and scalable product behavior across your SaaS surface."
+  productSlug="starter-pro"
+  buyLabel="Explore Starter Pro"
+  secondaryHref="/docs/patterns"
+  secondaryLabel="Browse Patterns"
+/>
