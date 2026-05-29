@@ -434,6 +434,51 @@ const items: RoadmapItem[] = [
     href: '/docs',
   },
   {
+    title: 'Starter Pro production architecture documentation',
+    description:
+      'Expand Starter Pro documentation around architecture, deployment, infrastructure, environment variables, and production scalability patterns.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Starter PRO', 'Docs', 'Architecture'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Scalable token foundation',
+    description:
+      'Migrate radius tokens to scalable rem-driven architecture for stronger consistency, theming flexibility, and long-term design-system maintainability.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Tokens', 'Design System', 'Scalability'],
+    href: '/docs/design-system',
+  },
+  {
+    title: 'Trusted Publishing infrastructure',
+    description:
+      'Harden npm publishing workflows through GitHub OIDC Trusted Publishing, Changesets automation, and improved release reliability.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['CI', 'Release', 'Infrastructure'],
+  },
+  {
+    title: 'Commercial upgrade clarity',
+    description:
+      'Strengthen Free-to-Pro positioning with clearer upgrade messaging, product differentiation, and production-ready SaaS value communication.',
+    status: 'Shipped',
+    milestone: 'May 2026',
+    tags: ['Conversion', 'Upgrade', 'Starter PRO'],
+    href: '/upgrade',
+  },
+  {
+    title: 'Authority engineering content engine',
+    description:
+      'Publish high-value engineering articles around SaaS infrastructure, monorepos, CI/CD, npm publishing, release workflows, and production-ready developer systems.',
+    status: 'Now',
+    milestone: 'H1 2026',
+    tags: ['Blog', 'Authority', 'SEO'],
+    href: '/blog',
+  },
+
+  {
     title: 'Starter Pro conversion instrumentation',
     description:
       'Measure the docs-to-pricing-to-checkout funnel across Starter Free, Starter Pro, pricing, upgrade, and post-purchase access.',
