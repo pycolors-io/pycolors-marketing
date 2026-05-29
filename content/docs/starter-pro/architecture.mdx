@@ -1,0 +1,372 @@
+---
+title: Architecture
+description: Understand how Starter Pro is structured so you can scale features, auth, billing, and product workflows without losing maintainability.
+lastUpdated: "2026-05-29"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  Blocks,
+  Boxes,
+  CreditCard,
+  Database,
+  GitBranch,
+  Layers3,
+  LayoutDashboard,
+  LockKeyhole,
+  Package,
+  PanelLeft,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Architecture</Badge>
+</div>
+
+## Production-shaped architecture
+
+Starter Pro is designed around one principle:
+
+> move fast without destroying long-term maintainability.
+
+The architecture separates product concerns clearly:
+
+- routing
+- authentication
+- billing
+- backend boundaries
+- dashboard structure
+- product features
+- shared UI primitives
+
+This helps teams scale product complexity without turning the codebase into a monolith of coupled pages and duplicated logic.
+
+<Callout title="Core principle">
+  Starter Pro is structured to support real SaaS growth, not only local demos.
+</Callout>
+
+## High-level architecture
+
+```txt title="starter-pro-architecture.txt"
+app
+  ↓
+route groups
+  ↓
+feature modules
+  ↓
+server boundaries
+  ↓
+database + billing + auth
+  ↓
+shared UI system
+```
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Routes',
+      title: 'Route layer',
+      icon: PanelLeft,
+      description: (
+        <>
+          <p>
+            The route layer defines URLs, layouts, navigation structure, protected areas, and page orchestration.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">App Router</Badge>
+            <Badge variant="outline">Protected routes</Badge>
+            <Badge variant="outline">Layouts</Badge>
+            <Badge variant="outline">Navigation</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Features',
+      title: 'Feature layer',
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            Feature modules own business behavior, forms, dialogs, product logic, billing-aware flows, and user interactions.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Billing flows</Badge>
+            <Badge variant="outline">Dashboard actions</Badge>
+            <Badge variant="outline">Settings</Badge>
+            <Badge variant="outline">Product workflows</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Server',
+      title: 'Server layer',
+      icon: Server,
+      description: (
+        <>
+          <p>
+            Server boundaries isolate auth, billing, database access, webhooks, and sensitive product operations.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Auth.js</Badge>
+            <Badge variant="outline">Stripe</Badge>
+            <Badge variant="outline">Prisma</Badge>
+            <Badge variant="outline">Server actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'UI',
+      title: 'UI foundation',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Shared primitives come from @pycolors/ui while visual consistency comes from @pycolors/tokens.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Design system</Badge>
+            <Badge variant="outline">Semantic tokens</Badge>
+            <Badge variant="outline">Accessibility</Badge>
+            <Badge variant="outline">Shared primitives</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### Core systems
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      description:
+        'Real sessions, OAuth, verification flows, protected routes, and account-aware application behavior.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Stripe Checkout, subscriptions, customer sync, billing portal, and webhook-aware product access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Database',
+      description:
+        'Prisma-powered persistence with scalable ownership boundaries and production-ready data access patterns.',
+      icon: Database,
+    },
+    {
+      title: 'Dashboard shell',
+      description:
+        'Shared SaaS navigation, layouts, settings structure, and reusable application surfaces.',
+      icon: LayoutDashboard,
+    },
+  ]}
+/>
+
+## Why this structure exists
+
+Most SaaS codebases become difficult to evolve because:
+
+- auth logic leaks everywhere
+- billing state becomes inconsistent
+- pages duplicate logic
+- UI primitives drift apart
+- feature boundaries disappear
+- server and client responsibilities mix together
+
+Starter Pro is designed to reduce that entropy from the start.
+
+<Callout type="info" title="Production rule">
+  The architecture is designed to keep product velocity high after launch, not only before launch.
+</Callout>
+
+## Product flow
+
+<Steps>
+  <Step>
+    ### Configure infrastructure
+
+    Connect database, authentication providers, email delivery, and Stripe billing infrastructure.
+  </Step>
+
+  <Step>
+    ### Keep the foundation
+
+    Preserve auth, billing, layouts, settings, dashboard shell, and protected routing structure.
+  </Step>
+
+  <Step>
+    ### Replace product surfaces
+
+    Replace starter content, navigation labels, dashboards, and domain-specific flows with your real product logic.
+  </Step>
+
+  <Step>
+    ### Extend feature modules
+
+    Add your own business workflows while keeping server boundaries and shared UI primitives stable.
+  </Step>
+
+  <Step>
+    ### Launch incrementally
+
+    Ship faster because the infrastructure layer is already production-shaped.
+  </Step>
+</Steps>
+
+### Protected application model
+
+Starter Pro treats the application as multiple trust layers.
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Public surface',
+      title: 'Marketing and acquisition',
+      icon: Rocket,
+      description:
+        'Public routes focus on positioning, onboarding, pricing, and conversion before authentication.',
+      items: [
+        'landing pages',
+        'pricing',
+        'marketing routes',
+        'upgrade flows',
+        'SEO surfaces',
+      ],
+    },
+    {
+      eyebrow: 'Protected surface',
+      title: 'Authenticated product area',
+      icon: ShieldCheck,
+      tone: 'primary',
+      description:
+        'Protected routes require authenticated sessions and support plan-aware product behavior.',
+      items: [
+        'dashboard',
+        'settings',
+        'billing',
+        'team workflows',
+        'subscription-aware access',
+      ],
+    },
+  ]}
+/>
+
+## Shared UI philosophy
+
+Starter Pro ships with a shared design system already integrated.
+
+This includes:
+
+- `@pycolors/ui`
+- `@pycolors/tokens`
+- Tailwind CSS v4
+- semantic color tokens
+- reusable SaaS primitives
+- accessibility-first patterns
+
+The goal is consistency across:
+
+- marketing pages
+- app UI
+- billing flows
+- settings pages
+- dialogs and overlays
+- dashboard surfaces
+
+<Callout title="UI consistency matters">
+  SaaS products feel more premium when navigation, overlays, forms, settings, and billing surfaces behave consistently across the entire product.
+</Callout>
+
+## What you should customize
+
+Starter Pro is designed to be extended, not rewritten.
+
+You typically replace:
+
+- branding
+- copy
+- navigation labels
+- domain entities
+- product workflows
+- dashboard content
+- pricing strategy
+
+You typically keep:
+
+- auth foundations
+- billing infrastructure
+- route protection
+- dashboard shell
+- settings architecture
+- shared UI primitives
+- product structure
+
+### Mental model
+
+> Starter Pro is not the final product.
+>
+> It is the production-shaped system your product grows inside.
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      href: '/docs/starter-pro/auth',
+      description:
+        'Understand sessions, OAuth, protected routes, and authentication boundaries.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Explore Stripe integration, subscriptions, billing sync, and plan-aware access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend',
+      href: '/docs/starter-pro/backend',
+      description:
+        'Learn how Starter Pro structures data access, Prisma, and server-side boundaries.',
+      icon: Database,
+    },
+    {
+      title: 'Production checklist',
+      href: '/docs/starter-pro/production-checklist',
+      description:
+        'Validate infrastructure, auth, billing, and launch readiness before shipping.',
+      icon: Package,
+    },
+  ]}
+/>
