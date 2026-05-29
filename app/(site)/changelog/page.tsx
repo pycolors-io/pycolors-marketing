@@ -64,6 +64,87 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.15.0',
+    title:
+      'Starter Pro production documentation, scalable token architecture, npm Trusted Publishing, and stronger commercial positioning',
+    dateLabel: 'Fri 29 May 2026',
+    dateISO: '2026-05-29',
+    status: 'Stable',
+    releaseWeekLabel: 'May 2026 (weekly release)',
+    summary:
+      'This release strengthens PyColors as a production-ready SaaS developer platform. It expands Starter Pro production documentation, improves upgrade messaging and commercial clarity, introduces a more scalable token radius architecture, hardens npm publishing infrastructure with Trusted Publishing, and refines documentation systems, sharing UX, overlays guidance, and reusable product decision surfaces. The focus is clear: improve long-term platform credibility, release reliability, onboarding quality, and Free-to-Pro conversion.',
+    highlights: [
+      {
+        title: 'Starter Pro production documentation expanded',
+        items: [
+          'Added dedicated architecture documentation explaining Starter Pro structure, separation of concerns, scalability principles, and long-term maintainability.',
+          'Added comprehensive environment variables documentation covering auth, billing, database, email, deployment, and production security practices.',
+          'Added production deployment documentation with infrastructure guidance, deployment workflows, environment management, and operational recommendations.',
+          'Integrated architecture, deployment, and environment variable sections directly into the Starter Pro docs navigation for easier onboarding and discoverability.',
+        ],
+      },
+      {
+        title: 'Commercial upgrade path is clearer',
+        items: [
+          'Refined Upgrade page messaging to better explain the value difference between Starter Free and Starter Pro.',
+          'Improved commercial positioning, headlines, feature framing, and product differentiation to reduce ambiguity during upgrade evaluation.',
+          'Clarified production-ready capabilities, SaaS foundations, and long-term scaling benefits across commercial surfaces.',
+          'Improved CTA clarity and reduced friction in the Free-to-Pro decision process.',
+        ],
+      },
+      {
+        title: 'Scalable token architecture improved',
+        items: [
+          'Reworked border radius tokens from fixed pixel values to scalable rem-based calculations driven by a base radius variable.',
+          'Improved consistency across components, surfaces, cards, badges, inputs, overlays, and product UI.',
+          'Made the token system more adaptable to future scaling, theming, accessibility, and ecosystem-wide consistency.',
+          'Strengthened the long-term maintainability of the PyColors design system architecture.',
+        ],
+      },
+      {
+        title:
+          'npm Trusted Publishing and release infrastructure hardened',
+        items: [
+          'Migrated package publishing workflows to npm Trusted Publishing using GitHub OIDC.',
+          'Removed dependency on long-lived NPM_TOKEN secrets to improve security and operational reliability.',
+          'Added dedicated GitHub workflows for Changesets-based manual publishing flows.',
+          'Updated CI configuration and Node.js runtime consistency for more reliable automated releases.',
+          'Improved release workflow documentation and clarified publishing architecture for monorepo package management.',
+        ],
+      },
+      {
+        title: 'Engineering and accessibility polish',
+        items: [
+          'Improved success badge foreground contrast for better accessibility and visual consistency.',
+          'Aligned badge foreground colors with primary surfaces to reinforce visual coherence across the UI system.',
+          'Updated internal dependencies to latest PyColors package versions for stability and consistency.',
+        ],
+      },
+      {
+        title: 'Documentation and editorial system refinement',
+        items: [
+          'Expanded overlays pattern documentation with stronger UX guidance, accessibility recommendations, and decision frameworks.',
+          'Refactored patterns documentation around reusable comparison systems, modular structures, and clearer onboarding.',
+          'Improved release policy documentation with clearer semantic versioning explanations and release transparency guidance.',
+          'Added a new blog article documenting npm Trusted Publishing issues and solutions for pnpm monorepos using GitHub Actions and Changesets.',
+        ],
+      },
+      {
+        title: 'Content distribution and sharing UX improved',
+        items: [
+          'Added the ability to copy full share-post content including title and URL for easier social distribution.',
+          'Improved clipboard handling and sharing reliability across editorial surfaces.',
+          'Refined URL generation consistency for cleaner public sharing behavior.',
+        ],
+      },
+    ],
+    cta: {
+      label: 'Read the docs',
+      href: '/docs',
+    },
+  },
+
+  {
     version: 'v1.14.0',
     title:
       'Documentation system consolidation, reusable docs components, NA-AI guidance, and clearer product decision paths',
