@@ -1,22 +1,35 @@
 ---
 title: Why Patterns
 description: Why most SaaS products fail at the feature level—and how patterns fix it.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-18"
 appliesTo: Patterns
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
-import { ArrowRight, AlertTriangle, CheckCircle, Layers, LoaderCircle, Table2, Workflow, Zap } from "lucide-react";
-import { DocsLinks } from "@/components/docs/docs-links";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  Layers,
+  Layers3,
+  LoaderCircle,
+  Rocket,
+  Table2,
+  Workflow,
+  Zap,
+} from "lucide-react";
+
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Patterns</Badge>
   <Badge>Strategy</Badge>
 </div>
 
-## Most products don’t fail at UI
+## Most products do not fail at UI
 
 They fail at the **feature layer**.
 
@@ -31,22 +44,16 @@ But because:
 - async flows break under real conditions
 
 <Callout title="Reality">
-  You don’t ship components.
+  You do not ship components.
 
-  You ship:
-  - tables with filters
-  - forms with validation
-  - mutations with feedback
-  - dashboards with real data
+  You ship tables with filters, forms with validation, mutations with feedback, and dashboards with real data.
 
-  That’s where most systems break.
+  That is where most systems break.
 </Callout>
 
+### The hidden gap in most UI systems
 
-
-## The hidden gap in most UI systems
-
-Most UI libraries stop here:
+Most UI libraries stop at primitives:
 
 - buttons
 - inputs
@@ -55,10 +62,10 @@ Most UI libraries stop here:
 
 They give you **pieces**.
 
-But they don’t tell you:
+But they do not define:
 
 - how to structure a data table
-- how to handle loading vs empty vs error
+- how to handle loading, empty, and error states
 - how to design mutation UX
 - how to keep behavior consistent across features
 
@@ -67,8 +74,7 @@ So teams end up:
 - reinventing the same logic
 - making inconsistent decisions
 - shipping fragile UX
-
-
+- slowing down as the product grows
 
 ## What Patterns actually solve
 
@@ -109,65 +115,52 @@ They combine:
   ]}
 />
 
-### Without Patterns
+## Without Patterns vs With Patterns
 
-<div className="mb-10 grid gap-6 md:grid-cols-2">
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-base">
-        <AlertTriangle className="h-4 w-4 text-destructive" />
-        What happens
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>every feature is built differently</li>
-        <li>loading / empty / error states are inconsistent</li>
-        <li>UX decisions depend on the developer</li>
-        <li>bugs appear in edge cases</li>
-        <li>features are hard to reuse</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-  <Card className="rounded-2xl border-border/60 bg-card/70">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-base">
-        <CheckCircle className="h-4 w-4 text-primary" />
-        What it creates
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-        <li>slow product velocity</li>
-        <li>inconsistent UX</li>
-        <li>low user trust</li>
-        <li>technical debt</li>
-        <li>team friction</li>
-      </ul>
-    </CardContent>
-  </Card>
-
-</div>
-
-### With Patterns
-
-Patterns create **predictability at scale**.
-
-- features behave the same way everywhere
-- states are always handled
-- UX decisions are consistent
-- teams move faster
-- users trust the product
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Without Patterns',
+      title: 'Every feature becomes a local decision',
+      icon: AlertTriangle,
+      description:
+        'When product behavior is not standardized, teams rebuild the same decisions repeatedly and inconsistently.',
+      items: [
+        'every feature is built differently',
+        'loading, empty, and error states are inconsistent',
+        'UX decisions depend on the developer',
+        'bugs appear in edge cases',
+        'features are hard to reuse',
+        'team velocity slows down',
+      ],
+    },
+    {
+      eyebrow: 'With Patterns',
+      title: 'Features become predictable at scale',
+      icon: CheckCircle,
+      tone: 'pro',
+      description:
+        'Patterns create a shared default for building product behavior across the whole SaaS surface.',
+      items: [
+        'features behave the same way everywhere',
+        'states are always handled',
+        'UX decisions are consistent',
+        'teams move faster',
+        'users trust the product',
+        'edge cases become easier to reason about',
+      ],
+    },
+  ]}
+/>
 
 <Callout type="info" title="Key shift">
-  Patterns don’t make you faster by giving more components.
+  Patterns do not make you faster by giving you more components.
 
-  They make you faster by removing decisions.
+  They make you faster by removing repeated decisions.
 </Callout>
 
-## The leverage effect
+### The leverage effect
 
 Patterns are a **force multiplier**.
 
@@ -185,6 +178,7 @@ That means:
 - fewer UX bugs
 - faster onboarding
 - higher product quality
+- clearer ownership between UI and product behavior
 
 ## Why this matters for SaaS
 
@@ -195,33 +189,113 @@ They evolve:
 - more data
 - more features
 - more users
+- more roles
 - more edge cases
 
-Without Patterns, complexity grows **faster than your system**.
+Without Patterns, complexity grows faster than your system.
 
-With Patterns, complexity becomes **manageable**.
+With Patterns, complexity becomes manageable because repeated product behavior already has a default.
 
-### The PyColors approach
+## The PyColors approach
 
 PyColors is structured in layers:
 
 | Layer | Role |
-|---|--- |
-| Design System | Visual consistency (tokens, colors, typography) |
-| UI Components | Primitives |
-| Guides | UX reasoning |
-| Patterns | Feature implementation |
-| Starter Pro | Production backend |
+| --- | --- |
+| Design System | Visual consistency through tokens, colors, typography, radius, and shadows |
+| UI Components | Small reusable primitives |
+| Guides | UX reasoning and product judgment |
+| Patterns | Feature-level implementation defaults |
+| Starter Pro | Production auth, billing, backend, and launch foundations |
 
-Patterns sit exactly where most systems are weak.
+Patterns sit exactly where most systems are weak: between low-level components and real product features.
 
+<Callout title="From UI to product">
+  Components help you build screens.
 
+  Patterns help you build features.
 
-### From UI to product
+  Starter Pro helps you launch a business.
+</Callout>
 
-> Components help you build screens
-> Patterns help you build features
-> Starter Pro helps you launch a business
+### Where Patterns help most
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Data-heavy screens',
+      description:
+        'Tables, filters, pagination, row actions, bulk actions, and operational workflows.',
+      icon: Table2,
+    },
+    {
+      title: 'Async behavior',
+      description:
+        'Loading states, optimistic feedback, retry paths, undo actions, and destructive confirmation.',
+      icon: LoaderCircle,
+    },
+    {
+      title: 'Product flows',
+      description:
+        'Feature-level rules that connect UI, state, copy, and user intent.',
+      icon: Layers3,
+    },
+  ]}
+/>
+
+### Decision
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Primitive',
+      title: 'Use UI components for building blocks',
+      icon: Layers,
+      description:
+        'Use primitives when the problem is visual composition and reusable UI structure.',
+      items: [
+        'buttons',
+        'inputs',
+        'cards',
+        'dialogs',
+        'badges',
+      ],
+    },
+    {
+      eyebrow: 'Pattern',
+      title: 'Use patterns for product behavior',
+      icon: Workflow,
+      tone: 'pro',
+      description:
+        'Use patterns when the feature needs consistent state, feedback, interaction, and UX rules.',
+      items: [
+        'data tables',
+        'async actions',
+        'filters',
+        'forms',
+        'overlays',
+      ],
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Use Starter Pro for launch wiring',
+      href: '/docs/starter-pro',
+      icon: Rocket,
+      description:
+        'Use Starter Pro when auth, billing, backend, protected routes, and delivery become the launch blocker.',
+      items: [
+        'authentication',
+        'billing',
+        'backend',
+        'production flows',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ## Next step
 
@@ -246,14 +320,11 @@ Patterns sit exactly where most systems are weak.
   ]}
 />
 
-<Callout title="Turn patterns into a real SaaS">
-  Patterns give you the feature layer.
-
-  Starter Pro gives you:
-  - authentication
-  - billing
-  - backend
-  - production flows
-
-  → `/docs/starter-pro`
-</Callout>
+<DocsUpgradeCTA
+  title="Turn patterns into a real SaaS."
+  description="Patterns give you the feature layer. Starter Pro gives you authentication, billing, backend, and production flows."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>
