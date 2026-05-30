@@ -168,7 +168,7 @@ export default function CheckoutCancelPage() {
                   variant="ghost"
                   className="w-full rounded-xl"
                 >
-                  <Link href="mailto:support@pycolors.io?subject=PyColors%20checkout%20question">
+                  <Link href="mailto:contact@pycolors.io?subject=PyColors%20checkout%20question">
                     Contact support
                   </Link>
                 </Button>
