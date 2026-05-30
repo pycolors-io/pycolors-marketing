@@ -1,41 +1,40 @@
 ---
 title: Overview
 description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, and secure your SaaS faster.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-05-29"
 appliesTo: Starter Pro
 ---
 
-import Link from "next/link";
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  ArrowRight,
   CreditCard,
   Database,
   Download,
+  GitBranch,
+  Globe,
+  Layers3,
   LockKeyhole,
+  Package,
   Rocket,
+  Server,
   ShieldCheck,
   Sparkles,
+  Terminal,
 } from "lucide-react";
-import { DocsLinks } from "@/components/docs/docs-links";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
   <Badge>Pro</Badge>
 </div>
 
-### Turn a product-shaped app into a real SaaS
+## Turn a product-shaped app into a real SaaS
 
 Starter Pro is the production layer that helps you move from **validated UI** to **real SaaS infrastructure**.
 
@@ -52,27 +51,24 @@ Starter Pro helps you launch with:
 
 It is not just more UI. It is the layer that removes the engineering work that usually delays revenue.
 
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-
-  <Button
-    asChild
-    variant="outline"
-    className="h-11 rounded-xl px-6 text-sm font-medium no-underline"
-  >
-    <Link href="/pricing">Compare pricing</Link>
-  </Button>
-</div>
+<DocsUpgradeCTA
+  title="Starter Free validates the product. Starter Pro wires the business."
+  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, backend, and deployment confidence become the blocker."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="Compare pricing"
+/>
 
 <Callout title="The simple difference">
   Starter Free validates the product. Starter Pro wires the business.
 </Callout>
 
-### What Starter Pro solves
+## What Starter Pro solves
 
 Most SaaS projects slow down at the same point:
 
-> The UI is credible. Now auth, billing, backend, and protected access must become real.
+> The UI is credible. Now auth, billing, backend, deployment, and protected access must become real.
 
 That phase is:
 
@@ -85,103 +81,102 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 
 ## What Starter Pro includes
 
-<div className="grid gap-4 md:grid-cols-2">
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <LockKeyhole className="h-4 w-4 text-primary" />
-        </div>
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      description:
+        'Email/password auth, OAuth, email verification, password reset, session-aware flows, and safer account foundations.',
+      icon: LockKeyhole,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and plan-aware product behavior.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Backend foundation',
+      description:
+        'Database-ready structure, Prisma models, server-side patterns, auth-aware logic, and billing-aware boundaries.',
+      icon: Database,
+    },
+    {
+      title: 'Secure delivery',
+      description:
+        'Private asset delivery, secure access after purchase, token-based download flow, and controlled fulfillment.',
+      icon: Download,
+    },
+  ]}
+/>
 
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Authentication
-        </CardTitle>
-      </div>
-    </CardHeader>
+### System model
 
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Email/password auth, OAuth, email verification, password
-        reset, session-aware flows, and safer account foundations.
-      </div>
-    </CardContent>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Architecture',
+      title: 'Architecture',
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            Starter Pro is organized around route groups, feature modules, server boundaries, and shared UI foundations.
+          </p>
 
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Route groups</Badge>
+            <Badge variant="outline">Feature modules</Badge>
+            <Badge variant="outline">Server boundaries</Badge>
+            <Badge variant="outline">Shared UI</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Environment',
+      title: 'Environment variables',
+      icon: Terminal,
+      description: (
+        <>
+          <p>
+            Environment variables separate app URLs, database access, authentication secrets, email delivery, and Stripe billing.
+          </p>
 
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <CreditCard className="h-4 w-4 text-primary" />
-        </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Database</Badge>
+            <Badge variant="outline">Auth secrets</Badge>
+            <Badge variant="outline">Stripe</Badge>
+            <Badge variant="outline">Email</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Deployment',
+      title: 'Deployment',
+      icon: Globe,
+      description: (
+        <>
+          <p>
+            Deployment guidance helps you move from local validation to production infrastructure with safer launch confidence.
+          </p>
 
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Billing
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Stripe Checkout, billing portal, subscriptions, invoices,
-        webhook synchronization, and plan-aware product behavior.
-      </div>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Database className="h-4 w-4 text-primary" />
-        </div>
-
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Backend foundation
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Database-ready structure, Prisma models, server-side patterns,
-        auth-aware logic, and billing-aware boundaries.
-      </div>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-
-  <Card className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-card/60 shadow-sm transition-all duration-200 hover:shadow-md">
-    <CardHeader className="pb-3">
-      <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-          <Download className="h-4 w-4 text-primary" />
-        </div>
-
-        <CardTitle className="text-sm font-semibold tracking-tight">
-          Secure delivery
-        </CardTitle>
-      </div>
-    </CardHeader>
-
-    <CardContent className="pt-0">
-      <div className="text-sm leading-6 text-muted-foreground">
-        Private asset delivery, secure access after purchase,
-        token-based download flow, and controlled fulfillment.
-      </div>
-    </CardContent>
-
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-linear-to-r from-transparent via-white/5 to-transparent" />
-  </Card>
-</div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Vercel</Badge>
+            <Badge variant="outline">PostgreSQL</Badge>
+            <Badge variant="outline">Webhooks</Badge>
+            <Badge variant="outline">Production domains</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Free vs Pro
-
-### Capability comparison
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -197,27 +192,14 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 | Invoices and subscriptions | Mocked | Real |
 | Protected routes | Partial | Production-ready |
 | Backend structure | Mocked | Real-ready |
+| Deployment guidance | Basic | Production-oriented |
 | Best use case | Validate UX | Launch faster |
 
 <Callout title="Free to validate. Pro to monetize.">
-  Starter Free proves the surface. Starter Pro helps you charge
-  customers with production-shaped auth, billing, backend, and
-  delivery.
+  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, deployment, and delivery.
 </Callout>
 
 ## Upgrade strategy
-
-### When Pro is the right move
-
-You likely need Starter Pro when:
-
-- you want to charge users
-- users need real accounts and sessions
-- routes must be protected
-- Stripe billing must work
-- billing status controls product access
-- mock data needs to become backend data
-- you want less uncertainty before launch
 
 <DocsDecisionGrid
   columns={2}
@@ -251,24 +233,27 @@ You likely need Starter Pro when:
         'Stripe billing',
         'protected routes',
         'backend foundations',
-        'production-ready workflows',
+        'deployment confidence',
       ],
       cta: 'Explore Starter Pro →',
     },
   ]}
 />
 
-### Builder path
+## Builder path
 
 Most builders follow this path:
 
 1. start with Starter Free
 2. validate UX and product structure
 3. move to Starter Pro
-4. wire authentication
-5. wire billing
-6. connect backend logic
-7. launch
+4. understand the architecture
+5. configure environment variables
+6. wire authentication
+7. wire billing
+8. connect backend logic
+9. validate delivery and deployment
+10. launch
 
 Starter Pro is the bridge between:
 
@@ -295,8 +280,6 @@ That is the point. Starter Pro removes repeated infrastructure work so you can f
 
 ## Why Starter Pro exists
 
-### The real value
-
 You are not buying “more code”.
 
 You are buying:
@@ -306,17 +289,46 @@ You are buying:
 - cleaner execution
 - fewer auth and billing edge cases
 - faster path to revenue
+- stronger production confidence
 
 <Callout title="Time-to-revenue decision">
-  Starter Free proves your product can exist. Starter Pro makes
-  it able to generate revenue.
+  Starter Free proves your product can exist. Starter Pro makes it able to generate revenue.
 </Callout>
 
-## Explore the system
+### Explore the system
 
 <DocsLinks
   variant="grid"
+  tone="platform"
   items={[
+    {
+      title: 'Architecture',
+      href: '/docs/starter-pro/architecture',
+      description:
+        'Understand route groups, feature modules, server boundaries, and shared UI foundations.',
+      icon: Layers3,
+    },
+    {
+      title: 'Getting started',
+      href: '/docs/starter-pro/getting-started',
+      description:
+        'Set up Starter Pro locally and validate the production-shaped baseline.',
+      icon: Rocket,
+    },
+    {
+      title: 'Environment variables',
+      href: '/docs/starter-pro/environment-variables',
+      description:
+        'Configure app URLs, auth, database, Stripe, and email delivery safely.',
+      icon: Terminal,
+    },
+    {
+      title: 'Deployment',
+      href: '/docs/starter-pro/deployment',
+      description:
+        'Deploy Starter Pro with production-ready infrastructure and launch confidence.',
+      icon: Globe,
+    },
     {
       title: 'Authentication',
       href: '/docs/starter-pro/auth',
@@ -350,25 +362,46 @@ You are buying:
 
 ## Next steps
 
-### Ready to launch faster?
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'What is included',
+      href: '/docs/starter-pro/what-is-included',
+      description:
+        'Review exactly what Starter Pro includes and what you still build yourself.',
+      icon: Package,
+    },
+    {
+      title: 'Why buy instead of building',
+      href: '/docs/starter-pro/why-buy-instead-of-building',
+      description:
+        'Understand why buying the foundation can be higher leverage than rebuilding auth, billing, and backend.',
+      icon: GitBranch,
+    },
+    {
+      title: 'Production checklist',
+      href: '/docs/starter-pro/production-checklist',
+      description:
+        'Validate auth, billing, backend, delivery, environment, and deployment readiness before launch.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Deployment',
+      href: '/docs/starter-pro/deployment',
+      description:
+        'Deploy Starter Pro with production-ready infrastructure, environment setup, domains, and Stripe webhooks.',
+      icon: Globe,
+    },
+  ]}
+/>
 
-If you are still exploring, start with Starter Free.
-
-If the business layer is slowing you down, move to Starter Pro.
-
-<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-  <BuyStarterProButton fullWidth={false} showTrustText />
-
-  <Button
-    asChild
-    variant="outline"
-    className="h-11 rounded-xl px-6 text-sm font-medium no-underline"
-  >
-    <Link href="/pricing">Compare pricing</Link>
-  </Button>
-</div>
-
-<Callout title="Build the product. Don’t rebuild the blockers.">
-  Starter Pro gives you the production foundation so you can
-  spend more time on customers, product, and revenue.
-</Callout>
+<DocsUpgradeCTA
+  title="Build the product. Don’t rebuild the blockers."
+  description="Starter Pro gives you the production foundation so you can spend more time on customers, product, and revenue."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="Compare pricing"
+/>
