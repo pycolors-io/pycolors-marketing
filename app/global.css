@@ -472,13 +472,13 @@ div[role="dialog"] {
   gap: 0.75rem;
 
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 8px;
 
   background: var(--card);
   padding: 1rem;
 
   color: var(--foreground);
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
 }
 
 /* Left accent line */
@@ -620,9 +620,9 @@ div[role="dialog"] {
   margin-block: 1.5rem;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 8px;
   background: var(--card);
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
 }
 
 .docs-prose div[data-orientation='vertical'].divide-y.divide-fd-border
@@ -923,4 +923,245 @@ div[role="dialog"] {
 .blog-prose .highlighted:is(pre *):is(.shiki *):not(.not-fumadocs-codeblock *) {
   background: color-mix(in oklch, var(--primary), transparent 94%);
   border-left: 2px solid var(--primary);
+}
+
+/* ==========================================================================
+   Fumadocs / Shiki code blocks
+   ========================================================================== */
+
+.blog-prose figure {
+  box-shadow: none !important;
+}
+
+.blog-prose figure  div[role='region'] {
+  background: transprearent !important;
+  padding: inherit !important;
+}
+
+.blog-prose figure div[role='region'] pre{
+  background: transprearent !important;
+  border: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+
+.docs-shell figure {
+  box-shadow: none !important;
+  border-radius: 8px !important;
+}
+
+
+.docs-shell div[role='region'] {
+   border-radius: 0 !important;
+}
+
+.docs-shell div[data-orientation='horizontal'] {
+  border-radius: 8px !important;
+}
+
+.docs-shell figure div[role='region'] pre {
+  border-radius: 0 !important;
+}
+
+.docs-shell div[role='tablist'] button {
+  cursor: pointer;
+}
+
+.docs-shell div[data-state='active']  {
+   border-radius: 0 !important;
+}
+
+.docs-shell div[data-state='active'] div {
+   border-radius: 0 !important;
+   box-shadow: none !important;
+}
+
+/* .docs-shell div {
+   border-radius: 0 !important;
+} */
+
+/* ==========================================================================
+   Fumadocs Steps
+   ========================================================================== */
+
+/* Steps container */
+.docs-prose .fd-steps {
+  position: relative;
+
+  margin-block: 2.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  counter-reset: step;
+
+  border: none !important;
+}
+
+/* Vertical line */
+.docs-prose .fd-steps::before {
+  content: '';
+
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 15px;
+
+  width: 1px;
+
+  background: color-mix(
+    in oklch,
+    var(--border),
+    transparent 35%
+  );
+}
+
+/* Step */
+.docs-prose .fd-step {
+  position: relative;
+
+  padding-left: 3rem;
+
+  counter-increment: step;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.docs-prose .fd-step:hover {
+  transform: translateX(2px);
+}
+
+/* Hide Fumadocs default marker */
+.docs-prose .fd-step::before {
+  display: none !important;
+}
+
+/* Number */
+.docs-prose .fd-step::after {
+  content: counter(step);
+
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+
+  width: 1.75rem;
+  height: 1.75rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  border: 1px solid
+    color-mix(
+      in oklch,
+      var(--border),
+      transparent 15%
+    );
+
+  background: var(--card);
+
+  color: var(--primary);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+
+  box-shadow: var(--shadow-soft);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Hover state */
+.docs-prose .fd-step:hover::after {
+  border-color: color-mix(
+    in oklch,
+    var(--primary),
+    transparent 45%
+  );
+
+  background: color-mix(
+    in oklch,
+    var(--primary),
+    transparent 92%
+  );
+
+  color: var(--primary);
+
+  transform: scale(1.03);
+}
+
+/* Headings */
+.docs-prose .fd-step h3,
+.docs-prose .fd-step h4 {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  scroll-margin-top: 7rem;
+
+  color: var(--foreground);
+
+  font-size: 1rem !important;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+}
+
+/* Heading anchor icon */
+.docs-prose .fd-step h3 a svg,
+.docs-prose .fd-step h4 a svg {
+  opacity: 0;
+
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.docs-prose .fd-step:hover h3 a svg,
+.docs-prose .fd-step:hover h4 a svg {
+  opacity: 1;
+}
+
+/* Content */
+.docs-prose .fd-step p {
+  margin-top: 0.5rem !important;
+  max-width: 68ch;
+
+  color: var(--muted-foreground);
+
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .docs-prose .fd-steps {
+    gap: 1.25rem;
+  }
+
+  .docs-prose .fd-step {
+    padding-left: 2.75rem;
+  }
+
+  .docs-prose .fd-step::after {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    font-size: 0.7rem;
+  }
+
+  .docs-prose .fd-step p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
 }

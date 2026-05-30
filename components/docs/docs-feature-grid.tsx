@@ -109,7 +109,7 @@ function DocsFeatureGridCard({
   return (
     <section
       className={cn(
-        'group relative overflow-hidden ',
+        'group relative overflow-hidden rounded-[8px]',
         'border border-border-subtle bg-card p-4 ',
         'transition-colors duration-200',
         'hover:border-border hover:bg-muted/18',

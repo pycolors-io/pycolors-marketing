@@ -44,24 +44,24 @@ const toneStyles: Record<
     card: 'border-border-subtle bg-card',
     icon: 'border-platform/10 bg-platform/[0.06] text-platform',
     eyebrow: 'border-platform/10 bg-platform/[0.05] text-platform',
-    bullet: 'bg-platform/70',
-    glow: 'from-platform/[0.16]',
+    bullet: 'bg-platform/65',
+    glow: 'from-platform/[0.14]',
     cta: 'text-platform',
   },
   primary: {
     card: 'border-border-subtle bg-card',
     icon: 'border-primary/10 bg-primary/[0.06] text-primary',
     eyebrow: 'border-primary/10 bg-primary/[0.05] text-primary',
-    bullet: 'bg-primary/70',
-    glow: 'from-primary/[0.16]',
+    bullet: 'bg-primary/65',
+    glow: 'from-primary/[0.14]',
     cta: 'text-primary',
   },
   success: {
     card: 'border-border-subtle bg-card',
     icon: 'border-success/10 bg-success/[0.06] text-success',
     eyebrow: 'border-success/10 bg-success/[0.05] text-success',
-    bullet: 'bg-success/70',
-    glow: 'from-success/[0.16]',
+    bullet: 'bg-success/65',
+    glow: 'from-success/[0.14]',
     cta: 'text-success',
   },
   pro: {
@@ -69,16 +69,16 @@ const toneStyles: Record<
     icon: 'border-pro-border-subtle bg-pro-surface-muted text-primary',
     eyebrow:
       'border-pro-border-subtle bg-pro-surface-muted text-primary',
-    bullet: 'bg-primary/70',
-    glow: 'from-primary/[0.22]',
+    bullet: 'bg-primary/65',
+    glow: 'from-primary/[0.18]',
     cta: 'text-primary',
   },
   neutral: {
     card: 'border-border-subtle bg-card',
-    icon: 'border-border-subtle bg-muted/40 text-muted-foreground',
-    eyebrow: 'border-border-subtle bg-muted/40 text-muted-foreground',
-    bullet: 'bg-muted-foreground/50',
-    glow: 'from-muted/50',
+    icon: 'border-border-subtle bg-muted/35 text-muted-foreground',
+    eyebrow: 'border-border-subtle bg-muted/35 text-muted-foreground',
+    bullet: 'bg-muted-foreground/45',
+    glow: 'from-muted/40',
     cta: 'text-foreground',
   },
 };
@@ -101,7 +101,7 @@ export function DocsDecisionGrid({
   return (
     <div
       className={cn(
-        'not-prose my-8 grid grid-cols-1 gap-4',
+        'not-prose my-7 grid grid-cols-1 gap-3.5',
         columnStyles[columns],
         className,
       )}
@@ -129,26 +129,19 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
   const card = (
     <article
       className={cn(
-        'group relative flex h-full min-h-80 flex-col overflow-hidden rounded-[5px]',
-        'border p-5 shadow-soft transition-all duration-200 sm:p-6',
+        'group relative flex h-full flex-col overflow-hidden rounded-[8px]',
+        'border p-4 shadow-soft transition-all duration-200 sm:p-5',
         'hover:-translate-y-0.5 hover:border-border hover:shadow-medium',
         styles.card,
       )}
     >
-      <div
-        className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r via-transparent to-transparent',
-          styles.glow,
-        )}
-      />
-
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           {item.eyebrow ? (
             <span
               className={cn(
-                'mb-4 inline-flex w-fit items-center rounded-full border px-2 py-0.5',
-                'text-[11px] font-medium leading-4',
+                'mb-3 inline-flex w-fit items-center rounded-[5px] border px-2 py-0.5',
+                'text-[10px] font-medium leading-4 tracking-wide',
                 styles.eyebrow,
               )}
             >
@@ -156,7 +149,7 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
             </span>
           ) : null}
 
-          <h3 className="m-0 text-base font-semibold tracking-tight text-foreground">
+          <h3 className="m-0 text-[15px] font-semibold tracking-[-0.02em] text-foreground">
             {item.title}
           </h3>
         </div>
@@ -164,23 +157,23 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
         {Icon ? (
           <span
             className={cn(
-              'flex size-9 shrink-0 items-center justify-center rounded-[5px] border',
-              'shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
+              'flex size-8 shrink-0 items-center justify-center rounded-[5px] border',
+              'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
               styles.icon,
             )}
             aria-hidden="true"
           >
-            <Icon className="size-4" />
+            <Icon className="size-3.5" />
           </span>
         ) : null}
       </div>
 
       <div
         className={cn(
-          'mt-3 text-sm leading-6 text-muted-foreground',
+          'mt-2.5 text-[13px] leading-6 text-muted-foreground',
           '[&_code]:rounded-[4px] [&_code]:border [&_code]:border-border-subtle',
           '[&_code]:bg-muted/40 [&_code]:px-1.5 [&_code]:py-0.5',
-          '[&_code]:font-mono [&_code]:text-[12px] [&_code]:font-medium',
+          '[&_code]:font-mono [&_code]:text-[11px] [&_code]:font-medium',
           '[&_code]:text-foreground',
         )}
       >
@@ -188,20 +181,21 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
       </div>
 
       {item.items?.length ? (
-        <ul className="docs-list-none m-0 mt-5 space-y-2.5 p-0">
+        <ul className="docs-list-none m-0 mt-4 space-y-2 p-0">
           {item.items.map((listItem, index) => (
             <li
               key={`${item.title}-${index}`}
-              className="grid grid-cols-[10px_1fr] items-start gap-2.5"
+              className="grid grid-cols-[8px_1fr] items-start gap-2"
             >
               <span
                 className={cn(
-                  'mt-2.25 size-1.5 rounded-full',
+                  'mt-[0.6rem] size-1 rounded-full',
                   styles.bullet,
                 )}
                 aria-hidden="true"
               />
-              <span className="min-w-0 text-sm leading-6 text-muted-foreground">
+
+              <span className="min-w-0 text-[13px] leading-6 text-muted-foreground">
                 {listItem}
               </span>
             </li>
@@ -213,7 +207,7 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
         <div className="mt-auto pt-6">
           <span
             className={cn(
-              'inline-flex items-center gap-1.5 text-sm font-medium',
+              'inline-flex items-center gap-1.5 text-[13px] font-medium',
               'transition-colors group-hover:text-foreground',
               styles.cta,
             )}
