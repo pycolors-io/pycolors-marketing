@@ -71,7 +71,7 @@ export function DocsConceptTabs({
             <section
               className={cn(
                 'border-x border-b border-border-subtle bg-card',
-                'rounded-b-[5px] p-5 shadow-soft sm:p-6',
+                'rounded-b-[8px] p-5 shadow-off sm:p-6',
               )}
             >
               <div className="flex items-start gap-3">

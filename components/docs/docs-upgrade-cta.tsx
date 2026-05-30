@@ -35,9 +35,12 @@ export function DocsUpgradeCTA({
   return (
     <section
       className={cn(
-        'not-prose my-8 rounded-[5px]',
+        'not-prose my-8 rounded-[8px]',
         'border border-border-subtle bg-card',
-        'p-5 shadow-soft sm:p-6',
+        'p-5 shadow-none transition-all duration-200 sm:p-6',
+        'hover:-translate-y-px',
+        'hover:border-border',
+        'hover:shadow-soft',
         className,
       )}
     >

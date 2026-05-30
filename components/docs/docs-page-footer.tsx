@@ -77,7 +77,7 @@ export function DocsPageFooter({
       <div
         className={cn(
           'mt-8 rounded-[5px] border border-border-subtle',
-          'bg-card p-5 shadow-soft sm:p-6',
+          'bg-card p-5 shadow-off sm:p-6',
         )}
       >
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -121,7 +121,7 @@ export function DocsPageFooter({
             className={cn(
               'inline-flex items-center gap-2 rounded-full',
               'border border-border-subtle bg-card px-4 py-2',
-              'shadow-soft',
+              'shadow-off',
             )}
           >
             <span className="text-xs font-medium text-muted-foreground">
@@ -167,9 +167,9 @@ function DocsFooterNavCard({
     <Link
       href={href}
       className={cn(
-        'group rounded-[5px] border border-border-subtle bg-card p-4',
-        'no-underline shadow-soft transition-all duration-200',
-        'hover:border-border-strong hover:bg-surface-muted hover:shadow-medium',
+        'group rounded-[8px] border border-border-subtle bg-card p-4',
+        'no-underline shadow-off transition-all duration-200',
+        'hover:border-border-subtle hover:bg-surface-muted hover:shadow-off',
         isNext && 'md:text-right',
       )}
     >

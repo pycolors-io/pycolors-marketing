@@ -78,8 +78,8 @@ export function DocsLinks({
         isGrid
           ? 'grid gap-3 sm:grid-cols-2'
           : [
-              'overflow-hidden rounded-[5px]',
-              'border border-border-subtle bg-card shadow-soft',
+              'overflow-hidden rounded-[8px]',
+              'border border-border-subtle bg-card shadow-off',
             ],
         isCompact && 'my-2',
         className,
@@ -125,8 +125,8 @@ function DocsLinksItemRow({
     styles.hover,
     isGrid
       ? [
-          'grid-cols-[32px_1fr_auto] rounded-[5px]',
-          'border border-border-subtle bg-card p-4 shadow-soft',
+          'grid-cols-[32px_1fr_auto] rounded-[8px]',
+          'border border-border-subtle bg-card p-4 shadow-off',
           'hover:border-border',
           'sm:p-5',
         ]
@@ -151,7 +151,7 @@ function DocsLinksItemRow({
 
       <span
         className={cn(
-          'flex shrink-0 items-center justify-center rounded-[5px]',
+          'flex shrink-0 items-center justify-center rounded-[8px]',
           'border text-xs font-medium transition-colors duration-200',
           isCompact ? 'size-6' : 'size-7',
           styles.icon,

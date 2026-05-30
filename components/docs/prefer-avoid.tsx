@@ -45,8 +45,8 @@ function Panel({ tone, title, items }: PanelProps) {
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-[5px] border bg-card',
-        'border-border-subtle shadow-soft',
+        'relative overflow-hidden rounded-[8px] border bg-card',
+        'border-border-subtle shadow-off',
       )}
     >
       <div
