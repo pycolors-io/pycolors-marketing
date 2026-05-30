@@ -36,6 +36,8 @@ import {
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -92,6 +94,22 @@ export function BasicButton() {
 
 The default button uses primary semantic tokens and adapts automatically to light and dark mode.
 
+## Product action model
+
+Buttons are one of the highest-frequency interaction primitives inside a SaaS product.
+
+They influence:
+
+- conversion clarity
+- workflow confidence
+- destructive action safety
+- onboarding friction
+- perceived product quality
+
+<Callout title="Mental model">
+  A button is not decoration. It is an interaction commitment.
+</Callout>
+
 ## When to use Button
 
 Use Button when the user is taking an action.
@@ -121,6 +139,70 @@ Use Button when the user is taking an action.
     },
   ]}
 />
+
+
+
+### Decision model
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Primary',
+      title: 'Primary actions',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Primary buttons represent the highest-priority action inside a product surface.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Upgrade</Badge>
+            <Badge variant="outline">Checkout</Badge>
+            <Badge variant="outline">Continue</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Secondary',
+      title: 'Secondary actions',
+      icon: PanelTop,
+      description: (
+        <>
+          <p>
+            Secondary actions support workflows without competing visually with the primary path.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Preview</Badge>
+            <Badge variant="outline">Cancel</Badge>
+            <Badge variant="outline">Learn more</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Destructive',
+      title: 'Destructive actions',
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Destructive buttons communicate irreversible risk and require strong visual clarity.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Delete</Badge>
+            <Badge variant="outline">Remove</Badge>
+            <Badge variant="outline">Revoke</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
 
 ### Variants
 
@@ -462,6 +544,42 @@ export function ButtonAsChild() {
   </Step>
 </Steps>
 
+## Product decision guide
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Mutation',
+      title: 'Use Button',
+      icon: MousePointerClick,
+      description:
+        'Buttons should trigger actions, mutations, submissions, confirmations, or workflow progression.',
+      items: [
+        'save data',
+        'submit forms',
+        'open overlays',
+        'trigger async actions',
+      ],
+    },
+    {
+      eyebrow: 'Navigation',
+      title: 'Use Link',
+      icon: ExternalLink,
+      tone: 'primary',
+      description:
+        'Links should navigate between pages, routes, or external resources.',
+      items: [
+        'page navigation',
+        'external docs',
+        'route changes',
+        'resource links',
+      ],
+    },
+  ]}
+/>
+
+
 ## Button vs link vs badge
 
 | Situation | Use |
@@ -549,33 +667,52 @@ export type ButtonSize =
 
 ### Product copy guidelines
 
-Button labels should be specific and action-oriented.
+Button labels should communicate intent clearly and reduce hesitation.
 
-<Tabs items={["Good", "Avoid"]}>
-  <Tab value="Good">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>Save changes</li>
-        <li>Create project</li>
-        <li>Upgrade to Pro</li>
-        <li>Invite member</li>
-        <li>Delete project</li>
-      </ul>
-    </div>
-  </Tab>
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Good',
+      title: 'Good labels',
+      icon: CheckCircle,
+      description: (
+        <>
+          <p>
+            Strong labels are explicit, action-oriented, and outcome-focused.
+          </p>
 
-  <Tab value="Avoid">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-        <li>OK</li>
-        <li>Submit</li>
-        <li>Click here</li>
-        <li>Do it</li>
-        <li>Proceed with the thing</li>
-      </ul>
-    </div>
-  </Tab>
-</Tabs>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Save changes</Badge>
+            <Badge variant="outline">Create project</Badge>
+            <Badge variant="outline">Upgrade to Pro</Badge>
+            <Badge variant="outline">Invite member</Badge>
+            <Badge variant="outline">Delete project</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Avoid',
+      title: 'Avoid vague labels',
+      icon: XCircle,
+      description: (
+        <>
+          <p>
+            Generic labels create friction because the outcome is unclear.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">OK</Badge>
+            <Badge variant="outline">Submit</Badge>
+            <Badge variant="outline">Click here</Badge>
+            <Badge variant="outline">Do it</Badge>
+            <Badge variant="outline">Proceed</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
 
 ## Common questions
 
