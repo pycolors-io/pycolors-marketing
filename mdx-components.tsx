@@ -274,7 +274,7 @@ export function getMDXComponents(
       />
     ),
     table: ({ className, ...props }) => (
-      <div className="not-prose relative my-6 overflow-x-auto rounded-[0px] border border-border-subtle bg-card shadow-soft">
+      <div className="not-prose relative my-6 overflow-x-auto rounded-[8px] border border-border-subtle bg-card shadow-off">
         <table
           {...props}
           className={[
