@@ -49,7 +49,7 @@ type LicenseSection = {
 
 const COMPANY = {
   name: 'Py Colors SASU',
-  email: 'contact@pycolors.io',
+  email: 'contact@pycolors.com',
 };
 
 const LAST_UPDATED = 'May 14, 2026';

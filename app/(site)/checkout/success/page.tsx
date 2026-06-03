@@ -366,7 +366,7 @@ export default async function CheckoutSuccessPage({
                 className="rounded-xl"
               >
                 <Link
-                  href={`mailto:contact@pycolors.io?subject=${supportSubject}`}
+                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
                 >
                   Contact support
                 </Link>
