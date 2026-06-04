@@ -5,6 +5,8 @@
     "why-patterns",
     "data-table",
     "async-actions",
-    "overlays"
+    "overlays",
+    "feature-showcase",
+    "upgrade-gate"
   ]
 }

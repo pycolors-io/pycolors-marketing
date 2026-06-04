@@ -1,16 +1,30 @@
 ---
 title: Patterns
-description: Production-ready feature patterns combining UI, behavior, state, and UX for real SaaS products.
-lastUpdated: "2026-04-27"
+description: Production-ready feature patterns combining UI, behavior, state, interaction, monetization, and UX structure for real SaaS products.
+lastUpdated: "2026-06-04"
 appliesTo: Patterns
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
-import { ArrowRight, Layers, Workflow, Layers3, LoaderCircle, ShieldCheck, Table2 } from "lucide-react";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  Layers,
+  Layers3,
+  LayoutTemplate,
+  LoaderCircle,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Table2,
+  Workflow,
+} from "lucide-react";
+
 import { PreferAvoid } from '@/components/docs/prefer-avoid';
-import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Patterns</Badge>
@@ -21,25 +35,29 @@ import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 Patterns are where UI becomes product.
 
-They are **opinionated, production-ready feature blocks** that combine:
+They are **production-ready feature structures** combining:
 
 - UI primitives
 - state handling
 - interaction rules
 - async behavior
-- real SaaS constraints
+- monetization logic
+- SaaS UX conventions
+- scalable architecture decisions
 
-Instead of assembling everything manually, you start from a **working product structure**.
+Instead of assembling features from isolated components, you start from a **working product system**.
 
 <Callout title="Why Patterns exist">
-  Most UI systems fail at the feature level.
+  Most UI systems fail at the feature layer.
 
-  Components are correct, but:
+  Components are visually correct, but:
   - states are inconsistent
+  - upgrade UX feels disconnected
+  - async behavior breaks under pressure
+  - monetization feels bolted on
   - UX decisions vary between pages
-  - async behavior is fragile
 
-  Patterns fix that by giving you a **default way to build features correctly**.
+  Patterns solve this by defining a default way to build product behavior consistently.
 </Callout>
 
 ## What you get
@@ -51,19 +69,19 @@ Instead of assembling everything manually, you start from a **working product st
     {
       title: 'Feature structure',
       description:
-        'Complete building blocks combining layout, actions, and real product flows.',
+        'Reusable feature-level architecture combining layout, actions, state, and product behavior.',
       icon: Layers,
     },
     {
       title: 'State handling',
       description:
-        'Clear handling of loading, empty, error, success, and mutation states.',
+        'Explicit loading, empty, success, destructive, and mutation behavior across the product.',
       icon: Workflow,
     },
     {
       title: 'Production UX',
       description:
-        'Predictable interactions, accessibility rules, and scalable UX decisions.',
+        'Predictable interactions, scalable UX decisions, and SaaS-ready product structure.',
       icon: ShieldCheck,
     },
   ]}
@@ -71,8 +89,8 @@ Instead of assembling everything manually, you start from a **working product st
 
 ### Mental model
 
-> Components render UI
-> Patterns define how features behave
+> Components render UI.
+> Patterns define how features behave.
 
 A Pattern is not just visual.
 
@@ -82,22 +100,24 @@ It includes:
 - state
 - interaction
 - feedback
+- product logic
 - UX rules
+- monetization boundaries
 
 ## System positioning
 
 | Layer | Purpose | Output |
 |---|---|---|
 | UI Components | Build primitives | Stateless UI elements |
-| Guides | Explain decisions | UX rules and reasoning |
-| Patterns | Ship features | UI + state + behavior |
+| Guides | Explain decisions | UX reasoning and product judgment |
+| Patterns | Ship features | UI + state + behavior + product structure |
+| Starter Pro | Ship a SaaS | Auth, billing, backend, delivery, monetization |
 
 <Callout type="info" title="System rule">
-  If a feature has repeated structure or repeated state logic, it should become a Pattern.
+  If a feature repeats structure, state handling, monetization rules, or interaction behavior, it should become a Pattern.
 </Callout>
 
-
-### Available patterns
+## Available patterns
 
 <DocsLinks
   variant="list"
@@ -114,34 +134,96 @@ It includes:
       title: 'Overlays Pattern',
       href: '/docs/patterns/overlays',
       description:
-        'Choose the right overlay (Dialog, Sheet, Dropdown) with strong UX rules.',
+        'Choose the right overlay (Dialog, Sheet, Dropdown) with stronger UX rules.',
       icon: Layers3,
     },
     {
       title: 'Async Actions Pattern',
       href: '/docs/patterns/async-actions',
       description:
-        'Design mutation flows with optimistic UI, retry, undo, and clear feedback.',
+        'Design mutation UX with retry, undo, loading, and feedback handling.',
       icon: LoaderCircle,
+    },
+    {
+      title: 'Feature Showcase Pattern',
+      href: '/docs/patterns/feature-showcase',
+      description:
+        'Present extensibility, advanced capabilities, and scalable SaaS evolution without fake enterprise positioning.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Upgrade Gate Pattern',
+      href: '/docs/patterns/upgrade-gate',
+      description:
+        'Structure premium boundaries, feature gating, and monetization UX without damaging product credibility.',
+      icon: Lock,
     },
   ]}
 />
 
-### When to use Patterns
+## Why Patterns matter for SaaS
+
+SaaS products eventually become complex:
+
+- more entities
+- more permissions
+- more async behavior
+- more monetization
+- more collaboration
+- more edge cases
+
+Without Patterns:
+
+- UX drifts
+- teams slow down
+- monetization becomes inconsistent
+- product behavior becomes fragile
+
+With Patterns:
+
+- features become predictable
+- users trust the product more
+- teams move faster
+- product evolution becomes manageable
+
+<Callout title="Patterns reduce repeated decisions">
+  Patterns make teams faster not by adding more UI,
+  but by removing repeated product decisions.
+</Callout>
+
+## What Patterns are NOT
+
+Patterns are not:
+
+- UI kits
+- component libraries
+- isolated templates
+- visual snippets
+- marketing sections
+
+Patterns exist to structure:
+
+- product behavior
+- feature architecture
+- state handling
+- SaaS UX conventions
+- monetization flows
+
+## When to use Patterns
 
 Use Patterns when:
 
 - you are building real SaaS features
-- async behavior becomes important
-- UX consistency matters across pages
-- multiple developers work on the same feature
-- the same logic appears multiple times
+- the same UX repeats across pages
+- async behavior matters
+- monetization enters the product
+- multiple developers touch the same workflows
+- product consistency becomes important
 
 This is the moment where:
 
 > UI stops being screens
-> and starts becoming a system
-
+> and starts becoming a scalable system.
 
 ## Common mistakes
 
@@ -150,37 +232,98 @@ This is the moment where:
   avoidTitle="Avoid"
   prefer={[
     'feature-level structure',
-    'explicit async states',
-    'clear separation of responsibilities',
-    'predictable UX patterns',
-    'reusable product logic',
+    'predictable async behavior',
+    'clear monetization boundaries',
+    'scalable product conventions',
+    'reusable interaction systems',
   ]}
   avoid={[
-    'building features only with components',
-    'ignoring loading, empty, and error states',
-    'mixing UI, state, and data logic',
-    'inconsistent UX between pages',
-    'rebuilding the same feature multiple times',
+    'building features only with primitives',
+    'inconsistent loading and empty states',
+    'fake enterprise UX',
+    'mixing business logic into components',
+    'rebuilding product behavior repeatedly',
   ]}
 />
 
-### Why this matters
+## PyColors philosophy
 
-Patterns are where product quality becomes visible.
+PyColors Patterns are intentionally:
 
-Without them:
+- sober
+- architecture-oriented
+- product-first
+- scalable
+- SaaS-aware
 
-- features drift
-- UX becomes inconsistent
-- teams slow down
-- bugs multiply in edge cases
+The goal is not:
 
-With them:
+> more UI
 
-- features feel predictable
-- users trust the product more
-- teams move faster
-- systems scale cleanly
+The goal is:
+
+> better product systems.
+
+Patterns help products feel:
+
+- coherent
+- predictable
+- trustworthy
+- scalable
+- production-ready
+
+## Decision guide
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'UI',
+      title: 'Use UI components for primitives',
+      icon: Layers,
+      description:
+        'Use primitives when solving isolated rendering or visual composition problems.',
+      items: [
+        'buttons',
+        'inputs',
+        'cards',
+        'badges',
+        'dialogs',
+      ],
+    },
+    {
+      eyebrow: 'Patterns',
+      title: 'Use Patterns for feature behavior',
+      icon: Workflow,
+      tone: 'pro',
+      description:
+        'Use Patterns when features require repeated state handling, interaction rules, or monetization logic.',
+      items: [
+        'tables',
+        'async actions',
+        'upgrade UX',
+        'feature showcases',
+        'overlay systems',
+      ],
+    },
+    {
+      eyebrow: 'Starter Pro',
+      title: 'Use Starter Pro for launch infrastructure',
+      href: '/docs/starter-pro',
+      icon: Sparkles,
+      description:
+        'Use Starter Pro when auth, billing, backend, delivery, and monetization become launch blockers.',
+      items: [
+        'authentication',
+        'billing',
+        'backend',
+        'subscriptions',
+        'protected routes',
+      ],
+      cta: 'Explore Starter Pro →',
+    },
+  ]}
+/>
 
 ## Next step
 
@@ -189,25 +332,42 @@ With them:
   tone="platform"
   items={[
     {
-      title: 'Start with Data Table',
+      title: 'Explore Data Table',
       href: '/docs/patterns/data-table',
       description:
-        'Core SaaS pattern used across dashboards and admin products.',
+        'A core SaaS pattern used across dashboards, admin products, and operational tooling.',
       icon: Table2,
     },
     {
-      title: 'Handle Async Actions',
-      href: '/docs/patterns/async-actions',
+      title: 'Explore Feature Showcase',
+      href: '/docs/patterns/feature-showcase',
       description:
-        'Design mutation flows with better UX, loading states, and feedback.',
-      icon: LoaderCircle,
+        'Present scalable product evolution without fake enterprise positioning.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Explore Upgrade Gate',
+      href: '/docs/patterns/upgrade-gate',
+      description:
+        'Structure monetization boundaries and premium UX more credibly.',
+      icon: Lock,
     },
   ]}
 />
 
-<Callout title="Build faster with stronger foundations">
+<Callout title="Build product systems, not isolated screens">
   Patterns give you the feature layer.
-  Starter Pro gives you the production backend.
 
-  Together, they turn UI into a real SaaS product.
+  Starter Pro gives you authentication, billing, backend, and production infrastructure.
+
+  Together, they transform UI into a real SaaS product system.
 </Callout>
+
+<DocsUpgradeCTA
+  title="Move from components to product systems."
+  description="Starter Pro uses these patterns across billing, admin, dashboard, projects, authentication, and monetization flows."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>
