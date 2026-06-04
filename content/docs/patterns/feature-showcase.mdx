@@ -1,0 +1,444 @@
+---
+title: Feature Showcase
+description: Production-ready pattern for presenting advanced SaaS capabilities, extensibility, and product evolution without fake features or misleading upsells.
+lastUpdated: "2026-06-04"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  LayoutTemplate,
+  Layers3,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Product Positioning</Badge>
+</div>
+
+## Turn advanced features into product leverage
+
+Most SaaS products eventually reach the same problem:
+
+> How do you present advanced capabilities without making the product feel fake, bloated, or overly marketing-driven?
+
+This is where `FeatureShowcase` becomes useful.
+
+It is a production-ready pattern designed to:
+
+- preview extensibility
+- present advanced capabilities
+- demonstrate scalable architecture
+- communicate product direction
+- reinforce product credibility
+
+without pretending unfinished features already exist.
+
+<Callout title="Core idea">
+  FeatureShowcase is not a marketing banner.
+
+  It is a structured product pattern used to demonstrate:
+  - extensibility
+  - advanced workflows
+  - future capability surfaces
+  - reusable SaaS architecture
+</Callout>
+
+## What problem this solves
+
+Many SaaS products make the same mistake:
+
+- fake enterprise features
+- unrealistic dashboards
+- invented analytics
+- misleading “AI-ready” claims
+- empty premium upsells
+
+This damages trust.
+
+FeatureShowcase solves that by separating:
+
+| Layer | Purpose |
+| --- | --- |
+| Existing functionality | Real implemented product behavior |
+| Showcase layer | Realistic extensibility and scalable patterns |
+| Future capability | Honest direction without false promises |
+
+The result feels:
+
+- more credible
+- more premium
+- more product-oriented
+- closer to real SaaS products like Vercel, Supabase, or Linear
+
+### What FeatureShowcase actually is
+
+FeatureShowcase is a reusable overlay pattern combining:
+
+- blurred preview surfaces
+- capability framing
+- product positioning
+- feature grouping
+- extensibility messaging
+- CTA entrypoints
+
+It sits between:
+
+- product UX
+- onboarding
+- upgrade positioning
+- architecture communication
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Capability framing',
+      description:
+        'Present advanced product capabilities without making unsupported claims.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Reusable positioning',
+      description:
+        'Reuse the same product framing system across dashboard, billing, admin, and projects.',
+      icon: Layers3,
+    },
+    {
+      title: 'Scalable architecture',
+      description:
+        'Demonstrate how the product can evolve into more advanced SaaS workflows.',
+      icon: LayoutTemplate,
+    },
+  ]}
+/>
+
+### Mental model
+
+> Components render UI.
+> Patterns shape product perception.
+
+FeatureShowcase exists to communicate:
+
+- “this system scales”
+- “this foundation is extensible”
+- “this SaaS can evolve”
+
+without needing every advanced feature implemented immediately.
+
+## Good vs bad usage
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Bad usage',
+      title: 'Fake enterprise positioning',
+      icon: AlertTriangle,
+      description:
+        'Using fake analytics, fake AI, fake RBAC, or imaginary features damages trust and product credibility.',
+      items: [
+        'invented metrics',
+        'fake enterprise claims',
+        'non-existent permissions',
+        'misleading AI positioning',
+        'marketing-heavy surfaces',
+        'template-like UX',
+      ],
+    },
+    {
+      eyebrow: 'Good usage',
+      title: 'Realistic extensibility',
+      icon: CheckCircle,
+      tone: 'pro',
+      description:
+        'Strong FeatureShowcase patterns demonstrate credible product evolution while staying grounded in real architecture.',
+      items: [
+        'existing product foundations',
+        'honest capability framing',
+        'realistic product evolution',
+        'reusable SaaS structures',
+        'credible enterprise direction',
+        'clear upgrade positioning',
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Important distinction">
+  FeatureShowcase should communicate:
+  “this can scale into advanced workflows.”
+
+  Not:
+  “this already exists.”
+</Callout>
+
+## Where FeatureShowcase works best
+
+### Billing
+
+Use FeatureShowcase to present:
+
+- subscription intelligence
+- usage-based pricing
+- revenue analytics
+- invoice systems
+
+### Projects
+
+Use FeatureShowcase to present:
+
+- workspace organization
+- scalable entity systems
+- collaboration structures
+- operational product flows
+
+### Admin
+
+Use FeatureShowcase to present:
+
+- invitation systems
+- team structures
+- ownership models
+- scalable collaboration patterns
+
+### Settings
+
+Use FeatureShowcase to present:
+
+- security centers
+- connected account management
+- sessions
+- account lifecycle extensions
+
+### Example positioning
+
+#### Good
+
+```txt
+Can later extend into analytics, quotas, permissions, AI tooling, or billing-aware workflows.
+```
+
+#### Bad
+
+```txt
+Enterprise AI analytics with advanced RBAC and predictive automation.
+```
+
+if those systems do not actually exist.
+
+### Product philosophy
+
+FeatureShowcase is intentionally:
+
+- sober
+- structured
+- product-oriented
+- architecture-aware
+
+It should never feel:
+
+- flashy
+- crypto-like
+- startup-template-heavy
+- overly gradient-based
+- fake-enterprise
+
+The goal is:
+
+> credible SaaS evolution
+
+not hype.
+
+### Relationship with UpgradeGate
+
+FeatureShowcase and UpgradeGate solve different problems.
+
+| Pattern | Role |
+| --- | --- |
+| UpgradeGate | Restrict or gate access to a feature |
+| FeatureShowcase | Present extensibility and scalable product evolution |
+
+### UpgradeGate
+
+Use UpgradeGate when:
+
+- a feature is restricted
+- access depends on plan
+- monetization controls visibility
+- a capability is intentionally locked
+
+### FeatureShowcase
+
+Use FeatureShowcase when:
+
+- the capability already exists conceptually
+- the architecture supports extension
+- you want to present scalable product direction
+- you want to reinforce SaaS credibility
+
+<Callout title="Simple distinction">
+  UpgradeGate blocks access.
+
+  FeatureShowcase explains product evolution.
+</Callout>
+
+## Common mistakes
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    'realistic capability framing',
+    'honest product evolution',
+    'scalable SaaS positioning',
+    'feature grouping tied to real architecture',
+    'sober enterprise-oriented presentation',
+  ]}
+  avoid={[
+    'fake enterprise claims',
+    'invented analytics',
+    'imaginary AI systems',
+    'marketing-heavy overlays',
+    'overpromising unfinished features',
+  ]}
+/>
+
+## Visual principles
+
+A good FeatureShowcase should feel:
+
+- integrated into the product
+- subtle
+- premium
+- architecture-aware
+- production-oriented
+
+Recommended styling:
+
+- soft blur
+- low-contrast overlays
+- thin borders
+- minimal gradients
+- restrained shadows
+- product-like spacing
+
+Avoid:
+
+- glassmorphism
+- aggressive glow
+- oversized gradients
+- crypto aesthetics
+- template-heavy marketing
+
+### When NOT to use it
+
+Do not use FeatureShowcase:
+
+- on every page
+- for primitive UI components
+- as a replacement for onboarding
+- for fake monetization pressure
+- to compensate for weak product UX
+
+FeatureShowcase should support the product.
+
+It should not dominate the product.
+
+### PyColors approach
+
+PyColors uses FeatureShowcase as:
+
+- a SaaS positioning layer
+- an architecture communication layer
+- a credibility reinforcement layer
+
+It helps products feel:
+
+- scalable
+- extensible
+- production-ready
+
+without sacrificing honesty.
+
+## Decision guide
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Use FeatureShowcase',
+      title: 'When extensibility matters',
+      icon: Wand2,
+      tone: 'pro',
+      description:
+        'Use FeatureShowcase when the product architecture can realistically evolve into advanced SaaS workflows.',
+      items: [
+        'workspace systems',
+        'billing evolution',
+        'analytics surfaces',
+        'AI extensions',
+        'team workflows',
+        'advanced SaaS positioning',
+      ],
+    },
+    {
+      eyebrow: 'Avoid FeatureShowcase',
+      title: 'When the feature is fake',
+      icon: AlertTriangle,
+      description:
+        'Do not use FeatureShowcase to simulate product maturity that does not exist.',
+      items: [
+        'fake dashboards',
+        'imaginary analytics',
+        'fake AI systems',
+        'non-existent enterprise tooling',
+        'marketing-only product layers',
+      ],
+    },
+  ]}
+/>
+
+## Next step
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Upgrade Gate Pattern',
+      href: '/docs/patterns/upgrade-gate',
+      description:
+        'Restrict and monetize features with clearer upgrade boundaries.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Async Actions',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Design safer mutation flows with explicit feedback and loading states.',
+      icon: Wand2,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Turn product surfaces into credible SaaS foundations."
+  description="Starter Pro uses FeatureShowcase patterns across billing, projects, admin, and product positioning surfaces."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

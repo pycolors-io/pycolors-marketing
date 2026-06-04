@@ -213,7 +213,7 @@ export default function RecoverOrderPage() {
                     variant="outline"
                     className="rounded-xl"
                   >
-                    <Link href="mailto:support@pycolors.io?subject=PyColors%20access%20recovery">
+                    <Link href="mailto:support@pycolors.com?subject=PyColors%20access%20recovery">
                       Contact support
                     </Link>
                   </Button>

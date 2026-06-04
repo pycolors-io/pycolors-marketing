@@ -1,0 +1,449 @@
+---
+title: Upgrade Gate
+description: Production-ready pattern for gating premium SaaS capabilities, feature access, and monetization flows without damaging product UX.
+lastUpdated: "2026-06-04"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  CreditCard,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Patterns</Badge>
+  <Badge>Monetization</Badge>
+</div>
+
+## Monetization should feel integrated into the product
+
+Most SaaS products eventually need:
+
+- plan limits
+- premium features
+- usage restrictions
+- workspace upgrades
+- billing-aware UX
+
+The problem is that many upgrade systems feel:
+
+- aggressive
+- disconnected
+- fake
+- marketing-heavy
+- frustrating
+
+UpgradeGate exists to solve that.
+
+It provides a production-ready pattern for:
+
+- feature restrictions
+- monetization UX
+- upgrade messaging
+- premium positioning
+- gated capabilities
+
+without damaging product credibility.
+
+<Callout title="Core idea">
+  UpgradeGate is not a paywall popup.
+
+  It is a structured SaaS pattern for presenting:
+  - restricted capabilities
+  - premium access
+  - monetization boundaries
+  - upgrade paths
+  - feature differentiation
+</Callout>
+
+## What problem this solves
+
+Without a clear upgrade pattern:
+
+- premium features feel random
+- limits feel frustrating
+- upgrade messaging feels disconnected
+- product UX becomes inconsistent
+
+Teams often end up:
+
+- inventing upgrade UX repeatedly
+- mixing billing logic into components
+- creating inconsistent gating behavior
+- damaging trust with aggressive upsells
+
+UpgradeGate creates a shared system for how premium boundaries behave.
+
+### What UpgradeGate actually is
+
+UpgradeGate combines:
+
+- preview surfaces
+- visual restriction
+- capability framing
+- upgrade CTA structure
+- premium messaging
+- monetization boundaries
+
+into a reusable product pattern.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Feature restriction',
+      description:
+        'Create clear premium boundaries without breaking product UX.',
+      icon: Lock,
+    },
+    {
+      title: 'Upgrade positioning',
+      description:
+        'Present upgrade paths naturally inside the product surface.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Monetization structure',
+      description:
+        'Keep billing-aware product behavior consistent across the app.',
+      icon: Wallet,
+    },
+  ]}
+/>
+
+### Mental model
+
+> Good monetization feels like product structure.
+>
+> Bad monetization feels like interruption.
+
+UpgradeGate should:
+
+- preserve product credibility
+- explain value clearly
+- maintain UX consistency
+- integrate naturally into the workflow
+
+It should never feel like:
+
+- spam
+- fake urgency
+- dark patterns
+- marketing overlays
+
+## Good vs bad gating
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Bad gating',
+      title: 'Aggressive monetization',
+      icon: AlertTriangle,
+      description:
+        'Weak upgrade UX damages trust and makes products feel low quality.',
+      items: [
+        'blocking basic workflows',
+        'fake urgency',
+        'interruptive popups',
+        'confusing restrictions',
+        'hidden limits',
+        'marketing-heavy overlays',
+      ],
+    },
+    {
+      eyebrow: 'Good gating',
+      title: 'Clear premium boundaries',
+      icon: CheckCircle,
+      tone: 'pro',
+      description:
+        'Strong upgrade UX creates understandable product tiers and clear capability boundaries.',
+      items: [
+        'visible premium structure',
+        'clear capability explanation',
+        'integrated upgrade flows',
+        'predictable restrictions',
+        'real product differentiation',
+        'credible monetization UX',
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Important principle">
+  Users should understand:
+  - what is restricted
+  - why it is restricted
+  - what unlocks it
+  - what value they get
+</Callout>
+
+## Where UpgradeGate works best
+
+### Billing
+
+Use UpgradeGate for:
+
+- subscription upgrades
+- plan-aware capabilities
+- invoice exports
+- billing intelligence
+- premium billing workflows
+
+### Dashboard
+
+Use UpgradeGate for:
+
+- analytics upgrades
+- AI features
+- operational insights
+- advanced reporting
+- premium workspace tools
+
+### Projects
+
+Use UpgradeGate for:
+
+- quotas
+- advanced workflows
+- premium collaboration
+- scalable workspace limits
+
+### Admin
+
+Use UpgradeGate for:
+
+- advanced permissions
+- organization controls
+- enterprise collaboration
+- audit systems
+
+### Good positioning copy
+
+#### Good
+
+```txt
+Upgrade to unlock workspace analytics and advanced collaboration workflows.
+```
+
+#### Bad
+
+```txt
+LIMITED TIME OFFER — BUY NOW TO ACCESS ENTERPRISE AI.
+```
+
+### Product philosophy
+
+UpgradeGate should feel:
+
+- calm
+- structured
+- integrated
+- product-oriented
+- architecture-aware
+
+It should never feel:
+
+- desperate
+- manipulative
+- overly marketing-driven
+- crypto/startup-template-like
+
+The goal is:
+
+> premium product positioning
+
+not pressure.
+
+### Relationship with FeatureShowcase
+
+FeatureShowcase and UpgradeGate solve different problems.
+
+| Pattern | Role |
+| --- | --- |
+| FeatureShowcase | Present extensibility and product evolution |
+| UpgradeGate | Restrict and monetize capabilities |
+
+### FeatureShowcase
+
+Use FeatureShowcase when:
+
+- you want to present scalable architecture
+- you want to communicate future capability
+- the system already supports extension conceptually
+
+### UpgradeGate
+
+Use UpgradeGate when:
+
+- access is intentionally restricted
+- billing controls capability access
+- plans change product behavior
+- monetization boundaries exist
+
+<Callout title="Simple distinction">
+  FeatureShowcase explains evolution.
+
+  UpgradeGate controls access.
+</Callout>
+
+### Visual principles
+
+Good UpgradeGate styling should feel:
+
+- subtle
+- premium
+- product-native
+- integrated into the surface
+
+Recommended styling:
+
+- soft blur
+- restrained overlays
+- thin borders
+- muted premium badges
+- low-contrast gradients
+
+Avoid:
+
+- giant paywalls
+- aggressive popups
+- flashing CTAs
+- fake urgency
+- excessive animations
+
+## Common mistakes
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    'clear premium boundaries',
+    'integrated monetization UX',
+    'predictable upgrade flows',
+    'real capability differentiation',
+    'credible premium positioning',
+  ]}
+  avoidTitle="Avoid"
+  avoid={[
+    'interruptive paywalls',
+    'fake scarcity',
+    'aggressive upsells',
+    'blocking core workflows',
+    'marketing-first overlays',
+  ]}
+/>
+
+### When NOT to use UpgradeGate
+
+Do not use UpgradeGate:
+
+- on every feature
+- for basic product functionality
+- before validating the core product
+- as a substitute for real value
+- to artificially limit weak products
+
+UpgradeGate should support monetization.
+
+It should not compensate for poor product quality.
+
+### PyColors approach
+
+PyColors uses UpgradeGate to:
+
+- structure monetization UX
+- present premium capability boundaries
+- reinforce product credibility
+- support scalable SaaS monetization
+
+The pattern is intentionally:
+
+- sober
+- premium
+- architecture-oriented
+- product-first
+
+## Decision guide
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'Use UpgradeGate',
+      title: 'When premium boundaries matter',
+      icon: CreditCard,
+      tone: 'pro',
+      description:
+        'Use UpgradeGate when plans, subscriptions, or billing change feature availability.',
+      items: [
+        'subscription plans',
+        'workspace limits',
+        'analytics upgrades',
+        'AI capabilities',
+        'billing-aware features',
+        'premium collaboration',
+      ],
+    },
+    {
+      eyebrow: 'Avoid UpgradeGate',
+      title: 'When the feature should stay accessible',
+      icon: ShieldCheck,
+      description:
+        'Do not restrict functionality that is necessary for basic product trust or usability.',
+      items: [
+        'core navigation',
+        'basic CRUD',
+        'essential onboarding',
+        'critical account access',
+        'fundamental workflows',
+      ],
+    },
+  ]}
+/>
+
+## Next step
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Feature Showcase',
+      href: '/docs/patterns/feature-showcase',
+      description:
+        'Present scalable product evolution without fake enterprise positioning.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Async Actions',
+      href: '/docs/patterns/async-actions',
+      description:
+        'Build safer mutation flows with clearer loading and feedback behavior.',
+      icon: Wallet,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Turn monetization into a product system."
+  description="Starter Pro uses UpgradeGate patterns across billing, analytics, collaboration, and premium SaaS capabilities."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/billing"
+  secondaryLabel="Explore billing"
+/>

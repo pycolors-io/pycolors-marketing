@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 const COMPANY = {
   name: 'Py Colors SASU',
-  email: 'contact@pycolors.io',
+  email: 'contact@pycolors.com',
   addressLine1: '6 rue d’Armaillé',
   postalCode: '75017 Paris',
   country: 'France',
