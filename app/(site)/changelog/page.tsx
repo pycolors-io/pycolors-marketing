@@ -64,6 +64,85 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.16.0',
+    title:
+      'Starter Pro product maturity, reusable SaaS patterns, premium docs polish, and conversion-ready platform refinement',
+    dateLabel: 'Fri 5 Jun 2026',
+    dateISO: '2026-06-05',
+    status: 'Stable',
+    releaseWeekLabel: 'Jun 2026 (weekly release)',
+    summary:
+      'This release significantly improves the product maturity of Starter Pro and strengthens PyColors as a production-ready SaaS developer platform. It introduces reusable SaaS showcase patterns, refines pricing and dashboard surfaces, improves projects and admin workflows, upgrades documentation architecture, and unifies UI consistency across marketing and product experiences. The focus is clear: stronger product credibility, clearer upgrade positioning, better onboarding quality, and more scalable documentation and SaaS UX foundations.',
+
+    highlights: [
+      {
+        title:
+          'Starter Pro product surfaces are more production-ready',
+        items: [
+          'Refined dashboard, billing, pricing, settings, projects, and admin experiences to feel more cohesive and product-oriented.',
+          'Improved visual hierarchy, status handling, badges, navigation clarity, and responsive layout consistency across the app.',
+          'Strengthened readonly typing patterns and centralized UI configuration logic to improve long-term maintainability.',
+          'Improved product wording and structure to better communicate operational SaaS workflows and subscription-ready experiences.',
+        ],
+      },
+      {
+        title: 'Reusable Feature Showcase system introduced',
+        items: [
+          'Added a reusable FeatureShowcase component for presenting advanced SaaS capabilities and extensible product surfaces.',
+          'Standardized preview layouts, feature lists, upgrade positioning, and documentation CTAs across Starter Pro.',
+          'Improved consistency when presenting premium product capabilities and future-ready architecture patterns.',
+          'Expanded reusable product-marketing patterns to reduce duplication and improve scalability across the platform.',
+        ],
+      },
+
+      {
+        title: 'Projects, billing, and admin UX refined',
+        items: [
+          'Improved project creation, rename, archive, and delete flows with clearer UX guidance and stronger validation behavior.',
+          'Refined billing surfaces, invoice actions, subscription states, and pricing messaging for improved clarity and consistency.',
+          'Improved admin member management, invitation workflows, filtering, and table handling.',
+          'Expanded product-oriented navigation and internal routing consistency across Starter Pro surfaces.',
+        ],
+      },
+
+      {
+        title: 'Documentation architecture and patterns expanded',
+        items: [
+          'Added Feature Showcase and Upgrade Gate documentation patterns for production-ready SaaS product communication.',
+          'Expanded decision-oriented documentation with stronger UX guidance, comparison systems, and monetization-aware product patterns.',
+          'Refined documentation hierarchy, modularity, and reusable content structures for easier long-term maintenance.',
+          'Improved docs readability, instructional clarity, and interactive guidance across UI and product documentation.',
+        ],
+      },
+
+      {
+        title: 'Premium UI consistency and polish improved',
+        items: [
+          'Unified shadows, border radius usage, spacing, hover behavior, and neutral surfaces across documentation and product UI.',
+          'Refined cards, tables, buttons, step visuals, and code block rendering for a cleaner and more cohesive reading experience.',
+          'Improved accessibility details and semantic consistency across multiple interactive surfaces.',
+          'Strengthened overall visual polish to better align PyColors with premium SaaS platform expectations.',
+        ],
+      },
+
+      {
+        title: 'Navigation and mobile experience improved',
+        items: [
+          'Improved sidebar structure and mobile navigation consistency with reusable footer areas and version visibility.',
+          'Refined user menu interactions and added clearer access to billing and account-related surfaces.',
+          'Simplified navigation labels and internal upgrade paths for better product discoverability.',
+          'Improved responsive layout behavior and reduced UI duplication across navigation surfaces.',
+        ],
+      },
+    ],
+
+    cta: {
+      label: 'Read the docs',
+      href: '/docs',
+    },
+  },
+
+  {
     version: 'v1.15.0',
     title:
       'Starter Pro production documentation, scalable token architecture, npm Trusted Publishing, and stronger commercial positioning',
