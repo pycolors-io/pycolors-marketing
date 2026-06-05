@@ -469,6 +469,45 @@ const items: RoadmapItem[] = [
     href: '/upgrade',
   },
   {
+    title: 'Reusable SaaS feature showcase system',
+    description:
+      'Introduced reusable Feature Showcase patterns across Starter Pro and documentation to standardize premium feature presentation, upgrade positioning, and scalable SaaS product communication.',
+    status: 'Shipped',
+    milestone: 'H1 2026',
+    tags: ['Starter PRO', 'Patterns', 'Conversion'],
+    href: '/docs/patterns/feature-showcase',
+  },
+
+  {
+    title: 'Upgrade Gate monetization patterns',
+    description:
+      'Added reusable Upgrade Gate documentation and UX guidance for production-ready premium feature gating and upgrade flows.',
+    status: 'Shipped',
+    milestone: 'H1 2026',
+    tags: ['Monetization', 'Upgrade', 'Patterns'],
+    href: '/docs/patterns/upgrade-gate',
+  },
+
+  {
+    title: 'Starter Pro product-surface refinement',
+    description:
+      'Refined dashboard, pricing, billing, projects, settings, admin, and navigation surfaces to improve SaaS product maturity and premium UX consistency.',
+    status: 'Shipped',
+    milestone: 'H1 2026',
+    tags: ['Starter PRO', 'UX', 'Product'],
+    href: '/starters/pro',
+  },
+
+  {
+    title: 'Documentation modularity and decision systems',
+    description:
+      'Expanded reusable documentation structures, concept guidance, comparison systems, and decision-oriented product documentation.',
+    status: 'Shipped',
+    milestone: 'H1 2026',
+    tags: ['Docs', 'DX', 'Architecture'],
+    href: '/docs',
+  },
+  {
     title: 'Authority engineering content engine',
     description:
       'Publish high-value engineering articles around SaaS infrastructure, monorepos, CI/CD, npm publishing, release workflows, and production-ready developer systems.',
