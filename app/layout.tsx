@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { RootProvider } from 'fumadocs-ui/provider/next';
+import { Analytics } from '@vercel/analytics/react';
 
 import './global.css';
 import { inter } from './fonts';
@@ -139,6 +140,7 @@ export default function Layout({
           {children}
           <PrivacyConsentBanner />
         </RootProvider>
+        <Analytics />
       </body>
     </html>
   );
