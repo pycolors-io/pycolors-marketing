@@ -1,6 +1,7 @@
 {
   "title": "Project",
   "pages": [
-    "release-policy"
+    "release-policy",
+    "versioning-policy"
   ]
 }
