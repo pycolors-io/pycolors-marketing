@@ -131,6 +131,8 @@ const proofPoints = [
   'Forgot and reset password',
   'Session management',
   'Protected routes',
+  'Installable PWA foundations',
+  'Standalone mobile app experience',
   'Connected accounts foundations',
   'Provider disconnect safeguards',
   'Stripe Checkout',
@@ -172,6 +174,11 @@ const comparisonRows = [
   {
     capability: 'Protected routes and sessions',
     free: 'Partial',
+    pro: 'Included',
+  },
+  {
+    capability: 'PWA-ready app experience',
+    free: 'Basic',
     pro: 'Included',
   },
   {
@@ -431,6 +438,7 @@ export default function UpgradePage() {
               'Real authentication',
               'Stripe billing',
               'Protected routes',
+              'PWA-ready',
               'Prisma foundation',
               'Commercial usage',
             ]}

@@ -11,9 +11,12 @@ import {
   LayoutDashboard,
   Lock,
   Mail,
+  MonitorSmartphone,
   Rocket,
   ShieldCheck,
+  Smartphone,
   Sparkles,
+  WifiOff,
 } from 'lucide-react';
 
 import {
@@ -67,6 +70,9 @@ const INTERNAL = {
   docsAuth: '/docs/starter-pro/auth',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
+  docsPwa: '/docs/starter-pro/pwa',
+  docsPwaSetup: '/docs/starter-pro/pwa-setup',
+  docsPwaChecklist: '/docs/starter-pro/pwa-production-checklist',
   changelog: '/changelog',
   roadmap: '/roadmap',
   license: '/license',
@@ -95,6 +101,13 @@ const screenshots = [
     image: '/images/starters/pro-dashboard-pycolors.png',
     href: INTERNAL.docsBackend,
   },
+  {
+    title: 'PWA-ready experience',
+    description:
+      'Installable app behavior, standalone mode, mobile dashboard screenshots, and offline fallback foundations.',
+    image: '/images/starters/pro-pwa-pycolors.png',
+    href: INTERNAL.docsPwa,
+  },
 ] as const;
 
 const coreFeatures = [
@@ -117,10 +130,22 @@ const coreFeatures = [
     icon: LayoutDashboard,
   },
   {
+    title: 'PWA-ready app experience',
+    description:
+      'Manifest, standalone mode, professional icons, dashboard screenshots, mobile-safe viewport handling, and offline fallback foundations are included to make the product feel more mature.',
+    icon: Smartphone,
+  },
+  {
     title: 'Built to reduce launch friction',
     description:
       'Starter Pro removes repeated foundation work so you can focus on product logic, onboarding, positioning, customers, and growth.',
     icon: Rocket,
+  },
+  {
+    title: 'Built for long-term SaaS evolution',
+    description:
+      'Starter Pro is structured to support real product growth with reusable patterns, typed boundaries, scalable routing, protected surfaces, and maintainable architecture.',
+    icon: GitBranch,
   },
 ] as const;
 
@@ -149,6 +174,18 @@ const includedItems = [
       'Prisma and PostgreSQL foundations ready for real product data and SaaS growth.',
     icon: Database,
   },
+  {
+    title: 'PWA foundation',
+    description:
+      'Installable app metadata, icons, screenshots, standalone behavior, and offline-ready routing.',
+    icon: MonitorSmartphone,
+  },
+  {
+    title: 'Production-oriented architecture',
+    description:
+      'Structured routing, reusable SaaS patterns, typed server boundaries, and maintainable foundations designed for serious products.',
+    icon: ShieldCheck,
+  },
 ] as const;
 
 const trustItems = [
@@ -159,10 +196,28 @@ const trustItems = [
     icon: Code2,
   },
   {
+    title: 'Production-minded engineering',
+    description:
+      'Typed foundations, reusable patterns, maintainable architecture, and production-oriented decisions designed to reduce long-term technical debt.',
+    icon: ShieldCheck,
+  },
+  {
     title: 'Documentation-first',
     description:
       'Starter Pro is supported by implementation docs so buyers understand what is included and how to extend it.',
     icon: Mail,
+  },
+  {
+    title: 'PWA-ready without risky caching',
+    description:
+      'The PWA layer improves installability and mobile perception while keeping auth, billing, and admin data online-first.',
+    icon: WifiOff,
+  },
+  {
+    title: 'App-quality product polish',
+    description:
+      'Responsive layouts, standalone-ready PWA foundations, mobile-safe surfaces, loading states, empty states, and production-shaped UX patterns.',
+    icon: Smartphone,
   },
   {
     title: 'Actively maintained',
@@ -181,6 +236,7 @@ const stackItems = [
   'PostgreSQL',
   'Stripe',
   'Vercel',
+  'PWA',
 ] as const;
 
 const includedChecklist = [
@@ -201,6 +257,10 @@ const includedChecklist = [
   'Subscription lifecycle handling',
   'Dashboard, settings, billing, and admin surfaces',
   'Plan gating and feature access control',
+  'Installable PWA foundation',
+  'Standalone mode and manifest setup',
+  'Professional PWA icons and screenshots',
+  'Offline fallback route',
   'Prisma schema and PostgreSQL setup',
   'Zod validation and React Hook Form integration',
   'Environment configuration foundations',
@@ -259,6 +319,16 @@ const comparisonRows = [
     pro: 'Prisma + PostgreSQL',
   },
   {
+    label: 'PWA manifest and standalone mode',
+    free: 'No',
+    pro: 'Included',
+  },
+  {
+    label: 'Offline fallback foundation',
+    free: 'No',
+    pro: 'Included baseline',
+  },
+  {
     label: 'Commercial usage',
     free: 'Review license',
     pro: 'Included',
@@ -292,15 +362,20 @@ const faqs = [
       'Yes. Starter Pro includes commercial usage rights. Review the license and terms before production use.',
   },
   {
+    question: 'Does Starter Pro include PWA support?',
+    answer:
+      'Yes. Starter Pro includes a PWA-ready foundation with manifest metadata, standalone mode, professional icons, install screenshots, service worker registration, and an offline fallback route. Auth, billing, and admin data intentionally remain online-first.',
+  },
+  {
     question: 'Why buy Starter Pro instead of using Starter Free?',
     answer:
       'Starter Free helps you validate product shape. Starter Pro removes the auth, billing, database, and protected architecture bottlenecks that slow real SaaS launches.',
   },
-  {
-    question: 'Will the price stay at 199 €?',
-    answer:
-      'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
-  },
+  // {
+  //   question: 'Will the price stay at 199 €?',
+  //   answer:
+  //     'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
+  // },
 ] as const;
 
 function SectionHeading({
@@ -481,9 +556,9 @@ export default function StarterProPage() {
                 variant: 'outline',
               },
             ]}
-            title="Stop rebuilding auth and billing. Start closer to launch."
-            subtitle="A production-ready Next.js SaaS starter with the business layer already wired."
-            description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
+            title="Stop rebuilding auth, billing, and app foundations. Start closer to launch."
+            subtitle="A production-ready Next.js SaaS starter with the business layer and PWA-ready app experience already shaped."
+            description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, installable PWA foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
             actions={
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <BuyStarterProButton />
@@ -514,6 +589,7 @@ export default function StarterProPage() {
               'Instant access',
               'Commercial usage',
               'Built for real SaaS',
+              'PWA-ready',
             ]}
             extraClassName="mx-auto max-w-6xl"
             extra={
@@ -523,6 +599,7 @@ export default function StarterProPage() {
                   <CheckItem>Real auth wired</CheckItem>
                   <CheckItem>Stripe billing wired</CheckItem>
                   <CheckItem>Protected SaaS app</CheckItem>
+                  <CheckItem>PWA-ready foundation</CheckItem>
                 </div>
 
                 <div className="mx-auto mt-12 max-w-6xl">
@@ -537,7 +614,7 @@ export default function StarterProPage() {
                         </div>
 
                         <span className="text-[11px] text-muted-foreground">
-                          Protected SaaS foundation
+                          Protected SaaS foundation · PWA-ready
                         </span>
                       </div>
                     </div>
@@ -563,17 +640,16 @@ export default function StarterProPage() {
           />
         </div>
       </Container>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               eyebrow="Why it exists"
               title="Most SaaS starters stop at UI. Starter Pro wires the expensive part."
-              description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, and all the small decisions needed before a SaaS can charge customers."
+              description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, PWA-ready app polish, and all the small decisions needed before a SaaS can charge customers."
             />
 
-            <div className="mt-12 grid gap-4 md:grid-cols-2">
+            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {coreFeatures.map((feature) => (
                 <FeatureCard key={feature.title} {...feature} />
               ))}
@@ -581,17 +657,16 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               eyebrow="Product proof"
-              title="Focused screenshots for the business layer."
-              description="Starter Pro should not feel like a screenshot gallery. It shows the surfaces that matter most when a SaaS becomes real: auth, billing, and protected application structure."
+              title="Focused screenshots for the business and app layer."
+              description="Starter Pro should not feel like a screenshot gallery. It shows the surfaces that matter most when a SaaS becomes real: auth, billing, protected application structure, and PWA-ready app experience."
             />
 
-            <div className="mt-12 grid gap-4 lg:grid-cols-3">
+            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {screenshots.map((screenshot) => (
                 <ScreenshotCard
                   key={screenshot.title}
@@ -606,6 +681,62 @@ export default function StarterProPage() {
         </Container>
       </section>
 
+      <section className="border-t border-border-subtle">
+        <Container className="py-10 lg:py-12">
+          <div className="mx-auto max-w-6xl rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-3xl">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <Badge variant="outline">PWA-ready</Badge>
+                  <Badge variant="secondary">
+                    Included in Starter Pro
+                  </Badge>
+                </div>
+
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                  A more app-like SaaS experience, without risky
+                  offline shortcuts.
+                </h2>
+
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  Starter Pro includes manifest setup, standalone
+                  mode, professional icons, install screenshots,
+                  mobile-safe viewport handling, and an offline
+                  fallback while keeping auth, billing, and admin data
+                  online-first.
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Pill>Installable</Pill>
+                  <Pill>Standalone mode</Pill>
+                  <Pill>Offline fallback</Pill>
+                  <Pill>Mobile-ready</Pill>
+                </div>
+              </div>
+
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row lg:flex-col">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 rounded-[5px] text-sm font-medium"
+                >
+                  <Link href={INTERNAL.docsPwa}>Read PWA docs</Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 rounded-[5px] text-sm font-medium"
+                >
+                  <Link href={INTERNAL.docsPwaChecklist}>
+                    Release checklist
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
@@ -628,7 +759,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
@@ -653,7 +783,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
@@ -709,7 +838,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
@@ -777,7 +905,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-3xl">
@@ -882,7 +1009,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
@@ -913,7 +1039,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
       <section>
         <Container className="py-16 lg:py-24">
           <div className="mx-auto max-w-6xl rounded-[5px] border border-pro-border bg-pro-surface px-6 py-10 shadow-medium sm:px-10 sm:py-14">
@@ -932,8 +1057,8 @@ export default function StarterProPage() {
 
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
                 Buy Starter Pro when authentication, billing,
-                protected routes, and SaaS infrastructure should
-                already be handled.
+                protected routes, PWA-ready app foundations, and SaaS
+                infrastructure should already be handled.
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -941,6 +1066,7 @@ export default function StarterProPage() {
                 <Pill>One-time payment</Pill>
                 <Pill>Instant access</Pill>
                 <Pill>Commercial usage</Pill>
+                <Pill>PWA-ready</Pill>
               </div>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

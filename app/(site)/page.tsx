@@ -11,8 +11,10 @@ import {
   GitBranch,
   LayoutTemplate,
   Lock,
+  MonitorSmartphone,
   Rocket,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
       'Next.js SaaS UI System, Templates & Starters · PyColors',
   },
   description:
-    'PyColors helps developers build and launch modern Next.js SaaS products faster with a production-ready UI system, premium templates, Starter Free, and Starter Pro with authentication, Stripe billing, Prisma, and SaaS foundations.',
+    'PyColors helps developers build and launch modern Next.js SaaS products faster with a production-ready UI system, premium templates, Starter Free, and Starter Pro with authentication, Stripe billing, Prisma, PWA-ready foundations, and SaaS architecture.',
   alternates: {
     canonical: 'https://pycolors.io',
   },
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
     title: 'Next.js SaaS UI System, Templates & Starters · PyColors',
 
     description:
-      'Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, billing, Prisma, and protected app architecture.',
+      'Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, billing, Prisma, PWA-ready foundations, and protected app architecture.',
     url: 'https://pycolors.io',
     siteName: 'PyColors',
     type: 'website',
@@ -74,6 +76,7 @@ const INTERNAL = {
   pricing: '/pricing',
   starterDocs: '/docs/starter',
   starterUpgradeDocs: '/docs/starter/upgrade',
+  starterProPwaDocs: '/docs/starter-pro/pwa',
   ui: '/ui',
   patterns: '/ui/patterns',
   examples: '/ui/examples',
@@ -131,7 +134,7 @@ const productCards = [
     eyebrow: 'Launch layer',
     badge: '199 €',
     description:
-      'A production-ready SaaS foundation with real auth, Stripe billing, protected routes, and Prisma.',
+      'A production-ready SaaS foundation with real auth, Stripe billing, protected routes, Prisma, and PWA-ready app foundations.',
     href: INTERNAL.starterPro,
     cta: 'See Starter Pro',
     icon: Rocket,
@@ -191,6 +194,12 @@ const trustItems = [
       'PyColors focuses on real SaaS flows: auth, billing, dashboards, account surfaces, protected routes, and product UX.',
     icon: ShieldCheck,
   },
+  {
+    title: 'App-ready polish',
+    description:
+      'Starter Pro adds installable Progressive Web App foundations, standalone behavior, mobile-safe surfaces, and offline fallback routing.',
+    icon: MonitorSmartphone,
+  },
 ] as const;
 
 const proFoundation = [
@@ -211,6 +220,12 @@ const proFoundation = [
     description:
       'Prisma and PostgreSQL foundations ready for real product data and SaaS workflows.',
     icon: Database,
+  },
+  {
+    title: 'PWA-ready foundation',
+    description:
+      'Manifest, standalone mode, installable app behavior, professional icons, and offline fallback foundations.',
+    icon: Smartphone,
   },
 ] as const;
 
@@ -505,7 +520,7 @@ export default function HomePage() {
             ]}
             title="Ship credible SaaS products faster."
             subtitle="Start with a template, validate the surface, then wire the business layer."
-            description="PyColors helps developers move from idea to launch with a clear product ladder: premium templates for fast marketing pages, PyColors UI for consistent interfaces, Starter Free for validation, and Starter Pro for real auth, billing, and protected SaaS foundations."
+            description="PyColors helps developers move from idea to launch with a clear product ladder: premium templates for fast marketing pages, PyColors UI for consistent interfaces, Starter Free for validation, and Starter Pro for real auth, billing, PWA-ready app foundations, and protected SaaS architecture."
             actions={
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                 <Button
@@ -543,6 +558,7 @@ export default function HomePage() {
               'Open-source UI',
               'Starter Free',
               'Starter Pro',
+              'PWA-ready',
               'Built for real launches',
             ]}
             extraClassName="mx-auto max-w-5xl"
@@ -998,7 +1014,7 @@ pnpm dev`}</pre>
             <SectionHeader
               eyebrow="Starter Pro"
               title="Starter Free validates the product. Starter Pro wires the business."
-              description="Upgrade when auth, billing, backend, protected routes, and SaaS foundations become the bottleneck."
+              description="Upgrade when auth, billing, backend, protected routes, PWA-ready app foundations, and SaaS infrastructure become the bottleneck."
               action={
                 <Button asChild className="rounded-[5px]">
                   <Link href={INTERNAL.starterPro}>
@@ -1022,13 +1038,13 @@ pnpm dev`}</pre>
 
                   <h2 className="mt-5 max-w-lg text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
                     Stop rebuilding auth, billing, and protected SaaS
-                    foundations.
+                    and app foundations.
                   </h2>
 
                   <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
                     Starter Pro gives you the expensive business layer
-                    developers rebuild again and again so you can
-                    spend more time on product, customers, and growth.
+                    developers rebuild again and again, plus PWA-ready
+                    app foundations that improve product credibility.
                   </p>
 
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -1094,7 +1110,7 @@ pnpm dev`}</pre>
               <StepCard
                 step="Step 04"
                 title="Upgrade to Pro"
-                description="Move to Starter Pro when auth, billing, backend, and delivery become the blocker."
+                description="Move to Starter Pro when auth, billing, backend, PWA, and delivery become the blocker."
                 href={INTERNAL.pricing}
                 cta="View pricing"
                 highlight
@@ -1227,8 +1243,8 @@ pnpm dev`}</pre>
                   <p className="text-sm leading-7 text-muted-foreground">
                     Buy a template for the marketing page, use Starter
                     Free for product validation, and move to Starter
-                    Pro when auth, billing, and protected app
-                    foundations should already be handled.
+                    Pro when auth, billing, protected app, and
+                    PWA-ready foundations should already be handled.
                   </p>
 
                   <div className="flex flex-wrap gap-2">
@@ -1240,6 +1256,7 @@ pnpm dev`}</pre>
                       label={`Starter Pro ${pricing.starterPro}`}
                     />
                     <Pill label="Instant access" />
+                    <Pill label="PWA-ready" />
                   </div>
                 </div>
 
