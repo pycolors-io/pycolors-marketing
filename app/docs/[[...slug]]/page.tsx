@@ -99,7 +99,10 @@ export default async function Page(
     currentUrl,
   );
 
-  const toc = page.data.toc.filter((item) => item.depth <= 2);
+  const toc =
+    Array.isArray(page.data.toc) && page.data.toc.length > 0
+      ? page.data.toc.filter((item) => item.depth <= 2)
+      : [];
 
   return (
     <DocsPage
