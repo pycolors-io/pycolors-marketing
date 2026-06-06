@@ -12,6 +12,7 @@
     "billing",
     "backend",
     "delivery",
-    "production-checklist"
+    "production-checklist",
+    "releases-history"
   ]
 }
