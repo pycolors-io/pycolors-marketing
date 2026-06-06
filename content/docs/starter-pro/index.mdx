@@ -1,7 +1,7 @@
 ---
 title: Overview
-description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, and secure your SaaS faster.
-lastUpdated: "2026-05-29"
+description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, secure, and package your SaaS faster with PWA-ready foundations.
+lastUpdated: "2026-06-06"
 appliesTo: Starter Pro
 ---
 
@@ -15,12 +15,15 @@ import {
   Globe,
   Layers3,
   LockKeyhole,
+  MonitorSmartphone,
   Package,
   Rocket,
   Server,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Terminal,
+  WifiOff,
 } from "lucide-react";
 
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -32,6 +35,7 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter</Badge>
   <Badge>Pro</Badge>
+  <Badge variant="secondary">PWA-ready</Badge>
 </div>
 
 ## Turn a product-shaped app into a real SaaS
@@ -47,13 +51,14 @@ Starter Pro helps you launch with:
 - backend-ready structure
 - protected routes
 - secure delivery
+- PWA-ready app foundations
 - production-oriented SaaS flows
 
 It is not just more UI. It is the layer that removes the engineering work that usually delays revenue.
 
 <DocsUpgradeCTA
   title="Starter Free validates the product. Starter Pro wires the business."
-  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, backend, and deployment confidence become the blocker."
+  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, backend, PWA-ready app foundations, and deployment confidence become the blocker."
   productSlug="starter-pro"
   buyLabel="Get Starter Pro"
   secondaryHref="/pricing"
@@ -61,14 +66,14 @@ It is not just more UI. It is the layer that removes the engineering work that u
 />
 
 <Callout title="The simple difference">
-  Starter Free validates the product. Starter Pro wires the business.
+  Starter Free validates the product. Starter Pro wires the business and gives your SaaS a more app-like, production-ready foundation.
 </Callout>
 
 ## What Starter Pro solves
 
 Most SaaS projects slow down at the same point:
 
-> The UI is credible. Now auth, billing, backend, deployment, and protected access must become real.
+> The UI is credible. Now auth, billing, backend, deployment, protected access, and app-quality foundations must become real.
 
 That phase is:
 
@@ -76,6 +81,7 @@ That phase is:
 - security-sensitive
 - revenue-critical
 - easy to get partially wrong
+- easy to delay late in production
 
 Starter Pro exists to reduce that repeated implementation cost so you can spend more time on product differentiation.
 
@@ -104,10 +110,22 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       icon: Database,
     },
     {
+      title: 'PWA-ready app foundation',
+      description:
+        'Manifest, installable mode, standalone behavior, professional icons, screenshots, mobile-safe viewport handling, and offline-ready fallback routing.',
+      icon: Smartphone,
+    },
+    {
       title: 'Secure delivery',
       description:
         'Private asset delivery, secure access after purchase, token-based download flow, and controlled fulfillment.',
       icon: Download,
+    },
+    {
+      title: 'Production deployment path',
+      description:
+        'Environment variables, production domains, HTTPS, Stripe webhooks, and deployment guidance for launch confidence.',
+      icon: Globe,
     },
   ]}
 />
@@ -123,7 +141,7 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       description: (
         <>
           <p>
-            Starter Pro is organized around route groups, feature modules, server boundaries, and shared UI foundations.
+            Starter Pro is organized around route groups, feature modules, server boundaries, shared UI foundations, and app-shell patterns.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -142,7 +160,7 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       description: (
         <>
           <p>
-            Environment variables separate app URLs, database access, authentication secrets, email delivery, and Stripe billing.
+            Environment variables separate app URLs, database access, authentication secrets, email delivery, Stripe billing, and deployment infrastructure.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -150,6 +168,25 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
             <Badge variant="outline">Auth secrets</Badge>
             <Badge variant="outline">Stripe</Badge>
             <Badge variant="outline">Email</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'PWA',
+      title: 'PWA-ready app layer',
+      icon: MonitorSmartphone,
+      description: (
+        <>
+          <p>
+            Starter Pro includes installable app foundations with manifest metadata, standalone mode, icons, screenshots, service worker registration, and offline fallback routing.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Manifest</Badge>
+            <Badge variant="outline">Standalone</Badge>
+            <Badge variant="outline">Offline fallback</Badge>
+            <Badge variant="outline">Mobile app-like UX</Badge>
           </div>
         </>
       ),
@@ -192,11 +229,15 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 | Invoices and subscriptions | Mocked | Real |
 | Protected routes | Partial | Production-ready |
 | Backend structure | Mocked | Real-ready |
+| PWA manifest | Basic/manual if added | Included foundation |
+| Installable mode | Not included | Included |
+| Offline fallback | Not included | Included baseline |
+| App screenshots and icons | Not included | Included foundation |
 | Deployment guidance | Basic | Production-oriented |
 | Best use case | Validate UX | Launch faster |
 
-<Callout title="Free to validate. Pro to monetize.">
-  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, deployment, and delivery.
+<Callout title="Free to validate. Pro to monetize and package.">
+  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, deployment, delivery, and PWA-ready app foundations.
 </Callout>
 
 ## Upgrade strategy
@@ -227,12 +268,13 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       icon: Rocket,
       tone: 'pro',
       description:
-        'Use Starter Pro when auth, billing, protected routes, backend contracts, and production confidence become the work slowing launch.',
+        'Use Starter Pro when auth, billing, protected routes, backend contracts, PWA-ready app foundations, and production confidence become the work slowing launch.',
       items: [
         'real authentication',
         'Stripe billing',
         'protected routes',
         'backend foundations',
+        'installable PWA layer',
         'deployment confidence',
       ],
       cta: 'Explore Starter Pro →',
@@ -251,9 +293,10 @@ Most builders follow this path:
 5. configure environment variables
 6. wire authentication
 7. wire billing
-8. connect backend logic
-9. validate delivery and deployment
-10. launch
+8. validate PWA installability
+9. connect backend logic
+10. validate delivery and deployment
+11. launch
 
 Starter Pro is the bridge between:
 
@@ -275,6 +318,7 @@ You still own:
 - your onboarding
 - your positioning
 - your differentiation
+- your final offline strategy if you need more than fallback support
 
 That is the point. Starter Pro removes repeated infrastructure work so you can focus on what customers actually pay for.
 
@@ -290,9 +334,10 @@ You are buying:
 - fewer auth and billing edge cases
 - faster path to revenue
 - stronger production confidence
+- more credible app-like product perception
 
 <Callout title="Time-to-revenue decision">
-  Starter Free proves your product can exist. Starter Pro makes it able to generate revenue.
+  Starter Free proves your product can exist. Starter Pro makes it able to generate revenue and feel closer to a real installed SaaS application.
 </Callout>
 
 ### Explore the system
@@ -321,6 +366,22 @@ You are buying:
       description:
         'Configure app URLs, auth, database, Stripe, and email delivery safely.',
       icon: Terminal,
+    },
+    {
+      title: 'PWA',
+      href: '/docs/starter-pro/pwa',
+      description:
+        'Understand installability, standalone mode, app-like mobile UX, screenshots, and offline-ready routing.',
+      icon: Smartphone,
+      badge: 'New',
+    },
+    {
+      title: 'PWA setup',
+      href: '/docs/starter-pro/pwa-setup',
+      description:
+        'Configure manifest, icons, screenshots, service worker registration, and the offline page.',
+      icon: MonitorSmartphone,
+      badge: 'New',
     },
     {
       title: 'Deployment',
@@ -360,6 +421,51 @@ You are buying:
   ]}
 />
 
+## PWA-ready foundation
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: 'App quality',
+      title: 'Installable SaaS baseline',
+      href: '/docs/starter-pro/pwa',
+      icon: Smartphone,
+      tone: 'platform',
+      description:
+        'Starter Pro includes the app-quality details that make the product feel more mature on desktop and mobile.',
+      items: [
+        'manifest metadata',
+        'standalone mode',
+        'professional icons',
+        'dashboard screenshots',
+        'mobile-safe viewport',
+      ],
+      cta: 'Explore PWA →',
+    },
+    {
+      eyebrow: 'Release quality',
+      title: 'Production checklist',
+      href: '/docs/starter-pro/pwa-production-checklist',
+      icon: ShieldCheck,
+      description:
+        'Validate installability, service worker behavior, offline fallback, screenshots, iOS, Android, and production HTTPS before launch.',
+      items: [
+        'Chrome DevTools validation',
+        'offline fallback test',
+        'mobile install test',
+        'Lighthouse check',
+        'production HTTPS verification',
+      ],
+      cta: 'Open checklist →',
+    },
+  ]}
+/>
+
+<Callout type="info" title="PWA boundary">
+  Starter Pro provides a safe PWA baseline. Auth, billing, admin, and subscription state remain online-first and server-verifiable.
+</Callout>
+
 ## Next steps
 
 <DocsLinks
@@ -367,18 +473,19 @@ You are buying:
   tone="platform"
   items={[
     {
-      title: 'What is included',
-      href: '/docs/starter-pro/what-is-included',
-      description:
-        'Review exactly what Starter Pro includes and what you still build yourself.',
-      icon: Package,
-    },
-    {
       title: 'Why buy instead of building',
       href: '/docs/starter-pro/why-buy-instead-of-building',
       description:
-        'Understand why buying the foundation can be higher leverage than rebuilding auth, billing, and backend.',
+        'Understand why buying the foundation can be higher leverage than rebuilding auth, billing, backend, and app foundations.',
       icon: GitBranch,
+    },
+    {
+      title: 'PWA production checklist',
+      href: '/docs/starter-pro/pwa-production-checklist',
+      description:
+        'Validate installability, screenshots, service worker, offline fallback, and mobile app-like behavior before release.',
+      icon: WifiOff,
+      badge: 'New',
     },
     {
       title: 'Production checklist',
@@ -399,7 +506,7 @@ You are buying:
 
 <DocsUpgradeCTA
   title="Build the product. Don’t rebuild the blockers."
-  description="Starter Pro gives you the production foundation so you can spend more time on customers, product, and revenue."
+  description="Starter Pro gives you the production foundation so you can spend more time on customers, product, revenue, and differentiation."
   productSlug="starter-pro"
   buyLabel="Get Starter Pro"
   secondaryHref="/pricing"

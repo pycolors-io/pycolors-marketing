@@ -1,9 +1,9 @@
 ---
 title: PyColors Documentation
-description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth and billing, and ship with production-shaped foundations.
+description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth, billing, PWA-ready foundations, and ship with production-shaped systems.
 full: false
 hero: false
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-06-06"
 appliesTo: PyColors
 ---
 
@@ -18,9 +18,11 @@ import {
   Layers3,
   LayoutTemplate,
   LockKeyhole,
+  MonitorSmartphone,
   Rocket,
   ShieldCheck,
   Sparkles,
+  Smartphone,
 } from "lucide-react";
 
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -31,6 +33,7 @@ import { DocsLinks } from "@/components/docs/docs-links";
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Docs</Badge>
   <Badge>Template → Validate → Wire → Launch</Badge>
+  <Badge variant="secondary">PWA-ready</Badge>
 </div>
 
 ## From product idea to real SaaS
@@ -41,8 +44,9 @@ PyColors helps developers build in the right order:
 2. validate the product surface
 3. keep the UI system consistent
 4. wire the business layer
-5. launch with stronger foundations
-6. reduce the distance between product work and revenue
+5. add app-like production foundations
+6. launch with stronger confidence
+7. reduce the distance between product work and revenue
 
 This documentation is designed for one goal:
 
@@ -58,11 +62,12 @@ Use these docs to understand the PyColors ecosystem:
 - authentication
 - billing
 - backend structure
+- PWA-ready foundations
 - secure delivery
 - launch readiness
 
 <Callout title="The PyColors path">
-  Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, and reduce the infrastructure work that delays revenue.
+  Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, package, and reduce the infrastructure work that delays revenue.
 </Callout>
 
 ## Start here
@@ -89,7 +94,7 @@ Use these docs to understand the PyColors ecosystem:
       title: 'Starter Pro',
       href: '/docs/starter-pro',
       description:
-        'Launch with real auth, billing, backend foundations, protected routes, and delivery.',
+        'Launch with real auth, billing, backend foundations, protected routes, PWA-ready app foundations, and delivery.',
       icon: Rocket,
       tone: 'primary',
       badge: 'Pro',
@@ -113,6 +118,7 @@ It helps reduce the gap between:
 - a public offer
 - a validated product surface
 - a paid SaaS foundation
+- an app-like production baseline
 - a launch-ready system
 - a product that can support revenue over time
 
@@ -169,7 +175,7 @@ It helps reduce the gap between:
       description: (
         <>
           <p>
-            Move to Starter Pro when auth, billing, protected routes, backend persistence, and secure delivery become the work slowing launch.
+            Move to Starter Pro when auth, billing, protected routes, backend persistence, secure delivery, and app-ready foundations become the work slowing launch.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -177,6 +183,7 @@ It helps reduce the gap between:
             <Badge variant="outline">Billing</Badge>
             <Badge variant="outline">Backend</Badge>
             <Badge variant="outline">Protected routes</Badge>
+            <Badge variant="outline">PWA-ready</Badge>
           </div>
         </>
       ),
@@ -188,13 +195,14 @@ It helps reduce the gap between:
       description: (
         <>
           <p>
-            Validate the production checklist, confirm real users and real payments, then ship the first version of your SaaS with stronger foundations.
+            Validate the production checklist, confirm real users, real payments, installable app behavior, and production infrastructure, then ship the first version of your SaaS.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="outline">Production checklist</Badge>
             <Badge variant="outline">Real users</Badge>
             <Badge variant="outline">Real payments</Badge>
+            <Badge variant="outline">PWA validation</Badge>
             <Badge variant="outline">Launch readiness</Badge>
           </div>
         </>
@@ -220,7 +228,7 @@ It helps reduce the gap between:
       title: 'Why buy instead of building',
       href: '/docs/starter-pro/why-buy-instead-of-building',
       description:
-        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, and backend foundations.',
+        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, backend, and app foundations.',
       icon: Rocket,
       tone: 'primary',
     },
@@ -270,11 +278,27 @@ It helps reduce the gap between:
       icon: Database,
     },
     {
+      title: 'PWA-ready foundations',
+      href: '/docs/starter-pro/pwa',
+      description:
+        'Installable app behavior, standalone mode, professional icons, screenshots, and offline fallback routing.',
+      icon: Smartphone,
+      badge: 'New',
+    },
+    {
       title: 'Secure delivery',
       href: '/docs/starter-pro/delivery',
       description:
         'Controlled post-purchase access, private assets, token-based downloads, and fulfillment flow.',
       icon: ShieldCheck,
+    },
+    {
+      title: 'PWA production checklist',
+      href: '/docs/starter-pro/pwa-production-checklist',
+      description:
+        'Validate installability, service worker behavior, mobile surfaces, and offline fallback before release.',
+      icon: MonitorSmartphone,
+      badge: 'New',
     },
   ]}
 />
@@ -327,6 +351,7 @@ They slow down when the product needs:
 - protected access
 - Stripe billing
 - backend persistence
+- PWA-ready app polish
 - secure delivery
 - launch confidence
 
@@ -380,11 +405,12 @@ That matters because every week lost to repeated infrastructure work is a week n
       icon: Rocket,
       tone: 'pro',
       description:
-        'Use this path when auth, billing, backend, and delivery would slow the launch.',
+        'Use this path when auth, billing, backend, PWA-ready foundations, and delivery would slow the launch.',
       items: [
         'real auth',
         'Stripe billing',
         'backend-ready structure',
+        'installable app baseline',
         'protected access',
       ],
       cta: 'Explore Pro →',
@@ -393,7 +419,7 @@ That matters because every week lost to repeated infrastructure work is a week n
 />
 
 <Callout title="Build fast. Validate early. Upgrade when ready.">
-  PyColors is designed around a simple path: idea → public offer → product surface → validation → production wiring → launch.
+  PyColors is designed around a simple path: idea → public offer → product surface → validation → production wiring → app-ready foundations → launch.
 </Callout>
 
 ## Next step
