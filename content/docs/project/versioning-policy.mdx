@@ -1,0 +1,261 @@
+---
+title: Versioning policy
+description: Semantic Versioning rules used across PyColors packages, starters, templates, and ecosystem products.
+lastUpdated: "2026-06-06"
+appliesTo: Project
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  GitCommitHorizontal,
+  Map,
+  PackageCheck,
+  RefreshCcw,
+  ShieldCheck,
+  Sparkles,
+  TriangleAlert,
+  Wrench,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Reference</Badge>
+  <Badge>Versioning policy</Badge>
+</div>
+
+## Why versioning matters
+
+PyColors uses Semantic Versioning to make upgrades predictable, safe, and easy to understand.
+
+A version number should immediately communicate:
+
+- the level of change
+- upgrade risk
+- compatibility expectations
+- migration requirements
+
+This policy exists to reduce uncertainty across the ecosystem.
+
+<Callout title="Core principle">
+  Developers should be able to understand upgrade impact before reading the changelog.
+</Callout>
+
+## Semantic Versioning baseline
+
+PyColors packages, starters, templates, and shared tooling follow Semantic Versioning.
+
+```txt title="semver.txt"
+MAJOR.MINOR.PATCH
+```
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Patch',
+      description:
+        'Fixes, polish, documentation updates, dependency-safe maintenance, and small UX improvements with no breaking changes.',
+      icon: Wrench,
+    },
+    {
+      title: 'Minor',
+      description:
+        'New capabilities, APIs, patterns, workflows, or components that remain backward compatible.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Major',
+      description:
+        'Breaking changes requiring migration, architecture updates, or incompatible API changes.',
+      icon: TriangleAlert,
+    },
+  ]}
+/>
+
+## Release type rules
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Patch',
+      title: 'Patch release',
+      icon: Wrench,
+      description: (
+        <>
+          <p>
+            Patch releases improve stability, polish, and maintainability without changing expected integrations or workflows.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>bug fixes</li>
+            <li>documentation improvements</li>
+            <li>small UI polish</li>
+            <li>dependency-safe maintenance</li>
+            <li>performance optimizations</li>
+          </ul>
+
+          <div className="mt-4 rounded-md border bg-muted/30 p-3 text-sm">
+            Example: <code>1.0.4 → 1.0.5</code>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Minor',
+      title: 'Minor release',
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Minor releases add new capabilities while preserving compatibility with existing integrations.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>new components</li>
+            <li>new exports</li>
+            <li>new starter features</li>
+            <li>additional APIs</li>
+            <li>new documentation sections</li>
+          </ul>
+
+          <div className="mt-4 rounded-md border bg-muted/30 p-3 text-sm">
+            Example: <code>1.2.0 → 1.3.0</code>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Major',
+      title: 'Major release',
+      icon: TriangleAlert,
+      description: (
+        <>
+          <p>
+            Major releases communicate incompatible changes that may require migration or code updates.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>removed exports</li>
+            <li>breaking API changes</li>
+            <li>migration-required updates</li>
+            <li>incompatible design system changes</li>
+            <li>architecture-level modifications</li>
+          </ul>
+
+          <div className="mt-4 rounded-md border bg-muted/30 p-3 text-sm">
+            Example: <code>1.x.x → 2.0.0</code>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+## Practical interpretation
+
+In practice, the version type answers one question:
+
+> Can the user upgrade safely without migration?
+
+| Situation | Release type |
+| --- | --- |
+| Fixing bugs or polish | Patch |
+| Adding backward-compatible capabilities | Minor |
+| Requiring migration or changing compatibility | Major |
+
+<Callout type="info" title="Important distinction">
+  A large amount of work does not automatically mean a major release. The determining factor is compatibility impact.
+</Callout>
+
+## What is not a major release
+
+The following changes usually remain patch or minor releases:
+
+- visual polish
+- documentation restructuring
+- internal refactors
+- performance improvements
+- new optional APIs
+- new starter sections
+- additive design system improvements
+
+A release becomes major only when compatibility expectations change.
+
+## Versioning goals
+
+This policy is designed to provide:
+
+- predictable upgrades
+- transparent compatibility expectations
+- stable package consumption
+- clear migration boundaries
+- safer long-term adoption
+- stronger developer trust
+
+<Callout title="Trust principle">
+  Stable versioning is part of the product experience, not only a technical detail.
+</Callout>
+
+### Relationship with ecosystem releases
+
+Semantic Versioning applies to technical package releases.
+
+The broader PyColors ecosystem communicates progress separately through:
+
+- weekly releases
+- changelog updates
+- roadmap progression
+- ecosystem announcements
+
+This separation keeps technical truth precise while making product progress easier to follow.
+
+## Source of truth
+
+| Surface | Purpose |
+| --- | --- |
+| GitHub Releases | Technical release details |
+| `CHANGELOG.md` | Package-level changes |
+| `/changelog` | Ecosystem progress |
+| `/roadmap` | Upcoming direction |
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Release policy',
+      href: '/docs/project/release-policy',
+      description:
+        'Understand how PyColors ships updates across the ecosystem.',
+      icon: RefreshCcw,
+    },
+    {
+      title: 'Changelog',
+      href: '/changelog',
+      description:
+        'Follow ecosystem progress and release cadence.',
+      icon: GitCommitHorizontal,
+    },
+    {
+      title: 'Roadmap',
+      href: '/roadmap',
+      description:
+        'See what is planned next across the platform.',
+      icon: Map,
+    },
+    {
+      title: 'UI docs',
+      href: '/docs/ui',
+      description:
+        'Explore the PyColors design system and components.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>

@@ -53,11 +53,18 @@ const guides: Guide[] = [
     category: 'Foundations',
   },
   {
-    title: 'How to build a SaaS with Next.js',
+    title: 'How to build a production-ready SaaS with Next.js',
     description:
       'Architecture, product surface, authentication, billing, and deployment basics.',
     href: '/guides/build-saas-nextjs',
     category: 'Foundations',
+  },
+  {
+    title: 'Why PWA foundations matter for modern SaaS',
+    description:
+      'Installability, standalone mode, offline resilience, and app-like UX patterns for modern SaaS products.',
+    href: '/guides/pwa-for-saas',
+    category: 'PWA',
   },
   {
     title: 'SaaS dashboard design patterns',
@@ -233,7 +240,7 @@ export default function GuidesPage() {
           ]}
           title="SaaS building guides for developers."
           subtitle="Learn how stronger SaaS products are structured before you build them."
-          description="Learn how modern SaaS products are designed and structured — from dashboards and authentication to billing, team systems, admin workflows, and production-ready product foundations."
+          description="Learn how modern SaaS products are designed and structured — from dashboards and authentication to billing, installable PWA experiences, admin workflows, and production-ready product foundations."
           actions={
             <>
               <Button
@@ -273,7 +280,7 @@ export default function GuidesPage() {
             'Architecture',
             'Auth',
             'Billing',
-            'B2B systems',
+            'PWA',
             'Admin UX',
           ]}
           extra={
@@ -321,6 +328,7 @@ export default function GuidesPage() {
                   <div className="flex flex-wrap gap-2 pt-1">
                     <Pill>Production-ready thinking</Pill>
                     <Pill>SaaS-first UX</Pill>
+                    <Pill>PWA-ready UX</Pill>
                     <Pill>System design</Pill>
                     <Pill>Developer-focused</Pill>
                   </div>
@@ -401,7 +409,7 @@ export default function GuidesPage() {
                 title:
                   'Build with Starter Free, upgrade with Starter Pro',
                 description:
-                  'Start with a production-shaped SaaS surface today, then move to Starter Pro when auth, billing, and backend wiring become the blocker.',
+                  'Start with a production-shaped SaaS surface today, then move to Starter Pro when auth, billing, backend wiring, and installable PWA foundations become the blocker.',
               },
             ].map((item) => (
               <Card
@@ -446,8 +454,9 @@ export default function GuidesPage() {
 
                   <p className="text-sm leading-7 text-muted-foreground">
                     Use Starter Free to validate a real SaaS product
-                    surface now, then move to Starter Pro when the
-                    business layer needs to be wired.
+                    surface now, then move to Starter Pro when auth,
+                    billing, backend workflows, and installable PWA
+                    foundations need to be wired seriously.
                   </p>
 
                   <div className="flex flex-wrap gap-2 pt-1">

@@ -8,10 +8,14 @@
     "getting-started",
     "environment-variables",
     "deployment",
+    "pwa",
+    "pwa-setup",
+    "pwa-production-checklist",
     "auth",
     "billing",
     "backend",
     "delivery",
-    "production-checklist"
+    "production-checklist",
+    "releases-history"
   ]
 }

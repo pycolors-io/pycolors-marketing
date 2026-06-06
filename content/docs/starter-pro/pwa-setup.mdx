@@ -1,0 +1,342 @@
+---
+title: PWA setup
+description: Configure the PWA-ready layer in Starter Pro with Next.js App Router, manifest, icons, screenshots, service worker registration, offline routing, and production-safe boundaries.
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AppWindow,
+  FolderTree,
+  Globe,
+  Image,
+  LayoutDashboard,
+  Settings2,
+  ShieldCheck,
+  Smartphone,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>PWA setup</Badge>
+</div>
+
+## Configure the PWA-ready layer
+
+Starter Pro uses an explicit PWA setup based on Next.js App Router conventions.
+
+<DocsUpgradeCTA
+  title="Start with a clean PWA foundation."
+  description="Starter Pro includes installable app behavior, standalone mode, professional icons, screenshots, and offline-ready routing without unsafe cache strategies."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/pwa"
+  secondaryLabel="PWA overview"
+/>
+
+<Callout title="Core principle">
+  The PWA layer should be easy to audit, easy to replace, and safe for SaaS products with authentication, billing, and protected app data.
+</Callout>
+
+## Recommended structure
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="manifest.ts" />
+    <Folder name="offline">
+      <File name="page.tsx" />
+    </Folder>
+  </Folder>
+
+  <Folder name="components" defaultOpen>
+    <Folder name="pwa">
+      <File name="pwa-register.tsx" />
+    </Folder>
+  </Folder>
+
+  <Folder name="lib" defaultOpen>
+    <Folder name="pwa">
+      <File name="pwa-config.ts" />
+    </Folder>
+  </Folder>
+
+  <Folder name="public" defaultOpen>
+    <File name="favicon.ico" />
+    <File name="icon.png" />
+    <File name="apple-icon.png" />
+    <File name="sw.js" />
+
+    <Folder name="pwa" defaultOpen>
+      <File name="icon-192.png" />
+      <File name="icon-512.png" />
+      <File name="maskable-icon-512.png" />
+      <File name="dashboard-desktop.png" />
+      <File name="dashboard-mobile.png" />
+    </Folder>
+  </Folder>
+</Files>
+
+## Setup flow
+
+<Steps>
+  <Step>
+    ### Add the PWA config
+
+```ts title="lib/pwa/pwa-config.ts"
+export const pwaConfig = {
+  name: 'PyColors Starter Pro',
+  shortName: 'Starter Pro',
+  description:
+    'Production-ready SaaS starter with auth, billing, dashboard and installable PWA foundations.',
+  themeColor: '#0b0b10',
+  backgroundColor: '#0b0b10',
+  brandColor: 'oklch(0.68 0.19 292)',
+  display: 'standalone',
+  orientation: 'portrait',
+} as const;
+```
+  </Step>
+
+  <Step>
+    ### Add the manifest
+
+```ts title="app/manifest.ts"
+import type { MetadataRoute } from 'next';
+
+import { pwaConfig } from '@/lib/pwa/pwa-config';
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    id: '/',
+    name: pwaConfig.name,
+    short_name: pwaConfig.shortName,
+    description: pwaConfig.description,
+    start_url: '/',
+    scope: '/',
+    display: 'standalone',
+    orientation: 'portrait',
+    theme_color: pwaConfig.themeColor,
+    background_color: pwaConfig.backgroundColor,
+    categories: ['business', 'productivity', 'developer'],
+    icons: [
+      {
+        src: '/pwa/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/pwa/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+      {
+        src: '/pwa/maskable-icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+    ],
+    screenshots: [
+      {
+        src: '/pwa/dashboard-desktop.png',
+        sizes: '1280x720',
+        type: 'image/png',
+        form_factor: 'wide',
+        label: 'Starter Pro dashboard workspace',
+      },
+      {
+        src: '/pwa/dashboard-mobile.png',
+        sizes: '390x844',
+        type: 'image/png',
+        form_factor: 'narrow',
+        label: 'Starter Pro mobile dashboard',
+      },
+    ],
+  };
+}
+```
+  </Step>
+
+  <Step>
+    ### Register the service worker
+
+```tsx title="components/pwa/pwa-register.tsx"
+'use client';
+
+import { useEffect } from 'react';
+
+export function PwaRegister() {
+  useEffect(() => {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    const registerServiceWorker = async () => {
+      try {
+        await navigator.serviceWorker.register('/sw.js');
+      } catch {
+        // PWA enhancements must never break the core app.
+      }
+    };
+
+    void registerServiceWorker();
+  }, []);
+
+  return null;
+}
+```
+  </Step>
+
+  <Step>
+    ### Add the offline route
+
+```txt title="route.txt"
+app/offline/page.tsx
+```
+  </Step>
+</Steps>
+
+## Asset requirements
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "PWA icons",
+      description:
+        "`icon-192.png`, `icon-512.png`, and `maskable-icon-512.png` power install surfaces and app launcher presentation.",
+      icon: Image,
+    },
+    {
+      title: "Apple icon",
+      description:
+        "`apple-icon.png` should be available at the public root for iOS home screen support.",
+      icon: Smartphone,
+    },
+    {
+      title: "Screenshots",
+      description:
+        "`dashboard-desktop.png` and `dashboard-mobile.png` improve the install preview and product perception.",
+      icon: LayoutDashboard,
+    },
+  ]}
+/>
+
+### Setup decisions
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Recommended",
+      title: "Manual PWA foundation",
+      icon: Settings2,
+      tone: "platform",
+      description:
+        "Starter Pro starts with an explicit manifest, explicit service worker, and clear offline fallback strategy.",
+      items: [
+        "easy to audit",
+        "simple to customize",
+        "safe for auth and billing",
+        "no aggressive cache defaults",
+      ],
+    },
+    {
+      eyebrow: "Later",
+      title: "Advanced PWA library",
+      icon: AppWindow,
+      description:
+        "You can add a more advanced PWA library later if your product needs deeper caching or offline behavior.",
+      items: [
+        "runtime cache strategies",
+        "precache automation",
+        "update prompts",
+        "background sync",
+      ],
+    },
+  ]}
+/>
+
+## Prefer / avoid
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "keep auth and billing online-first",
+    "use a lightweight `public/sw.js`",
+    "use real dashboard screenshots",
+    "keep `NEXT_PUBLIC_APP_URL` configurable",
+    "test with `pnpm build && pnpm start`",
+  ]}
+  avoid={[
+    "hardcoding production URLs in reusable starter code",
+    "caching Stripe or subscription state",
+    "using oversized screenshots",
+    "testing PWA only in `pnpm dev`",
+    "making service worker failures break the app",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should I use next-pwa immediately?">
+    Not necessarily. Starter Pro uses an explicit PWA baseline first because it is easier to audit and safer for auth, billing, and protected SaaS data.
+  </Accordion>
+
+  <Accordion title="Should billing pages work offline?">
+    No. Billing should remain online-first because Stripe state, subscription access, and invoice data must stay server-verifiable.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "PWA overview",
+      href: "/docs/starter-pro/pwa",
+      description:
+        "Understand the product and business role of PWA-ready foundations inside Starter Pro.",
+      icon: Smartphone,
+    },
+    {
+      title: "PWA production checklist",
+      href: "/docs/starter-pro/pwa-production-checklist",
+      description:
+        "Validate installability, icons, screenshots, service worker, offline fallback, and release readiness.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Environment variables",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configure `NEXT_PUBLIC_APP_URL`, production domains, auth, database, email, and billing variables.",
+      icon: Globe,
+    },
+    {
+      title: "Architecture",
+      href: "/docs/starter-pro/architecture",
+      description:
+        "Review route groups, layouts, feature modules, server boundaries, and product structure.",
+      icon: FolderTree,
+    },
+  ]}
+/>

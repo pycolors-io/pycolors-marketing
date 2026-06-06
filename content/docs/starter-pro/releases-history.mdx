@@ -1,0 +1,279 @@
+---
+title: Release history
+description: Version policy, release notes, and product evolution for PyColors Starter Pro.
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+toc: false
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  GitCommitHorizontal,
+  LayoutTemplate,
+  Lock,
+  Package,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  Workflow,
+} from "lucide-react";
+
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Release history</Badge>
+</div>
+
+## Starter Pro release history
+
+This page provides a product-specific release overview for **PyColors Starter Pro**.
+
+For the full PyColors ecosystem history, use the global [changelog](/changelog).
+
+<Callout title="Release philosophy">
+  Starter Pro is maintained as a production-ready SaaS foundation.
+
+  Releases focus on authentication, billing, protected application surfaces, reusable SaaS patterns, developer experience, and long-term maintainability.
+</Callout>
+
+## Versioning policy
+
+Starter Pro follows Semantic Versioning.
+
+For complete rules and upgrade expectations, see the shared [Versioning policy](/docs/project/versioning-policy).
+
+## Release principles
+
+Starter Pro releases prioritize:
+
+- production readiness
+- long-term maintainability
+- upgrade safety
+- reusable SaaS architecture
+- real-world developer workflows
+- stable business foundations
+- clear product evolution
+
+Features are added progressively with a strong focus on clarity, composability, and operational realism.
+
+<Callout type="info" title="Upgrade philosophy">
+  Starter Pro aims to evolve without forcing unnecessary rewrites.
+
+  New capabilities should integrate progressively while preserving upgrade clarity and developer trust.
+</Callout>
+
+## Current direction
+
+Starter Pro is evolving from a premium starter into a **production-ready SaaS foundation**.
+
+The current focus is:
+
+- production-ready authentication
+- operational Stripe billing
+- protected app surfaces
+- reusable SaaS workflows
+- cleaner onboarding
+- stronger buyer confidence
+- production-ready UX
+- scalable product architecture
+
+---
+
+## v1.2.0 — Product systems & SaaS patterns update
+
+Released: June 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Feature Showcase',
+      description:
+        'A product pattern for presenting extensibility and scalable SaaS evolution.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'Upgrade Gate',
+      description:
+        'A monetization pattern for premium boundaries and billing-aware UX.',
+      icon: Lock,
+    },
+    {
+      title: 'Product polish',
+      description:
+        'Improved dashboard, billing, projects, admin, settings, and navigation surfaces.',
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+### Added
+
+- `FeatureShowcase` product pattern
+- `UpgradeGate` monetization pattern
+- `/docs/patterns/feature-showcase`
+- `/docs/patterns/upgrade-gate`
+- Improved Patterns index page
+- Pricing example as a Starter Pro business surface
+
+### Improved
+
+- Dashboard positioning and SaaS credibility
+- Billing status badges, invoice surfaces, and portal positioning
+- Projects table, dialogs, row actions, and detail page
+- Admin members and invitations workflow
+- Settings account and security surfaces
+- Sidebar footer, mobile navigation, and user menu
+- Starter Pro homepage and first-run product positioning
+
+### Migration notes
+
+No migration required.
+
+This release adds new product patterns and improves existing surfaces while keeping the Starter Pro foundation backward compatible.
+
+<Callout type="info" title="Product principle">
+  v1.2.0 focuses on making Starter Pro feel like a serious SaaS foundation, not a generic template.
+</Callout>
+
+---
+
+## v1.1.0 — Initial commercial release
+
+Released: June 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Authentication',
+      description:
+        'Credentials auth, OAuth, verification, password reset, and protected routes.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Billing',
+      description:
+        'Stripe Checkout, Billing Portal, subscriptions, invoices, and plan-aware access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'App shell',
+      description:
+        'Dashboard, projects, admin, billing, settings, pricing, and authenticated navigation.',
+      icon: Rocket,
+    },
+  ]}
+/>
+
+### Added
+
+- Email and password authentication
+- Google and GitHub OAuth
+- Email verification and password reset flows
+- Connected account management
+- Stripe Checkout and Billing Portal
+- Subscription lifecycle handling
+- Plan-aware access foundation
+- Prisma models for users, auth, billing, and subscriptions
+- Docker-based PostgreSQL local setup
+- Seed script for local development
+- Production-shaped app surfaces
+
+### Migration notes
+
+No migration required.
+
+This release established the first commercial foundation of Starter Pro.
+
+### Notes
+
+This release is the baseline for developers who want to start from a serious SaaS structure instead of rebuilding auth, billing, and app architecture from scratch.
+
+---
+
+## v1.0.0 — Internal foundation
+
+Released: Internal
+
+### Notes
+
+- Initial Starter Pro architecture
+- Derived from Starter Free
+- Early authentication and billing experiments
+- Initial dashboard and app shell direction
+- Initial design system integration
+
+This version should be treated as an internal baseline, not the public commercial foundation.
+
+---
+
+## Migration expectations
+
+Minor and patch releases are designed to remain backward compatible unless explicitly stated otherwise.
+
+Future major releases will include dedicated migration documentation when required.
+
+<Callout title="Trust principle">
+  Starter Pro release notes should make upgrade impact clear before developers touch their codebase.
+</Callout>
+
+## Related pages
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: 'Global changelog',
+      href: '/changelog',
+      description:
+        'Read ecosystem-wide PyColors releases across UI, Starters, Templates, Docs, and tooling.',
+      icon: GitCommitHorizontal,
+    },
+    {
+      title: 'Release policy',
+      href: '/docs/project/release-policy',
+      description:
+        'Understand how PyColors ships updates across the ecosystem.',
+      icon: Package,
+    },
+    {
+      title: 'Patterns',
+      href: '/docs/patterns',
+      description:
+        'Explore reusable product patterns used across Starter Pro surfaces.',
+      icon: Workflow,
+    },
+    {
+      title: 'Billing',
+      href: '/docs/starter-pro/billing',
+      description:
+        'Understand Stripe, subscriptions, invoices, and plan-aware access.',
+      icon: CreditCard,
+    },
+    {
+      title: 'Production checklist',
+      href: '/docs/starter-pro/production-checklist',
+      description:
+        'Validate authentication, billing, backend, delivery, and deployment before launch.',
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Build on a SaaS foundation designed to evolve."
+  description="Starter Pro combines authentication, billing, backend, product UX, and reusable SaaS patterns into a production-ready foundation."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

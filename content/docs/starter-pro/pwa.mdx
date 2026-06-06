@@ -1,0 +1,408 @@
+---
+title: Progressive Web App
+description: "Understand the PWA-ready foundations included in Starter Pro: manifest, installability, standalone mode, mobile app-like UX, screenshots, and offline-ready routing."
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Badge } from "@pycolors/ui";
+
+import {
+  Download,
+  Globe,
+  LayoutDashboard,
+  Layers3,
+  MonitorSmartphone,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  WifiOff,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>PWA-ready</Badge>
+</div>
+
+## Installable SaaS foundations
+
+Starter Pro includes **Progressive Web App foundations** designed to make your SaaS feel more mature, more mobile-ready, and closer to a real application.
+
+It is not a gimmick layer.
+
+It is a product-quality layer that improves:
+
+- installability
+- standalone mode
+- mobile-first UX
+- perceived product maturity
+- app-like navigation
+- offline fallback resilience
+- professional launch confidence
+
+<DocsUpgradeCTA
+  title="Make your SaaS feel like a real product."
+  description="Starter Pro includes installable PWA foundations, standalone mode, responsive app surfaces, and offline-ready routing for modern SaaS products."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+<Callout title="Core idea">
+  PWA support should make the product feel more credible without introducing unsafe offline behavior for authentication, billing, admin, or subscription state.
+</Callout>
+
+## What Starter Pro includes
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Installable application",
+      description:
+        "Manifest, app metadata, icons, screenshots, and standalone mode make the starter installable on supported browsers and devices.",
+      icon: Download,
+    },
+    {
+      title: "Mobile app-like UX",
+      description:
+        "Dashboard, billing, settings, admin, and project surfaces are shaped for responsive and standalone usage.",
+      icon: Smartphone,
+    },
+    {
+      title: "Offline-ready fallback",
+      description:
+        "A lightweight service worker and offline route provide a resilient fallback without pretending that the whole SaaS is offline-first.",
+      icon: WifiOff,
+    },
+    {
+      title: "Production-safe boundaries",
+      description:
+        "Sensitive routes such as auth, billing, admin, and account settings remain online-first and server-verifiable.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Why this matters
+
+Most SaaS starters stop at responsive layout.
+
+Starter Pro goes further by adding the foundations that make the product feel like a serious application:
+
+- a clean manifest
+- professional PWA icons
+- maskable icons
+- install screenshots
+- standalone mode
+- splash screen colors
+- service worker registration
+- offline fallback routing
+- mobile-safe viewport behavior
+
+<Callout type="info" title="Product perception">
+  Installability and standalone mode are not only technical details.
+  They help the product feel more mature, more complete, and more trustworthy.
+</Callout>
+
+## PWA architecture
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="manifest.ts" />
+    <Folder name="offline">
+      <File name="page.tsx" />
+    </Folder>
+  </Folder>
+
+  <Folder name="components" defaultOpen>
+    <Folder name="pwa">
+      <File name="pwa-register.tsx" />
+    </Folder>
+  </Folder>
+
+  <Folder name="lib" defaultOpen>
+    <Folder name="pwa">
+      <File name="pwa-config.ts" />
+    </Folder>
+  </Folder>
+
+  <Folder name="public" defaultOpen>
+    <File name="favicon.ico" />
+    <File name="icon.png" />
+    <File name="apple-icon.png" />
+    <File name="sw.js" />
+
+    <Folder name="pwa" defaultOpen>
+      <File name="icon-192.png" />
+      <File name="icon-512.png" />
+      <File name="maskable-icon-512.png" />
+      <File name="dashboard-desktop.png" />
+      <File name="dashboard-mobile.png" />
+    </Folder>
+  </Folder>
+</Files>
+<br />
+| File | Responsibility |
+| --- | --- |
+| `app/manifest.ts` | PWA manifest, icons, screenshots, install metadata |
+| `app/layout.tsx` | metadata, viewport, icons, service worker registration |
+| `app/offline/page.tsx` | offline fallback surface |
+| `components/pwa/pwa-register.tsx` | client-side service worker registration |
+| `lib/pwa/pwa-config.ts` | shared PWA configuration |
+| `public/sw.js` | lightweight service worker |
+| `public/pwa/*` | icons and screenshots |
+
+<Callout title="Architecture rule">
+  Keep the PWA layer explicit and easy to audit. A starter product should teach the buyer how the system works, not hide it behind unnecessary magic.
+</Callout>
+
+## System model
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Manifest",
+      title: "Manifest layer",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The manifest describes how the application appears when installed.
+            It includes app name, display mode, theme colors, icons, screenshots, and app metadata.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">manifest.ts</Badge>
+            <Badge variant="outline">icons</Badge>
+            <Badge variant="outline">screenshots</Badge>
+            <Badge variant="outline">standalone</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Install",
+      title: "Install layer",
+      icon: Smartphone,
+      description: (
+        <>
+          <p>
+            Installability makes the SaaS feel closer to a real application.
+            Users can add the app to their device and open it in standalone mode when supported.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">mobile install</Badge>
+            <Badge variant="outline">desktop install</Badge>
+            <Badge variant="outline">app shell</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Offline",
+      title: "Offline fallback layer",
+      icon: WifiOff,
+      description: (
+        <>
+          <p>
+            Offline support is intentionally scoped to safe fallback routing.
+            Starter Pro does not cache sensitive SaaS data as truth.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">offline page</Badge>
+            <Badge variant="outline">navigation fallback</Badge>
+            <Badge variant="outline">safe boundaries</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+## Recommended strategy
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Enable",
+      title: "Product-quality PWA features",
+      icon: Rocket,
+      tone: "platform",
+      description:
+        "These features improve app quality without creating risky synchronization or security problems.",
+      items: [
+        "installable manifest",
+        "standalone display mode",
+        "professional icons",
+        "dashboard screenshots",
+        "offline fallback page",
+        "mobile-safe viewport",
+      ],
+    },
+    {
+      eyebrow: "Avoid",
+      title: "Unsafe offline-first shortcuts",
+      icon: ShieldCheck,
+      description:
+        "Starter Pro avoids caching sensitive SaaS state as truth because billing, auth, and admin state must remain server-verifiable.",
+      items: [
+        "offline billing state",
+        "cached auth truth",
+        "stale admin permissions",
+        "offline destructive actions",
+        "unverified subscription access",
+      ],
+    },
+  ]}
+/>
+
+## Online-first boundaries
+
+| Area | Recommended approach |
+| --- | --- |
+| Authentication | Online-first |
+| Billing | Online-first |
+| Admin actions | Server-validated |
+| Account settings | Server-validated |
+| Subscription state | Backend source of truth |
+| Offline support | Fallback-only baseline |
+
+<Callout title="Production rule">
+  Redirects, cached UI, and offline pages are UX.
+  Server state remains the source of truth for authentication, billing, permissions, and subscriptions.
+</Callout>
+
+## PWA surfaces in Starter Pro
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Dashboard",
+      description:
+        "The dashboard is the strongest screenshot candidate because it communicates the full SaaS workspace.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Mobile app shell",
+      description:
+        "Standalone mobile usage should feel intentional, responsive, and app-like across core authenticated surfaces.",
+      icon: MonitorSmartphone,
+    },
+    {
+      title: "Offline page",
+      description:
+        "The offline fallback should preserve product credibility instead of feeling like a browser error page.",
+      icon: WifiOff,
+    },
+  ]}
+/>
+
+## Prefer / avoid
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "use `app/manifest.ts` as the manifest source",
+    "keep `public/sw.js` lightweight and auditable",
+    "use real dashboard screenshots for install surfaces",
+    "keep auth, billing, and admin routes online-first",
+    "treat PWA as progressive enhancement",
+  ]}
+  avoid={[
+    "caching Stripe or billing state as truth",
+    "making authentication work offline",
+    "using oversized screenshots in the manifest",
+    "hiding service worker behavior behind unclear abstractions",
+    "claiming full offline support without synchronization logic",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Is Starter Pro a full offline-first SaaS?">
+    No. Starter Pro includes offline-ready foundations and fallback routing.
+    It does not pretend that billing, authentication, permissions, or admin data can safely work offline without a dedicated synchronization system.
+  </Accordion>
+
+  <Accordion title="Why not cache the dashboard aggressively?">
+    Dashboards often contain user-specific, billing-aware, or permission-sensitive data.
+    Caching those surfaces without a clear invalidation strategy can show stale or incorrect information.
+  </Accordion>
+
+  <Accordion title="Should I use next-pwa or Workbox?">
+    You can add a more advanced PWA library later.
+    Starter Pro starts with an explicit lightweight baseline because it is safer, easier to learn, and better suited to auth and billing-heavy SaaS products.
+  </Accordion>
+
+  <Accordion title="Is the PWA layer required for the app to work?">
+    No. The app should work normally without service worker support.
+    PWA behavior is progressive enhancement.
+  </Accordion>
+</Accordions>
+
+## Next steps
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "PWA setup",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Configure manifest, icons, screenshots, service worker registration, and offline routing.",
+      icon: Smartphone,
+    },
+    {
+      title: "PWA production checklist",
+      href: "/docs/starter-pro/pwa-production-checklist",
+      description:
+        "Validate installability, service worker behavior, screenshots, Lighthouse, iOS, Android, and production readiness.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Environment variables",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configure app URLs, production domains, auth, email, database, and Stripe infrastructure.",
+      icon: Globe,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy Starter Pro with HTTPS, production domains, Stripe webhooks, and launch-ready infrastructure.",
+      icon: Rocket,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Ship a SaaS that feels more like a real product."
+  description="Starter Pro includes installable PWA foundations, standalone mode, mobile-ready app surfaces, and production-minded offline handling."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>

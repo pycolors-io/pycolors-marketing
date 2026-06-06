@@ -91,6 +91,10 @@ const starterProIncludes = [
   'Production-ready Next.js App Router architecture',
   'Strict TypeScript setup',
   'Tailwind CSS foundation',
+
+  'Installable PWA foundations',
+  'Standalone mode + offline fallback page',
+
   'Email and password authentication',
   'Google and GitHub OAuth',
   'Email verification and reset password',
@@ -187,6 +191,12 @@ const comparisonRows = [
     template: 'Launching a polished landing page',
     free: 'Exploring and validating UX',
     pro: 'Launching and charging faster',
+  },
+  {
+    feature: 'PWA-ready app experience',
+    template: 'No',
+    free: 'Basic',
+    pro: 'Included',
   },
 ] as const;
 
@@ -449,6 +459,7 @@ export default function PricingPage() {
             'One-time payment',
             'Instant access',
             'Commercial usage',
+            'PWA-ready',
             'Built for real launches',
           ]}
           extraClassName="mx-auto max-w-6xl"

@@ -1,0 +1,268 @@
+---
+title: PWA production checklist
+description: Validate installability, standalone behavior, service worker setup, screenshots, icons, offline fallback, and production readiness before shipping Starter Pro.
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+
+import {
+  BadgeCheck,
+  Chrome,
+  Globe,
+  Image,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  WifiOff,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>PWA checklist</Badge>
+</div>
+
+## Validate before release
+
+Use this checklist before shipping the PWA layer in Starter Pro.
+
+The goal is to validate:
+
+- manifest quality
+- icon quality
+- screenshot quality
+- service worker behavior
+- offline fallback routing
+- standalone mode
+- mobile UX
+- production HTTPS behavior
+
+<DocsUpgradeCTA
+  title="Ship the PWA layer with confidence."
+  description="Validate installability, screenshots, offline fallback behavior, and production-safe boundaries before launch."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/pwa-setup"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Release principle">
+  A PWA is not production-ready because a manifest exists.
+  It is production-ready when installability, offline fallback, mobile UX, and security boundaries have been validated.
+</Callout>
+
+## Core checklist
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Manifest",
+      description:
+        "Confirm the manifest is detected, app metadata is correct, and install surfaces render professional assets.",
+      icon: BadgeCheck,
+    },
+    {
+      title: "Service worker",
+      description:
+        "Confirm the service worker registers, activates, and never breaks the core app when unavailable.",
+      icon: Chrome,
+    },
+    {
+      title: "Offline fallback",
+      description:
+        "Confirm the `/offline` route renders correctly when navigation fails because the device is offline.",
+      icon: WifiOff,
+    },
+  ]}
+/>
+
+### Release gates
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Required",
+      title: "Technical validation",
+      icon: ShieldCheck,
+      tone: "platform",
+      description:
+        "These checks validate that the PWA layer is installed, reachable, and safe to ship.",
+      items: [
+        "manifest visible in Chrome DevTools",
+        "service worker active",
+        "`/offline` route available",
+        "icons load correctly",
+        "screenshots load correctly",
+        "HTTPS enabled in production",
+      ],
+    },
+    {
+      eyebrow: "Required",
+      title: "Product validation",
+      icon: Smartphone,
+      description:
+        "These checks validate that the PWA layer improves user perception instead of feeling unfinished.",
+      items: [
+        "dashboard screenshot looks premium",
+        "mobile screenshot represents app usage",
+        "offline page matches PyColors design system",
+        "standalone mode remains navigable",
+        "mobile layouts remain usable",
+      ],
+    },
+  ]}
+/>
+
+## Manifest checklist
+
+Validate in Chrome DevTools:
+
+```txt title="chrome-devtools.txt"
+Application
+→ Manifest
+```
+
+Confirm:
+
+- app name is correct
+- short name is correct
+- `display` is `standalone`
+- theme color is visible
+- background color is visible
+- icons are detected
+- screenshots are detected
+- no installability warning appears
+
+## Asset checklist
+
+| Asset | Expected |
+| --- | --- |
+| `icon-192.png` | 192x192 |
+| `icon-512.png` | 512x512 |
+| `maskable-icon-512.png` | 512x512 with safe padding |
+| `apple-icon.png` | 180x180 |
+| `dashboard-desktop.png` | 1280x720 |
+| `dashboard-mobile.png` | 390x844 |
+
+<Callout type="info" title="Screenshot rule">
+  Use real dashboard or workspace screenshots. Avoid using only login screens because they do not communicate the full SaaS value.
+</Callout>
+
+## Offline checklist
+
+Validate offline behavior:
+
+```txt title="chrome-devtools.txt"
+Application
+→ Service Workers
+→ Offline
+```
+
+Then reload the app.
+
+Expected result:
+
+- `/offline` renders
+- page keeps PyColors styling
+- app does not crash
+- reload action is present
+- no sensitive stale data is shown
+
+## Mobile checklist
+
+Validate on real devices when possible:
+
+- iPhone Safari
+- Chrome Android
+- installed standalone mode
+- mobile dashboard
+- mobile billing page
+- mobile settings page
+- mobile offline page
+
+## Prefer / avoid
+
+<PreferAvoid
+  preferTitle="Validate"
+  avoidTitle="Do not ship with"
+  prefer={[
+    "production build tested with `pnpm build && pnpm start`",
+    "real screenshots in `public/pwa`",
+    "service worker activated in DevTools",
+    "offline fallback confirmed",
+    "iOS and Android install behavior checked",
+  ]}
+  avoid={[
+    "testing only in development mode",
+    "placeholder screenshots",
+    "oversized manifest images",
+    "offline billing or auth assumptions",
+    "unclear service worker cache behavior",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Should Lighthouse be perfect before shipping?">
+    No. Use Lighthouse as a signal, not as the only release gate.
+    The key release gate is whether installability, offline fallback, icons, screenshots, and production HTTPS are correct.
+  </Accordion>
+
+  <Accordion title="Should I cache authenticated routes?">
+    Not by default. Authenticated SaaS routes can contain sensitive or stale data. Start with fallback-only offline behavior.
+  </Accordion>
+
+  <Accordion title="What should I test on iOS?">
+    Validate Add to Home Screen, standalone mode, status bar behavior, viewport fit, and mobile navigation.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "PWA overview",
+      href: "/docs/starter-pro/pwa",
+      description:
+        "Understand the PWA-ready product layer in Starter Pro.",
+      icon: Smartphone,
+    },
+    {
+      title: "PWA setup",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Configure manifest, icons, service worker registration, and offline routing.",
+      icon: Rocket,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy Starter Pro with HTTPS, production domains, and production infrastructure.",
+      icon: Globe,
+    },
+    {
+      title: "Production checklist",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validate auth, billing, backend, delivery, environment, and deployment readiness.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
