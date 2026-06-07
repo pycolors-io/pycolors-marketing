@@ -1,0 +1,230 @@
+---
+title: Testing Fixtures
+description: Validate auth, billing, onboarding, and protected SaaS states locally with production-shaped testing fixtures.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+
+import {
+  BadgeCheck,
+  CreditCard,
+  LockKeyhole,
+  ShieldCheck,
+  Sparkles,
+  UserRoundCheck,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Testing Fixtures</Badge>
+</div>
+
+## Production-shaped local testing
+
+Starter Pro includes seeded account states designed to validate realistic SaaS behavior during development.
+
+The goal is not only to create users.
+
+The goal is to simulate:
+
+- authentication states
+- onboarding states
+- billing states
+- protected route behavior
+- subscription-aware product access
+
+<Callout title="Core principle">
+  Serious SaaS products require realistic account states during development.
+</Callout>
+
+## Why this exists
+
+Most SaaS products become difficult to validate locally because developers must manually recreate account edge cases repeatedly.
+
+Starter Pro reduces that friction by exposing reusable testing states.
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentication testing",
+      description:
+        "Validate credentials auth, OAuth flows, verification behavior, and protected routes.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Billing validation",
+      description:
+        "Validate subscription-aware product behavior and billing-gated access.",
+      icon: CreditCard,
+    },
+    {
+      title: "Onboarding states",
+      description:
+        "Test verified, unverified, and provider-only onboarding experiences.",
+      icon: UserRoundCheck,
+    },
+    {
+      title: "Product confidence",
+      description:
+        "Reduce repetitive setup work and validate realistic SaaS behavior faster.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Enable fixtures
+
+```bash title=".env.local"
+SEED_AUTH_FIXTURES=true
+```
+
+Then run:
+
+```bash title="seed.sh"
+pnpm app:setup
+```
+
+## Included testing states
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Verified",
+      title: "Standard user",
+      icon: BadgeCheck,
+      description:
+        "Validate normal authenticated product behavior and dashboard flows.",
+      items: [
+        "protected routes",
+        "dashboard navigation",
+        "authenticated settings",
+        "normal SaaS usage",
+      ],
+    },
+    {
+      eyebrow: "Verification",
+      title: "Unverified user",
+      icon: Sparkles,
+      tone: "primary",
+      description:
+        "Validate verification-aware onboarding and restricted account behavior.",
+      items: [
+        "email verification",
+        "restricted access",
+        "verification prompts",
+        "onboarding edge cases",
+      ],
+    },
+    {
+      eyebrow: "OAuth",
+      title: "Provider-only user",
+      icon: LockKeyhole,
+      description:
+        "Validate provider-linked accounts and passwordless account behavior.",
+      items: [
+        "Google sign in",
+        "GitHub sign in",
+        "provider linking",
+        "OAuth-only restrictions",
+      ],
+    },
+    {
+      eyebrow: "Billing",
+      title: "Subscription-enabled user",
+      icon: CreditCard,
+      description:
+        "Validate billing-aware navigation and premium product access.",
+      items: [
+        "premium routes",
+        "upgrade flows",
+        "billing access",
+        "plan-aware UI",
+      ],
+    },
+  ]}
+/>
+
+## Default credentials
+
+```txt title="credentials.txt"
+Password123!
+```
+
+These credentials are intended only for local development environments.
+
+<Callout type="info" title="Security rule">
+  Never reuse development credentials in staging or production environments.
+</Callout>
+
+## Recommended validation flow
+
+1. validate authentication
+2. validate protected routes
+3. validate onboarding states
+4. validate billing-aware access
+5. validate settings flows
+6. validate mobile and PWA behavior
+
+## Prefer / avoid
+
+<PreferAvoid
+  prefer={[
+    "validate multiple account states",
+    "test billing-aware product behavior",
+    "keep fixtures isolated to development",
+    "test OAuth and credentials flows",
+  ]}
+  avoid={[
+    "hardcoding product access",
+    "testing only one account state",
+    "using development credentials in production",
+    "coupling fixtures to business logic",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Why include multiple account states?">
+    Because real SaaS products behave differently depending on verification, billing, provider state, and onboarding lifecycle.
+  </Accordion>
+
+  <Accordion title="Should fixtures exist in production?">
+    No. Fixtures are intended only for local development and controlled staging environments.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Authentication",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Understand sessions, providers, and protected routes.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Billing",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Explore subscription-aware access and Stripe billing.",
+      icon: CreditCard,
+    },
+  ]}
+/>
