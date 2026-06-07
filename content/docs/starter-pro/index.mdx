@@ -1,16 +1,18 @@
 ---
 title: Overview
-description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, secure, and package your SaaS faster with PWA-ready foundations.
-lastUpdated: "2026-06-06"
+description: Understand what Starter Pro is, what it includes, and why it helps you launch, monetize, secure, validate, and package your SaaS faster with PWA-ready foundations.
+lastUpdated: "2026-06-07"
 appliesTo: Starter Pro
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge } from "@pycolors/ui";
 import {
+  CheckCircle2,
   CreditCard,
   Database,
   Download,
+  FlaskConical,
   GitBranch,
   Globe,
   Layers3,
@@ -23,6 +25,7 @@ import {
   Smartphone,
   Sparkles,
   Terminal,
+  TestTube2,
   WifiOff,
 } from "lucide-react";
 
@@ -51,14 +54,16 @@ Starter Pro helps you launch with:
 - backend-ready structure
 - protected routes
 - secure delivery
+- local development fixtures
+- billing validation flows
 - PWA-ready app foundations
-- production-oriented SaaS flows
+- production-oriented SaaS workflows
 
 It is not just more UI. It is the layer that removes the engineering work that usually delays revenue.
 
 <DocsUpgradeCTA
   title="Starter Free validates the product. Starter Pro wires the business."
-  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, backend, PWA-ready app foundations, and deployment confidence become the blocker."
+  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, backend, testing fixtures, PWA-ready app foundations, and deployment confidence become the blocker."
   productSlug="starter-pro"
   buyLabel="Get Starter Pro"
   secondaryHref="/pricing"
@@ -73,7 +78,7 @@ It is not just more UI. It is the layer that removes the engineering work that u
 
 Most SaaS projects slow down at the same point:
 
-> The UI is credible. Now auth, billing, backend, deployment, protected access, and app-quality foundations must become real.
+> The UI is credible. Now auth, billing, backend, deployment, protected access, test states, and app-quality foundations must become real.
 
 That phase is:
 
@@ -110,21 +115,21 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       icon: Database,
     },
     {
+      title: 'Testing fixtures',
+      description:
+        'Seeded local account states for validating auth, onboarding, billing, protected routes, and subscription-aware product behavior.',
+      icon: TestTube2,
+    },
+    {
       title: 'PWA-ready app foundation',
       description:
         'Manifest, installable mode, standalone behavior, professional icons, screenshots, mobile-safe viewport handling, and offline-ready fallback routing.',
       icon: Smartphone,
     },
     {
-      title: 'Secure delivery',
-      description:
-        'Private asset delivery, secure access after purchase, token-based download flow, and controlled fulfillment.',
-      icon: Download,
-    },
-    {
       title: 'Production deployment path',
       description:
-        'Environment variables, production domains, HTTPS, Stripe webhooks, and deployment guidance for launch confidence.',
+        'Environment variables, production domains, HTTPS, Stripe webhooks, local-to-production validation, and deployment guidance for launch confidence.',
       icon: Globe,
     },
   ]}
@@ -154,20 +159,39 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       ),
     },
     {
-      value: 'Environment',
-      title: 'Environment variables',
+      value: 'Local',
+      title: 'Local development',
       icon: Terminal,
       description: (
         <>
           <p>
-            Environment variables separate app URLs, database access, authentication secrets, email delivery, Stripe billing, and deployment infrastructure.
+            Local development validates the real SaaS foundation before deep customization: environment variables, database, seed fixtures, auth, billing, and PWA behavior.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Database</Badge>
-            <Badge variant="outline">Auth secrets</Badge>
-            <Badge variant="outline">Stripe</Badge>
-            <Badge variant="outline">Email</Badge>
+            <Badge variant="outline">PostgreSQL</Badge>
+            <Badge variant="outline">Prisma</Badge>
+            <Badge variant="outline">Seed fixtures</Badge>
+            <Badge variant="outline">Stripe test mode</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Validation',
+      title: 'Testing and validation',
+      icon: FlaskConical,
+      description: (
+        <>
+          <p>
+            Starter Pro includes guidance for validating account states, billing lifecycle behavior, protected access, and app-ready mobile surfaces before launch.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Testing fixtures</Badge>
+            <Badge variant="outline">Billing testing</Badge>
+            <Badge variant="outline">Protected routes</Badge>
+            <Badge variant="outline">Release checks</Badge>
           </div>
         </>
       ),
@@ -191,29 +215,10 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
         </>
       ),
     },
-    {
-      value: 'Deployment',
-      title: 'Deployment',
-      icon: Globe,
-      description: (
-        <>
-          <p>
-            Deployment guidance helps you move from local validation to production infrastructure with safer launch confidence.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Vercel</Badge>
-            <Badge variant="outline">PostgreSQL</Badge>
-            <Badge variant="outline">Webhooks</Badge>
-            <Badge variant="outline">Production domains</Badge>
-          </div>
-        </>
-      ),
-    },
   ]}
 />
 
-## Free vs Pro
+## Starter Free vs Starter Pro
 
 | Capability | Starter Free | Starter Pro |
 | --- | --- | --- |
@@ -226,9 +231,12 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 | Stripe Checkout | UI only | Real |
 | Billing portal | UI only | Real |
 | Webhook sync | Not included | Real |
+| Billing testing guidance | Not included | Included |
 | Invoices and subscriptions | Mocked | Real |
 | Protected routes | Partial | Production-ready |
 | Backend structure | Mocked | Real-ready |
+| Testing fixtures | Not included | Included |
+| Local development path | Basic | Production-shaped |
 | PWA manifest | Basic/manual if added | Included foundation |
 | Installable mode | Not included | Included |
 | Offline fallback | Not included | Included baseline |
@@ -237,7 +245,7 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
 | Best use case | Validate UX | Launch faster |
 
 <Callout title="Free to validate. Pro to monetize and package.">
-  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, deployment, delivery, and PWA-ready app foundations.
+  Starter Free proves the surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, testing, deployment, delivery, and PWA-ready app foundations.
 </Callout>
 
 ## Upgrade strategy
@@ -268,21 +276,21 @@ Starter Pro exists to reduce that repeated implementation cost so you can spend 
       icon: Rocket,
       tone: 'pro',
       description:
-        'Use Starter Pro when auth, billing, protected routes, backend contracts, PWA-ready app foundations, and production confidence become the work slowing launch.',
+        'Use Starter Pro when auth, billing, protected routes, backend contracts, local testing states, PWA-ready app foundations, and production confidence become the work slowing launch.',
       items: [
         'real authentication',
         'Stripe billing',
         'protected routes',
         'backend foundations',
+        'testing fixtures',
         'installable PWA layer',
-        'deployment confidence',
       ],
       cta: 'Explore Starter Pro →',
     },
   ]}
 />
 
-## Builder path
+### Builder path
 
 Most builders follow this path:
 
@@ -290,13 +298,16 @@ Most builders follow this path:
 2. validate UX and product structure
 3. move to Starter Pro
 4. understand the architecture
-5. configure environment variables
-6. wire authentication
-7. wire billing
-8. validate PWA installability
-9. connect backend logic
-10. validate delivery and deployment
-11. launch
+5. configure local development
+6. configure environment variables
+7. validate testing fixtures
+8. wire authentication
+9. wire billing
+10. validate billing lifecycle
+11. validate PWA installability
+12. connect backend logic
+13. validate delivery and deployment
+14. launch
 
 Starter Pro is the bridge between:
 
@@ -334,6 +345,7 @@ You are buying:
 - fewer auth and billing edge cases
 - faster path to revenue
 - stronger production confidence
+- realistic local testing states
 - more credible app-like product perception
 
 <Callout title="Time-to-revenue decision">
@@ -361,27 +373,27 @@ You are buying:
       icon: Rocket,
     },
     {
+      title: 'Local development',
+      href: '/docs/starter-pro/local-development',
+      description:
+        'Structure a realistic local SaaS environment with auth, billing, database, and PWA foundations.',
+      icon: Terminal,
+      badge: 'New',
+    },
+    {
+      title: 'Testing fixtures',
+      href: '/docs/starter-pro/testing-fixtures',
+      description:
+        'Validate auth, onboarding, billing, protected routes, and subscription-aware states locally.',
+      icon: TestTube2,
+      badge: 'New',
+    },
+    {
       title: 'Environment variables',
       href: '/docs/starter-pro/environment-variables',
       description:
         'Configure app URLs, auth, database, Stripe, and email delivery safely.',
-      icon: Terminal,
-    },
-    {
-      title: 'PWA',
-      href: '/docs/starter-pro/pwa',
-      description:
-        'Understand installability, standalone mode, app-like mobile UX, screenshots, and offline-ready routing.',
-      icon: Smartphone,
-      badge: 'New',
-    },
-    {
-      title: 'PWA setup',
-      href: '/docs/starter-pro/pwa-setup',
-      description:
-        'Configure manifest, icons, screenshots, service worker registration, and the offline page.',
-      icon: MonitorSmartphone,
-      badge: 'New',
+      icon: Server,
     },
     {
       title: 'Deployment',
@@ -405,6 +417,22 @@ You are buying:
       icon: CreditCard,
     },
     {
+      title: 'Billing testing',
+      href: '/docs/starter-pro/billing-testing',
+      description:
+        'Validate checkout, webhooks, subscription lifecycle, and billing-aware access before launch.',
+      icon: CheckCircle2,
+      badge: 'New',
+    },
+    {
+      title: 'PWA',
+      href: '/docs/starter-pro/pwa',
+      description:
+        'Understand installability, standalone mode, app-like mobile UX, screenshots, and offline-ready routing.',
+      icon: Smartphone,
+      badge: 'New',
+    },
+    {
       title: 'Backend',
       href: '/docs/starter-pro/backend',
       description:
@@ -420,6 +448,65 @@ You are buying:
     },
   ]}
 />
+
+### Local validation foundation
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: 'Setup',
+      title: 'Local development',
+      href: '/docs/starter-pro/local-development',
+      icon: Terminal,
+      tone: 'platform',
+      description:
+        'Validate infrastructure, database, auth, billing, protected routes, and PWA behavior before deep customization.',
+      items: [
+        'environment setup',
+        'database startup',
+        'seed and migration flow',
+        'local validation checklist',
+      ],
+      cta: 'Open local setup →',
+    },
+    {
+      eyebrow: 'Fixtures',
+      title: 'Testing fixtures',
+      href: '/docs/starter-pro/testing-fixtures',
+      icon: TestTube2,
+      tone: 'primary',
+      description:
+        'Use seeded states to validate realistic auth, onboarding, billing, and protected access behavior.',
+      items: [
+        'verified user',
+        'unverified user',
+        'OAuth-only user',
+        'subscription-enabled user',
+      ],
+      cta: 'Open fixtures →',
+    },
+    {
+      eyebrow: 'Billing',
+      title: 'Billing testing',
+      href: '/docs/starter-pro/billing-testing',
+      icon: CreditCard,
+      description:
+        'Validate checkout, webhook truth, subscription lifecycle, and plan-aware access before launch.',
+      items: [
+        'Stripe CLI',
+        'webhook sync',
+        'subscription states',
+        'premium route access',
+      ],
+      cta: 'Open billing testing →',
+    },
+  ]}
+/>
+
+<Callout type="info" title="Validation boundary">
+  Starter Pro is not only a starter UI. It includes the local validation path required to test realistic SaaS behavior before launch.
+</Callout>
 
 ## PWA-ready foundation
 
@@ -480,11 +567,19 @@ You are buying:
       icon: GitBranch,
     },
     {
-      title: 'PWA production checklist',
-      href: '/docs/starter-pro/pwa-production-checklist',
+      title: 'Testing fixtures',
+      href: '/docs/starter-pro/testing-fixtures',
       description:
-        'Validate installability, screenshots, service worker, offline fallback, and mobile app-like behavior before release.',
-      icon: WifiOff,
+        'Validate realistic account states, onboarding flows, billing states, and protected routes locally.',
+      icon: TestTube2,
+      badge: 'New',
+    },
+    {
+      title: 'Billing testing',
+      href: '/docs/starter-pro/billing-testing',
+      description:
+        'Validate checkout, webhooks, subscriptions, and billing-aware SaaS behavior before launch.',
+      icon: CreditCard,
       badge: 'New',
     },
     {
@@ -493,13 +588,6 @@ You are buying:
       description:
         'Validate auth, billing, backend, delivery, environment, and deployment readiness before launch.',
       icon: ShieldCheck,
-    },
-    {
-      title: 'Deployment',
-      href: '/docs/starter-pro/deployment',
-      description:
-        'Deploy Starter Pro with production-ready infrastructure, environment setup, domains, and Stripe webhooks.',
-      icon: Globe,
     },
   ]}
 />

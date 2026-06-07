@@ -1,0 +1,438 @@
+---
+title: Billing Testing
+description: Validate Stripe Checkout, subscriptions, webhooks, and billing-aware SaaS behavior before launch.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AlertTriangle,
+  CheckCircle2,
+  CreditCard,
+  Database,
+  Globe,
+  Layers3,
+  LockKeyhole,
+  RefreshCcw,
+  Rocket,
+  ShieldCheck,
+  Webhook,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Billing Testing</Badge>
+</div>
+
+## Validate billing before launch
+
+Billing systems require more than checkout UI.
+
+Starter Pro includes production-shaped billing foundations designed to validate:
+
+- Checkout behavior
+- webhook synchronization
+- subscription lifecycle
+- plan-aware product access
+- billing-aware navigation
+- premium route protection
+
+<DocsUpgradeCTA
+  title="Validate monetization before launch."
+  description="Reduce billing inconsistency, webhook drift, and subscription access issues before shipping."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/billing"
+  secondaryLabel="Billing system"
+/>
+
+<Callout title="Core principle">
+  Redirects are UX. Webhooks are billing truth.
+</Callout>
+
+## Why billing testing matters
+
+Billing systems are distributed state systems.
+
+A successful redirect does not guarantee synchronized subscription state.
+
+The frontend can look correct while the backend state is still wrong:
+
+- checkout may complete
+- the user may return to the app
+- the subscription may not be synchronized
+- premium access may remain locked
+- webhook processing may fail silently
+- billing state may drift from Stripe
+
+That is why billing must be tested as a lifecycle, not as a button.
+
+```txt title="billing-lifecycle.txt"
+Checkout
+  ↓
+Stripe
+  ↓
+Webhook verification
+  ↓
+Subscription sync
+  ↓
+Application billing state
+  ↓
+Plan-aware access
+  ↓
+Protected product routes
+```
+
+<Callout type="info" title="Production insight">
+  The most dangerous billing bugs often appear after checkout succeeds.
+  Validate the state synchronization path, not only the payment page.
+</Callout>
+
+### Billing mental model
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Checkout",
+      title: "Checkout starts the flow",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Checkout creates payment intent and subscription intent. It does not prove your application state is already synchronized.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Checkout session</Badge>
+            <Badge variant="outline">Success URL</Badge>
+            <Badge variant="outline">Cancel URL</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Webhook",
+      title: "Webhook confirms truth",
+      icon: Webhook,
+      description: (
+        <>
+          <p>
+            Webhooks tell your backend what actually happened in Stripe after checkout, renewal, cancellation, or failed payment.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Signature verification</Badge>
+            <Badge variant="outline">Subscription sync</Badge>
+            <Badge variant="outline">Invoice events</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Access",
+      title: "Access reads app state",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Protected routes should read synchronized billing state from your app, not assume access from a client redirect.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Plan-aware access</Badge>
+            <Badge variant="outline">Server-verifiable</Badge>
+            <Badge variant="outline">Protected routes</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### Billing validation areas
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Stripe Checkout",
+      description:
+        "Validate session creation, success redirects, cancel redirects, and customer mapping safely.",
+      icon: CreditCard,
+    },
+    {
+      title: "Webhook synchronization",
+      description:
+        "Confirm Stripe events synchronize subscription, invoice, and customer state correctly.",
+      icon: Webhook,
+    },
+    {
+      title: "Subscription lifecycle",
+      description:
+        "Validate active, trialing, canceled, past-due, and failed payment states.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Protected access",
+      description:
+        "Validate premium product access, billing-aware navigation, and server-side gating.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Stripe CLI
+
+Use Stripe CLI to forward local webhook events to Starter Pro.
+
+```bash title="stripe-cli.sh"
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Then configure the webhook secret in `.env.local`.
+
+```bash title=".env.local"
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+```
+
+<Callout title="Webhook rule">
+  If the webhook secret is wrong, billing sync should fail safely.
+  Do not bypass webhook verification during development.
+</Callout>
+
+## Recommended validation flow
+
+<Steps>
+  <Step>
+    ### Start the local app
+
+```bash
+pnpm dev
+```
+  </Step>
+
+  <Step>
+    ### Start Stripe webhook forwarding
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+  </Step>
+
+  <Step>
+    ### Start the upgrade flow
+
+    Trigger checkout from pricing, billing, or an upgrade CTA.
+  </Step>
+
+  <Step>
+    ### Complete checkout in test mode
+
+    Use a Stripe test card and return to the application.
+  </Step>
+
+  <Step>
+    ### Confirm webhook synchronization
+
+    Validate that subscription state was synchronized in your database and reflected in protected routes.
+  </Step>
+
+  <Step>
+    ### Validate access behavior
+
+    Confirm that premium surfaces behave correctly after subscription state changes.
+  </Step>
+</Steps>
+
+## Recommended validation checklist
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Checkout",
+      title: "Upgrade flow",
+      icon: CreditCard,
+      description:
+        "Validate the complete upgrade and redirect lifecycle.",
+      items: [
+        "Checkout session creation",
+        "success redirect",
+        "cancel redirect",
+        "customer mapping",
+        "pricing entry points",
+      ],
+    },
+    {
+      eyebrow: "Webhooks",
+      title: "Subscription synchronization",
+      icon: Webhook,
+      tone: "primary",
+      description:
+        "Validate webhook truth and backend synchronization.",
+      items: [
+        "subscription created",
+        "subscription updated",
+        "payment succeeded",
+        "payment failed",
+        "idempotent processing",
+      ],
+    },
+    {
+      eyebrow: "Access",
+      title: "Plan-aware behavior",
+      icon: ShieldCheck,
+      description:
+        "Validate that product access follows synchronized billing state.",
+      items: [
+        "premium route access",
+        "upgrade redirect",
+        "billing page state",
+        "server-side checks",
+      ],
+    },
+    {
+      eyebrow: "State",
+      title: "Lifecycle coverage",
+      icon: RefreshCcw,
+      description:
+        "Validate more than the happy path before launch.",
+      items: [
+        "trialing",
+        "active",
+        "past due",
+        "canceled",
+      ],
+    },
+  ]}
+/>
+
+## Stripe test card
+
+```txt title="stripe-test-card.txt"
+4242 4242 4242 4242
+```
+
+Use:
+
+- any future expiration date
+- any CVC
+- any ZIP code
+
+### Common production mistakes
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Redirect-only validation",
+      description:
+        "Assuming a success redirect proves subscription state was synchronized.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Client-only access checks",
+      description:
+        "Protecting premium access only in the frontend instead of server-verifiable logic.",
+      icon: Layers3,
+    },
+    {
+      title: "Mixed Stripe modes",
+      description:
+        "Using test API keys with live product or price IDs, or the reverse.",
+      icon: CreditCard,
+    },
+    {
+      title: "Webhook shortcuts",
+      description:
+        "Skipping webhook signature verification or ignoring retry behavior.",
+      icon: Webhook,
+    },
+  ]}
+/>
+
+## Prefer / avoid
+
+<PreferAvoid
+  prefer={[
+    "validate billing end-to-end",
+    "treat webhooks as truth",
+    "test subscription lifecycle states",
+    "protect premium routes server-side",
+    "confirm billing state in the database",
+  ]}
+  avoid={[
+    "unlocking access only from redirects",
+    "testing only the pricing page",
+    "skipping webhook verification",
+    "mixing Stripe test and live IDs",
+    "hardcoding premium access during testing",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Why are webhooks required?">
+    Because redirects alone cannot confirm what actually happened inside Stripe. Webhooks are the backend synchronization layer.
+  </Accordion>
+
+  <Accordion title="Should access checks happen client-side only?">
+    No. Sensitive billing-aware access should remain server-verifiable. The UI can reflect access state, but the server should protect valuable resources.
+  </Accordion>
+
+  <Accordion title="Do I need to test failed payments before launch?">
+    Yes. Failed payment and cancellation states are part of real subscription lifecycle behavior and should not be discovered after launch.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Understand the full Stripe billing architecture.",
+      icon: CreditCard,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy billing infrastructure safely.",
+      icon: Globe,
+    },
+    {
+      title: "Backend foundations",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Understand how billing state connects to server-side access.",
+      icon: Database,
+    },
+    {
+      title: "Production checklist",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validate infrastructure, auth, billing, and release readiness.",
+      icon: CheckCircle2,
+    },
+  ]}
+/>

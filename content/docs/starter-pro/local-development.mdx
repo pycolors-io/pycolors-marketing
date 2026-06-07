@@ -1,0 +1,382 @@
+---
+title: Local Development
+description: Structure a realistic local SaaS environment with authentication, billing, database, and PWA foundations.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AlertTriangle,
+  CreditCard,
+  Database,
+  Globe,
+  Layers3,
+  LockKeyhole,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Smartphone,
+  Terminal,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Local Development</Badge>
+</div>
+
+## Local environments should feel real
+
+Starter Pro is designed so local development validates realistic SaaS behavior instead of disconnected demo pages.
+
+The local environment supports:
+
+- authentication
+- billing
+- protected routes
+- Prisma
+- Stripe
+- PWA behavior
+- production-shaped workflows
+
+<DocsUpgradeCTA
+  title="Start from a production-shaped local environment."
+  description="Validate auth, billing, mobile UX, and product infrastructure before writing domain logic."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>
+
+<Callout title="Core principle">
+  Local development should validate product infrastructure, not only UI composition.
+</Callout>
+
+## Why this matters
+
+Many SaaS products become difficult to scale because local development environments never reflected real production behavior.
+
+That usually creates:
+
+- inconsistent auth flows
+- billing drift
+- broken onboarding
+- unsafe deployment assumptions
+- mobile UX regressions
+- fragile environment setup
+
+Starter Pro is structured to reduce that operational drift from the start.
+
+```txt title="local-development-model.txt"
+Local setup
+  ↓
+Environment variables
+  ↓
+Database
+  ↓
+Auth
+  ↓
+Billing
+  ↓
+Protected routes
+  ↓
+PWA behavior
+  ↓
+Production confidence
+```
+
+<Callout type="info" title="Production insight">
+  A strong local setup is not about convenience only.
+  It is the first release gate for your product infrastructure.
+</Callout>
+
+### Mental model
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Infrastructure",
+      title: "Infrastructure layer",
+      icon: Server,
+      description: (
+        <>
+          <p>
+            The infrastructure layer includes environment variables, database access, local services, and development scripts.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Environment</Badge>
+            <Badge variant="outline">PostgreSQL</Badge>
+            <Badge variant="outline">Prisma</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Product",
+      title: "Product behavior",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The product layer includes dashboards, settings, billing pages, protected routes, and starter surfaces.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Dashboard</Badge>
+            <Badge variant="outline">Settings</Badge>
+            <Badge variant="outline">Billing</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Validation",
+      title: "Validation layer",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            The validation layer confirms that real flows work before deeper customization starts.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Auth</Badge>
+            <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">PWA</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### Included infrastructure
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentication",
+      description:
+        "Credentials auth, OAuth providers, sessions, and protected routing.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Billing",
+      description:
+        "Stripe-ready billing infrastructure and subscription-aware flows.",
+      icon: CreditCard,
+    },
+    {
+      title: "Database",
+      description:
+        "Prisma-powered PostgreSQL development environment.",
+      icon: Database,
+    },
+    {
+      title: "PWA",
+      description:
+        "Installable app behavior, offline routing, safe areas, and standalone testing.",
+      icon: Smartphone,
+    },
+  ]}
+/>
+
+## Recommended setup flow
+
+<Steps>
+  <Step>
+    ### Install dependencies
+
+```bash
+pnpm install
+```
+  </Step>
+
+  <Step>
+    ### Configure environment variables
+
+```bash
+cp .env.example .env.local
+```
+  </Step>
+
+  <Step>
+    ### Start infrastructure
+
+```bash
+pnpm db:up
+```
+  </Step>
+
+  <Step>
+    ### Seed and migrate
+
+```bash
+pnpm app:setup
+```
+  </Step>
+
+  <Step>
+    ### Start development
+
+```bash
+pnpm dev
+```
+  </Step>
+</Steps>
+
+## Local development checklist
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Required",
+      title: "Infrastructure validation",
+      icon: Server,
+      description:
+        "Confirm the local environment is ready before customizing product logic.",
+      items: [
+        "dependencies installed",
+        "environment variables configured",
+        "database running",
+        "Prisma client generated",
+        "seed completed",
+      ],
+    },
+    {
+      eyebrow: "Required",
+      title: "Product validation",
+      icon: Rocket,
+      tone: "primary",
+      description:
+        "Confirm that Starter Pro behaves like a real SaaS locally.",
+      items: [
+        "auth flows work",
+        "billing routes render",
+        "settings pages work",
+        "protected pages redirect correctly",
+        "PWA fallback works",
+      ],
+    },
+  ]}
+/>
+
+## Recommended validation checklist
+
+Validate:
+
+- authentication flows
+- billing routes
+- protected pages
+- mobile responsiveness
+- PWA installability
+- offline fallback behavior
+- settings surfaces
+- local seed fixtures
+
+<Callout type="info" title="Validation principle">
+  Validate real product flows locally before customizing deeply.
+</Callout>
+
+### Common mistakes
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Demo-only environments",
+      description:
+        "Testing isolated pages without validating real auth or billing behavior.",
+      icon: Layers3,
+    },
+    {
+      title: "Skipping mobile validation",
+      description:
+        "Ignoring standalone mode, safe areas, and mobile navigation behavior.",
+      icon: Smartphone,
+    },
+    {
+      title: "Environment drift",
+      description:
+        "Letting local, staging, and production variables diverge without clear documentation.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Delayed validation",
+      description:
+        "Customizing deeply before confirming the default product flows work.",
+      icon: Terminal,
+    },
+  ]}
+/>
+
+## Prefer / avoid
+
+<PreferAvoid
+  prefer={[
+    "validate auth before product customization",
+    "test billing locally with Stripe test mode",
+    "use seed fixtures for repeatable states",
+    "test mobile and standalone behavior",
+    "keep environment variables documented",
+  ]}
+  avoid={[
+    "customizing before setup is validated",
+    "testing only static pages",
+    "skipping protected routes",
+    "using production secrets locally",
+    "ignoring PWA safe-area behavior",
+  ]}
+/>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Environment Variables",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configure auth, billing, database, and infrastructure safely.",
+      icon: Server,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy Starter Pro with production-ready infrastructure.",
+      icon: Globe,
+    },
+    {
+      title: "Testing fixtures",
+      href: "/docs/starter-pro/testing-fixtures",
+      description:
+        "Validate realistic account states and onboarding flows.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "PWA setup",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Validate local installability and app-like mobile behavior.",
+      icon: Smartphone,
+    },
+  ]}
+/>
