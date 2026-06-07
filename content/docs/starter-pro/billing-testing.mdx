@@ -1,0 +1,186 @@
+---
+title: Billing Testing
+description: Validate Stripe Checkout, subscriptions, webhooks, and billing-aware SaaS behavior before launch.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+
+import {
+  CreditCard,
+  RefreshCcw,
+  ShieldCheck,
+  Webhook,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Billing Testing</Badge>
+</div>
+
+## Validate billing before launch
+
+Billing systems require more than checkout UI.
+
+Starter Pro includes production-shaped billing foundations designed to validate:
+
+- Checkout behavior
+- webhook synchronization
+- subscription lifecycle
+- plan-aware product access
+- billing-aware navigation
+
+<Callout title="Core principle">
+  Redirects are UX. Webhooks are billing truth.
+</Callout>
+
+## Billing validation areas
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Stripe Checkout",
+      description:
+        "Validate session creation and upgrade flows safely.",
+      icon: CreditCard,
+    },
+    {
+      title: "Webhook synchronization",
+      description:
+        "Confirm Stripe events synchronize subscription state correctly.",
+      icon: Webhook,
+    },
+    {
+      title: "Subscription lifecycle",
+      description:
+        "Validate active, canceled, trialing, and failed payment states.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Protected access",
+      description:
+        "Validate premium product access and billing-aware gating.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Stripe CLI
+
+```bash title="stripe-cli.sh"
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Then configure:
+
+```bash title=".env.local"
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+```
+
+## Recommended validation checklist
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Checkout",
+      title: "Upgrade flow",
+      icon: CreditCard,
+      description:
+        "Validate the complete upgrade and redirect lifecycle.",
+      items: [
+        "Checkout session creation",
+        "success redirect",
+        "cancel redirect",
+        "customer mapping",
+      ],
+    },
+    {
+      eyebrow: "Webhooks",
+      title: "Subscription synchronization",
+      icon: Webhook,
+      tone: "primary",
+      description:
+        "Validate webhook truth and backend synchronization.",
+      items: [
+        "subscription created",
+        "subscription updated",
+        "payment succeeded",
+        "payment failed",
+      ],
+    },
+  ]}
+/>
+
+## Stripe test card
+
+```txt title="stripe-test-card.txt"
+4242 4242 4242 4242
+```
+
+Use:
+- any future expiration date
+- any CVC
+- any ZIP code
+
+## Prefer / avoid
+
+<PreferAvoid
+  prefer={[
+    "validate billing end-to-end",
+    "treat webhooks as truth",
+    "test subscription lifecycle states",
+    "protect premium routes server-side",
+  ]}
+  avoid={[
+    "unlocking access only from redirects",
+    "testing only the pricing page",
+    "skipping webhook verification",
+    "mixing Stripe test and live IDs",
+  ]}
+/>
+
+## Common questions
+
+<Accordions type="single">
+  <Accordion title="Why are webhooks required?">
+    Because redirects alone cannot confirm what actually happened inside Stripe.
+  </Accordion>
+
+  <Accordion title="Should access checks happen client-side only?">
+    No. Sensitive billing-aware access should remain server-verifiable.
+  </Accordion>
+</Accordions>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Understand the full Stripe billing architecture.",
+      icon: CreditCard,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy billing infrastructure safely.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
