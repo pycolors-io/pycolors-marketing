@@ -7,21 +7,28 @@ appliesTo: Starter Pro
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Badge } from "@pycolors/ui";
 
 import {
+  AlertTriangle,
   BadgeCheck,
   CreditCard,
+  KeyRound,
+  Layers3,
   LockKeyhole,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   UserRoundCheck,
 } from "lucide-react";
 
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
@@ -42,6 +49,15 @@ The goal is to simulate:
 - protected route behavior
 - subscription-aware product access
 
+<DocsUpgradeCTA
+  title="Validate realistic SaaS states locally."
+  description="Test auth, billing, onboarding, and protected access without rebuilding account states manually."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/local-development"
+  secondaryLabel="Local development"
+/>
+
 <Callout title="Core principle">
   Serious SaaS products require realistic account states during development.
 </Callout>
@@ -51,6 +67,100 @@ The goal is to simulate:
 Most SaaS products become difficult to validate locally because developers must manually recreate account edge cases repeatedly.
 
 Starter Pro reduces that friction by exposing reusable testing states.
+
+```txt title="testing-fixtures-model.txt"
+Seed fixtures
+  ↓
+Account states
+  ↓
+Billing states
+  ↓
+Protected routes
+  ↓
+Realistic product validation
+```
+
+## Why account states matter
+
+Real SaaS products behave differently depending on:
+
+- verification lifecycle
+- billing status
+- provider state
+- onboarding state
+- protected access level
+
+Without realistic fixtures, developers often validate only happy paths.
+
+That creates hidden production risk later.
+
+<Callout type="info" title="Production insight">
+  A single happy-path user is not enough to validate a SaaS product.
+  Real products require multiple identity, billing, and access states.
+</Callout>
+
+### Mental model
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Identity",
+      title: "Identity state",
+      icon: UserRoundCheck,
+      description: (
+        <>
+          <p>
+            Identity state determines whether a user is verified, OAuth-only, password-based, or ready for normal product access.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Verified</Badge>
+            <Badge variant="outline">Unverified</Badge>
+            <Badge variant="outline">OAuth-only</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Billing",
+      title: "Billing state",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing state determines whether product areas should be available, restricted, or upgrade-gated.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Free</Badge>
+            <Badge variant="outline">Trialing</Badge>
+            <Badge variant="outline">Plan-aware access</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Access",
+      title: "Access state",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Access state validates whether protected routes, settings, billing, and admin surfaces behave correctly.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="outline">Protected routes</Badge>
+            <Badge variant="outline">Upgrade redirects</Badge>
+            <Badge variant="outline">Settings</Badge>
+          </div>
+        </>
+      ),
+    },
+  ]}
+/>
+
+### Feature overview
 
 <DocsFeatureGrid
   columns={2}
@@ -95,7 +205,7 @@ Then run:
 pnpm app:setup
 ```
 
-## Included testing states
+### Included testing states
 
 <DocsDecisionGrid
   columns={2}
@@ -170,12 +280,72 @@ These credentials are intended only for local development environments.
 
 ## Recommended validation flow
 
-1. validate authentication
-2. validate protected routes
-3. validate onboarding states
-4. validate billing-aware access
-5. validate settings flows
-6. validate mobile and PWA behavior
+<Steps>
+  <Step>
+    ### Enable fixture seeding
+
+    Set `SEED_AUTH_FIXTURES=true` in your local environment.
+  </Step>
+
+  <Step>
+    ### Run setup
+
+```bash
+pnpm app:setup
+```
+  </Step>
+
+  <Step>
+    ### Validate authentication states
+
+    Test verified, unverified, password-based, and OAuth-oriented account behavior.
+  </Step>
+
+  <Step>
+    ### Validate billing-aware states
+
+    Confirm that premium, free, and upgrade-gated surfaces behave as expected.
+  </Step>
+
+  <Step>
+    ### Validate mobile and PWA behavior
+
+    Confirm that the same account states remain usable in mobile and standalone app contexts.
+  </Step>
+</Steps>
+
+### Common mistakes
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Testing only happy paths",
+      description:
+        "Skipping verification, provider-only, or billing edge cases.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Hardcoded product access",
+      description:
+        "Bypassing realistic protected access behavior during development.",
+      icon: Layers3,
+    },
+    {
+      title: "Fixture leakage",
+      description:
+        "Letting local-only development credentials influence production environments.",
+      icon: KeyRound,
+    },
+    {
+      title: "Desktop-only validation",
+      description:
+        "Skipping mobile, standalone, and PWA behavior for important account states.",
+      icon: Smartphone,
+    },
+  ]}
+/>
 
 ## Prefer / avoid
 
@@ -185,12 +355,14 @@ These credentials are intended only for local development environments.
     "test billing-aware product behavior",
     "keep fixtures isolated to development",
     "test OAuth and credentials flows",
+    "validate mobile and PWA behavior",
   ]}
   avoid={[
     "hardcoding product access",
     "testing only one account state",
     "using development credentials in production",
     "coupling fixtures to business logic",
+    "skipping restricted account states",
   ]}
 />
 
@@ -203,6 +375,10 @@ These credentials are intended only for local development environments.
 
   <Accordion title="Should fixtures exist in production?">
     No. Fixtures are intended only for local development and controlled staging environments.
+  </Accordion>
+
+  <Accordion title="Why not create users manually?">
+    Manual setup is slower, inconsistent, and easy to forget. Fixtures make core states repeatable across local environments.
   </Accordion>
 </Accordions>
 
@@ -225,6 +401,20 @@ These credentials are intended only for local development environments.
       description:
         "Explore subscription-aware access and Stripe billing.",
       icon: CreditCard,
+    },
+    {
+      title: "Local development",
+      href: "/docs/starter-pro/local-development",
+      description:
+        "Build a realistic local SaaS environment.",
+      icon: Layers3,
+    },
+    {
+      title: "PWA setup",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Validate installability, safe areas, and standalone mobile behavior.",
+      icon: Smartphone,
     },
   ]}
 />
