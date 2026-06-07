@@ -1,0 +1,161 @@
+---
+title: Local Development
+description: Structure a realistic local SaaS environment with authentication, billing, database, and PWA foundations.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  Database,
+  LockKeyhole,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Smartphone,
+} from "lucide-react";
+
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Local Development</Badge>
+</div>
+
+## Local environments should feel real
+
+Starter Pro is designed so local development validates realistic SaaS behavior instead of disconnected demo pages.
+
+The local environment supports:
+
+- authentication
+- billing
+- protected routes
+- Prisma
+- Stripe
+- PWA behavior
+- production-shaped workflows
+
+<Callout title="Core principle">
+  Local development should validate product infrastructure, not only UI composition.
+</Callout>
+
+## Included infrastructure
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentication",
+      description:
+        "Credentials auth, OAuth providers, sessions, and protected routing.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Billing",
+      description:
+        "Stripe-ready billing infrastructure and subscription-aware flows.",
+      icon: Rocket,
+    },
+    {
+      title: "Database",
+      description:
+        "Prisma-powered PostgreSQL development environment.",
+      icon: Database,
+    },
+    {
+      title: "PWA",
+      description:
+        "Installable app behavior, offline routing, and standalone testing.",
+      icon: Smartphone,
+    },
+  ]}
+/>
+
+## Recommended setup flow
+
+<Steps>
+  <Step>
+    ### Install dependencies
+
+```bash
+pnpm install
+```
+  </Step>
+
+  <Step>
+    ### Configure environment variables
+
+```bash
+cp .env.example .env.local
+```
+  </Step>
+
+  <Step>
+    ### Start infrastructure
+
+```bash
+pnpm db:up
+```
+  </Step>
+
+  <Step>
+    ### Seed and migrate
+
+```bash
+pnpm app:setup
+```
+  </Step>
+
+  <Step>
+    ### Start development
+
+```bash
+pnpm dev
+```
+  </Step>
+</Steps>
+
+## Recommended validation checklist
+
+Validate:
+
+- authentication flows
+- billing routes
+- protected pages
+- mobile responsiveness
+- PWA installability
+- offline fallback behavior
+- settings surfaces
+
+<Callout type="info" title="Validation principle">
+  Validate real product flows locally before customizing deeply.
+</Callout>
+
+## Related
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Environment Variables",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configure auth, billing, database, and infrastructure safely.",
+      icon: Server,
+    },
+    {
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Deploy Starter Pro with production-ready infrastructure.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
