@@ -74,7 +74,7 @@ const productSurfaces = [
   {
     title: '/login + /register',
     badge: 'Auth UX',
-    image: '/images/starters/free/free-auth-pycolors.png',
+    image: '/images/starters/free/auth-page-pycolors.png',
     subtitle:
       'Production-shaped authentication screens that help your SaaS feel credible before real auth is wired.',
     points: [
@@ -88,7 +88,7 @@ const productSurfaces = [
   {
     title: '/dashboard',
     badge: 'Product credibility',
-    image: '/images/starters/free/free-dashboard-page-pycolors.png',
+    image: '/images/starters/free/dashboard-free-page-pycolors.png',
     subtitle:
       'A structured dashboard designed to communicate product value immediately.',
     points: [
@@ -102,7 +102,7 @@ const productSurfaces = [
   {
     title: '/projects',
     badge: 'CRUD surface',
-    image: '/images/starters/free/free-projects-pycolors.png',
+    image: '/images/starters/free/projects-page-pycolors.png',
     subtitle:
       'Reusable CRUD patterns adapted to modern SaaS products and internal tools.',
     points: ['Tables', 'Dialogs', 'Actions', 'Entity flows'],
@@ -111,7 +111,7 @@ const productSurfaces = [
   {
     title: '/settings',
     badge: 'Trust',
-    image: '/images/starters/free/free-settings-pycolors.png',
+    image: '/images/starters/free/settings-page-pycolors.png',
     subtitle:
       'Settings surfaces that make your product feel mature and account-ready.',
     points: [
@@ -125,7 +125,7 @@ const productSurfaces = [
   {
     title: '/billing',
     badge: 'Monetization',
-    image: '/images/starters/free/free-billing-pycolors.png',
+    image: '/images/starters/free/billing-free-page-pycolors.png',
     subtitle:
       'Billing entrypoints designed before Stripe wiring, so the paid path is visible early.',
     points: [
@@ -139,7 +139,7 @@ const productSurfaces = [
   {
     title: '/admin',
     badge: 'B2B-ready',
-    image: '/images/starters/free/free-admin-pycolors.png',
+    image: '/images/starters/free/admin-page-pycolors.png',
     subtitle:
       'Team and member management surfaces for B2B SaaS credibility.',
     points: [
@@ -226,47 +226,53 @@ function SurfaceCard({
   readonly image: string;
 }) {
   return (
-    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated">
-      <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
+    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-border hover:bg-surface-elevated hover:shadow-medium">
+      <div className="border-b border-border-subtle bg-surface-muted/70 px-4 py-3">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-medium text-foreground">
-            {title}
-          </p>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-primary" />
 
-          <span className="text-[11px] text-muted-foreground">
-            {badge}
-          </span>
-        </div>
-      </div>
-      <div className="relative aspect-16/10 overflow-hidden border-b border-border-subtle bg-background">
-        <Image
-          src={image}
-          alt={`${title} surface preview`}
-          fill
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
-      </div>
-      <CardContent className="p-6">
-        <div className="space-y-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="text-sm font-medium text-foreground">
+            <p className="font-mono text-xs text-foreground">
               {title}
-            </div>
-
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
-            >
-              {badge}
-            </Badge>
+            </p>
           </div>
 
-          <p className="text-sm leading-7 text-muted-foreground">
-            {subtitle}
-          </p>
+          <Badge
+            variant="outline"
+            className="rounded-[5px] border-border-subtle bg-background/60 text-[11px]"
+          >
+            {badge}
+          </Badge>
+        </div>
+      </div>
 
-          <ul className="space-y-2">
+      <div className="relative border-b border-border-subtle bg-surface p-3">
+        <div className="relative flex aspect-16/10 items-center justify-center overflow-hidden rounded-[5px] border border-border-subtle bg-white">
+          <Image
+            src={image}
+            alt={`${title} surface preview`}
+            fill
+            className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/5" />
+        </div>
+      </div>
+
+      <CardContent className="p-6">
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              {title}
+            </h3>
+
+            <p className="text-sm leading-7 text-muted-foreground">
+              {subtitle}
+            </p>
+          </div>
+
+          <ul className="grid gap-2 sm:grid-cols-2">
             {points.map((point) => (
               <CheckItem key={point}>{point}</CheckItem>
             ))}
@@ -288,7 +294,6 @@ function SurfaceCard({
     </Card>
   );
 }
-
 function ProofPill({
   children,
 }: {
@@ -396,7 +401,7 @@ export default function StarterFreePage() {
 
                   <div className="group relative aspect-video w-full overflow-hidden bg-background">
                     <Image
-                      src="/images/starters/free/starter-free-pycolors-hero.png"
+                      src="/images/starters/free/dashboard-free-page-pycolors-hero.png"
                       alt="Starter Free SaaS product surface preview"
                       fill
                       priority
