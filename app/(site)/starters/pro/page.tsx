@@ -79,37 +79,6 @@ const INTERNAL = {
   terms: '/terms',
 } as const;
 
-const screenshots = [
-  {
-    title: 'Authentication flow',
-    description:
-      'Real sign-in, account access, verification, and protected session flows.',
-    image: '/images/starters/pro-auth-pycolors.png',
-    href: INTERNAL.docsAuth,
-  },
-  {
-    title: 'Billing foundation',
-    description:
-      'Stripe-oriented pricing, billing states, invoices, and customer portal entrypoints.',
-    image: '/images/starters/pro-billing-pycolors.png',
-    href: INTERNAL.docsBilling,
-  },
-  {
-    title: 'Protected app surface',
-    description:
-      'Dashboard, settings, account areas, and protected product structure.',
-    image: '/images/starters/pro-dashboard-pycolors.png',
-    href: INTERNAL.docsBackend,
-  },
-  {
-    title: 'PWA-ready experience',
-    description:
-      'Installable app behavior, standalone mode, mobile dashboard screenshots, and offline fallback foundations.',
-    image: '/images/starters/pro-pwa-pycolors.png',
-    href: INTERNAL.docsPwa,
-  },
-] as const;
-
 const coreFeatures = [
   {
     title: 'Real authentication already wired',
@@ -377,6 +346,110 @@ const faqs = [
   //     'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
   // },
 ] as const;
+function StarterProHeroCarousel() {
+  const heroScreenshots = [
+    {
+      title: 'Authentication',
+      label: 'Production Auth',
+      image: '/images/starters/pro/auth-pycolors.png',
+    },
+    {
+      title: 'Billing',
+      label: 'Stripe Billing',
+      image: '/images/starters/pro/billing-pycolors.png',
+    },
+    {
+      title: 'Pricing',
+      label: 'Pricing System',
+      image: '/images/starters/pro/pricing-pycolors.png',
+    },
+    {
+      title: 'PWA',
+      label: 'Installable PWA',
+      // image: '/images/starters/pro/pwa-mobile-pycolors.png',
+      image: '/images/starters/pro/pwa-pycolors.png',
+    },
+  ] as const;
+
+  return (
+    <section className="px-4 pb-14 sm:px-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
+          <div className="flex items-center justify-between border-b border-border-subtle bg-surface-muted/80 px-4 py-3 backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-primary" />
+
+              <span className="text-xs font-medium text-foreground">
+                Starter Pro
+              </span>
+            </div>
+
+            <div className="absolute left-1/2 hidden -translate-x-1/2 sm:block">
+              <div className="overflow-hidden rounded-full border border-border-subtle bg-background/70 px-5 py-1.5">
+                <div className="relative h-4 w-[220px]">
+                  {heroScreenshots.map((screenshot, index) => (
+                    <span
+                      key={screenshot.title}
+                      className="absolute inset-0 flex animate-hero-label items-center justify-center opacity-0 whitespace-nowrap text-center text-[10px] font-medium tracking-wide text-muted-foreground"
+                      style={{ animationDelay: `${index * 5}s` }}
+                    >
+                      {screenshot.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="h-2 w-2 rounded-full bg-green-500/70" />
+
+              <span className="text-[11px] text-muted-foreground">
+                Production-ready
+              </span>
+            </div>
+          </div>
+
+          <div className="relative aspect-[16/10] min-h-[320px] overflow-hidden bg-background sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
+            {heroScreenshots.map((screenshot, index) => (
+              <div
+                key={screenshot.title}
+                className="absolute inset-0 animate-hero-fade opacity-0"
+                style={{ animationDelay: `${index * 5}s` }}
+              >
+                <Image
+                  src={screenshot.image}
+                  alt={`${screenshot.title} Starter Pro preview`}
+                  fill
+                  priority={index === 0}
+                  sizes="(min-width: 1280px) 1280px, 100vw"
+                  className="object-cover object-top"
+                />
+              </div>
+            ))}
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/35 to-transparent" />
+
+            <div className="absolute bottom-4 right-4 z-20 hidden items-center gap-1.5 rounded-full border border-border-subtle bg-background/70 px-2.5 py-2 backdrop-blur-md sm:flex">
+              {heroScreenshots.map((screenshot, index) => (
+                <span
+                  key={screenshot.title}
+                  className="relative h-1.5 w-6 overflow-hidden rounded-full bg-muted"
+                >
+                  <span
+                    className="absolute inset-y-0 left-0 animate-carousel-progress rounded-full bg-foreground/70"
+                    style={{ animationDelay: `${index * 5}s` }}
+                  />
+                </span>
+              ))}
+            </div>
+
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function SectionHeading({
   eyebrow,
@@ -470,176 +543,78 @@ function FeatureCard({
   );
 }
 
-function ScreenshotCard({
-  title,
-  description,
-  image,
-  href,
-}: {
-  readonly title: string;
-  readonly description: string;
-  readonly image: string;
-  readonly href: string;
-}) {
-  return (
-    <Card className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-all hover:border-border hover:bg-surface-elevated">
-      <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-medium text-foreground">
-            {title}
-          </p>
-
-          <span className="text-[11px] text-muted-foreground">
-            Pro surface
-          </span>
-        </div>
-      </div>
-
-      <div className="relative aspect-16/10 overflow-hidden border-b border-border-subtle bg-background">
-        <Image
-          src={image}
-          alt={`${title} screenshot`}
-          fill
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
-          sizes="(min-width: 1024px) 33vw, 100vw"
-        />
-      </div>
-
-      <CardContent className="space-y-4 p-5">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">
-            {title}
-          </p>
-
-          <p className="text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        </div>
-
-        <Button
-          asChild
-          size="sm"
-          variant="outline"
-          className="rounded-[5px]"
-        >
-          <Link href={href}>View implementation details</Link>
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
-
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
       <Container className="py-18">
-        <div className="mx-auto max-w-6xl">
-          <PageHero
-            maxWidth="5xl"
-            badges={[
-              {
-                label: 'Starter Pro',
-                variant: 'secondary',
-              },
-              {
-                label: `Launch price ${launchPrice}`,
-                variant: 'outline',
-                icon: (
-                  <Sparkles
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  />
-                ),
-              },
-              {
-                label: `${regularPrice} regular price`,
-                variant: 'outline',
-              },
-            ]}
-            title="Stop rebuilding auth, billing, and app foundations. Start closer to launch."
-            subtitle="A production-ready Next.js SaaS starter with the business layer and PWA-ready app experience already shaped."
-            description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, installable PWA foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
-            actions={
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <BuyStarterProButton />
+        <PageHero
+          maxWidth="5xl"
+          badges={[
+            {
+              label: 'Starter Pro',
+              variant: 'secondary',
+            },
+            {
+              label: `Launch price ${launchPrice}`,
+              variant: 'outline',
+              icon: (
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  aria-hidden="true"
+                />
+              ),
+            },
+            {
+              label: `${regularPrice} regular price`,
+              variant: 'outline',
+            },
+          ]}
+          title="Stop rebuilding auth, billing, and app foundations. Start closer to launch."
+          subtitle="A production-ready Next.js SaaS starter with the business layer and PWA-ready app experience already shaped."
+          description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, installable PWA foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
+          actions={
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+              <BuyStarterProButton />
 
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.pricing}>View pricing</Link>
-                </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.pricing}>View pricing</Link>
+              </Button>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.docsStarterPro}>
-                    Read docs
-                  </Link>
-                </Button>
-              </div>
-            }
-            pills={[
-              'One-time payment',
-              'Instant access',
-              'Commercial usage',
-              'Built for real SaaS',
-              'PWA-ready',
-            ]}
-            extraClassName="mx-auto max-w-6xl"
-            extra={
-              <>
-                <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-                  <CheckItem>Full source code</CheckItem>
-                  <CheckItem>Real auth wired</CheckItem>
-                  <CheckItem>Stripe billing wired</CheckItem>
-                  <CheckItem>Protected SaaS app</CheckItem>
-                  <CheckItem>PWA-ready foundation</CheckItem>
-                </div>
-
-                <div className="mx-auto mt-12 max-w-6xl">
-                  <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
-                    <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="h-2 w-2 rounded-full bg-primary" />
-                          <span className="text-xs font-medium">
-                            Starter Pro
-                          </span>
-                        </div>
-
-                        <span className="text-[11px] text-muted-foreground">
-                          Protected SaaS foundation · PWA-ready
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="group relative aspect-video overflow-hidden bg-background">
-                      <Image
-                        src="/images/starters/pro/starter-pro-pycolors-hero.png"
-                        alt="Starter Pro protected SaaS dashboard preview"
-                        fill
-                        priority
-                        sizes="(min-width: 1024px) 960px, 100vw"
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.012]"
-                      />
-
-                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.14),transparent_35%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/50 to-transparent" />
-                    </div>
-                  </div>
-                </div>
-              </>
-            }
-          />
-        </div>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
+                <Link href={INTERNAL.docsStarterPro}>Read docs</Link>
+              </Button>
+            </div>
+          }
+          pills={[
+            'One-time payment',
+            'Instant access',
+            'Commercial usage',
+            'Built for real SaaS',
+            'PWA-ready',
+          ]}
+          extra={
+            <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
+              <CheckItem>Full source code</CheckItem>
+              <CheckItem>Real auth wired</CheckItem>
+              <CheckItem>Stripe billing wired</CheckItem>
+              <CheckItem>Protected SaaS app</CheckItem>
+              <CheckItem>PWA-ready foundation</CheckItem>
+            </div>
+          }
+        />
       </Container>
+
+      <StarterProHeroCarousel />
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
@@ -662,25 +637,60 @@ export default function StarterProPage() {
           <div className="mx-auto max-w-6xl">
             <SectionHeading
               eyebrow="Product proof"
-              title="Focused screenshots for the business and app layer."
-              description="Starter Pro should not feel like a screenshot gallery. It shows the surfaces that matter most when a SaaS becomes real: auth, billing, protected application structure, and PWA-ready app experience."
+              title="A SaaS foundation built around the parts buyers actually pay for."
+              description="The visual product preview is already handled above. This section explains why Starter Pro is valuable: it removes the expensive foundations that slow real SaaS launches."
             />
 
-            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {screenshots.map((screenshot) => (
-                <ScreenshotCard
-                  key={screenshot.title}
-                  title={screenshot.title}
-                  description={screenshot.description}
-                  image={screenshot.image}
-                  href={screenshot.href}
-                />
-              ))}
+            <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <FeatureCard
+                title="Auth is already wired"
+                description="Email/password, OAuth, verification, recovery, sessions, and protected routes are included."
+                icon={Lock}
+              />
+
+              <FeatureCard
+                title="Billing is already wired"
+                description="Stripe Checkout, billing portal, invoices, webhooks, and subscription states are included."
+                icon={CreditCard}
+              />
+
+              <FeatureCard
+                title="App structure is ready"
+                description="Dashboard, settings, account areas, admin surfaces, and protected SaaS routing are shaped."
+                icon={LayoutDashboard}
+              />
+
+              <FeatureCard
+                title="PWA polish is included"
+                description="Installable app behavior, standalone mode, icons, screenshots, and offline fallback foundations."
+                icon={Smartphone}
+              />
             </div>
+
+            <Card className="mt-6 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
+                  Starter Pro is not positioned as a screenshot
+                  gallery. It is positioned as a shortcut to the
+                  commercial SaaS layer: authentication, billing,
+                  protected architecture, database foundations, and
+                  app-quality polish.
+                </p>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 shrink-0 rounded-[5px] text-sm font-medium"
+                >
+                  <Link href={INTERNAL.docsStarterPro}>
+                    Explore the docs
+                  </Link>
+                </Button>
+              </div>
+            </Card>
           </div>
         </Container>
       </section>
-
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-12">
           <div className="mx-auto max-w-6xl rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6">
