@@ -266,7 +266,27 @@ pnpm app:setup
   ]}
 />
 
-## Default credentials
+
+## Seeded accounts
+
+When `SEED_AUTH_FIXTURES=true`, Starter Pro creates multiple local testing accounts designed to validate realistic SaaS behavior.
+
+### Included accounts
+
+| Account | Password | State | Use case |
+| --- | --- | --- | --- |
+| `free@pycolors.io` | `Password123!` | Verified free user | Validate normal authenticated product behavior without PRO access |
+| `unverified@pycolors.io` | `Password123!` | Unverified user | Validate email verification and restricted onboarding flows |
+| `oauth@pycolors.io` | No password | OAuth-only user | Validate provider-linked accounts and add-password flows |
+| `pro@pycolors.io` | `Password123!` | Verified PRO trialing user | Validate premium access, billing-aware navigation, and subscription-gated product behavior |
+
+<Callout type="info" title="Local-only fixtures">
+  These accounts are development fixtures intended only for local and controlled staging environments.
+  Never reuse these credentials in production systems.
+</Callout>
+
+
+### Default credentials
 
 ```txt title="credentials.txt"
 Password123!
