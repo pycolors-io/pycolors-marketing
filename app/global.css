@@ -1165,3 +1165,86 @@ div[role="dialog"] {
     line-height: 1.75;
   }
 }
+
+@keyframes hero-fade {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  4% {
+    opacity: 1;
+  }
+
+  24% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+
+  30% {
+    opacity: 0;
+    transform: scale(1.015);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.015);
+  }
+}
+
+.animate-hero-fade {
+  animation: hero-fade 20s infinite ease-in-out;
+  will-change: opacity, transform;
+}
+
+@keyframes hero-label {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+
+  4% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  24% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  30%,
+  100% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+
+.animate-hero-label {
+  animation: hero-label 20s infinite ease-in-out;
+  will-change: opacity, transform;
+}
+
+@keyframes carousel-progress {
+  0% {
+    width: 0%;
+    opacity: 1;
+  }
+
+  24% {
+    width: 100%;
+    opacity: 1;
+  }
+
+  30%,
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-carousel-progress {
+  width: 0%;
+  animation: carousel-progress 20s infinite linear;
+  will-change: width, opacity;
+}
