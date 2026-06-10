@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
@@ -652,6 +653,23 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </nav>
 
               <div className="hidden items-center gap-2 md:flex">
+                <a
+                  href="https://www.producthunt.com/products/pycolors"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={cn(
+                    'hidden lg:flex items-center transition-opacity hover:opacity-90',
+                    focusRing,
+                  )}
+                >
+                  <Image
+                    src="https://api.producthunt.com/widgets/embed-image/v1/follow.svg?product_id=1243282&theme=dark&size=small"
+                    alt="Follow PyColors on Product Hunt"
+                    width={100}
+                    height={28}
+                    unoptimized
+                  />
+                </a>
                 <Button
                   asChild
                   size="sm"

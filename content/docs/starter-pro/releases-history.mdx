@@ -1,7 +1,7 @@
 ---
 title: Release history
 description: Version policy, release notes, and product evolution for PyColors Starter Pro.
-lastUpdated: "2026-06-06"
+lastUpdated: "2026-06-08"
 appliesTo: Starter Pro
 toc: false
 ---
@@ -81,6 +81,77 @@ The current focus is:
 - stronger buyer confidence
 - production-ready UX
 - scalable product architecture
+
+---
+
+## v1.3.0 — PWA foundations & public shell update
+
+Released: June 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: 'Installable PWA',
+      description:
+        'Manifest, service worker registration, offline fallback, and standalone mobile installability.',
+      icon: Rocket,
+    },
+    {
+      title: 'Public shell architecture',
+      description:
+        'Reusable public shell wrapper with shared layouts, sticky header, compact footer, and safe-area handling.',
+      icon: LayoutTemplate,
+    },
+    {
+      title: 'UX and metadata polish',
+      description:
+        'Responsive UX refinements, SEO metadata improvements, and onboarding/developer experience updates.',
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+### Added
+
+- Web App Manifest
+- Service Worker registration
+- Offline fallback page
+- Offline navigation caching
+- Mobile installability support
+- Standalone display mode
+- Shared public shell wrapper
+- Sticky responsive header
+- Shared marketing/auth layouts
+- Compact footer integration
+- Centralized safe-area handling
+- New local database scripts: `pnpm db:up`, `pnpm db:down`, `pnpm db:reset`, `pnpm db:logs`
+
+### Improved
+
+- Safe-area support for modern mobile devices
+- Viewport handling for iOS and Android
+- Responsive settings layouts
+- Connected accounts UX
+- Security activity cards
+- Change-password layouts
+- Overflow handling, stacking, and spacing
+- Centralized metadata configuration
+- Application metadata and robots directives
+- PWA branding metadata, icons, and viewport configuration
+- README organization and onboarding documentation
+- Added PWA testing guidance
+
+### Migration notes
+
+No migration required.
+
+This release introduces production-ready PWA foundations and public shell architecture while keeping existing Starter Pro foundations backward compatible.
+
+### Notes
+
+Built for developers shipping production-ready SaaS products with Next.js, TypeScript, Tailwind CSS, Prisma, Auth.js, Stripe, and modern PWA foundations.
 
 ---
 
