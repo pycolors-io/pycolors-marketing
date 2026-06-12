@@ -64,6 +64,80 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.17.0',
+    title:
+      'Starter Pro PWA foundations, public shell, local validation docs, analytics, and launch visibility',
+    dateLabel: 'Fri 12 Jun 2026',
+    dateISO: '2026-06-12',
+    status: 'Stable',
+    releaseWeekLabel: 'Jun 2026 (weekly release)',
+    summary:
+      'This release moves Starter Pro further toward a polished, app-like SaaS starter. It adds pragmatic PWA foundations, introduces a shared public shell for marketing and auth routes, expands local development and billing validation documentation, improves marketing analytics and SEO controls, and strengthens release transparency with versioning and product-specific release history. The focus is practical product credibility: installability, safer offline behavior, clearer public navigation, stronger local testing, and better launch visibility.',
+
+    highlights: [
+      {
+        title: 'Starter Pro is now PWA-ready',
+        items: [
+          'Added PWA configuration, web app manifest metadata, app icons, screenshots, theme colors, viewport refinements, and app-like installability settings.',
+          'Added a service worker registration component and lightweight service worker caching with an offline fallback page for resilient navigation.',
+          'Updated product copy, pricing, dashboard cards, badges, included-feature lists, and documentation to communicate PWA-ready foundations clearly.',
+          'Kept the PWA layer conservative and SaaS-safe: online-first for auth, billing, admin, and source-of-truth workflows.',
+        ],
+      },
+      {
+        title: 'Public shell and responsive layout foundations improved',
+        items: [
+          'Introduced shared public shell, public header, marketing layout wrapper, and auth-layout integration for consistent unauthenticated pages.',
+          'Added sticky header behavior, safe-area CSS variables, dynamic viewport height handling, and mobile-safe spacing for app and public layouts.',
+          'Refined homepage, auth, pricing, settings, security, connected accounts, project, admin, and not-found surfaces with subtler borders and stronger responsive behavior.',
+          'Improved empty states and accessibility details, including clearer not-found guidance and decorative icon handling.',
+        ],
+      },
+      {
+        title: 'Starter Pro documentation expanded for production-shaped validation',
+        items: [
+          'Added PWA overview, setup, production checklist, and pragmatic PWA guidance for installability, manifest, icons, offline fallback, and standalone behavior.',
+          'Added Local Development, testing fixtures, seeded local accounts, and billing testing guides to help validate auth, onboarding, subscriptions, webhooks, and protected routes.',
+          'Expanded README structure with local DB scripts, db logs, markdown links, Stripe and seed guidance, and clearer setup/testing instructions.',
+          'Added Starter Pro release history docs and centralized versioning-policy references to make upgrade expectations more transparent.',
+        ],
+      },
+      {
+        title: 'Marketing analytics, SEO, and recovery paths strengthened',
+        items: [
+          'Added Vercel Analytics to the marketing app and Starter Free demo so public usage and performance telemetry can be collected across pages.',
+          'Released Starter Free v1.2.2 with no-index controls, googleBot directives, canonical metadata, analytics, and corrected external Starter Pro links.',
+          'Improved the 404 page with recovery-path grids, ecosystem links, clearer CTAs, and routes toward docs, starters, pricing, changelog, roadmap, and patterns.',
+          'Added versioning policy documentation and product-specific release history references to reduce duplicated release guidance.',
+        ],
+      },
+      {
+        title: 'Marketing proof and launch visibility improved',
+        items: [
+          'Added Starter Free and Starter Pro promotional screenshots for auth, dashboard, billing, pricing, projects, settings, admin, and PWA views.',
+          'Replaced the static screenshot gallery with a focused hero carousel, looping animations, feature cards, and stronger Starter Pro product proof.',
+          'Added PWA-focused blog and guide content explaining pragmatic installability, standalone mode, mobile-safe UX, and safer offline foundations for SaaS.',
+          'Added Product Hunt badges to the marketing header and footers to improve launch visibility and discoverability.',
+        ],
+      },
+      {
+        title: 'Release and delivery workflow improved',
+        items: [
+          'Released Starter Pro v1.3.0 with PWA foundations, public shell layouts, UX polish, metadata improvements, local DB helpers, and onboarding updates.',
+          'Added a Starter Pro release packaging script that creates versioned ZIP archives with standard excludes and upload-ready output paths.',
+          'Centralized metadata from PWA configuration and strengthened Starter Pro SEO metadata, robots directives, fallback metadataBase handling, and dark color-scheme behavior.',
+          'Standardized UI tokens across multiple Starter Pro surfaces, replacing mixed hard-coded borders and color utilities with semantic tokens.',
+        ],
+      },
+    ],
+
+    cta: {
+      label: 'View Starter Pro',
+      href: '/starters/pro',
+    },
+  },
+
+  {
     version: 'v1.16.0',
     title:
       'Starter Pro product maturity, reusable SaaS patterns, premium docs polish, and conversion-ready platform refinement',
