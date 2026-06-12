@@ -40,6 +40,7 @@ type Milestone =
   | 'Mar 2026'
   | 'Apr 2026'
   | 'May 2026'
+  | 'Jun 2026'
   | 'H1 2026';
 
 type RoadmapItem = {
@@ -121,6 +122,12 @@ const milestones: Array<{
     title: 'May 2026',
     subtitle:
       'Turn documentation, branding, tokens, starters, pricing, and upgrade paths into a more premium and conversion-ready product surface.',
+  },
+  {
+    id: 'Jun 2026',
+    title: 'June 2026',
+    subtitle:
+      'Ship Starter Pro PWA foundations, local validation depth, release history, analytics, and stronger public product recovery paths.',
   },
   {
     id: 'H1 2026',
@@ -508,6 +515,60 @@ const items: RoadmapItem[] = [
     href: '/docs',
   },
   {
+    title: 'Starter Pro PWA foundation',
+    description:
+      'Added installable manifest metadata, service worker registration, offline fallback behavior, PWA icons and screenshots, mobile viewport tuning, and app-like product messaging.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'PWA', 'Mobile'],
+    href: '/docs/starter-pro/pwa',
+  },
+  {
+    title: 'Public shell and safe-area layout system',
+    description:
+      'Introduced shared public header and shell layouts for marketing and auth pages, centralizing navigation, footer structure, sticky headers, safe-area spacing, and responsive viewport behavior.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'Layout', 'UX'],
+    href: '/starters/pro',
+  },
+  {
+    title: 'Local validation and billing testing docs',
+    description:
+      'Expanded Starter Pro guidance for local development, seeded auth fixtures, production-shaped test accounts, Stripe Checkout validation, webhook sync, and billing-aware access checks.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Docs', 'Testing', 'Billing'],
+    href: '/docs/starter-pro',
+  },
+  {
+    title: 'Analytics, SEO, and recovery-path hardening',
+    description:
+      'Added Vercel Analytics to marketing and Starter Free, tightened Starter Free demo indexing controls, and improved 404 recovery paths with grouped ecosystem links and clearer CTAs.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Analytics', 'SEO', 'Navigation'],
+    href: '/changelog',
+  },
+  {
+    title: 'Starter Pro release history and packaging',
+    description:
+      'Added Starter Pro release history documentation, centralized versioning policy references, and a release script for packaging versioned Starter Pro archives.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Release', 'Docs', 'Starter PRO'],
+    href: '/docs/starter-pro/releases-history',
+  },
+  {
+    title: 'Marketing proof and launch visibility',
+    description:
+      'Added Starter Free and Starter Pro promotional screenshots, a rotating hero carousel, Product Hunt badges, PWA-focused guides, and stronger public messaging around pragmatic SaaS PWA foundations.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Marketing', 'Proof', 'PWA'],
+    href: '/starters/pro',
+  },
+  {
     title: 'Authority engineering content engine',
     description:
       'Publish high-value engineering articles around SaaS infrastructure, monorepos, CI/CD, npm publishing, release workflows, and production-ready developer systems.',
@@ -520,9 +581,9 @@ const items: RoadmapItem[] = [
   {
     title: 'Starter Pro conversion instrumentation',
     description:
-      'Measure the docs-to-pricing-to-checkout funnel across Starter Free, Starter Pro, pricing, upgrade, and post-purchase access.',
-    status: 'Now',
-    milestone: 'May 2026',
+      'Measure the docs-to-pricing-to-checkout funnel across Starter Free, Starter Pro, pricing, upgrade, and post-purchase access, starting with Vercel Analytics coverage.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
     tags: ['Analytics', 'Conversion', 'Sales'],
     href: '/pricing',
   },

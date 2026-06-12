@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.16.0' as const;
+export const APP_VERSION = '1.17.0' as const;
 export const UI_VERSION = '1.1.1' as const;
 
 export const APP_VERSION_TAG = `v${APP_VERSION}` as const;
