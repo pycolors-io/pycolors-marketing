@@ -64,6 +64,33 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.17.1',
+    title: 'NA-AI Landing checkout reliability fix',
+    dateLabel: 'Fri 19 Jun 2026',
+    dateISO: '2026-06-19',
+    status: 'Stable',
+    releaseWeekLabel: 'Jun 2026 (patch release)',
+    summary:
+      'This patch improves trust and conversion reliability for the templates catalog by fixing the NA-AI Landing purchase action on /templates.',
+
+    highlights: [
+      {
+        title: 'Templates purchase path reliability improved',
+        items: [
+          'Fixed the broken NA-AI Landing checkout action on `/templates`.',
+          'Reused the existing product checkout button flow from the product detail page.',
+          'Improved reliability of the templates purchase path without changing product scope.',
+        ],
+      },
+    ],
+
+    cta: {
+      label: 'View templates',
+      href: '/templates',
+    },
+  },
+
+  {
     version: 'v1.17.0',
     title:
       'Starter Pro PWA foundations, public shell, local validation docs, analytics, and launch visibility',

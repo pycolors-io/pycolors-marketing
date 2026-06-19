@@ -29,6 +29,7 @@ import {
 
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
+import { BuyProductButton } from '@/components/pricing/buy-product-button';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Templates',
@@ -67,7 +68,7 @@ type Template = {
   readonly tags: readonly string[];
   readonly priceLabel: string;
   readonly demoUrl?: string;
-  readonly buyHref?: string;
+  readonly productSlug?: string;
   readonly includes: readonly string[];
   readonly note: string;
 };
@@ -82,7 +83,7 @@ const templates: readonly Template[] = [
     tags: ['AI', 'Landing page', 'Next.js', 'Tailwind', 'SaaS'],
     priceLabel: '49 €',
     demoUrl: 'https://na-ai.pycolors.io',
-    buyHref: '/api/checkout/na-ai-landing',
+    productSlug: 'na-ai-landing',
     includes: [
       'Complete Next.js landing page source code',
       'Dark/light mode, pricing, FAQ, testimonials, analytics sections',
@@ -351,17 +352,11 @@ function TemplateCard({ template }: { readonly template: Template }) {
           </div>
 
           <div className="flex w-full flex-col gap-3 lg:w-60">
-            {template.buyHref ? (
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-[5px] px-6"
-              >
-                <Link href={template.buyHref}>
-                  Buy now
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
+            {template.productSlug ? (
+              <BuyProductButton
+                productSlug={template.productSlug}
+                label={`Buy ${template.name} — ${template.priceLabel}`}
+              />
             ) : null}
 
             <Button
