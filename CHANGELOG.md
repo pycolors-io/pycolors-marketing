@@ -6,7 +6,8 @@ This repository is a **read-only mirror** synced from the PyColors monorepo:
 https://github.com/pycolors-io/pycolors/tree/main/apps/marketing
 
 ## Unreleased
-- TBD
+- Fixed the broken NA-AI Landing checkout action on `/templates`.
+- Reused the existing product checkout button flow to improve templates purchase path reliability.
 
 ## 1.17.0
 - Weekly release for 12 June 2026.
