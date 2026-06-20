@@ -38,7 +38,7 @@ type ClaimResponse = {
 function getProductPageHref(productSlug: string | null) {
   switch (productSlug) {
     case 'starter-pro':
-      return '/starter-pro';
+      return '/starters/pro';
     case 'na-ai-landing':
       return '/templates/na-ai-landing';
     default:
