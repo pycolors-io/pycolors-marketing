@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
@@ -33,8 +32,6 @@ export function BuyProductButton({
   showTrustText = false,
   customerEmail,
 }: Readonly<BuyProductButtonProps>) {
-  const router = useRouter();
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -48,7 +45,7 @@ export function BuyProductButton({
         email: customerEmail,
       });
 
-      router.push(url);
+      window.location.href = url;
     } catch (err) {
       const message =
         err instanceof Error && err.message
