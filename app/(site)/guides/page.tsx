@@ -370,7 +370,7 @@ export default function GuidesPage() {
                 variant="outline"
                 className="rounded-[5px]"
               >
-                <Link href="/docs/saas-starter">Starter docs</Link>
+                <Link href="/docs/starter">Starter docs</Link>
               </Button>
             }
           />

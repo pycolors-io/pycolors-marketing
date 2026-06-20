@@ -58,7 +58,7 @@ function getProductDocsHref(productSlug: string | null) {
     case 'starter-pro':
       return '/docs/starter-pro';
     case 'na-ai-landing':
-      return '/templates/na-ai';
+      return '/templates/na-ai-landing';
     default:
       return '/docs';
   }
