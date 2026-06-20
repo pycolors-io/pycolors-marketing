@@ -1,6 +1,6 @@
 ---
 title: PyColors Documentation
-description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth, billing, PWA-ready foundations, and ship with production-shaped systems.
+description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth, billing, secure delivery, purchase recovery, and PWA-ready foundations, then ship with production-shaped systems.
 full: false
 hero: false
 lastUpdated: "2026-06-06"
@@ -32,7 +32,7 @@ import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Docs</Badge>
-  <Badge>Template → Validate → Wire → Launch</Badge>
+  <Badge>Template → Validate → Wire → Deliver → Launch</Badge>
   <Badge variant="secondary">PWA-ready</Badge>
 </div>
 
@@ -44,9 +44,10 @@ PyColors helps developers build in the right order:
 2. validate the product surface
 3. keep the UI system consistent
 4. wire the business layer
-5. add app-like production foundations
-6. launch with stronger confidence
-7. reduce the distance between product work and revenue
+5. deliver purchases reliably
+6. add app-like production foundations
+7. launch with stronger confidence
+8. reduce the distance between product work and revenue
 
 This documentation is designed for one goal:
 
@@ -62,12 +63,16 @@ Use these docs to understand the PyColors ecosystem:
 - authentication
 - billing
 - backend structure
+- product catalog architecture
 - PWA-ready foundations
 - secure delivery
+- purchase recovery
+- CI and automated tests
+- public mirror repositories
 - launch readiness
 
 <Callout title="The PyColors path">
-  Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, package, and reduce the infrastructure work that delays revenue.
+  Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, deliver purchases, recover access, and reduce the infrastructure work that delays revenue.
 </Callout>
 
 ## Start here
@@ -94,7 +99,7 @@ Use these docs to understand the PyColors ecosystem:
       title: 'Starter Pro',
       href: '/docs/starter-pro',
       description:
-        'Launch with real auth, billing, backend foundations, protected routes, PWA-ready app foundations, and delivery.',
+        'Launch with Auth.js, Stripe, Prisma, protected routes, PWA-ready app foundations, secure delivery, and purchase recovery.',
       icon: Rocket,
       tone: 'primary',
       badge: 'Pro',
@@ -119,6 +124,7 @@ It helps reduce the gap between:
 - a validated product surface
 - a paid SaaS foundation
 - an app-like production baseline
+- a reliable purchase and delivery flow
 - a launch-ready system
 - a product that can support revenue over time
 
@@ -175,12 +181,13 @@ It helps reduce the gap between:
       description: (
         <>
           <p>
-            Move to Starter Pro when auth, billing, protected routes, backend persistence, secure delivery, and app-ready foundations become the work slowing launch.
+            Move to Starter Pro when Auth.js, Stripe checkout, protected routes, backend persistence, secure delivery, purchase recovery, and app-ready foundations become the work slowing launch.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="outline">Auth</Badge>
             <Badge variant="outline">Billing</Badge>
+            <Badge variant="outline">Recovery</Badge>
             <Badge variant="outline">Backend</Badge>
             <Badge variant="outline">Protected routes</Badge>
             <Badge variant="outline">PWA-ready</Badge>
@@ -195,13 +202,14 @@ It helps reduce the gap between:
       description: (
         <>
           <p>
-            Validate the production checklist, confirm real users, real payments, installable app behavior, and production infrastructure, then ship the first version of your SaaS.
+            Validate the production checklist, confirm real users, real payments, purchase recovery, installable app behavior, and production infrastructure, then ship the first version of your SaaS.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="outline">Production checklist</Badge>
             <Badge variant="outline">Real users</Badge>
             <Badge variant="outline">Real payments</Badge>
+            <Badge variant="outline">Recovery flow</Badge>
             <Badge variant="outline">PWA validation</Badge>
             <Badge variant="outline">Launch readiness</Badge>
           </div>
@@ -228,7 +236,7 @@ It helps reduce the gap between:
       title: 'Why buy instead of building',
       href: '/docs/starter-pro/why-buy-instead-of-building',
       description:
-        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, backend, and app foundations.',
+        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, backend, delivery, and app foundations.',
       icon: Rocket,
       tone: 'primary',
     },
@@ -267,7 +275,7 @@ It helps reduce the gap between:
       title: 'Billing',
       href: '/docs/starter-pro/billing',
       description:
-        'Stripe Checkout, billing portal, subscriptions, invoices, webhooks, and plan-aware access.',
+        'Secure Stripe Checkout, billing portal, subscriptions, invoices, webhooks, recovery-aware access, and plan-aware states.',
       icon: CreditCard,
     },
     {
@@ -289,7 +297,7 @@ It helps reduce the gap between:
       title: 'Secure delivery',
       href: '/docs/starter-pro/delivery',
       description:
-        'Controlled post-purchase access, private assets, token-based downloads, and fulfillment flow.',
+        'Controlled post-purchase access, private assets, token-based downloads, purchase recovery, and fulfillment flow.',
       icon: ShieldCheck,
     },
     {
@@ -351,8 +359,12 @@ They slow down when the product needs:
 - protected access
 - Stripe billing
 - backend persistence
+- product catalog architecture
 - PWA-ready app polish
 - secure delivery
+- purchase recovery
+- CI and automated tests
+- public mirror repositories
 - launch confidence
 
 PyColors documentation is designed to reduce that delay.

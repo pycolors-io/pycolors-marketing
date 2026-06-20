@@ -58,6 +58,7 @@ const GROUPS: Array<{
       { label: 'Blog', href: '/blog' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Recover purchase', href: '/orders/recover' },
       { label: 'Open Source', href: '/open-source' },
     ],
   },
@@ -133,15 +134,15 @@ export function Footer() {
                 <h2 className="mt-4 text-balance text-xl font-semibold tracking-tight sm:text-4xl">
                   Launch the page. Validate the product.{' '}
                   <span className="block text-muted-foreground">
-                    Wire the business when it matters.
+                    Wire commerce when it matters.
                   </span>
                 </h2>
 
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
                   Start with a premium template, validate with Starter
                   Free, then move to Starter Pro when authentication,
-                  billing, and protected SaaS foundations should
-                  already be handled.
+                  secure checkout, purchase recovery, and protected
+                  SaaS foundations should already be handled.
                 </p>
 
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -174,6 +175,8 @@ export function Footer() {
                   <Lock className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Secure checkout</span>
                   <span>·</span>
+                  <span>Purchase recovery</span>
+                  <span>·</span>
                   <span>Templates from 49 €</span>
                   <span>·</span>
                   <span>Starter Pro 199 €</span>
@@ -190,8 +193,9 @@ export function Footer() {
 
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
                     A premium developer platform for building SaaS
-                    products with templates, UI systems, and
-                    production-ready foundations.
+                    products with templates, UI systems,
+                    commerce-ready foundations, and production-ready
+                    foundations.
                   </p>
                   <div className="pt-2">
                     <a

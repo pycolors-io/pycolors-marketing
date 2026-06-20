@@ -34,7 +34,7 @@ export const metadata: Metadata = {
       'Next.js SaaS UI System, Templates & Starters · PyColors',
   },
   description:
-    'PyColors helps developers build and launch modern Next.js SaaS products faster with a production-ready UI system, premium templates, Starter Free, and Starter Pro with authentication, Stripe billing, Prisma, PWA-ready foundations, and SaaS architecture.',
+    'PyColors helps developers build and launch modern Next.js SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro with Auth.js, Prisma, Stripe commerce, secure delivery, purchase recovery, and SaaS architecture.',
   alternates: {
     canonical: 'https://pycolors.io',
   },
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: 'Next.js SaaS UI System, Templates & Starters · PyColors',
 
     description:
-      'Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, billing, Prisma, PWA-ready foundations, and protected app architecture.',
+      'Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, Stripe commerce, Prisma, secure delivery, purchase recovery, and protected app architecture.',
     url: 'https://pycolors.io',
     siteName: 'PyColors',
     type: 'website',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Next.js SaaS UI System, Templates & Starters · PyColors',
     description:
-      'Build modern SaaS products faster with premium templates, production-ready UI systems, Starter Free, and Starter Pro.',
+      'Build modern SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro commerce foundations.',
     images: ['/seo/twitter-main.png'],
   },
 };
@@ -134,7 +134,7 @@ const productCards = [
     eyebrow: 'Launch layer',
     badge: '199 €',
     description:
-      'A production-ready SaaS foundation with real auth, Stripe billing, protected routes, Prisma, and PWA-ready app foundations.',
+      'A production-ready SaaS foundation with Auth.js, Stripe checkout, Prisma, protected routes, purchase recovery, and PWA-ready app foundations.',
     href: INTERNAL.starterPro,
     cta: 'See Starter Pro',
     icon: Rocket,
@@ -179,19 +179,19 @@ const trustItems = [
   {
     title: 'Clear product ladder',
     description:
-      'Templates launch the page. Starter Free validates the product surface. Starter Pro wires the business layer.',
+      'Templates launch the page. Starter Free validates the product surface. Starter Pro wires the business layer and commerce flow.',
     icon: GitBranch,
   },
   {
     title: 'Built with trusted tools',
     description:
-      'Next.js App Router, TypeScript, Tailwind, Prisma, PostgreSQL, Stripe, and Vercel-oriented foundations.',
+      'Next.js App Router, TypeScript, Tailwind, Auth.js, Prisma, PostgreSQL, Stripe, and Vercel-oriented foundations.',
     icon: Code2,
   },
   {
     title: 'Production-shaped scope',
     description:
-      'PyColors focuses on real SaaS flows: auth, billing, dashboards, account surfaces, protected routes, and product UX.',
+      'PyColors focuses on real SaaS flows: auth, billing, secure checkout, purchase recovery, dashboards, protected routes, and product UX.',
     icon: ShieldCheck,
   },
   {
@@ -212,7 +212,7 @@ const proFoundation = [
   {
     title: 'Stripe billing',
     description:
-      'Checkout, portal, invoices, subscription lifecycle, and webhook synchronization.',
+      'Secure checkout, portal, invoices, subscription lifecycle, webhook synchronization, and purchase recovery.',
     icon: CreditCard,
   },
   {

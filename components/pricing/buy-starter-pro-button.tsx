@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
@@ -28,8 +27,6 @@ export function BuyStarterProButton({
   trustText = 'One-time payment · Instant access after purchase',
   showTrustText = false,
 }: BuyStarterProButtonProps) {
-  const router = useRouter();
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -40,7 +37,7 @@ export function BuyStarterProButton({
 
       const url = await createStarterProCheckout();
 
-      router.push(url);
+      window.location.href = url;
     } catch (err) {
       const message =
         err instanceof Error && err.message

@@ -89,7 +89,7 @@ const coreFeatures = [
   {
     title: 'Stripe billing already integrated',
     description:
-      'Checkout, billing portal, invoices, webhook synchronization, subscription lifecycle handling, and billing-aware UI states are part of the foundation.',
+      'Secure Stripe checkout, billing portal, invoices, webhook synchronization, subscription lifecycle handling, and billing-aware UI states are part of the foundation.',
     icon: CreditCard,
   },
   {
@@ -107,7 +107,7 @@ const coreFeatures = [
   {
     title: 'Built to reduce launch friction',
     description:
-      'Starter Pro removes repeated foundation work so you can focus on product logic, onboarding, positioning, customers, and growth.',
+      'Starter Pro removes repeated foundation work across auth, billing, Prisma, delivery, and protected app structure so you can focus on product logic, onboarding, customers, and growth.',
     icon: Rocket,
   },
   {
@@ -122,7 +122,7 @@ const includedItems = [
   {
     title: 'Full Starter Pro source code',
     description:
-      'Get the complete codebase and adapt it to your own commercial SaaS product.',
+      'Get the complete type-safe codebase and adapt it to your own commercial SaaS product.',
     icon: Download,
   },
   {
@@ -134,7 +134,7 @@ const includedItems = [
   {
     title: 'Billing foundation',
     description:
-      'Stripe Checkout, portal, invoices, lifecycle logic, and webhook synchronization.',
+      'Secure Stripe Checkout, portal, invoices, lifecycle logic, webhook synchronization, and purchase recovery.',
     icon: CreditCard,
   },
   {
@@ -152,7 +152,7 @@ const includedItems = [
   {
     title: 'Production-oriented architecture',
     description:
-      'Structured routing, reusable SaaS patterns, typed server boundaries, and maintainable foundations designed for serious products.',
+      'Structured routing, reusable SaaS patterns, typed server boundaries, typed product configuration, and maintainable architecture designed for serious products.',
     icon: ShieldCheck,
   },
 ] as const;
@@ -161,19 +161,19 @@ const trustItems = [
   {
     title: 'Production-shaped scope',
     description:
-      'Focused on the expensive SaaS wiring behind the UI: auth, billing, database, protected flows, and account structure.',
+      'Focused on the expensive SaaS wiring behind the UI: auth, billing, database, protected flows, purchase recovery, and account structure.',
     icon: Code2,
   },
   {
     title: 'Production-minded engineering',
     description:
-      'Typed foundations, reusable patterns, maintainable architecture, and production-oriented decisions designed to reduce long-term technical debt.',
+      'Typed foundations, reusable patterns, maintainable architecture, and production-oriented decisions backed by CI and focused tests.',
     icon: ShieldCheck,
   },
   {
     title: 'Documentation-first',
     description:
-      'Starter Pro is supported by implementation docs so buyers understand what is included and how to extend it.',
+      'Starter Pro is supported by implementation docs so buyers understand what is included, how commerce works, and how to extend it.',
     icon: Mail,
   },
   {
@@ -191,7 +191,7 @@ const trustItems = [
   {
     title: 'Actively maintained',
     description:
-      'PyColors ships with changelog updates, roadmap direction, and a long-term ecosystem vision.',
+      'PyColors ships with changelog updates, public mirrors, roadmap direction, and a long-term ecosystem vision.',
     icon: GitBranch,
   },
 ] as const;
@@ -219,11 +219,13 @@ const includedChecklist = [
   'Reset password flow',
   'Session management',
   'Protected routes',
-  'Stripe Checkout integration',
+  'Secure Stripe Checkout integration',
   'Stripe billing portal',
   'Invoices and billing history UI',
   'Webhook synchronization with Prisma',
   'Subscription lifecycle handling',
+  'Purchase recovery flow',
+  'Download delivery foundations',
   'Dashboard, settings, billing, and admin surfaces',
   'Plan gating and feature access control',
   'Installable PWA foundation',
@@ -570,8 +572,8 @@ export default function StarterProPage() {
             },
           ]}
           title="Stop rebuilding auth, billing, and app foundations. Start closer to launch."
-          subtitle="A production-ready Next.js SaaS starter with the business layer and PWA-ready app experience already shaped."
-          description="Starter Pro gives you real authentication, Stripe billing, protected app architecture, Prisma foundations, installable PWA foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
+          subtitle="A production-ready Next.js SaaS starter with the commerce layer, protected architecture, and PWA-ready app experience already shaped."
+          description="Starter Pro gives you Auth.js authentication, secure Stripe checkout, purchase recovery, protected app architecture, Prisma foundations, installable PWA foundations, and launch-ready SaaS surfaces so you can focus on your product instead of repeated setup work."
           actions={
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
               <BuyStarterProButton />
@@ -599,7 +601,7 @@ export default function StarterProPage() {
             'One-time payment',
             'Instant access',
             'Commercial usage',
-            'Built for real SaaS',
+            'Commerce-ready',
             'PWA-ready',
           ]}
           extra={
@@ -621,7 +623,7 @@ export default function StarterProPage() {
             <SectionHeading
               eyebrow="Why it exists"
               title="Most SaaS starters stop at UI. Starter Pro wires the expensive part."
-              description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, PWA-ready app polish, and all the small decisions needed before a SaaS can charge customers."
+              description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, purchase recovery, delivery, PWA-ready app polish, and the small decisions needed before a SaaS can charge customers."
             />
 
             <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -650,7 +652,7 @@ export default function StarterProPage() {
 
               <FeatureCard
                 title="Billing is already wired"
-                description="Stripe Checkout, billing portal, invoices, webhooks, and subscription states are included."
+                description="Secure Stripe Checkout, billing portal, invoices, webhooks, purchase recovery, and subscription states are included."
                 icon={CreditCard}
               />
 
@@ -673,8 +675,8 @@ export default function StarterProPage() {
                   Starter Pro is not positioned as a screenshot
                   gallery. It is positioned as a shortcut to the
                   commercial SaaS layer: authentication, billing,
-                  protected architecture, database foundations, and
-                  app-quality polish.
+                  purchase recovery, protected architecture, database
+                  foundations, and app-quality polish.
                 </p>
 
                 <Button

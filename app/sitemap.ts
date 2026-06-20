@@ -58,6 +58,7 @@ const STATIC_ROUTES = [
   '/guides/saas-billing-ux',
   '/guides/saas-organizations',
   '/guides/saas-admin-panels',
+  '/guides/pwa-for-saas',
 
   /**
    * Documentation
@@ -75,8 +76,8 @@ const STATIC_ROUTES = [
    * Starter Pro docs
    */
   '/docs/starter-pro',
-  '/docs/starter-pro/overview',
-  '/docs/starter-pro/upgrade',
+  '/docs/starter-pro/getting-started',
+  '/docs/starter-pro/what-is-included',
   '/docs/starter-pro/billing',
   '/docs/starter-pro/backend',
 

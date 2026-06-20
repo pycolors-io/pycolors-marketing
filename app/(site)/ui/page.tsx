@@ -21,7 +21,7 @@ import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button
 export const metadata: Metadata = {
   title: 'Next.js SaaS UI System',
   description:
-    'Documentation-first UI system for Next.js SaaS products. Accessible primitives, semantic tokens, product-shaped components, and production-ready foundations built for modern SaaS applications.',
+    'Documentation-first UI system for Next.js SaaS products. Accessible primitives, semantic tokens, product-shaped components, public mirrors, and tested foundations built for modern SaaS applications.',
   alternates: {
     canonical: '/ui',
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Next.js SaaS UI System',
     description:
-      'Production-ready UI system for Next.js SaaS products with semantic tokens, accessible primitives, dashboards, auth flows, billing surfaces, and product-oriented foundations.',
+      'Production-ready UI system for Next.js SaaS products with semantic tokens, accessible primitives, dashboards, auth flows, billing surfaces, public mirrors, and product-oriented foundations.',
     url: '/ui',
     siteName: 'PyColors',
     type: 'website',
@@ -306,7 +306,7 @@ const surfaces = [
   {
     title: 'Billing entrypoints',
     tag: 'Monetization',
-    desc: 'Upgrade surfaces, plan states, and monetization-oriented UI ready to evolve into real billing flows.',
+    desc: 'Upgrade surfaces, plan states, and monetization-oriented UI ready to connect with secure Stripe checkout and recovery flows.',
     href: '/docs/starter-pro/billing',
     cta: 'Read billing docs',
     isExternal: false,
@@ -330,7 +330,7 @@ const surfaces = [
   {
     title: 'Upgrade moment',
     tag: 'Decision',
-    desc: 'Understand when UI stops being enough and when auth, billing, backend, and protected product flows become the real bottleneck.',
+    desc: 'Understand when UI stops being enough and when auth, billing, delivery, backend, and protected product flows become the real bottleneck.',
     href: '/starters/pro',
     cta: 'See Starter Pro',
     isExternal: false,
@@ -402,8 +402,8 @@ export default function UiPage() {
             },
           ]}
           title="A UI foundation that leads to real SaaS products."
-          subtitle="Build credible interfaces first. Validate with Starter Free. Upgrade when auth and billing become the bottleneck."
-          description="PyColors UI gives developers a serious foundation for product-shaped interfaces: accessible primitives, semantic tokens, consistent states, and documentation that connects naturally to Starter Free and Starter Pro."
+          subtitle="Build credible interfaces first. Validate with Starter Free. Upgrade when auth, billing, and delivery become the bottleneck."
+          description="PyColors UI gives developers a serious foundation for product-shaped interfaces: accessible primitives, semantic tokens, consistent states, open-source access, and documentation that connects naturally to Starter Free and Starter Pro."
           actions={
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
               <Button
@@ -491,7 +491,7 @@ export default function UiPage() {
                   PyColors UI should make the product feel credible
                   before the backend is finished. It creates the
                   visual and interaction baseline used by the docs,
-                  Starter Free, and Starter Pro.
+                  public mirrors, Starter Free, and Starter Pro.
                 </p>
               </div>
 
@@ -501,8 +501,9 @@ export default function UiPage() {
                     Use UI directly
                   </p>
                   <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Browse docs, install the package, and build
-                    consistent SaaS interfaces faster.
+                    Browse docs, install the package, inspect the
+                    public mirror, and build consistent SaaS
+                    interfaces faster.
                   </p>
                 </div>
 
@@ -522,7 +523,8 @@ export default function UiPage() {
                   </p>
                   <p className="mt-2 text-sm leading-7 text-muted-foreground">
                     Move to real auth, Stripe billing, protected
-                    routes, Prisma, and launch-ready SaaS foundations.
+                    routes, Prisma, purchase recovery, and
+                    launch-ready SaaS foundations.
                   </p>
                 </div>
               </div>
@@ -530,7 +532,7 @@ export default function UiPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <NpmBadges packageName="@pycolors/ui" size="sm" />
                 <span className="text-xs text-muted-foreground">
-                  Versioned · documented · actively maintained
+                  Versioned · documented · tested · actively maintained
                 </span>
               </div>
             </div>
@@ -541,7 +543,7 @@ export default function UiPage() {
           <SectionHeader
             eyebrow="Why this matters"
             title="A UI system should shorten the path to a credible product."
-            description="The value is not only in components. The value is in making the product feel coherent, trustworthy, and ready to evolve."
+            description="The value is not only in components. The value is in making the product feel coherent, trustworthy, documented, tested, and ready to evolve."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
