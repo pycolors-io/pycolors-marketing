@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -14,6 +13,7 @@ import {
   SITE_DEFAULT_TWITTER_IMAGE,
 } from '@/lib/seo/website';
 import { PrivacyConsentBanner } from '@/components/privacy/privacy-consent-banner';
+import { ConsentGatedGtm } from '@/components/privacy/consent-gated-gtm';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -101,36 +101,9 @@ export default function Layout({
     >
       <head>
         <JsonLd id="pycolors-site" data={siteJsonLd} />
-
-        {GTM_ID ? (
-          <Script
-            id="gtm"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','${GTM_ID}');
-              `,
-            }}
-          />
-        ) : null}
       </head>
 
       <body className="flex min-h-screen flex-col">
-        {GTM_ID ? (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-          </noscript>
-        ) : null}
-
         <RootProvider
           theme={{
             defaultTheme: 'dark',
@@ -138,6 +111,7 @@ export default function Layout({
           }}
         >
           {children}
+          <ConsentGatedGtm gtmId={GTM_ID} />
           <PrivacyConsentBanner />
         </RootProvider>
         <Analytics />
