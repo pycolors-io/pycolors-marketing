@@ -40,7 +40,7 @@ import { BuyProductButton } from '@/components/pricing/buy-product-button';
 export const metadata: Metadata = {
   title: 'Next.js SaaS Pricing',
   description:
-    'Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with authentication, Stripe billing, Prisma, PostgreSQL, and production-ready foundations.',
+    'Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with Auth.js, secure Stripe checkout, Prisma, purchase recovery, and production-ready foundations.',
   alternates: {
     canonical: '/pricing',
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Next.js SaaS Pricing',
     description:
-      'Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, billing, dashboards, and production-ready architecture.',
+      'Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, secure checkout, purchase recovery, dashboards, and production-ready architecture.',
     url: '/pricing',
     siteName: 'PyColors',
     type: 'website',
@@ -99,9 +99,11 @@ const starterProIncludes = [
   'Google and GitHub OAuth',
   'Email verification and reset password',
   'Session management and protected routes',
-  'Stripe Checkout integration',
+  'Secure Stripe Checkout integration',
   'Billing portal flow',
   'Subscription lifecycle handling',
+  'Purchase recovery flow',
+  'Download delivery foundations',
   'Invoices and billing history UI',
   'Webhook synchronization with Prisma',
   'Dashboard, settings, billing, and admin surfaces',
@@ -205,13 +207,13 @@ const trustItems = [
     icon: Code2,
     title: 'Production-shaped architecture',
     description:
-      'Built around real SaaS flows: protected app structure, account surfaces, billing states, and scalable foundations.',
+      'Built around real SaaS flows: protected app structure, account surfaces, billing states, purchase recovery, and scalable foundations.',
   },
   {
     icon: CreditCard,
     title: 'Stripe billing included',
     description:
-      'Checkout, billing portal, invoices, subscription lifecycle, and webhook synchronization are part of the paid foundation.',
+      'Secure checkout, billing portal, invoices, subscription lifecycle, webhook synchronization, and purchase recovery are part of the paid foundation.',
   },
   {
     icon: Lock,
@@ -223,7 +225,7 @@ const trustItems = [
     icon: GitBranch,
     title: 'Actively maintained',
     description:
-      'PyColors ships with public releases, changelog updates, roadmap direction, and documentation-first product thinking.',
+      'PyColors ships with public releases, mirror repositories, changelog updates, roadmap direction, and documentation-first product thinking.',
   },
 ] as const;
 
@@ -252,13 +254,13 @@ const faqs = [
   {
     question: 'Is Starter Pro production-ready?',
     answer:
-      'Yes. Starter Pro is designed as a real SaaS foundation with authentication, billing, protected app architecture, database foundations, and commercial product surfaces already wired.',
+      'Yes. Starter Pro is designed as a real SaaS foundation with authentication, secure Stripe checkout, protected app architecture, database foundations, purchase recovery, and commercial product surfaces already wired.',
   },
   {
     question:
       'Why should I buy Starter Pro instead of building it myself?',
     answer:
-      'Because auth, billing, protected routes, account flows, and webhook synchronization are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
+      'Because auth, billing, protected routes, account flows, webhook synchronization, and delivery/recovery flows are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
   },
   {
     question: 'Can I use PyColors products for commercial projects?',
@@ -814,8 +816,8 @@ export default function PricingPage() {
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       The cost is lower than the time usually spent
                       wiring auth, billing, protected flows, Stripe
-                      webhooks, account pages, and database
-                      synchronization from scratch.
+                      webhooks, recovery flows, account pages, and
+                      database synchronization from scratch.
                     </p>
                   </div>
 
