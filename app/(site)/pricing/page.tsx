@@ -266,6 +266,16 @@ const faqs = [
       'Yes. Paid PyColors products include commercial usage rights. You should still review the license and terms before using them in production.',
   },
   {
+    question: 'How do I receive access after purchase?',
+    answer:
+      'After checkout completes, PyColors sends access to the email used during purchase. The checkout success page also guides you through the next steps.',
+  },
+  {
+    question: 'What if I do not receive the access email?',
+    answer:
+      'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.',
+  },
+  {
     question: 'Will the Starter Pro price stay at 199 €?',
     answer:
       'No. 199 € is the current launch price. The regular price is planned at 299 € as the product matures and more production features are added.',

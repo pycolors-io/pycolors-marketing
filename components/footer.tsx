@@ -58,6 +58,7 @@ const GROUPS: Array<{
       { label: 'Blog', href: '/blog' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Recover purchase', href: '/orders/recover' },
       { label: 'Open Source', href: '/open-source' },
     ],
   },
