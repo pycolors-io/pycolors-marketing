@@ -100,10 +100,14 @@ const pricingJsonLd = {
     generateProductOfferJsonLd({
       product: PRODUCT_DISPLAY['starter-pro'],
       canonicalPath: '/starters/pro',
+      description:
+        'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
     }),
     generateProductOfferJsonLd({
       product: PRODUCT_DISPLAY['na-ai-landing'],
       canonicalPath: '/templates/na-ai-landing',
+      description:
+        'Premium AI and SaaS landing page template built for modern Next.js product launches.',
     }),
   ],
 };

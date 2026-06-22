@@ -80,6 +80,8 @@ const PRODUCT = {
 const naAiLandingJsonLd = generateProductOfferJsonLd({
   product: PRODUCT_DISPLAY['na-ai-landing'],
   canonicalPath: '/templates/na-ai-landing',
+  description:
+    'Premium AI and SaaS landing page template built for modern Next.js product launches.',
 });
 
 const SCREENSHOTS = [

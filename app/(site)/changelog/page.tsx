@@ -1603,8 +1603,8 @@ export default function ChangelogPage() {
 
           <p className="mx-auto mt-3 max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
             Changelog entries reflect shipped work and public-facing
-            release notes. For future direction, use the roadmap and
-            pricing pages.
+            release notes. For current product direction, use the
+            roadmap and pricing pages.
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -1638,8 +1638,8 @@ export default function ChangelogPage() {
               </span>{' '}
               PyColors ships in public through release-driven
               iterations. The changelog records shipped work. The
-              roadmap tracks direction. Pricing defines the commercial
-              path.
+              roadmap summarizes current priorities. Pricing defines
+              the commercial path.
             </p>
           </Card>
         </section>
@@ -1748,7 +1748,7 @@ export default function ChangelogPage() {
                           </span>{' '}
                           Weekly releases build trust. PyColors ships
                           usable foundations, documents what is real,
-                          and keeps product direction visible through
+                          and keeps product direction grounded in
                           roadmap and offer pages.
                         </p>
                       </Card>

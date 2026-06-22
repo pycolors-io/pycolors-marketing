@@ -22,33 +22,21 @@ export function JsonLd({ id, data }: JsonLdProps) {
 type ProductOfferJsonLdInput = {
   readonly product: PublicProductDisplay;
   readonly canonicalPath: string;
+  readonly description: string;
 };
-
-function parseEuroPriceLabel(priceLabel: string) {
-  const normalized = priceLabel.trim();
-  const match = normalized.match(/^(\d+(?:[.,]\d{1,2})?)\s*€$/);
-
-  if (!match) {
-    throw new Error(`Unsupported product price label: ${priceLabel}`);
-  }
-
-  return {
-    price: match[1].replace(',', '.'),
-    priceCurrency: 'EUR',
-  };
-}
 
 export function generateProductOfferJsonLd({
   product,
   canonicalPath,
+  description,
 }: ProductOfferJsonLdInput) {
-  const { price, priceCurrency } = parseEuroPriceLabel(product.priceLabel);
   const url = toAbsoluteUrl(canonicalPath);
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
+    description,
     url,
     brand: {
       '@type': 'Brand',
@@ -56,8 +44,8 @@ export function generateProductOfferJsonLd({
     },
     offers: {
       '@type': 'Offer',
-      price,
-      priceCurrency,
+      price: product.price,
+      priceCurrency: product.currency,
       url,
     },
   };

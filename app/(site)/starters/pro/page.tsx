@@ -71,6 +71,8 @@ const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
 const starterProJsonLd = generateProductOfferJsonLd({
   product: PRODUCT_DISPLAY['starter-pro'],
   canonicalPath: '/starters/pro',
+  description:
+    'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
 });
 
 const INTERNAL = {
