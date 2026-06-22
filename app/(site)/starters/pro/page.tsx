@@ -76,6 +76,7 @@ const starterProJsonLd = generateProductOfferJsonLd({
 });
 
 const INTERNAL = {
+  buildVsBuy: '/compare/build-vs-buy',
   pricing: '/pricing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
@@ -924,7 +925,15 @@ export default function StarterProPage() {
               />
               <p className="max-w-xl text-center text-xs leading-6 text-muted-foreground">
                 Choose Pro when the cost of rebuilding the foundation
-                is higher than the price of skipping it.
+                is higher than the price of skipping it. For a slower
+                decision, read the{' '}
+                <Link
+                  href={INTERNAL.buildVsBuy}
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  build vs buy comparison
+                </Link>
+                .
               </p>
             </div>
           </div>

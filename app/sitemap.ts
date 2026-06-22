@@ -25,6 +25,7 @@ const STATIC_ROUTES = [
    */
   '/templates/na-ai-landing',
   '/starters/pro',
+  '/compare/build-vs-buy',
   '/pricing',
   '/upgrade',
   '/starters/free',
@@ -100,6 +101,7 @@ function getPriority(route: string): number {
     [
       '/templates/na-ai-landing',
       '/starters/pro',
+      '/compare/build-vs-buy',
       '/pricing',
       '/upgrade',
       '/starters/free',
@@ -184,6 +186,7 @@ function getChangeFrequency(
   if (
     [
       '/templates/na-ai-landing',
+      '/compare/build-vs-buy',
       '/templates',
       '/starters/pro',
       '/starters/free',

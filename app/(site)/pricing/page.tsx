@@ -76,6 +76,7 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
+  buildVsBuy: '/compare/build-vs-buy',
   templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
@@ -285,8 +286,22 @@ const faqs = [
   {
     question:
       'Why should I buy Starter Pro instead of building it myself?',
-    answer:
-      'Because auth, billing, protected routes, account flows, webhook synchronization, and delivery/recovery flows are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
+    answer: (
+      <>
+        Because auth, billing, protected routes, account flows,
+        webhook synchronization, and delivery/recovery flows are
+        repeated work that can delay launch. Starter Pro helps you skip
+        that foundation work and focus on your product. For the longer
+        version, read the{' '}
+        <Link
+          href={INTERNAL.buildVsBuy}
+          className="font-medium text-foreground underline underline-offset-4"
+        >
+          build vs buy comparison
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: 'Can I use PyColors products for commercial projects?',
@@ -416,7 +431,7 @@ function FaqCard({
   answer,
 }: {
   readonly question: string;
-  readonly answer: string;
+  readonly answer: React.ReactNode;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">

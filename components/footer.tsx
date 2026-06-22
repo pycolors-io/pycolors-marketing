@@ -59,6 +59,7 @@ const GROUPS: Array<{
     title: 'Resources',
     links: [
       { label: 'Blog', href: '/blog' },
+      { label: 'Build vs Buy', href: '/compare/build-vs-buy' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
       { label: 'Recover purchase', href: '/orders/recover' },
