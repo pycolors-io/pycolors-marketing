@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@pycolors/ui';
+import { MoneyPathPageEvent } from '@/components/analytics/money-path-event';
 
 type CheckoutSuccessPageProps = {
   searchParams: Promise<{
@@ -131,6 +132,13 @@ export default async function CheckoutSuccessPage({
 
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+      <MoneyPathPageEvent
+        event="checkout_success_viewed"
+        productSlug={productSlug}
+        productName={result?.session.productName ?? null}
+        page="/checkout/success"
+        status={result?.session.paymentStatus ?? null}
+      />
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">

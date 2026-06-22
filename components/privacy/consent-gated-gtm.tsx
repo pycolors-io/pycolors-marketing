@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Script from 'next/script';
 
-const CONSENT_KEY = 'pycolors_privacy_consent';
+export const PRIVACY_CONSENT_KEY = 'pycolors_privacy_consent';
 
 type ConsentEvent = CustomEvent<{
   value: 'accepted' | 'denied';
@@ -19,7 +19,10 @@ export function ConsentGatedGtm({
   React.useEffect(() => {
     if (!gtmId) return;
 
-    setHasConsent(globalThis.localStorage.getItem(CONSENT_KEY) === 'accepted');
+    setHasConsent(
+      globalThis.localStorage.getItem(PRIVACY_CONSENT_KEY) ===
+        'accepted',
+    );
 
     function handleConsent(event: Event) {
       const consentEvent = event as ConsentEvent;
