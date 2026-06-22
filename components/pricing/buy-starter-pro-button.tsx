@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 import { createStarterProCheckout } from '@/lib/api/client';
 
 type BuyStarterProButtonProps = {
@@ -22,7 +23,7 @@ export function BuyStarterProButton({
   fullWidth = true,
   size = 'lg',
   variant = 'default',
-  label = 'Buy Starter Pro — 199 €',
+  label = `Buy Starter Pro — ${PRODUCT_DISPLAY['starter-pro'].priceLabel}`,
   loadingLabel = 'Redirecting to secure checkout...',
   trustText = 'One-time payment · Instant access after purchase',
   showTrustText = false,

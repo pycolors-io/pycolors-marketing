@@ -31,6 +31,10 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+import {
+  PRODUCT_DISPLAY,
+  STARTER_FREE_PRICE_LABEL,
+} from '@pycolors/core-config/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -80,10 +84,10 @@ const INTERNAL = {
 } as const;
 
 const PRICING = {
-  naAiLanding: '49 €',
-  starterFree: 'Free',
-  starterProLaunch: '199 €',
-  starterProRegular: '299 €',
+  naAiLanding: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  starterFree: STARTER_FREE_PRICE_LABEL,
+  starterProLaunch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
+  starterProRegular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
 } as const;
 
 const starterProIncludes = [
@@ -278,9 +282,9 @@ const faqs = [
       'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.',
   },
   {
-    question: 'Will the Starter Pro price stay at 199 €?',
+    question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
     answer:
-      'No. 199 € is the current launch price. The regular price is planned at 299 € as the product matures and more production features are added.',
+      `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
   },
 ] as const;
 

@@ -14,6 +14,7 @@ import {
 import { Container } from '@/components/container';
 import { UI_VERSION, formatVersion } from '@/lib/version';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 import { NpmBadges } from '@/components/npm-badges';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
-const launchPrice = '199 €';
+const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 function Pill({ label }: { readonly label: string }) {
   return (

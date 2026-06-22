@@ -30,6 +30,7 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
@@ -67,8 +68,8 @@ export const metadata: Metadata = {
 const PRODUCT = {
   slug: 'na-ai-landing',
   name: 'NA-AI Landing',
-  price: '49 €',
-  regularPrice: '79 €',
+  price: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  regularPrice: PRODUCT_DISPLAY['na-ai-landing'].regularPriceLabel,
   demoUrl: 'https://na-ai.pycolors.io',
 } as const;
 

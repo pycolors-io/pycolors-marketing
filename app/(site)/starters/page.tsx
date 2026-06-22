@@ -21,6 +21,7 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -70,8 +71,8 @@ const EXTERNAL = {
   starterDemo: 'https://starter-demo.pycolors.io',
 } as const;
 
-const launchPrice = '199 €';
-const regularPrice = '299 €';
+const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
 
 const cardClass =
   'rounded-[5px] border border-border-subtle bg-surface text-surface-foreground shadow-soft';

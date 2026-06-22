@@ -28,6 +28,7 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
@@ -60,8 +61,8 @@ export const metadata: Metadata = {
   },
 };
 
-const launchPrice = '199 €';
-const regularPrice = '299 €';
+const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
 
 const INTERNAL = {
   pricing: '/pricing',

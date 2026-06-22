@@ -20,6 +20,7 @@ import { Footer } from '@/components/footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 
 type QuickLink = {
   title: string;
@@ -37,6 +38,8 @@ type RecoveryPath = {
   href: string;
   icon: ReactNode;
 };
+
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const quickLinks: QuickLink[] = [
   {
@@ -163,7 +166,7 @@ export default function NotFound() {
 
               <BuyStarterProButton
                 fullWidth={false}
-                label="Buy Starter Pro — 199 €"
+                label={`Buy Starter Pro — ${starterProPriceLabel}`}
               />
 
               <Button

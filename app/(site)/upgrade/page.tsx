@@ -27,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -72,8 +73,8 @@ const INTERNAL = {
 } as const;
 
 const PRICING = {
-  launch: '199 €',
-  regular: '299 €',
+  launch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
+  regular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
 } as const;
 
 const valueCards = [
@@ -244,7 +245,7 @@ const faqs = [
   {
     question: 'What does the launch offer include?',
     answer:
-      'The launch offer gives you commercial access to Starter Pro at 199 € instead of the planned regular price of 299 €.',
+      `The launch offer gives you commercial access to Starter Pro at ${PRICING.launch} instead of the planned regular price of ${PRICING.regular}.`,
   },
   {
     question: 'Where do I find the legal and usage scope?',

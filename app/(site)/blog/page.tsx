@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 import { Container } from '@/components/container';
 import { BlogList } from '@/components/blog/blog-list';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
@@ -19,6 +20,8 @@ import {
   getAllTags,
   getFeaturedPosts,
 } from '@/lib/blog/utils';
+
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Engineering Blog',
@@ -179,7 +182,7 @@ export default function BlogPage() {
 
               <BuyStarterProButton
                 fullWidth={false}
-                label="Buy Starter Pro — 199 €"
+                label={`Buy Starter Pro — ${starterProPriceLabel}`}
               />
             </>
           }

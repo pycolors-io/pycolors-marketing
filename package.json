@@ -25,6 +25,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@pycolors/core-config": "workspace:*",
     "@pycolors/tokens": "^1.2.0",
     "@pycolors/ui": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.15",
