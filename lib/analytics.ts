@@ -25,7 +25,13 @@ export function hasAnalyticsConsent() {
     return false;
   }
 
-  return window.localStorage.getItem(PRIVACY_CONSENT_KEY) === 'accepted';
+  try {
+    return (
+      window.localStorage.getItem(PRIVACY_CONSENT_KEY) === 'accepted'
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function trackMoneyPathEvent(event: MoneyPathEvent) {
@@ -33,7 +39,11 @@ export function trackMoneyPathEvent(event: MoneyPathEvent) {
     return;
   }
 
-  const targetWindow = window as DataLayerWindow;
-  targetWindow.dataLayer = targetWindow.dataLayer ?? [];
-  targetWindow.dataLayer.push(event);
+  try {
+    const targetWindow = window as DataLayerWindow;
+    targetWindow.dataLayer = targetWindow.dataLayer ?? [];
+    targetWindow.dataLayer.push(event);
+  } catch {
+    // Analytics must never interrupt checkout or recovery flows.
+  }
 }
