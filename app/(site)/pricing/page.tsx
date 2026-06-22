@@ -31,8 +31,16 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+import {
+  PRODUCT_DISPLAY,
+  STARTER_FREE_PRICE_LABEL,
+} from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
@@ -68,6 +76,7 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const INTERNAL = {
+  buildVsBuy: '/compare/build-vs-buy',
   templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
@@ -80,11 +89,29 @@ const INTERNAL = {
 } as const;
 
 const PRICING = {
-  naAiLanding: '49 €',
-  starterFree: 'Free',
-  starterProLaunch: '199 €',
-  starterProRegular: '299 €',
+  naAiLanding: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  starterFree: STARTER_FREE_PRICE_LABEL,
+  starterProLaunch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
+  starterProRegular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
 } as const;
+
+const pricingJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY['starter-pro'],
+      canonicalPath: '/starters/pro',
+      description:
+        'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
+    }),
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY['na-ai-landing'],
+      canonicalPath: '/templates/na-ai-landing',
+      description:
+        'Premium AI and SaaS landing page template built for modern Next.js product launches.',
+    }),
+  ],
+};
 
 const starterProIncludes = [
   'Full Starter Pro source code',
@@ -259,8 +286,22 @@ const faqs = [
   {
     question:
       'Why should I buy Starter Pro instead of building it myself?',
-    answer:
-      'Because auth, billing, protected routes, account flows, webhook synchronization, and delivery/recovery flows are repeated work that can delay launch. Starter Pro helps you skip that foundation work and focus on your product.',
+    answer: (
+      <>
+        Because auth, billing, protected routes, account flows,
+        webhook synchronization, and delivery/recovery flows are
+        repeated work that can delay launch. Starter Pro helps you skip
+        that foundation work and focus on your product. For the longer
+        version, read the{' '}
+        <Link
+          href={INTERNAL.buildVsBuy}
+          className="font-medium text-foreground underline underline-offset-4"
+        >
+          build vs buy comparison
+        </Link>
+        .
+      </>
+    ),
   },
   {
     question: 'Can I use PyColors products for commercial projects?',
@@ -278,9 +319,9 @@ const faqs = [
       'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.',
   },
   {
-    question: 'Will the Starter Pro price stay at 199 €?',
+    question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
     answer:
-      'No. 199 € is the current launch price. The regular price is planned at 299 € as the product matures and more production features are added.',
+      `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
   },
 ] as const;
 
@@ -390,7 +431,7 @@ function FaqCard({
   answer,
 }: {
   readonly question: string;
-  readonly answer: string;
+  readonly answer: React.ReactNode;
 }) {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
@@ -410,6 +451,7 @@ function FaqCard({
 export default function PricingPage() {
   return (
     <Container className="py-18">
+      <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
       <div className="mx-auto max-w-6xl">
         <PageHero
           maxWidth="5xl"

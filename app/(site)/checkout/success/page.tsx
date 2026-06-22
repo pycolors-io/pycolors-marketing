@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@pycolors/ui';
+import { MoneyPathPageEvent } from '@/components/analytics/money-path-event';
 
 type CheckoutSuccessPageProps = {
   searchParams: Promise<{
@@ -61,6 +62,35 @@ function getProductDocsHref(productSlug: string | null) {
       return '/templates/na-ai-landing';
     default:
       return '/docs';
+  }
+}
+
+function getProductGuidance(productSlug: string | null) {
+  switch (productSlug) {
+    case 'na-ai-landing':
+      return {
+        title: 'A natural next step',
+        description:
+          'NA-AI Landing gives you the public launch surface. When you are ready to wire authentication, billing, protected routes, and app foundations, Starter Pro is the next layer.',
+        href: '/starters/pro',
+        cta: 'Explore Starter Pro',
+      };
+    case 'starter-pro':
+      return {
+        title: 'Set up Starter Pro',
+        description:
+          'Start with the setup documentation, keep the recovery page available if the delivery email is delayed, and use the Starter Pro docs as your implementation reference.',
+        href: '/docs/starter-pro',
+        cta: 'Open Starter Pro docs',
+      };
+    default:
+      return {
+        title: 'Recommended next step',
+        description:
+          'Start with the product documentation and keep the recovery page available if the delivery email is delayed.',
+        href: '/docs',
+        cta: 'Open documentation',
+      };
   }
 }
 
@@ -125,12 +155,20 @@ export default async function CheckoutSuccessPage({
     : null;
 
   const docsHref = getProductDocsHref(productSlug);
+  const guidance = getProductGuidance(productSlug);
   const supportSubject = encodeURIComponent(
     `${productName} order help`,
   );
 
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+      <MoneyPathPageEvent
+        event="checkout_success_viewed"
+        productSlug={productSlug}
+        productName={result?.session.productName ?? null}
+        page="/checkout/success"
+        status={result?.session.paymentStatus ?? null}
+      />
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
@@ -356,6 +394,29 @@ export default async function CheckoutSuccessPage({
                     checkout reference for faster help.
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-[28px] border">
+              <CardHeader>
+                <CardTitle className="text-lg">
+                  {guidance.title}
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
+                <p>{guidance.description}</p>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-xl"
+                >
+                  <Link href={guidance.href}>
+                    {guidance.cta}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 

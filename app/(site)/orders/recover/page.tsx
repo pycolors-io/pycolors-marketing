@@ -21,12 +21,21 @@ import {
 } from '@pycolors/ui';
 
 import { recoverCommerceAccess } from '@/lib/api/client';
+import { trackMoneyPathEvent } from '@/lib/analytics';
 
 export default function RecoverOrderPage() {
   const [email, setEmail] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    trackMoneyPathEvent({
+      event: 'recovery_page_viewed',
+      page: '/orders/recover',
+      status: 'viewed',
+    });
+  }, []);
 
   async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>,

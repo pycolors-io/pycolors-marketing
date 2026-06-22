@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -36,6 +37,8 @@ export const metadata: Metadata = {
     images: ['/seo/twitter-main.png'],
   },
 };
+
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 type Guide = {
   title: string;
@@ -473,7 +476,7 @@ export default function GuidesPage() {
 
                   <BuyStarterProButton
                     fullWidth={true}
-                    label="Starter Pro — 199 €"
+                    label={`Starter Pro — ${starterProPriceLabel}`}
                     variant="outline"
                   />
                 </div>

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   },
 };
 
-const launchPrice = '199 €';
+const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const AVAILABLE_NOW = {
   title: 'PyColors Starter Free',

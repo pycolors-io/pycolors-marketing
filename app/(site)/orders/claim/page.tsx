@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@pycolors/ui';
+import { MoneyPathPageEvent } from '@/components/analytics/money-path-event';
 
 type ClaimOrderPageProps = {
   readonly searchParams: Promise<{
@@ -125,6 +126,11 @@ export default async function ClaimOrderPage({
         title="Invalid access link"
         description="This claim link is missing the required access token. Open the email you received after purchase and use the original access button again."
       >
+        <MoneyPathPageEvent
+          event="claim_page_viewed"
+          page="/orders/claim"
+          status="missing_token"
+        />
         <div className="flex flex-wrap gap-3">
           <Button asChild>
             <Link href="/pricing">Back to pricing</Link>
@@ -147,6 +153,11 @@ export default async function ClaimOrderPage({
         title="Access link unavailable"
         description="We could not verify this access link right now. The delivery service may be temporarily unavailable, expired, or invalid. Please try again shortly or contact support with your purchase email."
       >
+        <MoneyPathPageEvent
+          event="claim_page_viewed"
+          page="/orders/claim"
+          status="unavailable"
+        />
         <div className="flex flex-wrap gap-3">
           <Button asChild>
             <Link href="mailto:support@pycolors.com?subject=PyColors%20access%20help">
@@ -189,6 +200,13 @@ export default async function ClaimOrderPage({
 
   return (
     <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+      <MoneyPathPageEvent
+        event="claim_page_viewed"
+        productSlug={productSlug}
+        productName={productName}
+        page="/orders/claim"
+        status="ready"
+      />
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">

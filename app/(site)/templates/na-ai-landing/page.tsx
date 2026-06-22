@@ -30,11 +30,16 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 import { TemplateStickyCta } from '@/components/templates/template-sticky-cta';
 
 export const metadata: Metadata = {
@@ -67,10 +72,17 @@ export const metadata: Metadata = {
 const PRODUCT = {
   slug: 'na-ai-landing',
   name: 'NA-AI Landing',
-  price: '49 €',
-  regularPrice: '79 €',
+  price: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  regularPrice: PRODUCT_DISPLAY['na-ai-landing'].regularPriceLabel,
   demoUrl: 'https://na-ai.pycolors.io',
 } as const;
+
+const naAiLandingJsonLd = generateProductOfferJsonLd({
+  product: PRODUCT_DISPLAY['na-ai-landing'],
+  canonicalPath: '/templates/na-ai-landing',
+  description:
+    'Premium AI and SaaS landing page template built for modern Next.js product launches.',
+});
 
 const SCREENSHOTS = [
   {
@@ -346,6 +358,7 @@ function ScreenshotGrid() {
 export default function NaAiTemplatePage() {
   return (
     <main className="bg-background pb-24 text-foreground">
+      <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
       <Container className="py-18">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8">

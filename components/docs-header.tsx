@@ -21,6 +21,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { DocsLogo } from '@/components/docs-logo';
 
 type DocsLink = Readonly<{
@@ -31,6 +32,9 @@ type DocsLink = Readonly<{
 type DocsHeaderProps = Readonly<{
   docsLinks?: DocsLink[];
 }>;
+
+const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 type DocsNavItem = Readonly<{
   label: string;
@@ -483,7 +487,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         </span>
 
                         <span className="hidden text-[11px] text-muted-foreground lg:inline">
-                          Templates from 49 € · Starter Pro from 199 €
+                          Templates from {templatePriceLabel} · Starter Pro
+                          from {starterProPriceLabel}
                         </span>
 
                         <ChevronRight

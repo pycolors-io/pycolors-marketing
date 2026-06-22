@@ -26,6 +26,7 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -73,6 +74,9 @@ type Template = {
   readonly note: string;
 };
 
+const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+
 const templates: readonly Template[] = [
   {
     name: 'NA-AI Landing',
@@ -81,7 +85,7 @@ const templates: readonly Template[] = [
     status: 'Available',
     href: '/templates/na-ai-landing',
     tags: ['AI', 'Landing page', 'Next.js', 'Tailwind', 'SaaS'],
-    priceLabel: '49 €',
+    priceLabel: templatePriceLabel,
     demoUrl: 'https://na-ai.pycolors.io',
     productSlug: 'na-ai-landing',
     includes: [
@@ -694,8 +698,8 @@ export default function TemplatesPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
-                <Pill>Templates from 49 €</Pill>
-                <Pill>Starter Pro from 199 €</Pill>
+                <Pill>Templates from {templatePriceLabel}</Pill>
+                <Pill>Starter Pro from {starterProPriceLabel}</Pill>
                 <Pill>Instant access</Pill>
                 <Pill>Commercial usage</Pill>
               </div>

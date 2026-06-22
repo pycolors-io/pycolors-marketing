@@ -2,6 +2,10 @@ import type {
   BaseLayoutProps,
   LinkItemType,
 } from 'fumadocs-ui/layouts/shared';
+import {
+  PRODUCT_DISPLAY,
+  STARTER_FREE_PRICE_LABEL,
+} from '@/lib/products/public-catalog';
 
 export type PrimaryNavItem = {
   label: string;
@@ -23,6 +27,7 @@ export type ProductMenuGroup = {
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'Docs', href: '/docs' },
+  { label: 'Guides', href: '/guides' },
   { label: 'Blog', href: '/blog' },
 ];
 
@@ -34,13 +39,13 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         label: 'Starter Pro',
         href: '/starters/pro',
         description: 'Launch with auth and billing',
-        badge: '199 €',
+        badge: PRODUCT_DISPLAY['starter-pro'].priceLabel,
       },
       {
         label: 'Starter Free',
         href: '/starters/free',
         description: 'Validate product UX fast',
-        badge: 'Free',
+        badge: STARTER_FREE_PRICE_LABEL,
       },
       {
         label: 'Compare Starters',
@@ -61,7 +66,7 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         label: 'NA-AI Landing',
         href: '/templates/na-ai-landing',
         description: 'AI/SaaS landing page template',
-        badge: '49 €',
+        badge: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
       },
     ],
   },

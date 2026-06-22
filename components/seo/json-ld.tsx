@@ -1,3 +1,7 @@
+import type { PublicProductDisplay } from '@/lib/products/public-catalog';
+
+import { toAbsoluteUrl } from '@/lib/seo/website';
+
 type JsonLdProps = {
   id: string;
   data: Record<string, unknown>;
@@ -13,4 +17,36 @@ export function JsonLd({ id, data }: JsonLdProps) {
       }}
     />
   );
+}
+
+type ProductOfferJsonLdInput = {
+  readonly product: PublicProductDisplay;
+  readonly canonicalPath: string;
+  readonly description: string;
+};
+
+export function generateProductOfferJsonLd({
+  product,
+  canonicalPath,
+  description,
+}: ProductOfferJsonLdInput) {
+  const url = toAbsoluteUrl(canonicalPath);
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description,
+    url,
+    brand: {
+      '@type': 'Brand',
+      name: 'PyColors',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: product.currency,
+      url,
+    },
+  };
 }

@@ -7,6 +7,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Logo } from './logo';
@@ -15,6 +16,8 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const CURRENT_YEAR = new Date().getFullYear();
+const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 type FooterLink = {
   readonly label: string;
@@ -56,6 +59,7 @@ const GROUPS: Array<{
     title: 'Resources',
     links: [
       { label: 'Blog', href: '/blog' },
+      { label: 'Build vs Buy', href: '/compare/build-vs-buy' },
       { label: 'Changelog', href: '/changelog' },
       { label: 'Roadmap', href: '/roadmap' },
       { label: 'Recover purchase', href: '/orders/recover' },
@@ -177,9 +181,9 @@ export function Footer() {
                   <span>·</span>
                   <span>Purchase recovery</span>
                   <span>·</span>
-                  <span>Templates from 49 €</span>
+                  <span>Templates from {templatePriceLabel}</span>
                   <span>·</span>
-                  <span>Starter Pro 199 €</span>
+                  <span>Starter Pro {starterProPriceLabel}</span>
                   <span>·</span>
                   <span>Instant access after purchase</span>
                 </div>

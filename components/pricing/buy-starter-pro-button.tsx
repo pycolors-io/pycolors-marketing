@@ -4,7 +4,9 @@ import * as React from 'react';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { createStarterProCheckout } from '@/lib/api/client';
+import { trackMoneyPathEvent } from '@/lib/analytics';
 
 type BuyStarterProButtonProps = {
   className?: string;
@@ -17,12 +19,14 @@ type BuyStarterProButtonProps = {
   showTrustText?: boolean;
 };
 
+const STARTER_PRO = PRODUCT_DISPLAY['starter-pro'];
+
 export function BuyStarterProButton({
   className,
   fullWidth = true,
   size = 'lg',
   variant = 'default',
-  label = 'Buy Starter Pro — 199 €',
+  label = `Buy Starter Pro — ${STARTER_PRO.priceLabel}`,
   loadingLabel = 'Redirecting to secure checkout...',
   trustText = 'One-time payment · Instant access after purchase',
   showTrustText = false,
@@ -32,10 +36,23 @@ export function BuyStarterProButton({
 
   async function handleBuy() {
     try {
+      trackMoneyPathEvent({
+        event: 'buy_clicked',
+        productSlug: STARTER_PRO.slug,
+        productName: STARTER_PRO.name,
+        page: globalThis.location.pathname,
+      });
       setIsLoading(true);
       setError(null);
 
       const url = await createStarterProCheckout();
+
+      trackMoneyPathEvent({
+        event: 'checkout_redirect_started',
+        productSlug: STARTER_PRO.slug,
+        productName: STARTER_PRO.name,
+        page: globalThis.location.pathname,
+      });
 
       window.location.href = url;
     } catch (err) {
@@ -43,6 +60,14 @@ export function BuyStarterProButton({
         err instanceof Error && err.message
           ? err.message
           : 'Checkout could not be opened right now. Please try again.';
+
+      trackMoneyPathEvent({
+        event: 'checkout_redirect_failed',
+        productSlug: STARTER_PRO.slug,
+        productName: STARTER_PRO.name,
+        page: globalThis.location.pathname,
+        status: 'error',
+      });
 
       setError(message);
       setIsLoading(false);

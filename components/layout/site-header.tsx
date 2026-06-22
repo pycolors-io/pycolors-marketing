@@ -24,6 +24,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import {
   PRIMARY_NAV_ITEMS,
   PRODUCT_MENU_GROUPS,
@@ -52,6 +53,8 @@ type MobileMenuSection = {
 };
 
 const HEADER_HEIGHT = 64;
+const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -614,8 +617,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                             See pricing
                           </span>
                           <span className="text-[11px] text-muted-foreground">
-                            Templates from 49 € · Starter Pro from 199
-                            €
+                            Templates from {templatePriceLabel} · Starter Pro
+                            from {starterProPriceLabel}
                           </span>
                         </span>
 

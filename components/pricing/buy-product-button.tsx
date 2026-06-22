@@ -4,8 +4,10 @@ import * as React from 'react';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { createCheckoutSession } from '@/lib/api/client';
+import { trackMoneyPathEvent } from '@/lib/analytics';
 
 type BuyProductButtonProps = {
   productSlug: string;
@@ -34,9 +36,19 @@ export function BuyProductButton({
 }: Readonly<BuyProductButtonProps>) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const productName =
+    productSlug in PRODUCT_DISPLAY
+      ? PRODUCT_DISPLAY[productSlug as keyof typeof PRODUCT_DISPLAY].name
+      : null;
 
   async function handleBuy() {
     try {
+      trackMoneyPathEvent({
+        event: 'buy_clicked',
+        productSlug,
+        productName,
+        page: globalThis.location.pathname,
+      });
       setIsLoading(true);
       setError(null);
 
@@ -45,12 +57,27 @@ export function BuyProductButton({
         email: customerEmail,
       });
 
+      trackMoneyPathEvent({
+        event: 'checkout_redirect_started',
+        productSlug,
+        productName,
+        page: globalThis.location.pathname,
+      });
+
       window.location.href = url;
     } catch (err) {
       const message =
         err instanceof Error && err.message
           ? err.message
           : 'Checkout could not be opened right now. Please try again.';
+
+      trackMoneyPathEvent({
+        event: 'checkout_redirect_failed',
+        productSlug,
+        productName,
+        page: globalThis.location.pathname,
+        status: 'error',
+      });
 
       setError(message);
       setIsLoading(false);

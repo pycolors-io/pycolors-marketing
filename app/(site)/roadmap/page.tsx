@@ -133,7 +133,7 @@ const milestones: Array<{
     id: 'H1 2026',
     title: 'H1 2026',
     subtitle:
-      'Grow Starter Pro after launch through trust, proof, analytics, backend expansion, and stronger conversion systems.',
+      'Keep the public product surface accurate, credible, and focused on shipped work.',
   },
 ];
 
@@ -242,7 +242,7 @@ const items: RoadmapItem[] = [
     status: 'Shipped',
     milestone: 'Mar 2026',
     tags: ['Patterns', 'Examples', 'Marketing'],
-    href: '/examples',
+    href: '/ui/examples',
   },
   {
     title: 'PRO upgrade funnel',
@@ -599,71 +599,20 @@ const items: RoadmapItem[] = [
   {
     title: 'Documentation-to-product conversion loop',
     description:
-      'Connect guides, patterns, Starter Free evaluation, Starter Pro value, pricing, and checkout more intentionally with measurable conversion events.',
-    status: 'Next',
+      'Keep guides, patterns, Starter Free, Starter Pro, pricing, and checkout paths aligned so public product journeys stay clear.',
+    status: 'Now',
     milestone: 'H1 2026',
     tags: ['Docs', 'Conversion', 'SEO'],
     href: '/docs',
   },
   {
-    title: 'Analytics and launch instrumentation',
+    title: 'Traffic-readiness trust cleanup',
     description:
-      'Finish GA4 and GTM wiring and validate conversion events across docs, pricing, starters, upgrade, and checkout flows.',
-    status: 'Next',
+      'Remove stale links, unfinished public promises, and outdated claims before sending more traffic to roadmap, changelog, pricing, and product pages.',
+    status: 'Now',
     milestone: 'H1 2026',
-    tags: ['Analytics', 'SEO', 'Growth'],
-  },
-  {
-    title: 'Monetization system v2',
-    description:
-      'Tighten checkout trust, billing states, support reassurance, proof, demos, legal clarity, and conversion logic.',
-    status: 'Next',
-    milestone: 'H1 2026',
-    tags: ['Sales', 'Checkout', 'Pricing'],
-    href: '/pricing',
-  },
-  {
-    title: 'Starter Pro backend expansion',
-    description:
-      'Extend Starter Pro beyond auth and billing into entities, permissions, admin direction, and product patterns.',
-    status: 'Next',
-    milestone: 'H1 2026',
-    tags: ['Starter PRO', 'Backend', 'Architecture'],
-    href: '/starters/pro',
-  },
-  {
-    title: 'Editorial cadence for authority building',
-    description:
-      'Turn blog and guides into a repeatable authority engine for SaaS, DX, product engineering, and starter-focused content.',
-    status: 'Next',
-    milestone: 'H1 2026',
-    tags: ['Blog', 'SEO', 'Authority'],
-    href: '/blog',
-  },
-  {
-    title: 'Starter Pro commercial maturity',
-    description:
-      'Improve Starter Pro through proof, onboarding, reassurance, delivery reliability, and premium business surfaces.',
-    status: 'Later',
-    milestone: 'H1 2026',
-    tags: ['Starter PRO', 'Premium', 'Growth'],
-    href: '/starters/pro',
-  },
-  {
-    title: 'Blocks library',
-    description:
-      'Ship copy-paste marketing and SaaS sections: hero, feature grids, pricing, testimonials, FAQ, CTA, and footer blocks.',
-    status: 'Later',
-    milestone: 'H1 2026',
-    tags: ['Blocks', 'Marketing'],
-  },
-  {
-    title: 'Templates line v2',
-    description:
-      'Expand beyond NA-AI Landing with more premium landing pages, dashboard templates, blocks, and productized demo experiences.',
-    status: 'Next',
-    milestone: 'H1 2026',
-    tags: ['Templates', 'Blocks', 'Monetization'],
+    tags: ['Trust', 'SEO', 'Marketing'],
+    href: '/changelog',
   },
 ];
 
@@ -793,10 +742,9 @@ export default function RoadmapPage() {
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-            A release-driven plan for turning PyColors into a serious
-            SaaS developer platform: UI foundations, guides, patterns,
-            Starter Free, Starter Pro, commercial delivery, trust,
-            analytics, and conversion.
+            A release-driven view of PyColors work across UI
+            foundations, guides, patterns, Starter Free, Starter Pro,
+            commercial delivery, trust, and product clarity.
           </p>
 
           <p className="mx-auto mt-3 max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
@@ -908,9 +856,9 @@ export default function RoadmapPage() {
               <div className="space-y-5">
                 <p className="text-sm leading-7 text-muted-foreground">
                   Shipped items reflect public work already released.
-                  Now and Next reflect the strongest current product,
-                  SEO, and monetization priorities. Later reflects
-                  likely direction, not a fixed delivery commitment.
+                  Now reflects active cleanup and product priorities.
+                  Next and Later are used only when public scope is
+                  realistic enough to show.
                 </p>
 
                 <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-5">
@@ -993,13 +941,13 @@ export default function RoadmapPage() {
                 </Badge>
 
                 <h2 className="font-brand text-2xl font-semibold tracking-tight">
-                  Requests, bugs, and feedback help decide what ships
-                  next.
+                  Public feedback stays scoped and practical.
                 </h2>
 
                 <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                  The roadmap is public because PyColors is built as a
-                  real product system, not a static template.
+                  For UI package bugs or documentation issues, use the
+                  public repository. Broader product direction stays
+                  selective and release-driven.
                 </p>
               </div>
 
@@ -1014,7 +962,7 @@ export default function RoadmapPage() {
                     target="_blank"
                     rel="noreferrer noopener"
                   >
-                    Open an issue
+                    Open UI issue
                   </a>
                 </Button>
 
@@ -1024,7 +972,7 @@ export default function RoadmapPage() {
                     target="_blank"
                     rel="noreferrer noopener"
                   >
-                    View repository
+                    View UI repository
                   </a>
                 </Button>
               </div>

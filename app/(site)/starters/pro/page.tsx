@@ -28,10 +28,15 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Starter with Auth & Billing',
@@ -60,10 +65,18 @@ export const metadata: Metadata = {
   },
 };
 
-const launchPrice = '199 €';
-const regularPrice = '299 €';
+const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
+
+const starterProJsonLd = generateProductOfferJsonLd({
+  product: PRODUCT_DISPLAY['starter-pro'],
+  canonicalPath: '/starters/pro',
+  description:
+    'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
+});
 
 const INTERNAL = {
+  buildVsBuy: '/compare/build-vs-buy',
   pricing: '/pricing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
@@ -548,6 +561,7 @@ function FeatureCard({
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
+      <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
       <Container className="py-18">
         <PageHero
           maxWidth="5xl"
@@ -911,7 +925,15 @@ export default function StarterProPage() {
               />
               <p className="max-w-xl text-center text-xs leading-6 text-muted-foreground">
                 Choose Pro when the cost of rebuilding the foundation
-                is higher than the price of skipping it.
+                is higher than the price of skipping it. For a slower
+                decision, read the{' '}
+                <Link
+                  href={INTERNAL.buildVsBuy}
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  build vs buy comparison
+                </Link>
+                .
               </p>
             </div>
           </div>

@@ -21,6 +21,7 @@ import {
 
 import { JsonLd } from '@/components/seo/json-ld';
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { UI_VERSION } from '@/lib/version';
 import { NpmBadges } from '@/components/npm-badges';
@@ -91,15 +92,15 @@ const INTERNAL = {
 } as const;
 
 const pricing = {
-  templateNaAi: '49 €',
-  starterPro: '199 €',
+  templateNaAi: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  starterPro: PRODUCT_DISPLAY['starter-pro'].priceLabel,
 } as const;
 
 const productCards = [
   {
     title: 'NA-AI Landing',
     eyebrow: 'Template',
-    badge: '49 €',
+    badge: pricing.templateNaAi,
     description:
       'A premium AI/SaaS landing page template for launching and validating your offer quickly.',
     href: INTERNAL.templateNaAi,
@@ -132,7 +133,7 @@ const productCards = [
   {
     title: 'Starter Pro',
     eyebrow: 'Launch layer',
-    badge: '199 €',
+    badge: pricing.starterPro,
     description:
       'A production-ready SaaS foundation with Auth.js, Stripe checkout, Prisma, protected routes, purchase recovery, and PWA-ready app foundations.',
     href: INTERNAL.starterPro,
@@ -616,9 +617,9 @@ export default function HomePage() {
                   </p>
 
                   <div className="mt-6 flex flex-wrap gap-2">
-                    <Pill label="Templates from 49 €" />
+                    <Pill label={`Templates from ${pricing.templateNaAi}`} />
                     <Pill label="Starter Free" />
-                    <Pill label="Starter Pro 199 €" />
+                    <Pill label={`Starter Pro ${pricing.starterPro}`} />
                   </div>
                 </div>
 

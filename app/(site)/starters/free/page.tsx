@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { NpmBadges } from '@/components/npm-badges';
@@ -56,6 +57,8 @@ export const metadata: Metadata = {
     images: ['/seo/twitter-main.png'],
   },
 };
+
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const EXTERNAL = {
   demo: 'https://starter-demo.pycolors.io',
@@ -363,7 +366,9 @@ export default function StarterFreePage() {
                 </a>
               </Button>
 
-              <BuyStarterProButton label="Upgrade to Pro — 199 €" />
+              <BuyStarterProButton
+                label={`Upgrade to Pro — ${starterProPriceLabel}`}
+              />
             </div>
           }
           pills={[
@@ -633,7 +638,7 @@ export default function StarterFreePage() {
 
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <BuyStarterProButton
-              label="Upgrade to Starter Pro — 199 €"
+              label={`Upgrade to Starter Pro — ${starterProPriceLabel}`}
               fullWidth={false}
             />
 
@@ -845,7 +850,9 @@ pnpm dev`}</pre>
                     </a>
                   </Button>
 
-                  <BuyStarterProButton label="Upgrade to Pro — 199 €" />
+                  <BuyStarterProButton
+                    label={`Upgrade to Pro — ${starterProPriceLabel}`}
+                  />
                 </div>
               </div>
             </CardContent>
