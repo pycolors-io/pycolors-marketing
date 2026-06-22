@@ -34,7 +34,7 @@ import {
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
-} from '@pycolors/core-config/products/public-catalog';
+} from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import {

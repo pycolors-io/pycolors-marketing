@@ -24,7 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 import { Container } from '@/components/container';
 import { NpmBadges } from '@/components/npm-badges';

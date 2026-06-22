@@ -7,7 +7,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { UI_VERSION, APP_VERSION } from '@/lib/version';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Logo } from './logo';

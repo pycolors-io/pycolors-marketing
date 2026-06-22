@@ -24,7 +24,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import {
   PRIMARY_NAV_ITEMS,
   PRODUCT_MENU_GROUPS,

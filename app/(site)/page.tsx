@@ -21,7 +21,7 @@ import {
 
 import { JsonLd } from '@/components/seo/json-ld';
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { UI_VERSION } from '@/lib/version';
 import { NpmBadges } from '@/components/npm-badges';

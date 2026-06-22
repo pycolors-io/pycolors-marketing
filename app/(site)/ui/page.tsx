@@ -14,7 +14,7 @@ import {
 import { Container } from '@/components/container';
 import { UI_VERSION, formatVersion } from '@/lib/version';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { NpmBadges } from '@/components/npm-badges';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';

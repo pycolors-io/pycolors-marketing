@@ -1,4 +1,4 @@
-import type { PublicProductDisplay } from '@pycolors/core-config/products/public-catalog';
+import type { PublicProductDisplay } from '@/lib/products/public-catalog';
 
 import { toAbsoluteUrl } from '@/lib/seo/website';
 

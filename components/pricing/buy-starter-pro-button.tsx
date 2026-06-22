@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ArrowRight, LoaderCircle } from 'lucide-react';
 
 import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { createStarterProCheckout } from '@/lib/api/client';
 import { trackMoneyPathEvent } from '@/lib/analytics';
 

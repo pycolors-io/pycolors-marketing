@@ -20,7 +20,7 @@ import { Footer } from '@/components/footer';
 import { SiteHeader } from '@/components/layout/site-header';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
 type QuickLink = {
   title: string;

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BlogList } from '@/components/blog/blog-list';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
