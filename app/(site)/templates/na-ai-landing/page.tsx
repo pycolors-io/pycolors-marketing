@@ -36,6 +36,10 @@ import { Container } from '@/components/container';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 import { TemplateStickyCta } from '@/components/templates/template-sticky-cta';
 
 export const metadata: Metadata = {
@@ -72,6 +76,11 @@ const PRODUCT = {
   regularPrice: PRODUCT_DISPLAY['na-ai-landing'].regularPriceLabel,
   demoUrl: 'https://na-ai.pycolors.io',
 } as const;
+
+const naAiLandingJsonLd = generateProductOfferJsonLd({
+  product: PRODUCT_DISPLAY['na-ai-landing'],
+  canonicalPath: '/templates/na-ai-landing',
+});
 
 const SCREENSHOTS = [
   {
@@ -347,6 +356,7 @@ function ScreenshotGrid() {
 export default function NaAiTemplatePage() {
   return (
     <main className="bg-background pb-24 text-foreground">
+      <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
       <Container className="py-18">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8">

@@ -37,6 +37,10 @@ import {
 } from '@pycolors/core-config/products/public-catalog';
 
 import { Container } from '@/components/container';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 import { PageHero } from '@/components/marketing/page-hero';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
@@ -89,6 +93,20 @@ const PRICING = {
   starterProLaunch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
   starterProRegular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
 } as const;
+
+const pricingJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY['starter-pro'],
+      canonicalPath: '/starters/pro',
+    }),
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY['na-ai-landing'],
+      canonicalPath: '/templates/na-ai-landing',
+    }),
+  ],
+};
 
 const starterProIncludes = [
   'Full Starter Pro source code',
@@ -414,6 +432,7 @@ function FaqCard({
 export default function PricingPage() {
   return (
     <Container className="py-18">
+      <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
       <div className="mx-auto max-w-6xl">
         <PageHero
           maxWidth="5xl"

@@ -33,6 +33,10 @@ import { PRODUCT_DISPLAY } from '@pycolors/core-config/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import {
+  JsonLd,
+  generateProductOfferJsonLd,
+} from '@/components/seo/json-ld';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Starter with Auth & Billing',
@@ -63,6 +67,11 @@ export const metadata: Metadata = {
 
 const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
+
+const starterProJsonLd = generateProductOfferJsonLd({
+  product: PRODUCT_DISPLAY['starter-pro'],
+  canonicalPath: '/starters/pro',
+});
 
 const INTERNAL = {
   pricing: '/pricing',
@@ -549,6 +558,7 @@ function FeatureCard({
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
+      <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
       <Container className="py-18">
         <PageHero
           maxWidth="5xl"
