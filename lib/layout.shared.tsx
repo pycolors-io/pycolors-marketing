@@ -27,6 +27,7 @@ export type ProductMenuGroup = {
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'Docs', href: '/docs' },
+  { label: 'Guides', href: '/guides' },
   { label: 'Blog', href: '/blog' },
 ];
 
