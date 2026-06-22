@@ -6,6 +6,7 @@ import {
   getAllTags,
   normalizeTaxonomy,
 } from '@/lib/blog/utils';
+import { source } from '@/lib/source';
 
 const BASE_URL = 'https://pycolors.io';
 
@@ -59,27 +60,6 @@ const STATIC_ROUTES = [
   '/guides/saas-organizations',
   '/guides/saas-admin-panels',
   '/guides/pwa-for-saas',
-
-  /**
-   * Documentation
-   */
-  '/docs',
-  '/docs/ui',
-
-  /**
-   * Starter Free docs
-   */
-  '/docs/starter',
-  '/docs/starter/upgrade',
-
-  /**
-   * Starter Pro docs
-   */
-  '/docs/starter-pro',
-  '/docs/starter-pro/getting-started',
-  '/docs/starter-pro/what-is-included',
-  '/docs/starter-pro/billing',
-  '/docs/starter-pro/backend',
 
   /**
    * Product transparency
@@ -235,6 +215,31 @@ function getChangeFrequency(
   return 'monthly';
 }
 
+type SitemapDocData = {
+  readonly draft?: boolean;
+  readonly private?: boolean;
+  readonly lastUpdated?: string | Date;
+};
+
+function isPublicDocsPage(page: { readonly data: unknown }) {
+  const data = page.data as SitemapDocData;
+
+  return data.draft !== true && data.private !== true;
+}
+
+function getDocsLastModified(
+  lastUpdated: SitemapDocData['lastUpdated'],
+  fallback: Date,
+) {
+  if (!lastUpdated) {
+    return fallback;
+  }
+
+  const lastModified = new Date(lastUpdated);
+
+  return Number.isNaN(lastModified.getTime()) ? fallback : lastModified;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -284,6 +289,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   /**
+   * Documentation pages from Fumadocs.
+   */
+  const docsPages: MetadataRoute.Sitemap = source
+    .getPages()
+    .filter(isPublicDocsPage)
+    .map((page) => {
+      const data = page.data as SitemapDocData;
+
+      return {
+        url: `${BASE_URL}${page.url}`,
+        lastModified: getDocsLastModified(data.lastUpdated, now),
+        changeFrequency: getChangeFrequency(page.url),
+        priority: getPriority(page.url),
+      };
+    });
+
+  /**
    * Merge + dedupe
    */
   const entries = [
@@ -291,6 +313,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPosts,
     ...blogCategories,
     ...blogTags,
+    ...docsPages,
   ];
 
   return Array.from(
