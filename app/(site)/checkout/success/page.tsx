@@ -276,7 +276,7 @@ export default async function CheckoutSuccessPage({
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
                   <Link href="/orders/recover">
-                    Access your product
+                    Recover access email
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -293,8 +293,15 @@ export default async function CheckoutSuccessPage({
 
               <p className="text-xs leading-6 text-muted-foreground">
                 If your delivery email does not arrive after a
-                reasonable delay, contact support and include your
-                checkout reference so we can help faster.
+                reasonable delay, email{' '}
+                <Link
+                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  support@pycolors.com
+                </Link>{' '}
+                and include your checkout reference so we can help
+                faster.
               </p>
             </CardContent>
           </Card>
@@ -390,8 +397,14 @@ export default async function CheckoutSuccessPage({
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
 
                   <p>
-                    If anything looks wrong, contact support with your
-                    checkout reference for faster help.
+                    If anything looks wrong, email{' '}
+                    <Link
+                      href={`mailto:support@pycolors.com?subject=${supportSubject}`}
+                      className="font-medium text-foreground underline underline-offset-4"
+                    >
+                      support@pycolors.com
+                    </Link>{' '}
+                    with your checkout reference for faster help.
                   </p>
                 </div>
               </CardContent>

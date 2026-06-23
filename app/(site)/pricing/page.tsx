@@ -79,6 +79,7 @@ const INTERNAL = {
   buildVsBuy: '/compare/build-vs-buy',
   templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
+  starterPro: '/starters/pro',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
@@ -681,13 +682,23 @@ export default function PricingPage() {
                   <CheckItem>Protected app architecture</CheckItem>
                 </ul>
 
-                <div className="mt-6">
+                <div className="mt-6 grid gap-2">
                   <BuyStarterProButton
-                    fullWidth={false}
+                    fullWidth
                     label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                   />
 
-                  <p className="mt-3 text-center text-xs leading-6 text-muted-foreground">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-10 w-full rounded-[5px] text-sm font-medium"
+                  >
+                    <Link href={INTERNAL.starterPro}>
+                      Explore Starter Pro
+                    </Link>
+                  </Button>
+
+                  <p className="text-center text-xs leading-6 text-muted-foreground">
                     Not sure yet? Read the{' '}
                     <Link
                       href={INTERNAL.buildVsBuy}

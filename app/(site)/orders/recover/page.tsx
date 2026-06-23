@@ -211,8 +211,14 @@ export default function RecoverOrderPage() {
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
                     If you still do not receive your access email,
-                    contact support and include the email used during
-                    checkout.
+                    email{' '}
+                    <Link
+                      href="mailto:support@pycolors.com?subject=PyColors%20access%20recovery"
+                      className="font-medium text-foreground underline underline-offset-4"
+                    >
+                      support@pycolors.com
+                    </Link>{' '}
+                    and include the email used during checkout.
                   </p>
                 </div>
 

@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 const INTERNAL = {
   patterns: '/ui/patterns',
-  examples: '/examples',
+  examples: '/ui/examples',
   guides: '/guides',
   pricing: '/pricing',
   starterFree: '/starters/free',
