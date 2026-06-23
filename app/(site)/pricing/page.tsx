@@ -79,6 +79,7 @@ const INTERNAL = {
   buildVsBuy: '/compare/build-vs-buy',
   templateNaAi: '/templates/na-ai-landing',
   starterFree: '/starters/free',
+  starterPro: '/starters/pro',
   docsStarterPro: '/docs/starter-pro',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
@@ -317,6 +318,26 @@ const faqs = [
     question: 'What if I do not receive the access email?',
     answer:
       'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.',
+  },
+  {
+    question: 'Do I get future Starter Pro updates?',
+    answer:
+      'Yes. Your one-time Starter Pro purchase includes future product releases. Major changes follow semantic versioning, with release notes in the changelog and docs.',
+  },
+  {
+    question: 'What support is included with Starter Pro?',
+    answer:
+      'Starter Pro includes email support for purchase access, setup questions, and product scope. It is not unlimited custom development or consulting.',
+  },
+  {
+    question: 'What if Starter Pro setup fails locally?',
+    answer:
+      'Start with Getting Started and the environment variable docs. Check Node.js version, dependencies, database connection, and Stripe test keys first. Email support can help with eligible setup issues.',
+  },
+  {
+    question: 'What is the refund policy?',
+    answer:
+      'PyColors paid products are digital goods with immediate access after checkout. Refunds may be limited unless required by applicable law. Review the terms before purchase.',
   },
   {
     question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
@@ -661,11 +682,32 @@ export default function PricingPage() {
                   <CheckItem>Protected app architecture</CheckItem>
                 </ul>
 
-                <div className="mt-6">
+                <div className="mt-6 grid gap-2">
                   <BuyStarterProButton
-                    fullWidth={false}
+                    fullWidth
                     label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                   />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-10 w-full rounded-[5px] text-sm font-medium"
+                  >
+                    <Link href={INTERNAL.starterPro}>
+                      Explore Starter Pro
+                    </Link>
+                  </Button>
+
+                  <p className="text-center text-xs leading-6 text-muted-foreground">
+                    Not sure yet? Read the{' '}
+                    <Link
+                      href={INTERNAL.buildVsBuy}
+                      className="font-medium text-foreground underline underline-offset-4"
+                    >
+                      build vs buy comparison
+                    </Link>
+                    .
+                  </p>
                 </div>
               </Card>
             </div>

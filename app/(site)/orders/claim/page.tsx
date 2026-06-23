@@ -124,7 +124,7 @@ export default async function ClaimOrderPage({
     return (
       <StatusShell
         title="Invalid access link"
-        description="This claim link is missing the required access token. Open the email you received after purchase and use the original access button again."
+        description="This access link is missing the required token. Open your claim email from purchase and use the original access link again."
       >
         <MoneyPathPageEvent
           event="claim_page_viewed"
@@ -165,7 +165,7 @@ export default async function ClaimOrderPage({
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/orders/recover">Recover access</Link>
+            <Link href="/orders/recover">Resend access link</Link>
           </Button>
         </div>
       </StatusShell>
@@ -291,6 +291,17 @@ export default async function ClaimOrderPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
+                  <Link href="/docs/starter-pro/getting-started">
+                    Start setup
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                >
                   <Link href={productPageHref}>
                     View product page
                   </Link>
@@ -300,7 +311,14 @@ export default async function ClaimOrderPage({
               <p className="text-xs leading-6 text-muted-foreground">
                 Save your downloaded package in a secure location
                 after download. If the link stops working or you need
-                help, contact support with your order reference.
+                help, email{' '}
+                <Link
+                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  support@pycolors.com
+                </Link>{' '}
+                with your order reference.
               </p>
             </CardContent>
           </Card>
@@ -366,7 +384,7 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <Package className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    Review the product page and documentation before
+                    Review Getting Started and the product page before
                     customizing or deploying your package.
                   </p>
                 </div>
@@ -374,8 +392,15 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    If you need help, contact support and include your
-                    order reference so we can help quickly.
+                    If you need help, email{' '}
+                    <Link
+                      href={`mailto:support@pycolors.com?subject=${supportSubject}`}
+                      className="font-medium text-foreground underline underline-offset-4"
+                    >
+                      support@pycolors.com
+                    </Link>{' '}
+                    and include your order reference so we can help
+                    quickly.
                   </p>
                 </div>
               </CardContent>
