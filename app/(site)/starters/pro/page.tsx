@@ -2,11 +2,13 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import {
+  ArrowRight,
   Check,
   Code2,
   CreditCard,
   Database,
   Download,
+  FileText,
   GitBranch,
   LayoutDashboard,
   Lock,
@@ -80,9 +82,15 @@ const INTERNAL = {
   pricing: '/pricing',
   starterFree: '/starters/free',
   docsStarterPro: '/docs/starter-pro',
+  docsGettingStarted: '/docs/starter-pro/getting-started',
+  docsWhatIsIncluded: '/docs/starter-pro/what-is-included',
+  docsDelivery: '/docs/starter-pro/delivery',
+  docsBillingTesting: '/docs/starter-pro/billing-testing',
+  docsProductionChecklist: '/docs/starter-pro/production-checklist',
   docsAuth: '/docs/starter-pro/auth',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
+  ordersRecover: '/orders/recover',
   docsPwa: '/docs/starter-pro/pwa',
   docsPwaSetup: '/docs/starter-pro/pwa-setup',
   docsPwaChecklist: '/docs/starter-pro/pwa-production-checklist',
@@ -128,45 +136,6 @@ const coreFeatures = [
     description:
       'Starter Pro is structured to support real product growth with reusable patterns, typed boundaries, scalable routing, protected surfaces, and maintainable architecture.',
     icon: GitBranch,
-  },
-] as const;
-
-const includedItems = [
-  {
-    title: 'Full Starter Pro source code',
-    description:
-      'Get the complete type-safe codebase and adapt it to your own commercial SaaS product.',
-    icon: Download,
-  },
-  {
-    title: 'Auth foundation',
-    description:
-      'Real authentication flows with providers, protected sessions, verification, and recovery flows.',
-    icon: ShieldCheck,
-  },
-  {
-    title: 'Billing foundation',
-    description:
-      'Secure Stripe Checkout, portal, invoices, lifecycle logic, webhook synchronization, and purchase recovery.',
-    icon: CreditCard,
-  },
-  {
-    title: 'Database foundation',
-    description:
-      'Prisma and PostgreSQL foundations ready for real product data and SaaS growth.',
-    icon: Database,
-  },
-  {
-    title: 'PWA foundation',
-    description:
-      'Installable app metadata, icons, screenshots, standalone behavior, and offline-ready routing.',
-    icon: MonitorSmartphone,
-  },
-  {
-    title: 'Production-oriented architecture',
-    description:
-      'Structured routing, reusable SaaS patterns, typed server boundaries, typed product configuration, and maintainable architecture designed for serious products.',
-    icon: ShieldCheck,
   },
 ] as const;
 
@@ -249,6 +218,115 @@ const includedChecklist = [
   'Zod validation and React Hook Form integration',
   'Environment configuration foundations',
   'Commercial usage rights',
+] as const;
+
+const postPurchaseDeliverables = [
+  {
+    title: 'Full source code',
+    description:
+      'The complete Starter Pro codebase, ready to inspect, adapt, and ship from.',
+  },
+  {
+    title: 'Documentation',
+    description:
+      'Implementation docs for auth, billing, backend, delivery, and launch workflows.',
+  },
+  {
+    title: 'Future updates',
+    description:
+      'Future Starter Pro releases are included with your one-time purchase.',
+  },
+  {
+    title: 'Commercial license',
+    description:
+      'Use Starter Pro in personal and client SaaS products under the PyColors license.',
+  },
+  {
+    title: 'Download access',
+    description:
+      'Secure download access after checkout. If email delivery fails, use purchase recovery with the same checkout email.',
+  },
+  {
+    title: 'Setup guidance',
+    description:
+      'Email help for access, recovery, and eligible setup questions — not custom development or consulting.',
+  },
+] as const;
+
+const first30MinutesSteps = [
+  {
+    step: '01',
+    title: 'Receive purchase email',
+    description:
+      'Checkout confirmation and access instructions arrive at your payment email. Missing the email? Use purchase recovery.',
+  },
+  {
+    step: '02',
+    title: 'Download source code',
+    description:
+      'Open the secure access link from your email or the checkout success page.',
+  },
+  {
+    step: '03',
+    title: 'Install dependencies',
+    description:
+      'Follow Getting Started to install packages and configure local environment variables.',
+  },
+  {
+    step: '04',
+    title: 'Run locally',
+    description:
+      'Start the app, connect PostgreSQL, and confirm auth and billing foundations load.',
+  },
+  {
+    step: '05',
+    title: 'Start building',
+    description:
+      'Replace demo product logic with your own onboarding, pricing, and customer flows.',
+  },
+] as const;
+
+const docResourceCards = [
+  {
+    title: 'Getting Started',
+    description:
+      'Install Starter Pro, configure the environment, and run the project locally.',
+    href: INTERNAL.docsGettingStarted,
+    cta: 'Read guide',
+    icon: Rocket,
+  },
+  {
+    title: 'What is Included',
+    description:
+      'See what is already wired, what is mocked, and what you still build yourself.',
+    href: INTERNAL.docsWhatIsIncluded,
+    cta: 'Review scope',
+    icon: FileText,
+  },
+  {
+    title: 'Delivery',
+    description:
+      'Understand secure access, download flow, and what happens after checkout.',
+    href: INTERNAL.docsDelivery,
+    cta: 'Read delivery docs',
+    icon: Download,
+  },
+  {
+    title: 'Billing Testing',
+    description:
+      'Validate Stripe Checkout, webhooks, and subscription flows before launch.',
+    href: INTERNAL.docsBillingTesting,
+    cta: 'Test billing',
+    icon: CreditCard,
+  },
+  {
+    title: 'Production Checklist',
+    description:
+      'Confirm auth, billing, backend, and release readiness before going live.',
+    href: INTERNAL.docsProductionChecklist,
+    cta: 'Open checklist',
+    icon: ShieldCheck,
+  },
 ] as const;
 
 const comparisonRows = [
@@ -354,6 +432,31 @@ const faqs = [
     question: 'Why buy Starter Pro instead of using Starter Free?',
     answer:
       'Starter Free helps you validate product shape. Starter Pro removes the auth, billing, database, and protected architecture bottlenecks that slow real SaaS launches.',
+  },
+  {
+    question: 'Do I get future Starter Pro updates?',
+    answer:
+      'Yes. Your one-time purchase includes future Starter Pro releases. Major changes follow semantic versioning, with release notes in the changelog and Starter Pro docs.',
+  },
+  {
+    question: 'What support is included?',
+    answer:
+      'Starter Pro includes email support for purchase access, setup questions, and product scope. It is not unlimited custom development or consulting.',
+  },
+  {
+    question: 'What if local setup fails?',
+    answer:
+      'Start with Getting Started and the environment variable docs. Check Node.js version, dependencies, database connection, and Stripe test keys first. Email support can help with eligible setup issues.',
+  },
+  {
+    question: 'What if I do not receive my purchase email?',
+    answer:
+      'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the secure access link for eligible orders.',
+  },
+  {
+    question: 'What is the refund policy?',
+    answer:
+      'Starter Pro is a digital product with immediate access after checkout. Refunds may be limited unless required by applicable law. Review the terms before purchase.',
   },
   // {
   //   question: 'Will the price stay at 199 €?',
@@ -558,10 +661,63 @@ function FeatureCard({
   );
 }
 
+function DocResourceCard({
+  title,
+  description,
+  href,
+  cta,
+  icon: Icon,
+}: {
+  readonly title: string;
+  readonly description: string;
+  readonly href: string;
+  readonly cta: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+      <CardContent className="p-5">
+        <div className="space-y-4">
+          <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+            <Icon className="h-4 w-4 text-muted-foreground" />
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-sm font-medium text-foreground">
+              {title}
+            </div>
+
+            <p className="text-sm leading-7 text-muted-foreground">
+              {description}
+            </p>
+          </div>
+
+          <Button
+            asChild
+            variant="outline"
+            className="h-10 rounded-[5px] text-sm font-medium"
+          >
+            <Link href={href}>
+              {cta}
+              <ArrowRight
+                className="ml-2 h-4 w-4"
+                aria-hidden="true"
+              />
+            </Link>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
-      <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
+      <JsonLd
+        id="starter-pro-product-jsonld"
+        data={starterProJsonLd}
+      />
       <Container className="py-18">
         <PageHero
           maxWidth="5xl"
@@ -629,6 +785,80 @@ export default function StarterProPage() {
           }
         />
       </Container>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-10 lg:py-12">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="After purchase"
+              title="What you receive after purchase"
+              description="One payment. Clear deliverables. No guessing what happens once checkout completes."
+            />
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {postPurchaseDeliverables.map((item) => (
+                <Card
+                  key={item.title}
+                  className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
+                      <Check className="h-3.5 w-3.5 text-foreground" />
+                    </span>
+
+                    <div>
+                      <p className="text-sm font-medium text-foreground">
+                        {item.title}
+                      </p>
+
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-10 lg:py-12">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="First 30 minutes"
+              title="What happens right after you buy"
+              description="A practical timeline from checkout to a running local project."
+            />
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+              {first30MinutesSteps.map((item) => (
+                <Card
+                  key={item.step}
+                  className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
+                >
+                  <CardContent className="p-5">
+                    <div className="space-y-3">
+                      <div className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        {item.step}
+                      </div>
+
+                      <div className="text-sm font-medium text-foreground">
+                        {item.title}
+                      </div>
+
+                      <p className="text-sm leading-7 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
 
       <StarterProHeroCarousel />
       <section className="border-t border-border-subtle">
@@ -781,30 +1011,6 @@ export default function StarterProPage() {
                   ))}
                 </ul>
               </Card>
-            </div>
-          </div>
-        </Container>
-      </section>
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-5xl">
-            <SectionHeading
-              eyebrow="After purchase"
-              title="What you get immediately"
-              description="Clear scope, instant delivery, and real SaaS foundations already wired."
-            />
-
-            <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {includedItems.map((item) => (
-                <FeatureCard key={item.title} {...item} />
-              ))}
-            </div>
-
-            <div className="mt-8 flex justify-center">
-              <BuyStarterProButton
-                fullWidth={false}
-                label={`Buy Starter Pro — ${launchPrice}`}
-              />
             </div>
           </div>
         </Container>
@@ -1040,6 +1246,23 @@ export default function StarterProPage() {
               </Link>
               .
             </p>
+          </div>
+        </Container>
+      </section>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Documentation"
+              title="Read before you buy, ship faster after you do"
+              description="Starter Pro is documentation-first. These guides answer the questions buyers ask before and after checkout."
+            />
+
+            <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {docResourceCards.map((item) => (
+                <DocResourceCard key={item.title} {...item} />
+              ))}
+            </div>
           </div>
         </Container>
       </section>
