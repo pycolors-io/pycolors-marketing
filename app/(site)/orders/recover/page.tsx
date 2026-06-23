@@ -83,8 +83,8 @@ export default function RecoverOrderPage() {
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
             If you completed your purchase but did not receive your
-            access email, you can request a new secure access link
-            here.
+            claim email, you can use purchase recovery to resend your
+            access link here.
           </p>
         </div>
 
@@ -111,7 +111,8 @@ export default function RecoverOrderPage() {
                       </p>
                       <p className="mt-1 text-sm leading-7 text-muted-foreground">
                         If an order exists for this email, a new
-                        access link has been sent.
+                        claim email with your access link has been
+                        sent.
                       </p>
                     </div>
                   </div>
@@ -158,7 +159,8 @@ export default function RecoverOrderPage() {
 
               <p className="text-xs leading-6 text-muted-foreground">
                 Use the same email address you used during checkout.
-                If an order exists, we will send a fresh access link.
+                If an order exists, we will send a fresh access link
+                in a new claim email.
               </p>
             </CardContent>
           </Card>
@@ -176,24 +178,23 @@ export default function RecoverOrderPage() {
                   <Shield className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
                     We validate the request against your purchase
-                    entitlement before generating a new secure access
-                    link.
+                    entitlement before sending a new access link.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    If your order exists, a new email is sent with
-                    your claim link and delivery instructions.
+                    If your order exists, a new claim email is sent with
+                    your access link and download instructions.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <RefreshCcw className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    This flow is designed to recover access without
-                    exposing your order publicly.
+                    Purchase recovery is designed to resend your access
+                    link without exposing your order publicly.
                   </p>
                 </div>
               </CardContent>
@@ -210,7 +211,7 @@ export default function RecoverOrderPage() {
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    If you still do not receive your access email,
+                    If you still do not receive your claim email,
                     email{' '}
                     <Link
                       href="mailto:support@pycolors.com?subject=PyColors%20access%20recovery"

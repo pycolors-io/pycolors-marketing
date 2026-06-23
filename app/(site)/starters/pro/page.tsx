@@ -256,15 +256,15 @@ const postPurchaseDeliverables = [
 const first30MinutesSteps = [
   {
     step: '01',
-    title: 'Receive purchase email',
+    title: 'Receive claim email',
     description:
-      'Checkout confirmation and access instructions arrive at your payment email. Missing the email? Use purchase recovery.',
+      'Your claim email arrives at your payment email with your access link. Missing it? Use purchase recovery to resend your access link.',
   },
   {
     step: '02',
     title: 'Download source code',
     description:
-      'Open the secure access link from your email or the checkout success page.',
+      'Open the access link in your claim email, download the package, and unzip it before setup.',
   },
   {
     step: '03',

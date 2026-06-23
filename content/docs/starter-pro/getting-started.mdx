@@ -21,7 +21,6 @@ import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
-import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Starter Pro</Badge>
@@ -42,14 +41,9 @@ The goal is not to study the codebase for days.
 
 The goal is to get the production baseline running, confirm the important systems, then start building your product on top of it.
 
-<DocsUpgradeCTA
-  title="Validate the foundation. Then build the product."
-  description="Starter Pro gives you the launch baseline so your first serious work can be product work, not infrastructure work."
-  productSlug="starter-pro"
-  buyLabel="Get Starter Pro"
-  secondaryHref="/docs/starter-pro/what-is-included"
-  secondaryLabel="See what’s included"
-/>
+<Callout title="After purchase">
+  Download and unzip Starter Pro from your claim email before running the setup commands below. Need the email again? Use [purchase recovery](/orders/recover) to resend your access link.
+</Callout>
 
 <Callout title="Core setup principle">
   Validate the foundation first.
@@ -92,6 +86,13 @@ You are starting from a product-shaped system that is already much closer to lau
 ## Setup flow
 
 <Steps>
+  <Step>
+    ### Download and unzip Starter Pro
+
+    Open your claim email and use the access link to download your package.
+    Unzip it before running the setup commands below.
+  </Step>
+
   <Step>
     ### Install dependencies
 

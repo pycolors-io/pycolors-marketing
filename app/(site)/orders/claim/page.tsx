@@ -124,7 +124,7 @@ export default async function ClaimOrderPage({
     return (
       <StatusShell
         title="Invalid access link"
-        description="This claim link is missing the required access token. Open the email you received after purchase and use the original access button again."
+        description="This access link is missing the required token. Open your claim email from purchase and use the original access link again."
       >
         <MoneyPathPageEvent
           event="claim_page_viewed"
@@ -165,7 +165,7 @@ export default async function ClaimOrderPage({
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/orders/recover">Recover access</Link>
+            <Link href="/orders/recover">Resend access link</Link>
           </Button>
         </div>
       </StatusShell>
@@ -384,7 +384,7 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <Package className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    Review the product page and documentation before
+                    Review Getting Started and the product page before
                     customizing or deploying your package.
                   </p>
                 </div>

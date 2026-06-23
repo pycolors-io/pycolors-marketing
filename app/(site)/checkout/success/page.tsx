@@ -57,7 +57,7 @@ function formatAmount(amountTotal: number, currency: string) {
 function getProductDocsHref(productSlug: string | null) {
   switch (productSlug) {
     case 'starter-pro':
-      return '/docs/starter-pro';
+      return '/docs/starter-pro/getting-started';
     case 'na-ai-landing':
       return '/templates/na-ai-landing';
     default:
@@ -79,15 +79,15 @@ function getProductGuidance(productSlug: string | null) {
       return {
         title: 'Set up Starter Pro',
         description:
-          'Start with the setup documentation, keep the recovery page available if the delivery email is delayed, and use the Starter Pro docs as your implementation reference.',
-        href: '/docs/starter-pro',
-        cta: 'Open Starter Pro docs',
+          'After you download from your claim email, follow Getting Started. Use purchase recovery if you need to resend your access link.',
+        href: '/docs/starter-pro/getting-started',
+        cta: 'Open Getting Started',
       };
     default:
       return {
         title: 'Recommended next step',
         description:
-          'Start with the product documentation and keep the recovery page available if the delivery email is delayed.',
+          'Start with the product documentation and use purchase recovery if your claim email is delayed.',
         href: '/docs',
         cta: 'Open documentation',
       };
@@ -190,8 +190,8 @@ export default async function CheckoutSuccessPage({
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
             Your payment for {productName} was completed successfully.
-            We are now preparing your secure delivery. Your access
-            email should arrive shortly with your secure claim link.
+            We are preparing your delivery. Your claim email should
+            arrive shortly with your access link.
           </p>
         </div>
 
@@ -217,8 +217,8 @@ export default async function CheckoutSuccessPage({
                     Your payment was redirected successfully, but we
                     could not fetch the checkout details right now.
                     This can happen locally if the API server is not
-                    running. Your delivery email is still handled by
-                    the webhook flow.
+                    running. Your claim email is still handled by the
+                    webhook flow.
                   </p>
                 </div>
               ) : null}
@@ -242,13 +242,11 @@ export default async function CheckoutSuccessPage({
                 <div className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
                   <div>
-                    <p className="text-sm font-medium">
-                      Access email
-                    </p>
+                    <p className="text-sm font-medium">Claim email</p>
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      Your access email should arrive shortly once
-                      delivery is completed. Keep this page available
-                      until you receive it.
+                      Your claim email should arrive shortly once
+                      delivery is completed. Check your inbox and spam
+                      folder until it arrives.
                     </p>
                   </div>
                 </div>
@@ -262,23 +260,31 @@ export default async function CheckoutSuccessPage({
                       What you receive
                     </p>
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      Your email contains your secure claim link and
-                      the next step to download your package.
+                      Your claim email contains your access link and
+                      download instructions.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <div
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-6 text-sm font-medium text-primary-foreground"
+                  role="status"
+                >
+                  <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
+                  {customerEmail
+                    ? `Check your inbox · ${customerEmail}`
+                    : 'Check your inbox'}
+                </div>
+
                 <Button
                   asChild
+                  variant="outline"
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href="/orders/recover">
-                    Recover access email
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  <Link href="/orders/recover">Resend access link</Link>
                 </Button>
 
                 <Button
@@ -287,13 +293,16 @@ export default async function CheckoutSuccessPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href={docsHref}>Read documentation</Link>
+                  <Link href={docsHref}>
+                    Start setup
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
 
               <p className="text-xs leading-6 text-muted-foreground">
-                If your delivery email does not arrive after a
-                reasonable delay, email{' '}
+                If your claim email does not arrive after a reasonable
+                delay, email{' '}
                 <Link
                   href={`mailto:support@pycolors.com?subject=${supportSubject}`}
                   className="font-medium text-foreground underline underline-offset-4"
@@ -388,8 +397,8 @@ export default async function CheckoutSuccessPage({
                   <Mail className="mt-0.5 h-5 w-5 shrink-0" />
 
                   <p>
-                    You receive an access email containing your secure
-                    claim link and delivery instructions.
+                    You receive a claim email with your access link and
+                    setup instructions.
                   </p>
                 </div>
 
