@@ -127,7 +127,7 @@ const milestones: Array<{
     id: 'Jun 2026',
     title: 'June 2026',
     subtitle:
-      'Ship Starter Pro PWA foundations, local validation depth, release history, analytics, and stronger public product recovery paths.',
+      'Ship Starter Pro PWA foundations, buyer trust and purchase-flow clarity, local validation depth, release history, analytics, and stronger public product recovery paths.',
   },
   {
     id: 'H1 2026',
@@ -588,6 +588,60 @@ const items: RoadmapItem[] = [
     href: '/pricing',
   },
   {
+    title: 'Starter Pro buyer trust and purchase-flow clarity',
+    description:
+      'Improved checkout success, purchase recovery, claim and download, Getting Started, pricing navigation, and consistent post-purchase terminology for Starter Pro buyers.',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'Trust', 'Conversion'],
+    href: '/checkout/success',
+  },
+  {
+    title: 'Starter Pro hosted demo',
+    description:
+      'Publish a hosted Starter Pro demo so buyers can evaluate the production-shaped product surface before purchase.',
+    status: 'Next',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'Demo', 'Trust'],
+    href: '/starters/pro',
+  },
+  {
+    title: 'Annotated Starter Pro screenshots',
+    description:
+      'Add annotated product screenshots that explain auth, billing, protected routes, and setup flows with clearer buyer context.',
+    status: 'Next',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'Proof', 'Trust'],
+    href: '/starters/pro',
+  },
+  {
+    title: 'Starter Pro video walkthrough',
+    description:
+      'Publish a concise walkthrough from purchase to first local run so buyers understand delivery, setup, and next steps faster.',
+    status: 'Next',
+    milestone: 'Jun 2026',
+    tags: ['Starter PRO', 'Trust', 'Onboarding'],
+    href: '/docs/starter-pro/getting-started',
+  },
+  {
+    title: 'Template #2',
+    description:
+      'Ship the next premium template product with docs, pricing, checkout, and delivery aligned to the existing commerce foundation.',
+    status: 'Next',
+    milestone: 'H1 2026',
+    tags: ['Templates', 'Monetization', 'Catalog'],
+    href: '/templates',
+  },
+  {
+    title: '@pycolors/blocks',
+    description:
+      'Introduce a reusable blocks package for faster SaaS page composition across marketing, docs, and product surfaces.',
+    status: 'Next',
+    milestone: 'H1 2026',
+    tags: ['Blocks', 'UI', 'DX'],
+    href: '/ui',
+  },
+  {
     title: 'Starter Pro sales proof and trust content',
     description:
       'Add implementation comparisons, real architecture explanations, buyer reassurance, launch checklists, and authority content.',
@@ -609,8 +663,8 @@ const items: RoadmapItem[] = [
     title: 'Traffic-readiness trust cleanup',
     description:
       'Remove stale links, unfinished public promises, and outdated claims before sending more traffic to roadmap, changelog, pricing, and product pages.',
-    status: 'Now',
-    milestone: 'H1 2026',
+    status: 'Shipped',
+    milestone: 'Jun 2026',
     tags: ['Trust', 'SEO', 'Marketing'],
     href: '/changelog',
   },
