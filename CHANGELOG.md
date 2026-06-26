@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.17.3
+
+### Patch Changes
+
+- Improved Starter Pro buyer trust copy across pricing, product, and post-purchase pages.
+- Clarified checkout success guidance with inbox-first messaging, purchase recovery as a secondary action, and aligned setup next steps.
+- Standardized purchase recovery and resend access link terminology on `/orders/recover` and related surfaces.
+- Added claim and download setup guidance, including a Getting Started download and unzip step before install commands.
+- Added an Explore Starter Pro link on the pricing page and fixed the Starters examples link to `/ui/examples`.
+- No backend changes.
+
 ## 1.17.2
 
 ### Patch Changes
@@ -12,9 +23,6 @@ This repository is a **read-only mirror** synced from the PyColors monorepo:
 https://github.com/pycolors-io/pycolors/tree/main/apps/marketing
 
 ## Unreleased
-
-- Fixed the broken NA-AI Landing checkout action on `/templates`.
-- Reused the existing product checkout button flow to improve templates purchase path reliability.
 
 ## 1.17.0
 

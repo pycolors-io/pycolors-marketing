@@ -64,6 +64,49 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.17.3',
+    title: 'Starter Pro buyer trust and purchase-flow clarity',
+    dateLabel: 'Fri 26 Jun 2026',
+    dateISO: '2026-06-26',
+    status: 'Stable',
+    releaseWeekLabel: 'Jun 2026 (patch release)',
+    summary:
+      'This patch improves Starter Pro buyer trust across the full purchase path: clearer checkout success guidance, consistent purchase recovery language, stronger claim and download setup direction, and aligned Getting Started documentation. No backend changes.',
+
+    highlights: [
+      {
+        title: 'Checkout success and purchase recovery clarity',
+        items: [
+          'Replaced failure-state checkout success copy with inbox-first guidance and clearer next steps after payment.',
+          'Moved purchase recovery to a secondary “Resend access link” action on checkout success.',
+          'Standardized terminology around claim email, access link, purchase recovery, and resend access link.',
+        ],
+      },
+      {
+        title: 'Claim, download, and setup guidance',
+        items: [
+          'Added clearer claim and download setup guidance, including a Start setup path to Getting Started.',
+          'Added a download and unzip step before install commands in Starter Pro Getting Started.',
+          'Removed the top-of-page purchase CTA from Getting Started for post-purchase readers.',
+        ],
+      },
+      {
+        title: 'Pricing and Starters navigation polish',
+        items: [
+          'Added an Explore Starter Pro link on the Starter Pro pricing card.',
+          'Fixed the Starters examples link from `/examples` to `/ui/examples`.',
+          'Expanded Starter Pro buyer reassurance across pricing and product surfaces.',
+        ],
+      },
+    ],
+
+    cta: {
+      label: 'View Starter Pro',
+      href: '/starters/pro',
+    },
+  },
+
+  {
     version: 'v1.17.1',
     title: 'NA-AI Landing checkout reliability fix',
     dateLabel: 'Fri 19 Jun 2026',
