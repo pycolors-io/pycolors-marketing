@@ -6,6 +6,7 @@ import {
   Code2,
   CreditCard,
   Database,
+  ExternalLink,
   GitBranch,
   LayoutTemplate,
   Lock,
@@ -87,6 +88,10 @@ const INTERNAL = {
   changelog: '/changelog',
   license: '/license',
   terms: '/terms',
+} as const;
+
+const EXTERNAL = {
+  starterDemo: 'https://starter-demo.pycolors.io',
 } as const;
 
 const PRICING = {
@@ -291,9 +296,9 @@ const faqs = [
       <>
         Because auth, billing, protected routes, account flows,
         webhook synchronization, and delivery/recovery flows are
-        repeated work that can delay launch. Starter Pro helps you skip
-        that foundation work and focus on your product. For the longer
-        version, read the{' '}
+        repeated work that can delay launch. Starter Pro helps you
+        skip that foundation work and focus on your product. For the
+        longer version, read the{' '}
         <Link
           href={INTERNAL.buildVsBuy}
           className="font-medium text-foreground underline underline-offset-4"
@@ -341,8 +346,7 @@ const faqs = [
   },
   {
     question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
-    answer:
-      `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
+    answer: `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
   },
 ] as const;
 
@@ -524,6 +528,22 @@ export default function PricingPage() {
                 variant="outline"
                 className="group h-11 rounded-[5px] px-6 text-sm font-medium"
               >
+                <a
+                  href={EXTERNAL.starterDemo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Try the live demo
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="group h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
                 <Link href={INTERNAL.starterFree}>
                   Explore Starter Free
                 </Link>
@@ -687,6 +707,21 @@ export default function PricingPage() {
                     fullWidth
                     label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                   />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-10 w-full rounded-[5px] text-sm font-medium"
+                  >
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Try the live demo
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
 
                   <Button
                     asChild
@@ -933,6 +968,24 @@ export default function PricingPage() {
                       focusRing,
                     )}
                   >
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Try the live demo
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className={cn(
+                      'h-10 rounded-[5px] text-sm font-medium',
+                      focusRing,
+                    )}
+                  >
                     <Link href={INTERNAL.docsBilling}>
                       Review billing docs
                     </Link>
@@ -1008,6 +1061,24 @@ export default function PricingPage() {
               fullWidth={false}
               label={`Move to Starter Pro — ${PRICING.starterProLaunch}`}
             />
+
+            <Button
+              asChild
+              variant="outline"
+              className={cn(
+                'h-10 rounded-[5px] text-sm font-medium',
+                focusRing,
+              )}
+            >
+              <a
+                href={EXTERNAL.starterDemo}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Try the live demo
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </Button>
 
             <p className="text-center text-xs text-muted-foreground">
               Choose Pro when the cost of rebuilding the foundation is
@@ -1124,6 +1195,21 @@ export default function PricingPage() {
                 <BuyStarterProButton
                   label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
                 />
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 w-full rounded-[5px] text-sm font-medium"
+                >
+                  <a
+                    href={EXTERNAL.starterDemo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Try the live demo
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
 
                 <BuyProductButton
                   productSlug="na-ai-landing"

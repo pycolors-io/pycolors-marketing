@@ -548,6 +548,25 @@ export default function HomePage() {
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
+                  <a
+                    href={EXTERNAL.starterDemo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Try the live demo
+                    <ExternalLink
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
                   <Link href={INTERNAL.pricing}>
                     Compare products
                   </Link>
@@ -1059,6 +1078,24 @@ pnpm dev`}</pre>
                       variant="outline"
                       className="rounded-[5px]"
                     >
+                      <a
+                        href={EXTERNAL.starterDemo}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Try the live demo
+                        <ExternalLink
+                          className="h-4 w-4"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-[5px]"
+                    >
                       <Link href={INTERNAL.pricing}>
                         View pricing
                       </Link>
@@ -1262,6 +1299,31 @@ pnpm dev`}</pre>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:min-w-60">
+                  <BuyStarterProButton
+                    label={`Buy Starter Pro — ${pricing.starterPro}`}
+                  />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className={cn(
+                      'h-11 rounded-[5px] text-sm font-medium',
+                      focusRing,
+                    )}
+                  >
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Try the live demo
+                      <ExternalLink
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
+
                   <Button
                     asChild
                     variant="outline"
@@ -1274,10 +1336,6 @@ pnpm dev`}</pre>
                       View NA-AI Landing
                     </Link>
                   </Button>
-
-                  <BuyStarterProButton
-                    label={`Buy Starter Pro — ${pricing.starterPro}`}
-                  />
                 </div>
               </div>
             </Card>

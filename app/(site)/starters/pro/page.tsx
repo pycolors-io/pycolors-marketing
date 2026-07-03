@@ -6,14 +6,13 @@ import {
   Check,
   Code2,
   CreditCard,
-  Database,
   Download,
+  ExternalLink,
   FileText,
   GitBranch,
   LayoutDashboard,
   Lock,
   Mail,
-  MonitorSmartphone,
   Rocket,
   ShieldCheck,
   Smartphone,
@@ -98,6 +97,10 @@ const INTERNAL = {
   roadmap: '/roadmap',
   license: '/license',
   terms: '/terms',
+} as const;
+
+const EXTERNAL = {
+  starterDemo: 'https://starter-demo.pycolors.io',
 } as const;
 
 const coreFeatures = [
@@ -222,34 +225,34 @@ const includedChecklist = [
 
 const postPurchaseDeliverables = [
   {
+    title: 'ZIP download',
+    description:
+      'Starter Pro is delivered as a downloadable ZIP after Stripe checkout, with recovery available if the email is missed.',
+  },
+  {
     title: 'Full source code',
     description:
-      'The complete Starter Pro codebase, ready to inspect, adapt, and ship from.',
+      'The complete Starter Pro codebase is included so you can inspect, adapt, and launch from it.',
   },
   {
     title: 'Documentation',
     description:
-      'Implementation docs for auth, billing, backend, delivery, and launch workflows.',
+      'Implementation guides cover auth, billing, backend, delivery, local setup, and launch workflows.',
   },
   {
-    title: 'Future updates',
+    title: 'Production checklist',
     description:
-      'Future Starter Pro releases are included with your one-time purchase.',
+      'A release checklist helps you verify auth, billing, backend, and production readiness before going live.',
   },
   {
     title: 'Commercial license',
     description:
-      'Use Starter Pro in personal and client SaaS products under the PyColors license.',
+      'Use Starter Pro in personal and client SaaS products under the PyColors commercial license.',
   },
   {
-    title: 'Download access',
+    title: 'Future updates',
     description:
-      'Secure download access after checkout. If email delivery fails, use purchase recovery with the same checkout email.',
-  },
-  {
-    title: 'Setup guidance',
-    description:
-      'Email help for access, recovery, and eligible setup questions — not custom development or consulting.',
+      'Your one-time purchase includes future Starter Pro releases, with release notes in the changelog.',
   },
 ] as const;
 
@@ -469,21 +472,25 @@ function StarterProHeroCarousel() {
     {
       title: 'Authentication',
       label: 'Production Auth',
+      caption: 'Authentication ready',
       image: '/images/starters/pro/auth-pycolors.png',
     },
     {
       title: 'Billing',
       label: 'Stripe Billing',
+      caption: 'Stripe Billing included',
       image: '/images/starters/pro/billing-pycolors.png',
     },
     {
       title: 'Pricing',
       label: 'Pricing System',
+      caption: 'Production-ready pricing',
       image: '/images/starters/pro/pricing-pycolors.png',
     },
     {
       title: 'PWA',
       label: 'Installable PWA',
+      caption: 'Installable app polish',
       // image: '/images/starters/pro/pwa-mobile-pycolors.png',
       image: '/images/starters/pro/pwa-pycolors.png',
     },
@@ -542,6 +549,10 @@ function StarterProHeroCarousel() {
                   sizes="(min-width: 1280px) 1280px, 100vw"
                   className="object-cover object-top"
                 />
+
+                <div className="absolute left-4 bottom-4 z-10 rounded-full border border-border-subtle bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground shadow-soft backdrop-blur-md sm:left-5 sm:bottom-5">
+                  {screenshot.caption}
+                </div>
               </div>
             ))}
 
@@ -754,6 +765,22 @@ export default function StarterProPage() {
                 size="lg"
                 className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
+                <a
+                  href={EXTERNAL.starterDemo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Try the live demo
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+              >
                 <Link href={INTERNAL.pricing}>View pricing</Link>
               </Button>
 
@@ -786,6 +813,7 @@ export default function StarterProPage() {
         />
       </Container>
 
+      <StarterProHeroCarousel />
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-12">
           <div className="mx-auto max-w-6xl">
@@ -859,8 +887,6 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-
-      <StarterProHeroCarousel />
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
@@ -1129,6 +1155,20 @@ export default function StarterProPage() {
                 fullWidth={false}
                 label={`Move to Starter Pro — ${launchPrice}`}
               />
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 rounded-[5px] text-sm font-medium"
+              >
+                <a
+                  href={EXTERNAL.starterDemo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Try the live demo
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
               <p className="max-w-xl text-center text-xs leading-6 text-muted-foreground">
                 Choose Pro when the cost of rebuilding the foundation
                 is higher than the price of skipping it. For a slower
@@ -1214,6 +1254,22 @@ export default function StarterProPage() {
                     fullWidth={false}
                     label={`Buy Starter Pro — ${launchPrice}`}
                   />
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                  >
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Try the live demo
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
 
                   <Button
                     asChild
@@ -1331,6 +1387,22 @@ export default function StarterProPage() {
                   fullWidth={false}
                   label={`Buy Starter Pro — ${launchPrice}`}
                 />
+
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
+                  <a
+                    href={EXTERNAL.starterDemo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Try the live demo
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
 
                 <Button
                   asChild
