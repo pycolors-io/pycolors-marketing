@@ -86,6 +86,7 @@ const INTERNAL = {
   docsDelivery: '/docs/starter-pro/delivery',
   docsBillingTesting: '/docs/starter-pro/billing-testing',
   docsProductionChecklist: '/docs/starter-pro/production-checklist',
+  docsDeployment: '/docs/starter-pro/deployment',
   docsAuth: '/docs/starter-pro/auth',
   docsBilling: '/docs/starter-pro/billing',
   docsBackend: '/docs/starter-pro/backend',
@@ -273,108 +274,138 @@ const first30MinutesSteps = [
 
 const docResourceCards = [
   {
-    title: 'Getting Started',
+    title: 'See what is included',
     description:
-      'Install Starter Pro, configure the environment, and run the project locally.',
-    href: INTERNAL.docsGettingStarted,
-    cta: 'Read guide',
-    icon: Rocket,
-  },
-  {
-    title: 'What is Included',
-    description:
-      'See what is already wired, what is mocked, and what you still build yourself.',
+      'Review the complete Starter Pro package before buying.',
     href: INTERNAL.docsWhatIsIncluded,
     cta: 'Review scope',
     icon: FileText,
   },
   {
-    title: 'Delivery',
+    title: 'Review setup',
     description:
-      'Understand secure access, download flow, and what happens after checkout.',
-    href: INTERNAL.docsDelivery,
-    cta: 'Read delivery docs',
-    icon: Download,
+      'Check local installation, environment setup, and the first run.',
+    href: INTERNAL.docsGettingStarted,
+    cta: 'Open setup guide',
+    icon: Rocket,
   },
   {
-    title: 'Billing Testing',
+    title: 'Production checklist',
     description:
-      'Validate Stripe Checkout, webhooks, and subscription flows before launch.',
-    href: INTERNAL.docsBillingTesting,
-    cta: 'Test billing',
-    icon: CreditCard,
-  },
-  {
-    title: 'Production Checklist',
-    description:
-      'Confirm auth, billing, backend, and release readiness before going live.',
+      'Confirm auth, billing, backend, delivery, and release readiness.',
     href: INTERNAL.docsProductionChecklist,
     cta: 'Open checklist',
     icon: ShieldCheck,
+  },
+  {
+    title: 'Deployment guide',
+    description:
+      'Prepare the Starter Pro foundation for a production deployment.',
+    href: INTERNAL.docsDeployment,
+    cta: 'Review deployment',
+    icon: Download,
+  },
+  {
+    title: 'Billing guide',
+    description:
+      'Understand subscriptions, checkout, customer portal, and billing states.',
+    href: INTERNAL.docsBilling,
+    cta: 'Review billing',
+    icon: CreditCard,
+  },
+  {
+    title: 'Authentication guide',
+    description:
+      'Review sign-in, sessions, OAuth, reset password, and protected access.',
+    href: INTERNAL.docsAuth,
+    cta: 'Review auth',
+    icon: Lock,
   },
 ] as const;
 
 const comparisonRows = [
   {
-    label: 'Product surface',
+    label: 'Production-ready dashboard foundation',
     free: 'Included',
     pro: 'Production-ready',
   },
   {
-    label: 'Dashboard foundation',
+    label: 'Authentication already configured',
     free: 'Included',
     pro: 'Ready after checkout',
   },
   {
-    label: 'Authentication',
-    free: 'Included',
-    pro: 'Production-ready',
-  },
-  {
-    label: 'Protected app access',
-    free: 'Requires building',
-    pro: 'Ready after checkout',
-  },
-  {
-    label: 'Stripe Billing',
+    label: 'Subscriptions ready to use',
     free: 'Requires building',
     pro: 'Production-ready',
   },
   {
-    label: 'Customer portal',
+    label: 'Customer billing portal included',
     free: 'Requires building',
     pro: 'Included',
   },
   {
-    label: 'Organizations',
+    label: 'Protected application areas',
+    free: 'Basic examples',
+    pro: 'Ready after checkout',
+  },
+  {
+    label: 'Organizations and team workflows',
     free: 'Example surface',
     pro: 'Included foundation',
   },
   {
-    label: 'Settings and account management',
+    label: 'Account and settings experience',
     free: 'Included',
     pro: 'Production-ready',
   },
   {
-    label: 'Mobile / PWA polish',
+    label: 'Admin and internal tool foundation',
+    free: 'Included',
+    pro: 'Ready to extend',
+  },
+  {
+    label: 'Mobile and PWA polish',
     free: 'Requires building',
     pro: 'Included',
   },
   {
-    label: 'Delivery after purchase',
+    label: 'Source code access',
     free: 'Open-source repo',
     pro: 'Instant ZIP delivery',
   },
   {
-    label: 'Commercial usage',
+    label: 'Commercial and client usage',
     free: 'Review license',
     pro: 'Included',
   },
   {
-    label: 'Best use case',
+    label: 'Best when you need to',
     free: 'Validate UX',
     pro: 'Launch and charge',
   },
+] as const;
+
+const perfectFor = [
+  'SaaS founders',
+  'Freelancers',
+  'Agencies',
+  'Startup teams',
+  'Internal business tools',
+] as const;
+
+const notIdealFor = [
+  'Static websites',
+  'Landing pages only',
+  'Blogs',
+] as const;
+
+const stillBuildItems = [
+  'your product logic',
+  'your AI features',
+  'your business workflows',
+  'your branding',
+  'your domain models',
 ] as const;
 
 const purchaseTrustItems = [
@@ -387,49 +418,59 @@ const purchaseTrustItems = [
 
 const faqs = [
   {
-    question: 'What do I get after purchase?',
+    question: 'How long before I can start?',
     answer:
-      'You receive the full Starter Pro source code with authentication, Stripe billing, protected app flows, Prisma foundations, and launch-ready SaaS surfaces already wired.',
+      'Immediately after payment. You receive ZIP access, then follow the setup docs to run the project locally.',
   },
   {
-    question: 'Is Starter Pro production-ready?',
+    question: 'What happens after payment?',
     answer:
-      'Yes. Starter Pro is designed as a real SaaS foundation, not a static UI demo. You still need to add your own product logic, but the repeated business layer is already shaped.',
+      'Stripe redirects you to the success flow and PyColors sends access to the checkout email. Purchase recovery is available if the email is missed.',
   },
   {
-    question: 'Is Stripe already integrated?',
+    question: 'Do I own the source code?',
     answer:
-      'Yes. Stripe Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle flows are included.',
+      'Yes. Starter Pro includes the full source code so you can inspect, modify, and ship from it.',
   },
   {
     question: 'Can I use it commercially?',
     answer:
-      'Yes. Starter Pro includes commercial usage rights. Review the license and terms before production use.',
+      'Yes. Starter Pro includes commercial usage rights under the PyColors license.',
   },
   {
-    question: 'Does Starter Pro include PWA support?',
+    question: 'Can I use it for client projects?',
     answer:
-      'Yes. Starter Pro includes a PWA-ready foundation with manifest metadata, standalone mode, professional icons, install screenshots, service worker registration, and an offline fallback route. Auth, billing, and admin data intentionally remain online-first.',
+      'Yes, commercial usage covers client work. Review the license and terms for the exact usage scope.',
   },
   {
-    question: 'Why buy Starter Pro instead of using Starter Free?',
+    question: 'Can I customize everything?',
     answer:
-      'Starter Free helps you validate product shape. Starter Pro removes the auth, billing, database, and protected architecture bottlenecks that slow real SaaS launches.',
+      'Yes. The source is yours to adapt: UI, routes, copy, branding, product logic, and domain models.',
+  },
+  {
+    question: 'What will I still need to build?',
+    answer:
+      'Your unique product logic, AI features, business workflows, branding, and domain models. Starter Pro provides the production foundation.',
+  },
+  {
+    question: 'Is Starter Pro production-ready?',
+    answer:
+      'Yes. It is built as a real SaaS foundation with auth, billing, protected routes, database foundations, and launch-oriented product surfaces.',
+  },
+  {
+    question: 'Is Stripe already integrated?',
+    answer:
+      'Yes. Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included.',
   },
   {
     question: 'Do I get future Starter Pro updates?',
     answer:
-      'Yes. Your one-time purchase includes future Starter Pro releases. Major changes follow semantic versioning, with release notes in the changelog and Starter Pro docs.',
-  },
-  {
-    question: 'What support is included?',
-    answer:
-      'Starter Pro includes email support for purchase access, setup questions, and product scope. It is not unlimited custom development or consulting.',
+      'Yes. Your one-time purchase includes future Starter Pro releases with release notes in the changelog.',
   },
   {
     question: 'What if local setup fails?',
     answer:
-      'Start with Getting Started and the environment variable docs. Check Node.js version, dependencies, database connection, and Stripe test keys first. Email support can help with eligible setup issues.',
+      'Start with setup and environment docs. Email support can help with eligible access and setup questions.',
   },
   {
     question: 'What if I do not receive my purchase email?',
@@ -449,6 +490,12 @@ const faqs = [
 ] as const;
 function StarterProHeroCarousel() {
   const heroScreenshots = [
+    {
+      title: 'Dashboard',
+      label: 'Dashboard',
+      description: 'Production-ready application foundation.',
+      image: '/images/starters/pro/dashboard-pycolors.png',
+    },
     {
       title: 'Authentication',
       label: 'Authentication',
@@ -775,7 +822,9 @@ export default function StarterProPage() {
                 size="lg"
                 className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
-                <Link href={INTERNAL.docsStarterPro}>Read docs</Link>
+                <Link href={INTERNAL.docsGettingStarted}>
+                  Review setup
+                </Link>
               </Button>
             </div>
           }
@@ -922,8 +971,8 @@ export default function StarterProPage() {
                   variant="outline"
                   className="h-10 shrink-0 rounded-[5px] text-sm font-medium"
                 >
-                  <Link href={INTERNAL.docsStarterPro}>
-                    Explore the docs
+                  <Link href={INTERNAL.docsWhatIsIncluded}>
+                    See what is included
                   </Link>
                 </Button>
               </div>
@@ -970,7 +1019,9 @@ export default function StarterProPage() {
                   variant="outline"
                   className="h-10 rounded-[5px] text-sm font-medium"
                 >
-                  <Link href={INTERNAL.docsPwa}>Read PWA docs</Link>
+                  <Link href={INTERNAL.docsPwaSetup}>
+                    Review PWA setup
+                  </Link>
                 </Button>
 
                 <Button
@@ -1001,6 +1052,93 @@ export default function StarterProPage() {
               <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {includedChecklist.map((item) => (
+                    <CheckItem key={item}>{item}</CheckItem>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Built with Starter Pro"
+              title="Use the foundation for real SaaS products, not only demos."
+              description="Starter Pro gives you the production layer underneath many common SaaS directions. You still build the product, but you do not start from blank auth, billing, account, and app foundations."
+            />
+          </div>
+        </Container>
+      </section>
+      <section className="border-t border-border-subtle">
+        <Container className="py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+                <Badge
+                  variant="outline"
+                  className="rounded-[5px] border-border-subtle bg-surface-muted"
+                >
+                  Who is this for?
+                </Badge>
+
+                <h2 className="mt-5 text-2xl font-semibold tracking-tight">
+                  Best for builders who need a SaaS foundation now.
+                </h2>
+
+                <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      Perfect for
+                    </p>
+                    <ul className="mt-4 grid gap-3">
+                      {perfectFor.map((item) => (
+                        <CheckItem key={item}>{item}</CheckItem>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      Not ideal for
+                    </p>
+                    <ul className="mt-4 grid gap-3">
+                      {notIdealFor.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-sm text-muted-foreground"
+                        >
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/50" />
+                          <span className="leading-6">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-6 shadow-soft sm:p-7">
+                <Badge
+                  variant="outline"
+                  className="rounded-[5px] border-pro-border bg-pro-surface-muted"
+                >
+                  What you still build
+                </Badge>
+
+                <h2 className="mt-5 text-2xl font-semibold tracking-tight">
+                  Your product stays yours.
+                </h2>
+
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  Starter Pro provides the production foundation. You
+                  still build the parts that make your business
+                  unique.
+                </p>
+
+                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {stillBuildItems.map((item) => (
                     <CheckItem key={item}>{item}</CheckItem>
                   ))}
                 </ul>
@@ -1262,8 +1400,8 @@ export default function StarterProPage() {
                     size="lg"
                     className="h-11 rounded-[5px] px-6 text-sm font-medium"
                   >
-                    <Link href={INTERNAL.docsStarterPro}>
-                      Read docs
+                    <Link href={INTERNAL.docsGettingStarted}>
+                      Review setup
                     </Link>
                   </Button>
                 </div>
