@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.17.4
+
+### Patch Changes
+
+- Improved live demo visibility across the marketing journey so Starter Free becomes the natural evaluation step before Starter Pro.
+- Strengthened Starter Pro visual proof with higher-placement screenshots, annotated product proof, and clearer buyer-facing captions.
+- Clarified what buyers receive after checkout, including ZIP delivery, full source code, documentation, production checklist, commercial license, and future updates.
+- Improved the Starter Free → Demo → Starter Pro path across homepage, pricing, starters, and Starter Pro pages.
+- Added stronger buyer confidence near purchase CTAs with secure checkout, instant ZIP delivery, future updates, and purchase recovery reassurance.
+- Improved Free vs Pro comparison language and documentation entry points around included scope, setup, deployment, billing, authentication, and production readiness.
+- No backend changes.
+- No pricing changes.
+
 ## 1.17.3
 
 ### Patch Changes
