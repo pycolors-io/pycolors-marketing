@@ -426,6 +426,25 @@ export default function StartersPage() {
                   size="lg"
                   className="h-11 rounded-[5px] px-6 text-sm font-medium"
                 >
+                  <a
+                    href={EXTERNAL.starterDemo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Try the live demo
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
                   <Link href={INTERNAL.pricing}>View pricing</Link>
                 </Button>
               </div>
@@ -618,6 +637,25 @@ export default function StartersPage() {
                   fullWidth={false}
                   label={`Buy Starter Pro — ${launchPrice}`}
                 />
+
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                >
+                  <a
+                    href={EXTERNAL.starterDemo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Try the live demo
+                    <ExternalLink
+                      className="ml-2 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
               </div>
             </Card>
           </section>
@@ -838,6 +876,25 @@ export default function StartersPage() {
                   <BuyStarterProButton
                     label={`Buy Starter Pro — ${launchPrice}`}
                   />
+
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                  >
+                    <a
+                      href={EXTERNAL.starterDemo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Try the live demo
+                      <ExternalLink
+                        className="ml-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
                 </div>
               </div>
             </Card>

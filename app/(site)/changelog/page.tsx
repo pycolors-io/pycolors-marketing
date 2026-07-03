@@ -64,6 +64,49 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.17.4',
+    title: 'Starter Pro demo visibility and conversion proof',
+    dateLabel: 'Fri 3 Jul 2026',
+    dateISO: '2026-07-03',
+    status: 'Stable',
+    releaseWeekLabel: 'Jul 2026 (patch release)',
+    summary:
+      'This patch improves Starter Pro conversion clarity by making the live demo easier to find, moving visual proof closer to the buying decision, clarifying what buyers receive after checkout, and strengthening buyer confidence near purchase CTAs. No backend changes and no pricing changes.',
+
+    highlights: [
+      {
+        title: 'Live demo visibility improved',
+        items: [
+          'Added clearer Try the live demo paths across homepage, pricing, starters, and Starter Pro pages.',
+          'Made the Starter Free live demo feel like the natural evaluation step before buying Starter Pro.',
+          'Clarified the Starter Free → Demo → Starter Pro journey across key marketing surfaces.',
+        ],
+      },
+      {
+        title: 'Starter Pro product proof strengthened',
+        items: [
+          'Moved Starter Pro visual proof closer to the hero so buyers see the product faster.',
+          'Added annotated screenshots and concise value captions for dashboard, authentication, billing, organizations, and PWA-ready surfaces.',
+          'Improved “what you receive” messaging around ZIP delivery, full source code, documentation, production checklist, commercial license, and future updates.',
+        ],
+      },
+      {
+        title: 'Buyer confidence before checkout improved',
+        items: [
+          'Added stronger reassurance near purchase CTAs for secure checkout, instant ZIP delivery, future updates, and purchase recovery.',
+          'Reworked Free vs Pro comparison copy toward buyer outcomes and business value.',
+          'Improved documentation entry points for included scope, setup, deployment, billing, authentication, and production readiness.',
+        ],
+      },
+    ],
+
+    cta: {
+      label: 'View Starter Pro',
+      href: '/starters/pro',
+    },
+  },
+
+  {
     version: 'v1.17.3',
     title: 'Starter Pro buyer trust and purchase-flow clarity',
     dateLabel: 'Fri 26 Jun 2026',

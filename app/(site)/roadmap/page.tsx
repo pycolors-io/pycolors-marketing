@@ -41,6 +41,7 @@ type Milestone =
   | 'Apr 2026'
   | 'May 2026'
   | 'Jun 2026'
+  | 'Jul 2026'
   | 'H1 2026';
 
 type RoadmapItem = {
@@ -128,6 +129,12 @@ const milestones: Array<{
     title: 'June 2026',
     subtitle:
       'Ship Starter Pro PWA foundations, buyer trust and purchase-flow clarity, local validation depth, release history, analytics, and stronger public product recovery paths.',
+  },
+  {
+    id: 'Jul 2026',
+    title: 'July 2026',
+    subtitle:
+      'Improve Starter Pro conversion proof with stronger demo visibility, annotated screenshots, clearer deliverables, comparison clarity, and buyer confidence before checkout.',
   },
   {
     id: 'H1 2026',
@@ -606,12 +613,12 @@ const items: RoadmapItem[] = [
     href: '/starters/pro',
   },
   {
-    title: 'Annotated Starter Pro screenshots',
+    title: 'Starter Pro demo visibility and conversion proof',
     description:
-      'Add annotated product screenshots that explain auth, billing, protected routes, and setup flows with clearer buyer context.',
-    status: 'Next',
-    milestone: 'Jun 2026',
-    tags: ['Starter PRO', 'Proof', 'Trust'],
+      'Improved live demo visibility, Starter Free → Demo → Starter Pro flow, annotated screenshots, what-you-receive messaging, buyer confidence near purchase CTAs, comparison clarity, and documentation entry points without backend or pricing changes.',
+    status: 'Shipped',
+    milestone: 'Jul 2026',
+    tags: ['Starter PRO', 'Conversion', 'Trust'],
     href: '/starters/pro',
   },
   {
