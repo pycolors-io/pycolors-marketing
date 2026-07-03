@@ -224,36 +224,18 @@ const includedChecklist = [
 ] as const;
 
 const postPurchaseDeliverables = [
-  {
-    title: 'ZIP download',
-    description:
-      'Starter Pro is delivered as a downloadable ZIP after Stripe checkout, with recovery available if the email is missed.',
-  },
-  {
-    title: 'Full source code',
-    description:
-      'The complete Starter Pro codebase is included so you can inspect, adapt, and launch from it.',
-  },
-  {
-    title: 'Documentation',
-    description:
-      'Implementation guides cover auth, billing, backend, delivery, local setup, and launch workflows.',
-  },
-  {
-    title: 'Production checklist',
-    description:
-      'A release checklist helps you verify auth, billing, backend, and production readiness before going live.',
-  },
-  {
-    title: 'Commercial license',
-    description:
-      'Use Starter Pro in personal and client SaaS products under the PyColors commercial license.',
-  },
-  {
-    title: 'Future updates',
-    description:
-      'Your one-time purchase includes future Starter Pro releases, with release notes in the changelog.',
-  },
+  'Starter Pro ZIP',
+  'Full source code',
+  'Next.js App Router',
+  'TypeScript',
+  'Tailwind CSS',
+  'Authentication',
+  'Stripe Billing',
+  'Organizations',
+  'Documentation',
+  'Production Checklist',
+  'Commercial License',
+  'Future updates',
 ] as const;
 
 const first30MinutesSteps = [
@@ -334,64 +316,54 @@ const docResourceCards = [
 
 const comparisonRows = [
   {
-    label: 'Product-shaped SaaS UI',
+    label: 'Product surface',
     free: 'Included',
-    pro: 'Included',
+    pro: 'Production-ready',
   },
   {
-    label: 'Dashboard, settings, billing screens',
+    label: 'Dashboard foundation',
     free: 'Included',
-    pro: 'Included + production wiring',
+    pro: 'Ready after checkout',
   },
   {
-    label: 'Auth UX screens',
+    label: 'Authentication',
     free: 'Included',
-    pro: 'Included + real auth',
+    pro: 'Production-ready',
   },
   {
-    label: 'Email/password auth',
-    free: 'Mock/demo only',
+    label: 'Protected app access',
+    free: 'Requires building',
+    pro: 'Ready after checkout',
+  },
+  {
+    label: 'Stripe Billing',
+    free: 'Requires building',
+    pro: 'Production-ready',
+  },
+  {
+    label: 'Customer portal',
+    free: 'Requires building',
     pro: 'Included',
   },
   {
-    label: 'OAuth providers',
-    free: 'No',
-    pro: 'Google + GitHub',
+    label: 'Organizations',
+    free: 'Example surface',
+    pro: 'Included foundation',
   },
   {
-    label: 'Protected routes and sessions',
-    free: 'Partial',
+    label: 'Settings and account management',
+    free: 'Included',
+    pro: 'Production-ready',
+  },
+  {
+    label: 'Mobile / PWA polish',
+    free: 'Requires building',
     pro: 'Included',
   },
   {
-    label: 'Stripe Checkout',
-    free: 'No',
-    pro: 'Included',
-  },
-  {
-    label: 'Billing portal',
-    free: 'No',
-    pro: 'Included',
-  },
-  {
-    label: 'Webhook sync',
-    free: 'No',
-    pro: 'Included',
-  },
-  {
-    label: 'Database foundation',
-    free: 'No',
-    pro: 'Prisma + PostgreSQL',
-  },
-  {
-    label: 'PWA manifest and standalone mode',
-    free: 'No',
-    pro: 'Included',
-  },
-  {
-    label: 'Offline fallback foundation',
-    free: 'No',
-    pro: 'Included baseline',
+    label: 'Delivery after purchase',
+    free: 'Open-source repo',
+    pro: 'Instant ZIP delivery',
   },
   {
     label: 'Commercial usage',
@@ -401,8 +373,16 @@ const comparisonRows = [
   {
     label: 'Best use case',
     free: 'Validate UX',
-    pro: 'Launch and charge faster',
+    pro: 'Launch and charge',
   },
+] as const;
+
+const purchaseTrustItems = [
+  'One-time payment',
+  'Secure Stripe checkout',
+  'Instant ZIP delivery',
+  'Future updates',
+  'Purchase recovery',
 ] as const;
 
 const faqs = [
@@ -471,26 +451,26 @@ function StarterProHeroCarousel() {
   const heroScreenshots = [
     {
       title: 'Authentication',
-      label: 'Production Auth',
-      caption: 'Authentication ready',
+      label: 'Authentication',
+      description: 'Production-ready authentication already wired.',
       image: '/images/starters/pro/auth-pycolors.png',
     },
     {
-      title: 'Billing',
+      title: 'Stripe Billing',
       label: 'Stripe Billing',
-      caption: 'Stripe Billing included',
+      description: 'Subscriptions and customer portal included.',
       image: '/images/starters/pro/billing-pycolors.png',
     },
     {
-      title: 'Pricing',
-      label: 'Pricing System',
-      caption: 'Production-ready pricing',
+      title: 'Pricing and Organizations',
+      label: 'Organizations',
+      description: 'Multi-tenant and plan-aware product structure.',
       image: '/images/starters/pro/pricing-pycolors.png',
     },
     {
-      title: 'PWA',
-      label: 'Installable PWA',
-      caption: 'Installable app polish',
+      title: 'Mobile / PWA',
+      label: 'Mobile / PWA',
+      description: 'Installable app polish for a more credible SaaS.',
       // image: '/images/starters/pro/pwa-mobile-pycolors.png',
       image: '/images/starters/pro/pwa-pycolors.png',
     },
@@ -550,8 +530,13 @@ function StarterProHeroCarousel() {
                   className="object-cover object-top"
                 />
 
-                <div className="absolute left-4 bottom-4 z-10 rounded-full border border-border-subtle bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground shadow-soft backdrop-blur-md sm:left-5 sm:bottom-5">
-                  {screenshot.caption}
+                <div className="absolute left-4 bottom-4 z-10 max-w-xs rounded-[5px] border border-border-subtle bg-background/85 px-4 py-3 shadow-soft backdrop-blur-md sm:left-5 sm:bottom-5">
+                  <p className="text-sm font-medium text-foreground">
+                    {screenshot.label}
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    {screenshot.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -820,33 +805,16 @@ export default function StarterProPage() {
             <SectionHeading
               eyebrow="After purchase"
               title="What you receive after purchase"
-              description="One payment. Clear deliverables. No guessing what happens once checkout completes."
+              description="A tangible Starter Pro package: ZIP delivery, source code, docs, checklist, license, and future releases."
             />
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {postPurchaseDeliverables.map((item) => (
-                <Card
-                  key={item.title}
-                  className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-                      <Check className="h-3.5 w-3.5 text-foreground" />
-                    </span>
-
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        {item.title}
-                      </p>
-
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            <Card className="mt-8 rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
+              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {postPurchaseDeliverables.map((item) => (
+                  <CheckItem key={item}>{item}</CheckItem>
+                ))}
+              </ul>
+            </Card>
           </div>
         </Container>
       </section>
@@ -1247,6 +1215,23 @@ export default function StarterProPage() {
                   </span>
                   . One-time payment with instant delivery after
                   purchase.
+                </div>
+
+                <div className="rounded-[5px] border border-border-subtle bg-background/60 p-4">
+                  <div className="flex flex-wrap gap-2">
+                    {purchaseTrustItems.map((item) => (
+                      <span
+                        key={item}
+                        className="inline-flex items-center gap-2 rounded-[5px] border border-border-subtle bg-surface px-2.5 py-1.5 text-xs font-medium text-muted-foreground"
+                      >
+                        <Check
+                          className="h-3.5 w-3.5 text-foreground"
+                          aria-hidden="true"
+                        />
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row">

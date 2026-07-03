@@ -1176,12 +1176,12 @@ div[role="dialog"] {
     opacity: 1;
   }
 
-  24% {
+  18% {
     opacity: 1;
     transform: scale(1.01);
   }
 
-  30% {
+  22% {
     opacity: 0;
     transform: scale(1.015);
   }
@@ -1193,7 +1193,7 @@ div[role="dialog"] {
 }
 
 .animate-hero-fade {
-  animation: hero-fade 20s infinite ease-in-out;
+  animation: hero-fade 25s infinite ease-in-out;
   will-change: opacity, transform;
 }
 
@@ -1208,12 +1208,12 @@ div[role="dialog"] {
     transform: translateY(0);
   }
 
-  24% {
+  18% {
     opacity: 1;
     transform: translateY(0);
   }
 
-  30%,
+  22%,
   100% {
     opacity: 0;
     transform: translateY(-2px);
@@ -1221,7 +1221,7 @@ div[role="dialog"] {
 }
 
 .animate-hero-label {
-  animation: hero-label 20s infinite ease-in-out;
+  animation: hero-label 25s infinite ease-in-out;
   will-change: opacity, transform;
 }
 
@@ -1231,12 +1231,12 @@ div[role="dialog"] {
     opacity: 1;
   }
 
-  24% {
+  18% {
     width: 100%;
     opacity: 1;
   }
 
-  30%,
+  22%,
   100% {
     width: 100%;
     opacity: 0;
@@ -1245,6 +1245,6 @@ div[role="dialog"] {
 
 .animate-carousel-progress {
   width: 0%;
-  animation: carousel-progress 20s infinite linear;
+  animation: carousel-progress 25s infinite linear;
   will-change: width, opacity;
 }
