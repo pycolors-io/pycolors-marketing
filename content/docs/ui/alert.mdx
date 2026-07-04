@@ -240,6 +240,8 @@ The `ariaLive` prop controls how assistive technologies announce updates.
 | `assertive` | `alert` | Critical errors |
 | `off` | none | Static messages that do not need announcement |
 
+The resulting `role` and `aria-live` are deterministic: they are always derived from `ariaLive` and take precedence over any native `role` or `aria-live` value passed through the rest of the component's props.
+
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
@@ -441,6 +443,7 @@ export interface AlertProps
 - `ariaLive="polite"` renders `role="status"`.
 - `ariaLive="assertive"` renders `role="alert"`.
 - `ariaLive="off"` removes live-region announcements.
+- The computed `role` and `aria-live` cannot be silently overridden by other props; `ariaLive` is the single source of truth.
 - Do not rely on color alone to communicate meaning.
 - Decorative indicators should use `aria-hidden="true"`.
 - Keep alert copy clear, short, and actionable.
