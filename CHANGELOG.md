@@ -5,8 +5,6 @@
 ### Patch Changes
 
 - 7e9179c: Improved Starter Pro demo visibility and conversion proof across homepage, pricing, starters, and product pages with clearer live demo CTAs, annotated screenshots, stronger what-you-receive messaging, better Free → Demo → Pro guidance, buyer confidence near purchase CTAs, comparison clarity, and more specific documentation entry points. No backend or pricing changes.
-- Updated dependencies [7d2dd2e]
-  - @pycolors/ui@1.1.2
 
 ## 1.17.4
 
