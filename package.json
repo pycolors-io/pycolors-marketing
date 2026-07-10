@@ -1,10 +1,10 @@
 {
   "name": "pycolors-marketing",
-  "version": "1.17.4",
+  "version": "1.17.5",
   "private": true,
   "packageManager": "pnpm@10.5.2",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "description": "PyColors marketing website (Next.js + Fumadocs) — public frontend only.",
   "keywords": [

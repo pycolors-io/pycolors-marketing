@@ -258,7 +258,7 @@ export function CardVariants() {
 
 ### Interactive cards
 
-Use `interactive` when the whole card behaves like a selectable or navigational surface.
+Use `interactive` when the whole card behaves like a selectable or navigational surface, and pass a real `onClick` so the interaction actually does something.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -267,7 +267,7 @@ Use `interactive` when the whole card behaves like a selectable or navigational 
         <Card interactive>
           <CardHeader>
             <CardTitle>Clickable card</CardTitle>
-            <CardDescription>Hover and focus states communicate interactivity.</CardDescription>
+            <CardDescription>Hover, focus, and keyboard activation all trigger the same action.</CardDescription>
           </CardHeader>
         </Card>
 
@@ -284,6 +284,8 @@ Use `interactive` when the whole card behaves like a selectable or navigational 
   <Tab value="Code">
 
 ```tsx title="interactive-cards.tsx"
+"use client";
+
 import {
   Card,
   CardHeader,
@@ -294,16 +296,16 @@ import {
 export function InteractiveCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Card interactive>
+      <Card interactive onClick={() => selectPlan("pro")}>
         <CardHeader>
           <CardTitle>Clickable card</CardTitle>
           <CardDescription>
-            Hover and focus states communicate interactivity.
+            Hover, focus, and keyboard activation all trigger the same action.
           </CardDescription>
         </CardHeader>
       </Card>
 
-      <Card interactive variant="muted">
+      <Card interactive variant="muted" onClick={() => selectPlan("team")}>
         <CardHeader>
           <CardTitle>Interactive + muted</CardTitle>
           <CardDescription>
@@ -319,8 +321,8 @@ export function InteractiveCards() {
   </Tab>
 </Tabs>
 
-<Callout title="Interaction rule">
-  If the card navigates, render it as a real link using `asChild`. If it performs an action, render it as a button or put a Button inside.
+<Callout type="info" title="Keyboard support">
+  A bare `Card interactive onClick` (no `asChild`) is keyboard operable: it gets `role="button"`, `tabIndex={0}`, and Enter or Space triggers the same click. Use `asChild` with a real `a` or `button` instead when you need native navigation or native button behavior.
 </Callout>
 
 ### With icon
@@ -496,6 +498,7 @@ Guidelines:
 
 - use meaningful headings inside cards when they introduce a section
 - keep interactive semantics accurate
+- a bare `interactive` card (no `asChild`) is keyboard accessible: it receives `role="button"`, `tabIndex={0}`, and Enter or Space activates its `onClick`
 - use `asChild` with `a` for navigation
 - use `asChild` with `button` only when the whole card performs an action
 - avoid multiple nested interactive elements inside an interactive card
@@ -503,7 +506,7 @@ Guidelines:
 - do not make a card interactive only for visual decoration
 
 <Callout title="Accessibility rule">
-  A clickable card should still be a real link or button. Visual interactivity is not enough.
+  An interactive card is keyboard accessible by default, but still prefer a real link or button semantics: use `asChild` with `a` for navigation or `button` when you need native button behavior.
 </Callout>
 
 ## Prefer / avoid
