@@ -64,6 +64,43 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.1.2 (@pycolors/ui)',
+    title: '@pycolors/ui accessibility hardening',
+    dateLabel: 'Pending publication',
+    dateISO: '',
+    status: 'In progress',
+    releaseWeekLabel:
+      'Jul 2026 (patch release, pending npm publication)',
+    summary:
+      'This nonbreaking patch prepares two accessibility fixes for @pycolors/ui: PasswordInput now fully respects the disabled state on its visibility toggle, and TableLoading exposes accessible live-region semantics. It also adds package-level Vitest, jsdom, and Testing Library regression coverage. No public API, export, prop, variant, or size changed. This entry is prepared ahead of release and will be marked Stable once the package is confirmed live on npm — do not install v1.1.2 until then.',
+
+    highlights: [
+      {
+        title: 'Accessibility fixes (pending release)',
+        items: [
+          'PasswordInput: the show/hide visibility toggle is disabled together with the field, instead of staying clickable on a disabled input.',
+          'TableLoading: now exposes accessible live-region semantics instead of being visual-only.',
+        ],
+      },
+      {
+        title: 'Test and reliability improvements',
+        items: [
+          'Added Vitest, jsdom, and Testing Library package-level coverage for @pycolors/ui.',
+          'Added focused regression coverage for package exports, Button variants, Input/Textarea accessibility, PasswordInput behavior, Table rendering and loading states, Card asChild/interactive semantics, and EmptyState status semantics.',
+        ],
+      },
+      {
+        title: 'Still open (not part of this release)',
+        items: [
+          'Package-wide data-slot consistency across Dialog, Sheet, DropdownMenu, Tabs, and Toast.',
+          'Pagination asChild support and a first-class Checkbox error API.',
+        ],
+      },
+    ],
+
+    cta: { label: 'View @pycolors/ui docs', href: '/docs/ui' },
+  },
+  {
     version: 'v1.17.4',
     title: 'Starter Pro demo visibility and conversion proof',
     dateLabel: 'Fri 3 Jul 2026',
