@@ -379,7 +379,8 @@ Tables should preserve semantic structure.
 
 Guidelines:
 
-- use `TableHead` for column headers
+- use `TableHead` for column headers — it defaults to `scope="col"`, so column association is correct without any extra props
+- pass `scope="row"` explicitly on a `TableHead` used as a row header
 - include a caption when the context is not obvious
 - avoid using tables for layout
 - keep cells readable and concise

@@ -258,24 +258,28 @@ export function CardVariants() {
 
 ### Interactive cards
 
-Use `interactive` when the whole card behaves like a selectable or navigational surface, and pass a real `onClick` so the interaction actually does something.
+`interactive` adds visual affordances only — cursor, hover background, and a focus-visible ring. Card never attaches its own click or keyboard handling, so an interactive card must compose `asChild` with a real `<button>` for an action or a real `<a>`/`Link` for navigation. Those elements provide correct keyboard, focus, and click semantics natively — Card does not need to (and must not) recreate them.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Card interactive>
-          <CardHeader>
-            <CardTitle>Clickable card</CardTitle>
-            <CardDescription>Hover, focus, and keyboard activation all trigger the same action.</CardDescription>
-          </CardHeader>
+        <Card asChild interactive>
+          <button type="button" className="block w-full text-left">
+            <CardHeader>
+              <CardTitle>Select a plan</CardTitle>
+              <CardDescription>A real button gives native click and keyboard behavior for free.</CardDescription>
+            </CardHeader>
+          </button>
         </Card>
 
-        <Card interactive variant="muted">
-          <CardHeader>
-            <CardTitle>Interactive + muted</CardTitle>
-            <CardDescription>Useful for secondary selection items.</CardDescription>
-          </CardHeader>
+        <Card asChild interactive variant="muted">
+          <a href="/pricing" className="block">
+            <CardHeader>
+              <CardTitle>View pricing</CardTitle>
+              <CardDescription>A real link gives native navigation and open-in-new-tab behavior.</CardDescription>
+            </CardHeader>
+          </a>
         </Card>
       </div>
     </Preview>
@@ -284,8 +288,6 @@ Use `interactive` when the whole card behaves like a selectable or navigational 
   <Tab value="Code">
 
 ```tsx title="interactive-cards.tsx"
-"use client";
-
 import {
   Card,
   CardHeader,
@@ -296,22 +298,30 @@ import {
 export function InteractiveCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Card interactive onClick={() => selectPlan("pro")}>
-        <CardHeader>
-          <CardTitle>Clickable card</CardTitle>
-          <CardDescription>
-            Hover, focus, and keyboard activation all trigger the same action.
-          </CardDescription>
-        </CardHeader>
+      <Card asChild interactive>
+        <button
+          type="button"
+          className="block w-full text-left"
+          onClick={() => selectPlan("pro")}
+        >
+          <CardHeader>
+            <CardTitle>Select a plan</CardTitle>
+            <CardDescription>
+              A real button gives native click and keyboard behavior for free.
+            </CardDescription>
+          </CardHeader>
+        </button>
       </Card>
 
-      <Card interactive variant="muted" onClick={() => selectPlan("team")}>
-        <CardHeader>
-          <CardTitle>Interactive + muted</CardTitle>
-          <CardDescription>
-            Useful for secondary selection items.
-          </CardDescription>
-        </CardHeader>
+      <Card asChild interactive variant="muted">
+        <a href="/pricing" className="block">
+          <CardHeader>
+            <CardTitle>View pricing</CardTitle>
+            <CardDescription>
+              A real link gives native navigation and open-in-new-tab behavior.
+            </CardDescription>
+          </CardHeader>
+        </a>
       </Card>
     </div>
   );
@@ -322,7 +332,7 @@ export function InteractiveCards() {
 </Tabs>
 
 <Callout type="info" title="Keyboard support">
-  A bare `Card interactive onClick` (no `asChild`) is keyboard operable: it gets `role="button"`, `tabIndex={0}`, and Enter or Space triggers the same click. Use `asChild` with a real `a` or `button` instead when you need native navigation or native button behavior.
+  `interactive` never adds `role`, `tabIndex`, or keyboard handling — it is visual only. A bare `Card interactive` with no `asChild` target is not keyboard or screen-reader accessible. Always compose `asChild` with a real `button` for actions or a real `a`/`Link` for navigation.
 </Callout>
 
 ### With icon
@@ -497,16 +507,17 @@ export type CardInteractive = boolean;
 Guidelines:
 
 - use meaningful headings inside cards when they introduce a section
-- keep interactive semantics accurate
-- a bare `interactive` card (no `asChild`) is keyboard accessible: it receives `role="button"`, `tabIndex={0}`, and Enter or Space activates its `onClick`
-- use `asChild` with `a` for navigation
-- use `asChild` with `button` only when the whole card performs an action
-- avoid multiple nested interactive elements inside an interactive card
+- `interactive` only adds visual affordances (cursor, hover, focus-visible ring) — it never adds `role`, `tabIndex`, or keyboard handling
+- a bare `Card interactive` with no `asChild` target is not keyboard or screen-reader accessible — it is styling only
+- use `asChild` with a real `a`/`Link` for navigation cards
+- use `asChild` with a real `button` for action cards
+- `asChild interactive` wrapping a non-focusable element (for example a plain `div`) is invalid — the slotted child must be a real interactive element
+- avoid nested interactive controls inside a clickable card
 - keep focus states visible for interactive cards
 - do not make a card interactive only for visual decoration
 
 <Callout title="Accessibility rule">
-  An interactive card is keyboard accessible by default, but still prefer a real link or button semantics: use `asChild` with `a` for navigation or `button` when you need native button behavior.
+  Card never synthesizes keyboard or focus behavior. An interactive card is only truly accessible when `asChild` wraps a real `a`/`Link` (navigation) or `button` (action) — those elements provide correct keyboard, focus, and click semantics natively.
 </Callout>
 
 ## Prefer / avoid
