@@ -186,19 +186,6 @@ const useCases = [
   },
 ] as const;
 
-const delivery = [
-  'Instant access after purchase',
-  'ZIP delivery with full source code',
-  'Setup instructions included',
-  'Ready to deploy on Vercel or similar platforms',
-] as const;
-
-const license = [
-  'Commercial usage included',
-  'Use for personal projects and client work',
-  'No reselling, redistribution, or source sharing',
-] as const;
-
 const faqs = [
   {
     question: 'Is NA-AI Landing a full SaaS app?',
@@ -266,17 +253,6 @@ function SectionHeading({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function CheckItem({ children }: { readonly children: ReactNode }) {
-  return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3.5 w-3.5 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
   );
 }
 
