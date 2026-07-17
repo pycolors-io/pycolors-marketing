@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.18.0
+
+### Minor Changes
+
+- Prepared the next nonbreaking `@pycolors/ui` and `@pycolors/tokens` patches
+  with accessibility, React Server Component compatibility, clearer validation
+  semantics, improved contrast tokens, and broader automated regression
+  coverage.
+- Defined durable component API conventions and expanded component
+  documentation so developers can adopt and upgrade the free UI layer with
+  less ambiguity.
+- Improved release reliability with Node.js 24, pinned package-manager
+  versions, stricter package publication checks, and safer synchronization of
+  public projects.
+- Established a policy-gated autonomous engineering workflow to shorten
+  delivery cycles while preserving maintainer review, focused pull requests,
+  and release quality.
+- Reinforced the business foundation for the four-year EUR2M objective by
+  reducing adoption risk in the free layer, increasing product trust, and
+  making future Starter Pro, UI Pro, Blocks, and Templates releases safer to
+  deliver.
+
 ## 1.17.5
 
 ### Patch Changes

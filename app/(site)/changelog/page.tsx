@@ -64,6 +64,59 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.18.0',
+    title: 'UI quality standards and more reliable product delivery',
+    dateLabel: 'Fri 17 Jul 2026',
+    dateISO: '2026-07-17',
+    status: 'Stable',
+    releaseWeekLabel: 'Jul 2026 (weekly release)',
+    summary:
+      'This release strengthens the systems used to adopt and ship the PyColors ecosystem. It prepares the next nonbreaking UI and token patches, establishes clearer component API conventions, expands regression coverage, and makes releases more predictable. The result is a safer path from free adoption to Starter Pro and future premium products, without changing public component names, variants, sizes, or required consumer migrations.',
+    highlights: [
+      {
+        title: 'Next UI and token patches prepared',
+        items: [
+          'Implemented improved Input and Textarea validation announcements while preserving consumer-provided accessibility descriptions.',
+          'Implemented better Badge contrast, Toast announcement priority, Table header semantics, Skeleton reduced-motion behavior, and disabled-state clarity.',
+          'Restored Card compatibility with React Server Components and static rendering while keeping interactive composition based on native buttons and links.',
+          'Expanded deterministic accessibility, rendering, export, and regression coverage across the UI package.',
+        ],
+      },
+      {
+        title: 'Component adoption is more predictable',
+        items: [
+          'Defined durable conventions for exported component APIs, accessibility behavior, composition, variants, sizes, and data attributes.',
+          'Updated component documentation and examples to reflect production-safe semantics and current package behavior.',
+          'Kept the improvements nonbreaking: no public component, prop, export, variant, or size was removed or renamed.',
+        ],
+      },
+      {
+        title: 'Release and delivery reliability improved',
+        items: [
+          'Aligned the active toolchain on Node.js 24 and pinned compatible package-manager versions for repeatable builds and publishing.',
+          'Strengthened package release checks so public package versions and GitHub release surfaces stay aligned.',
+          'Improved synchronization reliability for the free public projects and their release pages.',
+        ],
+      },
+      {
+        title: 'Focused engineering execution established',
+        items: [
+          'Introduced a governed issue-to-review lifecycle for smaller, independently reviewable engineering changes.',
+          'Added repository-level quality and security controls that preserve maintainer approval while reducing repetitive delivery work.',
+          'Improved the foundation for shipping Starter Pro, UI Pro, Blocks, and Templates with less regression and release risk.',
+        ],
+      },
+      {
+        title: 'Release transparency',
+        items: [
+          'The marketing application release is v1.18.0.',
+          'The repository prepares @pycolors/ui v1.1.3 and @pycolors/tokens v1.2.1, while the latest npm versions remain v1.1.2 and v1.2.0 until their separate package release completes.',
+        ],
+      },
+    ],
+    cta: { label: 'Explore the PyColors roadmap', href: '/roadmap' },
+  },
+  {
     version: 'v1.1.2 (@pycolors/ui)',
     title: '@pycolors/ui accessibility hardening',
     dateLabel: 'Sat 11 Jul 2026',
