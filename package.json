@@ -23,11 +23,11 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
-    "postinstall": "node scripts/ensure-pycolors-ui-card-rsc-safe.mjs && fumadocs-mdx"
+    "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
-    "@pycolors/tokens": "^1.2.0",
-    "@pycolors/ui": "^1.1.2",
+    "@pycolors/tokens": "workspace:^",
+    "@pycolors/ui": "workspace:^",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-slot": "^1.2.4",
