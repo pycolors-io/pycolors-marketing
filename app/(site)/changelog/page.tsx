@@ -66,17 +66,16 @@ const CHANGELOG: ChangelogItem[] = [
   {
     version: 'v1.1.2 (@pycolors/ui)',
     title: '@pycolors/ui accessibility hardening',
-    dateLabel: 'Pending publication',
-    dateISO: '',
-    status: 'In progress',
-    releaseWeekLabel:
-      'Jul 2026 (patch release, pending npm publication)',
+    dateLabel: 'Sat 11 Jul 2026',
+    dateISO: '2026-07-11',
+    status: 'Stable',
+    releaseWeekLabel: 'Jul 2026 (patch release)',
     summary:
-      'This nonbreaking patch prepares two accessibility fixes for @pycolors/ui: PasswordInput now fully respects the disabled state on its visibility toggle, and TableLoading exposes accessible live-region semantics. It also adds package-level Vitest, jsdom, and Testing Library regression coverage. No public API, export, prop, variant, or size changed. This entry is prepared ahead of release and will be marked Stable once the package is confirmed live on npm — do not install v1.1.2 until then.',
+      'This nonbreaking patch fixes two accessibility gaps in @pycolors/ui and adds package-level regression test coverage. PasswordInput now fully respects the disabled state on its visibility toggle, and TableLoading exposes accessible live-region semantics so assistive technology users are notified when a table starts loading. No public API, export, prop, variant, or size changed.',
 
     highlights: [
       {
-        title: 'Accessibility fixes (pending release)',
+        title: 'Accessibility fixes',
         items: [
           'PasswordInput: the show/hide visibility toggle is disabled together with the field, instead of staying clickable on a disabled input.',
           'TableLoading: now exposes accessible live-region semantics instead of being visual-only.',

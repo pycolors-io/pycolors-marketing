@@ -180,8 +180,9 @@ When `error` is provided:
 
 - error styles are applied
 - `aria-invalid` is set
-- error text is connected to the field
-- screen readers can access the validation message
+- error text is connected to the field via `aria-describedby` and `aria-errormessage`
+- the error text has `role="alert"`, so it is announced immediately when it appears — including while the field is already focused, not only on the next focus event
+- a consumer-supplied `aria-describedby` is composed with the field's own helper/error ids rather than replaced, so both descriptions remain available to assistive technology
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -434,6 +435,8 @@ Guidelines:
 - do not rely on placeholder text as the only label
 - `error` should set `aria-invalid`
 - helper and error text should be connected through `aria-describedby`
+- error text is also announced live via `role="alert"` the moment it appears
+- `disabled` dims the field and shows a not-allowed cursor on the field itself, not only on the native attribute — the visual state and the functional state always match
 - decorative icons should use `aria-hidden="true"`
 - keep focus rings visible
 - use appropriate native `type` values, such as `email`, `url`, `tel`, or `search`

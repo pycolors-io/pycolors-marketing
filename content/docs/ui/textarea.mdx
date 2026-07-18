@@ -177,7 +177,7 @@ export function TextareaHelperText() {
 
 ### Error state
 
-Use the `error` prop for validation errors. It automatically sets `aria-invalid`, `aria-errormessage`, and error styling.
+Use the `error` prop for validation errors. It automatically sets `aria-invalid`, `aria-errormessage`, and error styling. The error text carries `role="alert"`, so it is announced immediately when it appears — including while the field is already focused. A consumer-supplied `aria-describedby` is composed with the field's own helper/error ids rather than replaced.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
@@ -577,6 +577,7 @@ export interface TextareaProps
 - `helperText` is connected with `aria-describedby`.
 - `error` is connected with `aria-errormessage`.
 - `error` sets `aria-invalid`.
+- `error` text has `role="alert"` and is announced live, even while the field is already focused.
 - `required` sets `aria-required`.
 - Do not rely on placeholder text as the only accessible description.
 

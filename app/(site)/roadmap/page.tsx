@@ -624,8 +624,8 @@ const items: RoadmapItem[] = [
   {
     title: '@pycolors/ui v1.1.2 accessibility hardening',
     description:
-      'PasswordInput now fully respects the disabled state on its visibility toggle, and TableLoading exposes accessible live-region semantics, backed by new Vitest, jsdom, and Testing Library regression coverage for exports, forms, password visibility, tables, Card semantics, and EmptyState semantics. No public API, export, prop, variant, or size changed. Data-slot consistency, Pagination asChild support, and a Checkbox error API remain open follow-up work. Pending npm publication before this is marked shipped.',
-    status: 'Now',
+      'PasswordInput now fully respects the disabled state on its visibility toggle, and TableLoading exposes accessible live-region semantics, backed by new Vitest, jsdom, and Testing Library regression coverage for exports, forms, password visibility, tables, Card semantics, and EmptyState semantics. No public API, export, prop, variant, or size changed. Data-slot consistency, Pagination asChild support, and a Checkbox error API remain open follow-up work.',
+    status: 'Shipped',
     milestone: 'Jul 2026',
     tags: ['@pycolors/ui', 'Accessibility', 'Testing'],
     href: '/docs/ui',
