@@ -1,7 +1,7 @@
-import type { ComponentType, ReactNode } from 'react';
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
+import type { ComponentType, ReactNode } from "react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   Code2,
@@ -19,7 +19,7 @@ import {
   Users,
   Boxes,
   Check,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -29,186 +29,170 @@ import {
   CardHeader,
   CardTitle,
   cn,
-} from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
+} from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
-import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
-import { PageHero } from '@/components/marketing/page-hero';
-import { BuyProductButton } from '@/components/pricing/buy-product-button';
-import {
-  JsonLd,
-  generateProductOfferJsonLd,
-} from '@/components/seo/json-ld';
-import { TemplateStickyCta } from '@/components/templates/template-sticky-cta';
+import { Container } from "@/components/container";
+import { Breadcrumb } from "@/components/seo/breadcrumb";
+import { PageHero } from "@/components/marketing/page-hero";
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { TemplateStickyCta } from "@/components/templates/template-sticky-cta";
 
 export const metadata: Metadata = {
-  title: 'AI SaaS Landing Page Template for Next.js',
+  title: "AI SaaS Landing Page Template for Next.js",
   description:
-    'Premium AI SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing sections, FAQ, dark mode, SEO foundations, and commercial-ready source code.',
+    "Premium AI SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing sections, FAQ, dark mode, SEO foundations, and commercial-ready source code.",
   alternates: {
-    canonical: '/templates/na-ai-landing',
+    canonical: "/templates/na-ai-landing",
   },
 
   openGraph: {
-    title: 'AI SaaS Landing Page Template for Next.js',
+    title: "AI SaaS Landing Page Template for Next.js",
     description:
-      'Launch a polished AI or SaaS landing page faster with modern Next.js architecture, production-ready UI, SEO foundations, and commercial-ready source code.',
-    url: '/templates/na-ai-landing',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Launch a polished AI or SaaS landing page faster with modern Next.js architecture, production-ready UI, SEO foundations, and commercial-ready source code.",
+    url: "/templates/na-ai-landing",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'AI SaaS Landing Page Template for Next.js',
+    card: "summary_large_image",
+    title: "AI SaaS Landing Page Template for Next.js",
     description:
-      'Premium AI and SaaS landing page template built for modern product launches.',
-    images: ['/seo/twitter-main.png'],
+      "Premium AI and SaaS landing page template built for modern product launches.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
 const PRODUCT = {
-  slug: 'na-ai-landing',
-  name: 'NA-AI Landing',
-  price: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
-  regularPrice: PRODUCT_DISPLAY['na-ai-landing'].regularPriceLabel,
-  demoUrl: 'https://na-ai.pycolors.io',
+  slug: "na-ai-landing",
+  name: "NA-AI Landing",
+  price: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+  regularPrice: PRODUCT_DISPLAY["na-ai-landing"].regularPriceLabel,
+  demoUrl: "https://na-ai.pycolors.io",
 } as const;
 
 const naAiLandingJsonLd = generateProductOfferJsonLd({
-  product: PRODUCT_DISPLAY['na-ai-landing'],
-  canonicalPath: '/templates/na-ai-landing',
+  product: PRODUCT_DISPLAY["na-ai-landing"],
+  canonicalPath: "/templates/na-ai-landing",
   description:
-    'Premium AI and SaaS landing page template built for modern Next.js product launches.',
+    "Premium AI and SaaS landing page template built for modern Next.js product launches.",
 });
 
 const SCREENSHOTS = [
   {
-    src: '/templates/na-ai/na-ai-analytics-workspace-dark.webp',
-    alt: 'NA-AI Landing template full page preview in dark mode',
-    label: 'Dark mode',
+    src: "/templates/na-ai/na-ai-analytics-workspace-dark.webp",
+    alt: "NA-AI Landing template full page preview in dark mode",
+    label: "Dark mode",
   },
   {
-    src: '/templates/na-ai/na-ai-analytics-workspace-light.webp',
-    alt: 'NA-AI Landing template full page preview in light mode',
-    label: 'Light mode',
+    src: "/templates/na-ai/na-ai-analytics-workspace-light.webp",
+    alt: "NA-AI Landing template full page preview in light mode",
+    label: "Light mode",
   },
 ] as const;
 
 const highlights = [
   {
-    title: 'Built for AI/SaaS launches',
+    title: "Built for AI/SaaS launches",
     description:
-      'A focused landing page for AI tools, analytics products, SaaS platforms, and early product validation.',
+      "A focused landing page for AI tools, analytics products, SaaS platforms, and early product validation.",
     icon: Rocket,
   },
   {
-    title: 'Commercial-ready source code',
+    title: "Commercial-ready source code",
     description:
-      'Get the full template source code, adapt the copy, customize the UI, and deploy it for your own product.',
+      "Get the full template source code, adapt the copy, customize the UI, and deploy it for your own product.",
     icon: Package,
   },
   {
-    title: 'Designed to convert',
+    title: "Designed to convert",
     description:
-      'Hero, features, integrations, testimonials, pricing, FAQ, and trust sections are already structured.',
+      "Hero, features, integrations, testimonials, pricing, FAQ, and trust sections are already structured.",
     icon: Gauge,
   },
   {
-    title: 'SEO and launch baseline',
+    title: "SEO and launch baseline",
     description:
-      'Includes metadata, responsive structure, dark/light mode, and clean content architecture for launch.',
+      "Includes metadata, responsive structure, dark/light mode, and clean content architecture for launch.",
     icon: FileText,
   },
 ] as const;
 
 const included = [
-  'Complete Next.js App Router project structure',
-  'TypeScript setup',
-  'Tailwind CSS v4 styling',
-  'shadcn/ui + Radix UI primitives',
-  'Framer Motion animations',
-  'Data-driven architecture with TypeScript config files',
-  'Dark and light mode',
-  'Hero, feature sections, integrations, testimonials, and FAQ',
-  'AI-native, security, and revenue insight sections',
-  'Pricing section with monthly/yearly toggle',
-  'Pricing comparison table',
-  'Analytics-style sections with charts',
-  'Frontend contact/sales form structure',
-  'SEO baseline with Open Graph, sitemap, and robots',
-  'Responsive marketing layout',
-  'Setup documentation included',
-  'Commercial usage for personal and client projects',
+  "Complete Next.js App Router project structure",
+  "TypeScript setup",
+  "Tailwind CSS v4 styling",
+  "shadcn/ui + Radix UI primitives",
+  "Framer Motion animations",
+  "Data-driven architecture with TypeScript config files",
+  "Dark and light mode",
+  "Hero, feature sections, integrations, testimonials, and FAQ",
+  "AI-native, security, and revenue insight sections",
+  "Pricing section with monthly/yearly toggle",
+  "Pricing comparison table",
+  "Analytics-style sections with charts",
+  "Frontend contact/sales form structure",
+  "SEO baseline with Open Graph, sitemap, and robots",
+  "Responsive marketing layout",
+  "Setup documentation included",
+  "Commercial usage for personal and client projects",
 ] as const;
 
 const notIncluded = [
-  'Authentication',
-  'Database',
-  'Backend API',
-  'Stripe billing',
-  'Email delivery',
-  'User dashboard',
+  "Authentication",
+  "Database",
+  "Backend API",
+  "Stripe billing",
+  "Email delivery",
+  "User dashboard",
 ] as const;
 
 const stack = [
-  'Next.js 16+ App Router',
-  'React',
-  'TypeScript',
-  'Tailwind CSS v4',
-  'shadcn/ui',
-  'Radix UI',
-  'Framer Motion',
-  'Recharts',
-  'Lucide Icons',
+  "Next.js 16+ App Router",
+  "React",
+  "TypeScript",
+  "Tailwind CSS v4",
+  "shadcn/ui",
+  "Radix UI",
+  "Framer Motion",
+  "Recharts",
+  "Lucide Icons",
 ] as const;
 
 const useCases = [
   {
-    title: 'AI product launch',
+    title: "AI product launch",
     description:
-      'Present an AI assistant, analytics layer, automation platform, or workflow product with a polished SaaS page.',
+      "Present an AI assistant, analytics layer, automation platform, or workflow product with a polished SaaS page.",
     icon: Sparkles,
   },
   {
-    title: 'Indie SaaS validation',
+    title: "Indie SaaS validation",
     description:
-      'Ship the marketing surface first, validate interest, collect leads, then build the product behind it.',
+      "Ship the marketing surface first, validate interest, collect leads, then build the product behind it.",
     icon: Users,
   },
   {
-    title: 'Client landing pages',
+    title: "Client landing pages",
     description:
-      'Use it as a repeatable baseline for agencies or freelance work without rebuilding common sections.',
+      "Use it as a repeatable baseline for agencies or freelance work without rebuilding common sections.",
     icon: Boxes,
   },
 ] as const;
 
-const delivery = [
-  'Instant access after purchase',
-  'ZIP delivery with full source code',
-  'Setup instructions included',
-  'Ready to deploy on Vercel or similar platforms',
-] as const;
-
-const license = [
-  'Commercial usage included',
-  'Use for personal projects and client work',
-  'No reselling, redistribution, or source sharing',
-] as const;
-
 const faqs = [
   {
-    question: 'Is NA-AI Landing a full SaaS app?',
+    question: "Is NA-AI Landing a full SaaS app?",
     answer:
-      'No. NA-AI Landing is a frontend marketing template. It is designed for landing pages, product validation, and commercial presentation — not authentication, billing, or backend logic.',
+      "No. NA-AI Landing is a frontend marketing template. It is designed for landing pages, product validation, and commercial presentation — not authentication, billing, or backend logic.",
   },
   {
-    question: 'Can I use it for client work?',
+    question: "Can I use it for client work?",
     answer:
-      'Yes. Commercial usage is included for personal and client projects, as long as you do not resell or redistribute the template source code itself.',
+      "Yes. Commercial usage is included for personal and client projects, as long as you do not resell or redistribute the template source code itself.",
   },
   // {
   //   question: 'Is the template connected to PyColors UI?',
@@ -216,15 +200,14 @@ const faqs = [
   //     'The template follows the PyColors product direction and will progressively align with PyColors UI components and tokens as the ecosystem evolves.',
   // },
   {
-    question:
-      'What should I choose between this template and Starter Pro?',
+    question: "What should I choose between this template and Starter Pro?",
     answer:
-      'Choose NA-AI Landing when you need a polished marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.',
+      "Choose NA-AI Landing when you need a polished marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.",
   },
   {
-    question: 'What do I receive after purchase?',
+    question: "What do I receive after purchase?",
     answer:
-      'You receive a ZIP package containing the full source code and setup documentation, ready to run locally and deploy on Vercel or a similar platform.',
+      "You receive a ZIP package containing the full source code and setup documentation, ready to run locally and deploy on Vercel or a similar platform.",
   },
 ] as const;
 
@@ -232,19 +215,19 @@ function SectionHeading({
   eyebrow,
   title,
   description,
-  align = 'center',
+  align = "center",
 }: {
   readonly eyebrow?: string;
   readonly title: string;
   readonly description?: string;
-  readonly align?: 'center' | 'left';
+  readonly align?: "center" | "left";
 }) {
   return (
     <div
       className={cn(
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'max-w-3xl text-left',
+        align === "center"
+          ? "mx-auto max-w-3xl text-center"
+          : "max-w-3xl text-left",
       )}
     >
       {eyebrow ? (
@@ -266,17 +249,6 @@ function SectionHeading({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function CheckItem({ children }: { readonly children: ReactNode }) {
-  return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3.5 w-3.5 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
   );
 }
 
@@ -308,9 +280,7 @@ function FeatureCard({
       </CardHeader>
 
       <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
+        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   );
@@ -328,9 +298,7 @@ function ScreenshotGrid() {
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs font-medium">
-                  {screenshot.label}
-                </span>
+                <span className="text-xs font-medium">{screenshot.label}</span>
               </div>
 
               <span className="text-[11px] text-muted-foreground">
@@ -364,11 +332,11 @@ export default function NaAiTemplatePage() {
           <div className="mb-8">
             <Breadcrumb
               items={[
-                { label: 'Home', href: '/' },
-                { label: 'Templates', href: '/templates' },
+                { label: "Home", href: "/" },
+                { label: "Templates", href: "/templates" },
                 {
-                  label: 'NA-AI Landing',
-                  href: '/templates/na-ai-landing',
+                  label: "NA-AI Landing",
+                  href: "/templates/na-ai-landing",
                 },
               ]}
             />
@@ -378,17 +346,17 @@ export default function NaAiTemplatePage() {
             maxWidth="5xl"
             badges={[
               {
-                label: 'NA-AI Landing',
-                variant: 'secondary',
+                label: "NA-AI Landing",
+                variant: "secondary",
               },
               {
                 label: `${PRODUCT.price} launch price`,
-                variant: 'outline',
+                variant: "outline",
                 icon: <Sparkles className="h-3.5 w-3.5" />,
               },
               {
                 label: `${PRODUCT.regularPrice} regular price`,
-                variant: 'outline',
+                variant: "outline",
               },
             ]}
             title="Launch a premium AI landing page faster."
@@ -420,12 +388,12 @@ export default function NaAiTemplatePage() {
               </div>
             }
             pills={[
-              'Next.js App Router',
-              'Tailwind CSS v4',
-              'Dark/light mode',
-              'Full source code',
-              'Instant access',
-              'Commercial usage',
+              "Next.js App Router",
+              "Tailwind CSS v4",
+              "Dark/light mode",
+              "Full source code",
+              "Instant access",
+              "Commercial usage",
             ]}
             extraClassName="mx-auto max-w-6xl"
             extra={
@@ -530,27 +498,26 @@ export default function NaAiTemplatePage() {
                       </h2>
 
                       <p className="text-sm leading-7 text-muted-foreground">
-                        NA-AI Landing uses the same design tokens,
-                        components, spacing system, and UI conventions
-                        used across the PyColors ecosystem.
+                        NA-AI Landing uses the same design tokens, components,
+                        spacing system, and UI conventions used across the
+                        PyColors ecosystem.
                       </p>
                     </div>
                   </div>
 
                   <div className="flex flex-col justify-between gap-6">
                     <p className="text-sm leading-7 text-muted-foreground">
-                      The template is designed to feel
-                      production-ready from day one, with reusable
-                      SaaS-oriented patterns instead of isolated
-                      marketing sections.
+                      The template is designed to feel production-ready from day
+                      one, with reusable SaaS-oriented patterns instead of
+                      isolated marketing sections.
                     </p>
 
                     <div className="flex flex-wrap gap-2">
                       {[
-                        'Semantic tokens',
-                        'Tailwind v4',
-                        'Accessible primitives',
-                        'Production-ready patterns',
+                        "Semantic tokens",
+                        "Tailwind v4",
+                        "Accessible primitives",
+                        "Production-ready patterns",
                       ].map((item) => (
                         <span
                           key={item}
@@ -605,8 +572,7 @@ export default function NaAiTemplatePage() {
                       Template package
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Full source code · Commercial usage · Instant
-                      access
+                      Full source code · Commercial usage · Instant access
                     </p>
                   </div>
 
@@ -653,9 +619,9 @@ export default function NaAiTemplatePage() {
                         Need the full SaaS foundation?
                       </p>
                       <p className="mt-1 text-xs leading-6 text-muted-foreground">
-                        NA-AI Landing handles the marketing page.
-                        Starter Pro adds auth, billing, protected
-                        routes, and database foundations.
+                        NA-AI Landing handles the marketing page. Starter Pro
+                        adds auth, billing, protected routes, and database
+                        foundations.
                       </p>
                     </div>
 
@@ -693,8 +659,8 @@ export default function NaAiTemplatePage() {
                   </h2>
 
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    Built with familiar tools for modern SaaS landing
-                    pages and fast customization.
+                    Built with familiar tools for modern SaaS landing pages and
+                    fast customization.
                   </p>
 
                   <div className="mt-6 flex flex-wrap gap-2">
@@ -716,9 +682,9 @@ export default function NaAiTemplatePage() {
                   </h2>
 
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    This template is focused on the marketing page.
-                    For auth, billing, protected routes, and database
-                    foundations, use Starter Pro.
+                    This template is focused on the marketing page. For auth,
+                    billing, protected routes, and database foundations, use
+                    Starter Pro.
                   </p>
 
                   <div className="mt-6 flex flex-wrap gap-2">
@@ -728,11 +694,7 @@ export default function NaAiTemplatePage() {
                   </div>
 
                   <div className="mt-6">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
+                    <Button asChild variant="outline" className="rounded-[5px]">
                       <Link href="/starters/pro">
                         See Starter Pro
                         <ArrowRight className="h-4 w-4" />
@@ -775,8 +737,7 @@ export default function NaAiTemplatePage() {
                       After purchase
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Instant delivery, clear scope, and progressive
-                      updates.
+                      Instant delivery, clear scope, and progressive updates.
                     </p>
                   </div>
 
@@ -794,21 +755,21 @@ export default function NaAiTemplatePage() {
                   {[
                     {
                       icon: FileArchive,
-                      title: 'Instant access',
+                      title: "Instant access",
                       description:
-                        'Receive the full source code package after checkout.',
+                        "Receive the full source code package after checkout.",
                     },
                     {
                       icon: Code2,
-                      title: 'Setup included',
+                      title: "Setup included",
                       description:
-                        'Project structure and setup instructions are included.',
+                        "Project structure and setup instructions are included.",
                     },
                     {
                       icon: RefreshCcw,
-                      title: 'Maintained',
+                      title: "Maintained",
                       description:
-                        'The template improves progressively with PyColors.',
+                        "The template improves progressively with PyColors.",
                     },
                   ].map((item) => {
                     const Icon = item.icon;
@@ -837,9 +798,8 @@ export default function NaAiTemplatePage() {
                 <div className="border-t border-border-subtle bg-surface-muted/50 px-5 py-4 sm:px-6">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-xs leading-6 text-muted-foreground">
-                      Built as a focused frontend template. Follow
-                      future improvements through the roadmap and
-                      changelog.
+                      Built as a focused frontend template. Follow future
+                      improvements through the roadmap and changelog.
                     </p>
 
                     <div className="flex gap-2">
@@ -880,17 +840,13 @@ export default function NaAiTemplatePage() {
                     Commercial usage included
                   </div>
 
-                  <span className="hidden text-border-subtle sm:inline">
-                    —
-                  </span>
+                  <span className="hidden text-border-subtle sm:inline">—</span>
 
                   <p className="text-sm text-muted-foreground">
                     Use in personal and client projects.
                   </p>
 
-                  <span className="hidden text-border-subtle sm:inline">
-                    —
-                  </span>
+                  <span className="hidden text-border-subtle sm:inline">—</span>
 
                   <p className="text-sm text-muted-foreground">
                     No redistribution.
@@ -925,9 +881,7 @@ export default function NaAiTemplatePage() {
                   className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
                 >
                   <CardContent className="p-6">
-                    <h3 className="text-base font-medium">
-                      {faq.question}
-                    </h3>
+                    <h3 className="text-base font-medium">{faq.question}</h3>
 
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
                       {faq.answer}
@@ -952,14 +906,13 @@ export default function NaAiTemplatePage() {
               </Badge>
 
               <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start from a premium AI landing page. Spend your time
-                on the offer.
+                Start from a premium AI landing page. Spend your time on the
+                offer.
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                Buy NA-AI Landing when you need a polished,
-                commercial-ready marketing page for your AI or SaaS
-                product.
+                Buy NA-AI Landing when you need a polished, commercial-ready
+                marketing page for your AI or SaaS product.
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -996,18 +949,12 @@ export default function NaAiTemplatePage() {
           </div>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Legal scope and usage terms are governed by{' '}
-            <Link
-              href="/license"
-              className="underline underline-offset-4"
-            >
+            Legal scope and usage terms are governed by{" "}
+            <Link href="/license" className="underline underline-offset-4">
               /license
-            </Link>{' '}
-            and{' '}
-            <Link
-              href="/terms"
-              className="underline underline-offset-4"
-            >
+            </Link>{" "}
+            and{" "}
+            <Link href="/terms" className="underline underline-offset-4">
               /terms
             </Link>
             .
