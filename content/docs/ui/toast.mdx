@@ -410,7 +410,16 @@ export interface ToastProps
 - Toast is built on Radix Toast primitives.
 - Toasts should not trap focus.
 - Toasts should not interrupt form input.
-- Toasts are announced as live-region updates.
+- Toasts are announced as live-region updates, at an urgency that matches `variant`:
+
+  | Variant | Announcement | Radix `type` |
+  | --- | --- | --- |
+  | `default` | Polite — waits for a pause | `"background"` |
+  | `success` | Polite — waits for a pause | `"background"` |
+  | `warning` | Assertive — interrupts immediately | `"foreground"` |
+  | `destructive` | Assertive — interrupts immediately | `"foreground"` |
+
+  Pass an explicit `type` prop to override this default on a specific toast.
 - Keep copy short so announcements are understandable.
 - Do not rely on color alone for destructive or warning messages.
 - Do not use Toast as the only place for critical errors.

@@ -134,7 +134,7 @@ const milestones: Array<{
     id: 'Jul 2026',
     title: 'July 2026',
     subtitle:
-      'Improve Starter Pro conversion proof with stronger demo visibility, annotated screenshots, clearer deliverables, comparison clarity, and buyer confidence before checkout.',
+      'Improve Starter Pro conversion proof, stabilize the free UI layer, clarify component APIs, and strengthen release reliability for faster premium product delivery.',
   },
   {
     id: 'H1 2026',
@@ -629,6 +629,24 @@ const items: RoadmapItem[] = [
     milestone: 'Jul 2026',
     tags: ['@pycolors/ui', 'Accessibility', 'Testing'],
     href: '/docs/ui',
+  },
+  {
+    title: '@pycolors/ui production-readiness sprint',
+    description:
+      'Landed nonbreaking accessibility, contrast, validation, reduced-motion, table semantics, and React Server Component reliability improvements with broader automated coverage. The implementation is complete in the monorepo and queued for the next package patch.',
+    status: 'Now',
+    milestone: 'Jul 2026',
+    tags: ['@pycolors/ui', 'Quality', 'Accessibility'],
+    href: '/docs/ui',
+  },
+  {
+    title: 'Component standards and reliable delivery foundation',
+    description:
+      'Established durable component API conventions, production-safe documentation examples, repeatable release controls, and a governed engineering workflow so the ecosystem can ship focused improvements with lower regression risk.',
+    status: 'Shipped',
+    milestone: 'Jul 2026',
+    tags: ['DX', 'Documentation', 'Release'],
+    href: '/changelog',
   },
   {
     title: 'Starter Pro video walkthrough',

@@ -392,6 +392,7 @@ export type BadgeSize = "sm" | "md" | "lg";
 - Icons must be supplementary, not the only indicator.
 - Use `aria-hidden="true"` for decorative icons.
 - When interactive, use `asChild` with a semantic element such as `a` or `button`.
+- `success` and `warning` use dedicated `--success-foreground` / `--warning-foreground` design tokens (see `@pycolors/tokens`) tuned to meet WCAG AA contrast against their respective backgrounds — do not substitute a different text color on these two variants.
 
 ## Prefer / avoid
 

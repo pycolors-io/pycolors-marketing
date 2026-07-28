@@ -356,11 +356,12 @@ Skeleton is visual only.
 
 Guidelines:
 
-- Skeleton should be rendered with `aria-hidden`
+- Skeleton always renders with `aria-hidden="true"` — this is a fixed guarantee of the component and cannot be overridden by a passed-through prop
 - Skeleton should never receive focus
 - Skeleton should not be used as a status message
 - Do not announce every placeholder to screen readers
 - Provide accessible loading semantics at a higher level when needed
+- The pulse animation respects `prefers-reduced-motion` and is disabled automatically for users who request it
 - Replace skeletons with real content as soon as possible
 
 <Callout title="Accessibility rule">
