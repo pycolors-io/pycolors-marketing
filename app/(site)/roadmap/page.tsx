@@ -134,7 +134,7 @@ const milestones: Array<{
     id: 'Jul 2026',
     title: 'July 2026',
     subtitle:
-      'Improve Starter Pro conversion proof, stabilize the free UI layer, clarify component APIs, and strengthen release reliability for faster premium product delivery.',
+      'Improve Starter Pro conversion proof, stabilize the free UI and token layer, recover the missed release week, and strengthen release reliability for faster premium product delivery.',
   },
   {
     id: 'H1 2026',
@@ -633,11 +633,29 @@ const items: RoadmapItem[] = [
   {
     title: '@pycolors/ui production-readiness sprint',
     description:
-      'Landed nonbreaking accessibility, contrast, validation, reduced-motion, table semantics, and React Server Component reliability improvements with broader automated coverage. The implementation is complete in the monorepo and queued for the next package patch.',
-    status: 'Now',
+      'Landed nonbreaking accessibility, contrast, validation, reduced-motion, table semantics, and React Server Component reliability improvements with broader automated coverage. The work is now reflected in the repository package baseline for @pycolors/ui v1.1.4 and @pycolors/tokens v1.2.2.',
+    status: 'Shipped',
     milestone: 'Jul 2026',
     tags: ['@pycolors/ui', 'Quality', 'Accessibility'],
     href: '/docs/ui',
+  },
+  {
+    title: 'Release catch-up and UI delivery cleanup',
+    description:
+      'Closed the missed 24 July marketing release with a focused operational note covering Card RSC follow-up, generated docs source maintenance, dependency alignment, and release-preflight cleanup without changing pricing, checkout, backend behavior, or product scope.',
+    status: 'Shipped',
+    milestone: 'Jul 2026',
+    tags: ['Release', 'Marketing', 'Reliability'],
+    href: '/changelog',
+  },
+  {
+    title: '@pycolors/tokens v1.2.2 contrast baseline',
+    description:
+      'Added dedicated success and warning foreground tokens for light and dark themes, plus Tailwind v4 theme bridges, giving Badge and future components a clearer accessible status-color foundation without requiring consumer migrations.',
+    status: 'Shipped',
+    milestone: 'Jul 2026',
+    tags: ['@pycolors/tokens', 'Accessibility', 'Design System'],
+    href: '/docs/design-system/tokens',
   },
   {
     title: 'Component standards and reliable delivery foundation',

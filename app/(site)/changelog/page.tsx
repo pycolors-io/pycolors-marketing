@@ -64,6 +64,80 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.20.0',
+    title: 'Tokens baseline folded into the product story',
+    dateLabel: 'Fri 31 Jul 2026',
+    dateISO: '2026-07-31',
+    status: 'Stable',
+    releaseWeekLabel: 'Jul 2026 (weekly release)',
+    summary:
+      'This release turns the late-July package baseline into a public product update. @pycolors/tokens is now tracked as v1.2.2 in the repository, with dedicated success and warning foreground tokens for stronger contrast in light and dark themes. The marketing site also aligns its visible UI baseline with @pycolors/ui v1.1.4, so the public changelog, roadmap, and homepage now reflect the package work versioned this week.',
+    highlights: [
+      {
+        title: '@pycolors/tokens v1.2.2 baseline',
+        items: [
+          'Added dedicated `--success-foreground` and `--warning-foreground` custom properties for both light and dark themes.',
+          'Added matching Tailwind v4 `@theme inline` bridges so components can consume the new semantic foreground roles consistently.',
+          'Kept the token update additive and backward compatible: existing token names, imports, and theme setup remain unchanged.',
+        ],
+      },
+      {
+        title: '@pycolors/ui v1.1.4 alignment',
+        items: [
+          'Aligned the public UI baseline with the accessibility and reliability work versioned in the monorepo.',
+          'Kept the Card React Server Component contract explicit: `interactive` remains visual, while native links and buttons provide focus, keyboard, and click semantics.',
+          'Reflected the current UI package version across marketing surfaces that display the PyColors UI baseline.',
+        ],
+      },
+      {
+        title: 'Release transparency',
+        items: [
+          'The marketing application release is v1.20.0.',
+          'The repository package baseline is @pycolors/tokens v1.2.2 and @pycolors/ui v1.1.4.',
+          'This replaces the 17 July pending-package wording with the package versions applied on 28 July 2026.',
+        ],
+      },
+    ],
+    cta: { label: 'View design tokens', href: '/docs/design-system/tokens' },
+  },
+  {
+    version: 'v1.19.0',
+    title: 'Release catch-up and UI delivery cleanup',
+    dateLabel: 'Fri 24 Jul 2026',
+    dateISO: '2026-07-24',
+    status: 'Stable',
+    releaseWeekLabel: 'Jul 2026 (catch-up release)',
+    summary:
+      'This catch-up release closes the week that did not get a public marketing announcement. It records the cleanup after the v1.18.0 UI reliability sprint: Card React Server Component safety follow-up, generated docs source maintenance, dependency alignment, and release-preflight cleanup. The release is intentionally operational and noncommercial: no pricing, checkout, backend, or product-scope changes shipped in this marketing update.',
+    highlights: [
+      {
+        title: 'Card reliability follow-up',
+        items: [
+          'Kept the Card composition model focused on real native elements for actions and navigation.',
+          'Removed a brittle marketing postinstall safety path and kept Card safety represented through package code, docs, and tests instead.',
+          'Clarified the migration-safe behavior after the React Server Component compatibility work prepared earlier in July.',
+        ],
+      },
+      {
+        title: 'Docs and release maintenance',
+        items: [
+          'Refreshed generated documentation source imports after dependency and package-manager updates.',
+          'Kept package-manager metadata and release-preflight checks aligned with the Node.js 24 release environment.',
+          'Preserved public product claims while package publication work continued separately.',
+        ],
+      },
+      {
+        title: 'No commercial surface changes',
+        items: [
+          'No pricing changes.',
+          'No checkout, claim, recovery, or backend behavior changes.',
+          'No new paid product scope was announced in this catch-up release.',
+        ],
+      },
+    ],
+    cta: { label: 'Explore the PyColors roadmap', href: '/roadmap' },
+  },
+  {
     version: 'v1.18.0',
     title: 'UI quality standards and more reliable product delivery',
     dateLabel: 'Fri 17 Jul 2026',
@@ -109,8 +183,8 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: 'Release transparency',
         items: [
-          'The marketing application release is v1.18.0.',
-          'The repository prepares @pycolors/ui v1.1.3 and @pycolors/tokens v1.2.1, while the latest npm versions remain v1.1.2 and v1.2.0 until their separate package release completes.',
+          'At the time of this release, the marketing application release was v1.18.0.',
+          'At the time of this release, the repository prepared @pycolors/ui v1.1.3 and @pycolors/tokens v1.2.1 while the latest npm versions remained v1.1.2 and v1.2.0 until their separate package release completed.',
         ],
       },
     ],

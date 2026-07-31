@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.20.0
+
+### Minor Changes
+
+- Added the 31 July 2026 marketing release for the current package baseline:
+  `@pycolors/tokens` v1.2.2 and `@pycolors/ui` v1.1.4.
+- Highlighted the new success and warning foreground tokens, their light/dark
+  values, and their Tailwind v4 bridge as a nonbreaking token-system update.
+- Updated public release copy to replace the earlier pending-publication
+  wording with the current repository package versions.
+- Updated marketing version surfaces so the app reports v1.20.0, the UI
+  baseline reports v1.1.4, and the homepage shows the token baseline v1.2.2.
+
+## 1.19.0
+
+### Minor Changes
+
+- Added the missed 24 July 2026 marketing release to keep the weekly release
+  record explicit.
+- Documented the post-v1.18.0 cleanup around Card React Server Component
+  safety, generated docs source maintenance, and release-preflight alignment.
+- Clarified that the catch-up release did not change pricing, checkout,
+  backend behavior, or public product scope.
+- Kept package-facing work separated from public marketing claims until the
+  package versions were applied later in the month.
+
 ## 1.18.0
 
 ### Minor Changes

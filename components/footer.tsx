@@ -8,7 +8,7 @@ import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
 import { Container } from '@/components/container';
 import { Button, cn } from '@pycolors/ui';
 import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { UI_VERSION, APP_VERSION } from '@/lib/version';
+import { UI_VERSION, TOKENS_VERSION, APP_VERSION } from '@/lib/version';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { Logo } from './logo';
 
@@ -251,8 +251,8 @@ export function Footer() {
 
             <section className="mt-12 flex flex-col gap-4 border-t border-border-subtle pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <div className="text-xs text-muted-foreground">
-                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · App{' '}
-                {APP_VERSION}
+                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · Tokens{' '}
+                {TOKENS_VERSION} · App {APP_VERSION}
               </div>
 
               <div className="flex items-center justify-center sm:justify-end">
