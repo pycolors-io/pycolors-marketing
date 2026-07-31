@@ -23,7 +23,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
 import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
-import { UI_VERSION } from '@/lib/version';
+import { TOKENS_VERSION, UI_VERSION } from '@/lib/version';
 import { NpmBadges } from '@/components/npm-badges';
 import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
@@ -583,9 +583,13 @@ export default function HomePage() {
             ]}
             extraClassName="mx-auto max-w-5xl"
             extra={
-              <div className="grid w-full gap-3 sm:grid-cols-3">
+              <div className="grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <Stat label="Template" value="NA-AI Landing" />
                 <Stat label="UI baseline" value={`v${UI_VERSION}`} />
+                <Stat
+                  label="Tokens"
+                  value={`v${TOKENS_VERSION}`}
+                />
                 <Stat
                   label="Product path"
                   value="Template → Free → Pro"
