@@ -1,0 +1,529 @@
+---
+title: Usage Patterns
+description: Practical ways to import, compose, and ship PyColors UI primitives in real SaaS interfaces without changing the public API.
+lastUpdated: "2026-08-02"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  Accessibility,
+  Bell,
+  CheckSquare,
+  Layers3,
+  PanelsTopLeft,
+  Table2,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Usage patterns</Badge>
+</div>
+
+## Use primitives as product building blocks
+
+PyColors UI primitives are intentionally small. They give you accessible,
+token-driven pieces for SaaS interfaces, but your application owns the product
+state, data fetching, routing, validation, and business rules.
+
+Use this page when you know which components you need and want to compose them
+into a real screen without reading package source.
+
+<Callout title="Core idea">
+  Import public primitives from `@pycolors/ui`, keep product logic in your app,
+  and compose behavior at the page, feature, or pattern layer.
+</Callout>
+
+## Required usage rules
+
+These rules are part of the supported usage contract.
+
+- Import from the public package entry point: `@pycolors/ui`.
+- Keep `@pycolors/ui` primitives app-agnostic. Do not put auth, billing, routing,
+  or product-specific decisions inside shared UI components.
+- Preserve native semantics: buttons for actions, links for navigation, labels
+  for form controls, and table markup for tabular data.
+- Add a client boundary only where your app uses browser-only behavior, local
+  state, event handlers, or interactive Radix composition.
+- Use existing component docs for exact props and variants before inventing a
+  local wrapper.
+- Keep accessibility responsibilities visible when composing overlays, forms,
+  feedback, and dense data views.
+
+## Recommended defaults
+
+These defaults are not hard requirements, but they keep product surfaces
+consistent.
+
+- Start with `Button`, `Input`, `Card`, `Alert`, and `Table` before adding
+  local abstractions.
+- Use `Dialog` for focused decisions and short forms.
+- Use `Sheet` for side workflows that should keep page context visible.
+- Use `Tabs` for switching between related panels, not for primary navigation.
+- Use `Toast` for non-blocking feedback after actions.
+- Use `Alert` for inline, persistent feedback that affects the current task.
+- Use `Pagination` when the user needs stable page position and predictable
+  record counts.
+
+## Import from the public entry point
+
+```tsx title="public-imports.tsx"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Checkbox,
+  CheckboxField,
+  CheckboxLabel,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Toast,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@pycolors/ui";
+```
+
+Do not import from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`.
+Those paths are internal package details and are not part of the public
+contract.
+
+## Server and client component usage
+
+Many PyColors primitives can be composed in a server-rendered page when you pass
+static content and no event handlers. The moment your file owns state, effects,
+or event handlers, move that composition to a small client component.
+
+```tsx title="server-safe-summary-card.tsx"
+import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+
+export function BillingSummary() {
+  return (
+    <section className="space-y-4">
+      <Alert>
+        <AlertTitle>Plan active</AlertTitle>
+        <AlertDescription>
+          Your workspace is covered until the next renewal.
+        </AlertDescription>
+      </Alert>
+
+      <Button asChild>
+        <a href="/settings/billing">Manage billing</a>
+      </Button>
+    </section>
+  );
+}
+```
+
+Use a client boundary for event-driven composition.
+
+```tsx title="client-confirmation-dialog.tsx"
+"use client";
+
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
+
+export function DeleteProjectDialog() {
+  function deleteProject() {
+    // Call your action, mutation, or route handler here.
+  }
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="destructive">Delete project</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete project?</DialogTitle>
+          <DialogDescription>
+            This cannot be undone. Export anything you need first.
+          </DialogDescription>
+        </DialogHeader>
+
+        <Button variant="destructive" onClick={deleteProject}>
+          Confirm deletion
+        </Button>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+<Callout type="info" title="Client boundary rule">
+  Make the smallest interactive component a client component. Keep surrounding
+  pages and data loading server-side when possible.
+</Callout>
+
+## Forms and settings
+
+Use forms when the user is editing product state. Keep labels, descriptions,
+and validation messages close to the control they explain.
+
+```tsx title="notification-settings.tsx"
+import {
+  Button,
+  Checkbox,
+  CheckboxField,
+  CheckboxLabel,
+  Input,
+} from "@pycolors/ui";
+
+export function NotificationSettings() {
+  return (
+    <form className="space-y-4">
+      <Input
+        id="billing-email"
+        label="Billing email"
+        description="Invoices and payment notices are sent here."
+        type="email"
+      />
+
+      <CheckboxField>
+        <Checkbox id="weekly-summary" />
+        <CheckboxLabel htmlFor="weekly-summary">
+          Send a weekly workspace summary
+        </CheckboxLabel>
+      </CheckboxField>
+
+      <Button type="submit">Save settings</Button>
+    </form>
+  );
+}
+```
+
+Accessibility expectations:
+
+- Every form control needs a visible label or equivalent accessible name.
+- Validation errors should be text, not color alone.
+- Disabled controls should still communicate why the action is unavailable
+  when that reason matters to the workflow.
+
+## Overlays
+
+Choose overlays based on the job.
+
+| Need                                                  | Primitive      |
+| ----------------------------------------------------- | -------------- |
+| Confirm or complete a focused task                    | `Dialog`       |
+| Work through a side panel without losing page context | `Sheet`        |
+| Pick a compact row or menu action                     | `DropdownMenu` |
+
+```tsx title="filters-sheet.tsx"
+"use client";
+
+import {
+  Button,
+  Checkbox,
+  CheckboxField,
+  CheckboxLabel,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+
+export function FiltersSheet() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Filters</Button>
+      </SheetTrigger>
+
+      <SheetContent side="right">
+        <SheetHeader>
+          <SheetTitle>Filter customers</SheetTitle>
+          <SheetDescription>
+            Narrow the table without leaving the current view.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 space-y-3">
+          <CheckboxField>
+            <Checkbox id="trialing" />
+            <CheckboxLabel htmlFor="trialing">Trialing</CheckboxLabel>
+          </CheckboxField>
+          <CheckboxField>
+            <Checkbox id="past-due" />
+            <CheckboxLabel htmlFor="past-due">Past due</CheckboxLabel>
+          </CheckboxField>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+```
+
+Overlay accessibility expectations:
+
+- The trigger must have clear text or an accessible label.
+- Dialog and Sheet titles should describe the task.
+- Escape and focus-return behavior should remain intact.
+- Do not place long multi-step workflows in a modal when a page would be clearer.
+
+## Product sections with Tabs
+
+Use `Tabs` to switch between related panels inside the same page.
+
+```tsx title="settings-tabs.tsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
+
+export function SettingsTabs() {
+  return (
+    <Tabs defaultValue="profile">
+      <TabsList aria-label="Settings sections">
+        <TabsTrigger value="profile">Profile</TabsTrigger>
+        <TabsTrigger value="billing">Billing</TabsTrigger>
+        <TabsTrigger value="security">Security</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="profile">Profile form</TabsContent>
+      <TabsContent value="billing">Billing controls</TabsContent>
+      <TabsContent value="security">Security settings</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+Use navigation links instead of tabs when the destination is a different route,
+bookmarkable page, or primary information architecture.
+
+## Tables and pagination
+
+Use `Table` for comparable records. Add `Pagination` when the result set is
+split into stable pages.
+
+```tsx title="members-table.tsx"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@pycolors/ui";
+
+const members = [
+  { id: "m_1", name: "Ava Martin", role: "Owner" },
+  { id: "m_2", name: "Noah Chen", role: "Member" },
+];
+
+export function MembersTable() {
+  return (
+    <section className="space-y-4">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Role</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {members.map((member) => (
+            <TableRow key={member.id}>
+              <TableCell>{member.name}</TableCell>
+              <TableCell>{member.role}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <Pagination aria-label="Members pages">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious disabled />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink isActive>1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </section>
+  );
+}
+```
+
+Accessibility expectations:
+
+- Keep column headers meaningful.
+- Use captions or nearby headings when the table purpose is not obvious.
+- Keep pagination controls keyboard-operable and labeled for the collection
+  they control.
+
+## Feedback patterns
+
+Use inline feedback when the message affects the current surface. Use toast
+feedback when the message confirms a completed action without blocking the user.
+
+```tsx title="inline-feedback.tsx"
+import { Alert, AlertDescription, AlertTitle } from "@pycolors/ui";
+
+export function PaymentIssueAlert() {
+  return (
+    <Alert variant="destructive">
+      <AlertTitle>Payment failed</AlertTitle>
+      <AlertDescription>
+        Update your payment method to keep the workspace active.
+      </AlertDescription>
+    </Alert>
+  );
+}
+```
+
+```tsx title="toast-feedback.tsx"
+"use client";
+
+import {
+  Button,
+  Toast,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@pycolors/ui";
+
+export function SaveToastExample() {
+  return (
+    <ToastProvider>
+      <Button>Save changes</Button>
+
+      <Toast open variant="success">
+        <ToastTitle>Settings saved</ToastTitle>
+        <ToastDescription>
+          Your workspace preferences were updated.
+        </ToastDescription>
+      </Toast>
+
+      <ToastViewport />
+    </ToastProvider>
+  );
+}
+```
+
+## Common mistakes
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "importing public primitives from `@pycolors/ui`",
+    "using `Button asChild` when a link should look like a button",
+    "keeping state, mutations, and routing in app code",
+    "using `Alert` for persistent task feedback",
+    "using `Toast` for non-blocking action confirmation",
+    "using `Table` only for structured, comparable records",
+  ]}
+  avoid={[
+    "importing from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`",
+    "using a clickable `div` instead of a real button or link",
+    "putting billing, auth, or product rules inside UI primitives",
+    "using a toast for a blocking error the user must fix now",
+    "using tabs for primary route navigation",
+    "hiding labels or validation behind color alone",
+  ]}
+/>
+
+## Related docs
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Composition",
+      href: "/docs/ui/composition",
+      description:
+        "Learn how small primitives become maintainable product surfaces.",
+      icon: Layers3,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Review the semantics, focus, keyboard, and feedback expectations.",
+      icon: Accessibility,
+    },
+    {
+      title: "Forms",
+      href: "/docs/ui/input",
+      description:
+        "Start with Input and Checkbox documentation for form-level usage.",
+      icon: CheckSquare,
+    },
+    {
+      title: "Overlays",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choose between Dialog, Sheet, and DropdownMenu for real workflows.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Data Table Pattern",
+      href: "/docs/patterns/data-table",
+      description:
+        "Move from primitive tables to product-ready filtering and state.",
+      icon: Table2,
+    },
+    {
+      title: "Async Actions Pattern",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Design loading, retry, undo, and toast feedback for mutations.",
+      icon: Bell,
+    },
+  ]}
+/>
+
+<Callout title="Next step">
+  Start with the component docs for exact props, then use Patterns when the
+  interaction needs state, async behavior, or repeated product decisions.
+</Callout>
