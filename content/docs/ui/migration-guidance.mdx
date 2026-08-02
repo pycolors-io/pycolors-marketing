@@ -1,0 +1,469 @@
+---
+title: Migration Guidance
+description: Adopt PyColors UI in an existing React or Next.js codebase without broad rewrites, private imports, or public API changes.
+lastUpdated: "2026-08-02"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  Accessibility,
+  Code2,
+  GitPullRequest,
+  Layers3,
+  Route,
+  ShieldCheck,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Migration guidance</Badge>
+</div>
+
+## Migrate one product surface at a time
+
+Use this guide when you already have a React or Next.js app and want to adopt
+`@pycolors/ui` without rewriting the whole interface.
+
+The safest migration is incremental:
+
+1. confirm package, Tailwind, and token prerequisites
+2. replace private or local primitive imports with public `@pycolors/ui` imports
+3. migrate low-risk primitives first
+4. keep product state, routing, validation, and data loading in your app
+5. verify accessibility and regression behavior before moving to the next surface
+
+<Callout title="Core idea">
+  Treat PyColors UI as a primitive layer. Migrate imports and composition first;
+  keep product behavior where it already belongs.
+</Callout>
+
+## Before you migrate
+
+Confirm these prerequisites before changing component imports.
+
+| Check                                             | Why it matters                                                                                            |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `@pycolors/ui` is installed                       | Consumers should import supported primitives from the package entry point.                                |
+| React and React DOM are installed                 | They are peer dependencies of the UI package.                                                             |
+| Tailwind utilities are available                  | PyColors UI components are token-driven and Tailwind-friendly.                                            |
+| PyColors token CSS is loaded where required       | Components expect semantic design tokens such as `bg-card`, `border-border`, and `text-muted-foreground`. |
+| Existing behavior is covered manually or by tests | Migration should not change product flows unexpectedly.                                                   |
+
+Use the design-system docs for token setup and the component docs for exact
+props before replacing local abstractions.
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Design tokens",
+      href: "/docs/design-system/tokens",
+      description: "Review the semantic tokens used by PyColors UI components.",
+      icon: Layers3,
+    },
+    {
+      title: "Usage patterns",
+      href: "/docs/ui/usage-patterns",
+      description: "See how primitives compose into real product surfaces.",
+      icon: Code2,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Review the checks that should pass after each migrated surface.",
+      icon: Accessibility,
+    },
+  ]}
+/>
+
+## Import only from the public package
+
+The supported public entry point is `@pycolors/ui`.
+
+```tsx title="supported-imports.tsx"
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Dialog,
+  Input,
+  Pagination,
+  Sheet,
+  Table,
+  Tabs,
+  Toast,
+} from "@pycolors/ui";
+```
+
+Do not import from source, generated output, or mirrored repository internals.
+
+<PreferAvoid
+  prefer={[
+    "importing primitives from `@pycolors/ui`",
+    "moving one feature area at a time",
+    "keeping app-specific behavior in app code",
+  ]}
+  avoid={[
+    "importing from `@pycolors/ui/src/*`",
+    "importing from `@pycolors/ui/dist/*`",
+    "rewriting every screen in one migration PR",
+  ]}
+/>
+
+```tsx title="replace-private-imports.tsx"
+// Before
+import { Button } from "@/components/ui/button";
+
+// After
+import { Button } from "@pycolors/ui";
+```
+
+If your local component has product-specific behavior, keep that behavior in a
+local wrapper and move only the primitive rendering to PyColors UI.
+
+```tsx title="keep-product-behavior-local.tsx"
+import { Button } from "@pycolors/ui";
+
+export function BillingPortalButton() {
+  return (
+    <Button asChild>
+      <a href="/settings/billing">Manage billing</a>
+    </Button>
+  );
+}
+```
+
+## Recommended migration order
+
+Start with primitives that have low behavioral risk, then move to interactive
+composition.
+
+| Order | Primitive                                  | Migration note                                                                |
+| ----- | ------------------------------------------ | ----------------------------------------------------------------------------- |
+| 1     | `Button`, `Badge`, `Card`, `Alert`         | Low-risk visual and semantic primitives.                                      |
+| 2     | `Input`, `Checkbox`                        | Verify labels, descriptions, errors, and form submission behavior.            |
+| 3     | `Table`, `Pagination`, `Tabs`              | Keep data fetching, routing, filtering, and page state outside the primitive. |
+| 4     | `Dialog`, `Sheet`, `DropdownMenu`, `Toast` | Add a client boundary and verify keyboard/focus behavior.                     |
+
+Do not migrate a whole product area until the previous migrated surface still
+passes user-visible behavior checks.
+
+## React Server Component boundaries
+
+In a Next.js App Router app, keep pages and data loading as Server Components
+when possible. Add `"use client"` only to the smallest file that owns browser
+state, event handlers, effects, or interactive overlay/toast state.
+
+```tsx title="server-rendered-status.tsx"
+import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+
+export function AccountStatus() {
+  return (
+    <section className="space-y-4">
+      <Alert>
+        <AlertTitle>Workspace ready</AlertTitle>
+        <AlertDescription>
+          Your setup is complete. Invite teammates when you are ready.
+        </AlertDescription>
+      </Alert>
+
+      <Button asChild>
+        <a href="/settings/team">Open team settings</a>
+      </Button>
+    </section>
+  );
+}
+```
+
+Use a client component when the migrated surface owns interaction state.
+
+```tsx title="client-dialog-migration.tsx"
+"use client";
+
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
+
+export function ArchiveProjectDialog() {
+  function archiveProject() {
+    // Call your action, mutation, or route handler here.
+  }
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Archive project</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Archive project?</DialogTitle>
+          <DialogDescription>
+            The project will be hidden from active dashboards.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <Button variant="destructive" onClick={archiveProject}>
+            Archive
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+<Callout type="info" title="Client boundary rule">
+  A component can import PyColors UI from a Server Component file when the
+  composition is static. Add `"use client"` when your file adds browser-owned
+  state or handlers.
+</Callout>
+
+## Forms and validation
+
+When migrating forms, preserve labels, descriptions, required state, and error
+messages. Do not replace form validation logic with UI primitives.
+
+```tsx title="settings-form-migration.tsx"
+import {
+  Button,
+  Checkbox,
+  CheckboxDescription,
+  CheckboxField,
+  CheckboxLabel,
+  Input,
+} from "@pycolors/ui";
+
+export function NotificationSettingsForm() {
+  return (
+    <form className="space-y-4">
+      <Input
+        id="billing-email"
+        label="Billing email"
+        helperText="Invoices and payment notices are sent here."
+        type="email"
+      />
+
+      <CheckboxField>
+        <Checkbox id="weekly-summary" />
+        <div>
+          <CheckboxLabel htmlFor="weekly-summary">
+            Send weekly workspace summary
+          </CheckboxLabel>
+          <CheckboxDescription>
+            Includes usage, billing, and team activity.
+          </CheckboxDescription>
+        </div>
+      </CheckboxField>
+
+      <Button type="submit">Save settings</Button>
+    </form>
+  );
+}
+```
+
+Regression checks:
+
+- submitting the form still calls the same action
+- required and disabled states still work
+- errors are announced as text, not color alone
+- labels and descriptions remain associated with the control
+
+## Tables and pagination
+
+Keep data access and routing outside `@pycolors/ui`. Migrate the visible table
+structure first, then wire existing state back into the same product flow.
+
+```tsx title="table-pagination-migration.tsx"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@pycolors/ui";
+
+export function MembersTable() {
+  return (
+    <div className="space-y-4">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Role</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Ada Lovelace</TableCell>
+            <TableCell>Owner</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationLink isActive>1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>2</PaginationLink>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
+  );
+}
+```
+
+Review existing table behavior after migration:
+
+- column headers still describe the data
+- loading and empty states are still reachable
+- pagination state still matches routing or query parameters
+- row actions still use accessible buttons, links, dialogs, or menus
+
+## Tabs, sheets, and toasts
+
+Interactive primitives should preserve keyboard behavior and focus ownership.
+Migrate the primitive structure without hiding product decisions inside shared
+UI components.
+
+```tsx title="interactive-surface-migration.tsx"
+"use client";
+
+import {
+  Button,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Toast,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@pycolors/ui";
+
+export function BillingWorkspace() {
+  return (
+    <ToastProvider>
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="invoices">Invoices</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Open filters</Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Invoice filters</SheetTitle>
+                <SheetDescription>
+                  Narrow the invoice list without leaving the page.
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        </TabsContent>
+      </Tabs>
+
+      <Toast variant="success" open>
+        <ToastTitle>Billing updated</ToastTitle>
+        <ToastDescription>Your changes were saved.</ToastDescription>
+      </Toast>
+      <ToastViewport />
+    </ToastProvider>
+  );
+}
+```
+
+After migrating interactive surfaces, test:
+
+- Tab and arrow-key behavior where relevant
+- Escape closes overlays
+- focus returns to the trigger after closing
+- toast announcements match the urgency of the message
+- product actions still require the same confirmation or authorization
+
+## Migration checklist
+
+Use this checklist for each migrated page, feature, or component group.
+
+- [ ] Imports come from `@pycolors/ui`.
+- [ ] No code imports from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`.
+- [ ] Existing product behavior is unchanged.
+- [ ] Labels, descriptions, errors, and disabled states are preserved.
+- [ ] Server/client boundaries are explicit and minimal.
+- [ ] Keyboard and focus behavior pass manual review.
+- [ ] Local wrappers contain only product behavior, not duplicated primitive
+      styling.
+- [ ] Links to adjacent docs are updated when a new public pattern is documented.
+
+## What to do next
+
+Use the component reference pages when replacing a specific primitive, then use
+the usage-pattern and composition docs to migrate whole product surfaces.
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Usage patterns",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Compose public primitives into forms, overlays, tables, and feedback.",
+      icon: GitPullRequest,
+    },
+    {
+      title: "Composition",
+      href: "/docs/ui/composition",
+      description:
+        "Decide what belongs in primitives, patterns, and product surfaces.",
+      icon: Layers3,
+    },
+    {
+      title: "Button",
+      href: "/docs/ui/button",
+      description:
+        "Start with the most common action primitive before moving to heavier surfaces.",
+      icon: Route,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Run accessibility checks before treating a migrated surface as complete.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
