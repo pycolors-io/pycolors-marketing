@@ -11,9 +11,9 @@ import { Badge } from "@pycolors/ui";
 
 import {
   BadgeCheck,
-  Chrome,
   Globe,
   Image,
+  MonitorCheck,
   Rocket,
   ShieldCheck,
   Smartphone,
@@ -56,8 +56,9 @@ The goal is to validate:
 />
 
 <Callout title="Release principle">
-  A PWA is not production-ready because a manifest exists.
-  It is production-ready when installability, offline fallback, mobile UX, and security boundaries have been validated.
+  A PWA is not production-ready because a manifest exists. It is
+  production-ready when installability, offline fallback, mobile UX, and
+  security boundaries have been validated.
 </Callout>
 
 ## Core checklist
@@ -76,7 +77,7 @@ The goal is to validate:
       title: "Service worker",
       description:
         "Confirm the service worker registers, activates, and never breaks the core app when unavailable.",
-      icon: Chrome,
+      icon: MonitorCheck,
     },
     {
       title: "Offline fallback",
@@ -147,17 +148,18 @@ Confirm:
 
 ## Asset checklist
 
-| Asset | Expected |
-| --- | --- |
-| `icon-192.png` | 192x192 |
-| `icon-512.png` | 512x512 |
+| Asset                   | Expected                  |
+| ----------------------- | ------------------------- |
+| `icon-192.png`          | 192x192                   |
+| `icon-512.png`          | 512x512                   |
 | `maskable-icon-512.png` | 512x512 with safe padding |
-| `apple-icon.png` | 180x180 |
-| `dashboard-desktop.png` | 1280x720 |
-| `dashboard-mobile.png` | 390x844 |
+| `apple-icon.png`        | 180x180                   |
+| `dashboard-desktop.png` | 1280x720                  |
+| `dashboard-mobile.png`  | 390x844                   |
 
 <Callout type="info" title="Screenshot rule">
-  Use real dashboard or workspace screenshots. Avoid using only login screens because they do not communicate the full SaaS value.
+  Use real dashboard or workspace screenshots. Avoid using only login screens
+  because they do not communicate the full SaaS value.
 </Callout>
 
 ## Offline checklist
@@ -221,9 +223,10 @@ Validate on real devices when possible:
     The key release gate is whether installability, offline fallback, icons, screenshots, and production HTTPS are correct.
   </Accordion>
 
-  <Accordion title="Should I cache authenticated routes?">
-    Not by default. Authenticated SaaS routes can contain sensitive or stale data. Start with fallback-only offline behavior.
-  </Accordion>
+<Accordion title="Should I cache authenticated routes?">
+  Not by default. Authenticated SaaS routes can contain sensitive or stale data.
+  Start with fallback-only offline behavior.
+</Accordion>
 
   <Accordion title="What should I test on iOS?">
     Validate Add to Home Screen, standalone mode, status bar behavior, viewport fit, and mobile navigation.
@@ -239,8 +242,7 @@ Validate on real devices when possible:
     {
       title: "PWA overview",
       href: "/docs/starter-pro/pwa",
-      description:
-        "Understand the PWA-ready product layer in Starter Pro.",
+      description: "Understand the PWA-ready product layer in Starter Pro.",
       icon: Smartphone,
     },
     {
