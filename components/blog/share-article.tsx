@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { Check, Copy, Linkedin, Twitter } from 'lucide-react';
+import { useEffect, useMemo, useState } from "react";
+import { Check, Copy } from "lucide-react";
 
-import { Button, cn } from '@pycolors/ui';
+import { Button, cn } from "@pycolors/ui";
+import { LinkedinIcon, TwitterIcon } from "@/components/brand-icons";
 
 type ShareArticleProps = {
   readonly title: string;
@@ -11,16 +12,16 @@ type ShareArticleProps = {
 };
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 function getShareUrl(url: string) {
-  if (url.startsWith('http')) return url;
+  if (url.startsWith("http")) return url;
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') ??
-    'https://pycolors.io';
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ??
+    "https://pycolors.io";
 
-  return `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`;
+  return `${siteUrl}${url.startsWith("/") ? url : `/${url}`}`;
 }
 
 export function ShareArticle({ title, url }: ShareArticleProps) {
@@ -59,7 +60,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
 
       setCopied(true);
     } catch (error) {
-      console.error('Failed to copy article URL:', error);
+      console.error("Failed to copy article URL:", error);
     }
   }
 
@@ -69,7 +70,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
 
       setCopiedPost(true);
     } catch (error) {
-      console.error('Failed to copy share post:', error);
+      console.error("Failed to copy share post:", error);
     }
   }
 
@@ -79,7 +80,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         asChild
         variant="outline"
         size="sm"
-        className={cn('rounded-[5px]', focusRing)}
+        className={cn("rounded-[5px]", focusRing)}
       >
         <a
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded.url}`}
@@ -87,7 +88,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
           rel="noreferrer noopener"
           aria-label="Share this article on LinkedIn"
         >
-          <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />
+          <LinkedinIcon className="h-3.5 w-3.5" aria-hidden="true" />
           LinkedIn
         </a>
       </Button>
@@ -96,7 +97,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         asChild
         variant="outline"
         size="sm"
-        className={cn('rounded-[5px]', focusRing)}
+        className={cn("rounded-[5px]", focusRing)}
       >
         <a
           href={`https://twitter.com/intent/tweet?text=${encoded.title}&url=${encoded.url}`}
@@ -104,7 +105,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
           rel="noreferrer noopener"
           aria-label="Share this article on X"
         >
-          <Twitter className="h-3.5 w-3.5" aria-hidden="true" />X
+          <TwitterIcon className="h-3.5 w-3.5" aria-hidden="true" />X
         </a>
       </Button>
 
@@ -113,7 +114,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         size="sm"
         onClick={copyPost}
         aria-live="polite"
-        className={cn('rounded-[5px]', focusRing)}
+        className={cn("rounded-[5px]", focusRing)}
       >
         {copiedPost ? (
           <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -121,7 +122,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
           <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         )}
 
-        {copiedPost ? 'Post copied' : 'Copy post'}
+        {copiedPost ? "Post copied" : "Copy post"}
       </Button>
 
       <Button
@@ -129,7 +130,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         size="sm"
         onClick={copyLink}
         aria-live="polite"
-        className={cn('rounded-[5px]', focusRing)}
+        className={cn("rounded-[5px]", focusRing)}
       >
         {copied ? (
           <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -137,7 +138,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
           <Copy className="h-3.5 w-3.5" aria-hidden="true" />
         )}
 
-        {copied ? 'Copied' : 'Copy link'}
+        {copied ? "Copied" : "Copy link"}
       </Button>
     </div>
   );
