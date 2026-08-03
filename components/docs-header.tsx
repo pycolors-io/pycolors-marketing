@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ArrowRight,
   BookOpen,
@@ -15,14 +15,14 @@ import {
   Rocket,
   Sparkles,
   X,
-} from 'lucide-react';
-import { LargeSearchToggle } from 'fumadocs-ui/components/layout/search-toggle';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+} from "lucide-react";
+import { FullSearchTrigger as LargeSearchToggle } from "fumadocs-ui/layouts/shared/slots/search-trigger";
+import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 
-import { Container } from '@/components/container';
-import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { DocsLogo } from '@/components/docs-logo';
+import { Container } from "@/components/container";
+import { Button, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { DocsLogo } from "@/components/docs-logo";
 
 type DocsLink = Readonly<{
   label: string;
@@ -33,8 +33,8 @@ type DocsHeaderProps = Readonly<{
   docsLinks?: DocsLink[];
 }>;
 
-const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
-const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const templatePriceLabel = PRODUCT_DISPLAY["na-ai-landing"].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 type DocsNavItem = Readonly<{
   label: string;
@@ -45,61 +45,58 @@ type DocsNavItem = Readonly<{
 
 const DOCS_NAV_ITEMS: DocsNavItem[] = [
   {
-    label: 'Docs',
-    href: '/docs',
+    label: "Docs",
+    href: "/docs",
     icon: BookOpen,
-    description: 'Start here',
+    description: "Start here",
   },
   {
-    label: 'Templates',
-    href: '/docs/templates/na-ai-landing',
+    label: "Templates",
+    href: "/docs/templates/na-ai-landing",
     icon: LayoutTemplate,
-    description: 'Launch pages',
+    description: "Launch pages",
   },
   {
-    label: 'UI',
-    href: '/docs/ui',
+    label: "UI",
+    href: "/docs/ui",
     icon: Code2,
-    description: 'Primitives',
+    description: "Primitives",
   },
   {
-    label: 'Patterns',
-    href: '/docs/patterns',
+    label: "Patterns",
+    href: "/docs/patterns",
     icon: Layers3,
-    description: 'Product flows',
+    description: "Product flows",
   },
   {
-    label: 'Starter Free',
-    href: '/docs/starter',
+    label: "Starter Free",
+    href: "/docs/starter",
     icon: Sparkles,
-    description: 'Validate fast',
+    description: "Validate fast",
   },
   {
-    label: 'Starter Pro',
-    href: '/docs/starter-pro',
+    label: "Starter Pro",
+    href: "/docs/starter-pro",
     icon: Rocket,
-    description: 'Auth and billing',
+    description: "Auth and billing",
   },
 ];
 
 const FEATURED_DOCS_HREFS = [
-  '/docs/getting-started',
-  '/docs/templates/na-ai-landing/project-structure',
-  '/docs/starter/upgrade',
-  '/docs/starter-pro/what-is-included',
-  '/docs/starter-pro/billing',
-  '/docs/starter-pro/backend',
+  "/docs/getting-started",
+  "/docs/templates/na-ai-landing/project-structure",
+  "/docs/starter/upgrade",
+  "/docs/starter-pro/what-is-included",
+  "/docs/starter-pro/billing",
+  "/docs/starter-pro/backend",
 ] as const;
 
 const HEADER_HEIGHT = 64;
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-function getMostSpecificActiveHref(
-  pathname: string | null,
-  hrefs: string[],
-) {
+function getMostSpecificActiveHref(pathname: string | null, hrefs: string[]) {
   if (!pathname) return null;
 
   const matches = hrefs.filter(
@@ -188,10 +185,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     };
 
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -207,17 +204,17 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         closeDocsMenu();
       }
     }
 
-    document.addEventListener('mousedown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.removeEventListener('mousedown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [isDocsOpen, closeDocsMenu]);
 
@@ -225,14 +222,14 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     if (!isMenuOpen) return;
 
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault();
         closeMenu();
         openBtnRef.current?.focus();
         return;
       }
 
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       const container = mobileNavRef.current;
       if (!container) return;
@@ -240,15 +237,15 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
       const focusable = Array.from(
         container.querySelectorAll<HTMLElement>(
           [
-            'a[href]',
-            'button:not([disabled])',
+            "a[href]",
+            "button:not([disabled])",
             '[tabindex]:not([tabindex="-1"])',
-          ].join(','),
+          ].join(","),
         ),
       ).filter(
         (element) =>
-          !element.hasAttribute('disabled') &&
-          element.getAttribute('aria-hidden') !== 'true',
+          !element.hasAttribute("disabled") &&
+          element.getAttribute("aria-hidden") !== "true",
       );
 
       if (focusable.length === 0) return;
@@ -266,10 +263,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
       }
     }
 
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [isMenuOpen, closeMenu]);
 
@@ -284,10 +281,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     const previousWidth = body.style.width;
     const previousOverflow = body.style.overflow;
 
-    body.style.position = 'fixed';
+    body.style.position = "fixed";
     body.style.top = `-${scrollY}px`;
-    body.style.width = '100%';
-    body.style.overflow = 'hidden';
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
 
     const timer = window.setTimeout(() => {
       mobileNavRef.current?.focus();
@@ -310,18 +307,18 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           scrolled
-            ? 'border-b border-border-subtle bg-background/88 backdrop-blur-xl'
-            : 'border-b border-border-subtle/60 bg-background/78 backdrop-blur-md',
+            ? "border-b border-border-subtle bg-background/88 backdrop-blur-xl"
+            : "border-b border-border-subtle/60 bg-background/78 backdrop-blur-md",
         )}
       >
         <div className="relative z-10 mx-auto max-w-fd-container">
           <a
             href="#content"
             className={cn(
-              'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
-              'rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm',
+              "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]",
+              "rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm",
               focusRing,
             )}
           >
@@ -352,10 +349,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     onClick={() => setIsDocsOpen((prev) => !prev)}
                     onFocus={openDocsMenu}
                     className={cn(
-                      'inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150',
-                      'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
-                      (activeHref === '/docs' || isDocsOpen) &&
-                        'bg-surface-muted text-foreground',
+                      "inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150",
+                      "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                      (activeHref === "/docs" || isDocsOpen) &&
+                        "bg-surface-muted text-foreground",
                       focusRing,
                     )}
                   >
@@ -363,8 +360,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     <ChevronDown
                       aria-hidden="true"
                       className={cn(
-                        'ml-1.5 h-3.5 w-3.5 transition-transform duration-150',
-                        isDocsOpen && 'rotate-180',
+                        "ml-1.5 h-3.5 w-3.5 transition-transform duration-150",
+                        isDocsOpen && "rotate-180",
                       )}
                     />
                   </button>
@@ -376,11 +373,11 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     aria-label="Documentation menu"
                     onMouseEnter={openDocsMenu}
                     className={cn(
-                      'absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]',
-                      'border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150',
+                      "absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]",
+                      "border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150",
                       isDocsOpen
-                        ? 'pointer-events-auto translate-y-0 opacity-100'
-                        : 'pointer-events-none translate-y-1 opacity-0',
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none translate-y-1 opacity-0",
                     )}
                   >
                     <div className="grid gap-3 p-3 md:grid-cols-[1.25fr_0.95fr]">
@@ -392,8 +389,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         <div className="grid gap-1 sm:grid-cols-2">
                           {DOCS_NAV_ITEMS.map((item) => {
                             const Icon = item.icon;
-                            const isCurrent =
-                              activeHref === item.href;
+                            const isCurrent = activeHref === item.href;
 
                             return (
                               <Link
@@ -401,26 +397,26 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                                 href={item.href}
                                 role="menuitem"
                                 className={cn(
-                                  'group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150',
+                                  "group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150",
                                   isCurrent
-                                    ? 'border-border-subtle bg-surface-muted text-foreground'
-                                    : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                                    ? "border-border-subtle bg-surface-muted text-foreground"
+                                    : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                                   focusRing,
                                 )}
                               >
                                 <span
                                   className={cn(
-                                    'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150',
-                                    'group-hover:bg-background',
-                                    isCurrent && 'bg-background',
+                                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors duration-150",
+                                    "group-hover:bg-background",
+                                    isCurrent && "bg-background",
                                   )}
                                 >
                                   <Icon
                                     aria-hidden="true"
                                     className={cn(
-                                      'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
-                                      'group-hover:text-foreground',
-                                      isCurrent && 'text-foreground',
+                                      "h-3.5 w-3.5 text-muted-foreground transition-colors duration-150",
+                                      "group-hover:text-foreground",
+                                      isCurrent && "text-foreground",
                                     )}
                                   />
                                 </span>
@@ -451,14 +447,12 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                               href={item.href}
                               role="menuitem"
                               className={cn(
-                                'group flex items-center justify-between rounded-[5px] px-2.5 py-1.5 text-[13px] transition-colors duration-150',
-                                'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                                "group flex items-center justify-between rounded-[5px] px-2.5 py-1.5 text-[13px] transition-colors duration-150",
+                                "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                                 focusRing,
                               )}
                             >
-                              <span className="truncate">
-                                {item.label}
-                              </span>
+                              <span className="truncate">{item.label}</span>
 
                               <ChevronRight
                                 className="h-3 w-3 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60"
@@ -474,7 +468,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       <Link
                         href="/pricing"
                         className={cn(
-                          'group flex min-w-0 items-center gap-2 rounded-[5px] px-2 py-1.5 text-[13px] transition-colors hover:bg-surface',
+                          "group flex min-w-0 items-center gap-2 rounded-[5px] px-2 py-1.5 text-[13px] transition-colors hover:bg-surface",
                           focusRing,
                         )}
                       >
@@ -487,8 +481,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         </span>
 
                         <span className="hidden text-[11px] text-muted-foreground lg:inline">
-                          Templates from {templatePriceLabel} · Starter Pro
-                          from {starterProPriceLabel}
+                          Templates from {templatePriceLabel} · Starter Pro from{" "}
+                          {starterProPriceLabel}
                         </span>
 
                         <ChevronRight
@@ -507,12 +501,11 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      aria-current={isCurrent ? 'page' : undefined}
+                      aria-current={isCurrent ? "page" : undefined}
                       className={cn(
-                        'rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150',
-                        'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
-                        isCurrent &&
-                          'bg-surface-muted text-foreground',
+                        "rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-150",
+                        "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                        isCurrent && "bg-surface-muted text-foreground",
                         focusRing,
                       )}
                     >
@@ -533,10 +526,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                 >
                   <Link href="/starters/pro">
                     Explore Pro
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="h-3.5 w-3.5"
-                    />
+                    <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
                   </Link>
                 </Button>
               </div>
@@ -550,13 +540,13 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                   onClick={toggleMenu}
                   aria-label={
                     isMenuOpen
-                      ? 'Close documentation menu'
-                      : 'Open documentation menu'
+                      ? "Close documentation menu"
+                      : "Open documentation menu"
                   }
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-docs-navigation"
                   className={cn(
-                    'inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface',
+                    "inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface",
                     focusRing,
                   )}
                 >
@@ -588,8 +578,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             open
             aria-labelledby="mobile-docs-navigation-title"
             className={cn(
-              'fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border-subtle bg-background p-0 text-inherit',
-              'backdrop:hidden',
+              "fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border-subtle bg-background p-0 text-inherit",
+              "backdrop:hidden",
             )}
             style={{
               top: HEADER_HEIGHT,
@@ -610,8 +600,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </div>
 
                       <p className="text-xs leading-5 text-muted-foreground">
-                        Templates, UI primitives, and production-ready
-                        SaaS foundations.
+                        Templates, UI primitives, and production-ready SaaS
+                        foundations.
                       </p>
                     </div>
 
@@ -640,16 +630,14 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       <Link
                         key={item.href}
                         href={item.href}
-                        ref={
-                          index === 0 ? firstMobileLinkRef : undefined
-                        }
-                        aria-current={isCurrent ? 'page' : undefined}
+                        ref={index === 0 ? firstMobileLinkRef : undefined}
+                        aria-current={isCurrent ? "page" : undefined}
                         onClick={closeMenu}
                         className={cn(
-                          'group flex items-center justify-between rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5 text-sm shadow-soft transition-colors duration-150',
+                          "group flex items-center justify-between rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5 text-sm shadow-soft transition-colors duration-150",
                           isCurrent
-                            ? 'text-foreground'
-                            : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                            ? "text-foreground"
+                            : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                           focusRing,
                         )}
                       >
@@ -657,8 +645,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           <span
                             aria-hidden="true"
                             className={cn(
-                              'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted transition-colors',
-                              isCurrent && 'bg-background',
+                              "flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted transition-colors",
+                              isCurrent && "bg-background",
                             )}
                           >
                             <Icon className="h-3.5 w-3.5 text-muted-foreground" />
@@ -700,7 +688,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           href={item.href}
                           onClick={closeMenu}
                           className={cn(
-                            'rounded-[5px] px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground',
+                            "rounded-[5px] px-2.5 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground",
                             focusRing,
                           )}
                         >
@@ -714,16 +702,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             </div>
 
             <div className="border-t border-border-subtle bg-background/95 px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-4 backdrop-blur">
-              <Button
-                asChild
-                className="w-full justify-center rounded-[5px]"
-              >
+              <Button asChild className="w-full justify-center rounded-[5px]">
                 <Link href="/starters/pro" onClick={closeMenu}>
                   Explore Starter Pro
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="ml-2 h-4 w-4"
-                  />
+                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
