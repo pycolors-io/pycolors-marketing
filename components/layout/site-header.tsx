@@ -11,7 +11,6 @@ import {
   ChevronDown,
   ChevronRight,
   FileText,
-  Github,
   Layers3,
   LayoutTemplate,
   Menu,
@@ -26,6 +25,7 @@ import { Container } from "@/components/container";
 import { Button, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { PRIMARY_NAV_ITEMS, PRODUCT_MENU_GROUPS } from "@/lib/layout.shared";
+import { GithubIcon } from "@/components/brand-icons";
 import { Logo } from "../logo";
 
 type DocsLink = {
@@ -396,7 +396,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       {
         label: "GitHub",
         href: "https://github.com/pycolors",
-        icon: <Github aria-hidden="true" className="h-3.5 w-3.5" />,
+        icon: <GithubIcon aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
         label: "Pricing",

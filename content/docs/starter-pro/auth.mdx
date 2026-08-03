@@ -11,7 +11,6 @@ import { Badge } from "@pycolors/ui";
 import {
   CreditCard,
   Database,
-  Github,
   KeyRound,
   LockKeyhole,
   MailCheck,
@@ -21,6 +20,7 @@ import {
   UserRoundCheck,
 } from "lucide-react";
 
+import { GithubIcon } from "@/components/brand-icons";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
@@ -57,7 +57,8 @@ This is the layer that turns login pages into a working product system.
 />
 
 <Callout title="Core idea">
-  Auth is not UI. Auth is lifecycle, security, state, redirects, provider rules, and trust.
+  Auth is not UI. Auth is lifecycle, security, state, redirects, provider rules,
+  and trust.
 </Callout>
 
 ## What this solves
@@ -92,27 +93,27 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
   tone="platform"
   items={[
     {
-      title: 'Credentials auth',
+      title: "Credentials auth",
       description:
-        'Email and password authentication with account creation, password validation, password reset, and password change foundations.',
+        "Email and password authentication with account creation, password validation, password reset, and password change foundations.",
       icon: LockKeyhole,
     },
     {
-      title: 'OAuth providers',
+      title: "OAuth providers",
       description:
-        'Google and GitHub OAuth foundations with connected account patterns and safer provider lifecycle handling.',
-      icon: Github,
+        "Google and GitHub OAuth foundations with connected account patterns and safer provider lifecycle handling.",
+      icon: GithubIcon,
     },
     {
-      title: 'Verification and tokens',
+      title: "Verification and tokens",
       description:
-        'Email verification, reset password, token expiration, and recovery flows structured for production use.',
+        "Email verification, reset password, token expiration, and recovery flows structured for production use.",
       icon: MailCheck,
     },
     {
-      title: 'Protected foundations',
+      title: "Protected foundations",
       description:
-        'Session-aware UI, protected routes, auth-aware backend logic, and account safety patterns.',
+        "Session-aware UI, protected routes, auth-aware backend logic, and account safety patterns.",
       icon: ShieldCheck,
     },
   ]}
@@ -124,59 +125,59 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
   columns={2}
   items={[
     {
-      eyebrow: 'Sign in',
-      title: 'Sign in flow',
+      eyebrow: "Sign in",
+      title: "Sign in flow",
       icon: LockKeyhole,
       description:
-        'A production sign-in flow needs more than a form. It needs state, errors, redirects, and session creation.',
+        "A production sign-in flow needs more than a form. It needs state, errors, redirects, and session creation.",
       items: [
-        'email and password sign in',
-        'OAuth sign in',
-        'session creation',
-        'error-aware UX',
-        'redirect to protected app surface',
+        "email and password sign in",
+        "OAuth sign in",
+        "session creation",
+        "error-aware UX",
+        "redirect to protected app surface",
       ],
     },
     {
-      eyebrow: 'Register',
-      title: 'Registration flow',
+      eyebrow: "Register",
+      title: "Registration flow",
       icon: UserRoundCheck,
       description:
-        'Registration turns anonymous users into real accounts with a lifecycle that can support verification and onboarding.',
+        "Registration turns anonymous users into real accounts with a lifecycle that can support verification and onboarding.",
       items: [
-        'real account creation',
-        'password validation',
-        'email verification-ready lifecycle',
-        'provider signup path',
-        'session-aware onboarding path',
+        "real account creation",
+        "password validation",
+        "email verification-ready lifecycle",
+        "provider signup path",
+        "session-aware onboarding path",
       ],
     },
     {
-      eyebrow: 'Password',
-      title: 'Password lifecycle',
+      eyebrow: "Password",
+      title: "Password lifecycle",
       icon: KeyRound,
       description:
-        'Password flows need secure recovery, expiration-aware tokens, and clear account safety rules.',
+        "Password flows need secure recovery, expiration-aware tokens, and clear account safety rules.",
       items: [
-        'forgot password request',
-        'reset password token',
-        'expiration-aware recovery flow',
-        'in-session password change',
-        'add password for OAuth-only users',
+        "forgot password request",
+        "reset password token",
+        "expiration-aware recovery flow",
+        "in-session password change",
+        "add password for OAuth-only users",
       ],
     },
     {
-      eyebrow: 'Providers',
-      title: 'Connected accounts',
+      eyebrow: "Providers",
+      title: "Connected accounts",
       icon: RefreshCcw,
       description:
-        'Provider flows need connection, linking, disconnect, and fallback behavior so users do not get locked out.',
+        "Provider flows need connection, linking, disconnect, and fallback behavior so users do not get locked out.",
       items: [
-        'Google account connection',
-        'GitHub account connection',
-        'provider linking patterns',
-        'safe disconnect rules',
-        'account fallback behavior',
+        "Google account connection",
+        "GitHub account connection",
+        "provider linking patterns",
+        "safe disconnect rules",
+        "account fallback behavior",
       ],
     },
   ]}
@@ -184,21 +185,21 @@ Starter Pro gives you a structured foundation for that layer so you do not rebui
 
 ## Starter Free vs Starter Pro
 
-| Capability | Starter Free | Starter Pro |
-| --- | --- | --- |
-| Auth screens | Included | Included |
-| Credentials auth | Mocked | Real |
-| Google OAuth | Not included | Real |
-| GitHub OAuth | Not included | Real |
-| Sessions | Mocked / partial | Real |
-| Email verification | Not included | Real |
-| Forgot password | UI only | Real flow |
-| Reset password | UI only | Token-based |
-| In-session password change | Not included | Included |
-| OAuth account linking | Not included | Included |
-| Safe provider disconnect rules | Not included | Included |
-| Protected routes | Conceptual | Production-ready foundation |
-| Rate limiting foundations | Not included | Included pattern |
+| Capability                     | Starter Free     | Starter Pro                 |
+| ------------------------------ | ---------------- | --------------------------- |
+| Auth screens                   | Included         | Included                    |
+| Credentials auth               | Mocked           | Real                        |
+| Google OAuth                   | Not included     | Real                        |
+| GitHub OAuth                   | Not included     | Real                        |
+| Sessions                       | Mocked / partial | Real                        |
+| Email verification             | Not included     | Real                        |
+| Forgot password                | UI only          | Real flow                   |
+| Reset password                 | UI only          | Token-based                 |
+| In-session password change     | Not included     | Included                    |
+| OAuth account linking          | Not included     | Included                    |
+| Safe provider disconnect rules | Not included     | Included                    |
+| Protected routes               | Conceptual       | Production-ready foundation |
+| Rate limiting foundations      | Not included     | Included pattern            |
 
 <Callout title="Simple distinction">
   Starter Free simulates auth. Starter Pro handles real users.
@@ -212,17 +213,18 @@ Starter Pro auth is designed around the structures a serious SaaS usually needs.
 
 Typical auth responsibilities include:
 
-| Area | Purpose |
-| --- | --- |
-| User | Identity, email, profile image, verification state |
-| Account | OAuth provider accounts and account linking |
-| Session | Active user sessions |
-| VerificationToken | Auth.js-compatible verification flows |
-| UserToken | Email verification and password reset lifecycle |
-| AuthAttempt | Audit and rate-limiting foundation |
+| Area              | Purpose                                            |
+| ----------------- | -------------------------------------------------- |
+| User              | Identity, email, profile image, verification state |
+| Account           | OAuth provider accounts and account linking        |
+| Session           | Active user sessions                               |
+| VerificationToken | Auth.js-compatible verification flows              |
+| UserToken         | Email verification and password reset lifecycle    |
+| AuthAttempt       | Audit and rate-limiting foundation                 |
 
 <Callout type="info" title="Why this matters">
-  Production auth is not only about signing in. It is about storing enough state to make account lifecycle, recovery, and provider logic safe.
+  Production auth is not only about signing in. It is about storing enough state
+  to make account lifecycle, recovery, and provider logic safe.
 </Callout>
 
 ### Protected routes
@@ -277,18 +279,18 @@ Use these rules when adapting the authentication layer.
 
 <PreferAvoid
   prefer={[
-    'server-side validation for authentication actions',
-    'short-lived tokens for recovery flows',
-    'generic forgot-password confirmation copy',
-    'clear session-aware redirects',
-    'provider disconnect rules that never lock users out',
+    "server-side validation for authentication actions",
+    "short-lived tokens for recovery flows",
+    "generic forgot-password confirmation copy",
+    "clear session-aware redirects",
+    "provider disconnect rules that never lock users out",
   ]}
   avoid={[
-    'revealing whether an email exists',
-    'allowing users to disconnect their only login method',
-    'trusting client-side authentication state for protected data',
-    'returning overly specific authentication errors',
-    'mixing authentication logic into unrelated product components',
+    "revealing whether an email exists",
+    "allowing users to disconnect their only login method",
+    "trusting client-side authentication state for protected data",
+    "returning overly specific authentication errors",
+    "mixing authentication logic into unrelated product components",
   ]}
 />
 
@@ -298,42 +300,43 @@ Use these rules when adapting the authentication layer.
   columns={2}
   items={[
     {
-      eyebrow: 'Starter Pro',
-      title: 'Use Starter Pro auth when auth becomes real',
-      href: '/docs/starter-pro/getting-started',
+      eyebrow: "Starter Pro",
+      title: "Use Starter Pro auth when auth becomes real",
+      href: "/docs/starter-pro/getting-started",
       icon: ShieldCheck,
-      tone: 'pro',
+      tone: "pro",
       description:
-        'Use Starter Pro when authentication is part of the launch foundation and not only a mocked screen.',
+        "Use Starter Pro when authentication is part of the launch foundation and not only a mocked screen.",
       items: [
-        'real users need accounts',
-        'sessions must persist',
-        'OAuth providers matter',
-        'password reset must work',
-        'routes need protection',
-        'billing depends on identity',
-        'account lifecycle edge cases matter',
+        "real users need accounts",
+        "sessions must persist",
+        "OAuth providers matter",
+        "password reset must work",
+        "routes need protection",
+        "billing depends on identity",
+        "account lifecycle edge cases matter",
       ],
-      cta: 'Start setup →',
+      cta: "Start setup →",
     },
     {
-      eyebrow: 'Starter Free',
-      title: 'Stay on Free while validating UX',
+      eyebrow: "Starter Free",
+      title: "Stay on Free while validating UX",
       icon: UserRoundCheck,
       description:
-        'Stay on Starter Free when you are still testing the product surface and do not need real users yet.',
+        "Stay on Starter Free when you are still testing the product surface and do not need real users yet.",
       items: [
-        'you are still validating UX',
-        'you do not need real users yet',
-        'auth is not blocking progress',
-        'you are not preparing monetization',
+        "you are still validating UX",
+        "you do not need real users yet",
+        "auth is not blocking progress",
+        "you are not preparing monetization",
       ],
     },
   ]}
 />
 
 <Callout title="Upgrade when auth becomes real">
-  Starter Free helps you design the auth surface. Starter Pro gives you the auth system behind it.
+  Starter Free helps you design the auth surface. Starter Pro gives you the auth
+  system behind it.
 </Callout>
 
 ### Implementation checklist
@@ -354,8 +357,8 @@ Before treating auth as launch-ready, validate:
 - billing access ownership
 
 <Callout type="info" title="Validation principle">
-  Do not customize deeply before validating the default flows.
-  Confirm the foundation first, then adapt the product.
+  Do not customize deeply before validating the default flows. Confirm the
+  foundation first, then adapt the product.
 </Callout>
 
 ## Common questions
@@ -365,13 +368,15 @@ Before treating auth as launch-ready, validate:
     No. Starter Pro focuses on real auth behavior: sessions, providers, tokens, protected routes, and account lifecycle structure.
   </Accordion>
 
-  <Accordion title="Can I remove a provider?">
-    Yes. Providers should be treated as configurable entry points. Keep safe account fallback rules if you allow users to disconnect providers.
-  </Accordion>
+<Accordion title="Can I remove a provider?">
+  Yes. Providers should be treated as configurable entry points. Keep safe
+  account fallback rules if you allow users to disconnect providers.
+</Accordion>
 
-  <Accordion title="Should billing depend on auth?">
-    Yes. In a SaaS, billing state must be connected to a user, customer, or organization identity. Auth is the foundation for that ownership.
-  </Accordion>
+<Accordion title="Should billing depend on auth?">
+  Yes. In a SaaS, billing state must be connected to a user, customer, or
+  organization identity. Auth is the foundation for that ownership.
+</Accordion>
 
   <Accordion title="Can I replace the auth provider later?">
     You can, but auth touches many parts of a product. Replace it deliberately and keep the same boundaries around sessions, tokens, and protected access.
@@ -393,31 +398,30 @@ Before treating auth as launch-ready, validate:
   variant="grid"
   items={[
     {
-      title: 'Billing system',
-      href: '/docs/starter-pro/billing',
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
       description:
-        'Connect authenticated users to customers, subscriptions, and plan-aware access.',
+        "Connect authenticated users to customers, subscriptions, and plan-aware access.",
       icon: CreditCard,
     },
     {
-      title: 'Backend foundations',
-      href: '/docs/starter-pro/backend',
+      title: "Backend foundations",
+      href: "/docs/starter-pro/backend",
       description:
-        'Understand how authentication integrates with data ownership and server-side logic.',
+        "Understand how authentication integrates with data ownership and server-side logic.",
       icon: Database,
     },
     {
-      title: 'Production checklist',
-      href: '/docs/starter-pro/production-checklist',
+      title: "Production checklist",
+      href: "/docs/starter-pro/production-checklist",
       description:
-        'Validate authentication, billing, backend, and delivery before launch.',
+        "Validate authentication, billing, backend, and delivery before launch.",
       icon: ShieldCheck,
     },
     {
-      title: 'What is included',
-      href: '/docs/starter-pro/what-is-included',
-      description:
-        'Review the full Starter Pro foundation.',
+      title: "What is included",
+      href: "/docs/starter-pro/what-is-included",
+      description: "Review the full Starter Pro foundation.",
       icon: Package,
     },
   ]}
