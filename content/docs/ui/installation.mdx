@@ -1,0 +1,310 @@
+---
+title: Installation
+description: Install @pycolors/ui, load the token CSS, and verify your first public import in a React or Next.js app.
+lastUpdated: "2026-08-03"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  Accessibility,
+  Code2,
+  Layers3,
+  PackageCheck,
+  Route,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Installation</Badge>
+</div>
+
+## Install the primitive layer first
+
+`@pycolors/ui` is the public primitive package for PyColors product interfaces.
+Install it when you want reusable React primitives for SaaS surfaces such as
+forms, settings, dashboards, billing panels, overlays, and data views.
+
+<Callout title="Core idea">
+  Install the package, load the semantic token CSS your app needs, import from
+  `@pycolors/ui`, then verify one small screen before migrating more UI.
+</Callout>
+
+## Prerequisites
+
+Before installing, confirm the consuming app already has:
+
+- React and React DOM installed;
+- Tailwind CSS available in the app stylesheet/build;
+- a global stylesheet where token CSS can be imported;
+- a React or Next.js setup that supports ESM packages.
+
+`@pycolors/ui` is Tailwind-friendly and token-driven. Components use semantic
+utilities such as `bg-card`, `text-muted-foreground`, `border-border`, and
+`ring-ring`. Those utilities need matching design tokens in the consuming app.
+
+## Install packages
+
+Install `@pycolors/ui` with your package manager.
+
+```bash
+pnpm add @pycolors/ui
+```
+
+```bash
+npm i @pycolors/ui
+```
+
+```bash
+yarn add @pycolors/ui
+```
+
+### Peer dependencies
+
+`@pycolors/ui` declares these peer dependencies:
+
+| Package        | Requirement | Notes                                                                            |
+| -------------- | ----------- | -------------------------------------------------------------------------------- |
+| `react`        | `>=18`      | Required by the React primitives.                                                |
+| `react-dom`    | `>=18`      | Required for React DOM apps.                                                     |
+| `lucide-react` | `>=0.300.0` | Optional peer dependency. Install it when your app or examples use Lucide icons. |
+
+The package README documents this install command for peer dependencies:
+
+```bash
+pnpm add react react-dom lucide-react
+```
+
+Use the equivalent npm or yarn command when the app does not use pnpm.
+
+## Add design tokens
+
+Use `@pycolors/tokens` when your app does not already provide the PyColors
+semantic variables and Tailwind v4 mappings.
+
+```bash
+pnpm add @pycolors/tokens
+```
+
+```bash
+npm i @pycolors/tokens
+```
+
+```bash
+yarn add @pycolors/tokens
+```
+
+Import the token CSS once from your global stylesheet.
+
+```css title="app/globals.css"
+@import "@pycolors/tokens/tokens.css";
+```
+
+In the PyColors marketing app, this is done from
+`apps/marketing/app/global.css`.
+
+The token CSS provides:
+
+- semantic CSS variables such as `--background`, `--foreground`, `--card`,
+  `--primary`, `--border`, and `--ring`;
+- light and dark values using a `.dark` class strategy;
+- Tailwind v4 `@theme inline` mappings for semantic utilities.
+
+<Callout type="info" title="Dark mode">
+  `@pycolors/tokens` uses a `.dark` class strategy. Add or remove the `dark`
+  class at the app shell or document root through your existing theme logic.
+</Callout>
+
+## Import from the public entry point
+
+Import supported primitives from `@pycolors/ui`.
+
+```tsx title="first-import.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+
+export function FirstPyColorsCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>PyColors UI installed</CardTitle>
+        <CardDescription>
+          Your app can now compose token-driven product primitives.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button asChild>
+          <a href="/docs/ui/usage-patterns">Explore usage patterns</a>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+Do not import from package internals.
+
+<PreferAvoid
+  prefer={[
+    "imports from `@pycolors/ui`",
+    "semantic token utilities such as `bg-card` and `text-muted-foreground`",
+    "one verified screen before a broad migration",
+  ]}
+  avoid={[
+    "imports from `@pycolors/ui/src/*`",
+    "imports from `@pycolors/ui/dist/*`",
+    "raw color overrides that bypass tokens",
+  ]}
+/>
+
+## Server and client component boundaries
+
+Static primitive composition can stay server-rendered in a Next.js App Router
+app. Add `"use client"` only when the file owns browser state, effects, event
+handlers, or interactive overlay/toast state.
+
+```tsx title="server-safe-card.tsx"
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+
+export function BillingCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Billing ready</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button asChild>
+          <a href="/settings/billing">Manage billing</a>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+Use a client boundary for local interaction state.
+
+```tsx title="client-action.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+
+export function SaveButton() {
+  return (
+    <Button type="button" onClick={() => window.alert("Saved")}>
+      Save
+    </Button>
+  );
+}
+```
+
+<Callout title="Boundary rule">
+  Keep pages and data loading server-side when possible. Move only the
+  interactive leaf into a client component.
+</Callout>
+
+## Verify the first screen
+
+<Steps>
+  <Step>
+    ### Confirm the app builds
+
+    Run the consuming app’s type check and build command. In this monorepo, the
+    relevant docs app check is:
+
+    ```bash
+    pnpm --filter pycolors-marketing types:check
+    pnpm build
+    ```
+
+  </Step>
+
+  <Step>
+    ### Check token output
+
+    Open the screen in light and dark mode. Confirm semantic utilities such as
+    `bg-card`, `text-foreground`, `border-border`, and `ring-ring` resolve to
+    real styles.
+
+  </Step>
+
+  <Step>
+    ### Check accessibility basics
+
+    Tab through interactive elements, verify visible focus, confirm links have
+    descriptive text, and avoid color-only feedback.
+
+  </Step>
+
+  <Step>
+    ### Expand one surface at a time
+
+    After the first screen works, move to usage patterns and migration guidance
+    before replacing a full product area.
+
+  </Step>
+</Steps>
+
+## Common mistakes
+
+| Mistake                                                          | Safer path                                                                           |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Importing from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`     | Import from `@pycolors/ui`.                                                          |
+| Installing UI without token CSS or equivalent semantic variables | Load `@pycolors/tokens/tokens.css` or provide the same semantic roles intentionally. |
+| Adding `"use client"` to every page                              | Add a client boundary only where browser behavior is owned.                          |
+| Replacing product logic with UI primitives                       | Keep routing, auth, billing, validation, and data fetching in app code.              |
+| Styling with raw colors first                                    | Use semantic utilities and customize tokens centrally when needed.                   |
+
+## Next steps
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Usage patterns",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Compose public primitives into real SaaS forms, overlays, data views, and feedback.",
+      icon: Code2,
+    },
+    {
+      title: "Migration guidance",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adopt PyColors UI incrementally in an existing React or Next.js codebase.",
+      icon: Route,
+    },
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Review semantics, labels, keyboard behavior, focus, and feedback requirements.",
+      icon: Accessibility,
+    },
+    {
+      title: "Design tokens",
+      href: "/docs/design-system/tokens",
+      description:
+        "Understand the semantic token layer that keeps PyColors UI theme-safe.",
+      icon: Layers3,
+    },
+    {
+      title: "Release policy",
+      href: "/docs/project/release-policy",
+      description:
+        "Understand how public packages are versioned, released, and mirrored.",
+      icon: PackageCheck,
+    },
+  ]}
+/>

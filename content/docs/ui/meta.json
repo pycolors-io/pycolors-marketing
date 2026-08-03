@@ -2,6 +2,7 @@
   "title": "UI",
   "pages": [
     "index",
+    "installation",
     "why-pycolors-ui",
 
     "composition",
