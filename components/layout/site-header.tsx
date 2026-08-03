@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   ArrowRight,
   BookOpen,
@@ -11,7 +11,6 @@ import {
   ChevronDown,
   ChevronRight,
   FileText,
-  Github,
   Layers3,
   LayoutTemplate,
   Menu,
@@ -19,17 +18,15 @@ import {
   Rocket,
   Sparkles,
   X,
-} from 'lucide-react';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+} from "lucide-react";
+import { ThemeToggle } from "fumadocs-ui/components/layout/theme-toggle";
 
-import { Container } from '@/components/container';
-import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import {
-  PRIMARY_NAV_ITEMS,
-  PRODUCT_MENU_GROUPS,
-} from '@/lib/layout.shared';
-import { Logo } from '../logo';
+import { Container } from "@/components/container";
+import { Button, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { PRIMARY_NAV_ITEMS, PRODUCT_MENU_GROUPS } from "@/lib/layout.shared";
+import { GithubIcon } from "@/components/brand-icons";
+import { Logo } from "../logo";
 
 type DocsLink = {
   label: string;
@@ -53,14 +50,14 @@ type MobileMenuSection = {
 };
 
 const HEADER_HEIGHT = 64;
-const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
-const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const templatePriceLabel = PRODUCT_DISPLAY["na-ai-landing"].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 function matchPathname(pathname: string, href: string) {
-  if (href === '/') return pathname === '/';
+  if (href === "/") return pathname === "/";
 
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -73,10 +70,7 @@ function isProductsActive(pathname: string | null) {
   );
 }
 
-function getMostSpecificActiveHref(
-  pathname: string | null,
-  hrefs: string[],
-) {
+function getMostSpecificActiveHref(pathname: string | null, hrefs: string[]) {
   if (!pathname) return null;
 
   const matches = hrefs.filter(
@@ -89,9 +83,7 @@ function getMostSpecificActiveHref(
 }
 
 function getActiveProductHref(pathname: string | null) {
-  const allItems = PRODUCT_MENU_GROUPS.flatMap(
-    (group) => group.items,
-  );
+  const allItems = PRODUCT_MENU_GROUPS.flatMap((group) => group.items);
 
   return getMostSpecificActiveHref(
     pathname,
@@ -104,54 +96,52 @@ const PRODUCT_MENU_META: Record<
   {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     description: string;
-    tone?: 'default' | 'platform' | 'pro' | 'success';
+    tone?: "default" | "platform" | "pro" | "success";
   }
 > = {
-  '/templates': {
+  "/templates": {
     icon: LayoutTemplate,
-    description: 'Premium product templates',
-    tone: 'success',
+    description: "Premium product templates",
+    tone: "success",
   },
-  '/templates/na-ai-landing': {
+  "/templates/na-ai-landing": {
     icon: Sparkles,
-    description: 'AI/SaaS landing page template',
-    tone: 'success',
+    description: "AI/SaaS landing page template",
+    tone: "success",
   },
-  '/starters': {
+  "/starters": {
     icon: Boxes,
-    description: 'Compare Free and Pro',
-    tone: 'pro',
+    description: "Compare Free and Pro",
+    tone: "pro",
   },
-  '/starters/free': {
+  "/starters/free": {
     icon: Layers3,
-    description: 'Validate product UX fast',
-    tone: 'pro',
+    description: "Validate product UX fast",
+    tone: "pro",
   },
-  '/starters/pro': {
+  "/starters/pro": {
     icon: Rocket,
-    description: 'Launch with auth and billing',
-    tone: 'pro',
+    description: "Launch with auth and billing",
+    tone: "pro",
   },
-  '/ui': {
+  "/ui": {
     icon: Package2,
-    description: 'Production-ready primitives',
-    tone: 'platform',
+    description: "Production-ready primitives",
+    tone: "platform",
   },
-  '/ui/patterns': {
+  "/ui/patterns": {
     icon: LayoutTemplate,
-    description: 'Production-shaped SaaS surfaces',
-    tone: 'platform',
+    description: "Production-shaped SaaS surfaces",
+    tone: "platform",
   },
-  '/ui/examples': {
+  "/ui/examples": {
     icon: BookOpen,
-    description: 'See usage in context',
-    tone: 'platform',
+    description: "See usage in context",
+    tone: "platform",
   },
 };
 
-function ProductPill({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+function ProductPill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <span className="inline-flex rounded-[5px] border border-border-subtle bg-surface-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
       {children}
@@ -249,15 +239,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') closeProductsMenu();
+      if (event.key === "Escape") closeProductsMenu();
     }
 
-    document.addEventListener('mousedown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.removeEventListener('mousedown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [isProductsOpen, closeProductsMenu]);
 
@@ -265,7 +255,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     if (!isMenuOpen) return;
 
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault();
         closeMenu();
         openBtnRef.current?.focus();
@@ -273,7 +263,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         return;
       }
 
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       const container = mobileNavRef.current;
       if (!container) return;
@@ -281,18 +271,18 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       const focusable = Array.from(
         container.querySelectorAll<HTMLElement>(
           [
-            'a[href]',
-            'button:not([disabled])',
-            'input:not([disabled])',
-            'select:not([disabled])',
-            'textarea:not([disabled])',
+            "a[href]",
+            "button:not([disabled])",
+            "input:not([disabled])",
+            "select:not([disabled])",
+            "textarea:not([disabled])",
             '[tabindex]:not([tabindex="-1"])',
-          ].join(','),
+          ].join(","),
         ),
       ).filter(
         (element) =>
-          !element.hasAttribute('disabled') &&
-          element.getAttribute('aria-hidden') !== 'true',
+          !element.hasAttribute("disabled") &&
+          element.getAttribute("aria-hidden") !== "true",
       );
 
       if (focusable.length === 0) return;
@@ -310,10 +300,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
       }
     }
 
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [isMenuOpen, closeMenu]);
 
@@ -328,10 +318,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     const previousWidth = body.style.width;
     const previousOverflow = body.style.overflow;
 
-    body.style.position = 'fixed';
+    body.style.position = "fixed";
     body.style.top = `-${scrollY}px`;
-    body.style.width = '100%';
-    body.style.overflow = 'hidden';
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
 
     const timer = window.setTimeout(() => {
       mobileNavRef.current?.focus();
@@ -356,16 +346,16 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     };
 
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
   const mobileSections = React.useMemo<MobileMenuSection[]>(() => {
-    const productItems: MobileMenuItem[] =
-      PRODUCT_MENU_GROUPS.flatMap((group) =>
+    const productItems: MobileMenuItem[] = PRODUCT_MENU_GROUPS.flatMap(
+      (group) =>
         group.items.map((item) => {
           const meta = PRODUCT_MENU_META[item.href];
           const Icon = meta?.icon ?? Package2;
@@ -377,64 +367,60 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             icon: <Icon aria-hidden="true" className="h-3.5 w-3.5" />,
           };
         }),
-      );
+    );
 
     const resourceItems: MobileMenuItem[] = [
       {
-        label: 'Docs',
-        href: '/docs',
+        label: "Docs",
+        href: "/docs",
         icon: <BookOpen aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
-        label: 'Guides',
-        href: '/guides',
+        label: "Guides",
+        href: "/guides",
         icon: <BookOpen aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
-        label: 'Blog',
-        href: '/blog',
+        label: "Blog",
+        href: "/blog",
         icon: <FileText aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       ...docsLinks.map((doc) => ({
         label: doc.label,
         href: doc.href,
-        icon: (
-          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-        ),
+        icon: <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />,
       })),
     ];
 
     const proofItems: MobileMenuItem[] = [
       {
-        label: 'GitHub',
-        href: 'https://github.com/pycolors',
-        icon: <Github aria-hidden="true" className="h-3.5 w-3.5" />,
+        label: "GitHub",
+        href: "https://github.com/pycolors",
+        icon: <GithubIcon aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
-        label: 'Pricing',
-        href: '/pricing',
+        label: "Pricing",
+        href: "/pricing",
         icon: <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />,
       },
       {
-        label: 'Changelog',
-        href: '/changelog',
-        icon: (
-          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-        ),
+        label: "Changelog",
+        href: "/changelog",
+        icon: <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />,
       },
     ];
 
     return [
-      { title: 'Products', items: productItems },
-      { title: 'Resources', items: resourceItems },
-      { title: 'Proof', items: proofItems },
+      { title: "Products", items: productItems },
+      { title: "Resources", items: resourceItems },
+      { title: "Proof", items: proofItems },
     ];
   }, [docsLinks]);
 
   const mobileActiveHref = React.useMemo(() => {
     const allMobileHrefs = mobileSections.flatMap((section) =>
       section.items
-        .filter((item) => item.href.startsWith('/'))
+        .filter((item) => item.href.startsWith("/"))
         .map((item) => item.href),
     );
 
@@ -445,18 +431,18 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           scrolled
-            ? 'border-b border-border-subtle bg-background/88 backdrop-blur-xl'
-            : 'border-b border-transparent bg-background/70 backdrop-blur-md',
+            ? "border-b border-border-subtle bg-background/88 backdrop-blur-xl"
+            : "border-b border-transparent bg-background/70 backdrop-blur-md",
         )}
       >
         <div className="relative z-10 mx-auto max-w-fd-container">
           <a
             href="#content"
             className={cn(
-              'sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]',
-              'rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm',
+              "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60]",
+              "rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm",
               focusRing,
             )}
           >
@@ -487,10 +473,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     onClick={() => setIsProductsOpen((prev) => !prev)}
                     onFocus={openProductsMenu}
                     className={cn(
-                      'inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-200',
-                      'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                      "inline-flex items-center rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-200",
+                      "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                       (isProductsCurrent || isProductsOpen) &&
-                        'bg-surface-muted text-foreground',
+                        "bg-surface-muted text-foreground",
                       focusRing,
                     )}
                   >
@@ -498,8 +484,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     <ChevronDown
                       aria-hidden="true"
                       className={cn(
-                        'ml-1.5 h-3.5 w-3.5 transition-transform duration-200',
-                        isProductsOpen && 'rotate-180',
+                        "ml-1.5 h-3.5 w-3.5 transition-transform duration-200",
+                        isProductsOpen && "rotate-180",
                       )}
                     />
                   </button>
@@ -512,29 +498,24 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     aria-label="Products"
                     onMouseEnter={openProductsMenu}
                     className={cn(
-                      'absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]',
-                      'border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150',
+                      "absolute left-0 top-[calc(100%+0.5rem)] w-[48rem] origin-top-left overflow-hidden rounded-[5px]",
+                      "border border-border-subtle bg-background shadow-medium backdrop-blur-xl transition-all duration-150",
                       isProductsOpen
-                        ? 'pointer-events-auto translate-y-0 opacity-100'
-                        : 'pointer-events-none translate-y-1 opacity-0',
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none translate-y-1 opacity-0",
                     )}
                   >
                     <div className="p-2.5">
                       <div className="grid gap-2 md:grid-cols-3">
                         {PRODUCT_MENU_GROUPS.map((group) => (
-                          <div
-                            key={group.title}
-                            className="space-y-1"
-                          >
+                          <div key={group.title} className="space-y-1">
                             <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                               {group.title}
                             </p>
 
                             {group.items.map((item) => {
-                              const isCurrent =
-                                activeProductHref === item.href;
-                              const meta =
-                                PRODUCT_MENU_META[item.href];
+                              const isCurrent = activeProductHref === item.href;
+                              const meta = PRODUCT_MENU_META[item.href];
                               const Icon = meta?.icon ?? Package2;
 
                               return (
@@ -543,36 +524,34 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                   href={item.href}
                                   role="menuitem"
                                   className={cn(
-                                    'group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150',
+                                    "group flex items-start gap-2.5 rounded-[5px] border border-transparent px-2.5 py-2.5 transition-colors duration-150",
                                     isCurrent
-                                      ? 'border-border-subtle bg-surface-muted'
-                                      : 'hover:bg-surface-muted',
+                                      ? "border-border-subtle bg-surface-muted"
+                                      : "hover:bg-surface-muted",
                                     focusRing,
                                   )}
                                 >
                                   <span
                                     className={cn(
-                                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border bg-surface transition-colors duration-150',
-                                      'group-hover:bg-background',
-                                      isCurrent && 'bg-background',
-                                      meta?.tone === 'pro' &&
-                                        'border-pro-border-subtle bg-pro-surface-muted',
-                                      meta?.tone === 'platform' &&
-                                        'border-platform-border-subtle bg-platform-muted',
-                                      meta?.tone === 'success' &&
-                                        'border-success-border-subtle bg-success-muted',
-                                      !meta?.tone &&
-                                        'border-border-subtle',
+                                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] border bg-surface transition-colors duration-150",
+                                      "group-hover:bg-background",
+                                      isCurrent && "bg-background",
+                                      meta?.tone === "pro" &&
+                                        "border-pro-border-subtle bg-pro-surface-muted",
+                                      meta?.tone === "platform" &&
+                                        "border-platform-border-subtle bg-platform-muted",
+                                      meta?.tone === "success" &&
+                                        "border-success-border-subtle bg-success-muted",
+                                      !meta?.tone && "border-border-subtle",
                                     )}
                                   >
                                     <Icon
                                       className={cn(
-                                        'h-3.5 w-3.5 text-muted-foreground transition-colors duration-150',
-                                        'group-hover:text-foreground',
-                                        isCurrent &&
-                                          'text-foreground',
-                                        meta?.tone === 'pro' &&
-                                          'group-hover:text-primary',
+                                        "h-3.5 w-3.5 text-muted-foreground transition-colors duration-150",
+                                        "group-hover:text-foreground",
+                                        isCurrent && "text-foreground",
+                                        meta?.tone === "pro" &&
+                                          "group-hover:text-primary",
                                       )}
                                       aria-hidden="true"
                                     />
@@ -592,8 +571,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                     </span>
 
                                     <span className="mt-0.5 block text-[11px] leading-4 text-muted-foreground">
-                                      {item.description ??
-                                        meta?.description}
+                                      {item.description ?? meta?.description}
                                     </span>
                                   </span>
                                 </Link>
@@ -608,7 +586,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       <Link
                         href="/pricing"
                         className={cn(
-                          'group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-[13px] transition-colors hover:bg-surface',
+                          "group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-[13px] transition-colors hover:bg-surface",
                           focusRing,
                         )}
                       >
@@ -632,7 +610,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 </div>
 
                 {PRIMARY_NAV_ITEMS.filter(
-                  (item) => item.label !== 'Products',
+                  (item) => item.label !== "Products",
                 ).map((item) => {
                   const isCurrent = activeHref === item.href;
 
@@ -640,12 +618,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      aria-current={isCurrent ? 'page' : undefined}
+                      aria-current={isCurrent ? "page" : undefined}
                       className={cn(
-                        'rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-200',
-                        'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
-                        isCurrent &&
-                          'bg-surface-muted text-foreground',
+                        "rounded-[5px] px-3 py-1.5 text-[13px] transition-colors duration-200",
+                        "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                        isCurrent && "bg-surface-muted text-foreground",
                         focusRing,
                       )}
                     >
@@ -661,7 +638,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   target="_blank"
                   rel="noreferrer noopener"
                   className={cn(
-                    'hidden lg:flex items-center transition-opacity hover:opacity-90',
+                    "hidden lg:flex items-center transition-opacity hover:opacity-90",
                     focusRing,
                   )}
                 >
@@ -680,10 +657,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 >
                   <Link href="/starters/pro">
                     Explore Pro
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="h-3.5 w-3.5"
-                    />
+                    <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
                   </Link>
                 </Button>
               </div>
@@ -695,13 +669,13 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   onClick={toggleMenu}
                   aria-label={
                     isMenuOpen
-                      ? 'Close navigation menu'
-                      : 'Open navigation menu'
+                      ? "Close navigation menu"
+                      : "Open navigation menu"
                   }
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-navigation"
                   className={cn(
-                    'inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface',
+                    "inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface",
                     focusRing,
                   )}
                 >
@@ -733,8 +707,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             open
             aria-labelledby="mobile-navigation-title"
             className={cn(
-              'fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border-subtle bg-background p-0 text-inherit md:hidden',
-              'backdrop:hidden',
+              "fixed inset-x-0 z-50 m-0 flex w-screen max-w-none flex-col overflow-hidden border-t border-border-subtle bg-background p-0 text-inherit md:hidden",
+              "backdrop:hidden",
             )}
             style={{
               top: HEADER_HEIGHT,
@@ -747,8 +721,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
             <div
               className={cn(
-                'min-h-0 flex-1 overflow-y-auto overscroll-contain',
-                '[-webkit-overflow-scrolling:touch]',
+                "min-h-0 flex-1 overflow-y-auto overscroll-contain",
+                "[-webkit-overflow-scrolling:touch]",
               )}
             >
               <div className="px-4 pb-6 pt-4">
@@ -761,8 +735,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         </p>
 
                         <p className="text-sm leading-6 text-muted-foreground">
-                          Build faster with templates, UI primitives,
-                          and production-ready SaaS foundations.
+                          Build faster with templates, UI primitives, and
+                          production-ready SaaS foundations.
                         </p>
                       </div>
 
@@ -800,10 +774,9 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       >
                         {section.items.map((item, itemIndex) => {
                           const isCurrent =
-                            item.href.startsWith('/') &&
+                            item.href.startsWith("/") &&
                             mobileActiveHref === item.href;
-                          const isExternal =
-                            item.href.startsWith('http');
+                          const isExternal = item.href.startsWith("http");
 
                           return (
                             <Link
@@ -814,23 +787,17 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                   ? firstMobileLinkRef
                                   : undefined
                               }
-                              aria-current={
-                                isCurrent ? 'page' : undefined
-                              }
-                              target={
-                                isExternal ? '_blank' : undefined
-                              }
+                              aria-current={isCurrent ? "page" : undefined}
+                              target={isExternal ? "_blank" : undefined}
                               rel={
-                                isExternal
-                                  ? 'noreferrer noopener'
-                                  : undefined
+                                isExternal ? "noreferrer noopener" : undefined
                               }
                               onClick={closeMenu}
                               className={cn(
-                                'group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-sm transition-colors duration-150',
+                                "group flex items-center justify-between rounded-[5px] px-2.5 py-2 text-sm transition-colors duration-150",
                                 isCurrent
-                                  ? 'bg-surface-muted text-foreground'
-                                  : 'text-muted-foreground hover:bg-surface-muted hover:text-foreground',
+                                  ? "bg-surface-muted text-foreground"
+                                  : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
                                 focusRing,
                               )}
                             >
@@ -838,8 +805,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                                 <span
                                   aria-hidden="true"
                                   className={cn(
-                                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors',
-                                    isCurrent && 'bg-background',
+                                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface transition-colors",
+                                    isCurrent && "bg-background",
                                   )}
                                 >
                                   {item.icon}
@@ -876,16 +843,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
 
                     <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                       <ul className="space-y-2 text-sm leading-6 text-muted-foreground">
+                        <li>Launch faster with focused product templates.</li>
+                        <li>Validate product surfaces with Starter Free.</li>
                         <li>
-                          Launch faster with focused product
-                          templates.
-                        </li>
-                        <li>
-                          Validate product surfaces with Starter Free.
-                        </li>
-                        <li>
-                          Upgrade when auth and billing become the
-                          bottleneck.
+                          Upgrade when auth and billing become the bottleneck.
                         </li>
                       </ul>
                     </div>
@@ -901,10 +862,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   variant="outline"
                   className="w-full justify-center rounded-[5px]"
                 >
-                  <Link
-                    href="/templates/na-ai-landing"
-                    onClick={closeMenu}
-                  >
+                  <Link href="/templates/na-ai-landing" onClick={closeMenu}>
                     NA-AI Landing
                   </Link>
                 </Button>
@@ -915,10 +873,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 >
                   <Link href="/starters/pro" onClick={closeMenu}>
                     Explore Starter Pro
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="ml-2 h-4 w-4"
-                    />
+                    <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
