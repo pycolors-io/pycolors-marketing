@@ -48,7 +48,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/eslintrc": "^3.3.6",
     "@pycolors/eslint-config": "^1.0.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/mdx": "^2.0.13",
