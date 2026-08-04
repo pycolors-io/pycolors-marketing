@@ -22,8 +22,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
-    "postinstall": "fumadocs-mdx"
+    "docs:generate": "fumadocs-mdx && pnpm --dir ../.. exec prettier --write apps/marketing/.source/browser.ts apps/marketing/.source/server.ts",
+    "types:check": "pnpm docs:generate && next typegen && tsc --noEmit",
+    "postinstall": "pnpm docs:generate"
   },
   "dependencies": {
     "@pycolors/tokens": "workspace:^",
