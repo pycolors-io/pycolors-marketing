@@ -7,6 +7,18 @@ appliesTo: UI
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge } from "@pycolors/ui";
+import {
+  BellRing,
+  CheckSquare,
+  CircleAlert,
+  FormInput,
+  ListOrdered,
+  MousePointerClick,
+  PanelRight,
+  PanelTop,
+  Table2,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
@@ -303,13 +315,79 @@ documentation change:
 
 ## Component references
 
-- [Button](/docs/ui/button)
-- [Input](/docs/ui/input)
-- [Checkbox](/docs/ui/checkbox)
-- [Dialog](/docs/ui/dialog)
-- [Sheet](/docs/ui/sheet)
-- [Tabs](/docs/ui/tabs)
-- [Table](/docs/ui/table)
-- [Pagination](/docs/ui/pagination)
-- [Alert](/docs/ui/alert)
-- [Toast](/docs/ui/toast)
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Button",
+      href: "/docs/ui/button",
+      description:
+        "Accessible actions, icon-only labels, disabled states, and async feedback.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Input",
+      href: "/docs/ui/input",
+      description:
+        "Labels, descriptions, required state, validation errors, and helper text.",
+      icon: FormInput,
+    },
+    {
+      title: "Checkbox",
+      href: "/docs/ui/checkbox",
+      description:
+        "Consent, descriptions, required state, and field-level errors.",
+      icon: CheckSquare,
+    },
+    {
+      title: "Dialog",
+      href: "/docs/ui/dialog",
+      description:
+        "Modal names, descriptions, focus containment, dismissal, and focus return.",
+      icon: PanelTop,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Side workflows with accessible titles, descriptions, and focus behavior.",
+      icon: PanelRight,
+    },
+    {
+      title: "Tabs",
+      href: "/docs/ui/tabs",
+      description:
+        "Tablist labels, trigger relationships, keyboard movement, and activation mode.",
+      icon: ListOrdered,
+    },
+    {
+      title: "Table",
+      href: "/docs/ui/table",
+      description:
+        "Captions, headers, row actions, loading announcements, and empty states.",
+      icon: Table2,
+    },
+    {
+      title: "Pagination",
+      href: "/docs/ui/pagination",
+      description:
+        "Navigation labels, current page state, disabled controls, and result updates.",
+      icon: ListOrdered,
+    },
+    {
+      title: "Alert",
+      href: "/docs/ui/alert",
+      description:
+        "Persistent feedback, live-region urgency, destructive states, and clear copy.",
+      icon: CircleAlert,
+    },
+    {
+      title: "Toast",
+      href: "/docs/ui/toast",
+      description:
+        "Non-blocking feedback, provider setup, viewport placement, and close labels.",
+      icon: BellRing,
+    },
+  ]}
+/>
