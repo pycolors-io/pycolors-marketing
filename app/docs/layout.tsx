@@ -1,42 +1,42 @@
-import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import type { CSSProperties, ReactNode } from "react";
+import type { Metadata } from "next";
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
 
-import { getDocsNavLinks, source } from '@/lib/source';
-import { baseOptions } from '@/lib/layout.shared';
-import { ToastDocsProvider } from '@/content/docs/previews/toast-docs-provider';
-import { DocsFooter } from '@/components/docs-footer';
-import { JsonLd } from '@/components/seo/json-ld';
-import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
-import { DocsHeader } from '@/components/docs-header';
+import { getDocsNavLinks, source } from "@/lib/source";
+import { baseOptions } from "@/lib/layout.shared";
+import { ToastDocsProvider } from "@/content/docs/previews/toast-docs-provider";
+import { DocsFooter } from "@/components/docs-footer";
+import { JsonLd } from "@/components/seo/json-ld";
+import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
+import { DocsHeader } from "@/components/docs-header";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: '/docs',
+    canonical: "/docs",
   },
   title: {
-    default: 'Next.js SaaS Documentation',
-    template: '%s · Docs · PyColors',
+    default: "Next.js SaaS Documentation",
+    template: "%s · Docs · PyColors",
   },
   description:
-    'Official PyColors documentation for building modern Next.js SaaS products with UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready architecture.',
+    "Official PyColors documentation for building modern Next.js SaaS products with UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready architecture.",
 
   openGraph: {
-    type: 'website',
-    siteName: 'PyColors',
-    title: 'Next.js SaaS Documentation',
+    type: "website",
+    siteName: "PyColors",
+    title: "Next.js SaaS Documentation",
     description:
-      'Official PyColors docs for UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready Next.js architecture.',
-    url: '/docs',
-    images: ['/seo/og-main.png'],
+      "Official PyColors docs for UI foundations, SaaS patterns, Starter Free, Starter Pro, authentication, billing, and production-ready Next.js architecture.",
+    url: "/docs",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS Documentation',
+    card: "summary_large_image",
+    title: "Next.js SaaS Documentation",
     description:
-      'Documentation for building modern Next.js SaaS products faster with PyColors.',
-    images: ['/seo/twitter-main.png'],
+      "Documentation for building modern Next.js SaaS products faster with PyColors.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
@@ -49,31 +49,26 @@ function SidebarBanner() {
         </div>
 
         <p className="text-xs leading-5 text-muted-foreground">
-          Templates, UI primitives, and production-ready SaaS
-          foundations.
+          Templates, UI primitives, and production-ready SaaS foundations.
         </p>
       </div>
     </div>
   );
 }
 
-export default function Layout({
-  children,
-}: {
-  readonly children: ReactNode;
-}) {
+export default function Layout({ children }: { readonly children: ReactNode }) {
   const docsLinks = getDocsNavLinks();
 
   const docsTree = {
     ...source.pageTree,
     children: source.pageTree.children.filter(
-      (item) => item.type !== 'page' || item.url !== '/docs',
+      (item) => item.type !== "page" || item.url !== "/docs",
     ),
   };
 
   const breadcrumb = generateBreadcrumbJsonLd([
-    { label: 'Home', href: '/' },
-    { label: 'Docs', href: '/docs' },
+    { label: "Home", href: "/" },
+    { label: "Docs", href: "/docs" },
   ]);
 
   return (
@@ -84,6 +79,11 @@ export default function Layout({
         <DocsLayout
           tree={docsTree}
           {...baseOptions()}
+          containerProps={{
+            style: {
+              "--fd-banner-height": "var(--fd-nav-height)",
+            } as CSSProperties,
+          }}
           nav={{
             enabled: true,
             component: <DocsHeader docsLinks={docsLinks} />,
@@ -94,7 +94,7 @@ export default function Layout({
           }}
         >
           <ToastDocsProvider>
-            <div className="docs-shell">{children}</div>
+            <div className="docs-shell contents">{children}</div>
           </ToastDocsProvider>
         </DocsLayout>
         <DocsFooter />

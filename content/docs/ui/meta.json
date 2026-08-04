@@ -2,9 +2,12 @@
   "title": "UI",
   "pages": [
     "index",
+    "installation",
     "why-pycolors-ui",
 
     "composition",
+    "usage-patterns",
+    "migration-guidance",
     "accessibility",
 
     "button",

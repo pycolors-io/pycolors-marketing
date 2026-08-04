@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
-import { ThemeToggle } from 'fumadocs-ui/components/layout/theme-toggle';
+import Link from "next/link";
+import Image from "next/image";
+import { ExternalLink } from "lucide-react";
+import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 
-import { Container } from '@/components/container';
-import { cn } from '@pycolors/ui';
-import { UI_VERSION, TOKENS_VERSION, APP_VERSION } from '@/lib/version';
-import { Logo } from './logo';
+import { Container } from "@/components/container";
+import { cn } from "@pycolors/ui";
+import { UI_VERSION, TOKENS_VERSION, APP_VERSION } from "@/lib/version";
+import { Logo } from "./logo";
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -27,68 +27,68 @@ const GROUPS: Array<{
   links: FooterLink[];
 }> = [
   {
-    title: 'Products',
+    title: "Products",
     links: [
-      { label: 'Starter Pro', href: '/starters/pro' },
-      { label: 'Starter Free', href: '/starters/free' },
-      { label: 'Compare Starters', href: '/starters' },
-      { label: 'Upgrade', href: '/upgrade' },
-      { label: 'Templates', href: '/templates' },
+      { label: "Starter Pro", href: "/starters/pro" },
+      { label: "Starter Free", href: "/starters/free" },
+      { label: "Compare Starters", href: "/starters" },
+      { label: "Upgrade", href: "/upgrade" },
+      { label: "Templates", href: "/templates" },
       {
-        label: 'NA-AI Landing',
-        href: '/templates/na-ai-landing',
+        label: "NA-AI Landing",
+        href: "/templates/na-ai-landing",
       },
-      { label: 'Pricing', href: '/pricing' },
+      { label: "Pricing", href: "/pricing" },
     ],
   },
   {
-    title: 'Platform',
+    title: "Platform",
     links: [
-      { label: 'PyColors UI', href: '/ui' },
-      { label: 'Patterns', href: '/ui/patterns' },
-      { label: 'Examples', href: '/ui/examples' },
-      { label: 'Docs', href: '/docs' },
-      { label: 'Guides', href: '/guides' },
+      { label: "PyColors UI", href: "/ui" },
+      { label: "Patterns", href: "/ui/patterns" },
+      { label: "Examples", href: "/ui/examples" },
+      { label: "Docs", href: "/docs" },
+      { label: "Guides", href: "/guides" },
     ],
   },
   {
-    title: 'Resources',
+    title: "Resources",
     links: [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Changelog', href: '/changelog' },
-      { label: 'Roadmap', href: '/roadmap' },
-      { label: 'Recover purchase', href: '/orders/recover' },
-      { label: 'Open Source', href: '/open-source' },
+      { label: "Blog", href: "/blog" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "Roadmap", href: "/roadmap" },
+      { label: "Recover purchase", href: "/orders/recover" },
+      { label: "Open Source", href: "/open-source" },
     ],
   },
   {
-    title: 'Company',
+    title: "Company",
     links: [
-      { label: 'About', href: '/about' },
-      { label: 'License', href: '/license' },
-      { label: 'Terms', href: '/terms' },
-      { label: 'Privacy', href: '/privacy' },
+      { label: "About", href: "/about" },
+      { label: "License", href: "/license" },
+      { label: "Terms", href: "/terms" },
+      { label: "Privacy", href: "/privacy" },
     ],
   },
 ];
 
 const EXTERNAL: FooterLink[] = [
   {
-    label: 'PyColors UI',
-    href: 'https://github.com/pycolors-io/pycolors-ui',
+    label: "PyColors UI",
+    href: "https://github.com/pycolors-io/pycolors-ui",
     external: true,
-    ariaLabel: 'Open PyColors UI repository on GitHub',
+    ariaLabel: "Open PyColors UI repository on GitHub",
   },
   {
-    label: 'Starter Free',
-    href: 'https://github.com/pycolors-io/pycolors-starter-free',
+    label: "Starter Free",
+    href: "https://github.com/pycolors-io/pycolors-starter-free",
     external: true,
-    ariaLabel: 'Open PyColors Starter Free repository on GitHub',
+    ariaLabel: "Open PyColors Starter Free repository on GitHub",
   },
 ];
 function FooterLinkItem(link: FooterLink) {
   const className = cn(
-    'inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground',
+    "inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground",
     focusRing,
   );
 
@@ -99,9 +99,7 @@ function FooterLinkItem(link: FooterLink) {
         href={link.href}
         target="_blank"
         rel="noreferrer noopener"
-        aria-label={
-          link.ariaLabel ?? `${link.label} (opens in a new tab)`
-        }
+        aria-label={link.ariaLabel ?? `${link.label} (opens in a new tab)`}
         className={className}
       >
         {link.label}
@@ -129,9 +127,9 @@ export function DocsFooter() {
                   <Logo />
 
                   <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                    Documentation for building with PyColors UI,
-                    templates, product surfaces, and production-ready
-                    SaaS starter foundations.
+                    Documentation for building with PyColors UI, templates,
+                    product surfaces, and production-ready SaaS starter
+                    foundations.
                   </p>
                   <div className="pt-1">
                     <a
@@ -139,7 +137,7 @@ export function DocsFooter() {
                       target="_blank"
                       rel="noreferrer noopener"
                       className={cn(
-                        'inline-flex transition-opacity hover:opacity-90',
+                        "inline-flex transition-opacity hover:opacity-90",
                         focusRing,
                       )}
                     >
@@ -182,7 +180,7 @@ export function DocsFooter() {
 
             <section className="mt-12 flex flex-col gap-4 border-t border-border-subtle pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
               <div className="text-xs text-muted-foreground">
-                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · Tokens{' '}
+                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · Tokens{" "}
                 {TOKENS_VERSION} · App {APP_VERSION}
               </div>
 
@@ -190,19 +188,19 @@ export function DocsFooter() {
                 <ThemeToggle
                   mode="light-dark"
                   className={cn(
-                    'h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm',
-                    'rounded-[20px] px-1 shadow-sm',
-                    'opacity-80 transition-all duration-200 ease-out',
-                    'hover:border-border hover:bg-accent/30 hover:opacity-100',
-                    'cursor-pointer',
-                    '[&_button]:h-6.5',
-                    '[&_button]:w-6.5',
-                    '[&_button]:rounded-[4px]',
-                    '[&_button]:bg-transparent',
-                    '[&_button]:transition-all',
-                    '[&_button]:duration-200',
-                    '[&_button:hover]:bg-accent/50',
-                    '[&_button]:cursor-pointer',
+                    "h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm",
+                    "rounded-[20px] px-1 shadow-sm",
+                    "opacity-80 transition-all duration-200 ease-out",
+                    "hover:border-border hover:bg-accent/30 hover:opacity-100",
+                    "cursor-pointer",
+                    "[&_button]:h-6.5",
+                    "[&_button]:w-6.5",
+                    "[&_button]:rounded-[4px]",
+                    "[&_button]:bg-transparent",
+                    "[&_button]:transition-all",
+                    "[&_button]:duration-200",
+                    "[&_button:hover]:bg-accent/50",
+                    "[&_button]:cursor-pointer",
                   )}
                 />
               </div>
