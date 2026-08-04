@@ -1,312 +1,315 @@
 ---
 title: Accessibility
-description: Build accessible SaaS interfaces with PyColors UI. Practical guidelines for semantics, focus, keyboard navigation, and inclusive UX.
-lastUpdated: "2026-04-27"
+description: Required accessibility checks for composing PyColors UI primitives in forms, overlays, feedback, data views, and navigation.
+lastUpdated: "2026-08-04"
 appliesTo: UI
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Steps, Step } from "fumadocs-ui/components/steps";
-import {
-  Badge,
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-} from "@pycolors/ui";
-import {
-  ArrowRight,
-  CheckCircle,
-  Eye,
-  Keyboard,
-  Layers3,
-  LayoutTemplate,
-  MousePointerClick,
-  Rocket,
-  Type,
-  XCircle,
-} from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
-import { DocsLinks } from "@/components/docs/docs-links";
-import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { Badge } from "@pycolors/ui";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
   <Badge>Accessibility</Badge>
 </div>
 
-## Accessibility is a product requirement
+## Accessibility belongs to the composition
 
-Accessibility is not a finishing step.
+PyColors UI provides semantic elements, visible focus styles, and Radix behavior
+where the primitive can own them. Your application still owns accessible names,
+descriptions, validation, page structure, focus order, and feedback timing.
 
-It is part of how your product behaves for real users:
+Use this page as a pre-release checklist. Use the linked component pages for
+complete APIs and examples.
 
-- keyboard users
-- screen reader users
-- low-vision users
-- users on mobile or slow networks
-
-A product that is not accessible is harder to use for everyone.
-
-<Callout title="Core idea">
-  Accessible UI is clearer UI. It improves usability, not just compliance.
+<Callout title="Public API boundary">
+  Import every primitive from `@pycolors/ui`. Do not document or depend on
+  `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, or workspace-only paths.
 </Callout>
 
-### What PyColors expects
+## Required before shipping
 
-PyColors UI primitives are built to support accessibility.
+These checks are release gates for every composed product surface.
 
-But primitives are not enough.
+### Semantics and names
 
-You must ensure:
+- [ ] Use a `Button` for an action and a link for navigation.
+- [ ] Give every interactive control an accessible name. Prefer visible text;
+      use `aria-label` only when a visible label is not practical.
+- [ ] Connect form labels, descriptions, and errors to their controls.
+- [ ] Preserve heading order, lists, landmarks, and table structure.
+- [ ] Mark decorative icons with `aria-hidden="true"`; do not let an icon or
+      color carry the only meaning.
 
-- correct semantics
-- proper labeling
-- predictable focus behavior
-- accessible interactions
-- meaningful feedback
+### Keyboard and focus
 
-Accessibility happens at the **composition level**, not only inside components.
+- [ ] Reach every action with Tab and Shift+Tab in a logical order.
+- [ ] Activate buttons and checkboxes with the expected keyboard keys.
+- [ ] Keep a visible focus indicator; do not remove the PyColors focus ring.
+- [ ] Do not create keyboard traps. Modal overlays are the intentional
+      exception while open and must provide a working exit.
+- [ ] Restore focus predictably after closing an overlay or removing content.
 
-### The 4 pillars
+### State and feedback
 
-<DocsFeatureGrid
-  columns={4}
-  tone="platform"
-  items={[
-    {
-      title: 'Semantics',
-      description:
-        'Use the right HTML elements for the right purpose.',
-      icon: Type,
-    },
-    {
-      title: 'Keyboard',
-      description:
-        'Everything should be usable without a mouse.',
-      icon: Keyboard,
-    },
-    {
-      title: 'Perception',
-      description:
-        'Content must be readable and understandable.',
-      icon: Eye,
-    },
-    {
-      title: 'Feedback',
-      description:
-        'Users must understand what is happening.',
-      icon: MousePointerClick,
-    },
-  ]}
-/>
+- [ ] Expose disabled, required, invalid, loading, selected, expanded, and
+      current states programmatically where they apply.
+- [ ] Put validation errors next to the affected field and announce errors that
+      appear after an attempted submission.
+- [ ] Use text plus visual treatment for errors, warnings, and success states.
+- [ ] Keep blocking feedback in the task context; use a toast only for
+      non-blocking updates.
 
-### Semantics first
+### Visual and responsive checks
 
-Always use the correct HTML element.
+- [ ] Verify text, controls, and focus indicators in light and dark themes.
+- [ ] Check the surface at 200% zoom and at a narrow mobile width.
+- [ ] Confirm touch targets, reading order, and error recovery remain usable
+      without relying on hover.
 
-### Good
+## Component-specific gates
 
-```tsx
-<button>Save</button>
-<a href="/docs">Docs</a>
-<input type="email" />
+### Button
+
+See the [Button reference](/docs/ui/button).
+
+- Use a short, outcome-oriented accessible name. Icon-only buttons require an
+  `aria-label`, and their decorative icon requires `aria-hidden="true"`.
+- Keep actions as buttons. Use `Button asChild` with a real link when the user
+  navigates to another location.
+- Use the native `disabled` state for an unavailable action. If the reason is
+  important, explain it in nearby text and connect that text with
+  `aria-describedby`.
+- During async work, prevent duplicate submission and update visible text such
+  as “Saving…”. Add `aria-busy="true"` when the action is still processing.
+
+### Input
+
+See the [Input reference](/docs/ui/input).
+
+- Every input needs a visible `label` or an equivalent accessible name.
+  Placeholder text is never the label.
+- Use `required` for a required field. The component exposes both native and
+  accessible required state.
+- Use the `error` prop for field-level validation. It sets `aria-invalid`,
+  connects `aria-errormessage`, and renders an announced error.
+- Use `helperText` for instructions, not for an error that the user must fix.
+  Consumer-provided `aria-describedby` values are preserved.
+
+```tsx title="required-email.tsx"
+import { Input } from "@pycolors/ui";
+
+export function RequiredEmail() {
+  return (
+    <Input
+      id="email"
+      name="email"
+      type="email"
+      label="Email"
+      required
+      error="Enter a valid email address."
+    />
+  );
+}
 ```
 
-### Bad
+### Checkbox
 
-```tsx
-<div onClick={handleClick}>Save</div>
+See the [Checkbox reference](/docs/ui/checkbox).
+
+- Connect `CheckboxLabel` to `Checkbox` with matching `htmlFor` and `id`.
+- Give consequential choices a description. Connect it with
+  `aria-describedby`; `CheckboxDescription` does not create that relationship
+  automatically.
+- For required consent, set `required` and `aria-invalid` when invalid. Render a
+  nearby text error with `role="alert"` and connect its id to the checkbox.
+- Explain disabled choices when users need to know what makes them available.
+
+```tsx title="required-consent.tsx"
+import {
+  Checkbox,
+  CheckboxContent,
+  CheckboxDescription,
+  CheckboxField,
+  CheckboxLabel,
+} from "@pycolors/ui";
+
+export function RequiredConsent() {
+  const hasError = true;
+
+  return (
+    <CheckboxField>
+      <Checkbox
+        id="terms"
+        required
+        aria-invalid={hasError}
+        aria-describedby={
+          hasError ? "terms-description terms-error" : "terms-description"
+        }
+      />
+      <CheckboxContent>
+        <CheckboxLabel htmlFor="terms">Accept the terms</CheckboxLabel>
+        <CheckboxDescription id="terms-description">
+          Required to create the workspace.
+        </CheckboxDescription>
+        {hasError ? (
+          <p id="terms-error" role="alert" className="text-sm text-destructive">
+            Accept the terms to continue.
+          </p>
+        ) : null}
+      </CheckboxContent>
+    </CheckboxField>
+  );
+}
 ```
 
-<Callout type="info" title="Rule">
-  If it behaves like a button, use a button.
+### Dialog and Sheet
+
+See the [Dialog reference](/docs/ui/dialog) and
+[Sheet reference](/docs/ui/sheet).
+
+- Give the trigger a clear accessible name.
+- Render `DialogTitle` or `SheetTitle` for the accessible name. Add a
+  description when the task or consequence needs explanation.
+- Put initial focus on the first meaningful control. For a destructive
+  confirmation, prefer a safe action rather than the destructive button.
+- Preserve Radix Escape dismissal, focus containment, and focus return. If the
+  trigger unmounts, move focus to a logical surviving control.
+- Keep the page behind a modal overlay unavailable while it is open. Do not opt
+  out of modal behavior without an equivalent interaction review.
+- Keep submission errors inside the overlay and do not close it until the user
+  can understand the result.
+
+### Tabs
+
+See the [Tabs reference](/docs/ui/tabs).
+
+- Give `TabsList` an `aria-label` or associate it with a visible heading.
+- Keep trigger labels concise and make each label describe the related panel.
+- Preserve the Radix relationship between each trigger and its `TabsContent`.
+- Verify arrow-key movement, Home/End behavior, focus visibility, and the chosen
+  activation behavior. Automatic activation is appropriate only when switching
+  panels is immediate; use manual activation for work that has noticeable cost.
+- Use links instead of tabs for primary navigation or separate routes.
+
+### Table
+
+See the [Table reference](/docs/ui/table).
+
+- Give the table a caption or a nearby heading when its purpose is not obvious.
+- Use `TableHeader`, `TableBody`, and `TableHead`. Column headers default to
+  `scope="col"`; pass `scope="row"` for row headers.
+- Keep row actions as real links or buttons with accessible names. Do not make a
+  whole row the only ambiguous click target.
+- Announce loading state when it changes. `TableLoading` defaults to a polite
+  live region and accepts `ariaLive="assertive"` only for urgent updates.
+- Preserve understandable empty and error states outside the raw data rows.
+
+### Pagination
+
+See the [Pagination reference](/docs/ui/pagination).
+
+- Label the `Pagination` navigation for its collection, for example
+  `aria-label="Members pages"`.
+- Render page controls inside `PaginationContent` and `PaginationItem`.
+- Mark the current page with `PaginationLink isActive`; it sets
+  `aria-current="page"`.
+- Use native `disabled` on unavailable previous and next controls.
+- Keep page changes keyboard operable and announce updated results through the
+  surrounding result summary when the page changes asynchronously.
+
+### Alert and Toast
+
+See the [Alert reference](/docs/ui/alert) and
+[Toast reference](/docs/ui/toast).
+
+- Use `Alert` for persistent feedback that affects the current task. Use
+  `Toast` for a short, non-blocking confirmation or recoverable update.
+- `Alert` announces politely by default. Use `ariaLive="off"` for static content
+  that does not need an announcement and `ariaLive="assertive"` only for an
+  urgent error.
+- Toast urgency follows its variant: routine confirmations announce politely;
+  warning and destructive variants are more interruptive.
+- Render one `ToastViewport` per `ToastProvider` scope. Give `ToastClose` a
+  visible or accessible name when it is present.
+- Never put a blocking error, required recovery step, or critical instruction
+  only in a toast.
+
+## Server and client component boundaries
+
+Accessibility behavior must survive the React Server Component boundary.
+
+- `Alert`, `Button`, `Pagination`, and `Table` can render in a Server Component
+  when their composition is static.
+- `Input`, `Checkbox`, `Dialog`, `Sheet`, `Tabs`, and `Toast` provide their own
+  client boundary where their implementation needs one.
+- A Server Component may render a package Client Component. Add `"use client"`
+  to your app wrapper only when that wrapper owns state, effects, browser APIs,
+  or event handlers.
+- Do not pass event handlers from a Server Component. Move the smallest
+  interactive composition into a client component and keep surrounding data
+  loading server-side.
+
+See [Usage Patterns](/docs/ui/usage-patterns) for complete server/client
+examples and [Composition](/docs/ui/composition) for product-surface ownership.
+
+## Manual verification
+
+Run these checks on the changed surface without adding tooling:
+
+1. Use only the keyboard. Tab forward and backward, activate controls with
+   Enter or Space, and confirm focus remains visible and ordered.
+2. Open every Dialog and Sheet. Confirm initial focus, background blocking,
+   Escape dismissal, the visible close control, and focus return.
+3. Move through Tabs with the arrow keys and Home/End. Confirm the active panel
+   matches the selected trigger.
+4. Submit each form empty and invalid. Confirm required state, error text,
+   focus placement, and announcements are understandable.
+5. Trigger loading, success, warning, and error feedback. Confirm persistent
+   messages stay in context and toasts remain non-blocking.
+6. Inspect tables and pagination with keyboard navigation. Confirm headers,
+   current page, disabled controls, and updated-result feedback.
+7. Review light and dark themes, 200% zoom, a narrow viewport, and a
+   reduced-motion preference. Confirm meaning never depends on color alone.
+
+<Callout title="Manual review result">
+  Record what you checked in the pull request. A component being Radix-based is
+  not evidence that the complete application composition was verified.
 </Callout>
 
-### Labels and text
+## Recommended improvements
 
-Every interactive element needs a clear label.
+These practices improve confidence but are not release gates for this
+documentation change:
 
-### Inputs
+- test representative flows with more than one browser and screen reader;
+- add automated accessibility checks to behavior-heavy product flows;
+- include descriptions for choices with consequences, while keeping simple
+  labels concise;
+- test localization, long content, reduced motion, and high-contrast settings;
+- document reusable interaction behavior as a Pattern when several surfaces
+  repeat it.
 
-```tsx
-<label htmlFor="email">Email</label>
-<input id="email" type="email" />
-```
+## Common mistakes
 
-### Icon buttons
+- Importing private source or generated package paths.
+- Removing visible focus styles because the pointer design looks cleaner.
+- Using an icon, placeholder, or color as the only label or state signal.
+- Showing a validation error without connecting it to the affected control.
+- Closing an overlay after a failed submission.
+- Using Tabs as route navigation.
+- Making table rows clickable without a clear keyboard-operable action.
+- Using a toast for a blocking error or required next step.
 
-```tsx
-<button aria-label="Open settings">
-  <SettingsIcon />
-</button>
-```
+## Component references
 
-Do not rely only on icons.
-
-### Keyboard navigation
-
-Users must be able to:
-
-- tab through elements
-- trigger actions with Enter or Space
-- close overlays with Escape
-
-## Checklist
-
-- all interactive elements are focusable
-- focus order follows visual order
-- no keyboard traps
-- visible focus state
-
-<Callout title="Focus visibility">
-  Never remove focus outlines unless you replace them with a better visible indicator.
-</Callout>
-
-### Focus management
-
-Focus should move logically.
-
-### Example: dialog
-
-- open → focus moves inside
-- close → focus returns to trigger
-
-This is critical for accessibility.
-
-### Color and contrast
-
-Do not rely on color alone.
-
-### Bad
-
-- red = error
-- green = success
-
-### Better
-
-- icon + text + color
-
-Ensure sufficient contrast between:
-
-- text and background
-- UI elements and surfaces
-
-### Feedback and state
-
-Users must understand:
-
-- loading
-- success
-- error
-
-### Example
-
-```tsx
-<Button disabled>
-  Saving...
-</Button>
-```
-
-```tsx
-<Alert variant="destructive">
-  Payment failed. Try again.
-</Alert>
-```
-
-### Forms
-
-Accessible forms require:
-
-- labels
-- error messages
-- clear validation
-
-### Example
-
-```tsx
-<label>Email</label>
-<input />
-<p role="alert">Invalid email</p>
-```
-
-### Overlays (Dialog, Sheet)
-
-Overlays must:
-
-- trap focus
-- be dismissible via Escape
-- restore focus on close
-
-Use accessible primitives (Radix-based).
-
-### Tables and data
-
-Tables should:
-
-- use proper `<table>` structure
-- include headers
-- support keyboard navigation if interactive
-
-### Composition rules
-
-Accessibility lives in composition.
-
-- UI components should stay simple
-- pages must enforce accessibility rules
-- patterns must define interaction behavior
-
-## Prefer / avoid
-
-<PreferAvoid
-  preferTitle="Prefer"
-  avoidTitle="Avoid"
-  prefer={[
-    'semantic HTML',
-    'visible focus states',
-    'clear labels',
-    'keyboard support',
-  ]}
-  avoid={[
-    'clickable divs',
-    'hidden focus',
-    'icon-only meaning',
-    'color-only signals',
-  ]}
-/>
-
-## Quick checklist
-
-- all actions are keyboard accessible
-- labels are explicit
-- focus is visible and logical
-- errors are announced
-- UI is understandable without color
-
-<Callout title="Product quality">
-  Accessibility is not extra work. It is part of building a product that works.
-</Callout>
-
-## Next steps
-
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: 'Composition',
-      href: '/docs/ui/composition',
-      description:
-        'Build scalable UI with proper structure.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
-      description:
-        'See how accessibility fits real SaaS systems.',
-      icon: Rocket,
-    },
-  ]}
-/>
+- [Button](/docs/ui/button)
+- [Input](/docs/ui/input)
+- [Checkbox](/docs/ui/checkbox)
+- [Dialog](/docs/ui/dialog)
+- [Sheet](/docs/ui/sheet)
+- [Tabs](/docs/ui/tabs)
+- [Table](/docs/ui/table)
+- [Pagination](/docs/ui/pagination)
+- [Alert](/docs/ui/alert)
+- [Toast](/docs/ui/toast)
