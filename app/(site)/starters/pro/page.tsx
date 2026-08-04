@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import Image from 'next/image';
+import Link from "next/link";
+import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowRight,
   Check,
@@ -18,7 +18,7 @@ import {
   Smartphone,
   Sparkles,
   WifiOff,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -28,459 +28,510 @@ import {
   CardHeader,
   CardTitle,
   cn,
-} from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
+} from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
-import { Container } from '@/components/container';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { PageHero } from '@/components/marketing/page-hero';
-import {
-  JsonLd,
-  generateProductOfferJsonLd,
-} from '@/components/seo/json-ld';
+import { Container } from "@/components/container";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { PageHero } from "@/components/marketing/page-hero";
+import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Starter with Auth & Billing',
+  title: "Next.js SaaS Starter with Auth & Billing",
   description:
-    'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and launch-ready SaaS architecture already wired.',
+    "Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and launch-ready SaaS architecture already wired.",
   alternates: {
-    canonical: '/starters/pro',
+    canonical: "/starters/pro",
   },
 
   openGraph: {
-    title: 'Next.js SaaS Starter with Auth & Billing — PyColors',
+    title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      'Launch a real SaaS faster with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and production-ready foundations already wired.',
-    url: '/starters/pro',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Launch a real SaaS faster with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, OAuth, and production-ready foundations already wired.",
+    url: "/starters/pro",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS Starter with Auth & Billing — PyColors',
+    card: "summary_large_image",
+    title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      'Production-ready SaaS starter built for modern Next.js applications and faster product launches.',
-    images: ['/seo/twitter-main.png'],
+      "Production-ready SaaS starter built for modern Next.js applications and faster product launches.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
-const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
-const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
+const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
+const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
 
 const starterProJsonLd = generateProductOfferJsonLd({
-  product: PRODUCT_DISPLAY['starter-pro'],
-  canonicalPath: '/starters/pro',
+  product: PRODUCT_DISPLAY["starter-pro"],
+  canonicalPath: "/starters/pro",
   description:
-    'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
+    "Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.",
 });
 
 const INTERNAL = {
-  buildVsBuy: '/compare/build-vs-buy',
-  pricing: '/pricing',
-  starterFree: '/starters/free',
-  docsStarterPro: '/docs/starter-pro',
-  docsGettingStarted: '/docs/starter-pro/getting-started',
-  docsWhatIsIncluded: '/docs/starter-pro/what-is-included',
-  docsDelivery: '/docs/starter-pro/delivery',
-  docsBillingTesting: '/docs/starter-pro/billing-testing',
-  docsProductionChecklist: '/docs/starter-pro/production-checklist',
-  docsDeployment: '/docs/starter-pro/deployment',
-  docsAuth: '/docs/starter-pro/auth',
-  docsBilling: '/docs/starter-pro/billing',
-  docsBackend: '/docs/starter-pro/backend',
-  ordersRecover: '/orders/recover',
-  docsPwa: '/docs/starter-pro/pwa',
-  docsPwaSetup: '/docs/starter-pro/pwa-setup',
-  docsPwaChecklist: '/docs/starter-pro/pwa-production-checklist',
-  changelog: '/changelog',
-  roadmap: '/roadmap',
-  license: '/license',
-  terms: '/terms',
+  buildVsBuy: "/compare/build-vs-buy",
+  pricing: "/pricing",
+  starterFree: "/starters/free",
+  docsStarterPro: "/docs/starter-pro",
+  docsGettingStarted: "/docs/starter-pro/getting-started",
+  docsWhatIsIncluded: "/docs/starter-pro/what-is-included",
+  docsDelivery: "/docs/starter-pro/delivery",
+  docsBillingTesting: "/docs/starter-pro/billing-testing",
+  docsProductionChecklist: "/docs/starter-pro/production-checklist",
+  docsDeployment: "/docs/starter-pro/deployment",
+  docsAuth: "/docs/starter-pro/auth",
+  docsBilling: "/docs/starter-pro/billing",
+  docsBackend: "/docs/starter-pro/backend",
+  ordersRecover: "/orders/recover",
+  docsPwa: "/docs/starter-pro/pwa",
+  docsPwaSetup: "/docs/starter-pro/pwa-setup",
+  docsPwaChecklist: "/docs/starter-pro/pwa-production-checklist",
+  changelog: "/changelog",
+  roadmap: "/roadmap",
+  license: "/license",
+  terms: "/terms",
 } as const;
 
 const EXTERNAL = {
-  starterDemo: 'https://starter-demo.pycolors.io',
+  starterDemo: "https://starter-demo.pycolors.io",
 } as const;
 
 const coreFeatures = [
   {
-    title: 'Real authentication already wired',
+    title: "Real authentication already wired",
     description:
-      'Email/password auth, Google and GitHub OAuth, email verification, password reset, sessions, protected routes, and account foundations are already included.',
+      "Email/password auth, Google and GitHub OAuth, email verification, password reset, sessions, protected routes, and account foundations are already included.",
     icon: Lock,
   },
   {
-    title: 'Stripe billing already integrated',
+    title: "Stripe billing already integrated",
     description:
-      'Secure Stripe checkout, billing portal, invoices, webhook synchronization, subscription lifecycle handling, and billing-aware UI states are part of the foundation.',
+      "Secure Stripe checkout, billing portal, invoices, webhook synchronization, subscription lifecycle handling, and billing-aware UI states are part of the foundation.",
     icon: CreditCard,
   },
   {
-    title: 'Protected SaaS app architecture',
+    title: "Protected SaaS app architecture",
     description:
-      'Protected routes, account areas, settings, billing flows, app shell, and scalable product structure are shaped for a real SaaS product.',
+      "Protected routes, account areas, settings, billing flows, app shell, and scalable product structure are shaped for a real SaaS product.",
     icon: LayoutDashboard,
   },
   {
-    title: 'PWA-ready app experience',
+    title: "PWA-ready app experience",
     description:
-      'Manifest, standalone mode, professional icons, dashboard screenshots, mobile-safe viewport handling, and offline fallback foundations are included to make the product feel more mature.',
+      "Manifest, standalone mode, professional icons, dashboard screenshots, mobile-safe viewport handling, and offline fallback foundations are included to make the product feel more mature.",
     icon: Smartphone,
   },
   {
-    title: 'Built to reduce launch friction',
+    title: "Built to reduce launch friction",
     description:
-      'Starter Pro removes repeated foundation work across auth, billing, Prisma, delivery, and protected app structure so you can focus on product logic, onboarding, customers, and growth.',
+      "Starter Pro removes repeated foundation work across auth, billing, Prisma, delivery, and protected app structure so you can focus on product logic, onboarding, customers, and growth.",
     icon: Rocket,
   },
   {
-    title: 'Built for long-term SaaS evolution',
+    title: "Built for long-term SaaS evolution",
     description:
-      'Starter Pro is structured to support real product growth with reusable patterns, typed boundaries, scalable routing, protected surfaces, and maintainable architecture.',
+      "Starter Pro is structured to support real product growth with reusable patterns, typed boundaries, scalable routing, protected surfaces, and maintainable architecture.",
     icon: GitBranch,
   },
 ] as const;
 
 const trustItems = [
   {
-    title: 'Production-shaped scope',
+    title: "Production-shaped scope",
     description:
-      'Focused on the expensive SaaS wiring behind the UI: auth, billing, database, protected flows, purchase recovery, and account structure.',
+      "Focused on the expensive SaaS wiring behind the UI: auth, billing, database, protected flows, purchase recovery, and account structure.",
     icon: Code2,
   },
   {
-    title: 'Production-minded engineering',
+    title: "Production-minded engineering",
     description:
-      'Typed foundations, reusable patterns, maintainable architecture, and production-oriented decisions backed by CI and focused tests.',
+      "Typed foundations, reusable patterns, maintainable architecture, and production-oriented decisions backed by CI and focused tests.",
     icon: ShieldCheck,
   },
   {
-    title: 'Documentation-first',
+    title: "Documentation-first",
     description:
-      'Starter Pro is supported by implementation docs so buyers understand what is included, how commerce works, and how to extend it.',
+      "Starter Pro is supported by implementation docs so buyers understand what is included, how commerce works, and how to extend it.",
     icon: Mail,
   },
   {
-    title: 'PWA-ready without risky caching',
+    title: "PWA-ready without risky caching",
     description:
-      'The PWA layer improves installability and mobile perception while keeping auth, billing, and admin data online-first.',
+      "The PWA layer improves installability and mobile perception while keeping auth, billing, and admin data online-first.",
     icon: WifiOff,
   },
   {
-    title: 'App-quality product polish',
+    title: "App-quality product polish",
     description:
-      'Responsive layouts, standalone-ready PWA foundations, mobile-safe surfaces, loading states, empty states, and production-shaped UX patterns.',
+      "Responsive layouts, standalone-ready PWA foundations, mobile-safe surfaces, loading states, empty states, and production-shaped UX patterns.",
     icon: Smartphone,
   },
   {
-    title: 'Actively maintained',
+    title: "Actively maintained",
     description:
-      'PyColors ships with changelog updates, public mirrors, roadmap direction, and a long-term ecosystem vision.',
+      "PyColors ships with changelog updates, public mirrors, roadmap direction, and a long-term ecosystem vision.",
     icon: GitBranch,
   },
 ] as const;
 
 const stackItems = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Tailwind CSS',
-  'Prisma',
-  'PostgreSQL',
-  'Stripe',
-  'Vercel',
-  'PWA',
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "Prisma",
+  "PostgreSQL",
+  "Stripe",
+  "Vercel",
+  "PWA",
 ] as const;
 
 const includedChecklist = [
-  'Full Starter Pro source code',
-  'Production-ready Next.js App Router architecture',
-  'Strict TypeScript setup',
-  'Tailwind CSS foundation',
-  'Email/password authentication',
-  'Google and GitHub OAuth',
-  'Email verification',
-  'Reset password flow',
-  'Session management',
-  'Protected routes',
-  'Secure Stripe Checkout integration',
-  'Stripe billing portal',
-  'Invoices and billing history UI',
-  'Webhook synchronization with Prisma',
-  'Subscription lifecycle handling',
-  'Purchase recovery flow',
-  'Download delivery foundations',
-  'Dashboard, settings, billing, and admin surfaces',
-  'Plan gating and feature access control',
-  'Installable PWA foundation',
-  'Standalone mode and manifest setup',
-  'Professional PWA icons and screenshots',
-  'Offline fallback route',
-  'Prisma schema and PostgreSQL setup',
-  'Zod validation and React Hook Form integration',
-  'Environment configuration foundations',
-  'Commercial usage rights',
+  "Full Starter Pro source code",
+  "Production-ready Next.js App Router architecture",
+  "Strict TypeScript setup",
+  "Tailwind CSS foundation",
+  "Email/password authentication",
+  "Google and GitHub OAuth",
+  "Email verification",
+  "Reset password flow",
+  "Session management",
+  "Protected routes",
+  "Secure Stripe Checkout integration",
+  "Stripe billing portal",
+  "Invoices and billing history UI",
+  "Webhook synchronization with Prisma",
+  "Subscription lifecycle handling",
+  "Purchase recovery flow",
+  "Download delivery foundations",
+  "Dashboard, settings, billing, and admin surfaces",
+  "Plan gating and feature access control",
+  "Installable PWA foundation",
+  "Standalone mode and manifest setup",
+  "Professional PWA icons and screenshots",
+  "Offline fallback route",
+  "Prisma schema and PostgreSQL setup",
+  "Zod validation and React Hook Form integration",
+  "Environment configuration foundations",
+  "Commercial usage rights",
 ] as const;
 
 const postPurchaseDeliverables = [
-  'Starter Pro ZIP',
-  'Full source code',
-  'Next.js App Router',
-  'TypeScript',
-  'Tailwind CSS',
-  'Authentication',
-  'Stripe Billing',
-  'Organizations',
-  'Documentation',
-  'Production Checklist',
-  'Commercial License',
-  'Future updates',
+  "Starter Pro ZIP",
+  "Full source code",
+  "Next.js App Router",
+  "Strict TypeScript",
+  "Tailwind CSS",
+  "Auth.js foundations",
+  "Stripe billing foundations",
+  "Prisma + PostgreSQL",
+  "PWA-ready foundations",
+  "Documentation",
+  "Production checklist",
+  "Commercial license",
+] as const;
+
+const postPurchaseDetails = [
+  {
+    title: "Your downloadable package",
+    description:
+      "Your secure access link unlocks a Starter Pro ZIP with the full source code, documentation, and production checklist.",
+    icon: Download,
+    links: [
+      {
+        href: INTERNAL.docsWhatIsIncluded,
+        label: "Review everything included",
+      },
+      {
+        href: INTERNAL.docsDelivery,
+        label: "Review delivery",
+      },
+    ],
+  },
+  {
+    title: "Claim email and purchase recovery",
+    description:
+      "After purchase, you receive a claim email shortly afterward with a secure access link. If the original email or link is unavailable, recover access with the email used at checkout.",
+    icon: Mail,
+    links: [
+      {
+        href: INTERNAL.ordersRecover,
+        label: "Open purchase recovery",
+      },
+    ],
+  },
+  {
+    title: "Updates and access support",
+    description:
+      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability. Purchase and access-recovery support is available. No response-time SLA is promised.",
+    icon: ShieldCheck,
+    links: [
+      {
+        href: INTERNAL.changelog,
+        label: "Review release history",
+      },
+    ],
+  },
+  {
+    title: "Commercial license and setup",
+    description:
+      "Use Starter Pro for personal and commercial applications and modify the source for your own products. Redistribution, resale, sublicensing, or repackaging as a competing template or product is not permitted. The repository license remains authoritative. Setup requires dependencies, PostgreSQL, and environment variables for auth, billing, and email.",
+    icon: FileText,
+    links: [
+      {
+        href: INTERNAL.license,
+        label: "Review the license",
+      },
+      {
+        href: INTERNAL.docsGettingStarted,
+        label: "Review setup",
+      },
+    ],
+  },
 ] as const;
 
 const first30MinutesSteps = [
   {
-    step: '01',
-    title: 'Receive claim email',
+    step: "01",
+    title: "Receive claim email",
     description:
-      'Your claim email arrives at your payment email with your access link. Missing it? Use purchase recovery to resend your access link.',
+      "Your claim email should arrive shortly after payment with your secure access link. Missing it? Use purchase recovery to resend your access link.",
   },
   {
-    step: '02',
-    title: 'Download source code',
+    step: "02",
+    title: "Download source code",
     description:
-      'Open the access link in your claim email, download the package, and unzip it before setup.',
+      "Open the access link in your claim email, download the package, and unzip it before setup.",
   },
   {
-    step: '03',
-    title: 'Install dependencies',
+    step: "03",
+    title: "Install dependencies",
     description:
-      'Follow Getting Started to install packages and configure local environment variables.',
+      "Follow Getting Started to install packages and configure local environment variables.",
   },
   {
-    step: '04',
-    title: 'Run locally',
+    step: "04",
+    title: "Run locally",
     description:
-      'Start the app, connect PostgreSQL, and confirm auth and billing foundations load.',
+      "Start the app, connect PostgreSQL, and confirm auth and billing foundations load.",
   },
   {
-    step: '05',
-    title: 'Start building',
+    step: "05",
+    title: "Start building",
     description:
-      'Replace demo product logic with your own onboarding, pricing, and customer flows.',
+      "Replace demo product logic with your own onboarding, pricing, and customer flows.",
   },
 ] as const;
 
 const docResourceCards = [
   {
-    title: 'See what is included',
-    description:
-      'Review the complete Starter Pro package before buying.',
+    title: "See what is included",
+    description: "Review the complete Starter Pro package before buying.",
     href: INTERNAL.docsWhatIsIncluded,
-    cta: 'Review scope',
+    cta: "Review scope",
     icon: FileText,
   },
   {
-    title: 'Review setup',
+    title: "Review setup",
     description:
-      'Check local installation, environment setup, and the first run.',
+      "Check local installation, environment setup, and the first run.",
     href: INTERNAL.docsGettingStarted,
-    cta: 'Open setup guide',
+    cta: "Open setup guide",
     icon: Rocket,
   },
   {
-    title: 'Production checklist',
+    title: "Production checklist",
     description:
-      'Confirm auth, billing, backend, delivery, and release readiness.',
+      "Confirm auth, billing, backend, delivery, and release readiness.",
     href: INTERNAL.docsProductionChecklist,
-    cta: 'Open checklist',
+    cta: "Open checklist",
     icon: ShieldCheck,
   },
   {
-    title: 'Deployment guide',
+    title: "Deployment guide",
     description:
-      'Prepare the Starter Pro foundation for a production deployment.',
+      "Prepare the Starter Pro foundation for a production deployment.",
     href: INTERNAL.docsDeployment,
-    cta: 'Review deployment',
+    cta: "Review deployment",
     icon: Download,
   },
   {
-    title: 'Billing guide',
+    title: "Billing guide",
     description:
-      'Understand subscriptions, checkout, customer portal, and billing states.',
+      "Understand subscriptions, checkout, customer portal, and billing states.",
     href: INTERNAL.docsBilling,
-    cta: 'Review billing',
+    cta: "Review billing",
     icon: CreditCard,
   },
   {
-    title: 'Authentication guide',
+    title: "Authentication guide",
     description:
-      'Review sign-in, sessions, OAuth, reset password, and protected access.',
+      "Review sign-in, sessions, OAuth, reset password, and protected access.",
     href: INTERNAL.docsAuth,
-    cta: 'Review auth',
+    cta: "Review auth",
     icon: Lock,
   },
 ] as const;
 
 const comparisonRows = [
   {
-    label: 'Production-ready dashboard foundation',
-    free: 'Included',
-    pro: 'Production-ready',
+    label: "Production-ready dashboard foundation",
+    free: "Included",
+    pro: "Production-ready",
   },
   {
-    label: 'Authentication already configured',
-    free: 'Included',
-    pro: 'Ready after checkout',
+    label: "Authentication already configured",
+    free: "Included",
+    pro: "Ready after checkout",
   },
   {
-    label: 'Subscriptions ready to use',
-    free: 'Requires building',
-    pro: 'Production-ready',
+    label: "Subscriptions ready to use",
+    free: "Requires building",
+    pro: "Production-ready",
   },
   {
-    label: 'Customer billing portal included',
-    free: 'Requires building',
-    pro: 'Included',
+    label: "Customer billing portal included",
+    free: "Requires building",
+    pro: "Included",
   },
   {
-    label: 'Protected application areas',
-    free: 'Basic examples',
-    pro: 'Ready after checkout',
+    label: "Protected application areas",
+    free: "Basic examples",
+    pro: "Ready after checkout",
   },
   {
-    label: 'Organizations and team workflows',
-    free: 'Example surface',
-    pro: 'Included foundation',
+    label: "Organizations and team workflows",
+    free: "Example surface",
+    pro: "Included foundation",
   },
   {
-    label: 'Account and settings experience',
-    free: 'Included',
-    pro: 'Production-ready',
+    label: "Account and settings experience",
+    free: "Included",
+    pro: "Production-ready",
   },
   {
-    label: 'Admin and internal tool foundation',
-    free: 'Included',
-    pro: 'Ready to extend',
+    label: "Admin and internal tool foundation",
+    free: "Included",
+    pro: "Ready to extend",
   },
   {
-    label: 'Mobile and PWA polish',
-    free: 'Requires building',
-    pro: 'Included',
+    label: "Mobile and PWA polish",
+    free: "Requires building",
+    pro: "Included",
   },
   {
-    label: 'Source code access',
-    free: 'Open-source repo',
-    pro: 'Instant ZIP delivery',
+    label: "Source code access",
+    free: "Open-source repo",
+    pro: "Claim email + ZIP access",
   },
   {
-    label: 'Commercial and client usage',
-    free: 'Review license',
-    pro: 'Included',
+    label: "Commercial and client usage",
+    free: "Review license",
+    pro: "Included",
   },
   {
-    label: 'Best when you need to',
-    free: 'Validate UX',
-    pro: 'Launch and charge',
+    label: "Best when you need to",
+    free: "Validate UX",
+    pro: "Launch and charge",
   },
 ] as const;
 
 const perfectFor = [
-  'SaaS founders',
-  'Freelancers',
-  'Agencies',
-  'Startup teams',
-  'Internal business tools',
+  "SaaS founders",
+  "Freelancers",
+  "Agencies",
+  "Startup teams",
+  "Internal business tools",
 ] as const;
 
-const notIdealFor = [
-  'Static websites',
-  'Landing pages only',
-  'Blogs',
-] as const;
+const notIdealFor = ["Static websites", "Landing pages only", "Blogs"] as const;
 
 const stillBuildItems = [
-  'your product logic',
-  'your AI features',
-  'your business workflows',
-  'your branding',
-  'your domain models',
+  "your product logic",
+  "your AI features",
+  "your business workflows",
+  "your branding",
+  "your domain models",
 ] as const;
 
 const purchaseTrustItems = [
-  'One-time payment',
-  'Secure Stripe checkout',
-  'Instant ZIP delivery',
-  'Future updates',
-  'Purchase recovery',
+  "One-time payment",
+  "Secure Stripe checkout",
+  "Claim email shortly after purchase",
+  "Updates included while available",
+  "Purchase recovery",
 ] as const;
 
 const faqs = [
   {
-    question: 'How long before I can start?',
+    question: "How long before I can start?",
     answer:
-      'Immediately after payment. You receive ZIP access, then follow the setup docs to run the project locally.',
+      "After payment, your claim email should arrive shortly with a secure access link. Download the ZIP, then follow the setup docs to run the project locally.",
   },
   {
-    question: 'What happens after payment?',
+    question: "What happens after payment?",
     answer:
-      'Stripe redirects you to the success flow and PyColors sends access to the checkout email. Purchase recovery is available if the email is missed.',
+      "Stripe redirects you to the success flow and PyColors sends access to the checkout email. Purchase recovery is available if the email is missed.",
   },
   {
-    question: 'Do I own the source code?',
+    question: "Do I own the source code?",
     answer:
-      'Yes. Starter Pro includes the full source code so you can inspect, modify, and ship from it.',
+      "Starter Pro includes the full source code under a commercial license. You may inspect and modify it for your own personal or commercial applications.",
   },
   {
-    question: 'Can I use it commercially?',
+    question: "Can I use it commercially?",
     answer:
-      'Yes. Starter Pro includes commercial usage rights under the PyColors license.',
+      "Yes. Starter Pro includes commercial usage rights under the PyColors license.",
   },
   {
-    question: 'Can I use it for client projects?',
+    question: "Can I use it for client projects?",
     answer:
-      'Yes, commercial usage covers client work. Review the license and terms for the exact usage scope.',
+      "Use is permitted for personal and commercial applications. Review the repository license for the authoritative client-work and source-access terms.",
   },
   {
-    question: 'Can I customize everything?',
+    question: "Can I customize everything?",
     answer:
-      'Yes. The source is yours to adapt: UI, routes, copy, branding, product logic, and domain models.',
+      "You may modify the source for your own products, including the UI, routes, copy, branding, product logic, and domain models.",
   },
   {
-    question: 'What will I still need to build?',
+    question: "What will I still need to build?",
     answer:
-      'Your unique product logic, AI features, business workflows, branding, and domain models. Starter Pro provides the production foundation.',
+      "Your unique product logic, AI features, business workflows, branding, and domain models. Starter Pro provides the production foundation.",
   },
   {
-    question: 'Is Starter Pro production-ready?',
+    question: "Is Starter Pro production-ready?",
     answer:
-      'Yes. It is built as a real SaaS foundation with auth, billing, protected routes, database foundations, and launch-oriented product surfaces.',
+      "Yes. It is built as a real SaaS foundation with auth, billing, protected routes, database foundations, and launch-oriented product surfaces.",
   },
   {
-    question: 'Is Stripe already integrated?',
+    question: "Is Stripe already integrated?",
     answer:
-      'Yes. Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included.',
+      "Yes. Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included.",
   },
   {
-    question: 'Do I get future Starter Pro updates?',
+    question: "Do I get future Starter Pro updates?",
     answer:
-      'Yes. Your one-time purchase includes future Starter Pro releases with release notes in the changelog.',
+      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability.",
   },
   {
-    question: 'What if local setup fails?',
+    question: "What if local setup fails?",
     answer:
-      'Start with setup and environment docs. Email support can help with eligible access and setup questions.',
+      "Start with the setup and environment documentation. Purchase and access-recovery support is available. No response-time SLA is promised.",
   },
   {
-    question: 'What if I do not receive my purchase email?',
+    question: "What if I do not receive my purchase email?",
     answer:
-      'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the secure access link for eligible orders.',
+      "Use the purchase recovery page with the same email address used at checkout. PyColors can resend the secure access link for eligible orders.",
   },
   {
-    question: 'What is the refund policy?',
+    question: "What is the refund policy?",
     answer:
-      'Starter Pro is a digital product with immediate access after checkout. Refunds may be limited unless required by applicable law. Review the terms before purchase.',
+      "Starter Pro is a digital product delivered through a claim email after purchase. Refunds may be limited unless required by applicable law. Review the terms before purchase.",
   },
   // {
   //   question: 'Will the price stay at 199 €?',
@@ -491,35 +542,35 @@ const faqs = [
 function StarterProHeroCarousel() {
   const heroScreenshots = [
     {
-      title: 'Dashboard',
-      label: 'Dashboard',
-      description: 'Production-ready application foundation.',
-      image: '/images/starters/pro/dashboard-pycolors.png',
+      title: "Dashboard",
+      label: "Dashboard",
+      description: "Production-ready application foundation.",
+      image: "/images/starters/pro/dashboard-pycolors.png",
     },
     {
-      title: 'Authentication',
-      label: 'Authentication',
-      description: 'Production-ready authentication already wired.',
-      image: '/images/starters/pro/auth-pycolors.png',
+      title: "Authentication",
+      label: "Authentication",
+      description: "Production-ready authentication already wired.",
+      image: "/images/starters/pro/auth-pycolors.png",
     },
     {
-      title: 'Stripe Billing',
-      label: 'Stripe Billing',
-      description: 'Subscriptions and customer portal included.',
-      image: '/images/starters/pro/billing-pycolors.png',
+      title: "Stripe Billing",
+      label: "Stripe Billing",
+      description: "Subscriptions and customer portal included.",
+      image: "/images/starters/pro/billing-pycolors.png",
     },
     {
-      title: 'Pricing and Organizations',
-      label: 'Organizations',
-      description: 'Multi-tenant and plan-aware product structure.',
-      image: '/images/starters/pro/pricing-pycolors.png',
+      title: "Pricing and Organizations",
+      label: "Organizations",
+      description: "Multi-tenant and plan-aware product structure.",
+      image: "/images/starters/pro/pricing-pycolors.png",
     },
     {
-      title: 'Mobile / PWA',
-      label: 'Mobile / PWA',
-      description: 'Installable app polish for a more credible SaaS.',
+      title: "Mobile / PWA",
+      label: "Mobile / PWA",
+      description: "Installable app polish for a more credible SaaS.",
       // image: '/images/starters/pro/pwa-mobile-pycolors.png',
-      image: '/images/starters/pro/pwa-pycolors.png',
+      image: "/images/starters/pro/pwa-pycolors.png",
     },
   ] as const;
 
@@ -616,19 +667,19 @@ function SectionHeading({
   eyebrow,
   title,
   description,
-  align = 'center',
+  align = "center",
 }: {
   readonly eyebrow?: string;
   readonly title: string;
   readonly description?: string;
-  readonly align?: 'center' | 'left';
+  readonly align?: "center" | "left";
 }) {
   return (
     <div
       className={cn(
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'max-w-3xl text-left',
+        align === "center"
+          ? "mx-auto max-w-3xl text-center"
+          : "max-w-3xl text-left",
       )}
     >
       {eyebrow ? (
@@ -653,11 +704,7 @@ function SectionHeading({
   );
 }
 
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
+function CheckItem({ children }: { readonly children: React.ReactNode }) {
   return (
     <li className="flex items-start gap-3 text-sm text-muted-foreground">
       <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
@@ -696,9 +743,7 @@ function FeatureCard({
       </CardHeader>
 
       <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
+        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   );
@@ -726,9 +771,7 @@ function DocResourceCard({
           </div>
 
           <div className="space-y-2">
-            <div className="text-sm font-medium text-foreground">
-              {title}
-            </div>
+            <div className="text-sm font-medium text-foreground">{title}</div>
 
             <p className="text-sm leading-7 text-muted-foreground">
               {description}
@@ -742,10 +785,7 @@ function DocResourceCard({
           >
             <Link href={href}>
               {cta}
-              <ArrowRight
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>
@@ -757,31 +797,23 @@ function DocResourceCard({
 export default function StarterProPage() {
   return (
     <main className="bg-background text-foreground">
-      <JsonLd
-        id="starter-pro-product-jsonld"
-        data={starterProJsonLd}
-      />
+      <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
       <Container className="py-18">
         <PageHero
           maxWidth="5xl"
           badges={[
             {
-              label: 'Starter Pro',
-              variant: 'secondary',
+              label: "Starter Pro",
+              variant: "secondary",
             },
             {
               label: `Launch price ${launchPrice}`,
-              variant: 'outline',
-              icon: (
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              ),
+              variant: "outline",
+              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
             },
             {
               label: `${regularPrice} regular price`,
-              variant: 'outline',
+              variant: "outline",
             },
           ]}
           title="Stop rebuilding auth, billing, and app foundations. Start closer to launch."
@@ -822,18 +854,16 @@ export default function StarterProPage() {
                 size="lg"
                 className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
-                <Link href={INTERNAL.docsGettingStarted}>
-                  Review setup
-                </Link>
+                <Link href={INTERNAL.docsGettingStarted}>Review setup</Link>
               </Button>
             </div>
           }
           pills={[
-            'One-time payment',
-            'Instant access',
-            'Commercial usage',
-            'Commerce-ready',
-            'PWA-ready',
+            "One-time payment",
+            "Secure claim email",
+            "Commercial usage",
+            "Commerce-ready",
+            "PWA-ready",
           ]}
           extra={
             <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
@@ -854,16 +884,66 @@ export default function StarterProPage() {
             <SectionHeading
               eyebrow="After purchase"
               title="What you receive after purchase"
-              description="A tangible Starter Pro package: ZIP delivery, source code, docs, checklist, license, and future releases."
+              description="A clear path from payment to source access, with recovery, license, update, support, and setup expectations stated before checkout."
             />
 
             <Card className="mt-8 rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
-              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <h3 className="text-lg font-semibold tracking-tight">
+                Included in your Starter Pro package
+              </h3>
+
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {postPurchaseDeliverables.map((item) => (
                   <CheckItem key={item}>{item}</CheckItem>
                 ))}
               </ul>
             </Card>
+
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              {postPurchaseDetails.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <Card
+                    key={item.title}
+                    className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
+                  >
+                    <CardContent className="p-6 sm:p-7">
+                      <div className="flex items-start gap-4">
+                        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-primary">
+                          <Icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+
+                        <div>
+                          <h3 className="text-base font-semibold tracking-tight">
+                            {item.title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                            {item.description}
+                          </p>
+
+                          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                            {item.links.map((link) => (
+                              <Link
+                                key={link.href}
+                                href={link.href}
+                                className="inline-flex items-center gap-1 text-sm font-medium text-foreground underline underline-offset-4"
+                              >
+                                {link.label}
+                                <ArrowRight
+                                  className="h-3.5 w-3.5"
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </Container>
       </section>
@@ -959,11 +1039,10 @@ export default function StarterProPage() {
             <Card className="mt-6 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                  Starter Pro is not positioned as a screenshot
-                  gallery. It is positioned as a shortcut to the
-                  commercial SaaS layer: authentication, billing,
-                  purchase recovery, protected architecture, database
-                  foundations, and app-quality polish.
+                  Starter Pro is not positioned as a screenshot gallery. It is
+                  positioned as a shortcut to the commercial SaaS layer:
+                  authentication, billing, purchase recovery, protected
+                  architecture, database foundations, and app-quality polish.
                 </p>
 
                 <Button
@@ -987,22 +1066,19 @@ export default function StarterProPage() {
               <div className="max-w-3xl">
                 <div className="mb-3 flex flex-wrap items-center gap-2">
                   <Badge variant="outline">PWA-ready</Badge>
-                  <Badge variant="secondary">
-                    Included in Starter Pro
-                  </Badge>
+                  <Badge variant="secondary">Included in Starter Pro</Badge>
                 </div>
 
                 <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                  A more app-like SaaS experience, without risky
-                  offline shortcuts.
+                  A more app-like SaaS experience, without risky offline
+                  shortcuts.
                 </h2>
 
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                  Starter Pro includes manifest setup, standalone
-                  mode, professional icons, install screenshots,
-                  mobile-safe viewport handling, and an offline
-                  fallback while keeping auth, billing, and admin data
-                  online-first.
+                  Starter Pro includes manifest setup, standalone mode,
+                  professional icons, install screenshots, mobile-safe viewport
+                  handling, and an offline fallback while keeping auth, billing,
+                  and admin data online-first.
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -1019,9 +1095,7 @@ export default function StarterProPage() {
                   variant="outline"
                   className="h-10 rounded-[5px] text-sm font-medium"
                 >
-                  <Link href={INTERNAL.docsPwaSetup}>
-                    Review PWA setup
-                  </Link>
+                  <Link href={INTERNAL.docsPwaSetup}>Review PWA setup</Link>
                 </Button>
 
                 <Button
@@ -1132,9 +1206,8 @@ export default function StarterProPage() {
                 </h2>
 
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                  Starter Pro provides the production foundation. You
-                  still build the parts that make your business
-                  unique.
+                  Starter Pro provides the production foundation. You still
+                  build the parts that make your business unique.
                 </p>
 
                 <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -1169,8 +1242,7 @@ export default function StarterProPage() {
                     Built with the stack developers already trust
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Modern SaaS foundations using familiar production
-                    tools.
+                    Modern SaaS foundations using familiar production tools.
                   </p>
                 </div>
 
@@ -1217,15 +1289,9 @@ export default function StarterProPage() {
                 <table className="w-full border-collapse text-left text-sm">
                   <thead className="bg-surface-muted">
                     <tr>
-                      <th className="px-5 py-4 font-medium">
-                        Feature
-                      </th>
-                      <th className="px-5 py-4 font-medium">
-                        Starter Free
-                      </th>
-                      <th className="px-5 py-4 font-medium">
-                        Starter Pro
-                      </th>
+                      <th className="px-5 py-4 font-medium">Feature</th>
+                      <th className="px-5 py-4 font-medium">Starter Free</th>
+                      <th className="px-5 py-4 font-medium">Starter Pro</th>
                     </tr>
                   </thead>
 
@@ -1235,20 +1301,16 @@ export default function StarterProPage() {
                         key={row.label}
                         className={cn(
                           index !== comparisonRows.length - 1 &&
-                            'border-b border-border-subtle',
+                            "border-b border-border-subtle",
                         )}
                       >
-                        <td className="px-5 py-4 font-medium">
-                          {row.label}
-                        </td>
+                        <td className="px-5 py-4 font-medium">{row.label}</td>
 
                         <td className="px-5 py-4 text-muted-foreground">
                           {row.free}
                         </td>
 
-                        <td className="px-5 py-4 font-medium">
-                          {row.pro}
-                        </td>
+                        <td className="px-5 py-4 font-medium">{row.pro}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -1276,9 +1338,8 @@ export default function StarterProPage() {
                 </a>
               </Button>
               <p className="max-w-xl text-center text-xs leading-6 text-muted-foreground">
-                Choose Pro when the cost of rebuilding the foundation
-                is higher than the price of skipping it. For a slower
-                decision, read the{' '}
+                Choose Pro when the cost of rebuilding the foundation is higher
+                than the price of skipping it. For a slower decision, read the{" "}
                 <Link
                   href={INTERNAL.buildVsBuy}
                   className="font-medium text-foreground underline underline-offset-4"
@@ -1300,18 +1361,14 @@ export default function StarterProPage() {
               <CardHeader className="space-y-6 pb-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="text-xl font-semibold">
-                      Starter Pro
-                    </p>
+                    <p className="text-xl font-semibold">Starter Pro</p>
 
                     <p className="mt-2 text-sm text-muted-foreground">
                       Built for developers serious about launching.
                     </p>
                   </div>
 
-                  <Badge className="rounded-[5px]">
-                    Best launch path
-                  </Badge>
+                  <Badge className="rounded-[5px]">Best launch path</Badge>
                 </div>
 
                 <div className="flex items-end gap-3">
@@ -1320,9 +1377,7 @@ export default function StarterProPage() {
                   </span>
 
                   <div className="pb-1 text-sm text-muted-foreground">
-                    <span className="mr-2 line-through">
-                      {regularPrice}
-                    </span>{' '}
+                    <span className="mr-2 line-through">{regularPrice}</span>{" "}
                     one-time payment
                   </div>
                 </div>
@@ -1333,25 +1388,21 @@ export default function StarterProPage() {
                   <CheckItem>Full Starter Pro source code</CheckItem>
                   <CheckItem>Real authentication included</CheckItem>
                   <CheckItem>Stripe billing included</CheckItem>
-                  <CheckItem>
-                    Protected architecture included
-                  </CheckItem>
-                  <CheckItem>
-                    Prisma + PostgreSQL foundation
-                  </CheckItem>
+                  <CheckItem>Protected architecture included</CheckItem>
+                  <CheckItem>Prisma + PostgreSQL foundation</CheckItem>
                   <CheckItem>Commercial usage rights</CheckItem>
                 </ul>
 
                 <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 text-sm leading-7 text-muted-foreground">
-                  Current launch price:{' '}
+                  Current launch price:{" "}
                   <span className="font-medium text-foreground">
                     {launchPrice}
                   </span>
-                  . Regular price planned at{' '}
+                  . Regular price planned at{" "}
                   <span className="font-medium text-foreground">
                     {regularPrice}
                   </span>
-                  . One-time payment with instant delivery after
+                  . One-time payment with a claim email sent shortly after
                   purchase.
                 </div>
 
@@ -1400,23 +1451,21 @@ export default function StarterProPage() {
                     size="lg"
                     className="h-11 rounded-[5px] px-6 text-sm font-medium"
                   >
-                    <Link href={INTERNAL.docsGettingStarted}>
-                      Review setup
-                    </Link>
+                    <Link href={INTERNAL.docsGettingStarted}>Review setup</Link>
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Legal scope and usage terms are governed by{' '}
+              Legal scope and usage terms are governed by{" "}
               <Link
                 href={INTERNAL.license}
                 className="underline underline-offset-4"
               >
                 /license
-              </Link>{' '}
-              and{' '}
+              </Link>{" "}
+              and{" "}
               <Link
                 href={INTERNAL.terms}
                 className="underline underline-offset-4"
@@ -1461,9 +1510,7 @@ export default function StarterProPage() {
                   className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
                 >
                   <CardContent className="p-6">
-                    <h3 className="text-base font-medium">
-                      {faq.question}
-                    </h3>
+                    <h3 className="text-base font-medium">{faq.question}</h3>
 
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
                       {faq.answer}
@@ -1487,20 +1534,19 @@ export default function StarterProPage() {
               </Badge>
 
               <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start from the SaaS foundation. Spend your time on the
-                product.
+                Start from the SaaS foundation. Spend your time on the product.
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                Buy Starter Pro when authentication, billing,
-                protected routes, PWA-ready app foundations, and SaaS
-                infrastructure should already be handled.
+                Buy Starter Pro when authentication, billing, protected routes,
+                PWA-ready app foundations, and SaaS infrastructure should
+                already be handled.
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
                 <Pill>Launch price {launchPrice}</Pill>
                 <Pill>One-time payment</Pill>
-                <Pill>Instant access</Pill>
+                <Pill>Secure claim email</Pill>
                 <Pill>Commercial usage</Pill>
                 <Pill>PWA-ready</Pill>
               </div>

@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { ArrowRight, LoaderCircle } from 'lucide-react';
+import * as React from "react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
 
-import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { createStarterProCheckout } from '@/lib/api/client';
-import { trackMoneyPathEvent } from '@/lib/analytics';
+import { Button, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { createStarterProCheckout } from "@/lib/api/client";
+import { trackMoneyPathEvent } from "@/lib/analytics";
 
 type BuyStarterProButtonProps = {
   className?: string;
   fullWidth?: boolean;
-  size?: 'default' | 'sm' | 'lg' | 'icon';
-  variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: "default" | "sm" | "lg" | "icon";
+  variant?: "default" | "outline" | "secondary" | "ghost" | "link";
   label?: string;
   loadingLabel?: string;
   trustText?: string;
   showTrustText?: boolean;
 };
 
-const STARTER_PRO = PRODUCT_DISPLAY['starter-pro'];
+const STARTER_PRO = PRODUCT_DISPLAY["starter-pro"];
 
 export function BuyStarterProButton({
   className,
   fullWidth = true,
-  size = 'lg',
-  variant = 'default',
+  size = "lg",
+  variant = "default",
   label = `Buy Starter Pro — ${STARTER_PRO.priceLabel}`,
-  loadingLabel = 'Redirecting to secure checkout...',
-  trustText = 'One-time payment · Instant access after purchase',
+  loadingLabel = "Redirecting to secure checkout...",
+  trustText = "One-time payment · Claim email shortly after purchase",
   showTrustText = false,
 }: BuyStarterProButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -37,7 +37,7 @@ export function BuyStarterProButton({
   async function handleBuy() {
     try {
       trackMoneyPathEvent({
-        event: 'buy_clicked',
+        event: "buy_clicked",
         productSlug: STARTER_PRO.slug,
         productName: STARTER_PRO.name,
         page: globalThis.location.pathname,
@@ -48,7 +48,7 @@ export function BuyStarterProButton({
       const url = await createStarterProCheckout();
 
       trackMoneyPathEvent({
-        event: 'checkout_redirect_started',
+        event: "checkout_redirect_started",
         productSlug: STARTER_PRO.slug,
         productName: STARTER_PRO.name,
         page: globalThis.location.pathname,
@@ -59,14 +59,14 @@ export function BuyStarterProButton({
       const message =
         err instanceof Error && err.message
           ? err.message
-          : 'Checkout could not be opened right now. Please try again.';
+          : "Checkout could not be opened right now. Please try again.";
 
       trackMoneyPathEvent({
-        event: 'checkout_redirect_failed',
+        event: "checkout_redirect_failed",
         productSlug: STARTER_PRO.slug,
         productName: STARTER_PRO.name,
         page: globalThis.location.pathname,
-        status: 'error',
+        status: "error",
       });
 
       setError(message);
@@ -75,7 +75,7 @@ export function BuyStarterProButton({
   }
 
   return (
-    <div className={cn('space-y-2', fullWidth && 'w-full')}>
+    <div className={cn("space-y-2", fullWidth && "w-full")}>
       <Button
         type="button"
         onClick={handleBuy}
@@ -83,25 +83,25 @@ export function BuyStarterProButton({
         size={size}
         variant={variant}
         className={cn(
-          'h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer ',
-          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-          fullWidth && 'w-full',
-          variant === 'default' && [
-            'border border-transparent',
-            'bg-primary text-primary-foreground',
-            'shadow-soft',
-            'hover:bg-brand-primary-hover',
-            'hover:shadow-medium',
+          "h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer ",
+          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          fullWidth && "w-full",
+          variant === "default" && [
+            "border border-transparent",
+            "bg-primary text-primary-foreground",
+            "shadow-soft",
+            "hover:bg-brand-primary-hover",
+            "hover:shadow-medium",
           ],
-          variant === 'outline' && [
-            'border border-border-subtle',
-            'bg-background',
-            'hover:bg-surface-muted',
+          variant === "outline" && [
+            "border border-border-subtle",
+            "bg-background",
+            "hover:bg-surface-muted",
           ],
-          variant === 'secondary' && [
-            'border border-border-subtle',
-            'bg-surface-muted',
-            'hover:bg-surface',
+          variant === "secondary" && [
+            "border border-border-subtle",
+            "bg-surface-muted",
+            "hover:bg-surface",
           ],
           className,
         )}
