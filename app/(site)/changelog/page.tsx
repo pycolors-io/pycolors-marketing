@@ -64,6 +64,41 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: 'v1.21.0',
+    title: 'Clearer guidance from adoption to upgrade',
+    dateLabel: 'Fri 7 Aug 2026',
+    dateISO: '2026-08-07',
+    status: 'Stable',
+    releaseWeekLabel: 'Aug 2026 (weekly release)',
+    summary:
+      'This release makes PyColors easier to evaluate, adopt, customize, and upgrade. Developers now have a more connected documentation path, while teams considering Starter Pro get clearer purchase expectations. Accessibility guidance and common status announcements are also more consistent.',
+    highlights: [
+      {
+        title: 'A more connected PyColors UI learning path',
+        items: [
+          'Added practical guidance for installation, everyday usage, migration, and visual customization.',
+          'Strengthened accessibility guidance for teams building production interfaces.',
+          'Improved documentation navigation so relevant guidance is easier to find.',
+        ],
+      },
+      {
+        title: 'Clearer product evaluation',
+        items: [
+          'Clarified the Starter Pro purchase experience so buyers know what to expect before continuing.',
+          'Connected the documentation journey more clearly from first adoption through customization and upgrades.',
+        ],
+      },
+      {
+        title: 'Accessibility and fixes',
+        items: [
+          'Improved accessible status announcements for empty and loading interface states.',
+          'Fixed package badge links so they resolve consistently from the public marketing site.',
+        ],
+      },
+    ],
+    cta: { label: 'Explore PyColors UI guides', href: '/docs/ui' },
+  },
+  {
     version: 'v1.20.0',
     title: 'Tokens baseline folded into the product story',
     dateLabel: 'Fri 31 Jul 2026',

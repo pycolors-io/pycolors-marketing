@@ -42,6 +42,7 @@ type Milestone =
   | 'May 2026'
   | 'Jun 2026'
   | 'Jul 2026'
+  | 'Aug 2026'
   | 'H1 2026';
 
 type RoadmapItem = {
@@ -137,6 +138,12 @@ const milestones: Array<{
       'Improve Starter Pro conversion proof, stabilize the free UI and token layer, recover the missed release week, and strengthen release reliability for faster premium product delivery.',
   },
   {
+    id: 'Aug 2026',
+    title: 'August 2026',
+    subtitle:
+      'PyColors Marketing v1.21.0 shipped on 7 August 2026 with clearer public guidance for adoption, customization, upgrades, and product evaluation.',
+  },
+  {
     id: 'H1 2026',
     title: 'H1 2026',
     subtitle:
@@ -145,6 +152,24 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: 'PyColors UI adoption guidance',
+    description:
+      'Shipped connected installation, usage, migration, theming, and accessibility guidance with more reliable documentation navigation.',
+    status: 'Shipped',
+    milestone: 'Aug 2026',
+    tags: ['Docs', 'DX', 'Accessibility'],
+    href: '/docs/ui',
+  },
+  {
+    title: 'Starter Pro purchase clarity',
+    description:
+      'Shipped clearer purchase expectations so teams can evaluate Starter Pro with more confidence before continuing.',
+    status: 'Shipped',
+    milestone: 'Aug 2026',
+    tags: ['Starter Pro', 'Trust'],
+    href: '/starters/pro',
+  },
   {
     title: 'Ship v1.0 — UI Core',
     description:
