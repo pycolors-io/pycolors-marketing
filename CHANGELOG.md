@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.21.0
+
+Released by PyColors Marketing on 7 August 2026.
+
+### Minor Changes
+
+- Added clearer installation, usage, migration, theming, and accessibility
+  guidance so teams can adopt and customize PyColors UI with less ambiguity.
+- Improved documentation navigation so developers can find implementation
+  guidance more reliably.
+- Clarified the Starter Pro purchase experience so buyers have a clearer view
+  of what to expect before continuing.
+- Improved accessible status announcements for empty and loading interface
+  states.
+
+### Fixed
+
+- Fixed package badge links so they resolve consistently from the public
+  marketing site.
+
 ## 1.20.0
 
 ### Minor Changes
