@@ -1,0 +1,226 @@
+---
+title: Theming
+description: Load PyColors tokens, understand their Tailwind v4 mappings, and keep UI primitives consistent across light and dark themes.
+lastUpdated: "2026-08-06"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import { BookOpen, Layers3, Palette, Route } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Theming</Badge>
+</div>
+
+## Give every primitive the same semantic theme
+
+`@pycolors/ui` primitives use semantic roles such as `background`, `card`,
+`primary`, `border`, and `ring`. Load those roles once with
+`@pycolors/tokens`, then let components consume them through Tailwind utilities.
+
+<Callout title="Core idea">
+  The token package owns theme values and Tailwind mappings. UI primitives
+  consume the resulting semantic utilities. Your application owns when the
+  `dark` class is applied.
+</Callout>
+
+## Install and load the tokens
+
+Install the UI and token packages if they are not already dependencies of your
+app.
+
+```bash
+pnpm add @pycolors/ui @pycolors/tokens
+```
+
+Import the public token stylesheet once from your global stylesheet. In a
+Tailwind CSS v4 app, keep both imports at the top of that stylesheet.
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+```
+
+Do not copy `tokens.css` into your application or import a path inside the
+package. The supported public stylesheet is
+`@pycolors/tokens/tokens.css`.
+
+## Understand the token chain
+
+The token stylesheet connects four layers:
+
+| Layer                 | Card example                | Responsibility                                         |
+| --------------------- | --------------------------- | ------------------------------------------------------ |
+| Semantic CSS variable | `--card`                    | Defines the current theme value for a card surface.    |
+| Tailwind v4 mapping   | `--color-card: var(--card)` | Exposes the role to Tailwind through `@theme inline`.  |
+| Semantic utility      | `bg-card`                   | Lets application and component code request that role. |
+| UI primitive          | `Card`                      | Uses the shared role without owning a theme value.     |
+
+The package includes mappings like these:
+
+```css title="@pycolors/tokens/tokens.css"
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+```
+
+Tailwind v4 turns those mappings into utilities such as `bg-background`,
+`text-foreground`, `bg-card`, `text-card-foreground`, `bg-primary`,
+`border-border`, and `ring-ring`. Changing a theme value therefore does not
+require rewriting component classes.
+
+## Use semantic roles in product UI
+
+Import primitives from the public `@pycolors/ui` entry point and keep local
+composition token-driven.
+
+```tsx title="account-summary.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+
+export function AccountSummary() {
+  return (
+    <Card className="border-border bg-card text-card-foreground">
+      <CardHeader>
+        <CardTitle>Workspace theme</CardTitle>
+        <CardDescription>
+          Components follow the semantic theme selected by your app.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground">
+          Surfaces, text, borders, and focus rings update together.
+        </p>
+      </CardContent>
+      <CardFooter>
+        <Button>Save preference</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+The example uses semantic utilities rather than raw color values. The same
+component remains valid in both themes.
+
+## Apply dark mode at the app shell
+
+`@pycolors/tokens` defines its dark values under a `.dark` selector. Add the
+class to the document root or app shell through your existing theme logic.
+
+```tsx title="document-shell.tsx"
+export function DocumentShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="dark">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Remove the class for the default light theme. A real application should derive
+that class from its existing preference, storage, or server-rendered theme
+strategy.
+
+<Callout type="info" title="Application responsibility">
+  PyColors provides the `.dark` token values. It does not provide a theme
+  toggle, persistence API, React provider, or flash-prevention strategy. Keep
+  those decisions in your application.
+</Callout>
+
+## Customize without creating theme drift
+
+Start with the existing semantic roles. If your product needs different theme
+values, change them once in the application's global theme layer after the
+package import, and review the corresponding light and dark roles together.
+
+Keep these boundaries explicit:
+
+- preserve role names such as `primary`, `card`, `destructive`, and `ring`;
+- keep component code on semantic utilities instead of palette or raw values;
+- verify text contrast, focus visibility, disabled states, and status feedback
+  in both themes;
+- do not edit files in `node_modules` or import package internals;
+- do not scatter token redefinitions across components or feature stylesheets;
+- treat a new public role as a design-system decision, not a local component
+  workaround.
+
+<PreferAvoid
+  prefer={[
+    "one global import of `@pycolors/tokens/tokens.css`",
+    "semantic utilities such as `bg-card` and `text-muted-foreground`",
+    "the `.dark` class controlled by application theme logic",
+    "central theme changes reviewed in light and dark mode",
+  ]}
+  avoid={[
+    "raw color values in reusable components",
+    "component-local copies of semantic variables",
+    "private imports from the UI or token packages",
+    "using color alone to communicate status or errors",
+  ]}
+/>
+
+## Verification checklist
+
+- [ ] The token stylesheet is imported once from its public path.
+- [ ] Tailwind v4 recognizes semantic utilities from the token mappings.
+- [ ] UI imports use the public `@pycolors/ui` entry point.
+- [ ] Reusable components contain no raw theme colors.
+- [ ] The app shell adds and removes `.dark` through existing theme logic.
+- [ ] Text, controls, focus rings, and feedback remain understandable in both
+      themes.
+
+## Related docs
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Design tokens",
+      href: "/docs/design-system/tokens",
+      description:
+        "Understand the decisions, variables, and utility mappings behind the UI layer.",
+      icon: Layers3,
+    },
+    {
+      title: "Colors",
+      href: "/docs/design-system/colors",
+      description:
+        "Review semantic color roles, contrast expectations, and theme-safe usage.",
+      icon: Palette,
+    },
+    {
+      title: "Usage patterns",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Compose public primitives into real product surfaces without changing their API.",
+      icon: BookOpen,
+    },
+    {
+      title: "Migration guidance",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adopt PyColors UI incrementally while preserving product behavior and public imports.",
+      icon: Route,
+    },
+  ]}
+/>
