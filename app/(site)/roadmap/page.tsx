@@ -152,6 +152,15 @@ const milestones: Array<{
 
 const items: RoadmapItem[] = [
   {
+    title: "PyColors Marketing v1.21.1",
+    description:
+      "Added the 2026-08-14 public marketing update to make the paths across UI, documentation, starters, and templates easier to evaluate while preserving the full roadmap context.",
+    status: "Shipped",
+    milestone: "Aug 2026",
+    tags: ["Marketing", "Trust", "SEO"],
+    href: "/changelog",
+  },
+  {
     title: "PyColors UI adoption guidance",
     description:
       "Shipped connected installation, usage, migration, theming, and accessibility guidance with more reliable documentation navigation.",

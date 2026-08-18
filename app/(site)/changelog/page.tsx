@@ -52,6 +52,40 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.21.1",
+    title: "A clearer next step for product builders",
+    dateLabel: "Fri 14 Aug 2026",
+    dateISO: "2026-08-14",
+    status: "Stable",
+    releaseWeekLabel: "Aug 2026 (weekly release)",
+    summary:
+      "This marketing update makes the PyColors journey easier to scan: developers can more quickly move from UI foundations and practical guidance to the product path that fits their next release.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Added a current public release entry that connects the Changelog, Roadmap, UI documentation, and Starter Pro evaluation path.",
+          "Preserved the complete public release history so teams can keep the context behind earlier improvements.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Aligned the displayed PyColors UI baseline with the current v1.2.4 package release.",
+          "Kept the UI, documentation, starters, and template paths visible for teams choosing their best starting point.",
+        ],
+      },
+      {
+        title: "What this means for teams",
+        items: [
+          "Candidates can evaluate a clearer path from reusable components to a credible SaaS product experience.",
+          "Recruiters and companies can use the product pages and documentation to assess PyColors with less ambiguity.",
+        ],
+      },
+    ],
+    cta: { label: "Explore PyColors UI", href: "/docs/ui" },
+  },
+  {
     version: "v1.21.0",
     title: "Clearer guidance from adoption to upgrade",
     dateLabel: "Fri 7 Aug 2026",

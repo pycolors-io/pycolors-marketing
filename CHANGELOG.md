@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.21.1
+
+Released by PyColors Marketing on 14 August 2026.
+
+### Patch Changes
+
+- Added a product-focused weekly marketing update that helps developers find
+  the right PyColors starting point and next step.
+- Aligned the displayed PyColors UI baseline with the current v1.2.4 package
+  release.
+- Preserved the complete release history while adding the latest public update.
+
 ## 1.21.0
 
 Released by PyColors Marketing on 7 August 2026.
