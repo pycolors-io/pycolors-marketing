@@ -1,7 +1,8 @@
 // @ts-nocheck
-import * as __fd_glob_97 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
-import * as __fd_glob_96 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
-import * as __fd_glob_95 from "../content/docs/ui/toast.mdx?collection=docs";
+import * as __fd_glob_98 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
+import * as __fd_glob_97 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
+import * as __fd_glob_96 from "../content/docs/ui/toast.mdx?collection=docs";
+import * as __fd_glob_95 from "../content/docs/ui/theming.mdx?collection=docs";
 import * as __fd_glob_94 from "../content/docs/ui/textarea.mdx?collection=docs";
 import * as __fd_glob_93 from "../content/docs/ui/tabs.mdx?collection=docs";
 import * as __fd_glob_92 from "../content/docs/ui/table.mdx?collection=docs";
@@ -206,8 +207,9 @@ export const docs = await create.docs(
     "ui/table.mdx": __fd_glob_92,
     "ui/tabs.mdx": __fd_glob_93,
     "ui/textarea.mdx": __fd_glob_94,
-    "ui/toast.mdx": __fd_glob_95,
-    "ui/usage-patterns.mdx": __fd_glob_96,
-    "ui/why-pycolors-ui.mdx": __fd_glob_97,
+    "ui/theming.mdx": __fd_glob_95,
+    "ui/toast.mdx": __fd_glob_96,
+    "ui/usage-patterns.mdx": __fd_glob_97,
+    "ui/why-pycolors-ui.mdx": __fd_glob_98,
   },
 );

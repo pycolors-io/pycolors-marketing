@@ -170,6 +170,8 @@ const browserCollections = {
     "ui/tabs.mdx": () => import("../content/docs/ui/tabs.mdx?collection=docs"),
     "ui/textarea.mdx": () =>
       import("../content/docs/ui/textarea.mdx?collection=docs"),
+    "ui/theming.mdx": () =>
+      import("../content/docs/ui/theming.mdx?collection=docs"),
     "ui/toast.mdx": () =>
       import("../content/docs/ui/toast.mdx?collection=docs"),
     "ui/usage-patterns.mdx": () =>
