@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ExternalLink, LayoutTemplate, Lock } from "lucide-react";
 import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
 
@@ -195,26 +194,6 @@ export function Footer() {
                     templates, UI systems, commerce-ready foundations, and
                     production-ready foundations.
                   </p>
-                  <div className="pt-2">
-                    <a
-                      href="https://www.producthunt.com/posts/pycolors"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={cn(
-                        "inline-flex transition-opacity hover:opacity-90",
-                        focusRing,
-                      )}
-                    >
-                      <Image
-                        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1166981"
-                        alt="PyColors on Product Hunt"
-                        width={220}
-                        height={38}
-                        unoptimized
-                        className="rounded-[5px]"
-                      />
-                    </a>
-                  </div>
                 </div>
 
                 <nav
