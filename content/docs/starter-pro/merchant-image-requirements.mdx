@@ -16,11 +16,17 @@ Starter Pro’s Merchant image guidance is intentionally conservative:
 - `1500 × 1500 px` is the preferred canonical target when practical
 - 1:1 assets are preferred for product feeds
 
+There is currently no repository-owned Merchant feed or `image_link`/
+`additional_image_link` pipeline to audit in this checkout. The in-repo contract
+therefore documents the minimums and provides a repository-owned validator for
+assets that are already present, while the external Merchant Center boundary
+remains outside this PR.
+
 <Callout title="Validation boundary">
   Google Merchant Center can also ingest externally hosted images. When those
-  dimensions cannot be verified from repository evidence, Starter Pro
-  documents the boundary instead of guessing. Only repository-owned assets are
-  validated automatically in-repo.
+  dimensions cannot be verified from repository evidence, Starter Pro documents
+  the boundary instead of guessing. Only repository-owned assets are validated
+  automatically in-repo.
 </Callout>
 
 <div className="flex flex-wrap items-center gap-2">
@@ -38,4 +44,3 @@ minimum required dimensions before Google’s January 2027 enforcement date.
 If a Merchant integration references hosted images outside the repository, the
 repository can document the requirement but cannot prove the remote asset
 dimensions without external evidence.
-
