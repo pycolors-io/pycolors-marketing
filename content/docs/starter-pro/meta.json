@@ -16,6 +16,7 @@
     "auth",
     "billing",
     "billing-testing",
+    "merchant-image-requirements",
     "backend",
     "delivery",
     "production-checklist",

@@ -1,0 +1,41 @@
+---
+title: Merchant image requirements
+description: Document the Google Merchant image-size contract for Starter Pro assets.
+lastUpdated: "2026-08-21"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+
+## Merchant image contract
+
+Starter Pro’s Merchant image guidance is intentionally conservative:
+
+- repository-owned Merchant assets should be at least `500 × 500 px`
+- `1500 × 1500 px` is the preferred canonical target when practical
+- 1:1 assets are preferred for product feeds
+
+<Callout title="Validation boundary">
+  Google Merchant Center can also ingest externally hosted images. When those
+  dimensions cannot be verified from repository evidence, Starter Pro
+  documents the boundary instead of guessing. Only repository-owned assets are
+  validated automatically in-repo.
+</Callout>
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Merchant</Badge>
+</div>
+
+## What this protects
+
+This contract is meant to keep future Merchant uploads from drifting below the
+minimum required dimensions before Google’s January 2027 enforcement date.
+
+## What remains external
+
+If a Merchant integration references hosted images outside the repository, the
+repository can document the requirement but cannot prove the remote asset
+dimensions without external evidence.
+
