@@ -36,7 +36,7 @@ import {
   TextCursorInput,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
@@ -61,7 +61,8 @@ Use it for:
 Checkbox is built on **Radix Checkbox** and styled with PyColors semantic tokens such as `border-input`, `bg-background`, `text-foreground`, and `ring-ring`.
 
 <Callout title="Core idea">
-  Checkbox is for explicit selection. Use it when each option can be independently checked or unchecked.
+  Checkbox is for explicit selection. Use it when each option can be
+  independently checked or unchecked.
 </Callout>
 
 ### Import
@@ -107,9 +108,7 @@ export function BasicCheckbox() {
     <CheckboxField>
       <Checkbox id="analytics" />
       <CheckboxContent>
-        <CheckboxLabel htmlFor="analytics">
-          Enable analytics
-        </CheckboxLabel>
+        <CheckboxLabel htmlFor="analytics">Enable analytics</CheckboxLabel>
         <CheckboxDescription>
           Collect product usage data to improve the dashboard experience.
         </CheckboxDescription>
@@ -123,7 +122,8 @@ export function BasicCheckbox() {
 </Tabs>
 
 <Callout type="info" title="Label rule">
-  Always connect the visible label with the checkbox using `htmlFor` and `id`, unless the label wraps the control directly.
+  Always connect the visible label with the checkbox using `htmlFor` and `id`,
+  unless the label wraps the control directly.
 </Callout>
 
 ## When to use Checkbox
@@ -135,21 +135,20 @@ Use Checkbox when options are independent and the user can select multiple choic
   tone="platform"
   items={[
     {
-      title: 'Settings',
+      title: "Settings",
       description:
-        'Use for independent preferences, options, and account settings.',
+        "Use for independent preferences, options, and account settings.",
       icon: Settings2,
     },
     {
-      title: 'Filters',
+      title: "Filters",
       description:
-        'Use for multi-select filters where several values can apply at once.',
+        "Use for multi-select filters where several values can apply at once.",
       icon: Filter,
     },
     {
-      title: 'Consent',
-      description:
-        'Use for terms, confirmations, and explicit opt-in choices.',
+      title: "Consent",
+      description: "Use for terms, confirmations, and explicit opt-in choices.",
       icon: ShieldCheck,
     },
   ]}
@@ -188,6 +187,7 @@ Use `defaultChecked` for uncontrolled checkboxes and `checked` with `onCheckedCh
         </CheckboxField>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -297,7 +297,8 @@ export function ControlledCheckbox() {
 </Tabs>
 
 <Callout title="State rule">
-  Radix Checkbox can return `true`, `false`, or `"indeterminate"`. Convert the value intentionally when your app expects a boolean.
+  Radix Checkbox can return `true`, `false`, or `"indeterminate"`. Convert the
+  value intentionally when your app expects a boolean.
 </Callout>
 
 ### Indeterminate state
@@ -338,6 +339,7 @@ Use the indeterminate state for parent checkboxes when only some child items are
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -423,6 +425,7 @@ Use disabled checkboxes only when the option cannot currently be changed.
         </CheckboxField>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -471,24 +474,33 @@ export function DisabledCheckbox() {
 </Tabs>
 
 <Callout type="info" title="Disabled copy">
-  When a disabled option may frustrate users, explain why it is unavailable and what unlocks it.
+  When a disabled option may frustrate users, explain why it is unavailable and
+  what unlocks it.
 </Callout>
 
 ### Form validation
 
-Use `aria-invalid` and supporting error copy when a required checkbox is not selected.
+Use the `error` prop when a required checkbox is not selected. It renders visible
+error copy, sets `aria-invalid`, and connects the message with both
+`aria-describedby` and `aria-errormessage`. The error has `role="alert"`, so it
+is announced when it appears. Consumer-provided `aria-describedby` values are
+preserved alongside the error message id.
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">
     <Preview>
       <CheckboxField>
-        <Checkbox id="terms" aria-invalid="true" />
+        <Checkbox
+          id="terms"
+          required
+          error="You must accept the terms before continuing."
+        />
         <CheckboxContent>
           <CheckboxLabel htmlFor="terms">
             I agree to the terms
           </CheckboxLabel>
-          <CheckboxDescription className="text-destructive">
-            You must accept the terms before continuing.
+          <CheckboxDescription>
+            Required before creating a workspace.
           </CheckboxDescription>
         </CheckboxContent>
       </CheckboxField>
@@ -509,13 +521,15 @@ import {
 export function CheckboxValidation() {
   return (
     <CheckboxField>
-      <Checkbox id="terms" aria-invalid="true" />
+      <Checkbox
+        id="terms"
+        required
+        error="You must accept the terms before continuing."
+      />
       <CheckboxContent>
-        <CheckboxLabel htmlFor="terms">
-          I agree to the terms
-        </CheckboxLabel>
-        <CheckboxDescription className="text-destructive">
-          You must accept the terms before continuing.
+        <CheckboxLabel htmlFor="terms">I agree to the terms</CheckboxLabel>
+        <CheckboxDescription>
+          Required before creating a workspace.
         </CheckboxDescription>
       </CheckboxContent>
     </CheckboxField>
@@ -533,81 +547,90 @@ export function CheckboxValidation() {
     #### Use checkboxes for independent options
 
     Each checkbox should represent one choice that can be selected without forcing a mutually exclusive decision.
+
   </Step>
 
   <Step>
     #### Keep labels clear and specific
 
     The label should explain exactly what gets enabled, selected, or confirmed.
+
   </Step>
 
   <Step>
     #### Add descriptions for important consequences
 
     Use `CheckboxDescription` when the choice affects privacy, billing, delivery, visibility, or access.
+
   </Step>
 
   <Step>
     #### Handle indeterminate state intentionally
 
     Use `"indeterminate"` only when representing a mixed group state.
+
   </Step>
 
   <Step>
     #### Validate required confirmations
 
     For required consent or terms fields, show a direct error message near the checkbox.
+
   </Step>
 </Steps>
 
 ## Checkbox vs Switch vs Radio Group
 
-| Situation | Use |
-| --- | --- |
-| Multiple independent selections | Checkbox |
-| Required consent or confirmation | Checkbox |
-| Parent selection with mixed children | Checkbox with indeterminate state |
-| Immediate on/off setting | Switch |
-| One choice from a mutually exclusive group | Radio Group |
-| Small menu action list | Dropdown Menu |
+| Situation                                  | Use                               |
+| ------------------------------------------ | --------------------------------- |
+| Multiple independent selections            | Checkbox                          |
+| Required consent or confirmation           | Checkbox                          |
+| Parent selection with mixed children       | Checkbox with indeterminate state |
+| Immediate on/off setting                   | Switch                            |
+| One choice from a mutually exclusive group | Radio Group                       |
+| Small menu action list                     | Dropdown Menu                     |
 
 <Callout title="Decision rule">
-  Use Checkbox for selection, Switch for immediate enablement, and Radio Group for one exclusive choice.
+  Use Checkbox for selection, Switch for immediate enablement, and Radio Group
+  for one exclusive choice.
 </Callout>
 
 ## API
 
 #### Components
 
-| Component | Description |
-| --- | --- |
-| `Checkbox` | Root checkbox control built on Radix Checkbox |
-| `CheckboxField` | Layout helper for checkbox rows |
-| `CheckboxContent` | Text stack helper for label and description |
-| `CheckboxLabel` | Accessible label helper |
-| `CheckboxDescription` | Supporting text helper |
+| Component             | Description                                   |
+| --------------------- | --------------------------------------------- |
+| `Checkbox`            | Root checkbox control built on Radix Checkbox |
+| `CheckboxField`       | Layout helper for checkbox rows               |
+| `CheckboxContent`     | Text stack helper for label and description   |
+| `CheckboxLabel`       | Accessible label helper                       |
+| `CheckboxDescription` | Supporting text helper                        |
 
 #### Checkbox props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `boolean \| "indeterminate"` | — | Controlled checked state |
-| `defaultChecked` | `boolean \| "indeterminate"` | — | Initial uncontrolled checked state |
-| `onCheckedChange` | `(checked) => void` | — | Called when the checked state changes |
-| `disabled` | `boolean` | `false` | Disables the checkbox |
-| `required` | `boolean` | `false` | Marks the checkbox as required |
-| `name` | `string` | — | Form field name |
-| `value` | `string` | — | Submitted form value |
-| `className` | `string` | — | Additional Tailwind classes |
+| Prop              | Type                         | Default | Description                                           |
+| ----------------- | ---------------------------- | ------- | ----------------------------------------------------- |
+| `checked`         | `boolean \| "indeterminate"` | —       | Controlled checked state                              |
+| `defaultChecked`  | `boolean \| "indeterminate"` | —       | Initial uncontrolled checked state                    |
+| `onCheckedChange` | `(checked) => void`          | —       | Called when the checked state changes                 |
+| `disabled`        | `boolean`                    | `false` | Disables the checkbox                                 |
+| `required`        | `boolean`                    | `false` | Marks the checkbox as required                        |
+| `error`           | `string`                     | —       | Renders an announced error and sets the invalid state |
+| `name`            | `string`                     | —       | Form field name                                       |
+| `value`           | `string`                     | —       | Submitted form value                                  |
+| `className`       | `string`                     | —       | Additional Tailwind classes                           |
 
 `Checkbox` extends Radix Checkbox Root props.
 
 ### TypeScript types
 
 ```ts title="checkbox-types.ts"
-export type CheckboxProps = React.ComponentPropsWithoutRef<
+export interface CheckboxProps extends React.ComponentPropsWithoutRef<
   typeof CheckboxPrimitive.Root
->;
+> {
+  error?: string;
+}
 
 const Checkbox = React.forwardRef<
   React.ComponentRef<typeof CheckboxPrimitive.Root>,
@@ -628,6 +651,8 @@ That means:
 - disabled state is exposed correctly
 - focus styling uses PyColors ring tokens
 - form usage works through native form semantics
+- `error` renders visible error copy and wires `aria-invalid`,
+  `aria-describedby`, and `aria-errormessage`
 
 Guidelines:
 
@@ -635,29 +660,30 @@ Guidelines:
 - connect labels using `htmlFor` and `id`
 - use descriptions for choices with consequences
 - do not rely on color alone for validation states
-- use `aria-invalid` for invalid required confirmations
+- use the `error` prop for invalid required confirmations
 - keep checkbox labels short and action-oriented
 
 <Callout title="Accessibility rule">
-  A checkbox needs a clear accessible name. The label should make sense even when read without surrounding context.
+  A checkbox needs a clear accessible name. The label should make sense even
+  when read without surrounding context.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'clear labels connected with htmlFor and id',
-    'checkboxes for independent multi-select choices',
-    'descriptions for privacy, billing, or access impact',
-    'indeterminate state for mixed parent selection',
-    'visible validation copy for required confirmations',
+    "clear labels connected with htmlFor and id",
+    "checkboxes for independent multi-select choices",
+    "descriptions for privacy, billing, or access impact",
+    "indeterminate state for mixed parent selection",
+    "visible validation copy for required confirmations",
   ]}
   avoid={[
-    'using checkbox for mutually exclusive choices',
-    'using checkbox as an immediate setting when switch is clearer',
-    'labels that only say “Yes” or “Enable”',
-    'disabled options without explanation',
-    'color-only error communication',
+    "using checkbox for mutually exclusive choices",
+    "using checkbox as an immediate setting when switch is clearer",
+    "labels that only say “Yes” or “Enable”",
+    "disabled options without explanation",
+    "color-only error communication",
   ]}
 />
 
@@ -677,16 +703,16 @@ Checkbox copy should describe the selected outcome, not the UI control.
     </div>
   </Tab>
 
-  <Tab value="Filters">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Show production-ready templates only
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Hide mock-only examples from the template gallery.
-      </div>
+<Tab value="Filters">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-sm font-medium text-foreground">
+      Show production-ready templates only
     </div>
-  </Tab>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Hide mock-only examples from the template gallery.
+    </div>
+  </div>
+</Tab>
 
   <Tab value="Consent">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
@@ -707,13 +733,15 @@ Checkbox copy should describe the selected outcome, not the UI control.
     Use Checkbox when the user is selecting an option as part of a larger form. Use Switch when the setting changes immediately and behaves like an on/off control.
   </Accordion>
 
-  <Accordion title="When should I use indeterminate?">
-    Use indeterminate when a parent checkbox represents a group where only some child items are selected.
-  </Accordion>
+<Accordion title="When should I use indeterminate?">
+  Use indeterminate when a parent checkbox represents a group where only some
+  child items are selected.
+</Accordion>
 
-  <Accordion title="Can Checkbox be used inside forms?">
-    Yes. Use `name`, `value`, `required`, and validation copy when the checkbox participates in form submission.
-  </Accordion>
+<Accordion title="Can Checkbox be used inside forms?">
+  Yes. Use `name`, `value`, `required`, and validation copy when the checkbox
+  participates in form submission.
+</Accordion>
 
   <Accordion title="Should every checkbox have a description?">
     No. Use descriptions only when the choice needs clarification or has consequences. Simple choices can use only a label.
@@ -727,31 +755,31 @@ Checkbox copy should describe the selected outcome, not the UI control.
   tone="platform"
   items={[
     {
-      title: 'Input',
-      href: '/docs/ui/input',
+      title: "Input",
+      href: "/docs/ui/input",
       description:
-        'Use Input for single-line form fields next to checkbox-based settings.',
+        "Use Input for single-line form fields next to checkbox-based settings.",
       icon: FormInput,
     },
     {
-      title: 'Textarea',
-      href: '/docs/ui/textarea',
+      title: "Textarea",
+      href: "/docs/ui/textarea",
       description:
-        'Use Textarea for longer notes, messages, and feedback forms.',
+        "Use Textarea for longer notes, messages, and feedback forms.",
       icon: TextCursorInput,
     },
     {
-      title: 'Separator',
-      href: '/docs/ui/separator',
+      title: "Separator",
+      href: "/docs/ui/separator",
       description:
-        'Use Separator to structure grouped checkbox sections and forms.',
+        "Use Separator to structure grouped checkbox sections and forms.",
       icon: Minus,
     },
     {
-      title: 'Forms guide',
-      href: '/docs/guides/forms',
+      title: "Forms guide",
+      href: "/docs/guides/forms",
       description:
-        'Build accessible forms with labels, descriptions, validation, and clear actions.',
+        "Build accessible forms with labels, descriptions, validation, and clear actions.",
       icon: ClipboardCheck,
     },
   ]}
