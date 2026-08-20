@@ -9,13 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   Accessibility,
   ArrowRight,
@@ -29,7 +23,7 @@ import {
   ShieldAlert,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -62,7 +56,8 @@ Toast is intentionally minimal in PyColors UI.
 It provides structure and accessibility, not a full notification system with queues, global stores, deduping, or persistent notification history.
 
 <Callout title="Core idea">
-  Toasts are temporary feedback. They should confirm, summarize, or recover — not block the task.
+  Toasts are temporary feedback. They should confirm, summarize, or recover —
+  not block the task.
 </Callout>
 
 ### Import
@@ -117,9 +112,7 @@ export function ToastExample() {
         duration={2500}
       >
         <ToastTitle>Changes saved</ToastTitle>
-        <ToastDescription>
-          Your settings were updated.
-        </ToastDescription>
+        <ToastDescription>Your settings were updated.</ToastDescription>
       </Toast>
 
       <ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
@@ -132,7 +125,8 @@ export function ToastExample() {
 </Tabs>
 
 <Callout type="info" title="Provider rule">
-  Render one `ToastViewport` per provider scope. Avoid rendering a viewport inside every feature component.
+  Render one `ToastViewport` per provider scope. Avoid rendering a viewport
+  inside every feature component.
 </Callout>
 
 ## When to use Toast
@@ -144,22 +138,22 @@ Use Toast when feedback should be noticeable but should not interrupt the user.
   tone="platform"
   items={[
     {
-      title: 'Confirmation',
+      title: "Confirmation",
       description:
-        'Confirm that a save, update, archive, or background action completed.',
+        "Confirm that a save, update, archive, or background action completed.",
       icon: CheckCircle,
-      tone: 'success',
+      tone: "success",
     },
     {
-      title: 'Retry or undo',
+      title: "Retry or undo",
       description:
-        'Offer lightweight recovery for reversible actions or failed background updates.',
+        "Offer lightweight recovery for reversible actions or failed background updates.",
       icon: RefreshCcw,
     },
     {
-      title: 'System feedback',
+      title: "System feedback",
       description:
-        'Show short system feedback that does not belong permanently in the page.',
+        "Show short system feedback that does not belong permanently in the page.",
       icon: Bell,
     },
   ]}
@@ -201,6 +195,10 @@ Keep variants limited to avoid turning every message into an event.
     Something went wrong.
   </ToastDescription>
 </Toast>
+
+<Toast variant="info">
+  <ToastTitle>Information</ToastTitle>
+</Toast>
 ```
 
   </Tab>
@@ -208,15 +206,17 @@ Keep variants limited to avoid turning every message into an event.
 
 ### Available variants
 
-| Variant | Purpose |
-| --- | --- |
-| `default` | Neutral confirmation or information |
-| `success` | Positive confirmation |
-| `warning` | Attention needed, still non-blocking |
-| `destructive` | Non-blocking error feedback |
+| Variant       | Purpose                                                    |
+| ------------- | ---------------------------------------------------------- |
+| `default`     | Neutral confirmation or information                        |
+| `success`     | Positive confirmation                                      |
+| `warning`     | Attention needed, still non-blocking                       |
+| `destructive` | Non-blocking error feedback                                |
+| `info`        | Informational message — announces politely (non-assertive) |
 
 <Callout type="info" title="Variant rule">
-  Use `destructive` only for recoverable or non-blocking failures. Use Alert for blocking errors.
+  Use `destructive` only for recoverable or non-blocking failures. Use Alert for
+  blocking errors.
 </Callout>
 
 ### With description
@@ -243,41 +243,46 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
     #### Trigger after the action starts or completes
 
     Use toast feedback after a meaningful action: saved, archived, restored, copied, failed, or queued.
+
   </Step>
 
   <Step>
     #### Keep the message short
 
     Toasts are temporary. The user should understand them in one glance.
+
   </Step>
 
   <Step>
     #### Use inline state for active work
 
     For loading or submission, prefer button text such as `Saving…` before showing the final toast.
+
   </Step>
 
   <Step>
     #### Use recovery actions carefully
 
     Undo and retry work well for reversible actions, but they require real backend support.
+
   </Step>
 </Steps>
 
 ## Toast vs Alert vs Dialog
 
-| Situation | Use |
-| --- | --- |
-| Save confirmation | Toast |
-| Copied to clipboard | Toast |
-| Background sync completed | Toast |
-| Blocking page error | Alert |
-| Form-level validation issue | Alert |
-| Destructive confirmation | Dialog |
+| Situation                          | Use    |
+| ---------------------------------- | ------ |
+| Save confirmation                  | Toast  |
+| Copied to clipboard                | Toast  |
+| Background sync completed          | Toast  |
+| Blocking page error                | Alert  |
+| Form-level validation issue        | Alert  |
+| Destructive confirmation           | Dialog |
 | User must choose before continuing | Dialog |
 
 <Callout title="Decision rule">
-  Toast is for feedback after a flow. Alert is for information inside a flow. Dialog is for blocking decisions.
+  Toast is for feedback after a flow. Alert is for information inside a flow.
+  Dialog is for blocking decisions.
 </Callout>
 
 ### Product guidance
@@ -352,23 +357,24 @@ If the message needs more explanation, it probably belongs in an Alert, Dialog, 
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## API
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "success" \| "warning" \| "destructive"` | `"default"` | Visual style |
-| `open` | `boolean` | — | Controlled open state |
-| `onOpenChange` | `(open: boolean) => void` | — | State handler |
-| `duration` | `number` | Radix default | Auto-close delay in milliseconds |
-| `className` | `string` | — | Custom Tailwind classes |
+| Prop           | Type                                                   | Default       | Description                      |
+| -------------- | ------------------------------------------------------ | ------------- | -------------------------------- |
+| `variant`      | `"default" \| "success" \| "warning" \| "destructive"` | `"default"`   | Visual style                     |
+| `open`         | `boolean`                                              | —             | Controlled open state            |
+| `onOpenChange` | `(open: boolean) => void`                              | —             | State handler                    |
+| `duration`     | `number`                                               | Radix default | Auto-close delay in milliseconds |
+| `className`    | `string`                                               | —             | Custom Tailwind classes          |
 
 Toast extends Radix Toast root props:
 
 ```ts title="toast-types.ts"
-React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
+React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>;
 ```
 
 ### ToastProvider
@@ -376,9 +382,7 @@ React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
 Wraps the area where toasts are used.
 
 ```tsx title="toast-provider.tsx"
-<ToastProvider>
-  {/* app or route subtree */}
-</ToastProvider>
+<ToastProvider>{/* app or route subtree */}</ToastProvider>
 ```
 
 ### ToastViewport
@@ -394,14 +398,11 @@ Render one viewport per provider scope.
 ### TypeScript types
 
 ```ts title="toast-types.ts"
-export type ToastVariant =
-  | "default"
-  | "success"
-  | "warning"
-  | "destructive";
+export type ToastVariant = "default" | "success" | "warning" | "destructive";
 
 export interface ToastProps
-  extends React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>,
+  extends
+    React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>,
     VariantProps<typeof toastVariants> {}
 ```
 
@@ -412,38 +413,41 @@ export interface ToastProps
 - Toasts should not interrupt form input.
 - Toasts are announced as live-region updates, at an urgency that matches `variant`:
 
-  | Variant | Announcement | Radix `type` |
-  | --- | --- | --- |
-  | `default` | Polite — waits for a pause | `"background"` |
-  | `success` | Polite — waits for a pause | `"background"` |
-  | `warning` | Assertive — interrupts immediately | `"foreground"` |
+  | Variant       | Announcement                       | Radix `type`   |
+  | ------------- | ---------------------------------- | -------------- |
+  | `default`     | Polite — waits for a pause         | `"background"` |
+  | `success`     | Polite — waits for a pause         | `"background"` |
+  | `warning`     | Assertive — interrupts immediately | `"foreground"` |
   | `destructive` | Assertive — interrupts immediately | `"foreground"` |
+  | `info`        | Polite — waits for a pause         | `"background"` |
 
   Pass an explicit `type` prop to override this default on a specific toast.
+
 - Keep copy short so announcements are understandable.
 - Do not rely on color alone for destructive or warning messages.
 - Do not use Toast as the only place for critical errors.
 
 <Callout title="Accessibility rule">
-  Toasts are helpful when they are brief. Long or critical messages should move into the page with Alert.
+  Toasts are helpful when they are brief. Long or critical messages should move
+  into the page with Alert.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'short confirmation messages',
-    'one toast per meaningful action',
-    'inline loading before toast completion',
-    'retry or undo only when supported',
-    'Alert for blocking failures',
+    "short confirmation messages",
+    "one toast per meaningful action",
+    "inline loading before toast completion",
+    "retry or undo only when supported",
+    "Alert for blocking failures",
   ]}
   avoid={[
-    'using Toast for field validation',
-    'hiding blocking errors in Toast only',
-    'stacking many toasts at once',
-    'long paragraphs inside toast descriptions',
-    'using Toast as a notification center',
+    "using Toast for field validation",
+    "hiding blocking errors in Toast only",
+    "stacking many toasts at once",
+    "long paragraphs inside toast descriptions",
+    "using Toast as a notification center",
   ]}
 />
 
@@ -468,13 +472,15 @@ Use Alert, EmptyState, Dialog, or a dedicated pattern instead.
     Not by default. PyColors Toast is intentionally minimal. Add a global store only when your product needs queueing, deduping, persistence, or notification history.
   </Accordion>
 
-  <Accordion title="Can Toast include actions?">
-    Yes, but keep actions short and recoverable, such as Undo or Retry. If the user must make a decision, use Dialog.
-  </Accordion>
+<Accordion title="Can Toast include actions?">
+  Yes, but keep actions short and recoverable, such as Undo or Retry. If the
+  user must make a decision, use Dialog.
+</Accordion>
 
-  <Accordion title="Should errors use Toast?">
-    Only non-blocking or recoverable errors. Blocking errors should use Alert in context.
-  </Accordion>
+<Accordion title="Should errors use Toast?">
+  Only non-blocking or recoverable errors. Blocking errors should use Alert in
+  context.
+</Accordion>
 
   <Accordion title="How many ToastViewports should I render?">
     Usually one per app or layout scope. Avoid rendering a viewport in every component.
@@ -488,31 +494,31 @@ Use Alert, EmptyState, Dialog, or a dedicated pattern instead.
   tone="platform"
   items={[
     {
-      title: 'Alert',
-      href: '/docs/ui/alert',
+      title: "Alert",
+      href: "/docs/ui/alert",
       description:
-        'Inline feedback for blocking messages and persistent product states.',
+        "Inline feedback for blocking messages and persistent product states.",
       icon: CircleAlert,
     },
     {
-      title: 'Dialog',
-      href: '/docs/ui/dialog',
+      title: "Dialog",
+      href: "/docs/ui/dialog",
       description:
-        'Use Dialog when the user must confirm or complete a focused task.',
+        "Use Dialog when the user must confirm or complete a focused task.",
       icon: PanelTop,
     },
     {
-      title: 'Async actions pattern',
-      href: '/docs/patterns/async-actions',
+      title: "Async actions pattern",
+      href: "/docs/patterns/async-actions",
       description:
-        'Design save, retry, optimistic UI, undo, and mutation feedback.',
+        "Design save, retry, optimistic UI, undo, and mutation feedback.",
       icon: RefreshCcw,
     },
     {
-      title: 'Accessibility',
-      href: '/docs/ui/accessibility',
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
       description:
-        'Build accessible feedback with clear semantics and announcements.',
+        "Build accessible feedback with clear semantics and announcements.",
       icon: Accessibility,
     },
   ]}
