@@ -1,20 +1,14 @@
 ---
 title: Overview
 description: Composable UI primitives built for real SaaS interfaces. Designed to scale from product validation to production.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-08-18"
 appliesTo: UI
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   AlertTriangle,
   ArrowRight,
@@ -35,7 +29,7 @@ import {
   Tags,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 <div className="flex flex-wrap items-center gap-2">
@@ -62,7 +56,8 @@ This is not a UI kit for isolated demos.
 It is a component foundation for products that need to evolve without becoming inconsistent.
 
 <Callout title="Core idea">
-  UI components are the lowest product layer. They should stay small, token-driven, and predictable.
+  UI components are the lowest product layer. They should stay small,
+  token-driven, and predictable.
 </Callout>
 
 ### Where UI fits
@@ -81,38 +76,34 @@ PyColors is organized as a product system, not only a component library.
     </div>
   </Tab>
 
-  <Tab value="UI Components">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        UI Components
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Small reusable primitives consume the design system and stay easy to compose.
-      </div>
+<Tab value="UI Components">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-sm font-medium text-foreground">UI Components</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Small reusable primitives consume the design system and stay easy to
+      compose.
     </div>
-  </Tab>
+  </div>
+</Tab>
 
-  <Tab value="Guides">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Guides
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Guides explain how primitives behave inside real product experiences.
-      </div>
+<Tab value="Guides">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-sm font-medium text-foreground">Guides</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Guides explain how primitives behave inside real product experiences.
     </div>
-  </Tab>
+  </div>
+</Tab>
 
-  <Tab value="Patterns">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Patterns
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Patterns combine components, state, behavior, and UX into reusable product blocks.
-      </div>
+<Tab value="Patterns">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-sm font-medium text-foreground">Patterns</div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      Patterns combine components, state, behavior, and UX into reusable product
+      blocks.
     </div>
-  </Tab>
+  </div>
+</Tab>
 
   <Tab value="Starters">
     <div className="rounded-2xl border border-border/60 bg-card p-6">
@@ -138,6 +129,37 @@ This keeps the UI layer focused.
 
 If a primitive starts carrying too much product logic, the abstraction is probably in the wrong place.
 
+## Interactive component examples
+
+Storybook is the canonical interactive component example system for `@pycolors/ui`.
+Use it to inspect isolated component states, exercise keyboard and pointer behavior,
+and compare the PyColors light and dark themes. These Fumadocs pages remain the
+public usage documentation and product-context examples; Storybook does not replace
+them.
+
+Run Storybook from the repository root:
+
+```bash
+pnpm --filter @pycolors/ui storybook
+```
+
+### Maintaining examples
+
+The maintained public-surface stories live in
+`packages/ui/stories/public-surface.stories.tsx`. When a public component or a
+meaningful documented state changes:
+
+1. Add or update its representative story and import it through the package's
+   public `src/index.ts` barrel, not a component's internal file.
+2. Keep the story token-driven, accessible, and usable in both Storybook themes.
+3. Update the matching Fumadocs page when public usage or behavior changes.
+4. Run `pnpm --filter @pycolors/ui verify`; this includes a production Storybook
+   build. For documentation changes, also run
+   `pnpm --filter pycolors-marketing types:check`.
+
+This one-to-one maintenance path keeps isolated examples aligned with the public
+exports while the documentation continues to explain product usage and composition.
+
 ## Start with the essentials
 
 <DocsLinks
@@ -145,31 +167,31 @@ If a primitive starts carrying too much product logic, the abstraction is probab
   tone="platform"
   items={[
     {
-      title: 'Button',
-      href: '/docs/ui/button',
+      title: "Button",
+      href: "/docs/ui/button",
       description:
-        'The action primitive used for intent, hierarchy, submission, and navigation.',
+        "The action primitive used for intent, hierarchy, submission, and navigation.",
       icon: MousePointerClick,
     },
     {
-      title: 'Card',
-      href: '/docs/ui/card',
+      title: "Card",
+      href: "/docs/ui/card",
       description:
-        'The primary surface primitive for grouping content, metrics, sections, and product panels.',
+        "The primary surface primitive for grouping content, metrics, sections, and product panels.",
       icon: PanelTop,
     },
     {
-      title: 'Input',
-      href: '/docs/ui/input',
+      title: "Input",
+      href: "/docs/ui/input",
       description:
-        'The form primitive for labels, values, helper text, and validation states.',
+        "The form primitive for labels, values, helper text, and validation states.",
       icon: FormInput,
     },
     {
-      title: 'Badge',
-      href: '/docs/ui/badge',
+      title: "Badge",
+      href: "/docs/ui/badge",
       description:
-        'Compact metadata and status labels used to clarify information without becoming actions.',
+        "Compact metadata and status labels used to clarify information without becoming actions.",
       icon: Tags,
     },
   ]}
@@ -182,36 +204,36 @@ If a primitive starts carrying too much product logic, the abstraction is probab
   tone="platform"
   items={[
     {
-      title: 'Surfaces',
-      href: '/docs/ui',
+      title: "Surfaces",
+      href: "/docs/ui",
       description:
-        'Use surfaces to group content, create hierarchy, and communicate structure.',
+        "Use surfaces to group content, create hierarchy, and communicate structure.",
       icon: Box,
-      badges: ['Card', 'Alert', 'EmptyState', 'Skeleton'],
+      badges: ["Card", "Alert", "EmptyState", "Skeleton"],
     },
     {
-      title: 'Actions',
-      href: '/docs/ui/button',
+      title: "Actions",
+      href: "/docs/ui/button",
       description:
-        'Use action primitives to represent user intent and interaction hierarchy.',
+        "Use action primitives to represent user intent and interaction hierarchy.",
       icon: MousePointerClick,
-      badges: ['Button', 'DropdownMenu', 'Dialog', 'Sheet'],
+      badges: ["Button", "DropdownMenu", "Dialog", "Sheet"],
     },
     {
-      title: 'Inputs',
-      href: '/docs/ui/input',
+      title: "Inputs",
+      href: "/docs/ui/input",
       description:
-        'Use inputs to collect values, communicate validation, and support form workflows.',
+        "Use inputs to collect values, communicate validation, and support form workflows.",
       icon: FormInput,
-      badges: ['Input', 'PasswordInput'],
+      badges: ["Input", "PasswordInput"],
     },
     {
-      title: 'Data and navigation',
-      href: '/docs/ui/table',
+      title: "Data and navigation",
+      href: "/docs/ui/table",
       description:
-        'Use data primitives for tables, paging, tabs, and product navigation states.',
+        "Use data primitives for tables, paging, tabs, and product navigation states.",
       icon: Table2,
-      badges: ['Table', 'Pagination', 'Tabs', 'Toast'],
+      badges: ["Table", "Pagination", "Tabs", "Toast"],
     },
   ]}
 />
@@ -225,6 +247,7 @@ If a primitive starts carrying too much product logic, the abstraction is probab
     Use token-driven utilities such as `bg-card`, `text-muted-foreground`, `border-border`, and `shadow-sm`.
 
     Components should consume meaning, not raw visual values.
+
   </Step>
 
   <Step>
@@ -233,6 +256,7 @@ If a primitive starts carrying too much product logic, the abstraction is probab
     Prefer composition over large prop APIs.
 
     If a component needs too many product-specific props, extract the product behavior into a pattern.
+
   </Step>
 
   <Step>
@@ -241,6 +265,7 @@ If a primitive starts carrying too much product logic, the abstraction is probab
     A primitive should usually own one interaction responsibility.
 
     Complex flows like forms, tables, overlays, and async actions belong in Guides or Patterns.
+
   </Step>
 
   <Step>
@@ -249,6 +274,7 @@ If a primitive starts carrying too much product logic, the abstraction is probab
     Components should render state clearly.
 
     Product rules, billing checks, auth ownership, and backend decisions should stay outside the primitive layer.
+
   </Step>
 </Steps>
 
@@ -258,35 +284,36 @@ Use a UI component when you need a primitive.
 
 Use a Pattern when you need a product behavior.
 
-| Need | Use |
-| --- | --- |
-| Button action | UI component |
-| Form input | UI component |
-| Form validation flow | Guide |
-| Data table with loading, empty, error, filters | Pattern |
-| Dropdown vs Dialog vs Sheet decision | Pattern |
-| Mutation feedback with toast, retry, undo | Pattern |
+| Need                                           | Use          |
+| ---------------------------------------------- | ------------ |
+| Button action                                  | UI component |
+| Form input                                     | UI component |
+| Form validation flow                           | Guide        |
+| Data table with loading, empty, error, filters | Pattern      |
+| Dropdown vs Dialog vs Sheet decision           | Pattern      |
+| Mutation feedback with toast, retry, undo      | Pattern      |
 
 <Callout type="info" title="Rule of thumb">
-  Components render building blocks. Patterns explain how those blocks behave in a real product.
+  Components render building blocks. Patterns explain how those blocks behave in
+  a real product.
 </Callout>
 
 ## What to avoid
 
 <PreferAvoid
   prefer={[
-    'small primitives',
-    'semantic tokens',
-    'composition-first APIs',
-    'clear accessibility defaults',
-    'patterns for complex flows',
+    "small primitives",
+    "semantic tokens",
+    "composition-first APIs",
+    "clear accessibility defaults",
+    "patterns for complex flows",
   ]}
   avoid={[
-    'hardcoded one-off styles',
-    'giant components with too many variants',
-    'business logic inside primitives',
-    'using badges as buttons',
-    'duplicating the same product flow repeatedly',
+    "hardcoded one-off styles",
+    "giant components with too many variants",
+    "business logic inside primitives",
+    "using badges as buttons",
+    "duplicating the same product flow repeatedly",
   ]}
 />
 
@@ -297,31 +324,31 @@ Use a Pattern when you need a product behavior.
   tone="platform"
   items={[
     {
-      title: 'Button',
-      href: '/docs/ui/button',
+      title: "Button",
+      href: "/docs/ui/button",
       description:
-        'Action hierarchy, intent, loading states, and interaction patterns.',
+        "Action hierarchy, intent, loading states, and interaction patterns.",
       icon: MousePointerClick,
     },
     {
-      title: 'Input',
-      href: '/docs/ui/input',
+      title: "Input",
+      href: "/docs/ui/input",
       description:
-        'Accessible form primitives with validation and consistent UX behavior.',
+        "Accessible form primitives with validation and consistent UX behavior.",
       icon: FormInput,
     },
     {
-      title: 'Card',
-      href: '/docs/ui/card',
+      title: "Card",
+      href: "/docs/ui/card",
       description:
-        'Surface primitives used to structure dashboards and product interfaces.',
+        "Surface primitives used to structure dashboards and product interfaces.",
       icon: PanelTop,
     },
     {
-      title: 'Dialog',
-      href: '/docs/ui/dialog',
+      title: "Dialog",
+      href: "/docs/ui/dialog",
       description:
-        'Focused modal flows for confirmations, forms, and product actions.',
+        "Focused modal flows for confirmations, forms, and product actions.",
       icon: PanelsTopLeft,
     },
   ]}
@@ -334,22 +361,23 @@ Use a Pattern when you need a product behavior.
   tone="platform"
   items={[
     {
-      title: 'Why PyColors UI',
-      href: '/docs/ui/why-pycolors-ui',
+      title: "Why PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
       description:
-        'Understand the product philosophy behind the component system.',
+        "Understand the product philosophy behind the component system.",
       icon: Sparkles,
     },
     {
-      title: 'Patterns',
-      href: '/docs/patterns',
+      title: "Patterns",
+      href: "/docs/patterns",
       description:
-        'Move from primitives to reusable feature-level product blocks.',
+        "Move from primitives to reusable feature-level product blocks.",
       icon: LayoutTemplate,
     },
   ]}
 />
 
 <Callout title="Build the primitive once. Compose the product many times.">
-  PyColors UI is designed to keep your components simple while your SaaS grows in complexity.
+  PyColors UI is designed to keep your components simple while your SaaS grows
+  in complexity.
 </Callout>

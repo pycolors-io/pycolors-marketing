@@ -37,7 +37,7 @@ import {
   Table2,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -166,7 +166,113 @@ export function PaginationBasicExample() {
   </Tab>
 </Tabs>
 
-## When to use Pagination
+### Link composition
+
+`PaginationLink`, `PaginationPrevious`, and `PaginationNext` support the
+`asChild` composition pattern. Pass a real anchor (or a framework `Link`) as
+the child and the control renders it as the root element while preserving all
+styling, `data-slot`, accessible labels, and — for `PaginationPrevious` and
+`PaginationNext` — the built-in icon and visible text.
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab value="Preview">
+    <Preview>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious asChild>
+              <a href="#previous" />
+            </PaginationPrevious>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild>
+              <a href="#page-1">1</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild isActive>
+              <a href="#page-2">2</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild>
+              <a href="#page-3">3</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext asChild>
+              <a href="#next" />
+            </PaginationNext>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </Preview>
+  </Tab>
+
+  <Tab value="Code">
+
+```tsx title="pagination-link-composition.tsx"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "@pycolors/ui";
+
+// With real <a> elements — swap for your framework Link:
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious asChild>
+        <a href="/page/1" />
+      </PaginationPrevious>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild>
+        <a href="/page/1">1</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild isActive>
+        <a href="/page/2">2</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild>
+        <a href="/page/3">3</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext asChild>
+        <a href="/page/3" />
+      </PaginationNext>
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>;
+```
+
+  </Tab>
+</Tabs>
+
+<Callout title="Framework links">
+  Replace `<a href="...">` with your router's `Link` component (Next.js, React
+  Router, TanStack Router, etc.) — the composition pattern is router-neutral.
+</Callout>
+
+<Callout type="info" title="PaginationPrevious and PaginationNext with asChild">
+  You only need to supply the anchor element as the child. The built-in
+  ChevronLeft / ChevronRight icon and the visible Previous / Next text are
+  rendered automatically alongside your child element.
+</Callout>
 
 Use Pagination when users need controlled access to a finite set of pages.
 
@@ -175,21 +281,21 @@ Use Pagination when users need controlled access to a finite set of pages.
   tone="platform"
   items={[
     {
-      title: 'Tables',
+      title: "Tables",
       description:
-        'Use pagination when dense tables need stable page navigation.',
+        "Use pagination when dense tables need stable page navigation.",
       icon: Table2,
     },
     {
-      title: 'Paged data',
+      title: "Paged data",
       description:
-        'Use when the backend or data layer exposes page-based navigation.',
+        "Use when the backend or data layer exposes page-based navigation.",
       icon: Database,
     },
     {
-      title: 'Search results',
+      title: "Search results",
       description:
-        'Use when results are finite and users need predictable navigation.',
+        "Use when results are finite and users need predictable navigation.",
       icon: Rows3,
     },
   ]}
@@ -219,10 +325,7 @@ type Project = {
 
 const pageSize = 10;
 const totalPages = Math.ceil(projects.length / pageSize);
-const pageProjects = projects.slice(
-  (page - 1) * pageSize,
-  page * pageSize,
-);
+const pageProjects = projects.slice((page - 1) * pageSize, page * pageSize);
 
 // Pass `page`, `totalPages`, and handlers to Pagination.
 // Keep data slicing, fetching, and URL sync outside the UI primitive.
@@ -232,7 +335,8 @@ const pageProjects = projects.slice(
 </Tabs>
 
 <Callout type="info" title="Architecture rule">
-  Pagination should receive state and callbacks. The feature layer should own the data source, filters, sorting, and URL sync.
+  Pagination should receive state and callbacks. The feature layer should own
+  the data source, filters, sorting, and URL sync.
 </Callout>
 
 ### buildPaginationRange
@@ -261,74 +365,98 @@ This keeps rendering logic clean while keeping Pagination controlled.
     #### Keep page state outside the component
 
     Store `page`, `pageSize`, and `totalPages` in the page, feature hook, or data layer.
+
   </Step>
 
   <Step>
     #### Disable impossible navigation
 
     Disable Previous on the first page and Next on the last page.
+
   </Step>
 
   <Step>
     #### Use ellipsis for large page counts
 
     Avoid rendering dozens of page links. Compact large ranges with ellipsis.
+
   </Step>
 
   <Step>
     #### Sync URL only at the product layer
 
     URL syncing belongs to your page or routing layer, not the UI primitive.
+
   </Step>
 
   <Step>
     #### Pair with loading and empty states
 
     Pagination should work with Table, loading states, empty states, and filters as one product pattern.
+
   </Step>
 </Steps>
 
 ## Pagination vs infinite scroll
 
-| Situation | Use |
-| --- | --- |
-| Admin table | Pagination |
-| Search results with known page count | Pagination |
-| Invoices, users, subscriptions | Pagination |
-| Feed-style browsing | Infinite scroll |
+| Situation                            | Use                           |
+| ------------------------------------ | ----------------------------- |
+| Admin table                          | Pagination                    |
+| Search results with known page count | Pagination                    |
+| Invoices, users, subscriptions       | Pagination                    |
+| Feed-style browsing                  | Infinite scroll               |
 | Cursor-only API with no page concept | Product-level cursor controls |
-| Small data set | No pagination |
+| Small data set                       | No pagination                 |
 
 <Callout title="Decision rule">
-  Use Pagination when the user benefits from a stable position in a finite result set.
+  Use Pagination when the user benefits from a stable position in a finite
+  result set.
 </Callout>
 
 ## API
 
 #### Component
-| Component | Description |
-| --- | --- |
-| `Pagination` | Wrapper `nav` element with pagination semantics |
-| `PaginationContent` | List container |
-| `PaginationItem` | Item wrapper |
-| `PaginationLink` | Page control with active state |
-| `PaginationPrevious` | Previous button |
-| `PaginationNext` | Next button |
-| `PaginationEllipsis` | Visual overflow indicator |
+
+| Component            | Description                                     |
+| -------------------- | ----------------------------------------------- |
+| `Pagination`         | Wrapper `nav` element with pagination semantics |
+| `PaginationContent`  | List container                                  |
+| `PaginationItem`     | Item wrapper                                    |
+| `PaginationLink`     | Page control with active state                  |
+| `PaginationPrevious` | Previous button                                 |
+| `PaginationNext`     | Next button                                     |
+| `PaginationEllipsis` | Visual overflow indicator                       |
 
 #### PaginationLink props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the current page |
-| `size` | `string` | `"icon-sm"` | Maps to Button sizes |
-| `className` | `string` | — | Additional Tailwind classes |
+| Prop        | Type      | Default     | Description                                                                   |
+| ----------- | --------- | ----------- | ----------------------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`     | Render as a Slot wrapper; supply a real anchor or framework link as the child |
+| `isActive`  | `boolean` | `false`     | Marks the current page                                                        |
+| `size`      | `string`  | `"icon-sm"` | Maps to Button sizes                                                          |
+| `className` | `string`  | —           | Additional Tailwind classes                                                   |
+
+#### PaginationPrevious props
+
+| Prop        | Type      | Default           | Description                                                    |
+| ----------- | --------- | ----------------- | -------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`           | Render as a Slot wrapper; built-in icon and text are preserved |
+| `label`     | `string`  | `"Previous page"` | Accessible label for screen readers                            |
+| `className` | `string`  | —                 | Additional Tailwind classes                                    |
+
+#### PaginationNext props
+
+| Prop        | Type      | Default       | Description                                                    |
+| ----------- | --------- | ------------- | -------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`       | Render as a Slot wrapper; built-in icon and text are preserved |
+| `label`     | `string`  | `"Next page"` | Accessible label for screen readers                            |
+| `className` | `string`  | —             | Additional Tailwind classes                                    |
 
 #### buildPaginationRange options
 
-| Option | Type | Description |
-| --- | --- | --- |
-| `page` | `number` | Current page |
+| Option       | Type     | Description           |
+| ------------ | -------- | --------------------- |
+| `page`       | `number` | Current page          |
 | `totalPages` | `number` | Total number of pages |
 
 ### Accessibility
@@ -346,25 +474,26 @@ Guidelines:
 - provide URL sync at the page layer when deep linking matters
 
 <Callout title="Accessibility rule">
-  Pagination controls should be navigable, understandable, and predictable without relying on visual position alone.
+  Pagination controls should be navigable, understandable, and predictable
+  without relying on visual position alone.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'controlled page state',
-    'disabled unavailable controls',
-    'ellipsis for large page counts',
-    'URL sync in the route layer when needed',
-    'clear loading and empty states around paged data',
+    "controlled page state",
+    "disabled unavailable controls",
+    "ellipsis for large page counts",
+    "URL sync in the route layer when needed",
+    "clear loading and empty states around paged data",
   ]}
   avoid={[
-    'fetching data inside Pagination',
-    'rendering every page for large ranges',
-    'clickable ellipsis',
-    'pagination for tiny data sets',
-    'using pagination for feed-style discovery',
+    "fetching data inside Pagination",
+    "rendering every page for large ranges",
+    "clickable ellipsis",
+    "pagination for tiny data sets",
+    "using pagination for feed-style discovery",
   ]}
 />
 
@@ -425,7 +554,8 @@ Pagination labels should be short and predictable.
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Common questions
@@ -435,13 +565,15 @@ Pagination labels should be short and predictable.
     Often yes for data-heavy pages, but URL sync belongs in the page or route layer. Pagination should stay UI-only.
   </Accordion>
 
-  <Accordion title="Can Pagination work with cursor-based APIs?">
-    Yes, but the cursor logic belongs to the data layer. Use Previous and Next controls if numeric pages do not exist.
-  </Accordion>
+<Accordion title="Can Pagination work with cursor-based APIs?">
+  Yes, but the cursor logic belongs to the data layer. Use Previous and Next
+  controls if numeric pages do not exist.
+</Accordion>
 
-  <Accordion title="When should I hide Pagination?">
-    Hide it when there is only one page, when the data set is tiny, or when an empty state is shown.
-  </Accordion>
+<Accordion title="When should I hide Pagination?">
+  Hide it when there is only one page, when the data set is tiny, or when an
+  empty state is shown.
+</Accordion>
 
   <Accordion title="Should page size be part of Pagination?">
     Usually no. Page size selection is a toolbar or table control. Pagination should focus on page navigation.
@@ -455,31 +587,28 @@ Pagination labels should be short and predictable.
   tone="platform"
   items={[
     {
-      title: 'Table',
-      href: '/docs/ui/table',
-      description:
-        'Render structured data that often pairs with Pagination.',
+      title: "Table",
+      href: "/docs/ui/table",
+      description: "Render structured data that often pairs with Pagination.",
       icon: Table2,
     },
     {
-      title: 'Data Table Pattern',
-      href: '/docs/patterns/data-table',
+      title: "Data Table Pattern",
+      href: "/docs/patterns/data-table",
       description:
-        'Combine table, filters, states, actions, and pagination into a full SaaS pattern.',
+        "Combine table, filters, states, actions, and pagination into a full SaaS pattern.",
       icon: Rows3,
     },
     {
-      title: 'Building a SaaS layout',
-      href: '/docs/guides/building-a-saas-layout',
-      description:
-        'Place pagination inside real dashboard layouts.',
+      title: "Building a SaaS layout",
+      href: "/docs/guides/building-a-saas-layout",
+      description: "Place pagination inside real dashboard layouts.",
       icon: LayoutTemplate,
     },
     {
-      title: 'Empty, loading, and error states',
-      href: '/docs/guides/empty-loading-error',
-      description:
-        'Handle async states around paged data.',
+      title: "Empty, loading, and error states",
+      href: "/docs/guides/empty-loading-error",
+      description: "Handle async states around paged data.",
       icon: LoaderCircle,
     },
   ]}

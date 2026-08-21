@@ -9,13 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   Accessibility,
   ArrowRight,
@@ -95,22 +89,22 @@ Use Badge when the label helps the user understand context without adding heavy 
   tone="platform"
   items={[
     {
-      title: 'Metadata',
+      title: "Metadata",
       description:
-        'Use for labels such as category, plan, type, role, or version.',
+        "Use for labels such as category, plan, type, role, or version.",
       icon: Tags,
     },
     {
-      title: 'Status',
+      title: "Status",
       description:
-        'Use for small state labels such as active, paid, draft, shipped, or synced.',
+        "Use for small state labels such as active, paid, draft, shipped, or synced.",
       icon: CheckCircle,
-      tone: 'success',
+      tone: "success",
     },
     {
-      title: 'Grouping',
+      title: "Grouping",
       description:
-        'Use to classify content without turning the label into a navigation or action element.',
+        "Use to classify content without turning the label into a navigation or action element.",
       icon: Layers3,
     },
   ]}
@@ -130,6 +124,7 @@ Use variants to convey meaning or status.
       <Badge variant="success">Success</Badge>
       <Badge variant="warning">Warning</Badge>
       <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="info">Info</Badge>
     </div>
   </Tab>
 
@@ -148,6 +143,7 @@ export function BadgeVariants() {
       <Badge variant="success">Success</Badge>
       <Badge variant="warning">Warning</Badge>
       <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="info">Info</Badge>
     </div>
   );
 }
@@ -158,18 +154,20 @@ export function BadgeVariants() {
 
 ### Available variants
 
-| Variant | Purpose |
-| --- | --- |
-| `default` | Primary or neutral label |
-| `secondary` | Supporting information |
-| `muted` | Low-emphasis metadata |
-| `outline` | Neutral bordered label |
-| `success` | Positive or completed state |
-| `warning` | Caution or attention required |
-| `destructive` | Error or critical state |
+| Variant       | Purpose                                                   |
+| ------------- | --------------------------------------------------------- |
+| `default`     | Primary or neutral label                                  |
+| `secondary`   | Supporting information                                    |
+| `muted`       | Low-emphasis metadata                                     |
+| `outline`     | Neutral bordered label                                    |
+| `success`     | Positive or completed state                               |
+| `warning`     | Caution or attention required                             |
+| `destructive` | Error or critical state                                   |
+| `info`        | Informational status — semantic neutral, uses card tokens |
 
 <Callout type="info" title="Design rule">
-  Prefer `muted` and `outline` for metadata. Reserve semantic state variants for actual product states.
+  Prefer `muted` and `outline` for metadata. Reserve semantic state variants for
+  actual product states.
 </Callout>
 
 ### Sizes
@@ -206,14 +204,15 @@ export function BadgeSizes() {
 
 ### Available sizes
 
-| Size | Purpose |
-| --- | --- |
+| Size | Purpose                               |
+| ---- | ------------------------------------- |
 | `sm` | Dense metadata, tables, compact lists |
-| `md` | Default badge size |
+| `md` | Default badge size                    |
 | `lg` | Emphasized label or standout metadata |
 
 <Callout title="Density rule">
-  Use `sm` in tables and dense product views. Use `md` for most UI surfaces. Use `lg` sparingly.
+  Use `sm` in tables and dense product views. Use `md` for most UI surfaces. Use
+  `lg` sparingly.
 </Callout>
 
 ### With left icon
@@ -277,7 +276,8 @@ export function BadgeWithRightIcon() {
 </Tabs>
 
 <Callout title="Placement rule">
-  Use left icons for state or identity. Use right icons for direction, continuation, or linked context.
+  Use left icons for state or identity. Use right icons for direction,
+  continuation, or linked context.
 </Callout>
 
 ### As child
@@ -309,7 +309,8 @@ export function BadgeAsChild() {
 </Tabs>
 
 <Callout title="Interaction rule">
-  Only use interactive badges when the underlying element is semantic, such as an anchor or button. If it triggers an important action, use Button instead.
+  Only use interactive badges when the underlying element is semantic, such as
+  an anchor or button. If it triggers an important action, use Button instead.
 </Callout>
 
 ### Usage patterns
@@ -319,54 +320,59 @@ export function BadgeAsChild() {
     #### Choose the message
 
     Decide what the badge communicates: status, category, role, version, count, or plan.
+
   </Step>
 
   <Step>
     #### Pick the lowest useful emphasis
 
     Start with `muted` or `outline`. Move to semantic variants only when the state needs clear meaning.
+
   </Step>
 
   <Step>
     #### Keep the label short
 
     Badges work best with short labels: one or two words.
+
   </Step>
 
   <Step>
     #### Avoid turning metadata into actions
 
     A badge should not become a primary interaction. Use Button for actions.
+
   </Step>
 </Steps>
 
 ## Badge vs Button vs Alert
 
-| Situation | Use |
-| --- | --- |
-| Show a small status | Badge |
-| Show a category or plan label | Badge |
-| Trigger an action | Button |
-| Show persistent feedback or warning | Alert |
-| Confirm temporary background action | Toast |
+| Situation                           | Use    |
+| ----------------------------------- | ------ |
+| Show a small status                 | Badge  |
+| Show a category or plan label       | Badge  |
+| Trigger an action                   | Button |
+| Show persistent feedback or warning | Alert  |
+| Confirm temporary background action | Toast  |
 
 <Callout title="Decision rule">
-  Badge communicates context. Button triggers intent. Alert explains important feedback.
+  Badge communicates context. Button triggers intent. Alert explains important
+  feedback.
 </Callout>
 
 ## API
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `BadgeVariant` | `"default"` | Visual style |
-| `size` | `BadgeSize` | `"md"` | Badge size |
-| `asChild` | `boolean` | `false` | Render via Radix Slot |
-| `className` | `string` | — | Additional Tailwind classes |
+| Prop        | Type           | Default     | Description                 |
+| ----------- | -------------- | ----------- | --------------------------- |
+| `variant`   | `BadgeVariant` | `"default"` | Visual style                |
+| `size`      | `BadgeSize`    | `"md"`      | Badge size                  |
+| `asChild`   | `boolean`      | `false`     | Render via Radix Slot       |
+| `className` | `string`       | —           | Additional Tailwind classes |
 
 The Badge extends standard HTML span props:
 
 ```ts title="badge-props.ts"
-React.HTMLAttributes<HTMLSpanElement>
+React.HTMLAttributes<HTMLSpanElement>;
 ```
 
 ### TypeScript types
@@ -393,6 +399,7 @@ export type BadgeSize = "sm" | "md" | "lg";
 - Use `aria-hidden="true"` for decorative icons.
 - When interactive, use `asChild` with a semantic element such as `a` or `button`.
 - `success` and `warning` use dedicated `--success-foreground` / `--warning-foreground` design tokens (see `@pycolors/tokens`) tuned to meet WCAG AA contrast against their respective backgrounds — do not substitute a different text color on these two variants.
+- `info` uses existing semantic card tokens; contrast is theme-dependent and must satisfy the same accessibility requirements as other Badge variants.
 
 ## Prefer / avoid
 
@@ -420,17 +427,20 @@ export type BadgeSize = "sm" | "md" | "lg";
     Yes, but only when rendered with a semantic element through `asChild`. If it performs a primary action, use Button instead.
   </Accordion>
 
-  <Accordion title="Should every status use a colored badge?">
-    No. Use semantic color only when the state needs emphasis. For low-priority metadata, prefer `muted` or `outline`.
-  </Accordion>
+<Accordion title="Should every status use a colored badge?">
+  No. Use semantic color only when the state needs emphasis. For low-priority
+  metadata, prefer `muted` or `outline`.
+</Accordion>
 
-  <Accordion title="Can badges include icons?">
-    Yes. Icons can reinforce meaning, but the text must still communicate the state.
-  </Accordion>
+<Accordion title="Can badges include icons?">
+  Yes. Icons can reinforce meaning, but the text must still communicate the
+  state.
+</Accordion>
 
-  <Accordion title="Should icons appear on the left or the right?">
-    Use left icons for state, identity, or category. Use right icons for direction, continuation, or linked context.
-  </Accordion>
+<Accordion title="Should icons appear on the left or the right?">
+  Use left icons for state, identity, or category. Use right icons for
+  direction, continuation, or linked context.
+</Accordion>
 
   <Accordion title="How many badges should a card have?">
     Use as few as possible. Badges should clarify the interface, not decorate it.
