@@ -14,6 +14,7 @@ import {
   LayoutTemplate,
   Menu,
   Package2,
+  Palette,
   Rocket,
   Sparkles,
   X,
@@ -126,6 +127,11 @@ const PRODUCT_MENU_META: Record<
   "/ui": {
     icon: Package2,
     description: "Production-ready primitives",
+    tone: "platform",
+  },
+  "/tools/theme-builder": {
+    icon: Palette,
+    description: "Generate light and dark tokens",
     tone: "platform",
   },
   "/ui/patterns": {

@@ -1,7 +1,7 @@
 ---
 title: Overview
 description: Atomic design tokens that define the visual foundations of PyColors UI.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-08-25"
 appliesTo: Design System - Tokens
 ---
 
@@ -9,13 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   ArrowRight,
   Blocks,
@@ -29,7 +23,7 @@ import {
   Type,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
@@ -53,7 +47,9 @@ They encode small decisions that every component can consume:
 Tokens are not components. They are not random CSS values. They are **design decisions expressed as reusable variables**.
 
 <Callout title="Why this matters">
-  Without tokens, every component slowly starts making its own visual decisions. That creates drift, makes refactors risky, and weakens the premium feeling of the product over time.
+  Without tokens, every component slowly starts making its own visual decisions.
+  That creates drift, makes refactors risky, and weakens the premium feeling of
+  the product over time.
 </Callout>
 
 ### What tokens control
@@ -63,21 +59,21 @@ Tokens are not components. They are not random CSS values. They are **design dec
   tone="platform"
   items={[
     {
-      title: 'Geometry',
+      title: "Geometry",
       description:
-        'Radius tokens keep buttons, cards, inputs, and overlays visually related.',
+        "Radius tokens keep buttons, cards, inputs, and overlays visually related.",
       icon: Ruler,
     },
     {
-      title: 'Elevation',
+      title: "Elevation",
       description:
-        'Shadow tokens define calm, predictable depth across cards, menus, and modals.',
+        "Shadow tokens define calm, predictable depth across cards, menus, and modals.",
       icon: Layers3,
     },
     {
-      title: 'System intent',
+      title: "System intent",
       description:
-        'Tokens make design intent explicit so the product can scale without visual drift.',
+        "Tokens make design intent explicit so the product can scale without visual drift.",
       icon: Sparkles,
     },
   ]}
@@ -133,9 +129,7 @@ The raw value stays in the token layer. Components consume the utility.
 export function ProductCard() {
   return (
     <article className="rounded-lg border bg-card p-6 shadow-sm">
-      <h2 className="text-lg font-semibold tracking-tight">
-        Product surface
-      </h2>
+      <h2 className="text-lg font-semibold tracking-tight">Product surface</h2>
       <p className="mt-2 text-sm leading-6 text-muted-foreground">
         This surface consumes tokens indirectly through utilities.
       </p>
@@ -171,18 +165,20 @@ A new token should exist when it:
 
 PyColors intentionally starts with a small token surface. That keeps the system understandable and avoids token sprawl too early.
 
-| Category | Purpose | Current status |
-| --- | --- | --- |
-| Radius | Corner geometry for controls, cards, and overlays | Active |
-| Shadows | Elevation for surfaces and floating layers | Active |
-| Colors | Semantic surface, text, state, and chart roles | Active |
-| Typography | Font roles, hierarchy, labels, and density | Active |
-| Spacing | Product layout rhythm and density | Future |
-| Motion | Transitions, easing, and interaction feel | Future |
-| Z-index | Layering rules for overlays and navigation | Future |
+| Category   | Purpose                                           | Current status |
+| ---------- | ------------------------------------------------- | -------------- |
+| Radius     | Corner geometry for controls, cards, and overlays | Active         |
+| Shadows    | Elevation for surfaces and floating layers        | Active         |
+| Colors     | Semantic surface, text, state, and chart roles    | Active         |
+| Typography | Font roles, hierarchy, labels, and density        | Active         |
+| Spacing    | Product layout rhythm and density                 | Future         |
+| Motion     | Transitions, easing, and interaction feel         | Future         |
+| Z-index    | Layering rules for overlays and navigation        | Future         |
 
 <Callout title="Why the surface is intentionally small">
-  A smaller token system is easier to understand, document, and maintain. PyColors adds tokens when they clarify the system, not when they create extra vocabulary.
+  A smaller token system is easier to understand, document, and maintain.
+  PyColors adds tokens when they clarify the system, not when they create extra
+  vocabulary.
 </Callout>
 
 ## Decision guide
@@ -203,21 +199,20 @@ Avoid creating a token when:
 - the token duplicates an existing role
 - it makes the system harder to understand
 
-
 <PreferAvoid
   prefer={[
-    'tokens for repeated visual decisions',
-    'semantic names that describe intent',
-    'centralized values exposed through utilities',
-    'small scales that are easy to remember',
-    'documentation that explains when to use each token',
+    "tokens for repeated visual decisions",
+    "semantic names that describe intent",
+    "centralized values exposed through utilities",
+    "small scales that are easy to remember",
+    "documentation that explains when to use each token",
   ]}
   avoid={[
-    'tokenizing every one-off value',
-    'names that describe appearance only',
-    'duplicating existing semantic roles',
-    'hardcoding token values inside components',
-    'adding scales before the product needs them',
+    "tokenizing every one-off value",
+    "names that describe appearance only",
+    "duplicating existing semantic roles",
+    "hardcoding token values inside components",
+    "adding scales before the product needs them",
   ]}
 />
 
@@ -276,6 +271,7 @@ Avoid creating a token when:
         </div>
       </div>
     </div>
+
   </Tab>
 
   <Tab value="Component">
@@ -308,17 +304,17 @@ export function SettingsCard() {
   tone="platform"
   items={[
     {
-      title: 'Radius',
-      href: '/docs/design-system/tokens/radius',
+      title: "Radius",
+      href: "/docs/design-system/tokens/radius",
       description:
-        'Understand the corner geometry used across controls, cards, and overlays.',
+        "Understand the corner geometry used across controls, cards, and overlays.",
       icon: Ruler,
     },
     {
-      title: 'Shadows',
-      href: '/docs/design-system/tokens/shadows',
+      title: "Shadows",
+      href: "/docs/design-system/tokens/shadows",
       description:
-        'Learn how elevation creates calm, predictable depth across surfaces.',
+        "Learn how elevation creates calm, predictable depth across surfaces.",
       icon: Layers3,
     },
   ]}
@@ -331,9 +327,10 @@ export function SettingsCard() {
     No. Tokens define the value and intent. Utilities expose those tokens to components. A component should consume the utility, not hardcode the raw value.
   </Accordion>
 
-  <Accordion title="Should every design value become a token?">
-    No. Tokens should represent repeated system decisions. Tokenizing every value too early creates complexity without improving consistency.
-  </Accordion>
+<Accordion title="Should every design value become a token?">
+  No. Tokens should represent repeated system decisions. Tokenizing every value
+  too early creates complexity without improving consistency.
+</Accordion>
 
   <Accordion title="Can I customize the token values?">
     Yes. The goal is to keep the public roles stable while allowing the underlying values to change. This gives you theme flexibility without rewriting components.
@@ -347,31 +344,38 @@ export function SettingsCard() {
   tone="platform"
   items={[
     {
-      title: 'Colors',
-      href: '/docs/design-system/colors',
+      title: "Colors",
+      href: "/docs/design-system/colors",
       description:
-        'Learn how semantic color roles extend the same token logic across surfaces, text, and states.',
+        "Learn how semantic color roles extend the same token logic across surfaces, text, and states.",
       icon: Palette,
     },
     {
-      title: 'Typography',
-      href: '/docs/design-system/typography',
+      title: "Theme Builder",
+      href: "/tools/theme-builder",
       description:
-        'Review hierarchy, font roles, labels, and readable product structure.',
+        "Generate semantic CSS overrides to place after the public token stylesheet import.",
+      icon: ArrowRight,
+    },
+    {
+      title: "Typography",
+      href: "/docs/design-system/typography",
+      description:
+        "Review hierarchy, font roles, labels, and readable product structure.",
       icon: Type,
     },
     {
-      title: 'UI Components',
-      href: '/docs/ui',
+      title: "UI Components",
+      href: "/docs/ui",
       description:
-        'Move from foundations to reusable primitives built on the token system.',
+        "Move from foundations to reusable primitives built on the token system.",
       icon: Blocks,
     },
     {
-      title: 'Why PyColors UI',
-      href: '/docs/ui/why-pycolors-ui',
+      title: "Why PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
       description:
-        'Understand the philosophy and trade-offs behind the component system.',
+        "Understand the philosophy and trade-offs behind the component system.",
       icon: Sparkles,
     },
   ]}

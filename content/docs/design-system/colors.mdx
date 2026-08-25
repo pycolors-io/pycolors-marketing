@@ -1,7 +1,7 @@
 ---
 title: Colors
 description: Semantic color roles, theming architecture, and usage guidelines used across PyColors UI.
-lastUpdated: "2026-04-27"
+lastUpdated: "2026-08-25"
 appliesTo: Design System
 ---
 
@@ -18,7 +18,7 @@ import {
   Palette,
   Sparkles,
   Type,
-} from 'lucide-react';
+} from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
@@ -31,7 +31,10 @@ The system gives every interface layer a stable meaning: page surfaces, cards, t
 At the end of this page, you will understand how PyColors structures color roles, how light and dark mode remain predictable, and how to apply color decisions without creating theme drift.
 
 <Callout title="Why this matters">
-  Color consistency is one of the fastest signals of product quality. A semantic color system keeps dashboards, marketing pages, documentation, forms, and reusable components visually aligned without forcing every component to reinvent its own palette.
+  Color consistency is one of the fastest signals of product quality. A semantic
+  color system keeps dashboards, marketing pages, documentation, forms, and
+  reusable components visually aligned without forcing every component to
+  reinvent its own palette.
 </Callout>
 
 ### Principles
@@ -41,32 +44,30 @@ At the end of this page, you will understand how PyColors structures color roles
   tone="platform"
   items={[
     {
-      eyebrow: 'Role first',
-      title: 'Describe intent',
+      eyebrow: "Role first",
+      title: "Describe intent",
       description:
-        'Use tokens that explain product meaning: surface, text, action, state, input, and data.',
-     },
+        "Use tokens that explain product meaning: surface, text, action, state, input, and data.",
+    },
     {
-      eyebrow: 'Theme safe',
-      title: 'Change centrally',
+      eyebrow: "Theme safe",
+      title: "Change centrally",
       description:
-        'Map CSS variables into Tailwind utilities so components stay stable when themes evolve.',
-     },
+        "Map CSS variables into Tailwind utilities so components stay stable when themes evolve.",
+    },
     {
-      eyebrow: 'Production ready',
-      title: 'Scale consistently',
+      eyebrow: "Production ready",
+      title: "Scale consistently",
       description:
-        'Keep reusable components, dashboards, docs, and commercial pages visually coherent.',
-     },
+        "Keep reusable components, dashboards, docs, and commercial pages visually coherent.",
+    },
   ]}
 />
 
 ## What you’ll do
 
 <Steps>
-  <Step>
-   #### Understand the semantic role model behind PyColors colors.
-  </Step>
+  <Step>#### Understand the semantic role model behind PyColors colors.</Step>
   <Step>
     #### Map CSS variables to Tailwind utilities through the token layer.
   </Step>
@@ -74,7 +75,8 @@ At the end of this page, you will understand how PyColors structures color roles
     #### Apply colors in components without raw values or one-off overrides.
   </Step>
   <Step>
-    #### Use decision rules to keep UI colors, state colors, and chart colors separate.
+    #### Use decision rules to keep UI colors, state colors, and chart colors
+    separate.
   </Step>
 </Steps>
 
@@ -85,7 +87,15 @@ PyColors uses an **OKLCH-based color system** exposed through CSS variables and 
 OKLCH gives the token layer more predictable control over perceived lightness, contrast, and theme balance than raw RGB or one-off HSL values. That matters when a product must support light mode, dark mode, reusable UI components, long documentation pages, dashboards, settings screens, and commercial surfaces.
 
 <Callout type="info" title="Core principle">
-  Components should consume color roles. The token layer should decide how those roles look.
+  Components should consume color roles. The token layer should decide how those
+  roles look.
+</Callout>
+
+<Callout type="info" title="Generate a semantic starting point">
+  Need a concrete starting set of light and dark semantic values? Use the
+  <Link href="/tools/theme-builder">PyColors Theme Builder</Link> to generate
+  client-side CSS overrides, then review the result in your complete product
+  context.
 </Callout>
 
 <Tabs items={["Theme mapping", "Component usage", "Theme values"]}>
@@ -152,22 +162,26 @@ This keeps the component API stable while allowing the underlying theme to evolv
 
 PyColors groups colors by product responsibility. This keeps the system easier to reason about and prevents the table of contents from becoming noisy.
 
-| Category | Tokens | Used for |
-| --- | --- | --- |
-| Surfaces | `background`, `card`, `popover`, `sidebar` | Page layers, cards, overlays, navigation |
-| Text | `foreground`, `muted-foreground`, `card-foreground` | Primary copy, secondary copy, surface-specific text |
-| Actions | `primary`, `secondary`, `accent`, `muted` | Buttons, emphasis, subtle interaction areas |
-| States | `destructive`, `success`, `warning` | Product feedback, validation, risk, confirmation |
-| Inputs | `border`, `input`, `ring` | Forms, focus states, separators, control outlines |
-| Charts | `chart-1` to `chart-5` | Data visualization only |
+| Category | Tokens                                              | Used for                                            |
+| -------- | --------------------------------------------------- | --------------------------------------------------- |
+| Surfaces | `background`, `card`, `popover`, `sidebar`          | Page layers, cards, overlays, navigation            |
+| Text     | `foreground`, `muted-foreground`, `card-foreground` | Primary copy, secondary copy, surface-specific text |
+| Actions  | `primary`, `secondary`, `accent`, `muted`           | Buttons, emphasis, subtle interaction areas         |
+| States   | `destructive`, `success`, `warning`                 | Product feedback, validation, risk, confirmation    |
+| Inputs   | `border`, `input`, `ring`                           | Forms, focus states, separators, control outlines   |
+| Charts   | `chart-1` to `chart-5`                              | Data visualization only                             |
 
 <Callout title="Why this matters">
-  Separating UI roles from chart roles prevents data visualization colors from leaking into product states. A chart palette should not become the source of truth for buttons, alerts, or destructive actions.
+  Separating UI roles from chart roles prevents data visualization colors from
+  leaking into product states. A chart palette should not become the source of
+  truth for buttons, alerts, or destructive actions.
 </Callout>
 
 <div className="not-prose mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">background</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      background
+    </div>
     <div className="h-11 rounded-xl border border-border bg-background" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
@@ -175,11 +189,15 @@ PyColors groups colors by product responsibility. This keeps the system easier t
     <div className="h-11 rounded-xl border border-border bg-card" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">primary</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      primary
+    </div>
     <div className="h-11 rounded-xl bg-primary" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">secondary</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      secondary
+    </div>
     <div className="h-11 rounded-xl bg-secondary" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
@@ -191,15 +209,21 @@ PyColors groups colors by product responsibility. This keeps the system easier t
     <div className="h-11 rounded-xl bg-muted" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">destructive</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      destructive
+    </div>
     <div className="h-11 rounded-xl bg-destructive" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">success</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      success
+    </div>
     <div className="h-11 rounded-xl bg-success" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
-    <div className="mb-3 text-xs font-medium text-muted-foreground">warning</div>
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      warning
+    </div>
     <div className="h-11 rounded-xl bg-warning" />
   </div>
   <div className="rounded-2xl border border-border/60 bg-card p-4">
@@ -216,9 +240,12 @@ Use semantic utilities in every reusable component.
 export function ProductNotice() {
   return (
     <div className="rounded-2xl border border-border bg-card p-5 text-card-foreground">
-      <p className="text-sm font-medium text-foreground">Production-ready surface</p>
+      <p className="text-sm font-medium text-foreground">
+        Production-ready surface
+      </p>
       <p className="mt-1 text-sm text-muted-foreground">
-        The visual intent comes from the design system, not from local overrides.
+        The visual intent comes from the design system, not from local
+        overrides.
       </p>
     </div>
   );
@@ -238,7 +265,8 @@ export function ProductNotice() {
 ```
 
 <Callout type="warn" title="Common pitfall">
-  Do not solve repeated color needs with local overrides. If the same visual intent appears in multiple places, define or adjust the semantic role instead.
+  Do not solve repeated color needs with local overrides. If the same visual
+  intent appears in multiple places, define or adjust the semantic role instead.
 </Callout>
 
 ## Decision guide
@@ -260,7 +288,9 @@ Avoid local raw values when:
 - the value needs to survive future theme changes
 
 <Callout title="Inline CTA">
-  Ready to move from visual consistency to a production-shaped SaaS foundation? Explore <Link href="/docs/starter-pro">Starter Pro</Link> for auth, billing, backend, and delivery patterns built on top of PyColors UI.
+  Ready to move from visual consistency to a production-shaped SaaS foundation?
+  Explore <Link href="/docs/starter-pro">Starter Pro</Link> for auth, billing,
+  backend, and delivery patterns built on top of PyColors UI.
 </Callout>
 
 ## Common mistakes
@@ -270,17 +300,21 @@ Avoid local raw values when:
     Raw values create theme drift, make dark mode harder to maintain, and hide visual decisions inside component implementation. Prefer utilities such as `bg-card`, `text-muted-foreground`, and `border-border`.
   </Accordion>
 
-  <Accordion title="Reusing chart colors for product states">
-    Chart colors are for data visualization. Product states such as success, warning, and destructive actions need dedicated semantic roles so feedback stays consistent.
-  </Accordion>
+<Accordion title="Reusing chart colors for product states">
+  Chart colors are for data visualization. Product states such as success,
+  warning, and destructive actions need dedicated semantic roles so feedback
+  stays consistent.
+</Accordion>
 
-  <Accordion title="Treating accent as decoration">
-    `accent` should communicate intentional emphasis. If every section invents a different accent behavior, the product starts to feel inconsistent.
-  </Accordion>
+<Accordion title="Treating accent as decoration">
+  `accent` should communicate intentional emphasis. If every section invents a
+  different accent behavior, the product starts to feel inconsistent.
+</Accordion>
 
-  <Accordion title="Fixing one screen instead of the token layer">
-    Local fixes solve the current screen but create long-term maintenance cost. If the need repeats, update the semantic role centrally.
-  </Accordion>
+<Accordion title="Fixing one screen instead of the token layer">
+  Local fixes solve the current screen but create long-term maintenance cost. If
+  the need repeats, update the semantic role centrally.
+</Accordion>
 
   <Accordion title="Skipping contrast checks in dark mode">
     Every role used for text, actions, inputs, and states must remain readable in both light and dark mode before shipping.
@@ -294,31 +328,38 @@ Avoid local raw values when:
   tone="platform"
   items={[
     {
-      title: 'Typography',
-      href: '/docs/design-system/typography',
+      title: "Typography",
+      href: "/docs/design-system/typography",
       description:
-        'Continue with readable hierarchy, rhythm, and semantic text structure.',
+        "Continue with readable hierarchy, rhythm, and semantic text structure.",
       icon: Type,
     },
     {
-      title: 'Design tokens',
-      href: '/docs/design-system/tokens',
+      title: "Design tokens",
+      href: "/docs/design-system/tokens",
       description:
-        'Understand the token layer that keeps PyColors UI consistent across products.',
+        "Understand the token layer that keeps PyColors UI consistent across products.",
       icon: Layers3,
     },
     {
-      title: 'UI components',
-      href: '/docs/ui',
+      title: "Theme Builder",
+      href: "/tools/theme-builder",
       description:
-        'See how primitives consume semantic roles across real product interfaces.',
+        "Generate contrast-aware semantic overrides and review them in a production-shaped preview.",
+      icon: Palette,
+    },
+    {
+      title: "UI components",
+      href: "/docs/ui",
+      description:
+        "See how primitives consume semantic roles across real product interfaces.",
       icon: Blocks,
     },
     {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
       description:
-        'Move from UI consistency to production foundations with auth, billing, and backend structure.',
+        "Move from UI consistency to production foundations with auth, billing, and backend structure.",
       icon: Sparkles,
     },
   ]}

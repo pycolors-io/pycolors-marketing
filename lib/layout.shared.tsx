@@ -1,11 +1,8 @@
-import type {
-  BaseLayoutProps,
-  LinkItemType,
-} from 'fumadocs-ui/layouts/shared';
+import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
-} from '@/lib/products/public-catalog';
+} from "@/lib/products/public-catalog";
 
 export type PrimaryNavItem = {
   label: string;
@@ -25,68 +22,73 @@ export type ProductMenuGroup = {
 };
 
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Docs', href: '/docs' },
-  { label: 'Guides', href: '/guides' },
-  { label: 'Blog', href: '/blog' },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Docs", href: "/docs" },
+  { label: "Guides", href: "/guides" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
-    title: 'Starters',
+    title: "Starters",
     items: [
       {
-        label: 'Starter Pro',
-        href: '/starters/pro',
-        description: 'Launch with auth and billing',
-        badge: PRODUCT_DISPLAY['starter-pro'].priceLabel,
+        label: "Starter Pro",
+        href: "/starters/pro",
+        description: "Launch with auth and billing",
+        badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
       },
       {
-        label: 'Starter Free',
-        href: '/starters/free',
-        description: 'Validate product UX fast',
+        label: "Starter Free",
+        href: "/starters/free",
+        description: "Validate product UX fast",
         badge: STARTER_FREE_PRICE_LABEL,
       },
       {
-        label: 'Compare Starters',
-        href: '/starters',
-        description: 'Choose the right SaaS foundation',
+        label: "Compare Starters",
+        href: "/starters",
+        description: "Choose the right SaaS foundation",
       },
     ],
   },
   {
-    title: 'Templates',
+    title: "Templates",
     items: [
       {
-        label: 'All templates',
-        href: '/templates',
-        description: 'Browse premium Next.js templates',
+        label: "All templates",
+        href: "/templates",
+        description: "Browse premium Next.js templates",
       },
       {
-        label: 'NA-AI Landing',
-        href: '/templates/na-ai-landing',
-        description: 'AI/SaaS landing page template',
-        badge: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+        label: "NA-AI Landing",
+        href: "/templates/na-ai-landing",
+        description: "AI/SaaS landing page template",
+        badge: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
       },
     ],
   },
   {
-    title: 'UI system',
+    title: "UI system",
     items: [
       {
-        label: 'UI Library',
-        href: '/ui',
-        description: 'Production-ready primitives',
+        label: "UI Library",
+        href: "/ui",
+        description: "Production-ready primitives",
       },
       {
-        label: 'Patterns',
-        href: '/ui/patterns',
-        description: 'SaaS product patterns',
+        label: "Theme Builder",
+        href: "/tools/theme-builder",
+        description: "Generate light and dark tokens",
       },
       {
-        label: 'Examples',
-        href: '/ui/examples',
-        description: 'See components in context',
+        label: "Patterns",
+        href: "/ui/patterns",
+        description: "SaaS product patterns",
+      },
+      {
+        label: "Examples",
+        href: "/ui/examples",
+        description: "See components in context",
       },
     ],
   },
@@ -95,20 +97,18 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
 /**
  * Optional: if we later re-enable Fumadocs built-in navigation.
  */
-export const layoutLinks: LinkItemType[] = PRIMARY_NAV_ITEMS.map(
-  (item) => ({
-    type: 'main',
-    text: item.label,
-    url: item.href,
-    active: 'nested-url',
-  }),
-);
+export const layoutLinks: LinkItemType[] = PRIMARY_NAV_ITEMS.map((item) => ({
+  type: "main",
+  text: item.label,
+  url: item.href,
+  active: "nested-url",
+}));
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       enabled: false,
-      transparentMode: 'none',
+      transparentMode: "none",
     },
     searchToggle: { enabled: false },
     themeSwitch: { enabled: false },
