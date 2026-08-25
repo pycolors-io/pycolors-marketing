@@ -2,11 +2,6 @@
 
 import * as React from "react";
 import {
-  SEMANTIC_ROLES,
-  type SemanticRole,
-  type ThemeModeResult,
-} from "@pycolors/color-engine";
-import {
   Alert,
   AlertDescription,
   AlertTitle,
@@ -16,6 +11,8 @@ import {
 
 import { ThemeInputs } from "./theme-inputs";
 import { ThemeModeControl } from "./theme-mode-control";
+import { ThemeOutput } from "./theme-output";
+import { ThemePreview } from "./theme-preview";
 import {
   createThemeBuilderState,
   resetThemeBuilderState,
@@ -23,35 +20,9 @@ import {
   updateThemeBuilderField,
 } from "./theme-builder-state";
 
-const PREVIEW_SWATCHES = [
-  { label: "Background", role: "background" },
-  { label: "Surface", role: "surface" },
-  { label: "Primary", role: "primary" },
-  { label: "Accent", role: "accent" },
-  { label: "Muted", role: "muted" },
-  { label: "Border", role: "border" },
-] as const satisfies readonly Readonly<{
-  label: string;
-  role: SemanticRole;
-}>[];
-
-function scopedPreviewVariables(mode: ThemeModeResult): React.CSSProperties {
-  const variables: Record<string, string> = {};
-
-  for (const role of SEMANTIC_ROLES) {
-    variables[`--${role}`] = mode.semantic[role].srgbHex;
-  }
-
-  return variables as React.CSSProperties;
-}
-
 export function ThemeBuilder() {
   const [state, setState] = React.useState(createThemeBuilderState);
   const preview = state.generatedTheme.modes[state.previewMode];
-  const previewStyle = React.useMemo(
-    () => scopedPreviewVariables(preview),
-    [preview],
-  );
   const hasFieldErrors = Object.keys(state.fieldErrors).length > 0;
   const failedContrasts = state.generatedTheme.contrasts.filter(
     (contrast) => contrast.status === "fail",
@@ -120,104 +91,9 @@ export function ThemeBuilder() {
       </Card>
 
       <div className="min-w-0 space-y-6">
-        <section
-          aria-labelledby="theme-builder-preview-heading"
-          aria-describedby="theme-builder-preview-description"
-          data-theme-builder-preview={state.previewMode}
-          style={previewStyle}
-          className="min-w-0 overflow-hidden rounded-[8px] border border-border p-4 shadow-soft sm:p-6"
-        >
-          <div className="space-y-6">
-            <div className="flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="space-y-1">
-                <h2
-                  id="theme-builder-preview-heading"
-                  className="text-xl font-semibold tracking-tight"
-                >
-                  Scoped semantic preview
-                </h2>
-                <p
-                  id="theme-builder-preview-description"
-                  className="text-sm leading-6 text-muted-foreground"
-                >
-                  {state.previewMode === "light" ? "Light" : "Dark"} mode values
-                  are scoped to this preview only.
-                </p>
-              </div>
-              <span className="w-fit rounded-full border border-border px-3 py-1 text-xs font-medium">
-                {state.previewMode === "light"
-                  ? "Light preview"
-                  : "Dark preview"}
-              </span>
-            </div>
+        <ThemePreview mode={state.previewMode} theme={preview} />
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {PREVIEW_SWATCHES.map(({ label, role }) => {
-                const color = preview.semantic[role];
-
-                return (
-                  <div
-                    key={role}
-                    className="min-w-0 rounded-md border border-border p-3"
-                    style={{
-                      backgroundColor:
-                        role === "background"
-                          ? "var(--background)"
-                          : "var(--surface)",
-                      color: "var(--surface-foreground)",
-                    }}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-sm font-medium">{label}</span>
-                      <span
-                        aria-hidden="true"
-                        className="size-6 shrink-0 rounded-full border border-border"
-                        style={{ backgroundColor: `var(--${role})` }}
-                      />
-                    </div>
-                    <code className="mt-2 block truncate text-xs text-muted-foreground">
-                      {color.srgbHex}
-                    </code>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div
-              className="rounded-md border border-border p-4"
-              style={{
-                backgroundColor: "var(--card)",
-                color: "var(--card-foreground)",
-              }}
-            >
-              <p className="text-sm font-semibold">Generated semantic values</p>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                This is a minimal local feedback surface. Full component
-                previews and export tools are intentionally deferred.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span
-                  className="rounded-md px-3 py-2 text-sm font-medium"
-                  style={{
-                    backgroundColor: "var(--primary)",
-                    color: "var(--primary-foreground)",
-                  }}
-                >
-                  Primary
-                </span>
-                <span
-                  className="rounded-md px-3 py-2 text-sm font-medium"
-                  style={{
-                    backgroundColor: "var(--accent)",
-                    color: "var(--accent-foreground)",
-                  }}
-                >
-                  Accent
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ThemeOutput theme={state.generatedTheme} />
 
         <section
           aria-labelledby="theme-builder-notices-heading"
