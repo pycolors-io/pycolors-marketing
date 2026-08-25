@@ -1,53 +1,54 @@
 // @ts-nocheck
-import * as __fd_glob_100 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
-import * as __fd_glob_99 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
-import * as __fd_glob_98 from "../content/docs/ui/toast.mdx?collection=docs";
-import * as __fd_glob_97 from "../content/docs/ui/theming.mdx?collection=docs";
-import * as __fd_glob_96 from "../content/docs/ui/textarea.mdx?collection=docs";
-import * as __fd_glob_95 from "../content/docs/ui/tabs.mdx?collection=docs";
-import * as __fd_glob_94 from "../content/docs/ui/table.mdx?collection=docs";
-import * as __fd_glob_93 from "../content/docs/ui/skeleton.mdx?collection=docs";
-import * as __fd_glob_92 from "../content/docs/ui/sheet.mdx?collection=docs";
-import * as __fd_glob_91 from "../content/docs/ui/separator.mdx?collection=docs";
-import * as __fd_glob_90 from "../content/docs/ui/password-input.mdx?collection=docs";
-import * as __fd_glob_89 from "../content/docs/ui/pagination.mdx?collection=docs";
-import * as __fd_glob_88 from "../content/docs/ui/migration-guidance.mdx?collection=docs";
-import * as __fd_glob_87 from "../content/docs/ui/installation.mdx?collection=docs";
-import * as __fd_glob_86 from "../content/docs/ui/input.mdx?collection=docs";
-import * as __fd_glob_85 from "../content/docs/ui/index.mdx?collection=docs";
-import * as __fd_glob_84 from "../content/docs/ui/empty-state.mdx?collection=docs";
-import * as __fd_glob_83 from "../content/docs/ui/dropdown-menu.mdx?collection=docs";
-import * as __fd_glob_82 from "../content/docs/ui/dialog.mdx?collection=docs";
-import * as __fd_glob_81 from "../content/docs/ui/composition.mdx?collection=docs";
-import * as __fd_glob_80 from "../content/docs/ui/checkbox.mdx?collection=docs";
-import * as __fd_glob_79 from "../content/docs/ui/card.mdx?collection=docs";
-import * as __fd_glob_78 from "../content/docs/ui/button.mdx?collection=docs";
-import * as __fd_glob_77 from "../content/docs/ui/badge.mdx?collection=docs";
-import * as __fd_glob_76 from "../content/docs/ui/alert.mdx?collection=docs";
-import * as __fd_glob_75 from "../content/docs/ui/accessibility.mdx?collection=docs";
-import * as __fd_glob_74 from "../content/docs/templates/na-ai-landing/setup.mdx?collection=docs";
-import * as __fd_glob_73 from "../content/docs/templates/na-ai-landing/project-structure.mdx?collection=docs";
-import * as __fd_glob_72 from "../content/docs/templates/na-ai-landing/license.mdx?collection=docs";
-import * as __fd_glob_71 from "../content/docs/templates/na-ai-landing/index.mdx?collection=docs";
-import * as __fd_glob_70 from "../content/docs/templates/na-ai-landing/deployment.mdx?collection=docs";
-import * as __fd_glob_69 from "../content/docs/templates/na-ai-landing/customization.mdx?collection=docs";
-import * as __fd_glob_68 from "../content/docs/templates/index.mdx?collection=docs";
-import * as __fd_glob_67 from "../content/docs/starter/upgrade.mdx?collection=docs";
-import * as __fd_glob_66 from "../content/docs/starter/project-structure.mdx?collection=docs";
-import * as __fd_glob_65 from "../content/docs/starter/installation.mdx?collection=docs";
-import * as __fd_glob_64 from "../content/docs/starter/index.mdx?collection=docs";
-import * as __fd_glob_63 from "../content/docs/starter/getting-started.mdx?collection=docs";
-import * as __fd_glob_62 from "../content/docs/starter/deployment.mdx?collection=docs";
-import * as __fd_glob_61 from "../content/docs/starter/billing-concept.mdx?collection=docs";
-import * as __fd_glob_60 from "../content/docs/starter/auth-concept.mdx?collection=docs";
-import * as __fd_glob_59 from "../content/docs/starter-pro/why-buy-instead-of-building.mdx?collection=docs";
-import * as __fd_glob_58 from "../content/docs/starter-pro/what-is-included.mdx?collection=docs";
-import * as __fd_glob_57 from "../content/docs/starter-pro/testing-fixtures.mdx?collection=docs";
-import * as __fd_glob_56 from "../content/docs/starter-pro/releases-history.mdx?collection=docs";
-import * as __fd_glob_55 from "../content/docs/starter-pro/pwa.mdx?collection=docs";
-import * as __fd_glob_54 from "../content/docs/starter-pro/pwa-setup.mdx?collection=docs";
-import * as __fd_glob_53 from "../content/docs/starter-pro/pwa-production-checklist.mdx?collection=docs";
-import * as __fd_glob_52 from "../content/docs/starter-pro/production-checklist.mdx?collection=docs";
+import * as __fd_glob_101 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
+import * as __fd_glob_100 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
+import * as __fd_glob_99 from "../content/docs/ui/toast.mdx?collection=docs";
+import * as __fd_glob_98 from "../content/docs/ui/theming.mdx?collection=docs";
+import * as __fd_glob_97 from "../content/docs/ui/textarea.mdx?collection=docs";
+import * as __fd_glob_96 from "../content/docs/ui/tabs.mdx?collection=docs";
+import * as __fd_glob_95 from "../content/docs/ui/table.mdx?collection=docs";
+import * as __fd_glob_94 from "../content/docs/ui/skeleton.mdx?collection=docs";
+import * as __fd_glob_93 from "../content/docs/ui/sheet.mdx?collection=docs";
+import * as __fd_glob_92 from "../content/docs/ui/separator.mdx?collection=docs";
+import * as __fd_glob_91 from "../content/docs/ui/password-input.mdx?collection=docs";
+import * as __fd_glob_90 from "../content/docs/ui/pagination.mdx?collection=docs";
+import * as __fd_glob_89 from "../content/docs/ui/migration-guidance.mdx?collection=docs";
+import * as __fd_glob_88 from "../content/docs/ui/installation.mdx?collection=docs";
+import * as __fd_glob_87 from "../content/docs/ui/input.mdx?collection=docs";
+import * as __fd_glob_86 from "../content/docs/ui/index.mdx?collection=docs";
+import * as __fd_glob_85 from "../content/docs/ui/empty-state.mdx?collection=docs";
+import * as __fd_glob_84 from "../content/docs/ui/dropdown-menu.mdx?collection=docs";
+import * as __fd_glob_83 from "../content/docs/ui/dialog.mdx?collection=docs";
+import * as __fd_glob_82 from "../content/docs/ui/composition.mdx?collection=docs";
+import * as __fd_glob_81 from "../content/docs/ui/checkbox.mdx?collection=docs";
+import * as __fd_glob_80 from "../content/docs/ui/card.mdx?collection=docs";
+import * as __fd_glob_79 from "../content/docs/ui/button.mdx?collection=docs";
+import * as __fd_glob_78 from "../content/docs/ui/badge.mdx?collection=docs";
+import * as __fd_glob_77 from "../content/docs/ui/alert.mdx?collection=docs";
+import * as __fd_glob_76 from "../content/docs/ui/accessibility.mdx?collection=docs";
+import * as __fd_glob_75 from "../content/docs/templates/na-ai-landing/setup.mdx?collection=docs";
+import * as __fd_glob_74 from "../content/docs/templates/na-ai-landing/project-structure.mdx?collection=docs";
+import * as __fd_glob_73 from "../content/docs/templates/na-ai-landing/license.mdx?collection=docs";
+import * as __fd_glob_72 from "../content/docs/templates/na-ai-landing/index.mdx?collection=docs";
+import * as __fd_glob_71 from "../content/docs/templates/na-ai-landing/deployment.mdx?collection=docs";
+import * as __fd_glob_70 from "../content/docs/templates/na-ai-landing/customization.mdx?collection=docs";
+import * as __fd_glob_69 from "../content/docs/templates/index.mdx?collection=docs";
+import * as __fd_glob_68 from "../content/docs/starter/upgrade.mdx?collection=docs";
+import * as __fd_glob_67 from "../content/docs/starter/project-structure.mdx?collection=docs";
+import * as __fd_glob_66 from "../content/docs/starter/installation.mdx?collection=docs";
+import * as __fd_glob_65 from "../content/docs/starter/index.mdx?collection=docs";
+import * as __fd_glob_64 from "../content/docs/starter/getting-started.mdx?collection=docs";
+import * as __fd_glob_63 from "../content/docs/starter/deployment.mdx?collection=docs";
+import * as __fd_glob_62 from "../content/docs/starter/billing-concept.mdx?collection=docs";
+import * as __fd_glob_61 from "../content/docs/starter/auth-concept.mdx?collection=docs";
+import * as __fd_glob_60 from "../content/docs/starter-pro/why-buy-instead-of-building.mdx?collection=docs";
+import * as __fd_glob_59 from "../content/docs/starter-pro/what-is-included.mdx?collection=docs";
+import * as __fd_glob_58 from "../content/docs/starter-pro/testing-fixtures.mdx?collection=docs";
+import * as __fd_glob_57 from "../content/docs/starter-pro/releases-history.mdx?collection=docs";
+import * as __fd_glob_56 from "../content/docs/starter-pro/pwa.mdx?collection=docs";
+import * as __fd_glob_55 from "../content/docs/starter-pro/pwa-setup.mdx?collection=docs";
+import * as __fd_glob_54 from "../content/docs/starter-pro/pwa-production-checklist.mdx?collection=docs";
+import * as __fd_glob_53 from "../content/docs/starter-pro/production-checklist.mdx?collection=docs";
+import * as __fd_glob_52 from "../content/docs/starter-pro/merchant-image-requirements.mdx?collection=docs";
 import * as __fd_glob_51 from "../content/docs/starter-pro/local-development.mdx?collection=docs";
 import * as __fd_glob_50 from "../content/docs/starter-pro/index.mdx?collection=docs";
 import * as __fd_glob_49 from "../content/docs/starter-pro/getting-started.mdx?collection=docs";
@@ -166,54 +167,55 @@ export const docs = await create.docs(
     "starter-pro/getting-started.mdx": __fd_glob_49,
     "starter-pro/index.mdx": __fd_glob_50,
     "starter-pro/local-development.mdx": __fd_glob_51,
-    "starter-pro/production-checklist.mdx": __fd_glob_52,
-    "starter-pro/pwa-production-checklist.mdx": __fd_glob_53,
-    "starter-pro/pwa-setup.mdx": __fd_glob_54,
-    "starter-pro/pwa.mdx": __fd_glob_55,
-    "starter-pro/releases-history.mdx": __fd_glob_56,
-    "starter-pro/testing-fixtures.mdx": __fd_glob_57,
-    "starter-pro/what-is-included.mdx": __fd_glob_58,
-    "starter-pro/why-buy-instead-of-building.mdx": __fd_glob_59,
-    "starter/auth-concept.mdx": __fd_glob_60,
-    "starter/billing-concept.mdx": __fd_glob_61,
-    "starter/deployment.mdx": __fd_glob_62,
-    "starter/getting-started.mdx": __fd_glob_63,
-    "starter/index.mdx": __fd_glob_64,
-    "starter/installation.mdx": __fd_glob_65,
-    "starter/project-structure.mdx": __fd_glob_66,
-    "starter/upgrade.mdx": __fd_glob_67,
-    "templates/index.mdx": __fd_glob_68,
-    "templates/na-ai-landing/customization.mdx": __fd_glob_69,
-    "templates/na-ai-landing/deployment.mdx": __fd_glob_70,
-    "templates/na-ai-landing/index.mdx": __fd_glob_71,
-    "templates/na-ai-landing/license.mdx": __fd_glob_72,
-    "templates/na-ai-landing/project-structure.mdx": __fd_glob_73,
-    "templates/na-ai-landing/setup.mdx": __fd_glob_74,
-    "ui/accessibility.mdx": __fd_glob_75,
-    "ui/alert.mdx": __fd_glob_76,
-    "ui/badge.mdx": __fd_glob_77,
-    "ui/button.mdx": __fd_glob_78,
-    "ui/card.mdx": __fd_glob_79,
-    "ui/checkbox.mdx": __fd_glob_80,
-    "ui/composition.mdx": __fd_glob_81,
-    "ui/dialog.mdx": __fd_glob_82,
-    "ui/dropdown-menu.mdx": __fd_glob_83,
-    "ui/empty-state.mdx": __fd_glob_84,
-    "ui/index.mdx": __fd_glob_85,
-    "ui/input.mdx": __fd_glob_86,
-    "ui/installation.mdx": __fd_glob_87,
-    "ui/migration-guidance.mdx": __fd_glob_88,
-    "ui/pagination.mdx": __fd_glob_89,
-    "ui/password-input.mdx": __fd_glob_90,
-    "ui/separator.mdx": __fd_glob_91,
-    "ui/sheet.mdx": __fd_glob_92,
-    "ui/skeleton.mdx": __fd_glob_93,
-    "ui/table.mdx": __fd_glob_94,
-    "ui/tabs.mdx": __fd_glob_95,
-    "ui/textarea.mdx": __fd_glob_96,
-    "ui/theming.mdx": __fd_glob_97,
-    "ui/toast.mdx": __fd_glob_98,
-    "ui/usage-patterns.mdx": __fd_glob_99,
-    "ui/why-pycolors-ui.mdx": __fd_glob_100,
+    "starter-pro/merchant-image-requirements.mdx": __fd_glob_52,
+    "starter-pro/production-checklist.mdx": __fd_glob_53,
+    "starter-pro/pwa-production-checklist.mdx": __fd_glob_54,
+    "starter-pro/pwa-setup.mdx": __fd_glob_55,
+    "starter-pro/pwa.mdx": __fd_glob_56,
+    "starter-pro/releases-history.mdx": __fd_glob_57,
+    "starter-pro/testing-fixtures.mdx": __fd_glob_58,
+    "starter-pro/what-is-included.mdx": __fd_glob_59,
+    "starter-pro/why-buy-instead-of-building.mdx": __fd_glob_60,
+    "starter/auth-concept.mdx": __fd_glob_61,
+    "starter/billing-concept.mdx": __fd_glob_62,
+    "starter/deployment.mdx": __fd_glob_63,
+    "starter/getting-started.mdx": __fd_glob_64,
+    "starter/index.mdx": __fd_glob_65,
+    "starter/installation.mdx": __fd_glob_66,
+    "starter/project-structure.mdx": __fd_glob_67,
+    "starter/upgrade.mdx": __fd_glob_68,
+    "templates/index.mdx": __fd_glob_69,
+    "templates/na-ai-landing/customization.mdx": __fd_glob_70,
+    "templates/na-ai-landing/deployment.mdx": __fd_glob_71,
+    "templates/na-ai-landing/index.mdx": __fd_glob_72,
+    "templates/na-ai-landing/license.mdx": __fd_glob_73,
+    "templates/na-ai-landing/project-structure.mdx": __fd_glob_74,
+    "templates/na-ai-landing/setup.mdx": __fd_glob_75,
+    "ui/accessibility.mdx": __fd_glob_76,
+    "ui/alert.mdx": __fd_glob_77,
+    "ui/badge.mdx": __fd_glob_78,
+    "ui/button.mdx": __fd_glob_79,
+    "ui/card.mdx": __fd_glob_80,
+    "ui/checkbox.mdx": __fd_glob_81,
+    "ui/composition.mdx": __fd_glob_82,
+    "ui/dialog.mdx": __fd_glob_83,
+    "ui/dropdown-menu.mdx": __fd_glob_84,
+    "ui/empty-state.mdx": __fd_glob_85,
+    "ui/index.mdx": __fd_glob_86,
+    "ui/input.mdx": __fd_glob_87,
+    "ui/installation.mdx": __fd_glob_88,
+    "ui/migration-guidance.mdx": __fd_glob_89,
+    "ui/pagination.mdx": __fd_glob_90,
+    "ui/password-input.mdx": __fd_glob_91,
+    "ui/separator.mdx": __fd_glob_92,
+    "ui/sheet.mdx": __fd_glob_93,
+    "ui/skeleton.mdx": __fd_glob_94,
+    "ui/table.mdx": __fd_glob_95,
+    "ui/tabs.mdx": __fd_glob_96,
+    "ui/textarea.mdx": __fd_glob_97,
+    "ui/theming.mdx": __fd_glob_98,
+    "ui/toast.mdx": __fd_glob_99,
+    "ui/usage-patterns.mdx": __fd_glob_100,
+    "ui/why-pycolors-ui.mdx": __fd_glob_101,
   },
 );
