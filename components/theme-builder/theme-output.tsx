@@ -50,15 +50,27 @@ type CodePanelProps = Readonly<{
 
 function CodePanel({ title, content }: CodePanelProps) {
   return (
-    <div className="min-w-0 space-y-3">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm font-medium text-foreground">{title}</p>
-        <CopyButton value={content} label={`Copy ${title}`} />
+    <div className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-surface-inverted shadow-soft">
+      <div className="flex flex-col gap-3 border-b border-surface-inverted-foreground/15 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-0.5">
+          <p className="text-sm font-medium text-surface-inverted-foreground">
+            {title}
+          </p>
+          <p className="text-xs text-surface-inverted-foreground/65">
+            Select the output or copy the complete generated artifact.
+          </p>
+        </div>
+        <CopyButton
+          value={content}
+          label={`Copy ${title}`}
+          buttonClassName="border-surface-inverted-foreground/20 bg-transparent text-surface-inverted-foreground hover:bg-surface-inverted-foreground/10 hover:text-surface-inverted-foreground"
+          statusClassName="text-surface-inverted-foreground/75"
+        />
       </div>
       <pre
         tabIndex={0}
         aria-label={`${title} output. Selectable code.`}
-        className="max-h-96 max-w-full overflow-auto rounded-md border border-border bg-surface-inverted p-4 font-mono text-xs leading-6 text-surface-inverted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="max-h-105 max-w-full overflow-auto p-4 font-mono text-xs leading-6 text-surface-inverted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       >
         <code>{content}</code>
       </pre>
@@ -92,18 +104,26 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
   return (
     <section
       aria-labelledby="theme-builder-output-heading"
-      className="min-w-0 space-y-4 rounded-[8px] border border-border-subtle bg-surface p-4 shadow-soft sm:p-6"
+      className="min-w-0 space-y-5 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-medium sm:p-6"
     >
-      <div className="space-y-1">
-        <h2
-          id="theme-builder-output-heading"
-          className="text-xl font-semibold tracking-tight"
-        >
-          Token exports
-        </h2>
-        <p className="text-sm leading-6 text-muted-foreground">
-          Copy deterministic output from the current valid generated theme.
-          Nothing is uploaded or saved.
+      <div className="flex flex-col gap-3 border-b border-border-subtle pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-1">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+            04 · Export implementation
+          </p>
+          <h2
+            id="theme-builder-output-heading"
+            className="text-xl font-semibold tracking-tight"
+          >
+            Token exports
+          </h2>
+          <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+            Copy deterministic output from the current valid generated theme.
+            Nothing is uploaded or saved.
+          </p>
+        </div>
+        <p className="w-fit rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-2 text-xs text-muted-foreground">
+          CSS · Tailwind v4 · JSON
         </p>
       </div>
 
@@ -134,14 +154,14 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
               <p className="mb-3 text-sm leading-6 text-muted-foreground">
                 Load these semantic overrides after the PyColors token import.
               </p>
-              <div className="mb-4 space-y-2">
+              <div className="mb-4 space-y-2 rounded-[5px] border border-border-subtle bg-surface-muted p-4">
                 <h3 className="text-sm font-medium text-foreground">
                   Generated override example
                 </h3>
                 <pre
                   tabIndex={0}
                   aria-label="Compact example of the current generated CSS override"
-                  className="max-w-full overflow-auto rounded-md border border-border bg-surface-muted p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="max-w-full overflow-auto rounded-[4px] border border-border bg-background p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <code>{generatedCssExample(css.content)}</code>
                 </pre>
@@ -177,10 +197,13 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
 
           <section
             aria-labelledby="theme-builder-next-steps-heading"
-            className="border-t border-border-subtle pt-4"
+            className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-4 sm:p-5"
           >
             <div className="space-y-3">
               <div className="space-y-1">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+                  05 · Continue with PyColors
+                </p>
                 <h3
                   id="theme-builder-next-steps-heading"
                   className="text-base font-semibold tracking-tight"

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@pycolors/ui";
+import { Button, cn } from "@pycolors/ui";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;
 
@@ -41,9 +41,18 @@ export async function copyThemeOutput(
 type CopyButtonProps = Readonly<{
   value: string;
   label: string;
+  className?: string;
+  buttonClassName?: string;
+  statusClassName?: string;
 }>;
 
-export function CopyButton({ value, label }: CopyButtonProps) {
+export function CopyButton({
+  value,
+  label,
+  className,
+  buttonClassName,
+  statusClassName,
+}: CopyButtonProps) {
   const [status, setStatus] = React.useState<CopyStatus>({
     kind: "idle",
     message: "",
@@ -55,14 +64,22 @@ export function CopyButton({ value, label }: CopyButtonProps) {
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-end gap-2">
-      <Button type="button" variant="outline" size="sm" onClick={handleCopy}>
+    <div
+      className={cn("flex flex-wrap items-center justify-end gap-2", className)}
+    >
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className={buttonClassName}
+        onClick={handleCopy}
+      >
         {label}
       </Button>
       <p
         aria-live="polite"
         role="status"
-        className="text-xs text-muted-foreground"
+        className={cn("text-xs text-muted-foreground", statusClassName)}
       >
         {status.message}
       </p>

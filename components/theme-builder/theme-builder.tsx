@@ -10,7 +10,6 @@ import {
 } from "@pycolors/ui";
 
 import { ThemeInputs } from "./theme-inputs";
-import { ThemeModeControl } from "./theme-mode-control";
 import { ThemeOutput } from "./theme-output";
 import { ThemePreview } from "./theme-preview";
 import {
@@ -29,114 +28,140 @@ export function ThemeBuilder() {
   );
 
   return (
-    <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(18rem,0.85fr)_minmax(0,1.15fr)]">
-      <Card className="min-w-0 rounded-[8px] border-border-subtle bg-surface p-5 shadow-soft sm:p-6">
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-xl font-semibold tracking-tight">
-              Configure a theme
-            </h2>
-            <p className="text-sm leading-6 text-muted-foreground">
-              Values stay in this editor. No input is saved, shared, or sent to
-              a server.
-            </p>
-          </div>
+    <div className="space-y-8">
+      <section
+        aria-label="Theme Builder workspace"
+        className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium"
+      >
+        <div className="grid min-w-0 lg:grid-cols-[minmax(20rem,0.78fr)_minmax(0,1.22fr)]">
+          <Card className="min-w-0 rounded-none border-0 border-b border-border-subtle bg-surface p-5 shadow-none lg:border-b-0 lg:border-r sm:p-6">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+                  01 · Configure brand
+                </p>
+                <div className="space-y-2">
+                  <h2 className="text-xl font-semibold tracking-tight">
+                    Theme settings
+                  </h2>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    Enter a brand foundation, then review the result in a real
+                    product surface. Inputs stay local to this browser.
+                  </p>
+                </div>
+              </div>
 
-          <ThemeInputs
-            draft={state.draft}
-            errors={state.fieldErrors}
-            onFieldChange={(field, value) =>
-              setState((current) =>
-                updateThemeBuilderField(current, field, value),
-              )
-            }
-          />
+              <ThemeInputs
+                draft={state.draft}
+                errors={state.fieldErrors}
+                onFieldChange={(field, value) =>
+                  setState((current) =>
+                    updateThemeBuilderField(current, field, value),
+                  )
+                }
+              />
 
-          {hasFieldErrors ? (
-            <Alert variant="destructive" ariaLive="assertive">
-              <AlertTitle>Preview kept on the last valid theme</AlertTitle>
-              <AlertDescription>
-                Correct the field errors above before new semantic values are
-                applied.
-              </AlertDescription>
-            </Alert>
-          ) : null}
+              {hasFieldErrors ? (
+                <Alert variant="destructive" ariaLive="assertive">
+                  <AlertTitle>Preview kept on the last valid theme</AlertTitle>
+                  <AlertDescription>
+                    Correct the field errors above before new semantic values
+                    are applied.
+                  </AlertDescription>
+                </Alert>
+              ) : null}
 
-          {state.generationError ? (
-            <Alert variant="destructive" ariaLive="assertive">
-              <AlertTitle>Theme generation could not complete</AlertTitle>
-              <AlertDescription>{state.generationError}</AlertDescription>
-            </Alert>
-          ) : null}
+              {state.generationError ? (
+                <Alert variant="destructive" ariaLive="assertive">
+                  <AlertTitle>Theme generation could not complete</AlertTitle>
+                  <AlertDescription>{state.generationError}</AlertDescription>
+                </Alert>
+              ) : null}
 
-          <div className="flex flex-col gap-4 border-t border-border-subtle pt-5 sm:flex-row sm:items-end sm:justify-between">
-            <ThemeModeControl
-              value={state.previewMode}
-              onChange={(previewMode) =>
+              <div className="flex flex-col gap-3 border-t border-border-subtle pt-5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-xs leading-5 text-muted-foreground">
+                  Need a clean slate? Restore the documented PyColors defaults.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 shrink-0 rounded-[5px]"
+                  onClick={() => setState(resetThemeBuilderState())}
+                >
+                  Reset defaults
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          <div className="min-w-0 space-y-5 bg-surface-elevated/45 p-4 sm:p-6">
+            <ThemePreview
+              mode={state.previewMode}
+              theme={preview}
+              onModeChange={(previewMode) =>
                 setState((current) =>
                   selectThemeBuilderMode(current, previewMode),
                 )
               }
             />
-            <Button
-              type="button"
-              variant="outline"
-              className="min-h-11 rounded-[5px]"
-              onClick={() => setState(resetThemeBuilderState())}
+
+            <section
+              aria-labelledby="theme-builder-notices-heading"
+              className="rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-5"
             >
-              Reset defaults
-            </Button>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-1">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                    03 · Review contrast
+                  </p>
+                  <h2
+                    id="theme-builder-notices-heading"
+                    className="text-base font-semibold tracking-tight"
+                  >
+                    Contrast-aware notices
+                  </h2>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    Generated evidence helps guide review; it is not an
+                    accessibility certification.
+                  </p>
+                </div>
+
+                {failedContrasts.length > 0 ? (
+                  <p
+                    className="w-fit rounded-[5px] border border-warning/30 bg-warning/10 px-3 py-2 text-sm font-medium text-warning"
+                    role="status"
+                  >
+                    {failedContrasts.length} contrast check
+                    {failedContrasts.length === 1 ? "" : "s"} remain below
+                    target.
+                  </p>
+                ) : null}
+              </div>
+
+              <ul className="mt-4 grid gap-2" aria-live="polite">
+                {state.generatedTheme.warnings.map((warning, index) => (
+                  <li key={`${warning.code}-${warning.mode ?? "all"}-${index}`}>
+                    <Alert
+                      variant={
+                        warning.severity === "warning" ? "warning" : "info"
+                      }
+                    >
+                      <AlertTitle>
+                        {warning.code === "contrast-below-target"
+                          ? "Contrast warning"
+                          : warning.code.replaceAll("-", " ")}
+                      </AlertTitle>
+                      <AlertDescription>{warning.message}</AlertDescription>
+                    </Alert>
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
         </div>
-      </Card>
+      </section>
 
-      <div className="min-w-0 space-y-6">
-        <ThemePreview mode={state.previewMode} theme={preview} />
-
-        <ThemeOutput theme={state.generatedTheme} />
-
-        <section
-          aria-labelledby="theme-builder-notices-heading"
-          className="space-y-3"
-        >
-          <div className="space-y-1">
-            <h2
-              id="theme-builder-notices-heading"
-              className="text-base font-semibold tracking-tight"
-            >
-              Contrast-aware notices
-            </h2>
-            <p className="text-sm leading-6 text-muted-foreground">
-              Generated evidence helps guide review; it is not an accessibility
-              certification.
-            </p>
-          </div>
-
-          {failedContrasts.length > 0 ? (
-            <p className="text-sm font-medium text-warning" role="status">
-              {failedContrasts.length} contrast check
-              {failedContrasts.length === 1 ? "" : "s"} remain below target.
-            </p>
-          ) : null}
-
-          <ul className="grid gap-3" aria-live="polite">
-            {state.generatedTheme.warnings.map((warning, index) => (
-              <li key={`${warning.code}-${warning.mode ?? "all"}-${index}`}>
-                <Alert
-                  variant={warning.severity === "warning" ? "warning" : "info"}
-                >
-                  <AlertTitle>
-                    {warning.code === "contrast-below-target"
-                      ? "Contrast warning"
-                      : warning.code.replaceAll("-", " ")}
-                  </AlertTitle>
-                  <AlertDescription>{warning.message}</AlertDescription>
-                </Alert>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+      <ThemeOutput theme={state.generatedTheme} />
     </div>
   );
 }
