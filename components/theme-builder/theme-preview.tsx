@@ -46,7 +46,7 @@ export function ThemePreview({ mode, theme, onModeChange }: ThemePreviewProps) {
       aria-describedby="theme-builder-preview-description"
       data-theme-builder-preview={mode}
       style={style}
-      className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground shadow-soft"
+      className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
     >
       <div className="flex flex-col gap-3 border-b border-border bg-surface-elevated/70 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
         <div className="flex items-center gap-3">
@@ -92,7 +92,7 @@ export function ThemePreview({ mode, theme, onModeChange }: ThemePreviewProps) {
           </Badge>
         </div>
 
-        <div className="overflow-hidden rounded-[5px] border border-border bg-card shadow-soft">
+        <div className="overflow-hidden rounded-[5px] border border-border bg-card">
           <Card className="rounded-none border-0 bg-card shadow-none">
             <CardHeader className="gap-3 border-b border-border p-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="space-y-1">

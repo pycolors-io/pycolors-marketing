@@ -1,12 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 import {
   defineConfig,
   defineDocs,
   defineCollections,
   frontmatterSchema,
   metaSchema,
-} from 'fumadocs-mdx/config';
-import { rehypeCode } from 'fumadocs-core/mdx-plugins';
+} from "fumadocs-mdx/config";
+import rehypePrettyCode from "rehype-pretty-code";
 
 // Docs frontmatter schema
 const docsFrontmatterSchema = frontmatterSchema.extend({
@@ -18,8 +18,7 @@ const docsFrontmatterSchema = frontmatterSchema.extend({
     .optional()
     .transform((value) => {
       if (!value) return undefined;
-      if (value instanceof Date)
-        return value.toISOString().slice(0, 10);
+      if (value instanceof Date) return value.toISOString().slice(0, 10);
       return value;
     }),
   appliesTo: z.string().optional(),
@@ -40,13 +39,13 @@ const blogFrontmatterSchema = frontmatterSchema.extend({
     .object({
       label: z.string(),
       href: z.string(),
-      variant: z.enum(['free', 'pro', 'blocks']).default('free'),
+      variant: z.enum(["free", "pro", "blocks"]).default("free"),
     })
     .optional(),
 });
 
 export const docs = defineDocs({
-  dir: 'content/docs',
+  dir: "content/docs",
   docs: {
     schema: docsFrontmatterSchema,
     postprocess: {
@@ -59,8 +58,8 @@ export const docs = defineDocs({
 });
 
 export const blog = defineCollections({
-  type: 'doc',
-  dir: 'content/blog',
+  type: "doc",
+  dir: "content/blog",
   schema: blogFrontmatterSchema,
   postprocess: {
     includeProcessedMarkdown: true,
@@ -71,13 +70,14 @@ export default defineConfig({
   mdxOptions: {
     rehypePlugins: [
       [
-        rehypeCode,
+        rehypePrettyCode,
         {
-          themes: {
-            light: 'github-light',
-            dark: 'github-dark',
+          theme: {
+            light: "github-light",
+            dark: "github-dark",
           },
-          defaultLang: 'tsx',
+          defaultLang: "tsx",
+          keepBackground: false,
         },
       ],
     ],

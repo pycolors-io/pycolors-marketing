@@ -50,7 +50,7 @@ type CodePanelProps = Readonly<{
 
 function CodePanel({ title, content }: CodePanelProps) {
   return (
-    <div className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-surface-inverted shadow-soft">
+    <div className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-surface-inverted">
       <div className="flex flex-col gap-3 border-b border-surface-inverted-foreground/15 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-0.5">
           <p className="text-sm font-medium text-surface-inverted-foreground">
@@ -104,7 +104,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
   return (
     <section
       aria-labelledby="theme-builder-output-heading"
-      className="min-w-0 space-y-5 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-medium sm:p-6"
+      className="min-w-0 space-y-5 rounded-[5px] border border-border-subtle bg-surface p-5 sm:p-6"
     >
       <div className="flex flex-col gap-3 border-b border-border-subtle pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
