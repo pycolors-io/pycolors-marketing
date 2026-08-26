@@ -113,3 +113,61 @@ test("keeps the preview root-scoped and imports public UI components", () => {
   assert.doesNotMatch(builderSource, /document\.documentElement/u);
   assert.match(previewSource, /style=\{style\}/u);
 });
+
+test("highlights local token exports with Rehype Pretty Code", () => {
+  const outputSource = readFileSync(
+    new URL("./theme-output.tsx", import.meta.url),
+    "utf8",
+  );
+  const highlighterSource = readFileSync(
+    new URL("./theme-code-highlighter.worker.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(outputSource, /HighlightedThemeCode/u);
+  assert.match(outputSource, /activeFormat/u);
+  assert.match(outputSource, /colorScheme="dark"/u);
+  assert.match(
+    outputSource,
+    /Compact example of the current generated CSS override[\s\S]*generatedCssExample\(css\.content\)/u,
+  );
+  assert.match(highlighterSource, /from "rehype-pretty-code"/u);
+  assert.match(highlighterSource, /"github-dark"/u);
+  assert.match(highlighterSource, /self\.postMessage/u);
+  assert.doesNotMatch(highlighterSource, /fetch\s*\(/u);
+});
+
+test("prioritizes the SaaS preview while settings collapse safely on smaller screens", () => {
+  const builderSource = readFileSync(
+    new URL("./theme-builder.tsx", import.meta.url),
+    "utf8",
+  );
+  const inputsSource = readFileSync(
+    new URL("./theme-inputs.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(
+    builderSource,
+    /lg:grid-cols-\[minmax\(17rem,0\.62fr\)_minmax\(0,1\.38fr\)\]/u,
+  );
+  assert.match(
+    builderSource,
+    /aria-labelledby="theme-builder-settings-heading"/u,
+  );
+  assert.match(builderSource, /Theme settings/u);
+  assert.match(
+    builderSource,
+    /<ThemePreview[\s\S]*theme-builder-notices-heading/u,
+  );
+  assert.match(
+    inputsSource,
+    /<fieldset className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">/u,
+  );
+  assert.match(
+    inputsSource,
+    /<legend className="sr-only">Theme settings<\/legend>/u,
+  );
+  assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
+  assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
+});

@@ -51,20 +51,26 @@ export function ThemeBuilder() {
         aria-label="Theme Builder workspace"
         className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-surface"
       >
-        <div className="grid min-w-0 lg:grid-cols-[minmax(20rem,0.78fr)_minmax(0,1.22fr)]">
-          <div className="min-w-0 border-b border-border-subtle bg-surface p-5 lg:border-b-0 lg:border-r sm:p-6">
-            <div className="space-y-6">
+        <div className="grid min-w-0 lg:grid-cols-[minmax(17rem,0.62fr)_minmax(0,1.38fr)] lg:items-start">
+          <aside
+            aria-labelledby="theme-builder-settings-heading"
+            className="min-w-0 border-b border-border-subtle bg-surface lg:border-r lg:border-b-0"
+          >
+            <div className="space-y-5 p-5 sm:p-6">
               <div className="space-y-3">
                 <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
                   01 · Configure brand
                 </p>
-                <div className="space-y-2">
-                  <h2 className="text-xl font-semibold tracking-tight">
+                <div className="space-y-1">
+                  <h2
+                    id="theme-builder-settings-heading"
+                    className="text-xl font-semibold tracking-tight"
+                  >
                     Theme settings
                   </h2>
                   <p className="text-sm leading-6 text-muted-foreground">
-                    Enter a brand foundation, then review the result in a real
-                    product surface. Inputs stay local to this browser.
+                    A compact local control rail. The product preview updates as
+                    you type.
                   </p>
                 </div>
               </div>
@@ -96,21 +102,21 @@ export function ThemeBuilder() {
                 </Alert>
               ) : null}
 
-              <div className="flex flex-col gap-3 border-t border-border-subtle pt-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 border-t border-border-subtle pt-4 sm:flex-row sm:items-center sm:justify-between lg:items-start lg:flex-col">
                 <p className="text-xs leading-5 text-muted-foreground">
-                  Need a clean slate? Restore the documented PyColors defaults.
+                  Inputs stay in this browser and are never persisted.
                 </p>
                 <Button
                   type="button"
                   variant="outline"
-                  className="min-h-11 shrink-0 rounded-[5px]"
+                  className="min-h-10 shrink-0 rounded-[5px] px-3"
                   onClick={() => setState(resetThemeBuilderState())}
                 >
                   Reset defaults
                 </Button>
               </div>
             </div>
-          </div>
+          </aside>
 
           <div className="min-w-0 space-y-5 bg-surface-elevated/30 p-4 sm:p-6">
             <ThemePreview
@@ -125,7 +131,7 @@ export function ThemeBuilder() {
 
             <section
               aria-labelledby="theme-builder-notices-heading"
-              className="border-t border-border-subtle pt-5"
+              className="rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-5"
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="space-y-1">
@@ -145,7 +151,7 @@ export function ThemeBuilder() {
                 </div>
 
                 <p
-                  className="w-fit rounded-[5px] border border-border-subtle bg-surface px-3 py-2 text-xs font-medium tabular-nums text-muted-foreground"
+                  className="w-fit rounded-[5px] border border-border-subtle bg-surface-muted/35 px-3 py-2 text-xs font-medium tabular-nums text-muted-foreground"
                   role="status"
                 >
                   {failedContrasts.length > 0

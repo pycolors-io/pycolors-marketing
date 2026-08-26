@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 import {
   serializeTheme,
@@ -19,6 +20,8 @@ import {
 } from "@pycolors/ui";
 
 import { CopyButton } from "./copy-button";
+import { HighlightedThemeCode } from "./theme-code-highlighter";
+import type { ThemeCodeLanguage } from "./theme-code-highlighter-types";
 import { THEME_BUILDER_CTA_LINKS } from "./theme-builder-launch";
 
 type ThemeOutputProps = Readonly<{
@@ -46,36 +49,52 @@ function outputArtifact(
 type CodePanelProps = Readonly<{
   title: string;
   content: string;
+  language: ThemeCodeLanguage;
+  active: boolean;
 }>;
 
-function CodePanel({ title, content }: CodePanelProps) {
+function CodePanel({ title, content, language, active }: CodePanelProps) {
   return (
-    <div className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-surface-inverted">
-      <div className="flex flex-col gap-3 border-b border-surface-inverted-foreground/15 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+    <div
+      data-theme-builder-code-panel
+      className="min-w-0 overflow-hidden rounded-[5px] border border-white/15 bg-[oklch(0.18_0.012_285)] text-[oklch(0.985_0_0)]"
+    >
+      <div className="flex flex-col gap-3 border-b border-white/15 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-0.5">
-          <p className="text-sm font-medium text-surface-inverted-foreground">
-            {title}
-          </p>
-          <p className="text-xs text-surface-inverted-foreground/65">
+          <p className="text-sm font-medium">{title}</p>
+          <p className="text-xs text-white/65">
             Select the output or copy the complete generated artifact.
           </p>
         </div>
         <CopyButton
           value={content}
           label={`Copy ${title}`}
-          buttonClassName="border-surface-inverted-foreground/20 bg-transparent text-surface-inverted-foreground hover:bg-surface-inverted-foreground/10 hover:text-surface-inverted-foreground"
-          statusClassName="text-surface-inverted-foreground/75"
+          buttonClassName="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+          statusClassName="text-white/75"
         />
       </div>
       <pre
+        data-theme-builder-code
         tabIndex={0}
         aria-label={`${title} output. Selectable code.`}
-        className="max-h-105 max-w-full overflow-auto p-4 font-mono text-xs leading-6 text-surface-inverted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+        className="max-h-105 max-w-full overflow-auto p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       >
-        <code>{content}</code>
+        <HighlightedThemeCode
+          content={content}
+          language={language}
+          active={active}
+          colorScheme="dark"
+        />
       </pre>
     </div>
   );
+}
+
+const exportTabs = ["css", "tailwind-v4", "json"] as const;
+type ExportTab = (typeof exportTabs)[number];
+
+function isExportTab(value: string): value is ExportTab {
+  return (exportTabs as readonly string[]).includes(value);
 }
 
 /** Keep the launch example tied directly to the current serializer output. */
@@ -96,6 +115,7 @@ function generatedCssExample(content: string) {
 
 /** Display engine-owned export artifacts without rebuilding semantic values. */
 export function ThemeOutput({ theme }: ThemeOutputProps) {
+  const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
   const css = outputArtifact(theme, "css");
   const tailwind = outputArtifact(theme, "tailwind-v4");
   const json = outputArtifact(theme, "json");
@@ -134,7 +154,13 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
         </Alert>
       ) : (
         <>
-          <Tabs defaultValue="css" className="min-w-0">
+          <Tabs
+            value={activeFormat}
+            onValueChange={(value) => {
+              if (isExportTab(value)) setActiveFormat(value);
+            }}
+            className="min-w-0"
+          >
             <TabsList
               size="sm"
               className="h-auto max-w-full justify-start gap-1 overflow-x-auto"
@@ -159,14 +185,25 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                   Generated override example
                 </h3>
                 <pre
+                  data-theme-builder-code
                   tabIndex={0}
                   aria-label="Compact example of the current generated CSS override"
-                  className="max-w-full overflow-auto rounded-[4px] border border-border bg-background p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="max-w-full overflow-auto rounded-[4px] border border-white/15 bg-[oklch(0.18_0.012_285)] p-4 font-mono text-xs leading-6 text-[oklch(0.985_0_0)] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <code>{generatedCssExample(css.content)}</code>
+                  <HighlightedThemeCode
+                    content={generatedCssExample(css.content)}
+                    language="css"
+                    active={activeFormat === "css"}
+                    colorScheme="dark"
+                  />
                 </pre>
               </div>
-              <CodePanel title="CSS" content={css.content} />
+              <CodePanel
+                title="CSS"
+                content={css.content}
+                language="css"
+                active={activeFormat === "css"}
+              />
             </TabsContent>
 
             <TabsContent value="tailwind-v4" className="space-y-3">
@@ -183,7 +220,12 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                   variables.
                 </li>
               </ol>
-              <CodePanel title="Tailwind v4 CSS" content={tailwind.content} />
+              <CodePanel
+                title="Tailwind v4 CSS"
+                content={tailwind.content}
+                language="css"
+                active={activeFormat === "tailwind-v4"}
+              />
             </TabsContent>
 
             <TabsContent value="json">
@@ -191,7 +233,12 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                 Complete engine evidence, including both modes, scales, contrast
                 records, and warnings.
               </p>
-              <CodePanel title="JSON" content={json.content} />
+              <CodePanel
+                title="JSON"
+                content={json.content}
+                language="json"
+                active={activeFormat === "json"}
+              />
             </TabsContent>
           </Tabs>
 

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { SIX_DIGIT_HEX_COLOR_PATTERN } from "@pycolors/color-engine";
 import { Input as UiInput } from "@pycolors/ui";
 
@@ -27,6 +29,26 @@ type ColorFieldProps = Readonly<{
   onFieldChange: ThemeInputsProps["onFieldChange"];
 }>;
 
+type ThemeSettingProps = Readonly<{
+  title: string;
+  description: string;
+  children: ReactNode;
+}>;
+
+function ThemeSetting({ title, description, children }: ThemeSettingProps) {
+  return (
+    <div className="min-w-0 border border-border-subtle bg-surface-muted/35 p-3.5">
+      <div className="space-y-1">
+        <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-foreground">
+          {title}
+        </h3>
+        <p className="text-xs leading-5 text-muted-foreground">{description}</p>
+      </div>
+      <div className="mt-3.5">{children}</div>
+    </div>
+  );
+}
+
 function ColorField({
   field,
   label,
@@ -43,11 +65,11 @@ function ColorField({
     : pickerFallback;
 
   return (
-    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_5rem] sm:items-end">
+    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_3.25rem] gap-2.5 items-end">
       <UiInput
         id={inputId}
         label={label}
-        size={required ? "lg" : "md"}
+        size="md"
         required={required}
         value={value}
         error={error}
@@ -60,7 +82,7 @@ function ColorField({
       <div className="grid gap-1.5">
         <label
           htmlFor={`${inputId}-picker`}
-          className="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground"
+          className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground"
         >
           Color
         </label>
@@ -83,73 +105,69 @@ export function ThemeInputs({
   onFieldChange,
 }: ThemeInputsProps) {
   return (
-    <fieldset className="grid gap-4">
-      <legend className="text-base font-semibold tracking-tight text-foreground">
-        Theme inputs
-      </legend>
+    <fieldset className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+      <legend className="sr-only">Theme settings</legend>
 
-      <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted/55 p-4">
-        <div className="mb-4 space-y-1">
-          <p className="text-sm font-medium text-foreground">
-            Brand foundation
-          </p>
-          <p className="text-xs leading-5 text-muted-foreground">
-            Start with the one color that anchors both generated modes.
-          </p>
-        </div>
+      <ThemeSetting
+        title="Brand color"
+        description="Required source for both generated modes."
+      >
         <ColorField
           field="brandColor"
-          label="Brand color"
+          label="Hex value"
           required
           value={draft.brandColor}
           error={errors.brandColor}
-          helperText="Required. Enter a six-digit hexadecimal color such as #6a30d4."
+          helperText="Required · #RRGGBB"
           pickerFallback="#6a30d4"
           onFieldChange={onFieldChange}
         />
-      </div>
+      </ThemeSetting>
 
-      <div className="space-y-4 border-t border-border-subtle pt-4">
-        <div className="space-y-1">
-          <p className="text-sm font-medium text-foreground">
-            Optional refinements
-          </p>
-          <p className="text-xs leading-5 text-muted-foreground">
-            Fine-tune the metadata and neutral foundation without changing the
-            deterministic workflow.
-          </p>
-        </div>
-
+      <ThemeSetting
+        title="Theme name"
+        description="Optional label included in generated metadata."
+      >
         <UiInput
           id="theme-builder-name"
-          label="Theme name (optional)"
+          label="Name"
           value={draft.name}
           error={errors.name}
-          helperText="Optional. Used for deterministic theme metadata."
+          helperText="Optional"
           onChange={(event) => onFieldChange("name", event.target.value)}
           maxLength={64}
         />
+      </ThemeSetting>
 
+      <ThemeSetting
+        title="Neutral hue"
+        description="Optional tonal balance for the generated scale."
+      >
         <ColorField
           field="neutralColor"
-          label="Neutral color (optional)"
+          label="Hex value"
           value={draft.neutralColor}
           error={errors.neutralColor}
-          helperText="Optional. Leave empty to derive a conservative neutral from the brand hue."
+          helperText="Optional · derives from brand"
           pickerFallback="#71717a"
           onFieldChange={onFieldChange}
         />
+      </ThemeSetting>
 
+      <ThemeSetting
+        title="Light canvas"
+        description="Optional base for the light-mode background."
+      >
         <ColorField
           field="lightBackgroundColor"
-          label="Light background color (optional)"
+          label="Hex value"
           value={draft.lightBackgroundColor}
           error={errors.lightBackgroundColor}
-          helperText="Optional. Leave empty to use the engine default light background."
+          helperText="Optional · engine default"
           pickerFallback="#ffffff"
           onFieldChange={onFieldChange}
         />
-      </div>
+      </ThemeSetting>
     </fieldset>
   );
 }
