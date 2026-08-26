@@ -114,6 +114,28 @@ test("keeps the preview root-scoped and imports public UI components", () => {
   assert.match(previewSource, /style=\{style\}/u);
 });
 
+test("renders Northstar as a branded application shell instead of a component demo", () => {
+  const previewSource = readFileSync(
+    new URL("./theme-preview.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(previewSource, /aria-label="Northstar workspace"/u);
+  assert.match(previewSource, /Workspace overview/u);
+  assert.match(previewSource, /Active projects/u);
+  assert.match(previewSource, /Delivery board/u);
+  assert.match(previewSource, /Live activity/u);
+  assert.match(previewSource, /New project/u);
+  assert.match(previewSource, /bg-primary\/5/u);
+  assert.match(previewSource, /data-\[state=active\]:bg-primary/u);
+  assert.match(previewSource, /id="northstar-projects"/u);
+  assert.doesNotMatch(
+    previewSource,
+    /Manage the project defaults used by your delivery team\./u,
+  );
+  assert.doesNotMatch(previewSource, /Save workspace/u);
+});
+
 test("highlights local token exports with Rehype Pretty Code", () => {
   const outputSource = readFileSync(
     new URL("./theme-output.tsx", import.meta.url),

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 export default function ThemeBuilderPage() {
   return (
     <main id="content" className="bg-background text-foreground">
-      <Container className="py-18">
+      <Container className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl">
           <PageHero
             align="center"
@@ -58,7 +58,7 @@ export default function ThemeBuilderPage() {
                 transmitted.
               </p>
             }
-            className="bg-transparent px-0 py-12 sm:px-0 sm:py-14 lg:px-0 lg:py-16"
+            className="bg-transparent px-0 py-8 sm:px-0 sm:py-10 lg:px-0 lg:py-12"
             badgesClassName="gap-2"
             extraClassName="mt-6"
           />
@@ -74,11 +74,11 @@ export default function ThemeBuilderPage() {
       </section>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)]">
+        <Container className="py-12 lg:py-14">
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:gap-12">
             <section
               aria-labelledby="theme-builder-integration-heading"
-              className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6"
+              className="min-w-0"
             >
               <div className="space-y-3">
                 <h2
@@ -123,7 +123,7 @@ export default function ThemeBuilderPage() {
 
             <section
               aria-labelledby="theme-builder-limitations-heading"
-              className="rounded-[5px] border border-warning/35 bg-surface p-5 shadow-soft sm:p-6"
+              className="min-w-0 border-t border-warning/35 pt-8 lg:border-t-0 lg:border-l lg:pl-8 lg:pt-0"
             >
               <div className="space-y-3">
                 <h2
