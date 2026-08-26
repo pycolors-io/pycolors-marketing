@@ -7,6 +7,7 @@ import {
   serializeTheme,
   type ExportFormat,
   type SerializedThemeResult,
+  type ThemeMode,
 } from "@pycolors/color-engine";
 import {
   Alert,
@@ -21,11 +22,15 @@ import {
 
 import { CopyButton } from "./copy-button";
 import { HighlightedThemeCode } from "./theme-code-highlighter";
-import type { ThemeCodeLanguage } from "./theme-code-highlighter-types";
+import type {
+  ThemeCodeColorScheme,
+  ThemeCodeLanguage,
+} from "./theme-code-highlighter-types";
 import { THEME_BUILDER_CTA_LINKS } from "./theme-builder-launch";
 
 type ThemeOutputProps = Readonly<{
   theme: SerializedThemeResult;
+  mode: ThemeMode;
 }>;
 
 type OutputArtifact = Readonly<{
@@ -51,26 +56,48 @@ type CodePanelProps = Readonly<{
   content: string;
   language: ThemeCodeLanguage;
   active: boolean;
+  colorScheme: ThemeCodeColorScheme;
 }>;
 
-function CodePanel({ title, content, language, active }: CodePanelProps) {
+function CodePanel({
+  title,
+  content,
+  language,
+  active,
+  colorScheme,
+}: CodePanelProps) {
+  const isDark = colorScheme === "dark";
+  const surfaceClassName = isDark
+    ? "border-white/15 bg-black text-white"
+    : "border-border-subtle bg-white text-black";
+  const headerClassName = isDark ? "border-white/15" : "border-border-subtle";
+  const mutedTextClassName = isDark ? "text-white/65" : "text-muted-foreground";
+  const copyButtonClassName = isDark
+    ? "border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+    : "border-border-subtle bg-background text-foreground hover:bg-surface-muted hover:text-foreground";
+  const copyStatusClassName = isDark
+    ? "text-white/75"
+    : "text-muted-foreground";
+
   return (
     <div
       data-theme-builder-code-panel
-      className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-white text-foreground"
+      className={`min-w-0 overflow-hidden rounded-[5px] border ${surfaceClassName}`}
     >
-      <div className="flex flex-col gap-3 border-b border-border-subtle px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div
+        className={`flex flex-col gap-3 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between ${headerClassName}`}
+      >
         <div className="space-y-0.5">
           <p className="text-sm font-medium">{title}</p>
-          <p className="text-xs text-muted-foreground">
+          <p className={`text-xs ${mutedTextClassName}`}>
             Select the output or copy the complete generated artifact.
           </p>
         </div>
         <CopyButton
           value={content}
           label={`Copy ${title}`}
-          buttonClassName="border-border-subtle bg-background text-foreground hover:bg-surface-muted hover:text-foreground"
-          statusClassName="text-muted-foreground"
+          buttonClassName={copyButtonClassName}
+          statusClassName={copyStatusClassName}
         />
       </div>
       <pre
@@ -83,7 +110,7 @@ function CodePanel({ title, content, language, active }: CodePanelProps) {
           content={content}
           language={language}
           active={active}
-          colorScheme="adaptive"
+          colorScheme={colorScheme}
         />
       </pre>
     </div>
@@ -132,12 +159,16 @@ function generatedCssExample(content: string) {
 }
 
 /** Display engine-owned export artifacts without rebuilding semantic values. */
-export function ThemeOutput({ theme }: ThemeOutputProps) {
+export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
   const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
   const css = outputArtifact(theme, "css");
   const tailwind = outputArtifact(theme, "tailwind-v4");
   const json = outputArtifact(theme, "json");
   const error = css.error ?? tailwind.error ?? json.error;
+  const isDarkCode = mode === "dark";
+  const generatedExampleClassName = isDarkCode
+    ? "border-white/15 bg-black text-white"
+    : "border-border-subtle bg-white text-black";
 
   return (
     <section
@@ -206,13 +237,13 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                   data-theme-builder-code
                   tabIndex={0}
                   aria-label="Compact example of the current generated CSS override"
-                  className="max-w-full overflow-auto rounded-[4px] border border-border-subtle bg-white p-4 font-mono text-xs leading-6 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className={`max-w-full overflow-auto rounded-[4px] border p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${generatedExampleClassName}`}
                 >
                   <HighlightedThemeCode
                     content={generatedCssExample(css.content)}
                     language="css"
                     active={activeFormat === "css"}
-                    colorScheme="adaptive"
+                    colorScheme={mode}
                   />
                 </pre>
               </div>
@@ -221,6 +252,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                 content={css.content}
                 language="css"
                 active={activeFormat === "css"}
+                colorScheme={mode}
               />
             </TabsContent>
 
@@ -243,6 +275,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                 content={tailwind.content}
                 language="css"
                 active={activeFormat === "tailwind-v4"}
+                colorScheme={mode}
               />
             </TabsContent>
 
@@ -256,6 +289,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                 content={json.content}
                 language="json"
                 active={activeFormat === "json"}
+                colorScheme={mode}
               />
             </TabsContent>
           </Tabs>

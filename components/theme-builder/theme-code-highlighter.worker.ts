@@ -75,10 +75,7 @@ self.addEventListener(
 
     try {
       const transform = rehypePrettyCode({
-        theme:
-          request.colorScheme === "dark"
-            ? "github-dark"
-            : { light: "github-light", dark: "github-dark" },
+        theme: request.colorScheme === "dark" ? "github-dark" : "github-light",
         keepBackground: false,
       });
       const source = createSourceTree(request);

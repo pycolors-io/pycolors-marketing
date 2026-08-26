@@ -144,7 +144,7 @@ export function HighlightedThemeCode({
   content,
   language,
   active,
-  colorScheme = "adaptive",
+  colorScheme = "light",
 }: HighlightedThemeCodeProps) {
   const [highlighted, setHighlighted] = useState<
     readonly PrettyCodeNode[] | null

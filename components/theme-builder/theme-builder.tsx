@@ -598,7 +598,7 @@ export function ThemeBuilder() {
         </div>
       </section>
 
-      <ThemeOutput theme={state.generatedTheme} />
+      <ThemeOutput theme={state.generatedTheme} mode={state.previewMode} />
     </div>
   );
 }

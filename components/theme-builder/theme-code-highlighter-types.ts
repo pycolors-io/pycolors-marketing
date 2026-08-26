@@ -1,5 +1,5 @@
 export type ThemeCodeLanguage = "css" | "json";
-export type ThemeCodeColorScheme = "adaptive" | "dark";
+export type ThemeCodeColorScheme = "light" | "dark";
 
 export type PrettyCodeNode =
   | Readonly<{
