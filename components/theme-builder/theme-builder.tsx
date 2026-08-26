@@ -263,8 +263,9 @@ function ThemeSettingsPanel({
               Start with a balanced combination
             </h3>
             <p className="text-xs leading-5 text-muted-foreground">
-              Each starting point sets a brand, neutral, and subtle light
-              canvas. You can refine every value afterwards.
+              Each starting point pairs your brand with a balanced neutral and
+              canvas foundation. Refine the source colors without weakening the
+              system.
             </p>
           </div>
 

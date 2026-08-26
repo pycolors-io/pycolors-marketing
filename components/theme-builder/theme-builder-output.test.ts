@@ -152,12 +152,14 @@ test("highlights local token exports with Rehype Pretty Code", () => {
 
   assert.match(outputSource, /HighlightedThemeCode/u);
   assert.match(outputSource, /activeFormat/u);
-  assert.match(outputSource, /colorScheme="dark"/u);
+  assert.match(outputSource, /colorScheme="adaptive"/u);
+  assert.match(outputSource, /bg-white text-foreground/u);
   assert.match(
     outputSource,
     /Compact example of the current generated CSS override[\s\S]*generatedCssExample\(css\.content\)/u,
   );
   assert.match(highlighterSource, /from "rehype-pretty-code"/u);
+  assert.match(highlighterSource, /"github-light"/u);
   assert.match(highlighterSource, /"github-dark"/u);
   assert.match(highlighterSource, /self\.postMessage/u);
   assert.doesNotMatch(highlighterSource, /fetch\s*\(/u);
@@ -231,13 +233,15 @@ test("keeps the preview full width while settings open in a full Studio overlay"
     inputsSource,
     /<legend className="sr-only">Theme settings<\/legend>/u,
   );
-  assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
-  assert.match(inputsSource, /<details className="group overflow-hidden/u);
-  assert.match(inputsSource, /Advanced override/u);
+  assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 3);
+  assert.doesNotMatch(inputsSource, /Advanced override/u);
+  assert.doesNotMatch(inputsSource, /lightBackgroundColor/u);
   assert.match(
     inputsSource,
-    /grid min-w-0 gap-3 border-b border-border-subtle p-4 last:border-b-0 sm:grid-cols-\[9rem_minmax\(0,1fr\)\] sm:gap-5/u,
+    /grid min-w-0 gap-3 border-b border-border-subtle p-3\.5 last:border-b-0 sm:grid-cols-\[8rem_minmax\(0,1fr\)\] sm:gap-4/u,
   );
+  assert.match(inputsSource, /max-w-md/u);
+  assert.match(inputsSource, /Choose \{label\.toLowerCase\(\)\}/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
   assert.match(outputSource, /Integration checklist/u);

@@ -57,20 +57,20 @@ function CodePanel({ title, content, language, active }: CodePanelProps) {
   return (
     <div
       data-theme-builder-code-panel
-      className="min-w-0 overflow-hidden rounded-[5px] border border-white/15 bg-[oklch(0.18_0.012_285)] text-[oklch(0.985_0_0)]"
+      className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-white text-foreground"
     >
-      <div className="flex flex-col gap-3 border-b border-white/15 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-b border-border-subtle px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-0.5">
           <p className="text-sm font-medium">{title}</p>
-          <p className="text-xs text-white/65">
+          <p className="text-xs text-muted-foreground">
             Select the output or copy the complete generated artifact.
           </p>
         </div>
         <CopyButton
           value={content}
           label={`Copy ${title}`}
-          buttonClassName="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-          statusClassName="text-white/75"
+          buttonClassName="border-border-subtle bg-background text-foreground hover:bg-surface-muted hover:text-foreground"
+          statusClassName="text-muted-foreground"
         />
       </div>
       <pre
@@ -83,7 +83,7 @@ function CodePanel({ title, content, language, active }: CodePanelProps) {
           content={content}
           language={language}
           active={active}
-          colorScheme="dark"
+          colorScheme="adaptive"
         />
       </pre>
     </div>
@@ -206,13 +206,13 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                   data-theme-builder-code
                   tabIndex={0}
                   aria-label="Compact example of the current generated CSS override"
-                  className="max-w-full overflow-auto rounded-[4px] border border-white/15 bg-[oklch(0.18_0.012_285)] p-4 font-mono text-xs leading-6 text-[oklch(0.985_0_0)] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="max-w-full overflow-auto rounded-[4px] border border-border-subtle bg-white p-4 font-mono text-xs leading-6 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <HighlightedThemeCode
                     content={generatedCssExample(css.content)}
                     language="css"
                     active={activeFormat === "css"}
-                    colorScheme="dark"
+                    colorScheme="adaptive"
                   />
                 </pre>
               </div>
