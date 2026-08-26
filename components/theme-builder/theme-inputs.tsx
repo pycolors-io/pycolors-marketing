@@ -105,69 +105,93 @@ export function ThemeInputs({
   onFieldChange,
 }: ThemeInputsProps) {
   return (
-    <fieldset className="overflow-hidden rounded-[4px] border border-border-subtle bg-background">
-      <legend className="sr-only">Theme settings</legend>
+    <div className="space-y-3">
+      <fieldset className="overflow-hidden rounded-[4px] border border-border-subtle bg-background">
+        <legend className="sr-only">Theme settings</legend>
 
-      <ThemeSetting
-        title="Brand color"
-        description="Required source for both generated modes."
-      >
-        <ColorField
-          field="brandColor"
-          label="Hex value"
-          required
-          value={draft.brandColor}
-          error={errors.brandColor}
-          helperText="Required · #RRGGBB"
-          pickerFallback="#6a30d4"
-          onFieldChange={onFieldChange}
-        />
-      </ThemeSetting>
+        <ThemeSetting
+          title="Brand color"
+          description="Required source for both generated modes."
+        >
+          <ColorField
+            field="brandColor"
+            label="Hex value"
+            required
+            value={draft.brandColor}
+            error={errors.brandColor}
+            helperText="Required · #RRGGBB"
+            pickerFallback="#6a30d4"
+            onFieldChange={onFieldChange}
+          />
+        </ThemeSetting>
 
-      <ThemeSetting
-        title="Theme name"
-        description="Optional label included in generated metadata."
-      >
-        <UiInput
-          id="theme-builder-name"
-          label="Name"
-          value={draft.name}
-          error={errors.name}
-          helperText="Optional"
-          onChange={(event) => onFieldChange("name", event.target.value)}
-          maxLength={64}
-        />
-      </ThemeSetting>
+        <ThemeSetting
+          title="Theme name"
+          description="Optional label included in generated metadata."
+        >
+          <UiInput
+            id="theme-builder-name"
+            label="Name"
+            value={draft.name}
+            error={errors.name}
+            helperText="Optional"
+            onChange={(event) => onFieldChange("name", event.target.value)}
+            maxLength={64}
+          />
+        </ThemeSetting>
 
-      <ThemeSetting
-        title="Neutral hue"
-        description="Optional tonal balance for the generated scale."
-      >
-        <ColorField
-          field="neutralColor"
-          label="Hex value"
-          value={draft.neutralColor}
-          error={errors.neutralColor}
-          helperText="Optional · derives from brand"
-          pickerFallback="#71717a"
-          onFieldChange={onFieldChange}
-        />
-      </ThemeSetting>
+        <ThemeSetting
+          title="Neutral hue"
+          description="Optional tonal balance for the generated scale."
+        >
+          <ColorField
+            field="neutralColor"
+            label="Hex value"
+            value={draft.neutralColor}
+            error={errors.neutralColor}
+            helperText="Optional · derives from brand"
+            pickerFallback="#71717a"
+            onFieldChange={onFieldChange}
+          />
+        </ThemeSetting>
+      </fieldset>
 
-      <ThemeSetting
-        title="Light canvas"
-        description="Optional base for the light-mode background."
-      >
-        <ColorField
-          field="lightBackgroundColor"
-          label="Hex value"
-          value={draft.lightBackgroundColor}
-          error={errors.lightBackgroundColor}
-          helperText="Optional · engine default"
-          pickerFallback="#ffffff"
-          onFieldChange={onFieldChange}
-        />
-      </ThemeSetting>
-    </fieldset>
+      <details className="group overflow-hidden rounded-[4px] border border-border-subtle bg-background">
+        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 p-4 marker:content-none">
+          <div className="space-y-1">
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-foreground">
+              Advanced override
+            </p>
+            <p className="text-xs leading-5 text-muted-foreground">
+              Set a light canvas only when your product needs a deliberate
+              surface tint.
+            </p>
+          </div>
+          <span
+            aria-hidden="true"
+            className="mt-0.5 text-sm text-muted-foreground transition-transform group-open:rotate-45"
+          >
+            +
+          </span>
+        </summary>
+
+        <div className="border-t border-border-subtle">
+          <ThemeSetting
+            title="Light canvas"
+            description="Optional base for the light-mode background."
+          >
+            <ColorField
+              field="lightBackgroundColor"
+              label="Hex value"
+              value={draft.lightBackgroundColor}
+              error={errors.lightBackgroundColor}
+              helperText="Optional · engine default"
+              pickerFallback="#fafafa"
+              onFieldChange={onFieldChange}
+            />
+          </ThemeSetting>
+        </div>
+      </details>
+    </div>
   );
 }

@@ -161,7 +161,7 @@ test("highlights local token exports with Rehype Pretty Code", () => {
   assert.doesNotMatch(highlighterSource, /fetch\s*\(/u);
 });
 
-test("keeps the preview full width while settings open in an out-of-flow panel", () => {
+test("keeps the preview full width while settings open in a full Studio overlay", () => {
   const builderSource = readFileSync(
     new URL("./theme-builder.tsx", import.meta.url),
     "utf8",
@@ -189,11 +189,14 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
   );
   assert.match(
     builderSource,
-    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-50 max-h-\[calc\(100dvh-1rem\)\] w-\[min\(46rem,calc\(100vw-2rem\)\)\]/u,
+    /absolute inset-x-0 top-0 z-50 min-h-full rounded-\[4px\] border border-pro-border bg-surface shadow-medium/u,
   );
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
   assert.match(builderSource, /settingsOpen=\{settingsOpen\}/u);
+  assert.match(builderSource, /Professional foundations/u);
+  assert.match(builderSource, /Start with a balanced combination/u);
+  assert.match(builderSource, /applyThemeBuilderPreset/u);
   assert.match(
     builderSource,
     /border border-pro-border bg-pro-surface shadow-medium/u,
@@ -210,6 +213,8 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
     /<legend className="sr-only">Theme settings<\/legend>/u,
   );
   assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
+  assert.match(inputsSource, /<details className="group overflow-hidden/u);
+  assert.match(inputsSource, /Advanced override/u);
   assert.match(
     inputsSource,
     /grid min-w-0 gap-3 border-b border-border-subtle p-4 last:border-b-0 sm:grid-cols-\[9rem_minmax\(0,1fr\)\] sm:gap-5/u,

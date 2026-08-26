@@ -15,6 +15,7 @@ test("creates deterministic defaults with both generated modes", () => {
   const second = createThemeBuilderState();
 
   assert.deepEqual(first.draft, THEME_BUILDER_DEFAULTS);
+  assert.equal(THEME_BUILDER_DEFAULTS.lightBackgroundColor, "#fafafa");
   assert.equal(first.previewMode, DEFAULT_THEME_BUILDER_MODE);
   assert.deepEqual(Object.keys(first.generatedTheme.modes), ["light", "dark"]);
   assert.equal(JSON.stringify(first), JSON.stringify(second));

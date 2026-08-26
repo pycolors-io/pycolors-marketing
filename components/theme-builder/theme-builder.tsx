@@ -17,7 +17,78 @@ import type {
   ThemeBuilderDraft,
   ThemeBuilderField,
   ThemeBuilderFieldErrors,
+  ThemeBuilderState,
 } from "./theme-builder-state";
+
+type ThemeBuilderPreset = Readonly<{
+  id: string;
+  name: string;
+  description: string;
+  brandColor: string;
+  draft: ThemeBuilderDraft;
+}>;
+
+const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
+  {
+    id: "violet-studio",
+    name: "Violet Studio",
+    description: "A composed default for polished product interfaces.",
+    brandColor: "#6a30d4",
+    draft: {
+      brandColor: "#6a30d4",
+      name: "Violet Studio",
+      neutralColor: "#71717a",
+      lightBackgroundColor: "#fafafa",
+    },
+  },
+  {
+    id: "indigo-ledger",
+    name: "Indigo Ledger",
+    description: "Crisp indigo with a calm slate foundation.",
+    brandColor: "#4f46e5",
+    draft: {
+      brandColor: "#4f46e5",
+      name: "Indigo Ledger",
+      neutralColor: "#64748b",
+      lightBackgroundColor: "#f8fafc",
+    },
+  },
+  {
+    id: "emerald-console",
+    name: "Emerald Console",
+    description: "A measured green for operational SaaS products.",
+    brandColor: "#0f9d72",
+    draft: {
+      brandColor: "#0f9d72",
+      name: "Emerald Console",
+      neutralColor: "#5f6b7a",
+      lightBackgroundColor: "#f7faf9",
+    },
+  },
+  {
+    id: "graphite-atlas",
+    name: "Graphite Atlas",
+    description: "Quiet graphite with a precise, neutral canvas.",
+    brandColor: "#334155",
+    draft: {
+      brandColor: "#334155",
+      name: "Graphite Atlas",
+      neutralColor: "#64748b",
+      lightBackgroundColor: "#f8fafc",
+    },
+  },
+];
+
+function applyThemeBuilderPreset(
+  state: ThemeBuilderState,
+  preset: ThemeBuilderPreset,
+): ThemeBuilderState {
+  return (Object.keys(preset.draft) as ThemeBuilderField[]).reduce(
+    (nextState, field) =>
+      updateThemeBuilderField(nextState, field, preset.draft[field]),
+    state,
+  );
+}
 
 function generationWarningLabel(
   warning: ReturnType<
@@ -44,6 +115,7 @@ type ThemeSettingsPanelProps = Readonly<{
   generationError: string | null;
   onClose: () => void;
   onReset: () => void;
+  onPresetSelect: (preset: ThemeBuilderPreset) => void;
   onFieldChange: (field: ThemeBuilderField, value: string) => void;
 }>;
 
@@ -53,6 +125,7 @@ function ThemeSettingsPanel({
   generationError,
   onClose,
   onReset,
+  onPresetSelect,
   onFieldChange,
 }: ThemeSettingsPanelProps) {
   const hasFieldErrors = Object.keys(errors).length > 0;
@@ -61,7 +134,7 @@ function ThemeSettingsPanel({
     <aside
       id="theme-builder-settings-panel"
       aria-labelledby="theme-builder-settings-heading"
-      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100dvh-1rem)] w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-pro-border bg-surface shadow-medium"
+      className="absolute inset-x-0 top-0 z-50 min-h-full rounded-[4px] border border-pro-border bg-surface shadow-medium"
     >
       <div className="flex items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface px-4 py-3">
         <div className="min-w-0">
@@ -87,33 +160,82 @@ function ThemeSettingsPanel({
         </Button>
       </div>
 
-      <div className="space-y-4 p-4">
-        <p className="text-xs leading-5 text-muted-foreground">
-          Adjust your source colors. Northstar updates locally as you type.
-        </p>
+      <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:gap-6 lg:p-6">
+        <div className="min-w-0 space-y-4">
+          <p className="text-sm leading-6 text-muted-foreground">
+            Adjust the brand foundation. Northstar updates locally as you type.
+          </p>
 
-        <ThemeInputs
-          draft={draft}
-          errors={errors}
-          onFieldChange={onFieldChange}
-        />
+          <ThemeInputs
+            draft={draft}
+            errors={errors}
+            onFieldChange={onFieldChange}
+          />
 
-        {hasFieldErrors ? (
-          <Alert variant="destructive" ariaLive="assertive">
-            <AlertTitle>Preview kept on the last valid theme</AlertTitle>
-            <AlertDescription>
-              Correct the field errors above before new semantic values are
-              applied.
-            </AlertDescription>
-          </Alert>
-        ) : null}
+          {hasFieldErrors ? (
+            <Alert variant="destructive" ariaLive="assertive">
+              <AlertTitle>Preview kept on the last valid theme</AlertTitle>
+              <AlertDescription>
+                Correct the field errors above before new semantic values are
+                applied.
+              </AlertDescription>
+            </Alert>
+          ) : null}
 
-        {generationError ? (
-          <Alert variant="destructive" ariaLive="assertive">
-            <AlertTitle>Theme generation could not complete</AlertTitle>
-            <AlertDescription>{generationError}</AlertDescription>
-          </Alert>
-        ) : null}
+          {generationError ? (
+            <Alert variant="destructive" ariaLive="assertive">
+              <AlertTitle>Theme generation could not complete</AlertTitle>
+              <AlertDescription>{generationError}</AlertDescription>
+            </Alert>
+          ) : null}
+        </div>
+
+        <section
+          aria-labelledby="theme-builder-presets-heading"
+          className="rounded-[4px] border border-pro-border-subtle bg-pro-surface-muted/60 p-4"
+        >
+          <div className="space-y-1">
+            <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
+              Professional foundations
+            </p>
+            <h3
+              id="theme-builder-presets-heading"
+              className="text-sm font-semibold tracking-tight"
+            >
+              Start with a balanced combination
+            </h3>
+            <p className="text-xs leading-5 text-muted-foreground">
+              Each starting point sets a brand, neutral, and subtle light
+              canvas. You can refine every value afterwards.
+            </p>
+          </div>
+
+          <div className="mt-4 grid gap-2">
+            {THEME_BUILDER_PRESETS.map((preset) => (
+              <Button
+                key={preset.id}
+                type="button"
+                variant="outline"
+                className="h-auto min-h-16 justify-start rounded-[4px] border-pro-border bg-background px-3 py-3 text-left hover:border-foreground/30 hover:bg-background"
+                onClick={() => onPresetSelect(preset)}
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 size-3 shrink-0 rounded-full ring-1 ring-border"
+                  style={{ backgroundColor: preset.brandColor }}
+                />
+                <span className="min-w-0">
+                  <span className="block text-sm font-medium text-foreground">
+                    {preset.name}
+                  </span>
+                  <span className="mt-0.5 block whitespace-normal text-xs font-normal leading-5 text-muted-foreground">
+                    {preset.description}
+                  </span>
+                </span>
+              </Button>
+            ))}
+          </div>
+        </section>
       </div>
 
       <div className="flex items-center justify-between gap-3 border-t border-pro-border-subtle bg-pro-surface p-4">
@@ -203,23 +325,26 @@ export function ThemeBuilder() {
                   <SlidersHorizontal aria-hidden="true" />
                   Theme settings
                 </Button>
-                {settingsOpen ? (
-                  <ThemeSettingsPanel
-                    draft={state.draft}
-                    errors={state.fieldErrors}
-                    generationError={state.generationError}
-                    onClose={() => setSettingsOpen(false)}
-                    onReset={() => setState(resetThemeBuilderState())}
-                    onFieldChange={(field, value) =>
-                      setState((current) =>
-                        updateThemeBuilderField(current, field, value),
-                      )
-                    }
-                  />
-                ) : null}
               </div>
             }
           />
+          {settingsOpen ? (
+            <ThemeSettingsPanel
+              draft={state.draft}
+              errors={state.fieldErrors}
+              generationError={state.generationError}
+              onClose={() => setSettingsOpen(false)}
+              onReset={() => setState(resetThemeBuilderState())}
+              onPresetSelect={(preset) =>
+                setState((current) => applyThemeBuilderPreset(current, preset))
+              }
+              onFieldChange={(field, value) =>
+                setState((current) =>
+                  updateThemeBuilderField(current, field, value),
+                )
+              }
+            />
+          ) : null}
         </div>
 
         <div className="mt-6 min-w-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-4 shadow-soft sm:p-6">

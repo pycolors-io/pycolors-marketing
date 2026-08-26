@@ -30,13 +30,14 @@ export type ThemeBuilderState = Readonly<{
 
 /**
  * These defaults match the existing PyColors violet branding, use a generated
- * neutral, and make the supplied light background explicit and reproducible.
+ * neutral, and use a restrained off-white light background that remains
+ * explicit and reproducible.
  */
 export const THEME_BUILDER_DEFAULTS: ThemeBuilderDraft = {
   brandColor: "#6a30d4",
   name: "PyColors Theme",
   neutralColor: "",
-  lightBackgroundColor: "#ffffff",
+  lightBackgroundColor: "#fafafa",
 };
 
 export const DEFAULT_THEME_BUILDER_MODE: ThemeMode = "light";
