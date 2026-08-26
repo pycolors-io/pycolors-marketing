@@ -119,7 +119,6 @@ test("renders Northstar as a branded application shell instead of a component de
     new URL("./theme-preview.tsx", import.meta.url),
     "utf8",
   );
-
   assert.match(previewSource, /aria-label="Northstar workspace"/u);
   assert.match(previewSource, /Northstar workspace/u);
   assert.match(previewSource, /Dashboard/u);
@@ -128,6 +127,9 @@ test("renders Northstar as a branded application shell instead of a component de
   assert.match(previewSource, /Delivery board/u);
   assert.match(previewSource, /Live activity/u);
   assert.match(previewSource, /New project/u);
+  assert.match(previewSource, /Form validation/u);
+  assert.match(previewSource, /Empty state/u);
+  assert.match(previewSource, /Focus-ready action/u);
   assert.match(previewSource, /bg-primary\/5/u);
   assert.match(previewSource, /data-\[state=active\]:bg-primary/u);
   assert.match(previewSource, /id="northstar-projects"/u);
@@ -174,6 +176,10 @@ test("keeps the preview full width while settings open in a full Studio overlay"
     new URL("./theme-preview.tsx", import.meta.url),
     "utf8",
   );
+  const outputSource = readFileSync(
+    new URL("./theme-output.tsx", import.meta.url),
+    "utf8",
+  );
 
   assert.match(
     builderSource,
@@ -197,6 +203,14 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   assert.match(builderSource, /Professional foundations/u);
   assert.match(builderSource, /Start with a balanced combination/u);
   assert.match(builderSource, /applyThemeBuilderPreset/u);
+  assert.match(builderSource, /role="dialog"/u);
+  assert.match(builderSource, /aria-modal="true"/u);
+  assert.match(builderSource, /focusableSelector/u);
+  assert.match(builderSource, /event\.key === "Escape"/u);
+  assert.match(builderSource, /settingsTriggerRef/u);
+  assert.match(builderSource, /Theme quality/u);
+  assert.match(builderSource, /Automatic safeguards/u);
+  assert.match(builderSource, /Visual contrast check/u);
   assert.match(
     builderSource,
     /border border-pro-border bg-pro-surface shadow-medium/u,
@@ -221,4 +235,6 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   );
   assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
+  assert.match(outputSource, /Integration checklist/u);
+  assert.match(outputSource, /INTEGRATION_STEPS/u);
 });

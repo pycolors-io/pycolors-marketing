@@ -23,6 +23,7 @@ import type {
 type ThemeBuilderPreset = Readonly<{
   id: string;
   name: string;
+  category: string;
   description: string;
   brandColor: string;
   draft: ThemeBuilderDraft;
@@ -32,6 +33,7 @@ const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
   {
     id: "violet-studio",
     name: "Violet Studio",
+    category: "Product SaaS",
     description: "A composed default for polished product interfaces.",
     brandColor: "#6a30d4",
     draft: {
@@ -44,6 +46,7 @@ const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
   {
     id: "indigo-ledger",
     name: "Indigo Ledger",
+    category: "Finance and workflow",
     description: "Crisp indigo with a calm slate foundation.",
     brandColor: "#4f46e5",
     draft: {
@@ -56,6 +59,7 @@ const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
   {
     id: "emerald-console",
     name: "Emerald Console",
+    category: "Operations",
     description: "A measured green for operational SaaS products.",
     brandColor: "#0f9d72",
     draft: {
@@ -68,6 +72,7 @@ const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
   {
     id: "graphite-atlas",
     name: "Graphite Atlas",
+    category: "Developer tooling",
     description: "Quiet graphite with a precise, neutral canvas.",
     brandColor: "#334155",
     draft: {
@@ -97,17 +102,27 @@ function generationWarningLabel(
 ) {
   switch (warning.code) {
     case "neutral-derived":
-      return "Neutral scale derived";
+      return "A neutral scale was generated from your brand.";
     case "gamut-mapped":
-      return "Gamut mapped";
+      return "A color was refined to display reliably.";
     case "foreground-fallback-used":
-      return "Foreground adjusted";
+      return "Text color was strengthened for readability.";
     case "input-normalized":
-      return "Input normalized";
+      return "A color value was normalized.";
     default:
       return warning.code.replaceAll("-", " ");
   }
 }
+
+const focusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "summary",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 type ThemeSettingsPanelProps = Readonly<{
   draft: ThemeBuilderDraft;
@@ -129,11 +144,52 @@ function ThemeSettingsPanel({
   onFieldChange,
 }: ThemeSettingsPanelProps) {
   const hasFieldErrors = Object.keys(errors).length > 0;
+  const panelRef = React.useRef<HTMLElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      onClose();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusable = Array.from(
+      panelRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+    );
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    }
+  }
 
   return (
     <aside
+      ref={panelRef}
       id="theme-builder-settings-panel"
+      role="dialog"
+      aria-modal="true"
       aria-labelledby="theme-builder-settings-heading"
+      tabIndex={-1}
+      onKeyDown={handleKeyDown}
       className="absolute inset-x-0 top-0 z-50 min-h-full rounded-[4px] border border-pro-border bg-surface shadow-medium"
     >
       <div className="flex items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface px-4 py-3">
@@ -149,6 +205,7 @@ function ThemeSettingsPanel({
           </h2>
         </div>
         <Button
+          ref={closeButtonRef}
           type="button"
           variant="ghost"
           size="icon-sm"
@@ -225,8 +282,13 @@ function ThemeSettingsPanel({
                   style={{ backgroundColor: preset.brandColor }}
                 />
                 <span className="min-w-0">
-                  <span className="block text-sm font-medium text-foreground">
-                    {preset.name}
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span className="text-sm font-medium text-foreground">
+                      {preset.name}
+                    </span>
+                    <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                      {preset.category}
+                    </span>
                   </span>
                   <span className="mt-0.5 block whitespace-normal text-xs font-normal leading-5 text-muted-foreground">
                     {preset.description}
@@ -259,6 +321,8 @@ function ThemeSettingsPanel({
 export function ThemeBuilder() {
   const [state, setState] = React.useState(createThemeBuilderState);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const settingsTriggerRef = React.useRef<HTMLButtonElement>(null);
+  const settingsWereOpenRef = React.useRef(false);
   const preview = state.generatedTheme.modes[state.previewMode];
   const failedContrasts = state.generatedTheme.contrasts.filter(
     (contrast) => contrast.status === "fail",
@@ -268,6 +332,14 @@ export function ThemeBuilder() {
   );
   const passingContrastCount =
     state.generatedTheme.contrasts.length - failedContrasts.length;
+
+  React.useEffect(() => {
+    if (settingsWereOpenRef.current && !settingsOpen) {
+      settingsTriggerRef.current?.focus();
+    }
+
+    settingsWereOpenRef.current = settingsOpen;
+  }, [settingsOpen]);
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -314,6 +386,7 @@ export function ThemeBuilder() {
             settingsControl={
               <div className="relative z-40">
                 <Button
+                  ref={settingsTriggerRef}
                   type="button"
                   variant="outline"
                   size="sm"
@@ -361,11 +434,11 @@ export function ThemeBuilder() {
                   id="theme-builder-notices-heading"
                   className="text-base font-semibold tracking-tight"
                 >
-                  Theme health
+                  Theme quality
                 </h2>
                 <p className="text-sm leading-6 text-muted-foreground">
-                  Automatic choices and contrast checks are kept separate so you
-                  can focus on what needs product review.
+                  A short quality signal for the current theme. Details stay
+                  available when you need to review a real product context.
                 </p>
               </div>
 
@@ -374,8 +447,8 @@ export function ThemeBuilder() {
                 role="status"
               >
                 {failedContrasts.length > 0
-                  ? `${failedContrasts.length} checks to review`
-                  : "All checks pass"}
+                  ? `${failedContrasts.length} items to review`
+                  : "Ready to export"}
               </p>
             </div>
 
@@ -389,11 +462,12 @@ export function ThemeBuilder() {
                     id="theme-builder-generation-notes-heading"
                     className="text-sm font-medium"
                   >
-                    Automatic adjustments
+                    Automatic safeguards
                   </h3>
                   <p className="text-xs leading-5 text-muted-foreground">
-                    These preserve usable colors in sRGB or choose a stronger
-                    foreground. They are not failed checks.
+                    {generationWarnings.length > 0
+                      ? `${generationWarnings.length} safeguards were applied to keep the generated values usable.`
+                      : "No automatic safeguards were needed for this theme."}
                   </p>
                 </div>
 
@@ -401,8 +475,7 @@ export function ThemeBuilder() {
                   <details className="group mt-4 border-t border-border-subtle pt-3">
                     <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:content-none">
                       <span className="inline-flex items-center gap-2">
-                        {generationWarnings.length} implementation note
-                        {generationWarnings.length === 1 ? "" : "s"}
+                        See automatic adjustments
                         <span
                           aria-hidden="true"
                           className="text-muted-foreground transition-transform group-open:rotate-45"
@@ -419,18 +492,19 @@ export function ThemeBuilder() {
                         >
                           <p className="text-xs font-medium text-foreground">
                             {generationWarningLabel(warning)}
-                            {warning.mode ? ` · ${warning.mode}` : ""}
                           </p>
-                          <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
-                            {warning.message}
-                          </p>
+                          {warning.mode ? (
+                            <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
+                              Checked in {warning.mode} mode.
+                            </p>
+                          ) : null}
                         </li>
                       ))}
                     </ul>
                   </details>
                 ) : (
                   <p className="mt-4 border-t border-border-subtle pt-3 text-xs text-muted-foreground">
-                    No automatic adjustments were needed.
+                    Generated values were used without further adjustment.
                   </p>
                 )}
               </section>
@@ -445,11 +519,11 @@ export function ThemeBuilder() {
                       id="theme-builder-contrast-review-heading"
                       className="text-sm font-medium"
                     >
-                      Contrast review
+                      Visual contrast check
                     </h3>
                     <p className="text-xs leading-5 text-muted-foreground">
                       {failedContrasts.length > 0
-                        ? `${failedContrasts.length} token pairs need a visual check before shipping.`
+                        ? `${failedContrasts.length} token pairs need a visual check before shipping. This is evidence, not a failed export.`
                         : "Every checked token pair meets its target in both modes."}
                     </p>
                   </div>
@@ -459,7 +533,7 @@ export function ThemeBuilder() {
                   <details className="group mt-4 border-t border-border-subtle pt-3">
                     <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:content-none">
                       <span className="inline-flex items-center gap-2">
-                        Inspect {failedContrasts.length} contrast ratio
+                        Review {failedContrasts.length} measured ratio
                         {failedContrasts.length === 1 ? "" : "s"}
                         <span
                           aria-hidden="true"
@@ -470,7 +544,22 @@ export function ThemeBuilder() {
                       </span>
                     </summary>
                     <div className="mt-3 divide-y divide-border-subtle border-y border-border-subtle">
-                      <p className="py-2 text-xs tabular-nums text-muted-foreground">
+                      <div className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="max-w-xl text-xs leading-5 text-muted-foreground">
+                          Inspect borders, inputs, focus rings, and destructive
+                          actions in the preview that matches your product.
+                        </p>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="w-fit rounded-[4px]"
+                          onClick={() => setSettingsOpen(true)}
+                        >
+                          Review foundation
+                        </Button>
+                      </div>
+                      <p className="border-t border-border-subtle py-2 text-xs tabular-nums text-muted-foreground">
                         {passingContrastCount} pairs meet their target.
                       </p>
                       {failedContrasts.map((contrast) => (

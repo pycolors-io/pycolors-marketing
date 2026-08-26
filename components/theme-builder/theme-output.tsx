@@ -93,6 +93,24 @@ function CodePanel({ title, content, language, active }: CodePanelProps) {
 const exportTabs = ["css", "tailwind-v4", "json"] as const;
 type ExportTab = (typeof exportTabs)[number];
 
+const INTEGRATION_STEPS: Record<ExportTab, readonly string[]> = {
+  css: [
+    "Keep the PyColors token import in your global stylesheet.",
+    "Paste the generated override after that import so it wins predictably.",
+    "Review one light and one dark product screen before committing.",
+  ],
+  "tailwind-v4": [
+    "Import @pycolors/tokens/tokens.css once in your global stylesheet.",
+    "Place the generated override after the import and keep the existing @theme inline bridge.",
+    "Use semantic utilities and PyColors UI components normally.",
+  ],
+  json: [
+    "Store this evidence alongside your design-token source of truth.",
+    "Consume the serialized modes and semantic roles without rebuilding values.",
+    "Keep the contrast records available for design review and regression checks.",
+  ],
+};
+
 function isExportTab(value: string): value is ExportTab {
   return (exportTabs as readonly string[]).includes(value);
 }
@@ -241,6 +259,45 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
               />
             </TabsContent>
           </Tabs>
+
+          <section
+            aria-labelledby="theme-builder-integration-checklist-heading"
+            className="rounded-[5px] border border-border-subtle bg-background/70 p-4 sm:p-5"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div className="space-y-1">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+                  Integration checklist
+                </p>
+                <h3
+                  id="theme-builder-integration-checklist-heading"
+                  className="text-base font-semibold tracking-tight"
+                >
+                  Apply{" "}
+                  {activeFormat === "tailwind-v4"
+                    ? "Tailwind v4"
+                    : activeFormat.toUpperCase()}{" "}
+                  safely
+                </h3>
+              </div>
+              <p className="w-fit rounded-[4px] border border-border-subtle bg-surface-muted px-2 py-1 text-[11px] font-medium text-muted-foreground">
+                Current export
+              </p>
+            </div>
+            <ol className="mt-4 grid gap-3 lg:grid-cols-3">
+              {INTEGRATION_STEPS[activeFormat].map((step, index) => (
+                <li
+                  key={step}
+                  className="flex gap-3 rounded-[4px] border border-border-subtle bg-background p-3 text-xs leading-5 text-muted-foreground"
+                >
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
+                    {index + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
 
           <section
             aria-labelledby="theme-builder-next-steps-heading"

@@ -427,6 +427,68 @@ export function ThemePreview({
             </div>
           </div>
 
+          <section
+            aria-labelledby="northstar-interface-states-heading"
+            className="mt-4 grid gap-3 lg:grid-cols-3"
+          >
+            <Card className="rounded-[4px] border-border bg-card shadow-none">
+              <div className="p-3.5">
+                <h3
+                  id="northstar-interface-states-heading"
+                  className="text-sm font-semibold"
+                >
+                  Form validation
+                </h3>
+                <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                  Test field labels, errors, and helper text.
+                </p>
+                <Input
+                  id="northstar-workspace-url"
+                  label="Workspace URL"
+                  defaultValue="northstar"
+                  error="Use a public hostname before inviting clients."
+                  className="mt-3"
+                />
+              </div>
+            </Card>
+
+            <Card className="rounded-[4px] border-border bg-card shadow-none">
+              <div className="p-3.5">
+                <h3 className="text-sm font-semibold">Empty state</h3>
+                <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                  Test quiet surfaces without losing hierarchy.
+                </p>
+                <div className="mt-3 rounded-[4px] border border-dashed border-border bg-muted/30 p-3 text-center">
+                  <FolderKanban
+                    className="mx-auto size-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                  <p className="mt-2 text-xs font-medium">No pending reviews</p>
+                  <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                    New client feedback will appear here.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="rounded-[4px] border-border bg-card shadow-none">
+              <div className="p-3.5">
+                <h3 className="text-sm font-semibold">Focus-ready action</h3>
+                <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                  Test the visible keyboard focus treatment.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="mt-5 rounded-[4px] ring-2 ring-ring ring-offset-2 ring-offset-background"
+                >
+                  Invite teammate
+                </Button>
+              </div>
+            </Card>
+          </section>
+
           <div className="mt-4 flex flex-col gap-3 rounded-[4px] border border-primary/30 bg-primary/5 p-3.5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-2.5">
               <span className="grid size-7 shrink-0 place-items-center rounded-[3px] bg-primary text-primary-foreground">
