@@ -61,9 +61,9 @@ function ThemeSettingsPanel({
     <aside
       id="theme-builder-settings-panel"
       aria-labelledby="theme-builder-settings-heading"
-      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100vh-6rem)] w-[min(34rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-border bg-surface shadow-medium"
+      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100vh-6rem)] w-[min(34rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-pro-border bg-surface shadow-medium"
     >
-      <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
+      <div className="flex items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface px-4 py-3">
         <div className="min-w-0">
           <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
             01 · Configure brand
@@ -116,7 +116,7 @@ function ThemeSettingsPanel({
         ) : null}
       </div>
 
-      <div className="flex items-center justify-between gap-3 border-t border-border-subtle bg-surface-elevated/40 p-4">
+      <div className="flex items-center justify-between gap-3 border-t border-pro-border-subtle bg-pro-surface p-4">
         <p className="max-w-44 text-[11px] leading-4 text-muted-foreground">
           Inputs stay in this browser and are never persisted.
         </p>
@@ -148,16 +148,42 @@ export function ThemeBuilder() {
     state.generatedTheme.contrasts.length - failedContrasts.length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <section
         aria-label="Theme Builder workspace"
         className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
       >
-        <div className="min-w-0">
+        <div className="relative min-w-0 rounded-[5px] border border-pro-border bg-pro-surface shadow-medium">
+          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface-muted/70 px-4 py-3 backdrop-blur sm:px-5">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span
+                aria-hidden="true"
+                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-pro-border bg-background text-[11px] font-semibold text-primary"
+              >
+                P
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold tracking-tight">
+                  PyColors Theme Studio
+                </p>
+                <p className="truncate text-[11px] text-muted-foreground">
+                  Deterministic semantic token engine
+                </p>
+              </div>
+            </div>
+            <p className="inline-flex shrink-0 items-center gap-2 rounded-[4px] border border-success-border-subtle bg-success-muted px-2.5 py-1 text-[11px] font-medium text-success">
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-success"
+              />
+              Local session
+            </p>
+          </div>
           <ThemePreview
             mode={state.previewMode}
             theme={preview}
             settingsOpen={settingsOpen}
+            embedded
             onModeChange={(previewMode) =>
               setState((current) =>
                 selectThemeBuilderMode(current, previewMode),
@@ -196,10 +222,10 @@ export function ThemeBuilder() {
           />
         </div>
 
-        <div className="mt-6 min-w-0 rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-6">
+        <div className="mt-6 min-w-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-4 shadow-soft sm:p-6">
           <section
             aria-labelledby="theme-builder-notices-heading"
-            className="rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-5"
+            className="rounded-[5px] border border-pro-border-subtle bg-background/70 p-4 sm:p-5"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="space-y-1">
@@ -219,7 +245,7 @@ export function ThemeBuilder() {
               </div>
 
               <p
-                className="w-fit rounded-[5px] border border-border-subtle bg-surface-muted/35 px-3 py-2 text-xs font-medium tabular-nums text-muted-foreground"
+                className="w-fit rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted px-3 py-2 text-xs font-medium tabular-nums text-muted-foreground"
                 role="status"
               >
                 {failedContrasts.length > 0

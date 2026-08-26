@@ -40,6 +40,8 @@ test("publishes the Theme Builder SEO contract and launch limitations", () => {
     page,
     /Free, client-side, PyColors-compatible theme generation for\s+production-shaped SaaS interfaces\./u,
   );
+  assert.match(page, /Semantic token studio/u);
+  assert.match(page, /border border-pro-border bg-pro-surface/u);
   assert.match(page, /contrast-aware, not an accessibility\s+certification/u);
   for (const reviewContext of [
     "Brand perception",

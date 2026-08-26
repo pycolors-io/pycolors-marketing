@@ -194,7 +194,13 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
   assert.match(builderSource, /settingsOpen=\{settingsOpen\}/u);
+  assert.match(
+    builderSource,
+    /border border-pro-border bg-pro-surface shadow-medium/u,
+  );
+  assert.match(builderSource, /PyColors Theme Studio/u);
   assert.match(previewSource, /settingsOpen[\s\S]*overflow-visible/u);
+  assert.match(previewSource, /embedded = false/u);
   assert.match(
     inputsSource,
     /<fieldset className="overflow-hidden rounded-\[4px\] border border-border-subtle bg-background">/u,

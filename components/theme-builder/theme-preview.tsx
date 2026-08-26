@@ -43,6 +43,7 @@ type ThemePreviewProps = Readonly<{
   mode: ThemeMode;
   theme: ThemeModeResult;
   settingsOpen: boolean;
+  embedded?: boolean;
   onModeChange: (mode: ThemeMode) => void;
   settingsControl: React.ReactNode;
 }>;
@@ -84,6 +85,7 @@ export function ThemePreview({
   mode,
   theme,
   settingsOpen,
+  embedded = false,
   onModeChange,
   settingsControl,
 }: ThemePreviewProps) {
@@ -99,9 +101,13 @@ export function ThemePreview({
       data-theme-builder-preview={mode}
       style={style}
       className={
-        settingsOpen
-          ? "relative z-30 min-w-0 overflow-visible rounded-[5px] border border-border bg-background text-foreground"
-          : "relative min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
+        embedded
+          ? settingsOpen
+            ? "relative z-30 min-w-0 overflow-visible rounded-b-[4px] bg-background text-foreground"
+            : "relative min-w-0 overflow-hidden rounded-b-[4px] bg-background text-foreground"
+          : settingsOpen
+            ? "relative z-30 min-w-0 overflow-visible rounded-[5px] border border-border bg-background text-foreground"
+            : "relative min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
       }
     >
       <header className="relative z-30 flex min-h-14 flex-wrap items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur supports-backdrop-filter:bg-background/60 sm:px-5">

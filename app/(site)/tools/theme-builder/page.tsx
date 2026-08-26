@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 export default function ThemeBuilderPage() {
   return (
     <main id="content" className="bg-background text-foreground">
-      <Container className="py-12 sm:py-14">
+      <Container className="py-10 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-6xl">
           <PageHero
             align="center"
@@ -43,6 +43,7 @@ export default function ThemeBuilderPage() {
             badges={[
               { label: "Theme Builder", variant: "outline" },
               { label: "Free · client-side", variant: "outline" },
+              { label: "Semantic token studio", variant: "outline" },
             ]}
             title="Build a PyColors theme from your brand colors"
             description="Free, client-side, PyColors-compatible theme generation for production-shaped SaaS interfaces."
@@ -58,27 +59,31 @@ export default function ThemeBuilderPage() {
                 transmitted.
               </p>
             }
-            className="bg-transparent px-0 py-8 sm:px-0 sm:py-10 lg:px-0 lg:py-12"
+            className="rounded-[5px] border border-pro-border bg-pro-surface px-6 py-12 shadow-medium sm:px-8 sm:py-14 lg:px-12 lg:py-16"
             badgesClassName="gap-2"
             extraClassName="mt-6"
           />
         </div>
       </Container>
 
-      <section className="border-t border-border-subtle">
-        <Container className="py-12 lg:py-16">
+      <section className="relative border-y border-border-subtle bg-surface-elevated/45">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklch,var(--primary),transparent_94%),transparent_70%)]"
+        />
+        <Container className="relative py-10 sm:py-12 lg:py-16">
           <div className="mx-auto max-w-6xl">
             <ThemeBuilder />
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-border-subtle">
+      <section className="bg-surface-elevated/20">
         <Container className="py-12 lg:py-14">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:gap-12">
             <section
               aria-labelledby="theme-builder-integration-heading"
-              className="min-w-0"
+              className="min-w-0 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6"
             >
               <div className="space-y-3">
                 <h2
@@ -123,7 +128,7 @@ export default function ThemeBuilderPage() {
 
             <section
               aria-labelledby="theme-builder-limitations-heading"
-              className="min-w-0 border-t border-warning/35 pt-8 lg:border-t-0 lg:border-l lg:pl-8 lg:pt-0"
+              className="min-w-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-soft sm:p-6"
             >
               <div className="space-y-3">
                 <h2
