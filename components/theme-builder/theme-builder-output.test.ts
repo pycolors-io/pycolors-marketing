@@ -152,7 +152,9 @@ test("highlights local token exports with Rehype Pretty Code", () => {
 
   assert.match(outputSource, /HighlightedThemeCode/u);
   assert.match(outputSource, /activeFormat/u);
-  assert.match(outputSource, /colorScheme=\{mode\}/u);
+  assert.match(outputSource, /useTheme/u);
+  assert.match(outputSource, /resolvedTheme === "light" \? "light" : "dark"/u);
+  assert.match(outputSource, /colorScheme=\{codeColorScheme\}/u);
   assert.match(outputSource, /bg-white text-black/u);
   assert.match(outputSource, /bg-black text-white/u);
   assert.match(
@@ -202,10 +204,7 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   );
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
-  assert.match(
-    builderSource,
-    /<ThemeOutput theme=\{state\.generatedTheme\} mode=\{state\.previewMode\}/u,
-  );
+  assert.match(builderSource, /<ThemeOutput theme=\{state\.generatedTheme\}/u);
   assert.match(builderSource, /settingsOpen=\{settingsOpen\}/u);
   assert.match(builderSource, /Professional foundations/u);
   assert.match(builderSource, /Start with a balanced combination/u);

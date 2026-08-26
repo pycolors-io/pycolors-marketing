@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useTheme } from "fumadocs-ui/provider/base";
 
 import {
   serializeTheme,
   type ExportFormat,
   type SerializedThemeResult,
-  type ThemeMode,
 } from "@pycolors/color-engine";
 import {
   Alert,
@@ -30,7 +30,6 @@ import { THEME_BUILDER_CTA_LINKS } from "./theme-builder-launch";
 
 type ThemeOutputProps = Readonly<{
   theme: SerializedThemeResult;
-  mode: ThemeMode;
 }>;
 
 type OutputArtifact = Readonly<{
@@ -159,13 +158,16 @@ function generatedCssExample(content: string) {
 }
 
 /** Display engine-owned export artifacts without rebuilding semantic values. */
-export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
+export function ThemeOutput({ theme }: ThemeOutputProps) {
+  const { resolvedTheme } = useTheme();
   const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
   const css = outputArtifact(theme, "css");
   const tailwind = outputArtifact(theme, "tailwind-v4");
   const json = outputArtifact(theme, "json");
   const error = css.error ?? tailwind.error ?? json.error;
-  const isDarkCode = mode === "dark";
+  const codeColorScheme: ThemeCodeColorScheme =
+    resolvedTheme === "light" ? "light" : "dark";
+  const isDarkCode = codeColorScheme === "dark";
   const generatedExampleClassName = isDarkCode
     ? "border-white/15 bg-black text-white"
     : "border-border-subtle bg-white text-black";
@@ -243,7 +245,7 @@ export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
                     content={generatedCssExample(css.content)}
                     language="css"
                     active={activeFormat === "css"}
-                    colorScheme={mode}
+                    colorScheme={codeColorScheme}
                   />
                 </pre>
               </div>
@@ -252,7 +254,7 @@ export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
                 content={css.content}
                 language="css"
                 active={activeFormat === "css"}
-                colorScheme={mode}
+                colorScheme={codeColorScheme}
               />
             </TabsContent>
 
@@ -275,7 +277,7 @@ export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
                 content={tailwind.content}
                 language="css"
                 active={activeFormat === "tailwind-v4"}
-                colorScheme={mode}
+                colorScheme={codeColorScheme}
               />
             </TabsContent>
 
@@ -289,7 +291,7 @@ export function ThemeOutput({ theme, mode }: ThemeOutputProps) {
                 content={json.content}
                 language="json"
                 active={activeFormat === "json"}
-                colorScheme={mode}
+                colorScheme={codeColorScheme}
               />
             </TabsContent>
           </Tabs>
