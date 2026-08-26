@@ -13,6 +13,11 @@ import {
   selectThemeBuilderMode,
   updateThemeBuilderField,
 } from "./theme-builder-state";
+import type {
+  ThemeBuilderDraft,
+  ThemeBuilderField,
+  ThemeBuilderFieldErrors,
+} from "./theme-builder-state";
 
 function generationWarningLabel(
   warning: ReturnType<
@@ -33,11 +38,106 @@ function generationWarningLabel(
   }
 }
 
+type ThemeSettingsPanelProps = Readonly<{
+  draft: ThemeBuilderDraft;
+  errors: ThemeBuilderFieldErrors;
+  generationError: string | null;
+  onClose: () => void;
+  onReset: () => void;
+  onFieldChange: (field: ThemeBuilderField, value: string) => void;
+}>;
+
+function ThemeSettingsPanel({
+  draft,
+  errors,
+  generationError,
+  onClose,
+  onReset,
+  onFieldChange,
+}: ThemeSettingsPanelProps) {
+  const hasFieldErrors = Object.keys(errors).length > 0;
+
+  return (
+    <aside
+      id="theme-builder-settings-panel"
+      aria-labelledby="theme-builder-settings-heading"
+      className="absolute right-0 top-[calc(100%+0.5rem)] z-30 max-h-[calc(100vh-6rem)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-border bg-surface shadow-soft"
+    >
+      <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
+        <div className="min-w-0">
+          <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
+            01 · Configure brand
+          </p>
+          <h2
+            id="theme-builder-settings-heading"
+            className="mt-0.5 text-sm font-semibold tracking-tight"
+          >
+            Theme settings
+          </h2>
+        </div>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          className="shrink-0 rounded-[4px]"
+          aria-label="Close theme settings"
+          onClick={onClose}
+        >
+          <X aria-hidden="true" />
+        </Button>
+      </div>
+
+      <div className="space-y-4 p-4">
+        <p className="text-xs leading-5 text-muted-foreground">
+          Adjust your source colors. Northstar updates locally as you type.
+        </p>
+
+        <ThemeInputs
+          draft={draft}
+          errors={errors}
+          onFieldChange={onFieldChange}
+        />
+
+        {hasFieldErrors ? (
+          <Alert variant="destructive" ariaLive="assertive">
+            <AlertTitle>Preview kept on the last valid theme</AlertTitle>
+            <AlertDescription>
+              Correct the field errors above before new semantic values are
+              applied.
+            </AlertDescription>
+          </Alert>
+        ) : null}
+
+        {generationError ? (
+          <Alert variant="destructive" ariaLive="assertive">
+            <AlertTitle>Theme generation could not complete</AlertTitle>
+            <AlertDescription>{generationError}</AlertDescription>
+          </Alert>
+        ) : null}
+      </div>
+
+      <div className="flex items-center justify-between gap-3 border-t border-border-subtle bg-surface-elevated/40 p-4">
+        <p className="max-w-44 text-[11px] leading-4 text-muted-foreground">
+          Inputs stay in this browser and are never persisted.
+        </p>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="shrink-0 rounded-[4px]"
+          onClick={onReset}
+        >
+          Reset
+        </Button>
+      </div>
+    </aside>
+  );
+}
+
 export function ThemeBuilder() {
   const [state, setState] = React.useState(createThemeBuilderState);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const preview = state.generatedTheme.modes[state.previewMode];
-  const hasFieldErrors = Object.keys(state.fieldErrors).length > 0;
   const failedContrasts = state.generatedTheme.contrasts.filter(
     (contrast) => contrast.status === "fail",
   );
@@ -63,100 +163,36 @@ export function ThemeBuilder() {
               )
             }
             settingsControl={
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="rounded-[4px]"
-                aria-controls="theme-builder-settings-panel"
-                aria-expanded={settingsOpen}
-                onClick={() => setSettingsOpen((open) => !open)}
-              >
-                <SlidersHorizontal aria-hidden="true" />
-                Theme settings
-              </Button>
+              <div className="relative">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="rounded-[4px] bg-background/80"
+                  aria-controls="theme-builder-settings-panel"
+                  aria-expanded={settingsOpen}
+                  onClick={() => setSettingsOpen((open) => !open)}
+                >
+                  <SlidersHorizontal aria-hidden="true" />
+                  Theme settings
+                </Button>
+                {settingsOpen ? (
+                  <ThemeSettingsPanel
+                    draft={state.draft}
+                    errors={state.fieldErrors}
+                    generationError={state.generationError}
+                    onClose={() => setSettingsOpen(false)}
+                    onReset={() => setState(resetThemeBuilderState())}
+                    onFieldChange={(field, value) =>
+                      setState((current) =>
+                        updateThemeBuilderField(current, field, value),
+                      )
+                    }
+                  />
+                ) : null}
+              </div>
             }
           />
-
-          {settingsOpen ? (
-            <aside
-              id="theme-builder-settings-panel"
-              aria-labelledby="theme-builder-settings-heading"
-              className="absolute inset-x-4 top-20 z-20 max-h-[calc(100%-6rem)] overflow-y-auto rounded-[5px] border border-border bg-surface shadow-soft sm:inset-x-auto sm:right-6 sm:top-[5.5rem] sm:w-[22rem]"
-            >
-              <div className="space-y-5 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-1">
-                    <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
-                      01 · Configure brand
-                    </p>
-                    <h2
-                      id="theme-builder-settings-heading"
-                      className="text-lg font-semibold tracking-tight"
-                    >
-                      Theme settings
-                    </h2>
-                    <p className="text-xs leading-5 text-muted-foreground">
-                      Changes apply locally as you type.
-                    </p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon-sm"
-                    className="shrink-0 rounded-[4px]"
-                    aria-label="Close theme settings"
-                    onClick={() => setSettingsOpen(false)}
-                  >
-                    <X aria-hidden="true" />
-                  </Button>
-                </div>
-
-                <ThemeInputs
-                  draft={state.draft}
-                  errors={state.fieldErrors}
-                  onFieldChange={(field, value) =>
-                    setState((current) =>
-                      updateThemeBuilderField(current, field, value),
-                    )
-                  }
-                />
-
-                {hasFieldErrors ? (
-                  <Alert variant="destructive" ariaLive="assertive">
-                    <AlertTitle>
-                      Preview kept on the last valid theme
-                    </AlertTitle>
-                    <AlertDescription>
-                      Correct the field errors above before new semantic values
-                      are applied.
-                    </AlertDescription>
-                  </Alert>
-                ) : null}
-
-                {state.generationError ? (
-                  <Alert variant="destructive" ariaLive="assertive">
-                    <AlertTitle>Theme generation could not complete</AlertTitle>
-                    <AlertDescription>{state.generationError}</AlertDescription>
-                  </Alert>
-                ) : null}
-
-                <div className="flex flex-col gap-3 border-t border-border-subtle pt-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-xs leading-5 text-muted-foreground">
-                    Inputs stay in this browser and are never persisted.
-                  </p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="min-h-10 shrink-0 rounded-[5px] px-3"
-                    onClick={() => setState(resetThemeBuilderState())}
-                  >
-                    Reset defaults
-                  </Button>
-                </div>
-              </div>
-            </aside>
-          ) : null}
         </div>
 
         <div className="min-w-0 bg-surface p-4 sm:p-6">

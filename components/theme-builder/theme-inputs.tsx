@@ -37,14 +37,14 @@ type ThemeSettingProps = Readonly<{
 
 function ThemeSetting({ title, description, children }: ThemeSettingProps) {
   return (
-    <div className="min-w-0 border border-border-subtle bg-surface-muted/35 p-3.5">
+    <div className="min-w-0 border-b border-border-subtle p-4 last:border-b-0">
       <div className="space-y-1">
         <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-foreground">
           {title}
         </h3>
         <p className="text-xs leading-5 text-muted-foreground">{description}</p>
       </div>
-      <div className="mt-3.5">{children}</div>
+      <div className="mt-3">{children}</div>
     </div>
   );
 }
@@ -105,7 +105,7 @@ export function ThemeInputs({
   onFieldChange,
 }: ThemeInputsProps) {
   return (
-    <fieldset className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+    <fieldset className="overflow-hidden rounded-[4px] border border-border-subtle bg-background">
       <legend className="sr-only">Theme settings</legend>
 
       <ThemeSetting

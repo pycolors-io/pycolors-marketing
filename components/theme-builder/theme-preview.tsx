@@ -98,7 +98,7 @@ export function ThemePreview({
       style={style}
       className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
     >
-      <header className="flex min-h-14 flex-wrap items-center gap-3 border-b border-border bg-surface-elevated/70 px-4 py-3 sm:px-5">
+      <header className="flex min-h-14 flex-wrap items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur supports-backdrop-filter:bg-background/60 sm:px-5">
         <div className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden="true"
@@ -134,7 +134,7 @@ export function ThemePreview({
       <div className="grid min-w-0 md:grid-cols-[9.5rem_minmax(0,1fr)]">
         <nav
           aria-label="Northstar workspace"
-          className="border-b border-border bg-surface-elevated/35 p-2 md:border-r md:border-b-0 md:p-3"
+          className="border-b border-border bg-background p-2 md:border-r md:border-b-0 md:p-3"
         >
           <div className="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible">
             {navigation.map(({ label, icon: Icon, active }) => (
@@ -169,19 +169,19 @@ export function ThemePreview({
           <div className="flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-1">
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
-                Workspace overview
+                Northstar workspace
               </p>
               <h2
                 id="theme-builder-preview-heading"
                 className="text-lg font-semibold tracking-tight"
               >
-                Good morning, Avery
+                Dashboard
               </h2>
               <p
                 id="theme-builder-preview-description"
                 className="text-sm text-muted-foreground"
               >
-                Your delivery teams are moving through this week&apos;s plan.
+                A focused view of delivery, capacity, and client work.
               </p>
             </div>
             <Button type="button" size="sm" className="w-fit rounded-[4px]">
@@ -190,7 +190,7 @@ export function ThemePreview({
             </Button>
           </div>
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Card className="rounded-[4px] border-primary/35 bg-primary/5 shadow-none">
               <div className="p-3.5">
                 <div className="flex items-center justify-between gap-2">
@@ -230,6 +230,26 @@ export function ThemePreview({
               <div className="p-3.5">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-xs font-medium text-muted-foreground">
+                    Delivery health
+                  </p>
+                  <Activity
+                    className="size-3.5 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
+                <p className="mt-3 text-2xl font-semibold tracking-tight">
+                  98%
+                </p>
+                <p className="mt-1 text-[11px] text-muted-foreground">
+                  All client milestones on track
+                </p>
+              </div>
+            </Card>
+
+            <Card className="rounded-[4px] border-border bg-card shadow-none">
+              <div className="p-3.5">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-xs font-medium text-muted-foreground">
                     Plan status
                   </p>
                   <Badge variant="success" size="sm">
@@ -246,7 +266,7 @@ export function ThemePreview({
             </Card>
           </div>
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_11.5rem]">
+          <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(15rem,0.85fr)]">
             <Card className="min-w-0 rounded-[4px] border-border bg-card shadow-none">
               <div className="flex flex-col gap-3 border-b border-border p-3.5 sm:flex-row sm:items-center sm:justify-between">
                 <div>

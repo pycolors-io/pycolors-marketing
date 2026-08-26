@@ -121,8 +121,10 @@ test("renders Northstar as a branded application shell instead of a component de
   );
 
   assert.match(previewSource, /aria-label="Northstar workspace"/u);
-  assert.match(previewSource, /Workspace overview/u);
+  assert.match(previewSource, /Northstar workspace/u);
+  assert.match(previewSource, /Dashboard/u);
   assert.match(previewSource, /Active projects/u);
+  assert.match(previewSource, /Delivery health/u);
   assert.match(previewSource, /Delivery board/u);
   assert.match(previewSource, /Live activity/u);
   assert.match(previewSource, /New project/u);
@@ -181,17 +183,25 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
     builderSource,
     /aria-controls="theme-builder-settings-panel"[\s\S]*aria-expanded=\{settingsOpen\}/u,
   );
-  assert.match(builderSource, /absolute inset-x-4 top-20 z-20/u);
+  assert.match(
+    builderSource,
+    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-30/u,
+  );
+  assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
   assert.match(
     inputsSource,
-    /<fieldset className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">/u,
+    /<fieldset className="overflow-hidden rounded-\[4px\] border border-border-subtle bg-background">/u,
   );
   assert.match(
     inputsSource,
     /<legend className="sr-only">Theme settings<\/legend>/u,
   );
   assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
+  assert.match(
+    inputsSource,
+    /border-b border-border-subtle p-4 last:border-b-0/u,
+  );
   assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
 });

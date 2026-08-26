@@ -9,12 +9,10 @@ const MODE_OPTIONS: readonly ThemeMode[] = ["light", "dark"];
 
 export function ThemeModeControl({ value, onChange }: ThemeModeControlProps) {
   return (
-    <fieldset className="grid gap-1.5">
-      <legend className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-        Preview mode
-      </legend>
+    <fieldset className="shrink-0">
+      <legend className="sr-only">Preview mode</legend>
       <div
-        className="grid grid-cols-2 gap-1 rounded-[5px] border border-border-subtle bg-surface-muted p-1"
+        className="grid h-8 grid-cols-2 gap-0.5 rounded-[4px] border border-border-subtle bg-surface-muted p-0.5"
         role="radiogroup"
       >
         {MODE_OPTIONS.map((mode) => {
@@ -34,7 +32,7 @@ export function ThemeModeControl({ value, onChange }: ThemeModeControlProps) {
               />
               <label
                 htmlFor={inputId}
-                className="flex min-h-9 cursor-pointer items-center justify-center rounded-[4px] border border-transparent px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground peer-checked:border-border peer-checked:bg-background peer-checked:text-foreground peer-checked:shadow-soft peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2"
+                className="flex h-7 cursor-pointer items-center justify-center rounded-[3px] border border-transparent px-2.5 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground peer-checked:border-border peer-checked:bg-background peer-checked:text-foreground peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2"
               >
                 {mode === "light" ? "Light" : "Dark"}
               </label>
@@ -42,9 +40,6 @@ export function ThemeModeControl({ value, onChange }: ThemeModeControlProps) {
           );
         })}
       </div>
-      <p className="text-[11px] text-muted-foreground" aria-live="polite">
-        Current preview: {value === "light" ? "Light" : "Dark"}.
-      </p>
     </fieldset>
   );
 }
