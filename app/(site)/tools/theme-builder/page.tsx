@@ -35,47 +35,41 @@ export const metadata: Metadata = {
 export default function ThemeBuilderPage() {
   return (
     <main id="content" className="bg-background text-foreground">
-      <Container className="py-10 sm:py-12 lg:py-14">
-        <div className="mx-auto max-w-6xl">
-          <PageHero
-            align="center"
-            maxWidth="5xl"
-            badges={[
-              { label: "Theme Builder", variant: "outline" },
-              { label: "Free · client-side", variant: "outline" },
-              { label: "Semantic token studio", variant: "outline" },
-            ]}
-            title="Build a PyColors theme from your brand colors"
-            description="Free, client-side, PyColors-compatible theme generation for production-shaped SaaS interfaces."
-            pills={[
-              "Light + dark semantic tokens",
-              "Real PyColors UI preview",
-              "Local-only generation",
-            ]}
-            extra={
-              <p className="mx-auto max-w-3xl text-sm leading-6 text-muted-foreground">
-                It runs locally in your browser. No account is required, and
-                theme inputs or generated tokens are not persisted or
-                transmitted.
-              </p>
-            }
-            className="rounded-[5px] border border-pro-border bg-pro-surface px-6 py-12 shadow-medium sm:px-8 sm:py-14 lg:px-12 lg:py-16"
-            badgesClassName="gap-2"
-            extraClassName="mt-6"
-          />
-        </div>
+      <Container className="py-18">
+        <PageHero
+          align="center"
+          maxWidth="5xl"
+          badges={[
+            { label: "Theme Builder", variant: "outline" },
+            { label: "Free · client-side", variant: "outline" },
+            { label: "Semantic token studio", variant: "outline" },
+          ]}
+          title="Build a PyColors theme from your brand colors"
+          description="Free, client-side, PyColors-compatible theme generation for production-shaped SaaS interfaces."
+          pills={[
+            "Light + dark semantic tokens",
+            "Real PyColors UI preview",
+            "Local-only generation",
+          ]}
+          extra={
+            <p className="mx-auto max-w-3xl text-sm leading-6 text-muted-foreground">
+              It runs locally in your browser. No account is required, and theme
+              inputs or generated tokens are not persisted or transmitted.
+            </p>
+          }
+          badgesClassName="gap-2"
+          extraClassName="mt-6"
+        />
       </Container>
 
-      <section className="relative border-y border-border-subtle bg-surface-elevated/45">
+      <section className="relative border-y border-border-subtle bg-surface-elevated/45 px-4 py-10 sm:px-6 sm:py-12 lg:py-16">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklch,var(--primary),transparent_94%),transparent_70%)]"
         />
-        <Container className="relative py-10 sm:py-12 lg:py-16">
-          <div className="mx-auto max-w-6xl">
-            <ThemeBuilder />
-          </div>
-        </Container>
+        <div className="relative mx-auto max-w-7xl">
+          <ThemeBuilder />
+        </div>
       </section>
 
       <section className="bg-surface-elevated/20">

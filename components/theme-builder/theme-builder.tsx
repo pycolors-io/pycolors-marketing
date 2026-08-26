@@ -61,7 +61,7 @@ function ThemeSettingsPanel({
     <aside
       id="theme-builder-settings-panel"
       aria-labelledby="theme-builder-settings-heading"
-      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100vh-6rem)] w-[min(34rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-pro-border bg-surface shadow-medium"
+      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100dvh-1rem)] w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-pro-border bg-surface shadow-medium"
     >
       <div className="flex items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface px-4 py-3">
         <div className="min-w-0">
@@ -153,7 +153,7 @@ export function ThemeBuilder() {
         aria-label="Theme Builder workspace"
         className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
       >
-        <div className="relative min-w-0 rounded-[5px] border border-pro-border bg-pro-surface shadow-medium">
+        <div className="relative min-h-[320px] min-w-0 rounded-[5px] border border-pro-border bg-pro-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
           <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface-muted/70 px-4 py-3 backdrop-blur sm:px-5">
             <div className="flex min-w-0 items-center gap-2.5">
               <span

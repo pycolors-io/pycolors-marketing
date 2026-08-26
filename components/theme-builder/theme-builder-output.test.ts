@@ -189,7 +189,7 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
   );
   assert.match(
     builderSource,
-    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-50/u,
+    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-50 max-h-\[calc\(100dvh-1rem\)\] w-\[min\(46rem,calc\(100vw-2rem\)\)\]/u,
   );
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
