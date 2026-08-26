@@ -44,6 +44,7 @@ const GROUPS: Array<{
     title: "Platform",
     links: [
       { label: "PyColors UI", href: "/ui" },
+      { label: "Theme Builder", href: "/tools/theme-builder" },
       { label: "Patterns", href: "/ui/patterns" },
       { label: "Examples", href: "/ui/examples" },
       { label: "Docs", href: "/docs" },

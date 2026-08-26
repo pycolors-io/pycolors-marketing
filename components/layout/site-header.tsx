@@ -14,7 +14,6 @@ import {
   LayoutTemplate,
   Menu,
   Package2,
-  Palette,
   Rocket,
   Sparkles,
   X,
@@ -127,16 +126,6 @@ const PRODUCT_MENU_META: Record<
   "/ui": {
     icon: Package2,
     description: "Production-ready primitives",
-    tone: "platform",
-  },
-  "/tools/theme-builder": {
-    icon: Palette,
-    description: "Generate light and dark tokens",
-    tone: "platform",
-  },
-  "/ui/patterns": {
-    icon: LayoutTemplate,
-    description: "Production-shaped SaaS surfaces",
     tone: "platform",
   },
   "/ui/examples": {
@@ -375,6 +364,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     );
 
     const resourceItems: MobileMenuItem[] = [
+      {
+        label: "Theme Builder",
+        href: "/tools/theme-builder",
+        icon: <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />,
+      },
       {
         label: "Docs",
         href: "/docs",

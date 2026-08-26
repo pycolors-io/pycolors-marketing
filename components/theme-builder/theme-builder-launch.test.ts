@@ -63,6 +63,7 @@ test("publishes the Theme Builder SEO contract and launch limitations", () => {
 test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
   const navigation = readMarketingFile("lib/layout.shared.tsx");
   const footer = readMarketingFile("components/footer.tsx");
+  const docsFooter = readMarketingFile("components/docs-footer.tsx");
   const output = readMarketingFile("components/theme-builder/theme-output.tsx");
   const sitemap = readMarketingFile("app/sitemap.ts");
   const docs = [
@@ -71,8 +72,16 @@ test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
     "content/docs/ui/theming.mdx",
   ].map(readMarketingFile);
 
-  assert.match(navigation, /title: ["']UI system["'][\s\S]*Theme Builder/u);
+  assert.match(
+    navigation,
+    /PRIMARY_NAV_ITEMS[\s\S]*label: "Theme Builder"[\s\S]*href: "\/tools\/theme-builder"/u,
+  );
+  assert.doesNotMatch(
+    navigation,
+    /title: "UI system"[\s\S]*label: "Patterns"/u,
+  );
   assert.match(footer, /title: "Platform"[\s\S]*Theme Builder/u);
+  assert.match(docsFooter, /title: "Platform"[\s\S]*Theme Builder/u);
   assert.match(sitemap, /["']\/tools\/theme-builder["']/u);
   for (const document of docs) {
     assert.match(document, /\/tools\/theme-builder/u);

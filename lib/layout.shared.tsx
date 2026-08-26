@@ -24,6 +24,7 @@ export type ProductMenuGroup = {
 export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
   { label: "Pricing", href: "/pricing" },
   { label: "Docs", href: "/docs" },
+  { label: "Theme Builder", href: "/tools/theme-builder" },
   { label: "Guides", href: "/guides" },
   { label: "Blog", href: "/blog" },
 ];
@@ -74,16 +75,6 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         label: "UI Library",
         href: "/ui",
         description: "Production-ready primitives",
-      },
-      {
-        label: "Theme Builder",
-        href: "/tools/theme-builder",
-        description: "Generate light and dark tokens",
-      },
-      {
-        label: "Patterns",
-        href: "/ui/patterns",
-        description: "SaaS product patterns",
       },
       {
         label: "Examples",
