@@ -43,6 +43,7 @@ type ThemePreviewProps = Readonly<{
   mode: ThemeMode;
   theme: ThemeModeResult;
   onModeChange: (mode: ThemeMode) => void;
+  settingsControl: React.ReactNode;
 }>;
 
 const navigation = [
@@ -78,7 +79,12 @@ const projects = [
 ] as const;
 
 /** A branded, root-scoped Northstar application preview. */
-export function ThemePreview({ mode, theme, onModeChange }: ThemePreviewProps) {
+export function ThemePreview({
+  mode,
+  theme,
+  onModeChange,
+  settingsControl,
+}: ThemePreviewProps) {
   const style = React.useMemo(
     () => createThemePreviewVariables(theme) as React.CSSProperties,
     [theme],
@@ -110,7 +116,7 @@ export function ThemePreview({ mode, theme, onModeChange }: ThemePreviewProps) {
           </div>
         </div>
 
-        <div className="ml-auto flex items-center gap-1.5">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
           <Button
             type="button"
             variant="ghost"
@@ -120,6 +126,7 @@ export function ThemePreview({ mode, theme, onModeChange }: ThemePreviewProps) {
           >
             <Bell aria-hidden="true" />
           </Button>
+          {settingsControl}
           <ThemeModeControl value={mode} onChange={onModeChange} />
         </div>
       </header>

@@ -159,7 +159,7 @@ test("highlights local token exports with Rehype Pretty Code", () => {
   assert.doesNotMatch(highlighterSource, /fetch\s*\(/u);
 });
 
-test("prioritizes the SaaS preview while settings collapse safely on smaller screens", () => {
+test("keeps the preview full width while settings open in an out-of-flow panel", () => {
   const builderSource = readFileSync(
     new URL("./theme-builder.tsx", import.meta.url),
     "utf8",
@@ -171,17 +171,18 @@ test("prioritizes the SaaS preview while settings collapse safely on smaller scr
 
   assert.match(
     builderSource,
-    /lg:grid-cols-\[minmax\(17rem,0\.62fr\)_minmax\(0,1\.38fr\)\]/u,
+    /const \[settingsOpen, setSettingsOpen\] = React\.useState\(false\)/u,
   );
   assert.match(
     builderSource,
     /aria-labelledby="theme-builder-settings-heading"/u,
   );
-  assert.match(builderSource, /Theme settings/u);
   assert.match(
     builderSource,
-    /<ThemePreview[\s\S]*theme-builder-notices-heading/u,
+    /aria-controls="theme-builder-settings-panel"[\s\S]*aria-expanded=\{settingsOpen\}/u,
   );
+  assert.match(builderSource, /absolute inset-x-4 top-20 z-20/u);
+  assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
   assert.match(
     inputsSource,
     /<fieldset className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">/u,
@@ -191,5 +192,6 @@ test("prioritizes the SaaS preview while settings collapse safely on smaller scr
     /<legend className="sr-only">Theme settings<\/legend>/u,
   );
   assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
+  assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
 });
