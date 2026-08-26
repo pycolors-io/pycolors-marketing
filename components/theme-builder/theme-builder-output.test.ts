@@ -211,6 +211,11 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   assert.match(builderSource, /Theme quality/u);
   assert.match(builderSource, /Automatic safeguards/u);
   assert.match(builderSource, /Visual contrast check/u);
+  assert.match(builderSource, /Tune the brand foundation/u);
+  assert.match(
+    builderSource,
+    /xl:grid-cols-\[minmax\(0,1\.15fr\)_minmax\(20rem,0\.85fr\)\]/u,
+  );
   assert.match(
     builderSource,
     /border border-pro-border bg-pro-surface shadow-medium/u,

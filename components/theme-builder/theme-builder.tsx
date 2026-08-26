@@ -217,10 +217,11 @@ function ThemeSettingsPanel({
         </Button>
       </div>
 
-      <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:gap-6 lg:p-6">
+      <div className="grid gap-5 p-4 sm:p-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] xl:gap-6 xl:p-6">
         <div className="min-w-0 space-y-4">
-          <p className="text-sm leading-6 text-muted-foreground">
-            Adjust the brand foundation. Northstar updates locally as you type.
+          <p className="rounded-[4px] border border-border-subtle bg-background/70 px-3 py-2 text-sm leading-6 text-muted-foreground">
+            Tune the brand foundation. The Northstar preview updates locally as
+            you type.
           </p>
 
           <ThemeInputs

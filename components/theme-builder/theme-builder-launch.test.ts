@@ -44,6 +44,7 @@ test("publishes the Theme Builder SEO contract and launch limitations", () => {
   assert.match(page, /border border-pro-border-subtle bg-pro-surface/u);
   assert.match(page, /<Container className="py-18">/u);
   assert.match(page, /relative mx-auto max-w-7xl/u);
+  assert.match(page, /mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 lg:gap-8/u);
   assert.match(page, /contrast-aware, not an accessibility\s+certification/u);
   for (const reviewContext of [
     "Brand perception",

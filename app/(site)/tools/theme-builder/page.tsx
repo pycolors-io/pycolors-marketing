@@ -74,7 +74,7 @@ export default function ThemeBuilderPage() {
 
       <section className="bg-surface-elevated/20">
         <Container className="py-12 lg:py-14">
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(18rem,0.7fr)] lg:gap-12">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 lg:gap-8">
             <section
               aria-labelledby="theme-builder-integration-heading"
               className="min-w-0 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6"
