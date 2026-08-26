@@ -23,7 +23,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "test": "pnpm --filter @pycolors/color-engine build && tsx --test components/theme-builder/*.test.ts",
-    "docs:generate": "fumadocs-mdx && pnpm --dir ../.. exec prettier --write apps/marketing/.source/browser.ts apps/marketing/.source/server.ts",
+    "docs:generate": "fumadocs-mdx && pnpm --dir ../.. exec prettier --write apps/marketing/.source/browser.ts apps/marketing/.source/server.ts apps/marketing/.source/source.config.mjs",
     "types:check": "pnpm docs:generate && next typegen && pnpm docs:generate && tsc --noEmit",
     "postinstall": "pnpm docs:generate"
   },
