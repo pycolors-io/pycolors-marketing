@@ -61,7 +61,7 @@ function ThemeSettingsPanel({
     <aside
       id="theme-builder-settings-panel"
       aria-labelledby="theme-builder-settings-heading"
-      className="absolute right-0 top-[calc(100%+0.5rem)] z-30 max-h-[calc(100vh-6rem)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-border bg-surface shadow-soft"
+      className="absolute right-0 top-[calc(100%+0.5rem)] z-50 max-h-[calc(100vh-6rem)] w-[min(34rem,calc(100vw-2rem))] overflow-y-auto rounded-[5px] border border-border bg-surface shadow-medium"
     >
       <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
         <div className="min-w-0">
@@ -151,19 +151,20 @@ export function ThemeBuilder() {
     <div className="space-y-8">
       <section
         aria-label="Theme Builder workspace"
-        className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-surface"
+        className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
       >
-        <div className="relative min-w-0 bg-surface-elevated/30 p-4 sm:p-6">
+        <div className="min-w-0">
           <ThemePreview
             mode={state.previewMode}
             theme={preview}
+            settingsOpen={settingsOpen}
             onModeChange={(previewMode) =>
               setState((current) =>
                 selectThemeBuilderMode(current, previewMode),
               )
             }
             settingsControl={
-              <div className="relative">
+              <div className="relative z-40">
                 <Button
                   type="button"
                   variant="outline"
@@ -195,7 +196,7 @@ export function ThemeBuilder() {
           />
         </div>
 
-        <div className="min-w-0 bg-surface p-4 sm:p-6">
+        <div className="mt-6 min-w-0 rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-6">
           <section
             aria-labelledby="theme-builder-notices-heading"
             className="rounded-[5px] border border-border-subtle bg-surface p-4 sm:p-5"

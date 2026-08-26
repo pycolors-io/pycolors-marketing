@@ -170,6 +170,10 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
     new URL("./theme-inputs.tsx", import.meta.url),
     "utf8",
   );
+  const previewSource = readFileSync(
+    new URL("./theme-preview.tsx", import.meta.url),
+    "utf8",
+  );
 
   assert.match(
     builderSource,
@@ -185,10 +189,12 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
   );
   assert.match(
     builderSource,
-    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-30/u,
+    /absolute right-0 top-\[calc\(100%\+0\.5rem\)\] z-50/u,
   );
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
+  assert.match(builderSource, /settingsOpen=\{settingsOpen\}/u);
+  assert.match(previewSource, /settingsOpen[\s\S]*overflow-visible/u);
   assert.match(
     inputsSource,
     /<fieldset className="overflow-hidden rounded-\[4px\] border border-border-subtle bg-background">/u,
@@ -200,7 +206,7 @@ test("keeps the preview full width while settings open in an out-of-flow panel",
   assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 4);
   assert.match(
     inputsSource,
-    /border-b border-border-subtle p-4 last:border-b-0/u,
+    /grid min-w-0 gap-3 border-b border-border-subtle p-4 last:border-b-0 sm:grid-cols-\[9rem_minmax\(0,1fr\)\] sm:gap-5/u,
   );
   assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
   assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);

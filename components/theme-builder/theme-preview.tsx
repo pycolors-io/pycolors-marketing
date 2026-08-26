@@ -42,6 +42,7 @@ import { ThemeModeControl } from "./theme-mode-control";
 type ThemePreviewProps = Readonly<{
   mode: ThemeMode;
   theme: ThemeModeResult;
+  settingsOpen: boolean;
   onModeChange: (mode: ThemeMode) => void;
   settingsControl: React.ReactNode;
 }>;
@@ -82,6 +83,7 @@ const projects = [
 export function ThemePreview({
   mode,
   theme,
+  settingsOpen,
   onModeChange,
   settingsControl,
 }: ThemePreviewProps) {
@@ -96,9 +98,13 @@ export function ThemePreview({
       aria-describedby="theme-builder-preview-description"
       data-theme-builder-preview={mode}
       style={style}
-      className="min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
+      className={
+        settingsOpen
+          ? "relative z-30 min-w-0 overflow-visible rounded-[5px] border border-border bg-background text-foreground"
+          : "relative min-w-0 overflow-hidden rounded-[5px] border border-border bg-background text-foreground"
+      }
     >
-      <header className="flex min-h-14 flex-wrap items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur supports-backdrop-filter:bg-background/60 sm:px-5">
+      <header className="relative z-30 flex min-h-14 flex-wrap items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur supports-backdrop-filter:bg-background/60 sm:px-5">
         <div className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden="true"
