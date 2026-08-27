@@ -11,17 +11,66 @@ When a Block is added, its source lives at this neutral path:
 ```text
 apps/marketing/content/blocks/
 ├── README.md
-└── <category>/
-    └── <block-name>/
+└── <category-slug>/
+    └── <block-slug>/
         └── ...Block source files
 ```
 
-`<category>` and `<block-name>` are placeholders. This contract does not choose
-or create a production category; #93 owns category definition, while #94
-through #101 own production Block content.
+`<category-slug>` must be one of the approved values below. `<block-slug>` must
+be a stable lowercase kebab-case identity. This contract does not create a
+production Block; #94 through #101 own that source.
 
 The root `README.md` is the only allowed root-level file. Each category contains
-Block directories, and a Block directory can contain the local files it needs.
+non-empty Block directories, and a Block directory contains the local files it
+needs. Do not create empty category or Block placeholders.
+
+## Approved taxonomy
+
+Every Block has exactly one primary category. Secondary discovery belongs in
+tags or documentation metadata, never in duplicate source trees or category
+aliases.
+
+| Category            | Slug         | Authoritative source-owner issues |
+| ------------------- | ------------ | --------------------------------- |
+| Application shells  | `app-shells` | #94                               |
+| Authentication      | `auth`       | #95                               |
+| Commerce            | `commerce`   | #96 and #98                       |
+| Account & workspace | `account`    | #97 and #99                       |
+| Data & records      | `data`       | #101                              |
+| Feedback & states   | `feedback`   | #100                              |
+
+The slugs are an exact allowlist. Do not introduce aliases such as
+`application-shells`, `authentication`, `billing`, `settings`, `admin`,
+`tables`, or `states`.
+
+## Shared identity contract
+
+A Block keeps one `<category-slug>/<block-slug>` identity across canonical
+source, documentation navigation, and future Registry metadata. For example,
+source at `data/projects-table` is documented at
+`/docs/blocks/data/projects-table` and, if separately approved for Registry
+delivery, uses the item name `data-projects-table`.
+
+Free and Pro availability are separate metadata on that shared identity. They
+do not create parallel category taxonomies, duplicate implementations, or
+public access to private source.
+
+## Source authority and implementation order
+
+- `@pycolors/ui` and `@pycolors/tokens` remain the public primitive and token
+  authorities.
+- Starter Free is product evidence only, and documentation previews are examples
+  only. Neither is canonical Block source until the relevant source-owner issue
+  promotes source into this directory.
+- #94 through #101 own production Blocks; #93 owns only this taxonomy and
+  naming contract.
+- Registry architecture remains owned by #384 and its children. Future Registry
+  manifests and artifacts distribute canonical source; they do not own another
+  implementation. No manifest, generated JSON, route, CLI, or hosted delivery
+  behavior belongs in this directory.
+- Future Pro source and delivery remain a separate authority under #36.
+- The approved first source sequence is #94, then #101, then #97. This ordering
+  does not start those issues or make an unapproved candidate Registry-ready.
 
 ## Source and preview direction
 

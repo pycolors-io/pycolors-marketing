@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-08-20"
+lastUpdated: "2026-08-28"
 appliesTo: Blocks
 ---
 
@@ -21,8 +21,9 @@ its canonical source directory into your application, then treat the copied code
 as your own product code.
 
 <Callout title="Current scope">
-  This page establishes the installation contract. It does not announce a
-  production Block or choose a Block category.
+  The category and naming contract is approved. No production Block is announced
+  by this page; each source-owner issue still has to deliver and validate its
+  Block.
 </Callout>
 
 There is no `@pycolors/blocks` package, registry, CLI, download service, or
@@ -34,14 +35,45 @@ does not require a Changeset.
 The PyColors repository keeps canonical Block source at:
 
 ```text
-apps/marketing/content/blocks/<category>/<block-name>/
+apps/marketing/content/blocks/<category-slug>/<block-slug>/
 ```
 
-`<category>` and `<block-name>` are placeholders. Categories are defined
-separately, and each production Block owns its own source directory.
+Both path segments use lowercase kebab-case. `<category-slug>` must be one of
+the approved slugs below, and each production Block owns one stable
+`<block-slug>`.
+
+## Approved categories
+
+Every Block has exactly one primary category. Tags may support secondary
+discovery without creating duplicate source or category aliases.
+
+| Category            | Slug         | Source-owner issues |
+| ------------------- | ------------ | ------------------- |
+| Application shells  | `app-shells` | #94                 |
+| Authentication      | `auth`       | #95                 |
+| Commerce            | `commerce`   | #96 and #98         |
+| Account & workspace | `account`    | #97 and #99         |
+| Data & records      | `data`       | #101                |
+| Feedback & states   | `feedback`   | #100                |
+
+Source, documentation navigation, and future Registry metadata use the same
+`<category-slug>/<block-slug>` identity. For example, `data/projects-table`
+maps to the documentation route `/docs/blocks/data/projects-table` and, only
+after a separate Registry approval, the Registry item `data-projects-table`.
+
+Free and Pro availability are separate metadata on this shared identity. They
+do not create different taxonomies or expose private source.
 
 Documentation previews must import or render canonical Block source where
 practical. A preview is never an alternate implementation to copy from.
+
+<Callout title="Source authority">
+  `@pycolors/ui` and `@pycolors/tokens` remain the public primitive and token
+  authorities. Starter Free is product evidence and documentation previews are
+  examples, not alternate Block source. Future Registry artifacts distribute
+  canonical source only, while future Pro remains a separate authority under
+  #36. The approved first source sequence is #94, then #101, then #97.
+</Callout>
 
 ## Install a Block
 
@@ -49,8 +81,8 @@ practical. A preview is never an alternate implementation to copy from.
   <Step>
     ### Copy the complete source directory
 
-    Copy the canonical `<block-name>` directory into a location your app owns,
-    such as `src/components/blocks/<block-name>`. Keep the Block's local files
+    Copy the canonical `<block-slug>` directory into a location your app owns,
+    such as `src/components/blocks/<block-slug>`. Keep the Block's local files
     together so its relative imports remain local to the copied source.
 
   </Step>
@@ -62,7 +94,7 @@ practical. A preview is never an alternate implementation to copy from.
     [UI installation guide](/docs/ui/installation). Block source must import
     PyColors primitives from the public package entry point only.
 
-    ```tsx title="src/components/blocks/<block-name>/index.tsx"
+    ```tsx title="src/components/blocks/<block-slug>/index.tsx"
     import { Button, Card } from "@pycolors/ui";
     ```
 
@@ -103,10 +135,10 @@ pnpm --filter pycolors-marketing types:check
 pnpm --filter pycolors-marketing build
 ```
 
-The structural check guards the canonical layout and rejects deep
-`@pycolors/ui` imports, internal app or package imports, and package, registry,
-or CLI artifacts. It validates the delivery contract without creating a sample
-production Block.
+The structural check enforces the exact category allowlist and lowercase
+kebab-case names, rejects empty placeholders, deep `@pycolors/ui` imports,
+internal app or package imports, and package, registry, or CLI artifacts. It
+validates the delivery contract without creating a sample production Block.
 
 ## Updates are deliberate
 
