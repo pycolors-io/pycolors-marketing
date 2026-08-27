@@ -349,12 +349,12 @@ export function ThemeBuilder() {
         aria-label="Theme Builder workspace"
         className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
       >
-        <div className="relative min-h-[320px] min-w-0 rounded-[5px] border border-pro-border bg-pro-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
-          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface-muted/70 px-4 py-3 backdrop-blur sm:px-5">
+        <div className="group relative min-h-[320px] min-w-0 rounded-[5px] border border-border-subtle bg-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
+          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-border-subtle bg-surface-muted/80 px-4 py-3 backdrop-blur-md sm:px-5">
             <div className="flex min-w-0 items-center gap-2.5">
               <span
                 aria-hidden="true"
-                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-pro-border bg-background text-[11px] font-semibold text-primary"
+                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-border-subtle bg-background text-[11px] font-semibold text-primary"
               >
                 P
               </span>

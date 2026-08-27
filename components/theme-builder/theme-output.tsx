@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Code2 } from "lucide-react";
 import { useTheme } from "fumadocs-ui/provider/base";
 
 import {
@@ -119,6 +120,12 @@ function CodePanel({
 const exportTabs = ["css", "tailwind-v4", "json"] as const;
 type ExportTab = (typeof exportTabs)[number];
 
+const EXPORT_FORMAT_LABELS: Record<ExportTab, string> = {
+  css: "CSS",
+  "tailwind-v4": "Tailwind v4",
+  json: "JSON",
+};
+
 const INTEGRATION_STEPS: Record<ExportTab, readonly string[]> = {
   css: [
     "Keep the PyColors token import in your global stylesheet.",
@@ -161,6 +168,7 @@ function generatedCssExample(content: string) {
 export function ThemeOutput({ theme }: ThemeOutputProps) {
   const { resolvedTheme } = useTheme();
   const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
+  const [codeVisible, setCodeVisible] = useState(false);
   const css = outputArtifact(theme, "css");
   const tailwind = outputArtifact(theme, "tailwind-v4");
   const json = outputArtifact(theme, "json");
@@ -171,6 +179,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
   const generatedExampleClassName = isDarkCode
     ? "border-white/15 bg-black text-white"
     : "border-border-subtle bg-white text-black";
+  const activeFormatLabel = EXPORT_FORMAT_LABELS[activeFormat];
 
   return (
     <section
@@ -228,71 +237,25 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
             </TabsList>
 
             <TabsContent value="css">
-              <p className="mb-3 text-sm leading-6 text-muted-foreground">
+              <p className="text-sm leading-6 text-muted-foreground">
                 Load these semantic overrides after the PyColors token import.
               </p>
-              <div className="mb-4 space-y-2 rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                <h3 className="text-sm font-medium text-foreground">
-                  Generated override example
-                </h3>
-                <pre
-                  data-theme-builder-code
-                  tabIndex={0}
-                  aria-label="Compact example of the current generated CSS override"
-                  className={`max-w-full overflow-auto rounded-[4px] border p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${generatedExampleClassName}`}
-                >
-                  <HighlightedThemeCode
-                    content={generatedCssExample(css.content)}
-                    language="css"
-                    active={activeFormat === "css"}
-                    colorScheme={codeColorScheme}
-                  />
-                </pre>
-              </div>
-              <CodePanel
-                title="CSS"
-                content={css.content}
-                language="css"
-                active={activeFormat === "css"}
-                colorScheme={codeColorScheme}
-              />
             </TabsContent>
 
-            <TabsContent value="tailwind-v4" className="space-y-3">
-              <ol className="list-decimal space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-                <li>
-                  Import <code>@pycolors/tokens/tokens.css</code> once in your
-                  stylesheet.
-                </li>
-                <li>Place these generated CSS overrides after that import.</li>
-                <li>
-                  Use the existing Tailwind v4 semantic utilities and PyColors
-                  UI components normally; the package&apos;s{" "}
-                  <code>@theme inline</code> bridge already maps them to these
-                  variables.
-                </li>
-              </ol>
-              <CodePanel
-                title="Tailwind v4 CSS"
-                content={tailwind.content}
-                language="css"
-                active={activeFormat === "tailwind-v4"}
-                colorScheme={codeColorScheme}
-              />
+            <TabsContent value="tailwind-v4">
+              <p className="text-sm leading-6 text-muted-foreground">
+                Keep the existing Tailwind v4 semantic utilities and{" "}
+                <code>@theme inline</code> bridge. The checklist below confirms
+                the supported import order before you reveal the generated
+                override.
+              </p>
             </TabsContent>
 
             <TabsContent value="json">
-              <p className="mb-3 text-sm leading-6 text-muted-foreground">
+              <p className="text-sm leading-6 text-muted-foreground">
                 Complete engine evidence, including both modes, scales, contrast
                 records, and warnings.
               </p>
-              <CodePanel
-                title="JSON"
-                content={json.content}
-                language="json"
-                active={activeFormat === "json"}
-                colorScheme={codeColorScheme}
-              />
             </TabsContent>
           </Tabs>
 
@@ -333,6 +296,96 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
                 </li>
               ))}
             </ol>
+          </section>
+
+          <section
+            aria-labelledby="theme-builder-generated-code-heading"
+            className="overflow-hidden rounded-[5px] border border-border-subtle bg-background/70"
+          >
+            <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+              <div className="space-y-1">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+                  Generated artifact
+                </p>
+                <h3
+                  id="theme-builder-generated-code-heading"
+                  className="text-base font-semibold tracking-tight"
+                >
+                  {activeFormatLabel} implementation code
+                </h3>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Inspect the exact serializer output only when you are ready to
+                  implement it.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-10 shrink-0 rounded-[4px]"
+                aria-expanded={codeVisible}
+                aria-controls="theme-builder-generated-code"
+                onClick={() => setCodeVisible((visible) => !visible)}
+              >
+                <Code2 aria-hidden="true" />
+                {codeVisible ? "Hide generated code" : "View generated code"}
+              </Button>
+            </div>
+
+            <div
+              id="theme-builder-generated-code"
+              hidden={!codeVisible}
+              className="border-t border-border-subtle p-4 sm:p-5"
+            >
+              {activeFormat === "css" ? (
+                <div className="space-y-4">
+                  <div className="space-y-2 rounded-[5px] border border-border-subtle bg-surface-muted p-4">
+                    <h4 className="text-sm font-medium text-foreground">
+                      Generated override example
+                    </h4>
+                    <pre
+                      data-theme-builder-code
+                      tabIndex={0}
+                      aria-label="Compact example of the current generated CSS override"
+                      className={`max-w-full overflow-auto rounded-[4px] border p-4 font-mono text-xs leading-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${generatedExampleClassName}`}
+                    >
+                      <HighlightedThemeCode
+                        content={generatedCssExample(css.content)}
+                        language="css"
+                        active={codeVisible && activeFormat === "css"}
+                        colorScheme={codeColorScheme}
+                      />
+                    </pre>
+                  </div>
+                  <CodePanel
+                    title="CSS"
+                    content={css.content}
+                    language="css"
+                    active={codeVisible && activeFormat === "css"}
+                    colorScheme={codeColorScheme}
+                  />
+                </div>
+              ) : null}
+
+              {activeFormat === "tailwind-v4" ? (
+                <CodePanel
+                  title="Tailwind v4 CSS"
+                  content={tailwind.content}
+                  language="css"
+                  active={codeVisible && activeFormat === "tailwind-v4"}
+                  colorScheme={codeColorScheme}
+                />
+              ) : null}
+
+              {activeFormat === "json" ? (
+                <CodePanel
+                  title="JSON"
+                  content={json.content}
+                  language="json"
+                  active={codeVisible && activeFormat === "json"}
+                  colorScheme={codeColorScheme}
+                />
+              ) : null}
+            </div>
           </section>
 
           <section

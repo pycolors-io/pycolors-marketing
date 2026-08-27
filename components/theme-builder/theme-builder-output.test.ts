@@ -152,11 +152,23 @@ test("highlights local token exports with Rehype Pretty Code", () => {
 
   assert.match(outputSource, /HighlightedThemeCode/u);
   assert.match(outputSource, /activeFormat/u);
+  assert.match(
+    outputSource,
+    /const \[codeVisible, setCodeVisible\] = useState\(false\)/u,
+  );
   assert.match(outputSource, /useTheme/u);
   assert.match(outputSource, /resolvedTheme === "light" \? "light" : "dark"/u);
   assert.match(outputSource, /colorScheme=\{codeColorScheme\}/u);
   assert.match(outputSource, /bg-white text-black/u);
   assert.match(outputSource, /bg-black text-white/u);
+  assert.match(outputSource, /View generated code/u);
+  assert.match(outputSource, /Hide generated code/u);
+  assert.match(outputSource, /aria-expanded=\{codeVisible\}/u);
+  assert.match(outputSource, /hidden=\{!codeVisible\}/u);
+  assert.match(
+    outputSource,
+    /active=\{codeVisible && activeFormat === "css"\}/u,
+  );
   assert.match(
     outputSource,
     /Compact example of the current generated CSS override[\s\S]*generatedCssExample\(css\.content\)/u,
@@ -224,7 +236,7 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   );
   assert.match(
     builderSource,
-    /border border-pro-border bg-pro-surface shadow-medium/u,
+    /group relative min-h-\[320px\] min-w-0 rounded-\[5px\] border border-border-subtle bg-surface shadow-medium/u,
   );
   assert.match(builderSource, /PyColors Theme Studio/u);
   assert.match(previewSource, /settingsOpen[\s\S]*overflow-visible/u);
