@@ -212,7 +212,7 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   );
   assert.match(
     builderSource,
-    /absolute inset-x-0 top-0 z-50 min-h-full rounded-\[4px\] border border-pro-border bg-surface shadow-medium/u,
+    /absolute inset-x-0 top-0 z-50 min-h-full rounded-\[4px\] border border-border-subtle\/55 bg-surface shadow-medium/u,
   );
   assert.match(builderSource, /<ThemeSettingsPanel/u);
   assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
@@ -236,7 +236,7 @@ test("keeps the preview full width while settings open in a full Studio overlay"
   );
   assert.match(
     builderSource,
-    /group relative min-h-\[320px\] min-w-0 rounded-\[5px\] border border-border-subtle bg-surface shadow-medium/u,
+    /group relative min-h-\[320px\] min-w-0 rounded-\[5px\] border border-border-subtle\/55 bg-surface shadow-medium/u,
   );
   assert.match(builderSource, /PyColors Theme Studio/u);
   assert.match(previewSource, /settingsOpen[\s\S]*overflow-visible/u);

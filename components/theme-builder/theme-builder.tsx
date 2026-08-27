@@ -190,9 +190,9 @@ function ThemeSettingsPanel({
       aria-labelledby="theme-builder-settings-heading"
       tabIndex={-1}
       onKeyDown={handleKeyDown}
-      className="absolute inset-x-0 top-0 z-50 min-h-full rounded-[4px] border border-pro-border bg-surface shadow-medium"
+      className="absolute inset-x-0 top-0 z-50 min-h-full rounded-[4px] border border-border-subtle/55 bg-surface shadow-medium"
     >
-      <div className="flex items-center justify-between gap-3 border-b border-pro-border-subtle bg-pro-surface px-4 py-3">
+      <div className="flex items-center justify-between gap-3 border-b border-border-subtle/55 bg-surface-muted/80 px-4 py-3 backdrop-blur-md">
         <div className="min-w-0">
           <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
             01 · Configure brand
@@ -302,7 +302,7 @@ function ThemeSettingsPanel({
         </section>
       </div>
 
-      <div className="flex items-center justify-between gap-3 border-t border-pro-border-subtle bg-pro-surface p-4">
+      <div className="flex items-center justify-between gap-3 border-t border-border-subtle/55 bg-surface p-4">
         <p className="max-w-44 text-[11px] leading-4 text-muted-foreground">
           Inputs stay in this browser and are never persisted.
         </p>
@@ -349,12 +349,12 @@ export function ThemeBuilder() {
         aria-label="Theme Builder workspace"
         className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
       >
-        <div className="group relative min-h-[320px] min-w-0 rounded-[5px] border border-border-subtle bg-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
-          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-border-subtle bg-surface-muted/80 px-4 py-3 backdrop-blur-md sm:px-5">
+        <div className="group relative min-h-[320px] min-w-0 rounded-[5px] border border-border-subtle/55 bg-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
+          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-border-subtle/55 bg-surface-muted/80 px-4 py-3 backdrop-blur-md sm:px-5">
             <div className="flex min-w-0 items-center gap-2.5">
               <span
                 aria-hidden="true"
-                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-border-subtle bg-background text-[11px] font-semibold text-primary"
+                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-border-subtle/55 bg-background text-[11px] font-semibold text-primary"
               >
                 P
               </span>
@@ -422,10 +422,10 @@ export function ThemeBuilder() {
           ) : null}
         </div>
 
-        <div className="mt-6 min-w-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-4 shadow-soft sm:p-6">
+        <div className="mt-6 min-w-0 rounded-[5px] border border-border-subtle/55 bg-surface p-4 shadow-soft sm:p-6">
           <section
             aria-labelledby="theme-builder-notices-heading"
-            className="rounded-[5px] border border-pro-border-subtle bg-background/70 p-4 sm:p-5"
+            className="rounded-[5px] border border-border-subtle/55 bg-background/70 p-4 sm:p-5"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="space-y-1">

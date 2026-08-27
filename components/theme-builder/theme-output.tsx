@@ -184,7 +184,7 @@ export function ThemeOutput({ theme }: ThemeOutputProps) {
   return (
     <section
       aria-labelledby="theme-builder-output-heading"
-      className="min-w-0 space-y-5 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-medium sm:p-6"
+      className="min-w-0 space-y-5 rounded-[5px] border border-border-subtle/55 bg-surface p-5 shadow-medium sm:p-6"
     >
       <div className="flex flex-col gap-3 border-b border-border-subtle pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
