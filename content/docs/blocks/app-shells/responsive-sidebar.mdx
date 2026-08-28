@@ -1,0 +1,190 @@
+---
+title: Responsive sidebar
+description: A source-copy application shell with persistent desktop navigation and an accessible mobile Sheet.
+lastUpdated: "2026-08-28"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Application shells</Badge>
+  <Badge>responsive-sidebar</Badge>
+</div>
+
+## A reusable frame for application navigation
+
+`ResponsiveSidebar` gives a React application one bounded shell: persistent
+desktop navigation at the `md` breakpoint, a left-side mobile Sheet, a header
+and action region, and one main-content landmark. Brand, routes, active state,
+labels, icons, badges, footer, actions, and page content remain consumer-owned.
+
+It does not include authentication, user identity, billing, dashboard data,
+backend calls, or product-specific navigation.
+
+<Callout title="Source-copy Block">
+  Copy the complete canonical directory into your application. There is no
+  Blocks package, Registry installer, CLI, or automatic update channel for this
+  Block today.
+</Callout>
+
+## Canonical identity
+
+| Contract                               | Value                                                          |
+| -------------------------------------- | -------------------------------------------------------------- |
+| Category                               | `Application shells`                                           |
+| Category slug                          | `app-shells`                                                   |
+| Block slug                             | `responsive-sidebar`                                           |
+| Source                                 | `apps/marketing/content/blocks/app-shells/responsive-sidebar/` |
+| Export                                 | `ResponsiveSidebar`                                            |
+| Informational future Registry identity | `app-shells-responsive-sidebar`                                |
+
+The Registry identity is reserved for future distribution work. It is not an
+available installation method and this Block does not create Registry metadata
+or generated JSON.
+
+## Install by copying source
+
+1. Copy the complete `responsive-sidebar` directory to an application-owned
+   path, such as `src/components/blocks/responsive-sidebar/`.
+2. Install React 18 or newer and the public `@pycolors/ui` package.
+3. Load the public `@pycolors/tokens/tokens.css` contract and configure the
+   existing semantic Tailwind utilities used by your application.
+4. Import the Block from its copied local entry point.
+
+```tsx title="app-shell.tsx"
+"use client";
+
+import { ResponsiveSidebar } from "./components/blocks/responsive-sidebar";
+
+const items = [
+  { id: "overview", label: "Overview", href: "/overview" },
+  { id: "projects", label: "Projects", href: "/projects", badge: "4" },
+] as const;
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  return (
+    <ResponsiveSidebar
+      activeItemId="overview"
+      brand={<strong>Acme</strong>}
+      headerActions={<button type="button">Create project</button>}
+      headerTitle={<h1>Overview</h1>}
+      items={items}
+      mobileDescription="Choose a workspace destination."
+      mobileTitle="Workspace navigation"
+      navigationLabel="Primary workspace navigation"
+      sidebarFooter={<small>Acme workspace</small>}
+    >
+      {children}
+    </ResponsiveSidebar>
+  );
+}
+```
+
+Icons are optional consumer-owned React nodes. The Block treats icon content as
+decorative and keeps the visible item label as the link's accessible name.
+
+## Props
+
+| Prop                 | Type                                   | Default                     | Purpose                                                   |
+| -------------------- | -------------------------------------- | --------------------------- | --------------------------------------------------------- |
+| `brand`              | `ReactNode`                            | required                    | Consumer brand or workspace identity.                     |
+| `navigationLabel`    | `string`                               | required                    | Accessible label shared by desktop and mobile navigation. |
+| `mobileTitle`        | `string`                               | required                    | Accessible Sheet title.                                   |
+| `mobileDescription`  | `string`                               | `Navigate the application.` | Accessible Sheet description.                             |
+| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Accessible name for the icon-only mobile trigger.         |
+| `items`              | `readonly ResponsiveSidebarNavItem[]`  | required                    | Primary ungrouped navigation items.                       |
+| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Optional labelled navigation groups.                      |
+| `activeItemId`       | `string`                               | none                        | Stable item ID that receives `aria-current="page"`.       |
+| `renderLink`         | `(props) => ReactNode`                 | native anchor               | Router adapter seam.                                      |
+| `sidebarFooter`      | `ReactNode`                            | none                        | Optional consumer footer content.                         |
+| `headerTitle`        | `ReactNode`                            | none                        | Header title or context.                                  |
+| `headerActions`      | `ReactNode`                            | none                        | Consumer actions for the header.                          |
+| `contentId`          | `string`                               | `main-content`              | Main landmark ID and skip-link target.                    |
+| `skipToContentLabel` | `string`                               | `Skip to content`           | Visible-on-focus skip-link text.                          |
+| `className`          | `string`                               | none                        | Root layout customization.                                |
+| `children`           | `ReactNode`                            | required                    | Main application content.                                 |
+
+Navigation item IDs must be unique and stable across `items` and every group.
+The Block never derives active behavior from labels or URLs.
+
+## Responsive behavior
+
+- Below `md`, the persistent sidebar is hidden and the labelled header trigger
+  opens a left-side Sheet.
+- The Sheet is bounded to the viewport width and repeats the same consumer
+  brand, navigation, groups, active state, and optional footer.
+- Native-anchor navigation closes the Sheet. A custom router must invoke the
+  provided `onNavigate` callback after activation.
+- At `md` and above, the `w-64` sidebar is sticky, viewport-height, and
+  independently scrollable while the header and main content remain flexible
+  with `min-w-0`.
+- Responsive visibility uses CSS utilities rather than viewport JavaScript.
+
+## Router adaptation
+
+The default renderer uses native anchors. Adapt a client router through
+`renderLink`; preserve the supplied classes, active semantics, children, and
+mobile close callback.
+
+```tsx title="router-adapter.tsx"
+<ResponsiveSidebar
+  {...shellProps}
+  renderLink={({ active, children, className, item, onNavigate }) => (
+    <RouterLink
+      aria-current={active ? "page" : undefined}
+      className={className}
+      href={item.href}
+      onClick={onNavigate}
+    >
+      {children}
+    </RouterLink>
+  )}
+>
+  {children}
+</ResponsiveSidebar>
+```
+
+`RouterLink` is a placeholder for the consumer's router component; the
+canonical Block does not import Next.js or another routing library.
+
+## Accessibility and keyboard behavior
+
+- A visible-on-focus skip link targets the single focusable `main` landmark.
+- Desktop and mobile navigation expose the required consumer label.
+- The active native link uses `aria-current="page"`.
+- The mobile trigger is a labelled `Button` with visible focus styling.
+- The public `@pycolors/ui` Sheet supplies dialog focus containment, Escape and
+  outside-interaction dismissal, a labelled close button, and focus restoration
+  to the trigger.
+- `SheetTitle` and `SheetDescription` provide the mobile dialog name and
+  description.
+- Navigation remains native link navigation; there is no custom roving focus or
+  arrow-key model.
+
+Consumers must keep item labels visible, preserve `aria-current` in a custom
+renderer, provide meaningful navigation and Sheet labels, and avoid placing a
+second `main` landmark inside `children`. These guarantees are verified by
+focused interaction and axe tests; they are not a claim of full WCAG
+certification.
+
+## Styling and customization
+
+The Block uses semantic background, foreground, muted, border, accent, and ring
+utilities backed by the public tokens contract. It inherits the consumer's
+light or dark token values and introduces no colors, fonts, theme provider,
+global CSS, or local UI primitive copies.
+
+After copying, the consumer owns customization and future maintenance. Compare
+future canonical changes deliberately and apply only the updates that fit the
+application. Rollback is removal or reversion of the copied directory and its
+local integration; no package version or remote Block state is involved.
+
+## Explicit non-goals
+
+This Block does not provide user/session state, permissions, billing, metrics,
+data fetching, server actions, product navigation, a full dashboard, a package,
+a Registry item, generated Registry JSON, a CLI, automatic updates, a release,
+or deployment. Starter Free informed the composition but is not imported and
+is not source authority.
