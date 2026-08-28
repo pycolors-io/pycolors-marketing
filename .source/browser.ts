@@ -21,6 +21,8 @@ const browserCollections = {
   docs: create.doc("docs", {
     "blocks/app-shells/responsive-sidebar.mdx": () =>
       import("../content/docs/blocks/app-shells/responsive-sidebar.mdx?collection=docs"),
+    "blocks/data/data-table.mdx": () =>
+      import("../content/docs/blocks/data/data-table.mdx?collection=docs"),
     "blocks/index.mdx": () =>
       import("../content/docs/blocks/index.mdx?collection=docs"),
     "design-system/colors.mdx": () =>

@@ -20,11 +20,12 @@ PyColors Blocks use a manual source-copy flow. When a Block is available, copy
 its canonical source directory into your application, then treat the copied code
 as your own product code.
 
-<Callout title="First canonical Block">
+<Callout title="Canonical Blocks">
   The category and naming contract is approved. The
   [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar)
-  source is the first production-shaped Block; every other source-owner issue
-  still has to deliver and validate its own Block.
+  source is the first production-shaped Block, followed by
+  [`data/data-table`](/docs/blocks/data/data-table). Every other source-owner
+  issue still has to deliver and validate its own Block.
 </Callout>
 
 There is no `@pycolors/blocks` package, registry, CLI, download service, or
@@ -58,9 +59,9 @@ discovery without creating duplicate source or category aliases.
 | Feedback & states   | `feedback`   | #100                |
 
 Source, documentation navigation, and future Registry metadata use the same
-`<category-slug>/<block-slug>` identity. For example, `data/projects-table`
-maps to the documentation route `/docs/blocks/data/projects-table` and, only
-after a separate Registry approval, the Registry item `data-projects-table`.
+`<category-slug>/<block-slug>` identity. For example, `data/data-table` maps to
+the documentation route `/docs/blocks/data/data-table` and, only after a
+separate Registry approval, the Registry item `data-data-table`.
 
 Free and Pro availability are separate metadata on this shared identity. They
 do not create different taxonomies or expose private source.
