@@ -1,6 +1,3 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
-
 import {
   fireEvent,
   render,
@@ -15,6 +12,7 @@ import {
   ResponsiveSidebar,
   type ResponsiveSidebarProps,
 } from "../../content/blocks/app-shells/responsive-sidebar/index";
+import responsiveSidebarSource from "../../content/blocks/app-shells/responsive-sidebar/index.tsx?raw";
 
 const items = [
   {
@@ -230,13 +228,7 @@ describe("ResponsiveSidebar", () => {
   });
 
   it("keeps canonical source on approved public and Block-local imports", () => {
-    const source = readFileSync(
-      resolve(
-        process.cwd(),
-        "content/blocks/app-shells/responsive-sidebar/index.tsx",
-      ),
-      "utf8",
-    );
+    const source = responsiveSidebarSource;
 
     expect(source).toContain('from "react"');
     expect(source).toContain('from "@pycolors/ui"');
