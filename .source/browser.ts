@@ -19,6 +19,8 @@ const browserCollections = {
       import("../content/blog/why-production-migrations-break-saas-products.mdx?collection=blog"),
   }),
   docs: create.doc("docs", {
+    "blocks/account/settings-panel.mdx": () =>
+      import("../content/docs/blocks/account/settings-panel.mdx?collection=docs"),
     "blocks/app-shells/responsive-sidebar.mdx": () =>
       import("../content/docs/blocks/app-shells/responsive-sidebar.mdx?collection=docs"),
     "blocks/data/data-table.mdx": () =>

@@ -1,0 +1,277 @@
+---
+title: Settings panel
+description: A controlled account and workspace settings form with sectioned fields, validation presentation, submission state, and outcome feedback.
+lastUpdated: "2026-08-28"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Preview } from "@/components/docs/preview";
+import { SettingsPanelExample } from "@/components/docs/blocks/settings-panel-example";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Account & workspace</Badge>
+  <Badge>settings-panel</Badge>
+</div>
+
+## Compose trustworthy settings without owning product logic
+
+`SettingsPanel` renders a sectioned form for account profile and workspace
+identity fields. It provides responsive structure, accessible field wiring, a
+native submission boundary, optional progress state, and explicit outcome
+feedback.
+
+The consuming application owns every value, change callback, validation
+message, submission, permission, persistence decision, and outcome. The Block
+does not contact a service or imply that UI validation is server validation.
+
+<Callout title="Source-copy Block">
+  Copy the complete canonical directory into your application. There is no
+  Blocks package, Registry installer, CLI, or automatic update channel for this
+  Block today.
+</Callout>
+
+<Preview className="my-6 overflow-hidden">
+  <SettingsPanelExample />
+</Preview>
+
+## Canonical identity
+
+| Contract                               | Value                                                            |
+| -------------------------------------- | ---------------------------------------------------------------- |
+| Category                               | `Account & workspace`                                            |
+| Category slug                          | `account`                                                        |
+| Block slug                             | `settings-panel`                                                 |
+| Source                                 | `apps/marketing/content/blocks/account/settings-panel/`          |
+| Entry point                            | `apps/marketing/content/blocks/account/settings-panel/index.tsx` |
+| Export                                 | `SettingsPanel`                                                  |
+| Informational future Registry identity | `account-settings-panel`                                         |
+
+The Registry identity is informational only. Registry installation is not
+available, and this Block does not create a manifest, generated JSON, route, or
+delivery service.
+
+## Install by copying source
+
+1. Copy the complete `settings-panel` directory to an application-owned path,
+   such as `src/components/blocks/settings-panel/`.
+2. Install React 18 or newer and the public `@pycolors/ui` package.
+3. Load `@pycolors/tokens/tokens.css` and configure the semantic Tailwind
+   utilities used by the Block.
+4. Import `SettingsPanel` and its types from the copied local entry point.
+
+```tsx title="account-settings.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  SettingsPanel,
+  type SettingsPanelSection,
+} from "./blocks/settings-panel";
+
+export function AccountSettings() {
+  const [displayName, setDisplayName] = React.useState("Alex Morgan");
+  const [workspaceName, setWorkspaceName] = React.useState("Northstar");
+
+  const sections = [
+    {
+      id: "profile",
+      title: "Profile",
+      fields: [
+        {
+          id: "display-name",
+          name: "displayName",
+          label: "Display name",
+          value: displayName,
+          onValueChange: setDisplayName,
+        },
+      ],
+    },
+    {
+      id: "workspace",
+      title: "Workspace",
+      fields: [
+        {
+          id: "workspace-name",
+          name: "workspaceName",
+          label: "Workspace name",
+          value: workspaceName,
+          onValueChange: setWorkspaceName,
+        },
+      ],
+    },
+  ] satisfies readonly SettingsPanelSection[];
+
+  return (
+    <SettingsPanel
+      onSubmit={(event) => {
+        event.preventDefault();
+        // Validate and persist through your application boundary.
+      }}
+      sections={sections}
+      submitLabel="Save settings"
+      title="Account settings"
+    />
+  );
+}
+```
+
+## Consumer-owned types
+
+```ts title="settings-panel-types.ts"
+type SettingsPanelField = Readonly<{
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  onValueChange: (value: string) => void;
+  description?: string;
+  error?: string;
+  placeholder?: string;
+  autoComplete?: string;
+  required?: boolean;
+  disabled?: boolean;
+}> &
+  (
+    | Readonly<{
+        kind?: "input";
+        type?: "text" | "email" | "url" | "tel";
+      }>
+    | Readonly<{ kind: "textarea"; rows?: number }>
+  );
+
+type SettingsPanelSection = Readonly<{
+  id: string;
+  title: string;
+  description?: string;
+  fields: readonly SettingsPanelField[];
+}>;
+
+type SettingsPanelFeedback = Readonly<{
+  status: "success" | "error";
+  title: string;
+  description?: string;
+}>;
+```
+
+Use stable, unique section and field IDs. `name` remains available to the
+consumer's form boundary, while the Block prefixes rendered control IDs to
+avoid collisions between multiple panels.
+
+## Props
+
+| Prop              | Type                                | Default   | Purpose                                                   |
+| ----------------- | ----------------------------------- | --------- | --------------------------------------------------------- |
+| `title`           | `string`                            | required  | Accessible panel heading.                                 |
+| `description`     | `string`                            | none      | Panel-level context.                                      |
+| `sections`        | `readonly SettingsPanelSection[]`   | required  | Ordered consumer-owned sections and controlled fields.    |
+| `submitLabel`     | `string`                            | required  | Ready-state submit action name.                           |
+| `submitting`      | `boolean`                           | `false`   | Consumer-owned busy/disabled truth.                       |
+| `submittingLabel` | `string`                            | `Saving…` | Action copy while submitting.                             |
+| `submitDisabled`  | `boolean`                           | `false`   | Consumer-owned independent action availability.           |
+| `feedback`        | `SettingsPanelFeedback`             | none      | Consumer-owned success or error presentation.             |
+| `onSubmit`        | `FormEventHandler<HTMLFormElement>` | required  | Consumer submission boundary; no persistence is included. |
+| `className`       | `string`                            | none      | Root composition customization.                           |
+
+## Controlled values and validation
+
+Every field receives a `value` and `onValueChange`. The Block never stores a
+fallback value. Consumer rerenders determine what remains visible.
+
+`description` becomes helper text. When `error` is present, the public field
+primitive displays it, marks the control invalid, and associates the message
+with the control. The consumer decides when an error exists and what it means.
+The form uses `noValidate` deliberately so browser validation never masquerades
+as the consuming application's validation boundary.
+
+The supported input types are intentionally limited to ordinary profile and
+workspace presentation. Sensitive credential controls and product-specific
+widgets are outside this Block.
+
+## Submission and feedback
+
+`onSubmit` receives the native form event. The consumer prevents default when
+appropriate, validates current values, calls its own persistence layer, and
+controls all subsequent props.
+
+```tsx title="controlled-submission.tsx"
+<SettingsPanel
+  {...settingsProps}
+  feedback={
+    saveError
+      ? { status: "error", title: "Settings were not saved" }
+      : saved
+        ? { status: "success", title: "Settings saved" }
+        : undefined
+  }
+  onSubmit={handleSubmit}
+  submitting={isSaving}
+  submittingLabel="Saving account settings…"
+/>
+```
+
+While `submitting` is true, the form exposes `aria-busy`, editable controls and
+the action are disabled, and the submitting label is visible. Success feedback
+uses a polite status region. Error feedback uses an assertive alert. Neither
+state performs a request, infers permissions, or guarantees persistence.
+
+## Responsive behavior
+
+- The panel root and field grids use `min-w-0` to remain shrinkable.
+- Section context stacks above its fields on narrow viewports.
+- Sections become a balanced two-column composition at the existing `md`
+  breakpoint.
+- Fields flow in one column by default and two columns from `sm`; textareas span
+  the wider field grid.
+- Feedback and the full-width action stack on narrow screens, then align at
+  `sm`.
+- No JavaScript viewport detection is used.
+
+## Accessibility and keyboard behavior
+
+- The root is a labelled region containing one semantic form.
+- Each settings section has a programmatically associated heading.
+- Inputs and textareas use real labels and native focus/keyboard behavior.
+- Descriptions and errors are associated by the public field primitives.
+- The save action is a native submit button with visible focus treatment.
+- `submitting` exposes busy and disabled semantics.
+- Success/error feedback has visible text and appropriate live-region urgency,
+  rather than relying only on color.
+
+Focused semantic, interaction, and axe tests verify these behaviors. This is
+not a claim of full WCAG certification.
+
+## Customization
+
+After copying, change section content, fields, responsive proportions, action
+copy, and visual density for the consuming product. Preserve stable IDs,
+labels, descriptions, invalid-state associations, focus visibility, native form
+semantics, and consumer ownership while customizing.
+
+Compose separate product surfaces for password changes, security controls,
+billing, memberships, invitations, or destructive actions. They require
+different trust, permission, and confirmation boundaries.
+
+## Deliberate exclusions
+
+This Block does not include password management, MFA, sessions, identity
+providers, credentials, billing, subscriptions, payments, invitations, team
+administration, roles, permissions enforcement, authentication, authorization,
+backend/API calls, persistence, server actions, database models, routing,
+upgrade gates, or product-specific business logic.
+
+It does not depend on Next.js, Starter Free, Starter Pro, private/deep package
+imports, a form library, or another runtime dependency. Starter Free informed
+the general composition only; it remains evidence, not source authority.
+
+## Ownership, updates, and rollback
+
+After copying, the consumer owns the source, integration, values, validation,
+submission, persistence, permissions, content, and future maintenance. There is
+no automatic update or synchronization path. Compare future canonical revisions
+deliberately and adopt only the changes that fit the application.
+
+Rollback is removal or reversion of the copied `settings-panel` directory and
+its local integration. No package version, Registry state, remote Block state,
+account data, or workspace data is involved.
