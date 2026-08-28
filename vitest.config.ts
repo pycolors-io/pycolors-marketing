@@ -6,7 +6,10 @@ export default defineConfig({
     env: {
       NODE_ENV: "test",
     },
-    include: ["tests/blocks/**/*.test.{ts,tsx}"],
+    include: [
+      "tests/blocks/**/*.test.{ts,tsx}",
+      "tests/docs/**/*.test.{ts,tsx}",
+    ],
     setupFiles: ["./tests/setup.ts"],
   },
 });
