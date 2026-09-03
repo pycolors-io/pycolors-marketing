@@ -224,31 +224,61 @@ describe("MarketingResourceCard", () => {
     expect(link.className).toContain("bg-pro-surface");
   });
 
-  it("classifies destinations that leave the site as external", () => {
+  it("keeps non-http destinations in the current context", () => {
+    render(
+      <MarketingResourceCard
+        href="mailto:hello@pycolors.io"
+        title="Email the team"
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Email the team" });
+
+    expect(link).toHaveAttribute("href", "mailto:hello@pycolors.io");
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveTextContent("opens in a new tab");
+  });
+
+  it("classifies only http(s) destinations as new-tab external links", () => {
     expect(isExternalHref("/pricing")).toBe(false);
     expect(isExternalHref("#section")).toBe(false);
+    expect(isExternalHref("mailto:hello@pycolors.io")).toBe(false);
     expect(isExternalHref("https://pycolors.io")).toBe(true);
-    expect(isExternalHref("mailto:hello@pycolors.io")).toBe(true);
     expect(isExternalHref("//pycolors.io")).toBe(true);
   });
 });
 
 describe("MarketingStatCard", () => {
-  it("exposes the label and value as text for every tone", () => {
-    render(
+  it("exposes the label and value as text and composes tone and class", () => {
+    const { container } = render(
       <MarketingStatCard
         tone="success"
         label="Published packages"
         value="4"
         description="Versioned through Changesets."
+        className="w-full"
       />,
     );
+
+    const card = container.firstElementChild;
 
     expect(screen.getByText("Published packages")).toBeInTheDocument();
     expect(screen.getByText("4")).toBeInTheDocument();
     expect(
       screen.getByText("Versioned through Changesets."),
     ).toBeInTheDocument();
+    expect(card?.className).toContain("bg-success-muted/40");
+    expect(card?.className).toContain("w-full");
+  });
+
+  it("uses the neutral surface by default", () => {
+    const { container } = render(
+      <MarketingStatCard label="Uptime" value="99.9%" />,
+    );
+
+    expect(container.firstElementChild?.className).toContain(
+      "border-border-subtle",
+    );
   });
 });
 

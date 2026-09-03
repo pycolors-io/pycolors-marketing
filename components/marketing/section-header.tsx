@@ -9,6 +9,11 @@ export type MarketingSectionHeaderProps = Readonly<{
   description?: React.ReactNode;
   /** Caller-owned link or button rendered beside (or under) the title. */
   action?: React.ReactNode;
+  /**
+   * Defaults to `center`, matching the current public-page section rhythm.
+   * Conversion surfaces (`MarketingCtaPanel`, `MarketingActionGroup`) default
+   * to `left` because their actions sit inside an already aligned surface.
+   */
   align?: MarketingSectionHeaderAlign;
   /** Heading id, so the surrounding section can reference it. */
   titleId?: string;

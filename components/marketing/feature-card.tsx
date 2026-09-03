@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Card, cn } from "@pycolors/ui";
 
-import { marketingSurfaceToneClass, type MarketingTone } from "./tones";
-
-export type MarketingCardHeadingLevel = 2 | 3 | 4;
+import {
+  marketingSurfaceToneClass,
+  type MarketingHeadingLevel,
+  type MarketingTone,
+} from "./tones";
 
 export type MarketingFeatureCardProps = Readonly<{
   title: React.ReactNode;
@@ -16,7 +18,7 @@ export type MarketingFeatureCardProps = Readonly<{
   action?: React.ReactNode;
   tone?: MarketingTone;
   /** Heading level supplied by the surrounding page hierarchy. */
-  headingLevel?: MarketingCardHeadingLevel;
+  headingLevel?: MarketingHeadingLevel;
   className?: string;
 }>;
 

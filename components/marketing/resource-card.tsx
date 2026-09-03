@@ -5,9 +5,9 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import {
   marketingSurfaceToneClass,
+  type MarketingHeadingLevel,
   type MarketingNavigationTone,
 } from "./tones";
-import type { MarketingCardHeadingLevel } from "./feature-card";
 
 export type MarketingResourceCardProps = Readonly<{
   title: React.ReactNode;
@@ -16,18 +16,27 @@ export type MarketingResourceCardProps = Readonly<{
   /** Supporting context such as a category, duration, or date. */
   meta?: React.ReactNode;
   tone?: MarketingNavigationTone;
-  headingLevel?: MarketingCardHeadingLevel;
+  headingLevel?: MarketingHeadingLevel;
   className?: string;
 }>;
 
 /**
- * Returns true for hrefs that leave the marketing site.
+ * Returns true for absolute or protocol-relative http(s) destinations, which
+ * are the only ones that open in a new tab.
  *
- * Protocol-relative and absolute URLs are treated as external so external
- * link safety is never skipped by accident.
+ * Non-http schemes such as `mailto:` and `tel:` stay in the current context:
+ * announcing them as "opens in a new tab" would be inaccurate.
  */
 export function isExternalHref(href: string): boolean {
-  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/iu.test(href);
+  return /^(?:https?:)?\/\//iu.test(href);
+}
+
+/**
+ * Returns true for destinations that must not go through the client router,
+ * such as `mailto:` and `tel:`.
+ */
+function isNonRoutedHref(href: string): boolean {
+  return /^[a-z][a-z0-9+.-]*:/iu.test(href) && !/^https?:/iu.test(href);
 }
 
 /**
@@ -46,6 +55,7 @@ export function MarketingResourceCard({
 }: MarketingResourceCardProps) {
   const Heading = `h${headingLevel}` as const;
   const isExternal = isExternalHref(href);
+  const isPlainAnchor = isExternal || isNonRoutedHref(href);
 
   const content = (
     <>
@@ -81,27 +91,26 @@ export function MarketingResourceCard({
     </>
   );
 
-  const linkClassName = cn(
-    "group flex h-full flex-col justify-between rounded-[5px] border p-5 shadow-soft transition-colors hover:border-border",
-    marketingSurfaceToneClass[tone],
-    className,
-  );
-
   return (
-    <Card asChild interactive>
-      {isExternal ? (
+    <Card
+      asChild
+      interactive
+      className={cn(
+        "group flex h-full flex-col justify-between rounded-[5px] p-5 shadow-soft transition-colors hover:border-border",
+        marketingSurfaceToneClass[tone],
+        className,
+      )}
+    >
+      {isPlainAnchor ? (
         <a
           href={href}
-          target="_blank"
-          rel="noreferrer noopener"
-          className={linkClassName}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer noopener" : undefined}
         >
           {content}
         </a>
       ) : (
-        <Link href={href} className={linkClassName}>
-          {content}
-        </Link>
+        <Link href={href}>{content}</Link>
       )}
     </Card>
   );

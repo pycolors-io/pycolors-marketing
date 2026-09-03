@@ -11,6 +11,12 @@ export type MarketingTone = "neutral" | "pro" | "platform" | "success";
 /** Tones approved for navigation and conversion surfaces. */
 export type MarketingNavigationTone = Extract<MarketingTone, "neutral" | "pro">;
 
+/**
+ * Heading level supplied by the surrounding page hierarchy, so shared cards
+ * and panels never break heading order.
+ */
+export type MarketingHeadingLevel = 2 | 3 | 4;
+
 export const marketingSurfaceToneClass: Record<MarketingTone, string> = {
   neutral: "border-border-subtle bg-surface",
   pro: "border-pro-border-subtle bg-pro-surface",

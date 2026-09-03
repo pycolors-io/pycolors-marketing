@@ -3,9 +3,9 @@ import { cn } from "@pycolors/ui";
 
 import {
   marketingSurfaceToneClass,
+  type MarketingHeadingLevel,
   type MarketingNavigationTone,
 } from "./tones";
-import type { MarketingCardHeadingLevel } from "./feature-card";
 
 export type MarketingActionAlign = "left" | "center";
 
@@ -23,7 +23,7 @@ export type MarketingCtaPanelProps = Readonly<{
   actions?: React.ReactNode;
   tone?: MarketingNavigationTone;
   align?: MarketingActionAlign;
-  headingLevel?: MarketingCardHeadingLevel;
+  headingLevel?: MarketingHeadingLevel;
   titleId?: string;
   className?: string;
 }>;
