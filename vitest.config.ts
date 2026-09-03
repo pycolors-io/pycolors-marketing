@@ -9,6 +9,7 @@ export default defineConfig({
     include: [
       "tests/blocks/**/*.test.{ts,tsx}",
       "tests/docs/**/*.test.{ts,tsx}",
+      "tests/marketing/**/*.test.{ts,tsx}",
     ],
     setupFiles: ["./tests/setup.ts"],
   },
