@@ -43,6 +43,7 @@ type Milestone =
   | "Jun 2026"
   | "Jul 2026"
   | "Aug 2026"
+  | "Sep 2026"
   | "H1 2026";
 
 type RoadmapItem = {
@@ -143,6 +144,12 @@ const milestones: Array<{
       "PyColors Marketing v1.21.0 shipped on 7 August 2026 with clearer public guidance for adoption, customization, upgrades, and product evaluation.",
   },
   {
+    id: "Sep 2026",
+    title: "September 2026",
+    subtitle:
+      "PyColors Marketing v1.22.0 shipped on 4 September 2026 with the Theme Builder, copyable Blocks, current PyColors UI guidance, and clearer evaluation paths.",
+  },
+  {
     id: "H1 2026",
     title: "H1 2026",
     subtitle:
@@ -151,6 +158,15 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.22.0",
+    description:
+      "Shipped on 4 September 2026 with the Theme Builder, practical copyable Blocks, a current PyColors UI baseline, and a clearer path from evaluation to implementation.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Marketing", "DX", "Trust"],
+    href: "/changelog",
+  },
   {
     title: "PyColors Marketing v1.21.1",
     description:

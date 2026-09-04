@@ -52,6 +52,41 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.22.0",
+    title:
+      "PyColors Marketing v1.22.0: a more practical path to implementation",
+    dateLabel: "Fri 4 Sep 2026",
+    dateISO: "2026-09-04",
+    status: "Stable",
+    releaseWeekLabel: "Sep 2026 (catch-up release)",
+    summary:
+      "This update makes it easier to move from evaluation to implementation: explore a theme, start from a copyable Block, use the current PyColors UI baseline, and compare the product path with clearer context.",
+    highlights: [
+      {
+        title: "Explore a theme before implementation",
+        items: [
+          "Added the Theme Builder with a component preview so teams can see a palette in context.",
+          "Added reusable token exports to make an evaluated theme easier to carry into a product.",
+        ],
+      },
+      {
+        title: "Start from practical, copyable building blocks",
+        items: [
+          "Added documented Blocks for a responsive application shell, data table, and account settings panel.",
+          "Added a copyable installation command to shorten the first setup step.",
+        ],
+      },
+      {
+        title: "Use the current UI and product guidance",
+        items: [
+          "Aligned the visible PyColors UI baseline with v1.5.1, including accessible Checkbox error feedback, informative status variants, and link-ready pagination composition.",
+          "Brought the Home and Pricing pages onto shared composition patterns for a more consistent evaluation journey without changing pricing or checkout behavior.",
+        ],
+      },
+    ],
+    cta: { label: "Explore the Theme Builder", href: "/tools/theme-builder" },
+  },
+  {
     version: "v1.21.1",
     title: "A clearer next step for product builders",
     dateLabel: "Fri 14 Aug 2026",
