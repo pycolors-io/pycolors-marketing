@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  Check,
   Code2,
   CreditCard,
   Database,
@@ -28,6 +27,9 @@ import { NpmBadges } from '@/components/npm-badges';
 import { generateBreadcrumbJsonLd } from '@/lib/seo/breadcrumb';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingSectionShell } from '@/components/marketing/section-shell';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
 
 export const metadata: Metadata = {
   title: {
@@ -250,77 +252,6 @@ function Pill({ label }: { readonly label: string }) {
     <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
       {label}
     </span>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'center',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {action ? (
-        <div
-          className={
-            align === 'center' ? 'flex justify-center' : 'shrink-0'
-          }
-        >
-          {action}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
   );
 }
 
@@ -598,8 +529,13 @@ export default function HomePage() {
             }
           />
 
-          <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="default"
+            aria-labelledby="home-product-ladder-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-product-ladder-heading"
               eyebrow="Product ladder"
               title="Choose the right PyColors product for your stage."
               description="PyColors is not a random component kit. It is a product ecosystem designed to help you launch faster without rebuilding the same SaaS foundations."
@@ -610,9 +546,13 @@ export default function HomePage() {
                 <ProductCard key={product.title} {...product} />
               ))}
             </div>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-10 sm:py-12">
+          <MarketingSectionShell
+            width="full"
+            spacing="compact"
+            aria-labelledby="home-saas-builders-heading"
+          >
             <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
               <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
                 <div className="border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r">
@@ -624,7 +564,10 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h2 className="mt-5 max-w-lg text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <h2
+                    id="home-saas-builders-heading"
+                    className="mt-5 max-w-lg text-balance text-2xl font-semibold tracking-tight sm:text-3xl"
+                  >
                     Launch the page.
                     <br />
                     Validate the surface.
@@ -662,10 +605,15 @@ export default function HomePage() {
                 <Pill label="Docs-first" />
               </div>
             </Card>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-10 sm:py-12">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="compact"
+            aria-labelledby="home-template-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-template-heading"
               eyebrow="Template"
               title="Start with a polished AI/SaaS landing page."
               description="NA-AI Landing is the fastest commercial entry point into PyColors: a premium frontend template designed to help you validate and sell the offer quickly."
@@ -716,9 +664,9 @@ export default function HomePage() {
                     </p>
 
                     <ul className="grid gap-2">
-                      <CheckItem>Full source code</CheckItem>
-                      <CheckItem>Commercial usage</CheckItem>
-                      <CheckItem>SEO-ready frontend page</CheckItem>
+                      <MarketingCheckItem>Full source code</MarketingCheckItem>
+                      <MarketingCheckItem>Commercial usage</MarketingCheckItem>
+                      <MarketingCheckItem>SEO-ready frontend page</MarketingCheckItem>
                     </ul>
 
                     <div className="flex flex-wrap gap-2">
@@ -773,10 +721,15 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-10 sm:py-12">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="compact"
+            aria-labelledby="home-foundation-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-foundation-heading"
               eyebrow="Foundation"
               title="PyColors UI is the base layer of the ecosystem."
               description="Use it independently or as the foundation for patterns, examples, templates, Starter Free, and Starter Pro."
@@ -864,10 +817,15 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="default"
+            aria-labelledby="home-starter-free-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-starter-free-heading"
               eyebrow="Starter Free"
               title="Validate the product surface before infrastructure."
               description="Starter Free gives you a credible SaaS surface before backend complexity slows you down."
@@ -993,13 +951,16 @@ pnpm dev`}</pre>
                 </div>
               </CardContent>
             </Card>
-          </section>
+          </MarketingSectionShell>
 
-          <section
+          <MarketingSectionShell
             id="what-you-get"
-            className="py-12 sm:py-14 lg:py-16"
+            width="full"
+            spacing="default"
+            aria-labelledby="home-what-you-get-heading"
           >
-            <SectionHeader
+            <MarketingSectionHeader
+              titleId="home-what-you-get-heading"
               eyebrow="Product surfaces"
               title="What Starter Free gives you."
               description="Not feature noise. Product surfaces users expect on day one."
@@ -1032,10 +993,15 @@ pnpm dev`}</pre>
                 </Card>
               ))}
             </div>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="default"
+            aria-labelledby="home-starter-pro-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-starter-pro-heading"
               eyebrow="Starter Pro"
               title="Starter Free validates the product. Starter Pro wires the business."
               description="Upgrade when auth, billing, backend, protected routes, PWA-ready app foundations, and SaaS infrastructure become the bottleneck."
@@ -1114,10 +1080,15 @@ pnpm dev`}</pre>
                 </div>
               </div>
             </Card>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+          <MarketingSectionShell
+            width="full"
+            spacing="default"
+            aria-labelledby="home-workflow-heading"
+          >
+            <MarketingSectionHeader
+              titleId="home-workflow-heading"
               eyebrow="Workflow"
               title="Adopt progressively, without lock-in."
               description="Move from a public offer to product validation to production wiring without rebuilding everything."
@@ -1158,9 +1129,13 @@ pnpm dev`}</pre>
                 highlight
               />
             </div>
-          </section>
+          </MarketingSectionShell>
 
-          <section className="py-12 sm:py-14 lg:py-16">
+          <MarketingSectionShell
+            width="full"
+            spacing="default"
+            aria-labelledby="home-ecosystem-heading"
+          >
             <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
               <CardContent className="p-0">
                 <div className="grid divide-y divide-border-subtle lg:grid-cols-[0.9fr_1.1fr] lg:divide-x lg:divide-y-0">
@@ -1172,7 +1147,10 @@ pnpm dev`}</pre>
                       Product discipline
                     </Badge>
 
-                    <h3 className="mt-4 text-2xl font-semibold tracking-tight">
+                    <h3
+                      id="home-ecosystem-heading"
+                      className="mt-4 text-2xl font-semibold tracking-tight"
+                    >
                       A growing ecosystem designed to help SaaS
                       builders ship faster.
                     </h3>
@@ -1263,7 +1241,15 @@ pnpm dev`}</pre>
                 <Link href={INTERNAL.privacy}>Privacy</Link>
               </Button>
             </div>
-          </section>
+          </MarketingSectionShell>
+
+          {/*
+            Intentional exception: this closing CTA keeps its page-local
+            two-column layout, matching the pricing page's #401 exception,
+            and stays outside MarketingSectionShell/MarketingCtaPanel until
+            #439's showcase-first homepage restructuring settles this
+            surface (see pycolors-io/pycolors#436/#439 coordination).
+          */}
           <section className="pt-4">
             <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />

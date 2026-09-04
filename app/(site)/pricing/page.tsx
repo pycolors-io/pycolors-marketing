@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   BadgeCheck,
-  Check,
   Code2,
   CreditCard,
   Database,
@@ -23,7 +22,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardTitle,
   cn,
   Table,
   TableBody,
@@ -43,6 +41,15 @@ import {
   generateProductOfferJsonLd,
 } from '@/components/seo/json-ld';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingSectionShell } from '@/components/marketing/section-shell';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
+import { MarketingActionGroup } from '@/components/marketing/cta-panel';
+import {
+  MarketingPill,
+  MarketingPillList,
+} from '@/components/marketing/pill-list';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingFeatureCard } from '@/components/marketing/feature-card';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { BuyProductButton } from '@/components/pricing/buy-product-button';
 
@@ -350,107 +357,6 @@ const faqs = [
   },
 ] as const;
 
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function FeatureCard({
-  icon: Icon,
-  title,
-  description,
-}: {
-  readonly icon: React.ComponentType<{ className?: string }>;
-  readonly title: string;
-  readonly description: string;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-      <CardHeader className="space-y-4">
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-          <Icon className="h-4 w-4 text-muted-foreground" />
-        </div>
-
-        <CardTitle className="text-base">{title}</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
 function FaqCard({
   question,
   answer,
@@ -588,9 +494,9 @@ export default function PricingPage() {
                 </p>
 
                 <ul className="mt-5 space-y-2">
-                  <CheckItem>Full source code</CheckItem>
-                  <CheckItem>Commercial usage</CheckItem>
-                  <CheckItem>SEO-ready frontend page</CheckItem>
+                  <MarketingCheckItem>Full source code</MarketingCheckItem>
+                  <MarketingCheckItem>Commercial usage</MarketingCheckItem>
+                  <MarketingCheckItem>SEO-ready frontend page</MarketingCheckItem>
                 </ul>
 
                 <div className="mt-6 grid gap-2">
@@ -642,9 +548,9 @@ export default function PricingPage() {
                 </p>
 
                 <ul className="mt-5 space-y-2">
-                  <CheckItem>Frontend-first SaaS surface</CheckItem>
-                  <CheckItem>Mocked app flows</CheckItem>
-                  <CheckItem>Good for validation</CheckItem>
+                  <MarketingCheckItem>Frontend-first SaaS surface</MarketingCheckItem>
+                  <MarketingCheckItem>Mocked app flows</MarketingCheckItem>
+                  <MarketingCheckItem>Good for validation</MarketingCheckItem>
                 </ul>
 
                 <Button
@@ -697,9 +603,9 @@ export default function PricingPage() {
                 </p>
 
                 <ul className="mt-5 grid gap-2">
-                  <CheckItem>Real authentication</CheckItem>
-                  <CheckItem>Stripe billing</CheckItem>
-                  <CheckItem>Protected app architecture</CheckItem>
+                  <MarketingCheckItem>Real authentication</MarketingCheckItem>
+                  <MarketingCheckItem>Stripe billing</MarketingCheckItem>
+                  <MarketingCheckItem>Protected app architecture</MarketingCheckItem>
                 </ul>
 
                 <div className="mt-6 grid gap-2">
@@ -749,8 +655,13 @@ export default function PricingPage() {
           }
         />
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-trust-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-trust-heading"
             eyebrow="Trust"
             title="Built to feel like a serious SaaS foundation, not another UI kit."
             description="When there are no testimonials yet, trust comes from clarity: real scope, real architecture, real billing flows, active maintenance, and visible product thinking."
@@ -759,9 +670,9 @@ export default function PricingPage() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {trustItems.map((item) => (
-              <FeatureCard
+              <MarketingFeatureCard
                 key={item.title}
-                icon={item.icon}
+                icon={<item.icon className="h-4 w-4" />}
                 title={item.title}
                 description={item.description}
               />
@@ -781,17 +692,22 @@ export default function PricingPage() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <MarketingPillList aria-label="Technology stack">
                 {stackItems.map((item) => (
-                  <Pill key={item}>{item}</Pill>
+                  <MarketingPill key={item}>{item}</MarketingPill>
                 ))}
-              </div>
+              </MarketingPillList>
             </div>
           </Card>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-decision-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-decision-heading"
             eyebrow="Decision"
             title="Choose by stage, not by feature count."
             description="Templates launch the offer. Starter Free validates the SaaS surface. Starter Pro wires the business layer when you are ready to charge."
@@ -799,28 +715,33 @@ export default function PricingPage() {
           />
 
           <div className="grid gap-4 md:grid-cols-3">
-            <FeatureCard
-              icon={LayoutTemplate}
+            <MarketingFeatureCard
+              icon={<LayoutTemplate className="h-4 w-4" />}
               title="Use templates to launch"
               description="Choose a template when you need a polished landing page, clear offer, and fast path to a public launch."
             />
 
-            <FeatureCard
-              icon={Zap}
+            <MarketingFeatureCard
+              icon={<Zap className="h-4 w-4" />}
               title="Use Free to validate"
               description="Choose Starter Free when you are still exploring product shape, layout, UX direction, and SaaS patterns."
             />
 
-            <FeatureCard
-              icon={Rocket}
+            <MarketingFeatureCard
+              icon={<Rocket className="h-4 w-4" />}
               title="Use Pro to charge faster"
               description="Choose Starter Pro when auth, billing, sessions, protected routes, and database foundations become the bottleneck."
             />
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-starter-pro-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-starter-pro-heading"
             eyebrow="Starter Pro"
             title="What you are actually buying"
             description="A pricing page should make the value obvious. Starter Pro is not just screens. It is the SaaS foundation behind the screens."
@@ -874,7 +795,9 @@ export default function PricingPage() {
 
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                     {starterProIncludes.map((item) => (
-                      <CheckItem key={item}>{item}</CheckItem>
+                      <MarketingCheckItem key={item}>
+                        {item}
+                      </MarketingCheckItem>
                     ))}
                   </ul>
                 </div>
@@ -994,10 +917,15 @@ export default function PricingPage() {
               </CardContent>
             </Card>
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-comparison-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-comparison-heading"
             eyebrow="Comparison"
             title="Templates launch the page. Free validates the product. Pro wires the business."
             description="Make the decision simple: choose the product that matches your current bottleneck."
@@ -1085,36 +1013,41 @@ export default function PricingPage() {
               higher than the price of skipping it.
             </p>
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-proof-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-proof-heading"
             eyebrow="Proof of seriousness"
             title="A maintained product ecosystem, not a one-off template."
             description="For early buyers, trust comes from product discipline: docs, changelog, roadmap, clear scope, and an active ecosystem."
           />
 
           <div className="grid gap-4 md:grid-cols-3">
-            <FeatureCard
-              icon={ShieldCheck}
+            <MarketingFeatureCard
+              icon={<ShieldCheck className="h-4 w-4" />}
               title="Clear product scope"
               description="PyColors explains what is included, what is wired, and where each product stops so you can make a clean buying decision."
             />
 
-            <FeatureCard
-              icon={Database}
+            <MarketingFeatureCard
+              icon={<Database className="h-4 w-4" />}
               title="Real SaaS infrastructure"
               description="Starter Pro includes database, billing, protected app structure, and lifecycle flows instead of only static screens."
             />
 
-            <FeatureCard
-              icon={Mail}
+            <MarketingFeatureCard
+              icon={<Mail className="h-4 w-4" />}
               title="Documentation-first"
               description="Docs, release notes, and implementation guidance are part of the product experience, not an afterthought."
             />
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <MarketingActionGroup className="mt-6">
             <Button
               asChild
               variant="outline"
@@ -1136,11 +1069,16 @@ export default function PricingPage() {
             >
               <Link href={INTERNAL.roadmap}>View roadmap</Link>
             </Button>
-          </div>
-        </section>
+          </MarketingActionGroup>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-faq-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-faq-heading"
             eyebrow="FAQ"
             title="Remove the objections before the checkout click."
             description="The job of pricing is not only to show a number. It should make the decision feel safe, clear, and obvious."
@@ -1155,8 +1093,16 @@ export default function PricingPage() {
               />
             ))}
           </div>
-        </section>
+        </MarketingSectionShell>
 
+        {/*
+          Intentional exception: this closing CTA keeps its page-local
+          two-column layout (copy + pills on the left, stacked purchase
+          buttons on the right), which does not fit MarketingCtaPanel's
+          stacked-actions-below-title layout. Kept local per the #399/#401
+          contract for domain-specific composition (see
+          docs/internal/marketing-composition-components.md).
+        */}
         <section className="pt-4">
           <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -1183,12 +1129,16 @@ export default function PricingPage() {
                   handled.
                 </p>
 
-                <div className="flex flex-wrap gap-2">
-                  <Pill>NA-AI Landing {PRICING.naAiLanding}</Pill>
-                  <Pill>Starter Pro {PRICING.starterProLaunch}</Pill>
-                  <Pill>One-time payment</Pill>
-                  <Pill>Instant access</Pill>
-                </div>
+                <MarketingPillList aria-label="Purchase highlights">
+                  <MarketingPill>
+                    NA-AI Landing {PRICING.naAiLanding}
+                  </MarketingPill>
+                  <MarketingPill>
+                    Starter Pro {PRICING.starterProLaunch}
+                  </MarketingPill>
+                  <MarketingPill>One-time payment</MarketingPill>
+                  <MarketingPill>Instant access</MarketingPill>
+                </MarketingPillList>
               </div>
 
               <div className="flex flex-col gap-3 sm:min-w-65">
