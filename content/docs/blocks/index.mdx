@@ -1,0 +1,151 @@
+---
+title: Blocks installation
+description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
+lastUpdated: "2026-08-28"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Blocks</Badge>
+  <Badge>Source copy</Badge>
+</div>
+
+## Copy source, then own it
+
+PyColors Blocks use a manual source-copy flow. When a Block is available, copy
+its canonical source directory into your application, then treat the copied code
+as your own product code.
+
+<Callout title="Canonical Blocks">
+  The category and naming contract is approved. The
+  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar)
+  source is the first production-shaped Block, followed by
+  [`data/data-table`](/docs/blocks/data/data-table) and
+  [`account/settings-panel`](/docs/blocks/account/settings-panel). Every other
+  source-owner issue still has to deliver and validate its own Block.
+</Callout>
+
+There is no `@pycolors/blocks` package, registry, CLI, download service, or
+automatic synchronization. Copying source does not change a package version and
+does not require a Changeset.
+
+## Canonical source location
+
+The PyColors repository keeps canonical Block source at:
+
+```text
+apps/marketing/content/blocks/<category-slug>/<block-slug>/
+```
+
+Both path segments use lowercase kebab-case. `<category-slug>` must be one of
+the approved slugs below, and each production Block owns one stable
+`<block-slug>`.
+
+## Approved categories
+
+Every Block has exactly one primary category. Tags may support secondary
+discovery without creating duplicate source or category aliases.
+
+| Category            | Slug         | Source-owner issues |
+| ------------------- | ------------ | ------------------- |
+| Application shells  | `app-shells` | #94                 |
+| Authentication      | `auth`       | #95                 |
+| Commerce            | `commerce`   | #96 and #98         |
+| Account & workspace | `account`    | #97 and #99         |
+| Data & records      | `data`       | #101                |
+| Feedback & states   | `feedback`   | #100                |
+
+Source, documentation navigation, and future Registry metadata use the same
+`<category-slug>/<block-slug>` identity. For example, `data/data-table` maps to
+the documentation route `/docs/blocks/data/data-table` and, only after a
+separate Registry approval, the Registry item `data-data-table`.
+
+Free and Pro availability are separate metadata on this shared identity. They
+do not create different taxonomies or expose private source.
+
+Documentation previews must import or render canonical Block source where
+practical. A preview is never an alternate implementation to copy from.
+
+<Callout title="Source authority">
+  `@pycolors/ui` and `@pycolors/tokens` remain the public primitive and token
+  authorities. Starter Free is product evidence and documentation previews are
+  examples, not alternate Block source. Future Registry artifacts distribute
+  canonical source only, while future Pro remains a separate authority under
+  #36. The approved first source sequence is #94, then #101, then #97.
+</Callout>
+
+## Install a Block
+
+<Steps>
+  <Step>
+    ### Copy the complete source directory
+
+    Copy the canonical `<block-slug>` directory into a location your app owns,
+    such as `src/components/blocks/<block-slug>`. Keep the Block's local files
+    together so its relative imports remain local to the copied source.
+
+  </Step>
+
+  <Step>
+    ### Use public PyColors UI imports
+
+    Install and configure `@pycolors/ui` in the consuming app by following the
+    [UI installation guide](/docs/ui/installation). Block source must import
+    PyColors primitives from the public package entry point only.
+
+    ```tsx title="src/components/blocks/<block-slug>/index.tsx"
+    import { Button, Card } from "@pycolors/ui";
+    ```
+
+    Do not use `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, internal app
+    aliases, or private `@pycolors/*` packages. React or Next imports are
+    appropriate only when the copied Block actually needs them.
+
+  </Step>
+
+  <Step>
+    ### Customize the copied code
+
+    The copied code belongs to your application. Adapt it to your routes,
+    content, styling, state, and product rules. PyColors does not automatically
+    update or synchronize copied Block source.
+
+  </Step>
+
+  <Step>
+    ### Validate the result
+
+    Run your application's lint, type-check, test, and build commands after
+    copying or customizing a Block. Preserve accessible semantics, keyboard
+    behavior, labels, and visible focus states while making changes.
+
+  </Step>
+</Steps>
+
+## Repository checks
+
+PyColors maintainers validate this source-copy contract with:
+
+```bash
+pnpm check:blocks-contract
+pnpm test:blocks-contract
+pnpm --filter pycolors-marketing lint
+pnpm --filter pycolors-marketing types:check
+pnpm --filter pycolors-marketing build
+```
+
+The structural check enforces the exact category allowlist and lowercase
+kebab-case names, rejects empty placeholders, deep `@pycolors/ui` imports,
+internal app or package imports, and package, registry, or CLI artifacts. It
+validates the delivery contract without creating a sample production Block.
+
+## Updates are deliberate
+
+Blocks are source copies, not a managed dependency. If a future canonical
+version changes, review it deliberately and bring across only the changes that
+fit your application. Your copy remains under your control until you choose to
+update it.

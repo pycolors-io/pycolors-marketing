@@ -1,7 +1,7 @@
 ---
 title: Installation
 description: Install @pycolors/ui, load the token CSS, and verify your first public import in a React or Next.js app.
-lastUpdated: "2026-08-03"
+lastUpdated: "2026-08-28"
 appliesTo: UI
 ---
 
@@ -16,6 +16,7 @@ import {
   Route,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { CopyableCommand } from "@/components/docs/copyable-command";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 
 <div className="flex flex-wrap items-center gap-2">
@@ -49,19 +50,14 @@ utilities such as `bg-card`, `text-muted-foreground`, `border-border`, and
 
 ## Install packages
 
-Install `@pycolors/ui` with your package manager.
+Install the public primitives and their semantic tokens together. This is the
+canonical first-install command for a pnpm project.
 
-```bash
-pnpm add @pycolors/ui
-```
+<CopyableCommand command="pnpm add @pycolors/ui @pycolors/tokens" />
 
-```bash
-npm i @pycolors/ui
-```
-
-```bash
-yarn add @pycolors/ui
-```
+Use the equivalent `npm install` or `yarn add` command when the app does not use
+pnpm. Keep both package names in the command so the components and their token
+contract arrive together.
 
 ### Peer dependencies
 
@@ -83,20 +79,9 @@ Use the equivalent npm or yarn command when the app does not use pnpm.
 
 ## Add design tokens
 
-Use `@pycolors/tokens` when your app does not already provide the PyColors
-semantic variables and Tailwind v4 mappings.
-
-```bash
-pnpm add @pycolors/tokens
-```
-
-```bash
-npm i @pycolors/tokens
-```
-
-```bash
-yarn add @pycolors/tokens
-```
+The canonical install command above includes `@pycolors/tokens`. Use its token
+CSS when your app does not already provide the PyColors semantic variables and
+Tailwind v4 mappings.
 
 Import the token CSS once from your global stylesheet.
 

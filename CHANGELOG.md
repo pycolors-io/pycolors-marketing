@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.22.0
+
+Released by PyColors Marketing on 4 September 2026.
+
+### Minor Changes
+
+- Added the Theme Builder so teams can explore a palette with a component
+  preview and reusable token exports before implementation.
+- Added copyable Blocks for a responsive application shell, data table, and
+  account settings panel, with documentation that makes the starting point
+  easier to evaluate.
+- Aligned the displayed PyColors UI baseline with v1.5.1, including accessible
+  Checkbox error feedback, informative status variants, and link-ready
+  pagination composition.
+- Made the installation step easier to reuse and brought the Home and Pricing
+  pages onto a clearer shared composition without changing product data,
+  pricing, checkout behavior, or CTA destinations.
+
 ## 1.21.1
 
 Released by PyColors Marketing on 14 August 2026.

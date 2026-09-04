@@ -19,6 +19,14 @@ const browserCollections = {
       import("../content/blog/why-production-migrations-break-saas-products.mdx?collection=blog"),
   }),
   docs: create.doc("docs", {
+    "blocks/account/settings-panel.mdx": () =>
+      import("../content/docs/blocks/account/settings-panel.mdx?collection=docs"),
+    "blocks/app-shells/responsive-sidebar.mdx": () =>
+      import("../content/docs/blocks/app-shells/responsive-sidebar.mdx?collection=docs"),
+    "blocks/data/data-table.mdx": () =>
+      import("../content/docs/blocks/data/data-table.mdx?collection=docs"),
+    "blocks/index.mdx": () =>
+      import("../content/docs/blocks/index.mdx?collection=docs"),
     "design-system/colors.mdx": () =>
       import("../content/docs/design-system/colors.mdx?collection=docs"),
     "design-system/index.mdx": () =>
@@ -82,6 +90,8 @@ const browserCollections = {
       import("../content/docs/starter-pro/index.mdx?collection=docs"),
     "starter-pro/local-development.mdx": () =>
       import("../content/docs/starter-pro/local-development.mdx?collection=docs"),
+    "starter-pro/merchant-image-requirements.mdx": () =>
+      import("../content/docs/starter-pro/merchant-image-requirements.mdx?collection=docs"),
     "starter-pro/production-checklist.mdx": () =>
       import("../content/docs/starter-pro/production-checklist.mdx?collection=docs"),
     "starter-pro/pwa-production-checklist.mdx": () =>
@@ -170,6 +180,8 @@ const browserCollections = {
     "ui/tabs.mdx": () => import("../content/docs/ui/tabs.mdx?collection=docs"),
     "ui/textarea.mdx": () =>
       import("../content/docs/ui/textarea.mdx?collection=docs"),
+    "ui/theming.mdx": () =>
+      import("../content/docs/ui/theming.mdx?collection=docs"),
     "ui/toast.mdx": () =>
       import("../content/docs/ui/toast.mdx?collection=docs"),
     "ui/usage-patterns.mdx": () =>

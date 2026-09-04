@@ -1,8 +1,7 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import Link from "next/link";
+import type { Metadata } from "next";
 import {
   BadgeCheck,
-  Check,
   Code2,
   CreditCard,
   Database,
@@ -15,7 +14,7 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -23,7 +22,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardTitle,
   cn,
   Table,
   TableBody,
@@ -31,274 +29,278 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
-} from '@/lib/products/public-catalog';
+} from "@/lib/products/public-catalog";
 
-import { Container } from '@/components/container';
+import { Container } from "@/components/container";
+import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingActionGroup } from "@/components/marketing/cta-panel";
 import {
-  JsonLd,
-  generateProductOfferJsonLd,
-} from '@/components/seo/json-ld';
-import { PageHero } from '@/components/marketing/page-hero';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { BuyProductButton } from '@/components/pricing/buy-product-button';
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Pricing',
+  title: "Next.js SaaS Pricing",
   description:
-    'Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with Auth.js, secure Stripe checkout, Prisma, purchase recovery, and production-ready foundations.',
+    "Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with Auth.js, secure Stripe checkout, Prisma, purchase recovery, and production-ready foundations.",
   alternates: {
-    canonical: '/pricing',
+    canonical: "/pricing",
   },
 
   openGraph: {
-    title: 'Next.js SaaS Pricing',
+    title: "Next.js SaaS Pricing",
     description:
-      'Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, secure checkout, purchase recovery, dashboards, and production-ready architecture.',
-    url: '/pricing',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, secure checkout, purchase recovery, dashboards, and production-ready architecture.",
+    url: "/pricing",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS Pricing',
+    card: "summary_large_image",
+    title: "Next.js SaaS Pricing",
     description:
-      'Compare PyColors products for building and launching modern SaaS applications faster.',
-    images: ['/seo/twitter-main.png'],
+      "Compare PyColors products for building and launching modern SaaS applications faster.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const INTERNAL = {
-  buildVsBuy: '/compare/build-vs-buy',
-  templateNaAi: '/templates/na-ai-landing',
-  starterFree: '/starters/free',
-  starterPro: '/starters/pro',
-  docsStarterPro: '/docs/starter-pro',
-  docsBilling: '/docs/starter-pro/billing',
-  docsBackend: '/docs/starter-pro/backend',
-  roadmap: '/roadmap',
-  changelog: '/changelog',
-  license: '/license',
-  terms: '/terms',
+  buildVsBuy: "/compare/build-vs-buy",
+  templateNaAi: "/templates/na-ai-landing",
+  starterFree: "/starters/free",
+  starterPro: "/starters/pro",
+  docsStarterPro: "/docs/starter-pro",
+  docsBilling: "/docs/starter-pro/billing",
+  docsBackend: "/docs/starter-pro/backend",
+  roadmap: "/roadmap",
+  changelog: "/changelog",
+  license: "/license",
+  terms: "/terms",
 } as const;
 
 const EXTERNAL = {
-  starterDemo: 'https://starter-demo.pycolors.io',
+  starterDemo: "https://starter-demo.pycolors.io",
 } as const;
 
 const PRICING = {
-  naAiLanding: PRODUCT_DISPLAY['na-ai-landing'].priceLabel,
+  naAiLanding: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
   starterFree: STARTER_FREE_PRICE_LABEL,
-  starterProLaunch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
-  starterProRegular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
+  starterProLaunch: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+  starterProRegular: PRODUCT_DISPLAY["starter-pro"].regularPriceLabel,
 } as const;
 
 const pricingJsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
+  "@context": "https://schema.org",
+  "@graph": [
     generateProductOfferJsonLd({
-      product: PRODUCT_DISPLAY['starter-pro'],
-      canonicalPath: '/starters/pro',
+      product: PRODUCT_DISPLAY["starter-pro"],
+      canonicalPath: "/starters/pro",
       description:
-        'Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.',
+        "Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.",
     }),
     generateProductOfferJsonLd({
-      product: PRODUCT_DISPLAY['na-ai-landing'],
-      canonicalPath: '/templates/na-ai-landing',
+      product: PRODUCT_DISPLAY["na-ai-landing"],
+      canonicalPath: "/templates/na-ai-landing",
       description:
-        'Premium AI and SaaS landing page template built for modern Next.js product launches.',
+        "Premium AI and SaaS landing page template built for modern Next.js product launches.",
     }),
   ],
 };
 
 const starterProIncludes = [
-  'Full Starter Pro source code',
-  'Production-ready Next.js App Router architecture',
-  'Strict TypeScript setup',
-  'Tailwind CSS foundation',
+  "Full Starter Pro source code",
+  "Production-ready Next.js App Router architecture",
+  "Strict TypeScript setup",
+  "Tailwind CSS foundation",
 
-  'Installable PWA foundations',
-  'Standalone mode + offline fallback page',
+  "Installable PWA foundations",
+  "Standalone mode + offline fallback page",
 
-  'Email and password authentication',
-  'Google and GitHub OAuth',
-  'Email verification and reset password',
-  'Session management and protected routes',
-  'Secure Stripe Checkout integration',
-  'Billing portal flow',
-  'Subscription lifecycle handling',
-  'Purchase recovery flow',
-  'Download delivery foundations',
-  'Invoices and billing history UI',
-  'Webhook synchronization with Prisma',
-  'Dashboard, settings, billing, and admin surfaces',
-  'Plan gating and feature access control',
-  'Protected app architecture',
-  'Prisma schema + PostgreSQL setup',
-  'Zod validation and React Hook Form integration',
-  'Environment configuration ready',
-  'Commercial usage rights',
+  "Email and password authentication",
+  "Google and GitHub OAuth",
+  "Email verification and reset password",
+  "Session management and protected routes",
+  "Secure Stripe Checkout integration",
+  "Billing portal flow",
+  "Subscription lifecycle handling",
+  "Purchase recovery flow",
+  "Download delivery foundations",
+  "Invoices and billing history UI",
+  "Webhook synchronization with Prisma",
+  "Dashboard, settings, billing, and admin surfaces",
+  "Plan gating and feature access control",
+  "Protected app architecture",
+  "Prisma schema + PostgreSQL setup",
+  "Zod validation and React Hook Form integration",
+  "Environment configuration ready",
+  "Commercial usage rights",
 ] as const;
 
 const comparisonRows = [
   {
-    feature: 'Focused marketing page',
-    template: 'Included',
-    free: 'No',
-    pro: 'No',
+    feature: "Focused marketing page",
+    template: "Included",
+    free: "No",
+    pro: "No",
   },
   {
-    feature: 'Product-shaped SaaS UI',
-    template: 'Landing only',
-    free: 'Included',
-    pro: 'Included',
+    feature: "Product-shaped SaaS UI",
+    template: "Landing only",
+    free: "Included",
+    pro: "Included",
   },
   {
-    feature: 'Dashboard, settings, billing screens',
-    template: 'No',
-    free: 'Included',
-    pro: 'Included + production wiring',
+    feature: "Dashboard, settings, billing screens",
+    template: "No",
+    free: "Included",
+    pro: "Included + production wiring",
   },
   {
-    feature: 'Auth screens and UX',
-    template: 'No',
-    free: 'Included',
-    pro: 'Included + real auth',
+    feature: "Auth screens and UX",
+    template: "No",
+    free: "Included",
+    pro: "Included + real auth",
   },
   {
-    feature: 'Email/password auth',
-    template: 'No',
-    free: 'Mock/demo only',
-    pro: 'Included',
+    feature: "Email/password auth",
+    template: "No",
+    free: "Mock/demo only",
+    pro: "Included",
   },
   {
-    feature: 'Google and GitHub OAuth',
-    template: 'No',
-    free: 'No',
-    pro: 'Included',
+    feature: "Google and GitHub OAuth",
+    template: "No",
+    free: "No",
+    pro: "Included",
   },
   {
-    feature: 'Protected routes and sessions',
-    template: 'No',
-    free: 'Partial',
-    pro: 'Included',
+    feature: "Protected routes and sessions",
+    template: "No",
+    free: "Partial",
+    pro: "Included",
   },
   {
-    feature: 'Stripe Checkout',
-    template: 'No',
-    free: 'No',
-    pro: 'Included',
+    feature: "Stripe Checkout",
+    template: "No",
+    free: "No",
+    pro: "Included",
   },
   {
-    feature: 'Billing portal',
-    template: 'No',
-    free: 'No',
-    pro: 'Included',
+    feature: "Billing portal",
+    template: "No",
+    free: "No",
+    pro: "Included",
   },
   {
-    feature: 'Webhooks + Prisma sync',
-    template: 'No',
-    free: 'No',
-    pro: 'Included',
+    feature: "Webhooks + Prisma sync",
+    template: "No",
+    free: "No",
+    pro: "Included",
   },
   {
-    feature: 'Database foundation',
-    template: 'No',
-    free: 'No',
-    pro: 'Prisma + PostgreSQL',
+    feature: "Database foundation",
+    template: "No",
+    free: "No",
+    pro: "Prisma + PostgreSQL",
   },
   {
-    feature: 'Commercial usage',
-    template: 'Included',
-    free: 'Review license',
-    pro: 'Included',
+    feature: "Commercial usage",
+    template: "Included",
+    free: "Review license",
+    pro: "Included",
   },
   {
-    feature: 'Best for',
-    template: 'Launching a polished landing page',
-    free: 'Exploring and validating UX',
-    pro: 'Launching and charging faster',
+    feature: "Best for",
+    template: "Launching a polished landing page",
+    free: "Exploring and validating UX",
+    pro: "Launching and charging faster",
   },
   {
-    feature: 'PWA-ready app experience',
-    template: 'No',
-    free: 'Basic',
-    pro: 'Included',
+    feature: "PWA-ready app experience",
+    template: "No",
+    free: "Basic",
+    pro: "Included",
   },
 ] as const;
 
 const trustItems = [
   {
     icon: Code2,
-    title: 'Production-shaped architecture',
+    title: "Production-shaped architecture",
     description:
-      'Built around real SaaS flows: protected app structure, account surfaces, billing states, purchase recovery, and scalable foundations.',
+      "Built around real SaaS flows: protected app structure, account surfaces, billing states, purchase recovery, and scalable foundations.",
   },
   {
     icon: CreditCard,
-    title: 'Stripe billing included',
+    title: "Stripe billing included",
     description:
-      'Secure checkout, billing portal, invoices, subscription lifecycle, webhook synchronization, and purchase recovery are part of the paid foundation.',
+      "Secure checkout, billing portal, invoices, subscription lifecycle, webhook synchronization, and purchase recovery are part of the paid foundation.",
   },
   {
     icon: Lock,
-    title: 'Real authentication flows',
+    title: "Real authentication flows",
     description:
-      'Email/password, OAuth, verification, password reset, sessions, and protected routes are already wired.',
+      "Email/password, OAuth, verification, password reset, sessions, and protected routes are already wired.",
   },
   {
     icon: GitBranch,
-    title: 'Actively maintained',
+    title: "Actively maintained",
     description:
-      'PyColors ships with public releases, mirror repositories, changelog updates, roadmap direction, and documentation-first product thinking.',
+      "PyColors ships with public releases, mirror repositories, changelog updates, roadmap direction, and documentation-first product thinking.",
   },
 ] as const;
 
 const stackItems = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Tailwind CSS',
-  'Prisma',
-  'PostgreSQL',
-  'Stripe',
-  'Vercel',
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "Prisma",
+  "PostgreSQL",
+  "Stripe",
+  "Vercel",
 ] as const;
 
 const faqs = [
   {
-    question: 'Should I buy NA-AI Landing or Starter Pro?',
+    question: "Should I buy NA-AI Landing or Starter Pro?",
     answer:
-      'Choose NA-AI Landing when you need a polished frontend marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.',
+      "Choose NA-AI Landing when you need a polished frontend marketing page. Choose Starter Pro when you need real authentication, Stripe billing, protected routes, database foundations, and SaaS app wiring.",
   },
   {
-    question: 'Is NA-AI Landing a full SaaS app?',
+    question: "Is NA-AI Landing a full SaaS app?",
     answer:
-      'No. NA-AI Landing is a frontend marketing template. It focuses on the public landing page, not authentication, billing, database, or backend logic.',
+      "No. NA-AI Landing is a frontend marketing template. It focuses on the public landing page, not authentication, billing, database, or backend logic.",
   },
   {
-    question: 'Is Starter Pro production-ready?',
+    question: "Is Starter Pro production-ready?",
     answer:
-      'Yes. Starter Pro is designed as a real SaaS foundation with authentication, secure Stripe checkout, protected app architecture, database foundations, purchase recovery, and commercial product surfaces already wired.',
+      "Yes. Starter Pro is designed as a real SaaS foundation with authentication, secure Stripe checkout, protected app architecture, database foundations, purchase recovery, and commercial product surfaces already wired.",
   },
   {
-    question:
-      'Why should I buy Starter Pro instead of building it myself?',
+    question: "Why should I buy Starter Pro instead of building it myself?",
     answer: (
       <>
-        Because auth, billing, protected routes, account flows,
-        webhook synchronization, and delivery/recovery flows are
-        repeated work that can delay launch. Starter Pro helps you
-        skip that foundation work and focus on your product. For the
-        longer version, read the{' '}
+        Because auth, billing, protected routes, account flows, webhook
+        synchronization, and delivery/recovery flows are repeated work that can
+        delay launch. Starter Pro helps you skip that foundation work and focus
+        on your product. For the longer version, read the{" "}
         <Link
           href={INTERNAL.buildVsBuy}
           className="font-medium text-foreground underline underline-offset-4"
@@ -310,146 +312,45 @@ const faqs = [
     ),
   },
   {
-    question: 'Can I use PyColors products for commercial projects?',
+    question: "Can I use PyColors products for commercial projects?",
     answer:
-      'Yes. Paid PyColors products include commercial usage rights. You should still review the license and terms before using them in production.',
+      "Yes. Paid PyColors products include commercial usage rights. You should still review the license and terms before using them in production.",
   },
   {
-    question: 'How do I receive access after purchase?',
+    question: "How do I receive access after purchase?",
     answer:
-      'After checkout completes, PyColors sends access to the email used during purchase. The checkout success page also guides you through the next steps.',
+      "After checkout completes, PyColors sends access to the email used during purchase. The checkout success page also guides you through the next steps.",
   },
   {
-    question: 'What if I do not receive the access email?',
+    question: "What if I do not receive the access email?",
     answer:
-      'Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.',
+      "Use the purchase recovery page with the same email address used at checkout. PyColors can resend the access link for eligible orders.",
   },
   {
-    question: 'Do I get future Starter Pro updates?',
+    question: "Do I get future Starter Pro updates?",
     answer:
-      'Yes. Your one-time Starter Pro purchase includes future product releases. Major changes follow semantic versioning, with release notes in the changelog and docs.',
+      "Yes. Your one-time Starter Pro purchase includes future product releases. Major changes follow semantic versioning, with release notes in the changelog and docs.",
   },
   {
-    question: 'What support is included with Starter Pro?',
+    question: "What support is included with Starter Pro?",
     answer:
-      'Starter Pro includes email support for purchase access, setup questions, and product scope. It is not unlimited custom development or consulting.',
+      "Starter Pro includes email support for purchase access, setup questions, and product scope. It is not unlimited custom development or consulting.",
   },
   {
-    question: 'What if Starter Pro setup fails locally?',
+    question: "What if Starter Pro setup fails locally?",
     answer:
-      'Start with Getting Started and the environment variable docs. Check Node.js version, dependencies, database connection, and Stripe test keys first. Email support can help with eligible setup issues.',
+      "Start with Getting Started and the environment variable docs. Check Node.js version, dependencies, database connection, and Stripe test keys first. Email support can help with eligible setup issues.",
   },
   {
-    question: 'What is the refund policy?',
+    question: "What is the refund policy?",
     answer:
-      'PyColors paid products are digital goods with immediate access after checkout. Refunds may be limited unless required by applicable law. Review the terms before purchase.',
+      "PyColors paid products are digital goods with immediate access after checkout. Refunds may be limited unless required by applicable law. Review the terms before purchase.",
   },
   {
     question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
     answer: `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
   },
 ] as const;
-
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function FeatureCard({
-  icon: Icon,
-  title,
-  description,
-}: {
-  readonly icon: React.ComponentType<{ className?: string }>;
-  readonly title: string;
-  readonly description: string;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-      <CardHeader className="space-y-4">
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-          <Icon className="h-4 w-4 text-muted-foreground" />
-        </div>
-
-        <CardTitle className="text-base">{title}</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
 
 function FaqCard({
   question,
@@ -461,13 +362,9 @@ function FaqCard({
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
       <div className="space-y-2">
-        <div className="text-sm font-medium text-foreground">
-          {question}
-        </div>
+        <div className="text-sm font-medium text-foreground">{question}</div>
 
-        <p className="text-sm leading-7 text-muted-foreground">
-          {answer}
-        </p>
+        <p className="text-sm leading-7 text-muted-foreground">{answer}</p>
       </div>
     </Card>
   );
@@ -482,28 +379,20 @@ export default function PricingPage() {
           maxWidth="5xl"
           badges={[
             {
-              label: 'Pricing',
-              variant: 'secondary',
+              label: "Pricing",
+              variant: "secondary",
             },
             {
               label: `NA-AI Landing ${PRICING.naAiLanding}`,
-              variant: 'outline',
+              variant: "outline",
               icon: (
-                <LayoutTemplate
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
+                <LayoutTemplate className="h-3.5 w-3.5" aria-hidden="true" />
               ),
             },
             {
               label: `Starter Pro ${PRICING.starterProLaunch}`,
-              variant: 'outline',
-              icon: (
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              ),
+              variant: "outline",
+              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
             },
           ]}
           title="Choose the right PyColors product for your launch."
@@ -544,18 +433,16 @@ export default function PricingPage() {
                 variant="outline"
                 className="group h-11 rounded-[5px] px-6 text-sm font-medium"
               >
-                <Link href={INTERNAL.starterFree}>
-                  Explore Starter Free
-                </Link>
+                <Link href={INTERNAL.starterFree}>Explore Starter Free</Link>
               </Button>
             </div>
           }
           pills={[
-            'One-time payment',
-            'Instant access',
-            'Commercial usage',
-            'PWA-ready',
-            'Built for real launches',
+            "One-time payment",
+            "Instant access",
+            "Commercial usage",
+            "PWA-ready",
+            "Built for real launches",
           ]}
           extraClassName="mx-auto max-w-6xl"
           extra={
@@ -583,14 +470,16 @@ export default function PricingPage() {
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  A premium AI/SaaS landing page template for
-                  launching and validating your offer quickly.
+                  A premium AI/SaaS landing page template for launching and
+                  validating your offer quickly.
                 </p>
 
                 <ul className="mt-5 space-y-2">
-                  <CheckItem>Full source code</CheckItem>
-                  <CheckItem>Commercial usage</CheckItem>
-                  <CheckItem>SEO-ready frontend page</CheckItem>
+                  <MarketingCheckItem>Full source code</MarketingCheckItem>
+                  <MarketingCheckItem>Commercial usage</MarketingCheckItem>
+                  <MarketingCheckItem>
+                    SEO-ready frontend page
+                  </MarketingCheckItem>
                 </ul>
 
                 <div className="mt-6 grid gap-2">
@@ -607,9 +496,7 @@ export default function PricingPage() {
                     variant="outline"
                     className="h-10 w-full rounded-[5px] text-sm font-medium"
                   >
-                    <Link href={INTERNAL.templateNaAi}>
-                      View details
-                    </Link>
+                    <Link href={INTERNAL.templateNaAi}>View details</Link>
                   </Button>
                 </div>
               </Card>
@@ -637,14 +524,16 @@ export default function PricingPage() {
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Explore product surfaces, dashboards, settings, and
-                  SaaS UX before committing to production wiring.
+                  Explore product surfaces, dashboards, settings, and SaaS UX
+                  before committing to production wiring.
                 </p>
 
                 <ul className="mt-5 space-y-2">
-                  <CheckItem>Frontend-first SaaS surface</CheckItem>
-                  <CheckItem>Mocked app flows</CheckItem>
-                  <CheckItem>Good for validation</CheckItem>
+                  <MarketingCheckItem>
+                    Frontend-first SaaS surface
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>Mocked app flows</MarketingCheckItem>
+                  <MarketingCheckItem>Good for validation</MarketingCheckItem>
                 </ul>
 
                 <Button
@@ -652,9 +541,7 @@ export default function PricingPage() {
                   variant="outline"
                   className="mt-6 h-10 w-full rounded-[5px] text-sm font-medium"
                 >
-                  <Link href={INTERNAL.starterFree}>
-                    Open Starter Free
-                  </Link>
+                  <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                 </Button>
               </Card>
 
@@ -691,15 +578,16 @@ export default function PricingPage() {
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Stop rebuilding authentication, Stripe billing,
-                  protected routes, and SaaS account foundations from
-                  scratch.
+                  Stop rebuilding authentication, Stripe billing, protected
+                  routes, and SaaS account foundations from scratch.
                 </p>
 
                 <ul className="mt-5 grid gap-2">
-                  <CheckItem>Real authentication</CheckItem>
-                  <CheckItem>Stripe billing</CheckItem>
-                  <CheckItem>Protected app architecture</CheckItem>
+                  <MarketingCheckItem>Real authentication</MarketingCheckItem>
+                  <MarketingCheckItem>Stripe billing</MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Protected app architecture
+                  </MarketingCheckItem>
                 </ul>
 
                 <div className="mt-6 grid gap-2">
@@ -728,13 +616,11 @@ export default function PricingPage() {
                     variant="outline"
                     className="h-10 w-full rounded-[5px] text-sm font-medium"
                   >
-                    <Link href={INTERNAL.starterPro}>
-                      Explore Starter Pro
-                    </Link>
+                    <Link href={INTERNAL.starterPro}>Explore Starter Pro</Link>
                   </Button>
 
                   <p className="text-center text-xs leading-6 text-muted-foreground">
-                    Not sure yet? Read the{' '}
+                    Not sure yet? Read the{" "}
                     <Link
                       href={INTERNAL.buildVsBuy}
                       className="font-medium text-foreground underline underline-offset-4"
@@ -749,8 +635,13 @@ export default function PricingPage() {
           }
         />
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-trust-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-trust-heading"
             eyebrow="Trust"
             title="Built to feel like a serious SaaS foundation, not another UI kit."
             description="When there are no testimonials yet, trust comes from clarity: real scope, real architecture, real billing flows, active maintenance, and visible product thinking."
@@ -759,9 +650,9 @@ export default function PricingPage() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {trustItems.map((item) => (
-              <FeatureCard
+              <MarketingFeatureCard
                 key={item.title}
-                icon={item.icon}
+                icon={<item.icon className="h-4 w-4" />}
                 title={item.title}
                 description={item.description}
               />
@@ -776,22 +667,26 @@ export default function PricingPage() {
                 </p>
 
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Modern SaaS foundations using familiar production
-                  tools.
+                  Modern SaaS foundations using familiar production tools.
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <MarketingPillList aria-label="Technology stack">
                 {stackItems.map((item) => (
-                  <Pill key={item}>{item}</Pill>
+                  <MarketingPill key={item}>{item}</MarketingPill>
                 ))}
-              </div>
+              </MarketingPillList>
             </div>
           </Card>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-decision-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-decision-heading"
             eyebrow="Decision"
             title="Choose by stage, not by feature count."
             description="Templates launch the offer. Starter Free validates the SaaS surface. Starter Pro wires the business layer when you are ready to charge."
@@ -799,28 +694,33 @@ export default function PricingPage() {
           />
 
           <div className="grid gap-4 md:grid-cols-3">
-            <FeatureCard
-              icon={LayoutTemplate}
+            <MarketingFeatureCard
+              icon={<LayoutTemplate className="h-4 w-4" />}
               title="Use templates to launch"
               description="Choose a template when you need a polished landing page, clear offer, and fast path to a public launch."
             />
 
-            <FeatureCard
-              icon={Zap}
+            <MarketingFeatureCard
+              icon={<Zap className="h-4 w-4" />}
               title="Use Free to validate"
               description="Choose Starter Free when you are still exploring product shape, layout, UX direction, and SaaS patterns."
             />
 
-            <FeatureCard
-              icon={Rocket}
+            <MarketingFeatureCard
+              icon={<Rocket className="h-4 w-4" />}
               title="Use Pro to charge faster"
               description="Choose Starter Pro when auth, billing, sessions, protected routes, and database foundations become the bottleneck."
             />
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-starter-pro-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-starter-pro-heading"
             eyebrow="Starter Pro"
             title="What you are actually buying"
             description="A pricing page should make the value obvious. Starter Pro is not just screens. It is the SaaS foundation behind the screens."
@@ -829,7 +729,7 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href={INTERNAL.docsStarterPro}>
                   Read Starter Pro docs
@@ -860,10 +760,9 @@ export default function PricingPage() {
                   </h3>
 
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-                    Authentication, billing, protected app structure,
-                    database foundations, account flows, and SaaS UI
-                    surfaces are already shaped so your next work can
-                    be product-specific.
+                    Authentication, billing, protected app structure, database
+                    foundations, account flows, and SaaS UI surfaces are already
+                    shaped so your next work can be product-specific.
                   </p>
                 </div>
 
@@ -874,7 +773,7 @@ export default function PricingPage() {
 
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                     {starterProIncludes.map((item) => (
-                      <CheckItem key={item}>{item}</CheckItem>
+                      <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
                     ))}
                   </ul>
                 </div>
@@ -892,8 +791,8 @@ export default function PricingPage() {
                     </p>
 
                     <p className="mt-1 text-sm text-muted-foreground">
-                      The faster path from validated surface to
-                      monetizable SaaS.
+                      The faster path from validated surface to monetizable
+                      SaaS.
                     </p>
                   </div>
 
@@ -920,10 +819,9 @@ export default function PricingPage() {
                     <p className="text-sm font-medium">Best for</p>
 
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                      Indie hackers, freelancers, product engineers,
-                      and technical founders who want to stop
-                      rebuilding the same SaaS foundation before
-                      charging customers.
+                      Indie hackers, freelancers, product engineers, and
+                      technical founders who want to stop rebuilding the same
+                      SaaS foundation before charging customers.
                     </p>
                   </div>
 
@@ -933,20 +831,19 @@ export default function PricingPage() {
                     </p>
 
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                      The cost is lower than the time usually spent
-                      wiring auth, billing, protected flows, Stripe
-                      webhooks, recovery flows, account pages, and
-                      database synchronization from scratch.
+                      The cost is lower than the time usually spent wiring auth,
+                      billing, protected flows, Stripe webhooks, recovery flows,
+                      account pages, and database synchronization from scratch.
                     </p>
                   </div>
 
                   <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
                     <p className="text-sm leading-7 text-muted-foreground">
-                      Current launch price:{' '}
+                      Current launch price:{" "}
                       <span className="font-medium text-foreground">
                         {PRICING.starterProLaunch}
                       </span>
-                      . Regular price planned at{' '}
+                      . Regular price planned at{" "}
                       <span className="font-medium text-foreground">
                         {PRICING.starterProRegular}
                       </span>
@@ -964,7 +861,7 @@ export default function PricingPage() {
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-10 rounded-[5px] text-sm font-medium',
+                      "h-10 rounded-[5px] text-sm font-medium",
                       focusRing,
                     )}
                   >
@@ -982,22 +879,25 @@ export default function PricingPage() {
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-10 rounded-[5px] text-sm font-medium',
+                      "h-10 rounded-[5px] text-sm font-medium",
                       focusRing,
                     )}
                   >
-                    <Link href={INTERNAL.docsBilling}>
-                      Review billing docs
-                    </Link>
+                    <Link href={INTERNAL.docsBilling}>Review billing docs</Link>
                   </Button>
                 </div>
               </CardContent>
             </Card>
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-comparison-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-comparison-heading"
             eyebrow="Comparison"
             title="Templates launch the page. Free validates the product. Pro wires the business."
             description="Make the decision simple: choose the product that matches your current bottleneck."
@@ -1006,11 +906,9 @@ export default function PricingPage() {
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
-                <Link href={INTERNAL.docsBackend}>
-                  Explore backend docs
-                </Link>
+                <Link href={INTERNAL.docsBackend}>Explore backend docs</Link>
               </Button>
             }
           />
@@ -1020,24 +918,16 @@ export default function PricingPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[34%]">Feature</TableHead>
-                  <TableHead className="w-[22%]">
-                    NA-AI Landing
-                  </TableHead>
-                  <TableHead className="w-[22%]">
-                    Starter Free
-                  </TableHead>
-                  <TableHead className="w-[22%]">
-                    Starter Pro
-                  </TableHead>
+                  <TableHead className="w-[22%]">NA-AI Landing</TableHead>
+                  <TableHead className="w-[22%]">Starter Free</TableHead>
+                  <TableHead className="w-[22%]">Starter Pro</TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
                 {comparisonRows.map((row) => (
                   <TableRow key={row.feature}>
-                    <TableCell className="font-medium">
-                      {row.feature}
-                    </TableCell>
+                    <TableCell className="font-medium">{row.feature}</TableCell>
 
                     <TableCell className="text-muted-foreground">
                       {row.template}
@@ -1066,7 +956,7 @@ export default function PricingPage() {
               asChild
               variant="outline"
               className={cn(
-                'h-10 rounded-[5px] text-sm font-medium',
+                "h-10 rounded-[5px] text-sm font-medium",
                 focusRing,
               )}
             >
@@ -1081,45 +971,50 @@ export default function PricingPage() {
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">
-              Choose Pro when the cost of rebuilding the foundation is
-              higher than the price of skipping it.
+              Choose Pro when the cost of rebuilding the foundation is higher
+              than the price of skipping it.
             </p>
           </div>
-        </section>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-proof-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-proof-heading"
             eyebrow="Proof of seriousness"
             title="A maintained product ecosystem, not a one-off template."
             description="For early buyers, trust comes from product discipline: docs, changelog, roadmap, clear scope, and an active ecosystem."
           />
 
           <div className="grid gap-4 md:grid-cols-3">
-            <FeatureCard
-              icon={ShieldCheck}
+            <MarketingFeatureCard
+              icon={<ShieldCheck className="h-4 w-4" />}
               title="Clear product scope"
               description="PyColors explains what is included, what is wired, and where each product stops so you can make a clean buying decision."
             />
 
-            <FeatureCard
-              icon={Database}
+            <MarketingFeatureCard
+              icon={<Database className="h-4 w-4" />}
               title="Real SaaS infrastructure"
               description="Starter Pro includes database, billing, protected app structure, and lifecycle flows instead of only static screens."
             />
 
-            <FeatureCard
-              icon={Mail}
+            <MarketingFeatureCard
+              icon={<Mail className="h-4 w-4" />}
               title="Documentation-first"
               description="Docs, release notes, and implementation guidance are part of the product experience, not an afterthought."
             />
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <MarketingActionGroup className="mt-6">
             <Button
               asChild
               variant="outline"
               className={cn(
-                'h-10 rounded-[5px] text-sm font-medium',
+                "h-10 rounded-[5px] text-sm font-medium",
                 focusRing,
               )}
             >
@@ -1130,17 +1025,22 @@ export default function PricingPage() {
               asChild
               variant="outline"
               className={cn(
-                'h-10 rounded-[5px] text-sm font-medium',
+                "h-10 rounded-[5px] text-sm font-medium",
                 focusRing,
               )}
             >
               <Link href={INTERNAL.roadmap}>View roadmap</Link>
             </Button>
-          </div>
-        </section>
+          </MarketingActionGroup>
+        </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+        <MarketingSectionShell
+          width="full"
+          spacing="default"
+          aria-labelledby="pricing-faq-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-faq-heading"
             eyebrow="FAQ"
             title="Remove the objections before the checkout click."
             description="The job of pricing is not only to show a number. It should make the decision feel safe, clear, and obvious."
@@ -1155,8 +1055,16 @@ export default function PricingPage() {
               />
             ))}
           </div>
-        </section>
+        </MarketingSectionShell>
 
+        {/*
+          Intentional exception: this closing CTA keeps its page-local
+          two-column layout (copy + pills on the left, stacked purchase
+          buttons on the right), which does not fit MarketingCtaPanel's
+          stacked-actions-below-title layout. Kept local per the #399/#401
+          contract for domain-specific composition (see
+          docs/internal/marketing-composition-components.md).
+        */}
         <section className="pt-4">
           <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -1171,24 +1079,27 @@ export default function PricingPage() {
                 </Badge>
 
                 <h2 className="text-balance font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Launch the page. Validate the surface. Wire the
-                  business when it matters.
+                  Launch the page. Validate the surface. Wire the business when
+                  it matters.
                 </h2>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  Use NA-AI Landing for a polished marketing page,
-                  Starter Free to explore the product surface, and
-                  Starter Pro when auth, billing, protected routes,
-                  and the SaaS business layer should already be
-                  handled.
+                  Use NA-AI Landing for a polished marketing page, Starter Free
+                  to explore the product surface, and Starter Pro when auth,
+                  billing, protected routes, and the SaaS business layer should
+                  already be handled.
                 </p>
 
-                <div className="flex flex-wrap gap-2">
-                  <Pill>NA-AI Landing {PRICING.naAiLanding}</Pill>
-                  <Pill>Starter Pro {PRICING.starterProLaunch}</Pill>
-                  <Pill>One-time payment</Pill>
-                  <Pill>Instant access</Pill>
-                </div>
+                <MarketingPillList aria-label="Purchase highlights">
+                  <MarketingPill>
+                    NA-AI Landing {PRICING.naAiLanding}
+                  </MarketingPill>
+                  <MarketingPill>
+                    Starter Pro {PRICING.starterProLaunch}
+                  </MarketingPill>
+                  <MarketingPill>One-time payment</MarketingPill>
+                  <MarketingPill>Instant access</MarketingPill>
+                </MarketingPillList>
               </div>
 
               <div className="flex flex-col gap-3 sm:min-w-65">
@@ -1222,14 +1133,14 @@ export default function PricingPage() {
           </Card>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Legal scope and usage terms are governed by{' '}
+            Legal scope and usage terms are governed by{" "}
             <Link
               href={INTERNAL.license}
               className="underline underline-offset-4"
             >
               /license
-            </Link>{' '}
-            and{' '}
+            </Link>{" "}
+            and{" "}
             <Link
               href={INTERNAL.terms}
               className="underline underline-offset-4"

@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   ArrowRight,
@@ -127,11 +126,6 @@ const PRODUCT_MENU_META: Record<
   "/ui": {
     icon: Package2,
     description: "Production-ready primitives",
-    tone: "platform",
-  },
-  "/ui/patterns": {
-    icon: LayoutTemplate,
-    description: "Production-shaped SaaS surfaces",
     tone: "platform",
   },
   "/ui/examples": {
@@ -370,6 +364,11 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
     );
 
     const resourceItems: MobileMenuItem[] = [
+      {
+        label: "Theme Builder",
+        href: "/tools/theme-builder",
+        icon: <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />,
+      },
       {
         label: "Docs",
         href: "/docs",
@@ -633,23 +632,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
               </nav>
 
               <div className="hidden items-center gap-2 md:flex">
-                <a
-                  href="https://www.producthunt.com/products/pycolors"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className={cn(
-                    "hidden lg:flex items-center transition-opacity hover:opacity-90",
-                    focusRing,
-                  )}
-                >
-                  <Image
-                    src="https://api.producthunt.com/widgets/embed-image/v1/follow.svg?product_id=1243282&theme=dark&size=small"
-                    alt="Follow PyColors on Product Hunt"
-                    width={100}
-                    height={28}
-                    unoptimized
-                  />
-                </a>
                 <Button
                   asChild
                   size="sm"

@@ -1,7 +1,7 @@
 ---
 title: Theming
 description: Load PyColors tokens, understand their Tailwind v4 mappings, and keep UI primitives consistent across light and dark themes.
-lastUpdated: "2026-08-06"
+lastUpdated: "2026-08-25"
 appliesTo: UI
 ---
 
@@ -120,6 +120,25 @@ export function AccountSummary() {
 
 The example uses semantic utilities rather than raw color values. The same
 component remains valid in both themes.
+
+## Generate a semantic starting point
+
+[PyColors Theme Builder](/tools/theme-builder) generates a client-side,
+contrast-aware starting set of the same semantic CSS variables. Use it when
+you want to begin from a brand color without creating a new token contract.
+
+Keep the integration order unchanged:
+
+1. import `@pycolors/tokens/tokens.css` once;
+2. place the generated overrides after that import;
+3. use semantic utilities and public `@pycolors/ui` imports; and
+4. verify the complete interface in both light and dark modes.
+
+The generated overrides work with this package's existing `@theme inline`
+bridge. They do not define a second Tailwind theme. Theme Builder output is
+contrast-aware rather than an accessibility certification, so review brand
+perception, focus, hover, disabled, color-vision, and complete page contexts
+before shipping.
 
 ## Apply dark mode at the app shell
 
