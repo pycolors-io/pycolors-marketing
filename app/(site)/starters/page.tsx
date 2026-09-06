@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   BookOpen,
-  Check,
   CreditCard,
   ExternalLink,
   LayoutDashboard,
@@ -25,6 +24,13 @@ import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingFeatureCard } from '@/components/marketing/feature-card';
+import {
+  MarketingPill,
+  MarketingPillList,
+} from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
 
 export const metadata: Metadata = {
   title: 'SaaS Starters for Next.js',
@@ -79,9 +85,6 @@ const cardClass =
 
 const proCardClass =
   'rounded-[5px] border border-pro-border bg-pro-surface text-surface-foreground shadow-medium';
-
-const platformCardClass =
-  'rounded-[5px] border border-platform-border-subtle bg-surface text-surface-foreground shadow-soft';
 
 const primaryButtonClass =
   'h-11 rounded-[5px] bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-brand-primary-hover';
@@ -171,79 +174,6 @@ const journey = [
   },
 ] as const;
 
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] border-border-subtle bg-surface px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
 function ResourceCard({
   icon,
   title,
@@ -260,63 +190,25 @@ function ResourceCard({
   readonly tone?: 'default' | 'platform' | 'success' | 'pro';
 }) {
   return (
-    <Card
-      className={cn(
-        tone === 'platform' ? platformCardClass : cardClass,
-        tone === 'success' &&
-          'rounded-[5px] border-success-border-subtle bg-surface text-surface-foreground shadow-soft',
-        tone === 'pro' &&
-          'rounded-[5px] border-pro-border-subtle bg-surface text-surface-foreground shadow-soft',
-      )}
-    >
-      <CardContent className="p-5">
-        <div className="space-y-4">
-          <div
-            className={cn(
-              'inline-flex size-9 items-center justify-center rounded-[5px] border text-muted-foreground',
-              tone === 'platform'
-                ? 'border-platform-border-subtle bg-platform-surface-muted text-platform'
-                : tone === 'success'
-                  ? 'border-success-border-subtle bg-success-surface-muted text-success'
-                  : tone === 'pro'
-                    ? 'border-pro-border-subtle bg-pro-surface-muted text-primary'
-                    : 'border-border-subtle bg-surface-muted',
-            )}
-          >
-            {icon}
-          </div>
-
-          <div className="space-y-2">
-            <div className="text-sm font-medium text-foreground">
-              {title}
-            </div>
-            <p className="text-sm leading-7 text-muted-foreground">
-              {description}
-            </p>
-          </div>
-
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className={cn(
-              'h-11 rounded-[5px] px-5 text-sm font-medium',
-              tone === 'platform' && 'border-platform-border-subtle',
-              tone === 'success' && 'border-success-border-subtle',
-              tone === 'pro' && 'border-pro-border-subtle',
-            )}
-          >
-            <Link href={href}>
-              {cta}
-              <ArrowRight
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
-            </Link>
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+    <MarketingFeatureCard
+      title={title}
+      description={description}
+      icon={icon}
+      tone={tone === 'default' ? 'neutral' : tone}
+      action={
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className="h-11 rounded-[5px] px-5 text-sm font-medium"
+        >
+          <Link href={href}>
+            {cta}
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      }
+    />
   );
 }
 
@@ -361,7 +253,7 @@ function StarterCard({
 
         <ul className="grid gap-2 sm:grid-cols-2">
           {highlights.map((item) => (
-            <CheckItem key={item}>{item}</CheckItem>
+            <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
           ))}
         </ul>
 
@@ -457,17 +349,17 @@ export default function StartersPage() {
               'Built on PyColors UI',
             ]}
             extra={
-              <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-                <CheckItem>Free validates UX</CheckItem>
-                <CheckItem>Pro wires auth</CheckItem>
-                <CheckItem>Pro wires billing</CheckItem>
-                <CheckItem>Pro accelerates launch</CheckItem>
-              </div>
+              <ul className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
+                <MarketingCheckItem>Free validates UX</MarketingCheckItem>
+                <MarketingCheckItem>Pro wires auth</MarketingCheckItem>
+                <MarketingCheckItem>Pro wires billing</MarketingCheckItem>
+                <MarketingCheckItem>Pro accelerates launch</MarketingCheckItem>
+              </ul>
             }
           />
 
           <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+            <MarketingSectionHeader
               eyebrow="Choose your layer"
               title="Use the starter that matches your current bottleneck."
               description="Do not buy complexity too early. Start with the surface if you need validation. Move to Pro when repeated SaaS wiring blocks launch."
@@ -574,7 +466,7 @@ export default function StartersPage() {
           </section>
 
           <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+            <MarketingSectionHeader
               eyebrow="Free vs Pro"
               title="Free validates the surface. Pro wires the business."
               description="Pro is not just more screens. It is less repeated engineering work between your product idea and your first customers."
@@ -661,7 +553,7 @@ export default function StartersPage() {
           </section>
 
           <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+            <MarketingSectionHeader
               eyebrow="Builder journey"
               title="A simple path from validation to launch."
               description="The ecosystem is designed to reduce decision fatigue: explore the product surface, validate the UX, then upgrade when infrastructure becomes the real blocker."
@@ -738,7 +630,7 @@ export default function StartersPage() {
           </section>
 
           <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+            <MarketingSectionHeader
               eyebrow="Developer platform"
               title="Use the ecosystem to understand the product logic first."
               description="The starter becomes more valuable when it is connected to guides, examples, and patterns instead of treated like an isolated repository."
@@ -783,7 +675,7 @@ export default function StartersPage() {
           </section>
 
           <section className="py-12 sm:py-14 lg:py-16">
-            <SectionHeader
+            <MarketingSectionHeader
               eyebrow="Why Pro exists"
               title="Starter Pro is for the work that delays revenue."
               description="The expensive part is not drawing another dashboard. It is wiring the secure business layer correctly enough to launch and charge customers."
@@ -853,12 +745,12 @@ export default function StartersPage() {
                     path to revenue shortened.
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    <Pill>Free validates UX</Pill>
-                    <Pill>Pro wires auth</Pill>
-                    <Pill>Pro wires billing</Pill>
-                    <Pill>Launch price {launchPrice}</Pill>
-                  </div>
+                  <MarketingPillList aria-label="Starter decision points">
+                    <MarketingPill>Free validates UX</MarketingPill>
+                    <MarketingPill>Pro wires auth</MarketingPill>
+                    <MarketingPill>Pro wires billing</MarketingPill>
+                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
+                  </MarketingPillList>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:min-w-64">

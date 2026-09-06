@@ -4,7 +4,6 @@ import Image from 'next/image';
 import {
   BadgeCheck,
   BookOpen,
-  Check,
   ExternalLink,
   LayoutTemplate,
   Rocket,
@@ -30,6 +29,12 @@ import { Container } from '@/components/container';
 import { NpmBadges } from '@/components/npm-badges';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import {
+  MarketingPill,
+  MarketingPillList,
+} from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
 
 export const metadata: Metadata = {
   title: 'Free Next.js SaaS Starter',
@@ -198,21 +203,6 @@ const comparisonRows = [
   },
 ] as const;
 
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3.5 w-3.5 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
 function SurfaceCard({
   title,
   subtitle,
@@ -277,7 +267,7 @@ function SurfaceCard({
 
           <ul className="grid gap-2 sm:grid-cols-2">
             {points.map((point) => (
-              <CheckItem key={point}>{point}</CheckItem>
+              <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
             ))}
           </ul>
 
@@ -297,18 +287,6 @@ function SurfaceCard({
     </Card>
   );
 }
-function ProofPill({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <Badge variant="outline" className="rounded-[5px]">
-      {children}
-    </Badge>
-  );
-}
-
 export default function StarterFreePage() {
   return (
     <Container className="py-18">
@@ -381,12 +359,12 @@ export default function StarterFreePage() {
           extraClassName="mx-auto max-w-6xl"
           extra={
             <>
-              <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-                <CheckItem>Real SaaS surfaces</CheckItem>
-                <CheckItem>Fast UX validation</CheckItem>
-                <CheckItem>No database required</CheckItem>
-                <CheckItem>Ready to upgrade</CheckItem>
-              </div>
+              <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
+                <MarketingCheckItem>Real SaaS surfaces</MarketingCheckItem>
+                <MarketingCheckItem>Fast UX validation</MarketingCheckItem>
+                <MarketingCheckItem>No database required</MarketingCheckItem>
+                <MarketingCheckItem>Ready to upgrade</MarketingCheckItem>
+              </ul>
 
               <div className="mx-auto mt-12 max-w-6xl">
                 <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
@@ -526,13 +504,13 @@ export default function StarterFreePage() {
                     applications.
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    <ProofPill>Accessible primitives</ProofPill>
-                    <ProofPill>Production-shaped UX</ProofPill>
-                    <ProofPill>Tailwind v4</ProofPill>
-                    <ProofPill>Next.js App Router</ProofPill>
-                    <ProofPill>Semantic tokens</ProofPill>
-                  </div>
+                  <MarketingPillList aria-label="Starter Free proof points">
+                    <MarketingPill>Accessible primitives</MarketingPill>
+                    <MarketingPill>Production-shaped UX</MarketingPill>
+                    <MarketingPill>Tailwind v4</MarketingPill>
+                    <MarketingPill>Next.js App Router</MarketingPill>
+                    <MarketingPill>Semantic tokens</MarketingPill>
+                  </MarketingPillList>
 
                   <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
                     <NpmBadges packageName="@pycolors/ui" size="sm" />
@@ -548,24 +526,11 @@ export default function StarterFreePage() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
-            >
-              Included surfaces
-            </Badge>
-
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight">
-              Real SaaS surfaces for faster validation.
-            </h2>
-
-            <p className="mt-4 text-sm leading-7 text-muted-foreground">
-              Starter Free is not just a component gallery. It gives
-              you realistic product flows designed to make your SaaS
-              feel credible immediately.
-            </p>
-          </div>
+          <MarketingSectionHeader
+            eyebrow="Included surfaces"
+            title="Real SaaS surfaces for faster validation."
+            description="Starter Free is not just a component gallery. It gives you realistic product flows designed to make your SaaS feel credible immediately."
+          />
 
           <div className="grid gap-4 lg:grid-cols-2">
             {productSurfaces.map((surface) => (
@@ -583,26 +548,11 @@ export default function StarterFreePage() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-success-border-subtle bg-success-muted"
-            >
-              Upgrade path
-            </Badge>
-
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight">
-              Free validates the product.
-              <br />
-              Pro wires the business.
-            </h2>
-
-            <p className="mt-4 text-sm leading-7 text-muted-foreground">
-              Keep the funnel simple. Starter Free proves the surface.
-              Starter Pro handles authentication, Stripe billing,
-              protected routes, webhooks, and production foundations.
-            </p>
-          </div>
+          <MarketingSectionHeader
+            eyebrow="Upgrade path"
+            title={<>Free validates the product. Pro wires the business.</>}
+            description="Keep the funnel simple. Starter Free proves the surface. Starter Pro handles authentication, Stripe billing, protected routes, webhooks, and production foundations."
+          />
 
           <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
             <CardContent className="p-0">
@@ -656,24 +606,11 @@ export default function StarterFreePage() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
-            >
-              Ecosystem
-            </Badge>
-
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight">
-              Learn, adapt, then upgrade when needed.
-            </h2>
-
-            <p className="mt-4 text-sm leading-7 text-muted-foreground">
-              Starter Free works best as the first layer of a larger
-              product system: docs, guides, examples, patterns, and
-              Pro wiring.
-            </p>
-          </div>
+          <MarketingSectionHeader
+            eyebrow="Ecosystem"
+            title="Learn, adapt, then upgrade when needed."
+            description="Starter Free works best as the first layer of a larger product system: docs, guides, examples, patterns, and Pro wiring."
+          />
 
           <div className="grid gap-4 lg:grid-cols-3">
             {[
@@ -759,12 +696,12 @@ export default function StarterFreePage() {
                     matters.
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <ProofPill>pnpm</ProofPill>
-                    <ProofPill>No database</ProofPill>
-                    <ProofPill>No API required</ProofPill>
-                    <ProofPill>Mock data</ProofPill>
-                  </div>
+                  <MarketingPillList aria-label="Starter Free setup">
+                    <MarketingPill>pnpm</MarketingPill>
+                    <MarketingPill>No database</MarketingPill>
+                    <MarketingPill>No API required</MarketingPill>
+                    <MarketingPill>Mock data</MarketingPill>
+                  </MarketingPillList>
                 </div>
 
                 <div className="w-full lg:max-w-md">
@@ -825,12 +762,12 @@ pnpm dev`}</pre>
                     and production-ready architecture already wired.
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <ProofPill>Free validates UX</ProofPill>
-                    <ProofPill>Pro wires auth</ProofPill>
-                    <ProofPill>Pro wires billing</ProofPill>
-                    <ProofPill>Pro accelerates launch</ProofPill>
-                  </div>
+                  <MarketingPillList aria-label="Starter Free upgrade points">
+                    <MarketingPill>Free validates UX</MarketingPill>
+                    <MarketingPill>Pro wires auth</MarketingPill>
+                    <MarketingPill>Pro wires billing</MarketingPill>
+                    <MarketingPill>Pro accelerates launch</MarketingPill>
+                  </MarketingPillList>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:min-w-60">

@@ -26,7 +26,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardTitle,
   cn,
 } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
@@ -34,6 +33,13 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
@@ -663,66 +669,6 @@ function StarterProHeroCarousel() {
   );
 }
 
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-  align = "center",
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly align?: "center" | "left";
-}) {
-  return (
-    <div
-      className={cn(
-        align === "center"
-          ? "mx-auto max-w-3xl text-center"
-          : "max-w-3xl text-left",
-      )}
-    >
-      {eyebrow ? (
-        <Badge
-          variant="outline"
-          className="rounded-[5px] border-border-subtle bg-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
-        >
-          {eyebrow}
-        </Badge>
-      ) : null}
-
-      <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        {title}
-      </h2>
-
-      {description ? (
-        <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-          {description}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function CheckItem({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <li className="flex items-start gap-3 text-sm text-muted-foreground">
-      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3.5 w-3.5 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
 function FeatureCard({
   title,
   description,
@@ -733,19 +679,11 @@ function FeatureCard({
   readonly icon: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-      <CardHeader className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-          <Icon className="h-5 w-5 text-muted-foreground" />
-        </div>
-
-        <CardTitle className="text-lg">{title}</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
+    <MarketingFeatureCard
+      title={title}
+      description={description}
+      icon={<Icon className="h-5 w-5" />}
+    />
   );
 }
 
@@ -763,34 +701,23 @@ function DocResourceCard({
   readonly icon: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-      <CardContent className="p-5">
-        <div className="space-y-4">
-          <div className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-            <Icon className="h-4 w-4 text-muted-foreground" />
-          </div>
-
-          <div className="space-y-2">
-            <div className="text-sm font-medium text-foreground">{title}</div>
-
-            <p className="text-sm leading-7 text-muted-foreground">
-              {description}
-            </p>
-          </div>
-
-          <Button
-            asChild
-            variant="outline"
-            className="h-10 rounded-[5px] text-sm font-medium"
-          >
-            <Link href={href}>
-              {cta}
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+    <MarketingFeatureCard
+      title={title}
+      description={description}
+      icon={<Icon className="h-4 w-4" />}
+      action={
+        <Button
+          asChild
+          variant="outline"
+          className="h-10 rounded-[5px] text-sm font-medium"
+        >
+          <Link href={href}>
+            {cta}
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      }
+    />
   );
 }
 
@@ -866,13 +793,13 @@ export default function StarterProPage() {
             "PWA-ready",
           ]}
           extra={
-            <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-              <CheckItem>Full source code</CheckItem>
-              <CheckItem>Real auth wired</CheckItem>
-              <CheckItem>Stripe billing wired</CheckItem>
-              <CheckItem>Protected SaaS app</CheckItem>
-              <CheckItem>PWA-ready foundation</CheckItem>
-            </div>
+            <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
+              <MarketingCheckItem>Full source code</MarketingCheckItem>
+              <MarketingCheckItem>Real auth wired</MarketingCheckItem>
+              <MarketingCheckItem>Stripe billing wired</MarketingCheckItem>
+              <MarketingCheckItem>Protected SaaS app</MarketingCheckItem>
+              <MarketingCheckItem>PWA-ready foundation</MarketingCheckItem>
+            </ul>
           }
         />
       </Container>
@@ -881,7 +808,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-12">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="After purchase"
               title="What you receive after purchase"
               description="A clear path from payment to source access, with recovery, license, update, support, and setup expectations stated before checkout."
@@ -894,7 +821,7 @@ export default function StarterProPage() {
 
               <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {postPurchaseDeliverables.map((item) => (
-                  <CheckItem key={item}>{item}</CheckItem>
+                  <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
                 ))}
               </ul>
             </Card>
@@ -951,7 +878,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-12">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="First 30 minutes"
               title="What happens right after you buy"
               description="A practical timeline from checkout to a running local project."
@@ -987,7 +914,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Why it exists"
               title="Most SaaS starters stop at UI. Starter Pro wires the expensive part."
               description="The hardest repeated work is rarely the landing page. It is auth, billing, protected routes, account flows, database synchronization, purchase recovery, delivery, PWA-ready app polish, and the small decisions needed before a SaaS can charge customers."
@@ -1004,7 +931,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Product proof"
               title="A SaaS foundation built around the parts buyers actually pay for."
               description="The visual product preview is already handled above. This section explains why Starter Pro is valuable: it removes the expensive foundations that slow real SaaS launches."
@@ -1081,12 +1008,12 @@ export default function StarterProPage() {
                   and admin data online-first.
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Pill>Installable</Pill>
-                  <Pill>Standalone mode</Pill>
-                  <Pill>Offline fallback</Pill>
-                  <Pill>Mobile-ready</Pill>
-                </div>
+                <MarketingPillList aria-label="PWA capabilities">
+                  <MarketingPill>Installable</MarketingPill>
+                  <MarketingPill>Standalone mode</MarketingPill>
+                  <MarketingPill>Offline fallback</MarketingPill>
+                  <MarketingPill>Mobile-ready</MarketingPill>
+                </MarketingPillList>
               </div>
 
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row lg:flex-col">
@@ -1116,7 +1043,7 @@ export default function StarterProPage() {
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-              <SectionHeading
+              <MarketingSectionHeader
                 align="left"
                 eyebrow="What you actually get"
                 title="A complete SaaS foundation you can own, modify, and launch from."
@@ -1126,7 +1053,7 @@ export default function StarterProPage() {
               <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft sm:p-7">
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {includedChecklist.map((item) => (
-                    <CheckItem key={item}>{item}</CheckItem>
+                    <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
                   ))}
                 </ul>
               </Card>
@@ -1138,7 +1065,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Built with Starter Pro"
               title="Use the foundation for real SaaS products, not only demos."
               description="Starter Pro gives you the production layer underneath many common SaaS directions. You still build the product, but you do not start from blank auth, billing, account, and app foundations."
@@ -1169,7 +1096,7 @@ export default function StarterProPage() {
                     </p>
                     <ul className="mt-4 grid gap-3">
                       {perfectFor.map((item) => (
-                        <CheckItem key={item}>{item}</CheckItem>
+                        <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
                       ))}
                     </ul>
                   </div>
@@ -1212,7 +1139,7 @@ export default function StarterProPage() {
 
                 <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                   {stillBuildItems.map((item) => (
-                    <CheckItem key={item}>{item}</CheckItem>
+                    <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
                   ))}
                 </ul>
               </Card>
@@ -1223,7 +1150,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Trust"
               title="Built to feel like a serious product foundation."
               description="Early buyers need confidence. Starter Pro makes the scope, stack, maintenance, and production intent explicit."
@@ -1247,9 +1174,11 @@ export default function StarterProPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  {stackItems.map((item) => (
-                    <Pill key={item}>{item}</Pill>
-                  ))}
+                  <MarketingPillList aria-label="Starter Pro technology stack">
+                    {stackItems.map((item) => (
+                      <MarketingPill key={item}>{item}</MarketingPill>
+                    ))}
+                  </MarketingPillList>
                 </div>
               </div>
             </Card>
@@ -1278,7 +1207,7 @@ export default function StarterProPage() {
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-              <SectionHeading
+              <MarketingSectionHeader
                 align="left"
                 eyebrow="Free vs Pro"
                 title="Starter Free validates the surface. Starter Pro wires the business."
@@ -1385,12 +1314,12 @@ export default function StarterProPage() {
 
               <CardContent className="space-y-8">
                 <ul className="grid gap-3 sm:grid-cols-2">
-                  <CheckItem>Full Starter Pro source code</CheckItem>
-                  <CheckItem>Real authentication included</CheckItem>
-                  <CheckItem>Stripe billing included</CheckItem>
-                  <CheckItem>Protected architecture included</CheckItem>
-                  <CheckItem>Prisma + PostgreSQL foundation</CheckItem>
-                  <CheckItem>Commercial usage rights</CheckItem>
+                  <MarketingCheckItem>Full Starter Pro source code</MarketingCheckItem>
+                  <MarketingCheckItem>Real authentication included</MarketingCheckItem>
+                  <MarketingCheckItem>Stripe billing included</MarketingCheckItem>
+                  <MarketingCheckItem>Protected architecture included</MarketingCheckItem>
+                  <MarketingCheckItem>Prisma + PostgreSQL foundation</MarketingCheckItem>
+                  <MarketingCheckItem>Commercial usage rights</MarketingCheckItem>
                 </ul>
 
                 <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 text-sm leading-7 text-muted-foreground">
@@ -1480,7 +1409,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Documentation"
               title="Read before you buy, ship faster after you do"
               description="Starter Pro is documentation-first. These guides answer the questions buyers ask before and after checkout."
@@ -1497,7 +1426,7 @@ export default function StarterProPage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="FAQ"
               title="Questions buyers ask before paying"
               description="Reduce friction, increase trust, and make the decision easier before checkout."
@@ -1543,13 +1472,13 @@ export default function StarterProPage() {
                 already be handled.
               </p>
 
-              <div className="mt-6 flex flex-wrap justify-center gap-2">
-                <Pill>Launch price {launchPrice}</Pill>
-                <Pill>One-time payment</Pill>
-                <Pill>Secure claim email</Pill>
-                <Pill>Commercial usage</Pill>
-                <Pill>PWA-ready</Pill>
-              </div>
+                <MarketingPillList align="center" aria-label="Starter Pro purchase details">
+                <MarketingPill>Launch price {launchPrice}</MarketingPill>
+                <MarketingPill>One-time payment</MarketingPill>
+                <MarketingPill>Secure claim email</MarketingPill>
+                <MarketingPill>Commercial usage</MarketingPill>
+                <MarketingPill>PWA-ready</MarketingPill>
+                </MarketingPillList>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <BuyStarterProButton
