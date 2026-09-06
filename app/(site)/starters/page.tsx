@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   BookOpen,
@@ -9,7 +9,7 @@ import {
   LayoutTemplate,
   Lock,
   Sparkles,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -19,157 +19,157 @@ import {
   CardHeader,
   CardTitle,
   cn,
-} from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { Container } from '@/components/container';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { PageHero } from '@/components/marketing/page-hero';
-import { MarketingCheckItem } from '@/components/marketing/check-item';
-import { MarketingFeatureCard } from '@/components/marketing/feature-card';
+} from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { Container } from "@/components/container";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 import {
   MarketingPill,
   MarketingPillList,
-} from '@/components/marketing/pill-list';
-import { MarketingSectionHeader } from '@/components/marketing/section-header';
+} from "@/components/marketing/pill-list";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
 
 export const metadata: Metadata = {
-  title: 'SaaS Starters for Next.js',
+  title: "SaaS Starters for Next.js",
 
   description:
-    'Production-ready SaaS starters for Next.js. Validate your product with Starter Free, then upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and launch-ready architecture.',
+    "Production-ready SaaS starters for Next.js. Validate your product with Starter Free, then upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and launch-ready architecture.",
 
   alternates: {
-    canonical: '/starters',
+    canonical: "/starters",
   },
 
   openGraph: {
-    title: 'SaaS Starters for Next.js — PyColors',
+    title: "SaaS Starters for Next.js — PyColors",
     description:
-      'Validate your SaaS product with Starter Free. Upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and production-ready foundations.',
-    url: '/starters',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Validate your SaaS product with Starter Free. Upgrade to Starter Pro for authentication, Stripe billing, Prisma, PostgreSQL, and production-ready foundations.",
+    url: "/starters",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'SaaS Starters for Next.js — PyColors',
+    card: "summary_large_image",
+    title: "SaaS Starters for Next.js — PyColors",
     description:
-      'Production-ready SaaS starters built for modern Next.js products.',
-    images: ['/seo/twitter-main.png'],
+      "Production-ready SaaS starters built for modern Next.js products.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
 const INTERNAL = {
-  patterns: '/ui/patterns',
-  examples: '/ui/examples',
-  guides: '/guides',
-  pricing: '/pricing',
-  starterFree: '/starters/free',
-  starterPro: '/starters/pro',
-  docsStarter: '/docs/starter',
-  docsUpgrade: '/docs/starter/upgrade',
-  upgrade: '/upgrade',
+  patterns: "/ui/patterns",
+  examples: "/ui/examples",
+  guides: "/guides",
+  pricing: "/pricing",
+  starterFree: "/starters/free",
+  starterPro: "/starters/pro",
+  docsStarter: "/docs/starter",
+  docsUpgrade: "/docs/starter/upgrade",
+  upgrade: "/upgrade",
 } as const;
 
 const EXTERNAL = {
-  starterDemo: 'https://starter-demo.pycolors.io',
+  starterDemo: "https://starter-demo.pycolors.io",
 } as const;
 
-const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
-const regularPrice = PRODUCT_DISPLAY['starter-pro'].regularPriceLabel;
+const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
+const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
 
 const cardClass =
-  'rounded-[5px] border border-border-subtle bg-surface text-surface-foreground shadow-soft';
+  "rounded-[5px] border border-border-subtle bg-surface text-surface-foreground shadow-soft";
 
 const proCardClass =
-  'rounded-[5px] border border-pro-border bg-pro-surface text-surface-foreground shadow-medium';
+  "rounded-[5px] border border-pro-border bg-pro-surface text-surface-foreground shadow-medium";
 
 const primaryButtonClass =
-  'h-11 rounded-[5px] bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-brand-primary-hover';
+  "h-11 rounded-[5px] bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-brand-primary-hover";
 
 const starterFreeHighlights = [
-  'Production-shaped SaaS screens',
-  'Auth UX and account surfaces',
-  'Dashboard, CRUD, settings, billing',
-  'Mocked by design',
-  'No backend required',
-  'Fast product validation',
+  "Production-shaped SaaS screens",
+  "Auth UX and account surfaces",
+  "Dashboard, CRUD, settings, billing",
+  "Mocked by design",
+  "No backend required",
+  "Fast product validation",
 ] as const;
 
 const starterProHighlights = [
-  'Real authentication',
-  'Google and GitHub OAuth',
-  'Stripe Checkout',
-  'Billing portal and webhooks',
-  'Protected app architecture',
-  'Prisma + PostgreSQL foundation',
+  "Real authentication",
+  "Google and GitHub OAuth",
+  "Stripe Checkout",
+  "Billing portal and webhooks",
+  "Protected app architecture",
+  "Prisma + PostgreSQL foundation",
 ] as const;
 
 const comparison = [
   {
-    cap: 'Product surface',
-    free: 'Realistic SaaS screens and flows',
-    pro: 'Same surface with production wiring',
+    cap: "Product surface",
+    free: "Realistic SaaS screens and flows",
+    pro: "Same surface with production wiring",
   },
   {
-    cap: 'Authentication',
-    free: 'Screens, UX states, placeholders',
-    pro: 'Email/password, OAuth, sessions, protected routes',
+    cap: "Authentication",
+    free: "Screens, UX states, placeholders",
+    pro: "Email/password, OAuth, sessions, protected routes",
   },
   {
-    cap: 'Billing',
-    free: 'Billing screens and upgrade entrypoints',
-    pro: 'Stripe Checkout, portal, webhooks, invoices',
+    cap: "Billing",
+    free: "Billing screens and upgrade entrypoints",
+    pro: "Stripe Checkout, portal, webhooks, invoices",
   },
   {
-    cap: 'Backend',
-    free: 'Frontend-first with mock sources',
-    pro: 'Prisma, PostgreSQL, env foundations, integrations',
+    cap: "Backend",
+    free: "Frontend-first with mock sources",
+    pro: "Prisma, PostgreSQL, env foundations, integrations",
   },
   {
-    cap: 'Best for',
-    free: 'Validation, demos, product direction',
-    pro: 'Launch, revenue, customer onboarding',
+    cap: "Best for",
+    free: "Validation, demos, product direction",
+    pro: "Launch, revenue, customer onboarding",
   },
 ];
 
 const journey = [
   {
-    title: 'Explore',
-    heading: 'See the product surface',
-    text: 'Open the demo and understand the screens, flows, and UX direction before wiring infrastructure.',
+    title: "Explore",
+    heading: "See the product surface",
+    text: "Open the demo and understand the screens, flows, and UX direction before wiring infrastructure.",
     href: INTERNAL.starterFree,
-    cta: 'Open Starter Free',
-    tone: 'success',
+    cta: "Open Starter Free",
+    tone: "success",
     external: false,
   },
   {
-    title: 'Validate',
-    heading: 'Adapt the UX',
-    text: 'Use the free starter to test positioning, navigation, dashboard structure, billing entrypoints, and product credibility.',
+    title: "Validate",
+    heading: "Adapt the UX",
+    text: "Use the free starter to test positioning, navigation, dashboard structure, billing entrypoints, and product credibility.",
     href: EXTERNAL.starterDemo,
-    cta: 'View live demo',
+    cta: "View live demo",
     external: true,
-    tone: 'platform',
+    tone: "platform",
   },
   {
-    title: 'Decide',
-    heading: 'Measure the blocker',
-    text: 'When auth, billing, sessions, protected routes, and database foundations become the bottleneck, move to Pro.',
+    title: "Decide",
+    heading: "Measure the blocker",
+    text: "When auth, billing, sessions, protected routes, and database foundations become the bottleneck, move to Pro.",
     href: INTERNAL.pricing,
-    cta: 'View pricing',
-    tone: 'default',
+    cta: "View pricing",
+    tone: "default",
     external: false,
   },
   {
-    title: 'Launch',
-    heading: 'Buy the business layer',
-    text: 'Starter Pro helps you skip repeated SaaS wiring and focus on product logic, customers, onboarding, and growth.',
+    title: "Launch",
+    heading: "Buy the business layer",
+    text: "Starter Pro helps you skip repeated SaaS wiring and focus on product logic, customers, onboarding, and growth.",
     href: INTERNAL.starterPro,
-    cta: 'Explore Pro',
-    tone: 'pro',
+    cta: "Explore Pro",
+    tone: "pro",
     external: false,
   },
 ] as const;
@@ -180,21 +180,21 @@ function ResourceCard({
   description,
   href,
   cta,
-  tone = 'default',
+  tone = "default",
 }: {
   readonly icon: React.ReactNode;
   readonly title: string;
   readonly description: string;
   readonly href: string;
   readonly cta: string;
-  readonly tone?: 'default' | 'platform' | 'success' | 'pro';
+  readonly tone?: "default" | "platform" | "success" | "pro";
 }) {
   return (
     <MarketingFeatureCard
       title={title}
       description={description}
       icon={icon}
-      tone={tone === 'default' ? 'neutral' : tone}
+      tone={tone === "default" ? "neutral" : tone}
       action={
         <Button
           asChild
@@ -232,24 +232,20 @@ function StarterCard({
   readonly pro?: boolean;
 }) {
   return (
-    <Card className={cn(pro ? proCardClass : cardClass, 'p-6')}>
+    <Card className={cn(pro ? proCardClass : cardClass, "p-6")}>
       <CardHeader className="space-y-4 px-0 pt-0">
         <div className="space-y-3">
           <div>{badge}</div>
 
           <div>
             <CardTitle className="text-xl">{title}</CardTitle>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {subtitle}
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-6 px-0 pb-0">
-        <p className="text-sm leading-7 text-muted-foreground">
-          {description}
-        </p>
+        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
 
         <ul className="grid gap-2 sm:grid-cols-2">
           {highlights.map((item) => (
@@ -277,19 +273,19 @@ export default function StartersPage() {
             maxWidth="5xl"
             badges={[
               {
-                label: 'Starter Free available',
-                variant: 'secondary',
+                label: "Starter Free available",
+                variant: "secondary",
                 icon: (
                   <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                 ),
               },
               {
                 label: `Starter Pro ${launchPrice}`,
-                variant: 'outline',
+                variant: "outline",
               },
               {
                 label: `${regularPrice} regular price`,
-                variant: 'outline',
+                variant: "outline",
               },
             ]}
             title="Start free. Upgrade when launch friction appears."
@@ -297,14 +293,8 @@ export default function StartersPage() {
             description="PyColors starters give you a clear path: use Starter Free to explore product UX, dashboards, settings, billing screens, and CRUD flows. Move to Starter Pro when you need real authentication, Stripe billing, Prisma foundations, protected routes, and a faster path to revenue."
             actions={
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <Button
-                  asChild
-                  size="lg"
-                  className={primaryButtonClass}
-                >
-                  <Link href={INTERNAL.starterFree}>
-                    Open Starter Free
-                  </Link>
+                <Button asChild size="lg" className={primaryButtonClass}>
+                  <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                 </Button>
 
                 <BuyStarterProButton
@@ -324,10 +314,7 @@ export default function StartersPage() {
                     rel="noreferrer noopener"
                   >
                     Try the live demo
-                    <ExternalLink
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
+                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
                   </a>
                 </Button>
 
@@ -342,11 +329,11 @@ export default function StartersPage() {
               </div>
             }
             pills={[
-              'Validation-first',
-              'Production-shaped UX',
-              'Real upgrade path',
-              'Auth + billing in Pro',
-              'Built on PyColors UI',
+              "Validation-first",
+              "Production-shaped UX",
+              "Real upgrade path",
+              "Auth + billing in Pro",
+              "Built on PyColors UI",
             ]}
             extra={
               <ul className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
@@ -377,10 +364,7 @@ export default function StartersPage() {
                       <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                       Free
                     </Badge>
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
+                    <Badge variant="outline" className="rounded-[5px]">
                       Validate first
                     </Badge>
                   </div>
@@ -390,14 +374,8 @@ export default function StartersPage() {
                 description="A production-shaped SaaS surface with auth screens, dashboard, CRUD patterns, settings, billing entrypoints, and B2B member management. Mocked by design so you can move fast without infrastructure overhead."
                 highlights={starterFreeHighlights}
                 primaryAction={
-                  <Button
-                    asChild
-                    size="lg"
-                    className={primaryButtonClass}
-                  >
-                    <Link href={INTERNAL.starterFree}>
-                      Open Starter Free
-                    </Link>
+                  <Button asChild size="lg" className={primaryButtonClass}>
+                    <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                   </Button>
                 }
                 secondaryAction={
@@ -454,10 +432,7 @@ export default function StartersPage() {
                   >
                     <Link href={INTERNAL.starterPro}>
                       Explore Starter Pro
-                      <ArrowRight
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
+                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                     </Link>
                   </Button>
                 }
@@ -482,7 +457,7 @@ export default function StartersPage() {
               }
             />
 
-            <Card className={cn(cardClass, 'p-6 sm:p-7')}>
+            <Card className={cn(cardClass, "p-6 sm:p-7")}>
               <div className="overflow-hidden rounded-[5px] border border-border-subtle">
                 <div className="grid grid-cols-1 bg-surface-muted sm:grid-cols-3">
                   <div className="border-b border-border-subtle px-4 py-2 text-xs font-medium text-muted-foreground sm:border-b-0 sm:border-r">
@@ -515,14 +490,8 @@ export default function StartersPage() {
               </div>
 
               <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  className={primaryButtonClass}
-                >
-                  <Link href={INTERNAL.starterFree}>
-                    Start with Free
-                  </Link>
+                <Button asChild size="lg" className={primaryButtonClass}>
+                  <Link href={INTERNAL.starterFree}>Start with Free</Link>
                 </Button>
 
                 <BuyStarterProButton
@@ -542,10 +511,7 @@ export default function StartersPage() {
                     rel="noreferrer noopener"
                   >
                     Try the live demo
-                    <ExternalLink
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
+                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
                   </a>
                 </Button>
               </div>
@@ -566,21 +532,19 @@ export default function StartersPage() {
                   key={item.title}
                   className={cn(
                     cardClass,
-                    'p-5',
-                    item.tone === 'platform' &&
-                      'border-platform-border-subtle',
-                    item.tone === 'success' &&
-                      'border-success-border-subtle',
-                    item.tone === 'pro' && 'border-pro-border-subtle',
+                    "p-5",
+                    item.tone === "platform" && "border-platform-border-subtle",
+                    item.tone === "success" && "border-success-border-subtle",
+                    item.tone === "pro" && "border-pro-border-subtle",
                   )}
                 >
                   <div className="space-y-3">
                     <div
                       className={cn(
-                        'text-xs font-medium text-muted-foreground',
-                        item.tone === 'platform' && 'text-platform',
-                        item.tone === 'success' && 'text-success',
-                        item.tone === 'pro' && 'text-primary',
+                        "text-xs font-medium text-muted-foreground",
+                        item.tone === "platform" && "text-platform",
+                        item.tone === "success" && "text-success",
+                        item.tone === "pro" && "text-primary",
                       )}
                     >
                       {index + 1}. {item.title}
@@ -600,13 +564,12 @@ export default function StartersPage() {
                         size="lg"
                         variant="outline"
                         className={cn(
-                          'h-11 rounded-[5px] px-5 text-sm font-medium',
-                          item.tone === 'platform' &&
-                            'border-platform-border-subtle',
-                          item.tone === 'success' &&
-                            'border-success-border-subtle',
-                          item.tone === 'pro' &&
-                            'border-pro-border-subtle',
+                          "h-11 rounded-[5px] px-5 text-sm font-medium",
+                          item.tone === "platform" &&
+                            "border-platform-border-subtle",
+                          item.tone === "success" &&
+                            "border-success-border-subtle",
+                          item.tone === "pro" && "border-pro-border-subtle",
                         )}
                       >
                         {item.external ? (
@@ -639,9 +602,7 @@ export default function StartersPage() {
             <div className="grid gap-4 lg:grid-cols-3">
               <ResourceCard
                 tone="platform"
-                icon={
-                  <BookOpen className="h-4 w-4" aria-hidden="true" />
-                }
+                icon={<BookOpen className="h-4 w-4" aria-hidden="true" />}
                 title="Guides"
                 description="Learn how SaaS products structure dashboards, auth, billing, team systems, project and admin surfaces."
                 href={INTERNAL.guides}
@@ -649,12 +610,7 @@ export default function StartersPage() {
               />
 
               <ResourceCard
-                icon={
-                  <LayoutTemplate
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                }
+                icon={<LayoutTemplate className="h-4 w-4" aria-hidden="true" />}
                 title="UI Patterns"
                 description="Explore production-shaped interface patterns before choosing how your own product should feel."
                 href={INTERNAL.patterns}
@@ -663,9 +619,7 @@ export default function StartersPage() {
 
               <ResourceCard
                 tone="success"
-                icon={
-                  <Sparkles className="h-4 w-4" aria-hidden="true" />
-                }
+                icon={<Sparkles className="h-4 w-4" aria-hidden="true" />}
                 title="Examples"
                 description="Study real SaaS surface directions and what is already available today through Starter Free."
                 href={INTERNAL.examples}
@@ -694,12 +648,7 @@ export default function StartersPage() {
 
               <ResourceCard
                 tone="pro"
-                icon={
-                  <CreditCard
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                }
+                icon={<CreditCard className="h-4 w-4" aria-hidden="true" />}
                 title="Billing"
                 description="Stripe Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle flows."
                 href={INTERNAL.starterPro}
@@ -709,10 +658,7 @@ export default function StartersPage() {
               <ResourceCard
                 tone="pro"
                 icon={
-                  <LayoutDashboard
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
                 }
                 title="Protected app"
                 description="Protected app architecture, account areas, settings, billing-aware surfaces, and launch-ready foundations."
@@ -723,7 +669,7 @@ export default function StartersPage() {
           </section>
 
           <section className="mt-10">
-            <Card className={cn(proCardClass, 'p-6 sm:p-8')}>
+            <Card className={cn(proCardClass, "p-6 sm:p-8")}>
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 <div className="max-w-2xl space-y-3">
                   <Badge
@@ -734,15 +680,14 @@ export default function StartersPage() {
                   </Badge>
 
                   <h2 className="text-2xl font-semibold tracking-tight">
-                    Start with the surface. Buy Pro when the business
-                    layer matters.
+                    Start with the surface. Buy Pro when the business layer
+                    matters.
                   </h2>
 
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Use Starter Free now to validate UX. Move to
-                    Starter Pro when you want real authentication,
-                    Stripe billing, protected architecture, and the
-                    path to revenue shortened.
+                    Use Starter Free now to validate UX. Move to Starter Pro
+                    when you want real authentication, Stripe billing, protected
+                    architecture, and the path to revenue shortened.
                   </p>
 
                   <MarketingPillList aria-label="Starter decision points">
@@ -760,9 +705,7 @@ export default function StartersPage() {
                     variant="outline"
                     className="h-11 rounded-[5px] px-6 text-sm font-medium"
                   >
-                    <Link href={INTERNAL.starterFree}>
-                      Open Starter Free
-                    </Link>
+                    <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                   </Button>
 
                   <BuyStarterProButton
@@ -792,7 +735,7 @@ export default function StartersPage() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Starter docs live under{' '}
+              Starter docs live under{" "}
               <Link
                 href={INTERNAL.docsStarter}
                 className="font-mono text-foreground underline underline-offset-4"

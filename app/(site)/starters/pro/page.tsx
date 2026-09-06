@@ -20,14 +20,7 @@ import {
   WifiOff,
 } from "lucide-react";
 
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  cn,
-} from "@pycolors/ui";
+import { Badge, Button, Card, CardContent, CardHeader, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
 import { Container } from "@/components/container";
@@ -1096,7 +1089,9 @@ export default function StarterProPage() {
                     </p>
                     <ul className="mt-4 grid gap-3">
                       {perfectFor.map((item) => (
-                        <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
+                        <MarketingCheckItem key={item}>
+                          {item}
+                        </MarketingCheckItem>
                       ))}
                     </ul>
                   </div>
@@ -1314,12 +1309,24 @@ export default function StarterProPage() {
 
               <CardContent className="space-y-8">
                 <ul className="grid gap-3 sm:grid-cols-2">
-                  <MarketingCheckItem>Full Starter Pro source code</MarketingCheckItem>
-                  <MarketingCheckItem>Real authentication included</MarketingCheckItem>
-                  <MarketingCheckItem>Stripe billing included</MarketingCheckItem>
-                  <MarketingCheckItem>Protected architecture included</MarketingCheckItem>
-                  <MarketingCheckItem>Prisma + PostgreSQL foundation</MarketingCheckItem>
-                  <MarketingCheckItem>Commercial usage rights</MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Full Starter Pro source code
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Real authentication included
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Stripe billing included
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Protected architecture included
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Prisma + PostgreSQL foundation
+                  </MarketingCheckItem>
+                  <MarketingCheckItem>
+                    Commercial usage rights
+                  </MarketingCheckItem>
                 </ul>
 
                 <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 text-sm leading-7 text-muted-foreground">
@@ -1472,13 +1479,16 @@ export default function StarterProPage() {
                 already be handled.
               </p>
 
-                <MarketingPillList align="center" aria-label="Starter Pro purchase details">
+              <MarketingPillList
+                align="center"
+                aria-label="Starter Pro purchase details"
+              >
                 <MarketingPill>Launch price {launchPrice}</MarketingPill>
                 <MarketingPill>One-time payment</MarketingPill>
                 <MarketingPill>Secure claim email</MarketingPill>
                 <MarketingPill>Commercial usage</MarketingPill>
                 <MarketingPill>PWA-ready</MarketingPill>
-                </MarketingPillList>
+              </MarketingPillList>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <BuyStarterProButton
