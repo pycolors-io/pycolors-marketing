@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  Check,
   CreditCard,
   Eye,
   ExternalLink,
@@ -18,6 +17,9 @@ import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingPill, MarketingPillList } from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Examples',
@@ -139,79 +141,6 @@ const proofPoints = [
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0 sm:self-start">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
 function AvailableNowCard() {
   return (
     <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
@@ -243,12 +172,12 @@ function AvailableNowCard() {
             </div>
 
             <ul className="grid gap-2 sm:grid-cols-2">
-              <CheckItem>Dashboard surface</CheckItem>
-              <CheckItem>Auth UX screens</CheckItem>
-              <CheckItem>CRUD patterns</CheckItem>
-              <CheckItem>Billing entrypoints</CheckItem>
-              <CheckItem>Settings surface</CheckItem>
-              <CheckItem>Admin/member flows</CheckItem>
+              <MarketingCheckItem>Dashboard surface</MarketingCheckItem>
+              <MarketingCheckItem>Auth UX screens</MarketingCheckItem>
+              <MarketingCheckItem>CRUD patterns</MarketingCheckItem>
+              <MarketingCheckItem>Billing entrypoints</MarketingCheckItem>
+              <MarketingCheckItem>Settings surface</MarketingCheckItem>
+              <MarketingCheckItem>Admin/member flows</MarketingCheckItem>
             </ul>
           </div>
 
@@ -436,7 +365,7 @@ export default function ExamplesPage() {
           extra={
             <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-3">
               {proofPoints.map((point) => (
-                <CheckItem key={point}>{point}</CheckItem>
+                <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
               ))}
             </div>
           }
@@ -510,11 +439,13 @@ export default function ExamplesPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    <Pill>Runnable example</Pill>
-                    <Pill>Product-shaped UX</Pill>
-                    <Pill>Honest availability</Pill>
-                    <Pill>Upgrade path</Pill>
-                    <Pill>Conversion-aware</Pill>
+                    <MarketingPillList aria-label="Example benefits">
+                      <MarketingPill>Runnable example</MarketingPill>
+                      <MarketingPill>Product-shaped UX</MarketingPill>
+                      <MarketingPill>Honest availability</MarketingPill>
+                      <MarketingPill>Upgrade path</MarketingPill>
+                      <MarketingPill>Conversion-aware</MarketingPill>
+                    </MarketingPillList>
                   </div>
                 </div>
               </div>
@@ -523,8 +454,9 @@ export default function ExamplesPage() {
         </section>
 
         <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Available now"
+            align="left"
             title="What you can actually explore today"
             description="Starter Free is the current runnable example of the PyColors product direction."
           />
@@ -533,8 +465,9 @@ export default function ExamplesPage() {
         </section>
 
         <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Example directions"
+            align="left"
             title="Where the ecosystem is designed to go next"
             description="These are not random inspiration cards. They reflect the kinds of SaaS products PyColors patterns and starters are built to support."
             action={
@@ -560,7 +493,7 @@ export default function ExamplesPage() {
         </section>
 
         <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="How examples fit the PyColors path"
             title="Examples are not just inspiration. They help you see the product before the business layer is wired."
             description="The point is to shorten the distance between product imagination and product execution."
@@ -625,10 +558,12 @@ export default function ExamplesPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Pill>Starter Free validates UX</Pill>
-                  <Pill>Starter Pro wires auth</Pill>
-                  <Pill>Starter Pro wires billing</Pill>
-                  <Pill>Launch price {launchPrice}</Pill>
+                  <MarketingPillList aria-label="Example path">
+                    <MarketingPill>Starter Free validates UX</MarketingPill>
+                    <MarketingPill>Starter Pro wires auth</MarketingPill>
+                    <MarketingPill>Starter Pro wires billing</MarketingPill>
+                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
+                  </MarketingPillList>
                 </div>
               </div>
 

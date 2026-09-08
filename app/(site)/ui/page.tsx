@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  Check,
   CreditCard,
   ExternalLink,
   Layers3,
@@ -17,6 +16,14 @@ import { Badge, Button, Card, cn } from '@pycolors/ui';
 import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { NpmBadges } from '@/components/npm-badges';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingFeatureCard } from '@/components/marketing/feature-card';
+import {
+  MarketingPill,
+  MarketingPillList,
+} from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
+import { MarketingStatCard } from '@/components/marketing/stat-card';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
@@ -50,118 +57,6 @@ const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
-
-function Pill({ label }: { readonly label: string }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
-      {label}
-    </span>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function Stat({
-  label,
-  value,
-}: {
-  readonly label: string;
-  readonly value: string;
-}) {
-  return (
-    <div className="rounded-[5px] border border-border-subtle bg-surface px-4 py-4 shadow-soft">
-      <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-        {label}
-      </div>
-      <div className="mt-2 text-sm font-semibold text-foreground">
-        {value}
-      </div>
-    </div>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-}) {
-  return (
-    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <div className="max-w-3xl space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {action ? (
-        <div className="shrink-0 sm:self-start">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
-function ValueCard({
-  icon: Icon,
-  title,
-  description,
-}: {
-  readonly icon: React.ComponentType<{ className?: string }>;
-  readonly title: string;
-  readonly description: string;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface p-6 shadow-soft transition-colors hover:border-border">
-      <div className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-muted-foreground">
-          <Icon className="h-5 w-5" />
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="text-base font-semibold tracking-tight">
-            {title}
-          </h3>
-          <p className="text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        </div>
-      </div>
-    </Card>
-  );
-}
 
 function SurfaceCard({
   title,
@@ -436,17 +331,21 @@ export default function UiPage() {
           extra={
             <>
               <div className="mx-auto grid w-full max-w-3xl gap-3 sm:grid-cols-3">
-                <Stat label="Current version" value={versionLabel} />
-                <Stat label="Workflow" value="UI → Free → Pro" />
-                <Stat label="Goal" value="SaaS launch path" />
+                <MarketingStatCard label="Current version" value={versionLabel} />
+                <MarketingStatCard label="Workflow" value="UI → Free → Pro" />
+                <MarketingStatCard label="Goal" value="SaaS launch path" />
               </div>
 
-              <div className="mt-8 flex flex-wrap justify-center gap-2">
-                <Pill label="Semantic tokens" />
-                <Pill label="Accessible primitives" />
-                <Pill label="Product states" />
-                <Pill label="Starter-ready" />
-              </div>
+              <MarketingPillList
+                align="center"
+                aria-label="UI capabilities"
+                className="mt-8"
+              >
+                <MarketingPill>Semantic tokens</MarketingPill>
+                <MarketingPill>Accessible primitives</MarketingPill>
+                <MarketingPill>Product states</MarketingPill>
+                <MarketingPill>Starter-ready</MarketingPill>
+              </MarketingPillList>
 
               <div className="mt-6 flex justify-center">
                 <a
@@ -541,17 +440,18 @@ export default function UiPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Why this matters"
+            align="left"
             title="A UI system should shorten the path to a credible product."
             description="The value is not only in components. The value is in making the product feel coherent, trustworthy, documented, tested, and ready to evolve."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {proofPoints.map((item) => (
-              <ValueCard
+              <MarketingFeatureCard
                 key={item.title}
-                icon={item.icon}
+                icon={<item.icon className="h-5 w-5" />}
                 title={item.title}
                 description={item.description}
               />
@@ -560,8 +460,9 @@ export default function UiPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="What you can ship"
+            align="left"
             title="Real product surfaces, not isolated component demos."
             description="This is where PyColors becomes more valuable than a generic UI kit: the components are shown inside SaaS flows."
           />
@@ -582,8 +483,9 @@ export default function UiPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Component proof"
+            align="left"
             title={`A stronger baseline in ${versionLabel}`}
             description="Enough depth to start quickly, enough quality to support real product work."
             action={
@@ -716,10 +618,10 @@ export default function UiPage() {
                 </p>
 
                 <ul className="grid gap-2 sm:grid-cols-2">
-                  <CheckItem>Real authentication in Pro</CheckItem>
-                  <CheckItem>Stripe billing in Pro</CheckItem>
-                  <CheckItem>Protected routes in Pro</CheckItem>
-                  <CheckItem>Prisma foundation in Pro</CheckItem>
+                  <MarketingCheckItem>Real authentication in Pro</MarketingCheckItem>
+                  <MarketingCheckItem>Stripe billing in Pro</MarketingCheckItem>
+                  <MarketingCheckItem>Protected routes in Pro</MarketingCheckItem>
+                  <MarketingCheckItem>Prisma foundation in Pro</MarketingCheckItem>
                 </ul>
               </div>
 

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  Check,
   ExternalLink,
   Sparkles,
 } from 'lucide-react';
@@ -12,6 +11,9 @@ import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 import { Container } from '@/components/container';
 import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 import { PageHero } from '@/components/marketing/page-hero';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingPill, MarketingPillList } from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS UI Patterns',
@@ -123,79 +125,6 @@ const proofPoints = [
 
 const focusRing =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
-
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0 sm:self-start">{action}</div>
-      ) : null}
-    </div>
-  );
-}
 
 function PatternCard({ title, description, tag, category }: Pattern) {
   return (
@@ -318,7 +247,7 @@ export default function PatternsPage() {
           extra={
             <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-3">
               {proofPoints.map((point) => (
-                <CheckItem key={point}>{point}</CheckItem>
+                <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
               ))}
             </div>
           }
@@ -393,11 +322,13 @@ export default function PatternsPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    <Pill>Product-shaped UX</Pill>
-                    <Pill>Reusable SaaS surfaces</Pill>
-                    <Pill>Starter Free ready</Pill>
-                    <Pill>Upgrade path</Pill>
-                    <Pill>Conversion-aware</Pill>
+                    <MarketingPillList aria-label="Pattern benefits">
+                      <MarketingPill>Product-shaped UX</MarketingPill>
+                      <MarketingPill>Reusable SaaS surfaces</MarketingPill>
+                      <MarketingPill>Starter Free ready</MarketingPill>
+                      <MarketingPill>Upgrade path</MarketingPill>
+                      <MarketingPill>Conversion-aware</MarketingPill>
+                    </MarketingPillList>
                   </div>
                 </div>
               </div>
@@ -406,7 +337,7 @@ export default function PatternsPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Patterns"
             title="Core SaaS surfaces"
             description="Dashboards, billing, settings, teams, protected areas, and upgrade moments used in real SaaS products."
@@ -430,7 +361,7 @@ export default function PatternsPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Path"
             title="From UI primitive to launch-ready SaaS."
             description="Patterns turn components into structure. Starter Free turns structure into a runnable product surface. Starter Pro wires the business layer."
@@ -526,14 +457,14 @@ export default function PatternsPage() {
                   </p>
 
                   <ul className="grid gap-2 sm:grid-cols-2">
-                    <CheckItem>UI primitives and tokens</CheckItem>
-                    <CheckItem>Reusable SaaS surfaces</CheckItem>
-                    <CheckItem>
+                    <MarketingCheckItem>UI primitives and tokens</MarketingCheckItem>
+                    <MarketingCheckItem>Reusable SaaS surfaces</MarketingCheckItem>
+                    <MarketingCheckItem>
                       Runnable Starter Free product
-                    </CheckItem>
-                    <CheckItem>
+                    </MarketingCheckItem>
+                    <MarketingCheckItem>
                       Starter Pro auth and billing
-                    </CheckItem>
+                    </MarketingCheckItem>
                   </ul>
 
                   <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
@@ -601,10 +532,12 @@ export default function PatternsPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Pill>Free validates UX</Pill>
-                  <Pill>Pro wires auth</Pill>
-                  <Pill>Pro wires billing</Pill>
-                  <Pill>Launch price {launchPrice}</Pill>
+                  <MarketingPillList aria-label="Pattern path">
+                    <MarketingPill>Free validates UX</MarketingPill>
+                    <MarketingPill>Pro wires auth</MarketingPill>
+                    <MarketingPill>Pro wires billing</MarketingPill>
+                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
+                  </MarketingPillList>
                 </div>
               </div>
 
