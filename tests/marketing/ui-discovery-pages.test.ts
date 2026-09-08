@@ -36,7 +36,7 @@ describe("UI discovery page composition contracts", () => {
       /canonical:\s*['"]\/ui\/patterns['"]/u,
     );
     expect(readPage("examples/page.tsx")).toMatch(
-      /canonical:\s*['"]\/ui\/examples['"]/u,
+      /canonical:\s*['"]\/examples['"]/u,
     );
 
     expect(readPage("page.tsx")).toContain("@pycolors/ui");
