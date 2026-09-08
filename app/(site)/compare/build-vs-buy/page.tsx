@@ -1,5 +1,5 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+import Link from 'next/link';
+import type { Metadata } from 'next';
 import {
   ArrowRight,
   Clock,
@@ -10,7 +10,7 @@ import {
   Lock,
   ShieldCheck,
   TriangleAlert,
-} from "lucide-react";
+} from 'lucide-react';
 
 import {
   Badge,
@@ -22,140 +22,140 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pycolors/ui";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+} from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
-import { Container } from "@/components/container";
-import { MarketingCheckItem } from "@/components/marketing/check-item";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
-import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { MarketingSectionShell } from "@/components/marketing/section-shell";
-import { PageHero } from "@/components/marketing/page-hero";
-import { Breadcrumb } from "@/components/seo/breadcrumb";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { Container } from '@/components/container';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingFeatureCard } from '@/components/marketing/feature-card';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
+import { MarketingSectionShell } from '@/components/marketing/section-shell';
+import { PageHero } from '@/components/marketing/page-hero';
+import { Breadcrumb } from '@/components/seo/breadcrumb';
+import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
 
 export const metadata: Metadata = {
-  title: "Build vs Buy a Next.js SaaS Starter",
+  title: 'Build vs Buy a Next.js SaaS Starter',
   description:
-    "Compare building a Next.js SaaS starter from scratch with buying PyColors Starter Pro. Understand time, cost, scope, tradeoffs, and when each path makes sense.",
+    'Compare building a Next.js SaaS starter from scratch with buying PyColors Starter Pro. Understand time, cost, scope, tradeoffs, and when each path makes sense.',
   alternates: {
-    canonical: "/compare/build-vs-buy",
+    canonical: '/compare/build-vs-buy',
   },
   openGraph: {
-    title: "Build vs Buy a Next.js SaaS Starter",
+    title: 'Build vs Buy a Next.js SaaS Starter',
     description:
-      "A sober comparison of building SaaS foundations yourself versus using PyColors Starter Pro for auth, billing, protected routes, Prisma, and launch-ready structure.",
-    url: "/compare/build-vs-buy",
-    siteName: "PyColors",
-    type: "website",
-    images: ["/seo/og-main.png"],
+      'A sober comparison of building SaaS foundations yourself versus using PyColors Starter Pro for auth, billing, protected routes, Prisma, and launch-ready structure.',
+    url: '/compare/build-vs-buy',
+    siteName: 'PyColors',
+    type: 'website',
+    images: ['/seo/og-main.png'],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Build vs Buy a Next.js SaaS Starter",
+    card: 'summary_large_image',
+    title: 'Build vs Buy a Next.js SaaS Starter',
     description:
-      "Compare the tradeoffs of building SaaS foundations from scratch versus starting with PyColors Starter Pro.",
-    images: ["/seo/twitter-main.png"],
+      'Compare the tradeoffs of building SaaS foundations from scratch versus starting with PyColors Starter Pro.',
+    images: ['/seo/twitter-main.png'],
   },
 };
 
-const starterProPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
+const starterProPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const scratchItems = [
-  "You need unusual architecture, custom infrastructure, or internal platform constraints.",
-  "The starter itself is part of your product advantage and needs full ownership from day one.",
-  "You have enough engineering time to build, test, document, and maintain the foundation.",
-  "You want every auth, billing, data, and deployment decision to match an existing team standard.",
+  'You need unusual architecture, custom infrastructure, or internal platform constraints.',
+  'The starter itself is part of your product advantage and needs full ownership from day one.',
+  'You have enough engineering time to build, test, document, and maintain the foundation.',
+  'You want every auth, billing, data, and deployment decision to match an existing team standard.',
 ] as const;
 
 const buyItems = [
-  "You want to start from a working SaaS foundation instead of a blank repository.",
-  "You need authentication, Stripe billing, protected routes, Prisma, and product surfaces shaped together.",
-  "You value faster validation more than full control over every early technical decision.",
-  "You are comfortable adapting an opinionated foundation to your own product requirements.",
+  'You want to start from a working SaaS foundation instead of a blank repository.',
+  'You need authentication, Stripe billing, protected routes, Prisma, and product surfaces shaped together.',
+  'You value faster validation more than full control over every early technical decision.',
+  'You are comfortable adapting an opinionated foundation to your own product requirements.',
 ] as const;
 
 const comparisonRows = [
   {
-    factor: "Initial setup",
+    factor: 'Initial setup',
     scratch:
-      "You choose and wire every package, route, model, and integration.",
-    pro: "Starter Pro starts with the core SaaS wiring already shaped.",
+      'You choose and wire every package, route, model, and integration.',
+    pro: 'Starter Pro starts with the core SaaS wiring already shaped.',
   },
   {
-    factor: "Auth and account flows",
+    factor: 'Auth and account flows',
     scratch:
-      "Requires provider setup, sessions, verification, reset flows, and protected route decisions.",
-    pro: "Includes Auth.js foundations, OAuth, credentials, verification, reset, sessions, and protected routes.",
+      'Requires provider setup, sessions, verification, reset flows, and protected route decisions.',
+    pro: 'Includes Auth.js foundations, OAuth, credentials, verification, reset, sessions, and protected routes.',
   },
   {
-    factor: "Billing foundation",
+    factor: 'Billing foundation',
     scratch:
-      "Requires checkout, portal, webhook handling, subscription state, invoices, and recovery paths.",
-    pro: "Includes Stripe checkout, billing portal, webhook sync, invoices, lifecycle handling, and recovery surfaces.",
+      'Requires checkout, portal, webhook handling, subscription state, invoices, and recovery paths.',
+    pro: 'Includes Stripe checkout, billing portal, webhook sync, invoices, lifecycle handling, and recovery surfaces.',
   },
   {
-    factor: "Time profile",
+    factor: 'Time profile',
     scratch:
-      "Often measured in focused engineering weeks before the product-specific work is stable.",
-    pro: "Moves repeated foundation work earlier so product-specific work can start sooner.",
+      'Often measured in focused engineering weeks before the product-specific work is stable.',
+    pro: 'Moves repeated foundation work earlier so product-specific work can start sooner.',
   },
   {
-    factor: "Cost profile",
+    factor: 'Cost profile',
     scratch:
-      "Lower cash cost, higher engineering cost, and more maintenance responsibility.",
+      'Lower cash cost, higher engineering cost, and more maintenance responsibility.',
     pro: `${starterProPrice} launch price, plus the time needed to review, adapt, and maintain it.`,
   },
   {
-    factor: "Control",
+    factor: 'Control',
     scratch:
-      "Maximum control over architecture, naming, dependencies, and tradeoffs.",
-    pro: "Practical control after purchase, with an existing structure to adapt rather than invent.",
+      'Maximum control over architecture, naming, dependencies, and tradeoffs.',
+    pro: 'Practical control after purchase, with an existing structure to adapt rather than invent.',
   },
 ] as const;
 
 const includedItems = [
   {
-    title: "Authentication foundation",
+    title: 'Authentication foundation',
     description:
-      "Email/password auth, Google and GitHub OAuth, verification, password reset, sessions, and protected routes.",
+      'Email/password auth, Google and GitHub OAuth, verification, password reset, sessions, and protected routes.',
     icon: Lock,
   },
   {
-    title: "Stripe billing foundation",
+    title: 'Stripe billing foundation',
     description:
-      "Checkout, billing portal, invoices, subscription lifecycle handling, webhook synchronization, and recovery paths.",
+      'Checkout, billing portal, invoices, subscription lifecycle handling, webhook synchronization, and recovery paths.',
     icon: CreditCard,
   },
   {
-    title: "Database and backend baseline",
+    title: 'Database and backend baseline',
     description:
-      "Prisma, PostgreSQL foundations, typed boundaries, validation patterns, and production-oriented server structure.",
+      'Prisma, PostgreSQL foundations, typed boundaries, validation patterns, and production-oriented server structure.',
     icon: Database,
   },
   {
-    title: "Product-shaped surfaces",
+    title: 'Product-shaped surfaces',
     description:
-      "Dashboard, settings, billing, admin, protected app structure, and documentation that make the starter easier to evaluate.",
+      'Dashboard, settings, billing, admin, protected app structure, and documentation that make the starter easier to evaluate.',
     icon: Code2,
   },
 ] as const;
 
 const risks = [
   {
-    title: "Buying is not a substitute for product judgment",
+    title: 'Buying is not a substitute for product judgment',
     description:
-      "Starter Pro gives you a foundation. You still need to design onboarding, pricing, product logic, support flows, and customer experience.",
+      'Starter Pro gives you a foundation. You still need to design onboarding, pricing, product logic, support flows, and customer experience.',
   },
   {
-    title: "Opinionated structure means adaptation work",
+    title: 'Opinionated structure means adaptation work',
     description:
-      "You should expect to read the code, remove what you do not need, and align naming, flows, and architecture with your product.",
+      'You should expect to read the code, remove what you do not need, and align naming, flows, and architecture with your product.',
   },
   {
-    title: "Building still wins for unusual constraints",
+    title: 'Building still wins for unusual constraints',
     description:
-      "If your product requires a very specific infrastructure, auth model, billing model, or compliance posture, building from scratch can be the better path.",
+      'If your product requires a very specific infrastructure, auth model, billing model, or compliance posture, building from scratch can be the better path.',
   },
 ] as const;
 
@@ -166,11 +166,11 @@ export default function BuildVsBuyComparisonPage() {
         <div className="mb-8">
           <Breadcrumb
             items={[
-              { label: "Home", href: "/" },
-              { label: "Compare", href: "/compare/build-vs-buy" },
+              { label: 'Home', href: '/' },
+              { label: 'Compare', href: '/compare/build-vs-buy' },
               {
-                label: "Build vs Buy",
-                href: "/compare/build-vs-buy",
+                label: 'Build vs Buy',
+                href: '/compare/build-vs-buy',
               },
             ]}
           />
@@ -180,12 +180,12 @@ export default function BuildVsBuyComparisonPage() {
           maxWidth="5xl"
           badges={[
             {
-              label: "Comparison",
+              label: 'Comparison',
               icon: <GitBranch className="h-3.5 w-3.5" />,
             },
             {
-              label: "Starter Pro",
-              variant: "secondary",
+              label: 'Starter Pro',
+              variant: 'secondary',
               icon: <ShieldCheck className="h-3.5 w-3.5" />,
             },
           ]}
@@ -207,10 +207,10 @@ export default function BuildVsBuyComparisonPage() {
             </>
           }
           pills={[
-            "No magic claims",
-            "No fake ROI math",
-            "Auth + billing focus",
-            "Developer-first tradeoffs",
+            'No magic claims',
+            'No fake ROI math',
+            'Auth + billing focus',
+            'Developer-first tradeoffs',
           ]}
         />
 

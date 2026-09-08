@@ -56,8 +56,8 @@ describe("template and product-decision page composition contracts", () => {
       "generateProductOfferJsonLd",
     );
     expect(readPage("upgrade/page.tsx")).toContain("BuyStarterProButton");
-    expect(readPage("compare/build-vs-buy/page.tsx")).toContain(
-      'PRODUCT_DISPLAY["starter-pro"].priceLabel',
+    expect(readPage("compare/build-vs-buy/page.tsx")).toMatch(
+      /PRODUCT_DISPLAY\[['"]starter-pro['"]\]\.priceLabel/u,
     );
   });
 });

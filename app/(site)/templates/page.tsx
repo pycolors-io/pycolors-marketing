@@ -1,5 +1,5 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+import Link from 'next/link';
+import type { Metadata } from 'next';
 import {
   ArrowRight,
   Boxes,
@@ -14,50 +14,50 @@ import {
   Sparkles,
   Workflow,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { Badge, Button, Card, CardContent } from "@pycolors/ui";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { Badge, Button, Card, CardContent } from '@pycolors/ui';
+import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
 
-import { Container } from "@/components/container";
-import { MarketingCheckItem } from "@/components/marketing/check-item";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import { Container } from '@/components/container';
+import { MarketingCheckItem } from '@/components/marketing/check-item';
+import { MarketingFeatureCard } from '@/components/marketing/feature-card';
 import {
   MarketingPill,
   MarketingPillList,
-} from "@/components/marketing/pill-list";
-import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { PageHero } from "@/components/marketing/page-hero";
-import { BuyProductButton } from "@/components/pricing/buy-product-button";
+} from '@/components/marketing/pill-list';
+import { MarketingSectionHeader } from '@/components/marketing/section-header';
+import { PageHero } from '@/components/marketing/page-hero';
+import { BuyProductButton } from '@/components/pricing/buy-product-button';
 
 export const metadata: Metadata = {
-  title: "Next.js SaaS Templates",
+  title: 'Next.js SaaS Templates',
   description:
-    "Premium Next.js SaaS templates for AI products, analytics platforms, developer tools, and startup launches. Full source code, commercial usage, SEO foundations, and production-shaped UI built for modern SaaS applications.",
+    'Premium Next.js SaaS templates for AI products, analytics platforms, developer tools, and startup launches. Full source code, commercial usage, SEO foundations, and production-shaped UI built for modern SaaS applications.',
   alternates: {
-    canonical: "/templates",
+    canonical: '/templates',
   },
   openGraph: {
-    title: "Next.js SaaS Templates",
+    title: 'Next.js SaaS Templates',
 
     description:
-      "Launch polished SaaS and AI products faster with premium Next.js templates, production-ready UI, SEO foundations, and commercial-ready source code.",
-    url: "/templates",
-    siteName: "PyColors",
-    type: "website",
-    images: ["/seo/og-main.png"],
+      'Launch polished SaaS and AI products faster with premium Next.js templates, production-ready UI, SEO foundations, and commercial-ready source code.',
+    url: '/templates',
+    siteName: 'PyColors',
+    type: 'website',
+    images: ['/seo/og-main.png'],
   },
 
   twitter: {
-    card: "summary_large_image",
-    title: "Next.js SaaS Templates",
+    card: 'summary_large_image',
+    title: 'Next.js SaaS Templates',
     description:
-      "Premium templates built for modern SaaS, AI, analytics, and developer products.",
-    images: ["/seo/twitter-main.png"],
+      'Premium templates built for modern SaaS, AI, analytics, and developer products.',
+    images: ['/seo/twitter-main.png'],
   },
 };
 
-type TemplateStatus = "Available" | "Coming soon";
+type TemplateStatus = 'Available' | 'Coming soon';
 
 type Template = {
   readonly name: string;
@@ -72,123 +72,123 @@ type Template = {
   readonly note: string;
 };
 
-const templatePriceLabel = PRODUCT_DISPLAY["na-ai-landing"].priceLabel;
-const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
+const templatePriceLabel = PRODUCT_DISPLAY['na-ai-landing'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
 
 const templates: readonly Template[] = [
   {
-    name: "NA-AI Landing",
+    name: 'NA-AI Landing',
     description:
-      "Premium AI/SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing, FAQ, SEO foundations, and commercial-ready structure.",
-    status: "Available",
-    href: "/templates/na-ai-landing",
-    tags: ["AI", "Landing page", "Next.js", "Tailwind", "SaaS"],
+      'Premium AI/SaaS landing page template built with Next.js, Tailwind CSS, shadcn/ui, charts, pricing, FAQ, SEO foundations, and commercial-ready structure.',
+    status: 'Available',
+    href: '/templates/na-ai-landing',
+    tags: ['AI', 'Landing page', 'Next.js', 'Tailwind', 'SaaS'],
     priceLabel: templatePriceLabel,
-    demoUrl: "https://na-ai.pycolors.io",
-    productSlug: "na-ai-landing",
+    demoUrl: 'https://na-ai.pycolors.io',
+    productSlug: 'na-ai-landing',
     includes: [
-      "Complete Next.js landing page source code",
-      "Dark/light mode, pricing, FAQ, testimonials, analytics sections",
-      "Commercial usage for personal and client projects",
+      'Complete Next.js landing page source code',
+      'Dark/light mode, pricing, FAQ, testimonials, analytics sections',
+      'Commercial usage for personal and client projects',
     ],
-    note: "Sold directly by PyColors with instant access after purchase.",
+    note: 'Sold directly by PyColors with instant access after purchase.',
   },
 ];
 
 const principles = [
   {
-    title: "Built for real launches",
+    title: 'Built for real launches',
     description:
-      "Templates are shaped for commercial products, not just portfolio screenshots.",
+      'Templates are shaped for commercial products, not just portfolio screenshots.',
     icon: Rocket,
   },
   {
-    title: "Production-minded structure",
+    title: 'Production-minded structure',
     description:
-      "Clean sections, predictable conventions, and code you can extend without fighting the template.",
+      'Clean sections, predictable conventions, and code you can extend without fighting the template.',
     icon: Workflow,
   },
   {
-    title: "Part of the PyColors ecosystem",
+    title: 'Part of the PyColors ecosystem',
     description:
-      "Templates connect naturally with PyColors UI, Starter Free, Starter Pro, docs, and future bundles.",
+      'Templates connect naturally with PyColors UI, Starter Free, Starter Pro, docs, and future bundles.',
     icon: Boxes,
   },
 ] as const;
 
 const valueItems = [
   {
-    title: "Full source code",
+    title: 'Full source code',
     description:
-      "Own the code, customize the design, adapt the sections, and deploy with your preferred workflow.",
+      'Own the code, customize the design, adapt the sections, and deploy with your preferred workflow.',
     icon: PackageCheck,
   },
   {
-    title: "Commercial usage",
+    title: 'Commercial usage',
     description:
-      "Use templates for your own projects or client work according to the PyColors license.",
+      'Use templates for your own projects or client work according to the PyColors license.',
     icon: CreditCard,
   },
   {
-    title: "SEO-ready baseline",
+    title: 'SEO-ready baseline',
     description:
-      "Metadata, page structure, and marketing sections are designed to support a serious launch.",
+      'Metadata, page structure, and marketing sections are designed to support a serious launch.',
     icon: FileText,
   },
   {
-    title: "Fast integration",
+    title: 'Fast integration',
     description:
-      "Start from a polished baseline instead of rebuilding hero, pricing, FAQ, testimonials, and UI states.",
+      'Start from a polished baseline instead of rebuilding hero, pricing, FAQ, testimonials, and UI states.',
     icon: Zap,
   },
 ] as const;
 
 const ecosystemRows = [
   {
-    product: "Templates",
-    bestFor: "Launching focused SaaS, AI, or marketing pages quickly.",
-    label: "Explore NA-AI Landing",
-    href: "/templates/na-ai-landing",
+    product: 'Templates',
+    bestFor: 'Launching focused SaaS, AI, or marketing pages quickly.',
+    label: 'Explore NA-AI Landing',
+    href: '/templates/na-ai-landing',
   },
   {
-    product: "PyColors UI",
+    product: 'PyColors UI',
     bestFor:
-      "Building consistent SaaS interfaces with production-ready React primitives.",
-    label: "Browse UI components",
-    href: "/ui",
+      'Building consistent SaaS interfaces with production-ready React primitives.',
+    label: 'Browse UI components',
+    href: '/ui',
   },
   {
-    product: "Starter Free",
-    bestFor: "Validating SaaS UX surfaces before backend complexity.",
-    label: "See Starter Free",
-    href: "/starters/free",
+    product: 'Starter Free',
+    bestFor: 'Validating SaaS UX surfaces before backend complexity.',
+    label: 'See Starter Free',
+    href: '/starters/free',
   },
   {
-    product: "Starter Pro",
+    product: 'Starter Pro',
     bestFor:
-      "Launching with auth, billing, protected routes, and database foundations.",
-    label: "Upgrade to Pro",
-    href: "/starters/pro",
+      'Launching with auth, billing, protected routes, and database foundations.',
+    label: 'Upgrade to Pro',
+    href: '/starters/pro',
   },
 ] as const;
 
 const trustItems = [
   {
-    title: "Direct PyColors checkout",
+    title: 'Direct PyColors checkout',
     description:
-      "No marketplace dependency. Purchase, access, and delivery stay inside the PyColors product experience.",
+      'No marketplace dependency. Purchase, access, and delivery stay inside the PyColors product experience.',
     icon: ShieldCheck,
   },
   {
-    title: "Clear upgrade path",
+    title: 'Clear upgrade path',
     description:
-      "Use templates for focused pages, then move to Starter Pro when auth, billing, and app foundations matter.",
+      'Use templates for focused pages, then move to Starter Pro when auth, billing, and app foundations matter.',
     icon: Sparkles,
   },
   {
-    title: "Actively maintained",
+    title: 'Actively maintained',
     description:
-      "Templates improve progressively with the PyColors design system, changelog, and roadmap.",
+      'Templates improve progressively with the PyColors design system, changelog, and roadmap.',
     icon: LifeBuoy,
   },
 ] as const;
@@ -196,7 +196,7 @@ const trustItems = [
 function StatusBadge({ status }: { readonly status: TemplateStatus }) {
   return (
     <Badge
-      variant={status === "Available" ? "secondary" : "outline"}
+      variant={status === 'Available' ? 'secondary' : 'outline'}
       className="rounded-[5px] text-[11px]"
     >
       {status}
@@ -246,7 +246,7 @@ function TemplateCard({ template }: { readonly template: Template }) {
             </ul>
 
             <p className="text-xs leading-6 text-muted-foreground">
-              <span className="font-medium text-foreground">Delivery:</span>{" "}
+              <span className="font-medium text-foreground">Delivery:</span>{' '}
               {template.note}
             </p>
           </div>
@@ -301,19 +301,19 @@ export default function TemplatesPage() {
             maxWidth="5xl"
             badges={[
               {
-                label: "Templates",
-                variant: "secondary",
+                label: 'Templates',
+                variant: 'secondary',
               },
               {
-                label: "Premium Next.js products",
-                variant: "outline",
+                label: 'Premium Next.js products',
+                variant: 'outline',
                 icon: (
                   <LayoutTemplate className="h-3.5 w-3.5" aria-hidden="true" />
                 ),
               },
               {
-                label: "Instant delivery",
-                variant: "outline",
+                label: 'Instant delivery',
+                variant: 'outline',
               },
             ]}
             title="Launch polished SaaS pages without starting from a blank canvas."
@@ -339,11 +339,11 @@ export default function TemplatesPage() {
               </div>
             }
             pills={[
-              "One-time payment",
-              "Commercial usage",
-              "Full source code",
-              "SEO-ready baseline",
-              "Built for real launches",
+              'One-time payment',
+              'Commercial usage',
+              'Full source code',
+              'SEO-ready baseline',
+              'Built for real launches',
             ]}
           />
         </div>
@@ -383,7 +383,7 @@ export default function TemplatesPage() {
 
               <div className="text-sm text-muted-foreground">
                 {templates.length} template
-                {templates.length === 1 ? "" : "s"}
+                {templates.length === 1 ? '' : 's'}
               </div>
             </div>
 
@@ -505,7 +505,7 @@ export default function TemplatesPage() {
                               {row.product}
                             </div>
 
-                            {row.product === "Starter Pro" ? (
+                            {row.product === 'Starter Pro' ? (
                               <Badge
                                 variant="outline"
                                 className="rounded-[5px] border-pro-border bg-pro-surface-muted text-[11px]"
@@ -514,7 +514,7 @@ export default function TemplatesPage() {
                               </Badge>
                             ) : null}
 
-                            {row.product === "Templates" ? (
+                            {row.product === 'Templates' ? (
                               <Badge
                                 variant="outline"
                                 className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
@@ -523,7 +523,7 @@ export default function TemplatesPage() {
                               </Badge>
                             ) : null}
 
-                            {row.product === "Starter Free" ? (
+                            {row.product === 'Starter Free' ? (
                               <Badge
                                 variant="outline"
                                 className="rounded-[5px] text-[11px]"
@@ -532,7 +532,7 @@ export default function TemplatesPage() {
                               </Badge>
                             ) : null}
 
-                            {row.product === "PyColors UI" ? (
+                            {row.product === 'PyColors UI' ? (
                               <Badge
                                 variant="outline"
                                 className="rounded-[5px] text-[11px]"
@@ -627,11 +627,11 @@ export default function TemplatesPage() {
           </div>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Legal scope and usage terms are governed by{" "}
+            Legal scope and usage terms are governed by{' '}
             <Link href="/license" className="underline underline-offset-4">
               /license
-            </Link>{" "}
-            and{" "}
+            </Link>{' '}
+            and{' '}
             <Link href="/terms" className="underline underline-offset-4">
               /terms
             </Link>
