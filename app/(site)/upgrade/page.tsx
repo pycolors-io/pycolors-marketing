@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import Link from "next/link";
+import type { Metadata } from "next";
 import {
   CreditCard,
   Database,
@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -24,237 +24,237 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
+} from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
-import { Container } from '@/components/container';
-import { MarketingCheckItem } from '@/components/marketing/check-item';
-import { MarketingFeatureCard } from '@/components/marketing/feature-card';
+import { Container } from "@/components/container";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 import {
   MarketingPill,
   MarketingPillList,
-} from '@/components/marketing/pill-list';
-import { MarketingSectionHeader } from '@/components/marketing/section-header';
-import { PageHero } from '@/components/marketing/page-hero';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
+} from "@/components/marketing/pill-list";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { PageHero } from "@/components/marketing/page-hero";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Auth & Billing Starter',
+  title: "Next.js SaaS Auth & Billing Starter",
   description:
-    'Production-ready Next.js SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, subscription flows, and launch-ready business infrastructure.',
+    "Production-ready Next.js SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, subscription flows, and launch-ready business infrastructure.",
   alternates: {
-    canonical: '/upgrade',
+    canonical: "/upgrade",
   },
   openGraph: {
-    title: 'Next.js SaaS Auth & Billing Starter',
+    title: "Next.js SaaS Auth & Billing Starter",
     description:
-      'Upgrade from Starter Free to a production-ready SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, and launch-ready architecture.',
-    url: '/upgrade',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Upgrade from Starter Free to a production-ready SaaS foundation with authentication, Stripe billing, protected routes, Prisma, PostgreSQL, and launch-ready architecture.",
+    url: "/upgrade",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS Auth & Billing Starter',
+    card: "summary_large_image",
+    title: "Next.js SaaS Auth & Billing Starter",
     description:
-      'Production-ready SaaS auth, billing, and business foundations for modern Next.js applications.',
-    images: ['/seo/twitter-main.png'],
+      "Production-ready SaaS auth, billing, and business foundations for modern Next.js applications.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const INTERNAL = {
-  starterFree: '/starters/free',
-  starterPro: '/starters/pro',
-  docsStarterPro: '/docs/starter-pro',
-  docsBilling: '/docs/starter-pro/billing',
-  docsBackend: '/docs/starter-pro/backend',
-  pricing: '/pricing',
-  license: '/license',
-  terms: '/terms',
+  starterFree: "/starters/free",
+  starterPro: "/starters/pro",
+  docsStarterPro: "/docs/starter-pro",
+  docsBilling: "/docs/starter-pro/billing",
+  docsBackend: "/docs/starter-pro/backend",
+  pricing: "/pricing",
+  license: "/license",
+  terms: "/terms",
 } as const;
 
 const PRICING = {
-  launch: PRODUCT_DISPLAY['starter-pro'].priceLabel,
-  regular: PRODUCT_DISPLAY['starter-pro'].regularPriceLabel,
+  launch: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+  regular: PRODUCT_DISPLAY["starter-pro"].regularPriceLabel,
 } as const;
 
 const valueCards = [
   {
-    title: 'Launch faster',
+    title: "Launch faster",
     description:
-      'Move from validated product surface to revenue-ready SaaS without rebuilding the same foundations.',
+      "Move from validated product surface to revenue-ready SaaS without rebuilding the same foundations.",
     icon: Zap,
   },
   {
-    title: 'Ship with confidence',
+    title: "Ship with confidence",
     description:
-      'Authentication, billing, protected routes, account flows, and database structure are already shaped.',
+      "Authentication, billing, protected routes, account flows, and database structure are already shaped.",
     icon: Shield,
   },
   {
-    title: 'Focus on the product',
+    title: "Focus on the product",
     description:
-      'Spend time on onboarding, positioning, customers, and growth — not generic SaaS plumbing.',
+      "Spend time on onboarding, positioning, customers, and growth — not generic SaaS plumbing.",
     icon: Sparkles,
   },
 ] as const;
 
 const unlockedLayers = [
   {
-    title: 'Real authentication',
+    title: "Real authentication",
     description:
-      'Email/password, Google and GitHub OAuth, verification, reset flows, sessions, and protected routes.',
+      "Email/password, Google and GitHub OAuth, verification, reset flows, sessions, and protected routes.",
     icon: Lock,
   },
   {
-    title: 'Stripe billing',
+    title: "Stripe billing",
     description:
-      'Checkout, billing portal, invoices, subscription state, lifecycle flows, and webhook synchronization.',
+      "Checkout, billing portal, invoices, subscription state, lifecycle flows, and webhook synchronization.",
     icon: CreditCard,
   },
   {
-    title: 'Protected app architecture',
+    title: "Protected app architecture",
     description:
-      'Account areas, protected layouts, plan-aware states, settings, billing screens, and scalable structure.',
+      "Account areas, protected layouts, plan-aware states, settings, billing screens, and scalable structure.",
     icon: Database,
   },
   {
-    title: 'Production baseline',
+    title: "Production baseline",
     description:
-      'Environment setup, Prisma schema, PostgreSQL foundations, validation, and reusable server patterns.',
+      "Environment setup, Prisma schema, PostgreSQL foundations, validation, and reusable server patterns.",
     icon: Rocket,
   },
 ] as const;
 
 const proofPoints = [
-  'Email/password authentication',
-  'Google and GitHub OAuth',
-  'Email verification flow',
-  'Forgot and reset password',
-  'Session management',
-  'Protected routes',
-  'Installable PWA foundations',
-  'Standalone mobile app experience',
-  'Connected accounts foundations',
-  'Provider disconnect safeguards',
-  'Stripe Checkout',
-  'Stripe billing portal',
-  'Webhook synchronization',
-  'Invoices and billing history',
-  'Subscription lifecycle handling',
-  'Plan-aware UI states',
-  'Prisma + PostgreSQL foundations',
-  'Commercial usage rights',
+  "Email/password authentication",
+  "Google and GitHub OAuth",
+  "Email verification flow",
+  "Forgot and reset password",
+  "Session management",
+  "Protected routes",
+  "Installable PWA foundations",
+  "Standalone mobile app experience",
+  "Connected accounts foundations",
+  "Provider disconnect safeguards",
+  "Stripe Checkout",
+  "Stripe billing portal",
+  "Webhook synchronization",
+  "Invoices and billing history",
+  "Subscription lifecycle handling",
+  "Plan-aware UI states",
+  "Prisma + PostgreSQL foundations",
+  "Commercial usage rights",
 ] as const;
 
 const comparisonRows = [
   {
-    capability: 'Product-shaped SaaS UI',
-    free: 'Included',
-    pro: 'Included',
+    capability: "Product-shaped SaaS UI",
+    free: "Included",
+    pro: "Included",
   },
   {
-    capability: 'Dashboard, settings, billing screens',
-    free: 'Included',
-    pro: 'Included + production wiring',
+    capability: "Dashboard, settings, billing screens",
+    free: "Included",
+    pro: "Included + production wiring",
   },
   {
-    capability: 'Auth screens and UX',
-    free: 'Included',
-    pro: 'Included + real auth',
+    capability: "Auth screens and UX",
+    free: "Included",
+    pro: "Included + real auth",
   },
   {
-    capability: 'Email/password authentication',
-    free: 'Mock/demo only',
-    pro: 'Included',
+    capability: "Email/password authentication",
+    free: "Mock/demo only",
+    pro: "Included",
   },
   {
-    capability: 'Google and GitHub OAuth',
-    free: 'No',
-    pro: 'Included',
+    capability: "Google and GitHub OAuth",
+    free: "No",
+    pro: "Included",
   },
   {
-    capability: 'Protected routes and sessions',
-    free: 'Partial',
-    pro: 'Included',
+    capability: "Protected routes and sessions",
+    free: "Partial",
+    pro: "Included",
   },
   {
-    capability: 'PWA-ready app experience',
-    free: 'Basic',
-    pro: 'Included',
+    capability: "PWA-ready app experience",
+    free: "Basic",
+    pro: "Included",
   },
   {
-    capability: 'Stripe Checkout',
-    free: 'No',
-    pro: 'Included',
+    capability: "Stripe Checkout",
+    free: "No",
+    pro: "Included",
   },
   {
-    capability: 'Billing portal',
-    free: 'No',
-    pro: 'Included',
+    capability: "Billing portal",
+    free: "No",
+    pro: "Included",
   },
   {
-    capability: 'Webhooks + Prisma sync',
-    free: 'No',
-    pro: 'Included',
+    capability: "Webhooks + Prisma sync",
+    free: "No",
+    pro: "Included",
   },
   {
-    capability: 'Database foundation',
-    free: 'No',
-    pro: 'Prisma + PostgreSQL',
+    capability: "Database foundation",
+    free: "No",
+    pro: "Prisma + PostgreSQL",
   },
   {
-    capability: 'Best use case',
-    free: 'Validate UX',
-    pro: 'Launch and charge faster',
+    capability: "Best use case",
+    free: "Validate UX",
+    pro: "Launch and charge faster",
   },
 ] as const;
 
 const stackItems = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Tailwind CSS',
-  'Prisma',
-  'PostgreSQL',
-  'Stripe',
-  'Vercel',
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "Prisma",
+  "PostgreSQL",
+  "Stripe",
+  "Vercel",
 ] as const;
 
 const faqs = [
   {
-    question: 'Who should upgrade to Starter Pro?',
+    question: "Who should upgrade to Starter Pro?",
     answer:
-      'Upgrade when you are ready to move beyond product shape and need authentication, billing, protected routes, database foundations, and launch-ready infrastructure.',
+      "Upgrade when you are ready to move beyond product shape and need authentication, billing, protected routes, database foundations, and launch-ready infrastructure.",
   },
   {
     question:
-      'What is the biggest difference between Starter Free and Starter Pro?',
+      "What is the biggest difference between Starter Free and Starter Pro?",
     answer:
-      'Starter Free helps you validate the SaaS surface. Starter Pro wires the revenue-critical and security-critical layers required to launch and charge faster.',
+      "Starter Free helps you validate the SaaS surface. Starter Pro wires the revenue-critical and security-critical layers required to launch and charge faster.",
   },
   {
-    question: 'Is Starter Pro production-ready?',
+    question: "Is Starter Pro production-ready?",
     answer:
-      'Yes. Starter Pro is designed as a real SaaS foundation. You still add your product-specific logic, but the core auth, billing, protected app structure, and database foundations are already shaped.',
+      "Yes. Starter Pro is designed as a real SaaS foundation. You still add your product-specific logic, but the core auth, billing, protected app structure, and database foundations are already shaped.",
   },
   {
-    question: 'Will I still need to build things myself?',
+    question: "Will I still need to build things myself?",
     answer:
-      'Yes. You still build your unique product, onboarding, workflows, and business logic. Starter Pro removes repeated foundation work.',
+      "Yes. You still build your unique product, onboarding, workflows, and business logic. Starter Pro removes repeated foundation work.",
   },
   {
-    question: 'What does the launch offer include?',
+    question: "What does the launch offer include?",
     answer: `The launch offer gives you commercial access to Starter Pro at ${PRICING.launch} instead of the planned regular price of ${PRICING.regular}.`,
   },
   {
-    question: 'Where do I find the legal and usage scope?',
+    question: "Where do I find the legal and usage scope?",
     answer:
-      'The commercial overview lives on /pricing. Legal scope and product usage are governed by /license and /terms.',
+      "The commercial overview lives on /pricing. Legal scope and product usage are governed by /license and /terms.",
   },
 ] as const;
 
@@ -285,17 +285,17 @@ export default function UpgradePage() {
             maxWidth="5xl"
             badges={[
               {
-                label: 'Starter Pro',
-                variant: 'secondary',
+                label: "Starter Pro",
+                variant: "secondary",
               },
               {
                 label: `Launch offer ${PRICING.launch}`,
-                variant: 'outline',
+                variant: "outline",
                 icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
               },
               {
                 label: `${PRICING.regular} regular price`,
-                variant: 'outline',
+                variant: "outline",
               },
             ]}
             title="Ship a real SaaS product faster."
@@ -328,12 +328,12 @@ export default function UpgradePage() {
               </div>
             }
             pills={[
-              'Real authentication',
-              'Stripe billing',
-              'Protected routes',
-              'PWA-ready',
-              'Prisma foundation',
-              'Commercial usage',
+              "Real authentication",
+              "Stripe billing",
+              "Protected routes",
+              "PWA-ready",
+              "Prisma foundation",
+              "Commercial usage",
             ]}
             extraClassName="mx-auto max-w-5xl"
             extra={
@@ -342,20 +342,20 @@ export default function UpgradePage() {
                   <div className="grid divide-y divide-pro-border-subtle lg:grid-cols-3 lg:divide-x lg:divide-y-0">
                     {[
                       {
-                        label: 'Launch price',
+                        label: "Launch price",
                         value: PRICING.launch,
                         description: `Regular price planned at ${PRICING.regular}`,
                       },
                       {
-                        label: 'Best for',
-                        value: 'Real SaaS launch',
+                        label: "Best for",
+                        value: "Real SaaS launch",
                         description:
-                          'When auth and billing should not delay you',
+                          "When auth and billing should not delay you",
                       },
                       {
-                        label: 'Access',
-                        value: 'Instant',
-                        description: 'One-time payment with commercial usage',
+                        label: "Access",
+                        value: "Instant",
+                        description: "One-time payment with commercial usage",
                       },
                     ].map((item) => (
                       <div key={item.label} className="p-5 sm:p-6">
@@ -407,7 +407,7 @@ export default function UpgradePage() {
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href={INTERNAL.docsBackend}>
                     Explore technical docs
@@ -502,7 +502,7 @@ export default function UpgradePage() {
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                 </Button>
@@ -617,7 +617,7 @@ export default function UpgradePage() {
                       size="lg"
                       variant="outline"
                       className={cn(
-                        'h-11 rounded-[5px] px-6 text-sm font-medium',
+                        "h-11 rounded-[5px] px-6 text-sm font-medium",
                         focusRing,
                       )}
                     >
@@ -729,7 +729,7 @@ export default function UpgradePage() {
                     asChild
                     variant="outline"
                     className={cn(
-                      'h-11 rounded-[5px] text-sm font-medium',
+                      "h-11 rounded-[5px] text-sm font-medium",
                       focusRing,
                     )}
                   >
@@ -740,20 +740,20 @@ export default function UpgradePage() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Legal scope and usage terms are governed by{' '}
+              Legal scope and usage terms are governed by{" "}
               <Link
                 href={INTERNAL.pricing}
                 className="underline underline-offset-4"
               >
                 pricing
-              </Link>{' '}
+              </Link>{" "}
               <Link
                 href={INTERNAL.license}
                 className="underline underline-offset-4"
               >
                 license
-              </Link>{' '}
-              and{' '}
+              </Link>{" "}
+              and{" "}
               <Link
                 href={INTERNAL.terms}
                 className="underline underline-offset-4"
