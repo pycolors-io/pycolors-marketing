@@ -1,3 +1,6 @@
+// @vitest-environment node
+// These contracts inspect source files and do not require a browser DOM.
+
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
