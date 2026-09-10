@@ -102,14 +102,17 @@ describe("Blocks discovery", () => {
   });
 
   it("links to installation and Starter comparison", () => {
-    for (const href of [
-      "#catalog",
-      "/docs/blocks",
-      "/docs/ui/installation",
-      "/starters",
-    ]) {
+    for (const href of ["#catalog", "/docs/blocks", "/starters"]) {
       expect(page).toContain(`href="${href}"`);
     }
+
+    // The installation link is data-driven: verify both the route declaration
+    // and the Link binding instead of requiring a formatting-sensitive JSX
+    // literal. This keeps the contract valid when the presentation is refactored.
+    expect(page).toContain('href: "/docs/ui/installation"');
+    expect(page).toContain("href={step.href}");
+    expect(page).toContain('cta: "UI installation"');
+
     expect(page).toContain("no automatic updates or synchronization");
     expect(page).toContain("no Blocks npm package, Registry installer or CLI");
     expect(page).not.toMatch(
