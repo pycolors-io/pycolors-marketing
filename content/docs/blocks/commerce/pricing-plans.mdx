@@ -1,0 +1,205 @@
+---
+title: Pricing plans
+description: A source-copy offer comparison with consumer-owned prices, billing terms, actions, and optional controlled period selection.
+lastUpdated: "2026-09-10"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Preview } from "@/components/docs/preview";
+import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
+
+## Make offer choices clear without owning billing
+
+`PricingPlans` composes public PyColors UI cards into a responsive comparison.
+Each offer shows its name, description, formatted price, billing terms,
+features and consumer-owned action. An optional native select requests a
+billing-period change without calculating prices or choosing data for you.
+
+The Block never creates a checkout session, subscribes a customer, calculates a
+discount, interprets currency, fetches offers or enforces access. Those are
+application responsibilities, not presentation behavior.
+
+<Callout title="Fictional demonstration">
+  The offers below are illustrative, not PyColors product prices. Changing a
+  period or choosing an example changes local React state only. No purchase,
+  contact request, account creation or network request occurs.
+</Callout>
+
+<Preview className="my-6 overflow-hidden">
+  <PricingPlansExample />
+</Preview>
+
+## Canonical identity
+
+- Category: **Commerce**, slug `commerce`.
+- Block: `pricing-plans`, export `PricingPlans`.
+- Canonical source: `apps/marketing/content/blocks/commerce/pricing-plans/`.
+- Complete entry point: `index.tsx`.
+- Informational future Registry identity: `commerce-pricing-plans`.
+
+This identity does not provide a Registry installer. There is no Blocks npm
+package, CLI, download service or automatic source update channel.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/pricing-plans/index.tsx` in your application.
+Open the source below and use its copy button, or select the code manually.
+This is the complete canonical file, not the usage example or a second
+implementation. Keep the imports and client directive when copying.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/pricing-plans/index.tsx"'
+  >
+    ../../../blocks/commerce/pricing-plans/index.tsx
+  </include>
+</details>
+
+The documentation includes this file from canonical source at build time.
+Your application copy does not receive automatic updates. Follow the usage
+example below, connect your own behavior, and validate it in your application.
+Return to the [Blocks catalog](/blocks) to choose another pattern.
+
+## Install by copying source
+
+1. Copy the complete `pricing-plans` directory into an application-owned path.
+2. Configure React, the public `@pycolors/ui` package, tokens and semantic styles
+   through the [UI installation guide](/docs/ui/installation).
+3. Import the Block from your local entry point and supply your own offers.
+4. Run your application's lint, type-check, tests and build. Review offer terms,
+   keyboard behavior, long content and both themes before using real offers.
+
+```tsx title="offer-comparison.tsx"
+"use client";
+
+import { PricingPlans, type PricingPlan } from "./blocks/pricing-plans";
+
+const samplePlans = [
+  {
+    id: "launch",
+    name: "Launch example",
+    description: "A fictional offer, not a PyColors product.",
+    price: "$12",
+    priceSuffix: "/ month",
+    billingNote: "Illustrative price only. No checkout is connected.",
+    features: [{ id: "projects", label: "One sample project" }],
+    action: <a href="/your-offer-details">Read offer details</a>,
+  },
+] satisfies readonly PricingPlan[];
+
+export function OfferComparison() {
+  return (
+    <PricingPlans
+      description="Replace the sample data and link with your own offer."
+      plans={samplePlans}
+      title="Compare offers"
+    />
+  );
+}
+```
+
+The example link is an application-owned destination to replace, not a
+PyColors route or payment integration.
+
+## Consumer-owned props
+
+### Comparison
+
+`title` is required and labels the section with an `h2`. `description` supplies
+optional supporting text. `plans` is the ordered array of offers to display.
+`className` customizes the root through the public `cn` utility.
+
+With an empty `plans` array, the section displays `emptyMessage`, defaulting to
+"No plans are available." It does not render an empty comparison grid or a
+billing-period selector. An empty array is not treated as a loading or error
+state; the application must decide what an absent result means.
+
+### Offers
+
+Each `PricingPlan` supplies a stable `id`, `name`, `description`, formatted
+`price`, `features` and `action`. Feature entries have their own stable `id` and
+visible `label`.
+
+`priceSuffix` can explain a period or unit. `billingNote` should clarify the
+actual billing total and timing when they differ from a headline amount. The
+Block renders both strings unchanged: it never multiplies, prorates, rounds,
+formats currency or derives annual totals.
+
+`highlight` supplies visible wording and an emphasized border. It does not
+mean "most popular" or "recommended" unless the application explicitly supplies
+that claim and can substantiate it. `footnote` adds consumer-owned context below
+the action, such as eligibility or cancellation terms.
+
+Keep offer IDs unique within the comparison and feature IDs unique within each
+offer. Use nonempty names, labels and period values. Separate instances receive
+independent heading and control IDs; reordering offers preserves their identity.
+
+### Optional controlled period
+
+Supply `period` with `label`, `value`, `options` and `onValueChange`. Options have
+nonempty, unique `value` and `label` fields and may be `disabled`. The entire
+control may also be disabled.
+
+The native select requests a supported, enabled, different value. It does not
+store a fallback selection or update offer data. The consuming application must
+rerender both the selected `value` and the corresponding `plans`. The interactive
+example above demonstrates this with explicit monthly and annual data.
+
+No options means no selector. An invalid controlled value displays a disabled
+label placeholder instead of silently selecting the first period. Correct the
+value in the consumer; the Block does not invoke a callback during render.
+
+For asynchronous offer data, coordinate disabled/loading presentation in the
+consumer so old prices are never presented as a newly selected period. This
+Block is not a data-fetching or request-race manager.
+
+### Actions
+
+`action` is a React node supplied by the consumer: a public PyColors Button,
+native button, framework link or deliberately absent control. The Block does not
+clone the element, change its destination, intercept its event, force a focus
+transition or infer whether the visitor may buy.
+
+Give each action a meaningful accessible name, and use `type="button"` for a
+non-submitting button inside a surrounding form. Preserve disabled semantics.
+Connect payments or permissions only through the consuming application's
+validated server boundary; a disabled UI control is not authorization.
+
+## Responsive and accessibility behavior
+
+The comparison uses semantic section, heading, list and article markup. Offer
+headings are `h3` elements below the comparison `h2`; do not use this Block as a
+page's only heading. Each article is associated with its own heading.
+
+Cards stack on narrow screens, use two columns from `sm`, and three from `xl`.
+Root and cards remain shrinkable, offer text wraps, and actions stay in a
+consistent footer. Long content still requires visual review in your layout.
+
+The period control is a labelled native select with native keyboard and disabled
+behavior, not a custom tab or radio implementation. Consumer controls keep their
+own focus and interaction semantics. No automatic focus movement, viewport
+JavaScript, animation or live-region pricing announcement is introduced.
+
+Runtime tests cover semantics, controlled rerenders, callbacks, disabled states,
+independent instances and a representative axe scan. They do not constitute a
+visual contrast check or full accessibility certification.
+
+## Ownership, updates and exclusions
+
+Copying gives your application ownership of the source and its future changes.
+Compare later canonical revisions deliberately; no package version automatically
+updates your copy. Removing or reverting the copied directory rolls it back.
+
+This Block does not include checkout, Stripe, subscriptions, taxes, currency
+conversion, discount arithmetic, purchase confirmation, authentication,
+authorization, entitlements, persistence, routing, a Registry or a new runtime
+dependency. The existing PyColors commercial offers are unchanged.
+
+Use the [Data table](/docs/blocks/data/data-table) for record browsing or
+[Settings panel](/docs/blocks/account/settings-panel) for account forms.
+Need a broader application foundation? [Compare Starters](/starters).

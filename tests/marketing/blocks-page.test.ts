@@ -23,12 +23,13 @@ function readStaticRoutes() {
 }
 
 describe("Blocks discovery", () => {
-  it("lists three canonical Blocks with unique identities", () => {
+  it("lists four canonical Blocks with unique identities", () => {
     const identities = BLOCKS_CATALOG.map((block) => block.id);
     expect(identities).toEqual([
       "app-shells/responsive-sidebar",
       "data/data-table",
       "account/settings-panel",
+      "commerce/pricing-plans",
     ]);
     expect(new Set(identities).size).toBe(BLOCKS_CATALOG.length);
     expect(new Set(BLOCKS_CATALOG.map((block) => block.href)).size).toBe(

@@ -24,4 +24,12 @@ export const BLOCKS_CATALOG = [
       "A controlled settings form with labelled fields, validation messages and submission feedback. Your application owns values, validation and persistence.",
     href: "/docs/blocks/account/settings-panel",
   },
+  {
+    id: "commerce/pricing-plans",
+    title: "Pricing plans",
+    category: "Commerce",
+    description:
+      "Compare offers with clear prices, billing terms, features and consumer-owned actions. Request a billing-period change without handing over pricing or payment logic.",
+    href: "/docs/blocks/commerce/pricing-plans",
+  },
 ] as const;
