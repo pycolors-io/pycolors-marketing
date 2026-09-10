@@ -61,6 +61,7 @@ export type DataTableProps<Row> = Readonly<{
   state?: DataTableState;
   emptyTitle: string;
   emptyDescription?: string;
+  emptyAction?: React.ReactNode;
   renderRowActions?: (row: Row) => React.ReactNode;
   rowActionsLabel?: string;
   pagination?: DataTablePagination;
@@ -178,6 +179,7 @@ export function DataTable<Row>({
   caption,
   className,
   columns,
+  emptyAction,
   emptyDescription,
   emptyTitle,
   getRowId,
@@ -194,6 +196,8 @@ export function DataTable<Row>({
   );
   const loadingLabel = state?.status === "loading" ? state.label : undefined;
   const status = state?.status ?? "ready";
+  const showEmptyAction =
+    status === "ready" && rows.length === 0 && Boolean(emptyAction);
   const showPagination =
     status === "ready" && rows.length > 0 && hasValidPagination(pagination);
 
@@ -285,6 +289,15 @@ export function DataTable<Row>({
           )}
         </TableBody>
       </Table>
+
+      {showEmptyAction ? (
+        <div
+          className="flex min-w-0 flex-wrap justify-center gap-2"
+          data-slot="data-table-empty-action"
+        >
+          {emptyAction}
+        </div>
+      ) : null}
 
       {loadingLabel ? (
         <span

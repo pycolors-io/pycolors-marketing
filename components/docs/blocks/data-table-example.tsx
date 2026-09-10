@@ -126,3 +126,53 @@ export function DataTableExample() {
     </div>
   );
 }
+
+export function DataTableEmptyExample({
+  filtered = false,
+}: Readonly<{ filtered?: boolean }>) {
+  const [hasResults, setHasResults] = React.useState(false);
+  const resetRef = React.useRef<HTMLButtonElement>(null);
+
+  function showSampleRecords() {
+    setHasResults(true);
+    resetRef.current?.focus();
+  }
+
+  return (
+    <div className="not-prose space-y-3">
+      <DataTable
+        caption={filtered ? "Filtered sample records" : "New sample workspace"}
+        columns={columns}
+        emptyAction={
+          <Button onClick={showSampleRecords} size="sm" type="button">
+            {filtered ? "Clear sample filter" : "Add sample records"}
+          </Button>
+        }
+        emptyDescription={
+          filtered
+            ? "No sample records match this filter."
+            : "Start with sample records to explore this table."
+        }
+        emptyTitle={filtered ? "No matching records" : "No records yet"}
+        getRowId={(record) => record.id}
+        rows={hasResults ? pages[0] : []}
+      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          {hasResults
+            ? "Two sample records are displayed. Nothing was saved."
+            : "Interactive example only. No request is sent or data saved."}
+        </p>
+        <Button
+          onClick={() => setHasResults(false)}
+          ref={resetRef}
+          size="sm"
+          type="button"
+          variant="outline"
+        >
+          Reset example
+        </Button>
+      </div>
+    </div>
+  );
+}

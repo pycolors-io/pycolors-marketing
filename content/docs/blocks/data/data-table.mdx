@@ -1,14 +1,17 @@
 ---
 title: Data table
 description: A source-copy record table with typed columns, explicit states, consumer-owned row actions, and controlled pagination.
-lastUpdated: "2026-08-28"
+lastUpdated: "2026-09-10"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Preview } from "@/components/docs/preview";
-import { DataTableExample } from "@/components/docs/blocks/data-table-example";
+import {
+  DataTableEmptyExample,
+  DataTableExample,
+} from "@/components/docs/blocks/data-table-example";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Data & records</Badge>
@@ -152,6 +155,7 @@ does not interpret cell values.
 | `state`            | `DataTableState`                  | ready      | Explicit ready, loading, or error presentation.       |
 | `emptyTitle`       | `string`                          | required   | Consumer-owned empty-state heading.                   |
 | `emptyDescription` | `string`                          | UI default | Optional empty-state explanation.                     |
+| `emptyAction`      | `React.ReactNode`                 | none       | Consumer-owned controls below a ready, empty table.   |
 | `renderRowActions` | `(row: Row) => ReactNode`         | none       | Optional consumer-owned controls for one record.      |
 | `rowActionsLabel`  | `string`                          | `Actions`  | Header for the optional actions column.               |
 | `pagination`       | `DataTablePagination`             | none       | Optional controlled, one-based page navigation.       |
@@ -191,6 +195,56 @@ hidden while loading.
 When ready rows are empty, the public `TableEmpty` spans every effective column
 and displays consumer-owned copy. Empty is a valid result, not an error, and
 pagination is hidden.
+
+Pass `emptyAction` to offer the next useful step without making the Block own
+record creation or filters. The optional action area appears below the table,
+outside its horizontal scroller, only when ready rows are empty. It is hidden
+while loading, during an error, or once rows are present. Omitting the prop
+preserves the existing empty presentation.
+
+#### First use
+
+Use a clearly labelled creation action when no records exist. This demo adds
+sample records in local React state only; it does not create or save real data.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample />
+</Preview>
+
+#### No matching results
+
+Use a filter-reset action when records exist but the current view is empty.
+The consumer must distinguish that case from first use; the Block cannot infer
+it from an empty array. This demo simulates a cleared filter with local sample
+state and sends no request.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample filtered />
+</Preview>
+
+```tsx title="empty-table-action.tsx"
+<DataTable
+  {...tableProps}
+  rows={filteredRows}
+  emptyTitle="No matching records"
+  emptyDescription="Clear your filters to see all available records."
+  emptyAction={
+    <button onClick={clearFilters} type="button">
+      Clear filters
+    </button>
+  }
+/>
+```
+
+`tableProps`, `filteredRows`, and `clearFilters` belong to the consuming feature.
+Use a public PyColors `Button`, a native button, or a framework link with an
+accessible name. The Block renders your element without replacing its props,
+ref, link destination, disabled state, or event handling. Supply `type="button"`
+for an action that must not submit a surrounding form.
+
+When the action removes the empty state, manage the resulting focus transition
+in the consumer. The demo explicitly moves focus to its persistent reset
+control; the canonical Block never moves focus or mutates rows on its own.
 
 ### Error
 
