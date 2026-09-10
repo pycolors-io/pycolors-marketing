@@ -39,6 +39,33 @@ export const metadata: Metadata = {
 const linkClassName =
   "inline-flex min-h-11 items-center justify-center rounded-[5px] px-3 py-2 text-sm font-medium underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
+const adoptionSteps = [
+  {
+    title: "Configure the UI",
+    description:
+      "Set up the public UI package, tokens and semantic styles in your application before copying a Block.",
+    href: "/docs/ui/installation",
+    cta: "UI installation",
+  },
+  {
+    title: "Copy the source",
+    description:
+      "Open the Block guide and copy its complete source directory into a location your application owns. Keep local files together.",
+    href: "/docs/blocks",
+    cta: "Source-copy instructions",
+  },
+  {
+    title: "Connect and validate",
+    description:
+      "Supply your own data, actions and routes. Run your tests and build, then check keyboard behavior, narrow layouts and both themes in your application.",
+  },
+] as const;
+
+const ownershipParagraphs = [
+  "There is no Blocks npm package, Registry installer or CLI in this workflow. The copy lives in your application, and there are no automatic updates or synchronization. Review future canonical changes deliberately before adopting them.",
+  "Blocks provide interface composition, not authentication, billing, data fetching or persistence. Those responsibilities stay with your application. The examples use consumer-owned content and do not connect a backend for you.",
+] as const;
+
 export default function BlocksPage() {
   return (
     <main id="content" tabIndex={-1}>
@@ -102,37 +129,19 @@ export default function BlocksPage() {
               description="Copy one pattern into an existing application. You do not need to adopt a complete Starter to use a Block."
             />
             <ol className="grid list-decimal gap-8 pl-5 md:grid-cols-3">
-              <li className="min-w-0 space-y-3 pl-1">
-                <h3 className="text-base font-semibold">Configure the UI</h3>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Set up the public UI package, tokens and semantic styles in
-                  your application before copying a Block.
-                </p>
-                <Link className={linkClassName} href="/docs/ui/installation">
-                  UI installation
-                </Link>
-              </li>
-              <li className="min-w-0 space-y-3 pl-1">
-                <h3 className="text-base font-semibold">Copy the source</h3>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Open the Block guide and copy its complete source directory
-                  into a location your application owns. Keep local files
-                  together.
-                </p>
-                <Link className={linkClassName} href="/docs/blocks">
-                  Source-copy instructions
-                </Link>
-              </li>
-              <li className="min-w-0 space-y-3 pl-1">
-                <h3 className="text-base font-semibold">
-                  Connect and validate
-                </h3>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Supply your own data, actions and routes. Run your tests and
-                  build, then check keyboard behavior, narrow layouts and both
-                  themes in your application.
-                </p>
-              </li>
+              {adoptionSteps.map((step) => (
+                <li key={step.title} className="min-w-0 space-y-3 pl-1">
+                  <h3 className="text-base font-semibold">{step.title}</h3>
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    {step.description}
+                  </p>
+                  {"href" in step ? (
+                    <Link className={linkClassName} href={step.href}>
+                      {step.cta}
+                    </Link>
+                  ) : null}
+                </li>
+              ))}
             </ol>
           </MarketingSectionShell>
 
@@ -147,18 +156,9 @@ export default function BlocksPage() {
               titleId="blocks-ownership-title"
             />
             <div className="space-y-4 text-sm leading-7 text-muted-foreground">
-              <p>
-                There is no Blocks npm package, Registry installer or CLI in
-                this workflow. The copy lives in your application, and there
-                are no automatic updates or synchronization. Review future
-                canonical changes deliberately before adopting them.
-              </p>
-              <p>
-                Blocks provide interface composition, not authentication,
-                billing, data fetching or persistence. Those responsibilities
-                stay with your application. The examples use consumer-owned
-                content and do not connect a backend for you.
-              </p>
+              {ownershipParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
           </MarketingSectionShell>
 
