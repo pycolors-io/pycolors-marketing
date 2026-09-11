@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.23.0
+
+Released by PyColors Marketing on 11 September 2026 (2026-09-11).
+
+### Minor Changes
+
+- Added a dedicated Blocks catalog with direct guides for Responsive Sidebar,
+  Data Table, Settings Panel, and Pricing Plans.
+- Made complete Block implementations viewable and copyable from their guides,
+  alongside interactive examples and application-owned installation paths.
+  Copied source remains independent and does not receive automatic updates.
+- Added a responsive Pricing Plans Block with consumer-provided offers, prices,
+  billing terms, controlled period selection, and actions. Its interactive
+  example uses fictional offers and does not process payments.
+- Added optional Data Table empty-state actions for creating a first record or
+  clearing filters, with behavior owned by the consuming application and kept
+  separate from loading, error, populated-row, and pagination states.
+- Aligned the displayed PyColors UI baseline with the existing v1.5.2 package
+  version. PyColors Tokens remains v1.2.2; this Marketing release does not bump
+  public packages or change real product prices and checkout behavior.
+
+Explore the documented Blocks at `/blocks`.
+
 ## 1.22.0
 
 Released by PyColors Marketing on 4 September 2026.
