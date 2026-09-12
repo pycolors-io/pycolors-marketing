@@ -32,4 +32,12 @@ export const BLOCKS_CATALOG = [
       "Compare offers with clear prices, billing terms, features and consumer-owned actions. Request a billing-period change without handing over pricing or payment logic.",
     href: "/docs/blocks/commerce/pricing-plans",
   },
+  {
+    id: "feedback/empty-state-panel",
+    title: "Empty state panel",
+    category: "Feedback & states",
+    description:
+      "Give an empty section a clear next step, from first use to no matching results. Keep content, native actions, state and focus under your application's control.",
+    href: "/docs/blocks/feedback/empty-state-panel",
+  },
 ] as const;
