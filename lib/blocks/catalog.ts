@@ -40,4 +40,12 @@ export const BLOCKS_CATALOG = [
       "Give an empty section a clear next step, from first use to no matching results. Keep content, native actions, state and focus under your application's control.",
     href: "/docs/blocks/feedback/empty-state-panel",
   },
+  {
+    id: "account/workspace-members",
+    title: "Workspace members",
+    category: "Account & workspace",
+    description:
+      "Present workspace members with readable role and status labels and native actions. Keep identities, permissions, member changes and focus under your application's control.",
+    href: "/docs/blocks/account/workspace-members",
+  },
 ] as const;

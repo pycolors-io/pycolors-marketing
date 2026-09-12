@@ -14,7 +14,7 @@ import { BLOCKS_CATALOG } from "@/lib/blocks/catalog";
 
 const title = "PyColors Blocks — Copyable React application patterns";
 const description =
-  "Explore the responsive sidebar, data table, settings panel, pricing plans and empty state panel. Preview each PyColors Block, copy its source and keep control of your application code.";
+  "Explore navigation, data, settings, pricing, empty states and workspace members. Preview each PyColors Block, copy its source and keep control of your application code.";
 
 export const metadata: Metadata = {
   title,
@@ -77,7 +77,7 @@ export default function BlocksPage() {
               { label: "Manual source copy", variant: "secondary" },
             ]}
             title="Start from a pattern. Keep ownership of the code."
-            description="PyColors Blocks compose public PyColors UI primitives into application patterns. Choose navigation, records, settings, an offer comparison or an empty state, then connect it to your own product."
+            description="PyColors Blocks compose public PyColors UI primitives into application patterns. Choose navigation, records, settings, pricing, empty states or workspace members, then connect the pattern to your own product."
             actions={
               <>
                 <Link className={linkClassName} href="#catalog">
