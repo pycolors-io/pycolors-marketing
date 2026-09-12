@@ -81,7 +81,11 @@ export function WorkspaceMembersPanel({
       </div>
 
       {members.length > 0 ? (
-        <ul role="list" aria-labelledby={headingId} className="divide-y divide-border">
+        <ul
+          role="list"
+          aria-labelledby={headingId}
+          className="divide-y divide-border"
+        >
           {members.map((member) => (
             <li
               key={member.id}
@@ -102,7 +106,9 @@ export function WorkspaceMembersPanel({
                 <dl className="flex min-w-0 flex-wrap gap-x-6 gap-y-2">
                   <div className="min-w-0 space-y-1">
                     <dt className="text-xs text-muted-foreground">Role</dt>
-                    <dd className="min-w-0 break-words text-sm">{member.role}</dd>
+                    <dd className="min-w-0 break-words text-sm">
+                      {member.role}
+                    </dd>
                   </div>
                   <div className="min-w-0 space-y-1">
                     <dt className="text-xs text-muted-foreground">Status</dt>

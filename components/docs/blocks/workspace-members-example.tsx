@@ -62,7 +62,10 @@ export function WorkspaceMembersExample() {
       </p>
       <div className="flex flex-wrap items-end gap-4">
         <div className="space-y-2">
-          <label className="block text-sm font-medium" htmlFor={`${exampleId}-state`}>
+          <label
+            className="block text-sm font-medium"
+            htmlFor={`${exampleId}-state`}
+          >
             Example state
           </label>
           <select
@@ -110,7 +113,11 @@ export function WorkspaceMembersExample() {
         emptyTitle="No example members"
         emptyDescription="Your application chooses what to offer next. This demo has no invitation service."
       />
-      <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-sm text-muted-foreground"
+      >
         {selectedName
           ? `Selected example member: ${selectedName}. No data was changed.`
           : "No example member selected."}
