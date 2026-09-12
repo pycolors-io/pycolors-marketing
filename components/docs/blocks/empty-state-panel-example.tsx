@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Button } from "@pycolors/ui";
+import Link from "next/link";
 
 import { EmptyStatePanel } from "@/content/blocks/feedback/empty-state-panel";
 
@@ -86,7 +87,7 @@ export function EmptyStatePanelExample() {
           }
           secondaryAction={
             <Button asChild variant="outline">
-              <a href="/docs/ui/installation">Read UI setup</a>
+              <Link href="/docs/ui/installation">Read UI setup</Link>
             </Button>
           }
         />
