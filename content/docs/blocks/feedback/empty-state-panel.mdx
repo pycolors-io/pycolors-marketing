@@ -43,6 +43,8 @@ Configure the [public UI package and tokens](/docs/ui/installation), then create
 Open the source below and copy the complete file, keeping its public imports.
 The code is included from canonical source at build time, not duplicated in
 the guide or copied from the interactive demonstration.
+Use the code block's copy button, or select the code manually when clipboard
+access is unavailable.
 
 <details>
   <summary>View and copy the complete source</summary>
@@ -54,6 +56,13 @@ the guide or copied from the interactive demonstration.
     ../../../blocks/feedback/empty-state-panel/index.tsx
   </include>
 </details>
+
+## Install by copying source
+
+Paste the complete source into the destination above. Keep the public
+`@pycolors/ui` imports and the token setup from the UI installation guide.
+Import your local copy from the consuming component; no Blocks installer or
+additional dependency is required.
 
 ## Use your own content and actions
 
@@ -91,6 +100,7 @@ own filter state. The Block does not clear filters or fetch results itself.
 The canonical file needs no client directive or state hook. A consumer using
 callbacks must supply them inside its own appropriate client boundary; do not
 pass ordinary event handlers from a Server Component across that boundary.
+In Next.js, put interactive consumer code in a file marked `"use client"`.
 The documentation demo is a client component because it owns local sample state.
 
 ## Props and responsibility
@@ -152,8 +162,9 @@ callbacks, refs, disabled actions, rerenders, announcement opt-in and the actual
 demo. Representative axe checks do not certify visual contrast, responsive
 rendering, screen-reader announcements or complete accessibility.
 
-Your application owns its copied source and future modifications. Review later
-canonical revisions deliberately; no automatic update or synchronization occurs.
+Your application owns its copied source and future modifications. Your copy
+does not receive automatic updates. Review each later canonical revision and
+validate it in your application before adopting it; no synchronization occurs.
 A local revert of the copied file rolls it back without changing customer data.
 
 ## Boundaries and next steps
@@ -164,5 +175,5 @@ payments or analytics. There is no new dependency or public UI API change.
 The separate [Data table](/docs/blocks/data/data-table) keeps its own empty-action
 API for tabular results.
 
-[Explore the Blocks catalog](/blocks) for other compositions, or
+Explore the [Blocks catalog](/blocks) for other compositions, or
 [compare Starters](/starters) for a broader application foundation.
