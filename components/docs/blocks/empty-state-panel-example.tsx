@@ -71,7 +71,9 @@ export function EmptyStatePanelExample() {
         <EmptyStatePanel
           id={`${exampleId}-projects`}
           heading="Example projects"
-          title={noResults ? "No projects match your filters" : "Start a project"}
+          title={
+            noResults ? "No projects match your filters" : "Start a project"
+          }
           description={
             noResults
               ? "Clear the example filters to show the fictional project. Your application would own the real query and results."

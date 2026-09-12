@@ -78,7 +78,11 @@ describe("EmptyStatePanel", () => {
     expect(onCreate).toHaveBeenCalledOnce();
     expect(button).toHaveFocus();
     rerender(
-      <EmptyStatePanel {...content} {...actions} title="Your workspace is empty" />,
+      <EmptyStatePanel
+        {...content}
+        {...actions}
+        title="Your workspace is empty"
+      />,
     );
     expect(ref.current).toBe(button);
     expect(button).toHaveFocus();
@@ -226,22 +230,36 @@ describe("EmptyStatePanelExample", () => {
       "href",
       "/docs/ui/installation",
     );
-    fireEvent.click(screen.getByRole("button", { name: "Show sample project" }));
-    expect(screen.getByText("Launch checklist — fictional sample")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Example projects" })).toHaveFocus();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show sample project" }),
+    );
+    expect(
+      screen.getByText("Launch checklist — fictional sample"),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Example projects" }),
+    ).toHaveFocus();
 
     const reset = screen.getByRole("button", { name: "Reset example" });
     reset.focus();
     fireEvent.click(reset);
     expect(reset).toHaveFocus();
-    expect(screen.queryByText("Launch checklist — fictional sample")).toBeNull();
+    expect(
+      screen.queryByText("Launch checklist — fictional sample"),
+    ).toBeNull();
     scenario.focus();
     fireEvent.change(scenario, { target: { value: "no-results" } });
     expect(scenario).toHaveFocus();
     expect(screen.getByText("No projects match your filters")).toBeVisible();
-    fireEvent.click(screen.getByRole("button", { name: "Clear example filters" }));
-    expect(screen.getByText("Launch checklist — fictional sample")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Example projects" })).toHaveFocus();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Clear example filters" }),
+    );
+    expect(
+      screen.getByText("Launch checklist — fictional sample"),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Example projects" }),
+    ).toHaveFocus();
   });
 
   it("keeps repeated demos independent with unique IDs", () => {
@@ -256,9 +274,9 @@ describe("EmptyStatePanelExample", () => {
     fireEvent.click(
       screen.getAllByRole("button", { name: "Show sample project" })[0]!,
     );
-    expect(screen.getAllByText("Launch checklist — fictional sample")).toHaveLength(
-      1,
-    );
+    expect(
+      screen.getAllByText("Launch checklist — fictional sample"),
+    ).toHaveLength(1);
     expect(
       screen.getAllByRole("button", { name: "Show sample project" }),
     ).toHaveLength(1);
