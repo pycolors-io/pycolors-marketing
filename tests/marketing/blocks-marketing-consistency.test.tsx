@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
@@ -181,12 +182,12 @@ describe("Blocks Marketing consistency", () => {
 });
 
 describe("MarketingLinkButton", () => {
-  it("preserves the child anchor, callback, ref and native focus", () => {
+  it("preserves the child Link, callback, ref and native focus", () => {
     const ref = React.createRef<HTMLAnchorElement>();
     const onClick = vi.fn();
     render(
       <MarketingLinkButton>
-        <a
+        <Link
           href="/docs/blocks"
           ref={ref}
           onClick={(event) => {
@@ -195,7 +196,7 @@ describe("MarketingLinkButton", () => {
           }}
         >
           Browse source
-        </a>
+        </Link>
       </MarketingLinkButton>,
     );
     const link = screen.getByRole("link", { name: "Browse source" });
@@ -232,7 +233,7 @@ describe("MarketingLinkButton", () => {
     const label = "Read the complete source-copy and integration documentation";
     render(
       <MarketingLinkButton className="px-8 rounded-lg">
-        <a href="/docs/blocks">{label}</a>
+        <Link href="/docs/blocks">{label}</Link>
       </MarketingLinkButton>,
     );
     const link = screen.getByRole("link", { name: label });
