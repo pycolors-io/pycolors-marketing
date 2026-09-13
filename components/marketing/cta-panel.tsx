@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@pycolors/ui";
+import { Button, cn } from "@pycolors/ui";
 
 import {
   marketingSurfaceToneClass,
@@ -100,5 +100,37 @@ export function MarketingCtaPanel({
 
       {actions ? <div className="mt-8">{actions}</div> : null}
     </div>
+  );
+}
+
+export type MarketingLinkButtonProps = Readonly<{
+  /** Exactly one caller-owned Link or anchor, with its native props and ref. */
+  children: React.ReactElement;
+  variant?: "default" | "outline";
+  className?: string;
+}>;
+
+/**
+ * Existing public Button styling with shared marketing geometry. Long labels
+ * may wrap instead of overflowing a fixed-height CTA. The child owns navigation.
+ * This composition adds no click handler, router, state or disabled-link model.
+ */
+export function MarketingLinkButton({
+  children,
+  variant = "default",
+  className,
+}: MarketingLinkButtonProps) {
+  return (
+    <Button
+      asChild
+      size="lg"
+      variant={variant}
+      className={cn(
+        "h-auto min-h-11 min-w-0 max-w-full shrink whitespace-normal rounded-[5px] px-6 py-2.5 text-center",
+        className,
+      )}
+    >
+      {children}
+    </Button>
   );
 }
