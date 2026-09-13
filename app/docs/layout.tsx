@@ -94,7 +94,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
           }}
         >
           <ToastDocsProvider>
-            <div className="docs-shell w-full min-w-0 max-w-full">
+            <div className="docs-shell w-full min-w-0 max-w-full break-words">
               {children}
             </div>
           </ToastDocsProvider>
