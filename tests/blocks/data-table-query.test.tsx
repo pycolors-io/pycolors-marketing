@@ -34,6 +34,14 @@ const baseProps = {
   getRowId: (row) => row.id,
   rows,
 } satisfies DataTableProps<Row>;
+const emptySlots = [
+  { name: "missing", slot: undefined },
+  { name: "null", slot: null },
+  { name: "false", slot: false },
+  { name: "empty string", slot: "" },
+  { name: "empty array", slot: [] },
+  { name: "empty children", slot: [null, false, ""] },
+];
 
 function createQuery(overrides: Partial<DataTableQuery> = {}): DataTableQuery {
   return {
@@ -51,7 +59,7 @@ function visibleLabels(container: HTMLElement) {
 }
 
 describe("DataTable query controls", () => {
-  it("preserves the table without introducing controls when query is omitted", () => {
+  it("preserves tables when query is omitted", () => {
     const { container } = render(<DataTable {...baseProps} />);
     expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
     expect(screen.queryByRole("group")).not.toBeInTheDocument();
@@ -59,7 +67,7 @@ describe("DataTable query controls", () => {
     expect(screen.getByRole("table", { name: "Test records" })).toBeVisible();
   });
 
-  it("renders a labelled native search outside the table scroller", () => {
+  it("labels search outside the table scroller", () => {
     const inputRef = React.createRef<HTMLInputElement>();
     const query = createQuery({
       label: "Record search options",
@@ -74,10 +82,12 @@ describe("DataTable query controls", () => {
     });
     const { container } = render(<DataTable {...baseProps} query={query} />);
     const group = screen.getByRole("group", { name: "Record search options" });
-    const input = within(group).getByRole("searchbox", {
-      name: "Find records",
-    });
+    const controls = within(group);
+    const input = controls.getByRole("searchbox", { name: "Find records" });
     const table = screen.getByRole("table");
+    const summary = group.querySelector(
+      '[data-slot="data-table-query-summary"]',
+    );
 
     expect(screen.getByLabelText("Find records")).toBe(input);
     expect(inputRef.current).toBe(input);
@@ -86,15 +96,13 @@ describe("DataTable query controls", () => {
     expect(input).toHaveClass("focus-visible:ring-2", "min-w-0");
     expect(table.parentElement).not.toContainElement(input);
     expect(container.firstElementChild?.firstElementChild).toBe(group);
-    expect(
-      group.querySelector('[data-slot="data-table-query-summary"]'),
-    ).toHaveTextContent("0");
-    expect(within(group).queryByRole("status")).not.toBeInTheDocument();
+    expect(summary).toHaveTextContent("0");
+    expect(controls.queryByRole("status")).not.toBeInTheDocument();
     expect(group).not.toHaveAttribute("aria-live");
     expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
   });
 
-  it("forwards raw requests without changing rows, sorting, size or page state", () => {
+  it("forwards raw requests without changing table state", () => {
     const onValueChange = vi.fn();
     const onReset = vi.fn();
     const onPageChange = vi.fn();
@@ -126,26 +134,21 @@ describe("DataTable query controls", () => {
     const reset = screen.getByRole("button", { name: "Reset filters" });
     reset.focus();
     fireEvent.click(reset);
+    const size = screen.getByRole("combobox", { name: "Rows per page" });
+    const page = screen.getByRole("button", { name: "Page 2" });
+    const sortedHeader = container.querySelector("th[aria-sort]");
     expect(onReset).toHaveBeenCalledOnce();
     expect(reset).toHaveFocus();
     expect(visibleLabels(container)).toEqual(["Alpha", "Beta"]);
-    expect(
-      screen.getByRole("combobox", { name: "Rows per page" }),
-    ).toHaveValue("2");
-    expect(screen.getByRole("button", { name: "Page 2" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
-    expect(container.querySelector("th[aria-sort]")).toHaveAttribute(
-      "aria-sort",
-      "descending",
-    );
+    expect(size).toHaveValue("2");
+    expect(page).toHaveAttribute("aria-current", "page");
+    expect(sortedHeader).toHaveAttribute("aria-sort", "descending");
     expect(onPageChange).not.toHaveBeenCalled();
     expect(onPageSizeChange).not.toHaveBeenCalled();
     expect(onSortChange).not.toHaveBeenCalled();
   });
 
-  it("preserves controlled values, DOM identity and the ref across state transitions", () => {
+  it("preserves controlled input across async transitions", () => {
     const inputRef = React.createRef<HTMLInputElement>();
     const query = createQuery({
       search: {
@@ -164,17 +167,15 @@ describe("DataTable query controls", () => {
       { status: "ready" },
     ];
     for (const state of states) {
-      rerender(
-        <DataTable {...baseProps} query={query} rows={[]} state={state} />,
-      );
+      const props = { ...baseProps, query, rows: [], state };
+      rerender(<DataTable {...props} />);
+      const reset = screen.getByRole("button", { name: "Reset filters" });
       expect(screen.getByRole("searchbox")).toBe(input);
       expect(inputRef.current).toBe(input);
       expect(input).toHaveValue("Al");
       expect(input).toHaveFocus();
       expect(input).not.toBeDisabled();
-      expect(
-        screen.getByRole("button", { name: "Reset filters" }),
-      ).not.toBeDisabled();
+      expect(reset).not.toBeDisabled();
     }
     rerender(
       <DataTable
@@ -189,20 +190,16 @@ describe("DataTable query controls", () => {
   it("respects explicit search and reset disabled flags", () => {
     const onValueChange = vi.fn();
     const onReset = vi.fn();
-    render(
-      <DataTable
-        {...baseProps}
-        query={createQuery({
-          search: {
-            label: "Search records",
-            value: "Alpha",
-            onValueChange,
-            disabled: true,
-          },
-          reset: { label: "Reset filters", onReset, disabled: true },
-        })}
-      />,
-    );
+    const query = createQuery({
+      search: {
+        label: "Search records",
+        value: "Alpha",
+        onValueChange,
+        disabled: true,
+      },
+      reset: { label: "Reset filters", onReset, disabled: true },
+    });
+    render(<DataTable {...baseProps} query={query} />);
     const input = screen.getByRole("searchbox");
     const reset = screen.getByRole("button", { name: "Reset filters" });
     expect(input).toBeDisabled();
@@ -213,7 +210,7 @@ describe("DataTable query controls", () => {
     expect(onReset).not.toHaveBeenCalled();
   });
 
-  it("preserves consumer filter controls, refs, links and callbacks", () => {
+  it("preserves consumer filter controls and native behavior", () => {
     const onFilter = vi.fn();
     const selectRef = React.createRef<HTMLSelectElement>();
     const filters = (
@@ -231,64 +228,51 @@ describe("DataTable query controls", () => {
         </button>
       </>
     );
-    const { rerender } = render(
-      <DataTable {...baseProps} query={createQuery({ filters })} />,
-    );
+    const query = createQuery({ filters });
+    const { rerender } = render(<DataTable {...baseProps} query={query} />);
     const select = screen.getByRole("combobox", { name: "State" });
+    const help = screen.getByRole("link", { name: "Filter help" });
+    const disabled = screen.getByRole("button", {
+      name: "Unavailable filter",
+    });
     expect(selectRef.current).toBe(select);
-    expect(screen.getByRole("link", { name: "Filter help" })).toHaveAttribute(
-      "href",
-      "/records/help",
-    );
-    expect(
-      screen.getByRole("button", { name: "Unavailable filter" }),
-    ).toBeDisabled();
+    expect(help).toHaveAttribute("href", "/records/help");
+    expect(disabled).toBeDisabled();
     select.focus();
     fireEvent.change(select, { target: { value: "paused" } });
     expect(onFilter).toHaveBeenCalledOnce();
-    rerender(
-      <DataTable {...baseProps} query={createQuery({ filters })} rows={[]} />,
-    );
+    rerender(<DataTable {...baseProps} query={query} rows={[]} />);
     expect(screen.getByRole("combobox", { name: "State" })).toBe(select);
     expect(select).toHaveValue("paused");
     expect(select).toHaveFocus();
   });
 
-  it.each([
-    { name: "missing", slot: undefined },
-    { name: "null", slot: null },
-    { name: "false", slot: false },
-    { name: "empty string", slot: "" },
-    { name: "empty array", slot: [] },
-    { name: "empty children", slot: [null, false, ""] },
-  ])("omits empty filter and summary slots ($name)", ({ slot }) => {
-    const { container } = render(
-      <DataTable
-        {...baseProps}
-        query={createQuery({
-          filters: slot,
-          summary: slot,
-          reset: undefined,
-        })}
-      />,
+  it.each(emptySlots)("omits empty slots ($name)", ({ slot }) => {
+    const query = createQuery({
+      filters: slot,
+      summary: slot,
+      reset: undefined,
+    });
+    const { container } = render(<DataTable {...baseProps} query={query} />);
+    const filters = container.querySelector('[data-slot="data-table-filters"]');
+    const summary = container.querySelector(
+      '[data-slot="data-table-query-summary"]',
     );
-    expect(
-      container.querySelector('[data-slot="data-table-filters"]'),
-    ).toBeNull();
-    expect(
-      container.querySelector('[data-slot="data-table-query-summary"]'),
-    ).toBeNull();
-    expect(
-      screen.queryByRole("button", { name: "Reset filters" }),
-    ).not.toBeInTheDocument();
+    const reset = screen.queryByRole("button", { name: "Reset filters" });
+    expect(filters).toBeNull();
+    expect(summary).toBeNull();
+    expect(reset).not.toBeInTheDocument();
   });
 
-  it("keeps native reset non-submitting and only prevents non-composition Enter", () => {
-    const onSubmit = vi.fn((event: React.FormEvent<HTMLFormElement>) =>
-      event.preventDefault(),
-    );
+  it("prevents form submission without intercepting composition", () => {
+    const onSubmit = vi.fn();
     render(
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
         <DataTable {...baseProps} query={createQuery()} />
       </form>,
     );
@@ -316,41 +300,35 @@ describe("DataTable query controls", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it("isolates repeated instances and supports consumer-localized labels", () => {
+  it("isolates repeated instances with localized labels", () => {
     const firstChange = vi.fn();
     const secondChange = vi.fn();
+    const firstQuery = createQuery({
+      label: "Premier tableau",
+      search: {
+        label: "Rechercher",
+        value: "Alpha",
+        onValueChange: firstChange,
+      },
+    });
+    const secondQuery = createQuery({
+      label: "Second tableau",
+      search: {
+        label: "Rechercher",
+        value: "Beta",
+        onValueChange: secondChange,
+      },
+    });
     render(
       <>
-        <DataTable
-          {...baseProps}
-          query={createQuery({
-            label: "Premier tableau",
-            search: {
-              label: "Rechercher",
-              value: "Alpha",
-              onValueChange: firstChange,
-            },
-          })}
-        />
-        <DataTable
-          {...baseProps}
-          query={createQuery({
-            label: "Second tableau",
-            search: {
-              label: "Rechercher",
-              value: "Beta",
-              onValueChange: secondChange,
-            },
-          })}
-        />
+        <DataTable {...baseProps} query={firstQuery} />
+        <DataTable {...baseProps} query={secondQuery} />
       </>,
     );
-    const first = within(
-      screen.getByRole("group", { name: "Premier tableau" }),
-    ).getByLabelText("Rechercher");
-    const second = within(
-      screen.getByRole("group", { name: "Second tableau" }),
-    ).getByLabelText("Rechercher");
+    const firstGroup = screen.getByRole("group", { name: "Premier tableau" });
+    const secondGroup = screen.getByRole("group", { name: "Second tableau" });
+    const first = within(firstGroup).getByLabelText("Rechercher");
+    const second = within(secondGroup).getByLabelText("Rechercher");
     expect(first).not.toBe(second);
     expect(first).toHaveValue("Alpha");
     expect(second).toHaveValue("Beta");
@@ -359,28 +337,22 @@ describe("DataTable query controls", () => {
     expect(firstChange).not.toHaveBeenCalled();
   });
 
-  it.each([false, true])(
-    "has no structural axe violations with empty=%s",
-    async (empty) => {
-      const { container } = render(
-        <DataTable
-          {...baseProps}
-          query={createQuery({
-            summary: empty ? "0 matching records" : "2 matching records",
-          })}
-          rows={empty ? [] : rows}
-        />,
-      );
-      const result = await axe(container, {
-        rules: { "color-contrast": { enabled: false } },
-      });
-      expect(result).toHaveNoViolations();
-    },
-  );
+  it.each([false, true])("passes axe with empty=%s", async (empty) => {
+    const query = createQuery({
+      summary: empty ? "0 matching records" : "2 matching records",
+    });
+    const { container } = render(
+      <DataTable {...baseProps} query={query} rows={empty ? [] : rows} />,
+    );
+    const result = await axe(container, {
+      rules: { "color-contrast": { enabled: false } },
+    });
+    expect(result).toHaveNoViolations();
+  });
 });
 
 describe("DataTableQueryExample", () => {
-  it("searches the full dataset, intersects filters and recovers without losing focus", () => {
+  it("searches all records and recovers without losing focus", () => {
     const { container } = render(<DataTableQueryExample />);
     const input = screen.getByRole("searchbox", { name: "Search records" });
     expect(visibleLabels(container)).toEqual(["Northwind", "Contoso"]);
@@ -391,21 +363,18 @@ describe("DataTableQueryExample", () => {
     expect(input).toHaveValue("  WOrLD  ");
     expect(input).toHaveFocus();
     expect(visibleLabels(container)).toEqual(["Wide World Importers"]);
-    expect(
-      screen.getByText("Showing 1–1 of 1 matching records."),
-    ).toBeVisible();
+    const found = screen.getByText("Showing 1–1 of 1 matching records.");
+    expect(found).toBeVisible();
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
     fireEvent.change(screen.getByRole("combobox", { name: "State" }), {
       target: { value: "Paused" },
     });
     expect(visibleLabels(container)).toEqual([]);
     expect(screen.getByText("No matching records")).toBeVisible();
-    expect(
-      screen.getByText("Showing 0–0 of 0 matching records."),
-    ).toBeVisible();
-    expect(
-      screen.queryByRole("combobox", { name: "Rows per page" }),
-    ).not.toBeInTheDocument();
+    const empty = screen.getByText("Showing 0–0 of 0 matching records.");
+    const size = screen.queryByRole("combobox", { name: "Rows per page" });
+    expect(empty).toBeVisible();
+    expect(size).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Reset filters" }));
     expect(screen.getByRole("searchbox")).toBe(input);
     expect(input).toHaveValue("");
@@ -414,14 +383,13 @@ describe("DataTableQueryExample", () => {
     expect(visibleLabels(container)).toEqual(["Northwind", "Contoso"]);
   });
 
-  it("filters before sorting and slicing, resetting page but retaining sort and size", () => {
+  it("coordinates filters, sort, page resets and page size", () => {
     const { container } = render(<DataTableQueryExample />);
-    fireEvent.click(
-      screen.getByRole("button", { name: /^Record\s*:\s*Sort ascending$/ }),
-    );
-    fireEvent.change(screen.getByRole("combobox", { name: "Rows per page" }), {
-      target: { value: "3" },
-    });
+    const ascending = /^Record\s*:\s*Sort ascending$/;
+    const descending = /^Record\s*:\s*Sort descending$/;
+    fireEvent.click(screen.getByRole("button", { name: ascending }));
+    const size = screen.getByRole("combobox", { name: "Rows per page" });
+    fireEvent.change(size, { target: { value: "3" } });
     expect(visibleLabels(container)).toEqual([
       "Adventure Works",
       "Contoso",
@@ -441,9 +409,8 @@ describe("DataTableQueryExample", () => {
       "Contoso",
       "Northwind",
     ]);
-    expect(
-      screen.getByText("Showing 1–3 of 4 matching records."),
-    ).toBeVisible();
+    const matches = screen.getByText("Showing 1–3 of 4 matching records.");
+    expect(matches).toBeVisible();
     fireEvent.change(screen.getByRole("combobox", { name: "State" }), {
       target: { value: "Available" },
     });
@@ -453,52 +420,45 @@ describe("DataTableQueryExample", () => {
       "Wide World Importers",
     ]);
     fireEvent.click(screen.getByRole("button", { name: "Reset filters" }));
-    expect(
-      screen.getByRole("combobox", { name: "Rows per page" }),
-    ).toHaveValue("3");
-    expect(container.querySelector("th[aria-sort]")).toHaveAttribute(
-      "aria-sort",
-      "ascending",
-    );
+    const retainedSize = screen.getByRole("combobox", {
+      name: "Rows per page",
+    });
+    const sortedHeader = container.querySelector("th[aria-sort]");
+    expect(retainedSize).toHaveValue("3");
+    expect(sortedHeader).toHaveAttribute("aria-sort", "ascending");
     expect(visibleLabels(container)).toEqual([
       "Adventure Works",
       "Contoso",
       "Fabrikam",
     ]);
     fireEvent.click(screen.getByRole("button", { name: "Next page" }));
-    fireEvent.click(
-      screen.getByRole("button", { name: /^Record\s*:\s*Sort descending$/ }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: descending }));
     expect(visibleLabels(container)).toEqual([
       "Wide World Importers",
       "Tailspin",
       "Northwind",
     ]);
-    expect(
-      screen.getByText("Showing 1–3 of 6 matching records."),
-    ).toBeVisible();
+    const ordered = screen.getByText("Showing 1–3 of 6 matching records.");
+    expect(ordered).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Next page" }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Rows per page" }), {
-      target: { value: "2" },
-    });
+    fireEvent.change(retainedSize, { target: { value: "2" } });
     expect(visibleLabels(container)).toEqual([
       "Wide World Importers",
       "Tailspin",
     ]);
-    expect(
-      screen.getByText("Showing 1–2 of 6 matching records."),
-    ).toBeVisible();
+    const resized = screen.getByText("Showing 1–2 of 6 matching records.");
+    expect(resized).toBeVisible();
   });
 
-  it("keeps local actions truthful and the original dataset unchanged across mounts", () => {
+  it("keeps local actions truthful and sample records immutable", () => {
     const first = render(<DataTableQueryExample />);
     fireEvent.click(screen.getByRole("button", { name: "Inspect Northwind" }));
-    expect(
-      screen.getByText("Selected Northwind locally. Nothing was saved."),
-    ).toBeVisible();
-    fireEvent.click(
-      screen.getByRole("button", { name: /^Record\s*:\s*Sort ascending$/ }),
+    const selected = screen.getByText(
+      "Selected Northwind locally. Nothing was saved.",
     );
+    expect(selected).toBeVisible();
+    const ascending = /^Record\s*:\s*Sort ascending$/;
+    fireEvent.click(screen.getByRole("button", { name: ascending }));
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "missing" },
     });
