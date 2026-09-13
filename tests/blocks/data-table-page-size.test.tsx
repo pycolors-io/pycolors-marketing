@@ -89,7 +89,9 @@ describe("DataTable page size", () => {
     ).toEqual(["6", "2", "3"]);
     expect(options).toEqual(before);
     expect(pageSize.onPageSizeChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("table").parentElement).not.toContainElement(select);
+    expect(screen.getByRole("table").parentElement).not.toContainElement(
+      select,
+    );
     expect(select.closest("label")).toHaveClass("min-w-0", "flex-wrap");
     expect(select).toHaveClass("bg-background", "focus-visible:ring-2");
   });
@@ -103,7 +105,10 @@ describe("DataTable page size", () => {
         {...baseProps}
         pageSize={pageSize}
         pagination={{ page: 2, totalPages: 4, onPageChange }}
-        sorting={{ value: { columnId: "label", direction: "asc" }, onSortChange }}
+        sorting={{
+          value: { columnId: "label", direction: "asc" },
+          onSortChange,
+        }}
       />,
     );
     const select = screen.getByRole("combobox");
@@ -188,12 +193,16 @@ describe("DataTable page size", () => {
     );
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
     expect(screen.getByText("No records")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add record" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Add record" }),
+    ).toBeInTheDocument();
   });
 
   it("works without pagination and remains available on a single page", () => {
     const pageSize = controller();
-    const { rerender } = render(<DataTable {...baseProps} pageSize={pageSize} />);
+    const { rerender } = render(
+      <DataTable {...baseProps} pageSize={pageSize} />,
+    );
     const select = screen.getByRole("combobox");
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
     rerender(
@@ -286,7 +295,9 @@ describe("DataTable page size", () => {
 describe("DataTablePageSizeExample", () => {
   it("resets the page on size changes and sorts the full dataset before slicing", () => {
     render(<DataTablePageSizeExample />);
-    const table = screen.getByRole("table", { name: "Adjustable sample records" });
+    const table = screen.getByRole("table", {
+      name: "Adjustable sample records",
+    });
     const select = screen.getByRole("combobox", { name: "Rows per page" });
     expect(visibleLabels(table)).toEqual(["Northwind", "Contoso"]);
 
@@ -297,7 +308,9 @@ describe("DataTablePageSizeExample", () => {
     expect(visibleLabels(table)).toEqual(["Northwind", "Contoso", "Fabrikam"]);
     expect(screen.getByText(/Showing 1–3 of 6/)).toBeInTheDocument();
     expect(select).toHaveFocus();
-    expect(screen.getByRole("button", { name: "Previous page" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Previous page" }),
+    ).toBeDisabled();
 
     fireEvent.click(screen.getByRole("button", { name: "Next page" }));
     fireEvent.click(
@@ -308,7 +321,9 @@ describe("DataTablePageSizeExample", () => {
       "Contoso",
       "Fabrikam",
     ]);
-    expect(screen.getByRole("button", { name: "Previous page" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Previous page" }),
+    ).toBeDisabled();
 
     fireEvent.change(select, { target: { value: "6" } });
     expect(visibleLabels(table)).toEqual([
@@ -322,7 +337,9 @@ describe("DataTablePageSizeExample", () => {
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
     expect(select).toHaveValue("6");
     expect(screen.getByText(/Showing 1–6 of 6/)).toBeInTheDocument();
-    expect(screen.getByText(/No request is sent or data saved/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/No request is sent or data saved/),
+    ).toBeInTheDocument();
 
     fireEvent.change(select, { target: { value: "2" } });
     expect(visibleLabels(table)).toEqual(["Adventure Works", "Contoso"]);

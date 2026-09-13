@@ -423,8 +423,8 @@ export function AdjustableRecordsTable({ rows }: { rows: readonly Row[] }) {
         rows={visibleRows}
       />
       <p aria-live="polite">
-        Showing {rows.length === 0 ? 0 : start + 1}–{start + visibleRows.length} of{" "}
-        {rows.length} records.
+        Showing {rows.length === 0 ? 0 : start + 1}–{start + visibleRows.length}{" "}
+        of {rows.length} records.
       </p>
     </div>
   );
