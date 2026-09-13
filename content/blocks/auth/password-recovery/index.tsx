@@ -53,7 +53,9 @@ export function PasswordRecoveryPanel({
 
         <div>{form}</div>
 
-        {help ? <div className="text-sm text-muted-foreground">{help}</div> : null}
+        {help ? (
+          <div className="text-sm text-muted-foreground">{help}</div>
+        ) : null}
 
         {footer ? (
           <footer className="text-sm text-muted-foreground">{footer}</footer>
