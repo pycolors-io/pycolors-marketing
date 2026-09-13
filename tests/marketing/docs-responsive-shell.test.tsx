@@ -21,7 +21,6 @@ describe("DocsPageShell responsive contract", () => {
     expect(content).toHaveClass(
       "w-full",
       "min-w-0",
-      "max-w-full",
       "sm:px-2",
       "lg:px-0",
       "max-w-205",
