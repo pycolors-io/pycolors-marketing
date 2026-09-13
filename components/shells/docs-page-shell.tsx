@@ -6,10 +6,7 @@ type DocsPageShellProps = Readonly<{
   full?: boolean;
 }>;
 
-export function DocsPageShell({
-  children,
-  full = false,
-}: DocsPageShellProps) {
+export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
   return (
     <section className="w-full min-w-0 max-w-full">
       <div
