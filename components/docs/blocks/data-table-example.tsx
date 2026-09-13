@@ -6,6 +6,7 @@ import { Badge, Button } from "@pycolors/ui";
 import {
   DataTable,
   type DataTableColumn,
+  type DataTableSort,
 } from "@/content/blocks/data/data-table";
 
 type ExampleRecord = Readonly<{
@@ -171,6 +172,68 @@ export function DataTableEmptyExample({
           variant="outline"
         >
           Reset example
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+const sortableColumns = columns.map((column) => ({
+  ...column,
+  sortable: column.id === "label" || column.id === "state",
+}));
+
+export function DataTableSortingExample() {
+  const [sort, setSort] = React.useState<DataTableSort | null>(null);
+  const [page, setPage] = React.useState(1);
+  const records = pages.flat();
+
+  // This consumer orders the full dataset before selecting a page.
+  if (sort) {
+    records.sort((left, right) => {
+      const leftValue = sort.columnId === "state" ? left.state : left.label;
+      const rightValue = sort.columnId === "state" ? right.state : right.label;
+      const comparison = leftValue.localeCompare(rightValue, "en");
+      return sort.direction === "asc" ? comparison : -comparison;
+    });
+  }
+
+  function changeSort(nextSort: DataTableSort | null) {
+    setSort(nextSort);
+    setPage(1);
+  }
+
+  return (
+    <div className="not-prose space-y-3">
+      <DataTable
+        caption="Sortable sample records"
+        columns={sortableColumns}
+        emptyTitle="No sample records"
+        getRowId={(record) => record.id}
+        pagination={{
+          navigationLabel: "Sorted sample record pages",
+          onPageChange: setPage,
+          page,
+          summary: `Page ${page} of ${pages.length}`,
+          totalPages: pages.length,
+        }}
+        rows={records.slice((page - 1) * 2, page * 2)}
+        sorting={{ onSortChange: changeSort, value: sort }}
+      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          {sort
+            ? `Ordered by ${sort.columnId === "state" ? "state" : "record"}, ${sort.direction === "asc" ? "ascending" : "descending"}.`
+            : "Original sample order."}{" "}
+          Local example only. No request is sent or data saved.
+        </p>
+        <Button
+          onClick={() => changeSort(null)}
+          size="sm"
+          type="button"
+          variant="outline"
+        >
+          Reset sort
         </Button>
       </div>
     </div>

@@ -31,6 +31,19 @@ export type DataTableColumn<Row> = Readonly<{
   cell: (row: Row) => React.ReactNode;
   headerClassName?: string;
   cellClassName?: string;
+  sortable?: boolean;
+}>;
+
+export type DataTableSort = Readonly<{
+  columnId: string;
+  direction: "asc" | "desc";
+}>;
+
+export type DataTableSorting = Readonly<{
+  value: DataTableSort | null;
+  onSortChange: (sort: DataTableSort) => void;
+  ascendingLabel?: string;
+  descendingLabel?: string;
 }>;
 
 export type DataTablePagination = Readonly<{
@@ -65,6 +78,7 @@ export type DataTableProps<Row> = Readonly<{
   renderRowActions?: (row: Row) => React.ReactNode;
   rowActionsLabel?: string;
   pagination?: DataTablePagination;
+  sorting?: DataTableSorting;
   className?: string;
 }>;
 
@@ -173,7 +187,7 @@ function DataTablePaginationControls({
 
 /**
  * A source-copy record table with consumer-owned columns, rows, states,
- * actions, and controlled page navigation.
+ * actions, sorting requests, and controlled page navigation.
  */
 export function DataTable<Row>({
   caption,
@@ -187,6 +201,7 @@ export function DataTable<Row>({
   renderRowActions,
   rowActionsLabel = "Actions",
   rows,
+  sorting,
   state,
 }: DataTableProps<Row>) {
   const hasRowActions = Boolean(renderRowActions);
@@ -208,15 +223,61 @@ export function DataTable<Row>({
 
         <TableHeader>
           <TableRow>
-            {columns.map((column) => (
-              <TableHead
-                className={column.headerClassName}
-                data-column-id={column.id}
-                key={column.id}
-              >
-                {column.header}
-              </TableHead>
-            ))}
+            {columns.map((column) => {
+              const controller = column.sortable ? sorting : undefined;
+              const direction =
+                controller?.value?.columnId === column.id
+                  ? controller.value.direction
+                  : undefined;
+              const nextDirection = direction === "asc" ? "desc" : "asc";
+
+              return (
+                <TableHead
+                  aria-sort={
+                    direction === "asc"
+                      ? "ascending"
+                      : direction === "desc"
+                        ? "descending"
+                        : undefined
+                  }
+                  className={column.headerClassName}
+                  data-column-id={column.id}
+                  key={column.id}
+                >
+                  {controller ? (
+                    <button
+                      className="inline-flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm text-left font-medium outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      data-slot="data-table-sort-button"
+                      disabled={status !== "ready"}
+                      onClick={() =>
+                        controller.onSortChange({
+                          columnId: column.id,
+                          direction: nextDirection,
+                        })
+                      }
+                      type="button"
+                    >
+                      {column.header}
+                      <span aria-hidden="true">
+                        {direction === "asc"
+                          ? "▲"
+                          : direction === "desc"
+                            ? "▼"
+                            : "♢"}
+                      </span>
+                      <span className="sr-only">
+                        :{" "}
+                        {nextDirection === "asc"
+                          ? (controller.ascendingLabel ?? "Sort ascending")
+                          : (controller.descendingLabel ?? "Sort descending")}
+                      </span>
+                    </button>
+                  ) : (
+                    column.header
+                  )}
+                </TableHead>
+              );
+            })}
             {hasRowActions ? (
               <TableHead
                 className="text-right"
