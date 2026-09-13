@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { Card, cn } from "@pycolors/ui";
-
 export type SignInPanelProps = Readonly<{
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -25,9 +23,13 @@ export function SignInPanel({
   footer,
   className,
 }: SignInPanelProps) {
+  const sectionClassName = ["mx-auto w-full max-w-md", className]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <section className={cn("mx-auto w-full max-w-md", className)}>
-      <Card className="space-y-6 p-5 sm:p-6">
+    <section className={sectionClassName}>
+      <div className="space-y-6 rounded-xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
         <header className="space-y-2">
           <h2 className="text-xl font-semibold">{title}</h2>
           {description ? (
@@ -52,7 +54,7 @@ export function SignInPanel({
         {footer ? (
           <footer className="text-sm text-muted-foreground">{footer}</footer>
         ) : null}
-      </Card>
+      </div>
     </section>
   );
 }
