@@ -1,6 +1,6 @@
 ---
 title: Data table
-description: A source-copy record table with typed columns, explicit states, consumer-owned row actions, and controlled sorting and pagination.
+description: A source-copy records workflow with controlled search, custom filters, sorting, page size, pagination and empty-result recovery.
 lastUpdated: "2026-09-13"
 appliesTo: Blocks
 ---
@@ -12,6 +12,7 @@ import {
   DataTableEmptyExample,
   DataTableExample,
   DataTablePageSizeExample,
+  DataTableQueryExample,
   DataTableSortingExample,
 } from "@/components/docs/blocks/data-table-example";
 
@@ -24,7 +25,9 @@ import {
 
 `DataTable` renders one typed record-browsing composition from consumer-owned
 columns and rows. It provides deterministic ready, loading, empty, and error
-states, optional row actions, controlled sorting requests, and page navigation.
+states, optional row actions, controlled query and sorting requests, page size,
+and page navigation. Combine them in the
+[searchable records recipe](#search-filter-sort-and-paginate) below.
 
 The Block never fetches, filters, sorts, mutates, routes, or interprets records.
 Those decisions remain in the consuming feature or data layer.
@@ -166,6 +169,7 @@ The consumer owns:
 - unique column IDs, headers, and cell rendering;
 - state and state copy;
 - row-action controls and behavior;
+- search values, filter controls, matching rules, result counts and reset;
 - sort state, sortable columns, comparison logic and sort-change callbacks;
 - page state, total page count, navigation labels, and page-change callback;
 - optional page size, allowed sizes and page-size-change callback.
@@ -190,10 +194,217 @@ does not interpret cell values.
 | `pagination`       | `DataTablePagination`             | none       | Optional controlled, one-based page navigation.       |
 | `pageSize`         | `DataTablePageSize`               | none       | Optional controlled rows-per-page selection.          |
 | `sorting`          | `DataTableSorting`                | none       | Optional single-column sort requests and state.       |
+| `query`            | `DataTableQuery`                  | none       | Optional search, custom filters, reset and summary.   |
 | `className`        | `string`                          | none       | Root composition customization.                       |
 
 Provide at least one meaningful column. Keep column and row IDs unique and
 stable across renders.
+
+## Search, filter, sort and paginate
+
+Pass the optional `query` controller to compose a labelled live-search input,
+your own filter controls, an optional reset button and a result summary above
+the table. Omit it to keep the existing table presentation unchanged.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableQueryExample />
+</Preview>
+
+Try a name from another page, combine it with State, sort a column, and change
+Rows per page. Searching the full sample collection happens before sorting and
+pagination. No results keeps the query controls visible; Reset filters clears
+search and State, resets the page and returns focus to search while retaining
+the chosen sort and page size. That focus movement belongs to this demo, not
+the Block. Inspect only reports a local selection. Nothing is requested or saved.
+
+### Query API and ownership
+
+The exported `DataTableQuery` type contains:
+
+- `search`: required `value: string`, visible `label: string` and
+  `onValueChange(value: string)`; optional `placeholder`, `disabled` and
+  `inputRef: React.Ref<HTMLInputElement>`.
+- `label`: optional accessible group name, default `Record filters`. Choose
+  meaningful names when several tables appear on the same page.
+- `filters`: optional `React.ReactNode` for application-owned controls. Native
+  labels, links, callbacks, refs and disabled states are preserved; controls
+  are not cloned or intercepted.
+- `reset`: optional visible `label`, `onReset()` callback and `disabled` flag.
+- `summary`: optional `React.ReactNode`, including a numeric zero. The Block
+  never calculates a count or adds an implicit live region.
+
+Keep visible labels non-empty; a placeholder is not a replacement for a label.
+The group has normal Tab order, not an ARIA toolbar or grid keyboard model.
+The labelled native search and reset button wrap outside the table scroller.
+Empty filter/summary slots omit their wrappers; opaque components and fragments
+remain consumer-owned.
+
+`onValueChange` forwards raw text synchronously, including spaces and Unicode.
+Return that string as `search.value` immediately. Normalize only in your matching
+logic; debounce expensive requests, not the controlled input update. The Block
+never clears search, changes filters, resets a page or changes sort on its own.
+Its reset is a native `type="button"`. Non-composition Enter in live search is
+prevented from implicitly submitting an enclosing form; composition Enter and
+other keys are not intercepted. This is not a submit-to-search form.
+
+Query controls stay mounted in ready, empty, loading and error states so a user
+can correct a query. Disable search/reset explicitly when your workflow needs
+it and control disabled states on supplied filters yourself. Loading/error still
+suppress stale rows and page controls as before. Keep async status, recovery,
+request cancellation and stale-result handling in your data layer. Do not filter
+only a downloaded page and present it as a search of the full server dataset.
+
+### Copyable consumer recipe
+
+After copying the complete Block using the setup above, put this file beside
+`src/components/blocks/`. Pass the full local dataset as `rows`; adapt the state
+values, matching rules and locale to your product. This recipe does not fetch
+records or depend on a monorepo alias.
+
+```tsx title="src/components/searchable-records-table.tsx"
+"use client";
+
+import { useRef, useState } from "react";
+import {
+  DataTable,
+  type DataTableColumn,
+  type DataTableSort,
+} from "./blocks/data-table";
+
+type Row = Readonly<{
+  id: string;
+  label: string;
+  state: "Available" | "Paused";
+}>;
+
+const columns = [
+  {
+    id: "label",
+    header: "Record",
+    cell: (row) => row.label,
+    sortable: true,
+  },
+  {
+    id: "state",
+    header: "State",
+    cell: (row) => row.state,
+    sortable: true,
+  },
+] satisfies readonly DataTableColumn<Row>[];
+
+export function SearchableRecordsTable({ rows }: { rows: readonly Row[] }) {
+  const [search, setSearch] = useState("");
+  const [stateFilter, setStateFilter] = useState("all");
+  const [sort, setSort] = useState<DataTableSort | null>(null);
+  const [size, setSize] = useState(10);
+  const [page, setPage] = useState(1);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const term = search.trim().toLocaleLowerCase("en");
+  const matching = rows.filter(
+    (row) =>
+      row.label.toLocaleLowerCase("en").includes(term) &&
+      (stateFilter === "all" || row.state === stateFilter),
+  );
+  if (sort) {
+    matching.sort((left, right) => {
+      const leftValue = sort.columnId === "state" ? left.state : left.label;
+      const rightValue = sort.columnId === "state" ? right.state : right.label;
+      const comparison = leftValue.localeCompare(rightValue, "en");
+      return sort.direction === "asc" ? comparison : -comparison;
+    });
+  }
+  const totalPages = Math.max(1, Math.ceil(matching.length / size));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * size;
+  const visibleRows = matching.slice(start, start + size);
+
+  function resetFilters() {
+    setSearch("");
+    setStateFilter("all");
+    setPage(1);
+    inputRef.current?.focus();
+  }
+
+  return (
+    <DataTable
+      caption="Searchable records"
+      columns={columns}
+      emptyTitle={rows.length === 0 ? "No records yet" : "No matching records"}
+      emptyDescription={
+        rows.length === 0
+          ? "Add records in your application."
+          : "Change your search or reset the filters above."
+      }
+      getRowId={(row) => row.id}
+      pageSize={{
+        value: size,
+        options: [10, 25, 50],
+        onPageSizeChange: (nextSize) => {
+          setSize(nextSize);
+          setPage(1);
+        },
+      }}
+      pagination={{ page: currentPage, totalPages, onPageChange: setPage }}
+      query={{
+        search: {
+          label: "Search records",
+          value: search,
+          inputRef,
+          onValueChange: (value) => {
+            setSearch(value);
+            setPage(1);
+          },
+        },
+        filters: (
+          <label className="flex min-w-0 flex-col gap-1 text-sm">
+            <span className="text-muted-foreground">State</span>
+            <select
+              className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              value={stateFilter}
+              onChange={(event) => {
+                setStateFilter(event.currentTarget.value);
+                setPage(1);
+              }}
+            >
+              <option value="all">All states</option>
+              <option value="Available">Available</option>
+              <option value="Paused">Paused</option>
+            </select>
+          </label>
+        ),
+        reset: { label: "Reset filters", onReset: resetFilters },
+        summary: (
+          <p aria-live="polite" role="status">
+            Showing {matching.length === 0 ? 0 : start + 1}–
+            {start + visibleRows.length} of {matching.length} matching records.
+          </p>
+        ),
+      }}
+      rows={visibleRows}
+      sorting={{
+        value: sort,
+        onSortChange: (nextSort) => {
+          setSort(nextSort);
+          setPage(1);
+        },
+      }}
+    />
+  );
+}
+```
+
+`filter` creates a new array before sorting, so the caller's array is unchanged.
+The displayed page is clamped if incoming records shrink. Reset affects only
+the query/filter/page; sort and size remain selected. For remote records, use
+your server's matching total and ordering, and distinguish requested input from
+settled results. Choose your own announcement frequency to avoid noisy updates.
+
+Verify the copied integration with your application's lint, type, test and build
+commands. Then review keyboard/IME behavior, focus after reset or async changes,
+long labels, narrow widths, both themes and assistive-technology announcements.
+The preview and automated structural tests are not an independent consumer or
+complete accessibility certification. Use the [installation guide](/docs/blocks)
+for source ownership and update guidance.
 
 ## State behavior
 
@@ -541,7 +752,7 @@ loading/error rows keep their existing presentation. Only the active sortable
 header has `aria-sort`. Direction glyphs are hidden from assistive technology,
 and button names combine the visible header with the next action. Override
 `ascendingLabel` and `descendingLabel` to localize the default `Sort ascending`
-and `Sort descending` text. Keep these labels non-empty.
+and `Sort descendingLabel` text. Keep these labels non-empty.
 
 Tab reaches the enabled native buttons; Enter and Space use native browser
 activation. Focus is not moved by the Block. Keep column and row IDs stable
@@ -555,6 +766,7 @@ application. Automated structural checks are not a complete accessibility audit.
 - The public Table wrapper supplies horizontal scrolling when columns cannot
   fit; it does not create page-level horizontal overflow.
 - The outer composition uses `min-w-0`.
+- Query controls wrap above and outside the horizontal scroller.
 - Pagination summary and controls stack on narrow viewports and align in one
   row from the existing `sm` breakpoint.
 - The Block never hides arbitrary columns, changes rows into cards, or detects
@@ -569,6 +781,9 @@ is not the primary user task.
 - The required caption gives the table an accessible description.
 - Public `TableHead` cells retain `scope="col"`; only the active sortable header
   receives `aria-sort`. Sort requests use native, non-submitting buttons.
+- Query search has a visible label and normal native keyboard behavior, with
+  the documented live-search Enter guard. The optional group stays available
+  when results are empty, loading or failed; result announcements are opt-in.
 - Loading uses the public polite live region; decorative loading visuals stay
   hidden from assistive technology.
 - Empty and error copy stays visible and understandable without color or icons.
@@ -583,15 +798,15 @@ not a claim of full WCAG certification.
 
 ## Deliberate exclusions
 
-This Block does not include row selection, bulk actions, built-in search
-or filters, sorting engines, multi-column sorting, column visibility, resizing,
-reordering, virtualization,
-inline editing, export, saved views, data fetching, server pagination, caching,
-routing, permissions, mutations, business rules, authentication, or billing.
+This Block does not include row selection, bulk actions, matching or filtering
+engines, filter definitions, sorting engines, multi-column sorting, column
+visibility, resizing, reordering, virtualization, inline editing, export, saved
+views, data fetching, server pagination, caching, routing, permissions,
+mutations, business rules, authentication, or billing.
 
 It does not depend on TanStack Table, Next.js, Starter Free, Starter Pro,
-private/deep package imports, or a new runtime library. Compose search or filter
-controls outside the Block and pass the already-prepared rows when needed.
+private/deep package imports, or a new runtime library. Compose custom filter
+controls through `query.filters` or outside the Block and pass prepared rows.
 
 ## Ownership, updates, and rollback
 

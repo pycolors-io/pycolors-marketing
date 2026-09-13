@@ -13,7 +13,7 @@ export const BLOCKS_CATALOG = [
     title: "Data table",
     category: "Data & records",
     description:
-      "Typed columns, loading, empty and error states, optional row actions and controlled sorting and pagination. Add a next step to an empty table without handing over your data layer.",
+      "Search, filter, sort and paginate records with a clear path out of empty results. Reuse controlled query and page-size controls while keeping your data layer and row actions.",
     href: "/docs/blocks/data/data-table",
   },
   {

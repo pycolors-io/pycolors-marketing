@@ -311,3 +311,130 @@ export function DataTablePageSizeExample() {
     </div>
   );
 }
+
+export function DataTableQueryExample() {
+  const [search, setSearch] = React.useState("");
+  const [stateFilter, setStateFilter] = React.useState("all");
+  const [sort, setSort] = React.useState<DataTableSort | null>(null);
+  const [size, setSize] = React.useState(2);
+  const [page, setPage] = React.useState(1);
+  const [selected, setSelected] = React.useState<string>();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const term = search.trim().toLocaleLowerCase("en");
+
+  // The consumer filters the full dataset, then sorts, then selects a page.
+  const matching = pages.flat().filter((record) => {
+    return (
+      record.label.toLocaleLowerCase("en").includes(term) &&
+      (stateFilter === "all" || record.state === stateFilter)
+    );
+  });
+  if (sort) {
+    matching.sort((left, right) => {
+      const leftValue = sort.columnId === "state" ? left.state : left.label;
+      const rightValue = sort.columnId === "state" ? right.state : right.label;
+      const comparison = leftValue.localeCompare(rightValue, "en");
+      return sort.direction === "asc" ? comparison : -comparison;
+    });
+  }
+  const totalPages = Math.max(1, Math.ceil(matching.length / size));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * size;
+  const visibleRows = matching.slice(start, start + size);
+
+  function resetFilters() {
+    setSearch("");
+    setStateFilter("all");
+    setPage(1);
+    inputRef.current?.focus();
+  }
+
+  return (
+    <div className="not-prose space-y-3">
+      <DataTable
+        caption="Searchable sample records"
+        columns={sortableColumns}
+        emptyDescription="Change your search or reset the filters above."
+        emptyTitle="No matching records"
+        getRowId={(record) => record.id}
+        pageSize={{
+          value: size,
+          options: [2, 3, 6],
+          onPageSizeChange: (nextSize) => {
+            setSize(nextSize);
+            setPage(1);
+          },
+        }}
+        pagination={{
+          navigationLabel: "Searchable sample record pages",
+          page: currentPage,
+          totalPages,
+          onPageChange: setPage,
+        }}
+        query={{
+          label: "Sample record filters",
+          search: {
+            label: "Search records",
+            value: search,
+            placeholder: "Search by record name",
+            inputRef,
+            onValueChange: (value) => {
+              setSearch(value);
+              setPage(1);
+            },
+          },
+          filters: (
+            <label className="flex min-w-0 flex-col gap-1 text-sm">
+              <span className="text-muted-foreground">State</span>
+              <select
+                className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                onChange={(event) => {
+                  setStateFilter(event.currentTarget.value);
+                  setPage(1);
+                }}
+                value={stateFilter}
+              >
+                <option value="all">All states</option>
+                <option value="Available">Available</option>
+                <option value="Paused">Paused</option>
+              </select>
+            </label>
+          ),
+          reset: { label: "Reset filters", onReset: resetFilters },
+          summary: (
+            <p aria-live="polite" role="status">
+              Showing {matching.length === 0 ? 0 : start + 1}–
+              {start + visibleRows.length} of {matching.length} matching records.
+            </p>
+          ),
+        }}
+        renderRowActions={(record) => (
+          <Button
+            aria-label={`Inspect ${record.label}`}
+            onClick={() => setSelected(record.label)}
+            size="sm"
+            type="button"
+            variant="outline"
+          >
+            Inspect
+          </Button>
+        )}
+        rowActionsLabel="Record actions"
+        rows={visibleRows}
+        sorting={{
+          value: sort,
+          onSortChange: (nextSort) => {
+            setSort(nextSort);
+            setPage(1);
+          },
+        }}
+      />
+      <p aria-live="polite" className="min-h-5 text-sm text-muted-foreground">
+        {selected ? `Selected ${selected} locally. Nothing was saved.` : null}
+      </p>
+      <p className="text-sm text-muted-foreground">
+        Local example only. No request is sent or data saved.
+      </p>
+    </div>
+  );
+}
