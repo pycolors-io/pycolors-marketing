@@ -132,7 +132,7 @@ export default async function Page(
           />
         ) : null}
 
-        <DocsBody className="docs-prose">
+        <DocsBody className="docs-prose min-w-0 max-w-full break-words [&_figure]:max-w-full [&_pre]:max-w-full [&_table]:max-w-full">
           <MdxContent
             components={getMDXComponents({
               a: createRelativeLink(source, page),
