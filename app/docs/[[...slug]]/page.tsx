@@ -79,17 +79,14 @@ function getFooterCta(slug?: string[]) {
   };
 }
 
-export default async function Page(
-  props: PageProps<"/docs/[[...slug]]">,
-) {
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   const breadcrumbs = getBreadcrumbs(params.slug);
 
   if (!page) notFound();
 
-  const MdxContent = page.data
-    .body as React.ComponentType<MDXContentProps>;
+  const MdxContent = page.data.body as React.ComponentType<MDXContentProps>;
   const showDefaultHeader = page.data.hero !== true;
   const footerCta = getFooterCta(params.slug);
 
