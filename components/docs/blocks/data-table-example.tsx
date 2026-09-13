@@ -239,3 +239,75 @@ export function DataTableSortingExample() {
     </div>
   );
 }
+
+export function DataTablePageSizeExample() {
+  const [size, setSize] = React.useState(2);
+  const [page, setPage] = React.useState(1);
+  const [sort, setSort] = React.useState<DataTableSort | null>(null);
+  const records = pages.flat();
+
+  // Sorting and slicing belong to this consumer, never to the Block.
+  if (sort) {
+    records.sort((left, right) => {
+      const leftValue = sort.columnId === "state" ? left.state : left.label;
+      const rightValue = sort.columnId === "state" ? right.state : right.label;
+      const comparison = leftValue.localeCompare(rightValue, "en");
+      return sort.direction === "asc" ? comparison : -comparison;
+    });
+  }
+
+  const totalPages = Math.ceil(records.length / size);
+  const start = (page - 1) * size;
+  const visibleRows = records.slice(start, start + size);
+
+  return (
+    <div className="not-prose space-y-3">
+      <DataTable
+        caption="Adjustable sample records"
+        columns={sortableColumns}
+        emptyTitle="No sample records"
+        getRowId={(record) => record.id}
+        pageSize={{
+          onPageSizeChange: (nextSize) => {
+            setSize(nextSize);
+            setPage(1);
+          },
+          options: [2, 3, 6],
+          value: size,
+        }}
+        pagination={{
+          navigationLabel: "Adjustable sample record pages",
+          onPageChange: setPage,
+          page,
+          totalPages,
+        }}
+        rows={visibleRows}
+        sorting={{
+          onSortChange: (nextSort) => {
+            setSort(nextSort);
+            setPage(1);
+          },
+          value: sort,
+        }}
+      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          Showing {start + 1}–{start + visibleRows.length} of {records.length}.
+          Local example only. No request is sent or data saved.
+        </p>
+        <Button
+          onClick={() => {
+            setSize(2);
+            setPage(1);
+            setSort(null);
+          }}
+          size="sm"
+          type="button"
+          variant="outline"
+        >
+          Reset table
+        </Button>
+      </div>
+    </div>
+  );
+}

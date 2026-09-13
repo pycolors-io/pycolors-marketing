@@ -46,6 +46,13 @@ export type DataTableSorting = Readonly<{
   descendingLabel?: string;
 }>;
 
+export type DataTablePageSize = Readonly<{
+  value: number;
+  options: readonly number[];
+  onPageSizeChange: (pageSize: number) => void;
+  label?: string;
+}>;
+
 export type DataTablePagination = Readonly<{
   page: number;
   totalPages: number;
@@ -78,6 +85,7 @@ export type DataTableProps<Row> = Readonly<{
   renderRowActions?: (row: Row) => React.ReactNode;
   rowActionsLabel?: string;
   pagination?: DataTablePagination;
+  pageSize?: DataTablePageSize;
   sorting?: DataTableSorting;
   className?: string;
 }>;
@@ -93,6 +101,45 @@ function hasValidPagination(
     pagination.totalPages > 1 &&
     pagination.page >= 1 &&
     pagination.page <= pagination.totalPages
+  );
+}
+
+function DataTablePageSizeControls({
+  pageSize,
+}: Readonly<{ pageSize: DataTablePageSize }>) {
+  const { label = "Rows per page", onPageSizeChange, value } = pageSize;
+  const options = [
+    ...new Set(
+      pageSize.options.filter((size) => Number.isSafeInteger(size) && size > 0),
+    ),
+  ];
+
+  if (options.length < 2 || !options.includes(value)) return null;
+
+  return (
+    <label
+      className="flex min-w-0 flex-wrap items-center gap-2 text-sm"
+      data-slot="data-table-page-size"
+    >
+      <span className="text-muted-foreground">{label}</span>
+      <select
+        className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        data-slot="data-table-page-size-select"
+        onChange={(event) => {
+          const nextSize = Number(event.currentTarget.value);
+          if (nextSize !== value && options.includes(nextSize)) {
+            onPageSizeChange(nextSize);
+          }
+        }}
+        value={String(value)}
+      >
+        {options.map((size) => (
+          <option key={size} value={String(size)}>
+            {size}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -187,7 +234,7 @@ function DataTablePaginationControls({
 
 /**
  * A source-copy record table with consumer-owned columns, rows, states,
- * actions, sorting requests, and controlled page navigation.
+ * actions, sorting requests, and controlled page navigation and size.
  */
 export function DataTable<Row>({
   caption,
@@ -198,6 +245,7 @@ export function DataTable<Row>({
   emptyTitle,
   getRowId,
   pagination,
+  pageSize,
   renderRowActions,
   rowActionsLabel = "Actions",
   rows,
@@ -370,6 +418,10 @@ export function DataTable<Row>({
         >
           {loadingLabel}
         </span>
+      ) : null}
+
+      {status === "ready" && rows.length > 0 && pageSize ? (
+        <DataTablePageSizeControls pageSize={pageSize} />
       ) : null}
 
       {showPagination ? (
