@@ -114,8 +114,12 @@ function DataTableQueryControls({
   query,
 }: Readonly<{ query: DataTableQuery }>) {
   const { filters, label = "Record filters", reset, search, summary } = query;
-  const hasFilters = React.Children.toArray(filters).some((node) => node !== "");
-  const hasSummary = React.Children.toArray(summary).some((node) => node !== "");
+  const hasFilters = React.Children.toArray(filters).some(
+    (node) => node !== "",
+  );
+  const hasSummary = React.Children.toArray(summary).some(
+    (node) => node !== "",
+  );
 
   return (
     <div

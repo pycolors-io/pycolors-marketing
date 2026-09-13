@@ -74,7 +74,9 @@ describe("DataTable query controls", () => {
     });
     const { container } = render(<DataTable {...baseProps} query={query} />);
     const group = screen.getByRole("group", { name: "Record search options" });
-    const input = within(group).getByRole("searchbox", { name: "Find records" });
+    const input = within(group).getByRole("searchbox", {
+      name: "Find records",
+    });
     const table = screen.getByRole("table");
 
     expect(screen.getByLabelText("Find records")).toBe(input);
@@ -252,30 +254,34 @@ describe("DataTable query controls", () => {
     expect(select).toHaveFocus();
   });
 
-  it.each([undefined, null, false, "", [], [null, false, ""]])(
-    "omits empty filter and summary slots (%j)",
-    (slot) => {
-      const { container } = render(
-        <DataTable
-          {...baseProps}
-          query={createQuery({
-            filters: slot,
-            summary: slot,
-            reset: undefined,
-          })}
-        />,
-      );
-      expect(
-        container.querySelector('[data-slot="data-table-filters"]'),
-      ).toBeNull();
-      expect(
-        container.querySelector('[data-slot="data-table-query-summary"]'),
-      ).toBeNull();
-      expect(
-        screen.queryByRole("button", { name: "Reset filters" }),
-      ).not.toBeInTheDocument();
-    },
-  );
+  it.each([
+    { name: "missing", slot: undefined },
+    { name: "null", slot: null },
+    { name: "false", slot: false },
+    { name: "empty string", slot: "" },
+    { name: "empty array", slot: [] },
+    { name: "empty children", slot: [null, false, ""] },
+  ])("omits empty filter and summary slots ($name)", ({ slot }) => {
+    const { container } = render(
+      <DataTable
+        {...baseProps}
+        query={createQuery({
+          filters: slot,
+          summary: slot,
+          reset: undefined,
+        })}
+      />,
+    );
+    expect(
+      container.querySelector('[data-slot="data-table-filters"]'),
+    ).toBeNull();
+    expect(
+      container.querySelector('[data-slot="data-table-query-summary"]'),
+    ).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: "Reset filters" }),
+    ).not.toBeInTheDocument();
+  });
 
   it("keeps native reset non-submitting and only prevents non-composition Enter", () => {
     const onSubmit = vi.fn((event: React.FormEvent<HTMLFormElement>) =>

@@ -404,7 +404,8 @@ export function DataTableQueryExample() {
           summary: (
             <p aria-live="polite" role="status">
               Showing {matching.length === 0 ? 0 : start + 1}–
-              {start + visibleRows.length} of {matching.length} matching records.
+              {start + visibleRows.length} of {matching.length} matching
+              records.
             </p>
           ),
         }}
