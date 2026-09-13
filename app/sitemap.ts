@@ -43,6 +43,7 @@ const STATIC_ROUTES = [
    * Product ecosystem
    */
   "/starters",
+  "/blocks",
   "/open-source",
 
   /**
@@ -147,9 +148,13 @@ function getPriority(route: string): number {
    * Product ecosystem pages
    */
   if (
-    ["/starters", "/ui/examples", "/ui/patterns", "/open-source"].includes(
-      route,
-    )
+    [
+      "/starters",
+      "/blocks",
+      "/ui/examples",
+      "/ui/patterns",
+      "/open-source",
+    ].includes(route)
   ) {
     return 0.8;
   }

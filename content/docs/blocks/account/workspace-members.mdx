@@ -1,0 +1,176 @@
+---
+title: Workspace members
+description: A source-copy member list with consumer-owned identities, role and status labels, and native actions.
+lastUpdated: "2026-09-12"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Preview } from "@/components/docs/preview";
+import { WorkspaceMembersExample } from "@/components/docs/blocks/workspace-members-example";
+
+## Show the people in a workspace
+
+`WorkspaceMembersPanel` composes a named section, member list, readable role and
+status labels, and optional actions. Your application supplies every member and
+chooses which controls to show. The Block does not manage identity or access.
+
+<Callout title="Fictional local demonstration">
+  Names and addresses below are examples. The controls only change local demo
+  state or select a sample member. They do not send invitations or email, change
+  permissions, call a backend, or save data. The UI setup link is documentation
+  navigation.
+</Callout>
+
+<Preview className="my-6 overflow-hidden">
+  <WorkspaceMembersExample />
+</Preview>
+
+## Canonical identity
+
+- Category: **Account & workspace**, slug `account`.
+- Block: `workspace-members`, export `WorkspaceMembersPanel`.
+- Canonical source: `apps/marketing/content/blocks/account/workspace-members/`.
+- Complete entry point: `index.tsx`.
+
+The canonical Block uses React and the public UI package only. It does not
+require Next.js, an application alias, another copied Block or a service.
+There is no Blocks npm package, Registry installer or CLI in this flow.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/workspace-members/index.tsx` in your application.
+Open the source below and copy the complete file, preserving its public imports.
+Use the code block's copy button or select the code manually when clipboard
+access is unavailable. The displayed source is included at documentation build
+time; it is not a second implementation or a copy of the interactive demo.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/workspace-members/index.tsx"'
+  >
+    ../../../blocks/account/workspace-members/index.tsx
+  </include>
+</details>
+
+## Install by copying source
+
+Keep the complete file at the application-owned path above. Install and configure
+your compatible public `@pycolors/ui` and `@pycolors/tokens` dependencies first;
+copying source does not install packages or CSS. Replace the example content and
+routes with your own, then validate it in your application.
+
+```tsx title="src/components/workspace-people.tsx"
+import { Button } from "@pycolors/ui";
+import { WorkspaceMembersPanel } from "./blocks/workspace-members";
+
+export function WorkspacePeople() {
+  return (
+    <WorkspaceMembersPanel
+      id="workspace-people"
+      heading="Workspace members"
+      description="People associated with this workspace."
+      members={[
+        {
+          id: "example-alex",
+          name: "Alex Morgan",
+          secondaryText: "alex@example.com",
+          role: "Project observer",
+          status: "Active",
+          actions: (
+            <Button asChild variant="outline">
+              <a href="/workspace/members/example-alex">View Alex Morgan</a>
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+The example route belongs to your application, not PyColors. The canonical file
+needs no `"use client"` directive or hooks. When supplying ordinary event
+handlers, define them inside an appropriate consumer client boundary; do not
+pass handlers from a Server Component across that boundary. The interactive
+documentation example owns its local state and client boundary separately.
+
+## Content and actions remain yours
+
+`id`, `heading` and `members` are required. Use a stable, nonempty `id` unique
+across the page, including its derived `-heading` and optional `-description`
+IDs. Each member needs a stable `id` unique within the list. Members in separate
+panels can share member IDs because these are React keys, not HTML IDs.
+
+The section uses an `h2`; member names and the empty-state title use `h3`.
+Place it below your page heading. Optional `description` text names the section's
+purpose. Member `secondaryText` is optional plain text, not an implicit email
+link. An absent secondary value renders no empty paragraph.
+
+Member `role` and `status` are display strings. They do not authorize a user,
+choose actions, or map to access rights. Status uses a neutral outlined Badge
+with visible text rather than an inferred color or unsolicited live region.
+The Block preserves member order and values and does not sort or filter them.
+
+Supply optional panel `actions` and per-member `actions` as React nodes. Nodes
+are rendered unchanged, preserving refs, callbacks, native destinations, disabled
+state and button types. Use distinct accessible names such as **View Alex Morgan**
+when several members have similar controls. Set `type="button"` for controls
+that must not submit a surrounding form. Disabled presentation is not a security
+boundary: enforce permissions in your application's validated backend.
+
+Missing, null, false, empty-string and empty-array action slots omit the action
+group. Opaque components that render nothing remain consumer-owned content.
+Omit all actions when there is no useful next step; do not invent disabled
+permissions or expose a destructive action solely to fill the layout.
+
+## Empty, disabled and long-content cases
+
+Pass `members={[]}` for a successful empty result. The public `EmptyState`
+primitive renders `emptyTitle` (default **No members to display**) and optional
+`emptyDescription`, with announcements off. Panel actions remain available if
+your application supplied them. Loading and request failure are not empty states;
+render your own appropriate loading/error UI outside this presentation Block.
+
+The preview's state selector demonstrates both populated and empty lists. Its
+action toggle removes section and member actions; the final sample row has an
+explicitly disabled local control and deliberately long text. These are demo
+choices, not inferred permissions or production membership states.
+
+The layout stacks on small screens and arranges content and actions horizontally
+from `sm`, while labels and actions wrap. Semantic tokens support both themes.
+Use `className` for root overrides through public `cn`; consumer classes take
+precedence. Review real long names, role/status text and controls at narrow
+widths, especially controls with their own fixed dimensions.
+
+## Focus, validation and maintenance
+
+The Block never moves focus, intercepts keys, fetches data or changes members.
+Native controls keep their behavior. Your application owns focus after removing
+an active control or replacing content. The demo keeps the clicked button in
+place and reports local selection through a separate polite status message.
+
+Run your application's lint, type-check, tests and production build after
+copying. Review populated/empty lists, no actions, disabled controls, rerenders,
+multiple panels, long content, keyboard focus, both themes and narrow layouts.
+Runtime tests exercise the actual Block and demo; representative axe checks do
+not certify visual contrast, screen-reader behavior or complete accessibility.
+
+Your application owns the copied source and does not receive automatic updates.
+Review later canonical changes deliberately, preserve local customizations and
+validate it in your application before adoption. Revert your local copy to roll
+back presentation without changing member data.
+
+## Boundaries and next steps
+
+No invitations, role changes, removals, authentication, authorization, billing,
+email, analytics, persistence or production services are implemented here.
+The separate [Data table](/docs/blocks/data/data-table) owns tabular pagination
+and row composition; this Block is a focused member list, not another data engine.
+
+Explore the [Blocks catalog](/blocks) for other compositions, or
+[compare Starters](/starters) for an application foundation.

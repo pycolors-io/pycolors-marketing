@@ -1,42 +1,43 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  Check,
-  ExternalLink,
-  Sparkles,
-} from 'lucide-react';
+import Link from "next/link";
+import type { Metadata } from "next";
+import { ArrowRight, ExternalLink, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { Container } from '@/components/container';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { PageHero } from '@/components/marketing/page-hero';
+import { Badge, Button, Card, CardContent, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { Container } from "@/components/container";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS UI Patterns',
+  title: "Next.js SaaS UI Patterns",
   description:
-    'Production-shaped SaaS UI patterns for Next.js applications. Explore dashboards, billing pages, settings, admin surfaces, team management, and product-oriented workflows built with PyColors UI.',
+    "Production-shaped SaaS UI patterns for Next.js applications. Explore dashboards, billing pages, settings, admin surfaces, team management, and product-oriented workflows built with PyColors UI.",
   alternates: {
-    canonical: '/ui/patterns',
+    canonical: "/ui/patterns",
   },
 
   openGraph: {
-    title: 'Next.js SaaS UI Patterns',
+    title: "Next.js SaaS UI Patterns",
     description:
-      'Explore production-ready SaaS UI patterns for dashboards, billing, settings, admin panels, protected apps, and product workflows.',
-    url: '/ui/patterns',
-    siteName: 'PyColors',
-    type: 'website',
-    images: ['/seo/og-main.png'],
+      "Explore production-ready SaaS UI patterns for dashboards, billing, settings, admin panels, protected apps, and product workflows.",
+    url: "/ui/patterns",
+    siteName: "PyColors",
+    type: "website",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS UI Patterns',
+    card: "summary_large_image",
+    title: "Next.js SaaS UI Patterns",
     description:
-      'Production-shaped UI patterns built for modern Next.js SaaS applications.',
-    images: ['/seo/twitter-main.png'],
+      "Production-shaped UI patterns built for modern Next.js SaaS applications.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
@@ -47,155 +48,82 @@ type Pattern = {
   category: string;
 };
 
-const launchPrice = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 const patterns: Pattern[] = [
   {
-    title: 'Dashboard layout',
+    title: "Dashboard layout",
     description:
-      'KPI cards, activity hierarchy, quick actions, empty states, and the structure users expect from a credible SaaS product.',
-    tag: 'Dashboard',
-    category: 'Core',
+      "KPI cards, activity hierarchy, quick actions, empty states, and the structure users expect from a credible SaaS product.",
+    tag: "Dashboard",
+    category: "Core",
   },
   {
-    title: 'Billing page',
+    title: "Billing page",
     description:
-      'Plan state, upgrade entrypoints, invoice surfaces, and billing hierarchy designed to move toward monetization.',
-    tag: 'Billing',
-    category: 'Revenue',
+      "Plan state, upgrade entrypoints, invoice surfaces, and billing hierarchy designed to move toward monetization.",
+    tag: "Billing",
+    category: "Revenue",
   },
   {
-    title: 'Settings page',
+    title: "Settings page",
     description:
-      'Profile, security, organization preferences, API keys, and danger-zone patterns that make a SaaS feel complete.',
-    tag: 'Settings',
-    category: 'Account',
+      "Profile, security, organization preferences, API keys, and danger-zone patterns that make a SaaS feel complete.",
+    tag: "Settings",
+    category: "Account",
   },
   {
-    title: 'Team management',
+    title: "Team management",
     description:
-      'Members, invitations, roles, and permissions designed for collaborative and B2B SaaS products.',
-    tag: 'Teams',
-    category: 'B2B',
+      "Members, invitations, roles, and permissions designed for collaborative and B2B SaaS products.",
+    tag: "Teams",
+    category: "B2B",
   },
   {
-    title: 'Protected app shell',
+    title: "Protected app shell",
     description:
-      'Navigation, account areas, session-aware states, and protected surfaces that prepare the app for real authentication.',
-    tag: 'Protected',
-    category: 'Architecture',
+      "Navigation, account areas, session-aware states, and protected surfaces that prepare the app for real authentication.",
+    tag: "Protected",
+    category: "Architecture",
   },
   {
-    title: 'Upgrade moment',
+    title: "Upgrade moment",
     description:
-      'Pricing prompts, billing CTAs, upgrade states, and decision points that connect product usage to revenue.',
-    tag: 'Upgrade',
-    category: 'Conversion',
+      "Pricing prompts, billing CTAs, upgrade states, and decision points that connect product usage to revenue.",
+    tag: "Upgrade",
+    category: "Conversion",
   },
 ];
 
 const steps = [
   {
-    eyebrow: 'Step 01',
-    title: 'Understand the surface',
+    eyebrow: "Step 01",
+    title: "Understand the surface",
     description:
-      'Study how credible SaaS screens are structured before rebuilding dashboards, settings, billing, and admin flows yourself.',
+      "Study how credible SaaS screens are structured before rebuilding dashboards, settings, billing, and admin flows yourself.",
   },
   {
-    eyebrow: 'Step 02',
-    title: 'Validate with Starter Free',
+    eyebrow: "Step 02",
+    title: "Validate with Starter Free",
     description:
-      'Use the runnable starter to test layouts, states, navigation, product hierarchy, and monetization entrypoints quickly.',
+      "Use the runnable starter to test layouts, states, navigation, product hierarchy, and monetization entrypoints quickly.",
   },
   {
-    eyebrow: 'Step 03',
-    title: 'Upgrade when wiring blocks launch',
+    eyebrow: "Step 03",
+    title: "Upgrade when wiring blocks launch",
     description:
-      'Move to Starter Pro when authentication, billing, protected routes, and backend foundations become the real bottleneck.',
+      "Move to Starter Pro when authentication, billing, protected routes, and backend foundations become the real bottleneck.",
   },
 ] as const;
 
 const proofPoints = [
-  'Patterns show how components behave inside real product surfaces.',
-  'Starter Free lets you run and adapt those surfaces without backend overhead.',
-  'Starter Pro wires the business layer when you are ready to launch and charge.',
+  "Patterns show how components behave inside real product surfaces.",
+  "Starter Free lets you run and adapt those surfaces without backend overhead.",
+  "Starter Pro wires the business layer when you are ready to launch and charge.",
 ] as const;
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
-
-function Pill({ children }: { readonly children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-3 py-1 text-xs text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function CheckItem({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-      <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-surface">
-        <Check className="h-3 w-3 text-foreground" />
-      </span>
-      <span className="leading-6">{children}</span>
-    </li>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly action?: React.ReactNode;
-  readonly align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="shrink-0 sm:self-start">{action}</div>
-      ) : null}
-    </div>
-  );
-}
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 function PatternCard({ title, description, tag, category }: Pattern) {
   return (
@@ -210,15 +138,11 @@ function PatternCard({ title, description, tag, category }: Pattern) {
               {tag}
             </Badge>
 
-            <span className="text-xs text-muted-foreground">
-              {category}
-            </span>
+            <span className="text-xs text-muted-foreground">{category}</span>
           </div>
 
           <div className="space-y-2">
-            <h3 className="text-base font-semibold tracking-tight">
-              {title}
-            </h3>
+            <h3 className="text-base font-semibold tracking-tight">{title}</h3>
 
             <p className="text-sm leading-7 text-muted-foreground">
               {description}
@@ -258,22 +182,17 @@ export default function PatternsPage() {
           maxWidth="5xl"
           badges={[
             {
-              label: 'Patterns',
-              variant: 'secondary',
-              icon: (
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              ),
+              label: "Patterns",
+              variant: "secondary",
+              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
             },
             {
-              label: 'SaaS surfaces',
-              variant: 'outline',
+              label: "SaaS surfaces",
+              variant: "outline",
             },
             {
-              label: 'Free → Pro path',
-              variant: 'outline',
+              label: "Free → Pro path",
+              variant: "outline",
             },
           ]}
           title="SaaS patterns that turn components into product surfaces."
@@ -288,10 +207,7 @@ export default function PatternsPage() {
               >
                 <Link href="/starters/free">
                   Explore Starter Free
-                  <ArrowRight
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
@@ -308,17 +224,17 @@ export default function PatternsPage() {
             </div>
           }
           pills={[
-            'Dashboards',
-            'Billing',
-            'Settings',
-            'Teams',
-            'Protected app',
-            'Upgrade moments',
+            "Dashboards",
+            "Billing",
+            "Settings",
+            "Teams",
+            "Protected app",
+            "Upgrade moments",
           ]}
           extra={
             <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-3">
               {proofPoints.map((point) => (
-                <CheckItem key={point}>{point}</CheckItem>
+                <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
               ))}
             </div>
           }
@@ -337,36 +253,31 @@ export default function PatternsPage() {
                       Why patterns matter
                     </Badge>
 
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
+                    <Badge variant="outline" className="rounded-[5px]">
                       Product structure
                     </Badge>
                   </div>
 
                   <div className="space-y-3">
                     <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                      Components are easy. Product structure is what
-                      creates trust.
+                      Components are easy. Product structure is what creates
+                      trust.
                     </h2>
 
                     <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                      Patterns help you move from isolated primitives
-                      to the surfaces users actually judge:
-                      dashboards, billing, settings, teams, protected
-                      areas, and admin workflows.
+                      Patterns help you move from isolated primitives to the
+                      surfaces users actually judge: dashboards, billing,
+                      settings, teams, protected areas, and admin workflows.
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-5">
                   <p className="text-sm leading-7 text-muted-foreground">
-                    PyColors patterns connect UI primitives with real
-                    SaaS decisions: what the page should contain, how
-                    actions are prioritized, where trust is created,
-                    and when a surface is ready to become part of a
-                    product.
+                    PyColors patterns connect UI primitives with real SaaS
+                    decisions: what the page should contain, how actions are
+                    prioritized, where trust is created, and when a surface is
+                    ready to become part of a product.
                   </p>
 
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -393,11 +304,13 @@ export default function PatternsPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    <Pill>Product-shaped UX</Pill>
-                    <Pill>Reusable SaaS surfaces</Pill>
-                    <Pill>Starter Free ready</Pill>
-                    <Pill>Upgrade path</Pill>
-                    <Pill>Conversion-aware</Pill>
+                    <MarketingPillList aria-label="Pattern benefits">
+                      <MarketingPill>Product-shaped UX</MarketingPill>
+                      <MarketingPill>Reusable SaaS surfaces</MarketingPill>
+                      <MarketingPill>Starter Free ready</MarketingPill>
+                      <MarketingPill>Upgrade path</MarketingPill>
+                      <MarketingPill>Conversion-aware</MarketingPill>
+                    </MarketingPillList>
                   </div>
                 </div>
               </div>
@@ -406,7 +319,7 @@ export default function PatternsPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Patterns"
             title="Core SaaS surfaces"
             description="Dashboards, billing, settings, teams, protected areas, and upgrade moments used in real SaaS products."
@@ -430,7 +343,7 @@ export default function PatternsPage() {
         </section>
 
         <section className="py-14 sm:py-16 lg:py-20">
-          <SectionHeader
+          <MarketingSectionHeader
             eyebrow="Path"
             title="From UI primitive to launch-ready SaaS."
             description="Patterns turn components into structure. Starter Free turns structure into a runnable product surface. Starter Pro wires the business layer."
@@ -448,9 +361,7 @@ export default function PatternsPage() {
                     {step.eyebrow}
                   </div>
 
-                  <div className="text-sm font-medium">
-                    {step.title}
-                  </div>
+                  <div className="text-sm font-medium">{step.title}</div>
 
                   <p className="text-sm leading-7 text-muted-foreground">
                     {step.description}
@@ -468,9 +379,7 @@ export default function PatternsPage() {
                 variant="outline"
                 className="h-11 rounded-[5px] px-6 text-sm font-medium"
               >
-                <Link href="/starters/free">
-                  Start with Starter Free
-                </Link>
+                <Link href="/starters/free">Start with Starter Free</Link>
               </Button>
 
               <BuyStarterProButton
@@ -494,46 +403,46 @@ export default function PatternsPage() {
                       Pattern logic
                     </Badge>
 
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
+                    <Badge variant="outline" className="rounded-[5px]">
                       SaaS system
                     </Badge>
                   </div>
 
                   <div className="space-y-3">
                     <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                      PyColors connects primitives, patterns,
-                      starters, and revenue flows.
+                      PyColors connects primitives, patterns, starters, and
+                      revenue flows.
                     </h2>
 
                     <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                      The goal is not to collect components. The goal
-                      is to move faster toward a product users can
-                      trust and eventually pay for.
+                      The goal is not to collect components. The goal is to move
+                      faster toward a product users can trust and eventually pay
+                      for.
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-5">
                   <p className="text-sm leading-7 text-muted-foreground">
-                    PyColors UI gives you the primitives. Patterns
-                    give you the structure. Starter Free gives you the
-                    runnable product surface. Starter Pro gives you
-                    the business layer with auth, billing, protected
-                    routes, and launch-ready foundations.
+                    PyColors UI gives you the primitives. Patterns give you the
+                    structure. Starter Free gives you the runnable product
+                    surface. Starter Pro gives you the business layer with auth,
+                    billing, protected routes, and launch-ready foundations.
                   </p>
 
                   <ul className="grid gap-2 sm:grid-cols-2">
-                    <CheckItem>UI primitives and tokens</CheckItem>
-                    <CheckItem>Reusable SaaS surfaces</CheckItem>
-                    <CheckItem>
+                    <MarketingCheckItem>
+                      UI primitives and tokens
+                    </MarketingCheckItem>
+                    <MarketingCheckItem>
+                      Reusable SaaS surfaces
+                    </MarketingCheckItem>
+                    <MarketingCheckItem>
                       Runnable Starter Free product
-                    </CheckItem>
-                    <CheckItem>
+                    </MarketingCheckItem>
+                    <MarketingCheckItem>
                       Starter Pro auth and billing
-                    </CheckItem>
+                    </MarketingCheckItem>
                   </ul>
 
                   <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
@@ -589,22 +498,23 @@ export default function PatternsPage() {
                 </Badge>
 
                 <h2 className="text-2xl font-semibold tracking-tight">
-                  Use patterns to design better. Use Pro when you need
-                  to launch.
+                  Use patterns to design better. Use Pro when you need to
+                  launch.
                 </h2>
 
                 <p className="text-sm leading-7 text-muted-foreground">
-                  Start with Starter Free to validate the surface.
-                  Move to Starter Pro when authentication, billing,
-                  protected routes, and backend wiring become the real
-                  blocker.
+                  Start with Starter Free to validate the surface. Move to
+                  Starter Pro when authentication, billing, protected routes,
+                  and backend wiring become the real blocker.
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Pill>Free validates UX</Pill>
-                  <Pill>Pro wires auth</Pill>
-                  <Pill>Pro wires billing</Pill>
-                  <Pill>Launch price {launchPrice}</Pill>
+                  <MarketingPillList aria-label="Pattern path">
+                    <MarketingPill>Free validates UX</MarketingPill>
+                    <MarketingPill>Pro wires auth</MarketingPill>
+                    <MarketingPill>Pro wires billing</MarketingPill>
+                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
+                  </MarketingPillList>
                 </div>
               </div>
 
@@ -613,7 +523,7 @@ export default function PatternsPage() {
                   asChild
                   variant="outline"
                   className={cn(
-                    'h-11 rounded-[5px] text-sm font-medium',
+                    "h-11 rounded-[5px] text-sm font-medium",
                     focusRing,
                   )}
                 >

@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-08-28"
+lastUpdated: "2026-09-12"
 appliesTo: Blocks
 ---
 
@@ -14,6 +14,10 @@ import { Badge } from "@pycolors/ui";
   <Badge>Source copy</Badge>
 </div>
 
+[Explore the Blocks catalog](/blocks) to choose a sidebar, data table,
+settings panel, pricing comparison, empty state or workspace member list before
+following the installation steps below.
+
 ## Copy source, then own it
 
 PyColors Blocks use a manual source-copy flow. When a Block is available, copy
@@ -24,9 +28,12 @@ as your own product code.
   The category and naming contract is approved. The
   [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar)
   source is the first production-shaped Block, followed by
-  [`data/data-table`](/docs/blocks/data/data-table) and
-  [`account/settings-panel`](/docs/blocks/account/settings-panel). Every other
-  source-owner issue still has to deliver and validate its own Block.
+  [`data/data-table`](/docs/blocks/data/data-table),
+  [`account/settings-panel`](/docs/blocks/account/settings-panel),
+  [`commerce/pricing-plans`](/docs/blocks/commerce/pricing-plans),
+  [`feedback/empty-state-panel`](/docs/blocks/feedback/empty-state-panel) and
+  [`account/workspace-members`](/docs/blocks/account/workspace-members). Every
+  other source-owner issue still has to deliver and validate its own Block.
 </Callout>
 
 There is no `@pycolors/blocks` package, registry, CLI, download service, or
@@ -149,3 +156,29 @@ Blocks are source copies, not a managed dependency. If a future canonical
 version changes, review it deliberately and bring across only the changes that
 fit your application. Your copy remains under your control until you choose to
 update it.
+
+## Copy directly from the documentation
+
+Each available Block now has a **Copy source** section with its complete
+canonical implementation. You do not need to locate monorepo files to inspect
+or copy that code:
+
+- [Copy Responsive sidebar](/docs/blocks/app-shells/responsive-sidebar#copy-source).
+- [Copy Data table](/docs/blocks/data/data-table#copy-source).
+- [Copy Settings panel](/docs/blocks/account/settings-panel#copy-source).
+- [Copy Pricing plans](/docs/blocks/commerce/pricing-plans#copy-source).
+- [Copy Empty state panel](/docs/blocks/feedback/empty-state-panel#copy-source).
+- [Copy Workspace members](/docs/blocks/account/workspace-members#copy-source).
+
+Open **View and copy the complete source**, then use the code block's copy
+button or select the code manually. Save it at the application-owned path
+shown above the source and continue with that guide's usage example.
+Configure the [public UI package and tokens](/docs/ui/installation) first;
+copied source does not install dependencies or styles for you.
+
+The displayed file is included from canonical source when the documentation
+builds. Your application copy remains independent: review changes deliberately,
+validate your integration, and keep local customizations under version control.
+There is no new installer or automatic update service.
+
+Need a whole application rather than one pattern? [Compare Starters](/starters).

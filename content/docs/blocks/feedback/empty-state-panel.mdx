@@ -1,0 +1,179 @@
+---
+title: Empty state panel
+description: A source-copy empty section with consumer-owned first-use and no-results actions.
+lastUpdated: "2026-09-12"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Preview } from "@/components/docs/preview";
+import { EmptyStatePanelExample } from "@/components/docs/blocks/empty-state-panel-example";
+
+## Make an empty section useful
+
+`EmptyStatePanel` composes the public `EmptyState` primitive into a named
+section with a heading, explanatory content and optional primary and secondary
+actions. Use it for first use or a successful search with no matches. Your
+application decides which situation applies and what to offer next.
+
+<Callout title="Fictional local demonstration">
+  The preview only reveals a fictional sample project or resets local React
+  state. It does not create records, filter a real dataset, contact a backend or
+  check permissions. The UI setup link is ordinary documentation navigation.
+</Callout>
+
+<Preview className="my-6 overflow-hidden">
+  <EmptyStatePanelExample />
+</Preview>
+
+## Canonical identity
+
+- Category: **Feedback & states**, slug `feedback`.
+- Block: `empty-state-panel`, export `EmptyStatePanel`.
+- Canonical source: `apps/marketing/content/blocks/feedback/empty-state-panel/`.
+- Complete entry point: `index.tsx`.
+
+There is no Blocks npm package, Registry installer, CLI or automatic source
+update channel. This Block is independent from Next.js and backend services.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/empty-state-panel/index.tsx` in your application.
+Open the source below and copy the complete file, keeping its public imports.
+The code is included from canonical source at build time, not duplicated in
+the guide or copied from the interactive demonstration.
+Use the code block's copy button, or select the code manually when clipboard
+access is unavailable.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/empty-state-panel/index.tsx"'
+  >
+    ../../../blocks/feedback/empty-state-panel/index.tsx
+  </include>
+</details>
+
+## Install by copying source
+
+Paste the complete source into the destination above. Keep the public
+`@pycolors/ui` imports and the token setup from the UI installation guide.
+Import your local copy from the consuming component; no Blocks installer or
+additional dependency is required.
+
+## Use your own content and actions
+
+```tsx title="projects-empty.tsx"
+import { Button } from "@pycolors/ui";
+import { EmptyStatePanel } from "./blocks/empty-state-panel";
+
+export function ProjectsEmpty() {
+  return (
+    <EmptyStatePanel
+      id="workspace-projects-empty"
+      heading="Projects"
+      title="Start your first project"
+      description="Create a project to organize your next launch."
+      primaryAction={
+        <Button asChild>
+          <a href="/projects/new">Create project</a>
+        </Button>
+      }
+      secondaryAction={
+        <Button asChild variant="outline">
+          <a href="/project-guide">Read the project guide</a>
+        </Button>
+      }
+    />
+  );
+}
+```
+
+Replace these application-owned destinations with real routes in your product;
+they are not PyColors endpoints. For no matching results, supply different
+`title` and `description` text and a `type="button"` action connected to your
+own filter state. The Block does not clear filters or fetch results itself.
+
+The canonical file needs no client directive or state hook. A consumer using
+callbacks must supply them inside its own appropriate client boundary; do not
+pass ordinary event handlers from a Server Component across that boundary.
+In Next.js, put interactive consumer code in a file marked `"use client"`.
+The documentation demo is a client component because it owns local sample state.
+
+## Props and responsibility
+
+`id`, `heading` and `title` are required. Supply a stable, nonempty HTML `id`
+that is unique across the page, including the derived `${id}-heading` ID.
+There is no random ID or global counter. Distinct instances need distinct IDs;
+keep an instance's ID stable when its text changes.
+
+`heading` labels the section with an `h2`. The reused primitive renders `title`
+as an `h3`; place the Block below your page's `h1`, not as the page heading.
+`description` is optional supporting text. `icon` is decorative and hidden from
+assistive technology; communicate meaningful information in the visible title
+or description rather than relying on an illustration or color.
+
+`primaryAction` and `secondaryAction` are optional React nodes. You can provide
+one, both, or neither. Missing, null, false and empty-array actions do not create
+an action group. The Block renders consumer nodes unchanged: refs, link
+destinations, callbacks, disabled semantics and button types remain yours.
+Opaque components that render nothing are still consumer-owned content.
+
+Use meaningful action names and `type="button"` for non-submitting buttons
+inside forms. Omit actions when there is no useful next step. Explain why a
+control is disabled when that information helps users. A disabled button is
+not authorization; enforce permissions on your validated server boundary.
+
+`className` customizes the root through the public `cn` utility, with consumer
+classes taking precedence. Semantic tokens support both themes. The layout
+stacks actions on narrow screens and wraps them horizontally from `sm`.
+Long labels and descriptions wrap, but review your actual controls and content
+at narrow widths; fixed-height controls may need consumer styling.
+
+## Announcements and focus
+
+`ariaLive` defaults to **"off"**, overriding the primitive's polite default.
+A static empty section should not announce itself unsolicited. The Block does
+not create an additional outer live region.
+
+For a meaningful dynamic update, opt into `ariaLive="polite"` deliberately.
+`"assertive"` delegates the primitive's alert semantics and should be reserved
+for urgent information, not ordinary empty search results. Do not nest an
+announcing panel inside another live region. For complex result updates, the
+application can keep this panel off and own a separate, concise status message.
+
+The Block never moves focus or intercepts keyboard events. Native controls keep
+their keyboard behavior. When an action replaces the empty section, your
+application owns the next focus target. The demo explicitly focuses its results
+heading after revealing the sample; that behavior belongs to the demo alone.
+
+## Validate and maintain your copy
+
+Run your application's lint, type-check, tests and production build after
+copying. Review the first-use, no-results, no-action and disabled-action cases,
+multiple instances, long text, mobile and desktop layouts, light and dark themes,
+keyboard focus and the source-copy interaction.
+
+Repository runtime tests cover semantic headings, IDs, native controls,
+callbacks, refs, disabled actions, rerenders, announcement opt-in and the actual
+demo. Representative axe checks do not certify visual contrast, responsive
+rendering, screen-reader announcements or complete accessibility.
+
+Your application owns its copied source and future modifications. Your copy
+does not receive automatic updates. Review each later canonical revision and
+validate it in your application before adopting it; no synchronization occurs.
+A local revert of the copied file rolls it back without changing customer data.
+
+## Boundaries and next steps
+
+This Block does not infer loading, error, permissions or result counts, and does
+not implement record creation, filtering, routing, persistence, authentication,
+payments or analytics. There is no new dependency or public UI API change.
+The separate [Data table](/docs/blocks/data/data-table) keeps its own empty-action
+API for tabular results.
+
+Explore the [Blocks catalog](/blocks) for other compositions, or
+[compare Starters](/starters) for a broader application foundation.

@@ -1,14 +1,18 @@
 ---
 title: Data table
-description: A source-copy record table with typed columns, explicit states, consumer-owned row actions, and controlled pagination.
-lastUpdated: "2026-08-28"
+description: A source-copy record table with typed columns, explicit states, consumer-owned row actions, and controlled sorting and pagination.
+lastUpdated: "2026-09-13"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Preview } from "@/components/docs/preview";
-import { DataTableExample } from "@/components/docs/blocks/data-table-example";
+import {
+  DataTableEmptyExample,
+  DataTableExample,
+  DataTableSortingExample,
+} from "@/components/docs/blocks/data-table-example";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Data & records</Badge>
@@ -19,7 +23,7 @@ import { DataTableExample } from "@/components/docs/blocks/data-table-example";
 
 `DataTable` renders one typed record-browsing composition from consumer-owned
 columns and rows. It provides deterministic ready, loading, empty, and error
-states, an optional row-actions seam, and optional controlled page navigation.
+states, optional row actions, controlled sorting requests, and page navigation.
 
 The Block never fetches, filters, sorts, mutates, routes, or interprets records.
 Those decisions remain in the consuming feature or data layer.
@@ -49,6 +53,30 @@ Those decisions remain in the consuming feature or data layer.
 The Registry identity is informational only. Registry installation is not
 available, and this Block does not create a manifest, generated JSON, route, or
 delivery service.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/data-table/index.tsx` in your application.
+Open the source below and use its copy button, or select the code manually.
+This is the complete canonical file, not the usage example or a second
+implementation. Keep the imports and client directive when copying.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/data-table/index.tsx"'
+  >
+    ../../../blocks/data/data-table/index.tsx
+  </include>
+</details>
+
+The documentation includes this file from canonical source at build time.
+Your application copy does not receive automatic updates. Follow the usage
+example below, connect your own behavior, and validate it in your application.
+Return to the [Blocks catalog](/blocks) to choose another pattern.
 
 ## Install by copying source
 
@@ -106,6 +134,7 @@ type DataTableColumn<Row> = Readonly<{
   cell: (row: Row) => React.ReactNode;
   headerClassName?: string;
   cellClassName?: string;
+  sortable?: boolean;
 }>;
 
 type DataTableState =
@@ -136,6 +165,7 @@ The consumer owns:
 - unique column IDs, headers, and cell rendering;
 - state and state copy;
 - row-action controls and behavior;
+- sort state, sortable columns, comparison logic and sort-change callbacks;
 - page state, total page count, navigation labels, and page-change callback.
 
 `DataTable` does not infer identifiers from visible text or array positions and
@@ -152,9 +182,11 @@ does not interpret cell values.
 | `state`            | `DataTableState`                  | ready      | Explicit ready, loading, or error presentation.       |
 | `emptyTitle`       | `string`                          | required   | Consumer-owned empty-state heading.                   |
 | `emptyDescription` | `string`                          | UI default | Optional empty-state explanation.                     |
+| `emptyAction`      | `React.ReactNode`                 | none       | Consumer-owned controls below a ready, empty table.   |
 | `renderRowActions` | `(row: Row) => ReactNode`         | none       | Optional consumer-owned controls for one record.      |
 | `rowActionsLabel`  | `string`                          | `Actions`  | Header for the optional actions column.               |
 | `pagination`       | `DataTablePagination`             | none       | Optional controlled, one-based page navigation.       |
+| `sorting`          | `DataTableSorting`                | none       | Optional single-column sort requests and state.       |
 | `className`        | `string`                          | none       | Root composition customization.                       |
 
 Provide at least one meaningful column. Keep column and row IDs unique and
@@ -191,6 +223,56 @@ hidden while loading.
 When ready rows are empty, the public `TableEmpty` spans every effective column
 and displays consumer-owned copy. Empty is a valid result, not an error, and
 pagination is hidden.
+
+Pass `emptyAction` to offer the next useful step without making the Block own
+record creation or filters. The optional action area appears below the table,
+outside its horizontal scroller, only when ready rows are empty. It is hidden
+while loading, during an error, or once rows are present. Omitting the prop
+preserves the existing empty presentation.
+
+#### First use
+
+Use a clearly labelled creation action when no records exist. This demo adds
+sample records in local React state only; it does not create or save real data.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample />
+</Preview>
+
+#### No matching results
+
+Use a filter-reset action when records exist but the current view is empty.
+The consumer must distinguish that case from first use; the Block cannot infer
+it from an empty array. This demo simulates a cleared filter with local sample
+state and sends no request.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample filtered />
+</Preview>
+
+```tsx title="empty-table-action.tsx"
+<DataTable
+  {...tableProps}
+  rows={filteredRows}
+  emptyTitle="No matching records"
+  emptyDescription="Clear your filters to see all available records."
+  emptyAction={
+    <button onClick={clearFilters} type="button">
+      Clear filters
+    </button>
+  }
+/>
+```
+
+`tableProps`, `filteredRows`, and `clearFilters` belong to the consuming feature.
+Use a public PyColors `Button`, a native button, or a framework link with an
+accessible name. The Block renders your element without replacing its props,
+ref, link destination, disabled state, or event handling. Supply `type="button"`
+for an action that must not submit a surrounding form.
+
+When the action removes the empty state, manage the resulting focus transition
+in the consumer. The demo explicitly moves focus to its persistent reset
+control; the canonical Block never moves focus or mutates rows on its own.
 
 ### Error
 
@@ -254,6 +336,110 @@ controls, and compact page ranges. The Block emits only valid page numbers and
 does not slice rows, fetch data, synchronize URLs, or move focus after a page
 change. The consumer owns those behaviors.
 
+## Optional controlled sorting
+
+Mark individual columns `sortable: true` and pass a `sorting` controller to
+render native header buttons. Both are required; omitting either preserves
+plain headers. Sortable headers must contain meaningful, non-interactive
+phrasing content such as text or a span, never another button or link.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableSortingExample />
+</Preview>
+
+This example sorts a fresh copy of the full fictional dataset before taking a
+page. Its own callback resets the page to one. Reset sort restores the original
+sample order; no request is sent or data saved. The Block only requests a sort
+and displays the state supplied by this consumer.
+
+```ts title="data-table-sorting-types.ts"
+type DataTableSort = Readonly<{
+  columnId: string;
+  direction: "asc" | "desc";
+}>;
+
+type DataTableSorting = Readonly<{
+  value: DataTableSort | null;
+  onSortChange: (sort: DataTableSort) => void;
+  ascendingLabel?: string;
+  descendingLabel?: string;
+}>;
+```
+
+`value: null` means unsorted. Activating an inactive column requests `asc`;
+activating the currently ascending column requests `desc`, then `asc` again.
+Switching columns starts with ascending order. To clear sorting, set `value`
+to `null` in your application. There is no automatic third reset step.
+
+The callback receives a column ID, not a comparator, cell value or row array.
+Clicks do not optimistically change the indicator or reorder the supplied rows.
+Your application must return state that accurately describes its prepared rows.
+Unknown or non-sortable active column IDs receive no sort annotation.
+
+```tsx title="sortable-records-table.tsx"
+"use client";
+
+import { useState } from "react";
+import {
+  DataTable,
+  type DataTableColumn,
+  type DataTableSort,
+} from "./blocks/data-table";
+
+type Row = Readonly<{ id: string; label: string }>;
+
+const columns = [
+  {
+    id: "label",
+    header: "Record",
+    cell: (row) => row.label,
+    sortable: true,
+  },
+] satisfies readonly DataTableColumn<Row>[];
+
+export function SortableRecordsTable({ rows }: { rows: readonly Row[] }) {
+  const [sort, setSort] = useState<DataTableSort | null>(null);
+  const orderedRows = sort
+    ? [...rows].sort((left, right) => {
+        const comparison = left.label.localeCompare(right.label, "en");
+        return sort.direction === "asc" ? comparison : -comparison;
+      })
+    : rows;
+
+  return (
+    <DataTable
+      caption="Sortable records"
+      columns={columns}
+      emptyTitle="No records"
+      getRowId={(row) => row.id}
+      rows={orderedRows}
+      sorting={{ value: sort, onSortChange: setSort }}
+    />
+  );
+}
+```
+
+This small consumer has one sortable text column. Choose your own comparator
+and locale for other value types. For paginated data, order the complete dataset
+before slicing, or request the chosen ordering from your own server. Do not
+silently sort only the currently visible page and present it as global ordering.
+The consumer owns page reset, URL state, cancellation of stale requests and any
+announcement of asynchronously updated results.
+
+Header buttons are disabled in loading and error states; ready empty results
+can still request a sort. The active header reflects supplied state, while
+loading/error rows keep their existing presentation. Only the active sortable
+header has `aria-sort`. Direction glyphs are hidden from assistive technology,
+and button names combine the visible header with the next action. Override
+`ascendingLabel` and `descendingLabel` to localize the default `Sort ascending`
+and `Sort descending` text. Keep these labels non-empty.
+
+Tab reaches the enabled native buttons; Enter and Space use native browser
+activation. Focus is not moved by the Block. Keep column and row IDs stable
+when supplying reordered content, and verify focus, long headers, narrow
+horizontal scrolling, both themes and assistive-technology behavior in your
+application. Automated structural checks are not a complete accessibility audit.
+
 ## Responsive behavior
 
 - Native table markup remains intact at every viewport size.
@@ -272,7 +458,8 @@ is not the primary user task.
 
 - `table`, `thead`, `tbody`, `tr`, `th`, and `td` semantics are preserved.
 - The required caption gives the table an accessible description.
-- Public `TableHead` cells retain `scope="col"`.
+- Public `TableHead` cells retain `scope="col"`; only the active sortable header
+  receives `aria-sort`. Sort requests use native, non-submitting buttons.
 - Loading uses the public polite live region; decorative loading visuals stay
   hidden from assistive technology.
 - Empty and error copy stays visible and understandable without color or icons.
@@ -287,8 +474,9 @@ not a claim of full WCAG certification.
 
 ## Deliberate exclusions
 
-This first Block does not include row selection, bulk actions, built-in search
-or filters, sorting, column visibility, resizing, reordering, virtualization,
+This Block does not include row selection, bulk actions, built-in search
+or filters, sorting engines, multi-column sorting, column visibility, resizing,
+reordering, virtualization,
 inline editing, export, saved views, data fetching, server pagination, caching,
 routing, permissions, mutations, business rules, authentication, or billing.
 
