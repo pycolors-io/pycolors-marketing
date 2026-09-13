@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Card, cn } from '@pycolors/ui';
+import { Card, cn } from "@pycolors/ui";
 
 export type SignInPanelProps = Readonly<{
   title?: React.ReactNode;
@@ -17,7 +17,7 @@ export type SignInPanelProps = Readonly<{
  * entirely owned by the consuming application.
  */
 export function SignInPanel({
-  title = 'Sign in',
+  title = "Sign in",
   description,
   form,
   providers,
@@ -26,15 +26,10 @@ export function SignInPanel({
   className,
 }: SignInPanelProps) {
   return (
-    <section
-      aria-labelledby="sign-in-panel-title"
-      className={cn('mx-auto w-full max-w-md', className)}
-    >
+    <section className={cn("mx-auto w-full max-w-md", className)}>
       <Card className="space-y-6 p-5 sm:p-6">
         <header className="space-y-2">
-          <h2 id="sign-in-panel-title" className="text-xl font-semibold">
-            {title}
-          </h2>
+          <h2 className="text-xl font-semibold">{title}</h2>
           {description ? (
             <div className="text-sm text-muted-foreground">{description}</div>
           ) : null}
