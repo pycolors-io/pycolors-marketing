@@ -23,10 +23,13 @@ function readStaticRoutes() {
 }
 
 describe("Blocks discovery", () => {
-  it("lists six canonical Blocks with unique identities", () => {
+  it("lists documented canonical Blocks with unique identities", () => {
     const identities = BLOCKS_CATALOG.map((block) => block.id);
     expect(identities).toEqual([
       "app-shells/responsive-sidebar",
+      "auth/sign-in",
+      "auth/sign-up",
+      "auth/password-recovery",
       "data/data-table",
       "account/settings-panel",
       "commerce/pricing-plans",
