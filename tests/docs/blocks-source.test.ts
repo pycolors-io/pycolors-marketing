@@ -123,7 +123,7 @@ it("renders Authentication previews from canonical Blocks without service behavi
   ]) {
     expect(authExamples).toContain(canonicalImport);
   }
-  expect(authExamples).toContain('from "@pycolors/ui"');
+  expect(authExamples).not.toContain('from "@pycolors/ui"');
   expect(authExamples).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
   expect(authExamples).toContain("No network request is performed.");
 });
