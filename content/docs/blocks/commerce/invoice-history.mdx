@@ -1,0 +1,121 @@
+---
+title: Invoice history
+description: A presentation-only invoice table with consumer-owned dates, amounts, statuses, actions and empty state.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Present invoice history without owning invoice retrieval
+
+`InvoiceHistoryPanel` presents invoice records supplied by your application in a
+readable table with an explicit empty state. Your billing backend remains
+responsible for fetching records, formatting monetary truth and authorizing any
+download or detail action.
+
+<Callout title="Consumer-owned invoice data">
+  The Block does not fetch invoices, generate documents, format currency,
+  resolve payment status or authorize downloads. Pass already-resolved display
+  values and connect actions through your own validated billing boundary.
+</Callout>
+
+## Canonical identity
+
+- Category: **Commerce**, slug `commerce`.
+- Block: `invoice-history`, export `InvoiceHistoryPanel`.
+- Canonical source: `apps/marketing/content/blocks/commerce/invoice-history/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/invoice-history/index.tsx` in your application.
+
+Open the complete source below and use the code block copy button when available.
+If clipboard access is unavailable, select the code manually.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/invoice-history/index.tsx"'
+  >
+    ../../../blocks/commerce/invoice-history/index.tsx
+  </include>
+</details>
+
+The documentation includes the canonical file at build time. Your application
+owns the copied source and does not receive automatic updates. Review future
+changes deliberately and validate it in your application before adoption.
+Return to the [Blocks catalog](/blocks) to compare another pattern.
+
+## Install by copying source
+
+1. Copy the complete `invoice-history` directory into your application-owned
+   Blocks path.
+2. Configure the public PyColors UI package and tokens through the
+   [UI installation guide](/docs/ui/installation).
+3. Supply invoice rows from your own billing data and connect any row action.
+4. Run lint, type-check, tests and build, then review overflow, long values,
+   empty data, both themes and keyboard behavior.
+
+```tsx title="src/components/invoice-history.tsx"
+"use client";
+
+import { InvoiceHistoryPanel } from "./blocks/invoice-history";
+
+const invoices = [
+  {
+    id: "invoice-example-1",
+    date: "September 1, 2026",
+    amount: "$49.00",
+    status: "Paid",
+    action: <a href="/billing/invoices/example">View invoice</a>,
+  },
+] as const;
+
+export function InvoiceHistory() {
+  return (
+    <InvoiceHistoryPanel
+      title="Invoice history"
+      description="Example records supplied by your application."
+      invoices={invoices}
+      emptyState="No invoices are available."
+    />
+  );
+}
+```
+
+The example destination is application-owned. Connect invoice files or provider
+records only through a route that rechecks authorization on the server.
+
+## Consumer-owned contract
+
+`title` and `invoices` are required. Each invoice needs a stable `id`, display
+`date` and display `amount`; `status` and `action` are optional. Column labels and
+the empty state can be replaced with product-specific copy.
+
+The Block renders the supplied values without calculating totals, formatting
+currency, translating provider states or deciding whether an invoice action is
+available. Keep row IDs stable and make action labels specific to their result.
+
+## Responsive and accessibility notes
+
+The panel uses a labelled `section` and a semantic table when records exist. The
+table keeps a readable minimum width inside a horizontal overflow container so
+content is not crushed on narrow screens. Test the containing layout and ensure
+keyboard users can reach every interactive row action without losing context.
+
+## Ownership and boundaries
+
+Your application owns invoice retrieval, currency formatting, tax and billing
+truth, document storage, signed URLs, authorization, provider integration,
+mutations and error handling. The Block does not include invoice generation,
+download services, Stripe APIs, checkout, webhooks, persistence, authentication,
+analytics, Registry or CLI behavior.
+
+Explore the [Blocks catalog](/blocks), compare
+[Billing overview](/docs/blocks/commerce/billing-overview), or
+[compare Starters](/starters) for a complete application foundation.
