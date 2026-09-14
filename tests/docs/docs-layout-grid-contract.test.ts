@@ -1,10 +1,6 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-const layoutSource = readFileSync(
-  new URL("../../app/docs/layout.tsx", import.meta.url),
-  "utf8",
-);
+import layoutSource from "../../app/docs/layout.tsx?raw";
 
 describe("docs layout grid bridge", () => {
   it("keeps Fumadocs page regions exposed to the parent grid", () => {
