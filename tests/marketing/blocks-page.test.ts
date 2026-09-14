@@ -33,6 +33,9 @@ describe("Blocks discovery", () => {
       "data/data-table",
       "account/settings-panel",
       "commerce/pricing-plans",
+      "commerce/billing-overview",
+      "commerce/payment-method",
+      "commerce/invoice-history",
       "feedback/empty-state-panel",
       "account/workspace-members",
     ]);
