@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import * as React from "react";
 import { Button, Input } from "@pycolors/ui";
 
@@ -27,7 +28,9 @@ export function SignInExample() {
             className="space-y-4"
             onSubmit={(event) => {
               event.preventDefault();
-              setStatus("Sign-in submitted locally. No authentication occurred.");
+              setStatus(
+                "Sign-in submitted locally. No authentication occurred.",
+              );
             }}
           >
             <Input
@@ -53,7 +56,9 @@ export function SignInExample() {
           <Button
             className="w-full"
             onClick={() =>
-              setStatus("Provider action selected locally. No OAuth flow started.")
+              setStatus(
+                "Provider action selected locally. No OAuth flow started.",
+              )
             }
             type="button"
             variant="outline"
@@ -64,9 +69,12 @@ export function SignInExample() {
         footer={
           <span>
             Need an account?{" "}
-            <a className="font-medium text-foreground underline" href="/docs/blocks/auth/sign-up">
+            <Link
+              className="font-medium text-foreground underline"
+              href="/docs/blocks/auth/sign-up"
+            >
               View sign up
-            </a>
+            </Link>
           </span>
         }
       />
@@ -87,7 +95,9 @@ export function SignUpExample() {
             className="space-y-4"
             onSubmit={(event) => {
               event.preventDefault();
-              setStatus("Account creation submitted locally. Nothing was persisted.");
+              setStatus(
+                "Account creation submitted locally. Nothing was persisted.",
+              );
             }}
           >
             <Input
@@ -118,15 +128,18 @@ export function SignUpExample() {
         }
         consent={
           <span>
-            By continuing, you accept your application's terms and privacy policy.
+            {"By continuing, you accept your application's terms and privacy policy."}
           </span>
         }
         footer={
           <span>
             Already registered?{" "}
-            <a className="font-medium text-foreground underline" href="/docs/blocks/auth/sign-in">
+            <Link
+              className="font-medium text-foreground underline"
+              href="/docs/blocks/auth/sign-in"
+            >
               View sign in
-            </a>
+            </Link>
           </span>
         }
       />
@@ -147,7 +160,9 @@ export function PasswordRecoveryExample() {
             className="space-y-4"
             onSubmit={(event) => {
               event.preventDefault();
-              setStatus("Recovery requested locally. No email or reset token was created.");
+              setStatus(
+                "Recovery requested locally. No email or reset token was created.",
+              );
             }}
           >
             <Input
@@ -164,9 +179,12 @@ export function PasswordRecoveryExample() {
         }
         help="Use the address your application recognizes."
         footer={
-          <a className="font-medium text-foreground underline" href="/docs/blocks/auth/sign-in">
+          <Link
+            className="font-medium text-foreground underline"
+            href="/docs/blocks/auth/sign-in"
+          >
             Back to sign in
-          </a>
+          </Link>
         }
       />
       <DemoStatus message={status} />
