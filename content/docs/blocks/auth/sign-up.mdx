@@ -62,7 +62,10 @@ export function SignUpScreen() {
     <SignUpPanel
       description="Create the account your workspace will use."
       form={
-        <form className="space-y-4" onSubmit={(event) => event.preventDefault()}>
+        <form
+          className="space-y-4"
+          onSubmit={(event) => event.preventDefault()}
+        >
           <label className="grid gap-2 text-sm">
             Email
             <input
