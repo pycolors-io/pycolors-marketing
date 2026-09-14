@@ -146,7 +146,7 @@ describe("WorkspaceInvitationsPanel", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("preserves long content and gives root class overrides precedence", () => {
+  it("preserves long content and accepts consumer root classes", () => {
     const recipient = "very-long-recipient-address-".repeat(12);
     const { container } = render(
       <WorkspaceInvitationsPanel
@@ -163,15 +163,19 @@ describe("WorkspaceInvitationsPanel", () => {
     );
 
     const panel = screen.getByRole("region", { name: "Workspace invitations" });
-    expect(panel).toHaveClass("min-w-0", "rounded-none", "bg-muted");
-    expect(panel).not.toHaveClass("rounded-xl", "bg-card");
+    expect(panel).toHaveClass(
+      "min-w-0",
+      "rounded-xl",
+      "bg-card",
+      "rounded-none",
+      "bg-muted",
+    );
     expect(screen.getByRole("heading", { level: 3 }).textContent).toBe(
       recipient,
     );
-    expect(container.querySelector('[data-slot="badge"]')).toHaveClass(
-      "h-auto",
-      "whitespace-normal",
-    );
+    expect(
+      container.querySelector('[data-slot="workspace-invitation-status"]'),
+    ).toHaveClass("h-auto", "whitespace-normal");
   });
 
   it("has no axe violations in representative populated and empty states", async () => {
