@@ -128,7 +128,9 @@ export function SignUpExample() {
         }
         consent={
           <span>
-            {"By continuing, you accept your application's terms and privacy policy."}
+            {
+              "By continuing, you accept your application's terms and privacy policy."
+            }
           </span>
         }
         footer={
