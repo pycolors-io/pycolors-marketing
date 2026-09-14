@@ -5,7 +5,10 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/container";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { Badge, Button, cn } from "@pycolors/ui";
-import { OnThisPageInline, type TocItem } from "./on-this-page-inline";
+import {
+  OnThisPageInline,
+  type TocItem,
+} from "./on-this-page-inline";
 import type { BreadcrumbItem } from "@/lib/seo/breadcrumb";
 
 const focusRing =
@@ -37,7 +40,9 @@ export function GuidePageShell({
   ];
 
   const items =
-    breadcrumb && breadcrumb.length > 0 ? breadcrumb : defaultBreadcrumb;
+    breadcrumb && breadcrumb.length > 0
+      ? breadcrumb
+      : defaultBreadcrumb;
 
   return (
     <Container className="py-20 sm:py-20 lg:py-24">
