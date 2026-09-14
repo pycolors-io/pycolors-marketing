@@ -6,6 +6,9 @@ appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SignInExample } from "@/components/docs/blocks/auth-examples";
 
 ## Present a credible authentication entry point
 
@@ -30,20 +33,31 @@ credentials, create sessions or configure providers.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/sign-in/index.tsx` in your application. Open the source
-below and copy the complete file. Use the code block's copy button when available.
-If clipboard access is unavailable, select the code manually.
+`src/components/blocks/sign-in/index.tsx` in your application. Use the Source
+tab's copy button when available. If clipboard access is unavailable, select the
+code manually.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <SignInExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/sign-in/index.tsx"'
-  >
-    ../../../blocks/auth/sign-in/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/sign-in/index.tsx"'
+    >
+      ../../../blocks/auth/sign-in/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `SignInPanel` through a deterministic
+local fixture. It performs no authentication or network request. The Source tab
+is the complete canonical file included at build time, not a duplicated
+implementation.
 
 ## Install by copying source
 
