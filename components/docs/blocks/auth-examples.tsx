@@ -2,11 +2,46 @@
 
 import Link from "next/link";
 import * as React from "react";
-import { Button, Input } from "@pycolors/ui";
 
 import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
 import { SignInPanel } from "@/content/blocks/auth/sign-in";
 import { SignUpPanel } from "@/content/blocks/auth/sign-up";
+
+type DemoFieldProps = Readonly<{
+  autoComplete: string;
+  label: string;
+  name: string;
+  placeholder: string;
+  type: React.HTMLInputTypeAttribute;
+}>;
+
+const inputClassName =
+  "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+const primaryButtonClassName =
+  "inline-flex min-h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
+const secondaryButtonClassName =
+  "inline-flex min-h-10 w-full items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
+
+function DemoField({
+  autoComplete,
+  label,
+  name,
+  placeholder,
+  type,
+}: DemoFieldProps) {
+  return (
+    <label className="grid gap-2 text-sm font-medium text-foreground">
+      {label}
+      <input
+        autoComplete={autoComplete}
+        className={inputClassName}
+        name={name}
+        placeholder={placeholder}
+        type={type}
+      />
+    </label>
+  );
+}
 
 function DemoStatus({ message }: { message?: string }) {
   return (
@@ -33,44 +68,43 @@ export function SignInExample() {
               );
             }}
           >
-            <Input
+            <DemoField
               autoComplete="email"
               label="Email"
               name="email"
               placeholder="you@example.com"
               type="email"
             />
-            <Input
+            <DemoField
               autoComplete="current-password"
               label="Password"
               name="password"
               placeholder="••••••••"
               type="password"
             />
-            <Button className="w-full" type="submit">
+            <button className={primaryButtonClassName} type="submit">
               Sign in
-            </Button>
+            </button>
           </form>
         }
         providers={
-          <Button
-            className="w-full"
+          <button
+            className={secondaryButtonClassName}
             onClick={() =>
               setStatus(
                 "Provider action selected locally. No OAuth flow started.",
               )
             }
             type="button"
-            variant="outline"
           >
             Continue with GitHub
-          </Button>
+          </button>
         }
         footer={
           <span>
             Need an account?{" "}
             <Link
-              className="font-medium text-foreground underline"
+              className="font-medium text-foreground underline underline-offset-4"
               href="/docs/blocks/auth/sign-up"
             >
               View sign up
@@ -100,30 +134,30 @@ export function SignUpExample() {
               );
             }}
           >
-            <Input
+            <DemoField
               autoComplete="name"
               label="Name"
               name="name"
               placeholder="Alex Morgan"
               type="text"
             />
-            <Input
+            <DemoField
               autoComplete="email"
               label="Email"
               name="email"
               placeholder="you@example.com"
               type="email"
             />
-            <Input
+            <DemoField
               autoComplete="new-password"
               label="Password"
               name="password"
               placeholder="Create a password"
               type="password"
             />
-            <Button className="w-full" type="submit">
+            <button className={primaryButtonClassName} type="submit">
               Create account
-            </Button>
+            </button>
           </form>
         }
         consent={
@@ -137,7 +171,7 @@ export function SignUpExample() {
           <span>
             Already registered?{" "}
             <Link
-              className="font-medium text-foreground underline"
+              className="font-medium text-foreground underline underline-offset-4"
               href="/docs/blocks/auth/sign-in"
             >
               View sign in
@@ -167,22 +201,22 @@ export function PasswordRecoveryExample() {
               );
             }}
           >
-            <Input
+            <DemoField
               autoComplete="email"
               label="Email"
               name="email"
               placeholder="you@example.com"
               type="email"
             />
-            <Button className="w-full" type="submit">
+            <button className={primaryButtonClassName} type="submit">
               Request recovery link
-            </Button>
+            </button>
           </form>
         }
         help="Use the address your application recognizes."
         footer={
           <Link
-            className="font-medium text-foreground underline"
+            className="font-medium text-foreground underline underline-offset-4"
             href="/docs/blocks/auth/sign-in"
           >
             Back to sign in
