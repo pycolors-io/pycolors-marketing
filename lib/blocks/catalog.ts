@@ -96,4 +96,20 @@ export const BLOCKS_CATALOG = [
       "Present workspace members with readable role and status labels and native actions. Keep identities, permissions, member changes and focus under your application's control.",
     href: "/docs/blocks/account/workspace-members",
   },
+  {
+    id: "account/workspace-invitations",
+    title: "Workspace invitations",
+    category: "Account & workspace",
+    description:
+      "Present invitation recipients, roles, status, sent and expiry dates with consumer-owned actions while delivery, tokens and membership mutations remain application-owned.",
+    href: "/docs/blocks/account/workspace-invitations",
+  },
+  {
+    id: "account/audit-log",
+    title: "Audit log",
+    category: "Account & workspace",
+    description:
+      "Present ordered workspace activity, timestamps, details, filters and actions while event collection, retention, permissions and audit integrity remain application-owned.",
+    href: "/docs/blocks/account/audit-log",
+  },
 ] as const;
