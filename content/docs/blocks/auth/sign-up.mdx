@@ -6,6 +6,9 @@ appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SignUpExample } from "@/components/docs/blocks/auth-examples";
 
 ## Present account creation without owning auth logic
 
@@ -30,20 +33,31 @@ validation, account creation and authentication.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/sign-up/index.tsx` in your application. Open the source
-below and copy the complete file. Use the code block's copy button when available.
-If clipboard access is unavailable, select the code manually.
+`src/components/blocks/sign-up/index.tsx` in your application. Use the Source
+tab's copy button when available. If clipboard access is unavailable, select the
+code manually.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <SignUpExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/sign-up/index.tsx"'
-  >
-    ../../../blocks/auth/sign-up/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/sign-up/index.tsx"'
+    >
+      ../../../blocks/auth/sign-up/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `SignUpPanel` through a deterministic
+local fixture. It creates no account, starts no provider flow and performs no
+network request. The Source tab is the complete canonical file included at build
+time, not a duplicated implementation.
 
 ## Install by copying source
 
