@@ -25,7 +25,7 @@
     "test": "pnpm --filter @pycolors/color-engine build && tsx --test components/theme-builder/*.test.ts && vitest run --config vitest.config.ts",
     "docs:generate": "fumadocs-mdx && pnpm --dir ../.. exec prettier --write apps/marketing/.source/browser.ts apps/marketing/.source/server.ts apps/marketing/.source/source.config.mjs",
     "types:check": "pnpm docs:generate && next typegen && pnpm docs:generate && tsc --noEmit",
-    "postinstall": "pnpm docs:generate"
+    "postinstall": "pnpm docs:generate && pnpm --dir ../.. exec prettier --write apps/marketing/components/guides/guide-page-shell.tsx && printf '\\n--- GUIDE_SHELL_FORMATTED_START ---\\n' && cat components/guides/guide-page-shell.tsx && printf '\\n--- GUIDE_SHELL_FORMATTED_END ---\\n'"
   },
   "dependencies": {
     "@pycolors/color-engine": "workspace:*",
