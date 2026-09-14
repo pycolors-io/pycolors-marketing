@@ -9,10 +9,15 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 ## Present account creation without owning auth logic
 
-`SignUpPanel` composes a focused account-creation surface from content and controls supplied by your application. Use it for credentials, provider actions, consent copy and next-step links while your product keeps ownership of validation, account creation and authentication.
+`SignUpPanel` composes a focused account-creation surface from content and
+controls supplied by your application. Use it for credentials, provider actions,
+consent copy and next-step links while your product keeps ownership of
+validation, account creation and authentication.
 
 <Callout title="Consumer-owned behavior">
-  The Block does not create a user, validate a password, send verification email, start OAuth or persist consent. It only presents the React nodes and copy you supply.
+  The Block does not create a user, validate a password, send verification
+  email, start OAuth or persist consent. It only presents the React nodes and
+  copy you supply.
 </Callout>
 
 ## Canonical identity
@@ -24,7 +29,10 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 ## Copy source
 
-Configure the [public UI package and tokens](/docs/ui/installation), then create `src/components/blocks/sign-up/index.tsx` in your application. Open the source below and copy the complete file. Use the code block's copy button or select the code manually when clipboard access is unavailable.
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/sign-up/index.tsx` in your application. Open the source
+below and copy the complete file. Use the code block's copy button or select the
+code manually when clipboard access is unavailable.
 
 <details>
   <summary>View and copy the complete source</summary>
@@ -39,7 +47,10 @@ Configure the [public UI package and tokens](/docs/ui/installation), then create
 
 ## Install by copying source
 
-Keep the complete file at the application-owned path above. Copying source does not create auth routes, provider configuration, accounts or persistence. Wire the supplied controls to your own application behavior, then validate it in your application.
+Keep the complete file at the application-owned path above. Copying source does
+not create auth routes, provider configuration, accounts or persistence. Wire
+the supplied controls to your own application behavior, then validate it in your
+application.
 
 ```tsx title="src/components/sign-up-screen.tsx"
 "use client";
@@ -77,24 +88,41 @@ export function SignUpScreen() {
 }
 ```
 
-Use `"use client"` only where your consumer implementation needs handlers or client auth state. The canonical Block contains no account-creation state machine.
+Use `"use client"` only where your consumer implementation needs handlers or
+client auth state. The canonical Block contains no account-creation state
+machine.
 
 ## What the application owns
 
-`form` is required. Optional `providers`, `error`, `consent`, `footer`, `title`, `description` and `className` let you adapt the composition without moving product rules into PyColors.
+`form` is required. Optional `providers`, `error`, `consent`, `footer`, `title`,
+`description` and `className` let you adapt the composition without moving
+product rules into PyColors.
 
-Provider controls and links retain their native behavior because the Block renders your React nodes unchanged. Keep validation messages truthful and enforce password, verification, duplicate-account, legal-consent and anti-abuse rules in your validated application/backend.
+Provider controls and links retain their native behavior because the Block
+renders your React nodes unchanged. Keep validation messages truthful and
+enforce password, verification, duplicate-account, legal-consent and anti-abuse
+rules in your validated application/backend.
 
 ## Responsive and accessibility notes
 
-Keep each field labelled, retain native form submission semantics and make consent text understandable before the user submits. Error content uses `role="alert"`; supply it only when an actual consumer error needs attention. Review keyboard focus, touch targets, long legal copy and narrow widths in your application.
+Keep each field labelled, retain native form submission semantics and make
+consent text understandable before the user submits. Error content uses
+`role="alert"`; supply it only when an actual consumer error needs attention.
+Review keyboard focus, touch targets, long legal copy and narrow widths in your
+application.
 
 ## Ownership and updates
 
-Your application owns the copied source and does not receive automatic updates. Review later canonical changes deliberately and validate it in your application before adoption.
+Your application owns the copied source and does not receive automatic updates.
+Review later canonical changes deliberately and validate it in your application
+before adoption.
 
 ## Boundaries and next steps
 
-No account persistence, Auth.js configuration, OAuth setup, verification email, password policy, session mutation, authorization, analytics, billing or production service is implemented here.
+No account persistence, Auth.js configuration, OAuth setup, verification email,
+password policy, session mutation, authorization, analytics, billing or
+production service is implemented here.
 
-Explore the [Blocks catalog](/blocks), use [Sign in](/docs/blocks/auth/sign-in) for returning users, or [compare Starters](/starters) for a complete application foundation.
+Explore the [Blocks catalog](/blocks), use [Sign in](/docs/blocks/auth/sign-in)
+for returning users, or [compare Starters](/starters) for a complete application
+foundation.
