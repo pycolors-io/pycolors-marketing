@@ -45,9 +45,7 @@ describe("WorkspaceInvitationsPanel", () => {
       />,
     );
 
-    const panel = screen.getByRole("region", {
-      name: "Workspace invitations",
-    });
+    const panel = screen.getByRole("region", { name: "Workspace invitations" });
     expect(panel).toHaveAccessibleDescription(
       "People invited to this workspace.",
     );
@@ -100,10 +98,7 @@ describe("WorkspaceInvitationsPanel", () => {
 
   it("omits optional secondary text, expiry and actions cleanly", () => {
     const { container } = render(
-      <WorkspaceInvitationsPanel
-        {...props}
-        invitations={[invitations[1]!]}
-      />,
+      <WorkspaceInvitationsPanel {...props} invitations={[invitations[1]!]} />,
     );
 
     const row = screen.getByRole("listitem");
@@ -114,26 +109,23 @@ describe("WorkspaceInvitationsPanel", () => {
     ).toBeNull();
   });
 
-  it(
-    "renders a consumer-owned empty state without unsolicited announcements",
-    () => {
-      const { container } = render(
-        <WorkspaceInvitationsPanel
-          {...props}
-          invitations={[]}
-          emptyTitle="No pending invitations"
-          emptyDescription="Invite someone when you are ready."
-        />,
-      );
+  it("renders a consumer-owned empty state without unsolicited announcements", () => {
+    const { container } = render(
+      <WorkspaceInvitationsPanel
+        {...props}
+        invitations={[]}
+        emptyTitle="No pending invitations"
+        emptyDescription="Invite someone when you are ready."
+      />,
+    );
 
-      expect(screen.queryByRole("list")).toBeNull();
-      expect(screen.getByText("No pending invitations")).toBeVisible();
-      expect(
-        screen.getByText("Invite someone when you are ready."),
-      ).toBeVisible();
-      expect(container.querySelector("[aria-live]")).toBeNull();
-    },
-  );
+    expect(screen.queryByRole("list")).toBeNull();
+    expect(screen.getByText("No pending invitations")).toBeVisible();
+    expect(
+      screen.getByText("Invite someone when you are ready."),
+    ).toBeVisible();
+    expect(container.querySelector("[aria-live]")).toBeNull();
+  });
 
   it("keeps ids unique across repeated panels", () => {
     const { container } = render(
@@ -170,9 +162,7 @@ describe("WorkspaceInvitationsPanel", () => {
       />,
     );
 
-    const panel = screen.getByRole("region", {
-      name: "Workspace invitations",
-    });
+    const panel = screen.getByRole("region", { name: "Workspace invitations" });
     expect(panel).toHaveClass("min-w-0", "rounded-none", "bg-muted");
     expect(panel).not.toHaveClass("rounded-xl", "bg-card");
     expect(screen.getByRole("heading", { level: 3 }).textContent).toBe(
@@ -184,16 +174,13 @@ describe("WorkspaceInvitationsPanel", () => {
     );
   });
 
-  it(
-    "has no axe violations in representative populated and empty states",
-    async () => {
-      const { container, rerender } = render(
-        <WorkspaceInvitationsPanel {...props} />,
-      );
-      expect((await axe(container)).violations).toEqual([]);
+  it("has no axe violations in representative populated and empty states", async () => {
+    const { container, rerender } = render(
+      <WorkspaceInvitationsPanel {...props} />,
+    );
+    expect((await axe(container)).violations).toEqual([]);
 
-      rerender(<WorkspaceInvitationsPanel {...props} invitations={[]} />);
-      expect((await axe(container)).violations).toEqual([]);
-    },
-  );
+    rerender(<WorkspaceInvitationsPanel {...props} invitations={[]} />);
+    expect((await axe(container)).violations).toEqual([]);
+  });
 });
