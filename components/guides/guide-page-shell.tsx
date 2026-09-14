@@ -1,15 +1,15 @@
-import type { ReactNode } from 'react';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
-import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
-import { Badge, Button, cn } from '@pycolors/ui';
-import { OnThisPageInline, type TocItem } from './on-this-page-inline';
-import type { BreadcrumbItem } from '@/lib/seo/breadcrumb';
+import { Container } from "@/components/container";
+import { Breadcrumb } from "@/components/seo/breadcrumb";
+import { Badge, Button, cn } from "@pycolors/ui";
+import { OnThisPageInline, type TocItem } from "./on-this-page-inline";
+import type { BreadcrumbItem } from "@/lib/seo/breadcrumb";
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 type GuidePageShellProps = {
   badge?: string;
@@ -22,18 +22,18 @@ type GuidePageShellProps = {
 };
 
 export function GuidePageShell({
-  badge = 'Guide',
+  badge = "Guide",
   title,
   description,
-  tags = ['Next.js', 'SaaS'],
+  tags = ["Next.js", "SaaS"],
   toc,
   children,
   breadcrumb,
 }: GuidePageShellProps) {
   const defaultBreadcrumb: BreadcrumbItem[] = [
-    { label: 'Home', href: '/' },
-    { label: 'Guides', href: '/guides' },
-    { label: title, href: '#' },
+    { label: "Home", href: "/" },
+    { label: "Guides", href: "/guides" },
+    { label: title, href: "#" },
   ];
 
   const items =
@@ -49,7 +49,10 @@ export function GuidePageShell({
         <div className="mb-8">
           <Button asChild variant="outline" size="sm">
             <Link href="/guides" className={cn(focusRing)}>
-              <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+              <ArrowLeft
+                className="mr-2 h-4 w-4"
+                aria-hidden="true"
+              />
               Back to Guides
             </Link>
           </Button>
@@ -83,7 +86,10 @@ export function GuidePageShell({
         <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start xl:gap-12">
           <main className="min-w-0 space-y-10">{children}</main>
 
-          <aside aria-label="On this page" className="hidden min-w-0 lg:block">
+          <aside
+            aria-label="On this page"
+            className="hidden min-w-0 lg:block"
+          >
             <div className="sticky top-24">
               <OnThisPageInline items={toc} />
             </div>
