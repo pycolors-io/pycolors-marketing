@@ -10,9 +10,10 @@ describe("docs layout grid bridge", () => {
     expect(layoutSource).not.toMatch(/className="docs-shell[^"]*\bw-full\b/);
   });
 
-  it("keeps the desktop article below the fixed docs header", () => {
+  it("keeps the desktop breadcrumb below the fixed docs header", () => {
     expect(layoutSource).toContain(
       "lg:[&_#nd-page]:!pt-[calc(var(--fd-nav-height)+2rem)]",
     );
+    expect(layoutSource).not.toContain("lg:[&_#nd-page]:!pt-8");
   });
 });
