@@ -114,21 +114,26 @@ describe("WorkspaceInvitationsPanel", () => {
     ).toBeNull();
   });
 
-  it("renders a consumer-owned empty state without unsolicited announcements", () => {
-    const { container } = render(
-      <WorkspaceInvitationsPanel
-        {...props}
-        invitations={[]}
-        emptyTitle="No pending invitations"
-        emptyDescription="Invite someone when you are ready."
-      />,
-    );
+  it(
+    "renders a consumer-owned empty state without unsolicited announcements",
+    () => {
+      const { container } = render(
+        <WorkspaceInvitationsPanel
+          {...props}
+          invitations={[]}
+          emptyTitle="No pending invitations"
+          emptyDescription="Invite someone when you are ready."
+        />,
+      );
 
-    expect(screen.queryByRole("list")).toBeNull();
-    expect(screen.getByText("No pending invitations")).toBeVisible();
-    expect(screen.getByText("Invite someone when you are ready.")).toBeVisible();
-    expect(container.querySelector("[aria-live]")).toBeNull();
-  });
+      expect(screen.queryByRole("list")).toBeNull();
+      expect(screen.getByText("No pending invitations")).toBeVisible();
+      expect(
+        screen.getByText("Invite someone when you are ready."),
+      ).toBeVisible();
+      expect(container.querySelector("[aria-live]")).toBeNull();
+    },
+  );
 
   it("keeps ids unique across repeated panels", () => {
     const { container } = render(
@@ -179,13 +184,16 @@ describe("WorkspaceInvitationsPanel", () => {
     );
   });
 
-  it("has no axe violations in representative populated and empty states", async () => {
-    const { container, rerender } = render(
-      <WorkspaceInvitationsPanel {...props} />,
-    );
-    expect((await axe(container)).violations).toEqual([]);
+  it(
+    "has no axe violations in representative populated and empty states",
+    async () => {
+      const { container, rerender } = render(
+        <WorkspaceInvitationsPanel {...props} />,
+      );
+      expect((await axe(container)).violations).toEqual([]);
 
-    rerender(<WorkspaceInvitationsPanel {...props} invitations={[]} />);
-    expect((await axe(container)).violations).toEqual([]);
-  });
+      rerender(<WorkspaceInvitationsPanel {...props} invitations={[]} />);
+      expect((await axe(container)).violations).toEqual([]);
+    },
+  );
 });
