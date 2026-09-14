@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-09-12"
+lastUpdated: "2026-09-14"
 appliesTo: Blocks
 ---
 
@@ -14,9 +14,9 @@ import { Badge } from "@pycolors/ui";
   <Badge>Source copy</Badge>
 </div>
 
-[Explore the Blocks catalog](/blocks) to choose a sidebar, data table,
-settings panel, pricing comparison, empty state or workspace member list before
-following the installation steps below.
+[Explore the Blocks catalog](/blocks) to choose an application shell,
+authentication panel, data table, settings panel, pricing comparison, empty state
+or workspace member list before following the installation steps below.
 
 ## Copy source, then own it
 
@@ -24,16 +24,19 @@ PyColors Blocks use a manual source-copy flow. When a Block is available, copy
 its canonical source directory into your application, then treat the copied code
 as your own product code.
 
-<Callout title="Canonical Blocks">
-  The category and naming contract is approved. The
-  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar)
-  source is the first production-shaped Block, followed by
+<Callout title="Canonical documented Blocks">
+  The category and naming contract is approved. The documented catalog includes
+  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar),
+  [`auth/sign-in`](/docs/blocks/auth/sign-in),
+  [`auth/sign-up`](/docs/blocks/auth/sign-up),
+  [`auth/password-recovery`](/docs/blocks/auth/password-recovery),
   [`data/data-table`](/docs/blocks/data/data-table),
   [`account/settings-panel`](/docs/blocks/account/settings-panel),
   [`commerce/pricing-plans`](/docs/blocks/commerce/pricing-plans),
   [`feedback/empty-state-panel`](/docs/blocks/feedback/empty-state-panel) and
-  [`account/workspace-members`](/docs/blocks/account/workspace-members). Every
-  other source-owner issue still has to deliver and validate its own Block.
+  [`account/workspace-members`](/docs/blocks/account/workspace-members). Other
+  merged canonical source is surfaced through separately reviewed docs/catalog
+  parity issues before it becomes part of this public discovery contract.
 </Callout>
 
 There is no `@pycolors/blocks` package, registry, CLI, download service, or
@@ -82,7 +85,8 @@ practical. A preview is never an alternate implementation to copy from.
   authorities. Starter Free is product evidence and documentation previews are
   examples, not alternate Block source. Future Registry artifacts distribute
   canonical source only, while future Pro remains a separate authority under
-  #36. The approved first source sequence is #94, then #101, then #97.
+  #36. The approved first source sequence was #94, then #101, then #97; current
+  sequencing is coordinated by #35.
 </Callout>
 
 ## Install a Block
@@ -102,7 +106,8 @@ practical. A preview is never an alternate implementation to copy from.
 
     Install and configure `@pycolors/ui` in the consuming app by following the
     [UI installation guide](/docs/ui/installation). Block source must import
-    PyColors primitives from the public package entry point only.
+    PyColors primitives from the public package entry point only when it needs
+    them.
 
     ```tsx title="src/components/blocks/<block-slug>/index.tsx"
     import { Button, Card } from "@pycolors/ui";
@@ -159,11 +164,14 @@ update it.
 
 ## Copy directly from the documentation
 
-Each available Block now has a **Copy source** section with its complete
-canonical implementation. You do not need to locate monorepo files to inspect
-or copy that code:
+Each available Block has a **Copy source** section with its complete canonical
+implementation. You do not need to locate monorepo files to inspect or copy that
+code:
 
 - [Copy Responsive sidebar](/docs/blocks/app-shells/responsive-sidebar#copy-source).
+- [Copy Sign in](/docs/blocks/auth/sign-in#copy-source).
+- [Copy Sign up](/docs/blocks/auth/sign-up#copy-source).
+- [Copy Password recovery](/docs/blocks/auth/password-recovery#copy-source).
 - [Copy Data table](/docs/blocks/data/data-table#copy-source).
 - [Copy Settings panel](/docs/blocks/account/settings-panel#copy-source).
 - [Copy Pricing plans](/docs/blocks/commerce/pricing-plans#copy-source).
