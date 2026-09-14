@@ -1,0 +1,125 @@
+---
+title: Billing overview
+description: A presentation-only billing summary with consumer-owned plan, billing status, renewal, payment details and actions.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Present billing context without owning billing logic
+
+`BillingOverviewPanel` gives an application a compact billing summary while
+keeping billing truth and every action in the consuming product. Use it to show
+plan, billing cadence, status, renewal and payment information that your own
+billing layer has already resolved.
+
+<Callout title="Presentation only">
+  The Block does not query Stripe, calculate billing periods, change a plan,
+  open a portal, renew a subscription or authorize an action. Supply truthful
+  values and connect actions through your own validated billing boundary.
+</Callout>
+
+## Canonical identity
+
+- Category: **Commerce**, slug `commerce`.
+- Block: `billing-overview`, export `BillingOverviewPanel`.
+- Canonical source: `apps/marketing/content/blocks/commerce/billing-overview/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/billing-overview/index.tsx` in your application.
+
+Open the complete source below and use the code block copy button when available.
+If clipboard access is unavailable, select the code manually.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/billing-overview/index.tsx"'
+  >
+    ../../../blocks/commerce/billing-overview/index.tsx
+  </include>
+</details>
+
+The documentation includes the canonical file at build time. Your application
+owns the copied source and does not receive automatic updates. Review future
+changes deliberately and validate it in your application before adoption.
+Return to the [Blocks catalog](/blocks) to compare another pattern.
+
+## Install by copying source
+
+1. Copy the complete `billing-overview` directory into your application-owned
+   Blocks path.
+2. Configure the public PyColors UI package and tokens through the
+   [UI installation guide](/docs/ui/installation).
+3. Supply billing facts and actions from your own application state.
+4. Run lint, type-check, tests and build, then review narrow widths, long values,
+   both themes and keyboard behavior.
+
+```tsx title="src/components/billing-summary.tsx"
+"use client";
+
+import { BillingOverviewPanel } from "./blocks/billing-overview";
+
+export function BillingSummary() {
+  return (
+    <BillingOverviewPanel
+      title="Billing"
+      description="Example values supplied by your application."
+      planLabel="Plan"
+      planValue="Growth"
+      billingLabel="Billing"
+      billingValue="Monthly"
+      statusLabel="Status"
+      statusValue="Active"
+      renewalLabel="Renews"
+      renewalValue="October 15"
+      paymentLabel="Payment method"
+      paymentValue="Visa ending in 4242"
+      primaryAction={
+        <button type="button" onClick={() => undefined}>
+          Manage billing
+        </button>
+      }
+    />
+  );
+}
+```
+
+The example action is intentionally local. Replace it with your own route or
+server-backed billing flow only after validating permissions and current billing
+state.
+
+## Consumer-owned contract
+
+`title`, `planLabel` and `planValue` are required. Description, billing, status,
+renewal and payment pairs are optional. Provide both the label and value for an
+optional detail when you want it rendered.
+
+`primaryAction` and `secondaryAction` are React nodes supplied unchanged by the
+consumer. The Block does not infer whether a user may change plans, cancel,
+update payment details or open a billing portal. Authorization remains outside
+the presentation layer.
+
+## Responsive and accessibility notes
+
+The summary uses a labelled `section`, semantic definition-list markup and a
+responsive two-column details grid. Long values wrap instead of forcing page
+width. Preserve meaningful action names, visible focus and native disabled
+semantics in controls you supply.
+
+## Ownership and boundaries
+
+Your application owns billing data, pricing truth, subscription state, Stripe or
+other provider integration, permissions, mutations, redirects and error handling.
+The Block does not include checkout, Customer Portal, webhooks, persistence,
+entitlements, authentication, analytics, Registry or CLI behavior.
+
+Explore the [Blocks catalog](/blocks), compare
+[Pricing plans](/docs/blocks/commerce/pricing-plans), or
+[compare Starters](/starters) for a complete application foundation.
