@@ -84,11 +84,22 @@ export function GuidePageShell({
           </div>
         </header>
 
-        <div className="mb-10">
+        <div className="mb-10 lg:hidden">
           <OnThisPageInline items={toc} />
         </div>
 
-        <div className="space-y-10">{children}</div>
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start xl:gap-12">
+          <main className="min-w-0 space-y-10">{children}</main>
+
+          <aside
+            aria-label="On this page"
+            className="hidden min-w-0 lg:block"
+          >
+            <div className="sticky top-24">
+              <OnThisPageInline items={toc} />
+            </div>
+          </aside>
+        </div>
       </div>
     </Container>
   );
