@@ -9,6 +9,30 @@ export const BLOCKS_CATALOG = [
     href: "/docs/blocks/app-shells/responsive-sidebar",
   },
   {
+    id: "auth/sign-in",
+    title: "Sign in",
+    category: "Authentication",
+    description:
+      "Present credentials, provider actions, errors and recovery links without moving authentication state or session behavior into the Block.",
+    href: "/docs/blocks/auth/sign-in",
+  },
+  {
+    id: "auth/sign-up",
+    title: "Sign up",
+    category: "Authentication",
+    description:
+      "Compose account creation, provider actions and consent copy while keeping validation, account persistence and authentication consumer-owned.",
+    href: "/docs/blocks/auth/sign-up",
+  },
+  {
+    id: "auth/password-recovery",
+    title: "Password recovery",
+    category: "Authentication",
+    description:
+      "Present a recovery form, status, errors and help content while your application owns reset tokens, email delivery and password updates.",
+    href: "/docs/blocks/auth/password-recovery",
+  },
+  {
     id: "data/data-table",
     title: "Data table",
     category: "Data & records",
