@@ -57,6 +57,30 @@ export const BLOCKS_CATALOG = [
     href: "/docs/blocks/commerce/pricing-plans",
   },
   {
+    id: "commerce/billing-overview",
+    title: "Billing overview",
+    category: "Commerce",
+    description:
+      "Summarize plan, billing cadence, status, renewal and payment details while your application remains the source of truth for billing state and actions.",
+    href: "/docs/blocks/commerce/billing-overview",
+  },
+  {
+    id: "commerce/payment-method",
+    title: "Payment method",
+    category: "Commerce",
+    description:
+      "Present a payment method, expiry, billing contact and status with consumer-owned actions and no hidden provider or payment mutation behavior.",
+    href: "/docs/blocks/commerce/payment-method",
+  },
+  {
+    id: "commerce/invoice-history",
+    title: "Invoice history",
+    category: "Commerce",
+    description:
+      "Show invoice dates, amounts, statuses and row actions in a readable table while retrieval, documents and authorization stay application-owned.",
+    href: "/docs/blocks/commerce/invoice-history",
+  },
+  {
     id: "feedback/empty-state-panel",
     title: "Empty state panel",
     category: "Feedback & states",
