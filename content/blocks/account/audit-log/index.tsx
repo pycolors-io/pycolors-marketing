@@ -99,7 +99,11 @@ export function AuditLogPanel({
       </div>
 
       {events.length > 0 ? (
-        <ol role="list" aria-labelledby={headingId} className="divide-y divide-border">
+        <ol
+          role="list"
+          aria-labelledby={headingId}
+          className="divide-y divide-border"
+        >
           {events.map((event) => (
             <li
               key={event.id}
