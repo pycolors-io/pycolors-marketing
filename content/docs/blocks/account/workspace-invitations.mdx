@@ -1,0 +1,151 @@
+---
+title: Workspace invitations
+description: A source-copy invitation list with consumer-owned recipients, roles, status, expiry, permissions, and actions.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Present invitations without owning invitation delivery
+
+`WorkspaceInvitationsPanel` renders a named invitation section with recipient,
+role, status, sent/expiry timestamps and optional actions. Your application
+supplies every invitation and owns what each action is allowed to do.
+
+<Callout title="Presentation only">
+  This Block does not create invitations, send email, generate or validate
+  tokens, accept memberships, revoke access, authorize actions or persist state.
+  Those behaviors remain behind your application's trusted boundaries.
+</Callout>
+
+## Canonical identity
+
+- Category: **Account & workspace**, slug `account`.
+- Block: `workspace-invitations`, export `WorkspaceInvitationsPanel`.
+- Canonical source: `apps/marketing/content/blocks/account/workspace-invitations/`.
+- Complete entry point: `index.tsx`.
+
+There is no Blocks npm package, Registry installer or CLI in this flow. The
+canonical file is presentation source that you copy into your application.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/workspace-invitations/index.tsx` in your application.
+Open the source below and use its copy button, or select the code manually. This
+is the complete canonical file, not a duplicated implementation.
+
+<details>
+  <summary>View and copy the complete source</summary>
+
+  <include
+    lang="tsx"
+    meta='title="src/components/blocks/workspace-invitations/index.tsx"'
+  >
+    ../../../blocks/account/workspace-invitations/index.tsx
+  </include>
+</details>
+
+The documentation includes this file from canonical source at build time. Your
+application copy does not receive automatic updates. Connect your own invitation
+service and authorization, then validate it in your application. Return to the
+[Blocks catalog](/blocks) to choose another pattern.
+
+## Install by copying source
+
+1. Copy the complete `workspace-invitations` directory into an application-owned path.
+2. Configure React, `@pycolors/ui`, tokens and semantic styles through the
+   [UI installation guide](/docs/ui/installation).
+3. Supply validated invitation data and consumer-owned actions.
+4. Run lint, type-check, tests and build in the consuming application.
+
+```tsx title="src/components/workspace-invitations-list.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+import { WorkspaceInvitationsPanel } from "./blocks/workspace-invitations";
+
+export function WorkspaceInvitationsList() {
+  return (
+    <WorkspaceInvitationsPanel
+      id="workspace-invitations"
+      heading="Pending invitations"
+      description="Invitations supplied by the application."
+      invitations={[
+        {
+          id: "invite-1",
+          recipient: "sam@example.com",
+          secondaryText: "Example recipient",
+          role: "Editor",
+          status: "Pending",
+          sentAt: "2026-09-15T09:00:00Z",
+          sentAtLabel: "15 September 2026",
+          expiresAt: "2026-09-22T09:00:00Z",
+          expiresAtLabel: "22 September 2026",
+          actions: (
+            <Button type="button" variant="outline">
+              Revoke invitation
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+The example button performs no mutation by itself. Your application owns its
+handler, confirmation flow, permission check, network request and resulting
+state refresh.
+
+## Invitation truth remains yours
+
+`id`, `heading` and `invitations` are required. Give each panel a stable unique
+HTML `id` and each invitation a stable `id` unique within that list.
+
+`recipient`, `role`, `status`, `sentAt` and `sentAtLabel` are display-ready
+consumer values. `secondaryText`, expiry values and actions are optional. The
+Block does not validate an address, map a role to permissions, derive invitation
+status, calculate expiry or decide whether an action should be shown.
+
+Supply `expiresAt` and `expiresAtLabel` together when expiry should be visible.
+Use machine-readable timestamps for the `dateTime` values and your own localized
+human labels for presentation.
+
+Top-level `actions` can expose an application-owned invitation entry point. Row
+actions can expose resend, revoke or view flows only when the current user is
+actually authorized. Omit unavailable actions rather than relying on a disabled
+button as a security boundary.
+
+## Empty, responsive and accessible states
+
+With `invitations={[]}`, the Block renders `emptyTitle` and optional
+`emptyDescription`. Loading, request failure and permission denial are distinct
+states that the consuming application should model explicitly.
+
+The section is labelled by its heading. Invitations use a semantic list, role
+and status are visible text, and sent/expiry values use semantic `<time>`
+elements. Long addresses, roles, statuses and controls wrap rather than forcing
+page-level overflow.
+
+The Block never moves focus, intercepts keys or announces status changes. Native
+controls and consumer components keep their own keyboard/focus semantics. Give
+repeated row controls distinct accessible names when their context would
+otherwise be ambiguous.
+
+## Ownership and security boundaries
+
+Your backend owns invitation creation, token generation, email delivery,
+expiration, acceptance, revocation, membership mutation, replay protection and
+permission checks. The UI is not proof that an invitation is valid or that the
+current viewer may mutate it.
+
+After copying, review future canonical changes deliberately and preserve local
+customizations. Validate long recipient text, empty results, expired/pending
+states, action permissions, narrow widths, both themes and keyboard behavior
+before production use.
+
+No email delivery, token handling, authentication, RBAC implementation,
+database/schema, backend/network behavior, Registry or CLI capability is
+introduced by this Block or guide.
