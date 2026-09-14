@@ -36,10 +36,7 @@ const props = {
 describe("AuditLogPanel", () => {
   it("renders a named region, ordered events and semantic timestamps", () => {
     render(
-      <AuditLogPanel
-        {...props}
-        description="Recent workspace activity."
-      />,
+      <AuditLogPanel {...props} description="Recent workspace activity." />,
     );
 
     const panel = screen.getByRole("region", { name: "Audit log" });
@@ -48,10 +45,9 @@ describe("AuditLogPanel", () => {
     expect(within(list).getAllByRole("listitem")).toHaveLength(2);
     expect(within(panel).getByText("Alex Morgan")).toBeVisible();
     expect(within(panel).getByText("Workspace settings")).toBeVisible();
-    expect(within(panel).getByText("September 14, 2026 at 10:00")).toHaveAttribute(
-      "datetime",
-      "2026-09-14T10:00:00.000Z",
-    );
+    expect(
+      within(panel).getByText("September 14, 2026 at 10:00"),
+    ).toHaveAttribute("datetime", "2026-09-14T10:00:00.000Z");
   });
 
   it("preserves consumer controls, callbacks and focus", () => {
@@ -62,9 +58,7 @@ describe("AuditLogPanel", () => {
       <AuditLogPanel
         {...props}
         filters={<input aria-label="Filter activity" />}
-        actions={
-          <a href="/audit/export">Export</a>
-        }
+        actions={<a href="/audit/export">Export</a>}
         events={[
           {
             ...events[0]!,
@@ -78,7 +72,9 @@ describe("AuditLogPanel", () => {
       />,
     );
 
-    expect(screen.getByRole("textbox", { name: "Filter activity" })).toBeVisible();
+    expect(
+      screen.getByRole("textbox", { name: "Filter activity" }),
+    ).toBeVisible();
     expect(screen.getByRole("link", { name: "Export" })).toHaveAttribute(
       "href",
       "/audit/export",
@@ -106,15 +102,23 @@ describe("AuditLogPanel", () => {
     expect(
       screen.getByText("Events will appear here when supplied by your app."),
     ).toBeVisible();
-    expect(container.querySelector('[data-slot="audit-log-filters"]')).toBeNull();
-    expect(container.querySelector('[data-slot="audit-log-actions"]')).toBeNull();
+    expect(
+      container.querySelector('[data-slot="audit-log-filters"]'),
+    ).toBeNull();
+    expect(
+      container.querySelector('[data-slot="audit-log-actions"]'),
+    ).toBeNull();
   });
 
   it("keeps ids unique across repeated panels", () => {
     const { container } = render(
       <>
         <AuditLogPanel {...props} />
-        <AuditLogPanel {...props} id="secondary-audit" heading="Other audit log" />
+        <AuditLogPanel
+          {...props}
+          id="secondary-audit"
+          heading="Other audit log"
+        />
       </>,
     );
 
