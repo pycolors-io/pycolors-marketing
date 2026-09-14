@@ -117,9 +117,9 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
 
 it("renders Authentication previews from canonical Blocks without service behavior", () => {
   for (const canonicalImport of [
-    '@/content/blocks/auth/sign-in',
-    '@/content/blocks/auth/sign-up',
-    '@/content/blocks/auth/password-recovery',
+    "@/content/blocks/auth/sign-in",
+    "@/content/blocks/auth/sign-up",
+    "@/content/blocks/auth/password-recovery",
   ]) {
     expect(authExamples).toContain(canonicalImport);
   }
