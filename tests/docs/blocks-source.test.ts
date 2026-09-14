@@ -12,6 +12,10 @@ const guide = readFileSync(
   resolve(marketingRoot, "content/docs/blocks/index.mdx"),
   "utf8",
 );
+const authExamples = readFileSync(
+  resolve(marketingRoot, "components/docs/blocks/auth-examples.tsx"),
+  "utf8",
+);
 
 function readIncludes(document: string) {
   const content = document
@@ -61,8 +65,19 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
     expect(start).toBeGreaterThan(-1);
     expect(end).toBeGreaterThan(start);
     const section = document.slice(start, end);
-    expect(section).toMatch(/<details>\s*<summary>[^<]+<\/summary>/u);
-    expect(section).toContain("</details>");
+
+    if (id.startsWith("auth/")) {
+      expect(section).toContain('groupId="blocks-doc-view"');
+      expect(section).toContain('items={["Preview", "Source"]}');
+      expect(section).toContain('<Tab value="Preview">');
+      expect(section).toContain("<Preview");
+      expect(section).toContain('<Tab value="Source">');
+      expect(section).toContain("</Tabs>");
+      expect(section).not.toContain("<details>");
+    } else {
+      expect(section).toMatch(/<details>\s*<summary>[^<]+<\/summary>/u);
+      expect(section).toContain("</details>");
+    }
 
     for (const { tag, attributes, path } of includes) {
       expect(section).toContain(tag);
@@ -98,6 +113,19 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
     expect(normalized).toContain("validate it in your application");
     expect(document).toContain("[Blocks catalog](/blocks)");
   });
+});
+
+it("renders Authentication previews from canonical Blocks without service behavior", () => {
+  for (const canonicalImport of [
+    '@/content/blocks/auth/sign-in',
+    '@/content/blocks/auth/sign-up',
+    '@/content/blocks/auth/password-recovery',
+  ]) {
+    expect(authExamples).toContain(canonicalImport);
+  }
+  expect(authExamples).toContain('from "@pycolors/ui"');
+  expect(authExamples).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
+  expect(authExamples).toContain("No network request is performed.");
 });
 
 it("ignores commented and illustrative includes", () => {
