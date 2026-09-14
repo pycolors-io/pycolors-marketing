@@ -38,6 +38,8 @@ describe("Blocks discovery", () => {
       "commerce/invoice-history",
       "feedback/empty-state-panel",
       "account/workspace-members",
+      "account/workspace-invitations",
+      "account/audit-log",
     ]);
     expect(new Set(identities).size).toBe(BLOCKS_CATALOG.length);
     expect(new Set(BLOCKS_CATALOG.map((block) => block.href)).size).toBe(
