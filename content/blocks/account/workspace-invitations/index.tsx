@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Badge, EmptyState, cn } from "@pycolors/ui";
 
 export interface WorkspaceInvitation {
   /** Stable identity, unique within this panel; used as the React key. */
@@ -63,10 +62,12 @@ export function WorkspaceInvitationsPanel({
       aria-labelledby={headingId}
       aria-describedby={descriptionId}
       data-slot="workspace-invitations-panel"
-      className={cn(
+      className={[
         "min-w-0 rounded-xl border border-border bg-card text-card-foreground",
         className,
-      )}
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <div className="flex min-w-0 flex-col gap-4 border-b border-border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-6">
         <div className="min-w-0 space-y-1">
@@ -119,12 +120,12 @@ export function WorkspaceInvitationsPanel({
                   <div className="min-w-0 space-y-1">
                     <dt className="text-xs text-muted-foreground">Status</dt>
                     <dd className="min-w-0">
-                      <Badge
-                        variant="outline"
-                        className="h-auto max-w-full whitespace-normal break-words"
+                      <span
+                        data-slot="workspace-invitation-status"
+                        className="inline-flex h-auto max-w-full items-center rounded-md border border-border px-2 py-0.5 text-xs font-medium whitespace-normal break-words"
                       >
                         {invitation.status}
-                      </Badge>
+                      </span>
                     </dd>
                   </div>
                   <div className="min-w-0 space-y-1">
@@ -153,12 +154,17 @@ export function WorkspaceInvitationsPanel({
           ))}
         </ul>
       ) : (
-        <EmptyState
-          title={emptyTitle}
-          description={emptyDescription}
-          ariaLive="off"
-          className="min-w-0 break-words rounded-none border-0 p-6 sm:p-8"
-        />
+        <div
+          data-slot="workspace-invitations-empty"
+          className="min-w-0 space-y-1 p-6 text-center sm:p-8"
+        >
+          <p className="break-words text-sm font-medium">{emptyTitle}</p>
+          {emptyDescription ? (
+            <p className="break-words text-sm text-muted-foreground">
+              {emptyDescription}
+            </p>
+          ) : null}
+        </div>
       )}
     </section>
   );
