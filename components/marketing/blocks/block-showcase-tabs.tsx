@@ -57,6 +57,15 @@ const mobileSimulationClassName = [
   "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
 ].join(" ");
 
+const simulatedAuditLogStyles = `
+[data-preview-layout="tablet"] [data-slot="audit-log-panel"] > div:first-child,
+[data-preview-layout="mobile"] [data-slot="audit-log-panel"] > div:first-child,
+[data-preview-layout="tablet"] [data-slot="audit-log-event"] > article,
+[data-preview-layout="mobile"] [data-slot="audit-log-event"] > article {
+  flex-direction: column !important;
+}
+`;
+
 function getSimulationClassName(viewport: Viewport) {
   if (viewport === "mobile") return mobileSimulationClassName;
   if (viewport === "tablet") return tabletSimulationClassName;
@@ -118,6 +127,7 @@ export function BlockShowcaseTabs({
 
   return (
     <div className="w-full overflow-hidden rounded-xl border border-border-subtle bg-background">
+      <style>{simulatedAuditLogStyles}</style>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-4 py-3 sm:px-6">
         <div
           aria-label="Block view"
