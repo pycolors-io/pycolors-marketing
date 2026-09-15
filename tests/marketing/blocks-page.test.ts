@@ -96,35 +96,32 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).not.toContain("requestFullscreen");
   });
 
-  it(
-    "simulates real mobile breakpoint stacking inside the 390px canvas",
-    () => {
-      expect(showcaseTabs).toContain("mobileSimulationClassName");
-      expect(showcaseTabs).toContain("data-preview-layout={viewport}");
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=pricing-plans-list]]:!grid-cols-1",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=billing-overview-panel]>dl]:!grid-cols-1",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=payment-method-panel]>dl]:!grid-cols-1",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=workspace-member]]:!flex-col",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=settings-panel-section]]:!grid-cols-1",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=responsive-sidebar-desktop]]:!hidden",
-      );
-      expect(showcaseTabs).toContain(
-        "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
-      );
-      expect(showcaseTabs).toContain('viewport === "mobile" ? "p-3"');
-    },
-  );
+  it("simulates real mobile breakpoint stacking inside the 390px canvas", () => {
+    expect(showcaseTabs).toContain("mobileSimulationClassName");
+    expect(showcaseTabs).toContain("data-preview-layout={viewport}");
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=pricing-plans-list]]:!grid-cols-1",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=billing-overview-panel]>dl]:!grid-cols-1",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=payment-method-panel]>dl]:!grid-cols-1",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=workspace-member]]:!flex-col",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=settings-panel-section]]:!grid-cols-1",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=responsive-sidebar-desktop]]:!hidden",
+    );
+    expect(showcaseTabs).toContain(
+      "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
+    );
+    expect(showcaseTabs).toContain('viewport === "mobile" ? "p-3"');
+  });
 
   it("exposes syntax-highlighted canonical source without repository path chrome", () => {
     expect(page).toContain("readBlockSource");
