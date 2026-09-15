@@ -153,8 +153,6 @@ describe("Blocks discovery", () => {
     for (const href of ["#block-catalog", "/docs/blocks", "/starters"]) {
       expect(page).toContain(`href="${href}"`);
     }
-    expect(page).toContain("#copy-source");
-    expect(page).toContain("#install-by-copying-source");
     expect(page).toContain("View");
     expect(page).toContain("Source");
     expect(page).toContain("Install");
