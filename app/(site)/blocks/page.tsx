@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 const categoryAnchorClassName =
-  "inline-flex min-h-10 items-center rounded-full border border-border-subtle bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex min-h-12 shrink-0 items-center border-b-2 border-transparent px-1 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const cardActionClassName =
   "inline-flex min-h-10 items-center justify-center gap-2 rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-border hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -80,48 +80,27 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
   const installHref = `${block.href}#install-by-copying-source`;
 
   return (
-    <article className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">
-      <div className="border-b border-border-subtle p-5 sm:p-6">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            {block.category}
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-            Canonical source
-          </span>
-        </div>
-        <h4 className="text-xl font-semibold tracking-tight">{block.title}</h4>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {block.description}
-        </p>
-      </div>
-
-      <div className="flex-1 p-4 sm:p-5">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-          Live preview
-        </p>
-        <div className="relative overflow-hidden rounded-lg border border-border-subtle bg-surface-muted/25">
-          <div
-            aria-hidden="true"
-            className="max-h-72 min-h-56 overflow-hidden p-3 sm:p-4"
-            inert
-          >
-            <BlockCatalogPreview blockId={blockId} />
+    <article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">
+      <div className="flex flex-col gap-5 border-b border-border-subtle p-5 sm:p-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              {block.category}
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+              Canonical source
+            </span>
           </div>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background/95 to-transparent"
-          />
+          <h4 className="text-xl font-semibold tracking-tight sm:text-2xl">
+            {block.title}
+          </h4>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-base">
+            {block.description}
+          </p>
         </div>
-      </div>
 
-      <div className="border-t border-border-subtle bg-surface-muted/20 p-4 sm:p-5">
-        <p className="mb-3 text-xs leading-5 text-muted-foreground">
-          Copy the complete source into your application, then own its behavior,
-          customization and future updates.
-        </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           <Link
             aria-label={`View ${block.title} documentation`}
             className={cardActionClassName}
@@ -147,6 +126,33 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
             Install
           </Link>
         </div>
+      </div>
+
+      <div className="bg-surface-muted/20 p-3 sm:p-4 lg:p-5">
+        <div className="mb-3 flex items-center justify-between gap-3 px-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+            Live preview
+          </p>
+          <p className="hidden text-xs text-muted-foreground sm:block">
+            Full-width canonical composition
+          </p>
+        </div>
+        <div className="overflow-auto rounded-lg border border-border-subtle bg-background">
+          <div
+            aria-hidden="true"
+            className="min-h-[28rem] min-w-0 p-4 sm:p-6 lg:min-h-[36rem] lg:p-8"
+            inert
+          >
+            <BlockCatalogPreview blockId={blockId} />
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-border-subtle bg-background px-5 py-4 sm:px-6">
+        <p className="text-xs leading-5 text-muted-foreground">
+          Copy the complete source into your application, then own its behavior,
+          customization and future updates.
+        </p>
       </div>
     </article>
   );
@@ -220,10 +226,10 @@ export default function BlocksPage() {
         width="full"
       >
         <Container>
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-[1440px]">
             <MarketingSectionHeader
               align="left"
-              description="Start with the product area you are building. Every card renders the canonical Block or a bounded fixture around it; the documentation remains the technical source-copy handoff."
+              description="Start with the product area you are building. Every Block gets the full canvas so you can judge the composition before opening its source."
               eyebrow="Visual catalog"
               title="Choose the interface you need next"
               titleId="blocks-catalog-title"
@@ -231,7 +237,7 @@ export default function BlocksPage() {
 
             <nav
               aria-label="Block categories"
-              className="mb-12 flex flex-wrap gap-2"
+              className="sticky top-16 z-20 -mx-4 mb-14 flex gap-6 overflow-x-auto border-y border-border-subtle bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/85 sm:mx-0 sm:border-x sm:px-5"
             >
               {BLOCK_CATEGORIES.map((category) => (
                 <Link
@@ -244,7 +250,7 @@ export default function BlocksPage() {
               ))}
             </nav>
 
-            <div className="space-y-16">
+            <div className="space-y-20 lg:space-y-24">
               {BLOCK_CATEGORIES.map((category) => {
                 const blocks = BLOCKS_CATALOG.filter(
                   (block) => block.category === category.label,
@@ -253,18 +259,18 @@ export default function BlocksPage() {
                 return (
                   <section
                     aria-labelledby={`category-${category.slug}-title`}
-                    className="scroll-mt-24"
+                    className="scroll-mt-40"
                     id={`category-${category.slug}`}
                     key={category.slug}
                   >
-                    <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border-subtle pb-4">
+                    <div className="mb-7 flex flex-wrap items-end justify-between gap-3 border-b border-border-subtle pb-4">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                           {blocks.length}{" "}
                           {blocks.length === 1 ? "Block" : "Blocks"}
                         </p>
                         <h3
-                          className="mt-1 text-2xl font-semibold tracking-tight"
+                          className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl"
                           id={`category-${category.slug}-title`}
                         >
                           {category.label}
@@ -278,7 +284,7 @@ export default function BlocksPage() {
                       </Link>
                     </div>
 
-                    <div className="grid min-w-0 gap-5 lg:grid-cols-2">
+                    <div className="grid min-w-0 gap-8">
                       {blocks.map((block) => (
                         <BlockCatalogCard block={block} key={block.id} />
                       ))}
