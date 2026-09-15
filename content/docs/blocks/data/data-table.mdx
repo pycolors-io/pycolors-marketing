@@ -25,12 +25,11 @@ import {
 ## Browse records without adopting a data-grid framework
 
 `DataTable` renders one typed record-browsing composition from consumer-owned
-columns and rows. It provides deterministic ready, loading, empty, and error
+columns and rows. It provides deterministic ready, loading, empty and error
 states, optional row actions, controlled query and sorting requests, page size,
-and page navigation. Combine them in the
-[searchable records recipe](#search-filter-sort-and-paginate) below.
+and page navigation.
 
-The Block never fetches, filters, sorts, mutates, routes, or interprets records.
+The Block never fetches, filters, sorts, mutates, routes or interprets records.
 Those decisions remain in the consuming feature or data layer.
 
 <Callout title="Source-copy Block">
@@ -52,7 +51,7 @@ Those decisions remain in the consuming feature or data layer.
 | Informational future Registry identity | `data-data-table`                                         |
 
 The Registry identity is informational only. Registry installation is not
-available, and this Block does not create a manifest, generated JSON, route, or
+available, and this Block does not create a manifest, generated JSON, route or
 delivery service.
 
 ## Copy source
@@ -60,9 +59,7 @@ delivery service.
 Configure the [public UI package and tokens](/docs/ui/installation), then create
 `src/components/blocks/data-table/index.tsx` in your application. Use the Source
 tab's copy button when available, or select the code manually when clipboard
-access is unavailable. This is the complete canonical file, not the usage
-example or a second implementation. Keep the imports and client directive when
-copying.
+access is unavailable. Keep the complete file, its imports and client directive.
 
 <Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
   <Tab value="Preview">
@@ -81,14 +78,14 @@ copying.
   </Tab>
 </Tabs>
 
-The Preview tab renders the real canonical `DataTable` through its existing
-local deterministic fixture. It performs no data fetch or network request. The
-Source tab includes the complete canonical file at build time, not a duplicated
+The Preview tab renders the real canonical `DataTable` through its deterministic
+local fixture. It performs no data fetch or network request. The Source tab
+includes the complete canonical file at build time, not a duplicated
 implementation.
 
-Your application copy does not receive automatic updates. Follow the usage
-example below, connect your own behavior, and validate it in your application.
-Return to the [Blocks catalog](/blocks) to choose another pattern.
+Your application copy does not receive automatic updates. Review later
+canonical changes deliberately and validate it in your application before
+adopting them. Return to the [Blocks catalog](/blocks) to choose another pattern.
 
 ## Install by copying source
 
@@ -111,16 +108,8 @@ type RecordRow = Readonly<{
 }>;
 
 const columns = [
-  {
-    id: "label",
-    header: "Record",
-    cell: (row) => row.label,
-  },
-  {
-    id: "state",
-    header: "State",
-    cell: (row) => row.state,
-  },
+  { id: "label", header: "Record", cell: (row) => row.label, sortable: true },
+  { id: "state", header: "State", cell: (row) => row.state, sortable: true },
 ] satisfies readonly DataTableColumn<RecordRow>[];
 
 export function RecordsTable({ rows }: { rows: readonly RecordRow[] }) {
@@ -139,240 +128,156 @@ export function RecordsTable({ rows }: { rows: readonly RecordRow[] }) {
 
 ## Consumer-owned contract
 
-```ts title="data-table-types.ts"
-type DataTableColumn<Row> = Readonly<{
-  id: string;
-  header: React.ReactNode;
-  cell: (row: Row) => React.ReactNode;
-  headerClassName?: string;
-  cellClassName?: string;
-  sortable?: boolean;
-}>;
-
-type DataTableState =
-  | Readonly<{ status?: "ready" }>
-  | Readonly<{ status: "loading"; label?: string }>
-  | Readonly<{
-      status: "error";
-      title: string;
-      description?: string;
-      action?: React.ReactNode;
-    }>;
-
-type DataTablePagination = Readonly<{
-  page: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  navigationLabel?: string;
-  previousLabel?: string;
-  nextLabel?: string;
-  summary?: React.ReactNode;
-}>;
-```
-
-The consumer owns:
-
-- the row type and current rows;
-- unique, stable row IDs through `getRowId`;
-- unique column IDs, headers, and cell rendering;
-- state and state copy;
-- row-action controls and behavior;
-- search values, filter controls, matching rules, result counts and reset;
-- sort state, sortable columns, comparison logic and sort-change callbacks;
-- page state, total page count, navigation labels, and page-change callback;
-- optional page size, allowed sizes and page-size-change callback.
-
+The consumer owns the row type, current rows, stable row IDs, unique column IDs,
+headers, cell rendering, state copy, row actions, search values, filters,
+matching rules, result counts, sort logic, pagination and page-size state.
 `DataTable` does not infer identifiers from visible text or array positions and
 does not interpret cell values.
 
-## Props
-
-| Prop               | Type                              | Default    | Purpose                                               |
-| ------------------ | --------------------------------- | ---------- | ----------------------------------------------------- |
-| `caption`          | `string`                          | required   | Concise accessible description for the table.         |
-| `columns`          | `readonly DataTableColumn<Row>[]` | required   | Consumer-defined semantic columns and cell renderers. |
-| `rows`             | `readonly Row[]`                  | required   | Already-prepared rows for the current view or page.   |
-| `getRowId`         | `(row: Row) => React.Key`         | required   | Stable consumer-owned React row identity.             |
-| `state`            | `DataTableState`                  | ready      | Explicit ready, loading, or error presentation.       |
-| `emptyTitle`       | `string`                          | required   | Consumer-owned empty-state heading.                   |
-| `emptyDescription` | `string`                          | UI default | Optional empty-state explanation.                     |
-| `emptyAction`      | `React.ReactNode`                 | none       | Consumer-owned controls below a ready, empty table.   |
-| `renderRowActions` | `(row: Row) => ReactNode`         | none       | Optional consumer-owned controls for one record.      |
-| `rowActionsLabel`  | `string`                          | `Actions`  | Header for the optional actions column.               |
-| `pagination`       | `DataTablePagination`             | none       | Optional controlled, one-based page navigation.       |
-| `pageSize`         | `DataTablePageSize`               | none       | Optional controlled rows-per-page selection.          |
-| `sorting`          | `DataTableSorting`                | none       | Optional single-column sort requests and state.       |
-| `query`            | `DataTableQuery`                  | none       | Optional search, custom filters, reset and summary.   |
-| `className`        | `string`                          | none       | Root composition customization.                       |
-
-Provide at least one meaningful column. Keep column and row IDs unique and
-stable across renders.
+The primary composition accepts `caption`, `columns`, `rows`, `getRowId`,
+`emptyTitle`, optional `emptyDescription`, `emptyAction`, `renderRowActions`,
+`rowActionsLabel`, `pagination`, `pageSize`, `sorting`, `query`, `state` and
+`className`. Provide at least one meaningful column and keep row/column IDs
+stable across rerenders.
 
 ## Search, filter, sort and paginate
 
 Pass the optional `query` controller to compose a labelled live-search input,
-your own filter controls, an optional reset button and a result summary above
-the table. Omit it to keep the existing table presentation unchanged.
+consumer-owned filters, an optional reset action and result summary above the
+table. The Block forwards raw controlled values; matching, debouncing, request
+cancellation and page reset remain consumer responsibilities.
 
 <Preview className="my-6 overflow-hidden">
   <DataTableQueryExample />
 </Preview>
 
-Try a name from another page, combine it with State, sort a column, and change
-Rows per page. Searching the full sample collection happens before sorting and
-pagination. No results keeps the query controls visible; Reset filters clears
-search and State, resets the page and returns focus to search while retaining
-the chosen sort and page size. That focus movement belongs to this demo, not
-the Block. Inspect only reports a local selection. Nothing is requested or saved.
+The demonstration searches a complete fictional collection before sorting and
+pagination. Reset changes local demo state only. Nothing is requested or saved.
+For remote records, use the server's matching total and ordering rather than
+filtering only a downloaded page.
 
-### Query API and ownership
+## Ready, loading, empty and error states
 
-The exported `DataTableQuery` type contains:
+Ready is the default. Loading replaces stale rows with the public loading
+presentation and suppresses pagination. Error presentation uses consumer-owned
+copy and recovery actions while rows and pagination stay hidden. A ready empty
+result is distinct from both loading and failure.
 
-- `search`: required `value: string`, visible `label: string` and
-  `onValueChange(value: string)`; optional `placeholder`, `disabled` and
-  `inputRef: React.Ref<HTMLInputElement>`.
-- `label`: optional accessible group name, default `Record filters`. Choose
-  meaningful names when several tables appear on the same page.
-- `filters`: optional `React.ReactNode` for application-owned controls. Native
-  labels, links, callbacks, refs and disabled states are preserved; controls
-  are not cloned or intercepted.
-- `reset`: optional visible `label`, `onReset()` callback and `disabled` flag.
-- `summary`: optional `React.ReactNode`, including a numeric zero. The Block
-  never calculates a count or adds an implicit live region.
+Pass `emptyAction` for a useful first-use or no-results next step. The action is
+rendered unchanged outside the table scroller; record creation, filter reset,
+permissions and focus after the empty state disappears remain consumer-owned.
 
-Keep visible labels non-empty; a placeholder is not a replacement for a label.
-The group has normal Tab order, not an ARIA toolbar or grid keyboard model.
-The labelled native search and reset button wrap outside the table scroller.
-Empty filter/summary slots omit their wrappers; opaque components and fragments
-remain consumer-owned.
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample />
+</Preview>
 
-`onValueChange` forwards raw text synchronously, including spaces and Unicode.
-Return that string as `search.value` immediately. Normalize only in your matching
-logic; debounce expensive requests, not the controlled input update. The Block
-never clears search, changes filters, resets a page or changes sort on its own.
-Its reset is a native `type="button"`. Non-composition Enter in live search is
-prevented from implicitly submitting an enclosing form; composition Enter and
-other keys are not intercepted. This is not a submit-to-search form.
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample filtered />
+</Preview>
 
-Query controls stay mounted in ready, empty, loading and error states so a user
-can correct a query. Disable search/reset explicitly when your workflow needs
-it and control disabled states on supplied filters yourself. Loading/error still
-suppress stale rows and page controls as before. Keep async status, recovery,
-request cancellation and stale-result handling in your data layer. Do not filter
-only a downloaded page and present it as a search of the full server dataset.
-
-### Copyable consumer recipe
-
-After copying the complete Block using the setup above, put this file beside
-`src/components/blocks/`. Pass the full local dataset as `rows`; adapt the state
-values, matching rules and locale to your product. This recipe does not fetch
-records or depend on a monorepo alias.
-
-```tsx title="src/components/searchable-records-table.tsx"
-"use client";
-
-import { useRef, useState } from "react";
-import {
-  DataTable,
-  type DataTableColumn,
-  type DataTableSort,
-} from "./blocks/data-table";
-
-type Row = Readonly<{
-  id: string;
-  label: string;
-  state: "Available" | "Paused";
-}>;
-
-const columns = [
-  {
-    id: "label",
-    header: "Record",
-    cell: (row) => row.label,
-    sortable: true,
-  },
-  {
-    id: "state",
-    header: "State",
-    cell: (row) => row.state,
-    sortable: true,
-  },
-] satisfies readonly DataTableColumn<Row>[];
-
-export function SearchableRecordsTable({ rows }: { rows: readonly Row[] }) {
-  const [search, setSearch] = useState("");
-  const [stateFilter, setStateFilter] = useState("all");
-  const [sort, setSort] = useState<DataTableSort | null>(null);
-  const [size, setSize] = useState(10);
-  const [page, setPage] = useState(1);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const term = search.trim().toLocaleLowerCase("en");
-  const matching = rows.filter(
-    (row) =>
-      row.label.toLocaleLowerCase("en").includes(term) &&
-      (stateFilter === "all" || row.state === stateFilter),
-  );
-  if (sort) {
-    matching.sort((left, right) => {
-      const leftValue = sort.columnId === "state" ? left.state : left.label;
-      const rightValue = sort.columnId === "state" ? right.state : right.label;
-      const comparison = leftValue.localeCompare(rightValue, "en");
-      return sort.direction === "asc" ? comparison : -comparison;
-    });
+```tsx title="empty-table-action.tsx"
+<DataTable
+  {...tableProps}
+  rows={filteredRows}
+  emptyTitle="No matching records"
+  emptyDescription="Clear your filters to see all available records."
+  emptyAction={
+    <button onClick={clearFilters} type="button">
+      Clear filters
+    </button>
   }
-  const totalPages = Math.max(1, Math.ceil(matching.length / size));
-  const currentPage = Math.min(page, totalPages);
-  const start = (currentPage - 1) * size;
-  const visibleRows = matching.slice(start, start + size);
+/>
+```
 
-  function resetFilters() {
-    setSearch("");
-    setStateFilter("all");
-    setPage(1);
-    inputRef.current?.focus();
-  }
+## Optional row actions
 
-  return (
-    <DataTable
-      caption="Searchable records"
-      columns={columns}
-      emptyTitle={rows.length === 0 ? "No records yet" : "No matching records"}
-      emptyDescription={
-        rows.length === 0
-          ? "Add records in your application."
-          : "Change your search or reset the filters above."
-      }
-      getRowId={(row) => row.id}
-      pageSize={{
-        value: size,
-        options: [10, 25, 50],
-        onPageSizeChange: (nextSize) => {
-          setSize(nextSize);
-          setPage(1);
-        },
-      }}
-      pagination={{ page: currentPage, totalPages, onPageChange: setPage }}
-      query={{
-        search: {
-          label: "Search records",
-          value: search,
-          inputRef,
-          onValueChange: (value) => {
-            setSearch(value);
-            setPage(1);
-          },
-        },
-        filters: (
-          <label className="flex min-w-0 flex-col gap-1 text-sm">
-            <span className="text-muted-foreground">State</span>
-            <select
-              className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              value={stateFilter}
-              onChange={(event) => {
-                setStateFilter(event.currentTarget.value);
-                setPage(1);
-              }}
-            >
-              <option value="all">All states</option>
-              <option value="Available">Available</option
+`renderRowActions` receives the current row and may return consumer-owned
+buttons, links or menus. Give every repeated control a specific accessible name.
+The Block does not provide permissions, confirmation, routing, mutation or
+destructive-action behavior and never makes the entire row interactive.
+
+## Optional controlled pagination
+
+Pagination is one-based. The Block renders valid page navigation from supplied
+`page` and `totalPages`, emits only valid page requests, and does not slice rows,
+fetch data, synchronize URLs or move focus. Those behaviors remain in the
+consumer.
+
+```tsx title="controlled-record-pages.tsx"
+<DataTable
+  {...tableProps}
+  pagination={{
+    navigationLabel: "Record pages",
+    onPageChange: setPage,
+    page,
+    summary: `Page ${page} of ${totalPages}`,
+    totalPages,
+  }}
+/>
+```
+
+## Optional controlled page size
+
+Pass `pageSize` with a selected positive safe integer, allowed options and an
+`onPageSizeChange` callback. The Block validates the presentation contract but
+does not slice rows or reset the current page for you.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTablePageSizeExample />
+</Preview>
+
+The example changes local size/page state and sorts a fresh copy before slicing.
+Nothing is requested from a server or persisted. For server pagination, keep
+approved sizes, true totals, cancellation and stale-result handling in your data
+layer.
+
+## Optional controlled sorting
+
+Mark columns `sortable: true` and pass a `sorting` controller. Header buttons
+request ascending or descending state; they do not reorder the supplied rows.
+Your application must return rows that match the displayed sort state.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableSortingExample />
+</Preview>
+
+The active sortable header receives `aria-sort`; direction glyphs are decorative.
+Tab, Enter and Space use native button behavior. Focus movement, comparator
+choice, locale, page reset and remote ordering remain consumer-owned.
+
+## Responsive and accessibility behavior
+
+- Native table semantics remain intact at every viewport size.
+- The table scrolls horizontally inside its bounded wrapper when needed.
+- Query controls remain outside the table scroller and wrap on narrow layouts.
+- Pagination and page-size controls use native, labelled controls.
+- Loading, empty and error copy remain visible without relying only on color.
+- Consumer row actions must remain keyboard operable and clearly labelled.
+- The Block does not move focus after query, page, size or sort changes.
+
+Focused semantic, interaction and representative axe tests verify these
+contracts, but they are not a complete accessibility certification. Review real
+long content, mobile widths, both themes, keyboard focus and assistive technology
+in the consuming application.
+
+## Deliberate exclusions
+
+This Block does not include row selection, bulk actions, a filtering engine,
+sorting engine, multi-column sorting, column visibility, resizing, reordering,
+virtualization, inline editing, export, saved views, data fetching, server
+pagination, caching, routing, permissions, mutations, authentication or billing.
+
+It does not depend on TanStack Table, Next.js, Starter Free, Starter Pro,
+private/deep package imports or a new runtime library. Compose product-specific
+controls through `query.filters` or outside the Block and pass prepared rows.
+
+## Ownership, updates and rollback
+
+After copying, the consumer owns the source, integration, cell content, action
+behavior, data lifecycle and future maintenance. There is no automatic update
+or synchronization path. Compare future canonical revisions deliberately and
+adopt only changes that fit the application.
+
+Rollback is removal or reversion of the copied `data-table` directory and its
+local integration. No package version, Registry state or remote Block state is
+involved.
