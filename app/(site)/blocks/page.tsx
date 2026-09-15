@@ -1,10 +1,12 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
   Boxes,
   CheckCircle2,
-  Code2,
   Copy,
   Eye,
   Layers3,
@@ -12,6 +14,7 @@ import {
 
 import { Container } from "@/components/container";
 import { BlockCatalogPreview } from "@/components/marketing/blocks/block-catalog-preview";
+import { BlockShowcaseTabs } from "@/components/marketing/blocks/block-showcase-tabs";
 import {
   MarketingActionGroup,
   MarketingCtaPanel,
@@ -28,7 +31,7 @@ import {
 
 const title = "PyColors Blocks — Copyable React application patterns";
 const description =
-  "Evaluate real PyColors Blocks by category, inspect canonical previews, open complete source and copy production-shaped React patterns into your application.";
+  "Evaluate real PyColors Blocks by category, preview canonical compositions and copy complete production-shaped React source directly into your application.";
 
 export const metadata: Metadata = {
   title,
@@ -69,15 +72,22 @@ const proofItems = [
   },
   {
     icon: Copy,
-    title: "Application-owned installation",
-    description: "Copy source locally; no Blocks Registry or CLI is required.",
+    title: "Copy source directly",
+    description: "Preview, inspect and copy without leaving the catalog.",
   },
 ] as const;
 
+function readBlockSource(block: BlockCatalogEntry) {
+  return readFileSync(
+    resolve(process.cwd(), "content", "blocks", block.id, "index.tsx"),
+    "utf8",
+  );
+}
+
 function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
   const blockId = block.id.split("/")[1];
-  const sourceHref = `${block.href}#copy-source`;
-  const installHref = `${block.href}#install-by-copying-source`;
+  const sourcePath = `content/blocks/${block.id}/index.tsx`;
+  const source = readBlockSource(block);
 
   return (
     <article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">
@@ -100,58 +110,31 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
           </p>
         </div>
 
-        <div className="flex shrink-0 flex-wrap gap-2">
-          <Link
-            aria-label={`View ${block.title} documentation`}
-            className={cardActionClassName}
-            href={block.href}
-          >
-            <Eye className="h-4 w-4" aria-hidden="true" />
-            View
-          </Link>
-          <Link
-            aria-label={`View ${block.title} source`}
-            className={cardActionClassName}
-            href={sourceHref}
-          >
-            <Code2 className="h-4 w-4" aria-hidden="true" />
-            Source
-          </Link>
-          <Link
-            aria-label={`Install ${block.title} by copying source`}
-            className={cardActionClassName}
-            href={installHref}
-          >
-            <Copy className="h-4 w-4" aria-hidden="true" />
-            Install
-          </Link>
-        </div>
+        <Link
+          aria-label={`Open ${block.title} documentation`}
+          className={cardActionClassName}
+          href={block.href}
+        >
+          Documentation
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </div>
 
-      <div className="bg-surface-muted/20 p-3 sm:p-4 lg:p-5">
-        <div className="mb-3 flex items-center justify-between gap-3 px-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            Live preview
-          </p>
-          <p className="hidden text-xs text-muted-foreground sm:block">
-            Full-width canonical composition
-          </p>
-        </div>
-        <div className="overflow-auto rounded-lg border border-border-subtle bg-background">
-          <div
-            aria-hidden="true"
-            className="min-h-[28rem] min-w-0 p-4 sm:p-6 lg:min-h-[36rem] lg:p-8"
-            inert
-          >
+      <BlockShowcaseTabs
+        preview={
+          <div aria-hidden="true" inert>
             <BlockCatalogPreview blockId={blockId} />
           </div>
-        </div>
-      </div>
+        }
+        source={source}
+        sourcePath={sourcePath}
+      />
 
       <div className="border-t border-border-subtle bg-background px-5 py-4 sm:px-6">
         <p className="text-xs leading-5 text-muted-foreground">
           Copy the complete source into your application, then own its behavior,
-          customization and future updates.
+          customization and future updates. Documentation covers integration and
+          application-owned responsibilities.
         </p>
       </div>
     </article>
@@ -173,7 +156,7 @@ export default function BlocksPage() {
                   </Link>
                 </MarketingLinkButton>
                 <MarketingLinkButton variant="outline">
-                  <Link href="/docs/blocks">Source-copy guide</Link>
+                  <Link href="/docs/blocks">Integration guide</Link>
                 </MarketingLinkButton>
               </MarketingActionGroup>
             }
@@ -183,16 +166,16 @@ export default function BlocksPage() {
                 variant: "secondary",
                 icon: <Boxes className="h-3.5 w-3.5" aria-hidden="true" />,
               },
-              { label: "Real canonical previews", variant: "outline" },
+              { label: "Preview + complete source", variant: "outline" },
             ]}
-            description="Evaluate production-shaped React patterns before you copy them. Browse real canonical compositions for navigation, authentication, commerce, account workflows, data and feedback states, then open the complete source when a pattern fits."
+            description="Evaluate production-shaped React patterns before you copy them. Preview the real composition, switch to its complete canonical source, copy it directly, then use the docs when you need integration guidance."
             maxWidth="5xl"
             pills={[
               `${BLOCKS_CATALOG.length} documented Blocks`,
-              "Server-rendered by default",
+              "Canonical source",
               "Consumer-owned behavior",
             ]}
-            subtitle="See the composition first. Inspect the source second."
+            subtitle="See the composition. Inspect the code. Copy what you need."
             title="Build SaaS interfaces faster"
           />
 
@@ -229,8 +212,8 @@ export default function BlocksPage() {
           <div className="mx-auto max-w-[1440px]">
             <MarketingSectionHeader
               align="left"
-              description="Start with the product area you are building. Every Block gets the full canvas so you can judge the composition before opening its source."
-              eyebrow="Visual catalog"
+              description="Start with the product area you are building. Every Block gets the full canvas plus its complete canonical source, so evaluation and copying happen in one place."
+              eyebrow="Visual source catalog"
               title="Choose the interface you need next"
               titleId="blocks-catalog-title"
             />
@@ -314,7 +297,7 @@ export default function BlocksPage() {
                     </Link>
                   </MarketingLinkButton>
                   <MarketingLinkButton variant="outline">
-                    <Link href="/docs/blocks">Continue with Blocks</Link>
+                    <Link href="/docs/blocks">Continue with Blocks docs</Link>
                   </MarketingLinkButton>
                 </MarketingActionGroup>
               }
