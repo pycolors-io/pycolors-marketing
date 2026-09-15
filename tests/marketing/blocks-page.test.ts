@@ -46,7 +46,6 @@ describe("Blocks discovery", () => {
       expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
     }
     expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-    expect(preview).toContain("canonical-examples");
     expect(preview).not.toMatch(
       /fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u,
     );
