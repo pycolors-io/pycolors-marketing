@@ -1,21 +1,13 @@
 import { Badge, Button, Input } from "@pycolors/ui";
 
 import { AuditLogPanel } from "@/content/blocks/account/audit-log";
-import {
-  WorkspaceInvitationsPanel,
-} from "@/content/blocks/account/workspace-invitations";
-import {
-  WorkspaceMembersPanel,
-} from "@/content/blocks/account/workspace-members";
-import {
-  ResponsiveSidebar,
-} from "@/content/blocks/app-shells/responsive-sidebar";
+import { WorkspaceInvitationsPanel } from "@/content/blocks/account/workspace-invitations";
+import { WorkspaceMembersPanel } from "@/content/blocks/account/workspace-members";
+import { ResponsiveSidebar } from "@/content/blocks/app-shells/responsive-sidebar";
 import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
 import { SignInPanel } from "@/content/blocks/auth/sign-in";
 import { SignUpPanel } from "@/content/blocks/auth/sign-up";
-import {
-  BillingOverviewPanel,
-} from "@/content/blocks/commerce/billing-overview";
+import { BillingOverviewPanel } from "@/content/blocks/commerce/billing-overview";
 import { InvoiceHistoryPanel } from "@/content/blocks/commerce/invoice-history";
 import { PaymentMethodPanel } from "@/content/blocks/commerce/payment-method";
 import { PricingPlans } from "@/content/blocks/commerce/pricing-plans";
