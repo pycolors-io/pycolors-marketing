@@ -1,16 +1,8 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Boxes,
-  CheckCircle2,
-  Copy,
-  Eye,
-  Layers3,
-} from "lucide-react";
+import { ArrowRight, Boxes, CheckCircle2, Copy, Eye, Layers3 } from "lucide-react";
 
 import { Container } from "@/components/container";
 import { BlockCatalogPreview } from "@/components/marketing/blocks/block-catalog-preview";
@@ -31,7 +23,7 @@ import {
 
 const title = "PyColors Blocks — Copyable React application patterns";
 const description =
-  "Evaluate real PyColors Blocks by category, preview canonical compositions and copy complete production-shaped React source directly into your application.";
+  "Try real PyColors Blocks by category, inspect canonical source and copy production-shaped React patterns into your application.";
 
 export const metadata: Metadata = {
   title,
@@ -54,10 +46,10 @@ export const metadata: Metadata = {
 };
 
 const categoryAnchorClassName =
-  "inline-flex min-h-12 shrink-0 items-center border-b-2 border-transparent px-1 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex min-h-10 shrink-0 items-center border-b-2 border-transparent px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const cardActionClassName =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-border hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-border hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const proofItems = [
   {
@@ -68,12 +60,12 @@ const proofItems = [
   {
     icon: Eye,
     title: `${BLOCK_CATEGORIES.length} product categories`,
-    description: "Scan by the screen or workflow you need next.",
+    description: "Try the real interaction before you copy the pattern.",
   },
   {
     icon: Copy,
     title: "Copy source directly",
-    description: "Preview, inspect and copy without leaving the catalog.",
+    description: "Preview, interact, inspect and copy without leaving the catalog.",
   },
 ] as const;
 
@@ -99,7 +91,7 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
             </span>
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
               <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-              Canonical source
+              Interactive preview · Canonical source
             </span>
           </div>
           <h4 className="text-xl font-semibold tracking-tight sm:text-2xl">
@@ -121,20 +113,16 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
       </div>
 
       <BlockShowcaseTabs
-        preview={
-          <div aria-hidden="true" inert>
-            <BlockCatalogPreview blockId={blockId} />
-          </div>
-        }
+        preview={<BlockCatalogPreview blockId={blockId} />}
         source={source}
         sourcePath={sourcePath}
       />
 
       <div className="border-t border-border-subtle bg-background px-5 py-4 sm:px-6">
         <p className="text-xs leading-5 text-muted-foreground">
-          Copy the complete source into your application, then own its behavior,
-          customization and future updates. Documentation covers integration and
-          application-owned responsibilities.
+          Preview interactions use fictional local state only. No account,
+          payment, email, persistence or network mutation occurs. Copy the
+          complete source, then connect the behavior your application owns.
         </p>
       </div>
     </article>
@@ -166,16 +154,16 @@ export default function BlocksPage() {
                 variant: "secondary",
                 icon: <Boxes className="h-3.5 w-3.5" aria-hidden="true" />,
               },
-              { label: "Preview + complete source", variant: "outline" },
+              { label: "Interactive preview + source", variant: "outline" },
             ]}
-            description="Evaluate production-shaped React patterns before you copy them. Preview the real composition, switch to its complete canonical source, copy it directly, then use the docs when you need integration guidance."
+            description="Try production-shaped React patterns before you copy them. Interact with the real composition using safe local demo state, switch to syntax-highlighted canonical source, copy it directly, then use the docs for integration guidance."
             maxWidth="5xl"
             pills={[
               `${BLOCKS_CATALOG.length} documented Blocks`,
-              "Canonical source",
+              "Interactive local demos",
               "Consumer-owned behavior",
             ]}
-            subtitle="See the composition. Inspect the code. Copy what you need."
+            subtitle="Try the composition. Inspect the code. Copy what you need."
             title="Build SaaS interfaces faster"
           />
 
@@ -212,28 +200,30 @@ export default function BlocksPage() {
           <div className="mx-auto max-w-[1440px]">
             <MarketingSectionHeader
               align="left"
-              description="Start with the product area you are building. Every Block gets the full canvas plus its complete canonical source, so evaluation and copying happen in one place."
-              eyebrow="Visual source catalog"
+              description="Start with the product area you are building. Every Preview is a safe interactive composition backed by the canonical Block; Code exposes the complete source without turning this page into a second documentation site."
+              eyebrow="Interactive catalog"
               title="Choose the interface you need next"
               titleId="blocks-catalog-title"
             />
 
-            <nav
-              aria-label="Block categories"
-              className="sticky top-16 z-20 -mx-4 mb-14 flex gap-6 overflow-x-auto border-y border-border-subtle bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/85 sm:mx-0 sm:border-x sm:px-5"
-            >
-              {BLOCK_CATEGORIES.map((category) => (
-                <Link
-                  className={categoryAnchorClassName}
-                  href={`#category-${category.slug}`}
-                  key={category.slug}
-                >
-                  {category.label}
-                </Link>
-              ))}
-            </nav>
+            <div className="sticky top-0 z-20 mb-12 border-y border-border-subtle bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+              <nav
+                aria-label="Block categories"
+                className="flex min-w-0 overflow-x-auto"
+              >
+                {BLOCK_CATEGORIES.map((category) => (
+                  <Link
+                    className={categoryAnchorClassName}
+                    href={`#category-${category.slug}`}
+                    key={category.slug}
+                  >
+                    {category.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
-            <div className="space-y-20 lg:space-y-24">
+            <div className="space-y-20">
               {BLOCK_CATEGORIES.map((category) => {
                 const blocks = BLOCKS_CATALOG.filter(
                   (block) => block.category === category.label,
@@ -242,18 +232,18 @@ export default function BlocksPage() {
                 return (
                   <section
                     aria-labelledby={`category-${category.slug}-title`}
-                    className="scroll-mt-40"
+                    className="scroll-mt-24"
                     id={`category-${category.slug}`}
                     key={category.slug}
                   >
-                    <div className="mb-7 flex flex-wrap items-end justify-between gap-3 border-b border-border-subtle pb-4">
+                    <div className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-border-subtle pb-4">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                           {blocks.length}{" "}
                           {blocks.length === 1 ? "Block" : "Blocks"}
                         </p>
                         <h3
-                          className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl"
+                          className="mt-1 text-2xl font-semibold tracking-tight"
                           id={`category-${category.slug}-title`}
                         >
                           {category.label}
@@ -267,7 +257,7 @@ export default function BlocksPage() {
                       </Link>
                     </div>
 
-                    <div className="grid min-w-0 gap-8">
+                    <div className="space-y-10">
                       {blocks.map((block) => (
                         <BlockCatalogCard block={block} key={block.id} />
                       ))}
@@ -297,7 +287,7 @@ export default function BlocksPage() {
                     </Link>
                   </MarketingLinkButton>
                   <MarketingLinkButton variant="outline">
-                    <Link href="/docs/blocks">Continue with Blocks docs</Link>
+                    <Link href="/docs/blocks">Continue with Blocks</Link>
                   </MarketingLinkButton>
                 </MarketingActionGroup>
               }
