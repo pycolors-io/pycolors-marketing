@@ -52,7 +52,7 @@ describe("Blocks discovery", () => {
     expect(page).toContain('aria-label="Block categories"');
   });
 
-  it("exposes canonical source directly beside every preview", () => {
+  it("exposes syntax-highlighted canonical source beside every preview", () => {
     expect(page).toContain("readBlockSource");
     expect(page).toContain('"content", "blocks", block.id, "index.tsx"');
     expect(page).toContain("BlockShowcaseTabs");
@@ -64,6 +64,10 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain("Code");
     expect(showcaseTabs).toContain("Copy code");
     expect(showcaseTabs).toContain("navigator.clipboard.writeText(source)");
+    expect(showcaseTabs).toContain("DynamicCodeBlock");
+    expect(showcaseTabs).toContain('lang="tsx"');
+    expect(showcaseTabs).toContain('light: "github-light"');
+    expect(showcaseTabs).toContain('dark: "github-dark"');
   });
 
   it("preserves public navigation and discovery routes", () => {
