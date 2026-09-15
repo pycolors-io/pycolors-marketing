@@ -62,8 +62,7 @@ const proofItems = [
   {
     icon: Layers3,
     title: `${BLOCKS_CATALOG.length} source-backed Blocks`,
-    description:
-      "Every preview maps to canonical copyable source.",
+    description: "Every preview maps to canonical copyable source.",
   },
   {
     icon: Eye,
