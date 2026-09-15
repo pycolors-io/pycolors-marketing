@@ -87,55 +87,43 @@ describe("Blocks discovery", () => {
     }
 
     expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-    expect(preview).toContain(
-      "@/components/docs/blocks/canonical-examples",
-    );
+    expect(preview).toContain("@/components/docs/blocks/canonical-examples");
     expect(preview).not.toMatch(/fumadocs|\.mdx/u);
     expect(preview).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
   });
 
-  it(
-    "keeps the catalog server-rendered with only bounded client fixtures",
-    () => {
-      expect(page).not.toMatch(/["']use client["']/u);
-      expect(page).not.toMatch(
-        /\b(?:useEffect|useState|fetch|localStorage)\b/u,
-      );
-      expect(preview).not.toMatch(/["']use client["']/u);
-      expect(clientPreviews).toMatch(/^"use client";/u);
-      expect(clientPreviews).toContain("CatalogDataTablePreview");
-      expect(clientPreviews).toContain("CatalogSettingsPanelPreview");
-      expect(clientPreviews).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
-    },
-  );
+  it("keeps the catalog server-rendered with only bounded client fixtures", () => {
+    expect(page).not.toMatch(/["']use client["']/u);
+    expect(page).not.toMatch(/\b(?:useEffect|useState|fetch|localStorage)\b/u);
+    expect(preview).not.toMatch(/["']use client["']/u);
+    expect(clientPreviews).toMatch(/^"use client";/u);
+    expect(clientPreviews).toContain("CatalogDataTablePreview");
+    expect(clientPreviews).toContain("CatalogSettingsPanelPreview");
+    expect(clientPreviews).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
+  });
 
-  it(
-    "uses shared Marketing components, category navigation and catalog data",
-    () => {
-      expect(page).toContain("BLOCK_CATEGORIES.map");
-      expect(page).toContain("BLOCKS_CATALOG.filter");
-      expect(page).toContain("BLOCKS_CATALOG.length");
-      expect(page).toContain("BlockCatalogPreview");
-      expect(page).toContain('aria-label="Block categories"');
-      expect(page).toContain("Build SaaS interfaces faster");
-      expect(page).toContain("Live preview");
-      for (const component of [
-        "Container",
-        "PageHero",
-        "MarketingSectionHeader",
-        "MarketingSectionShell",
-        "MarketingCtaPanel",
-        "MarketingActionGroup",
-      ]) {
-        expect(page).toContain(`<${component}`);
-      }
-      expect(page).not.toMatch(/from ["'][^"']*content\/blocks\//u);
-      expect(page).not.toMatch(/from ["']@pycolors\/ui\//u);
-      expect(page).not.toMatch(
-        /registryDependencies|registry:|registry\.json/u,
-      );
-    },
-  );
+  it("uses shared Marketing components, category navigation and catalog data", () => {
+    expect(page).toContain("BLOCK_CATEGORIES.map");
+    expect(page).toContain("BLOCKS_CATALOG.filter");
+    expect(page).toContain("BLOCKS_CATALOG.length");
+    expect(page).toContain("BlockCatalogPreview");
+    expect(page).toContain('aria-label="Block categories"');
+    expect(page).toContain("Build SaaS interfaces faster");
+    expect(page).toContain("Live preview");
+    for (const component of [
+      "Container",
+      "PageHero",
+      "MarketingSectionHeader",
+      "MarketingSectionShell",
+      "MarketingCtaPanel",
+      "MarketingActionGroup",
+    ]) {
+      expect(page).toContain(`<${component}`);
+    }
+    expect(page).not.toMatch(/from ["'][^"']*content\/blocks\//u);
+    expect(page).not.toMatch(/from ["']@pycolors\/ui\//u);
+    expect(page).not.toMatch(/registryDependencies|registry:|registry\.json/u);
+  });
 
   it("provides server-rendered metadata and existing social images", () => {
     expect(page).toMatch(/alternates:\s*\{\s*canonical:\s*"\/blocks"/u);
@@ -160,26 +148,23 @@ describe("Blocks discovery", () => {
     expect(page).toContain("inert");
   });
 
-  it(
-    "exposes distinct View, Source and Install actions without a fake installer",
-    () => {
-      for (const href of ["#block-catalog", "/docs/blocks", "/starters"]) {
-        expect(page).toContain(`href="${href}"`);
-      }
-      expect(page).toContain('const sourceHref = `${block.href}#copy-source`');
-      expect(page).toContain(
-        'const installHref = `${block.href}#install-by-copying-source`',
-      );
-      expect(page).toContain("View");
-      expect(page).toContain("Source");
-      expect(page).toContain("Install");
-      expect(page).toContain("Copy the complete source into your application");
-      expect(page).toContain("no Blocks Registry or CLI is required");
-      expect(page).not.toMatch(
-        /BuyStarterProButton|checkout|\/api\/|https:\/\/github/u,
-      );
-    },
-  );
+  it("exposes distinct View, Source and Install actions without a fake installer", () => {
+    for (const href of ["#block-catalog", "/docs/blocks", "/starters"]) {
+      expect(page).toContain(`href="${href}"`);
+    }
+    expect(page).toContain("const sourceHref = `${block.href}#copy-source`");
+    expect(page).toContain(
+      "const installHref = `${block.href}#install-by-copying-source`",
+    );
+    expect(page).toContain("View");
+    expect(page).toContain("Source");
+    expect(page).toContain("Install");
+    expect(page).toContain("Copy the complete source into your application");
+    expect(page).toContain("no Blocks Registry or CLI is required");
+    expect(page).not.toMatch(
+      /BuyStarterProButton|checkout|\/api\/|https:\/\/github/u,
+    );
+  });
 
   it("adds Blocks to shared desktop and mobile navigation", () => {
     const menu = read("lib/layout.shared.tsx");
