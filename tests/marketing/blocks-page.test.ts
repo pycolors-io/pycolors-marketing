@@ -11,6 +11,9 @@ const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (path: string) =>
   readFileSync(resolve(marketingRoot, path), "utf8");
 const page = read("app/(site)/blocks/page.tsx");
+const showcaseTabs = read(
+  "components/marketing/blocks/block-showcase-tabs.tsx",
+);
 
 describe("Blocks discovery", () => {
   it("keeps the canonical catalog and ordered categories", () => {
@@ -47,6 +50,20 @@ describe("Blocks discovery", () => {
     expect(page).toContain("BLOCKS_CATALOG.filter");
     expect(page).toContain("BlockCatalogPreview");
     expect(page).toContain('aria-label="Block categories"');
+  });
+
+  it("exposes canonical source directly beside every preview", () => {
+    expect(page).toContain("readBlockSource");
+    expect(page).toContain('"content", "blocks", block.id, "index.tsx"');
+    expect(page).toContain("BlockShowcaseTabs");
+    expect(page).toContain("source={source}");
+    expect(showcaseTabs).toContain('role="tablist"');
+    expect(showcaseTabs).toContain('role="tab"');
+    expect(showcaseTabs).toContain('role="tabpanel"');
+    expect(showcaseTabs).toContain("Preview");
+    expect(showcaseTabs).toContain("Code");
+    expect(showcaseTabs).toContain("Copy code");
+    expect(showcaseTabs).toContain("navigator.clipboard.writeText(source)");
   });
 
   it("preserves public navigation and discovery routes", () => {
