@@ -1,7 +1,7 @@
 "use client";
 
 import { Maximize2, Minimize2, RotateCcw } from "lucide-react";
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const iconButtonClassName =
   "inline-flex size-9 items-center justify-center rounded-md border border-border-subtle bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -17,34 +17,34 @@ export function BlockStandalonePreview({
   const [previewKey, setPreviewKey] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
 
+  useEffect(() => {
+    function syncFullscreenState() {
+      setFullscreen(document.fullscreenElement === surfaceRef.current);
+    }
+
+    document.addEventListener("fullscreenchange", syncFullscreenState);
+    return () =>
+      document.removeEventListener("fullscreenchange", syncFullscreenState);
+  }, []);
+
   async function toggleFullscreen() {
     if (!document.fullscreenEnabled || !surfaceRef.current) return;
 
     if (document.fullscreenElement) {
       await document.exitFullscreen();
-      setFullscreen(false);
       return;
     }
 
     await surfaceRef.current.requestFullscreen();
-    setFullscreen(true);
   }
 
   return (
-    <div
-      className="min-h-dvh bg-background p-3 sm:p-5"
-      onFullscreenChange={() =>
-        setFullscreen(Boolean(document.fullscreenElement))
-      }
-      ref={surfaceRef}
-    >
+    <div className="min-h-dvh bg-background p-3 sm:p-5" ref={surfaceRef}>
       <div className="mx-auto flex min-h-[calc(100dvh-1.5rem)] max-w-[1440px] flex-col overflow-hidden rounded-xl border border-border-subtle bg-background sm:min-h-[calc(100dvh-2.5rem)]">
         <header className="flex min-h-14 items-center justify-between gap-4 border-b border-border-subtle px-4 sm:px-6">
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold">{title}</p>
-            <p className="text-xs text-muted-foreground">
-              Interactive preview
-            </p>
+            <p className="text-xs text-muted-foreground">Interactive preview</p>
           </div>
           <div
             aria-label="Preview actions"
