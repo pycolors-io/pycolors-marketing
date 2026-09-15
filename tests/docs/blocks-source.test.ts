@@ -16,6 +16,10 @@ const authExamples = readFileSync(
   resolve(marketingRoot, "components/docs/blocks/auth-examples.tsx"),
   "utf8",
 );
+const canonicalExamples = readFileSync(
+  resolve(marketingRoot, "components/docs/blocks/canonical-examples.tsx"),
+  "utf8",
+);
 
 function readIncludes(document: string) {
   const content = document
@@ -59,25 +63,20 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
     expect(new Set(includedFiles).size).toBe(includedFiles.length);
   });
 
-  it("labels full source with its application-owned destination", () => {
+  it("standardizes Preview and Source around the complete canonical source", () => {
     const start = document.indexOf("## Copy source");
     const end = document.indexOf("## Install by copying source");
     expect(start).toBeGreaterThan(-1);
     expect(end).toBeGreaterThan(start);
     const section = document.slice(start, end);
 
-    if (id.startsWith("auth/")) {
-      expect(section).toContain('groupId="blocks-doc-view"');
-      expect(section).toContain('items={["Preview", "Source"]}');
-      expect(section).toContain('<Tab value="Preview">');
-      expect(section).toContain("<Preview");
-      expect(section).toContain('<Tab value="Source">');
-      expect(section).toContain("</Tabs>");
-      expect(section).not.toContain("<details>");
-    } else {
-      expect(section).toMatch(/<details>\s*<summary>[^<]+<\/summary>/u);
-      expect(section).toContain("</details>");
-    }
+    expect(section).toContain('groupId="blocks-doc-view"');
+    expect(section).toContain('items={["Preview", "Source"]}');
+    expect(section).toContain('<Tab value="Preview">');
+    expect(section).toContain("<Preview");
+    expect(section).toContain('<Tab value="Source">');
+    expect(section).toContain("</Tabs>");
+    expect(section).not.toContain("<details>");
 
     for (const { tag, attributes, path } of includes) {
       expect(section).toContain(tag);
@@ -126,6 +125,21 @@ it("renders Authentication previews from canonical Blocks without service behavi
   expect(authExamples).not.toContain('from "@pycolors/ui"');
   expect(authExamples).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
   expect(authExamples).toContain("No network request is performed.");
+});
+
+it("renders missing canonical previews without service behavior", () => {
+  for (const canonicalImport of [
+    "@/content/blocks/app-shells/responsive-sidebar",
+    "@/content/blocks/account/audit-log",
+    "@/content/blocks/account/workspace-invitations",
+    "@/content/blocks/commerce/billing-overview",
+    "@/content/blocks/commerce/invoice-history",
+    "@/content/blocks/commerce/payment-method",
+  ]) {
+    expect(canonicalExamples).toContain(canonicalImport);
+  }
+  expect(canonicalExamples).not.toContain('from "@pycolors/ui"');
+  expect(canonicalExamples).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
 });
 
 it("ignores commented and illustrative includes", () => {
