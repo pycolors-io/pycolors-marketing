@@ -14,9 +14,7 @@ const page = read("app/(site)/blocks/page.tsx");
 const catalogPreview = read(
   "components/marketing/blocks/block-catalog-preview.tsx",
 );
-const canonicalExamples = read(
-  "components/docs/blocks/canonical-examples.tsx",
-);
+const canonicalExamples = read("components/docs/blocks/canonical-examples.tsx");
 const showcaseTabs = read(
   "components/marketing/blocks/block-showcase-tabs.tsx",
 );
@@ -76,7 +74,7 @@ describe("Blocks discovery", () => {
     expect(canonicalExamples).toMatch(/^"use client";/u);
     expect(canonicalExamples).toContain("React.useState");
     expect(canonicalExamples).toContain("onClick");
-    expect(canonicalExamples).toContain('aria-pressed={selected}');
+    expect(canonicalExamples).toContain("aria-pressed={selected}");
   });
 
   it("adds accessible Desktop, Tablet, Mobile and Reset preview controls", () => {
