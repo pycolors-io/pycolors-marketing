@@ -95,7 +95,9 @@ describe("Blocks discovery", () => {
     "keeps the catalog server-rendered with only bounded client fixtures",
     () => {
       expect(page).not.toMatch(/["']use client["']/u);
-      expect(page).not.toMatch(/\b(?:useEffect|useState|fetch|localStorage)\b/u);
+      expect(page).not.toMatch(
+        /\b(?:useEffect|useState|fetch|localStorage)\b/u,
+      );
       expect(preview).not.toMatch(/["']use client["']/u);
       expect(clientPreviews).toMatch(/^"use client";/u);
       expect(clientPreviews).toContain("CatalogDataTablePreview");
@@ -126,7 +128,9 @@ describe("Blocks discovery", () => {
       }
       expect(page).not.toMatch(/from ["'][^"']*content\/blocks\//u);
       expect(page).not.toMatch(/from ["']@pycolors\/ui\//u);
-      expect(page).not.toMatch(/registryDependencies|registry:|registry\.json/u);
+      expect(page).not.toMatch(
+        /registryDependencies|registry:|registry\.json/u,
+      );
     },
   );
 
