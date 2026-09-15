@@ -8,7 +8,8 @@ import { describe, expect, it } from "vitest";
 import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
 
 const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const read = (path: string) => readFileSync(resolve(marketingRoot, path), "utf8");
+const read = (path: string) =>
+  readFileSync(resolve(marketingRoot, path), "utf8");
 const page = read("app/(site)/blocks/page.tsx");
 const preview = read("components/marketing/blocks/block-catalog-preview.tsx");
 
@@ -27,19 +28,30 @@ describe("Blocks discovery", () => {
 
     for (const block of BLOCKS_CATALOG) {
       expect(block.href).toBe(`/docs/blocks/${block.id}`);
-      expect(existsSync(resolve(marketingRoot, `content/blocks/${block.id}/index.tsx`))).toBe(true);
-      expect(existsSync(resolve(marketingRoot, `content/docs/blocks/${block.id}.mdx`))).toBe(true);
+      expect(
+        existsSync(
+          resolve(marketingRoot, `content/blocks/${block.id}/index.tsx`),
+        ),
+      ).toBe(true);
+      expect(
+        existsSync(resolve(marketingRoot, `content/docs/blocks/${block.id}.mdx`)),
+      ).toBe(true);
     }
   });
 
-  it("renders every catalogued Block through the source-backed preview registry", () => {
-    for (const block of BLOCKS_CATALOG) {
-      expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
-    }
-    expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-    expect(preview).toContain("canonical-examples");
-    expect(preview).not.toMatch(/fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u);
-  });
+  it(
+    "renders every catalogued Block through the source-backed preview registry",
+    () => {
+      for (const block of BLOCKS_CATALOG) {
+        expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
+      }
+      expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
+      expect(preview).toContain("canonical-examples");
+      expect(preview).not.toMatch(
+        /fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u,
+      );
+    },
+  );
 
   it("keeps the visual catalog server-rendered and category-driven", () => {
     expect(page).not.toMatch(/["']use client["']/u);
@@ -60,8 +72,12 @@ describe("Blocks discovery", () => {
     expect(page).toContain('id="block-catalog"');
     expect(page).toContain('href="/docs/blocks"');
     expect(page).toContain('href="/starters"');
-    expect(read("lib/layout.shared.tsx")).toMatch(/label:\s*"Blocks",\s*href:\s*"\/blocks"/u);
+    expect(read("lib/layout.shared.tsx")).toMatch(
+      /label:\s*"Blocks",\s*href:\s*"\/blocks"/u,
+    );
     expect(read("app/sitemap.ts")).toContain('"/blocks"');
-    expect(read("content/docs/blocks/index.mdx")).toContain("[Explore the Blocks catalog](/blocks)");
+    expect(read("content/docs/blocks/index.mdx")).toContain(
+      "[Explore the Blocks catalog](/blocks)",
+    );
   });
 });
