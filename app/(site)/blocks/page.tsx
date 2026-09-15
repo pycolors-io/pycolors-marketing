@@ -113,6 +113,7 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
 
       <BlockShowcaseTabs
         preview={<BlockCatalogPreview blockId={blockId} />}
+        previewHref={`/blocks/${block.id}/preview`}
         source={source}
       />
 
