@@ -1,10 +1,7 @@
-import { Button, Input } from "@pycolors/ui";
-
 import { WorkspaceMembersPanel } from "@/content/blocks/account/workspace-members";
 import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
 import { SignInPanel } from "@/content/blocks/auth/sign-in";
 import { SignUpPanel } from "@/content/blocks/auth/sign-up";
-import { PricingPlans } from "@/content/blocks/commerce/pricing-plans";
 import { EmptyStatePanel } from "@/content/blocks/feedback/empty-state-panel";
 import {
   AuditLogExample,
@@ -14,6 +11,7 @@ import {
   ResponsiveSidebarExample,
   WorkspaceInvitationsExample,
 } from "@/components/docs/blocks/canonical-examples";
+import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
 import {
   CatalogDataTablePreview,
   CatalogSettingsPanelPreview,
@@ -22,11 +20,12 @@ import {
 function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
   return (
     <div className="space-y-3">
-      <Input disabled label="Email" placeholder="you@example.com" type="email" />
-      <Input disabled label="Password" placeholder="••••••••" type="password" />
-      <Button className="w-full" disabled type="button">
+      <div className="rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
+        you@example.com
+      </div>
+      <div className="rounded-md border border-border bg-muted px-3 py-2 text-center text-sm font-medium text-muted-foreground">
         {submitLabel}
-      </Button>
+      </div>
     </div>
   );
 }
@@ -34,17 +33,17 @@ function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
 function RecoveryFormPreview() {
   return (
     <div className="space-y-3">
-      <Input disabled label="Email" placeholder="you@example.com" type="email" />
-      <Button className="w-full" disabled type="button">
+      <div className="rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
+        you@example.com
+      </div>
+      <div className="rounded-md border border-border bg-muted px-3 py-2 text-center text-sm font-medium text-muted-foreground">
         Send recovery link
-      </Button>
+      </div>
     </div>
   );
 }
 
-export function BlockCatalogPreview({
-  blockId,
-}: Readonly<{ blockId: string }>) {
+export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) {
   switch (blockId) {
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
@@ -80,48 +79,7 @@ export function BlockCatalogPreview({
       );
 
     case "pricing-plans":
-      return (
-        <PricingPlans
-          className="max-w-none"
-          description="Consumer-owned plan copy and actions."
-          plans={[
-            {
-              id: "starter",
-              name: "Starter",
-              description: "For a focused SaaS launch.",
-              price: "€29",
-              priceSuffix: "/mo",
-              features: [
-                { id: "projects", label: "3 projects" },
-                { id: "support", label: "Email support" },
-              ],
-              action: (
-                <Button disabled size="sm" type="button">
-                  Choose Starter
-                </Button>
-              ),
-            },
-            {
-              id: "scale",
-              name: "Scale",
-              description: "For growing product teams.",
-              price: "€79",
-              priceSuffix: "/mo",
-              highlight: "Popular",
-              features: [
-                { id: "projects", label: "Unlimited projects" },
-                { id: "support", label: "Priority support" },
-              ],
-              action: (
-                <Button disabled size="sm" type="button" variant="outline">
-                  Choose Scale
-                </Button>
-              ),
-            },
-          ]}
-          title="Plans"
-        />
-      );
+      return <PricingPlansExample />;
 
     case "billing-overview":
       return <BillingOverviewExample />;
