@@ -22,10 +22,16 @@ const viewports = [
 const iconButtonClassName =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground";
 
-// The viewport picker changes a component-sized canvas while the browser itself
-// can still be desktop-sized. These overrides mirror the canonical Blocks'
-// mobile breakpoint behavior so a 390px catalog preview stacks exactly as it
-// would when the Block is rendered in a real mobile viewport.
+// The picker resizes a component canvas, not the browser viewport. These
+// bounded overrides mirror the canonical Blocks' media-query results at the
+// simulated width so desktop browser breakpoints cannot leak into the preview.
+const tabletSimulationClassName = [
+  "[&_[data-slot=pricing-plans-list]]:!grid-cols-2",
+  "[&_[data-slot=workspace-invitation]]:!flex-col",
+  "[&_[data-slot=audit-log-panel]>div:first-child]:!flex-col",
+  "[&_[data-slot=audit-log-event]>article]:!flex-col",
+].join(" ");
+
 const mobileSimulationClassName = [
   "[&_[data-slot=pricing-plans-list]]:!grid-cols-1",
   "[&_[data-slot=billing-overview-panel]>dl]:!grid-cols-1",
@@ -51,6 +57,12 @@ const mobileSimulationClassName = [
   "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
 ].join(" ");
 
+function getSimulationClassName(viewport: Viewport) {
+  if (viewport === "mobile") return mobileSimulationClassName;
+  if (viewport === "tablet") return tabletSimulationClassName;
+  return "";
+}
+
 export function BlockShowcaseTabs({
   preview,
   source,
@@ -71,6 +83,7 @@ export function BlockShowcaseTabs({
       : viewport === "tablet"
         ? "p-5"
         : "p-4 sm:p-6 lg:p-8";
+  const simulationClassName = getSimulationClassName(viewport);
 
   async function copySource() {
     await navigator.clipboard.writeText(source);
@@ -195,9 +208,7 @@ export function BlockShowcaseTabs({
             style={{ width: viewportWidth }}
           >
             <div
-              className={`${previewPaddingClassName} ${
-                viewport === "mobile" ? mobileSimulationClassName : ""
-              }`}
+              className={`${previewPaddingClassName} ${simulationClassName}`}
               data-preview-layout={viewport}
             >
               {preview}
