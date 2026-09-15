@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import { ResponsiveSidebar } from "@/content/blocks/app-shells/responsive-sidebar";
@@ -8,14 +10,37 @@ import { InvoiceHistoryPanel } from "@/content/blocks/commerce/invoice-history";
 import { PaymentMethodPanel } from "@/content/blocks/commerce/payment-method";
 
 const actionClassName =
-  "inline-flex min-h-9 items-center justify-center rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-foreground shadow-xs";
+  "inline-flex min-h-9 items-center justify-center rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 const primaryActionClassName =
-  "inline-flex min-h-9 items-center justify-center rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-xs";
+  "inline-flex min-h-9 items-center justify-center rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 const statusClassName =
   "inline-flex items-center rounded-md border border-border px-2 py-1 text-xs font-medium text-foreground";
 
 function usePreviewId(prefix: string) {
   return `${prefix}-${React.useId().replaceAll(":", "")}`;
+}
+
+function DemoAction({
+  label,
+  selectedLabel = "Selected locally",
+  primary = false,
+}: Readonly<{
+  label: string;
+  selectedLabel?: string;
+  primary?: boolean;
+}>) {
+  const [selected, setSelected] = React.useState(false);
+
+  return (
+    <button
+      aria-pressed={selected}
+      className={primary ? primaryActionClassName : actionClassName}
+      onClick={() => setSelected((value) => !value)}
+      type="button"
+    >
+      {selected ? selectedLabel : label}
+    </button>
+  );
 }
 
 export function ResponsiveSidebarExample() {
@@ -29,9 +54,11 @@ export function ResponsiveSidebarExample() {
         className="min-h-[30rem] [&_[data-slot=responsive-sidebar-desktop]]:h-[30rem]"
         contentId={contentId}
         headerActions={
-          <button className={actionClassName} type="button">
-            New project
-          </button>
+          <DemoAction
+            label="New project"
+            primary
+            selectedLabel="Project action selected"
+          />
         }
         headerTitle={<strong>Overview</strong>}
         items={[
@@ -60,7 +87,9 @@ export function ResponsiveSidebarExample() {
             </div>
             <div className="rounded-lg border border-border bg-card p-4">
               <p className="text-sm font-medium">Environment</p>
-              <p className="mt-1 text-sm text-muted-foreground">Preview only</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Interactive local preview
+              </p>
             </div>
           </div>
         </div>
@@ -75,22 +104,22 @@ export function BillingOverviewExample() {
       <BillingOverviewPanel
         billingLabel="Billing"
         billingValue="Monthly"
-        description="Fictional values supplied by the documentation consumer."
+        description="Fictional values supplied by the preview consumer."
         paymentLabel="Payment method"
         paymentValue="Visa ending in 4242"
         planLabel="Plan"
         planValue="Growth example"
         primaryAction={
-          <button className={primaryActionClassName} type="button">
-            Manage billing
-          </button>
+          <DemoAction
+            label="Manage billing"
+            primary
+            selectedLabel="Billing action selected"
+          />
         }
         renewalLabel="Renews"
         renewalValue="October 15"
         secondaryAction={
-          <button className={actionClassName} type="button">
-            View plans
-          </button>
+          <DemoAction label="View plans" selectedLabel="Plans selected" />
         }
         statusLabel="Status"
         statusValue="Active"
@@ -112,9 +141,11 @@ export function PaymentMethodExample() {
         methodLabel="Method"
         methodValue="Visa ending in 4242"
         primaryAction={
-          <button className={primaryActionClassName} type="button">
-            Update payment method
-          </button>
+          <DemoAction
+            label="Update payment method"
+            primary
+            selectedLabel="Update selected locally"
+          />
         }
         status={<span className={statusClassName}>Default</span>}
         title="Payment method"
@@ -127,7 +158,7 @@ export function InvoiceHistoryExample() {
   return (
     <div className="not-prose">
       <InvoiceHistoryPanel
-        description="Fictional records supplied by the documentation consumer."
+        description="Fictional records supplied by the preview consumer."
         invoices={[
           {
             id: "invoice-example-1",
@@ -135,9 +166,10 @@ export function InvoiceHistoryExample() {
             amount: "$49.00",
             status: <span className={statusClassName}>Paid</span>,
             action: (
-              <button className={actionClassName} type="button">
-                View invoice
-              </button>
+              <DemoAction
+                label="View invoice"
+                selectedLabel="Invoice selected"
+              />
             ),
           },
           {
@@ -160,11 +192,12 @@ export function AuditLogExample() {
     <div className="not-prose">
       <AuditLogPanel
         actions={
-          <button className={actionClassName} type="button">
-            Export view
-          </button>
+          <DemoAction
+            label="Export view"
+            selectedLabel="Export selected locally"
+          />
         }
-        description="Fictional workspace events supplied by the documentation consumer."
+        description="Fictional workspace events supplied by the preview consumer."
         events={[
           {
             id: "event-1",
@@ -198,11 +231,13 @@ export function WorkspaceInvitationsExample() {
     <div className="not-prose">
       <WorkspaceInvitationsPanel
         actions={
-          <button className={primaryActionClassName} type="button">
-            Invite member
-          </button>
+          <DemoAction
+            label="Invite member"
+            primary
+            selectedLabel="Invite action selected"
+          />
         }
-        description="Fictional invitations supplied by the documentation consumer."
+        description="Fictional invitations supplied by the preview consumer."
         heading="Pending invitations"
         id={id}
         invitations={[
@@ -217,9 +252,10 @@ export function WorkspaceInvitationsExample() {
             expiresAt: "2026-09-22T09:00:00Z",
             expiresAtLabel: "22 September 2026",
             actions: (
-              <button className={actionClassName} type="button">
-                Revoke invitation
-              </button>
+              <DemoAction
+                label="Revoke invitation"
+                selectedLabel="Revoke selected locally"
+              />
             ),
           },
         ]}
