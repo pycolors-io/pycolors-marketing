@@ -87,7 +87,9 @@ describe("Blocks discovery", () => {
     }
 
     expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-    expect(preview).toContain("@/components/docs/blocks/canonical-examples");
+    expect(preview).toContain(
+      "@/components/docs/blocks/canonical-examples",
+    );
     expect(preview).not.toMatch(/fumadocs|\.mdx/u);
     expect(preview).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
   });
