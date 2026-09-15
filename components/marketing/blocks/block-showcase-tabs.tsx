@@ -1,9 +1,10 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
-import { Check, Copy } from "lucide-react";
+import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
+type View = "preview" | "source";
+
+const views: readonly View[] = ["preview", "source"];
 
 export function BlockShowcaseTabs({
   preview,
@@ -14,7 +15,8 @@ export function BlockShowcaseTabs({
   source: string;
   sourcePath: string;
 }>) {
-  const sourceId = useId();
+  const id = useId();
+  const [view, setView] = useState<View>("preview");
   const [copied, setCopied] = useState(false);
 
   async function copySource() {
@@ -23,55 +25,103 @@ export function BlockShowcaseTabs({
     window.setTimeout(() => setCopied(false), 1600);
   }
 
+  function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (![
+      "ArrowLeft",
+      "ArrowRight",
+      "Home",
+      "End",
+    ].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    const currentIndex = views.indexOf(view);
+    const nextView =
+      event.key === "Home"
+        ? views[0]
+        : event.key === "End"
+          ? views.at(-1)
+          : views[
+              (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + views.length) %
+                views.length
+            ];
+
+    if (nextView) {
+      setView(nextView);
+      document.getElementById(`${id}-${nextView}-tab`)?.focus();
+    }
+  }
+
   return (
-    <Tabs className="w-full" defaultValue="preview">
+    <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-4 py-3 sm:px-6">
-        <TabsList aria-label="Block view" className="h-9 bg-surface-muted/60" size="sm">
-          <TabsTrigger size="sm" value="preview">
-            Preview
-          </TabsTrigger>
-          <TabsTrigger size="sm" value="source">
-            Code
-          </TabsTrigger>
-        </TabsList>
+        <div
+          aria-label="Block view"
+          className="inline-flex h-9 items-center rounded-md bg-surface-muted/60 p-1"
+          role="tablist"
+        >
+          {views.map((item) => {
+            const selected = view === item;
+            return (
+              <button
+                aria-controls={`${id}-${item}-panel`}
+                aria-selected={selected}
+                className="inline-flex h-7 items-center justify-center rounded-sm px-3 text-xs font-medium capitalize text-muted-foreground transition data-[selected=true]:bg-background data-[selected=true]:text-foreground data-[selected=true]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                data-selected={selected}
+                id={`${id}-${item}-tab`}
+                key={item}
+                onClick={() => setView(item)}
+                onKeyDown={onTabKeyDown}
+                role="tab"
+                tabIndex={selected ? 0 : -1}
+                type="button"
+              >
+                {item === "source" ? "Code" : "Preview"}
+              </button>
+            );
+          })}
+        </div>
         <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
           {sourcePath}
         </span>
       </div>
 
-      <TabsContent className="mt-0" value="preview">
+      <div
+        aria-labelledby={`${id}-preview-tab`}
+        hidden={view !== "preview"}
+        id={`${id}-preview-panel`}
+        role="tabpanel"
+      >
         <div className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-5 sm:p-8 lg:min-h-[36rem] lg:p-10">
           {preview}
         </div>
-      </TabsContent>
+      </div>
 
-      <TabsContent className="mt-0" value="source">
+      <div
+        aria-labelledby={`${id}-source-tab`}
+        hidden={view !== "source"}
+        id={`${id}-source-panel`}
+        role="tabpanel"
+      >
         <div className="relative bg-neutral-950 text-neutral-100">
           <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-white/10 bg-neutral-950/95 px-4 py-3 backdrop-blur sm:px-6">
             <span className="truncate font-mono text-xs text-neutral-400">
               {sourcePath}
             </span>
             <button
-              className="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 text-xs font-medium text-neutral-100 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-white/15 bg-white/5 px-3 text-xs font-medium text-neutral-100 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               onClick={copySource}
               type="button"
             >
-              {copied ? (
-                <Check className="h-3.5 w-3.5" aria-hidden="true" />
-              ) : (
-                <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-              )}
               {copied ? "Copied" : "Copy code"}
             </button>
           </div>
-          <pre
-            className="max-h-[36rem] overflow-auto p-5 text-[13px] leading-6 sm:p-6"
-            id={sourceId}
-          >
+          <pre className="max-h-[36rem] overflow-auto p-5 text-[13px] leading-6 sm:p-6">
             <code>{source}</code>
           </pre>
         </div>
-      </TabsContent>
-    </Tabs>
+      </div>
+    </div>
   );
 }
