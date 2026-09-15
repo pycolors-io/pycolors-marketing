@@ -11,11 +11,9 @@ import {
   ResponsiveSidebarExample,
   WorkspaceInvitationsExample,
 } from "@/components/docs/blocks/canonical-examples";
+import { DataTableExample } from "@/components/docs/blocks/data-table-example";
 import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
-import {
-  CatalogDataTablePreview,
-  CatalogSettingsPanelPreview,
-} from "@/components/marketing/blocks/catalog-client-previews";
+import { SettingsPanelExample } from "@/components/docs/blocks/settings-panel-example";
 
 function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
   return (
@@ -93,7 +91,7 @@ export function BlockCatalogPreview({
       return <InvoiceHistoryExample />;
 
     case "settings-panel":
-      return <CatalogSettingsPanelPreview />;
+      return <SettingsPanelExample />;
 
     case "workspace-members":
       return (
@@ -127,7 +125,7 @@ export function BlockCatalogPreview({
       return <AuditLogExample />;
 
     case "data-table":
-      return <CatalogDataTablePreview />;
+      return <DataTableExample />;
 
     case "empty-state-panel":
       return (
