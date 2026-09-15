@@ -1,11 +1,26 @@
 "use client";
 
-import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
+import { Monitor, RotateCcw, Smartphone, Tablet } from "lucide-react";
+import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 
 type View = "preview" | "source";
+type Viewport = "desktop" | "tablet" | "mobile";
 
 const views: readonly View[] = ["preview", "source"];
+const viewports = [
+  { id: "desktop", label: "Desktop", width: "100%", icon: Monitor },
+  { id: "tablet", label: "Tablet", width: "768px", icon: Tablet },
+  { id: "mobile", label: "Mobile", width: "390px", icon: Smartphone },
+] as const satisfies readonly {
+  id: Viewport;
+  label: string;
+  width: string;
+  icon: typeof Monitor;
+}[];
+
+const iconButtonClassName =
+  "inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground";
 
 export function BlockShowcaseTabs({
   preview,
@@ -16,8 +31,11 @@ export function BlockShowcaseTabs({
 }>) {
   const id = useId();
   const [view, setView] = useState<View>("preview");
+  const [viewport, setViewport] = useState<Viewport>("desktop");
   const [copied, setCopied] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
+  const viewportWidth =
+    viewports.find((item) => item.id === viewport)?.width ?? "100%";
 
   async function copySource() {
     await navigator.clipboard.writeText(source);
@@ -79,14 +97,44 @@ export function BlockShowcaseTabs({
             );
           })}
         </div>
+
         {view === "preview" ? (
-          <button
-            className="inline-flex min-h-9 shrink-0 items-center rounded-md px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            onClick={() => setPreviewKey((value) => value + 1)}
-            type="button"
+          <div
+            aria-label="Preview viewport"
+            className="inline-flex items-center gap-1 rounded-lg border border-border-subtle bg-background p-1"
+            role="group"
           >
-            Reset preview
-          </button>
+            {viewports.map((item) => {
+              const Icon = item.icon;
+              const selected = viewport === item.id;
+              return (
+                <button
+                  aria-label={`${item.label} preview`}
+                  aria-pressed={selected}
+                  className={iconButtonClassName}
+                  key={item.id}
+                  onClick={() => setViewport(item.id)}
+                  title={`${item.label} preview`}
+                  type="button"
+                >
+                  <Icon aria-hidden="true" className="size-4" />
+                </button>
+              );
+            })}
+            <span
+              aria-hidden="true"
+              className="mx-1 h-5 w-px bg-border-subtle"
+            />
+            <button
+              aria-label="Reset preview"
+              className={iconButtonClassName}
+              onClick={() => setPreviewKey((value) => value + 1)}
+              title="Reset preview"
+              type="button"
+            >
+              <RotateCcw aria-hidden="true" className="size-4" />
+            </button>
+          </div>
         ) : (
           <button
             className="inline-flex min-h-9 shrink-0 items-center rounded-md px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -104,11 +152,15 @@ export function BlockShowcaseTabs({
         id={`${id}-preview-panel`}
         role="tabpanel"
       >
-        <div
-          className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-5 sm:p-8 lg:min-h-[36rem] lg:p-10"
-          key={previewKey}
-        >
-          {preview}
+        <div className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-3 sm:p-6 lg:min-h-[36rem] lg:p-8">
+          <div
+            className="mx-auto min-h-[24rem] max-w-full overflow-auto rounded-lg bg-background shadow-sm transition-[width] duration-200 lg:min-h-[32rem]"
+            data-viewport={viewport}
+            key={previewKey}
+            style={{ width: viewportWidth }}
+          >
+            <div className="p-4 sm:p-6 lg:p-8">{preview}</div>
+          </div>
         </div>
       </div>
 
