@@ -1,11 +1,12 @@
 ---
 title: Empty state panel
 description: A source-copy empty section with consumer-owned first-use and no-results actions.
-lastUpdated: "2026-09-12"
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import { EmptyStatePanelExample } from "@/components/docs/blocks/empty-state-panel-example";
 
@@ -22,10 +23,6 @@ application decides which situation applies and what to offer next.
   check permissions. The UI setup link is ordinary documentation navigation.
 </Callout>
 
-<Preview className="my-6 overflow-hidden">
-  <EmptyStatePanelExample />
-</Preview>
-
 ## Canonical identity
 
 - Category: **Feedback & states**, slug `feedback`.
@@ -39,30 +36,41 @@ update channel. This Block is independent from Next.js and backend services.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/empty-state-panel/index.tsx` in your application.
-Open the source below and copy the complete file, keeping its public imports.
-The code is included from canonical source at build time, not duplicated in
-the guide or copied from the interactive demonstration.
-Use the code block's copy button, or select the code manually when clipboard
-access is unavailable.
+`src/components/blocks/empty-state-panel/index.tsx` in your application. Use the
+Source tab's copy button when available, or select the code manually when
+clipboard access is unavailable. The code is included from canonical source at
+build time, not duplicated in the guide or copied from the interactive demo.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <EmptyStatePanelExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/empty-state-panel/index.tsx"'
-  >
-    ../../../blocks/feedback/empty-state-panel/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/empty-state-panel/index.tsx"'
+    >
+      ../../../blocks/feedback/empty-state-panel/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `EmptyStatePanel` through its existing
+local fixture. It performs no record creation, filtering or network request. The
+Source tab includes the complete canonical file at build time, not a duplicated
+implementation.
 
 ## Install by copying source
 
 Paste the complete source into the destination above. Keep the public
 `@pycolors/ui` imports and the token setup from the UI installation guide.
 Import your local copy from the consuming component; no Blocks installer or
-additional dependency is required.
+additional dependency is required. Your application owns the copied source and
+does not receive automatic updates; validate it in your application after every
+adopted change.
 
 ## Use your own content and actions
 
