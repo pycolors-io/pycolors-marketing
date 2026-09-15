@@ -1,8 +1,8 @@
-import { WorkspaceMembersPanel } from "@/content/blocks/account/workspace-members";
-import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
-import { SignInPanel } from "@/content/blocks/auth/sign-in";
-import { SignUpPanel } from "@/content/blocks/auth/sign-up";
-import { EmptyStatePanel } from "@/content/blocks/feedback/empty-state-panel";
+import {
+  PasswordRecoveryExample,
+  SignInExample,
+  SignUpExample,
+} from "@/components/docs/blocks/auth-examples";
 import {
   AuditLogExample,
   BillingOverviewExample,
@@ -12,34 +12,10 @@ import {
   WorkspaceInvitationsExample,
 } from "@/components/docs/blocks/canonical-examples";
 import { DataTableExample } from "@/components/docs/blocks/data-table-example";
+import { EmptyStatePanelExample } from "@/components/docs/blocks/empty-state-panel-example";
 import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
 import { SettingsPanelExample } from "@/components/docs/blocks/settings-panel-example";
-
-function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
-  return (
-    <div className="space-y-3">
-      <div className="rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
-        you@example.com
-      </div>
-      <div className="rounded-md border border-border bg-muted px-3 py-2 text-center text-sm font-medium text-muted-foreground">
-        {submitLabel}
-      </div>
-    </div>
-  );
-}
-
-function RecoveryFormPreview() {
-  return (
-    <div className="space-y-3">
-      <div className="rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
-        you@example.com
-      </div>
-      <div className="rounded-md border border-border bg-muted px-3 py-2 text-center text-sm font-medium text-muted-foreground">
-        Send recovery link
-      </div>
-    </div>
-  );
-}
+import { WorkspaceMembersExample } from "@/components/docs/blocks/workspace-members-example";
 
 export function BlockCatalogPreview({
   blockId,
@@ -47,96 +23,32 @@ export function BlockCatalogPreview({
   switch (blockId) {
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
-
     case "sign-in":
-      return (
-        <SignInPanel
-          description="Use your workspace account to continue."
-          footer="Application-owned authentication behavior."
-          form={<AuthFormPreview submitLabel="Sign in" />}
-          title="Welcome back"
-        />
-      );
-
+      return <SignInExample />;
     case "sign-up":
-      return (
-        <SignUpPanel
-          consent="By continuing, users accept your application terms."
-          description="Create a workspace account."
-          form={<AuthFormPreview submitLabel="Create account" />}
-          title="Create your account"
-        />
-      );
-
+      return <SignUpExample />;
     case "password-recovery":
-      return (
-        <PasswordRecoveryPanel
-          description="Enter the account email to continue."
-          form={<RecoveryFormPreview />}
-          help="Recovery delivery remains application-owned."
-          title="Recover your account"
-        />
-      );
-
+      return <PasswordRecoveryExample />;
     case "pricing-plans":
       return <PricingPlansExample />;
-
     case "billing-overview":
       return <BillingOverviewExample />;
-
     case "payment-method":
       return <PaymentMethodExample />;
-
     case "invoice-history":
       return <InvoiceHistoryExample />;
-
     case "settings-panel":
       return <SettingsPanelExample />;
-
     case "workspace-members":
-      return (
-        <WorkspaceMembersPanel
-          description="Current members supplied by the application."
-          heading="Workspace members"
-          id="catalog-workspace-members"
-          members={[
-            {
-              id: "member-1",
-              name: "Alex Morgan",
-              secondaryText: "alex@example.com",
-              role: "Owner",
-              status: "Active",
-            },
-            {
-              id: "member-2",
-              name: "Sam Rivera",
-              secondaryText: "sam@example.com",
-              role: "Editor",
-              status: "Active",
-            },
-          ]}
-        />
-      );
-
+      return <WorkspaceMembersExample />;
     case "workspace-invitations":
       return <WorkspaceInvitationsExample />;
-
     case "audit-log":
       return <AuditLogExample />;
-
     case "data-table":
       return <DataTableExample />;
-
     case "empty-state-panel":
-      return (
-        <EmptyStatePanel
-          description="Create the first project when your application is ready."
-          heading="Projects"
-          id="catalog-empty-state"
-          title="No projects yet"
-        />
-      );
-
+      return <EmptyStatePanelExample />;
     default:
       return null;
   }
