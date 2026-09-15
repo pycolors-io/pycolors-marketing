@@ -43,7 +43,9 @@ function RecoveryFormPreview() {
   );
 }
 
-export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) {
+export function BlockCatalogPreview({
+  blockId,
+}: Readonly<{ blockId: string }>) {
   switch (blockId) {
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
