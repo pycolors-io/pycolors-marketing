@@ -90,13 +90,15 @@ describe("Blocks Marketing consistency", () => {
     const articles = within(catalog).getAllByRole("article");
     expect(articles).toHaveLength(BLOCKS_CATALOG.length);
 
-    BLOCKS_CATALOG.forEach((block, index) => {
-      const article = articles[index];
-      expect(article).toBeDefined();
-      const scoped = within(article as HTMLElement);
-      expect(
-        scoped.getByRole("heading", { name: block.title, level: 4 }),
-      ).toBeVisible();
+    BLOCKS_CATALOG.forEach((block) => {
+      const heading = within(catalog).getByRole("heading", {
+        name: block.title,
+        level: 4,
+      });
+      const article = heading.closest("article");
+      if (!article) throw new Error(`Missing catalog article for ${block.id}`);
+      const scoped = within(article);
+      expect(heading).toBeVisible();
       expect(article).toHaveTextContent(block.category);
       expect(article).toHaveTextContent(block.description);
       expect(
