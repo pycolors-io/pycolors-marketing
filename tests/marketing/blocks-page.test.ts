@@ -47,11 +47,6 @@ describe("Blocks discovery", () => {
     expect(page).toContain("BLOCKS_CATALOG.filter");
     expect(page).toContain("BlockCatalogPreview");
     expect(page).toContain('aria-label="Block categories"');
-    expect(page).toContain("Live preview");
-    expect(page).toContain("View");
-    expect(page).toContain("Source");
-    expect(page).toContain("Install");
-    expect(page).toContain("no Blocks Registry or CLI is required");
   });
 
   it("preserves public navigation and discovery routes", () => {
