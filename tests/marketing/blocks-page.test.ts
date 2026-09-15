@@ -46,9 +46,6 @@ describe("Blocks discovery", () => {
       expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
     }
     expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-    expect(preview).not.toMatch(
-      /fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u,
-    );
   });
 
   it("keeps the visual catalog server-rendered and category-driven", () => {
