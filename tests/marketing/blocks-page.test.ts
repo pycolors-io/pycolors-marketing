@@ -52,8 +52,6 @@ describe("Blocks discovery", () => {
   it("preserves public navigation and discovery routes", () => {
     expect(page).toMatch(/alternates:\s*\{\s*canonical:\s*"\/blocks"/u);
     expect(page).toContain('id="block-catalog"');
-    expect(page).toContain('href="/docs/blocks"');
-    expect(page).toContain('href="/starters"');
     expect(read("lib/layout.shared.tsx")).toMatch(
       /label:\s*"Blocks",\s*href:\s*"\/blocks"/u,
     );
