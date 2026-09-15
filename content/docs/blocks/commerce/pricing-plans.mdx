@@ -1,11 +1,12 @@
 ---
 title: Pricing plans
 description: A source-copy offer comparison with consumer-owned prices, billing terms, actions, and optional controlled period selection.
-lastUpdated: "2026-09-10"
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
 
@@ -26,10 +27,6 @@ application responsibilities, not presentation behavior.
   contact request, account creation or network request occurs.
 </Callout>
 
-<Preview className="my-6 overflow-hidden">
-  <PricingPlansExample />
-</Preview>
-
 ## Canonical identity
 
 - Category: **Commerce**, slug `commerce`.
@@ -44,23 +41,34 @@ package, CLI, download service or automatic source update channel.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/pricing-plans/index.tsx` in your application.
-Open the source below and use its copy button, or select the code manually.
-This is the complete canonical file, not the usage example or a second
-implementation. Keep the imports and client directive when copying.
+`src/components/blocks/pricing-plans/index.tsx` in your application. Use the
+Source tab's copy button when available, or select the code manually when
+clipboard access is unavailable. This is the complete canonical file, not the
+usage example or a second implementation. Keep the imports and client directive
+when copying.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <PricingPlansExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/pricing-plans/index.tsx"'
-  >
-    ../../../blocks/commerce/pricing-plans/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/pricing-plans/index.tsx"'
+    >
+      ../../../blocks/commerce/pricing-plans/index.tsx
+    </include>
+  </Tab>
+</Tabs>
 
-The documentation includes this file from canonical source at build time.
+The Preview tab renders the real canonical `PricingPlans` through its existing
+local deterministic fixture. It performs no checkout or network request. The
+Source tab includes the complete canonical file at build time, not a duplicated
+implementation.
+
 Your application copy does not receive automatic updates. Follow the usage
 example below, connect your own behavior, and validate it in your application.
 Return to the [Blocks catalog](/blocks) to choose another pattern.
