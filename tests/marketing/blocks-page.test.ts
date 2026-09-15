@@ -77,8 +77,23 @@ describe("Blocks discovery", () => {
     expect(canonicalExamples).toContain("React.useState");
     expect(canonicalExamples).toContain("onClick");
     expect(canonicalExamples).toContain('aria-pressed={selected}');
-    expect(showcaseTabs).toContain("Reset preview");
+  });
+
+  it("adds accessible Desktop, Tablet, Mobile and Reset preview controls", () => {
+    expect(showcaseTabs).toContain('id: "desktop"');
+    expect(showcaseTabs).toContain('id: "tablet"');
+    expect(showcaseTabs).toContain('id: "mobile"');
+    expect(showcaseTabs).toContain('width: "100%"');
+    expect(showcaseTabs).toContain('width: "768px"');
+    expect(showcaseTabs).toContain('width: "390px"');
+    expect(showcaseTabs).toContain('aria-label="Preview viewport"');
+    expect(showcaseTabs).toContain("aria-pressed={selected}");
+    expect(showcaseTabs).toContain('aria-label="Reset preview"');
     expect(showcaseTabs).toContain("setPreviewKey");
+    expect(showcaseTabs).toContain("data-viewport={viewport}");
+    expect(showcaseTabs).toContain("style={{ width: viewportWidth }}");
+    expect(showcaseTabs).not.toContain("Open in new tab");
+    expect(showcaseTabs).not.toContain("requestFullscreen");
   });
 
   it("exposes syntax-highlighted canonical source without repository path chrome", () => {
