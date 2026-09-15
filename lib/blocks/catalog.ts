@@ -1,4 +1,13 @@
 // Navigation metadata only; Block implementations remain in content/blocks.
+export const BLOCK_CATEGORIES = [
+  { slug: "app-shells", label: "Application shells" },
+  { slug: "auth", label: "Authentication" },
+  { slug: "commerce", label: "Commerce" },
+  { slug: "account", label: "Account & workspace" },
+  { slug: "data", label: "Data & records" },
+  { slug: "feedback", label: "Feedback & states" },
+] as const;
+
 export const BLOCKS_CATALOG = [
   {
     id: "app-shells/responsive-sidebar",
@@ -113,3 +122,5 @@ export const BLOCKS_CATALOG = [
     href: "/docs/blocks/account/audit-log",
   },
 ] as const;
+
+export type BlockCatalogEntry = (typeof BLOCKS_CATALOG)[number];
