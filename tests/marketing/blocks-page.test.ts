@@ -11,6 +11,12 @@ const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (path: string) =>
   readFileSync(resolve(marketingRoot, path), "utf8");
 const page = read("app/(site)/blocks/page.tsx");
+const catalogPreview = read(
+  "components/marketing/blocks/block-catalog-preview.tsx",
+);
+const canonicalExamples = read(
+  "components/docs/blocks/canonical-examples.tsx",
+);
 const showcaseTabs = read(
   "components/marketing/blocks/block-showcase-tabs.tsx",
 );
@@ -50,6 +56,27 @@ describe("Blocks discovery", () => {
     expect(page).toContain("BLOCKS_CATALOG.filter");
     expect(page).toContain("BlockCatalogPreview");
     expect(page).toContain('aria-label="Block categories"');
+  });
+
+  it("keeps Preview interactive with safe local demo state", () => {
+    expect(page).toContain(
+      "preview={<BlockCatalogPreview blockId={blockId} />}",
+    );
+    expect(page).not.toContain('aria-hidden="true" inert');
+    expect(page).toContain("Interactive local demos");
+    expect(page).toContain("No account,");
+    expect(catalogPreview).toContain("SignInExample");
+    expect(catalogPreview).toContain("SignUpExample");
+    expect(catalogPreview).toContain("PasswordRecoveryExample");
+    expect(catalogPreview).toContain("PricingPlansExample");
+    expect(catalogPreview).toContain("DataTableExample");
+    expect(catalogPreview).toContain("SettingsPanelExample");
+    expect(catalogPreview).toContain("WorkspaceMembersExample");
+    expect(catalogPreview).toContain("EmptyStatePanelExample");
+    expect(canonicalExamples).toMatch(/^"use client";/u);
+    expect(canonicalExamples).toContain("React.useState");
+    expect(canonicalExamples).toContain("onClick");
+    expect(canonicalExamples).toContain('aria-pressed={selected}');
   });
 
   it("exposes syntax-highlighted canonical source beside every preview", () => {
