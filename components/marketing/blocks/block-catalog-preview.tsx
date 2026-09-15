@@ -22,18 +22,8 @@ import {
 function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
   return (
     <div className="space-y-3">
-      <Input
-        disabled
-        label="Email"
-        placeholder="you@example.com"
-        type="email"
-      />
-      <Input
-        disabled
-        label="Password"
-        placeholder="••••••••"
-        type="password"
-      />
+      <Input disabled label="Email" placeholder="you@example.com" type="email" />
+      <Input disabled label="Password" placeholder="••••••••" type="password" />
       <Button className="w-full" disabled type="button">
         {submitLabel}
       </Button>
@@ -44,12 +34,7 @@ function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
 function RecoveryFormPreview() {
   return (
     <div className="space-y-3">
-      <Input
-        disabled
-        label="Email"
-        placeholder="you@example.com"
-        type="email"
-      />
+      <Input disabled label="Email" placeholder="you@example.com" type="email" />
       <Button className="w-full" disabled type="button">
         Send recovery link
       </Button>
@@ -57,7 +42,9 @@ function RecoveryFormPreview() {
   );
 }
 
-export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) {
+export function BlockCatalogPreview({
+  blockId,
+}: Readonly<{ blockId: string }>) {
   switch (blockId) {
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
