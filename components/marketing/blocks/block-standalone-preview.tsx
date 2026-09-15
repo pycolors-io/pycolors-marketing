@@ -33,16 +33,24 @@ export function BlockStandalonePreview({
   return (
     <div
       className="min-h-dvh bg-background p-3 sm:p-5"
-      onFullscreenChange={() => setFullscreen(Boolean(document.fullscreenElement))}
+      onFullscreenChange={() =>
+        setFullscreen(Boolean(document.fullscreenElement))
+      }
       ref={surfaceRef}
     >
       <div className="mx-auto flex min-h-[calc(100dvh-1.5rem)] max-w-[1440px] flex-col overflow-hidden rounded-xl border border-border-subtle bg-background sm:min-h-[calc(100dvh-2.5rem)]">
         <header className="flex min-h-14 items-center justify-between gap-4 border-b border-border-subtle px-4 sm:px-6">
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold">{title}</p>
-            <p className="text-xs text-muted-foreground">Interactive preview</p>
+            <p className="text-xs text-muted-foreground">
+              Interactive preview
+            </p>
           </div>
-          <div className="flex items-center gap-1" role="group" aria-label="Preview actions">
+          <div
+            aria-label="Preview actions"
+            className="flex items-center gap-1"
+            role="group"
+          >
             <button
               aria-label="Reset preview"
               className={iconButtonClassName}
@@ -55,7 +63,9 @@ export function BlockStandalonePreview({
             <button
               aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               className={iconButtonClassName}
-              disabled={typeof document !== "undefined" && !document.fullscreenEnabled}
+              disabled={
+                typeof document !== "undefined" && !document.fullscreenEnabled
+              }
               onClick={toggleFullscreen}
               title={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               type="button"
