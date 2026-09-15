@@ -1,13 +1,21 @@
 import { Badge, Button, Input } from "@pycolors/ui";
 
 import { AuditLogPanel } from "@/content/blocks/account/audit-log";
-import { WorkspaceInvitationsPanel } from "@/content/blocks/account/workspace-invitations";
-import { WorkspaceMembersPanel } from "@/content/blocks/account/workspace-members";
-import { ResponsiveSidebar } from "@/content/blocks/app-shells/responsive-sidebar";
+import {
+  WorkspaceInvitationsPanel,
+} from "@/content/blocks/account/workspace-invitations";
+import {
+  WorkspaceMembersPanel,
+} from "@/content/blocks/account/workspace-members";
+import {
+  ResponsiveSidebar,
+} from "@/content/blocks/app-shells/responsive-sidebar";
 import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
 import { SignInPanel } from "@/content/blocks/auth/sign-in";
 import { SignUpPanel } from "@/content/blocks/auth/sign-up";
-import { BillingOverviewPanel } from "@/content/blocks/commerce/billing-overview";
+import {
+  BillingOverviewPanel,
+} from "@/content/blocks/commerce/billing-overview";
 import { InvoiceHistoryPanel } from "@/content/blocks/commerce/invoice-history";
 import { PaymentMethodPanel } from "@/content/blocks/commerce/payment-method";
 import { PricingPlans } from "@/content/blocks/commerce/pricing-plans";
@@ -20,8 +28,18 @@ import {
 function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
   return (
     <div className="space-y-3">
-      <Input disabled label="Email" placeholder="you@example.com" type="email" />
-      <Input disabled label="Password" placeholder="••••••••" type="password" />
+      <Input
+        disabled
+        label="Email"
+        placeholder="you@example.com"
+        type="email"
+      />
+      <Input
+        disabled
+        label="Password"
+        placeholder="••••••••"
+        type="password"
+      />
       <Button className="w-full" disabled type="button">
         {submitLabel}
       </Button>
@@ -32,7 +50,12 @@ function AuthFormPreview({ submitLabel }: Readonly<{ submitLabel: string }>) {
 function RecoveryFormPreview() {
   return (
     <div className="space-y-3">
-      <Input disabled label="Email" placeholder="you@example.com" type="email" />
+      <Input
+        disabled
+        label="Email"
+        placeholder="you@example.com"
+        type="email"
+      />
       <Button className="w-full" disabled type="button">
         Send recovery link
       </Button>
@@ -40,7 +63,9 @@ function RecoveryFormPreview() {
   );
 }
 
-export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) {
+export function BlockCatalogPreview({
+  blockId,
+}: Readonly<{ blockId: string }>) {
   switch (blockId) {
     case "responsive-sidebar":
       return (
@@ -57,7 +82,11 @@ export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) 
           mobileDescription="Workspace navigation"
           mobileTitle="Acme"
           navigationLabel="Workspace navigation"
-          sidebarFooter={<span className="text-xs text-muted-foreground">Starter workspace</span>}
+          sidebarFooter={
+            <span className="text-xs text-muted-foreground">
+              Starter workspace
+            </span>
+          }
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg border bg-card p-4">
