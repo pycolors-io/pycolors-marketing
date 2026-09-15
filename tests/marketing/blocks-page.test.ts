@@ -118,7 +118,9 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain(
       "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
     );
-    expect(showcaseTabs).toContain('viewport === "mobile" ? "p-3"');
+    expect(showcaseTabs).toContain("const previewPaddingClassName");
+    expect(showcaseTabs).toContain('viewport === "mobile"');
+    expect(showcaseTabs).toContain('? "p-3"');
   });
 
   it("exposes syntax-highlighted canonical source without repository path chrome", () => {
