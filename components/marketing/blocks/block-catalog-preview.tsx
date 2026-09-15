@@ -1,7 +1,6 @@
 import { Badge, Button, Input } from "@pycolors/ui";
 
 import { AuditLogPanel } from "@/content/blocks/account/audit-log";
-import { SettingsPanel } from "@/content/blocks/account/settings-panel";
 import { WorkspaceInvitationsPanel } from "@/content/blocks/account/workspace-invitations";
 import { WorkspaceMembersPanel } from "@/content/blocks/account/workspace-members";
 import { ResponsiveSidebar } from "@/content/blocks/app-shells/responsive-sidebar";
@@ -150,14 +149,16 @@ export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) 
     case "billing-overview":
       return (
         <BillingOverviewPanel
+          billingLabel="Billing"
+          billingValue="Monthly"
           description="Subscription details supplied by the application."
-          heading="Billing"
-          id="catalog-billing-overview"
-          rows={[
-            { id: "plan", label: "Plan", value: "Pro" },
-            { id: "renewal", label: "Renews", value: "24 September 2026" },
-          ]}
-          status={<Badge variant="success">Active</Badge>}
+          planLabel="Plan"
+          planValue="Pro"
+          renewalLabel="Renews"
+          renewalValue="24 September 2026"
+          statusLabel="Status"
+          statusValue={<Badge variant="success">Active</Badge>}
+          title="Billing"
         />
       );
 
@@ -165,9 +166,12 @@ export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) 
       return (
         <PaymentMethodPanel
           description="Payment details supplied by the application."
-          heading="Payment method"
-          id="catalog-payment-method"
-          method={{ brand: "Visa", last4: "4242", expiry: "09/29" }}
+          expiryLabel="Expires"
+          expiryValue="09/29"
+          methodLabel="Card"
+          methodValue="Visa •••• 4242"
+          status={<Badge variant="success">Default</Badge>}
+          title="Payment method"
         />
       );
 
@@ -175,26 +179,21 @@ export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) 
       return (
         <InvoiceHistoryPanel
           description="Invoices supplied by the application."
-          heading="Invoices"
-          id="catalog-invoice-history"
           invoices={[
             {
               id: "invoice-1",
-              reference: "INV-1042",
-              issuedAt: "2026-09-01T00:00:00Z",
-              issuedAtLabel: "1 Sep 2026",
+              date: "1 Sep 2026",
               amount: "€79.00",
-              status: "Paid",
+              status: <Badge variant="success">Paid</Badge>,
             },
             {
               id: "invoice-2",
-              reference: "INV-1031",
-              issuedAt: "2026-08-01T00:00:00Z",
-              issuedAtLabel: "1 Aug 2026",
+              date: "1 Aug 2026",
               amount: "€79.00",
-              status: "Paid",
+              status: <Badge variant="success">Paid</Badge>,
             },
           ]}
+          title="Invoices"
         />
       );
 
@@ -287,8 +286,9 @@ export function BlockCatalogPreview({ blockId }: Readonly<{ blockId: string }>) 
       return (
         <EmptyStatePanel
           description="Create the first project when your application is ready."
-          heading="No projects yet"
+          heading="Projects"
           id="catalog-empty-state"
+          title="No projects yet"
         />
       );
 
