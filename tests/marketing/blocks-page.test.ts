@@ -18,6 +18,12 @@ const canonicalExamples = read("components/docs/blocks/canonical-examples.tsx");
 const showcaseTabs = read(
   "components/marketing/blocks/block-showcase-tabs.tsx",
 );
+const standalonePreview = read(
+  "components/marketing/blocks/block-standalone-preview.tsx",
+);
+const standalonePage = read(
+  "app/(preview)/blocks/[category]/[block]/preview/page.tsx",
+);
 const sourceLoader = read("lib/blocks/source.server.ts");
 
 describe("Blocks discovery", () => {
@@ -78,7 +84,7 @@ describe("Blocks discovery", () => {
     expect(canonicalExamples).toContain("aria-pressed={selected}");
   });
 
-  it("adds accessible Desktop, Tablet, Mobile and Reset preview controls", () => {
+  it("adds accessible Desktop, Tablet, Mobile, open, fullscreen and Reset controls", () => {
     expect(showcaseTabs).toContain('id: "desktop"');
     expect(showcaseTabs).toContain('id: "tablet"');
     expect(showcaseTabs).toContain('id: "mobile"');
@@ -87,12 +93,28 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('width: "390px"');
     expect(showcaseTabs).toContain('aria-label="Preview viewport"');
     expect(showcaseTabs).toContain("aria-pressed={selected}");
+    expect(showcaseTabs).toContain('aria-label="Open preview in new tab"');
+    expect(showcaseTabs).toContain('rel="noopener noreferrer"');
+    expect(showcaseTabs).toContain('target="_blank"');
+    expect(showcaseTabs).toContain('aria-label="Enter fullscreen"');
+    expect(showcaseTabs).toContain("requestFullscreen");
     expect(showcaseTabs).toContain('aria-label="Reset preview"');
     expect(showcaseTabs).toContain("setPreviewKey");
     expect(showcaseTabs).toContain("data-viewport={viewport}");
     expect(showcaseTabs).toContain("style={{ width: viewportWidth }}");
-    expect(showcaseTabs).not.toContain("Open in new tab");
-    expect(showcaseTabs).not.toContain("requestFullscreen");
+  });
+
+  it("maps every catalog identity to the standalone preview route", () => {
+    expect(page).toContain("previewHref={`/blocks/${block.id}/preview`}");
+    expect(standalonePage).toContain("generateStaticParams");
+    expect(standalonePage).toContain("BLOCKS_CATALOG.map");
+    expect(standalonePage).toContain('entry.id === `${category}/${block}`');
+    expect(standalonePage).toContain("<BlockCatalogPreview blockId={block} />");
+    expect(standalonePage).toContain("robots: { index: false, follow: false }");
+    expect(standalonePreview).toContain('aria-label="Preview actions"');
+    expect(standalonePreview).toContain("requestFullscreen");
+    expect(standalonePreview).toContain("document.exitFullscreen");
+    expect(standalonePreview).toContain("setPreviewKey");
   });
 
   it("simulates real mobile breakpoint stacking inside the 390px canvas", () => {
