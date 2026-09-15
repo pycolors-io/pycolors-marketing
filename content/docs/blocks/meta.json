@@ -1,4 +1,12 @@
 {
   "title": "Blocks",
-  "pages": ["index", "app-shells", "data", "account"]
+  "pages": [
+    "index",
+    "app-shells",
+    "auth",
+    "data",
+    "account",
+    "commerce",
+    "feedback"
+  ]
 }

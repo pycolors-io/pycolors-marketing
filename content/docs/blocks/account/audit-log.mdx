@@ -1,0 +1,159 @@
+---
+title: Audit log
+description: A source-copy activity feed with consumer-owned events, filters, actions, timestamps, permissions, and persistence.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { AuditLogExample } from "@/components/docs/blocks/canonical-examples";
+
+## Present account activity without owning audit infrastructure
+
+`AuditLogPanel` renders a named activity section, ordered events, machine-readable
+timestamps, optional details, filters and actions. Your application supplies the
+audit data and decides which controls are available.
+
+<Callout title="Presentation only">
+  This Block does not collect events, write an audit trail, fetch activity,
+  authorize viewers, retain logs or perform mutations. Treat production audit
+  ingestion, integrity, retention and access control as application/backend
+  responsibilities.
+</Callout>
+
+## Canonical identity
+
+- Category: **Account & workspace**, slug `account`.
+- Block: `audit-log`, export `AuditLogPanel`.
+- Canonical source: `apps/marketing/content/blocks/account/audit-log/`.
+- Complete entry point: `index.tsx`.
+
+There is no Blocks npm package, Registry installer or CLI in this flow. The
+canonical file is React presentation source that you copy into your application.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/audit-log/index.tsx` in your application. Use the Source
+tab's copy button when available, or select the code manually when clipboard
+access is unavailable.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <AuditLogExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/audit-log/index.tsx"'
+    >
+      ../../../blocks/account/audit-log/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `AuditLogPanel` with fictional,
+deterministic events and inert local controls. It performs no audit collection,
+persistence or network operation. The Source tab includes the complete canonical
+file at build time, not a duplicated implementation.
+
+Your application copy does not receive automatic updates. Connect your own audit
+data and permissions, then validate it in your application. Return to the
+[Blocks catalog](/blocks) to choose another pattern.
+
+## Install by copying source
+
+1. Copy the complete `audit-log` directory into an application-owned path.
+2. Configure React, `@pycolors/ui`, tokens and semantic styles through the
+   [UI installation guide](/docs/ui/installation).
+3. Supply stable event identities, timestamps, labels and consumer-owned actions.
+4. Run lint, type-check, tests and build in the consuming application.
+
+```tsx title="src/components/workspace-audit-log.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+import { AuditLogPanel } from "./blocks/audit-log";
+
+export function WorkspaceAuditLog() {
+  return (
+    <AuditLogPanel
+      id="workspace-audit-log"
+      heading="Recent activity"
+      description="Security and workspace events supplied by the application."
+      events={[
+        {
+          id: "event-1",
+          actor: "Alex Morgan",
+          action: "updated",
+          target: "workspace settings",
+          occurredAt: "2026-09-15T08:30:00Z",
+          occurredAtLabel: "15 September 2026, 08:30 UTC",
+          details: "Example event metadata owned by the application.",
+          actions: (
+            <Button type="button" variant="outline">
+              View details
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+The button above is intentionally unconnected example UI. Your application owns
+its handler, destination, authorization and resulting behavior.
+
+## Data and permissions remain yours
+
+`id`, `heading` and `events` are required. Use a stable, unique HTML `id` for
+each panel. Every event needs a stable `id`, `actor`, `action`, machine-readable
+`occurredAt` value and consumer-formatted `occurredAtLabel`.
+
+`target`, `details` and per-event `actions` are optional. The Block renders
+values in the order supplied; it does not sort, filter, redact, format timestamps
+or infer event severity. Supply already-authorized, display-ready data.
+
+`filters` and top-level `actions` are arbitrary React nodes. They can host native
+controls or public PyColors UI components, but the Block never reads their state,
+changes a query or fetches results. Keep filtering and pagination logic in the
+consumer when an audit history grows beyond a bounded list.
+
+Do not use visible UI state as an authorization boundary. Check workspace roles,
+audit-log permissions and resource scope on trusted application/backend paths
+before returning events or performing actions.
+
+## Empty, responsive and accessible states
+
+With `events={[]}`, the Block renders `emptyTitle` and optional
+`emptyDescription`. A successful empty result is not a loading or error state;
+render those states explicitly in the application when required.
+
+The section is labelled by its heading, events use an ordered list, and each
+machine timestamp is rendered with a semantic `<time dateTime>` value. Event
+text, details and actions wrap on narrow layouts, while preformatted detail
+content may scroll horizontally within its bounded area.
+
+The Block does not move focus or intercept keyboard behavior. Consumer controls
+keep their native focus and disabled semantics. Give repeated actions distinct
+accessible names when their visible labels would otherwise be ambiguous.
+
+## Ownership and operational boundaries
+
+Your application owns event production, storage, immutability guarantees,
+retention, export, search, pagination, permissions, redaction and incident
+response. The Block does not provide audit compliance by itself.
+
+After copying, review future canonical changes deliberately and preserve local
+customizations. Validate long actors/actions/targets, empty states, narrow widths,
+both themes, keyboard focus and real permission combinations before production.
+
+No audit ingestion, database/schema, telemetry pipeline, authentication,
+authorization, backend/network request, Registry or CLI behavior is introduced
+by this Block or guide.

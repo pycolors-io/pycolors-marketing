@@ -1,0 +1,143 @@
+---
+title: Sign in
+description: A presentation-only sign-in panel with consumer-owned credentials, provider actions, errors and navigation.
+lastUpdated: "2026-09-14"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SignInExample } from "@/components/docs/blocks/auth-examples";
+
+## Present a credible authentication entry point
+
+`SignInPanel` gives an application a bounded sign-in composition while keeping
+authentication behavior entirely in the consuming app. Supply your own form,
+provider controls, error state and footer links; the Block does not validate
+credentials, create sessions or configure providers.
+
+<Callout title="Presentation only">
+  The Block renders the controls you provide. Your application owns credential
+  handling, Auth.js or another auth provider, session state, rate limits,
+  navigation and every network request.
+</Callout>
+
+## Canonical identity
+
+- Category: **Authentication**, slug `auth`.
+- Block: `sign-in`, export `SignInPanel`.
+- Canonical source: `apps/marketing/content/blocks/auth/sign-in/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/sign-in/index.tsx` in your application. Use the Source
+tab's copy button when available.
+
+If clipboard access is unavailable, select the code manually.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <SignInExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/sign-in/index.tsx"'
+    >
+      ../../../blocks/auth/sign-in/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `SignInPanel` through a deterministic
+local fixture. It performs no authentication or network request. The Source tab
+is the complete canonical file included at build time, not a duplicated
+implementation.
+
+## Install by copying source
+
+Keep the complete file at the application-owned path above. Copying source does
+not install dependencies, configure authentication or add routes for you.
+Connect the presentation to your own auth boundary, then validate it in your
+application.
+
+```tsx title="src/components/sign-in-screen.tsx"
+"use client";
+
+import { SignInPanel } from "./blocks/sign-in";
+
+export function SignInScreen() {
+  return (
+    <SignInPanel
+      description="Use your workspace account to continue."
+      form={
+        <form
+          className="space-y-4"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <label className="grid gap-2 text-sm">
+            Email
+            <input
+              className="rounded-md border bg-background px-3 py-2"
+              name="email"
+              type="email"
+              autoComplete="email"
+            />
+          </label>
+          <button className="rounded-md border px-4 py-2" type="submit">
+            Continue
+          </button>
+        </form>
+      }
+      footer={<a href="/forgot-password">Forgot your password?</a>}
+    />
+  );
+}
+```
+
+Use `"use client"` only in a consumer component that actually owns interactive
+handlers or client auth state. The canonical Block itself stays
+presentation-only.
+
+## What the application owns
+
+`form` is required. `title`, `description`, `providers`, `error`, `footer` and
+`className` are optional. Provider buttons, links and form controls are rendered
+as supplied, so their callbacks, refs, disabled states and native semantics stay
+under your control.
+
+The optional error region uses `role="alert"` because it is intended for an
+already-known consumer error. Do not place speculative validation copy there
+before a failed action. Provider configuration, credentials, MFA, account
+lockout, rate limiting and session policy remain outside the Block.
+
+## Responsive and accessibility notes
+
+The panel is bounded to a readable width, uses semantic theme classes and wraps
+consumer content naturally. Keep every field programmatically labelled, preserve
+visible focus and give provider controls clear accessible names. Review your
+actual error copy, disabled states, password-manager behavior and keyboard flow
+after integration.
+
+## Ownership and updates
+
+Your application owns the copied source and does not receive automatic updates.
+Review future canonical changes deliberately, preserve local customizations and
+validate it in your application before adoption.
+
+## Boundaries and next steps
+
+No Auth.js setup, OAuth configuration, credential validation, password policy,
+session mutation, persistence, authorization, analytics or production secret is
+implemented here.
+
+Explore the [Blocks catalog](/blocks), compare the related
+[Sign up](/docs/blocks/auth/sign-up) and
+[Password recovery](/docs/blocks/auth/password-recovery) Blocks, or
+[compare Starters](/starters) for a full application foundation.

@@ -31,6 +31,26 @@ export type DataTableColumn<Row> = Readonly<{
   cell: (row: Row) => React.ReactNode;
   headerClassName?: string;
   cellClassName?: string;
+  sortable?: boolean;
+}>;
+
+export type DataTableSort = Readonly<{
+  columnId: string;
+  direction: "asc" | "desc";
+}>;
+
+export type DataTableSorting = Readonly<{
+  value: DataTableSort | null;
+  onSortChange: (sort: DataTableSort) => void;
+  ascendingLabel?: string;
+  descendingLabel?: string;
+}>;
+
+export type DataTablePageSize = Readonly<{
+  value: number;
+  options: readonly number[];
+  onPageSizeChange: (pageSize: number) => void;
+  label?: string;
 }>;
 
 export type DataTablePagination = Readonly<{
@@ -40,6 +60,25 @@ export type DataTablePagination = Readonly<{
   navigationLabel?: string;
   previousLabel?: string;
   nextLabel?: string;
+  summary?: React.ReactNode;
+}>;
+
+export type DataTableQuery = Readonly<{
+  label?: string;
+  search: Readonly<{
+    value: string;
+    label: string;
+    onValueChange: (value: string) => void;
+    placeholder?: string;
+    disabled?: boolean;
+    inputRef?: React.Ref<HTMLInputElement>;
+  }>;
+  filters?: React.ReactNode;
+  reset?: Readonly<{
+    label: string;
+    onReset: () => void;
+    disabled?: boolean;
+  }>;
   summary?: React.ReactNode;
 }>;
 
@@ -61,11 +100,92 @@ export type DataTableProps<Row> = Readonly<{
   state?: DataTableState;
   emptyTitle: string;
   emptyDescription?: string;
+  emptyAction?: React.ReactNode;
   renderRowActions?: (row: Row) => React.ReactNode;
   rowActionsLabel?: string;
   pagination?: DataTablePagination;
+  pageSize?: DataTablePageSize;
+  sorting?: DataTableSorting;
+  query?: DataTableQuery;
   className?: string;
 }>;
+
+function DataTableQueryControls({
+  query,
+}: Readonly<{ query: DataTableQuery }>) {
+  const { filters, label = "Record filters", reset, search, summary } = query;
+  const hasFilters = React.Children.toArray(filters).some(
+    (node) => node !== "",
+  );
+  const hasSummary = React.Children.toArray(summary).some(
+    (node) => node !== "",
+  );
+
+  return (
+    <div
+      aria-label={label}
+      className="min-w-0 space-y-3"
+      data-slot="data-table-query"
+      role="group"
+    >
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+        <label
+          className="flex min-w-0 flex-1 flex-col gap-1 text-sm"
+          data-slot="data-table-search-label"
+        >
+          <span className="text-muted-foreground">{search.label}</span>
+          <input
+            autoComplete="off"
+            className="min-h-9 w-full min-w-0 rounded-md border border-border bg-background px-3 py-1 text-base text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+            data-slot="data-table-search"
+            disabled={search.disabled}
+            onChange={(event) => {
+              if (!search.disabled) {
+                search.onValueChange(event.currentTarget.value);
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+                event.preventDefault();
+              }
+            }}
+            placeholder={search.placeholder}
+            ref={search.inputRef}
+            type="search"
+            value={search.value}
+          />
+        </label>
+        {hasFilters ? (
+          <div
+            className="flex min-w-0 flex-wrap items-end gap-3"
+            data-slot="data-table-filters"
+          >
+            {filters}
+          </div>
+        ) : null}
+        {reset ? (
+          <button
+            className="inline-flex min-h-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-background px-3 py-1 text-sm font-medium text-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            data-slot="data-table-query-reset"
+            disabled={reset.disabled}
+            onClick={reset.onReset}
+            type="button"
+          >
+            {reset.label}
+          </button>
+        ) : null}
+      </div>
+      {hasSummary ? (
+        <div
+          className="text-sm text-muted-foreground"
+          data-slot="data-table-query-summary"
+        >
+          {summary}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 function hasValidPagination(
   pagination: DataTablePagination | undefined,
@@ -78,6 +198,45 @@ function hasValidPagination(
     pagination.totalPages > 1 &&
     pagination.page >= 1 &&
     pagination.page <= pagination.totalPages
+  );
+}
+
+function DataTablePageSizeControls({
+  pageSize,
+}: Readonly<{ pageSize: DataTablePageSize }>) {
+  const { label = "Rows per page", onPageSizeChange, value } = pageSize;
+  const options = [
+    ...new Set(
+      pageSize.options.filter((size) => Number.isSafeInteger(size) && size > 0),
+    ),
+  ];
+
+  if (options.length < 2 || !options.includes(value)) return null;
+
+  return (
+    <label
+      className="flex min-w-0 flex-wrap items-center gap-2 text-sm"
+      data-slot="data-table-page-size"
+    >
+      <span className="text-muted-foreground">{label}</span>
+      <select
+        className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        data-slot="data-table-page-size-select"
+        onChange={(event) => {
+          const nextSize = Number(event.currentTarget.value);
+          if (nextSize !== value && options.includes(nextSize)) {
+            onPageSizeChange(nextSize);
+          }
+        }}
+        value={String(value)}
+      >
+        {options.map((size) => (
+          <option key={size} value={String(size)}>
+            {size}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -172,19 +331,23 @@ function DataTablePaginationControls({
 
 /**
  * A source-copy record table with consumer-owned columns, rows, states,
- * actions, and controlled page navigation.
+ * actions, query and sorting requests, and controlled page navigation and size.
  */
 export function DataTable<Row>({
   caption,
   className,
   columns,
+  emptyAction,
   emptyDescription,
   emptyTitle,
   getRowId,
   pagination,
+  pageSize,
+  query,
   renderRowActions,
   rowActionsLabel = "Actions",
   rows,
+  sorting,
   state,
 }: DataTableProps<Row>) {
   const hasRowActions = Boolean(renderRowActions);
@@ -194,25 +357,75 @@ export function DataTable<Row>({
   );
   const loadingLabel = state?.status === "loading" ? state.label : undefined;
   const status = state?.status ?? "ready";
+  const showEmptyAction =
+    status === "ready" && rows.length === 0 && Boolean(emptyAction);
   const showPagination =
     status === "ready" && rows.length > 0 && hasValidPagination(pagination);
 
   return (
     <div className={cn("min-w-0 space-y-4", className)} data-slot="data-table">
+      {query ? <DataTableQueryControls query={query} /> : null}
+
       <Table className="min-w-max" data-slot="data-table-table">
         <TableCaption>{caption}</TableCaption>
 
         <TableHeader>
           <TableRow>
-            {columns.map((column) => (
-              <TableHead
-                className={column.headerClassName}
-                data-column-id={column.id}
-                key={column.id}
-              >
-                {column.header}
-              </TableHead>
-            ))}
+            {columns.map((column) => {
+              const controller = column.sortable ? sorting : undefined;
+              const direction =
+                controller?.value?.columnId === column.id
+                  ? controller.value.direction
+                  : undefined;
+              const nextDirection = direction === "asc" ? "desc" : "asc";
+
+              return (
+                <TableHead
+                  aria-sort={
+                    direction === "asc"
+                      ? "ascending"
+                      : direction === "desc"
+                        ? "descending"
+                        : undefined
+                  }
+                  className={column.headerClassName}
+                  data-column-id={column.id}
+                  key={column.id}
+                >
+                  {controller ? (
+                    <button
+                      className="inline-flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm text-left font-medium outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      data-slot="data-table-sort-button"
+                      disabled={status !== "ready"}
+                      onClick={() =>
+                        controller.onSortChange({
+                          columnId: column.id,
+                          direction: nextDirection,
+                        })
+                      }
+                      type="button"
+                    >
+                      {column.header}
+                      <span aria-hidden="true">
+                        {direction === "asc"
+                          ? "▲"
+                          : direction === "desc"
+                            ? "▼"
+                            : "♢"}
+                      </span>
+                      <span className="sr-only">
+                        :{" "}
+                        {nextDirection === "asc"
+                          ? (controller.ascendingLabel ?? "Sort ascending")
+                          : (controller.descendingLabel ?? "Sort descending")}
+                      </span>
+                    </button>
+                  ) : (
+                    column.header
+                  )}
+                </TableHead>
+              );
+            })}
             {hasRowActions ? (
               <TableHead
                 className="text-right"
@@ -286,6 +499,15 @@ export function DataTable<Row>({
         </TableBody>
       </Table>
 
+      {showEmptyAction ? (
+        <div
+          className="flex min-w-0 flex-wrap justify-center gap-2"
+          data-slot="data-table-empty-action"
+        >
+          {emptyAction}
+        </div>
+      ) : null}
+
       {loadingLabel ? (
         <span
           aria-atomic="true"
@@ -296,6 +518,10 @@ export function DataTable<Row>({
         >
           {loadingLabel}
         </span>
+      ) : null}
+
+      {status === "ready" && rows.length > 0 && pageSize ? (
+        <DataTablePageSizeControls pageSize={pageSize} />
       ) : null}
 
       {showPagination ? (
