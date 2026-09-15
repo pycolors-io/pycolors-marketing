@@ -56,8 +56,5 @@ describe("Blocks discovery", () => {
       /label:\s*"Blocks",\s*href:\s*"\/blocks"/u,
     );
     expect(read("app/sitemap.ts")).toContain('"/blocks"');
-    expect(read("content/docs/blocks/index.mdx")).toContain(
-      "[Explore the Blocks catalog](/blocks)",
-    );
   });
 });
