@@ -81,11 +81,13 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain("setPreviewKey");
   });
 
-  it("exposes syntax-highlighted canonical source beside every preview", () => {
+  it("exposes syntax-highlighted canonical source without repository path chrome", () => {
     expect(page).toContain("readBlockSource");
     expect(page).toContain('"content", "blocks", block.id, "index.tsx"');
     expect(page).toContain("BlockShowcaseTabs");
     expect(page).toContain("source={source}");
+    expect(page).not.toContain("sourcePath");
+    expect(showcaseTabs).not.toContain("sourcePath");
     expect(showcaseTabs).toContain('role="tablist"');
     expect(showcaseTabs).toContain('role="tab"');
     expect(showcaseTabs).toContain('role="tabpanel"');
@@ -97,6 +99,16 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('lang="tsx"');
     expect(showcaseTabs).toContain('light: "github-light"');
     expect(showcaseTabs).toContain('dark: "github-dark"');
+  });
+
+  it("keeps one bounded demo surface instead of wrapping every Block in a card", () => {
+    expect(page).toContain('<article className="space-y-5">');
+    expect(page).not.toContain(
+      '<article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">',
+    );
+    expect(showcaseTabs).toContain(
+      "overflow-hidden rounded-xl border border-border-subtle bg-background",
+    );
   });
 
   it("preserves public navigation and discovery routes", () => {
