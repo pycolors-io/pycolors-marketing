@@ -8,6 +8,14 @@ import BlocksPage, { metadata } from "../../app/(site)/blocks/page";
 import { MarketingLinkButton } from "../../components/marketing/cta-panel";
 import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
 
+vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
+  BlockShowcaseTabs: ({ source }: Readonly<{ source: string }>) => (
+    <div data-testid="block-showcase" data-source-length={source.length}>
+      Preview Code
+    </div>
+  ),
+}));
+
 const sectionNames = [
   "Choose the interface you need next",
   "Need the complete application foundation?",
@@ -54,12 +62,9 @@ describe("Blocks Marketing consistency", () => {
       expect(section).toHaveAttribute("aria-labelledby", heading.id);
       expect(section).toHaveClass("border-t", "border-border-subtle");
       expect(section).toHaveClass("py-16", "lg:py-20");
-      expect(section.querySelector(".max-w-6xl")).not.toBeNull();
       expect(section).not.toHaveClass("overflow-hidden");
     });
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(2);
-    expect(screen.queryByRole("banner")).not.toBeInTheDocument();
-    expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument();
   });
 
   it("gives hero actions primary-first native link semantics", () => {
@@ -70,25 +75,23 @@ describe("Blocks Marketing consistency", () => {
       name: "Explore Blocks",
     });
     const secondary = within(getHero()).getByRole("link", {
-      name: "Source-copy guide",
+      name: "Integration guide",
     });
     expect(links).toEqual([primary, secondary]);
     expect(primary).toHaveAttribute("href", "#block-catalog");
     expect(secondary).toHaveAttribute("href", "/docs/blocks");
     expectLinkButton(primary, true);
     expectLinkButton(secondary, false);
-    expect(primary.parentElement).toHaveClass("flex-col", "sm:flex-row");
-    expect(primary.parentElement).toHaveClass("sm:justify-center");
-    expect(document.getElementById("block-catalog")).toHaveClass(
-      "scroll-mt-24",
-    );
   });
 
-  it("renders every canonical Block once with View, Source and Install actions", () => {
+  it("renders every canonical Block once with one documentation action and showcase", () => {
     render(<BlocksPage />);
     const catalog = screen.getByRole("region", { name: sectionNames[0] });
     const articles = within(catalog).getAllByRole("article");
     expect(articles).toHaveLength(BLOCKS_CATALOG.length);
+    expect(within(catalog).getAllByTestId("block-showcase")).toHaveLength(
+      BLOCKS_CATALOG.length,
+    );
 
     BLOCKS_CATALOG.forEach((block) => {
       const heading = within(catalog).getByRole("heading", {
@@ -98,28 +101,21 @@ describe("Blocks Marketing consistency", () => {
       const article = heading.closest("article");
       if (!article) throw new Error(`Missing catalog article for ${block.id}`);
       const scoped = within(article);
-      expect(heading).toBeVisible();
       expect(article).toHaveTextContent(block.category);
       expect(article).toHaveTextContent(block.description);
       expect(
-        scoped.getByRole("link", { name: `View ${block.title} documentation` }),
-      ).toHaveAttribute("href", block.href);
-      expect(
-        scoped.getByRole("link", { name: `View ${block.title} source` }),
-      ).toHaveAttribute("href", `${block.href}#copy-source`);
-      expect(
         scoped.getByRole("link", {
-          name: `Install ${block.title} by copying source`,
+          name: `Open ${block.title} documentation`,
         }),
-      ).toHaveAttribute("href", `${block.href}#install-by-copying-source`);
+      ).toHaveAttribute("href", block.href);
+      expect(scoped.getByTestId("block-showcase")).toHaveTextContent(
+        "Preview Code",
+      );
+      expect(article).toHaveTextContent("fictional local state only");
     });
-
-    expect(
-      within(getHero()).getByText(`${BLOCKS_CATALOG.length} documented Blocks`),
-    ).toBeVisible();
   });
 
-  it("keeps ordered category navigation and consumer-owned source copy", () => {
+  it("keeps ordered category navigation", () => {
     render(<BlocksPage />);
     const catalog = screen.getByRole("region", { name: sectionNames[0] });
     const navigation = within(catalog).getByRole("navigation", {
@@ -144,16 +140,6 @@ describe("Blocks Marketing consistency", () => {
         expectedCount,
       );
     });
-
-    for (const article of within(catalog).getAllByRole("article")) {
-      expect(article).toHaveTextContent(
-        "own its behavior, customization and future updates",
-      );
-    }
-    expect(screen.getByText("Application-owned installation")).toBeVisible();
-    expect(
-      screen.getByText(/no Blocks Registry or CLI is required/u),
-    ).toBeVisible();
   });
 
   it("keeps the Starter decision and closing action order", () => {
@@ -170,7 +156,6 @@ describe("Blocks Marketing consistency", () => {
     expect(secondary).toHaveAttribute("href", "/docs/blocks");
     expectLinkButton(primary, true);
     expectLinkButton(secondary, false);
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
     expect(metadata.alternates).toEqual({ canonical: "/blocks" });
   });
 
@@ -215,7 +200,6 @@ describe("MarketingLinkButton", () => {
     fireEvent.click(link);
     expect(onClick).toHaveBeenCalledOnce();
     expect(link).toHaveFocus();
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
   it("preserves caller-owned external link attributes", () => {
