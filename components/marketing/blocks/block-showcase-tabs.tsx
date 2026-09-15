@@ -19,6 +19,7 @@ export function BlockShowcaseTabs({
   const id = useId();
   const [view, setView] = useState<View>("preview");
   const [copied, setCopied] = useState(false);
+  const [previewKey, setPreviewKey] = useState(0);
 
   async function copySource() {
     await navigator.clipboard.writeText(source);
@@ -80,9 +81,20 @@ export function BlockShowcaseTabs({
             );
           })}
         </div>
-        <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
-          {sourcePath}
-        </span>
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
+            {sourcePath}
+          </span>
+          {view === "preview" ? (
+            <button
+              className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-border-subtle bg-background px-3 text-xs font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              onClick={() => setPreviewKey((value) => value + 1)}
+              type="button"
+            >
+              Reset preview
+            </button>
+          ) : null}
+        </div>
       </div>
 
       <div
@@ -91,7 +103,10 @@ export function BlockShowcaseTabs({
         id={`${id}-preview-panel`}
         role="tabpanel"
       >
-        <div className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-5 sm:p-8 lg:min-h-[36rem] lg:p-10">
+        <div
+          className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-5 sm:p-8 lg:min-h-[36rem] lg:p-10"
+          key={previewKey}
+        >
           {preview}
         </div>
       </div>
