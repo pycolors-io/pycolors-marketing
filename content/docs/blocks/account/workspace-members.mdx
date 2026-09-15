@@ -1,11 +1,12 @@
 ---
 title: Workspace members
 description: A source-copy member list with consumer-owned identities, role and status labels, and native actions.
-lastUpdated: "2026-09-12"
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import { WorkspaceMembersExample } from "@/components/docs/blocks/workspace-members-example";
 
@@ -22,10 +23,6 @@ chooses which controls to show. The Block does not manage identity or access.
   navigation.
 </Callout>
 
-<Preview className="my-6 overflow-hidden">
-  <WorkspaceMembersExample />
-</Preview>
-
 ## Canonical identity
 
 - Category: **Account & workspace**, slug `account`.
@@ -40,22 +37,33 @@ There is no Blocks npm package, Registry installer or CLI in this flow.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/workspace-members/index.tsx` in your application.
-Open the source below and copy the complete file, preserving its public imports.
-Use the code block's copy button or select the code manually when clipboard
-access is unavailable. The displayed source is included at documentation build
-time; it is not a second implementation or a copy of the interactive demo.
+`src/components/blocks/workspace-members/index.tsx` in your application. Use the
+Source tab's copy button when available or select the code manually when
+clipboard access is unavailable. The displayed source is included at
+documentation build time; it is not a second implementation or a copy of the
+interactive demo.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <WorkspaceMembersExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/workspace-members/index.tsx"'
-  >
-    ../../../blocks/account/workspace-members/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/workspace-members/index.tsx"'
+    >
+      ../../../blocks/account/workspace-members/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `WorkspaceMembersPanel` through its
+existing local fixture. It performs no invitation, permission or network
+operation. The Source tab includes the complete canonical file at build time,
+not a duplicated implementation.
 
 ## Install by copying source
 
