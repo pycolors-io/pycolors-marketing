@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 
 type View = "preview" | "source";
 
@@ -26,12 +27,7 @@ export function BlockShowcaseTabs({
   }
 
   function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
-    if (![
-      "ArrowLeft",
-      "ArrowRight",
-      "Home",
-      "End",
-    ].includes(event.key)) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
       return;
     }
 
@@ -43,7 +39,9 @@ export function BlockShowcaseTabs({
         : event.key === "End"
           ? views.at(-1)
           : views[
-              (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + views.length) %
+              (currentIndex +
+                (event.key === "ArrowRight" ? 1 : -1) +
+                views.length) %
                 views.length
             ];
 
@@ -117,9 +115,18 @@ export function BlockShowcaseTabs({
               {copied ? "Copied" : "Copy code"}
             </button>
           </div>
-          <pre className="max-h-[36rem] overflow-auto p-5 text-[13px] leading-6 sm:p-6">
-            <code>{source}</code>
-          </pre>
+          <div className="max-h-[36rem] overflow-auto [&_figure]:m-0 [&_figure]:rounded-none [&_pre]:max-h-none">
+            <DynamicCodeBlock
+              code={source}
+              lang="tsx"
+              options={{
+                themes: {
+                  light: "github-light",
+                  dark: "github-dark",
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
