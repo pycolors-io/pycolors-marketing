@@ -77,6 +77,8 @@ describe("Blocks discovery", () => {
     expect(canonicalExamples).toContain("React.useState");
     expect(canonicalExamples).toContain("onClick");
     expect(canonicalExamples).toContain('aria-pressed={selected}');
+    expect(showcaseTabs).toContain("Reset preview");
+    expect(showcaseTabs).toContain("setPreviewKey");
   });
 
   it("exposes syntax-highlighted canonical source beside every preview", () => {
