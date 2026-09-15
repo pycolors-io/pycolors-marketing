@@ -4,9 +4,17 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
-import BlocksPage, { metadata } from "../../app/(site)/blocks/page";
 import { MarketingLinkButton } from "../../components/marketing/cta-panel";
 import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
+
+vi.mock("@/lib/blocks/source.server", () => ({
+  readBlockSource: () =>
+    "export default function CanonicalBlock() { return null; }",
+}));
+
+vi.mock("@/components/marketing/blocks/block-catalog-preview", () => ({
+  BlockCatalogPreview: () => <div data-testid="block-preview" />,
+}));
 
 vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
   BlockShowcaseTabs: ({ source }: Readonly<{ source: string }>) => (
@@ -15,6 +23,9 @@ vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
     </div>
   ),
 }));
+
+const { default: BlocksPage, metadata } =
+  await import("../../app/(site)/blocks/page");
 
 const sectionNames = [
   "Choose the interface you need next",

@@ -1,5 +1,3 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -27,6 +25,7 @@ import {
   BLOCKS_CATALOG,
   type BlockCatalogEntry,
 } from "@/lib/blocks/catalog";
+import { readBlockSource } from "@/lib/blocks/source.server";
 
 const title = "PyColors Blocks — Copyable React application patterns";
 const description =
@@ -76,13 +75,6 @@ const proofItems = [
       "Preview, interact, inspect and copy without leaving the catalog.",
   },
 ] as const;
-
-function readBlockSource(block: BlockCatalogEntry) {
-  return readFileSync(
-    resolve(process.cwd(), "content", "blocks", block.id, "index.tsx"),
-    "utf8",
-  );
-}
 
 function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
   const blockId = block.id.split("/")[1];

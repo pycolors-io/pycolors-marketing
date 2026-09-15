@@ -18,6 +18,7 @@ const canonicalExamples = read("components/docs/blocks/canonical-examples.tsx");
 const showcaseTabs = read(
   "components/marketing/blocks/block-showcase-tabs.tsx",
 );
+const sourceLoader = read("lib/blocks/source.server.ts");
 
 describe("Blocks discovery", () => {
   it("keeps the canonical catalog and ordered categories", () => {
@@ -125,7 +126,14 @@ describe("Blocks discovery", () => {
 
   it("exposes syntax-highlighted canonical source without repository path chrome", () => {
     expect(page).toContain("readBlockSource");
-    expect(page).toContain('"content", "blocks", block.id, "index.tsx"');
+    expect(page).toContain('from "@/lib/blocks/source.server"');
+    expect(page).not.toContain('from "node:fs"');
+    expect(page).not.toContain('from "node:path"');
+    expect(sourceLoader).toContain('from "node:fs"');
+    expect(sourceLoader).toContain('from "node:path"');
+    expect(sourceLoader).toContain(
+      '"content", "blocks", block.id, "index.tsx"',
+    );
     expect(page).toContain("BlockShowcaseTabs");
     expect(page).toContain("source={source}");
     expect(page).not.toContain("sourcePath");
