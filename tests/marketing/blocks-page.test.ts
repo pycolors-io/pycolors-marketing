@@ -34,24 +34,23 @@ describe("Blocks discovery", () => {
         ),
       ).toBe(true);
       expect(
-        existsSync(resolve(marketingRoot, `content/docs/blocks/${block.id}.mdx`)),
+        existsSync(
+          resolve(marketingRoot, `content/docs/blocks/${block.id}.mdx`),
+        ),
       ).toBe(true);
     }
   });
 
-  it(
-    "renders every catalogued Block through the source-backed preview registry",
-    () => {
-      for (const block of BLOCKS_CATALOG) {
-        expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
-      }
-      expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
-      expect(preview).toContain("canonical-examples");
-      expect(preview).not.toMatch(
-        /fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u,
-      );
-    },
-  );
+  it("renders every catalogued Block through the source-backed preview registry", () => {
+    for (const block of BLOCKS_CATALOG) {
+      expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
+    }
+    expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
+    expect(preview).toContain("canonical-examples");
+    expect(preview).not.toMatch(
+      /fumadocs|\.mdx|\b(?:fetch|axios|XMLHttpRequest)\b/u,
+    );
+  });
 
   it("keeps the visual catalog server-rendered and category-driven", () => {
     expect(page).not.toMatch(/["']use client["']/u);
