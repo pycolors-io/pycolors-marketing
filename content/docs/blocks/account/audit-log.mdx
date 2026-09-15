@@ -6,6 +6,9 @@ appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { AuditLogExample } from "@/components/docs/blocks/canonical-examples";
 
 ## Present account activity without owning audit infrastructure
 
@@ -33,24 +36,34 @@ canonical file is React presentation source that you copy into your application.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/audit-log/index.tsx` in your application. Open the source
-below and use its copy button, or select the code manually. This is the complete
-canonical file, not a shortened example or a second implementation.
+`src/components/blocks/audit-log/index.tsx` in your application. Use the Source
+tab's copy button when available, or select the code manually when clipboard
+access is unavailable.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <AuditLogExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/audit-log/index.tsx"'
-  >
-    ../../../blocks/account/audit-log/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/audit-log/index.tsx"'
+    >
+      ../../../blocks/account/audit-log/index.tsx
+    </include>
+  </Tab>
+</Tabs>
 
-The documentation includes this file from canonical source at build time. Your
-application copy does not receive automatic updates. Connect your own audit data
-and permissions, then validate it in your application. Return to the
+The Preview tab renders the real canonical `AuditLogPanel` with fictional,
+deterministic events and inert local controls. It performs no audit collection,
+persistence or network operation. The Source tab includes the complete canonical
+file at build time, not a duplicated implementation.
+
+Your application copy does not receive automatic updates. Connect your own audit
+data and permissions, then validate it in your application. Return to the
 [Blocks catalog](/blocks) to choose another pattern.
 
 ## Install by copying source
