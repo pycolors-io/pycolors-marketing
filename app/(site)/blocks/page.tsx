@@ -2,7 +2,14 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Boxes, CheckCircle2, Copy, Eye, Layers3 } from "lucide-react";
+import {
+  ArrowRight,
+  Boxes,
+  CheckCircle2,
+  Copy,
+  Eye,
+  Layers3,
+} from "lucide-react";
 
 import { Container } from "@/components/container";
 import { BlockCatalogPreview } from "@/components/marketing/blocks/block-catalog-preview";
@@ -65,7 +72,8 @@ const proofItems = [
   {
     icon: Copy,
     title: "Copy source directly",
-    description: "Preview, interact, inspect and copy without leaving the catalog.",
+    description:
+      "Preview, interact, inspect and copy without leaving the catalog.",
   },
 ] as const;
 
