@@ -12,8 +12,9 @@ const read = (path: string) =>
   readFileSync(resolve(marketingRoot, path), "utf8");
 const page = read("app/(site)/blocks/page.tsx");
 const preview = read("components/marketing/blocks/block-catalog-preview.tsx");
-const clientPreviews = read(
-  "components/marketing/blocks/catalog-client-previews.tsx",
+const dataTableExample = read("components/docs/blocks/data-table-example.tsx");
+const settingsPanelExample = read(
+  "components/docs/blocks/settings-panel-example.tsx",
 );
 
 function readStaticRoutes() {
@@ -92,14 +93,14 @@ describe("Blocks discovery", () => {
     expect(preview).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
   });
 
-  it("keeps the catalog server-rendered with only bounded client fixtures", () => {
+  it("keeps the catalog server-rendered and reuses bounded client fixtures", () => {
     expect(page).not.toMatch(/["']use client["']/u);
     expect(page).not.toMatch(/\b(?:useEffect|useState|fetch|localStorage)\b/u);
     expect(preview).not.toMatch(/["']use client["']/u);
-    expect(clientPreviews).toMatch(/^"use client";/u);
-    expect(clientPreviews).toContain("CatalogDataTablePreview");
-    expect(clientPreviews).toContain("CatalogSettingsPanelPreview");
-    expect(clientPreviews).not.toMatch(/\b(?:fetch|axios|XMLHttpRequest)\b/u);
+    expect(preview).toContain("DataTableExample");
+    expect(preview).toContain("SettingsPanelExample");
+    expect(dataTableExample).toMatch(/^"use client";/u);
+    expect(settingsPanelExample).toMatch(/^"use client";/u);
   });
 
   it("uses shared Marketing components, category navigation and catalog data", () => {
