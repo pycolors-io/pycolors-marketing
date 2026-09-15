@@ -62,7 +62,8 @@ const proofItems = [
   {
     icon: Layers3,
     title: `${BLOCKS_CATALOG.length} source-backed Blocks`,
-    description: "Every preview maps to canonical copyable source.",
+    description:
+      "Every preview maps to canonical copyable source.",
   },
   {
     icon: Eye,
@@ -125,9 +126,9 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
       />
 
       <p className="text-xs leading-5 text-muted-foreground">
-        Preview interactions use fictional local state only. No account, payment,
-        email, persistence or network mutation occurs. Copy the complete source,
-        then connect the behavior your application owns.
+        Preview interactions use fictional local state only. No account,
+        payment, email, persistence or network mutation occurs. Copy the
+        complete source, then connect the behavior your application owns.
       </p>
     </article>
   );
