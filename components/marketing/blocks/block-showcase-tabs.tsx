@@ -206,7 +206,10 @@ export function BlockShowcaseTabs({
                 </button>
               );
             })}
-            <span aria-hidden="true" className="mx-1 h-5 w-px bg-border-subtle" />
+            <span
+              aria-hidden="true"
+              className="mx-1 h-5 w-px bg-border-subtle"
+            />
             <a
               aria-label="Open preview in new tab"
               className={iconButtonClassName}
