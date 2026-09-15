@@ -6,10 +6,7 @@ import { axe } from "vitest-axe";
 
 import BlocksPage, { metadata } from "../../app/(site)/blocks/page";
 import { MarketingLinkButton } from "../../components/marketing/cta-panel";
-import {
-  BLOCK_CATEGORIES,
-  BLOCKS_CATALOG,
-} from "../../lib/blocks/catalog";
+import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
 
 const sectionNames = [
   "Choose the interface you need next",
@@ -97,17 +94,17 @@ describe("Blocks Marketing consistency", () => {
       const article = articles[index];
       expect(article).toBeDefined();
       const scoped = within(article as HTMLElement);
-      expect(scoped.getByRole("heading", { name: block.title, level: 4 })).toBeVisible();
+      expect(
+        scoped.getByRole("heading", { name: block.title, level: 4 }),
+      ).toBeVisible();
       expect(article).toHaveTextContent(block.category);
       expect(article).toHaveTextContent(block.description);
-      expect(scoped.getByRole("link", { name: `View ${block.title} documentation` })).toHaveAttribute(
-        "href",
-        block.href,
-      );
-      expect(scoped.getByRole("link", { name: `View ${block.title} source` })).toHaveAttribute(
-        "href",
-        `${block.href}#copy-source`,
-      );
+      expect(
+        scoped.getByRole("link", { name: `View ${block.title} documentation` }),
+      ).toHaveAttribute("href", block.href);
+      expect(
+        scoped.getByRole("link", { name: `View ${block.title} source` }),
+      ).toHaveAttribute("href", `${block.href}#copy-source`);
       expect(
         scoped.getByRole("link", {
           name: `Install ${block.title} by copying source`,
@@ -115,7 +112,9 @@ describe("Blocks Marketing consistency", () => {
       ).toHaveAttribute("href", `${block.href}#install-by-copying-source`);
     });
 
-    expect(within(getHero()).getByText(`${BLOCKS_CATALOG.length} documented Blocks`)).toBeVisible();
+    expect(
+      within(getHero()).getByText(`${BLOCKS_CATALOG.length} documented Blocks`),
+    ).toBeVisible();
   });
 
   it("keeps ordered category navigation and consumer-owned source copy", () => {
@@ -139,7 +138,9 @@ describe("Blocks Marketing consistency", () => {
       const expectedCount = BLOCKS_CATALOG.filter(
         (block) => block.category === category.label,
       ).length;
-      expect(within(section).getAllByRole("article")).toHaveLength(expectedCount);
+      expect(within(section).getAllByRole("article")).toHaveLength(
+        expectedCount,
+      );
     });
 
     for (const article of within(catalog).getAllByRole("article")) {
@@ -148,7 +149,9 @@ describe("Blocks Marketing consistency", () => {
       );
     }
     expect(screen.getByText("Application-owned installation")).toBeVisible();
-    expect(screen.getByText(/no Blocks Registry or CLI is required/u)).toBeVisible();
+    expect(
+      screen.getByText(/no Blocks Registry or CLI is required/u),
+    ).toBeVisible();
   });
 
   it("keeps the Starter decision and closing action order", () => {
