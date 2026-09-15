@@ -1,12 +1,13 @@
 ---
 title: Data table
 description: A source-copy records workflow with controlled search, custom filters, sorting, page size, pagination and empty-result recovery.
-lastUpdated: "2026-09-13"
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import {
   DataTableEmptyExample,
@@ -38,10 +39,6 @@ Those decisions remain in the consuming feature or data layer.
   Block today.
 </Callout>
 
-<Preview className="my-6 overflow-hidden">
-  <DataTableExample />
-</Preview>
-
 ## Canonical identity
 
 | Contract                               | Value                                                     |
@@ -61,23 +58,34 @@ delivery service.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/data-table/index.tsx` in your application.
-Open the source below and use its copy button, or select the code manually.
-This is the complete canonical file, not the usage example or a second
-implementation. Keep the imports and client directive when copying.
+`src/components/blocks/data-table/index.tsx` in your application. Use the Source
+tab's copy button when available, or select the code manually when clipboard
+access is unavailable. This is the complete canonical file, not the usage
+example or a second implementation. Keep the imports and client directive when
+copying.
 
-<details>
-  <summary>View and copy the complete source</summary>
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <DataTableExample />
+    </Preview>
+  </Tab>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/data-table/index.tsx"'
-  >
-    ../../../blocks/data/data-table/index.tsx
-  </include>
-</details>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/data-table/index.tsx"'
+    >
+      ../../../blocks/data/data-table/index.tsx
+    </include>
+  </Tab>
+</Tabs>
 
-The documentation includes this file from canonical source at build time.
+The Preview tab renders the real canonical `DataTable` through its existing
+local deterministic fixture. It performs no data fetch or network request. The
+Source tab includes the complete canonical file at build time, not a duplicated
+implementation.
+
 Your application copy does not receive automatic updates. Follow the usage
 example below, connect your own behavior, and validate it in your application.
 Return to the [Blocks catalog](/blocks) to choose another pattern.
@@ -367,454 +375,4 @@ export function SearchableRecordsTable({ rows }: { rows: readonly Row[] }) {
               }}
             >
               <option value="all">All states</option>
-              <option value="Available">Available</option>
-              <option value="Paused">Paused</option>
-            </select>
-          </label>
-        ),
-        reset: { label: "Reset filters", onReset: resetFilters },
-        summary: (
-          <p aria-live="polite" role="status">
-            Showing {matching.length === 0 ? 0 : start + 1}–
-            {start + visibleRows.length} of {matching.length} matching records.
-          </p>
-        ),
-      }}
-      rows={visibleRows}
-      sorting={{
-        value: sort,
-        onSortChange: (nextSort) => {
-          setSort(nextSort);
-          setPage(1);
-        },
-      }}
-    />
-  );
-}
-```
-
-`filter` creates a new array before sorting, so the caller's array is unchanged.
-The displayed page is clamped if incoming records shrink. Reset affects only
-the query/filter/page; sort and size remain selected. For remote records, use
-your server's matching total and ordering, and distinguish requested input from
-settled results. Choose your own announcement frequency to avoid noisy updates.
-
-Verify the copied integration with your application's lint, type, test and build
-commands. Then review keyboard/IME behavior, focus after reset or async changes,
-long labels, narrow widths, both themes and assistive-technology announcements.
-The preview and automated structural tests are not an independent consumer or
-complete accessibility certification. Use the [installation guide](/docs/blocks)
-for source ownership and update guidance.
-
-## State behavior
-
-The state union makes precedence explicit and prevents loading and error from
-being requested at the same time.
-
-### Ready
-
-Ready is the default. Rows render from the supplied column callbacks. When
-`renderRowActions` exists, the Block appends exactly one labelled actions
-column.
-
-### Loading
-
-```tsx title="loading-table.tsx"
-<DataTable
-  {...tableProps}
-  state={{ status: "loading", label: "Loading available records" }}
-/>
-```
-
-The public `TableLoading` spans every effective column, announces the generic
-loading state through its live region, and replaces stale rows. When `label` is
-provided, that consumer-owned copy becomes the polite live announcement while
-the public primitive remains the visible loading presentation. Pagination is
-hidden while loading.
-
-### Empty
-
-When ready rows are empty, the public `TableEmpty` spans every effective column
-and displays consumer-owned copy. Empty is a valid result, not an error, and
-pagination is hidden.
-
-Pass `emptyAction` to offer the next useful step without making the Block own
-record creation or filters. The optional action area appears below the table,
-outside its horizontal scroller, only when ready rows are empty. It is hidden
-while loading, during an error, or once rows are present. Omitting the prop
-preserves the existing empty presentation.
-
-#### First use
-
-Use a clearly labelled creation action when no records exist. This demo adds
-sample records in local React state only; it does not create or save real data.
-
-<Preview className="my-6 overflow-hidden">
-  <DataTableEmptyExample />
-</Preview>
-
-#### No matching results
-
-Use a filter-reset action when records exist but the current view is empty.
-The consumer must distinguish that case from first use; the Block cannot infer
-it from an empty array. This demo simulates a cleared filter with local sample
-state and sends no request.
-
-<Preview className="my-6 overflow-hidden">
-  <DataTableEmptyExample filtered />
-</Preview>
-
-```tsx title="empty-table-action.tsx"
-<DataTable
-  {...tableProps}
-  rows={filteredRows}
-  emptyTitle="No matching records"
-  emptyDescription="Clear your filters to see all available records."
-  emptyAction={
-    <button onClick={clearFilters} type="button">
-      Clear filters
-    </button>
-  }
-/>
-```
-
-`tableProps`, `filteredRows`, and `clearFilters` belong to the consuming feature.
-Use a public PyColors `Button`, a native button, or a framework link with an
-accessible name. The Block renders your element without replacing its props,
-ref, link destination, disabled state, or event handling. Supply `type="button"`
-for an action that must not submit a surrounding form.
-
-When the action removes the empty state, manage the resulting focus transition
-in the consumer. The demo explicitly moves focus to its persistent reset
-control; the canonical Block never moves focus or mutates rows on its own.
-
-### Error
-
-```tsx title="error-table.tsx"
-<DataTable
-  {...tableProps}
-  state={{
-    status: "error",
-    title: "Records could not be loaded",
-    description: "Check the connection and try again.",
-    action: <button type="button">Try again</button>,
-  }}
-/>
-```
-
-The public destructive `Alert` spans the full table width and announces the
-consumer-owned title and optional description. The consumer owns any recovery
-action; rows and pagination are suppressed.
-
-## Optional row actions
-
-`renderRowActions` receives the current row and may return consumer-owned
-buttons, links, or a public Dropdown Menu. Give every control visible text or
-an explicit accessible name.
-
-```tsx title="record-actions.tsx"
-<DataTable
-  {...tableProps}
-  renderRowActions={(row) => (
-    <button aria-label={`Inspect ${row.label}`} type="button">
-      Inspect
-    </button>
-  )}
-  rowActionsLabel="Record actions"
-/>
-```
-
-The Block does not provide permissions, confirmation, routing, mutation, or
-destructive-action behavior and never makes the entire row interactive.
-
-## Optional controlled pagination
-
-Pagination is one-based and rendered only when `page` and `totalPages` are safe
-integers, `totalPages` is greater than one, and `page` is within bounds.
-
-```tsx title="controlled-record-pages.tsx"
-<DataTable
-  {...tableProps}
-  pagination={{
-    navigationLabel: "Record pages",
-    onPageChange: setPage,
-    page,
-    summary: `Page ${page} of ${totalPages}`,
-    totalPages,
-  }}
-/>
-```
-
-The public Pagination primitives expose the current page, disabled boundary
-controls, and compact page ranges. The Block emits only valid page numbers and
-does not slice rows, fetch data, synchronize URLs, or move focus after a page
-change. The consumer owns those behaviors.
-
-## Optional controlled page size
-
-Pass the optional `pageSize` prop to offer a native rows-per-page selector.
-It stays outside the table's horizontal scroller and works independently of
-`pagination`, including when the selected size leaves only one page.
-
-<Preview className="my-6 overflow-hidden">
-  <DataTablePageSizeExample />
-</Preview>
-
-Choose 2, 3 or 6 rows, navigate, then sort a column. This consumer sorts a fresh
-copy of all six fictional records before slicing. Its callbacks explicitly
-reset the page after size or sort changes. Reset table restores the initial
-view; the status remains visible when page navigation disappears. Nothing is
-requested from a server or saved.
-
-```ts title="data-table-page-size-types.ts"
-type DataTablePageSize = Readonly<{
-  value: number;
-  options: readonly number[];
-  onPageSizeChange: (pageSize: number) => void;
-  label?: string;
-}>;
-```
-
-`options` must contain positive safe integers. Invalid numbers are ignored and
-duplicates are removed in your supplied order without mutating the array. The
-selector is omitted unless at least two distinct valid choices remain and
-`value` matches one of them. There is no implicit default, rounding, automatic
-callback or special `All` value. Omit `pageSize` to preserve existing behavior.
-
-The default visible label is `Rows per page`; use `label`, for example
-`Lignes par page`, to localize it. Keep the label meaningful and non-empty.
-Native label/select association works across repeated tables without shared
-HTML IDs. Keep the surrounding table context clear when multiple selectors
-have the same name. Browser-native selection and keyboard behavior are used,
-not a custom combobox or grid keyboard model.
-
-`onPageSizeChange` receives only a different allowed number. The control reflects
-`value` from your application, not speculative internal state. It never invokes
-`onPageChange` or `onSortChange`, submits a surrounding form, slices rows or
-calculates a total from the visible page. The consumer must update the size and
-reset or clamp the page coherently. This standalone local consumer demonstrates
-that boundary and also clamps the displayed page if the input collection shrinks:
-
-```tsx title="adjustable-records-table.tsx"
-"use client";
-
-import { useState } from "react";
-import { DataTable, type DataTableColumn } from "./blocks/data-table";
-
-type Row = Readonly<{ id: string; label: string }>;
-
-const columns = [
-  { id: "label", header: "Record", cell: (row) => row.label },
-] satisfies readonly DataTableColumn<Row>[];
-
-export function AdjustableRecordsTable({ rows }: { rows: readonly Row[] }) {
-  const [size, setSize] = useState(10);
-  const [page, setPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(rows.length / size));
-  const currentPage = Math.min(page, totalPages);
-  const start = (currentPage - 1) * size;
-  const visibleRows = rows.slice(start, start + size);
-
-  return (
-    <div>
-      <DataTable
-        caption="Available records"
-        columns={columns}
-        emptyTitle="No records"
-        getRowId={(row) => row.id}
-        pageSize={{
-          value: size,
-          options: [10, 25, 50],
-          onPageSizeChange: (nextSize) => {
-            setSize(nextSize);
-            setPage(1);
-          },
-        }}
-        pagination={{ page: currentPage, totalPages, onPageChange: setPage }}
-        rows={visibleRows}
-      />
-      <p aria-live="polite">
-        Showing {rows.length === 0 ? 0 : start + 1}–{start + visibleRows.length}{" "}
-        of {rows.length} records.
-      </p>
-    </div>
-  );
-}
-```
-
-For sorted data, order the full collection before slicing. For server pagination,
-keep the approved sizes and true total in your data layer; update the controller
-synchronously and request the corresponding page yourself. Handle request
-cancellation, stale results, persistence and URL state there. The Block is not a
-server pagination implementation.
-
-The selector is hidden during loading, errors and ready empty results. It
-reappears for ready non-empty rows with a valid controller. If that transition
-removes a focused control, the application owns focus recovery and result
-announcements. Stable keys preserve the control when it remains mounted; the
-Block does not move focus. Verify native keyboard operation, visible focus,
-long localized labels, narrow layouts, both themes and full source copying in
-your consuming application before shipping.
-
-## Optional controlled sorting
-
-Mark individual columns `sortable: true` and pass a `sorting` controller to
-render native header buttons. Both are required; omitting either preserves
-plain headers. Sortable headers must contain meaningful, non-interactive
-phrasing content such as text or a span, never another button or link.
-
-<Preview className="my-6 overflow-hidden">
-  <DataTableSortingExample />
-</Preview>
-
-This example sorts a fresh copy of the full fictional dataset before taking a
-page. Its own callback resets the page to one. Reset sort restores the original
-sample order; no request is sent or data saved. The Block only requests a sort
-and displays the state supplied by this consumer.
-
-```ts title="data-table-sorting-types.ts"
-type DataTableSort = Readonly<{
-  columnId: string;
-  direction: "asc" | "desc";
-}>;
-
-type DataTableSorting = Readonly<{
-  value: DataTableSort | null;
-  onSortChange: (sort: DataTableSort) => void;
-  ascendingLabel?: string;
-  descendingLabel?: string;
-}>;
-```
-
-`value: null` means unsorted. Activating an inactive column requests `asc`;
-activating the currently ascending column requests `desc`, then `asc` again.
-Switching columns starts with ascending order. To clear sorting, set `value`
-to `null` in your application. There is no automatic third reset step.
-
-The callback receives a column ID, not a comparator, cell value or row array.
-Clicks do not optimistically change the indicator or reorder the supplied rows.
-Your application must return state that accurately describes its prepared rows.
-Unknown or non-sortable active column IDs receive no sort annotation.
-
-```tsx title="sortable-records-table.tsx"
-"use client";
-
-import { useState } from "react";
-import {
-  DataTable,
-  type DataTableColumn,
-  type DataTableSort,
-} from "./blocks/data-table";
-
-type Row = Readonly<{ id: string; label: string }>;
-
-const columns = [
-  {
-    id: "label",
-    header: "Record",
-    cell: (row) => row.label,
-    sortable: true,
-  },
-] satisfies readonly DataTableColumn<Row>[];
-
-export function SortableRecordsTable({ rows }: { rows: readonly Row[] }) {
-  const [sort, setSort] = useState<DataTableSort | null>(null);
-  const orderedRows = sort
-    ? [...rows].sort((left, right) => {
-        const comparison = left.label.localeCompare(right.label, "en");
-        return sort.direction === "asc" ? comparison : -comparison;
-      })
-    : rows;
-
-  return (
-    <DataTable
-      caption="Sortable records"
-      columns={columns}
-      emptyTitle="No records"
-      getRowId={(row) => row.id}
-      rows={orderedRows}
-      sorting={{ value: sort, onSortChange: setSort }}
-    />
-  );
-}
-```
-
-This small consumer has one sortable text column. Choose your own comparator
-and locale for other value types. For paginated data, order the complete dataset
-before slicing, or request the chosen ordering from your own server. Do not
-silently sort only the currently visible page and present it as global ordering.
-The consumer owns page reset, URL state, cancellation of stale requests and any
-announcement of asynchronously updated results.
-
-Header buttons are disabled in loading and error states; ready empty results
-can still request a sort. The active header reflects supplied state, while
-loading/error rows keep their existing presentation. Only the active sortable
-header has `aria-sort`. Direction glyphs are hidden from assistive technology,
-and button names combine the visible header with the next action. Override
-`ascendingLabel` and `descendingLabel` to localize the default `Sort ascending`
-and `Sort descending` text. Keep these labels non-empty.
-
-Tab reaches the enabled native buttons; Enter and Space use native browser
-activation. Focus is not moved by the Block. Keep column and row IDs stable
-when supplying reordered content, and verify focus, long headers, narrow
-horizontal scrolling, both themes and assistive-technology behavior in your
-application. Automated structural checks are not a complete accessibility audit.
-
-## Responsive behavior
-
-- Native table markup remains intact at every viewport size.
-- The public Table wrapper supplies horizontal scrolling when columns cannot
-  fit; it does not create page-level horizontal overflow.
-- The outer composition uses `min-w-0`.
-- Query controls wrap above and outside the horizontal scroller.
-- Pagination summary and controls stack on narrow viewports and align in one
-  row from the existing `sm` breakpoint.
-- The Block never hides arbitrary columns, changes rows into cards, or detects
-  the viewport in JavaScript.
-
-Use a mobile-first list or card composition instead when horizontal comparison
-is not the primary user task.
-
-## Accessibility and keyboard behavior
-
-- `table`, `thead`, `tbody`, `tr`, `th`, and `td` semantics are preserved.
-- The required caption gives the table an accessible description.
-- Public `TableHead` cells retain `scope="col"`; only the active sortable header
-  receives `aria-sort`. Sort requests use native, non-submitting buttons.
-- Query search has a visible label and normal native keyboard behavior, with
-  the documented live-search Enter guard. The optional group stays available
-  when results are empty, loading or failed; result announcements are opt-in.
-- Loading uses the public polite live region; decorative loading visuals stay
-  hidden from assistive technology.
-- Empty and error copy stays visible and understandable without color or icons.
-- Consumer row actions must remain keyboard operable and clearly labelled.
-- Pagination has an accessible navigation label, `aria-current="page"`, and
-  disabled previous/next boundaries.
-- Page callbacks do not cause hidden focus movement inside the Block. Route or
-  result-heading focus remains consumer-owned.
-
-Focused semantic, interaction, and axe tests verify these behaviors. This is
-not a claim of full WCAG certification.
-
-## Deliberate exclusions
-
-This Block does not include row selection, bulk actions, matching or filtering
-engines, filter definitions, sorting engines, multi-column sorting, column
-visibility, resizing, reordering, virtualization, inline editing, export, saved
-views, data fetching, server pagination, caching, routing, permissions,
-mutations, business rules, authentication, or billing.
-
-It does not depend on TanStack Table, Next.js, Starter Free, Starter Pro,
-private/deep package imports, or a new runtime library. Compose custom filter
-controls through `query.filters` or outside the Block and pass prepared rows.
-
-## Ownership, updates, and rollback
-
-After copying, the consumer owns the source, integration, cell content, action
-behavior, data lifecycle, and future maintenance. There is no automatic update
-or synchronization path. Compare future canonical revisions deliberately and
-adopt only the changes that fit the application.
-
-Rollback is removal or reversion of the copied `data-table` directory and its
-local integration. No package version, Registry state, or remote Block state is
-involved.
+              <option value="Available">Available</option
