@@ -65,8 +65,9 @@ const simulatedPreviewStyles = `
   flex-direction: column !important;
 }
 
-[data-preview-layout="mobile"] [data-slot="settings-panel"] input,
-[data-preview-layout="mobile"] [data-slot="settings-panel"] textarea {
+[data-preview-layout="mobile"] input,
+[data-preview-layout="mobile"] textarea,
+[data-preview-layout="mobile"] select {
   box-sizing: border-box;
   min-width: 0 !important;
   max-width: 100% !important;
