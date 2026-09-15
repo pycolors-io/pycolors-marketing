@@ -6,6 +6,9 @@ appliesTo: Blocks
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { BillingOverviewExample } from "@/components/docs/blocks/canonical-examples";
 
 ## Present billing context without owning billing logic
 
@@ -30,26 +33,35 @@ billing layer has already resolved.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/billing-overview/index.tsx` in your application.
+`src/components/blocks/billing-overview/index.tsx` in your application. Use the
+Source tab's copy button when available. If clipboard access is unavailable,
+select the code manually.
 
-Open the complete source below and use the code block copy button when available.
-If clipboard access is unavailable, select the code manually.
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <BillingOverviewExample />
+    </Preview>
+  </Tab>
 
-<details>
-  <summary>View and copy the complete source</summary>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/billing-overview/index.tsx"'
+    >
+      ../../../blocks/commerce/billing-overview/index.tsx
+    </include>
+  </Tab>
+</Tabs>
 
-  <include
-    lang="tsx"
-    meta='title="src/components/blocks/billing-overview/index.tsx"'
-  >
-    ../../../blocks/commerce/billing-overview/index.tsx
-  </include>
-</details>
+The Preview tab renders the real canonical `BillingOverviewPanel` with fictional
+deterministic values and inert local controls. It performs no billing or network
+operation. The Source tab includes the complete canonical file at build time,
+not a duplicated implementation.
 
-The documentation includes the canonical file at build time. Your application
-owns the copied source and does not receive automatic updates. Review future
-changes deliberately and validate it in your application before adoption.
-Return to the [Blocks catalog](/blocks) to compare another pattern.
+Your application owns the copied source and does not receive automatic updates.
+Review future changes deliberately and validate it in your application before
+adoption. Return to the [Blocks catalog](/blocks) to compare another pattern.
 
 ## Install by copying source
 
