@@ -12,11 +12,13 @@ import {
 
 import { Container } from "@/components/container";
 import {
+  BlockCatalogPreview,
+} from "@/components/marketing/blocks/block-catalog-preview";
+import {
   MarketingActionGroup,
   MarketingCtaPanel,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { BlockCatalogPreview } from "@/components/marketing/blocks/block-catalog-preview";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
@@ -229,7 +231,10 @@ export default function BlocksPage() {
               titleId="blocks-catalog-title"
             />
 
-            <nav aria-label="Block categories" className="mb-12 flex flex-wrap gap-2">
+            <nav
+              aria-label="Block categories"
+              className="mb-12 flex flex-wrap gap-2"
+            >
               {BLOCK_CATEGORIES.map((category) => (
                 <Link
                   className={categoryAnchorClassName}
@@ -257,7 +262,8 @@ export default function BlocksPage() {
                     <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border-subtle pb-4">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                          {blocks.length} {blocks.length === 1 ? "Block" : "Blocks"}
+                          {blocks.length}{" "}
+                          {blocks.length === 1 ? "Block" : "Blocks"}
                         </p>
                         <h3
                           className="mt-1 text-2xl font-semibold tracking-tight"
