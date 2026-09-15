@@ -10,11 +10,9 @@ const views: readonly View[] = ["preview", "source"];
 export function BlockShowcaseTabs({
   preview,
   source,
-  sourcePath,
 }: Readonly<{
   preview: ReactNode;
   source: string;
-  sourcePath: string;
 }>) {
   const id = useId();
   const [view, setView] = useState<View>("preview");
@@ -53,7 +51,7 @@ export function BlockShowcaseTabs({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden rounded-xl border border-border-subtle bg-background">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-4 py-3 sm:px-6">
         <div
           aria-label="Block view"
@@ -81,20 +79,23 @@ export function BlockShowcaseTabs({
             );
           })}
         </div>
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
-            {sourcePath}
-          </span>
-          {view === "preview" ? (
-            <button
-              className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-border-subtle bg-background px-3 text-xs font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              onClick={() => setPreviewKey((value) => value + 1)}
-              type="button"
-            >
-              Reset preview
-            </button>
-          ) : null}
-        </div>
+        {view === "preview" ? (
+          <button
+            className="inline-flex min-h-9 shrink-0 items-center rounded-md px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            onClick={() => setPreviewKey((value) => value + 1)}
+            type="button"
+          >
+            Reset preview
+          </button>
+        ) : (
+          <button
+            className="inline-flex min-h-9 shrink-0 items-center rounded-md px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            onClick={copySource}
+            type="button"
+          >
+            {copied ? "Copied" : "Copy code"}
+          </button>
+        )}
       </div>
 
       <div
@@ -117,31 +118,17 @@ export function BlockShowcaseTabs({
         id={`${id}-source-panel`}
         role="tabpanel"
       >
-        <div className="relative bg-neutral-950 text-neutral-100">
-          <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-white/10 bg-neutral-950/95 px-4 py-3 backdrop-blur sm:px-6">
-            <span className="truncate font-mono text-xs text-neutral-400">
-              {sourcePath}
-            </span>
-            <button
-              className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-white/15 bg-white/5 px-3 text-xs font-medium text-neutral-100 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              onClick={copySource}
-              type="button"
-            >
-              {copied ? "Copied" : "Copy code"}
-            </button>
-          </div>
-          <div className="max-h-[36rem] overflow-auto [&_figure]:m-0 [&_figure]:rounded-none [&_pre]:max-h-none">
-            <DynamicCodeBlock
-              code={source}
-              lang="tsx"
-              options={{
-                themes: {
-                  light: "github-light",
-                  dark: "github-dark",
-                },
-              }}
-            />
-          </div>
+        <div className="max-h-[36rem] overflow-auto [&_figure]:m-0 [&_figure]:rounded-none [&_pre]:max-h-none">
+          <DynamicCodeBlock
+            code={source}
+            lang="tsx"
+            options={{
+              themes: {
+                light: "github-light",
+                dark: "github-dark",
+              },
+            }}
+          />
         </div>
       </div>
     </div>
