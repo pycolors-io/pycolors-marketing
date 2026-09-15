@@ -78,12 +78,11 @@ function readBlockSource(block: BlockCatalogEntry) {
 
 function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
   const blockId = block.id.split("/")[1];
-  const sourcePath = `content/blocks/${block.id}/index.tsx`;
   const source = readBlockSource(block);
 
   return (
-    <article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">
-      <div className="flex flex-col gap-5 border-b border-border-subtle p-5 sm:p-6 lg:flex-row lg:items-end lg:justify-between">
+    <article className="space-y-5">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
           <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
@@ -115,16 +114,13 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
       <BlockShowcaseTabs
         preview={<BlockCatalogPreview blockId={blockId} />}
         source={source}
-        sourcePath={sourcePath}
       />
 
-      <div className="border-t border-border-subtle bg-background px-5 py-4 sm:px-6">
-        <p className="text-xs leading-5 text-muted-foreground">
-          Preview interactions use fictional local state only. No account,
-          payment, email, persistence or network mutation occurs. Copy the
-          complete source, then connect the behavior your application owns.
-        </p>
-      </div>
+      <p className="text-xs leading-5 text-muted-foreground">
+        Preview interactions use fictional local state only. No account, payment,
+        email, persistence or network mutation occurs. Copy the complete source,
+        then connect the behavior your application owns.
+      </p>
     </article>
   );
 }
@@ -257,7 +253,7 @@ export default function BlocksPage() {
                       </Link>
                     </div>
 
-                    <div className="space-y-10">
+                    <div className="space-y-16">
                       {blocks.map((block) => (
                         <BlockCatalogCard block={block} key={block.id} />
                       ))}
