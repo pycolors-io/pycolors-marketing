@@ -11,9 +11,7 @@ import {
 } from "lucide-react";
 
 import { Container } from "@/components/container";
-import {
-  BlockCatalogPreview,
-} from "@/components/marketing/blocks/block-catalog-preview";
+import { BlockCatalogPreview } from "@/components/marketing/blocks/block-catalog-preview";
 import {
   MarketingActionGroup,
   MarketingCtaPanel,
