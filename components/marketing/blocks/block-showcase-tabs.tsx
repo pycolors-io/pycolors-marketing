@@ -1,8 +1,21 @@
 "use client";
 
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
-import { Monitor, RotateCcw, Smartphone, Tablet } from "lucide-react";
-import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  ExternalLink,
+  Maximize2,
+  Monitor,
+  RotateCcw,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
+import {
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 
 type View = "preview" | "source";
 type Viewport = "desktop" | "tablet" | "mobile";
@@ -22,9 +35,6 @@ const viewports = [
 const iconButtonClassName =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground";
 
-// The picker resizes a component canvas, not the browser viewport. These
-// bounded overrides mirror the canonical Blocks' media-query results at the
-// simulated width so desktop browser breakpoints cannot leak into the preview.
 const tabletSimulationClassName = [
   "[&_[data-slot=pricing-plans-list]]:!grid-cols-2",
   "[&_[data-slot=workspace-invitation]]:!flex-col",
@@ -83,12 +93,15 @@ function getSimulationClassName(viewport: Viewport) {
 
 export function BlockShowcaseTabs({
   preview,
+  previewHref,
   source,
 }: Readonly<{
   preview: ReactNode;
+  previewHref: string;
   source: string;
 }>) {
   const id = useId();
+  const previewSurfaceRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<View>("preview");
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [copied, setCopied] = useState(false);
@@ -107,6 +120,11 @@ export function BlockShowcaseTabs({
     await navigator.clipboard.writeText(source);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
+  }
+
+  async function enterFullscreen() {
+    if (!document.fullscreenEnabled || !previewSurfaceRef.current) return;
+    await previewSurfaceRef.current.requestFullscreen();
   }
 
   function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
@@ -188,10 +206,26 @@ export function BlockShowcaseTabs({
                 </button>
               );
             })}
-            <span
-              aria-hidden="true"
-              className="mx-1 h-5 w-px bg-border-subtle"
-            />
+            <span aria-hidden="true" className="mx-1 h-5 w-px bg-border-subtle" />
+            <a
+              aria-label="Open preview in new tab"
+              className={iconButtonClassName}
+              href={previewHref}
+              rel="noopener noreferrer"
+              target="_blank"
+              title="Open preview in new tab"
+            >
+              <ExternalLink aria-hidden="true" className="size-4" />
+            </a>
+            <button
+              aria-label="Enter fullscreen"
+              className={iconButtonClassName}
+              onClick={enterFullscreen}
+              title="Enter fullscreen"
+              type="button"
+            >
+              <Maximize2 aria-hidden="true" className="size-4" />
+            </button>
             <button
               aria-label="Reset preview"
               className={iconButtonClassName}
@@ -217,6 +251,7 @@ export function BlockShowcaseTabs({
         aria-labelledby={`${id}-preview-tab`}
         hidden={view !== "preview"}
         id={`${id}-preview-panel`}
+        ref={previewSurfaceRef}
         role="tabpanel"
       >
         <div className="min-h-[28rem] overflow-auto bg-surface-muted/20 p-3 sm:p-6 lg:min-h-[36rem] lg:p-8">
