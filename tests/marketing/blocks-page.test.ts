@@ -84,33 +84,40 @@ describe("Blocks discovery", () => {
     expect(canonicalExamples).toContain("aria-pressed={selected}");
   });
 
-  it("adds accessible Desktop, Tablet, Mobile, open, fullscreen and Reset controls", () => {
-    expect(showcaseTabs).toContain('id: "desktop"');
-    expect(showcaseTabs).toContain('id: "tablet"');
-    expect(showcaseTabs).toContain('id: "mobile"');
-    expect(showcaseTabs).toContain('width: "100%"');
-    expect(showcaseTabs).toContain('width: "768px"');
-    expect(showcaseTabs).toContain('width: "390px"');
-    expect(showcaseTabs).toContain('aria-label="Preview viewport"');
-    expect(showcaseTabs).toContain("aria-pressed={selected}");
-    expect(showcaseTabs).toContain('aria-label="Open preview in new tab"');
-    expect(showcaseTabs).toContain('rel="noopener noreferrer"');
-    expect(showcaseTabs).toContain('target="_blank"');
-    expect(showcaseTabs).toContain('aria-label="Enter fullscreen"');
-    expect(showcaseTabs).toContain("requestFullscreen");
-    expect(showcaseTabs).toContain('aria-label="Reset preview"');
-    expect(showcaseTabs).toContain("setPreviewKey");
-    expect(showcaseTabs).toContain("data-viewport={viewport}");
-    expect(showcaseTabs).toContain("style={{ width: viewportWidth }}");
-  });
+  it(
+    "adds accessible Desktop, Tablet, Mobile, open, fullscreen and Reset controls",
+    () => {
+      expect(showcaseTabs).toContain('id: "desktop"');
+      expect(showcaseTabs).toContain('id: "tablet"');
+      expect(showcaseTabs).toContain('id: "mobile"');
+      expect(showcaseTabs).toContain('width: "100%"');
+      expect(showcaseTabs).toContain('width: "768px"');
+      expect(showcaseTabs).toContain('width: "390px"');
+      expect(showcaseTabs).toContain('aria-label="Preview viewport"');
+      expect(showcaseTabs).toContain("aria-pressed={selected}");
+      expect(showcaseTabs).toContain('aria-label="Open preview in new tab"');
+      expect(showcaseTabs).toContain('rel="noopener noreferrer"');
+      expect(showcaseTabs).toContain('target="_blank"');
+      expect(showcaseTabs).toContain('aria-label="Enter fullscreen"');
+      expect(showcaseTabs).toContain("requestFullscreen");
+      expect(showcaseTabs).toContain('aria-label="Reset preview"');
+      expect(showcaseTabs).toContain("setPreviewKey");
+      expect(showcaseTabs).toContain("data-viewport={viewport}");
+      expect(showcaseTabs).toContain("style={{ width: viewportWidth }}");
+    },
+  );
 
   it("maps every catalog identity to the standalone preview route", () => {
     expect(page).toContain("previewHref={`/blocks/${block.id}/preview`}");
     expect(standalonePage).toContain("generateStaticParams");
     expect(standalonePage).toContain("BLOCKS_CATALOG.map");
     expect(standalonePage).toContain('entry.id === `${category}/${block}`');
-    expect(standalonePage).toContain("<BlockCatalogPreview blockId={block} />");
-    expect(standalonePage).toContain("robots: { index: false, follow: false }");
+    expect(standalonePage).toContain(
+      "<BlockCatalogPreview blockId={block} />",
+    );
+    expect(standalonePage).toContain(
+      "robots: { index: false, follow: false }",
+    );
     expect(standalonePreview).toContain('aria-label="Preview actions"');
     expect(standalonePreview).toContain("requestFullscreen");
     expect(standalonePreview).toContain("document.exitFullscreen");
@@ -146,42 +153,48 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('? "p-3"');
   });
 
-  it("exposes syntax-highlighted canonical source without repository path chrome", () => {
-    expect(page).toContain("readBlockSource");
-    expect(page).toContain('from "@/lib/blocks/source.server"');
-    expect(page).not.toContain('from "node:fs"');
-    expect(page).not.toContain('from "node:path"');
-    expect(sourceLoader).toContain('from "node:fs"');
-    expect(sourceLoader).toContain('from "node:path"');
-    expect(sourceLoader).toContain(
-      '"content", "blocks", block.id, "index.tsx"',
-    );
-    expect(page).toContain("BlockShowcaseTabs");
-    expect(page).toContain("source={source}");
-    expect(page).not.toContain("sourcePath");
-    expect(showcaseTabs).not.toContain("sourcePath");
-    expect(showcaseTabs).toContain('role="tablist"');
-    expect(showcaseTabs).toContain('role="tab"');
-    expect(showcaseTabs).toContain('role="tabpanel"');
-    expect(showcaseTabs).toContain("Preview");
-    expect(showcaseTabs).toContain("Code");
-    expect(showcaseTabs).toContain("Copy code");
-    expect(showcaseTabs).toContain("navigator.clipboard.writeText(source)");
-    expect(showcaseTabs).toContain("DynamicCodeBlock");
-    expect(showcaseTabs).toContain('lang="tsx"');
-    expect(showcaseTabs).toContain('light: "github-light"');
-    expect(showcaseTabs).toContain('dark: "github-dark"');
-  });
+  it(
+    "exposes syntax-highlighted canonical source without repository path chrome",
+    () => {
+      expect(page).toContain("readBlockSource");
+      expect(page).toContain('from "@/lib/blocks/source.server"');
+      expect(page).not.toContain('from "node:fs"');
+      expect(page).not.toContain('from "node:path"');
+      expect(sourceLoader).toContain('from "node:fs"');
+      expect(sourceLoader).toContain('from "node:path"');
+      expect(sourceLoader).toContain(
+        '"content", "blocks", block.id, "index.tsx"',
+      );
+      expect(page).toContain("BlockShowcaseTabs");
+      expect(page).toContain("source={source}");
+      expect(page).not.toContain("sourcePath");
+      expect(showcaseTabs).not.toContain("sourcePath");
+      expect(showcaseTabs).toContain('role="tablist"');
+      expect(showcaseTabs).toContain('role="tab"');
+      expect(showcaseTabs).toContain('role="tabpanel"');
+      expect(showcaseTabs).toContain("Preview");
+      expect(showcaseTabs).toContain("Code");
+      expect(showcaseTabs).toContain("Copy code");
+      expect(showcaseTabs).toContain("navigator.clipboard.writeText(source)");
+      expect(showcaseTabs).toContain("DynamicCodeBlock");
+      expect(showcaseTabs).toContain('lang="tsx"');
+      expect(showcaseTabs).toContain('light: "github-light"');
+      expect(showcaseTabs).toContain('dark: "github-dark"');
+    },
+  );
 
-  it("keeps one bounded demo surface instead of wrapping every Block in a card", () => {
-    expect(page).toContain('<article className="space-y-5">');
-    expect(page).not.toContain(
-      '<article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">',
-    );
-    expect(showcaseTabs).toContain(
-      "overflow-hidden rounded-xl border border-border-subtle bg-background",
-    );
-  });
+  it(
+    "keeps one bounded demo surface instead of wrapping every Block in a card",
+    () => {
+      expect(page).toContain('<article className="space-y-5">');
+      expect(page).not.toContain(
+        '<article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">',
+      );
+      expect(showcaseTabs).toContain(
+        "overflow-hidden rounded-xl border border-border-subtle bg-background",
+      );
+    },
+  );
 
   it("preserves public navigation and discovery routes", () => {
     expect(page).toMatch(/alternates:\s*\{\s*canonical:\s*"\/blocks"/u);
