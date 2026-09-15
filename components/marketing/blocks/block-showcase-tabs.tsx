@@ -22,6 +22,35 @@ const viewports = [
 const iconButtonClassName =
   "inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground";
 
+// The viewport picker changes a component-sized canvas while the browser itself
+// can still be desktop-sized. These overrides mirror the canonical Blocks'
+// mobile breakpoint behavior so a 390px catalog preview stacks exactly as it
+// would when the Block is rendered in a real mobile viewport.
+const mobileSimulationClassName = [
+  "[&_[data-slot=pricing-plans-list]]:!grid-cols-1",
+  "[&_[data-slot=billing-overview-panel]>dl]:!grid-cols-1",
+  "[&_[data-slot=billing-overview-panel]>div:last-child]:!flex-col",
+  "[&_[data-slot=payment-method-panel]>header>div]:!flex-col",
+  "[&_[data-slot=payment-method-panel]>dl]:!grid-cols-1",
+  "[&_[data-slot=payment-method-panel]>div:last-child]:!flex-col",
+  "[&_[data-slot=workspace-members-panel]>div:first-child]:!flex-col",
+  "[&_[data-slot=workspace-member]]:!flex-col",
+  "[&_[data-slot=workspace-invitations-panel]>div:first-child]:!flex-col",
+  "[&_[data-slot=workspace-invitation]]:!flex-col",
+  "[&_[data-slot=audit-log-panel]>div:first-child]:!flex-col",
+  "[&_[data-slot=audit-log-panel]>div:first-child>div:last-child]:!flex-col",
+  "[&_[data-slot=audit-log-event]>article]:!flex-col",
+  "[&_[data-slot=settings-panel-section]]:!grid-cols-1",
+  "[&_[data-slot=settings-panel-section]>div:last-child]:!grid-cols-1",
+  "[&_[data-slot=settings-panel-field]]:!col-span-1",
+  "[&_[data-slot=settings-panel-actions]]:!flex-col",
+  "[&_[data-slot=settings-panel-actions]>button]:!w-full",
+  "[&_[data-slot=data-table-query]>div:first-child]:!flex-col",
+  "[&_[data-slot=data-table-pagination]]:!flex-col",
+  "[&_[data-slot=responsive-sidebar-desktop]]:!hidden",
+  "[&_[data-slot=responsive-sidebar-mobile-trigger]]:!inline-flex",
+].join(" ");
+
 export function BlockShowcaseTabs({
   preview,
   source,
@@ -36,6 +65,12 @@ export function BlockShowcaseTabs({
   const [previewKey, setPreviewKey] = useState(0);
   const viewportWidth =
     viewports.find((item) => item.id === viewport)?.width ?? "100%";
+  const previewPaddingClassName =
+    viewport === "mobile"
+      ? "p-3"
+      : viewport === "tablet"
+        ? "p-5"
+        : "p-4 sm:p-6 lg:p-8";
 
   async function copySource() {
     await navigator.clipboard.writeText(source);
@@ -159,7 +194,14 @@ export function BlockShowcaseTabs({
             key={previewKey}
             style={{ width: viewportWidth }}
           >
-            <div className="p-4 sm:p-6 lg:p-8">{preview}</div>
+            <div
+              className={`${previewPaddingClassName} ${
+                viewport === "mobile" ? mobileSimulationClassName : ""
+              }`}
+              data-preview-layout={viewport}
+            >
+              {preview}
+            </div>
           </div>
         </div>
       </div>
