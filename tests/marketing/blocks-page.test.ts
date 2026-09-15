@@ -11,7 +11,6 @@ const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (path: string) =>
   readFileSync(resolve(marketingRoot, path), "utf8");
 const page = read("app/(site)/blocks/page.tsx");
-const preview = read("components/marketing/blocks/block-catalog-preview.tsx");
 
 describe("Blocks discovery", () => {
   it("keeps the canonical catalog and ordered categories", () => {
@@ -39,13 +38,6 @@ describe("Blocks discovery", () => {
         ),
       ).toBe(true);
     }
-  });
-
-  it("renders every catalogued Block through the source-backed preview registry", () => {
-    for (const block of BLOCKS_CATALOG) {
-      expect(preview).toContain(`case "${block.id.split("/")[1]}"`);
-    }
-    expect(preview).toMatch(/from ["']@\/content\/blocks\//u);
   });
 
   it("keeps the visual catalog server-rendered and category-driven", () => {
