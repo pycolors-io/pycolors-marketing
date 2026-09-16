@@ -29,6 +29,21 @@
         "@import \"@pycolors/tokens/tokens.css\"": {},
         "@source \"../../node_modules/@pycolors/ui\"": {}
       }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "feedback-empty-state-panel",
+      "type": "registry:block",
+      "title": "Empty state panel",
+      "description": "Production-shaped empty-state composition with consumer-owned actions.",
+      "registryDependencies": ["pycolors-base"],
+      "files": [
+        {
+          "path": "content/blocks/feedback/empty-state-panel/index.tsx",
+          "type": "registry:component",
+          "target": "@components/blocks/feedback-empty-state-panel/index.tsx"
+        }
+      ]
     }
   ]
 }
