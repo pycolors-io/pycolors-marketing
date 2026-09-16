@@ -36,7 +36,7 @@
       "type": "registry:block",
       "title": "Empty state panel",
       "description": "Production-shaped empty-state composition with consumer-owned actions.",
-      "registryDependencies": ["pycolors-base"],
+      "registryDependencies": ["pycolors-io/pycolors-marketing/pycolors-base"],
       "files": [
         {
           "path": "content/blocks/feedback/empty-state-panel/index.tsx",
