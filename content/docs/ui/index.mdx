@@ -160,8 +160,11 @@ When a public component or meaningful state changes:
 3. Update the matching component tests and Fumadocs page when behavior changes.
    Run `pnpm --filter @pycolors/ui verify`, `pnpm check:ui-package`, and
    `pnpm --filter pycolors-marketing types:check` for documentation changes.
-4. Check generated story IDs and browser rendering. A static build does not
-   execute interaction, theme, viewport or assistive-technology coverage.
+4. Install Chromium with `pnpm --filter @pycolors/ui test:storybook:install`,
+   then run `pnpm --filter @pycolors/ui test:storybook` for interactions,
+   accessibility scans, light/dark and desktop/mobile checks. Check generated
+   story IDs separately. Automated checks do not replace assistive-technology
+   and visual review; setup, selection and diagnostics are in the story guide.
 5. Preserve old IDs through shared-render compatibility entries when migrating
    links. The migration ledger and deprecation rules live in
    `packages/ui/stories/README.md`; the legacy module contains no new examples.
