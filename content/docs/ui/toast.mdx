@@ -161,7 +161,10 @@ Use Toast when feedback should be noticeable but should not interrupt the user.
 
 ### Variants
 
-Toast supports a small set of variants.
+Toast supports a small set of variants. Success, warning and destructive variants
+use semantic border colors with the normal foreground text, preserving readable
+message contrast in both themes. Include a descriptive title or message so meaning
+does not depend on color alone. Consumer `className` overrides still take precedence.
 
 Keep variants limited to avoid turning every message into an event.
 
