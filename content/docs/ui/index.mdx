@@ -145,20 +145,32 @@ pnpm --filter @pycolors/ui storybook
 
 ### Maintaining examples
 
-The maintained public-surface stories live in
-`packages/ui/stories/public-surface.stories.tsx`. When a public component or a
-meaningful documented state changes:
+Canonical examples live in `packages/ui/stories/components/<family>.stories.tsx`.
+The public `src/index.ts` barrel remains the source of truth for supported families.
+Foundations demonstrate existing tokens; compositions are small synthetic examples.
+The local navigation orders Foundations, Components, then Compositions.
 
-1. Add or update its representative story and import it through the package's
-   public `src/index.ts` barrel, not a component's internal file.
-2. Keep the story token-driven, accessible, and usable in both Storybook themes.
-3. Update the matching Fumadocs page when public usage or behavior changes.
-4. Run `pnpm --filter @pycolors/ui verify`; this includes a production Storybook
-   build. For documentation changes, also run
-   `pnpm --filter pycolors-marketing types:check`.
+When a public component or meaningful state changes:
 
-This one-to-one maintenance path keeps isolated examples aligned with the public
-exports while the documentation continues to explain product usage and composition.
+1. Update its typed family module with an explicit `components-<family>` ID,
+   stable story exports, a `Default`, a useful description and its Fumadocs link.
+   Import through `../../src/index.js`, never a component's internal file.
+2. Expose only supported args/controls. Controlled examples own their state;
+   keep labels, native/Radix semantics, tokens and both themes intact.
+3. Update the matching component tests and Fumadocs page when behavior changes.
+   Run `pnpm --filter @pycolors/ui verify`, `pnpm check:ui-package`, and
+   `pnpm --filter pycolors-marketing types:check` for documentation changes.
+4. Check generated story IDs and browser rendering. A static build does not
+   execute interaction, theme, viewport or assistive-technology coverage.
+5. Preserve old IDs through shared-render compatibility entries when migrating
+   links. The migration ledger and deprecation rules live in
+   `packages/ui/stories/README.md`; the legacy module contains no new examples.
+
+Story-only changes do not need a package release. Public API/behavior changes
+retain their normal Changeset, test and documentation requirements. Public stories
+must contain only public primitives and fixtures: no Pro source, private imports,
+credentials or customer data. Public Explorer hosting and a full consumer
+integration guide remain separate work; no production Explorer URL is assumed.
 
 ## Start with the essentials
 
