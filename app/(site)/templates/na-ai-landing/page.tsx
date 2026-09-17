@@ -1,4 +1,3 @@
-import type { ComponentType, ReactNode } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,18 +20,16 @@ import {
   Check,
 } from "lucide-react";
 
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  cn,
-} from "@pycolors/ui";
+import { Badge, Button, Card, CardContent } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
 import { Container } from "@/components/container";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
@@ -211,81 +208,6 @@ const faqs = [
   },
 ] as const;
 
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-  align = "center",
-}: {
-  readonly eyebrow?: string;
-  readonly title: string;
-  readonly description?: string;
-  readonly align?: "center" | "left";
-}) {
-  return (
-    <div
-      className={cn(
-        align === "center"
-          ? "mx-auto max-w-3xl text-center"
-          : "max-w-3xl text-left",
-      )}
-    >
-      {eyebrow ? (
-        <Badge
-          variant="outline"
-          className="rounded-[5px] border-border-subtle bg-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
-        >
-          {eyebrow}
-        </Badge>
-      ) : null}
-
-      <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        {title}
-      </h2>
-
-      {description ? (
-        <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-          {description}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function Pill({ children }: { readonly children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function FeatureCard({
-  title,
-  description,
-  icon: Icon,
-}: {
-  readonly title: string;
-  readonly description: string;
-  readonly icon: ComponentType<{ className?: string }>;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border hover:bg-surface-elevated">
-      <CardHeader className="space-y-4">
-        <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-          <Icon className="h-5 w-5 text-muted-foreground" />
-        </div>
-
-        <CardTitle className="text-lg">{title}</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
 function ScreenshotGrid() {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
@@ -442,7 +364,7 @@ export default function NaAiTemplatePage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Why it exists"
               title="Most builders lose time polishing the page before testing the offer."
               description="NA-AI Landing gives you the commercial surface first: a serious AI/SaaS landing page with sections, hierarchy, pricing, trust, and responsive UI already shaped."
@@ -450,7 +372,12 @@ export default function NaAiTemplatePage() {
 
             <div className="mt-12 grid gap-4 md:grid-cols-2">
               {highlights.map((highlight) => (
-                <FeatureCard key={highlight.title} {...highlight} />
+                <MarketingFeatureCard
+                  key={highlight.title}
+                  title={highlight.title}
+                  description={highlight.description}
+                  icon={<highlight.icon className="h-5 w-5" />}
+                />
               ))}
             </div>
           </div>
@@ -460,7 +387,7 @@ export default function NaAiTemplatePage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Preview"
               title="A polished full-page landing experience."
               description="Use the template as a strong baseline, then adapt the product story, screenshots, colors, sections, and offer for your own AI or SaaS product."
@@ -558,7 +485,7 @@ export default function NaAiTemplatePage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="What is included"
               title="Everything you need to launch the marketing layer."
               description="NA-AI Landing is a polished frontend package for launching, validating, and presenting your AI or SaaS product without rebuilding the landing page foundation."
@@ -663,11 +590,14 @@ export default function NaAiTemplatePage() {
                     fast customization.
                   </p>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <MarketingPillList
+                    aria-label="NA-AI Landing technology stack"
+                    className="mt-6"
+                  >
                     {stack.map((item) => (
-                      <Pill key={item}>{item}</Pill>
+                      <MarketingPill key={item}>{item}</MarketingPill>
                     ))}
-                  </div>
+                  </MarketingPillList>
                 </CardContent>
               </Card>
 
@@ -687,11 +617,14 @@ export default function NaAiTemplatePage() {
                     Starter Pro.
                   </p>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <MarketingPillList
+                    aria-label="NA-AI Landing exclusions"
+                    className="mt-6"
+                  >
                     {notIncluded.map((item) => (
-                      <Pill key={item}>{item}</Pill>
+                      <MarketingPill key={item}>{item}</MarketingPill>
                     ))}
-                  </div>
+                  </MarketingPillList>
 
                   <div className="mt-6">
                     <Button asChild variant="outline" className="rounded-[5px]">
@@ -711,7 +644,7 @@ export default function NaAiTemplatePage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="Use cases"
               title="Built for builders who need the page before the platform."
               description="Use NA-AI Landing when your priority is to present, test, and sell the product story quickly."
@@ -719,7 +652,12 @@ export default function NaAiTemplatePage() {
 
             <div className="mt-12 grid gap-4 md:grid-cols-3">
               {useCases.map((item) => (
-                <FeatureCard key={item.title} {...item} />
+                <MarketingFeatureCard
+                  key={item.title}
+                  title={item.title}
+                  description={item.description}
+                  icon={<item.icon className="h-5 w-5" />}
+                />
               ))}
             </div>
           </div>
@@ -868,7 +806,7 @@ export default function NaAiTemplatePage() {
       <section className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
-            <SectionHeading
+            <MarketingSectionHeader
               eyebrow="FAQ"
               title="Questions before buying"
               description="Make the scope clear before purchase."
@@ -915,12 +853,16 @@ export default function NaAiTemplatePage() {
                 marketing page for your AI or SaaS product.
               </p>
 
-              <div className="mt-6 flex flex-wrap justify-center gap-2">
-                <Pill>Launch price {PRODUCT.price}</Pill>
-                <Pill>One-time payment</Pill>
-                <Pill>Instant access</Pill>
-                <Pill>Commercial usage</Pill>
-              </div>
+              <MarketingPillList
+                aria-label="NA-AI Landing purchase details"
+                align="center"
+                className="mt-6"
+              >
+                <MarketingPill>Launch price {PRODUCT.price}</MarketingPill>
+                <MarketingPill>One-time payment</MarketingPill>
+                <MarketingPill>Instant access</MarketingPill>
+                <MarketingPill>Commercial usage</MarketingPill>
+              </MarketingPillList>
 
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <BuyProductButton

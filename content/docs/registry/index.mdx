@@ -1,0 +1,97 @@
+---
+title: Registry
+description: Understand the PyColors Registry pilot, its tested compatibility, and when to use npm packages or manual Block source instead.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+The PyColors Registry is a distribution layer over public PyColors packages and
+canonical Block source. Its first pilot combines `pycolors-base` with
+`feedback-empty-state-panel`, using the upstream shadcn CLI rather than a new
+PyColors installer.
+
+<Callout title="Pilot documentation, not a public-availability announcement">
+  Installation from generated local artifacts has passed the consumer matrix
+  described below. Credential-free installation from the public Marketing
+  mirror, including its Registry dependencies, still needs a separate
+  human-reviewed availability check. The public-address commands in this guide
+  are conditional on that check; they are not evidence that it has happened. Use
+  [manual Block installation](/docs/blocks) in the meantime.
+</Callout>
+
+## Choose your installation surface
+
+- **Public npm packages:** use [UI installation](/docs/ui/installation) when
+  composing your own interfaces. `@pycolors/ui` and `@pycolors/tokens` remain
+  versioned dependencies with public exports.
+- **Manual Block source:** use [Blocks installation](/docs/blocks) to copy a
+  documented pattern directly. You configure dependencies and styles yourself
+  and own the copied code.
+- **Registry pilot:** use the [Registry installation guide](/docs/registry/installation)
+  to inspect the base setup and the first free item before applying them to a
+  compatible existing app. Public transport verification remains a prerequisite.
+
+Registry installation does not make copied source an automatically updated npm
+package. It does not provide authentication, billing, a private registry, or
+premium downloads. There is no `@pycolors/blocks` package or proprietary
+`pycolors init`, `add`, or `doctor` command in this workflow.
+
+## Tested compatibility
+
+The installation evidence covers these exact scenarios, not every version in
+an entire major range:
+
+- Next.js **16.1.1**, App Router, standalone application.
+- Vite **8.0.0**, React application, standalone.
+- The same Vite application in **`apps/web` of a pnpm workspace**, with app-local
+  configuration and an unchanged sibling workspace.
+
+Common versions are **Node 24**, **pnpm 10.32.1**, **shadcn 4.19.0**,
+**React and React DOM 19.2.0**, **TypeScript 6.0.3**, and **Tailwind CSS and
+its PostCSS plugin 4.3.3**. The matrix installs public **`@pycolors/ui` 1.5.2**,
+**`@pycolors/tokens` 1.2.2**, and **`lucide-react` 1.46.0**. Its quality tooling
+uses ESLint 9.39.5, eslint-config-next 16.1.1, and Prettier 3.9.6.
+
+The required configuration is strict TypeScript/TSX, `radix-nova`, Lucide,
+CSS variables, unprefixed Tailwind classes, and aliases local to the consuming
+app. The stylesheet is `src/app/globals.css` for Next.js or
+`src/styles/globals.css` for Vite, relative to that app. Vite retains the base's
+`rsc: true` CLI setting; this does not give Vite React Server Components.
+
+Other frameworks or package managers, JavaScript output, Base UI, other styles,
+Tailwind 3, prefixed classes, different stylesheet depths, inherited TypeScript
+configuration, and cross-app aliases are outside this tested path. Start with
+manual installation rather than assuming that the CLI will safely reject an
+unsupported configuration.
+
+## What the checks prove
+
+The three scenarios each run twice with cold projects and package stores.
+They install real public npm dependencies, validate file placement and CSS,
+exercise repeat installation and file conflicts, and run formatting, lint,
+strict types, installed-source tests, and production builds. Dependency
+lifecycle scripts are disabled in those fixtures.
+
+The tests resolve generated local Registry artifacts. A temporary test payload
+maps the pilot's base dependency to the local base artifact; the authoritative
+manifest and original generated source are not changed. The separate offline
+consumer test also exercises item inspection with `view`.
+
+This is evidence for artifact installation, not for live GitHub delivery,
+every future dependency resolution, browser interaction, or visual
+accessibility. The [installation guide](/docs/registry/installation) explains
+public addressing and the remaining transport boundary.
+
+## Continue
+
+[Install the base and first item](/docs/registry/installation), then read
+[ownership, updates, and rollback](/docs/registry/updates). For a failed step,
+use [Registry troubleshooting](/docs/registry/troubleshooting).
+
+[Browse the Blocks catalog](/blocks) for other patterns; a documented Block is
+not automatically a Registry item. Need a complete application foundation?
+[Explore Starter Free](/docs/starter), [read about Starter Pro](/docs/starter-pro),
+or [compare the Starters](/starters). These are separate products, not premium
+Registry capabilities.

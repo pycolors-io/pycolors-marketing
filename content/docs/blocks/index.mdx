@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-08-28"
+lastUpdated: "2026-09-17"
 appliesTo: Blocks
 ---
 
@@ -14,24 +14,45 @@ import { Badge } from "@pycolors/ui";
   <Badge>Source copy</Badge>
 </div>
 
+[Explore the Blocks catalog](/blocks) to choose an application shell,
+authentication panel, commerce surface, data table, account/workspace surface,
+empty state or other documented pattern before following the installation steps
+below.
+
 ## Copy source, then own it
 
 PyColors Blocks use a manual source-copy flow. When a Block is available, copy
 its canonical source directory into your application, then treat the copied code
 as your own product code.
 
-<Callout title="Canonical Blocks">
-  The category and naming contract is approved. The
-  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar)
-  source is the first production-shaped Block, followed by
-  [`data/data-table`](/docs/blocks/data/data-table) and
-  [`account/settings-panel`](/docs/blocks/account/settings-panel). Every other
-  source-owner issue still has to deliver and validate its own Block.
+<Callout title="Canonical documented Blocks">
+  The category and naming contract is approved. The documented catalog includes
+  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar),
+  [`auth/sign-in`](/docs/blocks/auth/sign-in),
+  [`auth/sign-up`](/docs/blocks/auth/sign-up),
+  [`auth/password-recovery`](/docs/blocks/auth/password-recovery),
+  [`data/data-table`](/docs/blocks/data/data-table),
+  [`account/settings-panel`](/docs/blocks/account/settings-panel),
+  [`commerce/pricing-plans`](/docs/blocks/commerce/pricing-plans),
+  [`commerce/billing-overview`](/docs/blocks/commerce/billing-overview),
+  [`commerce/payment-method`](/docs/blocks/commerce/payment-method),
+  [`commerce/invoice-history`](/docs/blocks/commerce/invoice-history),
+  [`feedback/empty-state-panel`](/docs/blocks/feedback/empty-state-panel),
+  [`account/workspace-members`](/docs/blocks/account/workspace-members),
+  [`account/workspace-invitations`](/docs/blocks/account/workspace-invitations)
+  and [`account/audit-log`](/docs/blocks/account/audit-log). Other merged
+  canonical source is surfaced through separately reviewed docs/catalog parity
+  issues before it becomes part of this public discovery contract.
 </Callout>
 
-There is no `@pycolors/blocks` package, registry, CLI, download service, or
-automatic synchronization. Copying source does not change a package version and
-does not require a Changeset.
+There is no `@pycolors/blocks` package, proprietary PyColors CLI, or automatic
+synchronization. Copying source does not change a package version and does not
+require a Changeset.
+
+The [Registry pilot guide](/docs/registry) documents a separate base and
+`feedback-empty-state-panel` workflow through the upstream shadcn CLI. Public
+mirror installation still requires its separate availability check. The manual
+flow on this page stays supported and is not replaced by the pilot.
 
 ## Canonical source location
 
@@ -59,7 +80,7 @@ discovery without creating duplicate source or category aliases.
 | Data & records      | `data`       | #101                |
 | Feedback & states   | `feedback`   | #100                |
 
-Source, documentation navigation, and future Registry metadata use the same
+Source, documentation navigation, and Registry metadata use the same
 `<category-slug>/<block-slug>` identity. For example, `data/data-table` maps to
 the documentation route `/docs/blocks/data/data-table` and, only after a
 separate Registry approval, the Registry item `data-data-table`.
@@ -73,9 +94,10 @@ practical. A preview is never an alternate implementation to copy from.
 <Callout title="Source authority">
   `@pycolors/ui` and `@pycolors/tokens` remain the public primitive and token
   authorities. Starter Free is product evidence and documentation previews are
-  examples, not alternate Block source. Future Registry artifacts distribute
-  canonical source only, while future Pro remains a separate authority under
-  #36. The approved first source sequence is #94, then #101, then #97.
+  examples, not alternate Block source. Registry artifacts distribute canonical
+  source only, while future Pro remains a separate authority under #36. The
+  approved first source sequence was #94, then #101, then #97; current
+  sequencing is coordinated by #35.
 </Callout>
 
 ## Install a Block
@@ -95,7 +117,8 @@ practical. A preview is never an alternate implementation to copy from.
 
     Install and configure `@pycolors/ui` in the consuming app by following the
     [UI installation guide](/docs/ui/installation). Block source must import
-    PyColors primitives from the public package entry point only.
+    PyColors primitives from the public package entry point only when it needs
+    them.
 
     ```tsx title="src/components/blocks/<block-slug>/index.tsx"
     import { Button, Card } from "@pycolors/ui";
@@ -149,3 +172,37 @@ Blocks are source copies, not a managed dependency. If a future canonical
 version changes, review it deliberately and bring across only the changes that
 fit your application. Your copy remains under your control until you choose to
 update it.
+
+## Copy directly from the documentation
+
+Each available Block has a **Copy source** section with its complete canonical
+implementation. You do not need to locate monorepo files to inspect or copy that
+code:
+
+- [Copy Responsive sidebar](/docs/blocks/app-shells/responsive-sidebar#copy-source).
+- [Copy Sign in](/docs/blocks/auth/sign-in#copy-source).
+- [Copy Sign up](/docs/blocks/auth/sign-up#copy-source).
+- [Copy Password recovery](/docs/blocks/auth/password-recovery#copy-source).
+- [Copy Data table](/docs/blocks/data/data-table#copy-source).
+- [Copy Settings panel](/docs/blocks/account/settings-panel#copy-source).
+- [Copy Pricing plans](/docs/blocks/commerce/pricing-plans#copy-source).
+- [Copy Billing overview](/docs/blocks/commerce/billing-overview#copy-source).
+- [Copy Payment method](/docs/blocks/commerce/payment-method#copy-source).
+- [Copy Invoice history](/docs/blocks/commerce/invoice-history#copy-source).
+- [Copy Empty state panel](/docs/blocks/feedback/empty-state-panel#copy-source).
+- [Copy Workspace members](/docs/blocks/account/workspace-members#copy-source).
+- [Copy Workspace invitations](/docs/blocks/account/workspace-invitations#copy-source).
+- [Copy Audit log](/docs/blocks/account/audit-log#copy-source).
+
+Open **View and copy the complete source**, then use the code block's copy
+button or select the code manually. Save it at the application-owned path
+shown above the source and continue with that guide's usage example.
+Configure the [public UI package and tokens](/docs/ui/installation) first;
+copied source does not install dependencies or styles for you.
+
+The displayed file is included from canonical source when the documentation
+builds. Your application copy remains independent: review changes deliberately,
+validate your integration, and keep local customizations under version control.
+There is no new installer or automatic update service.
+
+Need a whole application rather than one pattern? [Compare Starters](/starters).

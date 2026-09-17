@@ -1,0 +1,116 @@
+---
+title: Ownership and updates
+description: Keep control of installed source, review Registry and npm changes separately, and handle conflicts or rollback without losing customization.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+Registry installation changes how a Block reaches your app, not who maintains
+the copy. After installation, the source under
+`src/components/blocks/feedback-empty-state-panel` is your application code.
+Customize it deliberately and preserve its accessible semantics.
+
+## Two independent update paths
+
+**Copied source** does not synchronize with PyColors automatically. A newer
+Registry item or canonical Block does not modify your app until you choose to
+apply changes. Reinstalling is not a migration or a customization-aware merge.
+
+**Public npm dependencies** such as `@pycolors/ui` and `@pycolors/tokens` follow
+the versions selected by your package manifest, overrides, and lockfile.
+Updating those packages does not update the copied Block. Review package
+compatibility and validate your app independently of source changes.
+
+## Review an update without losing local work
+
+Start from saved, reviewable work on a dedicated branch. Record the existing
+copied source and dependency lockfile before inspecting a new item revision.
+Follow the [inspection and dry-run steps](/docs/registry/installation#inspect-before-writing)
+for both the base and pilot; public transport verification remains required.
+
+Install the proposed revision in a disposable compatible app, compare its
+source with your current copy, and bring across only the changes that fit your
+application. Preserve your routes, actions, content, and accessibility work.
+The [canonical Empty state panel documentation](/docs/blocks/feedback/empty-state-panel)
+is the manual-copy alternative; a preview is not a second source authority.
+
+Use your version-control diff to review source, stylesheet, package, and
+lockfile changes together. Run formatting, lint, strict types, tests, a
+production build, and browser checks before accepting the update.
+
+The tested PyColors workflow uses `view`, `add --dry-run`, and explicit file
+review. The upstream CLI also documents `--diff`, but that flag is not exercised
+by the PyColors consumer matrix, so this guide does not present it as a verified
+PyColors update or merge workflow.
+
+## Repeat installs and conflicts
+
+A dry-run preserves the tested consumer tree, including a customized Block.
+An actual repeated install can normalize package ranges or rewrite the lockfile
+because the pilot reapplies its base. Follow the
+[lockfile reconciliation step](/docs/registry/installation#reconcile-and-verify-the-lockfile)
+and inspect the whole diff rather than promising a no-op.
+
+<Callout title="Declining overwrite protects the source, not every file">
+  In the tested flow, declining the overwrite prompt keeps the consumer-edited
+  Block intact, but dependency processing can still change the lockfile. Review
+  and reconcile it before continuing. The `--yes` flag does not grant permission
+  to discard your local source changes.
+</Callout>
+
+The fixtures test `--overwrite` only in disposable projects. Do not use it as
+the default update strategy in your app. There is no automatic conflict
+resolution, migration service, or rollback command supplied by this Registry.
+
+## Record repeatable inputs
+
+Unqualified GitHub references follow the mirror's default branch. Upstream
+GitHub addressing accepts a full 40-character commit SHA after `#` on an item
+address. Record the actual public mirror commit that was inspected rather than
+using a monorepo SHA or inventing a release identifier.
+
+Pinning the pilot address does **not** pin its base dependency. GitHub dependency
+references do not inherit the parent's ref, and the current pilot manifest
+contains an unpinned qualified base reference. Installing a pinned base first
+does not prevent the pilot from resolving its own base again.
+
+A fully pinned public dependency-chain test therefore needs each dependency's
+ref verified independently at the human-owned public-availability gate. This
+guide does not claim that gate is complete or silently rewrite the manifest to
+make it appear pinned. Keep the inspected revisions and npm lockfile with your
+validation evidence; exact Registry source alone does not freeze npm resolution.
+
+See the upstream [GitHub Registry reference](https://ui.shadcn.com/docs/registry/github)
+for address syntax. The supported PyColors compatibility remains the narrower
+[consumer matrix](/docs/registry#tested-compatibility).
+
+## Roll back an installation
+
+Prefer a reviewed revert of the dedicated installation change in version
+control. Include the copied file, app package manifest, stylesheet, and lockfile
+as one consistent unit. Do not restore an old lockfile on top of newer unrelated
+dependency changes or discard work made since the installation.
+
+After the revert, run a frozen install and the app's normal validation again.
+A Git revert does not undo external application state, although the Registry
+pilot itself adds no backend or production data mutation.
+
+## Remove the pilot or base
+
+To remove only the pilot, first remove its imports and usages, then remove the
+consumer-owned `feedback-empty-state-panel` source directory after preserving
+any customization you need. Keep the UI and token dependencies when other app
+components still use them.
+
+To remove the base as well, review all consumers of `@pycolors/ui`,
+`@pycolors/tokens`, and `lucide-react` before removing unused dependencies from
+the consuming app. Review whether the stylesheet still needs the token import
+and UI `@source` directive. Keep Tailwind and unrelated application styles.
+Update the shared lockfile deliberately and validate the app and affected
+workspaces. Removing copied source does not uninstall dependencies for you.
+
+Return to [Blocks](/blocks) for another pattern or
+[Registry troubleshooting](/docs/registry/troubleshooting) for an unresolved
+installation issue.

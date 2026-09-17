@@ -1,0 +1,123 @@
+---
+title: Troubleshooting
+description: Diagnose Registry configuration, workspace, dependency, style, conflict, and transport failures without weakening validation or losing source.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+Before retrying, preserve the current diff and identify which step failed:
+inspection, dry-run, dependency installation, source application, or app
+validation. Compare your app with the
+[tested compatibility](/docs/registry#tested-compatibility); do not force an
+unsupported setup through the installer.
+
+## Public item or URL cannot be resolved
+
+The public-address examples depend on a separate human-reviewed Marketing
+mirror availability check. A passing local consumer test is not proof that the
+public manifest, source files, or base dependency can be fetched.
+
+Check the exact qualified item address from the
+[installation guide](/docs/registry/installation#use-the-approved-public-address).
+Do not substitute the private monorepo, a raw source manifest URL, a bare item
+name, an `@pycolors` namespace, or an assumed hosted endpoint. Confirm the
+public mirror contains both items and their referenced files at the revision
+being inspected. An upstream network or rate-limit failure is not a reason to
+change the source target or add credentials.
+
+Do not add a production token to make a credential-free public workflow work.
+Until public delivery is verified, use
+[manual source copy](/docs/blocks/feedback/empty-state-panel#copy-source).
+
+## Configuration is incompatible
+
+Review the app's existing `components.json`: `radix-nova`, TypeScript/TSX,
+Lucide, CSS variables, zinc base color, no Tailwind prefix, and the documented
+stylesheet location. Compare it with the
+[configuration example](/docs/registry/installation#prepare-the-consuming-app).
+Do not run a forced initialization or switch primitive libraries just to make
+installation continue.
+
+The tests have a preflight guard for unsupported configurations. That is
+repository test tooling, not a public `doctor` command or a guarantee that the
+upstream CLI refuses every unsupported project without writing. Use manual
+installation when the configuration is outside the matrix.
+
+## Aliases fail or source lands in the wrong workspace
+
+The app's `aliases.components` must point to `@/components`, and its own
+TypeScript and bundler configuration must resolve `@` to that app's `src`.
+The expected copied file is
+`src/components/blocks/feedback-empty-state-panel/index.tsx` relative to the
+consuming app.
+
+For the tested workspace, run the CLI from `apps/web` and reconcile the shared
+lockfile from the workspace root. Confirm dependencies belong to `apps/web`,
+not the root package or an untouched sibling. Stop and review unexpected
+cross-workspace changes before rerunning the command. Shared-package aliases
+and inherited TypeScript configurations need separate validation.
+
+## Dependencies or frozen installation fail
+
+Confirm Node 24, pnpm 10.32.1, the pinned shadcn CLI, and the exact tested
+package versions. Check that dependencies resolve from public npm, not
+`workspace:`, `file:`, or `link:` references copied from a monorepo.
+
+An unavailable npm package or network failure is a real failed installation;
+do not replace it with a private package or borrowed `node_modules` tree.
+Preserve the error and retry only after identifying the cause.
+
+After an intentional Registry dependency change, use the documented
+[lockfile reconciliation](/docs/registry/installation#reconcile-and-verify-the-lockfile),
+review the result, then verify a frozen install. Do not delete the lockfile,
+disable frozen installs in CI, or accept unrelated upgrades to hide the error.
+
+## Tokens, colors, or Radix state styles are missing
+
+Check that the framework imports the global stylesheet and Tailwind 4/PostCSS
+already work. The base should add exactly one token import and one UI package
+`@source` directive. The latter is relative to the stylesheet, not the terminal's
+working directory.
+
+The zero-edit path expects `src/app/globals.css` or `src/styles/globals.css`
+inside the app, with that app resolving `node_modules/@pycolors/ui`. A different
+stylesheet depth is outside the tested flow. Compare the setup with
+[UI installation](/docs/ui/installation); do not copy UI package source or
+hardcode colors to conceal missing token integration.
+
+## A repeat install shows changes or an overwrite prompt
+
+Do not assume that a repeated installation is a no-op. Package ranges and the
+lockfile may change as the base is reapplied. Decline overwrite for customized
+source, inspect the complete diff, and follow
+[ownership and updates](/docs/registry/updates#repeat-installs-and-conflicts).
+A declined overwrite protects the Block file, not necessarily the lockfile.
+
+## Types, lint, or the production build fail
+
+Check the installed import path, public `@pycolors/ui` exports, and your
+consumer-owned props and actions against the
+[Empty state panel guide](/docs/blocks/feedback/empty-state-panel). Do not
+import `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, or private application
+modules to make the build pass.
+
+Formatting is an explicit consumer step after installation. Run formatting,
+lint, strict types, tests, and your production build on the installed source.
+The matrix validates Next.js with Webpack and Vite with its production build;
+other bundlers or version combinations require their own evidence. Do not
+weaken strict TypeScript, remove tests, or suppress build failures.
+
+Finally, review keyboard access, visible focus, mobile layout, and your actual
+action behavior in a browser. A static rendering test cannot validate your
+application's complete interaction.
+
+## Share a bounded reproduction
+
+Record the item and inspected revision, Node/pnpm/shadcn versions, framework,
+workspace position, sanitized failing command and error, and the paths changed.
+Include whether the failure occurs with a local artifact or the public GitHub
+address. Share a minimal reproduction without credentials, private source,
+customer data, or environment files.
+
+For a safe fallback, use [manual Blocks installation](/docs/blocks). For
+removal, follow [rollback and cleanup](/docs/registry/updates#roll-back-an-installation).

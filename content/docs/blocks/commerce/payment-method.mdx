@@ -1,0 +1,132 @@
+---
+title: Payment method
+description: A presentation-only payment-method panel with consumer-owned method, expiry, contact, status and actions.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { PaymentMethodExample } from "@/components/docs/blocks/canonical-examples";
+
+## Present payment details without owning payment behavior
+
+`PaymentMethodPanel` gives an application a bounded surface for displaying the
+payment method it already knows about. Use it for method, expiry, billing contact,
+status and consumer-owned actions while your billing provider and server remain
+the source of truth.
+
+<Callout title="No payment mutation inside the Block">
+  The Block never stores card data, opens Stripe, attaches or detaches a payment
+  method, validates billing details or decides whether an update is allowed.
+  Those operations remain application-owned.
+</Callout>
+
+## Canonical identity
+
+- Category: **Commerce**, slug `commerce`.
+- Block: `payment-method`, export `PaymentMethodPanel`.
+- Canonical source: `apps/marketing/content/blocks/commerce/payment-method/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/payment-method/index.tsx` in your application. Use the
+Source tab's copy button when available. If clipboard access is unavailable,
+select the code manually.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <PaymentMethodExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/payment-method/index.tsx"'
+    >
+      ../../../blocks/commerce/payment-method/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `PaymentMethodPanel` with fictional,
+redacted values and inert local controls. It performs no provider or network
+operation. The Source tab includes the complete canonical file at build time,
+not a duplicated implementation.
+
+Your application owns the copied source and does not receive automatic updates.
+Review future changes deliberately and validate it in your application before
+adoption. Return to the [Blocks catalog](/blocks) to compare another pattern.
+
+## Install by copying source
+
+1. Copy the complete `payment-method` directory into your application-owned
+   Blocks path.
+2. Configure the public PyColors UI package and tokens through the
+   [UI installation guide](/docs/ui/installation).
+3. Supply payment facts, status and actions from your validated billing layer.
+4. Run lint, type-check, tests and build, then review real labels, long values,
+   narrow widths, both themes and keyboard behavior.
+
+```tsx title="src/components/payment-method-summary.tsx"
+"use client";
+
+import { PaymentMethodPanel } from "./blocks/payment-method";
+
+export function PaymentMethodSummary() {
+  return (
+    <PaymentMethodPanel
+      title="Payment method"
+      description="Example values supplied by your application."
+      methodLabel="Method"
+      methodValue="Visa ending in 4242"
+      expiryLabel="Expires"
+      expiryValue="10 / 28"
+      contactLabel="Billing contact"
+      contactValue="billing@example.com"
+      status={<span>Default</span>}
+      primaryAction={
+        <button type="button" onClick={() => undefined}>
+          Update payment method
+        </button>
+      }
+    />
+  );
+}
+```
+
+The example action performs no payment operation. Replace it with your own
+provider-backed flow only after validating permissions and current account state.
+
+## Consumer-owned contract
+
+`title`, `methodLabel` and `methodValue` are required. Description, expiry and
+contact pairs are optional. `status` can present consumer-owned context such as a
+default-method badge, but it does not carry billing semantics by itself.
+
+`primaryAction` and `secondaryAction` are rendered exactly as supplied. The Block
+does not clone controls, intercept events or infer whether a user may edit or
+remove a method.
+
+## Responsive and accessibility notes
+
+The panel uses a labelled `section`, semantic definition-list markup and a
+responsive details grid. Keep card or bank identifiers appropriately redacted,
+provide meaningful control names and preserve visible focus and native disabled
+semantics in the actions you supply.
+
+## Ownership and boundaries
+
+Your application owns provider tokens, PCI-sensitive handling, billing contacts,
+payment-method lifecycle, permissions, mutations, redirects and errors. The
+Block does not include Stripe Elements, SetupIntents, Customer Portal, checkout,
+webhooks, persistence, authentication, analytics, Registry or CLI behavior.
+
+Explore the [Blocks catalog](/blocks), compare
+[Billing overview](/docs/blocks/commerce/billing-overview), or
+[compare Starters](/starters) for a complete application foundation.

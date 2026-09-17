@@ -52,6 +52,49 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.23.0",
+    title: "PyColors Marketing v1.23.0: discover, copy, and adapt Blocks",
+    dateLabel: "Fri 11 Sep 2026",
+    dateISO: "2026-09-11",
+    status: "Stable",
+    releaseWeekLabel: "Sep 2026 (weekly release)",
+    summary:
+      "This update connects Block discovery to implementation: browse four documented SaaS compositions, copy their complete source from the guides, compare offers with Pricing Plans, and give an empty data table a useful next action. Your application keeps control of data, prices, navigation, and behavior.",
+    highlights: [
+      {
+        title: "Find a Block and copy its complete source",
+        items: [
+          "Added a dedicated Blocks catalog with direct documentation links for Responsive Sidebar, Data Table, Settings Panel, and Pricing Plans.",
+          "Made complete Block implementations viewable and copyable from their guides, alongside interactive examples and installation instructions.",
+          "Clarified source ownership: copied code belongs in your application and does not receive automatic updates.",
+        ],
+      },
+      {
+        title: "Present offers with Pricing Plans",
+        items: [
+          "Added a responsive Pricing Plans Block for comparing consumer-provided offers, features, prices, billing terms, and actions.",
+          "Included controlled billing-period selection and a fictional interactive example without adding checkout, payment processing, or hidden price calculations.",
+        ],
+      },
+      {
+        title: "Give empty tables a useful next step",
+        items: [
+          "Added optional Data Table empty-state actions for first-record creation or clearing filters, with behavior owned by the consuming application.",
+          "Kept empty-state actions separate from loading, error, populated-row, and pagination behavior, with focused interaction and accessibility regression coverage.",
+        ],
+      },
+      {
+        title: "Keep adoption and package versions clear",
+        items: [
+          "Aligned the displayed PyColors UI baseline with the existing v1.5.2 package version; PyColors Tokens remains v1.2.2.",
+          "Kept existing Block APIs compatible and left real product prices, checkout behavior, and public package versions unchanged by this Marketing release.",
+          "Developers can inspect complete implementations before integrating them; teams can evaluate documented examples without mistaking presentation Blocks for backend wiring.",
+        ],
+      },
+    ],
+    cta: { label: "Explore PyColors Blocks", href: "/blocks" },
+  },
+  {
     version: "v1.22.0",
     title:
       "PyColors Marketing v1.22.0: a more practical path to implementation",

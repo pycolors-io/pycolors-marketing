@@ -1,4 +1,9 @@
 {
   "title": "Account & workspace",
-  "pages": ["settings-panel"]
+  "pages": [
+    "settings-panel",
+    "workspace-members",
+    "workspace-invitations",
+    "audit-log"
+  ]
 }

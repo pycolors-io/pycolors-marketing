@@ -1,12 +1,15 @@
 ---
 title: Responsive sidebar
 description: A source-copy application shell with persistent desktop navigation and an accessible mobile Sheet.
-lastUpdated: "2026-08-28"
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { ResponsiveSidebarExample } from "@/components/docs/blocks/canonical-examples";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Application shells</Badge>
@@ -43,6 +46,41 @@ backend calls, or product-specific navigation.
 The Registry identity is reserved for future distribution work. It is not an
 available installation method and this Block does not create Registry metadata
 or generated JSON.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/responsive-sidebar/index.tsx` in your application. Use
+the Source tab's copy button when available, or select the code manually when
+clipboard access is unavailable. This is the complete canonical file, not the
+usage example or a second implementation. Keep the imports and client directive
+when copying.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <ResponsiveSidebarExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/responsive-sidebar/index.tsx"'
+    >
+      ../../../blocks/app-shells/responsive-sidebar/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `ResponsiveSidebar` with fictional
+consumer navigation and content. Its links stay inside the preview document and
+no network or product service behavior is added. The Source tab includes the
+complete canonical file at build time, not a duplicated implementation.
+
+Your application copy does not receive automatic updates. Follow the usage
+example below, connect your own behavior, and validate it in your application.
+Return to the [Blocks catalog](/blocks) to choose another pattern.
 
 ## Install by copying source
 

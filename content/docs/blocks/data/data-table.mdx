@@ -1,14 +1,21 @@
 ---
 title: Data table
-description: A source-copy record table with typed columns, explicit states, consumer-owned row actions, and controlled pagination.
-lastUpdated: "2026-08-28"
+description: A source-copy records workflow with controlled search, custom filters, sorting, page size, pagination and empty-result recovery.
+lastUpdated: "2026-09-15"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
-import { DataTableExample } from "@/components/docs/blocks/data-table-example";
+import {
+  DataTableEmptyExample,
+  DataTableExample,
+  DataTablePageSizeExample,
+  DataTableQueryExample,
+  DataTableSortingExample,
+} from "@/components/docs/blocks/data-table-example";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">Data & records</Badge>
@@ -18,10 +25,11 @@ import { DataTableExample } from "@/components/docs/blocks/data-table-example";
 ## Browse records without adopting a data-grid framework
 
 `DataTable` renders one typed record-browsing composition from consumer-owned
-columns and rows. It provides deterministic ready, loading, empty, and error
-states, an optional row-actions seam, and optional controlled page navigation.
+columns and rows. It provides deterministic ready, loading, empty and error
+states, optional row actions, controlled query and sorting requests, page size,
+and page navigation.
 
-The Block never fetches, filters, sorts, mutates, routes, or interprets records.
+The Block never fetches, filters, sorts, mutates, routes or interprets records.
 Those decisions remain in the consuming feature or data layer.
 
 <Callout title="Source-copy Block">
@@ -29,10 +37,6 @@ Those decisions remain in the consuming feature or data layer.
   Blocks package, Registry installer, CLI, or automatic update channel for this
   Block today.
 </Callout>
-
-<Preview className="my-6 overflow-hidden">
-  <DataTableExample />
-</Preview>
 
 ## Canonical identity
 
@@ -47,8 +51,41 @@ Those decisions remain in the consuming feature or data layer.
 | Informational future Registry identity | `data-data-table`                                         |
 
 The Registry identity is informational only. Registry installation is not
-available, and this Block does not create a manifest, generated JSON, route, or
+available, and this Block does not create a manifest, generated JSON, route or
 delivery service.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/data-table/index.tsx` in your application. Use the Source
+tab's copy button when available, or select the code manually when clipboard
+access is unavailable. Keep the complete file, its imports and client directive.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <DataTableExample />
+    </Preview>
+  </Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/data-table/index.tsx"'
+    >
+      ../../../blocks/data/data-table/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+The Preview tab renders the real canonical `DataTable` through its deterministic
+local fixture. It performs no data fetch or network request. The Source tab
+includes the complete canonical file at build time, not a duplicated
+implementation.
+
+Your application copy does not receive automatic updates. Review later
+canonical changes deliberately and validate it in your application before
+adopting them. Return to the [Blocks catalog](/blocks) to choose another pattern.
 
 ## Install by copying source
 
@@ -71,16 +108,8 @@ type RecordRow = Readonly<{
 }>;
 
 const columns = [
-  {
-    id: "label",
-    header: "Record",
-    cell: (row) => row.label,
-  },
-  {
-    id: "state",
-    header: "State",
-    cell: (row) => row.state,
-  },
+  { id: "label", header: "Record", cell: (row) => row.label, sortable: true },
+  { id: "state", header: "State", cell: (row) => row.state, sortable: true },
 ] satisfies readonly DataTableColumn<RecordRow>[];
 
 export function RecordsTable({ rows }: { rows: readonly RecordRow[] }) {
@@ -99,142 +128,80 @@ export function RecordsTable({ rows }: { rows: readonly RecordRow[] }) {
 
 ## Consumer-owned contract
 
-```ts title="data-table-types.ts"
-type DataTableColumn<Row> = Readonly<{
-  id: string;
-  header: React.ReactNode;
-  cell: (row: Row) => React.ReactNode;
-  headerClassName?: string;
-  cellClassName?: string;
-}>;
-
-type DataTableState =
-  | Readonly<{ status?: "ready" }>
-  | Readonly<{ status: "loading"; label?: string }>
-  | Readonly<{
-      status: "error";
-      title: string;
-      description?: string;
-      action?: React.ReactNode;
-    }>;
-
-type DataTablePagination = Readonly<{
-  page: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  navigationLabel?: string;
-  previousLabel?: string;
-  nextLabel?: string;
-  summary?: React.ReactNode;
-}>;
-```
-
-The consumer owns:
-
-- the row type and current rows;
-- unique, stable row IDs through `getRowId`;
-- unique column IDs, headers, and cell rendering;
-- state and state copy;
-- row-action controls and behavior;
-- page state, total page count, navigation labels, and page-change callback.
-
+The consumer owns the row type, current rows, stable row IDs, unique column IDs,
+headers, cell rendering, state copy, row actions, search values, filters,
+matching rules, result counts, sort logic, pagination and page-size state.
 `DataTable` does not infer identifiers from visible text or array positions and
 does not interpret cell values.
 
-## Props
+The primary composition accepts `caption`, `columns`, `rows`, `getRowId`,
+`emptyTitle`, optional `emptyDescription`, `emptyAction`, `renderRowActions`,
+`rowActionsLabel`, `pagination`, `pageSize`, `sorting`, `query`, `state` and
+`className`. Provide at least one meaningful column and keep row/column IDs
+stable across rerenders.
 
-| Prop               | Type                              | Default    | Purpose                                               |
-| ------------------ | --------------------------------- | ---------- | ----------------------------------------------------- |
-| `caption`          | `string`                          | required   | Concise accessible description for the table.         |
-| `columns`          | `readonly DataTableColumn<Row>[]` | required   | Consumer-defined semantic columns and cell renderers. |
-| `rows`             | `readonly Row[]`                  | required   | Already-prepared rows for the current view or page.   |
-| `getRowId`         | `(row: Row) => React.Key`         | required   | Stable consumer-owned React row identity.             |
-| `state`            | `DataTableState`                  | ready      | Explicit ready, loading, or error presentation.       |
-| `emptyTitle`       | `string`                          | required   | Consumer-owned empty-state heading.                   |
-| `emptyDescription` | `string`                          | UI default | Optional empty-state explanation.                     |
-| `renderRowActions` | `(row: Row) => ReactNode`         | none       | Optional consumer-owned controls for one record.      |
-| `rowActionsLabel`  | `string`                          | `Actions`  | Header for the optional actions column.               |
-| `pagination`       | `DataTablePagination`             | none       | Optional controlled, one-based page navigation.       |
-| `className`        | `string`                          | none       | Root composition customization.                       |
+## Search, filter, sort and paginate
 
-Provide at least one meaningful column. Keep column and row IDs unique and
-stable across renders.
+Pass the optional `query` controller to compose a labelled live-search input,
+consumer-owned filters, an optional reset action and result summary above the
+table. The Block forwards raw controlled values; matching, debouncing, request
+cancellation and page reset remain consumer responsibilities.
 
-## State behavior
+<Preview className="my-6 overflow-hidden">
+  <DataTableQueryExample />
+</Preview>
 
-The state union makes precedence explicit and prevents loading and error from
-being requested at the same time.
+The demonstration searches a complete fictional collection before sorting and
+pagination. Reset changes local demo state only. Nothing is requested or saved.
+For remote records, use the server's matching total and ordering rather than
+filtering only a downloaded page.
 
-### Ready
+## Ready, loading, empty and error states
 
-Ready is the default. Rows render from the supplied column callbacks. When
-`renderRowActions` exists, the Block appends exactly one labelled actions
-column.
+Ready is the default. Loading replaces stale rows with the public loading
+presentation and suppresses pagination. Error presentation uses consumer-owned
+copy and recovery actions while rows and pagination stay hidden. A ready empty
+result is distinct from both loading and failure.
 
-### Loading
+Pass `emptyAction` for a useful first-use or no-results next step. The action is
+rendered unchanged outside the table scroller; record creation, filter reset,
+permissions and focus after the empty state disappears remain consumer-owned.
 
-```tsx title="loading-table.tsx"
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample />
+</Preview>
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample filtered />
+</Preview>
+
+```tsx title="empty-table-action.tsx"
 <DataTable
   {...tableProps}
-  state={{ status: "loading", label: "Loading available records" }}
+  rows={filteredRows}
+  emptyTitle="No matching records"
+  emptyDescription="Clear your filters to see all available records."
+  emptyAction={
+    <button onClick={clearFilters} type="button">
+      Clear filters
+    </button>
+  }
 />
 ```
-
-The public `TableLoading` spans every effective column, announces the generic
-loading state through its live region, and replaces stale rows. When `label` is
-provided, that consumer-owned copy becomes the polite live announcement while
-the public primitive remains the visible loading presentation. Pagination is
-hidden while loading.
-
-### Empty
-
-When ready rows are empty, the public `TableEmpty` spans every effective column
-and displays consumer-owned copy. Empty is a valid result, not an error, and
-pagination is hidden.
-
-### Error
-
-```tsx title="error-table.tsx"
-<DataTable
-  {...tableProps}
-  state={{
-    status: "error",
-    title: "Records could not be loaded",
-    description: "Check the connection and try again.",
-    action: <button type="button">Try again</button>,
-  }}
-/>
-```
-
-The public destructive `Alert` spans the full table width and announces the
-consumer-owned title and optional description. The consumer owns any recovery
-action; rows and pagination are suppressed.
 
 ## Optional row actions
 
 `renderRowActions` receives the current row and may return consumer-owned
-buttons, links, or a public Dropdown Menu. Give every control visible text or
-an explicit accessible name.
-
-```tsx title="record-actions.tsx"
-<DataTable
-  {...tableProps}
-  renderRowActions={(row) => (
-    <button aria-label={`Inspect ${row.label}`} type="button">
-      Inspect
-    </button>
-  )}
-  rowActionsLabel="Record actions"
-/>
-```
-
-The Block does not provide permissions, confirmation, routing, mutation, or
+buttons, links or menus. Give every repeated control a specific accessible name.
+The Block does not provide permissions, confirmation, routing, mutation or
 destructive-action behavior and never makes the entire row interactive.
 
 ## Optional controlled pagination
 
-Pagination is one-based and rendered only when `page` and `totalPages` are safe
-integers, `totalPages` is greater than one, and `page` is within bounds.
+Pagination is one-based. The Block renders valid page navigation from supplied
+`page` and `totalPages`, emits only valid page requests, and does not slice rows,
+fetch data, synchronize URLs or move focus. Those behaviors remain in the
+consumer.
 
 ```tsx title="controlled-record-pages.tsx"
 <DataTable
@@ -249,60 +216,68 @@ integers, `totalPages` is greater than one, and `page` is within bounds.
 />
 ```
 
-The public Pagination primitives expose the current page, disabled boundary
-controls, and compact page ranges. The Block emits only valid page numbers and
-does not slice rows, fetch data, synchronize URLs, or move focus after a page
-change. The consumer owns those behaviors.
+## Optional controlled page size
 
-## Responsive behavior
+Pass `pageSize` with a selected positive safe integer, allowed options and an
+`onPageSizeChange` callback. The Block validates the presentation contract but
+does not slice rows or reset the current page for you.
 
-- Native table markup remains intact at every viewport size.
-- The public Table wrapper supplies horizontal scrolling when columns cannot
-  fit; it does not create page-level horizontal overflow.
-- The outer composition uses `min-w-0`.
-- Pagination summary and controls stack on narrow viewports and align in one
-  row from the existing `sm` breakpoint.
-- The Block never hides arbitrary columns, changes rows into cards, or detects
-  the viewport in JavaScript.
+<Preview className="my-6 overflow-hidden">
+  <DataTablePageSizeExample />
+</Preview>
 
-Use a mobile-first list or card composition instead when horizontal comparison
-is not the primary user task.
+The example changes local size/page state and sorts a fresh copy before slicing.
+Nothing is requested from a server or persisted. For server pagination, keep
+approved sizes, true totals, cancellation and stale-result handling in your data
+layer.
 
-## Accessibility and keyboard behavior
+## Optional controlled sorting
 
-- `table`, `thead`, `tbody`, `tr`, `th`, and `td` semantics are preserved.
-- The required caption gives the table an accessible description.
-- Public `TableHead` cells retain `scope="col"`.
-- Loading uses the public polite live region; decorative loading visuals stay
-  hidden from assistive technology.
-- Empty and error copy stays visible and understandable without color or icons.
+Mark columns `sortable: true` and pass a `sorting` controller. Header buttons
+request ascending or descending state; they do not reorder the supplied rows.
+Your application must return rows that match the displayed sort state.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableSortingExample />
+</Preview>
+
+The active sortable header receives `aria-sort`; direction glyphs are decorative.
+Tab, Enter and Space use native button behavior. Focus movement, comparator
+choice, locale, page reset and remote ordering remain consumer-owned.
+
+## Responsive and accessibility behavior
+
+- Native table semantics remain intact at every viewport size.
+- The table scrolls horizontally inside its bounded wrapper when needed.
+- Query controls remain outside the table scroller and wrap on narrow layouts.
+- Pagination and page-size controls use native, labelled controls.
+- Loading, empty and error copy remain visible without relying only on color.
 - Consumer row actions must remain keyboard operable and clearly labelled.
-- Pagination has an accessible navigation label, `aria-current="page"`, and
-  disabled previous/next boundaries.
-- Page callbacks do not cause hidden focus movement inside the Block. Route or
-  result-heading focus remains consumer-owned.
+- The Block does not move focus after query, page, size or sort changes.
 
-Focused semantic, interaction, and axe tests verify these behaviors. This is
-not a claim of full WCAG certification.
+Focused semantic, interaction and representative axe tests verify these
+contracts, but they are not a complete accessibility certification. Review real
+long content, mobile widths, both themes, keyboard focus and assistive technology
+in the consuming application.
 
 ## Deliberate exclusions
 
-This first Block does not include row selection, bulk actions, built-in search
-or filters, sorting, column visibility, resizing, reordering, virtualization,
-inline editing, export, saved views, data fetching, server pagination, caching,
-routing, permissions, mutations, business rules, authentication, or billing.
+This Block does not include row selection, bulk actions, a filtering engine,
+sorting engine, multi-column sorting, column visibility, resizing, reordering,
+virtualization, inline editing, export, saved views, data fetching, server
+pagination, caching, routing, permissions, mutations, authentication or billing.
 
 It does not depend on TanStack Table, Next.js, Starter Free, Starter Pro,
-private/deep package imports, or a new runtime library. Compose search or filter
-controls outside the Block and pass the already-prepared rows when needed.
+private/deep package imports or a new runtime library. Compose product-specific
+controls through `query.filters` or outside the Block and pass prepared rows.
 
-## Ownership, updates, and rollback
+## Ownership, updates and rollback
 
 After copying, the consumer owns the source, integration, cell content, action
-behavior, data lifecycle, and future maintenance. There is no automatic update
+behavior, data lifecycle and future maintenance. There is no automatic update
 or synchronization path. Compare future canonical revisions deliberately and
-adopt only the changes that fit the application.
+adopt only changes that fit the application.
 
 Rollback is removal or reversion of the copied `data-table` directory and its
-local integration. No package version, Registry state, or remote Block state is
+local integration. No package version, Registry state or remote Block state is
 involved.

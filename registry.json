@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "pycolors",
+  "homepage": "https://pycolors.io/blocks",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "pycolors-base",
+      "type": "registry:base",
+      "title": "PyColors base",
+      "description": "Radix/native PyColors setup for public registry consumers.",
+      "extends": "none",
+      "config": {
+        "style": "radix-nova",
+        "iconLibrary": "lucide",
+        "rsc": true,
+        "tsx": true,
+        "tailwind": {
+          "baseColor": "zinc",
+          "cssVariables": true
+        }
+      },
+      "dependencies": [
+        "@pycolors/ui@^1.5.1",
+        "@pycolors/tokens@^1.2.2",
+        "lucide-react@>=0.300.0"
+      ],
+      "css": {
+        "@import \"@pycolors/tokens/tokens.css\"": {},
+        "@source \"../../node_modules/@pycolors/ui\"": {}
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "feedback-empty-state-panel",
+      "type": "registry:block",
+      "title": "Empty state panel",
+      "description": "Production-shaped empty-state composition with consumer-owned actions.",
+      "registryDependencies": ["pycolors-io/pycolors-marketing/pycolors-base"],
+      "files": [
+        {
+          "path": "content/blocks/feedback/empty-state-panel/index.tsx",
+          "type": "registry:component",
+          "target": "@components/blocks/feedback-empty-state-panel/index.tsx"
+        }
+      ]
+    }
+  ]
+}

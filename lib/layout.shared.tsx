@@ -77,6 +77,11 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         description: "Production-ready primitives",
       },
       {
+        label: "Blocks",
+        href: "/blocks",
+        description: "Copyable application patterns",
+      },
+      {
         label: "Examples",
         href: "/ui/examples",
         description: "See components in context",

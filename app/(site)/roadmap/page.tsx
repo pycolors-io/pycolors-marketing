@@ -147,7 +147,7 @@ const milestones: Array<{
     id: "Sep 2026",
     title: "September 2026",
     subtitle:
-      "PyColors Marketing v1.22.0 shipped on 4 September 2026 with the Theme Builder, copyable Blocks, current PyColors UI guidance, and clearer evaluation paths.",
+      "PyColors Marketing v1.23.0 adds a clearer path to discover, copy, and adapt Blocks on 11 September 2026, building on the v1.22.0 Theme Builder and UI guidance release.",
   },
   {
     id: "H1 2026",
@@ -158,6 +158,42 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.23.0",
+    description:
+      "The 2026-09-11 release connects the four-Block catalog, complete-source documentation, Pricing Plans, and Data Table empty-state actions while keeping application behavior consumer-owned.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Marketing", "Blocks", "DX"],
+    href: "/changelog",
+  },
+  {
+    title: "Blocks discovery and complete-source documentation",
+    description:
+      "Browse four documented Blocks from one catalog and copy their complete implementations from the guides. Copied source remains application-owned, without automatic updates or an installer.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Blocks", "Docs", "DX"],
+    href: "/blocks",
+  },
+  {
+    title: "Pricing Plans Block",
+    description:
+      "Compare offers with responsive plan cards, consumer-provided prices and billing terms, controlled period selection, and application-owned actions. The example uses fictional offers and processes no payments.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Blocks", "Commerce", "UI"],
+    href: "/docs/blocks/commerce/pricing-plans",
+  },
+  {
+    title: "Data Table empty-state actions",
+    description:
+      "Offer a first-record or filter-reset action when a ready table is empty. The application owns the callback and focus transition; loading, error, and populated states remain separate.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Blocks", "UX", "Accessibility"],
+    href: "/docs/blocks/data/data-table",
+  },
   {
     title: "PyColors Marketing v1.22.0",
     description:
@@ -736,11 +772,11 @@ const items: RoadmapItem[] = [
   {
     title: "@pycolors/blocks",
     description:
-      "Introduce a reusable blocks package for faster SaaS page composition across marketing, docs, and product surfaces.",
+      "Package-based distribution remains planned. The current Blocks catalog provides source-copy guides, not an installable Blocks package.",
     status: "Next",
     milestone: "H1 2026",
     tags: ["Blocks", "UI", "DX"],
-    href: "/ui",
+    href: "/blocks",
   },
   {
     title: "Starter Pro sales proof and trust content",
