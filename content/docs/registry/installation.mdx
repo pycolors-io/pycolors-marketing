@@ -1,0 +1,208 @@
+---
+title: Installation
+description: Prepare a compatible app, inspect the Registry pilot, understand its file changes, and validate the consumer-owned result.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+Read the [tested compatibility and availability boundary](/docs/registry)
+first. The base augments an existing shadcn-compatible application; it does
+not scaffold a project or migrate an incompatible one.
+
+<Callout title="Public transport verification is still required">
+  Run the public-address examples below only after a human-reviewed,
+  credential-free check of the Marketing mirror and its base dependency has
+  been recorded. Local artifact tests do not establish that public availability.
+  Until then, [copy the Block from its documentation](/docs/blocks/feedback/empty-state-panel#copy-source)
+  and follow [UI installation](/docs/ui/installation).
+</Callout>
+
+## Prepare the consuming app
+
+Save your current work in version control before installation. Use Node 24,
+pnpm 10.32.1, and the exact [tested versions](/docs/registry#tested-compatibility).
+Keep your app's normal install, lint, type-check, test, and build working before
+adding Registry source.
+
+The tested Next.js configuration is below. For Vite, the only change to this
+`components.json` is `tailwind.css: "src/styles/globals.css"`. Review and merge
+configuration deliberately; do not overwrite an existing file blindly.
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "radix-nova",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/app/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+The app's own `tsconfig.json` must resolve `@/*` to `./src/*` with strict
+TypeScript enabled. Vite must also resolve `@` to that app's `src` directory in
+its bundler configuration. The tested setup does not inherit TypeScript
+configuration or route aliases to a shared package.
+
+Your framework must already load its global stylesheet, with Tailwind 4 and
+`@tailwindcss/postcss` configured. Before adding the base, the fixture stylesheet
+contains `@import "tailwindcss";`. Keep the stylesheet exactly two directories
+below the consuming app root so the base's relative package source path resolves.
+
+### Keep dependency versions deliberate
+
+The base declares `@pycolors/ui@^1.5.1`, `@pycolors/tokens@^1.2.2`, and
+`lucide-react@>=0.300.0`. These are ranges, not the exact versions that every
+future install will resolve. The matrix uses public UI 1.5.2, not 1.5.1.
+
+The clean-room fixtures use root-level pnpm overrides to pin their complete
+[tested dependency set](/docs/registry#tested-compatibility). To retain the same
+three base-package versions, merge these entries into your existing root pnpm
+configuration without discarding other overrides:
+
+```json title="package.json fragment at the standalone or workspace root"
+{
+  "pnpm": {
+    "overrides": {
+      "@pycolors/ui": "1.5.2",
+      "@pycolors/tokens": "1.2.2",
+      "lucide-react": "1.46.0"
+    }
+  }
+}
+```
+
+This fragment is not a complete fixture or a transitive dependency freeze.
+Keep the rest of your app on the tested combination and retain a reviewed
+lockfile. Do not copy the PyColors monorepo's `workspace:*` overrides into a
+consumer. Review dependency lifecycle-script approvals separately; the
+clean-room tests disable those scripts.
+
+## Use the approved public address
+
+The pilot uses direct GitHub addressing through the public
+[Marketing mirror](https://github.com/pycolors-io/pycolors-marketing):
+`pycolors-io/pycolors-marketing/<item>`. It does not require a `registries`
+entry in `components.json`.
+
+There is no supported `@pycolors/<item>` namespace or hosted `/r` endpoint in
+this pilot. Do not pass the mirror's raw source `registry.json` URL as if it were
+a generated installable item. Do not use bare `pycolors-base`: that is not the
+qualified PyColors dependency address.
+
+The public mirror must contain its root `registry.json` and the canonical files
+referenced by that manifest. A monorepo merge alone does not prove that the
+human-reviewed mirror update or credential-free installation has succeeded.
+
+## Inspect before writing
+
+From the consuming app directory, inspect both items and preview the base's
+planned changes:
+
+```bash
+pnpm dlx shadcn@4.19.0 view pycolors-io/pycolors-marketing/pycolors-base
+pnpm dlx shadcn@4.19.0 view pycolors-io/pycolors-marketing/feedback-empty-state-panel
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/pycolors-base --dry-run
+```
+
+Check item names, source targets, public package dependencies, and CSS changes.
+The first item is presentation-only; actions and application behavior remain
+under your control. Inspection and dry-run do not replace review of package
+changes or prove compatibility with an untested application.
+
+## Install the base, then the first item
+
+After the public-availability prerequisite and your review are satisfied:
+
+```bash
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/pycolors-base --yes
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/feedback-empty-state-panel --dry-run
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/feedback-empty-state-panel --yes
+```
+
+Do not add `--overwrite` to these commands. Decline an overwrite prompt for a
+file you have customized and follow the [update workflow](/docs/registry/updates).
+
+The base adds its three dependencies to the consuming app's `package.json`,
+updates the lockfile, and adds these directives to the existing stylesheet:
+
+```css
+@import "@pycolors/tokens/tokens.css";
+@source "../../node_modules/@pycolors/ui";
+```
+
+The pilot's source target is
+`src/components/blocks/feedback-empty-state-panel/index.tsx`, resolved through
+`aliases.components`. It imports the public `@pycolors/ui` entry point; it does
+not copy UI package internals. The pilot also reapplies its base dependency, so
+package ranges and the lockfile may be revisited. The already-compatible
+`components.json` remains unchanged in the tested flow.
+
+### Reconcile and verify the lockfile
+
+The pinned CLI and pnpm can normalize dependency ranges differently on repeat
+installation. The tested flow deliberately reconciles the lockfile after those
+changes. From the standalone project root, or the workspace root for a monorepo:
+
+```bash
+pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts --prod=false
+pnpm install --frozen-lockfile --ignore-scripts --prod=false
+```
+
+Review the resulting package and lockfile diff together. This is an explicit
+consumer dependency update, not permission to bypass frozen-lockfile CI or
+accept unrelated upgrades. A subsequent frozen install must succeed without
+changing the lockfile. Repeating `add` alone is not promised to be byte-stable.
+
+## Monorepo placement
+
+The tested monorepo has a Vite app in `apps/web`, its own `package.json`,
+`components.json`, `tsconfig.json`, and `src/styles/globals.css`. Run all shadcn
+commands from `apps/web`, not the workspace root. The equivalent upstream
+`--cwd apps/web` option selects the same app when invoked from the root.
+
+Install the public dependencies in the app, not in the root package or a shared
+UI workspace. The copied target is
+`apps/web/src/components/blocks/feedback-empty-state-panel/index.tsx`.
+Reconcile the shared `pnpm-lock.yaml` from the workspace root. Root dependency
+metadata and sibling files should not change as a side effect of installing the
+items; deliberate version-pin configuration is a separate prerequisite.
+
+Shared-package aliases, cross-workspace source targets, and a Next.js monorepo
+are not part of this matrix. Use [manual installation](/docs/blocks) for those
+cases until they have their own validation.
+
+## Validate your integration
+
+Use the [Empty state panel usage and accessibility guidance](/docs/blocks/feedback/empty-state-panel)
+with the installed source path above. Supply your own content, state, and
+actions; the Registry does not implement a backend.
+
+Run your app's formatting, formatting check, lint, strict type-check, tests,
+and production build. The fixtures name these scripts `format`, `format:check`,
+`lint`, `types:check`, `test`, and `build`; use your app's equivalents rather
+than assuming those names exist. The tested Next.js production build uses
+Webpack; alternative bundlers are not established by this matrix.
+
+Check that token colors, focus states, and Radix state styles appear in the
+built app. Test keyboard interaction and mobile layout in a browser; static
+rendering and CSS assertions do not replace this review.
+
+Save the reviewed source, dependency changes, and lockfile together. Continue
+with [updates and rollback](/docs/registry/updates), or use
+[troubleshooting](/docs/registry/troubleshooting) before retrying a failed step.

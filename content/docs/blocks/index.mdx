@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-09-15"
+lastUpdated: "2026-09-17"
 appliesTo: Blocks
 ---
 
@@ -45,9 +45,14 @@ as your own product code.
   issues before it becomes part of this public discovery contract.
 </Callout>
 
-There is no `@pycolors/blocks` package, registry, CLI, download service, or
-automatic synchronization. Copying source does not change a package version and
-does not require a Changeset.
+There is no `@pycolors/blocks` package, proprietary PyColors CLI, or automatic
+synchronization. Copying source does not change a package version and does not
+require a Changeset.
+
+The [Registry pilot guide](/docs/registry) documents a separate base and
+`feedback-empty-state-panel` workflow through the upstream shadcn CLI. Public
+mirror installation still requires its separate availability check. The manual
+flow on this page stays supported and is not replaced by the pilot.
 
 ## Canonical source location
 
@@ -75,7 +80,7 @@ discovery without creating duplicate source or category aliases.
 | Data & records      | `data`       | #101                |
 | Feedback & states   | `feedback`   | #100                |
 
-Source, documentation navigation, and future Registry metadata use the same
+Source, documentation navigation, and Registry metadata use the same
 `<category-slug>/<block-slug>` identity. For example, `data/data-table` maps to
 the documentation route `/docs/blocks/data/data-table` and, only after a
 separate Registry approval, the Registry item `data-data-table`.
@@ -89,7 +94,7 @@ practical. A preview is never an alternate implementation to copy from.
 <Callout title="Source authority">
   `@pycolors/ui` and `@pycolors/tokens` remain the public primitive and token
   authorities. Starter Free is product evidence and documentation previews are
-  examples, not alternate Block source. Future Registry artifacts distribute
+  examples, not alternate Block source. Registry artifacts distribute
   canonical source only, while future Pro remains a separate authority under
   #36. The approved first source sequence was #94, then #101, then #97; current
   sequencing is coordinated by #35.
