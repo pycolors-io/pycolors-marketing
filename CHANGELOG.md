@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.24.0
+
+Released by PyColors Marketing on 18 September 2026 (2026-09-18).
+
+This update connects product setup, interactive UI examples, and design-system
+guidance so developers can inspect a working example and understand how to adapt
+it in their own application.
+
+### Applications updated
+
+- Added focused Getting Started guidance with a first-result checklist for each
+  product path and the styling steps needed to render the first UI component.
+- Added four interactive UI examples with complete source: notification settings,
+  a rename dialog, a paginated members table, and save feedback.
+- Added design-system principles covering semantic roles, composition, ownership,
+  and accessibility responsibilities.
+
+### Platform and shared capabilities
+
+- Aligned the displayed baselines with PyColors UI v1.5.4 and PyColors Tokens
+  v1.2.3. These package versions were already applied; this Marketing update does
+  not re-version them.
+
+### Reliability and maintenance
+
+- The package baselines improve muted-text contrast in light mode, foreground
+  contrast on primary and destructive surfaces in dark mode, and semantic Toast
+  readability while preserving compatible public APIs.
+
+### For developers and candidates
+
+Try the examples, inspect their source, and connect persistence, validation, and
+product behavior in your own application. Example state is local and resets on
+refresh.
+
+### For companies and recruiters
+
+Use the documented interactions and design principles to evaluate component
+composition and the responsibilities that remain with an application.
+
+[Start with the Getting Started guide](https://pycolors.io/docs/getting-started).
+
 ## 1.23.0
 
 Released by PyColors Marketing on 11 September 2026 (2026-09-11).
