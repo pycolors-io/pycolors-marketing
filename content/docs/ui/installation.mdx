@@ -1,7 +1,7 @@
 ---
 title: Installation
 description: Install @pycolors/ui, load the token CSS, and verify your first public import in a React or Next.js app.
-lastUpdated: "2026-08-28"
+lastUpdated: "2026-09-18"
 appliesTo: UI
 ---
 
@@ -40,7 +40,7 @@ forms, settings, dashboards, billing panels, overlays, and data views.
 Before installing, confirm the consuming app already has:
 
 - React and React DOM installed;
-- Tailwind CSS available in the app stylesheet/build;
+- Tailwind CSS v4 configured in the app stylesheet/build;
 - a global stylesheet where token CSS can be imported;
 - a React or Next.js setup that supports ESM packages.
 
@@ -83,14 +83,41 @@ The canonical install command above includes `@pycolors/tokens`. Use its token
 CSS when your app does not already provide the PyColors semantic variables and
 Tailwind v4 mappings.
 
-Import the token CSS once from your global stylesheet.
+In a Next.js app with an `app/` directory at the project root, add the following
+to your global stylesheet and import that stylesheet from `app/layout.tsx`.
+Keep any existing app styles after these directives.
 
 ```css title="app/globals.css"
+@import "tailwindcss";
 @import "@pycolors/tokens/tokens.css";
+
+@source "../node_modules/@pycolors/ui/dist";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 ```
 
-In the PyColors marketing app, this is done from
-`apps/marketing/app/global.css`.
+Tailwind ignores `node_modules` during automatic source detection. The
+[`@source` directive](https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources)
+includes the installed component classes so their utilities are generated.
+This is a CSS scan path; JavaScript imports still use only `@pycolors/ui`.
+
+The path is relative to the stylesheet. For `src/app/globals.css`, use
+`../../node_modules/@pycolors/ui/dist` instead. In other React setups, adjust
+the path to reach the consuming app's installed package and load this stylesheet
+from the app's entry point. Do not add a second Tailwind import if one already
+exists.
+
+The base rules apply the semantic border and page colors. Merge them with your
+existing base styles if the app already sets those roles.
 
 The token CSS provides:
 
@@ -101,14 +128,20 @@ The token CSS provides:
 
 <Callout type="info" title="Dark mode">
   `@pycolors/tokens` uses a `.dark` class strategy. Add or remove the `dark`
-  class at the app shell or document root through your existing theme logic.
+  class on the document root through your existing theme logic. The
+  [`@custom-variant`
+  directive](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually)
+  makes Tailwind's `dark:` utilities follow that same class.
 </Callout>
 
 ## Import from the public entry point
 
 Import supported primitives from `@pycolors/ui`.
 
-```tsx title="first-import.tsx"
+In the same Next.js app, use this page to verify the installation. Other React
+apps can render the exported component from their existing route or entry point.
+
+```tsx title="app/page.tsx"
 import {
   Button,
   Card,
@@ -118,7 +151,7 @@ import {
   CardTitle,
 } from "@pycolors/ui";
 
-export function FirstPyColorsCard() {
+export default function FirstPyColorsCard() {
   return (
     <Card>
       <CardHeader>
@@ -129,7 +162,9 @@ export function FirstPyColorsCard() {
       </CardHeader>
       <CardContent>
         <Button asChild>
-          <a href="/docs/ui/usage-patterns">Explore usage patterns</a>
+          <a href="https://pycolors.io/docs/ui/usage-patterns">
+            Explore usage patterns
+          </a>
         </Button>
       </CardContent>
     </Card>
@@ -204,11 +239,11 @@ export function SaveButton() {
   <Step>
     ### Confirm the app builds
 
-    Run the consuming app’s type check and build command. In this monorepo, the
-    relevant docs app check is:
+    Run the type-check and production-build scripts declared in your consuming
+    app's `package.json`. For example, when it defines `types:check` and `build`:
 
     ```bash
-    pnpm --filter pycolors-marketing types:check
+    pnpm types:check
     pnpm build
     ```
 
@@ -242,13 +277,14 @@ export function SaveButton() {
 
 ## Common mistakes
 
-| Mistake                                                          | Safer path                                                                           |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Importing from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`     | Import from `@pycolors/ui`.                                                          |
-| Installing UI without token CSS or equivalent semantic variables | Load `@pycolors/tokens/tokens.css` or provide the same semantic roles intentionally. |
-| Adding `"use client"` to every page                              | Add a client boundary only where browser behavior is owned.                          |
-| Replacing product logic with UI primitives                       | Keep routing, auth, billing, validation, and data fetching in app code.              |
-| Styling with raw colors first                                    | Use semantic utilities and customize tokens centrally when needed.                   |
+| Mistake                                                          | Safer path                                                                                        |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Importing from `@pycolors/ui/src/*` or `@pycolors/ui/dist/*`     | Import from `@pycolors/ui`.                                                                       |
+| Installing UI without token CSS or equivalent semantic variables | Load `@pycolors/tokens/tokens.css` or provide the same semantic roles intentionally.              |
+| Components render without spacing or variant styles              | Register the installed UI package with `@source`, using a path relative to the global stylesheet. |
+| Adding `"use client"` to every page                              | Add a client boundary only where browser behavior is owned.                                       |
+| Replacing product logic with UI primitives                       | Keep routing, auth, billing, validation, and data fetching in app code.                           |
+| Styling with raw colors first                                    | Use semantic utilities and customize tokens centrally when needed.                                |
 
 ## Next steps
 
