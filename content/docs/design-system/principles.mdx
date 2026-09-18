@@ -6,6 +6,7 @@ appliesTo: Design System
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Accessibility, Layers3, Palette, Sparkles } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 PyColors uses a small set of principles to keep product surfaces coherent as the codebase and product catalog grow. These are decision rules, not decorative preferences: use them when reviewing a component, composing a page, or deciding whether a visual exception belongs in the shared system.
@@ -92,24 +93,28 @@ They also do not replace the detailed contracts for tokens, colors, typography, 
     {
       title: "Tokens",
       href: "/docs/design-system/tokens",
+      icon: Layers3,
       description:
         "See how repeated visual decisions become shared foundations.",
     },
     {
       title: "Colors",
       href: "/docs/design-system/colors",
+      icon: Palette,
       description:
         "Use semantic roles for surfaces, text, borders, and states.",
     },
     {
       title: "UI accessibility",
       href: "/docs/ui/accessibility",
+      icon: Accessibility,
       description:
         "Apply accessibility responsibilities when composing public primitives.",
     },
     {
       title: "Why PyColors UI",
       href: "/docs/ui/why-pycolors-ui",
+      icon: Sparkles,
       description:
         "Connect the design-system rules to the public component philosophy.",
     },
