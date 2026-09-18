@@ -171,7 +171,6 @@ span[data-slot="badge"] {
 /* Mobile / tablet */
 @media (max-width: 1023px) {
   #nd-docs-layout {
-    display: block;
     max-width: none;
   }
 
