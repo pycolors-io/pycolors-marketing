@@ -79,6 +79,15 @@ Tokens are not components. They are not random CSS values. They are **design dec
   ]}
 />
 
+## Pair surfaces with their foreground tokens
+
+Use `primary` with `primary-foreground`, and `destructive` with
+`destructive-foreground`. Their foregrounds use dark text in dark mode because
+those semantic surfaces become lighter; hard-coded white text does not retain
+readable contrast. The light-mode `muted-foreground` also supports text on the
+muted surface. Custom palettes, opacity and layered backgrounds still require
+contrast checks in their actual context.
+
 ## Steps
 
 <Steps>

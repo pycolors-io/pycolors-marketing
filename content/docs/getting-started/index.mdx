@@ -1,402 +1,148 @@
 ---
 title: Getting Started
-description: Start with PyColors in the right order. Launch a template, validate your SaaS surface, understand the system, and move toward a production-ready business foundation.
-lastUpdated: "2026-05-14"
+description: Choose your PyColors starting point, follow its setup guide, and verify your first working screen.
+lastUpdated: "2026-09-18"
 appliesTo: PyColors
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Badge } from "@pycolors/ui";
-import {
-  Box,
-  Code2,
-  Layers3,
-  LayoutTemplate,
-  Rocket,
-  Sparkles,
-} from "lucide-react";
-import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { Code2, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
-import { PreferAvoid } from "@/components/docs/prefer-avoid";
-import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">PyColors Docs</Badge>
-  <Badge>Template → Validate → Wire → Launch</Badge>
+  <Badge>Getting Started</Badge>
 </div>
 
-## Build your SaaS in the right order
+## Choose your starting point
 
-PyColors helps developers move from **idea** to **credible SaaS product** without spending their best time on the wrong layer too early.
-
-The product path is simple:
-
-1. launch the marketing page when you need a public offer
-2. validate the SaaS surface before backend complexity
-3. build with consistent UI foundations
-4. use patterns for repeated product behavior
-5. wire auth, billing, backend, and delivery when the business layer becomes the blocker
-6. launch with more confidence
-
-This page gives you the fastest path through the PyColors documentation.
-
-<Callout title="Core idea">
-  Launch the page. Validate the product surface. Upgrade when infrastructure becomes the bottleneck.
-</Callout>
-
-### Choose your starting point
+Start with the product that matches what you need to build today. Each link
+below opens its setup guide, with the commands and configuration for that product.
 
 <DocsLinks
   variant="grid"
   tone="platform"
   items={[
-      {
-      title: 'PyColors UI',
-      href: '/docs/ui',
+    {
+      title: "Add UI to an existing app",
+      href: "/docs/ui/installation",
       description:
-        'Start from reusable SaaS primitives before composing product-level patterns.',
+        "Install the free PyColors UI primitives and tokens in your React app, then render your first component.",
       icon: Code2,
+      eyebrow: "PyColors UI",
     },
     {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
+      title: "Run a SaaS demo",
+      href: "/docs/starter/installation",
       description:
-        'Launch a premium AI or SaaS marketing presence before the full product is ready.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Starter Free',
-      href: '/docs/starter',
-      description:
-        'Validate a credible SaaS product surface before backend complexity.',
+        "Run Starter Free locally and explore dashboard, settings, and mocked product flows.",
       icon: Sparkles,
+      eyebrow: "Starter Free",
     },
     {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
+      title: "Set up your landing page",
+      href: "/docs/templates/na-ai-landing/setup",
       description:
-        'Launch with authentication, billing, backend foundations, and protected flows.',
-      icon: Rocket,
-      tone: 'primary',
-    },
-  ]}
-/>
-
-
-### Choose by intent
-
-<DocsDecisionGrid
-  columns={3}
-  items={[
-    {
-      eyebrow: 'Launch a page',
-      title: 'Start with NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
-      description:
-        'Choose this path when you need a polished AI or SaaS marketing page before building the full product.',
+        "After downloading NA-AI Landing, run the template locally before customizing its content.",
       icon: LayoutTemplate,
-      items: [
-        'premium AI/SaaS landing page',
-        'data-driven content structure',
-        'pricing, FAQ, integrations, testimonials, and contact sections',
-        'dark/light mode and SEO baseline',
-        'powered by PyColors UI and PyColors Tokens',
-      ],
-      cta: 'Explore template →',
+      eyebrow: "NA-AI Landing",
     },
     {
-      eyebrow: 'Validate a product',
-      title: 'Start with Starter Free',
-      href: '/docs/starter',
+      title: "Set up your SaaS foundation",
+      href: "/docs/starter-pro/getting-started",
       description:
-        'Choose this path when you need a credible SaaS product surface before backend complexity.',
-      icon: Sparkles,
-      items: [
-        'real SaaS screens',
-        'dashboard and navigation',
-        'auth, billing, admin, and settings surfaces',
-        'mocked data and UI states',
-        'fast demo and MVP validation',
-      ],
-      cta: 'Explore Free →',
-    },
-    {
-      eyebrow: 'Launch a business',
-      title: 'Move to Starter Pro',
-      href: '/docs/starter-pro',
-      description:
-        'Choose this path when your product needs real users, real payments, protected access, and backend foundations.',
+        "After downloading Starter Pro, configure the local environment, database, and authentication foundation.",
       icon: Rocket,
-      tone: 'pro',
-      items: [
-        'real authentication',
-        'Stripe Checkout and billing portal',
-        'webhook-driven subscription state',
-        'Prisma-ready backend foundation',
-        'secure delivery after purchase',
-      ],
-      cta: 'Explore Pro →',
+      eyebrow: "Starter Pro",
     },
   ]}
 />
 
-## What you should do first
-
-<Steps>
-  <Step>
-    ### Understand the product ladder
-
-    PyColors is not just a UI library. It is a path from public offer to product validation to SaaS launch:
-
-    - **Templates** help you launch focused marketing pages quickly
-    - **Design System** gives visual consistency
-    - **UI** gives reusable primitives
-    - **Guides** explain how to compose real interfaces
-    - **Patterns** solve repeated product flows
-    - **Starter Free** validates the product surface
-    - **Starter Pro** wires the business layer
-  </Step>
-
-  <Step>
-    ### Pick the right starting point
-
-    Use the product that matches your current bottleneck.
-
-    Start with a template if you need a public offer. Start with Starter Free if you need product validation. Move to Starter Pro if auth and billing are already the blocker.
-  </Step>
-
-  <Step>
-    ### Run the project locally
-
-    Start with the product surface.
-
-    Run the app locally, click through the main routes, and understand what is already shaped before changing too much.
-  </Step>
-
-  <Step>
-    ### Explore the UI foundations
-
-    Review the primitives that power the product: Button, Input, Card, Badge, Alert, Dialog, and Table.
-
-    These components keep the product interface consistent as it grows.
-  </Step>
-
-  <Step>
-    ### Learn the patterns
-
-    Patterns show how primitives become real product flows: data tables, overlays, async actions, empty states, loading states, and error states.
-
-    This is where UI becomes product behavior.
-  </Step>
-
-  <Step>
-    ### Upgrade when wiring slows you down
-
-    When the question changes from “what should this product feel like?” to “how do I launch this with real users and payments?”, Starter Pro becomes the faster path.
-  </Step>
-</Steps>
-
-### Fastest path by goal
-
-<DocsFeatureGrid
-  columns={3}
-  tone="platform"
-  items={[
-    {
-      title: 'Launch a landing page',
-      description:
-        'Start with a premium AI or SaaS marketing surface before the full product is ready.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Validate an idea',
-      description:
-        'Adapt Starter Free, rename the core entity, and test the product experience quickly.',
-      icon: Box,
-    },
-    {
-      title: 'Launch and monetize',
-      description:
-        'Move to Starter Pro when authentication, billing, backend, and delivery become the bottleneck.',
-      icon: Rocket,
-      tone: 'primary',
-    },
-  ]}
-/>
-
-### The PyColors system
-
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: 'PyColors UI',
-      href: '/docs/ui',
-      description:
-        'Reusable primitives for serious SaaS interfaces: buttons, cards, inputs, badges, tables, dialogs, sheets, and more.',
-      icon: Code2,
-    },
-    {
-      title: 'Patterns',
-      href: '/docs/patterns',
-      description:
-        'Product-level flows built from primitives: data tables, overlays, async feedback, empty states, and real SaaS behaviors.',
-      icon: Layers3,
-    },
-  ]}
-/>
-
-## Time to first result
-
-| Milestone | Target |
-| --- | --- |
-| Open the docs and choose a path | 5 minutes |
-| Run a project locally | 10 minutes |
-| Understand the main routes | 30 minutes |
-| Adapt the product surface | 1–2 hours |
-| Ship a first demo | Same day |
-| Wire production foundations | When validation is clear |
-| Launch with real auth and billing | Starter Pro path |
-
-<Callout type="info" title="Time-to-value matters">
-  The faster a builder sees a credible product surface, the faster they understand the value of PyColors.
+<Callout title="Start with one path">
+  You do not need to install every PyColors product. Use UI in an existing app,
+  Starter Free to evaluate a SaaS surface, a template for a landing page, or
+  Starter Pro when you need the backend foundation.
 </Callout>
 
-### Recommended reading order
+## Before you begin
 
-<DocsLinks
-  variant="steps"
-  tone="platform"
-  items={[
-    {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
-      description:
-        'Start with a production-shaped AI and SaaS landing page built with PyColors UI and Tokens.',
-    },
-    {
-      title: 'Why PyColors UI',
-      href: '/docs/ui/why-pycolors-ui',
-      description:
-        'Understand the principles behind the PyColors design system and SaaS-focused UI approach.',
-    },
-    {
-      title: 'Project structure',
-      href: '/docs/starter/project-structure',
-      description:
-        'Learn how routes, components, content, and product foundations are organized.',
-    },
-    {
-      title: 'Starter Free',
-      href: '/docs/starter',
-      description:
-        'Validate product ideas with a credible SaaS surface and frontend-first product flows.',
-    },
-    {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
-      description:
-        'Production-ready foundations with authentication, billing, protected routes, and backend wiring.',
-    },
-  ]}
-/>
+- **PyColors UI:** have a React app with Tailwind CSS v4 and a global stylesheet.
+  The [installation guide](/docs/ui/installation#prerequisites) covers the
+  package requirements and CSS setup.
+- **Starter Free:** have Git, Node.js, and pnpm. Clone the public starter using
+  its [installation guide](/docs/starter/installation). Its auth, billing, and
+  data flows are mocked; you do not need production service credentials to
+  explore them.
+- **NA-AI Landing:** download and unzip your purchased template, then follow
+  the [setup guide](/docs/templates/na-ai-landing/setup). The base template is
+  frontend-only.
+- **Starter Pro:** download and unzip your purchased starter, then follow its
+  [local setup sequence](/docs/starter-pro/getting-started#setup-flow). This path
+  includes environment and database configuration.
 
-## Free vs Pro decision
+For a starter or template, use the Node.js and package-manager versions declared
+by the project you downloaded. Run its commands from that project's root.
+For UI, run the install command inside the app that will consume the package.
 
-| Question | Best path |
-| --- | --- |
-| I need a public marketing page | NA-AI Landing |
-| I need to validate the product surface | Starter Free |
-| I need a credible UI demo | Starter Free |
-| I need real accounts and sessions | Starter Pro |
-| I need Stripe Checkout and billing portal | Starter Pro |
-| I need subscription state to control access | Starter Pro |
-| I need secure delivery after purchase | Starter Pro |
-| I need to reduce launch risk | Starter Pro |
+## Verify your first result
 
-<Callout title="Upgrade when wiring becomes the bottleneck">
-  Templates launch your offer. Starter Free validates your product. Starter Pro wires your business.
-</Callout>
+Complete the check for your chosen path before changing the project structure.
 
-## Revenue-focused mental model
+### PyColors UI
 
-PyColors is designed around a simple business principle:
+Follow [Installation](/docs/ui/installation) to install the packages, load token
+CSS, register the package with Tailwind, and render the example card.
 
-> Spend less time rebuilding repeated infrastructure. Spend more time on product, positioning, distribution, and customers.
+Your first result is a styled card and link in your own app. Confirm light and
+dark styles, visible keyboard focus, and a passing app build. Then use
+[usage patterns](/docs/ui/usage-patterns) to compose your next screen, or
+[migration guidance](/docs/ui/migration-guidance) when replacing existing UI.
 
-That matters if your goal is to build a serious SaaS business.
+### Starter Free
 
-The documentation should help every visitor understand:
+Follow [Installation](/docs/starter/installation), start the local server, and
+open `/dashboard` and `/projects`. Try a project action and navigate to settings.
 
-- what PyColors solves
-- where to start
-- when a template is enough
-- when Free is enough
-- when Pro becomes the faster path
-- why buying the foundation can be higher leverage than rebuilding it
+Your first result is a navigable SaaS demo with mock data. Continue with
+[the first-run walkthrough](/docs/starter/getting-started#first-run-path), then
+adapt one product surface. These screens do not establish real accounts,
+payments, or persistent backend data.
 
-## What to avoid
+### NA-AI Landing
 
-<PreferAvoid
-  prefer={[
-    'choosing the right product for the current bottleneck',
-    'running the project before refactoring',
-    'understanding the Template → Free → Pro path',
-    'validating product UX before deep backend work',
-    'using patterns for repeated product flows',
-    'upgrading when auth and billing slow launch',
-  ]}
-  avoid={[
-    'rewriting everything before understanding the baseline',
-    'starting with billing before validating the product',
-    'mixing UI primitives with business logic',
-    'treating Starter Free as a complete backend',
-    'using a template when you need real auth and billing',
-    'waiting too long to deploy and test the product surface',
-  ]}
-/>
+Follow [Setup](/docs/templates/na-ai-landing/setup) to run the downloaded template.
+Confirm the homepage renders, check its light and dark modes, and run the
+documented production build.
 
-## Next steps
+Your first result is a local landing page that builds successfully. Continue
+with [Customization](/docs/templates/na-ai-landing/customization) to update your
+branding and content.
 
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
-      description:
-        'Launch a premium AI and SaaS marketing experience.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Starter Free',
-      href: '/docs/starter',
-      description:
-        'Validate the SaaS product surface before backend wiring.',
-      icon: Box,
-    },
-    {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
-      description:
-        'Move to production auth, billing, backend, and protected flows.',
-      icon: Rocket,
-      tone: 'primary',
-    },
-    {
-      title: 'UI Components',
-      href: '/docs/ui',
-      description:
-        'Explore the primitives behind modern SaaS interfaces.',
-      icon: Code2,
-    },
-  ]}
-/>
+### Starter Pro
 
-<Callout title="Build fast. Validate early. Upgrade when ready.">
-  PyColors is built to help you reduce the distance between idea, product, launch, and revenue.
-</Callout>
+Follow [Getting started](/docs/starter-pro/getting-started) in order: unpack,
+install, configure the local environment, set up the database, and start the app.
+Use that guide's foundation checks for sign-in and protected routes before
+customizing the product.
+
+Your first result is a working local foundation. Running locally is one step
+toward launch; follow the product's separate configuration and validation guides
+before relying on authentication, billing, or delivery in production.
+
+## If setup does not work
+
+- **Components render without styling:** check the
+  [global CSS and package scan path](/docs/ui/installation#add-design-tokens).
+  Installing the JavaScript package alone does not generate its Tailwind styles.
+- **Dependency or runtime errors:** compare your local Node.js and pnpm versions
+  with the downloaded project's manifest before reinstalling. Use the
+  troubleshooting section of your product's setup guide.
+- **Starter Free does not save real users or payments:** this is its
+  [frontend-only boundary](/docs/starter/getting-started#know-what-is-intentionally-mocked).
+  Read the [upgrade guide](/docs/starter/upgrade) when backend wiring becomes
+  your next step.
+
+Once your first result works, follow the next guide for that product. You can
+return here when a different PyColors product matches the next thing you need
+to build.

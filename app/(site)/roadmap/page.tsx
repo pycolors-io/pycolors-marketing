@@ -147,7 +147,7 @@ const milestones: Array<{
     id: "Sep 2026",
     title: "September 2026",
     subtitle:
-      "PyColors Marketing v1.23.0 adds a clearer path to discover, copy, and adapt Blocks on 11 September 2026, building on the v1.22.0 Theme Builder and UI guidance release.",
+      "The 18 September 2026 PyColors Marketing v1.24.0 update connects setup guidance, interactive UI examples, design-system principles, and readable feedback, following the v1.23.0 Blocks and v1.22.0 Theme Builder releases.",
   },
   {
     id: "H1 2026",
@@ -158,6 +158,42 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "Product-specific setup guidance",
+    description:
+      "Choose a product path, follow its setup guide, and verify the first result. UI installation explains token CSS and styling setup before the first component.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Docs", "DX"],
+    href: "/docs/getting-started",
+  },
+  {
+    title: "Interactive UI usage examples",
+    description:
+      "Try notification settings, a rename dialog, a paginated members table, and save feedback with complete source. Examples use local state; applications own persistence and product behavior.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["UI", "Docs", "DX"],
+    href: "/docs/ui/usage-patterns",
+  },
+  {
+    title: "Design-system principles",
+    description:
+      "Use documented rules for semantic roles, composition, ownership, and accessibility when adapting UI primitives to a product.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Design System", "Docs", "Accessibility"],
+    href: "/docs/design-system/principles",
+  },
+  {
+    title: "Semantic color and Toast readability",
+    description:
+      "PyColors UI v1.5.4 and PyColors Tokens v1.2.3 improve light muted-text contrast, dark primary and destructive foregrounds, and semantic Toast readability with compatible public APIs.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["UI", "Tokens", "Accessibility"],
+    href: "/docs/design-system/tokens",
+  },
   {
     title: "PyColors Marketing v1.23.0",
     description:

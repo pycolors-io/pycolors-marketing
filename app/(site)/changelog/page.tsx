@@ -52,6 +52,54 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.24.0",
+    title: "PyColors Marketing v1.24.0: from setup to working UI examples",
+    dateLabel: "Fri 18 Sep 2026",
+    dateISO: "2026-09-18",
+    status: "Stable",
+    releaseWeekLabel: "Sep 2026 (weekly release)",
+    summary:
+      "This update connects product setup, interactive UI examples, and design-system guidance so developers can inspect a working example and understand how to adapt it in their own application.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "PyColors Marketing and Documentation now provide focused Getting Started guidance with a first-result checklist for each product path and the styling steps needed to render the first UI component.",
+          "Four interactive UI examples include complete source: notification settings, a rename dialog, a paginated members table, and save feedback.",
+          "A new design-system principles guide explains semantic roles, composition, ownership, and accessibility responsibilities.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Aligned the displayed baselines with PyColors UI v1.5.4 and PyColors Tokens v1.2.3. These package versions were already applied; this Marketing update does not re-version them.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "The package baselines improve muted-text contrast in light mode, foreground contrast on primary and destructive surfaces in dark mode, and semantic Toast readability while preserving compatible public APIs.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Try the examples, inspect their source, and connect persistence, validation, and product behavior in your own application. Example state is local and resets on refresh.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Use the documented interactions and design principles to evaluate component composition and the responsibilities that remain with an application.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Get started",
+      href: "/docs/getting-started",
+    },
+  },
+  {
     version: "v1.23.0",
     title: "PyColors Marketing v1.23.0: discover, copy, and adapt Blocks",
     dateLabel: "Fri 11 Sep 2026",

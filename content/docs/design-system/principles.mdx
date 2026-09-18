@@ -1,0 +1,122 @@
+---
+title: Principles
+description: "The product rules behind PyColors design decisions: semantic roles, composable primitives, accessibility, restraint, and one source of truth."
+lastUpdated: "2026-09-18"
+appliesTo: Design System
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accessibility, Layers3, Palette, Sparkles } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+PyColors uses a small set of principles to keep product surfaces coherent as the codebase and product catalog grow. These are decision rules, not decorative preferences: use them when reviewing a component, composing a page, or deciding whether a visual exception belongs in the shared system.
+
+## 1. Meaning before values
+
+Choose a semantic role before choosing a raw value. Reusable UI should express intent such as `background`, `card`, `muted-foreground`, `border`, or `primary` instead of embedding a color that only works in one context.
+
+This keeps light and dark themes aligned and makes system-wide changes possible without rewriting consumers.
+
+## 2. One decision, one owner
+
+Repeated visual decisions belong in the lowest authoritative layer that can own them.
+
+| Decision                         | Owner            |
+| -------------------------------- | ---------------- |
+| Shared visual value              | Design token     |
+| Semantic surface or text meaning | Color role       |
+| Reusable interaction             | UI primitive     |
+| Multi-component product behavior | Guide or Pattern |
+| Product foundation               | Starter          |
+
+<Callout title="Review question">
+  If the same decision must be repeated in two places, first ask whether the
+  system is missing an owner for it.
+</Callout>
+
+## 3. Components stay composable
+
+A primitive should solve one reusable interaction or presentation problem well. Product-specific state, orchestration, persistence, and business rules should not accumulate inside the primitive API.
+
+Prefer composition over adding props that encode one application's workflow.
+
+## 4. Accessibility is part of the contract
+
+Keyboard behavior, focus visibility, labels, semantic structure, contrast, and assistive-technology expectations are product requirements. They are not optional polish added after visual review.
+
+Consumers still own the accessibility of the composition around a primitive. A correctly implemented component cannot repair missing labels, ambiguous copy, or an inaccessible application flow.
+
+## 5. Restraint creates consistency
+
+Do not add a new token, variant, component, or abstraction only because it is possible. Add one when an existing supported concept cannot express a repeated, meaningful product need.
+
+Prefer a smaller system with clear responsibilities over parallel ways to express the same decision.
+
+## 6. Defaults should be production-shaped
+
+The default path should encourage readable hierarchy, theme-safe styling, predictable interaction, and maintainable composition. Examples should demonstrate supported public APIs rather than repository internals or demo-only shortcuts.
+
+Escape hatches can exist, but they should not become the normal integration path.
+
+## 7. Documentation is part of the interface
+
+A public component contract includes more than TypeScript types. Developers need to know what the primitive is for, how to compose it, its accessibility responsibilities, and which layer owns adjacent complexity.
+
+When behavior or a public API changes, its documentation should change with it.
+
+## Applying the principles
+
+Before introducing a design-system change, ask:
+
+- Is this a semantic need or a one-off visual preference?
+- Does an existing token, role, primitive, guide, or pattern already own it?
+- Will the decision work in both light and dark themes?
+- Does it preserve keyboard, focus, contrast, and semantic behavior?
+- Is the public API smaller after composition is considered?
+- Can a consumer understand the supported path from the documentation?
+- Would the decision still make sense across more than one PyColors product surface?
+
+If the answer exposes a missing shared rule, improve the appropriate system layer instead of patching an individual page.
+
+## Boundaries
+
+These principles do not require every value to become a token, every composition to become a component, or every product workflow to move into `@pycolors/ui`. Local choices are valid when they are genuinely local and do not create a competing system.
+
+They also do not replace the detailed contracts for tokens, colors, typography, theming, accessibility, or component APIs.
+
+## Continue
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Tokens",
+      href: "/docs/design-system/tokens",
+      icon: Layers3,
+      description:
+        "See how repeated visual decisions become shared foundations.",
+    },
+    {
+      title: "Colors",
+      href: "/docs/design-system/colors",
+      icon: Palette,
+      description:
+        "Use semantic roles for surfaces, text, borders, and states.",
+    },
+    {
+      title: "UI accessibility",
+      href: "/docs/ui/accessibility",
+      icon: Accessibility,
+      description:
+        "Apply accessibility responsibilities when composing public primitives.",
+    },
+    {
+      title: "Why PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
+      icon: Sparkles,
+      description:
+        "Connect the design-system rules to the public component philosophy.",
+    },
+  ]}
+/>

@@ -1,11 +1,17 @@
 ---
 title: Usage Patterns
 description: Practical ways to import, compose, and ship PyColors UI primitives in real SaaS interfaces without changing the public API.
-lastUpdated: "2026-08-02"
+lastUpdated: "2026-09-18"
 appliesTo: UI
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs as DocsTabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { NotificationSettings } from "@/components/docs/ui-usage/notification-settings";
+import { RenameProjectDialog } from "@/components/docs/ui-usage/rename-project-dialog";
+import { MembersTable } from "@/components/docs/ui-usage/members-table";
+import { SaveToastExample } from "@/components/docs/ui-usage/save-toast-example";
 import { Badge } from "@pycolors/ui";
 import {
   Accessibility,
@@ -36,6 +42,40 @@ into a real screen without reading package source.
   Import public primitives from `@pycolors/ui`, keep product logic in your app,
   and compose behavior at the page, feature, or pattern layer.
 </Callout>
+
+## Try and copy the examples
+
+Complete [UI installation](/docs/ui/installation) first, including the Tailwind
+package scan and token CSS. Each **Source** tab below includes the complete file
+used by its **Preview**. Copy the file into your app; use the code-block copy
+button or select the code manually.
+
+Dialog and Pagination use the optional `lucide-react` peer for their icons.
+Install it if your app does not already provide it:
+
+```bash
+pnpm add lucide-react
+```
+
+The four interactive examples keep state in memory. Refreshing resets them;
+no data is sent, stored remotely, or used to change an account. The form shows
+validation, the dialog commits or cancels an edit, the table changes pages, and
+the toast opens only after an action.
+
+For example, save the form source as `components/notification-settings.tsx` and
+render it from a Next.js page:
+
+```tsx title="app/page.tsx"
+import { NotificationSettings } from "../components/notification-settings";
+
+export default function SettingsPage() {
+  return <NotificationSettings />;
+}
+```
+
+The page can remain a Server Component. Each interactive example declares its
+own client boundary and imports only React and the public `@pycolors/ui` entry
+point. Connect your app's persistence and server-side validation separately.
 
 ## Required usage rules
 
@@ -147,46 +187,22 @@ export function BillingSummary() {
 
 Use a client boundary for event-driven composition.
 
-```tsx title="client-confirmation-dialog.tsx"
-"use client";
+<DocsTabs items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <RenameProjectDialog />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/rename-project-dialog.tsx"'>
+      ../../../components/docs/ui-usage/rename-project-dialog.tsx
+    </include>
+  </Tab>
+</DocsTabs>
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@pycolors/ui";
-
-export function DeleteProjectDialog() {
-  function deleteProject() {
-    // Call your action, mutation, or route handler here.
-  }
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="destructive">Delete project</Button>
-      </DialogTrigger>
-
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Delete project?</DialogTitle>
-          <DialogDescription>
-            This cannot be undone. Export anything you need first.
-          </DialogDescription>
-        </DialogHeader>
-
-        <Button variant="destructive" onClick={deleteProject}>
-          Confirm deletion
-        </Button>
-      </DialogContent>
-    </Dialog>
-  );
-}
-```
+Try renaming the project, submitting an empty name, and cancelling an edit.
+Escape dismisses the dialog and returns focus to its trigger. Saving changes
+only the displayed local name.
 
 <Callout type="info" title="Client boundary rule">
   Make the smallest interactive component a client component. Keep surrounding
@@ -198,37 +214,22 @@ export function DeleteProjectDialog() {
 Use forms when the user is editing product state. Keep labels, descriptions,
 and validation messages close to the control they explain.
 
-```tsx title="notification-settings.tsx"
-import {
-  Button,
-  Checkbox,
-  CheckboxField,
-  CheckboxLabel,
-  Input,
-} from "@pycolors/ui";
+<DocsTabs items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <NotificationSettings />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/notification-settings.tsx"'>
+      ../../../components/docs/ui-usage/notification-settings.tsx
+    </include>
+  </Tab>
+</DocsTabs>
 
-export function NotificationSettings() {
-  return (
-    <form className="space-y-4">
-      <Input
-        id="billing-email"
-        label="Billing email"
-        description="Invoices and payment notices are sent here."
-        type="email"
-      />
-
-      <CheckboxField>
-        <Checkbox id="weekly-summary" />
-        <CheckboxLabel htmlFor="weekly-summary">
-          Send a weekly workspace summary
-        </CheckboxLabel>
-      </CheckboxField>
-
-      <Button type="submit">Save settings</Button>
-    </form>
-  );
-}
-```
+Submit an empty or invalid email to see a connected field error, then enter
+`builder@example.com` and toggle the weekly summary. Saving updates the status
+message without navigating or making a network request.
 
 Accessibility expectations:
 
@@ -333,64 +334,23 @@ bookmarkable page, or primary information architecture.
 Use `Table` for comparable records. Add `Pagination` when the result set is
 split into stable pages.
 
-```tsx title="members-table.tsx"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@pycolors/ui";
+<DocsTabs items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <MembersTable />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/members-table.tsx"'>
+      ../../../components/docs/ui-usage/members-table.tsx
+    </include>
+  </Tab>
+</DocsTabs>
 
-const members = [
-  { id: "m_1", name: "Ava Martin", role: "Owner" },
-  { id: "m_2", name: "Noah Chen", role: "Member" },
-];
-
-export function MembersTable() {
-  return (
-    <section className="space-y-4">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Role</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {members.map((member) => (
-            <TableRow key={member.id}>
-              <TableCell>{member.name}</TableCell>
-              <TableCell>{member.role}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <Pagination aria-label="Members pages">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious disabled />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink isActive>1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </section>
-  );
-}
-```
+Move through all three pages. Previous and Next are disabled at the boundaries;
+the current page is announced and marked with `aria-current="page"`. These
+buttons paginate local example records. Use `PaginationLink asChild` with real
+links when your app owns paginated routes.
 
 Accessibility expectations:
 
@@ -419,35 +379,25 @@ export function PaymentIssueAlert() {
 }
 ```
 
-```tsx title="toast-feedback.tsx"
-"use client";
+<DocsTabs items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <SaveToastExample />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/save-toast-example.tsx"'>
+      ../../../components/docs/ui-usage/save-toast-example.tsx
+    </include>
+  </Tab>
+</DocsTabs>
 
-import {
-  Button,
-  Toast,
-  ToastDescription,
-  ToastProvider,
-  ToastTitle,
-  ToastViewport,
-} from "@pycolors/ui";
-
-export function SaveToastExample() {
-  return (
-    <ToastProvider>
-      <Button>Save changes</Button>
-
-      <Toast open variant="success">
-        <ToastTitle>Settings saved</ToastTitle>
-        <ToastDescription>
-          Your workspace preferences were updated.
-        </ToastDescription>
-      </Toast>
-
-      <ToastViewport />
-    </ToastProvider>
-  );
-}
-```
+Activate the button to simulate a successful save, dismiss the notification,
+and trigger it again. Dismissing returns focus to the trigger. It also closes
+after five seconds when not paused by interaction. In your app, open the toast
+after the mutation succeeds. Keep
+blocking failures in persistent inline feedback. This standalone example owns
+one provider and viewport; reuse your existing provider when integrating it.
 
 ## Common mistakes
 
