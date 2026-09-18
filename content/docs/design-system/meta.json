@@ -1,10 +1,4 @@
 {
   "title": "Design System",
-  "pages": [
-    "index",
-    "principles",
-    "tokens",
-    "colors",
-    "typography"
-  ]
+  "pages": ["index", "principles", "tokens", "colors", "typography"]
 }
