@@ -8,8 +8,6 @@ appliesTo: Design System
 import { Callout } from "fumadocs-ui/components/callout";
 import { DocsLinks } from "@/components/docs/docs-links";
 
-# Design system principles
-
 PyColors uses a small set of principles to keep product surfaces coherent as the codebase and product catalog grow. These are decision rules, not decorative preferences: use them when reviewing a component, composing a page, or deciding whether a visual exception belongs in the shared system.
 
 ## 1. Meaning before values
@@ -22,16 +20,17 @@ This keeps light and dark themes aligned and makes system-wide changes possible 
 
 Repeated visual decisions belong in the lowest authoritative layer that can own them.
 
-| Decision | Owner |
-| --- | --- |
-| Shared visual value | Design token |
-| Semantic surface or text meaning | Color role |
-| Reusable interaction | UI primitive |
+| Decision                         | Owner            |
+| -------------------------------- | ---------------- |
+| Shared visual value              | Design token     |
+| Semantic surface or text meaning | Color role       |
+| Reusable interaction             | UI primitive     |
 | Multi-component product behavior | Guide or Pattern |
-| Product foundation | Starter |
+| Product foundation               | Starter          |
 
 <Callout title="Review question">
-  If the same decision must be repeated in two places, first ask whether the system is missing an owner for it.
+  If the same decision must be repeated in two places, first ask whether the
+  system is missing an owner for it.
 </Callout>
 
 ## 3. Components stay composable
@@ -93,12 +92,14 @@ They also do not replace the detailed contracts for tokens, colors, typography, 
     {
       title: "Tokens",
       href: "/docs/design-system/tokens",
-      description: "See how repeated visual decisions become shared foundations.",
+      description:
+        "See how repeated visual decisions become shared foundations.",
     },
     {
       title: "Colors",
       href: "/docs/design-system/colors",
-      description: "Use semantic roles for surfaces, text, borders, and states.",
+      description:
+        "Use semantic roles for surfaces, text, borders, and states.",
     },
     {
       title: "UI accessibility",
