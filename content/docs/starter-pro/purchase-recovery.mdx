@@ -1,0 +1,108 @@
+---
+title: Purchase recovery
+description: Recover access to your Starter Pro purchase when the email is missing or the download link has expired.
+lastUpdated: "2026-09-22"
+appliesTo: Starter Pro buyers
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Download, LifeBuoy, RefreshCcw } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+Use [purchase recovery](/orders/recover) if your Starter Pro access email is
+missing, you lost the original link, or your download link has expired.
+You do not need a PyColors account or another purchase to request access.
+
+This guide concerns the Starter Pro ZIP you bought from PyColors. It does not
+reset a password or manage subscriptions inside an app built with Starter Pro.
+
+## Recover your download
+
+1. Check the inbox and spam folder for the email address used at checkout.
+2. Open [purchase recovery](/orders/recover), enter that same email address, and
+   select **Resend access link**.
+3. If eligible access is found and the request can be processed, PyColors sends
+   a new claim email. Open its access link, check the product name, and download
+   the ZIP from the claim page.
+4. Unzip the package and continue with [Getting started](/docs/starter-pro/getting-started).
+
+Access links currently expire 24 hours after they are issued. If a link expires
+before you download, request a fresh one. Keep claim links private: they grant
+access to your purchase.
+
+<Callout title="What the confirmation means">
+  The recovery page gives the same confirmation whether or not eligible access
+  is found. It does not confirm that a purchase exists or that an email reached
+  your inbox. Repeated requests may also be temporarily limited.
+</Callout>
+
+## If recovery does not work
+
+### No email after the confirmation
+
+Check the checkout email for typos and look in spam. If you made several requests,
+wait at least 30 minutes before trying again. If it still does not arrive,
+contact support.
+
+### The form reports an error
+
+Check your connection and try again later. If the error continues, contact
+support; the error does not prove that your payment failed.
+
+### The access link is unavailable or the download fails
+
+Request a fresh link. If that also fails, contact support with the product name
+and the error you see.
+
+### The email points to another PyColors product
+
+Recovery currently uses the most recent active purchase access associated with
+the email. Contact support for help with your Starter Pro order.
+
+### You cannot access the checkout email
+
+Contact support. The recovery form cannot change the email address on a purchase.
+
+Recovery cannot complete an unpaid checkout or restore access that is no longer
+active. If you believe you paid but cannot access the product, contact support
+before making another purchase.
+
+## Ask for purchase support
+
+Email [support@pycolors.com](mailto:support@pycolors.com?subject=PyColors%20Starter%20Pro%20access%20recovery)
+with:
+
+- the email address used at checkout;
+- the product name, **Starter Pro**;
+- the approximate purchase date and order reference, if available;
+- what happened and the steps you already tried.
+
+Do not include passwords, payment card details, API keys, or claim/download links.
+Remove those details from screenshots too. Support can review the access issue;
+no response-time or resolution-time guarantee is promised.
+
+## Continue
+
+<DocsLinks
+  variant="list"
+  items={[
+    {
+      title: "Resend access link",
+      href: "/orders/recover",
+      description: "Request access using the email address from checkout.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Getting started",
+      href: "/docs/starter-pro/getting-started",
+      description: "Set up Starter Pro after downloading your ZIP.",
+      icon: Download,
+    },
+    {
+      title: "Contact purchase support",
+      href: "mailto:support@pycolors.com?subject=PyColors%20Starter%20Pro%20access%20recovery",
+      description: "Get help when recovery does not restore your access.",
+      icon: LifeBuoy,
+    },
+  ]}
+/>

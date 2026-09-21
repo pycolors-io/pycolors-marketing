@@ -80,6 +80,7 @@ const INTERNAL = {
   docsGettingStarted: "/docs/starter-pro/getting-started",
   docsWhatIsIncluded: "/docs/starter-pro/what-is-included",
   docsDelivery: "/docs/starter-pro/delivery",
+  docsPurchaseRecovery: "/docs/starter-pro/purchase-recovery",
   docsBillingTesting: "/docs/starter-pro/billing-testing",
   docsProductionChecklist: "/docs/starter-pro/production-checklist",
   docsDeployment: "/docs/starter-pro/deployment",
@@ -255,12 +256,16 @@ const postPurchaseDetails = [
   {
     title: "Claim email and purchase recovery",
     description:
-      "After purchase, you receive a claim email shortly afterward with a secure access link. If the original email or link is unavailable, recover access with the email used at checkout.",
+      "Missing the purchase email or using an expired link? Request a fresh access link with the email used at checkout. Eligible purchases can be recovered without creating an account or buying again.",
     icon: Mail,
     links: [
       {
         href: INTERNAL.ordersRecover,
         label: "Open purchase recovery",
+      },
+      {
+        href: INTERNAL.docsPurchaseRecovery,
+        label: "Read the recovery guide",
       },
     ],
   },
@@ -525,7 +530,7 @@ const faqs = [
   {
     question: "What if I do not receive my purchase email?",
     answer:
-      "Use the purchase recovery page with the same email address used at checkout. PyColors can resend the secure access link for eligible orders.",
+      "Check spam, then use purchase recovery with the checkout email. The confirmation does not prove an email arrived. If recovery still fails, contact support@pycolors.com with your purchase email and product name before buying again.",
   },
   {
     question: "What is the refund policy?",
