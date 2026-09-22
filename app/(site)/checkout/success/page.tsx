@@ -212,9 +212,7 @@ export default async function CheckoutSuccessPage({
                 <Link href="/orders/recover">Recover purchase access</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="mailto:support@pycolors.com?subject=PyColors%20payment%20confirmation">
-                  Contact support
-                </Link>
+                <Link href="/orders/support">Contact support</Link>
               </Button>
             </div>
             <p className="text-sm leading-7 text-muted-foreground">
@@ -511,11 +509,7 @@ export default async function CheckoutSuccessPage({
 
             <div className="flex flex-wrap gap-3">
               <Button asChild variant="outline" className="rounded-xl">
-                <Link
-                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
-                >
-                  Contact support
-                </Link>
+                <Link href="/orders/support">Contact support</Link>
               </Button>
 
               <Button asChild variant="ghost" className="rounded-xl">

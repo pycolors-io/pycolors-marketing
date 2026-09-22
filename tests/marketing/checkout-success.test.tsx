@@ -48,7 +48,7 @@ function expectUnconfirmed() {
   ).toHaveAttribute("href", "/orders/recover");
   expect(screen.getByRole("link", { name: "Contact support" })).toHaveAttribute(
     "href",
-    expect.stringContaining("mailto:support@pycolors.com"),
+    "/orders/support",
   );
 }
 
@@ -95,6 +95,9 @@ describe("Checkout success", () => {
       "Your payment is confirmed.",
     );
     expect(screen.getByText("€199.00")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Contact support" }),
+    ).toHaveAttribute("href", "/orders/support");
     expect(screen.getByRole("link", { name: /Start setup/ })).toHaveAttribute(
       "href",
       "/docs/starter-pro/getting-started",

@@ -1,10 +1,5 @@
-import Link from 'next/link';
-import {
-  ArrowRight,
-  CreditCard,
-  LifeBuoy,
-  Shield,
-} from 'lucide-react';
+import Link from "next/link";
+import { ArrowRight, CreditCard, LifeBuoy, Shield } from "lucide-react";
 
 import {
   Badge,
@@ -13,7 +8,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export default function CheckoutCancelPage() {
   return (
@@ -38,9 +33,9 @@ export default function CheckoutCancelPage() {
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            No payment was captured and no order was created. You can
-            return to PyColors pricing, review the product again, and
-            restart checkout whenever you are ready.
+            No payment was captured and no order was created. You can return to
+            PyColors pricing, review the product again, and restart checkout
+            whenever you are ready.
           </p>
         </div>
 
@@ -60,18 +55,16 @@ export default function CheckoutCancelPage() {
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <p className="text-sm font-medium">What happened</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  The payment flow was interrupted before completion.
-                  Your card was not charged and your product access
-                  was not issued.
+                  The payment flow was interrupted before completion. Your card
+                  was not charged and your product access was not issued.
                 </p>
               </div>
 
               <div className="rounded-2xl border bg-muted/20 p-4">
                 <p className="text-sm font-medium">What to do next</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  Return to the pricing page, review the available
-                  PyColors products, and restart checkout when you
-                  want to continue.
+                  Return to the pricing page, review the available PyColors
+                  products, and restart checkout when you want to continue.
                 </p>
               </div>
 
@@ -98,8 +91,8 @@ export default function CheckoutCancelPage() {
               </div>
 
               <p className="text-xs leading-6 text-muted-foreground">
-                Canceling checkout does not create any billing
-                commitment. You remain free to restart later.
+                Canceling checkout does not create any billing commitment. You
+                remain free to restart later.
               </p>
             </CardContent>
           </Card>
@@ -116,24 +109,23 @@ export default function CheckoutCancelPage() {
                 <div className="flex items-start gap-3">
                   <Shield className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They want to review the offer one more time before
-                    buying.
+                    They want to review the offer one more time before buying.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <CreditCard className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They need to restart the payment flow with a
-                    different card or device.
+                    They need to restart the payment flow with a different card
+                    or device.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    They want to confirm scope, delivery, or
-                    documentation before completing checkout.
+                    They want to confirm scope, delivery, or documentation
+                    before completing checkout.
                   </p>
                 </div>
               </CardContent>
@@ -141,36 +133,20 @@ export default function CheckoutCancelPage() {
 
             <Card className="rounded-[28px] border">
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Helpful next steps
-                </CardTitle>
+                <CardTitle className="text-lg">Helpful next steps</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-3">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full rounded-xl"
-                >
+                <Button asChild variant="outline" className="w-full rounded-xl">
                   <Link href="/starters">Browse starters</Link>
                 </Button>
 
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full rounded-xl"
-                >
+                <Button asChild variant="outline" className="w-full rounded-xl">
                   <Link href="/templates">Browse templates</Link>
                 </Button>
 
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full rounded-xl"
-                >
-                  <Link href="mailto:support@pycolors.com?subject=PyColors%20checkout%20question">
-                    Contact support
-                  </Link>
+                <Button asChild variant="ghost" className="w-full rounded-xl">
+                  <Link href="/orders/support">Contact support</Link>
                 </Button>
               </CardContent>
             </Card>

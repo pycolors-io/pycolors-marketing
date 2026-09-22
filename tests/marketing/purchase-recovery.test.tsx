@@ -36,10 +36,7 @@ describe("Purchase recovery guidance", () => {
     ).toHaveAttribute("href", "/docs/starter-pro/purchase-recovery");
     expect(
       screen.getByRole("link", { name: "Contact support" }),
-    ).toHaveAttribute(
-      "href",
-      "mailto:support@pycolors.com?subject=PyColors%20access%20recovery",
-    );
+    ).toHaveAttribute("href", "/orders/support");
     expect(screen.getByText(/wait at least 30 minutes/)).toBeInTheDocument();
     expect(recoverCommerceAccess).not.toHaveBeenCalled();
     await expect(axe(container)).resolves.toHaveNoViolations();

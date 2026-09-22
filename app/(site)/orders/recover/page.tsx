@@ -231,9 +231,7 @@ export default function RecoverOrderPage() {
 
                 <div className="flex flex-wrap gap-3">
                   <Button asChild variant="outline" className="rounded-xl">
-                    <Link href="mailto:support@pycolors.com?subject=PyColors%20access%20recovery">
-                      Contact support
-                    </Link>
+                    <Link href="/orders/support">Contact support</Link>
                   </Button>
 
                   <Button asChild variant="ghost" className="rounded-xl">
