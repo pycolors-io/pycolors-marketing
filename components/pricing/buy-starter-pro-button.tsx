@@ -8,6 +8,8 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { createStarterProCheckout } from "@/lib/api/client";
 import { trackMoneyPathEvent } from "@/lib/analytics";
 
+import { CheckoutFailureNotice } from "./checkout-failure-notice";
+
 type BuyStarterProButtonProps = {
   className?: string;
   fullWidth?: boolean;
@@ -32,7 +34,7 @@ export function BuyStarterProButton({
   showTrustText = false,
 }: BuyStarterProButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [hasError, setHasError] = React.useState(false);
 
   async function handleBuy() {
     try {
@@ -43,7 +45,7 @@ export function BuyStarterProButton({
         page: globalThis.location.pathname,
       });
       setIsLoading(true);
-      setError(null);
+      setHasError(false);
 
       const url = await createStarterProCheckout();
 
@@ -55,12 +57,7 @@ export function BuyStarterProButton({
       });
 
       window.location.href = url;
-    } catch (err) {
-      const message =
-        err instanceof Error && err.message
-          ? err.message
-          : "Checkout could not be opened right now. Please try again.";
-
+    } catch {
       trackMoneyPathEvent({
         event: "checkout_redirect_failed",
         productSlug: STARTER_PRO.slug,
@@ -69,7 +66,7 @@ export function BuyStarterProButton({
         status: "error",
       });
 
-      setError(message);
+      setHasError(true);
       setIsLoading(false);
     }
   }
@@ -131,9 +128,7 @@ export function BuyStarterProButton({
         <p className="text-xs text-muted-foreground">{trustText}</p>
       ) : null}
 
-      {error ? (
-        <p className="text-sm leading-6 text-destructive">{error}</p>
-      ) : null}
+      {hasError ? <CheckoutFailureNotice /> : null}
     </div>
   );
 }
