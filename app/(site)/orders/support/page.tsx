@@ -92,6 +92,28 @@ export default function PurchaseSupportPage() {
         </Card>
       </div>
 
+      <section aria-labelledby="documents-heading" className="mt-8 space-y-4">
+        <h2
+          id="documents-heading"
+          className="text-xl font-semibold tracking-tight"
+        >
+          Need a receipt or invoice?
+        </h2>
+        <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
+          Your product access email and order reference are separate from a
+          payment receipt or invoice. For a missing document or a billing-detail
+          question, email support using the details above. If a particular
+          document is required before you buy, ask us to confirm what is
+          available first.
+        </p>
+        <Link
+          href="/docs/starter-pro/purchase-documents"
+          className="inline-block text-sm font-medium underline underline-offset-4"
+        >
+          Starter Pro receipts and invoices
+        </Link>
+      </section>
+
       <section aria-labelledby="recovery-heading" className="mt-8 space-y-4">
         <h2
           id="recovery-heading"
