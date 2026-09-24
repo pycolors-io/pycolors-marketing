@@ -1,407 +1,158 @@
 ---
 title: Delivery (PRO)
-description: Instant, secure access to Starter Pro after purchase with controlled delivery and fulfillment flow.
-lastUpdated: "2026-05-18"
-appliesTo: Starter Pro - Delivery
+description: Follow your Starter Pro purchase from payment confirmation to claim email and ZIP download, with recovery steps when access is missing.
+lastUpdated: "2026-09-24"
+appliesTo: Starter Pro buyers
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Badge } from "@pycolors/ui";
-import {
-  CreditCard,
-  Database,
-  Download,
-  KeyRound,
-  LockKeyhole,
-  PackageCheck,
-  RefreshCcw,
-  ShieldCheck,
-} from "lucide-react";
-
-import { PreferAvoid } from "@/components/docs/prefer-avoid";
-import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
-import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { Download, FileText, RefreshCcw } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
-import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">Starter Pro</Badge>
-  <Badge>Delivery</Badge>
-</div>
+This guide explains how you receive the **Starter Pro ZIP bought from PyColors**.
+You do not need a PyColors account to claim or recover your purchase.
+It does not configure subscriptions or digital-product delivery for an app you
+build with Starter Pro. For that app's subscription foundation, see the
+[billing guide](/docs/starter-pro/billing).
 
-## Secure delivery after purchase
-
-Starter Free gives you a product surface.
-
-Starter Pro gives you a **real paid product flow** with controlled delivery after purchase.
-
-That matters because a digital product is not only about checkout.
-
-It is also about what happens immediately after payment:
-
-- access is confirmed
-- delivery is controlled
-- the buyer receives the product
-- the asset is not publicly exposed
-- fulfillment does not rely on manual work
-
-<DocsUpgradeCTA
-  title="Checkout starts the sale. Delivery earns the trust."
-  description="Starter Pro gives you the controlled post-purchase flow that makes a paid digital product feel complete."
-  productSlug="starter-pro"
-  buyLabel="Get Starter Pro"
-  secondaryHref="/docs/starter-pro/billing"
-  secondaryLabel="Billing system"
-/>
-
-<Callout title="Core idea">
-  Checkout creates the purchase. Delivery completes the product experience.
+<Callout title="Already paid but cannot access the ZIP?">
+  Check the inbox and spam folder for the email used at checkout, then use
+  [purchase recovery](/orders/recover). If you are unsure whether payment
+  completed, contact [purchase support](/orders/support) before paying again.
+  Recovery does not complete an unpaid checkout.
 </Callout>
 
-### What this solves
+## From payment to your ZIP
 
-A paid digital product feels fragile when delivery is manual or exposed through public links.
+1. **Complete checkout and check confirmation.**
 
-Buyers expect:
+   Pay through Stripe Checkout using an email address you can access. PyColors
+   processes the payment confirmation on the server before creating purchase
+   access. A browser redirect alone does not prove payment or delivery succeeded.
+   Payment confirmation, access-email delivery, and a completed download are
+   separate steps.
 
-- secure payment
-- instant confirmation
-- controlled access
-- reliable download
-- no waiting for manual fulfillment
+2. **Find the claim email.**
 
-Starter Pro includes the foundations for a post-purchase delivery flow that feels serious, automated, and trustworthy.
+   PyColors sends an access email to the address used at checkout after purchase
+   access is created. Email delivery can fail even when your purchase access
+   exists. Check spam if it is missing; neither the confirmation page nor email
+   submission proves that a message reached your inbox. No exact email-arrival
+   or download-completion time is guaranteed by this guide.
 
-### Included foundations
+   The claim email is for product access. Receipts and invoices are separate;
+   see [purchase receipts and invoices](/docs/starter-pro/purchase-documents).
 
-<DocsFeatureGrid
-  columns={2}
-  tone="platform"
-  items={[
-    {
-      title: 'Fulfillment flow',
-      description:
-        'A structured flow from successful payment to confirmed product access and download availability.',
-      icon: PackageCheck,
-    },
-    {
-      title: 'Controlled access',
-      description:
-        'Backend-controlled download access so paid files are not exposed through permanent public URLs.',
-      icon: LockKeyhole,
-    },
-    {
-      title: 'Token-based delivery',
-      description:
-        'Secure token patterns for download access, expiration, validation, and post-purchase fulfillment.',
-      icon: KeyRound,
-    },
-    {
-      title: 'Retry-safe operation',
-      description:
-        'Delivery designed around backend confirmation, webhook truth, and resilience against interrupted browser sessions.',
-      icon: RefreshCcw,
-    },
-  ]}
-/>
+3. **Open the original access link.**
 
-## Delivery lifecycle
+   Use the link in the claim email rather than opening the claim route manually.
+   The link contains the private access token needed to verify your purchase
+   access. On **Your access is ready.**, check that the product is **Starter Pro**
+   and keep the order reference for support.
 
-<Steps>
-  <Step>
-    ### Buyer completes checkout
+   Access links currently expire 24 hours after they are issued. If yours has
+   expired, request a fresh link through [purchase recovery](/orders/recover).
+   Keep claim and download links private; do not put them in public issues,
+   screenshots, or shared documentation.
 
-    Payment happens through Stripe Checkout.
+4. **Download, save, and start setup.**
 
-    Checkout is the commercial action, but the browser redirect alone should not be treated as the source of truth.
-  </Step>
+   Select **Download package** on the claim page. PyColors validates the link
+   and active purchase access on the server before serving the private ZIP.
+   An access-ready page does not prove that the file finished downloading.
+   Check that the download completed, save the archive safely, and unzip it.
 
-  <Step>
-    ### Webhook confirms the purchase
+   Continue with [Getting started](/docs/starter-pro/getting-started), including
+   its first-session checkpoints. Downloading the source code does not provision
+   or deploy your SaaS. Configure and validate your own environment and
+   integrations before following the
+   [production checklist](/docs/starter-pro/production-checklist).
 
-    Stripe sends the confirmed event to your backend.
+## When a delivery step fails
 
-```txt title="stripe-events.txt"
-checkout.session.completed
-payment_intent.succeeded
-invoice.payment_succeeded
-```
+### Payment is pending or uncertain
 
-    The backend verifies the event and updates the internal purchase or access state.
-  </Step>
+Do not buy again just to obtain another access email. Contact
+[purchase support](/orders/support) with your checkout email, the product name,
+and the approximate purchase date. The
+[interrupted checkout page](/checkout/cancel) does not verify payment status or
+cancel an existing payment. Follow the
+[purchase recovery guide](/docs/starter-pro/purchase-recovery) for the distinction
+between retrying an unpaid checkout and recovering an existing purchase.
 
-  <Step>
-    ### Access is granted
+### No claim email arrives
 
-    The app associates the purchase with the buyer, customer, or user account.
+Check the checkout email and spam folder, then open
+[purchase recovery](/orders/recover) and select **Resend access link** with that
+same email. Eligible active purchase access can receive a new claim email.
 
-    This is where billing, auth, and backend ownership connect.
-  </Step>
+A recovery confirmation does not prove that a purchase exists or that an email
+reached your inbox. Repeated requests may be temporarily limited. Follow the
+[purchase recovery guide](/docs/starter-pro/purchase-recovery) for retry steps;
+contact support if access is still missing rather than making another purchase.
 
-  <Step>
-    ### Download token is created
+### The page says "Invalid access link"
 
-    A delivery token can be created for controlled access.
+This can happen when the claim link is missing its token. Open the original
+link from your claim email. Do not construct a token or copy an example URL.
+If you cannot find a usable link, request a fresh one through purchase recovery.
 
-```ts title="delivery-token.ts"
-const token = await createDownloadToken({
-  userId,
-  productId: "starter-pro",
-  expiresIn: "24h",
-});
-```
-  </Step>
+### The page says "Access link unavailable"
 
-  <Step>
-    ### Backend serves the asset
+The claim page could not verify the link. It may be expired or invalid, or the
+service may be temporarily unavailable; this message does not identify the
+cause or prove that payment failed. Try again shortly or request a fresh access
+link. If the new link also fails, contact purchase support.
 
-    The buyer requests the download through your backend.
+### The download fails after access is ready
 
-    The backend validates access and streams or redirects to a private file source without exposing a permanent public URL.
-  </Step>
-</Steps>
+Check your connection and retry the download. If the link has expired, request
+a fresh one. If the file remains unavailable or the ZIP cannot be opened,
+contact support with the product name and the error you see. Access verification
+and successful file delivery are separate checks; do not pay again to retry.
 
-<Callout title="Production rule">
-  Redirects are UX. Webhooks confirm purchase. Backend access controls delivery.
-</Callout>
+### The link is for another product or the checkout email is inaccessible
 
-### Secure delivery model
+Contact purchase support. Recovery currently selects the most recent active
+purchase access associated with an email; it cannot select a different order or
+change the checkout email. It also cannot restore inactive purchase access.
+The [purchase recovery guide](/docs/starter-pro/purchase-recovery) explains these
+limits and the support handoff.
 
-<DocsDecisionGrid
-  columns={2}
-  items={[
-    {
-      eyebrow: 'Storage',
-      title: 'Private storage',
-      icon: LockKeyhole,
-      description:
-        'Paid files should stay away from public permanent URLs and direct exposure.',
-      items: [
-        'paid files should not live behind public permanent links',
-        'private storage keeps the asset away from direct exposure',
-        'backend access can decide who gets the file',
-      ],
-    },
-    {
-      eyebrow: 'Access',
-      title: 'Access validation',
-      icon: ShieldCheck,
-      description:
-        'Delivery access should be validated on the server from confirmed purchase or entitlement state.',
-      items: [
-        'validate purchase or entitlement server-side',
-        'connect access to user or customer identity',
-        'avoid trusting client-only purchase state',
-      ],
-    },
-    {
-      eyebrow: 'Token',
-      title: 'Delivery token',
-      icon: KeyRound,
-      description:
-        'Tokens provide temporary, controlled delivery without exposing long-lived private asset links.',
-      items: [
-        'token represents controlled temporary access',
-        'expiration limits long-term link sharing',
-        'validation keeps delivery behind backend rules',
-      ],
-    },
-    {
-      eyebrow: 'Download',
-      title: 'Download endpoint',
-      icon: Download,
-      description:
-        'The download route becomes the controlled boundary between buyer access and private storage.',
-      items: [
-        'buyer requests file through the app',
-        'backend validates token and access',
-        'asset is delivered without exposing private storage',
-      ],
-    },
-  ]}
-/>
+## Ask for purchase support safely
 
-## Starter Free vs Starter Pro
+Open [purchase support](/orders/support) for the email contact and fallback
+instructions if your email app does not open. Include the checkout email,
+**Starter Pro**, approximate purchase date, order reference if available, the
+failed step, and what you already tried.
 
-| Capability | Starter Free | Starter Pro |
-| --- | --- | --- |
-| Product surface | Included | Included |
-| Checkout flow | Not included | Included foundation |
-| Paid access state | Not included | Included foundation |
-| Private file delivery | Not included | Included foundation |
-| Download tokens | Not included | Included pattern |
-| Backend-controlled access | Not included | Included foundation |
-| Manual fulfillment | Required | Avoided |
-| Buyer confidence | Demo-level | Production-oriented |
+Do not send passwords, payment card details, API keys, or claim/download links.
+Remove those details from screenshots too. Support can review the purchase or
+access issue; no response-time or resolution-time guarantee is promised.
+Requesting a new access link does not resend receipts or invoices.
 
-<Callout title="Simple distinction">
-  Starter Free validates the product. Starter Pro completes the paid product experience.
-</Callout>
-
-### Why this matters
-
-Delivery is the final step in the buyer journey.
-
-If delivery is slow, manual, fragile, or unclear, the purchase experience feels less trustworthy.
-
-A strong delivery system helps you:
-
-- reduce support friction
-- avoid manual fulfillment work
-- protect paid assets
-- improve buyer confidence
-- scale sales without operational drag
-
-<Callout type="info" title="Buyer trust principle">
-  The buyer should never wonder what happens after payment.
-  Confirmation and access should feel immediate, clear, and controlled.
-</Callout>
-
-### Security rules
-
-Use these rules when adapting the delivery layer.
-
-<PreferAvoid
-  prefer={[
-    'private storage for paid files',
-    'server-side access validation',
-    'webhook-confirmed purchase state',
-    'expiring delivery tokens',
-    'clear post-purchase confirmation copy',
-  ]}
-  avoid={[
-    'public permanent download links',
-    'manual fulfillment as the default path',
-    'trusting only redirect success',
-    'emailing raw private asset URLs',
-    'unclear buyer instructions after payment',
-  ]}
-/>
-
-## Decision guide
-
-<DocsDecisionGrid
-  columns={2}
-  items={[
-    {
-      eyebrow: 'Starter Pro',
-      title: 'Use Starter Pro when delivery becomes real',
-      href: '/docs/starter-pro/getting-started',
-      icon: PackageCheck,
-      tone: 'pro',
-      description:
-        'Use Starter Pro when paid access, private assets, and automated fulfillment become part of the product experience.',
-      items: [
-        'users can buy access',
-        'paid files must stay private',
-        'delivery should be automatic',
-        'buyer access must be controlled',
-        'fulfillment should not depend on manual work',
-        'the purchase experience must feel complete',
-      ],
-      cta: 'Start setup →',
-    },
-    {
-      eyebrow: 'Starter Free',
-      title: 'Stay on Free while validating UX',
-      icon: Download,
-      description:
-        'Stay on Starter Free when no one can buy yet and delivery is not part of the customer experience.',
-      items: [
-        'you are only validating product UX',
-        'no one can buy yet',
-        'delivery is not part of the product experience',
-        'manual demos are still acceptable',
-      ],
-    },
-  ]}
-/>
-
-### Implementation checklist
-
-Before treating delivery as production-ready, validate:
-
-- checkout completion
-- webhook confirmation
-- purchase-to-access mapping
-- private asset storage
-- token creation
-- token expiration
-- token validation
-- backend download route
-- unauthorized access behavior
-- expired token behavior
-- retry path for interrupted sessions
-- buyer-facing confirmation copy
-
-<Callout title="Delivery validation principle">
-  A paid product is not complete when checkout works.
-  It is complete when the buyer reliably receives controlled access.
-</Callout>
-
-## Common questions
-
-<Accordions type="single">
-  <Accordion title="Why not just email a public download link?">
-    Public links are easy to share, hard to revoke, and weak for paid product delivery. Backend-controlled access gives you a stronger commercial foundation.
-  </Accordion>
-
-  <Accordion title="Why are webhooks part of delivery?">
-    Because browser redirects can be interrupted or faked at the UX level. Webhooks confirm the payment state before access is granted.
-  </Accordion>
-
-  <Accordion title="Can delivery work without user accounts?">
-    It can, but accounts make access recovery, support, customer history, and repeat access much cleaner. For a SaaS product, auth and delivery should usually work together.
-  </Accordion>
-
-  <Accordion title="Can I replace the storage provider?">
-    Yes. Keep the same boundary: private storage, backend validation, controlled delivery, and no permanent public access to paid assets.
-  </Accordion>
-</Accordions>
-
-<DocsUpgradeCTA
-  title="Complete the paid product experience."
-  description="Starter Pro helps connect checkout, webhook truth, backend access, and controlled delivery into one serious purchase flow."
-  productSlug="starter-pro"
-  buyLabel="Get Starter Pro"
-  secondaryHref="/pricing"
-  secondaryLabel="View pricing"
-/>
-
-## Next steps
+## Continue
 
 <DocsLinks
-  variant="grid"
+  variant="list"
   items={[
     {
-      title: 'Billing system',
-      href: '/docs/starter-pro/billing',
-      description:
-        'Understand how payment and subscription state confirm access.',
-      icon: CreditCard,
+      title: "Recover purchase access",
+      href: "/docs/starter-pro/purchase-recovery",
+      description: "Follow the missing-email and expired-link recovery steps.",
+      icon: RefreshCcw,
     },
     {
-      title: 'Backend foundations',
-      href: '/docs/starter-pro/backend',
-      description:
-        'Review the server-side structure that validates and serves delivery access.',
-      icon: Database,
+      title: "Purchase receipts and invoices",
+      href: "/docs/starter-pro/purchase-documents",
+      description: "Find payment-document guidance separately from ZIP access.",
+      icon: FileText,
     },
     {
-      title: 'Authentication system',
-      href: '/docs/starter-pro/auth',
-      description:
-        'See how buyer identity and sessions support secure delivery.',
-      icon: LockKeyhole,
-    },
-    {
-      title: 'Production checklist',
-      href: '/docs/starter-pro/production-checklist',
-      description:
-        'Validate authentication, billing, backend, and delivery before launch.',
-      icon: ShieldCheck,
+      title: "Getting started",
+      href: "/docs/starter-pro/getting-started",
+      description: "Set up the downloaded source and check your first local run.",
+      icon: Download,
     },
   ]}
 />
