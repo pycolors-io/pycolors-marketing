@@ -113,7 +113,10 @@ export const starterProBuyerFaqs = [
     answer:
       "Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included. You still configure your own Stripe environment and validate billing in test mode before using production credentials. A rendered billing page alone does not validate payments.",
     links: [
-      { href: "/docs/starter-pro/billing", label: "Review billing configuration" },
+      {
+        href: "/docs/starter-pro/billing",
+        label: "Review billing configuration",
+      },
       {
         href: "/docs/starter-pro/billing-testing",
         label: "Follow billing test scenarios",
