@@ -22,6 +22,7 @@ import {
 
 import { Badge, Button, Card, CardContent, CardHeader, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
 
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
@@ -471,78 +472,6 @@ const purchaseTrustItems = [
   "Purchase recovery",
 ] as const;
 
-const faqs = [
-  {
-    question: "How long before I can start?",
-    answer:
-      "After payment, your claim email should arrive shortly with a secure access link. Download the ZIP, then follow the setup docs to run the project locally.",
-  },
-  {
-    question: "What happens after payment?",
-    answer:
-      "Stripe redirects you to the success flow and PyColors sends access to the checkout email. Purchase recovery is available if the email is missed.",
-  },
-  {
-    question: "Do I own the source code?",
-    answer:
-      "Starter Pro includes the full source code under a commercial license. You may inspect and modify it for your own personal or commercial applications.",
-  },
-  {
-    question: "Can I use it commercially?",
-    answer:
-      "Yes. Starter Pro includes commercial usage rights under the PyColors license.",
-  },
-  {
-    question: "Can I use it for client projects?",
-    answer:
-      "Use is permitted for personal and commercial applications. Review the repository license for the authoritative client-work and source-access terms.",
-  },
-  {
-    question: "Can I customize everything?",
-    answer:
-      "You may modify the source for your own products, including the UI, routes, copy, branding, product logic, and domain models.",
-  },
-  {
-    question: "What will I still need to build?",
-    answer:
-      "Your unique product logic, AI features, business workflows, branding, and domain models. Starter Pro provides the production foundation.",
-  },
-  {
-    question: "Is Starter Pro production-ready?",
-    answer:
-      "Yes. It is built as a real SaaS foundation with auth, billing, protected routes, database foundations, and launch-oriented product surfaces.",
-  },
-  {
-    question: "Is Stripe already integrated?",
-    answer:
-      "Yes. Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included.",
-  },
-  {
-    question: "Do I get future Starter Pro updates?",
-    answer:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability.",
-  },
-  {
-    question: "What if local setup fails?",
-    answer:
-      "Start with the setup and environment documentation. Purchase and access-recovery support is available. No response-time SLA is promised.",
-  },
-  {
-    question: "What if I do not receive my purchase email?",
-    answer:
-      "Check spam, then use purchase recovery with the checkout email. The confirmation does not prove an email arrived. If recovery still fails, contact support@pycolors.com with your purchase email and product name before buying again.",
-  },
-  {
-    question: "What is the refund policy?",
-    answer:
-      "Starter Pro is a digital product delivered through a claim email after purchase. Refunds may be limited unless required by applicable law. Review the terms before purchase.",
-  },
-  // {
-  //   question: 'Will the price stay at 199 €?',
-  //   answer:
-  //     'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
-  // },
-] as const;
 function StarterProHeroCarousel() {
   const heroScreenshots = [
     {
@@ -1435,17 +1364,17 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-      <section className="border-t border-border-subtle">
+      <section id="buyer-faq" className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
             <MarketingSectionHeader
               eyebrow="FAQ"
               title="Questions buyers ask before paying"
-              description="Reduce friction, increase trust, and make the decision easier before checkout."
+              description="Check setup, access, usage terms, and the steps you still own before buying."
             />
 
             <div className="mt-12 grid gap-4 lg:grid-cols-2">
-              {faqs.map((faq) => (
+              {starterProBuyerFaqs.map((faq) => (
                 <Card
                   key={faq.question}
                   className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
@@ -1456,6 +1385,23 @@ export default function StarterProPage() {
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
                       {faq.answer}
                     </p>
+
+                    <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                      {faq.links.map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="inline-flex items-center gap-1 text-sm font-medium text-foreground underline underline-offset-4"
+                          >
+                            {link.label}
+                            <ArrowRight
+                              className="h-3.5 w-3.5"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               ))}
