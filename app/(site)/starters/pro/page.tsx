@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import {
   ArrowRight,
-  Check,
   Code2,
   CreditCard,
   Download,
@@ -403,11 +402,30 @@ const stillBuildItems = [
 ] as const;
 
 const purchaseTrustItems = [
-  "One-time payment",
-  "Secure Stripe checkout",
-  "Claim email shortly after purchase",
-  "Updates included while available",
-  "Purchase recovery",
+  {
+    title: "Inspect what you get",
+    description:
+      "Full Starter Pro source code, setup documentation, and a production checklist. You configure your own providers and build your product logic.",
+    href: INTERNAL.docsWhatIsIncluded,
+    label: "Review included source and scope",
+    icon: Code2,
+  },
+  {
+    title: "Know how delivery works",
+    description:
+      "Once payment is confirmed and delivery is processed, use the access link sent to your checkout email to download the ZIP.",
+    href: INTERNAL.docsDelivery,
+    label: "Follow payment-to-ZIP delivery",
+    icon: Download,
+  },
+  {
+    title: "Recover missing access",
+    description:
+      "Missing email or expired link? Follow the recovery steps with your checkout email. If payment is uncertain, contact purchase support before paying again.",
+    href: INTERNAL.docsPurchaseRecovery,
+    label: "Review access recovery steps",
+    icon: Mail,
+  },
 ] as const;
 
 function StarterProHeroCarousel() {
@@ -1184,22 +1202,29 @@ export default function StarterProPage() {
                   purchase.
                 </div>
 
-                <div className="rounded-[5px] border border-border-subtle bg-background/60 p-4">
-                  <div className="flex flex-wrap gap-2">
-                    {purchaseTrustItems.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-2 rounded-[5px] border border-border-subtle bg-surface px-2.5 py-1.5 text-xs font-medium text-muted-foreground"
-                      >
-                        <Check
-                          className="h-3.5 w-3.5 text-foreground"
-                          aria-hidden="true"
-                        />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <ul
+                  aria-label="Before buying Starter Pro"
+                  className="grid gap-4 md:grid-cols-3"
+                >
+                  {purchaseTrustItems.map((item) => (
+                    <li key={item.href}>
+                      <MarketingFeatureCard
+                        title={item.title}
+                        description={item.description}
+                        icon={<item.icon className="h-4 w-4" />}
+                        className="p-4 shadow-none"
+                        action={
+                          <Link
+                            href={item.href}
+                            className="rounded-sm text-sm font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                          >
+                            {item.label}
+                          </Link>
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <BuyStarterProButton
