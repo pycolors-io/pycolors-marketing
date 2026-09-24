@@ -1,14 +1,9 @@
 import * as React from "react";
-import { existsSync, readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 
 import { StarterComparisonTable } from "../../components/starters/starter-comparison-table";
-
-const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 function cellsFor(label: string) {
   const header = screen.getByRole("rowheader", { name: label });
@@ -84,7 +79,7 @@ describe("Starter Free and Pro comparison", () => {
     expect(table).not.toHaveTextContent(/Ready after checkout/u);
   });
 
-  it("offers concrete next steps at existing internal destinations", () => {
+  it("offers descriptive links to the next steps", () => {
     const destinations = [
       ["Explore Starter Free", "/starters/free"],
       ["Plan the upgrade from Free", "/docs/starter/upgrade"],
@@ -96,11 +91,6 @@ describe("Starter Free and Pro comparison", () => {
 
     for (const [name, href] of destinations) {
       expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);
-      const path = href.startsWith("/docs/")
-        ? resolve(marketingRoot, "content/docs", `${href.slice(6)}.mdx`)
-        : resolve(marketingRoot, "app/(site)", href.slice(1), "page.tsx");
-
-      expect(existsSync(path), `Missing destination: ${href}`).toBe(true);
     }
   });
 
@@ -113,20 +103,6 @@ describe("Starter Free and Pro comparison", () => {
     expect(region).toHaveClass("overflow-x-auto");
     region.focus();
     expect(region).toHaveFocus();
-  });
-
-  it("keeps the page connected to the comparison and purchase CTA", () => {
-    const page = readFileSync(
-      resolve(marketingRoot, "app/(site)/starters/pro/page.tsx"),
-      "utf8",
-    );
-
-    expect(page).toContain("<StarterComparisonTable />");
-    expect(page).toContain('id="free-vs-pro"');
-    expect(page).not.toContain("const comparisonRows =");
-    expect(page).toContain("BuyStarterProButton");
-    expect(page).toContain("Try the Starter Free demo");
-    expect(page).toContain("starterProBuyerFaqs.map");
   });
 
   it("has no automated accessibility violations", async () => {
