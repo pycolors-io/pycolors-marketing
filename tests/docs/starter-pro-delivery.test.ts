@@ -75,13 +75,15 @@ describe("Starter Pro purchase delivery guidance", () => {
     expect(text).toContain("most recent active purchase access");
   });
 
-  it("limits support information and retains existing support boundaries", () => {
+  it("keeps support information safe and bounded", () => {
     const support = section("## Ask for purchase support safely");
     const supportText = support.replace(/\s+/gu, " ");
 
     expect(support).toContain("/orders/support");
     expect(supportText).toContain("order reference if available");
-    expect(supportText).toContain("Do not send passwords, payment card details");
+    expect(supportText).toContain(
+      "Do not send passwords, payment card details",
+    );
     expect(supportText).toContain("API keys, or claim/download links");
     expect(supportText).toContain("Remove those details from screenshots");
     expect(supportText).toContain(
@@ -90,7 +92,7 @@ describe("Starter Pro purchase delivery guidance", () => {
     expect(supportText).toContain("does not resend receipts or invoices");
   });
 
-  it("links to existing public destinations without example access tokens", () => {
+  it("resolves guide links to existing public destinations", () => {
     const links = Array.from(
       guide.matchAll(/\]\(([^)]+)\)|href:\s*"([^"]+)"/gu),
       ([, markdownHref, componentHref]) => markdownHref ?? componentHref,
@@ -107,6 +109,9 @@ describe("Starter Pro purchase delivery guidance", () => {
     );
     for (const href of new Set(links)) {
       expect(href).toMatch(/^\/[a-z0-9/-]+$/u);
+      if (!href) {
+        throw new Error("Delivery link is missing its destination");
+      }
       const path = href.startsWith("/docs/")
         ? resolve(marketingRoot, `content${href}.mdx`)
         : resolve(marketingRoot, "app/(site)", href.slice(1), "page.tsx");
