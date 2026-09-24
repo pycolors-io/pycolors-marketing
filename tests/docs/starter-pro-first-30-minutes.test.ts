@@ -35,7 +35,7 @@ describe("Starter Pro first-session guidance", () => {
     expect(timeline).toContain("A local first run is not a production launch");
   });
 
-  it("preserves separate payment, access-recovery, and local-failure paths", () => {
+  it("preserves payment, access-recovery, and local-failure paths", () => {
     const text = timeline.replace(/\s+/g, " ");
     expect(text).toContain("Recovery does not complete an unpaid checkout");
     expect(text).toContain("before paying again");
@@ -54,7 +54,9 @@ describe("Starter Pro first-session guidance", () => {
     expect(links).toContain("/orders/recover");
     expect(links).toContain("/orders/support");
     expect(links).toContain("#setup-flow");
-    const docLinks = links.filter((href) => href.startsWith("/docs/starter-pro/"));
+    const docLinks = links.filter((href) =>
+      href.startsWith("/docs/starter-pro/"),
+    );
     expect(docLinks.length).toBeGreaterThan(0);
     for (const href of docLinks) {
       const [path, anchor] = href.split("#");
