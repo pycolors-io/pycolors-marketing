@@ -21,7 +21,7 @@ function findFaq(question: string) {
 }
 
 describe("Starter Pro buyer FAQ", () => {
-  it("pairs distinct questions with answers and concrete next actions", () => {
+  it("gives each unique question a concrete next action", () => {
     const questions = starterProBuyerFaqs.map((faq) => faq.question);
 
     expect(questions.length).toBeGreaterThan(0);
@@ -42,7 +42,7 @@ describe("Starter Pro buyer FAQ", () => {
     }
   });
 
-  it("links only to existing public guides and buyer routes", () => {
+  it("resolves every FAQ link to an existing public destination", () => {
     for (const faq of starterProBuyerFaqs) {
       for (const { href } of faq.links) {
         expect(href).toMatch(/^\/[a-z0-9/-]+$/u);
@@ -56,7 +56,7 @@ describe("Starter Pro buyer FAQ", () => {
     }
   });
 
-  it("distinguishes source access from configured and validated production", () => {
+  it("separates setup and source access from production readiness", () => {
     const preparation = findFaq("What should I prepare before local setup?");
     const timing = findFaq("How long before I can start?");
     const production = findFaq("Is Starter Pro production-ready?");
@@ -66,14 +66,16 @@ describe("Starter Pro buyer FAQ", () => {
     expect(preparation.answer).toContain("local PostgreSQL");
     expect(preparation.answer).toContain("does not provision");
     expect(timing.answer).toContain("suggested checkpoints");
-    expect(timing.answer).toContain("not a setup-time or email-delivery guarantee");
+    expect(timing.answer).toContain(
+      "not a setup-time or email-delivery guarantee",
+    );
     expect(production.answer).toContain("not a production launch");
     expect(production.answer).toContain("does not deploy or operate your SaaS");
     expect(billing.answer).toContain("test mode");
     expect(billing.answer).toContain("alone does not validate payments");
   });
 
-  it("keeps uncertain payment and missing access on safe recovery paths", () => {
+  it("keeps recovery separate from payment and inbox delivery", () => {
     const payment = findFaq("What happens after payment?");
     const recovery = findFaq("What if I do not receive my purchase email?");
 
@@ -87,7 +89,7 @@ describe("Starter Pro buyer FAQ", () => {
     );
   });
 
-  it("preserves existing license, update, support, and refund boundaries", () => {
+  it("preserves existing commercial and support boundaries", () => {
     for (const question of [
       "Do I own the source code?",
       "Can I use it commercially?",
@@ -112,14 +114,16 @@ describe("Starter Pro buyer FAQ", () => {
     ).toContain("/terms");
   });
 
-  it("uses the shared answers in the existing server-rendered FAQ section", () => {
+  it("uses the shared content in the existing FAQ section", () => {
     const page = readFileSync(
       resolve(marketingRoot, "app/(site)/starters/pro/page.tsx"),
       "utf8",
     );
-    const section = page.match(/<section id="buyer-faq"[\s\S]*?<\/section>/u)?.[0];
+    const section = page.match(
+      /<section id="buyer-faq"[\s\S]*?<\/section>/u,
+    )?.[0];
 
-    expect(page).toContain('@/lib/products/starter-pro-buyer-faq');
+    expect(page).toContain("@/lib/products/starter-pro-buyer-faq");
     expect(page).not.toMatch(/["']use client["']/u);
     expect(page).not.toContain("const faqs =");
     expect(section).toBeDefined();
