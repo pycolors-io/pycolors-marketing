@@ -12,46 +12,37 @@ const comparisonRows = [
   {
     label: "Authentication",
     free: "Mocked auth screens; no real account or session is created.",
-    pro:
-      "Auth.js credentials, Google/GitHub OAuth, verification, and password reset; configure your providers.",
+    pro: "Auth.js credentials, Google/GitHub OAuth, verification, and password reset; configure your providers.",
   },
   {
     label: "Session and access checks",
     free: "UI structure only; add real session checks and authorization.",
-    pro:
-      "Auth.js sessions and server-side guards; extend permissions for your product.",
+    pro: "Auth.js sessions and server-side guards; extend permissions for your product.",
   },
   {
     label: "Stripe billing",
-    free:
-      "Mock plans and invoices; no Stripe Checkout or customer portal integration.",
-    pro:
-      "Checkout, customer portal, and webhook-backed subscriptions; configure and test your Stripe account.",
+    free: "Mock plans and invoices; no Stripe Checkout or customer portal integration.",
+    pro: "Checkout, customer portal, and webhook-backed subscriptions; configure and test your Stripe account.",
   },
   {
     label: "Data persistence",
     free: "Mock product data and client-side state; add your persistence layer.",
-    pro:
-      "Prisma + PostgreSQL foundations for auth and billing; wire your own domain data.",
+    pro: "Prisma + PostgreSQL foundations for auth and billing; wire your own domain data.",
   },
   {
     label: "Mobile experience",
     free: "Responsive web UI.",
-    pro:
-      "Responsive UI plus installable PWA foundations; auth and billing stay online-first.",
+    pro: "Responsive UI plus installable PWA foundations; auth and billing stay online-first.",
   },
   {
     label: "Source access",
     free: "Clone the public Starter Free repository.",
-    pro:
-      "Download the ZIP through your purchase claim email; access recovery is available.",
+    pro: "Download the ZIP through your purchase claim email; access recovery is available.",
   },
   {
     label: "Work you still own",
-    free:
-      "Build the integrations and product logic, then deploy and operate your app.",
-    pro:
-      "Configure and validate the integrations, build your product logic, then deploy and operate your app.",
+    free: "Build the integrations and product logic, then deploy and operate your app.",
+    pro: "Configure and validate the integrations, build your product logic, then deploy and operate your app.",
   },
 ] as const;
 
