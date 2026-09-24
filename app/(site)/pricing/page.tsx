@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import {
   BadgeCheck,
@@ -122,6 +123,28 @@ const pricingJsonLd = {
     }),
   ],
 };
+
+// Existing public Starter Pro captures; provenance and scope are recorded in the PR.
+const starterProScreenshots = [
+  {
+    src: "/images/starters/pro/auth-pycolors.png",
+    width: 3456,
+    height: 1928,
+    title: "Sign-in screen",
+    alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
+    caption:
+      "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
+  },
+  {
+    src: "/images/starters/pro/pwa-pycolors.png",
+    width: 3456,
+    height: 1926,
+    title: "Offline fallback",
+    alt: "Starter Pro offline screen with reload and dashboard links",
+    caption:
+      "Give users a clear fallback when their connection drops, with a message and navigation back to the application.",
+  },
+] as const;
 
 const starterProIncludes = [
   "Full Starter Pro source code",
@@ -634,6 +657,60 @@ export default function PricingPage() {
             </div>
           }
         />
+
+        <MarketingSectionShell
+          width="full"
+          spacing="compact"
+          aria-labelledby="pricing-product-preview-heading"
+        >
+          <MarketingSectionHeader
+            titleId="pricing-product-preview-heading"
+            eyebrow="Inside Starter Pro"
+            title="See the screens you can build on"
+            description="Existing Starter Pro interface captures, shown in the light theme. These previews show included screens, not proof of a live deployment, a completed payment, or a verified integration."
+          />
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {starterProScreenshots.map((screenshot) => (
+              <figure key={screenshot.src} className="min-w-0 space-y-4">
+                <a
+                  href={screenshot.src}
+                  aria-label={`View ${screenshot.title.toLowerCase()} screenshot at full size`}
+                  className={cn(
+                    "block overflow-hidden rounded-[5px] border border-border-subtle bg-surface",
+                    focusRing,
+                  )}
+                >
+                  <Image
+                    src={screenshot.src}
+                    alt={screenshot.alt}
+                    width={screenshot.width}
+                    height={screenshot.height}
+                    sizes="(min-width: 1280px) 564px, (min-width: 768px) 50vw, 100vw"
+                    className="h-auto w-full"
+                  />
+                </a>
+                <figcaption className="space-y-2">
+                  <h3 className="text-base font-semibold text-foreground">
+                    {screenshot.title}
+                  </h3>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    {screenshot.caption}
+                  </p>
+                  <a
+                    href={screenshot.src}
+                    className={cn(
+                      "inline-flex min-h-11 items-center rounded-[5px] text-sm font-medium text-foreground underline underline-offset-4",
+                      focusRing,
+                    )}
+                  >
+                    View {screenshot.title.toLowerCase()} at full size
+                  </a>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </MarketingSectionShell>
 
         <MarketingSectionShell
           width="full"
