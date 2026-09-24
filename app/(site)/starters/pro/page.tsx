@@ -20,7 +20,7 @@ import {
   WifiOff,
 } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, CardHeader, cn } from "@pycolors/ui";
+import { Badge, Button, Card, CardContent, CardHeader } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
 
@@ -35,6 +35,7 @@ import {
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
@@ -380,69 +381,6 @@ const docResourceCards = [
     href: INTERNAL.docsAuth,
     cta: "Review auth",
     icon: Lock,
-  },
-] as const;
-
-const comparisonRows = [
-  {
-    label: "Production-ready dashboard foundation",
-    free: "Included",
-    pro: "Production-ready",
-  },
-  {
-    label: "Authentication already configured",
-    free: "Included",
-    pro: "Ready after checkout",
-  },
-  {
-    label: "Subscriptions ready to use",
-    free: "Requires building",
-    pro: "Production-ready",
-  },
-  {
-    label: "Customer billing portal included",
-    free: "Requires building",
-    pro: "Included",
-  },
-  {
-    label: "Protected application areas",
-    free: "Basic examples",
-    pro: "Ready after checkout",
-  },
-  {
-    label: "Organizations and team workflows",
-    free: "Example surface",
-    pro: "Included foundation",
-  },
-  {
-    label: "Account and settings experience",
-    free: "Included",
-    pro: "Production-ready",
-  },
-  {
-    label: "Admin and internal tool foundation",
-    free: "Included",
-    pro: "Ready to extend",
-  },
-  {
-    label: "Mobile and PWA polish",
-    free: "Requires building",
-    pro: "Included",
-  },
-  {
-    label: "Source code access",
-    free: "Open-source repo",
-    pro: "Claim email + ZIP access",
-  },
-  {
-    label: "Commercial and client usage",
-    free: "Review license",
-    pro: "Included",
-  },
-  {
-    label: "Best when you need to",
-    free: "Validate UX",
-    pro: "Launch and charge",
   },
 ] as const;
 
@@ -1132,7 +1070,7 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-      <section className="border-t border-border-subtle">
+      <section id="free-vs-pro" className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -1143,37 +1081,7 @@ export default function StarterProPage() {
                 description="Use Free to explore product UX. Move to Pro when auth, billing, protected architecture, and database foundations become the bottleneck."
               />
 
-              <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                <table className="w-full border-collapse text-left text-sm">
-                  <thead className="bg-surface-muted">
-                    <tr>
-                      <th className="px-5 py-4 font-medium">Feature</th>
-                      <th className="px-5 py-4 font-medium">Starter Free</th>
-                      <th className="px-5 py-4 font-medium">Starter Pro</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {comparisonRows.map((row, index) => (
-                      <tr
-                        key={row.label}
-                        className={cn(
-                          index !== comparisonRows.length - 1 &&
-                            "border-b border-border-subtle",
-                        )}
-                      >
-                        <td className="px-5 py-4 font-medium">{row.label}</td>
-
-                        <td className="px-5 py-4 text-muted-foreground">
-                          {row.free}
-                        </td>
-
-                        <td className="px-5 py-4 font-medium">{row.pro}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <StarterComparisonTable />
             </div>
 
             <div className="mt-10 flex flex-col items-center gap-3">
@@ -1191,7 +1099,7 @@ export default function StarterProPage() {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Try the live demo
+                  Try the Starter Free demo
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </Button>
