@@ -1,7 +1,7 @@
 ---
 title: Getting started
 description: See how to go from purchase to first local run with Starter Pro, and understand the fastest path from setup to launch.
-lastUpdated: "2026-09-21"
+lastUpdated: "2026-09-24"
 appliesTo: Starter Pro
 ---
 
@@ -57,6 +57,76 @@ link in your claim email once delivery has been processed.
 <Callout title="Core setup principle">
   Validate the foundation first. Customize second. Build your product third.
 </Callout>
+
+## First 30 minutes after purchase
+
+Use this timeline to choose your next action, not to race through setup.
+The timeboxes are suggested planning checkpoints, not measured setup times or
+an email-delivery promise. Downloads, PostgreSQL, and provider configuration
+can take longer. A local first run is not a production launch.
+
+Before starting, have the checkout email available and review the README and
+Node.js/pnpm requirements in your downloaded release. Use a local development
+database and keep environment files private. Buying Starter Pro does not
+provision your database, email sender, OAuth apps, or Stripe account for you.
+
+1. **0–5 minutes: check payment and claim access.** Check your checkout
+   confirmation and the inbox/spam folder for the email used at checkout.
+   Payment confirmation is separate from access-email delivery. Continue when
+   you can open the claim email; if access is missing, follow
+   [purchase recovery](/docs/starter-pro/purchase-recovery).
+2. **5–10 minutes: download and inspect the package.** Open the access link,
+   check that the product is Starter Pro, download the ZIP, and unzip it.
+   Read the release README before running commands. Your checkpoint is an
+   extracted project and a clear setup entry point, not a configured SaaS.
+   See [delivery](/docs/starter-pro/delivery) for the access flow.
+3. **10–20 minutes: prepare the local foundation.** Follow the
+   [setup flow](#setup-flow) below for dependencies, environment variables,
+   PostgreSQL, and database setup, in that order. Use only a local development
+   database; do not run migrations or seeds against production. Check the
+   [environment guide](/docs/starter-pro/environment-variables) for the
+   integrations you intend to exercise. Continue only after setup succeeds.
+4. **20–25 minutes: check the first local run.** Start the app using the
+   release instructions, then verify a configured sign-in flow and a protected
+   page. A rendered login or billing page alone does not validate authentication
+   or payments. Use the [auth guide](/docs/starter-pro/auth) and
+   [testing fixtures](/docs/starter-pro/testing-fixtures) for the checks your
+   local configuration supports; do not bypass verification to meet a timebox.
+5. **25–30 minutes: choose one product change.** Once the baseline works,
+   choose a small branding or product-copy change and preserve the working
+   auth and billing foundations. Record any integration still unverified.
+   Follow [billing testing](/docs/starter-pro/billing-testing) separately in
+   test mode, then complete the
+   [production checklist](/docs/starter-pro/production-checklist) before launch.
+
+### Payment or access is blocked
+
+If payment is uncertain, contact [purchase support](/orders/support) before
+paying again. Recovery does not complete an unpaid checkout. If payment is
+confirmed but the email or link is missing or expired, use
+[purchase recovery](/orders/recover) with the same checkout email.
+A recovery confirmation does not prove a purchase exists or that an email
+reached your inbox. Follow the
+[recovery troubleshooting guide](/docs/starter-pro/purchase-recovery#if-recovery-does-not-work)
+rather than repeatedly submitting requests.
+
+If recovery still fails, the link shows another product, or you cannot access
+the checkout email, use [purchase support](/orders/support). Include the checkout
+email, product name, approximate purchase date, and the error you see. Do not
+share passwords, card details, API keys, or claim/download links, including in
+screenshots. No support response-time guarantee is promised.
+
+### Local setup is blocked
+
+Pause at the failing step. Compare the downloaded release README, required
+Node.js/pnpm versions, environment values, and local PostgreSQL connection with
+[local development](/docs/starter-pro/local-development). Keep the failing
+command and a sanitized error for diagnosis; do not delete data, remove
+validation, or switch to production credentials to get past a setup error.
+
+If email, OAuth, or billing is not configured, use the corresponding guide and
+record that flow as unverified. Continue from the last successful checkpoint
+when the prerequisite is ready, even if that takes longer than 30 minutes.
 
 ## What this page helps you do
 
