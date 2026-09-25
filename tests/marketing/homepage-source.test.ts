@@ -22,7 +22,6 @@ const approved = new Set([
   "components/marketing/showcase/showcase-fixtures.ts",
   "components/marketing/showcase/showcase-workspace.tsx",
   "components/marketing/tones.ts",
-  "components/npm-badges.tsx",
   "components/pricing/buy-starter-pro-button.tsx",
   "components/pricing/checkout-failure-notice.tsx",
   "components/privacy/consent-gated-gtm.tsx",
@@ -38,7 +37,6 @@ const approved = new Set([
 const external = new Set([
   "react",
   "next",
-  "next/image",
   "next/link",
   "next/script",
   "@pycolors/ui",
@@ -119,7 +117,6 @@ describe("homepage ownership and source contract", () => {
     );
     expect(clients.sort()).toEqual([
       "components/marketing/showcase/showcase-workspace.tsx",
-      "components/npm-badges.tsx",
       "components/pricing/buy-starter-pro-button.tsx",
       "components/privacy/consent-gated-gtm.tsx",
     ]);

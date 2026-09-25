@@ -17,7 +17,6 @@ import {
 import { cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/container";
-import { NpmBadges } from "@/components/npm-badges";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
@@ -150,6 +149,16 @@ const explorerLinks = [
   { family: "empty-state", label: "Empty states" },
 ] as const;
 
+const trustLinks = [
+  ["Public roadmap", "/roadmap"],
+  ["Changelog", "/changelog"],
+  ["Open source", "/open-source"],
+  ["License", "/license"],
+  ["Terms", "/terms"],
+  ["Privacy", "/privacy"],
+  ["Purchase support", "/orders/support"],
+] as const;
+
 export default function HomePage() {
   const breadcrumb = generateBreadcrumbJsonLd([{ label: "Home", href: "/" }]);
 
@@ -191,25 +200,16 @@ export default function HomePage() {
 
           <SaasShowcase />
           <div className="flex flex-col gap-3 pb-10 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <p className="text-xs leading-5 text-muted-foreground">
-                Built with public{" "}
-                <a
-                  href="https://www.npmjs.com/package/@pycolors/ui"
-                  className="rounded-sm underline decoration-border underline-offset-4 hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  @pycolors/ui v{UI_VERSION}
-                </a>
-                .
-              </p>
+            <p className="text-xs leading-5 text-muted-foreground">
+              Built with public{" "}
               <a
                 href="https://www.npmjs.com/package/@pycolors/ui"
-                aria-label="@pycolors/ui on npm"
-                className="inline-flex min-h-11 max-w-full items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="rounded-sm underline decoration-border underline-offset-4 hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <NpmBadges packageName="@pycolors/ui" size="sm" />
+                @pycolors/ui v{UI_VERSION}
               </a>
-            </div>
+              .
+            </p>
             <nav
               aria-label="Explore the showcase primitives"
               className="flex flex-wrap gap-x-5 gap-y-1"
@@ -473,8 +473,13 @@ export default function HomePage() {
                   <h3 className="text-2xl font-semibold tracking-tight">
                     {starterPro.name}
                   </h3>
-                  <p className="font-mono text-2xl font-medium tracking-tight">
-                    {starterPro.priceLabel}
+                  <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span className="font-mono text-2xl font-medium tracking-tight">
+                      {starterPro.priceLabel}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      Launch price
+                    </span>
                   </p>
                 </div>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground lg:min-h-21">
@@ -508,7 +513,7 @@ export default function HomePage() {
           </MarketingSectionShell>
 
           <MarketingSectionShell
-            spacing="compact"
+            spacing="default"
             width="full"
             aria-labelledby="home-trust-heading"
           >
@@ -518,21 +523,18 @@ export default function HomePage() {
               title="Inspect the project before you commit."
               description="Check maintenance, source, commercial terms and support alongside the product scope."
               align="left"
+              className={cn(sectionHeaderClass, "mb-4")}
             />
-            <ul className="flex flex-wrap gap-x-8 gap-y-2 border-y border-border-subtle py-5">
-              {(
-                [
-                  ["Public roadmap", "/roadmap"],
-                  ["Changelog", "/changelog"],
-                  ["Open source", "/open-source"],
-                  ["License", "/license"],
-                  ["Terms", "/terms"],
-                  ["Privacy", "/privacy"],
-                  ["Purchase support", "/orders/support"],
-                ] as const
-              ).map(([label, href]) => (
+            <ul className="flex flex-wrap gap-x-6">
+              {trustLinks.map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href} className={linkClass}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      linkClass,
+                      "text-muted-foreground decoration-transparent transition-colors hover:text-foreground hover:decoration-current",
+                    )}
+                  >
                     {label}
                   </Link>
                 </li>
