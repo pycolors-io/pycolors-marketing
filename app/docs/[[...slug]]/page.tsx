@@ -1,36 +1,37 @@
-import * as React from 'react';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { DocsBody, DocsPage } from 'fumadocs-ui/page';
+import * as React from "react";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
 
-import { getPageImage, source } from '@/lib/source';
-import { getMDXComponents } from '@/mdx-components';
-import { DocsPageShell } from '@/components/shells/docs-page-shell';
-import { DocsPageFooter } from '@/components/docs/docs-page-footer';
-import { DocsPageHeader } from '@/components/docs/docs-page-header';
-import { formatDate } from '@/lib/format-date';
-import { getPrevNextFromTree } from '@/lib/docs-navigation';
+import { getPageImage, source } from "@/lib/source";
+import { getMDXComponents } from "@/mdx-components";
+import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { DocsPageFooter } from "@/components/docs/docs-page-footer";
+import { DocsPageHeader } from "@/components/docs/docs-page-header";
+import { UiExplorerLink } from "@/components/docs/ui-explorer-link";
+import { formatDate } from "@/lib/format-date";
+import { getPrevNextFromTree } from "@/lib/docs-navigation";
 
 type MDXContentProps = {
   components?: ReturnType<typeof getMDXComponents>;
 };
 
 function getBreadcrumbs(slug?: string[]) {
-  const items = [{ label: 'Docs', href: '/docs' }];
+  const items = [{ label: "Docs", href: "/docs" }];
 
   if (!slug || slug.length === 0) {
     return items;
   }
 
-  let currentPath = '/docs';
+  let currentPath = "/docs";
 
   for (const segment of slug) {
     currentPath += `/${segment}`;
 
     items.push({
       label: segment
-        .replaceAll('-', ' ')
+        .replaceAll("-", " ")
         .replace(/\b\w/g, (char) => char.toUpperCase()),
       href: currentPath,
     });
@@ -43,61 +44,55 @@ function getBreadcrumbs(slug?: string[]) {
 }
 
 function getFooterCta(slug?: string[]) {
-  const path = slug?.join('/') ?? '';
+  const path = slug?.join("/") ?? "";
 
-  if (path.startsWith('starter-pro')) {
+  if (path.startsWith("starter-pro")) {
     return {
-      ctaLabel: 'View pricing',
-      ctaHref: '/pricing',
+      ctaLabel: "View pricing",
+      ctaHref: "/pricing",
     };
   }
 
-  if (path.startsWith('starter')) {
+  if (path.startsWith("starter")) {
     return {
-      ctaLabel: 'Explore Starter Pro',
-      ctaHref: '/starters/pro',
+      ctaLabel: "Explore Starter Pro",
+      ctaHref: "/starters/pro",
     };
   }
 
-  if (path.startsWith('patterns')) {
+  if (path.startsWith("patterns")) {
     return {
-      ctaLabel: 'See Starter Pro',
-      ctaHref: '/docs/starter-pro',
+      ctaLabel: "See Starter Pro",
+      ctaHref: "/docs/starter-pro",
     };
   }
 
-  if (path.startsWith('ui')) {
+  if (path.startsWith("ui")) {
     return {
-      ctaLabel: 'Explore Patterns',
-      ctaHref: '/docs/patterns',
+      ctaLabel: "Explore Patterns",
+      ctaHref: "/docs/patterns",
     };
   }
 
   return {
-    ctaLabel: 'Explore Starter Free',
-    ctaHref: '/docs/starter',
+    ctaLabel: "Explore Starter Free",
+    ctaHref: "/docs/starter",
   };
 }
 
-export default async function Page(
-  props: PageProps<'/docs/[[...slug]]'>,
-) {
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   const breadcrumbs = getBreadcrumbs(params.slug);
 
   if (!page) notFound();
 
-  const MdxContent = page.data
-    .body as React.ComponentType<MDXContentProps>;
+  const MdxContent = page.data.body as React.ComponentType<MDXContentProps>;
   const showDefaultHeader = page.data.hero !== true;
   const footerCta = getFooterCta(params.slug);
 
-  const currentUrl = `/docs/${params.slug?.join('/') ?? ''}`;
-  const { previous, next } = getPrevNextFromTree(
-    source.pageTree,
-    currentUrl,
-  );
+  const currentUrl = `/docs/${params.slug?.join("/") ?? ""}`;
+  const { previous, next } = getPrevNextFromTree(source.pageTree, currentUrl);
 
   const toc =
     Array.isArray(page.data.toc) && page.data.toc.length > 0
@@ -132,6 +127,8 @@ export default async function Page(
           />
         ) : null}
 
+        <UiExplorerLink slug={params.slug} />
+
         <DocsBody className="docs-prose">
           <MdxContent
             components={getMDXComponents({
@@ -149,7 +146,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<'/docs/[[...slug]]'>,
+  props: PageProps<"/docs/[[...slug]]">,
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);

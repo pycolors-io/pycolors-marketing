@@ -1,20 +1,22 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { ArrowRight, LoaderCircle } from 'lucide-react';
+import * as React from "react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
 
-import { Button, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
+import { Button, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
-import { createCheckoutSession } from '@/lib/api/client';
-import { trackMoneyPathEvent } from '@/lib/analytics';
+import { createCheckoutSession } from "@/lib/api/client";
+import { trackMoneyPathEvent } from "@/lib/analytics";
+
+import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
 type BuyProductButtonProps = {
   productSlug: string;
   className?: string;
   fullWidth?: boolean;
-  size?: 'default' | 'sm' | 'lg' | 'icon';
-  variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: "default" | "sm" | "lg" | "icon";
+  variant?: "default" | "outline" | "secondary" | "ghost" | "link";
   label: string;
   loadingLabel?: string;
   trustText?: string;
@@ -26,16 +28,16 @@ export function BuyProductButton({
   productSlug,
   className,
   fullWidth = true,
-  size = 'lg',
-  variant = 'default',
+  size = "lg",
+  variant = "default",
   label,
-  loadingLabel = 'Redirecting to secure checkout...',
-  trustText = 'One-time payment · Instant access after purchase',
+  loadingLabel = "Redirecting to secure checkout...",
+  trustText = "One-time payment · Instant access after purchase",
   showTrustText = false,
   customerEmail,
 }: Readonly<BuyProductButtonProps>) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [hasError, setHasError] = React.useState(false);
   const productName =
     productSlug in PRODUCT_DISPLAY
       ? PRODUCT_DISPLAY[productSlug as keyof typeof PRODUCT_DISPLAY].name
@@ -44,13 +46,13 @@ export function BuyProductButton({
   async function handleBuy() {
     try {
       trackMoneyPathEvent({
-        event: 'buy_clicked',
+        event: "buy_clicked",
         productSlug,
         productName,
         page: globalThis.location.pathname,
       });
       setIsLoading(true);
-      setError(null);
+      setHasError(false);
 
       const url = await createCheckoutSession({
         productSlug,
@@ -58,34 +60,29 @@ export function BuyProductButton({
       });
 
       trackMoneyPathEvent({
-        event: 'checkout_redirect_started',
+        event: "checkout_redirect_started",
         productSlug,
         productName,
         page: globalThis.location.pathname,
       });
 
       window.location.href = url;
-    } catch (err) {
-      const message =
-        err instanceof Error && err.message
-          ? err.message
-          : 'Checkout could not be opened right now. Please try again.';
-
+    } catch {
       trackMoneyPathEvent({
-        event: 'checkout_redirect_failed',
+        event: "checkout_redirect_failed",
         productSlug,
         productName,
         page: globalThis.location.pathname,
-        status: 'error',
+        status: "error",
       });
 
-      setError(message);
+      setHasError(true);
       setIsLoading(false);
     }
   }
 
   return (
-    <div className={cn('space-y-2', fullWidth && 'w-full')}>
+    <div className={cn("space-y-2", fullWidth && "w-full")}>
       <Button
         type="button"
         onClick={handleBuy}
@@ -93,25 +90,25 @@ export function BuyProductButton({
         size={size}
         variant={variant}
         className={cn(
-          'group h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer',
-          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-          fullWidth && 'w-full',
-          variant === 'default' && [
-            'border border-transparent',
-            'bg-primary text-primary-foreground',
-            'shadow-soft',
-            'hover:bg-brand-primary-hover',
-            'hover:shadow-medium',
+          "group h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer",
+          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          fullWidth && "w-full",
+          variant === "default" && [
+            "border border-transparent",
+            "bg-primary text-primary-foreground",
+            "shadow-soft",
+            "hover:bg-brand-primary-hover",
+            "hover:shadow-medium",
           ],
-          variant === 'outline' && [
-            'border border-border-subtle',
-            'bg-background',
-            'hover:bg-surface-muted',
+          variant === "outline" && [
+            "border border-border-subtle",
+            "bg-background",
+            "hover:bg-surface-muted",
           ],
-          variant === 'secondary' && [
-            'border border-border-subtle',
-            'bg-surface-muted',
-            'hover:bg-surface',
+          variant === "secondary" && [
+            "border border-border-subtle",
+            "bg-surface-muted",
+            "hover:bg-surface",
           ],
           className,
         )}
@@ -143,14 +140,7 @@ export function BuyProductButton({
         <p className="text-xs text-muted-foreground">{trustText}</p>
       ) : null}
 
-      {error ? (
-        <p
-          className="text-sm leading-6 text-destructive"
-          role="alert"
-        >
-          {error}
-        </p>
-      ) : null}
+      {hasError ? <CheckoutFailureNotice /> : null}
     </div>
   );
 }

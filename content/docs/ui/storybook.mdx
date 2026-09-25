@@ -1,0 +1,256 @@
+---
+title: Storybook
+description: Render PyColors in your own React/Vite Storybook with tokens, Tailwind CSS, a theme toolbar, and a first interactive story.
+lastUpdated: "2026-09-24"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Explore first, integrate when ready
+
+[PyColors UI Explorer](https://ui.pycolors.io) is the public interactive catalog.
+Use its controls, themes, and component states without installing anything.
+The **UI Explorer** resource menu links back to the matching component guide,
+installation, and the UI product page. These Fumadocs pages remain the canonical
+usage and accessibility documentation.
+
+This guide puts **published PyColors packages in your own Storybook**. It does not
+require cloning the monorepo, a PyColors provider, or private package aliases.
+
+## Verified setup
+
+The standalone example below uses Node 24, pnpm 10.32.1, React 19, Storybook
+10.5.9 with React/Vite, and Tailwind CSS 4.3.3. Versions are pinned so you can
+reproduce the verified setup. This is not a claim that every React peer version,
+Storybook release, or framework combination has been tested.
+
+<Callout title="Adding to an existing app?">
+  Keep your app's framework, dependency versions, scripts, and existing stories.
+  Merge the relevant configuration below rather than replacing its files. Reuse
+  your app stylesheet when it already includes Tailwind and PyColors tokens.
+  Register the Tailwind Vite plugin only once. Next.js-specific stories need the
+  appropriate Storybook framework and app mocks; this guide verifies React/Vite.
+</Callout>
+
+Create an empty directory outside the PyColors monorepo, then add these files.
+
+### Package and scripts
+
+```json title="package.json"
+{
+  "name": "pycolors-storybook-consumer",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "types:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pycolors/ui": "1.5.4",
+    "@pycolors/tokens": "1.2.3",
+    "lucide-react": "1.47.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.5.9",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "storybook": "10.5.9",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vite": "8.1.4"
+  }
+}
+```
+
+React and React DOM are required peers. Although `lucide-react` is declared as
+an optional peer, this verified Vite build needs it to resolve icon imports from
+the public UI barrel, even for the Button example. Keep it installed.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src", ".storybook"]
+}
+```
+
+### Storybook and Tailwind processing
+
+```ts title=".storybook/main.ts"
+import type { StorybookConfig } from "@storybook/react-vite";
+import tailwindcss from "@tailwindcss/vite";
+
+const config: StorybookConfig = {
+  stories: ["../src/**/*.stories.tsx"],
+  framework: { name: "@storybook/react-vite", options: {} },
+  async viteFinal(config) {
+    config.plugins ??= [];
+    config.plugins.push(tailwindcss());
+    return config;
+  },
+};
+
+export default config;
+```
+
+This isolated example has no app Vite configuration. For an existing app,
+Storybook's [Vite builder](https://storybook.js.org/docs/builders/vite) may already
+inherit its plugins; do not duplicate the Tailwind plugin in `viteFinal`.
+
+### Load the token CSS and component utilities
+
+```css title="src/styles.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+
+@source "../node_modules/@pycolors/ui/dist";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+}
+```
+
+Tokens supply the semantic variables and Tailwind mappings. Tailwind still needs
+to generate the utility classes used by the installed components: it does not
+scan `node_modules` automatically. The `@source` path above is relative to
+`src/styles.css`; adjust it if your stylesheet is nested elsewhere. It is a CSS
+scan location, not a JavaScript import path or source alias.
+
+### Preview and light/dark toolbar
+
+```ts title=".storybook/preview.ts"
+import { createElement } from "react";
+import type { Preview } from "@storybook/react-vite";
+import "../src/styles.css";
+
+const preview: Preview = {
+  initialGlobals: { theme: "light" },
+  globalTypes: {
+    theme: {
+      description: "Color theme",
+      toolbar: {
+        icon: "circlehollow",
+        items: [
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  decorators: [
+    (Story, context) => {
+      const dark = context.globals.theme === "dark";
+      document.documentElement.classList.toggle("dark", dark);
+      document.documentElement.style.colorScheme = dark ? "dark" : "light";
+      return createElement(
+        "main",
+        { "aria-label": "Component preview" },
+        createElement(Story),
+      );
+    },
+  ],
+  parameters: { layout: "padded" },
+};
+
+export default preview;
+```
+
+The stylesheet import loads `@pycolors/tokens/tokens.css` into the preview iframe.
+Changing the [global toolbar value](https://storybook.js.org/docs/essentials/toolbars-and-globals)
+reruns the decorator. `.dark` must be on the preview document root, not just the
+outer Storybook manager. This also themes overlays portalled into the iframe body.
+A dark manager or a changed canvas background alone does not switch PyColors tokens.
+
+### First story
+
+```tsx title="src/button.stories.tsx"
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "@pycolors/ui";
+
+const meta = {
+  title: "Example/Button",
+  component: Button,
+  args: { children: "Save changes" },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+export const Disabled: Story = { args: { disabled: true } };
+```
+
+Run these commands from that directory:
+
+```bash
+pnpm install
+pnpm types:check
+pnpm build-storybook
+pnpm storybook
+```
+
+Keep the generated lockfile. Subsequent installs can use
+`pnpm install --frozen-lockfile`. Open the local URL printed by Storybook, choose
+**Example / Button**, and switch the **Light / Dark** toolbar. Check that the
+page surface and Button colors change and that the disabled story cannot activate.
+
+## Check your integration
+
+- Navigate to the Button with Tab. Its focus indicator must stay visible in both themes.
+- Compare the default and disabled states at desktop and a narrow viewport.
+- For your own interactive stories, exercise keyboard input, focus return, and
+  accessible names; add the appropriate Storybook interaction and accessibility tests.
+- Validate overlays in both themes: portal content must inherit the same tokens.
+- An automated accessibility scan complements visual and screen-reader review;
+  this minimal fixture does not install an accessibility addon or certify compliance.
+
+PyColors uses public imports from `@pycolors/ui`. In a Next.js application, keep
+Server Components on the server and put state/event handlers at the smallest
+client boundary. A successful browser-only Storybook story does not prove RSC,
+routing, authentication, or server-data integration. Use synthetic fixtures and
+your framework's supported mocks; never put server secrets in stories.
+
+## Troubleshooting
+
+| Symptom                                  | Check                                                                                                                                                           |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Components have no spacing or colors     | Ensure Storybook processes Tailwind v4, imports `src/styles.css`, and scans the installed UI `dist` directory. Token variables alone do not generate utilities. |
+| Semantic colors are missing              | Confirm `@pycolors/tokens/tokens.css` is imported once and is not overridden by conflicting app CSS.                                                            |
+| Only the manager turns dark              | Toggle `.dark` on the preview iframe's document root; inspect that document rather than the parent window.                                                      |
+| Dialogs stay light                       | Check root-level `.dark` and body styles; theming a story wrapper alone misses portalled content.                                                               |
+| A workspace alias fails                  | Use installed packages and `@pycolors/ui`; remove aliases pointing into the PyColors monorepo.                                                                  |
+| React hooks or peers fail                | Check compatible React/React DOM versions and duplicate installations. Keep `lucide-react` installed for this public-barrel/Vite setup.                         |
+| App CSS works but Storybook CSS does not | Confirm the preview imports it and that the Storybook Vite configuration includes the required CSS plugin.                                                      |
+| A Next.js-specific story fails           | Configure its supported Storybook framework and mocks. The standalone React/Vite fixture does not validate Next.js services or RSC execution.                   |
+
+## Continue
+
+- [Open the public Button example](https://ui.pycolors.io/?path=/story/components-button--default).
+- [Read Button usage and accessibility](/docs/ui/button).
+- [Review installation](/docs/ui/installation) and [theming](/docs/ui/theming).
+- [Explore Starter Free](/starters/free) for these primitives in an application.

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 import {
   ArrowRight,
   BadgeCheck,
@@ -7,7 +7,7 @@ import {
   Lock,
   Package,
   Shield,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -16,8 +16,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
-import { MoneyPathPageEvent } from '@/components/analytics/money-path-event';
+} from "@pycolors/ui";
+import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 type ClaimOrderPageProps = {
   readonly searchParams: Promise<{
@@ -38,12 +38,12 @@ type ClaimResponse = {
 
 function getProductPageHref(productSlug: string | null) {
   switch (productSlug) {
-    case 'starter-pro':
-      return '/starters/pro';
-    case 'na-ai-landing':
-      return '/templates/na-ai-landing';
+    case "starter-pro":
+      return "/starters/pro";
+    case "na-ai-landing":
+      return "/templates/na-ai-landing";
     default:
-      return '/pricing';
+      return "/pricing";
   }
 }
 
@@ -84,23 +84,18 @@ function StatusShell({
   );
 }
 
-async function getClaim(
-  token: string,
-): Promise<ClaimResponse | null> {
+async function getClaim(token: string): Promise<ClaimResponse | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!apiBaseUrl) {
-    console.error('[orders/claim] Missing NEXT_PUBLIC_API_BASE_URL.');
+    console.error("[orders/claim] Missing NEXT_PUBLIC_API_BASE_URL.");
     return null;
   }
 
   try {
-    const response = await fetch(
-      `${apiBaseUrl}/api/v1/claims/${token}`,
-      {
-        cache: 'no-store',
-      },
-    );
+    const response = await fetch(`${apiBaseUrl}/api/v1/claims/${token}`, {
+      cache: "no-store",
+    });
 
     if (!response.ok) return null;
 
@@ -108,8 +103,8 @@ async function getClaim(
 
     return data.ok ? data : null;
   } catch {
-    if (process.env.NODE_ENV === 'development') {
-      console.info('[orders/claim] claim API unavailable.');
+    if (process.env.NODE_ENV === "development") {
+      console.info("[orders/claim] claim API unavailable.");
     }
     return null;
   }
@@ -136,9 +131,7 @@ export default async function ClaimOrderPage({
             <Link href="/pricing">Back to pricing</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="mailto:support@pycolors.com">
-              Contact support
-            </Link>
+            <Link href="/orders/support">Contact support</Link>
           </Button>
         </div>
       </StatusShell>
@@ -160,9 +153,7 @@ export default async function ClaimOrderPage({
         />
         <div className="flex flex-wrap gap-3">
           <Button asChild>
-            <Link href="mailto:support@pycolors.com?subject=PyColors%20access%20help">
-              Contact support
-            </Link>
+            <Link href="/orders/support">Contact support</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/orders/recover">Resend access link</Link>
@@ -172,26 +163,21 @@ export default async function ClaimOrderPage({
     );
   }
 
-  const {
-    productSlug,
-    productName,
-    orderReference,
-    customerEmail,
-    paidAt,
-  } = result.claim;
+  const { productSlug, productName, orderReference, customerEmail, paidAt } =
+    result.claim;
 
   const formattedPaidAt = paidAt
-    ? new Intl.DateTimeFormat('en', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+    ? new Intl.DateTimeFormat("en", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       }).format(new Date(paidAt))
     : null;
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!apiBaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_API_BASE_URL.');
+    throw new Error("Missing NEXT_PUBLIC_API_BASE_URL.");
   }
 
   const downloadUrl = `${apiBaseUrl}/api/v1/downloads/${token}`;
@@ -226,9 +212,9 @@ export default async function ClaimOrderPage({
           </h1>
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            Your order has been verified and your download is
-            available below. Keep this page for reference until you
-            have downloaded and stored your package safely.
+            Your order has been verified and your download is available below.
+            Keep this page for reference until you have downloaded and stored
+            your package safely.
           </p>
         </div>
 
@@ -239,9 +225,7 @@ export default async function ClaimOrderPage({
                 <Download className="h-5 w-5" />
               </div>
 
-              <CardTitle className="text-2xl">
-                Download {productName}
-              </CardTitle>
+              <CardTitle className="text-2xl">Download {productName}</CardTitle>
             </CardHeader>
 
             <CardContent className="space-y-6">
@@ -261,13 +245,10 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <Lock className="mt-0.5 h-5 w-5 text-muted-foreground" />
                   <div>
-                    <p className="text-sm font-medium">
-                      Secure access
-                    </p>
+                    <p className="text-sm font-medium">Secure access</p>
                     <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      This download link is tied to your purchase
-                      entitlement and delivered through a protected
-                      token flow.
+                      This download link is tied to your purchase entitlement
+                      and delivered through a protected token flow.
                     </p>
                   </div>
                 </div>
@@ -302,22 +283,19 @@ export default async function ClaimOrderPage({
                   size="lg"
                   className="h-11 rounded-xl px-6 text-sm font-medium"
                 >
-                  <Link href={productPageHref}>
-                    View product page
-                  </Link>
+                  <Link href={productPageHref}>View product page</Link>
                 </Button>
               </div>
 
               <p className="text-xs leading-6 text-muted-foreground">
-                Save your downloaded package in a secure location
-                after download. If the link stops working or you need
-                help, email{' '}
+                Save your downloaded package in a secure location after
+                download. If the link stops working or you need help, email{" "}
                 <Link
                   href={`mailto:support@pycolors.com?subject=${supportSubject}`}
                   className="font-medium text-foreground underline underline-offset-4"
                 >
                   support@pycolors.com
-                </Link>{' '}
+                </Link>{" "}
                 with your order reference.
               </p>
             </CardContent>
@@ -326,9 +304,7 @@ export default async function ClaimOrderPage({
           <div className="space-y-6">
             <Card className="rounded-[28px] border">
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Order summary
-                </CardTitle>
+                <CardTitle className="text-lg">Order summary</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-4 text-sm text-muted-foreground">
@@ -367,17 +343,15 @@ export default async function ClaimOrderPage({
 
             <Card className="rounded-[28px] border">
               <CardHeader>
-                <CardTitle className="text-lg">
-                  What to do next
-                </CardTitle>
+                <CardTitle className="text-lg">What to do next</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
                 <div className="flex items-start gap-3">
                   <Shield className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    Download and store your package safely before
-                    sharing it across your workflow.
+                    Download and store your package safely before sharing it
+                    across your workflow.
                   </p>
                 </div>
 
@@ -392,31 +366,22 @@ export default async function ClaimOrderPage({
                 <div className="flex items-start gap-3">
                   <LifeBuoy className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    If you need help, email{' '}
+                    If you need help, email{" "}
                     <Link
                       href={`mailto:support@pycolors.com?subject=${supportSubject}`}
                       className="font-medium text-foreground underline underline-offset-4"
                     >
                       support@pycolors.com
-                    </Link>{' '}
-                    and include your order reference so we can help
-                    quickly.
+                    </Link>{" "}
+                    and include your order reference so we can help quickly.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             <div className="flex flex-wrap gap-3">
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-xl"
-              >
-                <Link
-                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
-                >
-                  Contact support
-                </Link>
+              <Button asChild variant="outline" className="rounded-xl">
+                <Link href="/orders/support">Contact support</Link>
               </Button>
 
               <Button asChild variant="ghost" className="rounded-xl">

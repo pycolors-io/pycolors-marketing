@@ -1,7 +1,7 @@
 ---
 title: Getting started
 description: See how to go from purchase to first local run with Starter Pro, and understand the fastest path from setup to launch.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-09-24"
 appliesTo: Starter Pro
 ---
 
@@ -43,13 +43,90 @@ The goal is to get the production baseline running, confirm the important system
 
 <Callout title="After purchase">
   Download and unzip Starter Pro from your claim email before running the setup commands below. Need the email again? Use [purchase recovery](/orders/recover) to resend your access link.
+
+The confirmation page reports payment as confirmed only when your checkout is
+complete and paid. A pending, incomplete, expired, or unavailable confirmation
+does not provide download access. If the page cannot confirm your payment,
+check again or contact support before paying again.
+
+Payment confirmation and email delivery are separate steps. Use the access
+link in your claim email once delivery has been processed.
+
 </Callout>
 
 <Callout title="Core setup principle">
-  Validate the foundation first.
-  Customize second.
-  Build your product third.
+  Validate the foundation first. Customize second. Build your product third.
 </Callout>
+
+## First 30 minutes after purchase
+
+Use this timeline to choose your next action, not to race through setup.
+The timeboxes are suggested planning checkpoints, not measured setup times or
+an email-delivery promise. Downloads, PostgreSQL, and provider configuration
+can take longer. A local first run is not a production launch.
+
+Before starting, have the checkout email available and review the README and
+Node.js/pnpm requirements in your downloaded release. Use a local development
+database and keep environment files private. Buying Starter Pro does not
+provision your database, email sender, OAuth apps, or Stripe account for you.
+
+1. **0–5 minutes: check payment and claim access.** Check your checkout
+   confirmation and the inbox/spam folder for the email used at checkout.
+   Payment confirmation is separate from access-email delivery. Continue when
+   you can open the claim email; if access is missing, follow
+   [purchase recovery](/docs/starter-pro/purchase-recovery).
+2. **5–10 minutes: download and inspect the package.** Open the access link,
+   check that the product is Starter Pro, download the ZIP, and unzip it.
+   Read the release README before running commands. Your checkpoint is an
+   extracted project and a clear setup entry point, not a configured SaaS.
+   See [delivery](/docs/starter-pro/delivery) for the access flow.
+3. **10–20 minutes: prepare the local foundation.** Follow the
+   [setup flow](#setup-flow) below for dependencies, environment variables,
+   PostgreSQL, and database setup, in that order. Use only a local development
+   database; do not run migrations or seeds against production. Check the
+   [environment guide](/docs/starter-pro/environment-variables) for the
+   integrations you intend to exercise. Continue only after setup succeeds.
+4. **20–25 minutes: check the first local run.** Start the app using the
+   release instructions, then verify a configured sign-in flow and a protected
+   page. A rendered login or billing page alone does not validate authentication
+   or payments. Use the [auth guide](/docs/starter-pro/auth) and
+   [testing fixtures](/docs/starter-pro/testing-fixtures) for the checks your
+   local configuration supports; do not bypass verification to meet a timebox.
+5. **25–30 minutes: choose one product change.** Once the baseline works,
+   choose a small branding or product-copy change and preserve the working
+   auth and billing foundations. Record any integration still unverified.
+   Follow [billing testing](/docs/starter-pro/billing-testing) separately in
+   test mode, then complete the
+   [production checklist](/docs/starter-pro/production-checklist) before launch.
+
+### Payment or access is blocked
+
+If payment is uncertain, contact [purchase support](/orders/support) before
+paying again. Recovery does not complete an unpaid checkout. If payment is
+confirmed but the email or link is missing or expired, use
+[purchase recovery](/orders/recover) with the same checkout email.
+A recovery confirmation does not prove a purchase exists or that an email
+reached your inbox. Follow the
+[recovery troubleshooting guide](/docs/starter-pro/purchase-recovery#if-recovery-does-not-work)
+rather than repeatedly submitting requests.
+
+If recovery still fails, the link shows another product, or you cannot access
+the checkout email, use [purchase support](/orders/support). Include the checkout
+email, product name, approximate purchase date, and the error you see. Do not
+share passwords, card details, API keys, or claim/download links, including in
+screenshots. No support response-time guarantee is promised.
+
+### Local setup is blocked
+
+Pause at the failing step. Compare the downloaded release README, required
+Node.js/pnpm versions, environment values, and local PostgreSQL connection with
+[local development](/docs/starter-pro/local-development). Keep the failing
+command and a sanitized error for diagnosis; do not delete data, remove
+validation, or switch to production credentials to get past a setup error.
+
+If email, OAuth, or billing is not configured, use the corresponding guide and
+record that flow as unverified. Continue from the last successful checkpoint
+when the prerequisite is ready, even if that takes longer than 30 minutes.
 
 ## What this page helps you do
 
@@ -80,7 +157,8 @@ You are starting from a product-shaped system that is already much closer to lau
 <Callout type="info" title="Important">
   The fastest path is not rewriting everything.
 
-  The fastest path is validating what already exists, then replacing only what belongs to your product.
+The fastest path is validating what already exists, then replacing only what belongs to your product.
+
 </Callout>
 
 ## Setup flow
@@ -91,6 +169,7 @@ You are starting from a product-shaped system that is already much closer to lau
 
     Open your claim email and use the access link to download your package.
     Unzip it before running the setup commands below.
+
   </Step>
 
   <Step>
@@ -105,6 +184,7 @@ pnpm install
     This gives you the local baseline required to run the app,
     generate the database client,
     and validate the foundation.
+
   </Step>
 
   <Step>
@@ -137,6 +217,7 @@ AUTH_EMAIL_FROM=
     Do not overconfigure too early.
 
     Get the baseline running first.
+
   </Step>
 
   <Step>
@@ -156,6 +237,7 @@ pnpm db:seed
     users,
     billing surfaces,
     and local development flows faster.
+
   </Step>
 
   <Step>
@@ -170,6 +252,7 @@ http://localhost:3000
 ```
 
     Confirm that the app loads and the main product routes are reachable.
+
   </Step>
 
   <Step>
@@ -186,6 +269,7 @@ http://localhost:3000
     - dashboard shell
 
     This gives you confidence that the baseline works before you customize it.
+
   </Step>
 
   <Step>
@@ -202,6 +286,7 @@ http://localhost:3000
     - marketing links
 
     Branding comes after validation, not before.
+
   </Step>
 
   <Step>
@@ -217,6 +302,7 @@ http://localhost:3000
     - internal operations
 
     Keep auth, billing, and protected access intact while you build your differentiation.
+
   </Step>
 </Steps>
 
@@ -226,46 +312,46 @@ http://localhost:3000
   columns={3}
   items={[
     {
-      eyebrow: 'Authentication',
-      title: 'Validate auth first',
+      eyebrow: "Authentication",
+      title: "Validate auth first",
       icon: LockKeyhole,
       description:
-        'Confirm that the authentication foundation behaves correctly before product customization.',
+        "Confirm that the authentication foundation behaves correctly before product customization.",
       items: [
-        'sign in works locally',
-        'registration flow is reachable',
-        'protected routes redirect correctly',
-        'session-aware UI behaves correctly',
-        'provider and password flows are understood',
+        "sign in works locally",
+        "registration flow is reachable",
+        "protected routes redirect correctly",
+        "session-aware UI behaves correctly",
+        "provider and password flows are understood",
       ],
     },
     {
-      eyebrow: 'Billing',
-      title: 'Validate billing flows',
+      eyebrow: "Billing",
+      title: "Validate billing flows",
       icon: CreditCard,
-      tone: 'platform',
+      tone: "platform",
       description:
-        'Understand how billing flows work before integrating real production billing.',
+        "Understand how billing flows work before integrating real production billing.",
       items: [
-        'billing page renders correctly',
-        'checkout flow is understood',
-        'portal flow is understood',
-        'subscription state is clear',
-        'webhook responsibilities are understood',
+        "billing page renders correctly",
+        "checkout flow is understood",
+        "portal flow is understood",
+        "subscription state is clear",
+        "webhook responsibilities are understood",
       ],
     },
     {
-      eyebrow: 'Backend',
-      title: 'Validate the backend baseline',
+      eyebrow: "Backend",
+      title: "Validate the backend baseline",
       icon: Database,
       description:
-        'Confirm the backend-oriented structure is ready before domain customization.',
+        "Confirm the backend-oriented structure is ready before domain customization.",
       items: [
-        'database client is generated',
-        'migrations run locally',
-        'seed data exists',
-        'server-side boundaries are understood',
-        'domain additions have a clear place',
+        "database client is generated",
+        "migrations run locally",
+        "seed data exists",
+        "server-side boundaries are understood",
+        "domain additions have a clear place",
       ],
     },
   ]}
@@ -295,18 +381,18 @@ A better rule:
   preferTitle="Prefer this path"
   avoidTitle="Avoid this path"
   prefer={[
-    'install dependencies first',
-    'configure only the required environment variables',
-    'validate authentication and billing before redesigning',
-    'replace branding after the baseline works',
-    'build your product inside the existing structure',
+    "install dependencies first",
+    "configure only the required environment variables",
+    "validate authentication and billing before redesigning",
+    "replace branding after the baseline works",
+    "build your product inside the existing structure",
   ]}
   avoid={[
-    'rewriting the UI before validating the foundation',
-    'configuring every integration too early',
-    'removing authentication or billing before understanding them',
-    'building product features on a broken setup',
-    'treating Starter Pro like a blank template',
+    "rewriting the UI before validating the foundation",
+    "configuring every integration too early",
+    "removing authentication or billing before understanding them",
+    "building product features on a broken setup",
+    "treating Starter Pro like a blank template",
   ]}
 />
 
@@ -325,7 +411,8 @@ If your goal is speed, focus on this sequence:
 This gives you the best speed-to-confidence ratio.
 
 <Callout title="High-leverage setup">
-  Starter Pro pays for itself when you avoid rebuilding the foundation and start building what customers actually care about.
+  Starter Pro pays for itself when you avoid rebuilding the foundation and start
+  building what customers actually care about.
 </Callout>
 
 ### First product changes
@@ -371,21 +458,21 @@ It is moving to Starter Pro and building on the baseline.
   tone="platform"
   items={[
     {
-      title: 'Production baseline',
+      title: "Production baseline",
       description:
-        'Start from a product-shaped SaaS foundation instead of rebuilding the infrastructure layer.',
+        "Start from a product-shaped SaaS foundation instead of rebuilding the infrastructure layer.",
       icon: Rocket,
     },
     {
-      title: 'Launch confidence',
+      title: "Launch confidence",
       description:
-        'Validate authentication, billing, protected routes, and backend structure earlier.',
+        "Validate authentication, billing, protected routes, and backend structure earlier.",
       icon: LockKeyhole,
     },
     {
-      title: 'Higher-leverage work',
+      title: "Higher-leverage work",
       description:
-        'Spend more time on customers, product logic, workflows, and distribution.',
+        "Spend more time on customers, product logic, workflows, and distribution.",
       icon: CreditCard,
     },
   ]}
@@ -397,31 +484,31 @@ It is moving to Starter Pro and building on the baseline.
   variant="grid"
   items={[
     {
-      title: 'What is included',
-      href: '/docs/starter-pro/what-is-included',
+      title: "What is included",
+      href: "/docs/starter-pro/what-is-included",
       description:
-        'Review the systems included in Starter Pro before customizing deeply.',
+        "Review the systems included in Starter Pro before customizing deeply.",
       icon: Package,
     },
     {
-      title: 'Why buy instead of building',
-      href: '/docs/starter-pro/why-buy-instead-of-building',
+      title: "Why buy instead of building",
+      href: "/docs/starter-pro/why-buy-instead-of-building",
       description:
-        'Understand why buying the foundation can be a higher-leverage launch decision.',
+        "Understand why buying the foundation can be a higher-leverage launch decision.",
       icon: Scale,
     },
     {
-      title: 'Authentication system',
-      href: '/docs/starter-pro/auth',
+      title: "Authentication system",
+      href: "/docs/starter-pro/auth",
       description:
-        'Validate authentication, sessions, providers, and protected access.',
+        "Validate authentication, sessions, providers, and protected access.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing system',
-      href: '/docs/starter-pro/billing',
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
       description:
-        'Validate Stripe, subscriptions, invoices, billing portal, and webhooks.',
+        "Validate Stripe, subscriptions, invoices, billing portal, and webhooks.",
       icon: CreditCard,
     },
   ]}

@@ -323,7 +323,17 @@ export default function UiPage() {
                 <MarketingPill>Starter-ready</MarketingPill>
               </MarketingPillList>
 
-              <div className="mt-6 flex justify-center">
+              <div className="mt-6 flex flex-wrap justify-center gap-5">
+                <a
+                  href="https://ui.pycolors.io"
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-[5px] text-xs text-muted-foreground transition-colors hover:text-foreground",
+                    focusRing,
+                  )}
+                >
+                  PyColors UI Explorer
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
                 <a
                   href="https://github.com/pycolors-io/pycolors-ui"
                   target="_blank"

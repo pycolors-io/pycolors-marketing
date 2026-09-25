@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import {
   ArrowRight,
-  Check,
   Code2,
   CreditCard,
   Download,
@@ -20,8 +19,9 @@ import {
   WifiOff,
 } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, CardHeader, cn } from "@pycolors/ui";
+import { Badge, Button, Card, CardContent, CardHeader } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
 
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
@@ -34,6 +34,7 @@ import {
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
@@ -80,6 +81,7 @@ const INTERNAL = {
   docsGettingStarted: "/docs/starter-pro/getting-started",
   docsWhatIsIncluded: "/docs/starter-pro/what-is-included",
   docsDelivery: "/docs/starter-pro/delivery",
+  docsPurchaseRecovery: "/docs/starter-pro/purchase-recovery",
   docsBillingTesting: "/docs/starter-pro/billing-testing",
   docsProductionChecklist: "/docs/starter-pro/production-checklist",
   docsDeployment: "/docs/starter-pro/deployment",
@@ -255,12 +257,16 @@ const postPurchaseDetails = [
   {
     title: "Claim email and purchase recovery",
     description:
-      "After purchase, you receive a claim email shortly afterward with a secure access link. If the original email or link is unavailable, recover access with the email used at checkout.",
+      "Missing the purchase email or using an expired link? Request a fresh access link with the email used at checkout. Eligible purchases can be recovered without creating an account or buying again.",
     icon: Mail,
     links: [
       {
         href: INTERNAL.ordersRecover,
         label: "Open purchase recovery",
+      },
+      {
+        href: INTERNAL.docsPurchaseRecovery,
+        label: "Read the recovery guide",
       },
     ],
   },
@@ -377,69 +383,6 @@ const docResourceCards = [
   },
 ] as const;
 
-const comparisonRows = [
-  {
-    label: "Production-ready dashboard foundation",
-    free: "Included",
-    pro: "Production-ready",
-  },
-  {
-    label: "Authentication already configured",
-    free: "Included",
-    pro: "Ready after checkout",
-  },
-  {
-    label: "Subscriptions ready to use",
-    free: "Requires building",
-    pro: "Production-ready",
-  },
-  {
-    label: "Customer billing portal included",
-    free: "Requires building",
-    pro: "Included",
-  },
-  {
-    label: "Protected application areas",
-    free: "Basic examples",
-    pro: "Ready after checkout",
-  },
-  {
-    label: "Organizations and team workflows",
-    free: "Example surface",
-    pro: "Included foundation",
-  },
-  {
-    label: "Account and settings experience",
-    free: "Included",
-    pro: "Production-ready",
-  },
-  {
-    label: "Admin and internal tool foundation",
-    free: "Included",
-    pro: "Ready to extend",
-  },
-  {
-    label: "Mobile and PWA polish",
-    free: "Requires building",
-    pro: "Included",
-  },
-  {
-    label: "Source code access",
-    free: "Open-source repo",
-    pro: "Claim email + ZIP access",
-  },
-  {
-    label: "Commercial and client usage",
-    free: "Review license",
-    pro: "Included",
-  },
-  {
-    label: "Best when you need to",
-    free: "Validate UX",
-    pro: "Launch and charge",
-  },
-] as const;
-
 const perfectFor = [
   "SaaS founders",
   "Freelancers",
@@ -459,123 +402,93 @@ const stillBuildItems = [
 ] as const;
 
 const purchaseTrustItems = [
-  "One-time payment",
-  "Secure Stripe checkout",
-  "Claim email shortly after purchase",
-  "Updates included while available",
-  "Purchase recovery",
+  {
+    title: "Inspect what you get",
+    description:
+      "Full Starter Pro source code, setup documentation, and a production checklist. You configure your own providers and build your product logic.",
+    href: INTERNAL.docsWhatIsIncluded,
+    label: "Review included source and scope",
+    icon: Code2,
+  },
+  {
+    title: "Know how delivery works",
+    description:
+      "Once payment is confirmed and delivery is processed, use the access link sent to your checkout email to download the ZIP.",
+    href: INTERNAL.docsDelivery,
+    label: "Follow payment-to-ZIP delivery",
+    icon: Download,
+  },
+  {
+    title: "Recover missing access",
+    description:
+      "Missing email or expired link? Follow the recovery steps with your checkout email. If payment is uncertain, contact purchase support before paying again.",
+    href: INTERNAL.docsPurchaseRecovery,
+    label: "Review access recovery steps",
+    icon: Mail,
+  },
 ] as const;
 
-const faqs = [
-  {
-    question: "How long before I can start?",
-    answer:
-      "After payment, your claim email should arrive shortly with a secure access link. Download the ZIP, then follow the setup docs to run the project locally.",
-  },
-  {
-    question: "What happens after payment?",
-    answer:
-      "Stripe redirects you to the success flow and PyColors sends access to the checkout email. Purchase recovery is available if the email is missed.",
-  },
-  {
-    question: "Do I own the source code?",
-    answer:
-      "Starter Pro includes the full source code under a commercial license. You may inspect and modify it for your own personal or commercial applications.",
-  },
-  {
-    question: "Can I use it commercially?",
-    answer:
-      "Yes. Starter Pro includes commercial usage rights under the PyColors license.",
-  },
-  {
-    question: "Can I use it for client projects?",
-    answer:
-      "Use is permitted for personal and commercial applications. Review the repository license for the authoritative client-work and source-access terms.",
-  },
-  {
-    question: "Can I customize everything?",
-    answer:
-      "You may modify the source for your own products, including the UI, routes, copy, branding, product logic, and domain models.",
-  },
-  {
-    question: "What will I still need to build?",
-    answer:
-      "Your unique product logic, AI features, business workflows, branding, and domain models. Starter Pro provides the production foundation.",
-  },
-  {
-    question: "Is Starter Pro production-ready?",
-    answer:
-      "Yes. It is built as a real SaaS foundation with auth, billing, protected routes, database foundations, and launch-oriented product surfaces.",
-  },
-  {
-    question: "Is Stripe already integrated?",
-    answer:
-      "Yes. Stripe Checkout, customer portal, invoices, webhooks, and subscription lifecycle flows are included.",
-  },
-  {
-    question: "Do I get future Starter Pro updates?",
-    answer:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability.",
-  },
-  {
-    question: "What if local setup fails?",
-    answer:
-      "Start with the setup and environment documentation. Purchase and access-recovery support is available. No response-time SLA is promised.",
-  },
-  {
-    question: "What if I do not receive my purchase email?",
-    answer:
-      "Use the purchase recovery page with the same email address used at checkout. PyColors can resend the secure access link for eligible orders.",
-  },
-  {
-    question: "What is the refund policy?",
-    answer:
-      "Starter Pro is a digital product delivered through a claim email after purchase. Refunds may be limited unless required by applicable law. Review the terms before purchase.",
-  },
-  // {
-  //   question: 'Will the price stay at 199 €?',
-  //   answer:
-  //     'No. 199 € is the current launch price. The regular price is planned at 299 € as Starter Pro matures and more production features are added.',
-  // },
-] as const;
 function StarterProHeroCarousel() {
   const heroScreenshots = [
     {
       title: "Dashboard",
       label: "Dashboard",
-      description: "Production-ready application foundation.",
+      description: "Navigation, workspace summary and example metric cards.",
+      alt: "Starter Pro dashboard with navigation, workspace cards and demonstration metrics",
       image: "/images/starters/pro/dashboard-pycolors.png",
+      annotation:
+        "The sidebar groups projects, admin, billing and settings. Summary cards give you a dashboard layout to adapt. Displayed revenue, users and activity are demonstration data, not customer results.",
     },
     {
       title: "Authentication",
       label: "Authentication",
-      description: "Production-ready authentication already wired.",
+      description: "Email sign-in, provider choices and password recovery.",
+      alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
       image: "/images/starters/pro/auth-pycolors.png",
+      annotation:
+        "The right-hand form combines email and password fields, Google and GitHub buttons, password recovery and account creation. Configure your own provider credentials before using these options.",
     },
     {
-      title: "Stripe Billing",
-      label: "Stripe Billing",
-      description: "Subscriptions and customer portal included.",
+      title: "Billing",
+      label: "Billing",
+      description: "Plan summary, invoice area and billing portal actions.",
+      alt: "Starter Pro billing screen showing a demonstration trial plan and an empty invoice table",
       image: "/images/starters/pro/billing-pycolors.png",
+      annotation:
+        "Plan details, renewal information and an invoice table show the billing layout you can build on. The trial subscription and figures are demonstration fixtures, not evidence of a payment or a verified Stripe integration.",
     },
     {
-      title: "Pricing and Organizations",
-      label: "Organizations",
-      description: "Multi-tenant and plan-aware product structure.",
+      title: "Pricing example",
+      label: "Pricing example",
+      description: "An example SaaS offer with features and trial actions.",
+      alt: "Starter Pro example SaaS pricing page with feature lists and trial buttons",
       image: "/images/starters/pro/pricing-pycolors.png",
+      annotation:
+        "The sample page groups an offer, feature lists and trial actions. Its subscription price and trial terms are examples for your own SaaS, not the purchase terms for the Starter Pro source package.",
     },
     {
-      title: "Mobile / PWA",
-      label: "Mobile / PWA",
-      description: "Installable app polish for a more credible SaaS.",
-      // image: '/images/starters/pro/pwa-mobile-pycolors.png',
+      title: "Offline fallback",
+      label: "Offline fallback",
+      description: "A connection message with reload and dashboard actions.",
+      alt: "Starter Pro offline screen with reload and dashboard links",
       image: "/images/starters/pro/pwa-pycolors.png",
+      annotation:
+        "The connection message explains the offline state. Reload and dashboard actions give users a route back to the app. This fallback does not mean every feature works offline.",
     },
   ] as const;
 
   return (
-    <section className="px-4 pb-14 sm:px-6">
+    <section
+      aria-labelledby="starter-pro-previews-title"
+      className="px-4 pb-14 sm:px-6"
+    >
       <div className="mx-auto max-w-7xl">
+        <MarketingSectionHeader
+          titleId="starter-pro-previews-title"
+          eyebrow="Inside Starter Pro"
+          title="Inspect the screens you can build on"
+          description="Existing Starter Pro captures in the light theme, including demonstration data. These interface previews do not demonstrate a completed payment, a verified integration, or a live production deployment."
+        />
         <div className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
           <div className="flex items-center justify-between border-b border-border-subtle bg-surface-muted/80 px-4 py-3 backdrop-blur-md">
             <div className="flex items-center gap-2">
@@ -606,7 +519,7 @@ function StarterProHeroCarousel() {
               <span className="h-2 w-2 rounded-full bg-green-500/70" />
 
               <span className="text-[11px] text-muted-foreground">
-                Production-ready
+                Interface previews
               </span>
             </div>
           </div>
@@ -620,7 +533,7 @@ function StarterProHeroCarousel() {
               >
                 <Image
                   src={screenshot.image}
-                  alt={`${screenshot.title} Starter Pro preview`}
+                  alt={screenshot.alt}
                   fill
                   priority={index === 0}
                   sizes="(min-width: 1280px) 1280px, 100vw"
@@ -657,6 +570,28 @@ function StarterProHeroCarousel() {
             <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
           </div>
         </div>
+        <ol className="mt-6 grid list-none gap-4 sm:grid-cols-2">
+          {heroScreenshots.map((screenshot, index) => (
+            <li
+              key={screenshot.title}
+              className="rounded-[5px] border border-border-subtle bg-surface p-5"
+            >
+              <h3 className="font-semibold">
+                <span className="mr-2 text-primary">{index + 1}.</span>
+                {screenshot.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {screenshot.annotation}
+              </p>
+              <a
+                href={screenshot.image}
+                className="mt-3 inline-flex rounded-sm text-sm font-medium underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                View {screenshot.title.toLowerCase()} at full size
+              </a>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -1198,7 +1133,7 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-      <section className="border-t border-border-subtle">
+      <section id="free-vs-pro" className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -1209,37 +1144,7 @@ export default function StarterProPage() {
                 description="Use Free to explore product UX. Move to Pro when auth, billing, protected architecture, and database foundations become the bottleneck."
               />
 
-              <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                <table className="w-full border-collapse text-left text-sm">
-                  <thead className="bg-surface-muted">
-                    <tr>
-                      <th className="px-5 py-4 font-medium">Feature</th>
-                      <th className="px-5 py-4 font-medium">Starter Free</th>
-                      <th className="px-5 py-4 font-medium">Starter Pro</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {comparisonRows.map((row, index) => (
-                      <tr
-                        key={row.label}
-                        className={cn(
-                          index !== comparisonRows.length - 1 &&
-                            "border-b border-border-subtle",
-                        )}
-                      >
-                        <td className="px-5 py-4 font-medium">{row.label}</td>
-
-                        <td className="px-5 py-4 text-muted-foreground">
-                          {row.free}
-                        </td>
-
-                        <td className="px-5 py-4 font-medium">{row.pro}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <StarterComparisonTable />
             </div>
 
             <div className="mt-10 flex flex-col items-center gap-3">
@@ -1257,7 +1162,7 @@ export default function StarterProPage() {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Try the live demo
+                  Try the Starter Free demo
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </Button>
@@ -1342,22 +1247,29 @@ export default function StarterProPage() {
                   purchase.
                 </div>
 
-                <div className="rounded-[5px] border border-border-subtle bg-background/60 p-4">
-                  <div className="flex flex-wrap gap-2">
-                    {purchaseTrustItems.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-2 rounded-[5px] border border-border-subtle bg-surface px-2.5 py-1.5 text-xs font-medium text-muted-foreground"
-                      >
-                        <Check
-                          className="h-3.5 w-3.5 text-foreground"
-                          aria-hidden="true"
-                        />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <ul
+                  aria-label="Before buying Starter Pro"
+                  className="grid gap-4 md:grid-cols-3"
+                >
+                  {purchaseTrustItems.map((item) => (
+                    <li key={item.href}>
+                      <MarketingFeatureCard
+                        title={item.title}
+                        description={item.description}
+                        icon={<item.icon className="h-4 w-4" />}
+                        className="p-4 shadow-none"
+                        action={
+                          <Link
+                            href={item.href}
+                            className="rounded-sm text-sm font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                          >
+                            {item.label}
+                          </Link>
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <BuyStarterProButton
@@ -1430,17 +1342,17 @@ export default function StarterProPage() {
           </div>
         </Container>
       </section>
-      <section className="border-t border-border-subtle">
+      <section id="buyer-faq" className="border-t border-border-subtle">
         <Container className="py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
             <MarketingSectionHeader
               eyebrow="FAQ"
               title="Questions buyers ask before paying"
-              description="Reduce friction, increase trust, and make the decision easier before checkout."
+              description="Check setup, access, usage terms, and the steps you still own before buying."
             />
 
             <div className="mt-12 grid gap-4 lg:grid-cols-2">
-              {faqs.map((faq) => (
+              {starterProBuyerFaqs.map((faq) => (
                 <Card
                   key={faq.question}
                   className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
@@ -1451,6 +1363,23 @@ export default function StarterProPage() {
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
                       {faq.answer}
                     </p>
+
+                    <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                      {faq.links.map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="inline-flex items-center gap-1 text-sm font-medium text-foreground underline underline-offset-4"
+                          >
+                            {link.label}
+                            <ArrowRight
+                              className="h-3.5 w-3.5"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               ))}
