@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.25.0
+
+Released by PyColors Marketing on 25 September 2026 (2026-09-25).
+
+This update strengthens the path from evaluating PyColors to understanding the
+product experience: purchase states are clearer, Starter Pro proof sits closer
+to the buying decision, live UI examples are easier to reach, and the homepage
+leads with an interactive product showcase.
+
+### Applications updated
+
+- Improved the Starter Pro purchase journey with verified-success messaging,
+  explicit recovery/support paths, and safer handling when checkout is cancelled
+  or interrupted.
+- Expanded Starter Pro evaluation guidance around first-session setup, Free vs
+  Pro responsibilities, delivery/recovery, and buyer questions.
+- Added stronger product proof around Starter Pro offers with real product
+  screenshots and concise annotations.
+- Added a showcase-first homepage journey that surfaces interactive product
+  proof earlier and helps visitors choose a relevant starting point.
+
+### Platform and shared capabilities
+
+- Connected PyColors UI documentation to the verified live UI Explorer and
+  consumer Storybook guidance, with direct examples for evaluating component
+  behavior.
+- Kept the displayed package baselines at PyColors UI v1.5.4 and PyColors Tokens
+  v1.2.3; this Marketing release does not re-version either package.
+
+### Reliability and maintenance
+
+- Purchase feedback now distinguishes verified success from incomplete or
+  interrupted checkout states before presenting post-purchase guidance.
+- Recovery and support paths are more explicit when access or delivery needs
+  follow-up.
+
+### For developers and candidates
+
+Explore the interactive product proof, inspect live UI examples, and use the
+Starter Pro guidance to understand which integration responsibilities remain in
+your application.
+
+### For companies and recruiters
+
+Use the product showcase, Starter Pro evidence, and UI examples to evaluate the
+quality and scope of the PyColors ecosystem without relying on unverified
+production-readiness or conversion claims.
+
+[Explore PyColors](https://pycolors.io/).
+
 ## 1.24.0
 
 Released by PyColors Marketing on 18 September 2026 (2026-09-18).
