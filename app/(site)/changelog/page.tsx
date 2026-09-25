@@ -53,7 +53,8 @@ type ChangelogItem = {
 const CHANGELOG: ChangelogItem[] = [
   {
     version: "v1.25.0",
-    title: "PyColors Marketing v1.25.0: clearer product proof and purchase guidance",
+    title:
+      "PyColors Marketing v1.25.0: clearer product proof and purchase guidance",
     dateLabel: "Fri 25 Sep 2026",
     dateISO: "2026-09-25",
     status: "Stable",
