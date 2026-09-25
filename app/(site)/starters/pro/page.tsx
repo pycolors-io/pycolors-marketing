@@ -428,97 +428,171 @@ const purchaseTrustItems = [
   },
 ] as const;
 
-const starterProPreviews = [
-  {
-    title: "Sign-in screen",
-    alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
-    src: "/images/starters/pro/auth-pycolors.png",
-    width: 3456,
-    height: 1928,
-    annotations: [
-      {
-        title: "Email and password form",
-        description:
-          "The right-hand form groups sign-in fields and a password-recovery link, giving you an account entry screen to adapt to your product.",
-      },
-      {
-        title: "Provider choices and account creation",
-        description:
-          "Google and GitHub buttons sit above the email fields, with an account-creation link below the form. Configure your own provider credentials before using these options.",
-      },
-    ],
-  },
-  {
-    title: "Offline fallback",
-    alt: "Starter Pro offline screen with reload and dashboard links",
-    src: "/images/starters/pro/pwa-pycolors.png",
-    width: 3456,
-    height: 1926,
-    annotations: [
-      {
-        title: "A clear connection state",
-        description:
-          "The offline message explains why the app cannot load, giving users a useful destination when their connection drops.",
-      },
-      {
-        title: "A route back to the app",
-        description:
-          "Reload and dashboard actions provide recovery paths. This fallback screen does not mean every feature works offline.",
-      },
-    ],
-  },
-] as const;
+function StarterProHeroCarousel() {
+  const heroScreenshots = [
+    {
+      title: "Dashboard",
+      label: "Dashboard",
+      description: "Navigation, workspace summary and example metric cards.",
+      alt: "Starter Pro dashboard with navigation, workspace cards and demonstration metrics",
+      image: "/images/starters/pro/dashboard-pycolors.png",
+      annotation:
+        "The sidebar groups projects, admin, billing and settings. Summary cards give you a dashboard layout to adapt. Displayed revenue, users and activity are demonstration data, not customer results.",
+    },
+    {
+      title: "Authentication",
+      label: "Authentication",
+      description: "Email sign-in, provider choices and password recovery.",
+      alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
+      image: "/images/starters/pro/auth-pycolors.png",
+      annotation:
+        "The right-hand form combines email and password fields, Google and GitHub buttons, password recovery and account creation. Configure your own provider credentials before using these options.",
+    },
+    {
+      title: "Billing",
+      label: "Billing",
+      description: "Plan summary, invoice area and billing portal actions.",
+      alt: "Starter Pro billing screen showing a demonstration trial plan and an empty invoice table",
+      image: "/images/starters/pro/billing-pycolors.png",
+      annotation:
+        "Plan details, renewal information and an invoice table show the billing layout you can build on. The trial subscription and figures are demonstration fixtures, not evidence of a payment or a verified Stripe integration.",
+    },
+    {
+      title: "Pricing example",
+      label: "Pricing example",
+      description: "An example SaaS offer with features and trial actions.",
+      alt: "Starter Pro example SaaS pricing page with feature lists and trial buttons",
+      image: "/images/starters/pro/pricing-pycolors.png",
+      annotation:
+        "The sample page groups an offer, feature lists and trial actions. Its subscription price and trial terms are examples for your own SaaS, not the purchase terms for the Starter Pro source package.",
+    },
+    {
+      title: "Offline fallback",
+      label: "Offline fallback",
+      description: "A connection message with reload and dashboard actions.",
+      alt: "Starter Pro offline screen with reload and dashboard links",
+      image: "/images/starters/pro/pwa-pycolors.png",
+      annotation:
+        "The connection message explains the offline state. Reload and dashboard actions give users a route back to the app. This fallback does not mean every feature works offline.",
+    },
+  ] as const;
 
-function StarterProPreviews() {
   return (
     <section
       aria-labelledby="starter-pro-previews-title"
       className="px-4 pb-14 sm:px-6"
     >
-      <Container>
+      <div className="mx-auto max-w-7xl">
         <MarketingSectionHeader
           titleId="starter-pro-previews-title"
           eyebrow="Inside Starter Pro"
           title="Inspect the screens you can build on"
-          description="Existing Starter Pro captures in the light theme. These interface previews do not demonstrate a completed payment, a verified integration, or a live production deployment."
+          description="Existing Starter Pro captures in the light theme, including demonstration data. These interface previews do not demonstrate a completed payment, a verified integration, or a live production deployment."
         />
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {starterProPreviews.map((preview) => (
-            <figure
-              key={preview.title}
-              className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface"
-            >
-              <Image
-                src={preview.src}
-                alt={preview.alt}
-                width={preview.width}
-                height={preview.height}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="h-auto w-full border-b border-border-subtle"
-              />
-              <figcaption className="p-5 sm:p-6">
-                <h3 className="text-lg font-semibold">{preview.title}</h3>
-                <ol className="mt-4 list-decimal space-y-4 pl-5 text-sm marker:font-semibold marker:text-primary">
-                  {preview.annotations.map((annotation) => (
-                    <li key={annotation.title} className="pl-1">
-                      <p className="font-medium">{annotation.title}</p>
-                      <p className="mt-1 leading-6 text-muted-foreground">
-                        {annotation.description}
-                      </p>
-                    </li>
+        <div className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
+          <div className="flex items-center justify-between border-b border-border-subtle bg-surface-muted/80 px-4 py-3 backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-primary" />
+
+              <span className="text-xs font-medium text-foreground">
+                Starter Pro
+              </span>
+            </div>
+
+            <div className="absolute left-1/2 hidden -translate-x-1/2 sm:block">
+              <div className="overflow-hidden rounded-full border border-border-subtle bg-background/70 px-5 py-1.5">
+                <div className="relative h-4 w-[220px]">
+                  {heroScreenshots.map((screenshot, index) => (
+                    <span
+                      key={screenshot.title}
+                      className="absolute inset-0 flex animate-hero-label items-center justify-center opacity-0 whitespace-nowrap text-center text-[10px] font-medium tracking-wide text-muted-foreground"
+                      style={{ animationDelay: `${index * 5}s` }}
+                    >
+                      {screenshot.label}
+                    </span>
                   ))}
-                </ol>
-                <a
-                  href={preview.src}
-                  className="mt-5 inline-flex rounded-sm text-sm font-medium underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="h-2 w-2 rounded-full bg-green-500/70" />
+
+              <span className="text-[11px] text-muted-foreground">
+                Interface previews
+              </span>
+            </div>
+          </div>
+
+          <div className="relative aspect-[16/10] min-h-[320px] overflow-hidden bg-background sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
+            {heroScreenshots.map((screenshot, index) => (
+              <div
+                key={screenshot.title}
+                className="absolute inset-0 animate-hero-fade opacity-0"
+                style={{ animationDelay: `${index * 5}s` }}
+              >
+                <Image
+                  src={screenshot.image}
+                  alt={screenshot.alt}
+                  fill
+                  priority={index === 0}
+                  sizes="(min-width: 1280px) 1280px, 100vw"
+                  className="object-cover object-top"
+                />
+
+                <div className="absolute left-4 bottom-4 z-10 max-w-xs rounded-[5px] border border-border-subtle bg-background/85 px-4 py-3 shadow-soft backdrop-blur-md sm:left-5 sm:bottom-5">
+                  <p className="text-sm font-medium text-foreground">
+                    {screenshot.label}
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    {screenshot.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/35 to-transparent" />
+
+            <div className="absolute bottom-4 right-4 z-20 hidden items-center gap-1.5 rounded-full border border-border-subtle bg-background/70 px-2.5 py-2 backdrop-blur-md sm:flex">
+              {heroScreenshots.map((screenshot, index) => (
+                <span
+                  key={screenshot.title}
+                  className="relative h-1.5 w-6 overflow-hidden rounded-full bg-muted"
                 >
-                  View {preview.title.toLowerCase()} at full size
-                </a>
-              </figcaption>
-            </figure>
-          ))}
+                  <span
+                    className="absolute inset-y-0 left-0 animate-carousel-progress rounded-full bg-foreground/70"
+                    style={{ animationDelay: `${index * 5}s` }}
+                  />
+                </span>
+              ))}
+            </div>
+
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+          </div>
         </div>
-      </Container>
+        <ol className="mt-6 grid list-none gap-4 sm:grid-cols-2">
+          {heroScreenshots.map((screenshot, index) => (
+            <li
+              key={screenshot.title}
+              className="rounded-[5px] border border-border-subtle bg-surface p-5"
+            >
+              <h3 className="font-semibold">
+                <span className="mr-2 text-primary">{index + 1}.</span>
+                {screenshot.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {screenshot.annotation}
+              </p>
+              <a
+                href={screenshot.image}
+                className="mt-3 inline-flex rounded-sm text-sm font-medium underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                View {screenshot.title.toLowerCase()} at full size
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }
@@ -658,7 +732,7 @@ export default function StarterProPage() {
         />
       </Container>
 
-      <StarterProPreviews />
+      <StarterProHeroCarousel />
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-12">
           <div className="mx-auto max-w-6xl">

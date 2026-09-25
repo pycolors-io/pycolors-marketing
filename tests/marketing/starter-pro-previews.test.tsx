@@ -14,46 +14,52 @@ function renderPreviews() {
   });
 }
 
-describe("annotated Starter Pro previews", () => {
-  it("keeps both uncropped previews and their annotations available beside the purchase decision", () => {
+describe("annotated Starter Pro carousel", () => {
+  it("preserves all five rotating previews with permanent annotations and original links", () => {
     const region = renderPreviews();
     expect(region.previousElementSibling).toHaveTextContent("Buy Starter Pro");
-    expect(within(region).getAllByRole("img")).toHaveLength(2);
-    for (const [alt, title, file, annotation] of [
+    const images = within(region).getAllByRole("img");
+    expect(images).toHaveLength(5);
+    const notes = within(region).getAllByRole("listitem");
+    expect(notes).toHaveLength(5);
+    for (const [index, [title, file, annotation]] of [
+      ["Dashboard", "dashboard", "demonstration data, not customer results"],
+      ["Authentication", "auth", "Configure your own provider credentials"],
       [
-        "Starter Pro sign-in screen with email, password, Google and GitHub options",
-        "Sign-in screen",
-        "auth",
-        "Email and password form",
+        "Billing",
+        "billing",
+        "not evidence of a payment or a verified Stripe integration",
       ],
       [
-        "Starter Pro offline screen with reload and dashboard links",
-        "Offline fallback",
-        "pwa",
-        "A clear connection state",
+        "Pricing example",
+        "pricing",
+        "not the purchase terms for the Starter Pro source package",
       ],
-    ]) {
-      const image = within(region).getByRole("img", { name: alt });
-      const caption = image.closest("figure")?.querySelector("figcaption");
-      expect(caption).toHaveTextContent(title!);
-      expect(caption).toHaveTextContent(annotation!);
-      expect(caption?.querySelectorAll("li")).toHaveLength(2);
-      const link = within(region).getByRole("link", {
+      ["Offline fallback", "pwa", "does not mean every feature works offline"],
+    ].entries()) {
+      const image = images[index]!;
+      expect(image).toHaveAccessibleName(/Starter Pro/u);
+      expect(image.parentElement).toHaveClass("animate-hero-fade");
+      expect(image.parentElement).toHaveStyle({
+        animationDelay: `${index * 5}s`,
+      });
+      const note = notes[index]!;
+      expect(note).toHaveTextContent(annotation!);
+      expect(note.closest('[class*="animate-"]')).toBeNull();
+      expect(within(note).getByRole("heading", { level: 3 })).toHaveTextContent(
+        title!,
+      );
+      const link = within(note).getByRole("link", {
         name: `View ${title!.toLowerCase()} at full size`,
       });
       expect(link).toHaveAttribute(
         "href",
         `/images/starters/pro/${file}-pycolors.png`,
       );
+      expect(link).not.toHaveAttribute("target");
       link.focus();
       expect(link).toHaveFocus();
-      expect(image).not.toHaveClass("object-cover");
     }
-    expect(region.querySelector('[class*="animate-"]')).toBeNull();
-    expect(region).toHaveTextContent("Configure your own provider credentials");
-    expect(region).toHaveTextContent(
-      "does not mean every feature works offline",
-    );
     expect(region).toHaveTextContent(
       "do not demonstrate a completed payment, a verified integration, or a live production deployment",
     );
