@@ -147,7 +147,7 @@ const milestones: Array<{
     id: "Sep 2026",
     title: "September 2026",
     subtitle:
-      "The 18 September 2026 PyColors Marketing v1.24.0 update connects setup guidance, interactive UI examples, design-system principles, and readable feedback, following the v1.23.0 Blocks and v1.22.0 Theme Builder releases.",
+      "The 25 September 2026 PyColors Marketing v1.25.0 update strengthens product proof, purchase and recovery guidance, live UI evaluation, and the showcase-first homepage journey.",
   },
   {
     id: "H1 2026",
@@ -158,6 +158,42 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.25.0",
+    description:
+      "Shipped on 25 September 2026 with clearer Starter Pro purchase and recovery guidance, stronger product proof, verified live UI evaluation links, and a showcase-first homepage journey.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Marketing", "Trust", "DX"],
+    href: "/changelog",
+  },
+  {
+    title: "Starter Pro purchase and recovery clarity",
+    description:
+      "Distinguish verified success from incomplete checkout states, expose recovery and support paths, and connect buyers to delivery and first-session guidance.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Starter Pro", "Trust", "Commerce"],
+    href: "/starters/pro",
+  },
+  {
+    title: "Live PyColors UI evaluation",
+    description:
+      "Connect UI documentation to the verified live UI Explorer and consumer Storybook guidance so component behavior and examples are easier to inspect.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["UI", "Docs", "DX"],
+    href: "/docs/ui",
+  },
+  {
+    title: "Showcase-first product journey",
+    description:
+      "Bring interactive product proof earlier on the homepage and pair Starter Pro offers with annotated screenshots so evaluation starts from visible product behavior.",
+    status: "Shipped",
+    milestone: "Sep 2026",
+    tags: ["Marketing", "Product", "Trust"],
+    href: "/",
+  },
   {
     title: "Product-specific setup guidance",
     description:
