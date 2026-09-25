@@ -52,6 +52,41 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.25.0",
+    title: "PyColors Marketing v1.25.0: clearer product proof and purchase guidance",
+    dateLabel: "Fri 25 Sep 2026",
+    dateISO: "2026-09-25",
+    status: "Stable",
+    releaseWeekLabel: "Sep 2026 (weekly release)",
+    summary:
+      "This release makes the product easier to evaluate before and after a buying decision: Starter Pro proof is closer to pricing, purchase and recovery states are clearer, live UI examples are easier to reach, and the homepage leads with interactive product proof.",
+    highlights: [
+      {
+        title: "A clearer Starter Pro purchase journey",
+        items: [
+          "Verified-success messaging is separated from incomplete or interrupted checkout states.",
+          "Purchase recovery and support paths are easier to find when access or delivery needs follow-up.",
+          "Starter Pro guidance now covers first-session setup, delivery, recovery, buyer questions, and the Free versus Pro boundary more explicitly.",
+        ],
+      },
+      {
+        title: "Stronger product proof before purchase",
+        items: [
+          "Starter Pro screenshots and annotations now sit closer to pricing and product evaluation.",
+          "The homepage introduces interactive product proof earlier and guides visitors toward a relevant starting point.",
+        ],
+      },
+      {
+        title: "Live UI evaluation is easier to reach",
+        items: [
+          "UI documentation connects to the verified live UI Explorer and consumer Storybook guidance.",
+          "The visible package baselines remain PyColors UI v1.5.4 and PyColors Tokens v1.2.3; this Marketing release does not re-version them.",
+        ],
+      },
+    ],
+    cta: { label: "Explore PyColors", href: "/" },
+  },
+  {
     version: "v1.24.0",
     title: "PyColors Marketing v1.24.0: from setup to working UI examples",
     dateLabel: "Fri 18 Sep 2026",
