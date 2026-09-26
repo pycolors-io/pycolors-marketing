@@ -44,6 +44,20 @@
           "target": "@components/blocks/feedback-empty-state-panel/index.tsx"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "pycolors-agent-context",
+      "type": "registry:file",
+      "title": "PyColors agent context",
+      "description": "Optional, consumer-owned PyColors integration reference. Install explicitly and review before asking an agent to read it.",
+      "files": [
+        {
+          "path": "content/agent-context/pycolors-agent-context.md",
+          "type": "registry:file",
+          "target": "@lib/pycolors/agent-context.md"
+        }
+      ]
     }
   ]
 }
