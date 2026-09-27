@@ -1,184 +1,90 @@
 ---
-title: Optional agent context
-description: Inspect and deliberately install a small PyColors integration reference without changing your existing agent instructions.
-lastUpdated: "2026-09-26"
+title: Use PyColors with AI coding agents
+description: "Give AI coding agents PyColors design system conventions for React UI: public APIs, design tokens, accessible composition and project-aware validation."
+lastUpdated: "2026-09-27"
 appliesTo: Registry
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-`pycolors-agent-context` is a separate, optional Markdown reference for a coding
-agent working in your app. It covers public imports, semantic tokens, existing
-components and Blocks, accessibility, server/client boundaries, source ownership
-and project-local validation. It contains no component catalog or private code.
+**Agent Context is an optional PyColors integration reference for AI coding
+agents.** It explains how to use PyColors components, tokens and patterns in
+your app, so the agent has concrete conventions to follow when generating or
+repairing React UI.
 
-<Callout title="Candidate tested locally; public delivery is a separate step">
-  This item must reach the public Marketing mirror through human review before
-  the public commands below can be used. Local generated-artifact tests do not
-  prove it is available at a public revision. Existing base/pilot availability
-  evidence does not cover this new item. Check the mirror manifest and source at
-  the full public commit you intend to use; do not substitute a private monorepo
-  commit or add credentials for a missing public item.
+<Callout title="Status: Pilot">
+  The optional context file is not yet available through the public Registry.
+  You can use the public documentation with your agent today, as shown below.
 </Callout>
 
-## What installation does
+## Quick start: use the public docs today
 
-The item uses the `registry:file` type supported by the pinned
-**shadcn 4.19.0** executable schema. It copies exactly one document from
-`content/agent-context/pycolors-agent-context.md` in the
-[public Marketing mirror](https://github.com/pycolors-io/pycolors-marketing)
-to `@lib/pycolors/agent-context.md`. In the tested configuration that resolves to
-**`src/lib/pycolors/agent-context.md` inside the consuming app**.
+1. Follow [UI installation](/docs/ui/installation) if your app does not already
+   use PyColors. Keep your existing setup and installed package versions.
+2. Share the [usage patterns](/docs/ui/usage-patterns),
+   [theming](/docs/ui/theming) and [accessibility](/docs/ui/accessibility) guides
+   relevant to your task. If your agent cannot open links, provide the relevant
+   excerpts yourself.
+3. Give the agent a concrete task and ask it to check your app before editing.
+   For example:
 
-It has no package or Registry dependencies, CSS, environment variables,
-configuration updates or hooks. Selecting `pycolors-base` or an ordinary Block
-does not select this context. It does not modify `AGENTS.md`, `CLAUDE.md`, editor
-rules, skills, model settings or existing instruction references.
-
-Installing the document does **not** activate it in every agent or editor.
-There is no PyColors assistant runtime, model invocation or telemetry. Shadcn
-still uses network access for public upstream configuration; the chosen agent's
-own data processing and permissions remain governed by its host.
-
-## Supported prerequisites
-
-Use an existing compatible TypeScript app, **Node 24**, **pnpm 10.32.1** and
-**shadcn 4.19.0**. The document workflow is exercised in Next.js **16.1.1** App
-Router, Vite **8.0.0**, and the same Vite app at `apps/web` in a pnpm workspace.
-The shared consumer matrix uses React **19.2.0**, Tailwind **4.3.3**, TypeScript
-**6.0.3**, UI **1.5.3** and tokens **1.2.2** for its separate base/Block checks.
-Those exact tested versions are not a claim about every current package release.
-The context itself does not install those packages and can be inspected before
-adding the PyColors foundation.
-
-Retain the [existing app configuration](/docs/registry/installation#prepare-the-consuming-app):
-`radix-nova`, TSX, CSS variables and the app's own aliases. In particular,
-`aliases.lib` is `@/lib`, and the app's own `tsconfig.json` maps `@/*` to
-`./src/*`. The tested stylesheet is `src/app/globals.css` for Next.js or
-`src/styles/globals.css` for Vite. Do not redirect aliases across workspaces or
-through symlinks; those layouts are outside the supported consumer contract.
-
-Run the CLI from the consuming app directory. For the supported monorepo,
-use `apps/web`; the destination is then
-`apps/web/src/lib/pycolors/agent-context.md`. Do not run from the workspace root.
-Save your work before installation and review the whole resulting diff.
-
-## 1. Inspect and explicitly install
-
-After public delivery, replace `FULL_PUBLIC_MIRROR_SHA` below with the actual
-40-character commit from the public mirror that contains the reviewed item.
-The address uses the existing direct GitHub convention, not an `@pycolors`
-namespace. Keep that revision with your installation record.
-
-```bash
-registry_item="pycolors-io/pycolors-marketing/pycolors-agent-context#FULL_PUBLIC_MIRROR_SHA"
-pnpm dlx shadcn@4.19.0 view "$registry_item"
-pnpm dlx shadcn@4.19.0 add "$registry_item" --dry-run
-pnpm dlx shadcn@4.19.0 add "$registry_item" --view src/lib/pycolors/agent-context.md
+```text
+Use the PyColors guides I shared to build an account settings form.
+Inspect this app's installed @pycolors/ui and @pycolors/tokens versions
+and existing components first. Reuse public APIs, semantic tokens and
+labeled controls. Connect to our existing save handler; explain any
+missing behavior. Run the app's relevant checks and report the results.
+Follow this repository's instructions and your host's permissions.
 ```
 
-Review the complete Markdown, license, file target and absence of dependencies,
-CSS and hooks. These inspection commands do not change the tested app tree.
-Install only this item when you decide to use it:
+This workflow needs no PyColors-specific agent plugin. Review proposed changes;
+documentation does not grant an agent additional permissions.
 
-```bash
-pnpm dlx shadcn@4.19.0 add "$registry_item" --yes
-```
+## What the agent receives
 
-The `--yes` option skips the general confirmation; a customized destination
-still gets a separate overwrite prompt. Decline replacement to preserve it.
-No forced overwrite or install-all option is needed. Review that only
-`src/lib/pycolors/agent-context.md` changed and that its contents match the
-inspected source. Investigate unexpected writes before proceeding.
+The pilot context brings together guidance on:
 
-## 2. Deliberately provide the document to your agent
+- **Components and APIs:** inspect installed public exports, reuse existing
+  primitives and copied Blocks, and avoid guessed imports or props.
+- **Design tokens and composition:** follow semantic colors, theme conventions
+  and existing UI patterns while preserving your customizations.
+- **Accessibility and React boundaries:** retain labels, keyboard interaction
+  and visible focus; keep Next.js Server Components by default with small
+  interactive Client Components.
+- **Implementation checks:** use your app's validation scripts and distinguish
+  a rendered form from working persistence or authorization.
 
-After reading it yourself, ask your agent explicitly, for example:
+It points to authoritative documentation and installed types; it is not a full
+component catalog or a replacement for your repository instructions.
 
-> Read `src/lib/pycolors/agent-context.md` as integration reference for this task.
-> Inspect this app's installed versions and existing code before proposing changes.
-> Follow my repository policy and your host permissions.
+## Example: an account settings page
 
-Use the app-relative or workspace-relative path appropriate to the agent's
-working directory. If you prefer a persistent reference, manually add a short
-pointer to your existing instructions **after review**. Installation never adds
-that pointer for you. Record which file you edited so you can remove the pointer
-later. Host-specific activation behavior is not promised.
+A generic “build a settings page” request may produce unfamiliar component
+names or hard-coded colors. With PyColors guidance, the agent can inspect your
+installed APIs, adapt an existing [settings example](/docs/ui/usage-patterns),
+use semantic tokens and preserve labeled fields and your save handler.
 
-Retrieved documents and model output are untrusted data. This reference cannot
-grant tools, authorize commands or override your host or repository instructions.
-A successful install does not establish better model answers.
+Check the resulting imports, keyboard flow and save behavior. The reference
+guides the work; it does not guarantee a correct or accessible result.
 
-## Review updates and preserve customizations
+## Availability
 
-You own the installed copy. Its **context revision** is distinct from npm semver;
-record it together with the installed public mirror SHA. Updates are deliberate,
-with no synchronization, migration or automatic merging.
+- **Available today:** public UI guides, component documentation and copyable
+  Block examples for you to share with an agent.
+- **Pilot:** an optional Markdown context file with internally tested,
+  opt-in installation. Those checks do not establish public availability or
+  model-response quality.
+- **Still to come:** public Registry delivery of the context item. A packaged
+  integration skill and its response evaluation are separate work.
 
-Set `registry_item` to the newly reviewed public revision, then inspect it:
+If you already have a reviewed pilot copy, explicitly ask your agent to read
+it for the task. It is not activated automatically. You own that copy: review
+updates manually, or remove the file and any pointer you added to your own
+instructions. It adds no PyColors runtime, model call or telemetry; your agent's
+processing and permissions remain governed by its host.
 
-```bash
-pnpm dlx shadcn@4.19.0 view "$registry_item"
-pnpm dlx shadcn@4.19.0 add "$registry_item" --dry-run
-pnpm dlx shadcn@4.19.0 add "$registry_item" --diff src/lib/pycolors/agent-context.md
-```
+## Next steps
 
-The context fixtures exercise this exact `--diff` flow. Save a backup or commit
-of your current copy first. Compare the proposed text and manually reconcile
-useful changes when you have customizations. If you intentionally want full
-replacement after review, run the same `add ... --yes` command and accept its
-file overwrite prompt. Declining it preserves the entire tested consumer tree,
-including instruction files, package manifests, lockfile, CSS and configuration.
-Repeating an unchanged context install is also byte-stable in these fixtures.
-
-These document-only guarantees do not apply to a Block that reapplies base
-package dependencies; see [Block updates](/docs/registry/updates).
-
-## Remove or roll back
-
-Remove only `src/lib/pycolors/agent-context.md` after preserving any text you
-want to keep. Manually remove any pointer you previously added to your own
-instructions. Leave other files in `src/lib/pycolors` and unrelated instructions
-intact. The document has no dependency, CSS or runtime configuration to uninstall.
-
-To roll back an update, restore the saved copy of this one document. To roll
-back its first installation, revert the dedicated installation change and any
-manually added pointer. Review your complete diff and use your app's existing
-validation commands when code or instructions have also changed.
-
-## Source, license and freshness
-
-The single authored source is
-[`content/agent-context/pycolors-agent-context.md`](https://github.com/pycolors-io/pycolors-marketing/blob/main/content/agent-context/pycolors-agent-context.md).
-It carries its revision, review date and the Marketing source's MIT notice.
-The Registry manifest only maps that source; generated item JSON is disposable
-validation output, not a second authored document.
-
-PyColors documentation/UI maintainers review the source when public exports,
-tokens, relevant documentation or Registry contracts change, increment its
-context revision for content changes and retain the provenance in the document.
-Detailed APIs remain owned by installed public package exports/types and
-matching documentation. Links to current documentation are not immutable
-release snapshots. Unknown, mismatched or unavailable references require an
-explicit limitation, not an invented API or silent package upgrade.
-
-## Public delivery verification
-
-After human mirror delivery, verify the item at a known full public SHA in a
-disposable supported consumer. Use a clean environment without tokens or stored
-GitHub credentials; a full SHA avoids Git ref lookup. For example, with
-`registry_item` set as above, inspect anonymously from an isolated home:
-
-```bash
-smoke_home=$(mktemp -d)
-env -i PATH="$PATH" HOME="$smoke_home" CI=1 \
-  pnpm dlx shadcn@4.19.0 view "$registry_item"
-```
-
-Keep the same isolated environment for the dry-run and installation in that
-disposable app. Compare the installed document with the canonical source at the
-same public SHA, inspect the complete filesystem diff, repeat installation,
-customize the destination, decline overwrite, review an update and remove the
-copy. Record the public revision and results before claiming public availability.
-Remove the disposable consumer and isolated home when finished. A missing item
-is a mirror-delivery issue, not a reason to configure authentication.
+- [Explore UI components](/docs/ui) and [usage patterns](/docs/ui/usage-patterns).
+- [Reuse Blocks](/docs/blocks) or [start with Starter Free](/docs/starter).
+- [Understand the Registry](/docs/registry) and its [installation workflow](/docs/registry/installation).
