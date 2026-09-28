@@ -37,7 +37,7 @@ const pages = [
 
 describe("company and trust pages", () => {
   for (const [route, Page, metadata, title] of pages) {
-    it(`${route} retains its canonical, breadcrumb data, one H1 and a reachable main landmark`, async () => {
+    it(`${route} retains its canonical, breadcrumb data, one H1 and a reachable main landmark`, () => {
       const { container } = render(<Page />);
       const main = screen.getByRole("main");
       expect(main).toHaveAttribute("id", "content");
@@ -65,8 +65,14 @@ describe("company and trust pages", () => {
           expect(link).toHaveAttribute("rel", "noreferrer noopener");
         }
       }
-      expect(await axe(container)).toHaveNoViolations();
     });
+
+    // Scan the complete release/milestone history, including on slower CI
+    // runners. Keep the functional checks on Vitest's default deadline.
+    it(`${route} has no automated accessibility violations across the full page`, async () => {
+      const { container } = render(<Page />);
+      expect(await axe(container)).toHaveNoViolations();
+    }, 15_000);
   }
 
   it("keeps the About progression table and the existing product destinations", () => {
