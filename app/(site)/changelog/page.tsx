@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Calendar, Tag, CheckCircle2 } from "lucide-react";
 
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import {
+  MarketingActionGroup,
+  MarketingLinkButton,
+} from "@/components/marketing/cta-panel";
 import { Container } from "@/components/container";
-import { Badge, cn, Button, Card, CardHeader, CardContent } from "@pycolors/ui";
+import { Badge, cn, Card, CardHeader, CardContent } from "@pycolors/ui";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 
 export const metadata: Metadata = {
@@ -2021,198 +2027,192 @@ function TimelineDot() {
 
 export default function ChangelogPage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Changelog", href: "/changelog" },
-            ]}
-          />
-        </div>
-
-        <header className="mx-auto max-w-4xl text-center">
-          <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2 rounded-[5px]">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-              Ecosystem updates
-            </Badge>
-          </div>
-
-          <h1 className="font-brand mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            Changelog
-          </h1>
-
-          <p className="mx-auto mt-3 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-            Product updates across PyColors: UI, Starters, Templates, docs, and
-            commercial product growth.
-          </p>
-
-          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
-            Changelog entries reflect shipped work and public-facing release
-            notes. For current product direction, use the roadmap and pricing
-            pages.
-          </p>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button asChild className="rounded-[5px]">
-              <Link href="/docs">Read the docs</Link>
-            </Button>
-
-            <Button asChild variant="outline" className="rounded-[5px]">
-              <Link href="/roadmap">View roadmap</Link>
-            </Button>
-
-            <Button asChild variant="outline" className="rounded-[5px]">
-              <Link href="/pricing">View pricing</Link>
-            </Button>
-          </div>
-        </header>
-
-        <section className="mx-auto mt-10 w-full">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-            <p className="text-sm leading-7 text-muted-foreground">
-              <span className="font-medium text-foreground">
-                Release philosophy.
-              </span>{" "}
-              PyColors ships in public through release-driven iterations. The
-              changelog records shipped work. The roadmap summarizes current
-              priorities. Pricing defines the commercial path.
-            </p>
-          </Card>
-        </section>
-
-        <section className="mx-auto mt-10 w-full max-w-6xl">
-          <div className="relative">
-            <div
-              className="absolute left-4 top-0 h-full w-px bg-border-subtle sm:left-[18px]"
-              aria-hidden="true"
+    <main id="content" tabIndex={-1}>
+      <Container className="pb-10 pt-20 sm:pb-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Changelog", href: "/changelog" },
+              ]}
             />
-
-            <div className="space-y-8">
-              {CHANGELOG.map((entry) => (
-                <article key={entry.version} className="relative pl-14">
-                  <div className="absolute left-0 top-1">
-                    <TimelineDot />
-                  </div>
-
-                  <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                    <CardHeader className="border-b border-border-subtle bg-surface-muted">
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                        <div className="space-y-3">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <Badge
-                              variant="secondary"
-                              className="rounded-[5px] font-medium"
-                            >
-                              {entry.version}
-                            </Badge>
-
-                            <StatusPill status={entry.status} />
-                          </div>
-
-                          <div className="space-y-2">
-                            <h2 className="font-brand text-xl font-semibold tracking-tight">
-                              {entry.title}
-                            </h2>
-
-                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                              <span className="inline-flex items-center gap-1.5">
-                                <Calendar className="h-4 w-4" />
-                                <time dateTime={entry.dateISO}>
-                                  {entry.dateLabel}
-                                </time>
-                              </span>
-
-                              <span className="inline-flex items-center gap-1.5">
-                                <Tag className="h-4 w-4" />
-                                {entry.releaseWeekLabel}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {entry.cta ? (
-                          <Button
-                            asChild
-                            variant="outline"
-                            className="rounded-[5px] sm:mt-1"
-                          >
-                            <Link href={entry.cta.href}>
-                              {entry.cta.label}
-                              <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        ) : null}
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-6 p-6">
-                      <p className="max-w-3xl text-pretty text-sm leading-7 text-muted-foreground sm:text-base">
-                        {entry.summary}
-                      </p>
-
-                      <div className="space-y-6">
-                        {entry.highlights.map((block) => (
-                          <div key={block.title} className="space-y-3">
-                            <h3 className="text-sm font-semibold tracking-tight">
-                              {block.title}
-                            </h3>
-
-                            <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-                              {block.items.map((it) => (
-                                <li key={it} className="flex gap-2">
-                                  <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                                  <span className="text-pretty">{it}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-
-                      <Card className="rounded-[5px] border border-border-subtle bg-surface-muted p-4 shadow-none">
-                        <p className="text-sm leading-7 text-muted-foreground">
-                          <span className="font-medium text-foreground">
-                            Strategy.
-                          </span>{" "}
-                          Weekly releases build trust. PyColors ships usable
-                          foundations, documents what is real, and keeps product
-                          direction grounded in roadmap and offer pages.
-                        </p>
-                      </Card>
-
-                      <div className="flex flex-col gap-2 sm:flex-row">
-                        <Button asChild className="rounded-[5px]">
-                          <Link href="/docs/ui">
-                            Browse components
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Link>
-                        </Button>
-
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="rounded-[5px]"
-                        >
-                          <Link href="/docs">Read docs</Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </article>
-              ))}
-            </div>
           </div>
 
-          <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">
-            Changelog entries reflect shipped work. Internal tasks, strategy
-            changes, and in-progress commercial scope may be grouped or
-            summarized.
-          </p>
-        </section>
-      </div>
-    </Container>
+          <PageHero
+            variant="compact"
+            badges={[{ label: "Ecosystem updates", variant: "secondary" }]}
+            title="Changelog"
+            description="Product updates across PyColors: UI, Starters, Templates, docs, and commercial product growth."
+            actions={
+              <>
+                <MarketingLinkButton>
+                  <Link href="/docs">Read the docs</Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/roadmap">View roadmap</Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/pricing">View pricing</Link>
+                </MarketingLinkButton>
+              </>
+            }
+            extra={
+              <>
+                <p className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground">
+                  Changelog entries reflect shipped work and public-facing
+                  release notes. For current product direction, use the roadmap
+                  and pricing pages.
+                </p>{" "}
+              </>
+            }
+          />
+
+          <MarketingSectionShell spacing="compact">
+            <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
+              <p className="text-sm leading-7 text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  Release philosophy.
+                </span>{" "}
+                PyColors ships in public through release-driven iterations. The
+                changelog records shipped work. The roadmap summarizes current
+                priorities. Pricing defines the commercial path.
+              </p>
+            </Card>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell spacing="compact">
+            <div className="relative">
+              <div
+                className="absolute left-[18px] top-0 hidden h-full w-px bg-border-subtle sm:block"
+                aria-hidden="true"
+              />
+
+              <ol aria-label="Release history" className="space-y-8">
+                {CHANGELOG.map((entry) => (
+                  <li key={entry.version}>
+                    <article className="relative sm:pl-14">
+                      <div className="absolute left-0 top-1 hidden sm:block">
+                        <TimelineDot />
+                      </div>
+
+                      <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
+                        <CardHeader className="p-4 sm:p-6 border-b border-border-subtle bg-surface-muted">
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                            <div className="min-w-0 space-y-3">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <Badge
+                                  variant="secondary"
+                                  className="rounded-[5px] font-medium"
+                                >
+                                  {entry.version}
+                                </Badge>
+
+                                <StatusPill status={entry.status} />
+                              </div>
+
+                              <div className="space-y-2">
+                                <h2 className="font-brand text-xl font-semibold tracking-tight">
+                                  {entry.title}
+                                </h2>
+
+                                <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                                  <span className="inline-flex items-center gap-1.5">
+                                    <Calendar
+                                      className="h-4 w-4 shrink-0"
+                                      aria-hidden="true"
+                                    />
+                                    <time dateTime={entry.dateISO}>
+                                      {entry.dateLabel}
+                                    </time>
+                                  </span>
+
+                                  <span className="inline-flex items-center gap-1.5">
+                                    <Tag
+                                      className="h-4 w-4 shrink-0"
+                                      aria-hidden="true"
+                                    />
+                                    {entry.releaseWeekLabel}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {entry.cta ? (
+                              <MarketingLinkButton variant="outline">
+                                <Link href={entry.cta.href}>
+                                  {entry.cta.label}
+                                  <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                              </MarketingLinkButton>
+                            ) : null}
+                          </div>
+                        </CardHeader>
+
+                        <CardContent className="space-y-6 p-4 sm:p-6">
+                          <p className="max-w-3xl text-pretty text-sm leading-7 text-muted-foreground sm:text-base">
+                            {entry.summary}
+                          </p>
+
+                          <div className="space-y-6">
+                            {entry.highlights.map((block) => (
+                              <div key={block.title} className="space-y-3">
+                                <h3 className="text-sm font-semibold tracking-tight">
+                                  {block.title}
+                                </h3>
+
+                                <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
+                                  {block.items.map((it) => (
+                                    <li key={it} className="flex gap-2">
+                                      <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                                      <span className="text-pretty">{it}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="border-t border-border-subtle pt-4">
+                            <p className="text-sm leading-7 text-muted-foreground">
+                              <span className="font-medium text-foreground">
+                                Strategy.
+                              </span>{" "}
+                              Weekly releases build trust. PyColors ships usable
+                              foundations, documents what is real, and keeps
+                              product direction grounded in roadmap and offer
+                              pages.
+                            </p>
+                          </div>
+
+                          <MarketingActionGroup>
+                            <MarketingLinkButton>
+                              <Link href="/docs/ui">
+                                Browse components
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </Link>
+                            </MarketingLinkButton>
+
+                            <MarketingLinkButton variant="outline">
+                              <Link href="/docs">Read docs</Link>
+                            </MarketingLinkButton>
+                          </MarketingActionGroup>
+                        </CardContent>
+                      </Card>
+                    </article>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">
+              Changelog entries reflect shipped work. Internal tasks, strategy
+              changes, and in-progress commercial scope may be grouped or
+              summarized.
+            </p>
+          </MarketingSectionShell>
+        </div>
+      </Container>
+    </main>
   );
 }

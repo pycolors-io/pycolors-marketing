@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import {
+  MarketingActionGroup,
+  MarketingCtaPanel,
+  MarketingLinkButton,
+} from "@/components/marketing/cta-panel";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import { MarketingStatCard } from "@/components/marketing/stat-card";
 import { Container } from "@/components/container";
-import { Badge, Button, Card, cn } from "@pycolors/ui";
+import { Badge, Card, cn } from "@pycolors/ui";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 
 export const metadata: Metadata = {
@@ -892,22 +906,14 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2 py-0.5 text-[11px] text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
 function RoadmapCard({ item }: { item: RoadmapItem }) {
   const body = (
     <Card className="h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 space-y-2">
-          <div className="text-sm font-medium text-foreground">
+          <h3 className="text-base font-semibold text-foreground">
             {item.title}
-          </div>
+          </h3>
 
           <p className="text-sm leading-7 text-muted-foreground">
             {item.description}
@@ -920,11 +926,11 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
       </div>
 
       {item.tags?.length ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <MarketingPillList className="mt-4">
           {item.tags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
+            <MarketingPill key={tag}>{tag}</MarketingPill>
           ))}
-        </div>
+        </MarketingPillList>
       ) : null}
     </Card>
   );
@@ -937,7 +943,7 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
         href={item.href}
         target="_blank"
         rel="noreferrer noopener"
-        className="block h-full"
+        className="block h-full rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
       >
         {body}
       </a>
@@ -945,7 +951,10 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
   }
 
   return (
-    <Link href={item.href} className="block h-full">
+    <Link
+      href={item.href}
+      className="block h-full rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+    >
       {body}
     </Link>
   );
@@ -974,247 +983,210 @@ export default function RoadmapPage() {
   const later = items.filter((item) => item.status === "Later").length;
 
   return (
-    <Container className="py-20 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Roadmap", href: "/roadmap" },
-            ]}
-          />
-        </div>
-
-        <header className="mx-auto w-full max-w-4xl text-center">
-          <div className="flex justify-center">
-            <Badge variant="secondary" className="gap-2 rounded-[5px]">
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-              Public roadmap
-            </Badge>
+    <main id="content" tabIndex={-1}>
+      <Container className="pb-10 pt-20 sm:pb-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Roadmap", href: "/roadmap" },
+              ]}
+            />
           </div>
 
-          <h1 className="font-brand mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-            Roadmap
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-            A release-driven view of PyColors work across UI foundations,
-            guides, patterns, Starter Free, Starter Pro, commercial delivery,
-            trust, and product clarity.
-          </p>
-
-          <p className="mx-auto mt-3 max-w-3xl text-balance text-xs leading-6 text-muted-foreground">
-            This roadmap reflects current product direction. It is not a
-            contractual delivery promise, and scope may evolve based on real
-            usage, feedback, bugs, and commercial priorities.
-          </p>
-
-          <div className="mt-7 grid gap-3 sm:grid-cols-4">
-            <Card className="rounded-[5px] border border-border-subtle bg-surface px-4 py-3 shadow-soft">
-              <div className="text-2xl font-semibold">{shipped}</div>
-              <div className="mt-1 text-xs text-muted-foreground">shipped</div>
-            </Card>
-
-            <Card className="rounded-[5px] border border-primary/25 bg-primary/5 px-4 py-3 shadow-soft">
-              <div className="text-2xl font-semibold">{now}</div>
-              <div className="mt-1 text-xs text-muted-foreground">now</div>
-            </Card>
-
-            <Card className="rounded-[5px] border border-border-subtle bg-surface px-4 py-3 shadow-soft">
-              <div className="text-2xl font-semibold">{next}</div>
-              <div className="mt-1 text-xs text-muted-foreground">next</div>
-            </Card>
-
-            <Card className="rounded-[5px] border border-border-subtle bg-surface px-4 py-3 shadow-soft">
-              <div className="text-2xl font-semibold">{later}</div>
-              <div className="mt-1 text-xs text-muted-foreground">later</div>
-            </Card>
-          </div>
-
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button asChild className="rounded-[5px]">
-              <Link href="/docs">Read the docs</Link>
-            </Button>
-
-            <Button asChild variant="outline" className="rounded-[5px]">
-              <Link href="/changelog">View changelog</Link>
-            </Button>
-
-            <Button asChild variant="outline" className="rounded-[5px]">
-              <Link href="/pricing">View pricing</Link>
-            </Button>
-          </div>
-        </header>
-
-        <section className="mt-14 grid gap-4 sm:grid-cols-3">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-            <div className="text-sm font-medium">Single thing</div>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              Ship the PyColors funnel: Guides → Blog → Patterns / Examples →
-              Starter Free → Starter Pro.
-            </p>
-          </Card>
-
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-            <div className="text-sm font-medium">Documentation-first</div>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              Every component, guide, article, and starter should help users
-              understand what to build, why it matters, and how to ship.
-            </p>
-          </Card>
-
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-            <div className="text-sm font-medium">Commercial readiness</div>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              Trust pages, pricing clarity, launch proof, delivery reliability,
-              analytics, docs depth, auth, and billing.
-            </p>
-          </Card>
-        </section>
-
-        <section className="mt-10">
-          <Card className="rounded-[5px] border border-primary/25 bg-primary/5 p-6 shadow-soft sm:p-7">
-            <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="space-y-3">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-primary/25 bg-background/60"
-                >
-                  How to read this roadmap
-                </Badge>
-
-                <h2 className="font-brand text-2xl font-semibold tracking-tight">
-                  Release-driven, not promise-driven.
-                </h2>
-              </div>
-
-              <div className="space-y-5">
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Shipped items reflect public work already released. Now
-                  reflects active cleanup and product priorities. Next and Later
-                  are used only when public scope is realistic enough to show.
+          <PageHero
+            variant="compact"
+            badges={[{ label: "Public roadmap", variant: "secondary" }]}
+            title="Roadmap"
+            description="A release-driven view of PyColors work across UI foundations, guides, patterns, Starter Free, Starter Pro, commercial delivery, trust, and product clarity."
+            actions={
+              <>
+                <MarketingLinkButton>
+                  <Link href="/docs">Read the docs</Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/changelog">View changelog</Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/pricing">View pricing</Link>
+                </MarketingLinkButton>
+              </>
+            }
+            extra={
+              <>
+                <p className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground">
+                  This roadmap reflects current product direction. It is not a
+                  contractual delivery promise, and scope may evolve based on
+                  real usage, feedback, bugs, and commercial priorities.
                 </p>
-
-                <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-5">
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="rounded-[5px]"
-                  >
-                    <Link href="/starters/free">Starter Free</Link>
-                  </Button>
-
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="rounded-[5px]"
-                  >
-                    <Link href="/starters/pro">Starter Pro</Link>
-                  </Button>
-
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="rounded-[5px]"
-                  >
-                    <Link href="/pricing">Pricing</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </section>
-
-        <section className="mt-12 space-y-12">
-          {milestones.map((milestone) => {
-            const list = byMilestone.get(milestone.id) ?? [];
-
-            return (
-              <div key={milestone.id} className="space-y-4">
-                <div className="flex flex-col gap-2 border-b border-border-subtle pb-4 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <h2 className="font-brand text-xl font-semibold tracking-tight">
-                      {milestone.title}
-                    </h2>
-
-                    <p className="mt-1 max-w-3xl text-sm leading-7 text-muted-foreground">
-                      {milestone.subtitle}
-                    </p>
-                  </div>
-
-                  <div className="text-xs text-muted-foreground">
-                    {list.length} item{list.length === 1 ? "" : "s"}
-                  </div>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {list.map((item) => (
-                    <RoadmapCard
-                      key={`${item.milestone}:${item.title}`}
-                      item={item}
+                <ul
+                  aria-label="Roadmap status totals"
+                  className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
+                >
+                  <li>
+                    <MarketingStatCard
+                      label="shipped"
+                      value={shipped}
+                      tone="success"
                     />
-                  ))}
+                  </li>
+                  <li>
+                    <MarketingStatCard label="now" value={now} />
+                  </li>
+                  <li>
+                    <MarketingStatCard label="next" value={next} />
+                  </li>
+                  <li>
+                    <MarketingStatCard label="later" value={later} />
+                  </li>
+                </ul>
+              </>
+            }
+          />
+
+          <MarketingSectionShell spacing="compact">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <MarketingFeatureCard
+                headingLevel={2}
+                title="Single thing"
+                description="Ship the PyColors funnel: Guides → Blog → Patterns / Examples → Starter Free → Starter Pro."
+              />
+
+              <MarketingFeatureCard
+                headingLevel={2}
+                title="Documentation-first"
+                description="Every component, guide, article, and starter should help users understand what to build, why it matters, and how to ship."
+              />
+
+              <MarketingFeatureCard
+                headingLevel={2}
+                title="Commercial readiness"
+                description="Trust pages, pricing clarity, launch proof, delivery reliability, analytics, docs depth, auth, and billing."
+              />
+            </div>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell spacing="compact">
+            <Card className="rounded-[5px] border border-primary/25 bg-primary/5 p-6 shadow-soft sm:p-7">
+              <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+                <div className="space-y-3">
+                  <Badge
+                    variant="outline"
+                    className="rounded-[5px] border-primary/25 bg-background/60"
+                  >
+                    How to read this roadmap
+                  </Badge>
+
+                  <h2 className="font-brand text-2xl font-semibold tracking-tight">
+                    Release-driven, not promise-driven.
+                  </h2>
+                </div>
+
+                <div className="space-y-5">
+                  <p className="text-sm leading-7 text-muted-foreground">
+                    Shipped items reflect public work already released. Now
+                    reflects active cleanup and product priorities. Next and
+                    Later are used only when public scope is realistic enough to
+                    show.
+                  </p>
+
+                  <MarketingActionGroup className="border-t border-border-subtle pt-5">
+                    <MarketingLinkButton variant="outline">
+                      <Link href="/starters/free">Starter Free</Link>
+                    </MarketingLinkButton>
+
+                    <MarketingLinkButton variant="outline">
+                      <Link href="/starters/pro">Starter Pro</Link>
+                    </MarketingLinkButton>
+
+                    <MarketingLinkButton variant="outline">
+                      <Link href="/pricing">Pricing</Link>
+                    </MarketingLinkButton>
+                  </MarketingActionGroup>
                 </div>
               </div>
-            );
-          })}
-        </section>
+            </Card>
+          </MarketingSectionShell>
 
-        <section className="mt-14">
-          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-6 shadow-medium sm:p-7">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-2">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-pro-border bg-pro-surface-muted"
-                >
-                  Have a request?
-                </Badge>
+          <MarketingSectionShell spacing="compact">
+            <div className="space-y-12">
+              {milestones.map((milestone) => {
+                const list = byMilestone.get(milestone.id) ?? [];
 
-                <h2 className="font-brand text-2xl font-semibold tracking-tight">
-                  Public feedback stays scoped and practical.
-                </h2>
-
-                <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                  For UI package bugs or documentation issues, use the public
-                  repository. Broader product direction stays selective and
-                  release-driven.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Button asChild variant="outline" className="rounded-[5px]">
-                  <a
-                    href="https://github.com/pycolors-io/pycolors-ui/issues"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Open UI issue
-                  </a>
-                </Button>
-
-                <Button asChild className="rounded-[5px]">
-                  <a
-                    href="https://github.com/pycolors-io/pycolors-ui"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    View UI repository
-                  </a>
-                </Button>
-              </div>
+                return (
+                  <div key={milestone.id} className="space-y-4">
+                    <MarketingSectionHeader
+                      align="left"
+                      title={milestone.title}
+                      description={milestone.subtitle}
+                      action={
+                        <span className="text-xs text-muted-foreground">
+                          {list.length} item{list.length === 1 ? "" : "s"}
+                        </span>
+                      }
+                    />
+                    <ul
+                      aria-label={milestone.title}
+                      className="grid gap-3 sm:grid-cols-2"
+                    >
+                      {list.map((item) => (
+                        <li key={`${item.milestone}:${item.title}`}>
+                          <RoadmapCard item={item} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
-          </Card>
+          </MarketingSectionShell>
 
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            Roadmap items may shift based on feedback, bugs, technical
-            constraints, and real-world usage.
-          </p>
-        </section>
-      </div>
-    </Container>
+          <MarketingSectionShell spacing="compact">
+            <div className="mb-4">
+              <Badge
+                variant="outline"
+                className="rounded-[5px] border-pro-border bg-pro-surface-muted"
+              >
+                Have a request?
+              </Badge>
+            </div>
+            <MarketingCtaPanel
+              title="Public feedback stays scoped and practical."
+              description="For UI package bugs or documentation issues, use the public repository. Broader product direction stays selective and release-driven."
+              actions={
+                <>
+                  <MarketingActionGroup>
+                    <MarketingLinkButton variant="outline">
+                      <a
+                        href="https://github.com/pycolors-io/pycolors-ui/issues"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Open UI issue
+                      </a>
+                    </MarketingLinkButton>
+                    <MarketingLinkButton>
+                      <a
+                        href="https://github.com/pycolors-io/pycolors-ui"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        View UI repository
+                      </a>
+                    </MarketingLinkButton>
+                  </MarketingActionGroup>
+                </>
+              }
+            />
+
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              Roadmap items may shift based on feedback, bugs, technical
+              constraints, and real-world usage.
+            </p>
+          </MarketingSectionShell>
+        </div>
+      </Container>
+    </main>
   );
 }
