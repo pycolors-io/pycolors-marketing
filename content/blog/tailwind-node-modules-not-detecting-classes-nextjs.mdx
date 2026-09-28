@@ -1,6 +1,6 @@
 ---
-title: "Tailwind Not Detecting Classes from node_modules? Fix for Next.js + UI Libraries"
-description: "Fix Tailwind CSS not applying styles from node_modules in Next.js. Learn how to configure content paths for UI libraries."
+title: "Tailwind v4 Not Styling Installed UI Components? Check Source Detection"
+description: "Fix missing Tailwind v4 utilities in a Next.js app using installed PyColors components, with verified source paths and a public-package reproduction."
 author: Patrice Parny
 date: "2026-03-17"
 category: Next.js
@@ -13,337 +13,306 @@ tags:
 featured: true
 readingTime: 8 min read
 cover: /seo/blog/og-blog-saas.png
-cta:
-  label: Get the production-ready starter
-  href: /starters
-  variant: free
 ---
 
-## How I Fixed Tailwind Not Detecting Classes from node_modules (Next.js + UI Libraries)
+If installed PyColors components render as plain content, check whether their
+utilities exist in the generated CSS. In the Tailwind v4 reproduction below,
+adding `@source` for the installed package fixes the missing styles. Installing
+the package and passing a production build are not enough.
 
-While building the **PyColors SaaS starter**, I ran into a frustrating problem.
+For `app/globals.css`, the complete stylesheet is:
 
-Everything looked perfect locally.
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+@source "../node_modules/@pycolors/ui/dist";
 
-My components rendered correctly, the layout worked, and Tailwind styles were applied.
+@custom-variant dark (&:where(.dark, .dark *));
 
-But after installing my UI library from npm, something strange happened.
-
-The components rendered… but **without styles**.
-
-Buttons looked like plain HTML.
-
-Cards lost their layout.
-
-The UI felt completely broken.
-
-If you're building a **Next.js app with Tailwind and a component library**, you might hit this issue too.
-
-In this article, I’ll explain:
-
-- why Tailwind removes styles from UI libraries
-- how to fix it properly
-- how this fits into a modern **monorepo + Vercel workflow**
-
-This is the exact setup used behind the **PyColors ecosystem**.
-
----
-
-## The Problem: Tailwind Removes Your UI Library Styles
-
-Let's say you install a component library:
-
-```bash
-npm install @pycolors/ui
-```
-
-Then you use a component:
-
-```tsx
-import { Button } from "@pycolors/ui";
-
-export default function Page() {
-  return <Button>Save</Button>;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 ```
 
-You expect a styled button.
+Already importing Tailwind and PyColors tokens? Add only the missing `@source`
+line. Keep the imports at the top; do not duplicate the token mappings.
 
-Instead, you see something like this:
+[Read the PyColors UI installation guide](/docs/ui/installation) for the
+canonical setup and requirements.
 
+_Revised September 28, 2026: verified against the public npm packages and
+production consumer described below. Original publication: March 17, 2026._
+
+## Use the path relative to your stylesheet
+
+The two tested layouts need different registrations:
+
+| Global stylesheet     | Source registration                               |
+| --------------------- | ------------------------------------------------- |
+| `app/globals.css`     | `@source "../node_modules/@pycolors/ui/dist";`    |
+| `src/app/globals.css` | `@source "../../node_modules/@pycolors/ui/dist";` |
+
+Tailwind v4 ignores `node_modules` during automatic detection. An explicit
+`@source` opts this package in; its path starts at the stylesheet, not the
+terminal's working directory. See [Tailwind's source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files).
+
+Use the installed package's `dist` directory for this npm consumer. A workspace
+that imports local source has a different location: resolve that location from
+its stylesheet. Scanning an entire monorepo or all of `node_modules` is unnecessary.
+
+## What the failing build actually showed
+
+The example uses the public `Card` and `Button` exports without adding their
+internal classes to the app. Both the failing and corrected versions passed
+TypeScript checking and a production build.
+
+| Condition                                      | Generated CSS                                       | Browser result                                                                                         |
+| ---------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Tokens loaded, no library registration         | No `.inline-flex`, `.bg-primary` or `.bg-card` rule | Link styled as a Button remains inline, transparent and unpadded                                       |
+| Wrong relative source path                     | Same missing rules                                  | Same unstyled components                                                                               |
+| Correct source path                            | All three rules present                             | Button uses `inline-flex`, a 36px height and 8px/16px padding; Button and Card have themed backgrounds |
+| Correct source, primary/card mappings disabled | Layout rule present; both background rules absent   | Button keeps its layout but both surfaces are transparent                                              |
+
+The source-path results were verified for **both stylesheet locations**. The
+last row is a separate negative control: the test resets only
+`--color-primary` and `--color-card` to `initial` inside `@theme`. It leaves the
+underlying CSS variables loaded. Do not add that reset to your application.
+
+These utilities were never generated in the missing-source case; they were
+not existing component styles that Tailwind subsequently removed. If the rule
+is present but crossed out in browser DevTools, inspect the cascade and
+competing CSS instead of adding more scan paths.
+
+## Reproduce with the tested public packages
+
+The consumer ran with Node **24.18.1**, pnpm **10.32.1**, Next.js **16.1.1**,
+React/React DOM **19.2.0**, Tailwind CSS and its PostCSS plugin **4.3.3**,
+PostCSS **8.5.28**, UI **1.5.4**, and tokens **1.2.3**. These are tested pins,
+not a promise about every compatible version.
+
+Create an empty directory **outside a monorepo** and add the files below. The
+[complete fixture and lockfile](https://github.com/pycolors-io/pycolors/tree/main/scripts/fixtures/ui-tailwind)
+freeze the transitive dependencies used by the regression check. For the same
+resolution, copy its `pnpm-lock.yaml` too and install frozen:
+
+```bash
+pnpm install --frozen-lockfile --ignore-scripts --prod=false
+pnpm types:check
+pnpm build
+pnpm start
 ```
-unstyled HTML button
+
+Without that lockfile, an initial `pnpm install --ignore-scripts --prod=false`
+resolves a new dependency tree; record it before comparing results. There are
+no workspace links, copied component implementations or package-manager swaps
+in this reproduction.
+
+```json title="package.json"
+{
+  "name": "pycolors-tailwind-consumer",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "build": "next build --webpack",
+    "types:check": "next typegen && tsc --noEmit",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@pycolors/ui": "1.5.4",
+    "@pycolors/tokens": "1.2.3",
+    "lucide-react": "1.47.0",
+    "next": "16.1.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "postcss": "8.5.28",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "6.0.3"
+  }
+}
 ```
 
-No colors.
-
-No spacing.
-
-No layout.
-
-At first glance it feels like the library is broken.
-
-But the real cause is **Tailwind’s purge system**.
-
----
-
-## Why Tailwind Removes Your Styles
-
-Tailwind CSS generates styles **only for classes it detects in your project**.
-
-It scans files defined in your `tailwind.config`:
-
-```ts
-content: [
-  "./app/**/*.{ts,tsx}",
-  "./components/**/*.{ts,tsx}",
-]
+```js title="postcss.config.mjs"
+export default { plugins: { "@tailwindcss/postcss": {} } };
 ```
 
-During the build, Tailwind:
+This is the Tailwind v4 PostCSS setup described in the
+[official Next.js framework guide](https://tailwindcss.com/docs/installation/framework-guides/nextjs).
+Use the `app/globals.css` shown at the start of this article, then add:
 
-1. scans those files
-2. collects all Tailwind class names
-3. generates CSS only for those classes
+```tsx title="app/layout.tsx"
+import type { ReactNode } from "react";
+import "./globals.css";
 
-Anything **not detected gets removed**.
-
-This keeps CSS bundles extremely small.
-
-But it creates a problem when using **component libraries**.
-
----
-
-## The Root Cause with UI Libraries
-
-Inside the PyColors UI library, a component might look like this:
-
-```tsx
-export function Button({ children }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <button className="inline-flex items-center rounded-md px-4 py-2 bg-primary text-white">
-      {children}
-    </button>
+    <html lang="en">
+      <body>{children}</body>
+    </html>
   );
 }
 ```
 
-These Tailwind classes exist **inside the library code**.
+```tsx title="app/page.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
 
-But your project’s Tailwind config scans only:
-
+export default function Page() {
+  return (
+    <main>
+      <Card>
+        <CardHeader>
+          <CardTitle>Installed components</CardTitle>
+          <CardDescription>
+            Check the package styles in your app.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild>
+            <a href="https://pycolors.io/docs/ui/usage-patterns">
+              Explore usage patterns
+            </a>
+          </Button>
+        </CardContent>
+      </Card>
+    </main>
+  );
+}
 ```
-app/
-components/
-```
 
-It **never scans the UI library files**.
-
-So Tailwind assumes those classes are unused.
-
-During the build it removes them.
-
-Result:
-
-```
-UI components render without styles
-```
-
----
-
-## The Correct Fix
-
-The fix is simple once you understand the cause.
-
-You must tell Tailwind to scan the **library files**.
-
-```ts
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  darkMode: "class",
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./node_modules/@pycolors/ui/dist/**/*.{js,mjs}",
-  ],
-  theme: {
-    extend: {},
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
   },
-  plugins: [],
-};
-
-export default config;
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
 ```
 
-Now Tailwind scans:
-
-```
-node_modules/@pycolors/ui/dist
+```ts title="css-imports.d.ts"
+declare module "*.css";
 ```
 
-It detects the classes inside your components.
-
-And the styles are generated correctly.
-
----
-
-## Why Scanning `dist` Is Better
-
-A common mistake is scanning the entire package:
-
-```
-node_modules/@pycolors/ui/**
+```text title=".gitignore"
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
 ```
 
-This works, but it's inefficient.
+The CSS declaration supports the side-effect stylesheet import with the tested
+TypeScript 6.0.3 setup. Keep `.next` out of source detection, and keep diagnostic
+scripts and expected class strings outside the consumer. Otherwise the test
+itself can accidentally make Tailwind generate the missing utilities.
 
-It forces Tailwind to scan:
+For the second layout, move the complete `app` directory into `src/app` and
+change only the source registration to the second path in the table. Rebuild
+from a clean `.next` directory. The regression runner does this independently
+for each condition.
 
-- documentation files
-- build scripts
-- metadata
-- unrelated code
+## Check production CSS, then the browser
 
-A better approach is scanning only the **compiled output**:
+Temporarily remove the `@source` line from the disposable example, build again,
+and inspect `.next/static/css`. Restore the correct line and rebuild. Search
+for `.inline-flex`, `.bg-primary` and `.bg-card` in the emitted CSS, not just in
+the component's DOM class attribute. All three should appear after the correction.
 
-```
-node_modules/@pycolors/ui/dist
-```
+Serve the production output with `pnpm start`. In DevTools, inspect the computed
+styles of `[data-slot="button"]` and `[data-slot="card"]`. For the corrected
+example, Chromium measured these background colors:
 
-Advantages:
+| Surface | Light                  | With `.dark` on the document root |
+| ------- | ---------------------- | --------------------------------- |
+| Button  | `oklch(0.49 0.23 292)` | `oklch(0.68 0.19 292)`            |
+| Card    | `oklch(0.99 0 0)`      | `oklch(0.19 0.008 285)`           |
 
-- faster Tailwind builds
-- smaller scan scope
-- predictable results
+Wait for color transitions to finish before measuring. Your application owns
+its existing theme selection; PyColors does not require a new provider.
+This check covers this composition's styles, not an accessibility certification.
 
----
+From a PyColors repository checkout with its dependencies installed, the
+explicit network integration check repeats all eight combinations:
 
-## Monorepo vs Published Package
-
-Another nuance appears when working with a **monorepo**.
-
-During development, the UI library might live inside the repository:
-
-```
-apps/
-  starter-free
-packages/
-  ui
-```
-
-In that case Tailwind should scan:
-
-```
-"../../packages/ui/src/**/*.{ts,tsx}"
+```bash
+pnpm --filter @pycolors/ui exec playwright install chromium
+pnpm test:ui-consumer
 ```
 
-But when the library is **installed from npm**, the correct path becomes:
+It installs the locked public dependencies in a temporary external project,
+checks generated selectors and Chromium styles, and requires the negative
+controls to fail the same styling assertion that the corrected cases pass.
+It uses the existing Playwright dependency and is separate from ordinary unit
+tests. The fixture README records its scope and observed results.
 
-```
-"./node_modules/@pycolors/ui/dist/**/*.{js,mjs}"
-```
+## Distinguish source detection from token setup
 
----
+The public `@pycolors/tokens/tokens.css` import already supplies the theme values
+and their Tailwind v4 semantic mappings. A `--primary` value alone does not
+define a `bg-primary` utility. The mapping and a detected class are both needed.
+Our separate negative control demonstrates this: layout survives, while the
+two intentionally unmapped background utilities disappear.
 
-## Another Issue I Ran Into: Vercel + pnpm
+Keep the supported import once, and remove conflicting theme resets rather
+than copying a second mapping layer. Continue with the
+[theming guide](/docs/ui/theming) or
+[semantic design tokens article](/blog/semantic-design-tokens-tailwind-v4)
+when the remaining problem is theme values rather than missing utilities.
 
-Stack:
+In your own components, write complete class names. Tailwind scans text; it
+does not evaluate strings such as `bg-${color}-500`. Map a prop to complete
+static alternatives instead. This follows the
+[official class detection guidance](https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names).
 
-```
-Next.js
-Tailwind CSS
-Turborepo
-pnpm
-Vercel
-```
+## A note for readers of the earlier Tailwind v3 recipe
 
-Problems:
+The earlier version of this article used `tailwind.config` content paths, a
+Tailwind v3 convention. Tailwind v4 does not automatically detect JavaScript
+configuration files; see the [upgrade guide](https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file).
+The tested PyColors setup here uses v4 CSS configuration. This reproduction
+does not establish compatibility of these package versions with Tailwind v3.
 
-```
-ERR_INVALID_THIS
-pnpm registry fetch failures
-lockfile mismatches
-```
+Package download failures, ESLint configuration and deployment logs are separate
+diagnostics. Changing from pnpm to npm does not supply a missing source path;
+this entire reproduction uses pnpm.
 
-Stable solution:
+## Final checks
 
-```
-Node.js 24
-npm install
-npm run build
-```
+- Resolve the narrow package source path from the actual stylesheet location.
+- Import the public tokens stylesheet once and preserve its semantic mappings.
+- Verify generated utilities in a fresh production build.
+- Inspect computed component styles in both themes; investigate overrides when rules exist.
+- Keep complete class names and avoid diagnostic files contaminating source detection.
 
-Even with pnpm locally, using **npm on Vercel** improved reliability.
-
----
-
-## ESLint Warning: Next.js Plugin Not Detected
-
-Error:
-
-```
-The Next.js plugin was not detected in your ESLint configuration
-```
-
-Fix:
-
-```ts
-import { config as nextConfig } from "@pycolors/eslint-config/next-js";
-
-export default [
-  ...nextConfig,
-];
-```
-
----
-
-## The Final Architecture
-
-```
-Next.js
-Tailwind CSS
-Turborepo
-Vercel
-UI component library
-Design tokens
-```
-
-Structure:
-
-```
-apps
- └ starter-free
-
-packages
- ├ ui
- ├ tokens
- ├ eslint-config
- └ typescript-config
-```
-
----
-
-## Try the PyColors SaaS Starter
-
-👉 https://pycolors.io/starters
-
-Includes:
-
-- Next.js App Router
-- Tailwind + tokens
-- SaaS dashboard
-- UI components
-- production-ready architecture
-
----
-
-## Final Thoughts
-
-Tailwind purge issues are common when integrating UI libraries.
-
-The fix:
-
-**Tailwind must scan the files where classes exist.**
-
-One small config change can save hours of debugging.
+[Read the PyColors UI installation guide](/docs/ui/installation), then use
+[UI usage patterns](/docs/ui/usage-patterns) to build the next screen.
