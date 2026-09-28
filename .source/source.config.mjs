@@ -36,7 +36,9 @@ var blogFrontmatterSchema = frontmatterSchema.extend({
     .object({
       label: z.string(),
       href: z.string(),
-      variant: z.enum(["free", "pro", "blocks"]).default("free"),
+      variant: z
+        .enum(["free", "pro", "blocks", "theme-builder"])
+        .default("free"),
     })
     .optional(),
 });

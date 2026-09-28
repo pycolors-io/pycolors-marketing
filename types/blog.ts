@@ -1,7 +1,8 @@
 export type BlogCTA = {
   label: string;
   href: string;
-  variant?: 'free' | 'pro' | 'blocks';
+  /** Omitted variants retain the legacy Starter Free presentation. */
+  variant?: "free" | "pro" | "blocks" | "theme-builder";
 };
 
 export type BlogPost = {
