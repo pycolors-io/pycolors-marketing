@@ -95,22 +95,22 @@ React/React DOM **19.2.0**, Tailwind CSS and its PostCSS plugin **4.3.3**,
 PostCSS **8.5.28**, UI **1.5.4**, and tokens **1.2.3**. These are tested pins,
 not a promise about every compatible version.
 
-Create an empty directory **outside a monorepo** and add the files below. The
-[complete fixture and lockfile](https://github.com/pycolors-io/pycolors/tree/main/scripts/fixtures/ui-tailwind)
-freeze the transitive dependencies used by the regression check. For the same
-resolution, copy its `pnpm-lock.yaml` too and install frozen:
+Create an empty directory **outside a monorepo** and add the files below.
+With Node 24 and pnpm 10.32.1 available, run:
 
 ```bash
-pnpm install --frozen-lockfile --ignore-scripts --prod=false
+pnpm install --ignore-scripts --prod=false
 pnpm types:check
 pnpm build
 pnpm start
 ```
 
-Without that lockfile, an initial `pnpm install --ignore-scripts --prod=false`
-resolves a new dependency tree; record it before comparing results. There are
-no workspace links, copied component implementations or package-manager swaps
-in this reproduction.
+The manifest pins every direct dependency. This first install resolves
+transitive dependencies and creates `pnpm-lock.yaml`; keep that file and use
+`pnpm install --frozen-lockfile --ignore-scripts --prod=false` for subsequent
+installs. A later first install can resolve different transitive versions, so
+record your lockfile when comparing results. No repository access, workspace
+links or copied component implementations are needed.
 
 ```json title="package.json"
 {
@@ -238,8 +238,8 @@ itself can accidentally make Tailwind generate the missing utilities.
 
 For the second layout, move the complete `app` directory into `src/app` and
 change only the source registration to the second path in the table. Rebuild
-from a clean `.next` directory. The regression runner does this independently
-for each condition.
+from a clean `.next` directory. Both layouts were tested with fresh production
+output for every condition.
 
 ## Check production CSS, then the browser
 
@@ -260,20 +260,6 @@ example, Chromium measured these background colors:
 Wait for color transitions to finish before measuring. Your application owns
 its existing theme selection; PyColors does not require a new provider.
 This check covers this composition's styles, not an accessibility certification.
-
-From a PyColors repository checkout with its dependencies installed, the
-explicit network integration check repeats all eight combinations:
-
-```bash
-pnpm --filter @pycolors/ui exec playwright install chromium
-pnpm test:ui-consumer
-```
-
-It installs the locked public dependencies in a temporary external project,
-checks generated selectors and Chromium styles, and requires the negative
-controls to fail the same styling assertion that the corrected cases pass.
-It uses the existing Playwright dependency and is separate from ordinary unit
-tests. The fixture README records its scope and observed results.
 
 ## Distinguish source detection from token setup
 
