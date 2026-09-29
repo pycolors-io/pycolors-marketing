@@ -23,6 +23,7 @@ import GuidesPage, {
 import { getAllPosts } from "@/lib/blog/utils";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { trackMoneyPathEvent } from "@/lib/analytics";
+import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import contracts from "./fixtures/editorial-discovery.json";
 
 const { getPages } = vi.hoisted(() => {
@@ -31,6 +32,9 @@ const { getPages } = vi.hoisted(() => {
 });
 vi.mock("@/lib/source", () => ({ blogSource: { getPages } }));
 vi.mock("@/lib/analytics", () => ({ trackMoneyPathEvent: vi.fn() }));
+vi.mock("@/lib/api/checkout-navigation", () => ({
+  navigateToCheckout: vi.fn(),
+}));
 
 // Deliberately unsorted, with four featured articles and a newer non-featured
 // article. Real loaders/cards must retain the limit and featured/latest overlap.
@@ -338,15 +342,23 @@ describe("editorial discovery", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ productSlug: "starter-pro" }),
+          signal: expect.any(AbortSignal),
         },
       );
       completeCheckout(
-        new Response(JSON.stringify({ url: "#controlled-checkout" }), {
-          status: 200,
-        }),
+        new Response(
+          JSON.stringify({
+            url: "https://checkout.example.com/controlled-checkout",
+          }),
+          {
+            status: 200,
+          },
+        ),
       );
       await waitFor(() =>
-        expect(window.location.hash).toBe("#controlled-checkout"),
+        expect(navigateToCheckout).toHaveBeenCalledExactlyOnceWith(
+          "https://checkout.example.com/controlled-checkout",
+        ),
       );
       expect(trackMoneyPathEvent).toHaveBeenCalledWith(
         expect.objectContaining({

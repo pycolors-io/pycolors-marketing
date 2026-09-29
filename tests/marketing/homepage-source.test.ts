@@ -24,10 +24,12 @@ const approved = new Set([
   "components/marketing/tones.ts",
   "components/pricing/buy-starter-pro-button.tsx",
   "components/pricing/checkout-failure-notice.tsx",
+  "components/pricing/use-product-checkout.ts",
   "components/privacy/consent-gated-gtm.tsx",
   "components/seo/json-ld.tsx",
   "lib/analytics.ts",
   "lib/api/client.ts",
+  "lib/api/checkout-navigation.ts",
   "lib/docs/ui-explorer.ts",
   "lib/products/public-catalog.ts",
   "lib/seo/breadcrumb.ts",
@@ -38,6 +40,7 @@ const external = new Set([
   "react",
   "next",
   "next/link",
+  "next/navigation",
   "next/script",
   "@pycolors/ui",
   "lucide-react",
@@ -118,6 +121,7 @@ describe("homepage ownership and source contract", () => {
     expect(clients.sort()).toEqual([
       "components/marketing/showcase/showcase-workspace.tsx",
       "components/pricing/buy-starter-pro-button.tsx",
+      "components/pricing/use-product-checkout.ts",
       "components/privacy/consent-gated-gtm.tsx",
     ]);
   });
