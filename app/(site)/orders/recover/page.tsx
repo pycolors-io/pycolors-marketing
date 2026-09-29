@@ -62,7 +62,7 @@ export default function RecoverOrderPage() {
   }
 
   return (
-    <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+    <main className="mx-auto mt-10 max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
           <div className="flex flex-wrap items-center gap-2">
@@ -88,7 +88,7 @@ export default function RecoverOrderPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-6 px-3 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.05fr_0.95fr]">
           <Card className="rounded-[28px] border-2 shadow-sm shadow-black/5">
             <CardHeader className="space-y-4">
               <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-muted/30">
