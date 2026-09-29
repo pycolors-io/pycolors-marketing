@@ -1,3 +1,5 @@
+import type { PublicProductSlug } from "@/lib/products/public-catalog";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 if (!API_BASE_URL) {
@@ -87,7 +89,10 @@ export function createStarterProCheckout(input?: { email?: string }) {
   });
 }
 
-export async function recoverCommerceAccess(input: { email: string }) {
+export async function recoverCommerceAccess(input: {
+  email: string;
+  productSlug?: PublicProductSlug;
+}) {
   const response = await fetch(`${API_BASE_URL}/api/v1/orders/recover`, {
     method: "POST",
     headers: {
@@ -109,5 +114,8 @@ export async function recoverCommerceAccess(input: { email: string }) {
  * Legacy helper kept for backward compatibility.
  */
 export function recoverStarterProAccess(input: { email: string }) {
-  return recoverCommerceAccess(input);
+  return recoverCommerceAccess({
+    email: input.email,
+    productSlug: "starter-pro",
+  });
 }

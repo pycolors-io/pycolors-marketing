@@ -14,9 +14,17 @@ import {
 } from "@pycolors/ui";
 
 import { recoverCommerceAccess } from "@/lib/api/client";
+import {
+  PRODUCT_DISPLAY,
+  type PublicProductSlug,
+} from "@/lib/products/public-catalog";
 import { trackMoneyPathEvent } from "@/lib/analytics";
 
 export default function RecoverOrderPage() {
+  const [productSlug, setProductSlug] = React.useState<PublicProductSlug | "">(
+    "",
+  );
+  const submitting = React.useRef(false);
   const [email, setEmail] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
@@ -32,12 +40,14 @@ export default function RecoverOrderPage() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting.current || !productSlug) return;
+    submitting.current = true;
 
     try {
       setIsLoading(true);
       setError(null);
 
-      await recoverCommerceAccess({ email });
+      await recoverCommerceAccess({ email, productSlug });
 
       setDone(true);
     } catch (err) {
@@ -46,6 +56,7 @@ export default function RecoverOrderPage() {
 
       setError(message);
     } finally {
+      submitting.current = false;
       setIsLoading(false);
     }
   }
@@ -72,8 +83,8 @@ export default function RecoverOrderPage() {
 
           <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
             Missing your claim email or using an expired access link? Request a
-            fresh link with the email used at checkout. No account or new
-            purchase is needed.
+            fresh link with the email used at checkout and select your product.
+            No account or new purchase is needed.
           </p>
         </div>
 
@@ -122,6 +133,40 @@ export default function RecoverOrderPage() {
                       placeholder="you@example.com"
                       size="lg"
                     />
+
+                    <div className="min-w-0 space-y-2">
+                      <label
+                        htmlFor="product"
+                        className="block text-sm font-medium"
+                      >
+                        Product
+                      </label>
+                      <select
+                        id="product"
+                        name="productSlug"
+                        required
+                        disabled={isLoading}
+                        value={productSlug}
+                        onChange={(event) => {
+                          const value = event.target.value;
+                          setProductSlug(
+                            Object.hasOwn(PRODUCT_DISPLAY, value)
+                              ? (value as PublicProductSlug)
+                              : "",
+                          );
+                        }}
+                        className="h-11 w-full min-w-0 max-w-full rounded-md border border-input bg-background px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+                      >
+                        <option value="" disabled>
+                          Select your product
+                        </option>
+                        {Object.values(PRODUCT_DISPLAY).map((product) => (
+                          <option key={product.slug} value={product.slug}>
+                            {product.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
                     <Button
                       type="submit"
@@ -196,9 +241,9 @@ export default function RecoverOrderPage() {
                 <div className="flex items-start gap-3">
                   <RefreshCcw className="mt-0.5 h-5 w-5 shrink-0" />
                   <p>
-                    Open the latest claim email and check the product name
-                    before downloading. If it points to a different purchase,
-                    contact support for the product you need.
+                    Choose the product you want to recover, then check its name
+                    in the new claim email before downloading. If you still need
+                    help, contact support before purchasing again.
                   </p>
                 </div>
               </CardContent>
