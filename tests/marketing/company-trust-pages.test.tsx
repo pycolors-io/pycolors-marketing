@@ -161,7 +161,7 @@ describe("company and trust pages", () => {
       screen.getByRole("list", { name: "Roadmap status totals" }),
     ).getAllByRole("listitem");
     expect(totals.map((n) => n.textContent)).toEqual([
-      "shipped73",
+      "shipped78",
       "now3",
       "next4",
       "later0",
@@ -177,12 +177,13 @@ describe("company and trust pages", () => {
       "July 2026",
       "August 2026",
       "September 2026",
+      "October 2026",
       "H1 2026",
     ];
     const rows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(rows).toHaveLength(80);
+    expect(rows).toHaveLength(85);
     expect(
       rows.map(
         (row) =>
@@ -323,6 +324,11 @@ const roadmapTitles = [
   "Pricing Plans Block",
   "Data Table empty-state actions",
   "PyColors Marketing v1.22.0",
+  "PyColors Marketing v1.26.0",
+  "Docs-based AI integration guidance",
+  "Content-first blog and guide discovery",
+  "Product-specific purchase recovery guidance",
+  "PyColors UI v1.5.5 baseline",
   "Reusable SaaS feature showcase system",
   "Upgrade Gate monetization patterns",
   "Starter Pro product-surface refinement",
@@ -342,6 +348,12 @@ const pendingRoadmap = [
   ["Documentation-to-product conversion loop", "Now"],
 ] as const;
 const releases = [
+  [
+    "v1.26.0",
+    "2026-10-02",
+    "PyColors Marketing v1.26.0: practical integration guidance and clearer product journeys",
+    "/docs",
+  ],
   [
     "v1.25.0",
     "2026-09-25",

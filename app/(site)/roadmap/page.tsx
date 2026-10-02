@@ -58,6 +58,7 @@ type Milestone =
   | "Jul 2026"
   | "Aug 2026"
   | "Sep 2026"
+  | "Oct 2026"
   | "H1 2026";
 
 type RoadmapItem = {
@@ -164,6 +165,12 @@ const milestones: Array<{
       "The 25 September 2026 PyColors Marketing v1.25.0 update strengthens product proof, purchase and recovery guidance, live UI evaluation, and the showcase-first homepage journey.",
   },
   {
+    id: "Oct 2026",
+    title: "October 2026",
+    subtitle:
+      "PyColors Marketing v1.26.0, released on 2 October 2026, brings practical integration guidance and clearer product journeys.",
+  },
+  {
     id: "H1 2026",
     title: "H1 2026",
     subtitle:
@@ -172,6 +179,46 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.26.0",
+    description:
+      "Released on 2 October 2026 with public AI integration guidance, clearer content discovery and purchase-recovery feedback.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    href: "/changelog",
+  },
+  {
+    title: "Docs-based AI integration guidance",
+    description:
+      "Use public PyColors guides with a coding agent today. Agent Context remains a Pilot; public Registry delivery and packaged skill evaluation are separate work.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    href: "/docs/registry/agent-context",
+  },
+  {
+    title: "Content-first blog and guide discovery",
+    description:
+      "Browse resources before supporting product sections, and follow article actions that describe their destinations.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    href: "/guides",
+  },
+  {
+    title: "Product-specific purchase recovery guidance",
+    description:
+      "Select the product you need and follow conditional confirmation, retry and support guidance.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    href: "/orders/recover",
+  },
+  {
+    title: "PyColors UI v1.5.5 baseline",
+    description:
+      "The displayed PyColors UI baseline is v1.5.5; PyColors Tokens remains v1.2.3. No additional package version is introduced by this Marketing release.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    href: "/docs/ui",
+  },
   {
     title: "PyColors Marketing v1.25.0",
     description:

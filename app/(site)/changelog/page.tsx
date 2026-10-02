@@ -58,6 +58,58 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.26.0",
+    title:
+      "PyColors Marketing v1.26.0: practical integration guidance and clearer product journeys",
+    dateLabel: "Fri 2 Oct 2026",
+    dateISO: "2026-10-02",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary:
+      "This update makes PyColors easier to explore and apply: practical guidance for AI coding agents, clearer article and guide discovery, and more useful checkout and purchase-recovery feedback.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Blog and Guides now lead with their resources, while article actions describe their destinations and remain readable on small screens.",
+          "Company and product-history pages use consistent introductions and clearer layouts.",
+          "Checkout restores an actionable button after interrupted attempts. Purchase recovery lets buyers select the product they need.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Agent Context documentation explains how to share public PyColors guides with a coding agent today. The optional context file remains a Pilot; this release does not announce public Registry delivery or a packaged agent skill.",
+          "Expanded semantic-token guidance and styling troubleshooting with reproducible consumer examples. The email-verification tutorial now explains its example and deployment limits more precisely.",
+          "The displayed package baseline advances to PyColors UI v1.5.5, with PyColors Tokens v1.2.3 unchanged. Both are already-versioned package baselines; this Marketing release does not re-version them.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Purchase feedback keeps unconfirmed checkout states distinct from confirmed payment information, with recovery and support paths available.",
+          "Recovery guidance keeps confirmation conditional and offers deliberate retry and support when needed.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Use the public integration guides with your coding agent, reproduce the documented UI examples, and check the result in your own application. Agent guidance does not guarantee correct output.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Evaluate the shipped pages, component examples and documented implementation choices. The release makes no claim about measured conversion gains or model-response quality.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Explore the documentation",
+      href: "/docs",
+    },
+  },
+  {
     version: "v1.25.0",
     title:
       "PyColors Marketing v1.25.0: clearer product proof and purchase guidance",
