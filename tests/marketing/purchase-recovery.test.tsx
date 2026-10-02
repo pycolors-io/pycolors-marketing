@@ -7,6 +7,8 @@ import { recoverCommerceAccess } from "@/lib/api/client";
 
 vi.mock("@/lib/api/client", () => ({
   recoverCommerceAccess: vi.fn(),
+  RECOVERY_FAILURE_MESSAGE:
+    "Unable to request your access link. Please try again or contact support.",
 }));
 
 vi.mock("@/lib/analytics", () => ({
@@ -34,7 +36,7 @@ describe("Purchase recovery guidance", () => {
   });
 
   it("submits the selected NA-AI product with the same neutral confirmation", async () => {
-    vi.mocked(recoverCommerceAccess).mockResolvedValue(null);
+    vi.mocked(recoverCommerceAccess).mockResolvedValue({ ok: true });
     render(<RecoverOrderPage />);
     submitRecovery("na-ai-landing");
     expect(await screen.findByRole("status")).toHaveTextContent(
@@ -80,7 +82,7 @@ describe("Purchase recovery guidance", () => {
     vi.mocked(recoverCommerceAccess).mockImplementation(
       () =>
         new Promise((resolve) => {
-          finishRequest = () => resolve(null);
+          finishRequest = () => resolve({ ok: true });
         }),
     );
     const { container } = render(<RecoverOrderPage />);
@@ -112,13 +114,14 @@ describe("Purchase recovery guidance", () => {
 
   it("announces a failed request, preserves the email, and allows a retry", async () => {
     vi.mocked(recoverCommerceAccess)
-      .mockRejectedValueOnce(new Error("Unable to recover order access."))
-      .mockResolvedValueOnce(null);
+      .mockRejectedValueOnce(new Error("synthetic-private-detail"))
+      .mockResolvedValueOnce({ ok: true });
     const { container } = render(<RecoverOrderPage />);
 
     submitRecovery();
     const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent("Unable to recover order access.");
+    expect(alert).toHaveTextContent("Unable to request your access link.");
+    expect(alert.textContent?.includes("synthetic-private-detail")).toBe(false);
     expect(alert).toHaveTextContent(
       "contact support before making another purchase",
     );

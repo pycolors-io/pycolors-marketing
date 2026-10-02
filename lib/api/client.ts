@@ -6,14 +6,6 @@ if (!API_BASE_URL) {
   throw new Error("Missing NEXT_PUBLIC_API_BASE_URL.");
 }
 
-type ApiErrorResponse = {
-  error?: string;
-};
-
-async function parseJson<T>(response: Response): Promise<T | null> {
-  return (await response.json().catch(() => null)) as T | null;
-}
-
 // Initial UX bound, not a payment cancellation guarantee or measured SLA.
 export const CHECKOUT_TIMEOUT_MS = 30_000;
 
@@ -89,25 +81,36 @@ export function createStarterProCheckout(input?: { email?: string }) {
   });
 }
 
+export const RECOVERY_FAILURE_MESSAGE =
+  "Unable to request your access link. Please try again or contact support.";
+
 export async function recoverCommerceAccess(input: {
   email: string;
   productSlug?: PublicProductSlug;
-}) {
-  const response = await fetch(`${API_BASE_URL}/api/v1/orders/recover`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input),
-  });
-
-  const data = await parseJson<ApiErrorResponse>(response);
-
-  if (!response.ok) {
-    throw new Error(data?.error ?? "Unable to recover order access.");
+}): Promise<{ ok: true }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/orders/recover`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    });
+    const data: unknown = await response.json();
+    if (
+      !response.ok ||
+      typeof data !== "object" ||
+      data === null ||
+      Array.isArray(data) ||
+      Object.keys(data).length !== 1 ||
+      !("ok" in data) ||
+      data.ok !== true
+    ) {
+      throw new Error(RECOVERY_FAILURE_MESSAGE);
+    }
+    return { ok: true };
+  } catch {
+    // Old API responses and transport exceptions are untrusted too.
+    throw new Error(RECOVERY_FAILURE_MESSAGE);
   }
-
-  return data;
 }
 
 /**

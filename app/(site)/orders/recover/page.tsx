@@ -13,7 +13,10 @@ import {
   Input,
 } from "@pycolors/ui";
 
-import { recoverCommerceAccess } from "@/lib/api/client";
+import {
+  recoverCommerceAccess,
+  RECOVERY_FAILURE_MESSAGE,
+} from "@/lib/api/client";
 import {
   PRODUCT_DISPLAY,
   type PublicProductSlug,
@@ -50,11 +53,8 @@ export default function RecoverOrderPage() {
       await recoverCommerceAccess({ email, productSlug });
 
       setDone(true);
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Unable to resend access link.";
-
-      setError(message);
+    } catch {
+      setError(RECOVERY_FAILURE_MESSAGE);
     } finally {
       submitting.current = false;
       setIsLoading(false);
