@@ -5,15 +5,15 @@ import { axe } from "vitest-axe";
 import CheckoutCancelPage from "../../app/(site)/checkout/cancel/page";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
-import {
-  createCheckoutSession,
-  createStarterProCheckout,
-} from "@/lib/api/client";
+import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import { trackMoneyPathEvent } from "@/lib/analytics";
 
-vi.mock("@/lib/api/client", () => ({
-  createCheckoutSession: vi.fn(),
-  createStarterProCheckout: vi.fn(),
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_API_BASE_URL = "https://api.example.com";
+});
+vi.mock("next/navigation", () => ({ usePathname: () => "/pricing" }));
+vi.mock("@/lib/api/checkout-navigation", () => ({
+  navigateToCheckout: vi.fn(),
 }));
 
 vi.mock("@/lib/analytics", () => ({
@@ -63,7 +63,6 @@ const checkoutCases = [
     name: "Starter Pro",
     productSlug: "starter-pro",
     renderButton: () => <BuyStarterProButton />,
-    request: vi.mocked(createStarterProCheckout),
   },
   {
     name: "template",
@@ -71,17 +70,17 @@ const checkoutCases = [
     renderButton: () => (
       <BuyProductButton productSlug="na-ai-landing" label="Buy template" />
     ),
-    request: vi.mocked(createCheckoutSession),
   },
 ];
 
 describe.each(checkoutCases)(
   "$name checkout",
-  ({ renderButton, request, productSlug }) => {
+  ({ renderButton, productSlug }) => {
+    const request = () => vi.mocked(fetch);
     it.each([new Error("Internal provider diagnostic"), "Network unavailable"])(
       "announces a safe failure and offers support: %s",
       async (failure) => {
-        request.mockRejectedValueOnce(failure);
+        request().mockRejectedValueOnce(failure);
         const { container } = render(renderButton());
 
         fireEvent.click(screen.getByRole("button"));
@@ -106,11 +105,11 @@ describe.each(checkoutCases)(
     );
 
     it("allows a deliberate retry and preserves successful checkout navigation", async () => {
-      let completeCheckout!: (url: string) => void;
-      request.mockRejectedValueOnce(new Error("Temporary failure"));
-      request.mockImplementationOnce(
+      let completeCheckout!: (response: Response) => void;
+      request().mockRejectedValueOnce(new Error("Temporary failure"));
+      request().mockImplementationOnce(
         () =>
-          new Promise<string>((resolve) => {
+          new Promise<Response>((resolve) => {
             completeCheckout = resolve;
           }),
       );
@@ -123,12 +122,16 @@ describe.each(checkoutCases)(
       expect(screen.getByRole("button")).toBeDisabled();
       expect(screen.getByRole("button")).toHaveAttribute("aria-busy", "true");
       fireEvent.click(screen.getByRole("button"));
-      expect(request).toHaveBeenCalledTimes(2);
+      expect(fetch).toHaveBeenCalledTimes(2);
 
-      // A same-document destination exercises navigation without leaving jsdom.
-      completeCheckout("#checkout-test-destination");
+      // Only the browser navigation boundary is mocked.
+      completeCheckout(
+        Response.json({ url: "https://checkout.example.com/pay" }),
+      );
       await waitFor(() =>
-        expect(window.location.hash).toBe("#checkout-test-destination"),
+        expect(navigateToCheckout).toHaveBeenCalledWith(
+          "https://checkout.example.com/pay",
+        ),
       );
       expect(screen.queryByRole("alert")).toBeNull();
       expect(trackMoneyPathEvent).toHaveBeenCalledWith(
