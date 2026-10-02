@@ -27,7 +27,7 @@ const checkoutSessionSchema = z.object({
     paymentStatus: z.enum(["paid", "unpaid", "no_payment_required"]).nullable(),
     productSlug: z.string().nullable(),
     productName: z.string().min(1),
-    customerEmail: z.string().nullable(),
+    // Zod strips unknown fields, including emails from older API versions.
     amountTotal: z.number().int().nonnegative(),
     currency: z.string().regex(/^[a-z]{3}$/i),
   }),
@@ -143,7 +143,20 @@ async function getCheckoutSession(
 
     if (!response.ok) return null;
 
-    const result = checkoutSessionSchema.safeParse(await response.json());
+    const result = await response.json().then((payload: unknown) => {
+      // Development RSC diagnostics can retain the decoded JSON by reference.
+      // Erase the legacy field there too, before projecting the public summary.
+      if (
+        payload !== null &&
+        typeof payload === "object" &&
+        "session" in payload &&
+        payload.session !== null &&
+        typeof payload.session === "object"
+      ) {
+        Reflect.deleteProperty(payload.session, "customerEmail");
+      }
+      return checkoutSessionSchema.safeParse(payload);
+    });
 
     return result.success && result.data.session.id === sessionId
       ? result.data
@@ -233,8 +246,7 @@ export default async function CheckoutSuccessPage({
   }
 
   const shortReference = formatSessionReference(result.session.id);
-  const { productName, productSlug, customerEmail, amountTotal, currency } =
-    result.session;
+  const { productName, productSlug, amountTotal, currency } = result.session;
   const amountLabel = formatAmount(amountTotal, currency);
 
   const docsHref = getProductDocsHref(productSlug);
@@ -334,11 +346,7 @@ export default async function CheckoutSuccessPage({
                   role="status"
                 >
                   <Mail className="mr-2 h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 break-all">
-                    {customerEmail
-                      ? `Check your inbox · ${customerEmail}`
-                      : "Check your inbox"}
-                  </span>
+                  <span className="min-w-0 break-words">Check your inbox</span>
                 </div>
 
                 <Button
@@ -407,16 +415,6 @@ export default async function CheckoutSuccessPage({
 
                     <span className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
                       {amountLabel}
-                    </span>
-                  </div>
-                ) : null}
-
-                {customerEmail ? (
-                  <div className="flex items-start justify-between gap-4">
-                    <span>Customer</span>
-
-                    <span className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
-                      {customerEmail}
                     </span>
                   </div>
                 ) : null}

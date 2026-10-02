@@ -1,4 +1,10 @@
 {
   "title": "Registry",
-  "pages": ["index", "installation", "updates", "troubleshooting"]
+  "pages": [
+    "index",
+    "installation",
+    "updates",
+    "agent-context",
+    "troubleshooting"
+  ]
 }

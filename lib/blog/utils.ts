@@ -1,21 +1,17 @@
-import { blogSource } from '@/lib/source';
-import type { BlogCTA, BlogPost } from '@/types/blog';
-
-function isBlogVariant(value: unknown): value is BlogCTA['variant'] {
-  return value === 'free' || value === 'pro' || value === 'blocks';
-}
+import { blogSource } from "@/lib/source";
+import type { BlogPost } from "@/types/blog";
 
 function normalizeTags(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
 
   return value
-    .filter((item): item is string => typeof item === 'string')
+    .filter((item): item is string => typeof item === "string")
     .map((item) => item.trim())
     .filter(Boolean);
 }
 
 export function normalizeTaxonomy(value: string) {
-  return value.trim().toLowerCase().replace(/\s+/g, '-');
+  return value.trim().toLowerCase().replace(/\s+/g, "-");
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -27,47 +23,30 @@ export function getAllPosts(): BlogPost[] {
 
       if (!slug || !title) return null;
 
-      const ctaData = page.data.cta;
       const tags = normalizeTags(page.data.tags);
 
       return {
         slug,
         url: page.url,
         title,
-        description: String(page.data.description ?? ''),
-        author: String(page.data.author ?? ''),
-        category: String(page.data.category ?? '').trim(),
+        description: String(page.data.description ?? ""),
+        author: String(page.data.author ?? ""),
+        category: String(page.data.category ?? "").trim(),
         tags,
-        date: String(page.data.date ?? ''),
+        date: String(page.data.date ?? ""),
         featured: Boolean(page.data.featured),
         readingTime:
-          typeof page.data.readingTime === 'string'
+          typeof page.data.readingTime === "string"
             ? page.data.readingTime
             : undefined,
         cover:
-          typeof page.data.cover === 'string'
-            ? page.data.cover
-            : undefined,
-        cta:
-          ctaData &&
-          typeof ctaData === 'object' &&
-          'label' in ctaData &&
-          'href' in ctaData
-            ? {
-                label: String(ctaData.label),
-                href: String(ctaData.href),
-                variant: isBlogVariant(ctaData.variant)
-                  ? ctaData.variant
-                  : undefined,
-              }
-            : undefined,
+          typeof page.data.cover === "string" ? page.data.cover : undefined,
+        // The frontmatter schema validates variants before the source is loaded.
+        cta: page.data.cta,
       };
     })
     .filter((post): post is BlogPost => post !== null)
-    .sort(
-      (a, b) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostBySlug(slug: string) {
@@ -145,8 +124,7 @@ export function getRelatedPosts(slug: string, limit = 3): BlogPost[] {
       let score = 0;
 
       if (
-        normalizeTaxonomy(post.category) ===
-        normalizeTaxonomy(current.category)
+        normalizeTaxonomy(post.category) === normalizeTaxonomy(current.category)
       ) {
         score += 3;
       }
@@ -170,9 +148,9 @@ export function getRelatedPosts(slug: string, limit = 3): BlogPost[] {
     .map((item) => item.post);
 }
 
-export function formatDate(date: string, locale = 'en-US') {
+export function formatDate(date: string, locale = "en-US") {
   return new Intl.DateTimeFormat(locale, {
-    dateStyle: 'long',
+    dateStyle: "long",
   }).format(new Date(date));
 }
 

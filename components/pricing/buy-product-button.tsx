@@ -1,13 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 
 import { Button, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
-import { createCheckoutSession } from "@/lib/api/client";
-import { trackMoneyPathEvent } from "@/lib/analytics";
+import { useProductCheckout } from "./use-product-checkout";
 
 import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
@@ -36,50 +34,16 @@ export function BuyProductButton({
   showTrustText = false,
   customerEmail,
 }: Readonly<BuyProductButtonProps>) {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
   const productName =
     productSlug in PRODUCT_DISPLAY
       ? PRODUCT_DISPLAY[productSlug as keyof typeof PRODUCT_DISPLAY].name
       : null;
 
-  async function handleBuy() {
-    try {
-      trackMoneyPathEvent({
-        event: "buy_clicked",
-        productSlug,
-        productName,
-        page: globalThis.location.pathname,
-      });
-      setIsLoading(true);
-      setHasError(false);
-
-      const url = await createCheckoutSession({
-        productSlug,
-        email: customerEmail,
-      });
-
-      trackMoneyPathEvent({
-        event: "checkout_redirect_started",
-        productSlug,
-        productName,
-        page: globalThis.location.pathname,
-      });
-
-      window.location.href = url;
-    } catch {
-      trackMoneyPathEvent({
-        event: "checkout_redirect_failed",
-        productSlug,
-        productName,
-        page: globalThis.location.pathname,
-        status: "error",
-      });
-
-      setHasError(true);
-      setIsLoading(false);
-    }
-  }
+  const { handleBuy, isLoading, hasError } = useProductCheckout({
+    productSlug,
+    productName,
+    email: customerEmail,
+  });
 
   return (
     <div className={cn("space-y-2", fullWidth && "w-full")}>
@@ -90,7 +54,7 @@ export function BuyProductButton({
         size={size}
         variant={variant}
         className={cn(
-          "group h-11 rounded-[5px] px-6 text-sm font-medium transition-all duration-200 cursor-pointer",
+          "group h-auto min-h-11 max-w-full whitespace-normal rounded-[5px] px-6 py-2 text-sm font-medium transition-all duration-200 cursor-pointer",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           fullWidth && "w-full",
           variant === "default" && [

@@ -1,44 +1,53 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  BookOpen,
-  Layers3,
-  Sparkles,
-} from 'lucide-react';
+import Link from "next/link";
+import type { Metadata } from "next";
+import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
-import { Container } from '@/components/container';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { PageHero } from '@/components/marketing/page-hero';
+import { Badge, Button } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { Container } from "@/components/container";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { PageHero } from "@/components/marketing/page-hero";
+
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import {
+  MarketingActionGroup,
+  MarketingCtaPanel,
+  MarketingLinkButton,
+} from "@/components/marketing/cta-panel";
+import { MarketingResourceCard } from "@/components/marketing/resource-card";
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Architecture Guides',
+  title: "Next.js SaaS Architecture Guides",
   description:
-    'Guides for building modern Next.js SaaS products with stronger architecture, authentication systems, billing flows, admin panels, UI patterns, and production-ready product foundations.',
+    "Guides for building modern Next.js SaaS products with stronger architecture, authentication systems, billing flows, admin panels, UI patterns, and production-ready product foundations.",
   alternates: {
-    canonical: '/guides',
+    canonical: "/guides",
   },
 
   openGraph: {
-    title: 'Next.js SaaS Architecture Guides',
+    title: "Next.js SaaS Architecture Guides",
     description:
-      'Learn how modern SaaS products are structured across dashboards, authentication, billing systems, admin workflows, product UX, and production-ready Next.js architecture.',
-    url: '/guides',
-    images: ['/seo/og-main.png'],
+      "Learn how modern SaaS products are structured across dashboards, authentication, billing systems, admin workflows, product UX, and production-ready Next.js architecture.",
+    url: "/guides",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js SaaS Architecture Guides',
+    card: "summary_large_image",
+    title: "Next.js SaaS Architecture Guides",
     description:
-      'Guides for SaaS architecture, billing, authentication, UI systems, and modern Next.js product engineering.',
-    images: ['/seo/twitter-main.png'],
+      "Guides for SaaS architecture, billing, authentication, UI systems, and modern Next.js product engineering.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
-const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 type Guide = {
   title: string;
@@ -49,442 +58,273 @@ type Guide = {
 
 const guides: Guide[] = [
   {
-    title: 'What a production-ready SaaS starter should include',
+    title: "What a production-ready SaaS starter should include",
     description:
-      'The essential product surfaces and foundations that make a SaaS starter genuinely useful, without unnecessary complexity.',
-    href: '/guides/production-ready-saas-starter',
-    category: 'Foundations',
+      "The essential product surfaces and foundations that make a SaaS starter genuinely useful, without unnecessary complexity.",
+    href: "/guides/production-ready-saas-starter",
+    category: "Foundations",
   },
   {
-    title: 'How to build a production-ready SaaS with Next.js',
+    title: "How to build a production-ready SaaS with Next.js",
     description:
-      'Architecture, product surface, authentication, billing, and deployment basics.',
-    href: '/guides/build-saas-nextjs',
-    category: 'Foundations',
+      "Architecture, product surface, authentication, billing, and deployment basics.",
+    href: "/guides/build-saas-nextjs",
+    category: "Foundations",
   },
   {
-    title: 'Why PWA foundations matter for modern SaaS',
+    title: "Why PWA foundations matter for modern SaaS",
     description:
-      'Installability, standalone mode, offline resilience, and app-like UX patterns for modern SaaS products.',
-    href: '/guides/pwa-for-saas',
-    category: 'PWA',
+      "Installability, standalone mode, offline resilience, and app-like UX patterns for modern SaaS products.",
+    href: "/guides/pwa-for-saas",
+    category: "PWA",
   },
   {
-    title: 'SaaS dashboard design patterns',
+    title: "SaaS dashboard design patterns",
     description:
-      'How modern SaaS dashboards are structured: KPIs, activity feeds, hierarchy, and actions.',
-    href: '/guides/saas-dashboard-design',
-    category: 'Product UX',
+      "How modern SaaS dashboards are structured: KPIs, activity feeds, hierarchy, and actions.",
+    href: "/guides/saas-dashboard-design",
+    category: "Product UX",
   },
   {
-    title: 'Authentication flows for SaaS',
+    title: "Authentication flows for SaaS",
     description:
-      'Login, register, password reset, OAuth, sessions, and protected product access.',
-    href: '/guides/saas-auth-flows',
-    category: 'Auth',
+      "Login, register, password reset, OAuth, sessions, and protected product access.",
+    href: "/guides/saas-auth-flows",
+    category: "Auth",
   },
   {
-    title: 'SaaS billing UX best practices',
+    title: "SaaS billing UX best practices",
     description:
-      'Plans, usage metrics, invoices, upgrade flows, and billing trust patterns.',
-    href: '/guides/saas-billing-ux',
-    category: 'Billing',
+      "Plans, usage metrics, invoices, upgrade flows, and billing trust patterns.",
+    href: "/guides/saas-billing-ux",
+    category: "Billing",
   },
   {
-    title: 'Team & organization systems',
+    title: "Team & organization systems",
     description:
-      'How SaaS products structure organizations, members, roles, invitations, and collaboration.',
-    href: '/guides/saas-organizations',
-    category: 'B2B',
+      "How SaaS products structure organizations, members, roles, invitations, and collaboration.",
+    href: "/guides/saas-organizations",
+    category: "B2B",
   },
   {
-    title: 'Admin panels for SaaS products',
+    title: "Admin panels for SaaS products",
     description:
-      'Moderation tools, operational queues, audit logs, roles, and admin workflows.',
-    href: '/guides/saas-admin-panels',
-    category: 'Operations',
+      "Moderation tools, operational queues, audit logs, roles, and admin workflows.",
+    href: "/guides/saas-admin-panels",
+    category: "Operations",
   },
 ];
 
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-xs text-muted-foreground">
-      {children}
-    </span>
-  );
-}
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-  action,
-  align = 'left',
-}: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
-  align?: 'left' | 'center';
-}) {
-  return (
-    <div
-      className={cn(
-        'mb-8 space-y-3',
-        align === 'center'
-          ? 'mx-auto max-w-3xl text-center'
-          : 'flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between',
-      )}
-    >
-      <div className="space-y-3">
-        {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="rounded-[5px] border-border-subtle bg-surface-muted px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-          >
-            {eyebrow}
-          </Badge>
-        ) : null}
-
-        <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      {align === 'left' && action ? (
-        <div className="sm:self-start">{action}</div>
-      ) : null}
-    </div>
-  );
-}
-
-function GuideCard({ title, description, href, category }: Guide) {
-  return (
-    <Card className="flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border">
-      <CardContent className="p-6">
-        <div className="flex h-full flex-col justify-between">
-          <div className="space-y-4">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-border-subtle bg-surface-muted text-xs"
-            >
-              {category}
-            </Badge>
-
-            <div className="space-y-2">
-              <h3 className="text-base font-semibold tracking-tight">
-                {title}
-              </h3>
-
-              <p className="text-sm leading-7 text-muted-foreground">
-                {description}
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Button
-              asChild
-              size="sm"
-              variant="outline"
-              className="w-full rounded-[5px]"
-            >
-              <Link href={href}>
-                Read guide
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 export default function GuidesPage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <PageHero
-          badges={[
-            {
-              label: 'Guides',
-              variant: 'secondary',
-              icon: (
-                <BookOpen
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
+    <main id="content" tabIndex={-1}>
+      <Container className="pb-16 pt-24">
+        <div className="mx-auto max-w-6xl">
+          <PageHero
+            variant="compact"
+            align="left"
+            maxWidth="5xl"
+            contentClassName="mx-0"
+            badges={[
+              {
+                label: "Guides",
+                variant: "secondary",
+                icon: <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />,
+              },
+              { label: "SaaS knowledge base", variant: "outline" },
+              {
+                label: "Product-first",
+                variant: "outline",
+                icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
+              },
+            ]}
+            title="SaaS building guides for developers."
+            description="Learn how stronger SaaS products are structured before you build them."
+            actions={
+              <MarketingLinkButton variant="outline">
+                <Link href="#browse-guides">Browse guides</Link>
+              </MarketingLinkButton>
+            }
+          />
+
+          <MarketingSectionShell
+            id="browse-guides"
+            aria-labelledby="guides-title"
+            spacing="compact"
+            className="scroll-mt-20"
+          >
+            <MarketingSectionHeader
+              titleId="guides-title"
+              align="left"
+              eyebrow="Browse guides"
+              title="Focused guides for the surfaces and systems that matter most in SaaS"
+              description="These guides are designed to help developers think more clearly about product structure before moving into implementation."
+              action={
+                <MarketingLinkButton variant="outline">
+                  <Link href="/docs/starter">Starter docs</Link>
+                </MarketingLinkButton>
+              }
+            />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {guides.map(({ category, ...guide }) => (
+                <MarketingResourceCard
+                  key={guide.href}
+                  {...guide}
+                  meta={
+                    <Badge
+                      variant="outline"
+                      className="rounded-[5px] border-border-subtle bg-surface-muted text-xs"
+                    >
+                      {category}
+                    </Badge>
+                  }
                 />
-              ),
-            },
-            {
-              label: 'SaaS knowledge base',
-              variant: 'outline',
-            },
-            {
-              label: 'Product-first',
-              variant: 'outline',
-              icon: (
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
-              ),
-            },
-          ]}
-          title="SaaS building guides for developers."
-          subtitle="Learn how stronger SaaS products are structured before you build them."
-          description="Learn how modern SaaS products are designed and structured — from dashboards and authentication to billing, installable PWA experiences, admin workflows, and production-ready product foundations."
-          actions={
-            <>
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
+              ))}
+            </div>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell aria-labelledby="why-guides-title">
+            <MarketingSectionHeader
+              titleId="why-guides-title"
+              align="left"
+              title="Why these guides exist"
+            />
+            <div className="max-w-3xl space-y-6">
+              <p className="text-sm leading-7 text-muted-foreground">
+                Learn how modern SaaS products are designed and structured —
+                from dashboards and authentication to billing, installable PWA
+                experiences, admin workflows, and production-ready product
+                foundations.
+              </p>
+              <MarketingPillList>
+                {["Architecture", "Auth", "Billing", "PWA", "Admin UX"].map(
+                  (label) => (
+                    <MarketingPill key={label}>{label}</MarketingPill>
+                  ),
+                )}
+              </MarketingPillList>
+              <p className="text-sm leading-7 text-muted-foreground">
+                The guides are educational on purpose: they help you understand
+                the product logic first, so your UI, starter, and monetization
+                decisions become clearer.
+              </p>
+              <p className="text-sm leading-7 text-muted-foreground">
+                PyColors is not only a UI library or a starter. It is a system
+                for building SaaS products with stronger structure, clearer UX,
+                and less rework.
+              </p>
+              <p className="text-sm leading-7 text-muted-foreground">
+                These guides explain the product patterns behind that system so
+                you can make better product decisions before implementation
+                complexity takes over.
+              </p>
+              <MarketingPillList>
+                {[
+                  "Production-ready thinking",
+                  "SaaS-first UX",
+                  "PWA-ready UX",
+                  "System design",
+                  "Developer-focused",
+                ].map((label) => (
+                  <MarketingPill key={label}>{label}</MarketingPill>
+                ))}
+              </MarketingPillList>
+              <MarketingActionGroup>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/pricing">View pricing</Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/starters/pro">See Starter Pro</Link>
+                </MarketingLinkButton>
+              </MarketingActionGroup>
+            </div>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell aria-labelledby="guides-path-title">
+            <MarketingSectionHeader
+              titleId="guides-path-title"
+              eyebrow="How the guides fit the PyColors path"
+              title="The guides are educational on purpose"
+              description="They help you understand the product logic before you choose the interface patterns, starter path, or business wiring."
+              align="left"
+            />
+            <div className="grid gap-4 lg:grid-cols-3">
+              <MarketingFeatureCard
+                meta="Step 01"
+                title="Learn the product logic"
+                description="Use the guides to understand how strong SaaS products structure dashboards, auth, billing, settings, and operations."
+              />
+              <MarketingFeatureCard
+                meta="Step 02"
+                title="Explore patterns and examples"
+                description="Move from concepts to real interfaces with examples and UI patterns built around the same product surfaces."
+              />
+              <MarketingFeatureCard
+                meta="Step 03"
+                title="Build with Starter Free, upgrade with Starter Pro"
+                description="Start with a production-shaped SaaS surface today, then move to Starter Pro when auth, billing, backend wiring, and installable PWA foundations become the blocker."
+              />
+            </div>
+            <MarketingActionGroup className="mt-6">
+              <MarketingLinkButton>
                 <Link href="/starters/free">
                   Start with Starter Free
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
-              </Button>
-
+              </MarketingLinkButton>
               <Button
                 asChild
                 variant="secondary"
                 size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                className="h-auto min-h-11 whitespace-normal rounded-[5px] px-6 py-2.5 text-sm font-medium"
               >
                 <Link href="/examples">Explore Examples</Link>
               </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
+              <MarketingLinkButton variant="outline">
                 <Link href="/ui/patterns">Browse UI Patterns</Link>
-              </Button>
-            </>
-          }
-          pills={[
-            'Architecture',
-            'Auth',
-            'Billing',
-            'PWA',
-            'Admin UX',
-          ]}
-          extra={
-            <div className="mx-auto max-w-3xl">
-              <div className="rounded-[5px] border border-border-subtle bg-surface-muted px-5 py-4">
-                <p className="text-sm leading-7 text-muted-foreground">
-                  The guides are educational on purpose: they help you
-                  understand the product logic first, so your UI,
-                  starter, and monetization decisions become clearer.
-                </p>
-              </div>
-            </div>
-          }
-        />
+              </MarketingLinkButton>
+            </MarketingActionGroup>
+          </MarketingSectionShell>
 
-        <section className="py-12 sm:py-14 lg:py-16">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-            <CardContent className="p-6 sm:p-7">
-              <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
-                <div className="space-y-4">
-                  <Badge
-                    variant="outline"
-                    className="gap-2 rounded-[5px] border-border-subtle bg-surface-muted"
-                  >
-                    <Layers3
-                      className="h-3.5 w-3.5"
-                      aria-hidden="true"
+          <MarketingSectionShell
+            aria-labelledby="guides-next-title"
+            spacing="compact"
+          >
+            <Badge
+              variant="outline"
+              className="mb-4 rounded-[5px] border-border-subtle bg-surface-muted"
+            >
+              Build faster
+            </Badge>
+            <MarketingCtaPanel
+              titleId="guides-next-title"
+              title="Build your SaaS faster with PyColors"
+              description="Use Starter Free to validate a real SaaS product surface now, then move to Starter Pro when auth, billing, backend workflows, and installable PWA foundations need to be wired seriously."
+              actions={
+                <div className="space-y-6">
+                  <MarketingPillList>
+                    {["Starter Free", "Starter Pro", "Production-shaped"].map(
+                      (label) => (
+                        <MarketingPill key={label}>{label}</MarketingPill>
+                      ),
+                    )}
+                  </MarketingPillList>
+                  <MarketingActionGroup className="sm:max-w-60 sm:flex-col sm:items-stretch">
+                    <MarketingLinkButton>
+                      <Link href="/starters/free">Starter Free</Link>
+                    </MarketingLinkButton>
+                    <BuyStarterProButton
+                      fullWidth={true}
+                      label={`Starter Pro — ${starterProPriceLabel}`}
+                      variant="outline"
                     />
-                    Why these guides exist
-                  </Badge>
-
-                  <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                    PyColors is not only a UI library or a starter. It
-                    is a system for building SaaS products with
-                    stronger structure, clearer UX, and less rework.
-                  </p>
-
-                  <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                    These guides explain the product patterns behind
-                    that system so you can make better product
-                    decisions before implementation complexity takes
-                    over.
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <Pill>Production-ready thinking</Pill>
-                    <Pill>SaaS-first UX</Pill>
-                    <Pill>PWA-ready UX</Pill>
-                    <Pill>System design</Pill>
-                    <Pill>Developer-focused</Pill>
-                  </div>
+                  </MarketingActionGroup>
                 </div>
-
-                <div className="flex flex-wrap gap-2 lg:justify-end">
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="rounded-[5px]"
-                  >
-                    <Link href="/pricing">View pricing</Link>
-                  </Button>
-
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="rounded-[5px]"
-                  >
-                    <Link href="/starters/pro">See Starter Pro</Link>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="Browse guides"
-            title="Focused guides for the surfaces and systems that matter most in SaaS"
-            description="These guides are designed to help developers think more clearly about product structure before moving into implementation."
-            action={
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="rounded-[5px]"
-              >
-                <Link href="/docs/starter">Starter docs</Link>
-              </Button>
-            }
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.map((guide) => (
-              <GuideCard key={guide.title} {...guide} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <SectionHeader
-            eyebrow="How the guides fit the PyColors path"
-            title="The guides are educational on purpose"
-            description="They help you understand the product logic before you choose the interface patterns, starter path, or business wiring."
-            align="center"
-          />
-
-          <div className="grid gap-4 lg:grid-cols-3">
-            {[
-              {
-                step: 'Step 01',
-                title: 'Learn the product logic',
-                description:
-                  'Use the guides to understand how strong SaaS products structure dashboards, auth, billing, settings, and operations.',
-              },
-              {
-                step: 'Step 02',
-                title: 'Explore patterns and examples',
-                description:
-                  'Move from concepts to real interfaces with examples and UI patterns built around the same product surfaces.',
-              },
-              {
-                step: 'Step 03',
-                title:
-                  'Build with Starter Free, upgrade with Starter Pro',
-                description:
-                  'Start with a production-shaped SaaS surface today, then move to Starter Pro when auth, billing, backend wiring, and installable PWA foundations become the blocker.',
-              },
-            ].map((item) => (
-              <Card
-                key={item.step}
-                className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
-              >
-                <CardContent className="p-5">
-                  <div className="space-y-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                      {item.step}
-                    </div>
-
-                    <div className="text-sm font-medium">
-                      {item.title}
-                    </div>
-
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-medium">
-            <CardContent className="p-7 sm:p-8">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                <div className="max-w-xl space-y-3">
-                  <Badge
-                    variant="outline"
-                    className="rounded-[5px] border-border-subtle bg-surface-muted"
-                  >
-                    Build faster
-                  </Badge>
-
-                  <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                    Build your SaaS faster with PyColors
-                  </h2>
-
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    Use Starter Free to validate a real SaaS product
-                    surface now, then move to Starter Pro when auth,
-                    billing, backend workflows, and installable PWA
-                    foundations need to be wired seriously.
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <Pill>Starter Free</Pill>
-                    <Pill>Starter Pro</Pill>
-                    <Pill>Production-shaped</Pill>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:min-w-[240px]">
-                  <Button asChild className="h-11 rounded-[5px]">
-                    <Link href="/starters/free">Starter Free</Link>
-                  </Button>
-
-                  <BuyStarterProButton
-                    fullWidth={true}
-                    label={`Starter Pro — ${starterProPriceLabel}`}
-                    variant="outline"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-      </div>
-    </Container>
+              }
+            />
+          </MarketingSectionShell>
+        </div>
+      </Container>
+    </main>
   );
 }

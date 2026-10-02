@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.26.0
+
+Released by PyColors Marketing on 2 October 2026 (2026-10-02).
+
+This update makes PyColors easier to explore and apply: practical guidance for AI coding agents, clearer article and guide discovery, and more useful checkout and purchase-recovery feedback.
+
+### Applications updated
+
+- Blog and Guides now lead with their resources, while article actions describe their destinations and remain readable on small screens.
+- Company and product-history pages use consistent introductions and clearer layouts.
+- Checkout restores an actionable button after interrupted attempts. Purchase recovery lets buyers select the product they need.
+
+### Platform and shared capabilities
+
+- Agent Context documentation explains how to share public PyColors guides with a coding agent today. The optional context file remains a Pilot; this release does not announce public Registry delivery or a packaged agent skill.
+- Expanded semantic-token guidance and styling troubleshooting with reproducible consumer examples. The email-verification tutorial now explains its example and deployment limits more precisely.
+- The displayed package baseline advances to PyColors UI v1.5.5, with PyColors Tokens v1.2.3 unchanged. Both are already-versioned package baselines; this Marketing release does not re-version them.
+
+### Reliability and maintenance
+
+- Purchase feedback keeps unconfirmed checkout states distinct from confirmed payment information, with recovery and support paths available.
+- Recovery guidance keeps confirmation conditional and offers deliberate retry and support when needed.
+
+### For developers and candidates
+
+- Use the public integration guides with your coding agent, reproduce the documented UI examples, and check the result in your own application. Agent guidance does not guarantee correct output.
+
+### For companies and recruiters
+
+- Evaluate the shipped pages, component examples and documented implementation choices. The release makes no claim about measured conversion gains or model-response quality.
+
+[Explore PyColors documentation](https://pycolors.io/docs).
+
 ## 1.25.0
 
 Released by PyColors Marketing on 25 September 2026 (2026-09-25).

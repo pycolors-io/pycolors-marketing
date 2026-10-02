@@ -72,7 +72,9 @@ describe("Starter Pro purchase delivery guidance", () => {
     expect(text).toContain("Recovery does not complete an unpaid checkout");
     expect(text).toContain("A recovery confirmation does not prove");
     expect(text).toContain("cannot restore inactive purchase access");
-    expect(text).toContain("most recent active purchase access");
+    expect(text).toContain("selected product only");
+    expect(text).toContain("PyColors Starter Pro");
+    expect(text).not.toContain("most recent active purchase access");
   });
 
   it("keeps support information safe and bounded", () => {

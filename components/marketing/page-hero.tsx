@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { Badge, cn } from '@pycolors/ui';
+import * as React from "react";
+import { Badge, cn } from "@pycolors/ui";
 
 type PageHeroBadge = {
   label: string;
-  variant?: 'secondary' | 'outline';
+  variant?: "secondary" | "outline";
   icon?: React.ReactNode;
 };
 
 export type PageHeroProps = {
+  /** Compact, undecorated introduction for content-led company/trust pages. */
+  variant?: "default" | "compact";
   badges?: PageHeroBadge[];
   title: string;
   subtitle?: string;
@@ -21,8 +23,8 @@ export type PageHeroProps = {
   actionsClassName?: string;
   pillsClassName?: string;
   extraClassName?: string;
-  align?: 'center' | 'left';
-  maxWidth?: '3xl' | '4xl' | '5xl';
+  align?: "center" | "left";
+  maxWidth?: "3xl" | "4xl" | "5xl";
 };
 
 function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -33,19 +35,20 @@ function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   );
 }
 
-function getMaxWidthClass(maxWidth: PageHeroProps['maxWidth']) {
+function getMaxWidthClass(maxWidth: PageHeroProps["maxWidth"]) {
   switch (maxWidth) {
-    case '3xl':
-      return 'max-w-3xl';
-    case '5xl':
-      return 'max-w-5xl';
-    case '4xl':
+    case "3xl":
+      return "max-w-3xl";
+    case "5xl":
+      return "max-w-5xl";
+    case "4xl":
     default:
-      return 'max-w-4xl';
+      return "max-w-4xl";
   }
 }
 
 export function PageHero({
+  variant = "default",
   badges = [],
   title,
   subtitle,
@@ -59,51 +62,58 @@ export function PageHero({
   actionsClassName,
   pillsClassName,
   extraClassName,
-  align = 'center',
-  maxWidth = '4xl',
+  align = "center",
+  maxWidth = "4xl",
 }: PageHeroProps) {
-  const isCentered = align === 'center';
+  const isCentered = align === "center";
+  const isCompact = variant === "compact";
   const maxWidthClass = getMaxWidthClass(maxWidth);
 
   return (
     <section
       className={cn(
-        'relative overflow-hidden bg-background/80 px-6 py-14 backdrop-blur sm:px-8 sm:py-16 lg:px-12 lg:py-20',
+        "relative",
+        !isCompact &&
+          "overflow-hidden bg-background/80 px-6 py-14 backdrop-blur sm:px-8 sm:py-16 lg:px-12 lg:py-20",
         className,
       )}
     >
-      {/* subtle premium glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_96%),transparent_42%)]"
-      />
+      {!isCompact ? (
+        <>
+          {/* subtle premium glow */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_96%),transparent_42%)]"
+          />
 
-      {/* top separator */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-      />
+          {/* top separator */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+          />
+        </>
+      ) : null}
 
       <div
         className={cn(
-          'relative mx-auto',
+          "relative mx-auto",
           maxWidthClass,
-          isCentered ? 'text-center' : 'text-left',
+          isCentered ? "text-center" : "text-left",
           contentClassName,
         )}
       >
         {badges.length > 0 ? (
           <div
             className={cn(
-              'flex flex-wrap items-center gap-2',
-              isCentered ? 'justify-center' : 'justify-start',
+              "flex flex-wrap items-center gap-2",
+              isCentered ? "justify-center" : "justify-start",
               badgesClassName,
             )}
           >
             {badges.map((badge) => (
               <Badge
-                key={`${badge.label}-${badge.variant ?? 'secondary'}`}
-                variant={badge.variant ?? 'outline'}
+                key={`${badge.label}-${badge.variant ?? "secondary"}`}
+                variant={badge.variant ?? "outline"}
                 className="gap-1.5 rounded-md border-border-subtle px-2.5 py-1 text-[11px] font-medium"
               >
                 {badge.icon ? badge.icon : null}
@@ -115,24 +125,25 @@ export function PageHero({
 
         <h1
           className={cn(
-            'text-balance font-brand text-4xl font-semibold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[4rem] lg:leading-[0.98]',
-            badges.length > 0 ? 'mt-7' : 'mt-0',
+            "text-balance font-brand font-semibold tracking-[-0.04em] text-foreground",
+            isCompact
+              ? "text-3xl sm:text-4xl lg:text-5xl"
+              : "text-4xl sm:text-5xl lg:text-[4rem] lg:leading-[0.98]",
+            badges.length > 0 ? (isCompact ? "mt-4" : "mt-7") : "mt-0",
           )}
         >
           {title}
 
           {subtitle ? (
-            <span className="mt-3 block text-muted-foreground">
-              {subtitle}
-            </span>
+            <span className="mt-3 block text-muted-foreground">{subtitle}</span>
           ) : null}
         </h1>
 
         {description ? (
           <p
             className={cn(
-              'mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base',
-              isCentered ? 'mx-auto max-w-3xl' : 'max-w-3xl',
+              "mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base",
+              isCentered ? "mx-auto max-w-3xl" : "max-w-3xl",
             )}
           >
             {description}
@@ -142,8 +153,10 @@ export function PageHero({
         {actions ? (
           <div
             className={cn(
-              'mt-8 flex flex-col gap-3 sm:flex-row',
-              isCentered ? 'justify-center' : 'justify-start',
+              "flex flex-col gap-3 sm:flex-row",
+              isCompact && "flex-wrap",
+              isCompact ? "mt-6" : "mt-8",
+              isCentered ? "justify-center" : "justify-start",
               actionsClassName,
             )}
           >
@@ -154,8 +167,8 @@ export function PageHero({
         {pills.length > 0 ? (
           <div
             className={cn(
-              'mt-7 flex flex-wrap gap-2',
-              isCentered ? 'justify-center' : 'justify-start',
+              "mt-7 flex flex-wrap gap-2",
+              isCentered ? "justify-center" : "justify-start",
               pillsClassName,
             )}
           >
@@ -166,7 +179,9 @@ export function PageHero({
         ) : null}
 
         {extra ? (
-          <div className={cn('mt-10', extraClassName)}>{extra}</div>
+          <div className={cn(isCompact ? "mt-6" : "mt-10", extraClassName)}>
+            {extra}
+          </div>
         ) : null}
       </div>
     </section>

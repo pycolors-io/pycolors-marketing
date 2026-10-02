@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
+import { renderToStaticMarkup } from "react-dom/server";
+import { isValidElement } from "react";
 
 import CheckoutSuccessPage from "../../app/(site)/checkout/success/page";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
@@ -146,6 +148,98 @@ describe("Checkout success", () => {
       "/templates/na-ai-landing",
     );
   });
+
+  it.each([null, undefined, "synthetic-private-summary@example.invalid"])(
+    "discards nullable, absent and legacy email before rendering or forwarding (%s)",
+    async (customerEmail) => {
+      const sensitive = "synthetic-private-summary@example.invalid";
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      const info = vi.spyOn(console, "info").mockImplementation(() => {});
+      try {
+        respond({
+          ok: true,
+          session: {
+            ...paidSession,
+            customerEmail,
+            privateMetadata: sensitive,
+          },
+        });
+        const tree = await CheckoutSuccessPage({
+          searchParams: Promise.resolve({ session_id: sessionId }),
+        });
+        // All returned element props, including client boundaries, are inspected
+        // before React renders them. Unknown payload keys must be stripped.
+        const props = JSON.stringify(tree, (_key, value: unknown) =>
+          isValidElement(value) ? { props: value.props } : value,
+        );
+        expect(props).not.toContain(sensitive);
+        expect(props).not.toContain("customerEmail");
+        const html = renderToStaticMarkup(tree);
+        expect(html).not.toContain(sensitive);
+        const { container } = render(tree);
+        expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+          "Your payment is confirmed.",
+        );
+        expect(screen.getByRole("status")).toHaveTextContent(
+          /^Check your inbox$/,
+        );
+        expect(screen.queryByText("Customer")).toBeNull();
+        expect(container.innerHTML).not.toContain(sensitive);
+        expect(
+          JSON.stringify(vi.mocked(MoneyPathPageEvent).mock.calls),
+        ).not.toContain(sensitive);
+        expect(
+          JSON.stringify([error.mock.calls, info.mock.calls]),
+        ).not.toContain(sensitive);
+        for (const link of screen.getAllByRole("link")) {
+          expect(link.getAttribute("href")).not.toContain(sessionId);
+        }
+        expect(fetch).toHaveBeenCalledTimes(1);
+      } finally {
+        error.mockRestore();
+        info.mockRestore();
+      }
+    },
+  );
+
+  it.each([404, 502, 503])(
+    "unavailable summary %i preserves recovery without automatically initiating payment",
+    async (status) => {
+      respond({ error: "Checkout session summary unavailable." }, status);
+      await renderPage();
+      expectUnconfirmed();
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+        "We could not confirm your payment.",
+      );
+      expect(fetch).toHaveBeenCalledTimes(1);
+      for (const link of screen.getAllByRole("link")) {
+        if (link.textContent === "Check payment status again") continue;
+        expect(link.getAttribute("href")).not.toContain(sessionId);
+      }
+      expect(screen.queryByRole("button", { name: /buy|pay/i })).toBeNull();
+    },
+  );
+
+  it.each(["complete", "invalid"])(
+    "removes legacy email from decoded references retained by RSC diagnostics (%s)",
+    async (status) => {
+      const response = Response.json({
+        ok: true,
+        session: { ...paidSession, status },
+      });
+      const decode = response.json.bind(response);
+      let retained: unknown;
+      vi.spyOn(response, "json").mockImplementation(async () => {
+        // Model the reference retained by React's development I/O tracing.
+        retained = await decode();
+        return retained;
+      });
+      vi.mocked(fetch).mockResolvedValue(response);
+      await renderPage();
+      expect(JSON.stringify(retained)).not.toContain("buyer@example.com");
+      expect(JSON.stringify(retained)).not.toContain("customerEmail");
+    },
+  );
 
   it.each([
     ["complete", "unpaid", "Your payment is still pending."],

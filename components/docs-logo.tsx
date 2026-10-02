@@ -1,26 +1,21 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import Link from "next/link";
 
-import { cn } from '@pycolors/ui';
+import { cn } from "@pycolors/ui";
 
-const BRAND = '#6A30D4';
+import { wordmarkFont } from "./wordmark-font";
 
-const wordmarkFont = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['700', '800'],
-  display: 'swap',
-});
+const BRAND = "#6A30D4";
 
 function Logomark() {
   return (
     <svg
       viewBox="0 0 44 40"
       className={cn(
-        'h-8.5 w-8.5 shrink-0',
-        'transition-transform duration-300 ease-out',
-        'group-hover:scale-[1.03]',
+        "h-8.5 w-8.5 shrink-0",
+        "transition-transform duration-300 ease-out",
+        "group-hover:scale-[1.03]",
       )}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +37,8 @@ function Logomark() {
            H10Z"
         fill={BRAND}
         className={cn(
-          'transition-opacity duration-300 ease-out',
-          'group-hover:opacity-90',
+          "transition-opacity duration-300 ease-out",
+          "group-hover:opacity-90",
         )}
       />
     </svg>
@@ -55,11 +50,11 @@ function Wordmark() {
     <span
       className={cn(
         wordmarkFont.className,
-        'select-none text-[18px] font-extrabold leading-none tracking-[-0.075em]',
-        'text-foreground antialiased',
+        "select-none text-[18px] font-extrabold leading-none tracking-[-0.075em]",
+        "text-foreground antialiased",
       )}
     >
-      pycolors{' '}
+      pycolors{" "}
       <span className="ml-1" style={{ color: BRAND }}>
         /docs
       </span>
@@ -73,8 +68,8 @@ export function DocsLogo() {
       href="/docs"
       aria-label="PyColors Docs"
       className={cn(
-        'group inline-flex items-center gap-0.5',
-        'transition-opacity duration-200 hover:opacity-90',
+        "group inline-flex items-center gap-0.5",
+        "transition-opacity duration-200 hover:opacity-90",
       )}
     >
       <Logomark />

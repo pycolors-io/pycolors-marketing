@@ -1,0 +1,90 @@
+---
+title: Use PyColors with AI coding agents
+description: "Give AI coding agents PyColors design system conventions for React UI: public APIs, design tokens, accessible composition and project-aware validation."
+lastUpdated: "2026-09-27"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+**Agent Context is an optional PyColors integration reference for AI coding
+agents.** It explains how to use PyColors components, tokens and patterns in
+your app, so the agent has concrete conventions to follow when generating or
+repairing React UI.
+
+<Callout title="Status: Pilot">
+  The optional context file is not yet available through the public Registry.
+  You can use the public documentation with your agent today, as shown below.
+</Callout>
+
+## Quick start: use the public docs today
+
+1. Follow [UI installation](/docs/ui/installation) if your app does not already
+   use PyColors. Keep your existing setup and installed package versions.
+2. Share the [usage patterns](/docs/ui/usage-patterns),
+   [theming](/docs/ui/theming) and [accessibility](/docs/ui/accessibility) guides
+   relevant to your task. If your agent cannot open links, provide the relevant
+   excerpts yourself.
+3. Give the agent a concrete task and ask it to check your app before editing.
+   For example:
+
+```text
+Use the PyColors guides I shared to build an account settings form.
+Inspect this app's installed @pycolors/ui and @pycolors/tokens versions
+and existing components first. Reuse public APIs, semantic tokens and
+labeled controls. Connect to our existing save handler; explain any
+missing behavior. Run the app's relevant checks and report the results.
+Follow this repository's instructions and your host's permissions.
+```
+
+This workflow needs no PyColors-specific agent plugin. Review proposed changes;
+documentation does not grant an agent additional permissions.
+
+## What the agent receives
+
+The pilot context brings together guidance on:
+
+- **Components and APIs:** inspect installed public exports, reuse existing
+  primitives and copied Blocks, and avoid guessed imports or props.
+- **Design tokens and composition:** follow semantic colors, theme conventions
+  and existing UI patterns while preserving your customizations.
+- **Accessibility and React boundaries:** retain labels, keyboard interaction
+  and visible focus; keep Next.js Server Components by default with small
+  interactive Client Components.
+- **Implementation checks:** use your app's validation scripts and distinguish
+  a rendered form from working persistence or authorization.
+
+It points to authoritative documentation and installed types; it is not a full
+component catalog or a replacement for your repository instructions.
+
+## Example: an account settings page
+
+A generic “build a settings page” request may produce unfamiliar component
+names or hard-coded colors. With PyColors guidance, the agent can inspect your
+installed APIs, adapt an existing [settings example](/docs/ui/usage-patterns),
+use semantic tokens and preserve labeled fields and your save handler.
+
+Check the resulting imports, keyboard flow and save behavior. The reference
+guides the work; it does not guarantee a correct or accessible result.
+
+## Availability
+
+- **Available today:** public UI guides, component documentation and copyable
+  Block examples for you to share with an agent.
+- **Pilot:** an optional Markdown context file with internally tested,
+  opt-in installation. Those checks do not establish public availability or
+  model-response quality.
+- **Still to come:** public Registry delivery of the context item. A packaged
+  integration skill and its response evaluation are separate work.
+
+If you already have a reviewed pilot copy, explicitly ask your agent to read
+it for the task. It is not activated automatically. You own that copy: review
+updates manually, or remove the file and any pointer you added to your own
+instructions. It adds no PyColors runtime, model call or telemetry; your agent's
+processing and permissions remain governed by its host.
+
+## Next steps
+
+- [Explore UI components](/docs/ui) and [usage patterns](/docs/ui/usage-patterns).
+- [Reuse Blocks](/docs/blocks) or [start with Starter Free](/docs/starter).
+- [Understand the Registry](/docs/registry) and its [installation workflow](/docs/registry/installation).
