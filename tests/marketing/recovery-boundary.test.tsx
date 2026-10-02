@@ -64,7 +64,7 @@ describe("real recovery client and form boundary", () => {
         screen.getByRole("link", { name: "Contact support" }),
       ).toHaveAttribute("href", "/orders/support");
       expect(fetch).toHaveBeenCalledTimes(1);
-      for (const log of logs) expect(log).not.toHaveBeenCalled();
+      for (const log of logs) expect(log.mock.calls.length).toBe(0);
       await expect(axe(container)).resolves.toHaveNoViolations();
       fireEvent.click(
         screen.getByRole("button", { name: "Resend access link" }),
@@ -80,7 +80,7 @@ describe("real recovery client and form boundary", () => {
           productSlug: "na-ai-landing",
         }),
       );
-      for (const log of logs) expect(log).not.toHaveBeenCalled();
+      for (const log of logs) expect(log.mock.calls.length).toBe(0);
     },
   );
 });

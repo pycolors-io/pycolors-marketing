@@ -68,9 +68,13 @@ describe("recovery response privacy", () => {
       vi.mocked(fetch).mockResolvedValue(Response.json(body));
       const { recoverCommerceAccess, RECOVERY_FAILURE_MESSAGE } =
         await import("@/lib/api/client");
-      await expect(
-        recoverCommerceAccess({ email: "buyer@example.com" }),
-      ).rejects.toThrow(RECOVERY_FAILURE_MESSAGE);
+      const error: unknown = await recoverCommerceAccess({
+        email: "buyer@example.com",
+      }).catch((value: unknown) => value);
+      // Assert booleans so a regression cannot print the rejected payload.
+      expect(
+        error instanceof Error && error.message === RECOVERY_FAILURE_MESSAGE,
+      ).toBe(true);
     },
   );
   it.each(["legacy-error", "network", "invalid-json", "body-read"])(
@@ -105,7 +109,7 @@ describe("recovery response privacy", () => {
       ).toBe(true);
       expect(fetch).toHaveBeenCalledTimes(1);
       for (const log of logs) {
-        expect(log).not.toHaveBeenCalled();
+        expect(log.mock.calls.length).toBe(0);
         log.mockRestore();
       }
     },

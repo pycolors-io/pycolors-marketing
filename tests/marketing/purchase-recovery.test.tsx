@@ -120,8 +120,8 @@ describe("Purchase recovery guidance", () => {
 
     submitRecovery();
     const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent("Unable to request your access link.");
     expect(alert.textContent?.includes("synthetic-private-detail")).toBe(false);
+    expect(alert).toHaveTextContent("Unable to request your access link.");
     expect(alert).toHaveTextContent(
       "contact support before making another purchase",
     );
