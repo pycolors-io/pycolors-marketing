@@ -1,0 +1,36 @@
+{
+  "base": "e89dac28af9c5803a221652881793afaddf90c6f",
+  "closedFocus": {
+    "focused": true,
+    "href": "/starters/pro",
+    "opacity": "0"
+  },
+  "firstClickExpanded": "true",
+  "keyboard": [
+    {
+      "expanded": "true",
+      "focused": "Products",
+      "step": "Tab to Products"
+    },
+    {
+      "expanded": "false",
+      "focused": "Products",
+      "step": "First Enter"
+    },
+    {
+      "expanded": "false",
+      "focused": "Starter Pro199 \u20acLaunch with auth and billing",
+      "href": "/starters/pro",
+      "opacity": "0",
+      "step": "Tab after first Enter"
+    }
+  ],
+  "closedAxe": {
+    "violations": [
+      {
+        "id": "aria-required-children",
+        "targets": [["#products-menu"]]
+      }
+    ]
+  }
+}

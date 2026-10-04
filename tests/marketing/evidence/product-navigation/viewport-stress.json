@@ -1,0 +1,1035 @@
+[
+  {
+    "layout": {
+      "close": {
+        "bottom": 53.5,
+        "height": 44,
+        "left": 897,
+        "right": 959,
+        "top": 9.5,
+        "width": 62,
+        "x": 897,
+        "y": 9.5
+      },
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 800,
+        "height": 800,
+        "left": 0,
+        "right": 1023,
+        "top": 0,
+        "width": 1023,
+        "x": 0,
+        "y": 0
+      },
+      "reducedMotion": true,
+      "viewport": [1023, 800]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      },
+      {
+        "href": "/docs",
+        "inViewport": true,
+        "label": null,
+        "text": "Docs"
+      },
+      {
+        "href": "/guides",
+        "inViewport": true,
+        "label": null,
+        "text": "Guides"
+      },
+      {
+        "href": "/blog",
+        "inViewport": true,
+        "label": null,
+        "text": "Blog"
+      },
+      {
+        "href": "/changelog",
+        "inViewport": true,
+        "label": null,
+        "text": "Changelog"
+      },
+      {
+        "href": "https://github.com/pycolors",
+        "inViewport": true,
+        "label": null,
+        "text": "GitHub"
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "Explore Pro"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": null,
+        "text": "Close"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": "Toggle Theme",
+        "text": ""
+      },
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targetCount": 17,
+          "sampleTargets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            ["header"],
+            [".bg-background\\/80"]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 437,
+        "height": 365,
+        "left": 16,
+        "right": 1008,
+        "top": 72,
+        "width": 992,
+        "x": 16,
+        "y": 72
+      },
+      "reducedMotion": true,
+      "viewport": [1024, 800]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 437,
+        "height": 365,
+        "left": 16,
+        "right": 1009,
+        "top": 72,
+        "width": 993,
+        "x": 16,
+        "y": 72
+      },
+      "reducedMotion": true,
+      "viewport": [1025, 800]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "close": {
+        "bottom": 53.5,
+        "height": 44,
+        "left": 194,
+        "right": 256,
+        "top": 9.5,
+        "width": 62,
+        "x": 194,
+        "y": 9.5
+      },
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 480,
+        "height": 480,
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "width": 320,
+        "x": 0,
+        "y": 0
+      },
+      "reducedMotion": true,
+      "viewport": [320, 480]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      },
+      {
+        "href": "/docs",
+        "inViewport": true,
+        "label": null,
+        "text": "Docs"
+      },
+      {
+        "href": "/guides",
+        "inViewport": true,
+        "label": null,
+        "text": "Guides"
+      },
+      {
+        "href": "/blog",
+        "inViewport": true,
+        "label": null,
+        "text": "Blog"
+      },
+      {
+        "href": "/changelog",
+        "inViewport": true,
+        "label": null,
+        "text": "Changelog"
+      },
+      {
+        "href": "https://github.com/pycolors",
+        "inViewport": true,
+        "label": null,
+        "text": "GitHub"
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "Explore Pro"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": null,
+        "text": "Close"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": "Toggle Theme",
+        "text": ""
+      },
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targetCount": 17,
+          "sampleTargets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            ["header"],
+            [".bg-background\\/80"]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 437,
+        "height": 365,
+        "left": 16,
+        "right": 1008,
+        "top": 72,
+        "width": 992,
+        "x": 16,
+        "y": 72
+      },
+      "reducedMotion": true,
+      "viewport": [1024, 480]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "fontSize": "16px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 352,
+        "height": 280,
+        "left": 144,
+        "right": 1296,
+        "top": 72,
+        "width": 1152,
+        "x": 144,
+        "y": 72
+      },
+      "reducedMotion": true,
+      "viewport": [1440, 360]
+    },
+    "enlarged": false,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "close": {
+        "bottom": 216,
+        "height": 88,
+        "left": 32,
+        "right": 154,
+        "top": 128,
+        "width": 122,
+        "x": 32,
+        "y": 128
+      },
+      "fontSize": "32px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 640,
+        "height": 640,
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "width": 320,
+        "x": 0,
+        "y": 0
+      },
+      "reducedMotion": true,
+      "viewport": [320, 640]
+    },
+    "enlarged": true,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": false,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": false,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": false,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      },
+      {
+        "href": "/docs",
+        "inViewport": true,
+        "label": null,
+        "text": "Docs"
+      },
+      {
+        "href": "/guides",
+        "inViewport": true,
+        "label": null,
+        "text": "Guides"
+      },
+      {
+        "href": "/blog",
+        "inViewport": true,
+        "label": null,
+        "text": "Blog"
+      },
+      {
+        "href": "/changelog",
+        "inViewport": true,
+        "label": null,
+        "text": "Changelog"
+      },
+      {
+        "href": "https://github.com/pycolors",
+        "inViewport": true,
+        "label": null,
+        "text": "GitHub"
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "Explore Pro"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": null,
+        "text": "Close"
+      },
+      {
+        "href": null,
+        "inViewport": true,
+        "label": "Toggle Theme",
+        "text": ""
+      },
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": false,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": false,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targetCount": 17,
+          "sampleTargets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            ["header"],
+            [".bg-background\\/80"]
+          ]
+        },
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  },
+  {
+    "layout": {
+      "fontSize": "32px",
+      "horizontalOverflow": false,
+      "inViewport": true,
+      "panel": {
+        "bottom": 784,
+        "height": 640,
+        "left": 32,
+        "right": 1408,
+        "top": 144,
+        "width": 1376,
+        "x": 32,
+        "y": 144
+      },
+      "reducedMotion": true,
+      "viewport": [1440, 800]
+    },
+    "enlarged": true,
+    "keyboardTraversal": [
+      {
+        "href": "/ui",
+        "inViewport": true,
+        "label": null,
+        "text": "UI LibraryReact primitives for your product interface."
+      },
+      {
+        "href": "/blocks",
+        "inViewport": true,
+        "label": null,
+        "text": "BlocksPreview and copy application patterns."
+      },
+      {
+        "href": "/starters/free",
+        "inViewport": true,
+        "label": null,
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing."
+      },
+      {
+        "href": "/starters/pro",
+        "inViewport": true,
+        "label": null,
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS."
+      },
+      {
+        "href": "/tools/theme-builder",
+        "inViewport": true,
+        "label": null,
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens."
+      },
+      {
+        "href": "/templates/na-ai-landing",
+        "inViewport": true,
+        "label": null,
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products."
+      },
+      {
+        "href": "/starters",
+        "inViewport": true,
+        "label": null,
+        "text": "Compare Starters"
+      },
+      {
+        "href": "/templates",
+        "inViewport": true,
+        "label": null,
+        "text": "All templates"
+      },
+      {
+        "href": "/ui/examples",
+        "inViewport": true,
+        "label": null,
+        "text": "UI examples"
+      },
+      {
+        "href": "/pricing",
+        "inViewport": true,
+        "label": null,
+        "text": "Pricing"
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targetCount": 1,
+          "sampleTargets": [["#radix-_R_32inqbradb_-trigger-all"]]
+        }
+      ]
+    }
+  }
+]
