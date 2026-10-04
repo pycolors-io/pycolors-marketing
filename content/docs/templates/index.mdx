@@ -1,18 +1,13 @@
 ---
 title: Templates
 description: Premium product templates built with PyColors UI and PyColors Tokens. Launch focused marketing pages faster without rebuilding the foundation.
-lastUpdated: "2026-05-19"
+lastUpdated: "2026-10-03"
 appliesTo: Templates
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Badge } from "@pycolors/ui";
-import {
-  BadgeEuro,
-  LayoutTemplate,
-  Rocket,
-  Sparkles,
-} from "lucide-react";
+import { BadgeEuro, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
 
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
@@ -42,6 +37,21 @@ Templates are intentionally narrower than starters.
 A template helps you launch the public surface.
 A starter helps you build the product foundation behind it.
 
+## Find the right guide
+
+Choose the guide for the task you need to complete. These links lead to the existing NA-AI Landing documentation; you do not need to read every page before getting started.
+
+- **Evaluate the template:** [Overview](/docs/templates/na-ai-landing) explains its intended use and included surface.
+- **Run your downloaded project:** [Setup](/docs/templates/na-ai-landing/setup) covers prerequisites, local startup, and the first working page.
+- **Update the page:** [Customization](/docs/templates/na-ai-landing/customization) covers content, branding, and assets.
+- **Find the files to edit:** [Project structure](/docs/templates/na-ai-landing/project-structure) maps the template's source.
+- **Prepare to publish:** [Deployment](/docs/templates/na-ai-landing/deployment) covers the build and hosting workflow.
+- **Check permitted usage:** [License](/docs/templates/na-ai-landing/license) contains the product-specific usage guidance.
+
+Already have the template? Start with [Setup](/docs/templates/na-ai-landing/setup), verify the unchanged page locally, then move to [Customization](/docs/templates/na-ai-landing/customization). Keep the downloaded project's README and package manifest beside the guide when checking commands and version requirements.
+
+### Choose your starting point
+
 <DocsUpgradeCTA
   title="Launch the page first."
   description="Templates help you publish a premium public surface quickly without rebuilding a marketing foundation from scratch."
@@ -52,8 +62,8 @@ A starter helps you build the product foundation behind it.
 />
 
 <Callout title="Core idea">
-  Templates are the fastest path to a polished public page.
-  Starters are the path to a full SaaS product foundation.
+  Templates are the fastest path to a polished public page. Starters are the
+  path to a full SaaS product foundation.
 </Callout>
 
 ### Product ladder
@@ -62,53 +72,53 @@ A starter helps you build the product foundation behind it.
   columns={3}
   items={[
     {
-      eyebrow: 'Templates',
-      title: 'Launch the offer',
-      href: '/templates',
+      eyebrow: "Templates",
+      title: "Launch the offer",
+      href: "/templates",
       icon: LayoutTemplate,
       description:
-        'Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.',
+        "Use templates when your bottleneck is presenting a product clearly, collecting interest, or launching a premium marketing surface.",
       items: [
-        'premium landing pages',
-        'marketing-first surfaces',
-        'SEO baseline',
-        'launch-ready presentation',
-        'fast publishing workflow',
+        "premium landing pages",
+        "marketing-first surfaces",
+        "SEO baseline",
+        "launch-ready presentation",
+        "fast publishing workflow",
       ],
-      cta: 'Explore Templates →',
+      cta: "Explore Templates →",
     },
     {
-      eyebrow: 'Starter Free',
-      title: 'Validate the product surface',
-      href: '/starters/free',
+      eyebrow: "Starter Free",
+      title: "Validate the product surface",
+      href: "/starters/free",
       icon: Sparkles,
       description:
-        'Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked product flows.',
+        "Use Starter Free when you need SaaS screens, dashboards, settings, billing entrypoints, and mocked product flows.",
       items: [
-        'dashboard structure',
-        'settings and billing surfaces',
-        'mocked app flows',
-        'product UX validation',
-        'rapid MVP iteration',
+        "dashboard structure",
+        "settings and billing surfaces",
+        "mocked app flows",
+        "product UX validation",
+        "rapid MVP iteration",
       ],
-      cta: 'Explore Starter Free →',
+      cta: "Explore Starter Free →",
     },
     {
-      eyebrow: 'Starter Pro',
-      title: 'Wire the business layer',
-      href: '/starters/pro',
+      eyebrow: "Starter Pro",
+      title: "Wire the business layer",
+      href: "/starters/pro",
       icon: Rocket,
-      tone: 'pro',
+      tone: "pro",
       description:
-        'Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and production-ready SaaS wiring.',
+        "Use Starter Pro when you need real authentication, billing, protected routes, database foundations, and production-ready SaaS wiring.",
       items: [
-        'real authentication',
-        'Stripe billing',
-        'protected routes',
-        'database foundations',
-        'launch-ready SaaS infrastructure',
+        "real authentication",
+        "Stripe billing",
+        "protected routes",
+        "database foundations",
+        "launch-ready SaaS infrastructure",
       ],
-      cta: 'Explore Starter Pro →',
+      cta: "Explore Starter Pro →",
     },
   ]}
 />
@@ -137,8 +147,8 @@ They help you move faster when the bottleneck is:
 - testing positioning
 
 <Callout type="info" title="Decision rule">
-  Choose a template when the page is the bottleneck.
-  Choose Starter Pro when the business layer is the bottleneck.
+  Choose a template when the page is the bottleneck. Choose Starter Pro when the
+  business layer is the bottleneck.
 </Callout>
 
 ### Available templates
@@ -148,18 +158,18 @@ They help you move faster when the bottleneck is:
   tone="platform"
   items={[
     {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
+      title: "NA-AI Landing",
+      href: "/docs/templates/na-ai-landing",
       icon: Sparkles,
       description:
-        'Premium Next.js landing page for AI products, SaaS tools, and analytics platforms.',
-      badges: ['49 €', 'Next.js', 'PyColors UI'],
+        "Premium Next.js landing page for AI products, SaaS tools, and analytics platforms.",
+      badges: ["49 €", "Next.js", "PyColors UI"],
     },
     {
-      title: 'More templates coming',
+      title: "More templates coming",
       icon: LayoutTemplate,
       description:
-        'Future templates will follow the same product-first approach: focused, documented, and powered by PyColors foundations.',
+        "Future templates will follow the same product-first approach: focused, documented, and powered by PyColors foundations.",
     },
   ]}
 />
@@ -192,11 +202,11 @@ That separation keeps them:
 
 ### How templates fit into PyColors
 
-| Need | Product |
-| --- | --- |
-| Launch a marketing page | Template |
-| Validate SaaS UX | Starter Free |
-| Wire auth, billing, protected routes, and database foundations | Starter Pro |
+| Need                                                           | Product      |
+| -------------------------------------------------------------- | ------------ |
+| Launch a marketing page                                        | Template     |
+| Validate SaaS UX                                               | Starter Free |
+| Wire auth, billing, protected routes, and database foundations | Starter Pro  |
 
 ### Recommended path
 
@@ -211,7 +221,8 @@ A common progression looks like this:
 This keeps the product evolution aligned with the actual bottleneck instead of prematurely building infrastructure.
 
 <Callout title="The goal is leverage">
-  Templates reduce repeated marketing work so you can focus on positioning, product clarity, and launch speed.
+  Templates reduce repeated marketing work so you can focus on positioning,
+  product clarity, and launch speed.
 </Callout>
 
 ## Next steps
@@ -220,31 +231,30 @@ This keeps the product evolution aligned with the actual bottleneck instead of p
   variant="grid"
   items={[
     {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
+      title: "NA-AI Landing",
+      href: "/docs/templates/na-ai-landing",
       description:
-        'See what is included, how the template is structured, and how to customize it.',
+        "See what is included, how the template is structured, and how to customize it.",
       icon: LayoutTemplate,
     },
     {
-      title: 'Pricing',
-      href: '/pricing',
-      description:
-        'Compare NA-AI Landing, Starter Free, and Starter Pro.',
+      title: "Pricing",
+      href: "/pricing",
+      description: "Compare NA-AI Landing, Starter Free, and Starter Pro.",
       icon: BadgeEuro,
     },
     {
-      title: 'Starter Free',
-      href: '/starters/free',
+      title: "Starter Free",
+      href: "/starters/free",
       description:
-        'Validate dashboards, settings, billing surfaces, and SaaS UX flows.',
+        "Validate dashboards, settings, billing surfaces, and SaaS UX flows.",
       icon: Sparkles,
     },
     {
-      title: 'Starter Pro',
-      href: '/starters/pro',
+      title: "Starter Pro",
+      href: "/starters/pro",
       description:
-        'Move into authentication, billing, protected routes, and backend foundations.',
+        "Move into authentication, billing, protected routes, and backend foundations.",
       icon: Rocket,
     },
   ]}
