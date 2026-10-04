@@ -1,0 +1,222 @@
+{
+  "checks": [
+    {
+      "name": "Closed links cannot receive browser focus",
+      "result": true
+    },
+    {
+      "name": "First pointer activation opens the disclosure",
+      "result": true
+    },
+    {
+      "name": "Enter opens from the focused trigger",
+      "result": true
+    },
+    {
+      "name": "Tab reaches first documentation link",
+      "result": true
+    },
+    {
+      "name": "Shift+Tab returns to trigger without closing",
+      "result": true
+    },
+    {
+      "name": "Space closes",
+      "result": true
+    },
+    {
+      "name": "Space opens",
+      "result": true
+    },
+    {
+      "name": "Escape closes and restores trigger focus",
+      "result": true
+    },
+    {
+      "name": "Leaving the panel closes without stealing focus",
+      "result": true
+    },
+    {
+      "name": "Native link navigates and closes panel",
+      "result": true
+    },
+    {
+      "name": "Mobile is modal and locks background scroll",
+      "result": true
+    },
+    {
+      "name": "Background focus is contained",
+      "result": true
+    },
+    {
+      "name": "Tab wraps within modal",
+      "result": true
+    },
+    {
+      "name": "Shift+Tab wraps within modal",
+      "result": true
+    },
+    {
+      "name": "Escape releases lock and restores visible mobile trigger",
+      "result": true
+    },
+    {
+      "name": "Scroll position is preserved after dismissal",
+      "result": true
+    },
+    {
+      "name": "Resizing to desktop releases lock and focuses desktop trigger",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 1279x600, large=False",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 1280x600, large=False",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 1281x600, large=False",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 320x400, large=False",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 1440x400, large=False",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 320x640, large=True",
+      "result": true
+    },
+    {
+      "name": "Last action reachable at 1440x700, large=True",
+      "result": true
+    }
+  ],
+  "boundaries": [
+    {
+      "width": 1279,
+      "height": 600,
+      "largeText": false,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 600,
+        "height": 600,
+        "left": 0,
+        "right": 1279,
+        "top": 0,
+        "width": 1279,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "width": 1280,
+      "height": 600,
+      "largeText": false,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 459,
+        "height": 387,
+        "left": 256,
+        "right": 1024,
+        "top": 72,
+        "width": 768,
+        "x": 256,
+        "y": 72
+      }
+    },
+    {
+      "width": 1281,
+      "height": 600,
+      "largeText": false,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 459,
+        "height": 387,
+        "left": 256.5,
+        "right": 1024.5,
+        "top": 72,
+        "width": 768,
+        "x": 256.5,
+        "y": 72
+      }
+    },
+    {
+      "width": 320,
+      "height": 400,
+      "largeText": false,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 400,
+        "height": 400,
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "width": 320,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "width": 1440,
+      "height": 400,
+      "largeText": false,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 392,
+        "height": 320,
+        "left": 336,
+        "right": 1104,
+        "top": 72,
+        "width": 768,
+        "x": 336,
+        "y": 72
+      }
+    },
+    {
+      "width": 320,
+      "height": 640,
+      "largeText": true,
+      "overflow": false,
+      "pageOverflow": true,
+      "panel": {
+        "bottom": 640,
+        "height": 640,
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "width": 320,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "width": 1440,
+      "height": 700,
+      "largeText": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "panel": {
+        "bottom": 684,
+        "height": 540,
+        "left": 32,
+        "right": 1408,
+        "top": 144,
+        "width": 1376,
+        "x": 32,
+        "y": 144
+      }
+    }
+  ],
+  "errors": ""
+}

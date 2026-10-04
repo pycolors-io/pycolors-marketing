@@ -1,0 +1,278 @@
+{
+  "base": "66b948d6",
+  "states": [
+    {
+      "mode": "light",
+      "width": 1440,
+      "layout": {
+        "panel": {
+          "bottom": 346.25,
+          "height": 290.5,
+          "left": 183.953125,
+          "right": 951.953125,
+          "top": 55.75,
+          "width": 768,
+          "x": 183.953125,
+          "y": 55.75
+        },
+        "scrollWidth": 1440,
+        "width": 1440
+      },
+      "axe": {
+        "violations": [
+          {
+            "id": "aria-required-children",
+            "impact": "critical",
+            "targets": [["#docs-menu"]]
+          }
+        ]
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    },
+    {
+      "mode": "light",
+      "width": 768,
+      "layout": {
+        "panel": {
+          "bottom": 346.25,
+          "height": 290.5,
+          "left": 207.953125,
+          "right": 975.953125,
+          "top": 55.75,
+          "width": 768,
+          "x": 207.953125,
+          "y": 55.75
+        },
+        "scrollWidth": 768,
+        "width": 768
+      },
+      "axe": {
+        "violations": [
+          {
+            "id": "aria-required-children",
+            "impact": "critical",
+            "targets": [["#docs-menu"]]
+          },
+          {
+            "id": "landmark-no-duplicate-banner",
+            "impact": "moderate",
+            "targets": [[".border-border-subtle\\/60"]]
+          },
+          {
+            "id": "landmark-unique",
+            "impact": "moderate",
+            "targets": [[".border-border-subtle\\/60"]]
+          }
+        ]
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    },
+    {
+      "mode": "light",
+      "width": 320,
+      "layout": {
+        "panel": {
+          "bottom": 0,
+          "height": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        "scrollWidth": 320,
+        "width": 320
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    },
+    {
+      "mode": "dark",
+      "width": 1440,
+      "layout": {
+        "panel": {
+          "bottom": 346.25,
+          "height": 290.5,
+          "left": 183.953125,
+          "right": 951.953125,
+          "top": 55.75,
+          "width": 768,
+          "x": 183.953125,
+          "y": 55.75
+        },
+        "scrollWidth": 1440,
+        "width": 1440
+      },
+      "axe": {
+        "violations": [
+          {
+            "id": "aria-required-children",
+            "impact": "critical",
+            "targets": [["#docs-menu"]]
+          }
+        ]
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    },
+    {
+      "mode": "dark",
+      "width": 768,
+      "layout": {
+        "panel": {
+          "bottom": 346.25,
+          "height": 290.5,
+          "left": 207.953125,
+          "right": 975.953125,
+          "top": 55.75,
+          "width": 768,
+          "x": 207.953125,
+          "y": 55.75
+        },
+        "scrollWidth": 768,
+        "width": 768
+      },
+      "axe": {
+        "violations": [
+          {
+            "id": "aria-required-children",
+            "impact": "critical",
+            "targets": [["#docs-menu"]]
+          },
+          {
+            "id": "landmark-no-duplicate-banner",
+            "impact": "moderate",
+            "targets": [[".border-border-subtle\\/60"]]
+          },
+          {
+            "id": "landmark-unique",
+            "impact": "moderate",
+            "targets": [[".border-border-subtle\\/60"]]
+          }
+        ]
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    },
+    {
+      "mode": "dark",
+      "width": 320,
+      "layout": {
+        "panel": {
+          "bottom": 0,
+          "height": 0,
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        "scrollWidth": 320,
+        "width": 320
+      },
+      "destinations": [
+        "#content",
+        "/docs",
+        "/docs/getting-started",
+        "/docs/patterns",
+        "/docs/starter",
+        "/docs/starter-pro",
+        "/docs/starter-pro/backend",
+        "/docs/starter-pro/billing",
+        "/docs/starter-pro/what-is-included",
+        "/docs/starter/upgrade",
+        "/docs/templates/na-ai-landing",
+        "/docs/templates/na-ai-landing/project-structure",
+        "/docs/ui",
+        "/pricing",
+        "/starters/pro"
+      ]
+    }
+  ],
+  "errors": "",
+  "hiddenLinkFocus": {
+    "focused": true,
+    "href": "/docs",
+    "opacity": "0"
+  },
+  "firstClickExpanded": "false"
+}
