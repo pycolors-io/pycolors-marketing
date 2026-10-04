@@ -1,5 +1,14 @@
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import {
+  Boxes,
+  Layers3,
+  LayoutTemplate,
+  Package2,
+  Rocket,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
+import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
@@ -12,7 +21,8 @@ export type PrimaryNavItem = {
 export type ProductMenuGroupItem = {
   label: string;
   href: string;
-  description?: string;
+  description: string;
+  icon: LucideIcon;
   badge?: string;
 };
 
@@ -31,63 +41,82 @@ export const PRIMARY_NAV_ITEMS: PrimaryNavItem[] = [
 
 export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
-    title: "Starters",
-    items: [
-      {
-        label: "Starter Pro",
-        href: "/starters/pro",
-        description: "Launch with auth and billing",
-        badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
-      },
-      {
-        label: "Starter Free",
-        href: "/starters/free",
-        description: "Validate product UX fast",
-        badge: STARTER_FREE_PRICE_LABEL,
-      },
-      {
-        label: "Compare Starters",
-        href: "/starters",
-        description: "Choose the right SaaS foundation",
-      },
-    ],
-  },
-  {
-    title: "Templates",
-    items: [
-      {
-        label: "All templates",
-        href: "/templates",
-        description: "Browse premium Next.js templates",
-      },
-      {
-        label: "NA-AI Landing",
-        href: "/templates/na-ai-landing",
-        description: "AI/SaaS landing page template",
-        badge: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
-      },
-    ],
-  },
-  {
-    title: "UI system",
+    title: "Build your interface",
     items: [
       {
         label: "UI Library",
         href: "/ui",
-        description: "Production-ready primitives",
+        description: "React primitives for your product interface.",
+        icon: Package2,
       },
       {
         label: "Blocks",
         href: "/blocks",
-        description: "Copyable application patterns",
-      },
-      {
-        label: "Examples",
-        href: "/ui/examples",
-        description: "See components in context",
+        description: "Preview and copy application patterns.",
+        icon: Boxes,
       },
     ],
   },
+  {
+    title: "Start your application",
+    items: [
+      {
+        label: "Starter Free",
+        href: "/starters/free",
+        description: "Explore SaaS screens with mocked auth and billing.",
+        icon: Layers3,
+        badge: STARTER_FREE_PRICE_LABEL,
+      },
+      {
+        label: PRODUCT_DISPLAY["starter-pro"].name,
+        href: "/starters/pro",
+        description:
+          "Auth.js and Stripe foundations to configure for your SaaS.",
+        icon: Rocket,
+        badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+      },
+    ],
+  },
+  {
+    title: "Design and launch",
+    items: [
+      {
+        label: "Theme Builder",
+        href: "/tools/theme-builder",
+        description: "Generate and preview light and dark CSS tokens.",
+        icon: Sparkles,
+      },
+      {
+        label: PRODUCT_DISPLAY["na-ai-landing"].name,
+        href: "/templates/na-ai-landing",
+        description:
+          "A Next.js landing page template for AI and SaaS products.",
+        icon: LayoutTemplate,
+        badge: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+      },
+    ],
+  },
+];
+
+export const PRODUCT_MENU_SECONDARY_ITEMS: PrimaryNavItem[] = [
+  { label: "Compare Starters", href: "/starters" },
+  { label: "All templates", href: "/templates" },
+  { label: "UI examples", href: "/ui/examples" },
+  { label: "Pricing", href: "/pricing" },
+];
+
+// Primary destinations already listed as products/secondary links need no
+// duplicate mobile entry. Documentation-specific links are supplied by callers.
+export const RESOURCE_NAV_ITEMS: PrimaryNavItem[] = [
+  ...PRIMARY_NAV_ITEMS.filter(
+    (item) =>
+      ![
+        ...PRODUCT_MENU_GROUPS.flatMap((group) => group.items),
+        ...PRODUCT_MENU_SECONDARY_ITEMS,
+      ].some((product) => product.href === item.href),
+  ),
+  { label: "Changelog", href: "/changelog" },
+  { label: "GitHub", href: "https://github.com/pycolors" },
 ];
 
 /**

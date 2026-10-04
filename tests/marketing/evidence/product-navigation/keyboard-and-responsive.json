@@ -1,0 +1,1249 @@
+{
+  "steps": [
+    {
+      "action": "Tab from logo reaches Products without opening",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "First Enter opens",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab enters first product",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Shift+Tab returns to trigger",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Space closes",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Space opens",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Pointer leaves while product keeps keyboard focus",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /blocks",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/blocks",
+        "label": null,
+        "tag": "A",
+        "text": "BlocksPreview and copy application patterns.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /starters/free",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/starters/free",
+        "label": null,
+        "tag": "A",
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /starters/pro",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/starters/pro",
+        "label": null,
+        "tag": "A",
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /tools/theme-builder",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/tools/theme-builder",
+        "label": null,
+        "tag": "A",
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /templates/na-ai-landing",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/templates/na-ai-landing",
+        "label": null,
+        "tag": "A",
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /starters",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/starters",
+        "label": null,
+        "tag": "A",
+        "text": "Compare Starters",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /templates",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/templates",
+        "label": null,
+        "tag": "A",
+        "text": "All templates",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /ui/examples",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/ui/examples",
+        "label": null,
+        "tag": "A",
+        "text": "UI examples",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab to /pricing",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/pricing",
+        "label": null,
+        "tag": "A",
+        "text": "Pricing",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Tab leaves panel without focus theft",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": "/pricing",
+        "label": null,
+        "tag": "A",
+        "text": "Pricing",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Escape closes and restores trigger",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Pointer click opens on first activation",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Pointer click toggles closed",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Outside pointer closes",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BODY",
+        "text": "((a,b,c,d,e,f,g,h)=>{let i=document.documentElement,j=[\"light\",\"dark\"];function k(b){var c;(Array.isArray(a)?a:[a]).forEach(a=>{let c=\"class\"===a,d=c&&f?e.map(a=>f[a]||a)",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Native product link navigates to existing UI page and closes",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BODY",
+        "text": "((a,b,c,d,e,f,g,h)=>{let i=document.documentElement,j=[\"light\",\"dark\"];function k(b){var c;(Array.isArray(a)?a:[a]).forEach(a=>{let c=\"class\"===a,d=c&&f?e.map(a=>f[a]||a)",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 1000,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/ui",
+      "scrollY": 0,
+      "width": 1440
+    },
+    {
+      "action": "Mobile opens modal at existing scroll position",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": "Toggle Theme",
+        "tag": "BUTTON",
+        "text": "",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 1",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 2",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/blocks",
+        "label": null,
+        "tag": "A",
+        "text": "BlocksPreview and copy application patterns.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 3",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/free",
+        "label": null,
+        "tag": "A",
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 4",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/pro",
+        "label": null,
+        "tag": "A",
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 5",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/tools/theme-builder",
+        "label": null,
+        "tag": "A",
+        "text": "Theme BuilderGenerate and preview light and dark CSS tokens.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 6",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/templates/na-ai-landing",
+        "label": null,
+        "tag": "A",
+        "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 7",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters",
+        "label": null,
+        "tag": "A",
+        "text": "Compare Starters",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 8",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/templates",
+        "label": null,
+        "tag": "A",
+        "text": "All templates",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 9",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui/examples",
+        "label": null,
+        "tag": "A",
+        "text": "UI examples",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 10",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/pricing",
+        "label": null,
+        "tag": "A",
+        "text": "Pricing",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 11",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/docs",
+        "label": null,
+        "tag": "A",
+        "text": "Docs",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 12",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/guides",
+        "label": null,
+        "tag": "A",
+        "text": "Guides",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 13",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/blog",
+        "label": null,
+        "tag": "A",
+        "text": "Blog",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 14",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/changelog",
+        "label": null,
+        "tag": "A",
+        "text": "Changelog",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 15",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "https://github.com/pycolors",
+        "label": null,
+        "tag": "A",
+        "text": "GitHub",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 16",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/pro",
+        "label": null,
+        "tag": "A",
+        "text": "Explore Pro",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 17",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Close",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 18",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": "Toggle Theme",
+        "tag": "BUTTON",
+        "text": "",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 19",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 20",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/blocks",
+        "label": null,
+        "tag": "A",
+        "text": "BlocksPreview and copy application patterns.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 21",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/free",
+        "label": null,
+        "tag": "A",
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Tab 22",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/pro",
+        "label": null,
+        "tag": "A",
+        "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Shift+Tab 1",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/starters/free",
+        "label": null,
+        "tag": "A",
+        "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Shift+Tab 2",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/blocks",
+        "label": null,
+        "tag": "A",
+        "text": "BlocksPreview and copy application patterns.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Shift+Tab 3",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Programmatic background focus is contained",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Modal wheel scroll leaves page scroll locked",
+      "dialog": true,
+      "expanded": "false",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": true,
+      "height": 800,
+      "hidden": true,
+      "overflow": "hidden",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Mobile Escape releases scroll and restores trigger",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": "Open navigation menu",
+        "tag": "BUTTON",
+        "text": "",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Close button releases modal and restores trigger",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": "Open navigation menu",
+        "tag": "BUTTON",
+        "text": "",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 320
+    },
+    {
+      "action": "Resize modal to desktop releases locks and focuses Products",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 1024
+    },
+    {
+      "action": "Reopen Products after resize",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Products",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 1024
+    },
+    {
+      "action": "Focus first product before shrinking",
+      "dialog": false,
+      "expanded": "true",
+      "focus": {
+        "href": "/ui",
+        "label": null,
+        "tag": "A",
+        "text": "UI LibraryReact primitives for your product interface.",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": false,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 1024
+    },
+    {
+      "action": "Resize focused panel to compact restores visible mobile trigger",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": "Open navigation menu",
+        "tag": "BUTTON",
+        "text": "",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/",
+      "scrollY": 480,
+      "width": 1023
+    },
+    {
+      "action": "Mobile product route closes and releases body",
+      "dialog": false,
+      "expanded": "false",
+      "focus": {
+        "href": null,
+        "label": null,
+        "tag": "MAIN",
+        "text": "PyColors BlocksInteractive preview + sourceBuild SaaS interfaces fasterTry the composition. Inspect the code. Copy what you need.Try production-shaped React patterns befo",
+        "visible": true
+      },
+      "focusInDialog": false,
+      "height": 800,
+      "hidden": true,
+      "overflow": "visible",
+      "path": "/blocks",
+      "scrollY": 0,
+      "width": 1023
+    }
+  ],
+  "closedFocus": {
+    "focused": false,
+    "hidden": true,
+    "positiveTabIndex": 0
+  },
+  "mobileTabs": [
+    {
+      "href": "/ui",
+      "label": null,
+      "tag": "A",
+      "text": "UI LibraryReact primitives for your product interface.",
+      "visible": true
+    },
+    {
+      "href": "/blocks",
+      "label": null,
+      "tag": "A",
+      "text": "BlocksPreview and copy application patterns.",
+      "visible": true
+    },
+    {
+      "href": "/starters/free",
+      "label": null,
+      "tag": "A",
+      "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+      "visible": true
+    },
+    {
+      "href": "/starters/pro",
+      "label": null,
+      "tag": "A",
+      "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS.",
+      "visible": true
+    },
+    {
+      "href": "/tools/theme-builder",
+      "label": null,
+      "tag": "A",
+      "text": "Theme BuilderGenerate and preview light and dark CSS tokens.",
+      "visible": true
+    },
+    {
+      "href": "/templates/na-ai-landing",
+      "label": null,
+      "tag": "A",
+      "text": "NA-AI \u2014 AI Analytics Landing Page49 \u20acA Next.js landing page template for AI and SaaS products.",
+      "visible": true
+    },
+    {
+      "href": "/starters",
+      "label": null,
+      "tag": "A",
+      "text": "Compare Starters",
+      "visible": true
+    },
+    {
+      "href": "/templates",
+      "label": null,
+      "tag": "A",
+      "text": "All templates",
+      "visible": true
+    },
+    {
+      "href": "/ui/examples",
+      "label": null,
+      "tag": "A",
+      "text": "UI examples",
+      "visible": true
+    },
+    {
+      "href": "/pricing",
+      "label": null,
+      "tag": "A",
+      "text": "Pricing",
+      "visible": true
+    },
+    {
+      "href": "/docs",
+      "label": null,
+      "tag": "A",
+      "text": "Docs",
+      "visible": true
+    },
+    {
+      "href": "/guides",
+      "label": null,
+      "tag": "A",
+      "text": "Guides",
+      "visible": true
+    },
+    {
+      "href": "/blog",
+      "label": null,
+      "tag": "A",
+      "text": "Blog",
+      "visible": true
+    },
+    {
+      "href": "/changelog",
+      "label": null,
+      "tag": "A",
+      "text": "Changelog",
+      "visible": true
+    },
+    {
+      "href": "https://github.com/pycolors",
+      "label": null,
+      "tag": "A",
+      "text": "GitHub",
+      "visible": true
+    },
+    {
+      "href": "/starters/pro",
+      "label": null,
+      "tag": "A",
+      "text": "Explore Pro",
+      "visible": true
+    },
+    {
+      "href": null,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "Close",
+      "visible": true
+    },
+    {
+      "href": null,
+      "label": "Toggle Theme",
+      "tag": "BUTTON",
+      "text": "",
+      "visible": true
+    },
+    {
+      "href": "/ui",
+      "label": null,
+      "tag": "A",
+      "text": "UI LibraryReact primitives for your product interface.",
+      "visible": true
+    },
+    {
+      "href": "/blocks",
+      "label": null,
+      "tag": "A",
+      "text": "BlocksPreview and copy application patterns.",
+      "visible": true
+    },
+    {
+      "href": "/starters/free",
+      "label": null,
+      "tag": "A",
+      "text": "Starter FreeFreeExplore SaaS screens with mocked auth and billing.",
+      "visible": true
+    },
+    {
+      "href": "/starters/pro",
+      "label": null,
+      "tag": "A",
+      "text": "PyColors Starter Pro199 \u20acAuth.js and Stripe foundations to configure for your SaaS.",
+      "visible": true
+    }
+  ],
+  "errors": ""
+}
