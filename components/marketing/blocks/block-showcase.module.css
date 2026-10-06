@@ -1,0 +1,23 @@
+.stage {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 8%, var(--background)) 45%
+  );
+}
+
+.preview:fullscreen {
+  overflow: auto;
+  background: var(--background);
+}
+
+.preview:fullscreen .stage {
+  min-height: 100dvh;
+}
+
+@media (pointer: coarse), (max-width: 639px) {
+  .control {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

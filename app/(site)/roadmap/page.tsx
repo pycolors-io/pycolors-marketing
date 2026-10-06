@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  ChevronDown,
+  CircleDashed,
+  CircleDot,
+  GitBranch,
+  History,
+  MessageSquare,
+  MoreHorizontal,
+  Route,
+  type LucideIcon,
+} from "lucide-react";
+import { Badge, cn } from "@pycolors/ui";
+import { Container } from "@/components/container";
+import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
-import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import {
   MarketingActionGroup,
   MarketingCtaPanel,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
-import { MarketingStatCard } from "@/components/marketing/stat-card";
-import { Container } from "@/components/container";
-import { Badge, Card, cn } from "@pycolors/ui";
-import { Breadcrumb } from "@/components/seo/breadcrumb";
+import disclosureStyles from "@/components/marketing/faq.module.css";
+import styles from "@/components/marketing/roadmap.module.css";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Product Roadmap",
@@ -73,30 +83,35 @@ type RoadmapItem = {
 const statusMeta: Record<
   Status,
   {
-    variant: "secondary" | "default" | "outline";
-    label: string;
+    icon: LucideIcon;
+    description: string;
+    href: string;
     className: string;
   }
 > = {
-  Shipped: {
-    variant: "default",
-    label: "Shipped",
-    className: "bg-success text-primary-foreground",
-  },
   Now: {
-    variant: "secondary",
-    label: "Now",
-    className: "border-primary/30 bg-primary/10 text-foreground",
+    icon: CircleDot,
+    description: "Active work and priorities",
+    href: "#roadmap-now",
+    className: styles.now,
   },
   Next: {
-    variant: "outline",
-    label: "Next",
-    className: "border-primary/30 bg-primary/5",
+    icon: CircleDashed,
+    description: "Planned next steps",
+    href: "#roadmap-next",
+    className: styles.next,
   },
   Later: {
-    variant: "outline",
-    label: "Later",
-    className: "border-border-subtle bg-surface-muted",
+    icon: MoreHorizontal,
+    description: "Longer-term possibilities",
+    href: "#roadmap-later",
+    className: styles.later,
+  },
+  Shipped: {
+    icon: CheckCircle2,
+    description: "Work already released",
+    href: "#roadmap-history",
+    className: styles.shipped,
   },
 };
 
@@ -940,299 +955,394 @@ const items: RoadmapItem[] = [
   },
 ];
 
-function StatusBadge({ status }: { status: Status }) {
-  const meta = statusMeta[status];
-
+function StatusBadge({ status }: Readonly<{ status: Status }>) {
+  const { icon: Icon, className } = statusMeta[status];
   return (
-    <Badge
-      variant={meta.variant}
-      className={cn("rounded-[5px] text-[11px]", meta.className)}
-    >
-      {meta.label}
+    <Badge variant="outline" className={cn(styles.statusBadge, className)}>
+      <Icon className="size-3" aria-hidden="true" />
+      {status}
     </Badge>
   );
 }
 
-function RoadmapCard({ item }: { item: RoadmapItem }) {
-  const body = (
-    <Card className="h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0 space-y-2">
-          <h3 className="text-base font-semibold text-foreground">
-            {item.title}
-          </h3>
-
-          <p className="text-sm leading-7 text-muted-foreground">
-            {item.description}
-          </p>
-        </div>
-
-        <div className="shrink-0">
-          <StatusBadge status={item.status} />
-        </div>
+function RoadmapCard({
+  item,
+  archived = false,
+}: Readonly<{
+  item: RoadmapItem;
+  archived?: boolean;
+}>) {
+  const external = item.href?.startsWith("http");
+  const content = (
+    <>
+      <div className={styles.itemMeta}>
+        <StatusBadge status={item.status} />
+        {!archived ? (
+          <span className={styles.milestoneLabel}>
+            Original milestone · {item.milestone}
+          </span>
+        ) : null}
       </div>
-
+      <div className={styles.itemHeading}>
+        <h3>{item.title}</h3>
+        {item.href ? (
+          <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+        ) : null}
+      </div>
+      <p className={styles.itemDescription}>{item.description}</p>
       {item.tags?.length ? (
-        <MarketingPillList className="mt-4">
+        <div className={styles.tags}>
           {item.tags.map((tag) => (
-            <MarketingPill key={tag}>{tag}</MarketingPill>
+            <Badge key={tag} variant="outline" className={styles.tag}>
+              {tag}
+            </Badge>
           ))}
-        </MarketingPillList>
+        </div>
       ) : null}
-    </Card>
+      {external ? <span className="sr-only">Opens in a new tab.</span> : null}
+    </>
   );
-
-  if (!item.href) return body;
-
-  if (item.href.startsWith("http")) {
+  const className = cn(
+    styles.item,
+    archived ? styles.archiveItem : styles.activeItem,
+  );
+  if (!item.href) return <div className={className}>{content}</div>;
+  if (external) {
     return (
       <a
         href={item.href}
         target="_blank"
         rel="noreferrer noopener"
-        className="block h-full rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        className={className}
       >
-        {body}
+        {content}
       </a>
     );
   }
-
   return (
-    <Link
-      href={item.href}
-      className="block h-full rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-    >
-      {body}
+    <Link href={item.href} className={className}>
+      {content}
     </Link>
   );
 }
 
-function groupByMilestone(list: RoadmapItem[]) {
-  const map = new Map<Milestone, RoadmapItem[]>();
-
-  for (const milestone of milestones.map((item) => item.id)) {
-    map.set(milestone, []);
-  }
-
-  for (const item of list) {
-    map.get(item.milestone)?.push(item);
-  }
-
-  return map;
-}
+const historyOrder: Milestone[] = [
+  "Oct 2026",
+  "Sep 2026",
+  "Aug 2026",
+  "Jul 2026",
+  "Jun 2026",
+  "H1 2026",
+  "May 2026",
+  "Apr 2026",
+  "Mar 2026",
+  "Feb 2026",
+  "Jan 2026",
+  "Release Week",
+];
 
 export default function RoadmapPage() {
-  const byMilestone = groupByMilestone(items);
-
-  const shipped = items.filter((item) => item.status === "Shipped").length;
-  const now = items.filter((item) => item.status === "Now").length;
-  const next = items.filter((item) => item.status === "Next").length;
-  const later = items.filter((item) => item.status === "Later").length;
+  const byStatus = {
+    Now: items.filter((item) => item.status === "Now"),
+    Next: items.filter((item) => item.status === "Next"),
+    Later: items.filter((item) => item.status === "Later"),
+    Shipped: items.filter((item) => item.status === "Shipped"),
+  };
+  const history = historyOrder.flatMap((id) => {
+    const milestone = milestones.find((milestone) => milestone.id === id);
+    const entries = byStatus.Shipped.filter((item) => item.milestone === id);
+    return milestone && entries.length ? [{ ...milestone, entries }] : [];
+  });
 
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-10 pt-20 sm:pb-14">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8">
-            <Breadcrumb
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Roadmap", href: "/roadmap" },
-              ]}
-            />
-          </div>
-
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className="max-w-7xl pb-16 pt-24 sm:pb-24 sm:pt-28 lg:px-6 xl:px-0">
+        <Breadcrumb
+          className={styles.breadcrumb}
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Roadmap", href: "/roadmap" },
+          ]}
+        />
+        <div className={styles.heroLayout}>
           <PageHero
             variant="compact"
-            badges={[{ label: "Public roadmap", variant: "secondary" }]}
-            title="Roadmap"
-            description="A release-driven view of PyColors work across UI foundations, guides, patterns, Starter Free, Starter Pro, commercial delivery, trust, and product clarity."
+            align="left"
+            contentClassName="mx-0"
+            className={styles.hero}
+            badges={[
+              {
+                label: "Public roadmap",
+                icon: <Route className="size-3.5" aria-hidden="true" />,
+              },
+            ]}
+            title="The work ahead. The progress so far."
+            description="Follow the evolution of PyColors, from UI foundations to product experiences. See the active work, the planned next steps and what has already shipped."
             actions={
               <>
                 <MarketingLinkButton>
-                  <Link href="/docs">Read the docs</Link>
+                  <Link href="#roadmap-priorities">
+                    Explore the priorities
+                    <ArrowDown className="size-4" aria-hidden="true" />
+                  </Link>
                 </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/changelog">View changelog</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/pricing">View pricing</Link>
-                </MarketingLinkButton>
-              </>
-            }
-            extra={
-              <>
-                <p className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground">
-                  This roadmap reflects current product direction. It is not a
-                  contractual delivery promise, and scope may evolve based on
-                  real usage, feedback, bugs, and commercial priorities.
-                </p>
-                <ul
-                  aria-label="Roadmap status totals"
-                  className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
-                >
-                  <li>
-                    <MarketingStatCard
-                      label="shipped"
-                      value={shipped}
-                      tone="success"
-                    />
-                  </li>
-                  <li>
-                    <MarketingStatCard label="now" value={now} />
-                  </li>
-                  <li>
-                    <MarketingStatCard label="next" value={next} />
-                  </li>
-                  <li>
-                    <MarketingStatCard label="later" value={later} />
-                  </li>
-                </ul>
+                <Link href="/changelog" className={styles.textLink}>
+                  View changelog
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
               </>
             }
           />
-
-          <MarketingSectionShell spacing="compact">
-            <div className="grid gap-4 sm:grid-cols-3">
-              <MarketingFeatureCard
-                headingLevel={2}
-                title="Single thing"
-                description="Ship the PyColors funnel: Guides → Blog → Patterns / Examples → Starter Free → Starter Pro."
-              />
-
-              <MarketingFeatureCard
-                headingLevel={2}
-                title="Documentation-first"
-                description="Every component, guide, article, and starter should help users understand what to build, why it matters, and how to ship."
-              />
-
-              <MarketingFeatureCard
-                headingLevel={2}
-                title="Commercial readiness"
-                description="Trust pages, pricing clarity, launch proof, delivery reliability, analytics, docs depth, auth, and billing."
-              />
+          <aside
+            aria-labelledby="roadmap-overview-heading"
+            className={styles.overview}
+          >
+            <div className={styles.overviewHeading}>
+              <GitBranch className="size-4" aria-hidden="true" />
+              <h2 id="roadmap-overview-heading">Roadmap at a glance</h2>
             </div>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell spacing="compact">
-            <Card className="rounded-[5px] border border-primary/25 bg-primary/5 p-6 shadow-soft sm:p-7">
-              <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-                <div className="space-y-3">
-                  <Badge
-                    variant="outline"
-                    className="rounded-[5px] border-primary/25 bg-background/60"
-                  >
-                    How to read this roadmap
-                  </Badge>
-
-                  <h2 className="font-brand text-2xl font-semibold tracking-tight">
-                    Release-driven, not promise-driven.
-                  </h2>
-                </div>
-
-                <div className="space-y-5">
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    Shipped items reflect public work already released. Now
-                    reflects active cleanup and product priorities. Next and
-                    Later are used only when public scope is realistic enough to
-                    show.
-                  </p>
-
-                  <MarketingActionGroup className="border-t border-border-subtle pt-5">
-                    <MarketingLinkButton variant="outline">
-                      <Link href="/starters/free">Starter Free</Link>
-                    </MarketingLinkButton>
-
-                    <MarketingLinkButton variant="outline">
-                      <Link href="/starters/pro">Starter Pro</Link>
-                    </MarketingLinkButton>
-
-                    <MarketingLinkButton variant="outline">
-                      <Link href="/pricing">Pricing</Link>
-                    </MarketingLinkButton>
-                  </MarketingActionGroup>
-                </div>
-              </div>
-            </Card>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell spacing="compact">
-            <div className="space-y-12">
-              {milestones.map((milestone) => {
-                const list = byMilestone.get(milestone.id) ?? [];
-
+            <ul
+              aria-label="Roadmap status totals"
+              className={styles.statusTotals}
+            >
+              {(["Now", "Next", "Later", "Shipped"] as const).map((status) => {
+                const {
+                  icon: Icon,
+                  description,
+                  href,
+                  className,
+                } = statusMeta[status];
                 return (
-                  <div key={milestone.id} className="space-y-4">
-                    <MarketingSectionHeader
-                      align="left"
-                      title={milestone.title}
-                      description={milestone.subtitle}
-                      action={
-                        <span className="text-xs text-muted-foreground">
-                          {list.length} item{list.length === 1 ? "" : "s"}
+                  <li key={status}>
+                    <Link
+                      href={href}
+                      className={cn(styles.statusLink, className)}
+                    >
+                      <Icon className={styles.statusIcon} aria-hidden="true" />
+                      <span className={styles.statusCopy}>
+                        <span className={styles.statusLabel}>{status}</span>
+                        <span className={styles.statusDescription}>
+                          {description}
                         </span>
-                      }
-                    />
+                      </span>
+                      <span className={styles.statusCount}>
+                        {byStatus[status].length}
+                      </span>
+                      <ArrowDown
+                        className="size-3.5 shrink-0 text-muted-foreground"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className={styles.overviewNote}>
+              Item counts describe the public roadmap, not release versions.
+            </p>
+          </aside>
+        </div>
+
+        <div className={styles.directionNote}>
+          <CircleDashed className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+          <p>
+            This roadmap reflects current product direction. It is not a
+            contractual delivery promise, and scope may evolve based on real
+            usage, feedback, bugs, and commercial priorities.
+          </p>
+        </div>
+
+        <section
+          id="roadmap-priorities"
+          aria-labelledby="roadmap-priorities-heading"
+          tabIndex={-1}
+          className={styles.section}
+        >
+          <span className={styles.eyebrow}>01 / Looking ahead</span>
+          <MarketingSectionHeader
+            align="left"
+            titleId="roadmap-priorities-heading"
+            title="Active priorities. Clear next steps."
+            description="Now reflects active work. Next describes planned scope. Original milestone labels provide context; they are not new delivery dates."
+          />
+          <div className={styles.priorityGrid}>
+            {(["Now", "Next"] as const).map((status) => (
+              <section
+                key={status}
+                id={`roadmap-${status.toLowerCase()}`}
+                aria-label={status}
+                tabIndex={-1}
+                className={cn(
+                  styles.priorityLane,
+                  status === "Now" && styles.nowLane,
+                )}
+              >
+                <div className={styles.laneHeading}>
+                  <StatusBadge status={status} />
+                  <span>{byStatus[status].length} items</span>
+                </div>
+                <p className={styles.laneDescription}>
+                  {status === "Now"
+                    ? "Work receiving attention today."
+                    : "The next improvements under consideration."}
+                </p>
+                <ul
+                  aria-label={`${status} roadmap items`}
+                  className={styles.priorityList}
+                >
+                  {byStatus[status].map((item) => (
+                    <li key={item.title}>
+                      <RoadmapCard item={item} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+          <section
+            id="roadmap-later"
+            aria-label="Later"
+            tabIndex={-1}
+            className={styles.laterSection}
+          >
+            <div>
+              <StatusBadge status="Later" />
+              <span className={styles.laterCount}>
+                {byStatus.Later.length} items
+              </span>
+            </div>
+            {byStatus.Later.length ? (
+              <ul aria-label="Later roadmap items" className={styles.laterList}>
+                {byStatus.Later.map((item) => (
+                  <li key={item.title}>
+                    <RoadmapCard item={item} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                No longer-term items are listed yet. New scope will appear here
+                when it is ready to share.
+              </p>
+            )}
+          </section>
+        </section>
+
+        <section
+          id="roadmap-history"
+          aria-labelledby="roadmap-history-heading"
+          tabIndex={-1}
+          className={cn(styles.section, styles.dividedSection)}
+        >
+          <div className={styles.historyLayout}>
+            <div className={styles.historyIntro}>
+              <span className={styles.eyebrow}>02 / Delivered work</span>
+              <h2 id="roadmap-history-heading">Progress you can explore.</h2>
+              <p>
+                Browse {byStatus.Shipped.length} shipped items by milestone,
+                starting with the most recent month. Open a group to see its
+                details and related product pages.
+              </p>
+              <Link href="/changelog" className={styles.textLink}>
+                <History className="size-4" aria-hidden="true" />
+                Read the release notes
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+              <p className={styles.historyHint}>
+                Month labels group the roadmap history. The changelog records
+                dated releases.
+              </p>
+            </div>
+            <div className={styles.historyGroups}>
+              {history.map((milestone, index) => (
+                <details
+                  key={milestone.id}
+                  open={index === 0}
+                  className={cn(styles.historyGroup, disclosureStyles.item)}
+                >
+                  <summary className={styles.historySummary}>
+                    <span className={styles.historyDot} aria-hidden="true" />
+                    <span className={styles.historyMonth}>
+                      {milestone.title}
+                    </span>
+                    <span className={styles.historyCount}>
+                      {milestone.entries.length} shipped
+                    </span>
+                    <span
+                      className={disclosureStyles.indicator}
+                      aria-hidden="true"
+                    >
+                      <ChevronDown className="size-4" />
+                    </span>
+                  </summary>
+                  <div className={disclosureStyles.content}>
+                    <p className={styles.milestoneDescription}>
+                      {milestone.subtitle}
+                    </p>
                     <ul
                       aria-label={milestone.title}
-                      className="grid gap-3 sm:grid-cols-2"
+                      className={styles.historyList}
                     >
-                      {list.map((item) => (
-                        <li key={`${item.milestone}:${item.title}`}>
-                          <RoadmapCard item={item} />
+                      {milestone.entries.map((item) => (
+                        <li key={item.title}>
+                          <RoadmapCard item={item} archived />
                         </li>
                       ))}
                     </ul>
                   </div>
-                );
-              })}
+                </details>
+              ))}
             </div>
-          </MarketingSectionShell>
+          </div>
+        </section>
 
-          <MarketingSectionShell spacing="compact">
-            <div className="mb-4">
-              <Badge
-                variant="outline"
-                className="rounded-[5px] border-pro-border bg-pro-surface-muted"
-              >
-                Have a request?
-              </Badge>
-            </div>
-            <MarketingCtaPanel
-              title="Public feedback stays scoped and practical."
-              description="For UI package bugs or documentation issues, use the public repository. Broader product direction stays selective and release-driven."
-              actions={
-                <>
-                  <MarketingActionGroup>
-                    <MarketingLinkButton variant="outline">
-                      <a
-                        href="https://github.com/pycolors-io/pycolors-ui/issues"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        Open UI issue
-                      </a>
-                    </MarketingLinkButton>
-                    <MarketingLinkButton>
-                      <a
-                        href="https://github.com/pycolors-io/pycolors-ui"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        View UI repository
-                      </a>
-                    </MarketingLinkButton>
-                  </MarketingActionGroup>
-                </>
-              }
-            />
-
-            <p className="mt-4 text-center text-xs text-muted-foreground">
+        <section
+          aria-labelledby="roadmap-feedback-heading"
+          className={styles.feedbackSection}
+        >
+          <MarketingCtaPanel
+            titleId="roadmap-feedback-heading"
+            title="Help shape the next improvement."
+            description="Found a UI bug or a documentation gap? Share the details in the public repository. Clear steps and examples make feedback easier to act on."
+            className={styles.feedbackPanel}
+            actions={
+              <MarketingActionGroup>
+                <MarketingLinkButton>
+                  <a
+                    href="https://github.com/pycolors-io/pycolors-ui/issues"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Open UI issue
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </MarketingLinkButton>
+                <Link href="/contact" className={styles.textLink}>
+                  <MessageSquare className="size-4" aria-hidden="true" />
+                  Contact PyColors
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </MarketingActionGroup>
+            }
+          />
+          <div className={styles.feedbackFooter}>
+            <p>
               Roadmap items may shift based on feedback, bugs, technical
               constraints, and real-world usage.
             </p>
-          </MarketingSectionShell>
-        </div>
+            <a
+              href="https://github.com/pycolors-io/pycolors-ui"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.textLink}
+            >
+              View UI repository
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </section>
       </Container>
     </main>
   );

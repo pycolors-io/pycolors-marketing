@@ -1,0 +1,124 @@
+.page {
+  background-image: radial-gradient(
+    ellipse at 90% 0%,
+    color-mix(in oklab, var(--primary) 7%, transparent),
+    transparent 65%
+  );
+  background-size: 100% 42rem;
+  background-repeat: no-repeat;
+}
+.sectionNav a {
+  min-height: 2.75rem;
+}
+.preview > div {
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+}
+.previewStage {
+  background:
+    radial-gradient(
+      ellipse at 0% 0%,
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in oklab, var(--brand-platform) 8%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+.browserWindow {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow: 0 12px 32px -20px
+    color-mix(in oklab, var(--primary) 35%, transparent);
+}
+.windowDot {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background: var(--border);
+}
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.textLink:hover {
+  color: var(--primary);
+}
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 9%, transparent);
+}
+.componentCard,
+.resourceCard {
+  background: linear-gradient(
+    150deg,
+    color-mix(in oklab, var(--primary) 4%, var(--background)),
+    var(--background) 60%
+  );
+}
+.componentCard > div > span[aria-hidden="true"] {
+  color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 6%, var(--background));
+}
+.setupPanel,
+.proPanel {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in oklab, var(--primary) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+.stepNumber {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid
+    color-mix(in oklab, var(--primary) 15%, var(--border-subtle));
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--primary);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.625rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .resourceCard {
+    transition: none;
+  }
+  .resourceCard:hover svg {
+    translate: none;
+  }
+  .preview [role="tab"] {
+    transition: none;
+  }
+}

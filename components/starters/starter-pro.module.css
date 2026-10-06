@@ -1,0 +1,332 @@
+/* Matches the diagonal treatment of the Theme Builder workspace preview. */
+.stage {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 4%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 10%, var(--background)) 45%
+  );
+}
+
+.checkItem {
+  column-gap: 0.75rem;
+}
+
+/* Inclusion markers are decorative, not interactive checkboxes. */
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--foreground) 7%, transparent);
+}
+
+.checkItem > span:first-child > svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  stroke-width: 2.25;
+}
+
+.comparisonTable tr > :nth-child(2),
+.comparisonTable tr > :nth-child(3) {
+  border-left: 1px solid var(--border-subtle);
+}
+
+.comparisonTable tr > :nth-child(3) {
+  background: color-mix(in oklab, var(--primary) 3%, var(--background));
+}
+
+.comparisonTable thead tr > :nth-child(3) {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 7%, var(--background)),
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 80%
+  );
+}
+
+.foundationStory {
+  position: relative;
+  isolation: isolate;
+}
+
+.foundationIntro {
+  margin-bottom: 2rem;
+}
+
+.foundationReveal {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.featuredFoundation {
+  container-type: inline-size;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background-image: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 3%, transparent),
+    transparent 55%
+  );
+}
+
+.foundationCards {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.supportingFoundation {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+}
+
+.foundationSurface {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 5%, var(--background)),
+    color-mix(in oklab, var(--primary) 1%, var(--background)) 55%,
+    var(--background) 100%
+  );
+}
+
+.foundationEvidence {
+  display: grid;
+  border-block: 1px solid var(--border-subtle);
+}
+
+.foundationEvidence > a + a {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.foundationMap {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--border-subtle) 1px, transparent 0),
+    radial-gradient(
+      ellipse at 50% 100%,
+      color-mix(in oklab, var(--primary) 5%, var(--background)),
+      var(--background) 80%
+    );
+  background-size:
+    16px 16px,
+    auto;
+}
+
+.foundationFlow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 1.5rem 0.75rem;
+}
+
+.foundationFlow::before {
+  content: "";
+  position: absolute;
+  top: 3rem;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: color-mix(in oklab, var(--primary) 25%, var(--border-subtle));
+}
+
+.foundationNode {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  margin-inline: auto;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 2px 6px color-mix(in oklab, var(--foreground) 4%, transparent);
+}
+
+.foundationPoints {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@container (min-width: 28rem) {
+  .foundationPoints {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .foundationCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featuredFoundation {
+    grid-column: 1 / -1;
+  }
+
+  .foundationEvidence {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .foundationEvidence > a + a {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+
+@media (min-width: 64rem) {
+  .featuredFoundation {
+    grid-column: auto;
+  }
+}
+
+/* Cards remain visible in server HTML and without JavaScript. Only cards
+   below the viewport are prepared for a one-time reveal after hydration. */
+@media (prefers-reduced-motion: no-preference) {
+  .foundationCards > [data-reveal] {
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .foundationCards > [data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(40px) scale(0.985);
+  }
+
+  .foundationCards > [data-reveal="visible"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .foundationCards > [data-reveal="focused"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  @media (min-width: 48rem) {
+    .foundationCards > [data-reveal="visible"]:nth-child(even) {
+      transition-delay: 120ms;
+    }
+  }
+
+  @media (max-width: 47.999rem) {
+    .foundationCards > [data-reveal] {
+      transition-duration: 500ms;
+    }
+
+    .foundationCards > [data-reveal="pending"] {
+      transform: translateY(24px);
+    }
+  }
+}
+
+.carousel {
+  --preview-direction: 1;
+  --preview-distance: clamp(4px, 0.7vw, 8px);
+}
+
+.carousel[data-direction="previous"] {
+  --preview-direction: -1;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: var(--foreground);
+  transform-origin: left;
+}
+
+.carousel[data-rotating="true"] .progressFill {
+  animation-name: preview-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes preview-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Both slides share a fixed grid cell while they crossfade. Inactive slides
+   become inert immediately; visibility waits for the visual exit to finish. */
+.slide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 420ms;
+}
+
+.slide[data-active="true"] {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Keep the outgoing image opaque behind the incoming one so light captures
+   never fade through the dark page background. */
+.slide[data-exiting="true"] {
+  opacity: 1;
+  transition: visibility 0s linear 520ms;
+}
+
+.media {
+  transform: translateX(
+      calc(var(--preview-direction) * var(--preview-distance))
+    )
+    scale(1.025);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.caption {
+  transform: translateY(4px);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide[data-exiting="true"] .media {
+  transform: translateX(
+      calc(var(--preview-direction) * var(--preview-distance) * -1)
+    )
+    scale(1.025);
+}
+
+.slide[data-exiting="true"] .caption {
+  transform: translateY(-4px);
+}
+
+.slide[data-active="true"] .media,
+.slide[data-active="true"] .caption {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel[data-rotating="true"] .progressFill {
+    animation: none;
+  }
+
+  .slide,
+  .slide[data-exiting="true"],
+  .media,
+  .caption {
+    transition: none;
+  }
+
+  .media,
+  .caption,
+  .slide[data-exiting="true"] .media,
+  .slide[data-exiting="true"] .caption {
+    transform: none;
+  }
+}

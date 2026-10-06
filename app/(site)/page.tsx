@@ -13,8 +13,12 @@ import {
   Palette,
   PanelsTopLeft,
   Server,
+  Check,
+  Table2,
+  MousePointer2,
+  PanelTop,
 } from "lucide-react";
-import { cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -31,6 +35,7 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { UI_VERSION } from "@/lib/version";
 import { getUiExplorerUrl } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
+import styles from "@/components/marketing/home.module.css";
 
 export const metadata: Metadata = {
   title: {
@@ -85,8 +90,10 @@ function ResourceLink({
   );
 }
 
-const sectionHeaderClass =
-  "mb-10 [&_h2]:max-w-2xl [&_h2]:text-3xl [&_h2]:tracking-[-0.035em] sm:[&_h2]:text-4xl [&_p]:max-w-2xl [&_[data-slot=badge]]:rounded-none [&_[data-slot=badge]]:border-0 [&_[data-slot=badge]]:bg-transparent [&_[data-slot=badge]]:px-0 [&_[data-slot=badge]]:text-muted-foreground";
+const sectionHeaderClass = cn(
+  styles.sectionHeader,
+  "mb-9 [&_h2]:max-w-2xl [&_h2]:text-3xl [&_h2]:tracking-[-0.04em] sm:[&_h2]:text-4xl [&_p]:max-w-2xl [&_[data-slot=badge]]:rounded-none [&_[data-slot=badge]]:border-0 [&_[data-slot=badge]]:bg-transparent [&_[data-slot=badge]]:px-0 [&_[data-slot=badge]]:text-muted-foreground",
+);
 
 const starterPro = PRODUCT_DISPLAY["starter-pro"];
 const starterDemo = "https://starter-demo.pycolors.io";
@@ -95,9 +102,8 @@ const startingPoints = [
   {
     product: "Templates",
     icon: LayoutTemplate,
-    situation: "You need a focused landing page.",
-    value:
-      "An editable frontend for presenting and validating your SaaS offer.",
+    situation: "Launch a focused landing page.",
+    value: "Present your SaaS offer with an editable frontend.",
     detail: PRODUCT_DISPLAY["na-ai-landing"].name,
     href: "/templates/na-ai-landing",
     action: "View NA-AI template",
@@ -105,9 +111,8 @@ const startingPoints = [
   {
     product: "PyColors UI",
     icon: Box,
-    situation: "You already have an application.",
-    value:
-      "Public components and semantic tokens for building consistent custom screens.",
+    situation: "Build inside your existing app.",
+    value: "Compose custom screens with public components and semantic tokens.",
     detail: "Public UI foundation",
     href: "/ui",
     action: "Explore PyColors UI",
@@ -115,9 +120,8 @@ const startingPoints = [
   {
     product: "Blocks",
     icon: Blocks,
-    situation: "You need a complete interface section.",
-    value:
-      "Inspect source-backed patterns and copy the section into your application.",
+    situation: "Add a complete interface section.",
+    value: "Inspect and copy reusable layouts into your application.",
     detail: "Public, copyable sections",
     href: "/blocks",
     action: "Explore Blocks",
@@ -125,8 +129,8 @@ const startingPoints = [
   {
     product: "PyColors Starter Free",
     icon: PanelsTopLeft,
-    situation: "You want to evaluate a full SaaS surface.",
-    value: "Run the mocked frontend before connecting your own infrastructure.",
+    situation: "Explore the application experience.",
+    value: "Run the SaaS frontend with mocked auth, payments and data.",
     detail: "Runnable application UX",
     href: "/starters/free",
     action: "Explore Starter Free",
@@ -134,9 +138,9 @@ const startingPoints = [
   {
     product: starterPro.name,
     icon: Server,
-    situation: "You need the documented infrastructure foundation.",
+    situation: "Connect your application foundation.",
     value:
-      "Review auth, billing, database, email and PWA scope, including setup obligations.",
+      "Start with auth, billing, database and email. Configure and validate for production.",
     detail: "Commercial SaaS foundation",
     href: "/starters/pro",
     action: "View Starter Pro",
@@ -144,9 +148,24 @@ const startingPoints = [
 ] as const;
 
 const explorerLinks = [
-  { family: "table", label: "Table states" },
-  { family: "tabs", label: "Tab interactions" },
-  { family: "empty-state", label: "Empty states" },
+  {
+    family: "table",
+    label: "Table states",
+    description: "Rows, selection & status",
+    icon: Table2,
+  },
+  {
+    family: "tabs",
+    label: "Tab interactions",
+    description: "Filters & keyboard control",
+    icon: MousePointer2,
+  },
+  {
+    family: "empty-state",
+    label: "Empty states",
+    description: "Clear recovery actions",
+    icon: PanelTop,
+  },
 ] as const;
 
 const trustLinks = [
@@ -159,18 +178,87 @@ const trustLinks = [
   ["Purchase support", "/orders/support"],
 ] as const;
 
+function FoundationVisual({
+  kind,
+}: {
+  kind: "components" | "tokens" | "composition";
+}) {
+  return (
+    <div className={styles.foundationVisual} aria-hidden="true">
+      {kind === "components" ? (
+        <div className={styles.apiVisual}>
+          <span>
+            <Package className="size-4" /> @pycolors/ui
+          </span>
+          <div>
+            {["Button", "Dialog", "Table"].map((name) => (
+              <span key={name}>{name}</span>
+            ))}
+          </div>
+        </div>
+      ) : kind === "tokens" ? (
+        <div className={styles.tokenVisual}>
+          <div>
+            {["background", "surface", "border", "primary"].map((token) => (
+              <span key={token} data-token={token} />
+            ))}
+          </div>
+          <span>One theme. Every surface.</span>
+        </div>
+      ) : (
+        <div className={styles.compositionVisual}>
+          <span>
+            <Box className="size-3.5" /> Primitives
+          </span>
+          <span>
+            <Blocks className="size-3.5" /> Blocks
+          </span>
+          <span>
+            <PanelsTopLeft className="size-3.5" /> Applications
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StarterScope({ pro = false }: { pro?: boolean }) {
+  const rows = pro
+    ? [
+        ["Interface", "Application foundation"],
+        ["Services", "Auth, database, billing & email"],
+        ["Next step", "Configure, integrate, validate"],
+      ]
+    : [
+        ["Interface", "Runnable frontend"],
+        ["Services", "Mock authentication, payments & data"],
+        ["Next step", "Explore, customize, connect"],
+      ];
+  return (
+    <dl className={styles.starterScope}>
+      {rows.map(([label, value]) => (
+        <div key={label}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export default function HomePage() {
   const breadcrumb = generateBreadcrumbJsonLd([{ label: "Home", href: "/" }]);
 
   return (
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
-      <Container className="pt-24 pb-8 lg:px-8">
+      <Container className={cn(styles.page, "pt-24 pb-8 lg:px-8")}>
         <main id="content" tabIndex={-1} className="mx-auto w-full max-w-6xl">
           <PageHero
+            variant="compact"
             maxWidth="4xl"
             align="center"
-            className="px-0 py-9 sm:px-6 sm:py-12 lg:px-8 lg:py-14"
+            className={styles.hero}
             badges={[
               {
                 label: `npm · @pycolors/ui v${UI_VERSION}`,
@@ -179,10 +267,25 @@ export default function HomePage() {
             ]}
             actionsClassName="mt-7"
             title="Ship credible SaaS products faster."
-            description="A coherent React and Next.js foundation for developers building a SaaS. Explore a working interface, then choose the starting point your project needs."
+            description="UI components, reusable blocks and application starters. One shared design system for your next React and Next.js product."
+            extra={
+              <div className={styles.heroProof}>
+                {[
+                  "Public UI foundation",
+                  "Source you can inspect",
+                  "Free starting point",
+                ].map((label) => (
+                  <span key={label}>
+                    <Check className="size-3.5" aria-hidden="true" />
+                    {label}
+                  </span>
+                ))}
+              </div>
+            }
+            extraClassName="mt-6"
             actions={
               <MarketingActionGroup align="center" className="w-full">
-                <MarketingLinkButton className="motion-reduce:transition-none">
+                <MarketingLinkButton className={styles.primaryAction}>
                   <a href="#start-with-pycolors">
                     Choose your starting point
                     <ArrowRight className="size-4" aria-hidden="true" />
@@ -198,111 +301,140 @@ export default function HomePage() {
             }
           />
 
-          <SaasShowcase />
-          <div className="flex flex-col gap-3 pb-10 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs leading-5 text-muted-foreground">
-              Built with public{" "}
-              <a
-                href="https://www.npmjs.com/package/@pycolors/ui"
-                className="rounded-sm underline decoration-border underline-offset-4 hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                @pycolors/ui v{UI_VERSION}
-              </a>
-              .
-            </p>
-            <nav
-              aria-label="Explore the showcase primitives"
-              className="flex flex-wrap gap-x-5 gap-y-1"
-            >
-              {explorerLinks.map(({ family, label }) => (
-                <a
-                  key={family}
-                  href={getUiExplorerUrl(["ui", family])}
-                  className={linkClass}
+          <SaasShowcase
+            className={styles.showcase}
+            actions={
+              <MarketingActionGroup className={styles.showcaseActions}>
+                <MarketingLinkButton className={styles.primaryAction}>
+                  <Link href="/ui">
+                    Explore PyColors UI{" "}
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                </MarketingLinkButton>
+                <Link
+                  href="/docs/ui/installation"
+                  className={styles.showcaseDocsLink}
                 >
-                  {label}
-                  <ExternalLink
-                    className="size-3.5 shrink-0"
-                    aria-hidden="true"
-                  />
-                </a>
-              ))}
-            </nav>
-          </div>
+                  Read the docs{" "}
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </MarketingActionGroup>
+            }
+            footer={
+              <div className={styles.proofCaption}>
+                <div className={styles.proofPackage}>
+                  <p>Explore the building blocks.</p>
+                  <a href="https://www.npmjs.com/package/@pycolors/ui">
+                    <Package className="size-3.5" aria-hidden="true" />
+                    @pycolors/ui <span>v{UI_VERSION}</span>
+                    <ArrowUpRight className="size-3" aria-hidden="true" />
+                  </a>
+                </div>
+                <nav
+                  aria-label="Explore the showcase primitives"
+                  className={styles.proofLinks}
+                >
+                  {explorerLinks.map(
+                    ({ family, label, description, icon: Icon }) => (
+                      <a
+                        key={family}
+                        href={getUiExplorerUrl(["ui", family])}
+                        aria-label={label}
+                      >
+                        <span className={styles.proofLinkTitle}>
+                          <Icon className="size-3.5" aria-hidden="true" />
+                          {label}
+                          <ArrowUpRight className="size-3" aria-hidden="true" />
+                        </span>
+                        <span className={styles.proofLinkDescription}>
+                          {description}
+                        </span>
+                      </a>
+                    ),
+                  )}
+                </nav>
+              </div>
+            }
+          />
 
           <MarketingSectionShell
             id="start-with-pycolors"
             spacing="default"
             width="full"
             aria-labelledby="home-start-heading"
-            className="scroll-mt-24 border-t border-border-subtle"
+            className={styles.section}
           >
             <MarketingSectionHeader
               titleId="home-start-heading"
-              eyebrow="Choose your starting point"
+              eyebrow="One system. Five entry points."
               title="Start with what your project needs now."
-              description="Enter at any layer. Each shares the same UI foundation; you do not need to begin with a template or buy a starter."
+              description="From a single component to a complete application foundation. Choose the scope that fits your next step."
               align="left"
               className={sectionHeaderClass}
             />
-            <ol
-              aria-label="PyColors starting points"
-              className="divide-y divide-border-subtle overflow-hidden rounded-lg border border-border-subtle bg-surface"
-            >
-              {startingPoints.map(({ icon: Icon, ...point }, index) => (
-                <li
-                  key={point.product}
-                  className={cn(
-                    "group grid gap-5 p-6 transition-colors hover:bg-surface-muted/40 motion-reduce:transition-none sm:p-8 lg:grid-cols-[1fr_1.15fr_13rem] lg:items-center lg:gap-8",
-                    point.href === "/starters/pro" && "bg-pro-surface/40",
-                  )}
-                >
-                  <div className="flex items-center gap-5">
-                    <span
-                      aria-hidden="true"
-                      className="flex size-11 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-background text-muted-foreground"
-                    >
-                      <Icon className="size-5" strokeWidth={1.5} />
-                    </span>
-                    <div className="space-y-2">
-                      <span
-                        aria-hidden="true"
-                        className="font-mono text-[11px] text-muted-foreground"
-                      >
-                        0{index + 1}
-                      </span>
-                      <p className="max-w-xs text-sm font-medium leading-6">
-                        {point.situation}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold tracking-tight">
-                      {point.product}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      {point.detail}
-                    </p>
-                    <p className="max-w-md text-sm leading-6 text-muted-foreground">
-                      {point.value}
-                    </p>
-                  </div>
-                  <Link
-                    href={point.href}
+            <div className={styles.startingPointsFrame}>
+              <div className={styles.startingPointsHeader} aria-hidden="true">
+                <span>Product</span>
+                <span>Best for your next step</span>
+                <span>Explore the scope</span>
+              </div>
+              <ol
+                aria-label="PyColors starting points"
+                className={styles.startingPoints}
+              >
+                {startingPoints.map(({ icon: Icon, ...point }) => (
+                  <li
+                    key={point.product}
                     className={cn(
-                      linkClass,
-                      "justify-between justify-self-start gap-4 no-underline lg:w-full",
+                      "group",
+                      styles.startingPoint,
+                      point.href === "/starters/pro" && styles.proStartingPoint,
                     )}
                   >
-                    {point.action}
-                    <ArrowRight
-                      className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ol>
+                    <div className="flex min-w-0 items-center gap-3.5">
+                      <span aria-hidden="true" className={styles.productIcon}>
+                        <Icon className="size-[18px]" strokeWidth={1.5} />
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-[15px] font-semibold tracking-tight">
+                          {point.product}
+                        </h3>
+                        <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                          {point.detail}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={styles.productDescription}>
+                      <p className="text-[13px] font-medium leading-6">
+                        {point.situation}
+                      </p>
+                      <p className="mt-1 max-w-md text-xs leading-5 text-muted-foreground">
+                        {point.value}
+                      </p>
+                    </div>
+                    <Link
+                      href={point.href}
+                      className={cn(linkClass, styles.productLink)}
+                    >
+                      {point.action}
+                      <span
+                        className={styles.productLinkIcon}
+                        aria-hidden="true"
+                      >
+                        <ArrowRight className="size-3.5" />
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+              <div className={styles.startingPointsFooter}>
+                <span>
+                  <Layers3 className="size-3.5" aria-hidden="true" />
+                  One shared design system.
+                </span>
+                <p>Start at any layer. Build on it as your product grows.</p>
+              </div>
+            </div>
           </MarketingSectionShell>
 
           <MarketingSectionShell
@@ -310,7 +442,7 @@ export default function HomePage() {
             spacing="default"
             width="full"
             aria-labelledby="home-foundations-heading"
-            className="scroll-mt-24"
+            className={styles.section}
           >
             <MarketingSectionHeader
               titleId="home-foundations-heading"
@@ -320,10 +452,11 @@ export default function HomePage() {
               align="left"
               className={sectionHeaderClass}
             />
-            <div className="grid divide-y divide-border-subtle overflow-hidden rounded-lg border border-border-subtle bg-surface lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-              <div className="flex flex-col p-6 sm:p-8">
+            <div className={styles.foundations}>
+              <div className={styles.foundationCard}>
+                <FoundationVisual kind="components" />
                 <Code2
-                  className="mb-8 size-6 text-muted-foreground"
+                  className="mb-4 size-5 text-muted-foreground"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -352,9 +485,10 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
-              <div className="flex flex-col p-6 sm:p-8">
+              <div className={styles.foundationCard}>
+                <FoundationVisual kind="tokens" />
                 <Palette
-                  className="mb-8 size-6 text-muted-foreground"
+                  className="mb-4 size-5 text-muted-foreground"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -378,9 +512,10 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
-              <div className="flex flex-col p-6 sm:p-8">
+              <div className={styles.foundationCard}>
+                <FoundationVisual kind="composition" />
                 <Layers3
-                  className="mb-8 size-6 text-muted-foreground"
+                  className="mb-4 size-5 text-muted-foreground"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -416,6 +551,7 @@ export default function HomePage() {
             spacing="default"
             width="full"
             aria-labelledby="home-production-heading"
+            className={styles.section}
           >
             <MarketingSectionHeader
               titleId="home-production-heading"
@@ -425,13 +561,18 @@ export default function HomePage() {
               align="left"
               className={sectionHeaderClass}
             />
-            <div className="grid gap-5 lg:grid-cols-2">
-              <div className="flex flex-col rounded-lg border border-border-subtle bg-surface p-6 sm:p-9">
-                <PanelsTopLeft
-                  className="mb-8 size-7 text-muted-foreground"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
+            <div className={styles.starters}>
+              <div className={styles.starterCard}>
+                <div className={styles.starterEyebrow}>
+                  <PanelsTopLeft
+                    className="size-5"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                  <Badge variant="outline" size="sm">
+                    Free · Open source
+                  </Badge>
+                </div>
                 <h3 className="text-2xl font-semibold tracking-tight">
                   PyColors Starter Free
                 </h3>
@@ -440,6 +581,7 @@ export default function HomePage() {
                   surfaces and admin flows. Authentication, payments and data
                   are mocked.
                 </p>
+                <StarterScope />
                 <div className="mt-7">
                   <MarketingLinkButton
                     variant="outline"
@@ -463,12 +605,17 @@ export default function HomePage() {
                   </ResourceLink>
                 </div>
               </div>
-              <div className="flex flex-col rounded-lg border border-pro-border-subtle bg-pro-surface/50 p-6 sm:p-9">
-                <Server
-                  className="mb-8 size-7 text-primary"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
+              <div className={cn(styles.starterCard, styles.proCard)}>
+                <div className={styles.starterEyebrow}>
+                  <Server
+                    className="size-5 text-primary"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                  <Badge variant="outline" size="sm">
+                    Commercial foundation
+                  </Badge>
+                </div>
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <h3 className="text-2xl font-semibold tracking-tight">
                     {starterPro.name}
@@ -487,6 +634,7 @@ export default function HomePage() {
                   email, protected routes and PWA foundations. Review included
                   scope and setup before buying.
                 </p>
+                <StarterScope pro />
                 <div className="mt-7">
                   <BuyStarterProButton
                     fullWidth
@@ -516,6 +664,7 @@ export default function HomePage() {
             spacing="default"
             width="full"
             aria-labelledby="home-trust-heading"
+            className={cn(styles.section, styles.trust)}
           >
             <MarketingSectionHeader
               titleId="home-trust-heading"
@@ -525,7 +674,7 @@ export default function HomePage() {
               align="left"
               className={cn(sectionHeaderClass, "mb-4")}
             />
-            <ul className="flex flex-wrap gap-x-6">
+            <ul className={styles.trustLinks}>
               {trustLinks.map(([label, href]) => (
                 <li key={href}>
                   <Link
@@ -536,6 +685,7 @@ export default function HomePage() {
                     )}
                   >
                     {label}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -546,14 +696,16 @@ export default function HomePage() {
             spacing="compact"
             width="full"
             aria-labelledby="home-next-heading"
+            className="pt-0"
           >
             <MarketingCtaPanel
               titleId="home-next-heading"
+              className={styles.closing}
               title="Choose the foundation for your next step."
               description="Start with the layer that fits your current project. If infrastructure is the blocker, review Starter Pro’s scope and setup."
               actions={
                 <MarketingActionGroup>
-                  <MarketingLinkButton className="motion-reduce:transition-none">
+                  <MarketingLinkButton className={styles.primaryAction}>
                     <a href="#start-with-pycolors">
                       Choose your starting point
                       <ArrowRight className="size-4" aria-hidden="true" />

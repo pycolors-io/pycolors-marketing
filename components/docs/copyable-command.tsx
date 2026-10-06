@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@pycolors/ui";
+import { Button, cn } from "@pycolors/ui";
 import { Check, Copy } from "lucide-react";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;
@@ -49,9 +49,10 @@ export async function copyCommand(
 
 type CopyableCommandProps = Readonly<{
   command: string;
+  className?: string;
 }>;
 
-export function CopyableCommand({ command }: CopyableCommandProps) {
+export function CopyableCommand({ command, className }: CopyableCommandProps) {
   const [status, setStatus] = React.useState<CopyStatus>(IDLE_STATUS);
 
   async function handleCopy() {
@@ -60,7 +61,12 @@ export function CopyableCommand({ command }: CopyableCommandProps) {
   }
 
   return (
-    <div className="my-6 overflow-hidden rounded-xl border border-border bg-muted/30">
+    <div
+      className={cn(
+        "my-6 overflow-hidden rounded-xl border border-border bg-muted/30",
+        className,
+      )}
+    >
       <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-2">
         <span className="text-xs font-medium text-muted-foreground">
           Terminal

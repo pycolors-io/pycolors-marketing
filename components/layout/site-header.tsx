@@ -279,7 +279,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     onClick={() => setIsProductsOpen((open) => !open)}
                     className={cn(
                       "inline-flex min-h-11 items-center rounded-[5px] px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
-                      (activeProductHref || isProductsOpen) &&
+                      (isProductsOpen ||
+                        (activeProductHref && !activePrimaryHref)) &&
                         "bg-surface-muted text-foreground",
                       focusRing,
                     )}

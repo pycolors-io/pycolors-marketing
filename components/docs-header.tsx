@@ -8,12 +8,8 @@ import {
   BookOpen,
   ChevronDown,
   ChevronRight,
-  Code2,
   Layers3,
-  LayoutTemplate,
   Menu,
-  Rocket,
-  Sparkles,
 } from "lucide-react";
 import {
   FullSearchTrigger as LargeSearchToggle,
@@ -32,6 +28,8 @@ import {
 } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { DocsLogo } from "@/components/docs-logo";
+import { DOCS_MENU_GROUPS } from "@/lib/layout.shared";
+import { DocsNewArticleBadge } from "@/components/docs/docs-sidebar-items";
 
 type DocsLink = Readonly<{
   label: string;
@@ -52,44 +50,28 @@ type DocsNavItem = Readonly<{
   description: string;
 }>;
 
-const DOCS_NAV_ITEMS: DocsNavItem[] = [
+const DOCS_RESOURCE_ITEMS: DocsNavItem[] = [
   {
-    label: "Docs",
+    label: "Documentation overview",
     href: "/docs",
     icon: BookOpen,
-    description: "Start here",
-  },
-  {
-    label: "Templates",
-    href: "/docs/templates/na-ai-landing",
-    icon: LayoutTemplate,
-    description: "Launch pages",
-  },
-  {
-    label: "UI",
-    href: "/docs/ui",
-    icon: Code2,
-    description: "Primitives",
+    description: "Find your starting point.",
   },
   {
     label: "Patterns",
     href: "/docs/patterns",
     icon: Layers3,
-    description: "Product flows",
-  },
-  {
-    label: "Starter Free",
-    href: "/docs/starter",
-    icon: Sparkles,
-    description: "Validate fast",
-  },
-  {
-    label: "Starter Pro",
-    href: "/docs/starter-pro",
-    icon: Rocket,
-    description: "Auth and billing",
+    description: "Apply shared product conventions.",
   },
 ];
+
+const DOCS_NAV_ITEMS = [
+  ...DOCS_MENU_GROUPS.flatMap((group) => group.items),
+  ...DOCS_RESOURCE_ITEMS,
+];
+const DOCS_PRIMARY_ITEMS = DOCS_MENU_GROUPS.flatMap((group) =>
+  group.items.filter((item) => item.href !== "/docs/design-system"),
+);
 
 const FEATURED_DOCS_HREFS = [
   "/docs/getting-started",
@@ -131,6 +113,9 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
   const activeDocHref = getMostSpecificActiveHref(
     pathname,
     docsLinks.map((item) => item.href),
+  );
+  const isPrimarySection = DOCS_PRIMARY_ITEMS.some(
+    (item) => item.href === activeHref,
   );
   const curated = FEATURED_DOCS_HREFS.flatMap((href) =>
     docsLinks.filter((item) => item.href === href),
@@ -195,8 +180,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     }
   }
 
-  function sectionLinks() {
-    return DOCS_NAV_ITEMS.map((item) => {
+  function sectionLinks(items: readonly DocsNavItem[]) {
+    return items.map((item) => {
       const Icon = item.icon;
       const isCurrent = activeHref === item.href;
       return (
@@ -213,12 +198,12 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           >
             <Icon
               aria-hidden="true"
-              className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+              className="mt-0.5 size-5 shrink-0 text-primary"
             />
             <span className="min-w-0">
-              <span className="block font-medium text-foreground">
+              <span className="block font-semibold text-foreground">
                 {item.label}
-              </span>
+              </span>{" "}
               <span className="mt-1 block text-xs leading-5 text-muted-foreground">
                 {item.description}
               </span>
@@ -229,7 +214,32 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     });
   }
 
-  function docLinks(items: DocsLink[]) {
+  function documentationSections() {
+    return (
+      <>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {DOCS_MENU_GROUPS.map((group) => (
+            <div key={group.title} className="min-w-0">
+              <p className="mb-2 px-3 text-sm font-semibold text-muted-foreground">
+                {group.title}
+              </p>
+              <ul aria-label={group.title} className="space-y-1">
+                {sectionLinks(group.items)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <ul
+          aria-label="Documentation resources"
+          className="mt-4 grid gap-1 border-t border-border-subtle pt-4 sm:grid-cols-2"
+        >
+          {sectionLinks(DOCS_RESOURCE_ITEMS)}
+        </ul>
+      </>
+    );
+  }
+
+  function docLinks(items: DocsLink[], showNew = false) {
     return items.map((item) => (
       <li key={item.href} className="min-w-0">
         <Link
@@ -242,8 +252,11 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             focusRing,
           )}
         >
-          <span className="min-w-0 break-words">{item.label}</span>
-          <ChevronRight aria-hidden="true" className="size-3.5 shrink-0" />
+          <span className="min-w-0 break-words">{item.label}</span>{" "}
+          <span className="inline-flex shrink-0 items-center gap-2">
+            {showNew && <DocsNewArticleBadge href={item.href} />}
+            <ChevronRight aria-hidden="true" className="size-3.5 shrink-0" />
+          </span>
         </Link>
       </li>
     ));
@@ -269,8 +282,8 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           >
             Skip to content
           </a>
-          <Container className="max-sm:px-[16px]">
-            <div className="flex h-16 items-center gap-[12px]">
+          <Container>
+            <div className="flex h-16 items-center gap-3">
               <div className="flex shrink-0 items-center gap-3">
                 <DocsLogo />
               </div>
@@ -300,7 +313,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     onClick={() => setIsDocsOpen((open) => !open)}
                     className={cn(
                       "inline-flex min-h-11 items-center rounded-[5px] px-3 py-2 text-[13px] text-muted-foreground hover:bg-surface-muted hover:text-foreground",
-                      (activeHref === "/docs" || isDocsOpen) &&
+                      ((activeHref && !isPrimarySection) || isDocsOpen) &&
                         "bg-surface-muted text-foreground",
                       focusRing,
                     )}
@@ -317,22 +330,17 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                   <div
                     id={docsMenuId}
                     hidden={!isDocsOpen}
-                    className="absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-3xl overflow-y-auto overscroll-contain rounded-[5px] border border-border-subtle bg-background shadow-medium"
+                    className="absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-[5px] border border-border-subtle bg-background shadow-medium"
                   >
-                    <div className="grid grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-4 p-4">
-                      <div className="min-w-0">
-                        <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
-                          Sections
-                        </p>
-                        <ul
-                          aria-label="Documentation sections"
-                          className="grid grid-cols-2 gap-1"
-                        >
-                          {sectionLinks()}
-                        </ul>
-                      </div>
+                    <div className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-6 p-5">
+                      <nav
+                        aria-label="Documentation sections"
+                        className="min-w-0"
+                      >
+                        {documentationSections()}
+                      </nav>
                       {featuredDocsLinks.length > 0 && (
-                        <div className="min-w-0">
+                        <div className="min-w-0 border-l border-border-subtle pl-4">
                           <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
                             Quick links
                           </p>
@@ -342,7 +350,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         </div>
                       )}
                     </div>
-                    <div className="border-t border-border-subtle bg-surface-muted px-4 py-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border-subtle bg-surface px-5 py-2">
                       <Link
                         href="/pricing"
                         onClick={onNavigate}
@@ -363,10 +371,21 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           className="size-3.5 shrink-0 text-muted-foreground"
                         />
                       </Link>
+                      <Link
+                        href="/tools/theme-builder"
+                        onClick={onNavigate}
+                        className={cn(
+                          "inline-flex min-h-11 items-center gap-2 rounded-[5px] px-3 py-2 text-sm text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                          focusRing,
+                        )}
+                      >
+                        Open Theme Builder
+                        <ArrowRight aria-hidden="true" className="size-3.5" />
+                      </Link>
                     </div>
                   </div>
                 </div>
-                {DOCS_NAV_ITEMS.slice(1).map((item) => (
+                {DOCS_PRIMARY_ITEMS.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -451,19 +470,60 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4">
           <nav aria-label="Documentation navigation">
-            <ul className="space-y-1">{sectionLinks()}</ul>
+            {documentationSections()}
           </nav>
           {docsLinks.length > 0 && (
-            <nav
-              aria-label="All documentation links"
-              className="mt-4 border-t border-border-subtle pt-4"
-            >
-              <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
-                All docs
-              </p>
-              <ul>{docLinks(docsLinks)}</ul>
-            </nav>
+            <>
+              <nav
+                aria-label="Quick documentation links"
+                className="mt-4 border-t border-border-subtle pt-4"
+              >
+                <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
+                  Quick links
+                </p>
+                <ul>{docLinks(featuredDocsLinks)}</ul>
+              </nav>
+              <details className="group mt-4 border-t border-border-subtle pt-2">
+                <summary
+                  className={cn(
+                    "flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-[5px] px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden",
+                    focusRing,
+                  )}
+                >
+                  All documentation pages
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="size-4 shrink-0 group-open:rotate-180"
+                  />
+                </summary>
+                <nav aria-label="All documentation links">
+                  <ul>{docLinks(docsLinks, true)}</ul>
+                </nav>
+              </details>
+            </>
           )}
+          <nav
+            aria-label="PyColors tools and pricing"
+            className="mt-4 flex flex-wrap gap-1 border-t border-border-subtle pt-4"
+          >
+            {[
+              { label: "Pricing", href: "/pricing" },
+              { label: "Theme Builder", href: "/tools/theme-builder" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onNavigate}
+                className={cn(
+                  "inline-flex min-h-11 items-center gap-2 rounded-[5px] px-3 py-2 text-sm text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                  focusRing,
+                )}
+              >
+                {item.label}
+                <ArrowRight aria-hidden="true" className="size-3.5" />
+              </Link>
+            ))}
+          </nav>
         </div>
         <div className="shrink-0 border-t border-border-subtle px-4 pt-3 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
           <Button

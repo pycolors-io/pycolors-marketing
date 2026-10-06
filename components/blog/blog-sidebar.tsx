@@ -1,138 +1,130 @@
-import Link from 'next/link';
-import { ArrowRight, Layers3, Sparkles, Tags } from 'lucide-react';
+import Link from "next/link";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { Badge } from "@pycolors/ui";
 
-import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { normalizeTaxonomy } from '@/lib/blog/utils';
+import { normalizeTaxonomy } from "@/lib/blog/utils";
+import type { BlogPost } from "@/types/blog";
+import styles from "./blog-index.module.css";
 
 type BlogSidebarProps = {
   readonly categories: string[];
   readonly tags: string[];
+  readonly posts: BlogPost[];
 };
 
-const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+const linkClass =
+  "flex min-h-11 items-center justify-between gap-3 rounded-[5px] px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface-muted/50 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
-function SidebarSection({
-  icon: Icon,
-  title,
-  children,
-}: {
-  readonly icon: React.ComponentType<{ className?: string }>;
-  readonly title: string;
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-border-subtle pb-3">
-          <div className="inline-flex h-7 w-7 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-            <Icon className="h-3.5 w-3.5 text-muted-foreground" />
-          </div>
-
-          <p className="font-brand text-sm font-semibold tracking-tight">
-            {title}
-          </p>
-        </div>
-
-        {children}
-      </div>
-    </Card>
+/** Topic navigation stays usable without client JavaScript. */
+export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
+  const uniqueTags = tags.filter(
+    (tag, index) =>
+      tags.findIndex(
+        (other) => normalizeTaxonomy(other) === normalizeTaxonomy(tag),
+      ) === index,
   );
-}
 
-export function BlogSidebar({ categories, tags }: BlogSidebarProps) {
   return (
-    <aside className="space-y-4">
-      <SidebarSection icon={Layers3} title="Categories">
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              asChild
-              variant="outline"
-              className="rounded-[5px] border-border-subtle bg-surface-muted text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+    <aside
+      className="min-w-0 lg:sticky lg:top-24"
+      aria-label="Explore the blog"
+    >
+      <nav aria-label="Blog topics">
+        <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+          Browse by topic
+        </p>
+        <ul className="grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
+          <li>
+            <Link
+              href="#latest-articles"
+              aria-current="page"
+              className={`${linkClass} bg-surface-muted/60 font-medium text-foreground`}
             >
-              <Link
-                href={`/blog/categories/${normalizeTaxonomy(category)}`}
-                className={cn(focusRing)}
+              <span>All articles</span>{" "}
+              <span
+                className="font-mono text-[11px]"
+                aria-label={`${posts.length} articles`}
               >
-                {category}
-              </Link>
-            </Badge>
-          ))}
-        </div>
-      </SidebarSection>
+                {String(posts.length).padStart(2, "0")}
+              </span>
+            </Link>
+          </li>
+          {categories.map((category) => {
+            const count = posts.filter(
+              (post) =>
+                normalizeTaxonomy(post.category) ===
+                normalizeTaxonomy(category),
+            ).length;
+            return (
+              <li key={category}>
+                <Link
+                  href={`/blog/categories/${normalizeTaxonomy(category)}`}
+                  className={linkClass}
+                >
+                  <span>{category}</span>{" "}
+                  <span
+                    className="font-mono text-[11px]"
+                    aria-label={`${count} ${count === 1 ? "article" : "articles"}`}
+                  >
+                    {String(count).padStart(2, "0")}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
 
-      <SidebarSection icon={Tags} title="Popular tags">
-        <div className="flex flex-wrap gap-2">
-          {tags.slice(0, 12).map((tag) => (
-            <Badge
-              key={tag}
-              asChild
-              variant="secondary"
-              className="rounded-[5px] border border-border-subtle bg-surface-muted text-[11px] text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <Link
-                href={`/blog/tags/${normalizeTaxonomy(tag)}`}
-                className={cn(focusRing)}
-              >
-                {tag}
-              </Link>
-            </Badge>
-          ))}
-        </div>
-      </SidebarSection>
-
-      <Card className="relative overflow-hidden rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-medium">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
-
-        <div className="space-y-4">
-          <Badge
-            variant="outline"
-            className="gap-1.5 rounded-[5px] border-pro-border bg-pro-surface-muted text-[11px]"
+      {uniqueTags.length > 0 ? (
+        <details
+          className={`${styles.tagDisclosure} mt-5 border-t border-border-subtle pt-3`}
+        >
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-[5px] text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+            Explore tags
+            <ChevronDown
+              className="size-4 text-muted-foreground"
+              aria-hidden="true"
+            />
+          </summary>
+          <nav
+            aria-label="Blog tags"
+            className="mt-2 flex flex-wrap gap-x-2 pb-3"
           >
-            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-            Build with PyColors
-          </Badge>
-
-          <div className="space-y-2">
-            <h3 className="font-brand text-base font-semibold tracking-tight">
-              Move from insight to implementation.
-            </h3>
-
-            <p className="text-sm leading-7 text-muted-foreground">
-              Use the blog to understand the decisions, Starter Free
-              to validate the surface, and Starter Pro when auth and
-              billing become the bottleneck.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Button
-              asChild
-              size="sm"
-              className={cn('rounded-[5px]', focusRing)}
-            >
-              <Link href="/starters/free">
-                Starter Free
-                <ArrowRight
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
+            {uniqueTags.slice(0, 12).map((tag) => (
+              <Link
+                key={tag}
+                href={`/blog/tags/${normalizeTaxonomy(tag)}`}
+                className="group inline-flex min-h-11 max-w-full items-center rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                <Badge
+                  variant="outline"
+                  size="sm"
+                  className="h-auto min-h-7 max-w-full rounded-[5px] border-border-subtle bg-background px-2.5 py-1 leading-5 text-muted-foreground transition-colors duration-150 group-hover:border-border group-hover:bg-surface-muted/60 group-hover:text-foreground group-focus-visible:border-border group-focus-visible:text-foreground"
+                >
+                  <span className="wrap-anywhere">{tag}</span>
+                </Badge>
               </Link>
-            </Button>
+            ))}
+          </nav>
+        </details>
+      ) : null}
 
-            <Button
-              asChild
-              size="sm"
-              variant="outline"
-              className={cn('rounded-[5px]', focusRing)}
-            >
-              <Link href="/starters/pro">Explore Starter Pro</Link>
-            </Button>
-          </div>
+      <div className="mt-5 border-t border-border-subtle pt-5">
+        <p className="text-sm font-medium">Looking for a walkthrough?</p>
+        <p className="mt-2 text-xs leading-6 text-muted-foreground">
+          Follow a product guide, or jump into the implementation docs.
+        </p>
+        <div className="mt-2">
+          <Link href="/guides" className={`${linkClass} px-0`}>
+            Practical guides{" "}
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </Link>
+          <Link href="/docs" className={`${linkClass} px-0`}>
+            Documentation{" "}
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </Link>
         </div>
-      </Card>
+      </div>
     </aside>
   );
 }

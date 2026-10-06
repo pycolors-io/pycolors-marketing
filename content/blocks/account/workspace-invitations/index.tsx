@@ -63,7 +63,7 @@ export function WorkspaceInvitationsPanel({
       aria-describedby={descriptionId}
       data-slot="workspace-invitations-panel"
       className={[
-        "min-w-0 rounded-xl border border-border bg-card text-card-foreground",
+        "min-w-0 rounded-[5px] border border-border bg-card text-card-foreground",
         className,
       ]
         .filter(Boolean)
@@ -71,13 +71,16 @@ export function WorkspaceInvitationsPanel({
     >
       <div className="flex min-w-0 flex-col gap-4 border-b border-border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-6">
         <div className="min-w-0 space-y-1">
-          <h2 id={headingId} className="break-words text-base font-semibold">
+          <h2
+            id={headingId}
+            className="break-words text-base font-semibold tracking-tight"
+          >
             {heading}
           </h2>
           {description ? (
             <p
               id={descriptionId}
-              className="break-words text-sm text-muted-foreground"
+              className="break-words text-sm leading-6 text-muted-foreground"
             >
               {description}
             </p>
@@ -104,7 +107,7 @@ export function WorkspaceInvitationsPanel({
                     {invitation.recipient}
                   </h3>
                   {invitation.secondaryText ? (
-                    <p className="break-words text-sm text-muted-foreground">
+                    <p className="break-words text-sm leading-6 text-muted-foreground">
                       {invitation.secondaryText}
                     </p>
                   ) : null}
@@ -160,7 +163,7 @@ export function WorkspaceInvitationsPanel({
         >
           <p className="break-words text-sm font-medium">{emptyTitle}</p>
           {emptyDescription ? (
-            <p className="break-words text-sm text-muted-foreground">
+            <p className="break-words text-sm leading-6 text-muted-foreground">
               {emptyDescription}
             </p>
           ) : null}

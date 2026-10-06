@@ -12,11 +12,7 @@ export function Logomark() {
   return (
     <svg
       viewBox="0 0 44 40"
-      className={cn(
-        "h-8.5 w-8.5 shrink-0",
-        "transition-transform duration-300 ease-out",
-        "group-hover:scale-[1.03]",
-      )}
+      className="h-8.5 w-8.5 shrink-0"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -60,15 +56,32 @@ function Wordmark() {
   );
 }
 
-export function Logo() {
+export function Logo({
+  variant = "default",
+}: {
+  readonly variant?: "default" | "docs";
+}) {
+  const isDocs = variant === "docs";
+
   return (
     <Link
-      href="/"
-      aria-label="PyColors"
-      className={cn("group inline-flex items-center gap-0.5")}
+      href={isDocs ? "/docs" : "/"}
+      aria-label={isDocs ? "PyColors Docs" : "PyColors"}
+      className={cn(
+        "group inline-flex min-h-11 shrink-0 items-center gap-0.5 rounded-[5px]",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+      )}
     >
       <Logomark />
-      <Wordmark />
+      {/* The badge must not change the wordmark's vertical position. */}
+      <span className="inline-flex h-[18px] items-baseline gap-2">
+        <Wordmark />
+        {isDocs ? (
+          <span className="inline-flex h-5 shrink-0 items-center rounded border border-border bg-transparent px-1.5 text-xs font-medium leading-none text-muted-foreground">
+            Docs
+          </span>
+        ) : null}
+      </span>
     </Link>
   );
 }

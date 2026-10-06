@@ -1,35 +1,35 @@
-import Link from 'next/link';
+import Link from "next/link";
+import { Badge } from "@pycolors/ui";
+import { normalizeTaxonomy } from "@/lib/blog/utils";
 
-import { Badge, cn } from '@pycolors/ui';
-import { normalizeTaxonomy } from '@/lib/blog/utils';
-
-type TagListProps = {
-  readonly tags: string[];
-};
-
-const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+type TagListProps = { readonly tags: string[] };
 
 export function TagList({ tags }: TagListProps) {
-  if (tags.length === 0) return null;
-
+  const uniqueTags = [
+    ...new Map(
+      tags
+        .filter((tag) => tag.trim())
+        .map((tag) => [normalizeTaxonomy(tag), tag.trim()]),
+    ).entries(),
+  ];
+  if (uniqueTags.length === 0) return null;
   return (
-    <div className="flex flex-wrap gap-2">
-      {tags.map((tag) => (
-        <Badge
-          key={tag}
-          asChild
-          variant="secondary"
-          className="rounded-[5px] border border-border-subtle bg-surface-muted text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+    <nav aria-label="Article tags" className="flex flex-wrap gap-x-2">
+      {uniqueTags.map(([slug, tag]) => (
+        <Link
+          key={slug}
+          href={`/blog/tags/${slug}`}
+          className="group inline-flex min-h-11 max-w-full items-center rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
-          <Link
-            href={`/blog/tags/${normalizeTaxonomy(tag)}`}
-            className={cn(focusRing)}
+          <Badge
+            variant="outline"
+            size="sm"
+            className="h-auto min-h-7 max-w-full border-border-subtle bg-background px-2.5 py-1 leading-5 text-muted-foreground group-hover:border-border group-hover:bg-surface-muted/60 group-hover:text-foreground"
           >
-            {tag}
-          </Link>
-        </Badge>
+            <span className="wrap-anywhere">{tag}</span>
+          </Badge>
+        </Link>
       ))}
-    </div>
+    </nav>
   );
 }

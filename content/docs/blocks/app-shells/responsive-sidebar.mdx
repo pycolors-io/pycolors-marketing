@@ -125,24 +125,38 @@ decorative and keeps the visible item label as the link's accessible name.
 
 ## Props
 
-| Prop                 | Type                                   | Default                     | Purpose                                                   |
-| -------------------- | -------------------------------------- | --------------------------- | --------------------------------------------------------- |
-| `brand`              | `ReactNode`                            | required                    | Consumer brand or workspace identity.                     |
-| `navigationLabel`    | `string`                               | required                    | Accessible label shared by desktop and mobile navigation. |
-| `mobileTitle`        | `string`                               | required                    | Accessible Sheet title.                                   |
-| `mobileDescription`  | `string`                               | `Navigate the application.` | Accessible Sheet description.                             |
-| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Accessible name for the icon-only mobile trigger.         |
-| `items`              | `readonly ResponsiveSidebarNavItem[]`  | required                    | Primary ungrouped navigation items.                       |
-| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Optional labelled navigation groups.                      |
-| `activeItemId`       | `string`                               | none                        | Stable item ID that receives `aria-current="page"`.       |
-| `renderLink`         | `(props) => ReactNode`                 | native anchor               | Router adapter seam.                                      |
-| `sidebarFooter`      | `ReactNode`                            | none                        | Optional consumer footer content.                         |
-| `headerTitle`        | `ReactNode`                            | none                        | Header title or context.                                  |
-| `headerActions`      | `ReactNode`                            | none                        | Consumer actions for the header.                          |
-| `contentId`          | `string`                               | `main-content`              | Main landmark ID and skip-link target.                    |
-| `skipToContentLabel` | `string`                               | `Skip to content`           | Visible-on-focus skip-link text.                          |
-| `className`          | `string`                               | none                        | Root layout customization.                                |
-| `children`           | `ReactNode`                            | required                    | Main application content.                                 |
+The preview includes local Overview, Projects and Team views, grouped navigation,
+a workspace identity and a member footer. “Add demo project” adds a fictional row
+only in the preview; no project is saved or sent to a backend. The integration
+guide links are ordinary navigation. Use the preview's Reset control to return
+to the initial state.
+
+When embedding the shell inside an existing page, pass `contentAs="div"` to
+avoid nesting main landmarks. The default remains `contentAs="main"` for a full
+application shell. The skip link still targets the focusable content element.
+The mobile Sheet has a visually hidden accessible title and description so the
+workspace brand appears once. Navigation labels wrap, and narrow-screen
+navigation links and the menu trigger have at least 44px height.
+
+| Prop                 | Type                                   | Default                     | Purpose                                                      |
+| -------------------- | -------------------------------------- | --------------------------- | ------------------------------------------------------------ |
+| `brand`              | `ReactNode`                            | required                    | Consumer brand or workspace identity.                        |
+| `navigationLabel`    | `string`                               | required                    | Accessible label shared by desktop and mobile navigation.    |
+| `mobileTitle`        | `string`                               | required                    | Accessible Sheet title.                                      |
+| `mobileDescription`  | `string`                               | `Navigate the application.` | Accessible Sheet description.                                |
+| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Accessible name for the icon-only mobile trigger.            |
+| `items`              | `readonly ResponsiveSidebarNavItem[]`  | required                    | Primary ungrouped navigation items.                          |
+| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Optional labelled navigation groups.                         |
+| `activeItemId`       | `string`                               | none                        | Stable item ID that receives `aria-current="page"`.          |
+| `renderLink`         | `(props) => ReactNode`                 | native anchor               | Router adapter seam.                                         |
+| `sidebarFooter`      | `ReactNode`                            | none                        | Optional consumer footer content.                            |
+| `headerTitle`        | `ReactNode`                            | none                        | Header title or context.                                     |
+| `headerActions`      | `ReactNode`                            | none                        | Consumer actions for the header.                             |
+| `contentAs`          | `"main" \| "div"`                      | `main`                      | Content element; use `div` inside an existing main landmark. |
+| `contentId`          | `string`                               | `main-content`              | Main landmark ID and skip-link target.                       |
+| `skipToContentLabel` | `string`                               | `Skip to content`           | Visible-on-focus skip-link text.                             |
+| `className`          | `string`                               | none                        | Root layout customization.                                   |
+| `children`           | `ReactNode`                            | required                    | Main application content.                                    |
 
 Navigation item IDs must be unique and stable across `items` and every group.
 The Block never derives active behavior from labels or URLs.

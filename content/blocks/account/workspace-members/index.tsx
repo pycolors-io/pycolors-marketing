@@ -59,19 +59,22 @@ export function WorkspaceMembersPanel({
       aria-describedby={descriptionId}
       data-slot="workspace-members-panel"
       className={cn(
-        "min-w-0 rounded-xl border border-border bg-card text-card-foreground",
+        "min-w-0 rounded-[5px] border border-border bg-card text-card-foreground",
         className,
       )}
     >
       <div className="flex min-w-0 flex-col gap-4 border-b border-border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-6">
         <div className="min-w-0 space-y-1">
-          <h2 id={headingId} className="break-words text-base font-semibold">
+          <h2
+            id={headingId}
+            className="break-words text-base font-semibold tracking-tight"
+          >
             {heading}
           </h2>
           {description ? (
             <p
               id={descriptionId}
-              className="break-words text-sm text-muted-foreground"
+              className="break-words text-sm leading-6 text-muted-foreground"
             >
               {description}
             </p>
@@ -93,15 +96,29 @@ export function WorkspaceMembersPanel({
               className="flex min-w-0 flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6"
             >
               <div className="min-w-0 flex-1 space-y-3">
-                <div className="min-w-0 space-y-1">
-                  <h3 className="break-words text-sm font-medium">
-                    {member.name}
-                  </h3>
-                  {member.secondaryText ? (
-                    <p className="break-words text-sm text-muted-foreground">
-                      {member.secondaryText}
-                    </p>
-                  ) : null}
+                <div className="flex min-w-0 items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"
+                  >
+                    {member.name
+                      .trim()
+                      .split(/\s+/u)
+                      .slice(0, 2)
+                      .map((part) => Array.from(part)[0] ?? "")
+                      .join("")
+                      .toLocaleUpperCase()}
+                  </span>
+                  <div className="min-w-0 space-y-1">
+                    <h3 className="break-words text-sm font-medium">
+                      {member.name}
+                    </h3>
+                    {member.secondaryText ? (
+                      <p className="break-words text-sm leading-6 text-muted-foreground">
+                        {member.secondaryText}
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
                 <dl className="flex min-w-0 flex-wrap gap-x-6 gap-y-2">
                   <div className="min-w-0 space-y-1">

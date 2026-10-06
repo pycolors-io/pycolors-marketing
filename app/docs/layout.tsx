@@ -9,6 +9,10 @@ import { DocsFooter } from "@/components/docs-footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
+import {
+  DocsSidebarItem,
+  DocsSidebarPublications,
+} from "@/components/docs/docs-sidebar-items";
 
 export const metadata: Metadata = {
   alternates: {
@@ -58,6 +62,13 @@ function SidebarBanner() {
 
 export default function Layout({ children }: { readonly children: ReactNode }) {
   const docsLinks = getDocsNavLinks();
+  const publicationDates = Object.fromEntries(
+    source
+      .getPages()
+      .flatMap((page) =>
+        page.data.publishedAt ? [[page.url, page.data.publishedAt]] : [],
+      ),
+  );
 
   const docsTree = {
     ...source.pageTree,
@@ -76,29 +87,32 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
       <div className="min-h-screen">
-        <DocsLayout
-          tree={docsTree}
-          {...baseOptions()}
-          containerProps={{
-            style: {
-              "--fd-banner-height": "var(--fd-nav-height)",
-            } as CSSProperties,
-          }}
-          nav={{
-            enabled: true,
-            component: <DocsHeader docsLinks={docsLinks} />,
-          }}
-          sidebar={{
-            collapsible: false,
-            banner: <SidebarBanner />,
-          }}
-        >
-          <ToastDocsProvider>
-            <div className="docs-shell contents lg:[&_#nd-page]:!pt-[calc(var(--fd-nav-height)+2rem)]">
-              {children}
-            </div>
-          </ToastDocsProvider>
-        </DocsLayout>
+        <DocsSidebarPublications dates={publicationDates}>
+          <DocsLayout
+            tree={docsTree}
+            {...baseOptions()}
+            containerProps={{
+              style: {
+                "--fd-banner-height": "var(--fd-nav-height)",
+              } as CSSProperties,
+            }}
+            nav={{
+              enabled: true,
+              component: <DocsHeader docsLinks={docsLinks} />,
+            }}
+            sidebar={{
+              collapsible: false,
+              banner: <SidebarBanner />,
+              components: { Item: DocsSidebarItem },
+            }}
+          >
+            <ToastDocsProvider>
+              <div className="docs-shell contents lg:[&_#nd-page]:!pt-[calc(var(--fd-nav-height)+2rem)]">
+                {children}
+              </div>
+            </ToastDocsProvider>
+          </DocsLayout>
+        </DocsSidebarPublications>
         <DocsFooter />
       </div>
     </>

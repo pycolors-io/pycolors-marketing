@@ -81,6 +81,7 @@ const STATIC_ROUTES = [
    * Company
    */
   "/about",
+  "/contact",
 
   /**
    * Blog taxonomy
@@ -167,6 +168,7 @@ function getPriority(route: string): number {
       "/roadmap",
       "/changelog",
       "/about",
+      "/contact",
       "/license",
       "/terms",
       "/privacy",

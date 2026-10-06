@@ -10,7 +10,7 @@ import { getUiExplorerUrl } from "../../lib/docs/ui-explorer";
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
 const headings = [
-  "Project readiness workspace",
+  "Your next interface starts here.",
   "Start with what your project needs now.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",
@@ -123,6 +123,18 @@ describe("showcase-first homepage", () => {
 
   it("uses helper-owned Explorer URLs and precise documentation, trust and production handoffs", () => {
     render(<HomePage />);
+    const showcase = screen.getByRole("region", { name: headings[0] });
+    expect(
+      within(showcase).getByRole("link", { name: "Explore PyColors UI" }),
+    ).toHaveAttribute("href", "/ui");
+    expect(
+      within(showcase).getByRole("link", { name: "Read the docs" }),
+    ).toHaveAttribute("href", "/docs/ui/installation");
+    expect(
+      within(showcase).getByRole("navigation", {
+        name: "Explore the showcase primitives",
+      }),
+    ).toBeVisible();
     const links = within(
       screen.getByRole("navigation", {
         name: "Explore the showcase primitives",

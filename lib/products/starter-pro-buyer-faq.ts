@@ -1,3 +1,9 @@
+import {
+  DIGITAL_REFUND_SUMMARY,
+  PURCHASE_SUPPORT_SUMMARY,
+  STARTER_PRO_USAGE_SUMMARY,
+} from "./commercial-policy";
+
 interface BuyerFaq {
   readonly question: string;
   readonly answer: string;
@@ -54,7 +60,7 @@ export const starterProBuyerFaqs = [
   {
     question: "Do I own the source code?",
     answer:
-      "Starter Pro includes the full source code under a commercial license. You may inspect and modify it for your own personal or commercial applications.",
+      "You receive the full source code under a commercial license, not ownership of the underlying Starter Pro code. You retain your rights in the original code and content you create; the PyColors and third-party code remains subject to its licenses.",
     links: [{ href: "/license", label: "Read the authoritative license" }],
   },
   {
@@ -65,8 +71,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "Can I use it for client projects?",
-    answer:
-      "Use is permitted for personal and commercial applications. Review the repository license for the authoritative client-work and source-access terms.",
+    answer: STARTER_PRO_USAGE_SUMMARY,
     links: [
       { href: "/license", label: "Review client-work and source-access terms" },
     ],
@@ -131,8 +136,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "What if local setup fails?",
-    answer:
-      "Start with the setup and environment documentation. Purchase and access-recovery support is available. No response-time SLA is promised.",
+    answer: PURCHASE_SUPPORT_SUMMARY,
     links: [
       {
         href: "/docs/starter-pro/local-development",
@@ -159,8 +163,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "What is the refund policy?",
-    answer:
-      "Starter Pro is a digital product delivered through a claim email after purchase. Refunds may be limited unless required by applicable law. Review the terms before purchase.",
+    answer: DIGITAL_REFUND_SUMMARY,
     links: [{ href: "/terms", label: "Read the terms before purchase" }],
   },
 ] as const satisfies readonly BuyerFaq[];

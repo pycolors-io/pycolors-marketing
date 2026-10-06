@@ -39,7 +39,7 @@ export function InvoiceHistoryPanel({
   const titleId = `${id}-title`;
   const descriptionId = `${id}-description`;
   const rootClassName = [
-    "min-w-0 space-y-5 rounded-xl border border-border bg-card p-5 text-card-foreground sm:p-6",
+    "min-w-0 space-y-5 rounded-[5px] border border-border bg-background p-5 text-foreground sm:p-6",
     className,
   ]
     .filter(Boolean)
@@ -53,12 +53,15 @@ export function InvoiceHistoryPanel({
       data-slot="invoice-history-panel"
     >
       <header className="min-w-0 space-y-2">
-        <h2 className="break-words text-xl font-semibold" id={titleId}>
+        <h2
+          className="break-words text-lg font-semibold tracking-tight"
+          id={titleId}
+        >
           {title}
         </h2>
         {description ? (
           <div
-            className="break-words text-sm text-muted-foreground"
+            className="break-words text-sm leading-6 text-muted-foreground"
             id={descriptionId}
           >
             {description}
@@ -68,15 +71,16 @@ export function InvoiceHistoryPanel({
 
       {invoices.length === 0 ? (
         <div
-          className="rounded-lg border border-dashed border-border bg-background p-5 text-sm text-muted-foreground"
+          className="rounded-lg border border-dashed border-border bg-background p-5 text-sm leading-6 text-muted-foreground"
           data-slot="invoice-history-empty"
         >
           {emptyState}
         </div>
       ) : (
-        <div className="min-w-0 overflow-x-auto rounded-lg border border-border">
-          <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-            <thead className="bg-muted/50 text-muted-foreground">
+        <div className="min-w-0 overflow-x-auto border-y border-border">
+          <table className="w-full min-w-[30rem] border-collapse text-left text-sm">
+            <caption className="sr-only">{title}</caption>
+            <thead className="bg-muted/20 text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium" scope="col">
                   {dateLabel}
@@ -94,11 +98,14 @@ export function InvoiceHistoryPanel({
             </thead>
             <tbody className="divide-y divide-border">
               {invoices.map((invoice) => (
-                <tr className="bg-background align-middle" key={invoice.id}>
-                  <td className="max-w-48 break-words px-4 py-3">
+                <tr
+                  className="bg-background align-middle transition-colors hover:bg-muted/20 motion-reduce:transition-none"
+                  key={invoice.id}
+                >
+                  <td className="max-w-48 break-words px-4 py-4 text-xs">
                     {invoice.date}
                   </td>
-                  <td className="max-w-48 break-words px-4 py-3 font-medium">
+                  <td className="max-w-48 break-words px-4 py-4 font-medium tabular-nums">
                     {invoice.amount}
                   </td>
                   <td className="max-w-48 break-words px-4 py-3">
@@ -106,7 +113,7 @@ export function InvoiceHistoryPanel({
                   </td>
                   <td className="px-4 py-3 text-right">
                     {invoice.action ? (
-                      <div className="inline-flex min-w-0 justify-end">
+                      <div className="inline-flex min-w-0 justify-end [&>*]:max-w-full [&>*]:whitespace-normal [&>*]:break-words">
                         {invoice.action}
                       </div>
                     ) : (

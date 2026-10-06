@@ -24,6 +24,11 @@ export type ProductMenuGroupItem = {
   description: string;
   icon: LucideIcon;
   badge?: string;
+  documentation: {
+    href: string;
+    description: string;
+    label?: string;
+  };
 };
 
 export type ProductMenuGroup = {
@@ -48,12 +53,20 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         href: "/ui",
         description: "React primitives for your product interface.",
         icon: Package2,
+        documentation: {
+          href: "/docs/ui",
+          description: "Install and use React primitives.",
+        },
       },
       {
         label: "Blocks",
         href: "/blocks",
         description: "Preview and copy application patterns.",
         icon: Boxes,
+        documentation: {
+          href: "/docs/blocks",
+          description: "Compose application screens and flows.",
+        },
       },
     ],
   },
@@ -66,6 +79,10 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         description: "Explore SaaS screens with mocked auth and billing.",
         icon: Layers3,
         badge: STARTER_FREE_PRICE_LABEL,
+        documentation: {
+          href: "/docs/starter",
+          description: "Set up the frontend SaaS starter.",
+        },
       },
       {
         label: PRODUCT_DISPLAY["starter-pro"].name,
@@ -74,6 +91,11 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
           "Auth.js and Stripe foundations to configure for your SaaS.",
         icon: Rocket,
         badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+        documentation: {
+          label: "Starter Pro",
+          href: "/docs/starter-pro",
+          description: "Configure auth, billing and backend services.",
+        },
       },
     ],
   },
@@ -85,6 +107,11 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
         href: "/tools/theme-builder",
         description: "Generate and preview light and dark CSS tokens.",
         icon: Sparkles,
+        documentation: {
+          label: "Design system",
+          href: "/docs/design-system",
+          description: "Understand colors, tokens and themes.",
+        },
       },
       {
         label: PRODUCT_DISPLAY["na-ai-landing"].name,
@@ -93,10 +120,25 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
           "A Next.js landing page template for AI and SaaS products.",
         icon: LayoutTemplate,
         badge: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+        documentation: {
+          label: "NA-AI Landing",
+          href: "/docs/templates/na-ai-landing",
+          description: "Customize and deploy your landing page.",
+        },
       },
     ],
   },
 ];
+
+export const DOCS_MENU_GROUPS = PRODUCT_MENU_GROUPS.map((group) => ({
+  title: group.title,
+  items: group.items.map((item) => ({
+    label: item.documentation.label ?? item.label,
+    href: item.documentation.href,
+    description: item.documentation.description,
+    icon: item.icon,
+  })),
+}));
 
 export const PRODUCT_MENU_SECONDARY_ITEMS: PrimaryNavItem[] = [
   { label: "Compare Starters", href: "/starters" },

@@ -2,622 +2,590 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import {
   ArrowRight,
-  CreditCard,
-  ExternalLink,
+  ArrowUpRight,
+  AppWindow,
+  Code2,
+  LayoutGrid,
   Layers3,
-  LayoutDashboard,
-  Rocket,
-  Sparkles,
+  MessageSquare,
+  MousePointer2,
+  Palette,
+  PanelsTopLeft,
+  ShieldCheck,
+  Table2,
+  Terminal,
+  TextCursorInput,
 } from "lucide-react";
-
+import { Button } from "@pycolors/ui";
+import { SCALE_STEPS } from "@pycolors/color-engine";
+import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Container } from "@/components/container";
-import { UI_VERSION, formatVersion } from "@/lib/version";
-import { Badge, Button, Card, cn } from "@pycolors/ui";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { NpmBadges } from "@/components/npm-badges";
 import { PageHero } from "@/components/marketing/page-hero";
-import { MarketingCheckItem } from "@/components/marketing/check-item";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { MarketingStatCard } from "@/components/marketing/stat-card";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { UiSectionNav } from "@/components/marketing/ui-section-nav";
+import { UiLivePreview } from "@/components/marketing/ui-live-preview";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { createThemeBuilderState } from "@/components/theme-builder/theme-builder-state";
+import { UI_VERSION, formatVersion } from "@/lib/version";
 
+const description =
+  "React components and semantic colors for Next.js product interfaces. Try PyColors UI, customize a light and dark theme, and start building with the documentation.";
 export const metadata: Metadata = {
-  title: "Next.js SaaS UI System",
-  description:
-    "Documentation-first UI system for Next.js SaaS products. Accessible primitives, semantic tokens, product-shaped components, public mirrors, and tested foundations built for modern SaaS applications.",
-  alternates: {
-    canonical: "/ui",
-  },
-
+  title: "PyColors UI — Components for your next product",
+  description,
+  alternates: { canonical: "/ui" },
   openGraph: {
-    title: "Next.js SaaS UI System",
-    description:
-      "Production-ready UI system for Next.js SaaS products with semantic tokens, accessible primitives, dashboards, auth flows, billing surfaces, public mirrors, and product-oriented foundations.",
+    title: "PyColors UI — Components for your next product",
+    description,
     url: "/ui",
     siteName: "PyColors",
     type: "website",
     images: ["/seo/og-main.png"],
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Next.js SaaS UI System",
-    description:
-      "A documentation-first UI system built for modern SaaS products and real product workflows.",
+    title: "PyColors UI — Components for your next product",
+    description,
     images: ["/seo/twitter-main.png"],
   },
 };
 
-const focusRing =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-
-function SurfaceCard({
-  title,
-  tag,
-  desc,
-  href,
-  cta,
-  isExternal = false,
-}: {
-  readonly title: string;
-  readonly tag: string;
-  readonly desc: string;
-  readonly href: string;
-  readonly cta: string;
-  readonly isExternal?: boolean;
-}) {
-  return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-sm font-semibold text-foreground">{title}</div>
-          <Badge
-            variant="outline"
-            className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
-          >
-            {tag}
-          </Badge>
-        </div>
-
-        <p className="text-sm leading-7 text-muted-foreground">{desc}</p>
-
-        <Button asChild size="sm" variant="outline" className="rounded-[5px]">
-          {isExternal ? (
-            <a href={href} target="_blank" rel="noreferrer noopener">
-              {cta}
-              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-            </a>
-          ) : (
-            <Link href={href}>
-              {cta}
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-            </Link>
-          )}
-        </Button>
-      </div>
-    </Card>
-  );
-}
-
-function ComponentCard({
-  name,
-  desc,
-  href,
-}: {
-  readonly name: string;
-  readonly desc: string;
-  readonly href: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "group rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-elevated",
-        focusRing,
-      )}
-    >
-      <div className="space-y-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="text-sm font-semibold text-foreground">{name}</div>
-
-          <span className="inline-flex rounded-[5px] border border-success-border-subtle bg-success-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-success">
-            Stable
-          </span>
-        </div>
-
-        <p className="text-sm leading-7 text-muted-foreground">{desc}</p>
-
-        <div className="text-xs text-muted-foreground transition-colors group-hover:text-foreground">
-          Open docs →
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-const proofPoints = [
+const componentGroups = [
   {
-    title: "Built for real product surfaces",
-    description:
-      "PyColors UI is designed for auth flows, dashboards, settings, billing entrypoints, admin patterns, and the screens users actually judge.",
+    title: "Actions",
+    icon: MousePointer2,
+    description: "Make the next step clear.",
+    links: [
+      ["Button", "button"],
+      ["Dropdown Menu", "dropdown-menu"],
+      ["Tabs", "tabs"],
+    ],
+  },
+  {
+    title: "Forms",
+    icon: TextCursorInput,
+    description: "Collect input with clear feedback.",
+    links: [
+      ["Input", "input"],
+      ["Checkbox", "checkbox"],
+      ["Textarea", "textarea"],
+      ["Password Input", "password-input"],
+    ],
+  },
+  {
+    title: "Overlays",
+    icon: PanelsTopLeft,
+    description: "Keep focused tasks in context.",
+    links: [
+      ["Dialog", "dialog"],
+      ["Sheet", "sheet"],
+    ],
+  },
+  {
+    title: "Data",
+    icon: Table2,
+    description: "Organize records and navigation.",
+    links: [
+      ["Table", "table"],
+      ["Pagination", "pagination"],
+    ],
+  },
+  {
+    title: "Feedback",
+    icon: MessageSquare,
+    description: "Show progress, results, and next steps.",
+    links: [
+      ["Alert", "alert"],
+      ["Toast", "toast"],
+      ["Empty State", "empty-state"],
+      ["Skeleton", "skeleton"],
+    ],
+  },
+  {
+    title: "Structure",
+    icon: LayoutGrid,
+    description: "Give every screen a shared language.",
+    links: [
+      ["Card", "card"],
+      ["Badge", "badge"],
+      ["Separator", "separator"],
+    ],
+  },
+] as const;
+
+const nextSteps = [
+  {
+    title: "Compose a screen",
+    product: "Patterns",
     icon: Layers3,
-  },
-  {
-    title: "Docs-first by design",
     description:
-      "Preview, usage, code, and props are structured to reduce friction and help developers move faster from idea to implementation.",
-    icon: Sparkles,
+      "Explore layout patterns for settings, dashboards, and everyday product flows.",
+    href: "/ui/patterns",
+    label: "Explore patterns",
   },
   {
-    title: "Connected to a SaaS funnel",
+    title: "Start with an app",
+    product: "Starter Free",
+    icon: AppWindow,
     description:
-      "Use the UI as the foundation, Starter Free as the product surface, and Starter Pro when auth and billing become the bottleneck.",
-    icon: Rocket,
-  },
-] as const;
-
-const surfaces = [
-  {
-    title: "Auth flows",
-    tag: "Trust",
-    desc: "Login, register, forgot-password, and user-facing states that feel product-ready from the start.",
+      "See the components inside a runnable Next.js interface with Starter Free.",
     href: "/starters/free",
-    cta: "See in Starter Free",
-    isExternal: false,
+    label: "Explore Starter Free",
   },
   {
-    title: "Settings surface",
-    tag: "Credibility",
-    desc: "Profile, security, sessions, and danger-zone structures that make products feel mature and trustworthy.",
-    href: "https://starter-demo.pycolors.io/settings",
-    cta: "View settings surface",
-    isExternal: true,
-  },
-  {
-    title: "Billing entrypoints",
-    tag: "Monetization",
-    desc: "Upgrade surfaces, plan states, and monetization-oriented UI ready to connect with secure Stripe checkout and recovery flows.",
-    href: "/docs/starter-pro/billing",
-    cta: "Read billing docs",
-    isExternal: false,
-  },
-  {
-    title: "CRUD + data screens",
-    tag: "Workflow",
-    desc: "Tables, dialogs, sheets, pagination, empty states, and loading states for real product workflows.",
-    href: "/docs/ui/table",
-    cta: "Open Table docs",
-    isExternal: false,
-  },
-  {
-    title: "Admin / members",
-    tag: "B2B-ready",
-    desc: "Members, invitations, and role-oriented interfaces that most UI libraries never show in context.",
-    href: "https://starter-demo.pycolors.io/admin",
-    cta: "See admin surface",
-    isExternal: true,
-  },
-  {
-    title: "Upgrade moment",
-    tag: "Decision",
-    desc: "Understand when UI stops being enough and when auth, billing, delivery, backend, and protected product flows become the real bottleneck.",
+    title: "Connect the business layer",
+    product: "Starter Pro",
+    icon: ShieldCheck,
+    description:
+      "Explore Starter Pro for authentication, Stripe billing, and protected product routes.",
     href: "/starters/pro",
-    cta: "See Starter Pro",
-    isExternal: false,
+    label: "Explore Starter Pro",
   },
 ] as const;
 
-const components = [
-  {
-    name: "Dialog",
-    desc: "Accessible modal primitives for product flows.",
-    href: "/docs/ui/dialog",
-  },
-  {
-    name: "Sheet",
-    desc: "Slide-over panels for settings, actions, and contextual UI.",
-    href: "/docs/ui/sheet",
-  },
-  {
-    name: "Dropdown Menu",
-    desc: "Stateful menus, groups, submenus, and shortcuts.",
-    href: "/docs/ui/dropdown-menu",
-  },
-  {
-    name: "Tabs",
-    desc: "Segmented navigation with flexible styling and states.",
-    href: "/docs/ui/tabs",
-  },
-  {
-    name: "Toast",
-    desc: "Accessible feedback notifications with variants.",
-    href: "/docs/ui/toast",
-  },
-  {
-    name: "Table",
-    desc: "Composable table primitives for CRUD-oriented products.",
-    href: "/docs/ui/table",
-  },
-] as const;
+const textLink =
+  "inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+const primaryAction =
+  "h-auto min-h-11 max-w-full whitespace-normal rounded-[5px] px-5 py-2.5 text-sm";
+
+const saveButtonCode = `import { Button } from "@pycolors/ui";
+
+export function SaveButton() {
+  return <Button>Save changes</Button>;
+}`;
 
 export default function UiPage() {
-  const versionLabel = formatVersion(UI_VERSION);
-
+  const { generatedTheme } = createThemeBuilderState();
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
+    <main id="content" tabIndex={-1} className="bg-background text-foreground">
+      <Container className="max-w-7xl pt-24 pb-10 sm:pt-28 sm:pb-12 lg:px-6">
+        <UiSectionNav active="overview" />
         <PageHero
-          maxWidth="5xl"
+          variant="compact"
+          align="left"
           badges={[
-            {
-              label: `${versionLabel} · stable baseline`,
-              variant: "secondary",
-              icon: (
-                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-              ),
-            },
-            {
-              label: "Open source",
-              variant: "outline",
-              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
-            },
-            {
-              label: "SaaS-oriented",
-              variant: "outline",
-            },
+            { label: "PyColors UI", variant: "outline" },
+            { label: formatVersion(UI_VERSION), variant: "outline" },
           ]}
-          title="A UI foundation that leads to real SaaS products."
-          subtitle="Build credible interfaces first. Validate with Starter Free. Upgrade when auth, billing, and delivery become the bottleneck."
-          description="PyColors UI gives developers a serious foundation for product-shaped interfaces: accessible primitives, semantic tokens, consistent states, open-source access, and documentation that connects naturally to Starter Free and Starter Pro."
+          title="Build your interface. Make it yours."
+          description="React components and semantic colors for dashboards, forms, and settings. Explore the UI, shape your theme, and bring it into your Next.js app."
+          contentClassName="mx-0 max-w-3xl"
           actions={
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/docs/ui">
-                  Browse components
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            <>
+              <Button asChild className={primaryAction}>
+                <Link href="/docs/ui/installation">
+                  Start building <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/starters/free">See Starter Free</Link>
+              <Button asChild variant="outline" className={primaryAction}>
+                <a href="#ui-preview">Try the components</a>
               </Button>
-
-              <BuyStarterProButton />
-            </div>
-          }
-          extra={
-            <>
-              <div className="mx-auto grid w-full max-w-3xl gap-3 sm:grid-cols-3">
-                <MarketingStatCard
-                  label="Current version"
-                  value={versionLabel}
-                />
-                <MarketingStatCard label="Workflow" value="UI → Free → Pro" />
-                <MarketingStatCard label="Goal" value="SaaS launch path" />
-              </div>
-
-              <MarketingPillList
-                align="center"
-                aria-label="UI capabilities"
-                className="mt-8"
-              >
-                <MarketingPill>Semantic tokens</MarketingPill>
-                <MarketingPill>Accessible primitives</MarketingPill>
-                <MarketingPill>Product states</MarketingPill>
-                <MarketingPill>Starter-ready</MarketingPill>
-              </MarketingPillList>
-
-              <div className="mt-6 flex flex-wrap justify-center gap-5">
-                <a
-                  href="https://ui.pycolors.io"
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-[5px] text-xs text-muted-foreground transition-colors hover:text-foreground",
-                    focusRing,
-                  )}
-                >
-                  PyColors UI Explorer
-                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                </a>
-                <a
-                  href="https://github.com/pycolors-io/pycolors-ui"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label="Open the PyColors UI repository on GitHub"
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-[5px] text-xs text-muted-foreground transition-colors hover:text-foreground",
-                    focusRing,
-                  )}
-                >
-                  GitHub
-                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                </a>
-              </div>
             </>
           }
         />
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-7 shadow-soft">
-            <div className="space-y-5">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className="rounded-[5px]">
-                  @pycolors/ui
-                </Badge>
-                <Badge variant="secondary" className="rounded-[5px]">
-                  Foundation layer
-                </Badge>
-              </div>
-
-              <div className="space-y-3">
-                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  The open-source layer that proves the quality of the whole
-                  PyColors ecosystem.
-                </h2>
-
-                <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
-                  PyColors UI should make the product feel credible before the
-                  backend is finished. It creates the visual and interaction
-                  baseline used by the docs, public mirrors, Starter Free, and
-                  Starter Pro.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                  <p className="text-sm font-medium text-foreground">
-                    Use UI directly
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Browse docs, install the package, inspect the public mirror,
-                    and build consistent SaaS interfaces faster.
-                  </p>
-                </div>
-
-                <div className="rounded-[5px] border border-platform-border-subtle bg-platform-muted p-4">
-                  <p className="text-sm font-medium text-foreground">
-                    Validate with Free
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    See the UI inside auth flows, settings, dashboards, billing
-                    screens, and admin surfaces.
-                  </p>
-                </div>
-
-                <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
-                  <p className="text-sm font-medium text-foreground">
-                    Upgrade with Pro
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Move to real auth, Stripe billing, protected routes, Prisma,
-                    purchase recovery, and launch-ready SaaS foundations.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2">
-                <NpmBadges packageName="@pycolors/ui" size="sm" />
-                <span className="text-xs text-muted-foreground">
-                  Versioned · documented · tested · actively maintained
-                </span>
-              </div>
-            </div>
-          </Card>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <MarketingSectionHeader
-            eyebrow="Why this matters"
-            align="left"
-            title="A UI system should shorten the path to a credible product."
-            description="The value is not only in components. The value is in making the product feel coherent, trustworthy, documented, tested, and ready to evolve."
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {proofPoints.map((item) => (
-              <MarketingFeatureCard
-                key={item.title}
-                icon={<item.icon className="h-5 w-5" />}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
+        <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
+          {[
+            "Open source · MIT",
+            "Light and dark",
+            "Semantic color tokens",
+            "Keyboard interactions",
+          ].map((label) => (
+            <MarketingCheckItem key={label} className="text-xs">
+              {label}
+            </MarketingCheckItem>
+          ))}
+        </ul>
+        <div className="mt-7 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-border-subtle pt-5">
+          <a
+            href="https://www.npmjs.com/package/@pycolors/ui"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View @pycolors/ui on npm"
+            className="inline-flex min-h-10 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          >
+            <NpmBadges packageName="@pycolors/ui" size="sm" />
+          </a>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+            <p className="text-xs leading-6 text-muted-foreground">
+              Versioned · documented · tested · actively maintained
+            </p>
+            <a
+              href="https://github.com/pycolors-io/pycolors-ui"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex min-h-10 items-center gap-1.5 text-xs text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+              aria-label="Open the PyColors UI repository on GitHub"
+            >
+              View on GitHub
+              <ArrowUpRight aria-hidden="true" className="size-3" />
+            </a>
           </div>
+        </div>
+      </Container>
+
+      <Container className="max-w-7xl pb-14 lg:px-6">
+        <section
+          id="ui-preview"
+          aria-label="Try PyColors UI"
+          className="scroll-mt-24"
+        >
+          <UiLivePreview modes={generatedTheme.modes} />
         </section>
+      </Container>
 
-        <section className="py-14 sm:py-16 lg:py-20">
+      <section
+        aria-labelledby="ui-components-heading"
+        className="border-t border-border-subtle py-12 sm:py-16"
+      >
+        <Container className="max-w-7xl lg:px-6">
+          <p className="mb-2 text-xs font-medium text-muted-foreground">
+            The component library
+          </p>
           <MarketingSectionHeader
-            eyebrow="What you can ship"
             align="left"
-            title="Real product surfaces, not isolated component demos."
-            description="This is where PyColors becomes more valuable than a generic UI kit: the components are shown inside SaaS flows."
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {surfaces.map((item) => (
-              <SurfaceCard
-                key={item.title}
-                title={item.title}
-                tag={item.tag}
-                desc={item.desc}
-                href={item.href}
-                cta={item.cta}
-                isExternal={item.isExternal}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <MarketingSectionHeader
-            eyebrow="Component proof"
-            align="left"
-            title={`A stronger baseline in ${versionLabel}`}
-            description="Enough depth to start quickly, enough quality to support real product work."
+            titleId="ui-components-heading"
+            title="Small pieces. A consistent product."
+            description="Start with the primitives you need. Each component has usage examples, props, and guidance in the documentation."
             action={
-              <Button asChild variant="outline" className="rounded-[5px]">
-                <Link href="/docs/ui">See all components</Link>
-              </Button>
+              <Link href="/docs/ui" className={textLink}>
+                Browse all components{" "}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
             }
           />
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {components.map((component) => (
-              <ComponentCard
-                key={component.name}
-                name={component.name}
-                desc={component.desc}
-                href={component.href}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface p-7 shadow-soft sm:p-8">
-            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="space-y-4">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-success-border-subtle bg-success-muted"
-                >
-                  Conversion path
-                </Badge>
-
-                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  UI gives trust. Starter Free validates. Starter Pro launches.
-                </h2>
-
-                <p className="text-sm leading-7 text-muted-foreground">
-                  The page should not stop at open source. It should make the
-                  commercial path obvious without forcing the buyer too early.
+          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle sm:grid-cols-2 lg:grid-cols-3">
+            {componentGroups.map((group) => (
+              <div
+                key={group.title}
+                className="min-w-0 bg-background p-5 sm:p-7"
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <span className="grid size-9 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/40">
+                    <group.icon
+                      aria-hidden="true"
+                      className="size-4 text-muted-foreground"
+                    />
+                  </span>
+                  <span className="text-xs tabular-nums text-muted-foreground">
+                    {group.links.length} components
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold tracking-tight">
+                  {group.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {group.description}
                 </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                  <Layers3 className="h-4 w-4 text-muted-foreground" />
-                  <p className="mt-4 text-sm font-medium">1. Build UI</p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Use primitives, tokens, docs, and product patterns.
-                  </p>
-                </div>
-
-                <div className="rounded-[5px] border border-success-border-subtle bg-success-muted p-4">
-                  <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
-                  <p className="mt-4 text-sm font-medium">2. Validate UX</p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Use Starter Free to test dashboards, settings, and flows.
-                  </p>
-                </div>
-
-                <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
-                  <CreditCard className="h-4 w-4 text-muted-foreground" />
-                  <p className="mt-4 text-sm font-medium">3. Launch Pro</p>
-                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                    Buy Pro when auth, billing, and protected routes block
-                    launch.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row ">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <Button asChild className="h-11 rounded-[5px] px-6">
-                  <Link href="/docs/ui">
-                    Browse components
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-11 rounded-[5px] px-6"
-                >
-                  <Link href="/starters/free">Open Starter Free</Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface p-7 shadow-medium sm:p-8">
-            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div className="max-w-2xl space-y-4">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
-                >
-                  Next step
-                </Badge>
-
-                <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Start with UI. Move to Pro when the business layer becomes the
-                  blocker.
-                </h2>
-
-                <p className="text-sm leading-7 text-muted-foreground">
-                  PyColors UI creates the product language. Starter Pro turns
-                  that product surface into a stronger SaaS baseline with real
-                  authentication, Stripe billing, and protected architecture.
-                </p>
-
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  <MarketingCheckItem>
-                    Real authentication in Pro
-                  </MarketingCheckItem>
-                  <MarketingCheckItem>Stripe billing in Pro</MarketingCheckItem>
-                  <MarketingCheckItem>
-                    Protected routes in Pro
-                  </MarketingCheckItem>
-                  <MarketingCheckItem>
-                    Prisma foundation in Pro
-                  </MarketingCheckItem>
+                <ul className="mt-5 border-t border-border-subtle pt-3">
+                  {group.links.map(([label, slug]) => (
+                    <li key={slug}>
+                      <Link
+                        href={`/docs/ui/${slug}`}
+                        className="group -mx-2 flex min-h-10 items-center justify-between gap-3 rounded-[3px] px-2 text-sm text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+                      >
+                        {label}
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="size-3.5 shrink-0 opacity-40 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+                        />
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-              <div className="flex flex-col gap-3 lg:min-w-65">
-                <Button asChild className="rounded-[5px]">
-                  <Link href="/docs/ui">
-                    Browse components
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+      <section
+        aria-labelledby="ui-themes-heading"
+        className="border-t border-border-subtle py-12 sm:py-16"
+      >
+        <Container className="max-w-7xl lg:px-6">
+          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+              <Palette
+                aria-hidden="true"
+                className="mb-4 size-5 text-muted-foreground"
+              />
+              <p className="text-xs font-medium text-muted-foreground">
+                Your colors, across every surface
+              </p>
+              <MarketingSectionHeader
+                align="left"
+                className="mt-2 mb-0"
+                titleId="ui-themes-heading"
+                title="Make the system feel like your brand."
+                description="Choose your brand color, neutrals, and typography in Theme Builder. Explore the palette, try it on components or a dashboard, and export CSS or JSON for both modes."
+              />
+              <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground">
+                <span>Brand colors</span>
+                <span>Neutral surfaces</span>
+                <span>Typography</span>
+              </div>
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <Button asChild className={primaryAction}>
+                  <Link href="/tools/theme-builder">
+                    Open Theme Builder <ArrowRight aria-hidden="true" />
                   </Link>
                 </Button>
-
-                <Button asChild variant="outline" className="rounded-[5px]">
-                  <Link href="/starters/free">Start with Starter Free</Link>
-                </Button>
-
-                <BuyStarterProButton
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
+                <Link href="/docs/ui/theming" className={textLink}>
+                  Theming guide
+                </Link>
               </div>
             </div>
-          </Card>
+            <div className="min-w-0 border-t border-border-subtle lg:border-t-0 lg:border-l">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-5 py-4 sm:px-7">
+                <p className="text-sm font-medium">One palette. Two modes.</p>
+                <span className="text-xs text-muted-foreground">
+                  PyColors violet
+                </span>
+              </div>
+              {(["light", "dark"] as const).map((mode) => (
+                <div
+                  key={mode}
+                  className="border-b border-border-subtle p-5 sm:p-7"
+                  style={{
+                    backgroundColor:
+                      generatedTheme.modes[mode].semantic.background.srgbHex,
+                    color:
+                      generatedTheme.modes[mode].semantic.foreground.srgbHex,
+                  }}
+                >
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <p className="text-sm font-medium">
+                      {mode === "light"
+                        ? "Light appearance"
+                        : "Dark appearance"}
+                    </p>
+                    <span
+                      className="text-[11px]"
+                      style={{
+                        color:
+                          generatedTheme.modes[mode].semantic[
+                            "muted-foreground"
+                          ].srgbHex,
+                      }}
+                    >
+                      12 accent shades
+                    </span>
+                  </div>
+                  <div
+                    role="img"
+                    aria-label={`Twelve generated ${mode}-mode accent shades`}
+                    className="grid h-12 grid-cols-12 gap-1"
+                  >
+                    {SCALE_STEPS.map((step) => (
+                      <span
+                        key={step}
+                        className="min-w-0 rounded-[3px] border border-black/10"
+                        style={{
+                          backgroundColor:
+                            generatedTheme.modes[mode].scales.accent[step]
+                              .srgbHex,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
+                    {(
+                      [
+                        ["background", "Background"],
+                        ["foreground", "Text"],
+                        ["primary", "Primary"],
+                      ] as const
+                    ).map(([role, label]) => (
+                      <span
+                        key={role}
+                        className="inline-flex items-center gap-2 text-[11px]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="size-3 rounded-full border"
+                          style={{
+                            backgroundColor:
+                              generatedTheme.modes[mode].semantic[role].srgbHex,
+                            borderColor:
+                              generatedTheme.modes[mode].semantic.border
+                                .srgbHex,
+                          }}
+                        />
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <p className="px-5 py-4 text-xs leading-6 text-muted-foreground sm:px-7">
+                Preview your palette and review color contrast in Theme Builder
+                before using it in your app.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            Building in public. Shipping a real SaaS foundation layer by layer.
-          </p>
-        </section>
-      </div>
-    </Container>
+      <section
+        aria-labelledby="ui-install-heading"
+        className="border-t border-border-subtle py-12 sm:py-16"
+      >
+        <Container className="max-w-7xl lg:px-6">
+          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="p-6 sm:p-8 lg:p-10">
+              <Terminal
+                aria-hidden="true"
+                className="mb-4 size-5 text-muted-foreground"
+              />
+              <p className="text-xs font-medium text-muted-foreground">
+                From preview to your project
+              </p>
+              <MarketingSectionHeader
+                align="left"
+                className="mt-2 mb-0"
+                titleId="ui-install-heading"
+                title="Start with one component."
+                description="Add the components and tokens to your React or Next.js app. Follow the installation guide to configure Tailwind v4, then build your first screen."
+              />
+              <ol className="mt-8 space-y-6">
+                {[
+                  {
+                    title: "Install the packages",
+                    detail: "Add the components and shared color tokens.",
+                  },
+                  {
+                    title: "Connect your styles",
+                    detail: "Load the token CSS and configure Tailwind v4.",
+                  },
+                  {
+                    title: "Build your first screen",
+                    detail: "Import a component and check both color modes.",
+                  },
+                ].map((step, index) => (
+                  <li key={step.title} className="flex items-start gap-4">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/40 font-mono text-[11px] text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium leading-7">
+                        {step.title}
+                      </p>
+                      <p className="mt-0.5 text-xs leading-6 text-muted-foreground">
+                        {step.detail}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <Link href="/docs/ui/installation" className={`${textLink} mt-7`}>
+                Read the installation guide{" "}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            </div>
+            <div className="flex min-w-0 flex-col border-t border-border-subtle bg-surface-muted/20 lg:border-t-0 lg:border-l">
+              <CopyableCommand
+                command="pnpm add @pycolors/ui @pycolors/tokens"
+                className="my-0 rounded-none border-0 border-b border-border-subtle bg-transparent [&_button]:h-10 [&_button]:text-xs"
+              />
+              <div className="flex flex-1 flex-col">
+                <DynamicCodeBlock
+                  lang="tsx"
+                  code={saveButtonCode}
+                  options={{
+                    themes: { light: "github-light", dark: "github-dark" },
+                  }}
+                  codeblock={{
+                    title: "save-button.tsx",
+                    icon: (
+                      <Code2 aria-hidden="true" className="size-4 shrink-0" />
+                    ),
+                    allowCopy: true,
+                    className:
+                      "m-0 flex flex-1 flex-col rounded-none border-0 bg-transparent shadow-none [&>div:first-child]:h-12 [&_button]:size-10",
+                    viewportProps: {
+                      "aria-label": "Button usage example",
+                      className:
+                        "flex-1 py-5 [&_pre]:text-xs [&_pre]:leading-8 sm:py-7 sm:[&_pre]:text-sm",
+                    },
+                  }}
+                />
+                <div className="border-t border-border-subtle px-5 py-4 text-xs leading-6 text-muted-foreground sm:px-7">
+                  After the stylesheet setup in the installation guide.{" "}
+                  <Link
+                    href="/docs/ui/button"
+                    className="font-medium text-foreground underline underline-offset-4"
+                  >
+                    Button documentation
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section
+        aria-labelledby="ui-next-heading"
+        className="border-t border-border-subtle py-12 sm:py-16"
+      >
+        <Container className="max-w-7xl lg:px-6">
+          <Layers3
+            aria-hidden="true"
+            className="mb-4 size-5 text-muted-foreground"
+          />
+          <MarketingSectionHeader
+            align="left"
+            className="mb-0"
+            titleId="ui-next-heading"
+            title="Keep building from here."
+            description="Use the UI in your existing app, compose a screen, or start with a complete foundation."
+            action={
+              <Link href="/ui/examples" className={textLink}>
+                See product examples{" "}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            }
+          />
+          <div className="mt-8 grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-3">
+            {nextSteps.map((item) => (
+              <div
+                key={item.title}
+                className="flex min-w-0 flex-col bg-background p-6 sm:p-8"
+              >
+                <div className="mb-7 flex items-center gap-3">
+                  <span className="grid size-9 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/40">
+                    <item.icon
+                      aria-hidden="true"
+                      className="size-4 text-muted-foreground"
+                    />
+                  </span>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    {item.product}
+                  </span>
+                </div>
+                <h3 className="text-lg font-semibold tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
+                  {item.description}
+                </p>
+                <Link
+                  href={item.href}
+                  className={`${textLink} group mt-7 justify-between border-t border-border-subtle pt-4`}
+                >
+                  {item.label}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 shrink-0 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+                  />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+    </main>
   );
 }

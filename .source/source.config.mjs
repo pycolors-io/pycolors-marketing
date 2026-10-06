@@ -12,6 +12,12 @@ var docsFrontmatterSchema = frontmatterSchema.extend({
   toc: z.boolean().optional(),
   full: z.boolean().optional(),
   hero: z.boolean().optional(),
+  publishedAt: z
+    .union([
+      z.iso.date(),
+      z.date().transform((value) => value.toISOString().slice(0, 10)),
+    ])
+    .optional(),
   lastUpdated: z
     .union([z.string(), z.date()])
     .optional()

@@ -206,13 +206,13 @@ span[data-slot="badge"] {
     padding: 0;
   }
 
-  div[role="dialog"] {
+  div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
     top: 100px;
     border-radius: 10px;
   }
 }
 
-div[role="dialog"] {
+div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
   border-radius: 10px;
 }
 

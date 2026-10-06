@@ -1,543 +1,407 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, ExternalLink, Sparkles } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Blocks,
+  Code2,
+  Layers3,
+  Palette,
+} from "lucide-react";
+import { Badge, cn } from "@pycolors/ui";
 
-import { Badge, Button, Card, CardContent, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
+import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
+import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import {
+  PatternAnatomy,
+  PatternPreview,
+  type PatternKind,
+} from "@/components/marketing/pattern-preview";
+import styles from "@/components/marketing/ui-patterns.module.css";
 
+const description =
+  "Explore six SaaS UI patterns for dashboards, billing, settings, teams, application shells, and upgrade moments. Find the related PyColors Blocks, source, and runnable examples.";
 export const metadata: Metadata = {
   title: "Next.js SaaS UI Patterns",
-  description:
-    "Production-shaped SaaS UI patterns for Next.js applications. Explore dashboards, billing pages, settings, admin surfaces, team management, and product-oriented workflows built with PyColors UI.",
-  alternates: {
-    canonical: "/ui/patterns",
-  },
-
+  description,
+  alternates: { canonical: "/ui/patterns" },
   openGraph: {
     title: "Next.js SaaS UI Patterns",
-    description:
-      "Explore production-ready SaaS UI patterns for dashboards, billing, settings, admin panels, protected apps, and product workflows.",
+    description,
     url: "/ui/patterns",
     siteName: "PyColors",
     type: "website",
     images: ["/seo/og-main.png"],
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Next.js SaaS UI Patterns",
-    description:
-      "Production-shaped UI patterns built for modern Next.js SaaS applications.",
+    description,
     images: ["/seo/twitter-main.png"],
   },
 };
 
 type Pattern = {
+  id: PatternKind;
   title: string;
-  description: string;
-  tag: string;
   category: string;
+  description: string;
+  points: readonly string[];
+  docs: string;
+  docsLabel: string;
 };
 
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-
-const patterns: Pattern[] = [
+const patterns: readonly Pattern[] = [
   {
+    id: "dashboard",
     title: "Dashboard layout",
+    category: "Overview",
     description:
-      "KPI cards, activity hierarchy, quick actions, empty states, and the structure users expect from a credible SaaS product.",
-    tag: "Dashboard",
-    category: "Core",
+      "Help people understand what matters now, what has changed, and where to go next.",
+    points: [
+      "Lead with a small set of useful metrics",
+      "Keep recent activity and next actions in context",
+    ],
+    docs: "/docs/blocks/data/stats-overview",
+    docsLabel: "Explore the stats block",
   },
   {
+    id: "billing",
     title: "Billing page",
+    category: "Subscription",
     description:
-      "Plan state, upgrade entrypoints, invoice surfaces, and billing hierarchy designed to move toward monetization.",
-    tag: "Billing",
-    category: "Revenue",
+      "Bring the current plan, payment details, and billing actions into one predictable place.",
+    points: [
+      "Make the current plan and status easy to find",
+      "Separate billing information from plan changes",
+    ],
+    docs: "/docs/blocks/commerce/billing-overview",
+    docsLabel: "Explore the billing block",
   },
   {
+    id: "settings",
     title: "Settings page",
-    description:
-      "Profile, security, organization preferences, API keys, and danger-zone patterns that make a SaaS feel complete.",
-    tag: "Settings",
     category: "Account",
+    description:
+      "Organize everyday preferences and sensitive changes around clear groups of related controls.",
+    points: [
+      "Group fields by purpose, with a clear save action",
+      "Keep destructive actions separate",
+    ],
+    docs: "/docs/blocks/account/settings-panel",
+    docsLabel: "Explore the settings block",
   },
   {
+    id: "team",
     title: "Team management",
+    category: "Collaboration",
     description:
-      "Members, invitations, roles, and permissions designed for collaborative and B2B SaaS products.",
-    tag: "Teams",
-    category: "B2B",
+      "Make it easy to understand who belongs to a workspace and which role each person holds.",
+    points: [
+      "Keep identity, role, and status together",
+      "Distinguish invitations from active membership",
+    ],
+    docs: "/docs/blocks/account/workspace-members",
+    docsLabel: "Explore the members block",
   },
   {
+    id: "shell",
     title: "Protected app shell",
+    category: "Navigation",
     description:
-      "Navigation, account areas, session-aware states, and protected surfaces that prepare the app for real authentication.",
-    tag: "Protected",
-    category: "Architecture",
+      "Give signed-in screens a consistent frame, with a visible location and predictable navigation.",
+    points: [
+      "Keep workspace navigation consistent across screens",
+      "Enforce authentication and permissions in your app",
+    ],
+    docs: "/docs/blocks/app-shells/responsive-sidebar",
+    docsLabel: "Explore the sidebar block",
   },
   {
+    id: "upgrade",
     title: "Upgrade moment",
+    category: "Plan selection",
     description:
-      "Pricing prompts, billing CTAs, upgrade states, and decision points that connect product usage to revenue.",
-    tag: "Upgrade",
-    category: "Conversion",
+      "Explain the next plan at a relevant moment, with visible terms and a clear way to continue.",
+    points: [
+      "Show the value and billing terms before the action",
+      "Keep the current plan and alternatives visible",
+    ],
+    docs: "/docs/blocks/commerce/pricing-plans",
+    docsLabel: "Explore the pricing block",
   },
 ];
 
-const steps = [
+const workflow = [
   {
-    eyebrow: "Step 01",
-    title: "Understand the surface",
+    number: "01",
+    title: "Choose the structure",
     description:
-      "Study how credible SaaS screens are structured before rebuilding dashboards, settings, billing, and admin flows yourself.",
+      "Start with the job your user needs to do. Pick the pattern that gives information and actions a clear order.",
+    href: "#pattern-library",
+    link: "Browse the patterns",
+    icon: Layers3,
   },
   {
-    eyebrow: "Step 02",
-    title: "Validate with Starter Free",
+    number: "02",
+    title: "Make it your own",
     description:
-      "Use the runnable starter to test layouts, states, navigation, product hierarchy, and monetization entrypoints quickly.",
+      "Open the related Block for its example and source. Apply your tokens and adapt the content to your product.",
+    href: "/tools/theme-builder",
+    link: "Open Theme Builder",
+    icon: Palette,
   },
   {
-    eyebrow: "Step 03",
-    title: "Upgrade when wiring blocks launch",
+    number: "03",
+    title: "Connect the behavior",
     description:
-      "Move to Starter Pro when authentication, billing, protected routes, and backend foundations become the real bottleneck.",
+      "Wire up your data, permissions, and actions. Review loading, empty, error, and success states in your application.",
+    href: "/docs/blocks",
+    link: "Read the integration docs",
+    icon: Code2,
   },
 ] as const;
 
-const proofPoints = [
-  "Patterns show how components behave inside real product surfaces.",
-  "Starter Free lets you run and adapt those surfaces without backend overhead.",
-  "Starter Pro wires the business layer when you are ready to launch and charge.",
-] as const;
-
-const focusRing =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-function PatternCard({ title, description, tag, category }: Pattern) {
+function PatternCard({ pattern, index }: { pattern: Pattern; index: number }) {
   return (
-    <Card className="flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border">
-      <CardContent className="flex h-full flex-col justify-between p-6">
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
-            >
-              {tag}
-            </Badge>
-
-            <span className="text-xs text-muted-foreground">{category}</span>
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold tracking-tight">{title}</h3>
-
-            <p className="text-sm leading-7 text-muted-foreground">
-              {description}
-            </p>
-          </div>
+    <article
+      id={`pattern-${pattern.id}`}
+      tabIndex={-1}
+      aria-labelledby={`pattern-${pattern.id}-title`}
+      className={styles.patternCard}
+    >
+      <div className={styles.previewStage}>
+        <div className={styles.previewMeta} aria-hidden="true">
+          <span>Pattern {String(index + 1).padStart(2, "0")}</span>
+          <span>{pattern.category}</span>
         </div>
-
-        <div className="mt-6 flex gap-2">
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="flex-1 rounded-[5px]"
-          >
-            <Link href="/examples">View pattern</Link>
-          </Button>
-
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="flex-1 rounded-[5px]"
-          >
-            <Link href="/starters/free">See in product</Link>
-          </Button>
+        <PatternPreview kind={pattern.id} />
+      </div>
+      <div className={styles.cardContent}>
+        <div className={styles.cardHeading}>
+          <h3 id={`pattern-${pattern.id}-title`}>{pattern.title}</h3>
+          <Badge variant="outline" className={styles.category}>
+            {pattern.category}
+          </Badge>
         </div>
-      </CardContent>
-    </Card>
+        <p className={styles.cardDescription}>{pattern.description}</p>
+        <ul className={styles.checks}>
+          {pattern.points.map((point) => (
+            <MarketingCheckItem key={point} className={styles.checkItem}>
+              {point}
+            </MarketingCheckItem>
+          ))}
+        </ul>
+        <Link href={pattern.docs} className={styles.cardLink}>
+          {pattern.docsLabel}
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+      </div>
+    </article>
   );
 }
 
 export default function PatternsPage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
-        <PageHero
-          maxWidth="5xl"
-          badges={[
-            {
-              label: "Patterns",
-              variant: "secondary",
-              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
-            },
-            {
-              label: "SaaS surfaces",
-              variant: "outline",
-            },
-            {
-              label: "Free → Pro path",
-              variant: "outline",
-            },
-          ]}
-          title="SaaS patterns that turn components into product surfaces."
-          subtitle="Use patterns to understand the product structure. Use Starter Free to validate it. Use Starter Pro when auth and billing become the blocker."
-          description="PyColors patterns connect UI primitives with real SaaS flows: dashboards, billing, settings, teams, protected app shells, and upgrade moments designed for products that need to feel credible before they are fully wired."
-          actions={
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/starters/free">
-                  Explore Starter Free
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className="max-w-7xl pb-16 pt-24 sm:pb-24 sm:pt-28 lg:px-6">
+        <div className={styles.sectionNav}>
+          <UiSectionNav active="patterns" />
+        </div>
+        <div className="mx-auto max-w-6xl">
+          <div className={styles.heroLayout}>
+            <PageHero
+              variant="compact"
+              align="left"
+              className={styles.hero}
+              contentClassName="!max-w-none"
+              badges={[
+                {
+                  label: "UI patterns",
+                  variant: "outline",
+                  icon: <Layers3 size={13} aria-hidden="true" />,
+                },
+              ]}
+              title="Give every screen a clear purpose."
+              description="Six interface patterns for the everyday work of a SaaS product. Find the right structure, explore the matching Block, and make it your own."
+              actions={
+                <>
+                  <MarketingLinkButton>
+                    <a href="#pattern-library">
+                      Explore the patterns
+                      <ArrowDown size={15} aria-hidden="true" />
+                    </a>
+                  </MarketingLinkButton>
+                  <MarketingLinkButton variant="outline">
+                    <Link href="/ui/examples">
+                      View examples
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </Link>
+                  </MarketingLinkButton>
+                </>
+              }
+            />
+            <PatternAnatomy />
+          </div>
+
+          <nav aria-label="Pattern categories" className={styles.patternNav}>
+            <span className={styles.eyebrow}>Find your surface</span>
+            <ul>
+              {patterns.map((pattern) => (
+                <li key={pattern.id}>
+                  <a href={`#pattern-${pattern.id}`}>
+                    {pattern.title}
+                    <ArrowDown size={12} aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <section
+            id="pattern-library"
+            tabIndex={-1}
+            aria-labelledby="pattern-library-title"
+            className={styles.section}
+          >
+            <MarketingSectionHeader
+              align="left"
+              titleId="pattern-library-title"
+              title="Familiar patterns. Considered details."
+              description="Illustrative layouts with a practical starting point for each one. Open the related Block for working examples, complete source, and integration guidance."
+              action={
+                <Link href="/blocks" className={styles.textLink}>
+                  Browse all Blocks
+                  <ArrowUpRight size={15} aria-hidden="true" />
                 </Link>
-              </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/examples">See examples</Link>
-              </Button>
-
-              <BuyStarterProButton />
-            </div>
-          }
-          pills={[
-            "Dashboards",
-            "Billing",
-            "Settings",
-            "Teams",
-            "Protected app",
-            "Upgrade moments",
-          ]}
-          extra={
-            <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-3">
-              {proofPoints.map((point) => (
-                <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
+              }
+            />
+            <div className={styles.patternGrid}>
+              {patterns.map((pattern, index) => (
+                <PatternCard key={pattern.id} pattern={pattern} index={index} />
               ))}
             </div>
-          }
-        />
+            <p className={styles.scopeNote}>
+              The Blocks provide interface structure. Your application supplies
+              data, authentication, permissions, and payment behavior.
+            </p>
+          </section>
 
-        <section className="py-10 sm:py-12">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-            <CardContent className="p-6 sm:p-7">
-              <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-                <div className="space-y-5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
-                    >
-                      Why patterns matter
-                    </Badge>
-
-                    <Badge variant="outline" className="rounded-[5px]">
-                      Product structure
-                    </Badge>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                      Components are easy. Product structure is what creates
-                      trust.
-                    </h2>
-
-                    <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                      Patterns help you move from isolated primitives to the
-                      surfaces users actually judge: dashboards, billing,
-                      settings, teams, protected areas, and admin workflows.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-5">
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    PyColors patterns connect UI primitives with real SaaS
-                    decisions: what the page should contain, how actions are
-                    prioritized, where trust is created, and when a surface is
-                    ready to become part of a product.
-                  </p>
-
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                      <p className="text-sm font-medium">UI</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Reusable primitives and tokens.
-                      </p>
+          <section
+            aria-labelledby="pattern-workflow-title"
+            className={cn(styles.section, styles.workflowSection)}
+          >
+            <MarketingSectionHeader
+              align="left"
+              titleId="pattern-workflow-title"
+              title="From a useful pattern to your product."
+              description="Keep the structure consistent while making the experience specific to your users."
+            />
+            <ol className={styles.workflow}>
+              {workflow.map(
+                ({ number, title, description, href, link, icon: Icon }) => (
+                  <li key={number}>
+                    <div className={styles.stepMeta}>
+                      <span>{number}</span>
+                      <Icon size={17} aria-hidden="true" />
                     </div>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                    <Link href={href} className={styles.textLink}>
+                      {link}
+                      <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
+                  </li>
+                ),
+              )}
+            </ol>
+          </section>
 
-                    <div className="rounded-[5px] border border-success-border-subtle bg-success-muted p-4">
-                      <p className="text-sm font-medium">Free</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Runnable product surfaces.
-                      </p>
-                    </div>
-
-                    <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
-                      <p className="text-sm font-medium">Pro</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Auth, billing, and backend wiring.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <MarketingPillList aria-label="Pattern benefits">
-                      <MarketingPill>Product-shaped UX</MarketingPill>
-                      <MarketingPill>Reusable SaaS surfaces</MarketingPill>
-                      <MarketingPill>Starter Free ready</MarketingPill>
-                      <MarketingPill>Upgrade path</MarketingPill>
-                      <MarketingPill>Conversion-aware</MarketingPill>
-                    </MarketingPillList>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <MarketingSectionHeader
-            eyebrow="Patterns"
-            title="Core SaaS surfaces"
-            description="Dashboards, billing, settings, teams, protected areas, and upgrade moments used in real SaaS products."
-            action={
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="rounded-[5px]"
-              >
-                <Link href="/guides">Read guides</Link>
-              </Button>
-            }
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {patterns.map((pattern) => (
-              <PatternCard key={pattern.title} {...pattern} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <MarketingSectionHeader
-            eyebrow="Path"
-            title="From UI primitive to launch-ready SaaS."
-            description="Patterns turn components into structure. Starter Free turns structure into a runnable product surface. Starter Pro wires the business layer."
-            align="center"
-          />
-
-          <div className="grid gap-4 lg:grid-cols-3">
-            {steps.map((step) => (
-              <Card
-                key={step.eyebrow}
-                className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft"
-              >
-                <div className="space-y-2">
-                  <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                    {step.eyebrow}
-                  </div>
-
-                  <div className="text-sm font-medium">{step.title}</div>
-
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    {step.description}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
-              >
-                <Link href="/starters/free">Start with Starter Free</Link>
-              </Button>
-
-              <BuyStarterProButton
-                fullWidth={false}
-                label={`Buy Starter Pro — ${launchPrice}`}
-              />
+          <section
+            aria-labelledby="patterns-starters-title"
+            className={styles.starters}
+          >
+            <div className={styles.startersIntro}>
+              <span className={styles.eyebrow}>A complete starting point</span>
+              <h2 id="patterns-starters-title">
+                See the pieces work together.
+              </h2>
+              <p>
+                Explore the patterns in a runnable application, then choose the
+                foundation that matches your next step.
+              </p>
+              <Link href="/ui/examples" className={styles.textLink}>
+                Explore the application screens
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </Link>
             </div>
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-16 lg:py-20">
-          <Card className="rounded-[5px] border border-platform-border-subtle bg-surface shadow-soft">
-            <CardContent className="p-6 sm:p-7">
-              <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-                <div className="space-y-5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
-                    >
-                      Pattern logic
-                    </Badge>
-
-                    <Badge variant="outline" className="rounded-[5px]">
-                      SaaS system
-                    </Badge>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                      PyColors connects primitives, patterns, starters, and
-                      revenue flows.
-                    </h2>
-
-                    <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                      The goal is not to collect components. The goal is to move
-                      faster toward a product users can trust and eventually pay
-                      for.
-                    </p>
-                  </div>
+            <div className={styles.starterOptions}>
+              <div className={styles.starterOption}>
+                <div className={styles.starterHeading}>
+                  <h3>Starter Free</h3>
+                  <Badge variant="outline" className={styles.category}>
+                    Open source
+                  </Badge>
                 </div>
-
-                <div className="space-y-5">
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    PyColors UI gives you the primitives. Patterns give you the
-                    structure. Starter Free gives you the runnable product
-                    surface. Starter Pro gives you the business layer with auth,
-                    billing, protected routes, and launch-ready foundations.
-                  </p>
-
-                  <ul className="grid gap-2 sm:grid-cols-2">
-                    <MarketingCheckItem>
-                      UI primitives and tokens
-                    </MarketingCheckItem>
-                    <MarketingCheckItem>
-                      Reusable SaaS surfaces
-                    </MarketingCheckItem>
-                    <MarketingCheckItem>
-                      Runnable Starter Free product
-                    </MarketingCheckItem>
-                    <MarketingCheckItem>
-                      Starter Pro auth and billing
-                    </MarketingCheckItem>
-                  </ul>
-
-                  <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
-                      <Link href="/examples">See examples</Link>
-                    </Button>
-
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
-                      <Link href="/pricing">View pricing</Link>
-                    </Button>
-
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className="rounded-[5px]"
-                    >
-                      <a
-                        href="https://starter-demo.pycolors.io"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        Live demo
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="pt-4">
-          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="max-w-2xl space-y-3">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-pro-border bg-pro-surface-muted"
-                >
-                  Next step
-                </Badge>
-
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  Use patterns to design better. Use Pro when you need to
-                  launch.
-                </h2>
-
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Start with Starter Free to validate the surface. Move to
-                  Starter Pro when authentication, billing, protected routes,
-                  and backend wiring become the real blocker.
+                <p>
+                  Run the screens, explore the navigation, and adapt the
+                  interface with demonstration data.
                 </p>
-
-                <div className="flex flex-wrap gap-2">
-                  <MarketingPillList aria-label="Pattern path">
-                    <MarketingPill>Free validates UX</MarketingPill>
-                    <MarketingPill>Pro wires auth</MarketingPill>
-                    <MarketingPill>Pro wires billing</MarketingPill>
-                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
-                  </MarketingPillList>
+                <p className={styles.starterNote}>
+                  Authentication, billing, and product data are mocked.
+                </p>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/starters/free">
+                    Explore Starter Free
+                    <ArrowRight size={15} aria-hidden="true" />
+                  </Link>
+                </MarketingLinkButton>
+              </div>
+              <div className={styles.starterOption}>
+                <div className={styles.starterHeading}>
+                  <h3>Starter Pro</h3>
+                  <Badge variant="outline" className={styles.category}>
+                    Commercial
+                  </Badge>
+                </div>
+                <p>
+                  Start with connected foundations for authentication, billing,
+                  and protected application routes.
+                </p>
+                <p className={styles.starterNote}>
+                  Configure your services, add product logic, and validate
+                  before launch.
+                </p>
+                <div className={styles.proActions}>
+                  <BuyStarterProButton
+                    fullWidth={false}
+                    label={`Buy Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`}
+                  />
+                  <Link href="/starters/pro" className={styles.textLink}>
+                    See what’s included
+                    <ArrowUpRight size={14} aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
-
-              <div className="flex flex-col gap-3 sm:min-w-[240px]">
-                <Button
-                  asChild
-                  variant="outline"
-                  className={cn(
-                    "h-11 rounded-[5px] text-sm font-medium",
-                    focusRing,
-                  )}
-                >
-                  <Link href="/starters/free">Starter Free</Link>
-                </Button>
-
-                <BuyStarterProButton
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
-              </div>
             </div>
-          </Card>
-        </section>
-      </div>
-    </Container>
+          </section>
+          <div className={styles.bottomLink}>
+            <Blocks size={15} aria-hidden="true" />
+            <p>Looking for individual components?</p>
+            <Link href="/ui" className={styles.textLink}>
+              Explore PyColors UI
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </Container>
+    </main>
   );
 }

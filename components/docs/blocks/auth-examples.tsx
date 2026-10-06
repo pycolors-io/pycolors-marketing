@@ -16,11 +16,11 @@ type DemoFieldProps = Readonly<{
 }>;
 
 const inputClassName =
-  "h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+  "h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
 const primaryButtonClassName =
-  "inline-flex min-h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
+  "inline-flex min-h-11 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
 const secondaryButtonClassName =
-  "inline-flex min-h-10 w-full items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
+  "inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
 
 function DemoField({
   autoComplete,
@@ -55,7 +55,7 @@ export function SignInExample() {
   const [status, setStatus] = React.useState<string>();
 
   return (
-    <div className="not-prose space-y-4">
+    <div className="not-prose mx-auto max-w-md space-y-4">
       <SignInPanel
         description="Use your workspace account to continue."
         form={
@@ -121,7 +121,7 @@ export function SignUpExample() {
   const [status, setStatus] = React.useState<string>();
 
   return (
-    <div className="not-prose space-y-4">
+    <div className="not-prose mx-auto max-w-md space-y-4">
       <SignUpPanel
         description="Create a workspace account with application-owned behavior."
         form={
@@ -188,7 +188,7 @@ export function PasswordRecoveryExample() {
   const [status, setStatus] = React.useState<string>();
 
   return (
-    <div className="not-prose space-y-4">
+    <div className="not-prose mx-auto max-w-md space-y-4">
       <PasswordRecoveryPanel
         description="Enter the email associated with your workspace account."
         form={

@@ -136,7 +136,7 @@ function DataTableQueryControls({
           <span className="text-muted-foreground">{search.label}</span>
           <input
             autoComplete="off"
-            className="min-h-9 w-full min-w-0 rounded-md border border-border bg-background px-3 py-1 text-base text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+            className="min-h-11 sm:min-h-10 w-full min-w-0 rounded-md border border-border bg-background px-3 py-1 text-base text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
             data-slot="data-table-search"
             disabled={search.disabled}
             onChange={(event) => {
@@ -165,7 +165,7 @@ function DataTableQueryControls({
         ) : null}
         {reset ? (
           <button
-            className="inline-flex min-h-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-background px-3 py-1 text-sm font-medium text-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-11 sm:min-h-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-background px-3 py-1 text-sm font-medium text-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             data-slot="data-table-query-reset"
             disabled={reset.disabled}
             onClick={reset.onReset}
@@ -177,7 +177,7 @@ function DataTableQueryControls({
       </div>
       {hasSummary ? (
         <div
-          className="text-sm text-muted-foreground"
+          className="text-sm leading-6 text-muted-foreground"
           data-slot="data-table-query-summary"
         >
           {summary}
@@ -219,23 +219,40 @@ function DataTablePageSizeControls({
       data-slot="data-table-page-size"
     >
       <span className="text-muted-foreground">{label}</span>
-      <select
-        className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        data-slot="data-table-page-size-select"
-        onChange={(event) => {
-          const nextSize = Number(event.currentTarget.value);
-          if (nextSize !== value && options.includes(nextSize)) {
-            onPageSizeChange(nextSize);
-          }
-        }}
-        value={String(value)}
-      >
-        {options.map((size) => (
-          <option key={size} value={String(size)}>
-            {size}
-          </option>
-        ))}
-      </select>
+      <span className="relative inline-grid min-w-24 max-w-full">
+        <select
+          className="h-11 w-full min-w-0 appearance-none truncate rounded-[5px] border border-input bg-background py-2 pl-3 pr-9 text-base leading-5 text-foreground shadow-xs outline-none transition-colors hover:border-border focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm motion-reduce:transition-none"
+          data-slot="data-table-page-size-select"
+          onChange={(event) => {
+            const nextSize = Number(event.currentTarget.value);
+            if (nextSize !== value && options.includes(nextSize)) {
+              onPageSizeChange(nextSize);
+            }
+          }}
+          value={String(value)}
+        >
+          {options.map((size) => (
+            <option key={size} value={String(size)}>
+              {size}
+            </option>
+          ))}
+        </select>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 16 16"
+          fill="none"
+          className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground"
+        >
+          <path
+            d="m4 6 4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
     </label>
   );
 }
@@ -275,7 +292,7 @@ function DataTablePaginationControls({
     >
       {summary ? (
         <div
-          className="text-sm text-muted-foreground"
+          className="text-sm leading-6 text-muted-foreground"
           data-slot="data-table-pagination-summary"
         >
           {summary}
@@ -286,7 +303,7 @@ function DataTablePaginationControls({
 
       <Pagination
         aria-label={navigationLabel}
-        className="w-auto justify-start sm:justify-end"
+        className="w-auto justify-start sm:justify-end [&_button]:min-h-11 sm:[&_button]:min-h-10"
       >
         <PaginationContent className="!m-0 !max-w-none !p-0 [&>li]:!m-0 [&>li]:!p-0 [&>li]:before:hidden">
           <PaginationItem>
@@ -363,13 +380,16 @@ export function DataTable<Row>({
     status === "ready" && rows.length > 0 && hasValidPagination(pagination);
 
   return (
-    <div className={cn("min-w-0 space-y-4", className)} data-slot="data-table">
+    <div
+      className={cn("min-w-0 space-y-4 rounded-[5px] bg-background", className)}
+      data-slot="data-table"
+    >
       {query ? <DataTableQueryControls query={query} /> : null}
 
       <Table className="min-w-max" data-slot="data-table-table">
         <TableCaption>{caption}</TableCaption>
 
-        <TableHeader>
+        <TableHeader className="bg-muted/20 text-xs">
           <TableRow>
             {columns.map((column) => {
               const controller = column.sortable ? sorting : undefined;
@@ -394,7 +414,7 @@ export function DataTable<Row>({
                 >
                   {controller ? (
                     <button
-                      className="inline-flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm text-left font-medium outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex min-h-11 sm:min-h-10 w-full cursor-pointer items-center gap-2 rounded-sm text-left font-medium outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                       data-slot="data-table-sort-button"
                       disabled={status !== "ready"}
                       onClick={() =>

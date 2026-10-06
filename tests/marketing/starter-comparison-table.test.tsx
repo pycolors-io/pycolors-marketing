@@ -27,11 +27,10 @@ describe("Starter Free and Pro comparison", () => {
     });
     const headers = within(table).getAllByRole("columnheader");
 
-    expect(headers.map((header) => header.textContent)).toEqual([
-      "Capability",
-      "Starter Free",
-      "Starter Pro",
-    ]);
+    expect(headers).toHaveLength(3);
+    for (const name of ["Capability", "Starter Free", "Starter Pro"]) {
+      expect(within(table).getByRole("columnheader", { name })).toBeVisible();
+    }
     for (const header of headers) {
       expect(header).toHaveAttribute("scope", "col");
     }

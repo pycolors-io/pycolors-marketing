@@ -1,19 +1,18 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
+import { Badge } from "@pycolors/ui";
+
+import { GuidePageShell } from "@/components/guides/guide-page-shell";
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Badge,
-  Button,
-  Card,
-} from '@pycolors/ui';
+  GuideSection as Section,
+  GuideCallout as Alert,
+  GuideCalloutTitle as AlertTitle,
+  GuideCalloutDescription as AlertDescription,
+  GuideNextSteps,
+} from "@/components/guides/guide-content";
 
-import { GuidePageShell } from '@/components/guides/guide-page-shell';
-
-import { Callout } from 'fumadocs-ui/components/callout';
-import { File, Files, Folder } from 'fumadocs-ui/components/files';
+import { Callout } from "fumadocs-ui/components/callout";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
 
 import {
   Blocks,
@@ -24,90 +23,55 @@ import {
   Smartphone,
   WifiOff,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { DocsFeatureGrid } from '@/components/docs/docs-feature-grid';
-import { DocsDecisionGrid } from '@/components/docs/docs-decision-grid';
-import { DocsConceptTabs } from '@/components/docs/docs-concept-tabs';
-import { DocsLinks } from '@/components/docs/docs-links';
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 
 export const metadata: Metadata = {
-  title: 'Why PWA Foundations Matter for Modern SaaS',
+  title: "Why PWA Foundations Matter for Modern SaaS",
   description:
-    'Learn why installability, standalone mode, offline resilience, and app-like UX improve SaaS credibility — and how to approach PWA architecture without overengineering.',
+    "Learn why installability, standalone mode, offline resilience, and app-like UX improve SaaS credibility — and how to approach PWA architecture without overengineering.",
 
   alternates: {
-    canonical: '/guides/pwa-for-saas',
+    canonical: "/guides/pwa-for-saas",
   },
 
   openGraph: {
-    title: 'Why PWA Foundations Matter for Modern SaaS',
+    title: "Why PWA Foundations Matter for Modern SaaS",
     description:
-      'Learn how installability, standalone mode, mobile-safe layouts, and offline resilience improve modern SaaS credibility.',
-    url: '/guides/pwa-for-saas',
-    images: ['/seo/og-main.png'],
+      "Learn how installability, standalone mode, mobile-safe layouts, and offline resilience improve modern SaaS credibility.",
+    url: "/guides/pwa-for-saas",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Why PWA Foundations Matter for Modern SaaS',
+    card: "summary_large_image",
+    title: "Why PWA Foundations Matter for Modern SaaS",
     description:
-      'A production-oriented guide to PWA architecture for SaaS products.',
-    images: ['/seo/twitter-main.png'],
+      "A production-oriented guide to PWA architecture for SaaS products.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
-function Section({
-  id,
-  title,
-  description,
-  children,
-}: Readonly<{
-  id: string;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-}>) {
-  return (
-    <section
-      id={id}
-      className="scroll-mt-28 border-t border-border/60 py-10 sm:py-12"
-    >
-      <div className="mb-5 space-y-1 sm:mb-6">
-        <h2 className="font-brand text-lg font-semibold tracking-tight">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="text-sm text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      <div className="space-y-5 text-sm leading-7 text-muted-foreground sm:text-[15px]">
-        {children}
-      </div>
-    </section>
-  );
-}
-
 const toc = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'why-pwas-are-returning', label: 'Why PWAs are returning' },
+  { id: "overview", label: "Overview" },
+  { id: "why-pwas-are-returning", label: "Why PWAs are returning" },
   {
-    id: 'why-most-saas-feel-like-websites',
-    label: 'Why SaaS still feels like websites',
+    id: "why-most-saas-feel-like-websites",
+    label: "Why SaaS still feels like websites",
   },
-  { id: 'what-actually-matters', label: 'What actually matters' },
-  { id: 'correct-mental-model', label: 'Correct mental model' },
-  { id: 'what-to-avoid', label: 'What to avoid' },
-  { id: 'starter-pro-approach', label: 'Starter Pro approach' },
-  { id: 'project-structure', label: 'Project structure' },
-  { id: 'production-checklist', label: 'Production checklist' },
-  { id: 'final-takeaway', label: 'Final takeaway' },
-  { id: 'next-steps', label: 'Next steps' },
+  { id: "what-actually-matters", label: "What actually matters" },
+  { id: "correct-mental-model", label: "Correct mental model" },
+  { id: "what-to-avoid", label: "What to avoid" },
+  { id: "starter-pro-approach", label: "Starter Pro approach" },
+  { id: "project-structure", label: "Project structure" },
+  { id: "production-checklist", label: "Production checklist" },
+  { id: "final-takeaway", label: "Final takeaway" },
+  { id: "next-steps", label: "Next steps" },
 ];
 
 export default function GuidePwaForSaasPage() {
@@ -116,20 +80,32 @@ export default function GuidePwaForSaasPage() {
       title="Why PWA foundations matter for modern SaaS"
       description="Learn how installability, standalone mode, offline resilience, and mobile-safe UX improve SaaS credibility without overengineering."
       toc={toc}
-      breadcrumb={[
-        { label: 'Home', href: '/' },
-        { label: 'Guides', href: '/guides' },
+      tags={["Next.js", "PWA"]}
+      documentation={{
+        title: "PWA documentation",
+        href: "/docs/starter-pro/pwa",
+      }}
+      relatedGuides={[
         {
-          label: 'Why PWA foundations matter for modern SaaS',
-          href: '/guides/pwa-for-saas',
+          title: "SaaS dashboard design patterns",
+          href: "/guides/saas-dashboard-design",
+        },
+        {
+          title: "How to build a SaaS with Next.js",
+          href: "/guides/build-saas-nextjs",
+        },
+      ]}
+      breadcrumb={[
+        { label: "Home", href: "/" },
+        { label: "Guides", href: "/guides" },
+        {
+          label: "Why PWA foundations matter for modern SaaS",
+          href: "/guides/pwa-for-saas",
         },
       ]}
     >
       <div>
-        <section
-          id="overview"
-          className="scroll-mt-28 py-10 sm:py-12"
-        >
+        <section id="overview" className="scroll-mt-28 py-10 sm:py-12">
           <div className="space-y-6">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="outline">Guide</Badge>
@@ -140,17 +116,16 @@ export default function GuidePwaForSaasPage() {
             <Alert>
               <AlertTitle>Core idea</AlertTitle>
               <AlertDescription>
-                The real value of a PWA is not replacing native apps.
-                The real value is improving SaaS credibility,
-                resilience, installability, and app-like UX.
+                The real value of a PWA is not replacing native apps. The real
+                value is improving SaaS credibility, resilience, installability,
+                and app-like UX.
               </AlertDescription>
             </Alert>
 
             <p>
-              Modern SaaS applications increasingly use PWA
-              foundations to create stronger mobile experiences,
-              standalone app behavior, and more resilient product
-              surfaces.
+              Modern SaaS applications increasingly use PWA foundations to
+              create stronger mobile experiences, standalone app behavior, and
+              more resilient product surfaces.
             </p>
           </div>
         </section>
@@ -161,9 +136,8 @@ export default function GuidePwaForSaasPage() {
           description="Modern browser capabilities changed the conversation."
         >
           <p>
-            PWAs are becoming relevant again because the web platform
-            is significantly stronger today than it was a few years
-            ago.
+            PWAs are becoming relevant again because the web platform is
+            significantly stronger today than it was a few years ago.
           </p>
 
           <DocsFeatureGrid
@@ -171,27 +145,27 @@ export default function GuidePwaForSaasPage() {
             tone="platform"
             items={[
               {
-                title: 'Installability',
+                title: "Installability",
                 description:
-                  'Modern browsers now provide strong install flows and standalone experiences.',
+                  "Modern browsers now provide strong install flows and standalone experiences.",
                 icon: Download,
               },
               {
-                title: 'Standalone mode',
+                title: "Standalone mode",
                 description:
-                  'Products can now feel more application-oriented instead of temporary webpages.',
+                  "Products can now feel more application-oriented instead of temporary webpages.",
                 icon: MonitorSmartphone,
               },
               {
-                title: 'Offline resilience',
+                title: "Offline resilience",
                 description:
-                  'Fallback pages and resilient navigation improve reliability.',
+                  "Fallback pages and resilient navigation improve reliability.",
                 icon: WifiOff,
               },
               {
-                title: 'Mobile-safe UX',
+                title: "Mobile-safe UX",
                 description:
-                  'Viewport-fit handling and safe-area support improve mobile credibility.',
+                  "Viewport-fit handling and safe-area support improve mobile credibility.",
                 icon: Smartphone,
               },
             ]}
@@ -208,29 +182,29 @@ export default function GuidePwaForSaasPage() {
             tone="platform"
             items={[
               {
-                eyebrow: 'Problem',
-                title: 'No installability',
+                eyebrow: "Problem",
+                title: "No installability",
                 description:
-                  'No manifest, screenshots, or standalone behavior.',
+                  "No manifest, screenshots, or standalone behavior.",
                 icon: Download,
                 items: [
-                  'no install flow',
-                  'no app icons',
-                  'no screenshots',
-                  'weak persistence',
+                  "no install flow",
+                  "no app icons",
+                  "no screenshots",
+                  "weak persistence",
                 ],
               },
               {
-                eyebrow: 'Problem',
-                title: 'Weak mobile UX',
+                eyebrow: "Problem",
+                title: "Weak mobile UX",
                 description:
-                  'Safe-area and viewport issues reduce product quality perception.',
+                  "Safe-area and viewport issues reduce product quality perception.",
                 icon: Smartphone,
                 items: [
-                  'layout jumps',
-                  'unsafe viewport handling',
-                  'weak standalone behavior',
-                  'browser chrome conflicts',
+                  "layout jumps",
+                  "unsafe viewport handling",
+                  "weak standalone behavior",
+                  "browser chrome conflicts",
                 ],
               },
             ]}
@@ -245,8 +219,8 @@ export default function GuidePwaForSaasPage() {
           <DocsConceptTabs
             items={[
               {
-                value: 'Manifest',
-                title: 'Structured installability',
+                value: "Manifest",
+                title: "Structured installability",
                 icon: Download,
                 description: (
                   <>
@@ -261,8 +235,8 @@ export default function GuidePwaForSaasPage() {
                 ),
               },
               {
-                value: 'Offline',
-                title: 'Safe offline handling',
+                value: "Offline",
+                title: "Safe offline handling",
                 icon: WifiOff,
                 description: (
                   <>
@@ -276,8 +250,8 @@ export default function GuidePwaForSaasPage() {
                 ),
               },
               {
-                value: 'UX',
-                title: 'Mobile-safe UX',
+                value: "UX",
+                title: "Mobile-safe UX",
                 icon: Smartphone,
                 description: (
                   <>
@@ -305,9 +279,9 @@ export default function GuidePwaForSaasPage() {
           </Callout>
 
           <p>
-            PWA architecture should improve resilience and mobile UX —
-            not redefine authentication, billing, permissions, or
-            backend state ownership.
+            PWA architecture should improve resilience and mobile UX — not
+            redefine authentication, billing, permissions, or backend state
+            ownership.
           </p>
         </Section>
 
@@ -320,16 +294,16 @@ export default function GuidePwaForSaasPage() {
             preferTitle="Healthy PWA foundations"
             avoidTitle="Dangerous PWA patterns"
             prefer={[
-              'lightweight service workers',
-              'safe offline fallback pages',
-              'mobile-safe viewport handling',
-              'progressive enhancement',
+              "lightweight service workers",
+              "safe offline fallback pages",
+              "mobile-safe viewport handling",
+              "progressive enhancement",
             ]}
             avoid={[
-              'offline auth as source of truth',
-              'aggressive billing caching',
-              'overengineered service workers',
-              'trying to replace native apps',
+              "offline auth as source of truth",
+              "aggressive billing caching",
+              "overengineered service workers",
+              "trying to replace native apps",
             ]}
           />
         </Section>
@@ -394,29 +368,28 @@ export default function GuidePwaForSaasPage() {
             tone="success"
             items={[
               {
-                eyebrow: 'Installability',
-                title: 'Manifest validation',
+                eyebrow: "Installability",
+                title: "Manifest validation",
                 description:
-                  'Ensure your PWA meets installability requirements',
+                  "Ensure your PWA meets installability requirements",
                 icon: CheckCircle2,
                 items: [
-                  'valid manifest',
-                  'professional icons',
-                  'maskable icon',
-                  'screenshots',
+                  "valid manifest",
+                  "professional icons",
+                  "maskable icon",
+                  "screenshots",
                 ],
               },
               {
-                eyebrow: 'Operations',
-                title: 'Production discipline',
-                description:
-                  'Validate critical aspects before shipping',
+                eyebrow: "Operations",
+                title: "Production discipline",
+                description: "Validate critical aspects before shipping",
                 icon: ShieldCheck,
                 items: [
-                  'cache review',
-                  'offline validation',
-                  'auth verification',
-                  'billing verification',
+                  "cache review",
+                  "offline validation",
+                  "auth verification",
+                  "billing verification",
                 ],
               },
             ]}
@@ -428,78 +401,49 @@ export default function GuidePwaForSaasPage() {
           title="Final takeaway"
           description="The future of SaaS PWAs is probably simpler than expected."
         >
-          <p>
-            The best SaaS PWAs are usually the most disciplined ones.
-          </p>
+          <p>The best SaaS PWAs are usually the most disciplined ones.</p>
 
           <p>
-            Not maximum complexity. Just enough application behavior
-            to improve product credibility and resilience.
+            Not maximum complexity. Just enough application behavior to improve
+            product credibility and resilience.
           </p>
         </Section>
 
-        <section
-          id="next-steps"
-          className="scroll-mt-28 border-t border-border/60 py-8 sm:py-10"
-        >
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Explore Starter Pro PWA foundations
-                </h2>
-
-                <p className="text-sm text-muted-foreground">
-                  Discover the installable app architecture included
-                  in Starter Pro.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href="/docs/starter-pro/pwa">PWA docs</Link>
-                </Button>
-
-                <Button asChild variant="secondary">
-                  <Link href="/starters/pro">
-                    Explore Starter Pro
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </section>
+        <GuideNextSteps
+          title="Explore Starter Pro PWA foundations"
+          description="Review the installable app foundations in Starter Pro, then follow the setup and production checklist for your environment."
+          primary={{ href: "/docs/starter-pro/pwa", label: "PWA docs" }}
+        />
 
         <section className="border-t border-border/60 py-8 sm:py-10">
           <DocsLinks
             variant="grid"
             items={[
               {
-                title: 'Starter Pro PWA documentation',
-                href: '/docs/starter-pro/pwa',
+                title: "Starter Pro PWA documentation",
+                href: "/docs/starter-pro/pwa",
                 description:
-                  'Understand the installable app foundations included in Starter Pro.',
+                  "Understand the installable app foundations included in Starter Pro.",
                 icon: Smartphone,
               },
               {
-                title: 'PWA setup',
-                href: '/docs/starter-pro/pwa-setup',
+                title: "PWA setup",
+                href: "/docs/starter-pro/pwa-setup",
                 description:
-                  'Configure manifest, icons, service worker, screenshots, and metadata.',
+                  "Configure manifest, icons, service worker, screenshots, and metadata.",
                 icon: Zap,
               },
               {
-                title: 'PWA production checklist',
-                href: '/docs/starter-pro/pwa-production-checklist',
-                description:
-                  'Validate installability and release readiness.',
+                title: "PWA production checklist",
+                href: "/docs/starter-pro/pwa-production-checklist",
+                description: "Validate installability and release readiness.",
                 icon: ShieldCheck,
               },
               {
-                title: 'Explore Starter Pro',
-                href: '/starters/pro',
+                title: "Explore Starter Pro",
+                href: "/starters/pro",
                 description:
-                  'Production-ready SaaS foundations with authentication, billing, dashboard architecture, and PWA support.',
+                  "Production-ready SaaS foundations with authentication, billing, dashboard architecture, and PWA support.",
                 icon: Blocks,
               },
             ]}

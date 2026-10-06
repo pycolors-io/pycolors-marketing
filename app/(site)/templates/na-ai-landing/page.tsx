@@ -1,40 +1,42 @@
 import type { Metadata } from "next";
+import {
+  NA_AI_USAGE_SUMMARY,
+  DIGITAL_REFUND_SUMMARY,
+} from "@/lib/products/commercial-policy";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUpRight,
+  BookOpen,
   Code2,
-  ExternalLink,
   FileArchive,
-  FileText,
-  Gauge,
-  Image as ImageIcon,
-  Lock,
-  Package,
-  RefreshCcw,
-  Rocket,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  Boxes,
-  Check,
+  FileCode2,
+  LayoutTemplate,
+  Palette,
+  SlidersHorizontal,
 } from "lucide-react";
 
-import { Badge, Button, Card, CardContent } from "@pycolors/ui";
+import { Badge, Button, cn } from "@pycolors/ui";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
-
 import { Container } from "@/components/container";
+import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 import {
   MarketingPill,
   MarketingPillList,
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingFaq } from "@/components/marketing/faq";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { TemplateColorPreview } from "@/components/templates/template-color-preview";
 import { TemplateStickyCta } from "@/components/templates/template-sticky-cta";
+import styles from "@/components/templates/na-ai-landing.module.css";
 
 export const metadata: Metadata = {
   title: "AI SaaS Landing Page Template for Next.js",
@@ -78,64 +80,61 @@ const naAiLandingJsonLd = generateProductOfferJsonLd({
     "Premium AI and SaaS landing page template built for modern Next.js product launches.",
 });
 
-const SCREENSHOTS = [
+const previews = [
   {
+    mode: "dark",
+    label: "Dark",
     src: "/templates/na-ai/na-ai-analytics-workspace-dark.webp",
-    alt: "NA-AI Landing template full page preview in dark mode",
-    label: "Dark mode",
   },
   {
+    mode: "light",
+    label: "Light",
     src: "/templates/na-ai/na-ai-analytics-workspace-light.webp",
-    alt: "NA-AI Landing template full page preview in light mode",
-    label: "Light mode",
   },
 ] as const;
 
-const highlights = [
+const includedGroups = [
   {
-    title: "Built for AI/SaaS launches",
+    title: "The marketing sections",
+    label: "01 / Product story",
     description:
-      "A focused landing page for AI tools, analytics products, SaaS platforms, and early product validation.",
-    icon: Rocket,
+      "The structure to explain your product and answer the next question.",
+    icon: LayoutTemplate,
+    items: [
+      "Hero, features and integrations",
+      "AI, security and revenue insight sections",
+      "Analytics-style charts and product visuals",
+      "Monthly/yearly pricing and comparison table",
+      "Testimonials, FAQ and frontend contact form",
+    ],
   },
   {
-    title: "Commercial-ready source code",
-    description:
-      "Get the full template source code, adapt the copy, customize the UI, and deploy it for your own product.",
-    icon: Package,
+    title: "The visual foundation",
+    label: "02 / Design & interaction",
+    description: "A consistent interface you can adapt to your own identity.",
+    icon: Palette,
+    items: [
+      "Responsive layouts for mobile and desktop",
+      "Dark and light appearances",
+      "PyColors UI and shared design tokens",
+      "Radix primitives and Lucide icons",
+      "Tailwind CSS v4 and Framer Motion",
+    ],
   },
   {
-    title: "Designed to convert",
+    title: "The source project",
+    label: "03 / Code & setup",
     description:
-      "Hero, features, integrations, testimonials, pricing, FAQ, and trust sections are already structured.",
-    icon: Gauge,
+      "An editable Next.js project with the essentials to get started.",
+    icon: Code2,
+    items: [
+      "Next.js App Router, React and TypeScript",
+      "Content managed in TypeScript config files",
+      "Metadata and social preview foundations",
+      "Sitemap and robots configuration",
+      "Full source ZIP and setup documentation",
+    ],
   },
-  {
-    title: "SEO and launch baseline",
-    description:
-      "Includes metadata, responsive structure, dark/light mode, and clean content architecture for launch.",
-    icon: FileText,
-  },
-] as const;
-
-const included = [
-  "Complete Next.js App Router project structure",
-  "TypeScript setup",
-  "Tailwind CSS v4 styling",
-  "shadcn/ui + Radix UI primitives",
-  "Framer Motion animations",
-  "Data-driven architecture with TypeScript config files",
-  "Dark and light mode",
-  "Hero, feature sections, integrations, testimonials, and FAQ",
-  "AI-native, security, and revenue insight sections",
-  "Pricing section with monthly/yearly toggle",
-  "Pricing comparison table",
-  "Analytics-style sections with charts",
-  "Frontend contact/sales form structure",
-  "SEO baseline with Open Graph, sitemap, and robots",
-  "Responsive marketing layout",
-  "Setup documentation included",
-  "Commercial usage for personal and client projects",
 ] as const;
 
 const notIncluded = [
@@ -147,40 +146,37 @@ const notIncluded = [
   "User dashboard",
 ] as const;
 
-const stack = [
-  "Next.js 16+ App Router",
-  "React",
-  "TypeScript",
-  "Tailwind CSS v4",
-  "shadcn/ui",
-  "Radix UI",
-  "Framer Motion",
-  "Recharts",
-  "Lucide Icons",
+const contentFiles = [
+  { path: "@data/hero.ts", purpose: "Product promise & calls to action" },
+  { path: "@data/features.ts", purpose: "Features & benefits" },
+  { path: "@data/pricing.ts", purpose: "Plans & pricing content" },
+  { path: "@data/faq.ts", purpose: "Questions & answers" },
+  { path: "config/site.ts", purpose: "Site identity & metadata" },
 ] as const;
 
-const useCases = [
+const customizationSteps = [
   {
-    title: "AI product launch",
+    number: "01",
+    title: "Make the content yours",
     description:
-      "Present an AI assistant, analytics layer, automation platform, or workflow product with a polished SaaS page.",
-    icon: Sparkles,
+      "Replace the sample copy, testimonials, metrics and product visuals with accurate content for your own offer.",
   },
   {
-    title: "Indie SaaS validation",
+    number: "02",
+    title: "Set your visual identity",
     description:
-      "Ship the marketing surface first, validate interest, collect leads, then build the product behind it.",
-    icon: Users,
+      "Update your logo, colors, fonts and social images. PyColors UI and tokens keep the interface consistent.",
   },
   {
-    title: "Client landing pages",
+    number: "03",
+    title: "Connect, review, deploy",
     description:
-      "Use it as a repeatable baseline for agencies or freelance work without rebuilding common sections.",
-    icon: Boxes,
+      "Connect forms and services, check links and both themes, then validate the production build before publishing.",
   },
 ] as const;
 
 const faqs = [
+  { question: "What is the refund policy?", answer: DIGITAL_REFUND_SUMMARY },
   {
     question: "Is NA-AI Landing a full SaaS app?",
     answer:
@@ -188,14 +184,8 @@ const faqs = [
   },
   {
     question: "Can I use it for client work?",
-    answer:
-      "Yes. Commercial usage is included for personal and client projects, as long as you do not resell or redistribute the template source code itself.",
+    answer: NA_AI_USAGE_SUMMARY,
   },
-  // {
-  //   question: 'Is the template connected to PyColors UI?',
-  //   answer:
-  //     'The template follows the PyColors product direction and will progressively align with PyColors UI components and tokens as the ecosystem evolves.',
-  // },
   {
     question: "What should I choose between this template and Starter Pro?",
     answer:
@@ -208,707 +198,571 @@ const faqs = [
   },
 ] as const;
 
-function ScreenshotGrid() {
-  return (
-    <div className="grid gap-4 lg:grid-cols-2">
-      {SCREENSHOTS.map((screenshot) => (
-        <Card
-          key={screenshot.src}
-          className="group overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border"
-        >
-          <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs font-medium">{screenshot.label}</span>
-              </div>
-
-              <span className="text-[11px] text-muted-foreground">
-                Full layout preview
-              </span>
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden bg-background">
-            <Image
-              src={screenshot.src}
-              alt={screenshot.alt}
-              width={1400}
-              height={900}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.012]"
-            />
-          </div>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
 export default function NaAiTemplatePage() {
   return (
-    <main className="bg-background pb-24 text-foreground">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={cn(
+        "bg-background text-foreground focus:outline-none",
+        styles.page,
+      )}
+    >
       <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
-      <Container className="py-18">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8">
-            <Breadcrumb
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Templates", href: "/templates" },
-                {
-                  label: "NA-AI Landing",
-                  href: "/templates/na-ai-landing",
-                },
-              ]}
-            />
-          </div>
-
+      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+        <Breadcrumb
+          className={cn("mb-8", styles.breadcrumb)}
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Templates", href: "/templates" },
+            { label: PRODUCT.name, href: "/templates/na-ai-landing" },
+          ]}
+        />
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14">
           <PageHero
-            maxWidth="5xl"
+            variant="compact"
+            align="left"
+            contentClassName="mx-0 max-w-3xl"
             badges={[
-              {
-                label: "NA-AI Landing",
-                variant: "secondary",
-              },
-              {
-                label: `${PRODUCT.price} launch price`,
-                variant: "outline",
-                icon: <Sparkles className="h-3.5 w-3.5" />,
-              },
-              {
-                label: `${PRODUCT.regularPrice} regular price`,
-                variant: "outline",
-              },
+              { label: PRODUCT.name, variant: "outline" },
+              { label: "Frontend template", variant: "outline" },
             ]}
-            title="Launch a premium AI landing page faster."
-            subtitle="A Next.js template built for AI, analytics, and SaaS products."
-            description="NA-AI Landing helps you launch a premium AI or SaaS landing page in hours — with production-ready Next.js code, clean architecture, scalable content structure, polished UI, dark mode, SEO foundations, and commercial usage included."
+            title="A complete landing page for your AI product."
+            description="Give your AI, analytics or SaaS product a considered marketing page. NA-AI Landing brings the sections, visuals and editable Next.js source. Make it your own, then connect your services."
             actions={
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <BuyProductButton
-                  productSlug={PRODUCT.slug}
-                  label={`Buy NA-AI Landing — ${PRODUCT.price}`}
-                  fullWidth={false}
-                />
-
+              <>
                 <Button
                   asChild
-                  size="lg"
                   variant="outline"
-                  className="h-11 rounded-[5px] px-6"
+                  className="min-h-11 rounded-[5px] px-5 text-sm shadow-none"
                 >
-                  <Link
-                    href={PRODUCT.demoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Live demo
-                    <ExternalLink className="h-4 w-4" />
+                  <Link href="#template-preview">
+                    Explore the preview{" "}
+                    <ArrowDown className="size-4" aria-hidden="true" />
                   </Link>
                 </Button>
-              </div>
+                <Link
+                  href="/docs/templates/na-ai-landing"
+                  className={styles.textLink}
+                >
+                  Read the documentation{" "}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </>
             }
-            pills={[
-              "Next.js App Router",
-              "Tailwind CSS v4",
-              "Dark/light mode",
-              "Full source code",
-              "Instant access",
-              "Commercial usage",
-            ]}
-            extraClassName="mx-auto max-w-6xl"
             extra={
-              <Link
+              <MarketingPillList aria-label="NA-AI Landing foundations">
+                {["Next.js", "TypeScript", "Tailwind CSS", "PyColors UI"].map(
+                  (item) => (
+                    <MarketingPill key={item} className="bg-background">
+                      {item}
+                    </MarketingPill>
+                  ),
+                )}
+              </MarketingPillList>
+            }
+          />
+          <aside
+            aria-label="Purchase NA-AI Landing"
+            className={cn(
+              "rounded-[5px] border border-border-subtle p-5 sm:p-6",
+              styles.purchasePanel,
+            )}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-medium text-muted-foreground">
+                The complete template
+              </p>
+              <FileArchive
+                className="size-4 text-muted-foreground"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-4xl font-semibold tracking-[-0.04em]">
+                {PRODUCT.price}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                One-time payment
+              </span>
+            </div>
+            <p className="mt-2 text-xs leading-6 text-muted-foreground">
+              Launch price · Regular price {PRODUCT.regularPrice}
+            </p>
+            <ul className="my-5 space-y-2" aria-label="Purchase includes">
+              {[
+                "Full editable source code",
+                "Setup documentation",
+                "Commercial use under the PyColors license",
+              ].map((item) => (
+                <MarketingCheckItem key={item} className={styles.checkItem}>
+                  {item}
+                </MarketingCheckItem>
+              ))}
+            </ul>
+            <BuyProductButton
+              productSlug={PRODUCT.slug}
+              label="Buy NA-AI Landing"
+              loadingLabel="Opening checkout…"
+              className="shadow-none hover:shadow-none"
+            />
+            <Button
+              asChild
+              variant="outline"
+              className="mt-2 min-h-11 w-full rounded-[5px] text-sm shadow-none"
+            >
+              <a
                 href={PRODUCT.demoUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="group block"
-                aria-label="Open NA-AI Landing live demo"
               >
-                <div className="mx-auto mt-12 max-w-6xl overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium transition-all duration-500 hover:border-border hover:shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
-                  <div className="border-b border-border-subtle bg-surface-muted px-4 py-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="h-2.5 w-2.5 rounded-full bg-rose-500/70" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500/70" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
-                      </div>
+                Open live demo{" "}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+            <p className="mt-4 text-xs leading-6 text-muted-foreground">
+              ZIP access is sent to your checkout email after payment
+              confirmation and delivery processing.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-x-5">
+              <Link href="/license" className={styles.textLink}>
+                License
+              </Link>
+              <Link href="/terms" className={styles.textLink}>
+                Purchase terms
+              </Link>
+            </div>
+          </aside>
+        </div>
 
-                      <span className="rounded-[5px] border border-border-subtle px-3 py-1 text-[11px] text-muted-foreground transition-colors group-hover:border-border group-hover:text-foreground">
-                        Open live demo
+        <nav
+          aria-label="NA-AI Landing sections"
+          className="mt-10 flex flex-wrap gap-x-6 gap-y-1 border-y border-border-subtle py-2 text-muted-foreground"
+        >
+          {[
+            ["Preview", "template-preview"],
+            ["What's included", "template-included"],
+            ["Customization", "template-customization"],
+            ["Delivery", "template-delivery"],
+            ["FAQ", "template-faq"],
+          ].map(([label, id]) => (
+            <Link key={id} href={`#${id}`} className={styles.textLink}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        <MarketingSectionShell
+          id="template-preview"
+          aria-labelledby="template-preview-title"
+          width="full"
+          className="scroll-mt-24"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="template-preview-title"
+            title="See how your product could look."
+            description="Explore both appearances, then try the live demo to inspect the full page and its interactions."
+            action={
+              <a
+                href={PRODUCT.demoUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={styles.textLink}
+              >
+                Explore the live demo{" "}
+                <ArrowUpRight
+                  className="size-3.5 shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            }
+          />
+          <div
+            className={cn(
+              "overflow-hidden rounded-[5px] border border-border-subtle",
+              styles.previewStage,
+            )}
+          >
+            <TemplateColorPreview
+              previews={previews.map((preview) => ({
+                mode: preview.mode,
+                label: preview.label,
+                content: (
+                  <figure className="w-full min-w-0">
+                    <a
+                      href={PRODUCT.demoUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={`Open NA-AI live demo from the ${preview.mode} preview (opens in a new tab)`}
+                      className={cn(
+                        "block overflow-hidden rounded-[5px] border border-border-subtle bg-background focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+                        styles.previewImage,
+                      )}
+                    >
+                      <Image
+                        src={preview.src}
+                        alt={`NA-AI Landing hero and illustrative analytics preview in ${preview.mode} mode`}
+                        width={3452}
+                        height={1916}
+                        sizes="(min-width: 1280px) 1180px, 92vw"
+                        className="h-auto w-full"
+                      />
+                    </a>
+                    <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-1 text-xs leading-6 text-muted-foreground">
+                      <span className="font-medium text-foreground">
+                        {preview.label} appearance · Hero preview
                       </span>
-                    </div>
-                  </div>
+                      <span>Product visuals and metrics are illustrative.</span>
+                    </figcaption>
+                  </figure>
+                ),
+              }))}
+            />
+          </div>
+        </MarketingSectionShell>
 
-                  <div className="relative aspect-video overflow-hidden bg-background">
-                    <Image
-                      src="/templates/na-ai/na-ai-analytics-workspace-dark.webp"
-                      alt="NA-AI Landing template hero preview"
-                      fill
-                      priority
-                      sizes="(min-width: 1024px) 960px, 100vw"
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.012]"
-                    />
-
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.16),transparent_35%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background/70 to-transparent" />
+        <MarketingSectionShell
+          id="template-included"
+          aria-labelledby="template-included-title"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="template-included-title"
+            title="The marketing layer, already considered."
+            description="A clear view of the sections, design system and source files included in the template."
+          />
+          <div className="grid gap-4 lg:grid-cols-3">
+            {includedGroups.map((group) => (
+              <MarketingFeatureCard
+                key={group.title}
+                title={group.title}
+                description={group.description}
+                className={cn("bg-background shadow-none", styles.includedCard)}
+                icon={<group.icon className="size-4" />}
+                meta={
+                  <div>
+                    <p className="mb-5 border-b border-border-subtle pb-4 font-mono text-[11px] text-muted-foreground">
+                      {group.label}
+                    </p>
+                    <ul className="space-y-3" aria-label={group.title}>
+                      {group.items.map((item) => (
+                        <MarketingCheckItem
+                          key={item}
+                          className={styles.checkItem}
+                        >
+                          {item}
+                        </MarketingCheckItem>
+                      ))}
+                    </ul>
                   </div>
-                </div>
+                }
+              />
+            ))}
+          </div>
+          <div className="mt-5 grid gap-6 rounded-[5px] border border-border-subtle bg-background p-5 sm:p-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]">
+            <div>
+              <h3 className="flex items-center gap-2.5 text-sm font-medium">
+                <SlidersHorizontal
+                  className="size-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                What you&apos;ll connect yourself
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                NA-AI Landing is a frontend template. Its pricing, charts and
+                contact form are presentation UI; connect real services for your
+                product.
+              </p>
+            </div>
+            <div>
+              <MarketingPillList aria-label="Not included in the template">
+                {notIncluded.map((item) => (
+                  <MarketingPill key={item} className="bg-background">
+                    {item}
+                  </MarketingPill>
+                ))}
+              </MarketingPillList>
+              <Link
+                href="/starters/pro"
+                className={cn("mt-3", styles.textLink)}
+              >
+                Need auth and billing? Explore Starter Pro{" "}
+                <ArrowRight className="size-3.5 shrink-0" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
+          id="template-customization"
+          aria-labelledby="template-customization-title"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="template-customization-title"
+            title="Your content. Your visual identity."
+            description="Start with the content files and shared tokens. Adjust the page without having to rebuild its structure."
+            action={
+              <Link
+                href="/docs/templates/na-ai-landing/customization"
+                className={styles.textLink}
+              >
+                Customization guide{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
               </Link>
             }
           />
-        </div>
-      </Container>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-6xl">
-            <MarketingSectionHeader
-              eyebrow="Why it exists"
-              title="Most builders lose time polishing the page before testing the offer."
-              description="NA-AI Landing gives you the commercial surface first: a serious AI/SaaS landing page with sections, hierarchy, pricing, trust, and responsive UI already shaped."
-            />
-
-            <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {highlights.map((highlight) => (
-                <MarketingFeatureCard
-                  key={highlight.title}
-                  title={highlight.title}
-                  description={highlight.description}
-                  icon={<highlight.icon className="h-5 w-5" />}
-                />
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-6xl">
-            <MarketingSectionHeader
-              eyebrow="Preview"
-              title="A polished full-page landing experience."
-              description="Use the template as a strong baseline, then adapt the product story, screenshots, colors, sections, and offer for your own AI or SaaS product."
-            />
-
-            <div className="mt-12">
-              <ScreenshotGrid />
-            </div>
-          </div>
-        </Container>
-      </section>
-      <section className="border-t border-border-subtle">
-        <Container className="py-14 lg:py-16">
-          <div className="mx-auto max-w-6xl">
-            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-              <CardContent className="p-6 sm:p-7">
-                <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge
-                        variant="outline"
-                        className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-[11px]"
-                      >
-                        Built with PyColors UI
-                      </Badge>
-
-                      <span className="text-[11px] text-muted-foreground">
-                        @pycolors/ui
-                      </span>
-                    </div>
-
-                    <div className="space-y-3">
-                      <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                        Consistent product foundations from the start.
-                      </h2>
-
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        NA-AI Landing uses the same design tokens, components,
-                        spacing system, and UI conventions used across the
-                        PyColors ecosystem.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col justify-between gap-6">
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      The template is designed to feel production-ready from day
-                      one, with reusable SaaS-oriented patterns instead of
-                      isolated marketing sections.
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        "Semantic tokens",
-                        "Tailwind v4",
-                        "Accessible primitives",
-                        "Production-ready patterns",
-                      ].map((item) => (
-                        <span
-                          key={item}
-                          className="inline-flex items-center rounded-[5px] border border-border-subtle bg-surface-muted px-2.5 py-1 text-[11px] text-muted-foreground"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-4 border-t border-border-subtle pt-5">
-                      <Link
-                        href="/ui"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
-                      >
-                        Explore PyColors UI
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-
-                      <a
-                        href="https://github.com/pycolors-io/pycolors-ui"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        GitHub
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-5xl">
-            <MarketingSectionHeader
-              eyebrow="What is included"
-              title="Everything you need to launch the marketing layer."
-              description="NA-AI Landing is a polished frontend package for launching, validating, and presenting your AI or SaaS product without rebuilding the landing page foundation."
-            />
-
-            <Card className="mt-12 overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
-              <div className="border-b border-border-subtle bg-surface-muted px-5 py-4 sm:px-6">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      Template package
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Full source code · Commercial usage · Instant access
-                    </p>
-                  </div>
-
-                  <Badge
-                    variant="outline"
-                    className="rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
-                  >
-                    Included after purchase
-                  </Badge>
-                </div>
+          <div className="grid items-stretch gap-6 lg:grid-cols-2">
+            <div
+              className={cn(
+                "min-w-0 overflow-hidden rounded-[5px] border border-border-subtle",
+                styles.sourcePanel,
+              )}
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-border-subtle bg-background/70 px-5 py-4 sm:px-6">
+                <p className="flex items-center gap-2 text-xs font-medium">
+                  <Code2
+                    className="size-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                  Content map
+                </p>
+                <span className="font-mono text-xs text-muted-foreground">
+                  src/
+                </span>
               </div>
-
-              <CardContent className="p-0">
-                <div className="grid divide-y divide-border-subtle">
-                  {included.map((item) => (
-                    <div
-                      key={item}
-                      className="group flex items-start justify-between gap-4 px-5 py-4 transition-colors hover:bg-surface-muted/60 sm:px-6"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-background transition-colors group-hover:border-success-border-subtle group-hover:bg-success-muted">
-                          <Check className="h-3.5 w-3.5 text-foreground" />
-                        </span>
-
-                        <span className="text-sm leading-6 text-muted-foreground group-hover:text-foreground">
-                          {item}
-                        </span>
-                      </div>
-
-                      <Badge
-                        variant="outline"
-                        className="hidden shrink-0 rounded-[5px] text-[11px] sm:inline-flex"
-                      >
-                        Included
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-border-subtle bg-pro-surface px-5 py-5 sm:px-6">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        Need the full SaaS foundation?
-                      </p>
-                      <p className="mt-1 text-xs leading-6 text-muted-foreground">
-                        NA-AI Landing handles the marketing page. Starter Pro
-                        adds auth, billing, protected routes, and database
-                        foundations.
-                      </p>
-                    </div>
-
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className="shrink-0 rounded-[5px]"
-                    >
-                      <Link href="/starters/pro">
-                        See Starter Pro
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-4 lg:grid-cols-2">
-              <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                <CardContent className="p-6 sm:p-7">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-                    <Code2 className="h-5 w-5 text-muted-foreground" />
-                  </div>
-
-                  <h2 className="mt-5 text-2xl font-semibold tracking-tight">
-                    Modern frontend stack
-                  </h2>
-
-                  <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    Built with familiar tools for modern SaaS landing pages and
-                    fast customization.
-                  </p>
-
-                  <MarketingPillList
-                    aria-label="NA-AI Landing technology stack"
-                    className="mt-6"
+              <dl className="divide-y divide-border-subtle bg-background">
+                {contentFiles.map((file) => (
+                  <div
+                    key={file.path}
+                    className="flex flex-col gap-2 px-5 py-4 sm:px-6"
                   >
-                    {stack.map((item) => (
-                      <MarketingPill key={item}>{item}</MarketingPill>
-                    ))}
-                  </MarketingPillList>
-                </CardContent>
-              </Card>
-
-              <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                <CardContent className="p-6 sm:p-7">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted">
-                    <Lock className="h-5 w-5 text-muted-foreground" />
+                    <dt className="flex items-center gap-2.5">
+                      <FileCode2
+                        className="size-3.5 shrink-0 text-muted-foreground"
+                        aria-hidden="true"
+                      />
+                      <code className="break-all text-xs font-medium text-foreground">
+                        {file.path}
+                      </code>
+                    </dt>
+                    <dd className="pl-6 text-xs leading-6 text-muted-foreground">
+                      {file.purpose}
+                    </dd>
                   </div>
-
-                  <h2 className="mt-5 text-2xl font-semibold tracking-tight">
-                    Frontend-only by design
-                  </h2>
-
-                  <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    This template is focused on the marketing page. For auth,
-                    billing, protected routes, and database foundations, use
-                    Starter Pro.
-                  </p>
-
-                  <MarketingPillList
-                    aria-label="NA-AI Landing exclusions"
-                    className="mt-6"
-                  >
-                    {notIncluded.map((item) => (
-                      <MarketingPill key={item}>{item}</MarketingPill>
-                    ))}
-                  </MarketingPillList>
-
-                  <div className="mt-6">
-                    <Button asChild variant="outline" className="rounded-[5px]">
-                      <Link href="/starters/pro">
-                        See Starter Pro
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-6xl">
-            <MarketingSectionHeader
-              eyebrow="Use cases"
-              title="Built for builders who need the page before the platform."
-              description="Use NA-AI Landing when your priority is to present, test, and sell the product story quickly."
-            />
-
-            <div className="mt-12 grid gap-4 md:grid-cols-3">
-              {useCases.map((item) => (
-                <MarketingFeatureCard
-                  key={item.title}
-                  title={item.title}
-                  description={item.description}
-                  icon={<item.icon className="h-5 w-5" />}
-                />
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-14 lg:py-16">
-          <div className="mx-auto max-w-6xl">
-            <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-medium">
-              <div className="border-b border-border-subtle bg-surface-muted px-5 py-4 sm:px-6">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      After purchase
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Instant delivery, clear scope, and progressive updates.
-                    </p>
-                  </div>
-
-                  <Badge
-                    variant="outline"
-                    className="rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
-                  >
-                    Direct PyColors delivery
-                  </Badge>
-                </div>
-              </div>
-
-              <CardContent className="p-0">
-                <div className="grid divide-y divide-border-subtle lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-                  {[
-                    {
-                      icon: FileArchive,
-                      title: "Instant access",
-                      description:
-                        "Receive the full source code package after checkout.",
-                    },
-                    {
-                      icon: Code2,
-                      title: "Setup included",
-                      description:
-                        "Project structure and setup instructions are included.",
-                    },
-                    {
-                      icon: RefreshCcw,
-                      title: "Maintained",
-                      description:
-                        "The template improves progressively with PyColors.",
-                    },
-                  ].map((item) => {
-                    const Icon = item.icon;
-
-                    return (
-                      <div
-                        key={item.title}
-                        className="group p-5 transition-colors hover:bg-surface-muted/60 sm:p-6"
-                      >
-                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-background transition-colors group-hover:border-border">
-                          <Icon className="h-4 w-4 text-muted-foreground" />
-                        </div>
-
-                        <p className="mt-4 text-sm font-medium text-foreground">
-                          {item.title}
-                        </p>
-
-                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="border-t border-border-subtle bg-surface-muted/50 px-5 py-4 sm:px-6">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-xs leading-6 text-muted-foreground">
-                      Built as a focused frontend template. Follow future
-                      improvements through the roadmap and changelog.
-                    </p>
-
-                    <div className="flex gap-2">
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="rounded-[5px]"
-                      >
-                        <Link href="/roadmap">Roadmap</Link>
-                      </Button>
-
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="rounded-[5px]"
-                      >
-                        <Link href="/changelog">Changelog</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-12 lg:py-14">
-          <div className="mx-auto max-w-6xl">
-            <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-              <CardContent className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
-                    <ShieldCheck className="h-4 w-4 text-muted-foreground" />
-                    Commercial usage included
-                  </div>
-
-                  <span className="hidden text-border-subtle sm:inline">—</span>
-
-                  <p className="text-sm text-muted-foreground">
-                    Use in personal and client projects.
-                  </p>
-
-                  <span className="hidden text-border-subtle sm:inline">—</span>
-
-                  <p className="text-sm text-muted-foreground">
-                    No redistribution.
-                  </p>
-                </div>
-
+                ))}
+              </dl>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border-subtle px-5 py-3 sm:px-6">
                 <Link
-                  href="/license"
-                  className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                  href="/docs/templates/na-ai-landing/project-structure"
+                  className={styles.textLink}
                 >
-                  License details
+                  Explore the project structure{" "}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
                 </Link>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-border-subtle">
-        <Container className="py-16 lg:py-20">
-          <div className="mx-auto max-w-5xl">
-            <MarketingSectionHeader
-              eyebrow="FAQ"
-              title="Questions before buying"
-              description="Make the scope clear before purchase."
-            />
-
-            <div className="mt-12 grid gap-4 lg:grid-cols-2">
-              {faqs.map((faq) => (
-                <Card
-                  key={faq.question}
-                  className="rounded-[5px] border border-border-subtle bg-surface shadow-soft"
-                >
-                  <CardContent className="p-6">
-                    <h3 className="text-base font-medium">{faq.question}</h3>
-
-                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                      {faq.answer}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+              </div>
             </div>
-          </div>
-        </Container>
-      </section>
-
-      <section>
-        <Container className="py-16 lg:py-24">
-          <div className="mx-auto max-w-6xl rounded-[5px] border border-pro-border bg-pro-surface px-6 py-10 shadow-medium sm:px-10 sm:py-14">
-            <div className="mx-auto max-w-3xl text-center">
-              <Badge
-                variant="outline"
-                className="rounded-[5px] border-pro-border bg-pro-surface-muted px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
-              >
-                Final decision
-              </Badge>
-
-              <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start from a premium AI landing page. Spend your time on the
-                offer.
-              </h2>
-
-              <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
-                Buy NA-AI Landing when you need a polished, commercial-ready
-                marketing page for your AI or SaaS product.
-              </p>
-
-              <MarketingPillList
-                aria-label="NA-AI Landing purchase details"
-                align="center"
-                className="mt-6"
-              >
-                <MarketingPill>Launch price {PRODUCT.price}</MarketingPill>
-                <MarketingPill>One-time payment</MarketingPill>
-                <MarketingPill>Instant access</MarketingPill>
-                <MarketingPill>Commercial usage</MarketingPill>
-              </MarketingPillList>
-
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <BuyProductButton
-                  productSlug={PRODUCT.slug}
-                  label={`Buy NA-AI Landing — ${PRODUCT.price}`}
-                  fullWidth={false}
-                />
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-11 rounded-[5px] px-6"
-                >
-                  <Link
-                    href={PRODUCT.demoUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Live demo
-                    <ExternalLink className="h-4 w-4" />
+            <div className="flex min-w-0 flex-col justify-between rounded-[5px] border border-border-subtle bg-background p-5 sm:p-7">
+              <ol aria-label="Customize NA-AI Landing" className="space-y-6">
+                {customizationSteps.map((step) => (
+                  <li key={step.number} className="flex items-start gap-4">
+                    <span aria-hidden="true" className={styles.stepNumber}>
+                      {step.number}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-medium">{step.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                        {step.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-7 border-t border-border-subtle pt-4">
+                <p className="text-xs leading-6 text-muted-foreground">
+                  Built with the public PyColors UI and Tokens packages.
+                </p>
+                <div className="mt-1 flex flex-wrap gap-x-5">
+                  <Link href="/ui" className={styles.textLink}>
+                    Explore PyColors UI{" "}
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
                   </Link>
-                </Button>
+                  <Link href="/tools/theme-builder" className={styles.textLink}>
+                    Open Theme Builder{" "}
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
+        </MarketingSectionShell>
 
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            Legal scope and usage terms are governed by{" "}
-            <Link href="/license" className="underline underline-offset-4">
-              /license
-            </Link>{" "}
-            and{" "}
-            <Link href="/terms" className="underline underline-offset-4">
-              /terms
+        <MarketingSectionShell
+          id="template-delivery"
+          aria-labelledby="template-delivery-title"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+        >
+          <div
+            className={cn(
+              "overflow-hidden rounded-[5px] border border-border-subtle",
+              styles.deliveryPanel,
+            )}
+          >
+            <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:p-10">
+              <div>
+                <div
+                  className={cn(
+                    "mb-5 inline-flex size-11 items-center justify-center rounded-[5px] border",
+                    styles.deliveryIcon,
+                  )}
+                >
+                  <FileArchive className="size-5" aria-hidden="true" />
+                </div>
+                <MarketingSectionHeader
+                  align="left"
+                  titleId="template-delivery-title"
+                  title="What arrives after purchase."
+                  description="The source project and setup documentation, delivered as a ZIP you can run and customize locally."
+                  className="mb-0"
+                />
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Badge
+                    variant="outline"
+                    className="rounded-[5px] bg-background text-xs"
+                  >
+                    Full source code
+                  </Badge>
+                  <Badge
+                    variant="outline"
+                    className="rounded-[5px] bg-background text-xs"
+                  >
+                    Setup documentation
+                  </Badge>
+                </div>
+              </div>
+              <ol aria-label="Template delivery steps" className="space-y-5">
+                {[
+                  {
+                    title: "Confirm your purchase",
+                    text: "Complete checkout using the email address where you want to receive access.",
+                  },
+                  {
+                    title: "Open your access email",
+                    text: "Once payment is confirmed and delivery is processed, use the secure link to download your ZIP.",
+                  },
+                  {
+                    title: "Run the project locally",
+                    text: "Unzip the package and follow the setup guide. Configure your content and services before deployment.",
+                  },
+                ].map((step, i) => (
+                  <li key={step.title} className="flex items-start gap-3">
+                    <span className={styles.stepNumber} aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-medium">{step.title}</h3>
+                      <p className="mt-2 text-xs leading-6 text-muted-foreground">
+                        {step.text}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-border-subtle bg-background/60 px-5 py-3 sm:px-8 lg:px-10">
+              <Link
+                href="/docs/templates/na-ai-landing/setup"
+                className={styles.textLink}
+              >
+                <BookOpen className="size-3.5" aria-hidden="true" />
+                Read the setup guide
+              </Link>
+              <Link href="/orders/recover" className={styles.textLink}>
+                Recover a purchase{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+              <Link href="/orders/support" className={styles.textLink}>
+                Purchase support{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
+          id="template-faq"
+          aria-labelledby="template-faq-heading"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+        >
+          <MarketingFaq
+            titleId="template-faq-heading"
+            title="Questions before buying"
+            description="Make the scope clear before purchase."
+            items={faqs}
+          />
+          <div className="mt-6 flex flex-wrap justify-end gap-x-5">
+            <Link href="/license" className={styles.textLink}>
+              Read the license{" "}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
             </Link>
-            .
-          </p>
-        </Container>
-      </section>
+            <Link href="/terms" className={styles.textLink}>
+              Read purchase terms{" "}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+        </MarketingSectionShell>
 
+        <section
+          aria-labelledby="template-purchase-title"
+          className={cn(
+            "flex flex-col gap-7 rounded-[5px] border border-border-subtle p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between",
+            styles.purchasePanel,
+          )}
+        >
+          <div className="max-w-2xl">
+            <h2
+              id="template-purchase-title"
+              className="text-2xl font-semibold tracking-tight sm:text-3xl"
+            >
+              Make the page your own.
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">
+              NA-AI Landing · Full source code · {PRODUCT.price} one-time
+              payment.
+            </p>
+            <Link href="/templates" className={cn("mt-2", styles.textLink)}>
+              Back to templates{" "}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="w-full lg:w-auto lg:min-w-64">
+            <BuyProductButton
+              productSlug={PRODUCT.slug}
+              label={`Buy NA-AI Landing — ${PRODUCT.price}`}
+              loadingLabel="Opening checkout…"
+              className="shadow-none hover:shadow-none"
+            />
+            <p className="mt-3 text-xs leading-6 text-muted-foreground">
+              Source ZIP and setup docs. Your hosting and services are separate.
+            </p>
+          </div>
+        </section>
+      </Container>
       <TemplateStickyCta
         productSlug={PRODUCT.slug}
         name={PRODUCT.name}
         price={PRODUCT.price}
         demoUrl={PRODUCT.demoUrl}
+        className={styles.purchasePanel}
       />
     </main>
   );

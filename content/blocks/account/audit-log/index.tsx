@@ -71,7 +71,7 @@ export function AuditLogPanel({
       aria-describedby={descriptionId}
       data-slot="audit-log-panel"
       className={[
-        "min-w-0 rounded-xl border border-border bg-card text-card-foreground",
+        "min-w-0 rounded-[5px] border border-border bg-card text-card-foreground",
         className,
       ]
         .filter(Boolean)
@@ -79,13 +79,16 @@ export function AuditLogPanel({
     >
       <div className="flex min-w-0 flex-col gap-4 border-b border-border p-4 sm:p-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0 space-y-1">
-          <h2 id={headingId} className="break-words text-base font-semibold">
+          <h2
+            id={headingId}
+            className="break-words text-base font-semibold tracking-tight"
+          >
             {heading}
           </h2>
           {description ? (
             <p
               id={descriptionId}
-              className="break-words text-sm text-muted-foreground"
+              className="break-words text-sm leading-6 text-muted-foreground"
             >
               {description}
             </p>
@@ -133,7 +136,7 @@ export function AuditLogPanel({
                   {hasContent(event.details) ? (
                     <div
                       data-slot="audit-log-details"
-                      className="min-w-0 break-words text-sm text-muted-foreground [&_pre]:max-w-full [&_pre]:overflow-x-auto"
+                      className="min-w-0 break-words text-sm leading-6 text-muted-foreground [&_pre]:max-w-full [&_pre]:overflow-x-auto"
                     >
                       {event.details}
                     </div>
@@ -152,7 +155,7 @@ export function AuditLogPanel({
         >
           <p className="break-words text-sm font-medium">{emptyTitle}</p>
           {emptyDescription ? (
-            <p className="break-words text-sm text-muted-foreground">
+            <p className="break-words text-sm leading-6 text-muted-foreground">
               {emptyDescription}
             </p>
           ) : null}

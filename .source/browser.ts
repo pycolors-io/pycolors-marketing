@@ -23,6 +23,8 @@ const browserCollections = {
   docs: create.doc("docs", {
     "blocks/account/audit-log.mdx": () =>
       import("../content/docs/blocks/account/audit-log.mdx?collection=docs"),
+    "blocks/account/onboarding-checklist.mdx": () =>
+      import("../content/docs/blocks/account/onboarding-checklist.mdx?collection=docs"),
     "blocks/account/settings-panel.mdx": () =>
       import("../content/docs/blocks/account/settings-panel.mdx?collection=docs"),
     "blocks/account/workspace-invitations.mdx": () =>
@@ -47,6 +49,8 @@ const browserCollections = {
       import("../content/docs/blocks/commerce/pricing-plans.mdx?collection=docs"),
     "blocks/data/data-table.mdx": () =>
       import("../content/docs/blocks/data/data-table.mdx?collection=docs"),
+    "blocks/data/stats-overview.mdx": () =>
+      import("../content/docs/blocks/data/stats-overview.mdx?collection=docs"),
     "blocks/feedback/empty-state-panel.mdx": () =>
       import("../content/docs/blocks/feedback/empty-state-panel.mdx?collection=docs"),
     "blocks/index.mdx": () =>

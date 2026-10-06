@@ -386,18 +386,35 @@ export function DataTableQueryExample() {
           filters: (
             <label className="flex min-w-0 flex-col gap-1 text-sm">
               <span className="text-muted-foreground">State</span>
-              <select
-                className="min-h-9 max-w-full rounded-md border border-border bg-background px-3 py-1 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                onChange={(event) => {
-                  setStateFilter(event.currentTarget.value);
-                  setPage(1);
-                }}
-                value={stateFilter}
-              >
-                <option value="all">All states</option>
-                <option value="Available">Available</option>
-                <option value="Paused">Paused</option>
-              </select>
+              <span className="relative inline-grid min-w-24 max-w-full">
+                <select
+                  className="h-11 w-full min-w-0 appearance-none truncate rounded-[5px] border border-input bg-background py-2 pl-3 pr-9 text-base leading-5 text-foreground shadow-xs outline-none transition-colors hover:border-border focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm motion-reduce:transition-none"
+                  onChange={(event) => {
+                    setStateFilter(event.currentTarget.value);
+                    setPage(1);
+                  }}
+                  value={stateFilter}
+                >
+                  <option value="all">All states</option>
+                  <option value="Available">Available</option>
+                  <option value="Paused">Paused</option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground"
+                >
+                  <path
+                    d="m4 6 4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
             </label>
           ),
           reset: { label: "Reset filters", onReset: resetFilters },

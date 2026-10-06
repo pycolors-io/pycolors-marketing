@@ -212,12 +212,37 @@ describe("Marketing product discovery navigation", () => {
     (path) => {
       route.pathname = `${path}/details`;
       render(<Fixture />);
+      expect(trigger()).toHaveClass("bg-surface-muted", "text-foreground");
       openProducts();
       const current = panel().querySelectorAll('[aria-current="page"]');
       expect(current).toHaveLength(1);
       expect(current[0]).toHaveAttribute("href", path);
     },
   );
+
+  it.each([
+    { path: "/pricing", label: "Pricing" },
+    { path: "/pricing/details", label: "Pricing" },
+    { path: "/tools/theme-builder", label: "Theme Builder" },
+    { path: "/tools/theme-builder/details", label: "Theme Builder" },
+  ])("highlights only the primary destination at $path", ({ path, label }) => {
+    route.pathname = path;
+    render(<Fixture />);
+    const primary = within(screen.getByRole("navigation", { name: "Primary" }));
+    const current = primary.getByRole("link", { name: label });
+    expect(current).toHaveAttribute("aria-current", "page");
+    expect(current).toHaveClass("bg-surface-muted", "text-foreground");
+    expect(trigger()).not.toHaveClass("bg-surface-muted");
+    expect(trigger()).not.toHaveClass("text-foreground");
+
+    openProducts();
+    expect(trigger()).toHaveAttribute("aria-expanded", "true");
+    expect(trigger()).toHaveClass("bg-surface-muted", "text-foreground");
+    fireEvent.keyDown(trigger(), { key: "Escape" });
+    expect(trigger()).toHaveAttribute("aria-expanded", "false");
+    expect(trigger()).not.toHaveClass("bg-surface-muted");
+    expect(current).toHaveAttribute("aria-current", "page");
+  });
 
   it("closes on route changes and preserves modifier-click and native anchors", () => {
     const { rerender } = render(<Fixture />);

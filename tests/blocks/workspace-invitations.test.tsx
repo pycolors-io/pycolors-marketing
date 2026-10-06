@@ -165,7 +165,7 @@ describe("WorkspaceInvitationsPanel", () => {
     const panel = screen.getByRole("region", { name: "Workspace invitations" });
     expect(panel).toHaveClass(
       "min-w-0",
-      "rounded-xl",
+      "rounded-[5px]",
       "bg-card",
       "rounded-none",
       "bg-muted",

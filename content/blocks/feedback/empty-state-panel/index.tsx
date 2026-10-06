@@ -37,12 +37,15 @@ export function EmptyStatePanel({
       aria-labelledby={headingId}
       data-slot="empty-state-panel"
       className={cn(
-        "min-w-0 rounded-xl border border-border bg-card text-card-foreground",
+        "min-w-0 rounded-[5px] border border-border bg-card text-card-foreground",
         className,
       )}
     >
       <div className="border-b border-border px-4 py-4 sm:px-6">
-        <h2 id={headingId} className="break-words text-base font-semibold">
+        <h2
+          id={headingId}
+          className="break-words text-base font-semibold tracking-tight"
+        >
           {heading}
         </h2>
       </div>

@@ -158,3 +158,31 @@ export function selectThemeBuilderMode(
 export function resetThemeBuilderState(): ThemeBuilderState {
   return createThemeBuilderState();
 }
+
+/** Validate a complete saved draft once before replacing any editor state. */
+export function restoreThemeBuilderState(
+  draft: ThemeBuilderDraft,
+  previewMode: ThemeMode,
+):
+  | Readonly<{ ok: true; state: ThemeBuilderState }>
+  | Readonly<{ ok: false; message: string }> {
+  const evaluation = evaluateDraft(draft);
+  if (!evaluation.ok) {
+    return {
+      ok: false,
+      message:
+        evaluation.generationError ??
+        Object.values(evaluation.fieldErrors).join(" "),
+    };
+  }
+  return {
+    ok: true,
+    state: {
+      draft,
+      previewMode,
+      generatedTheme: evaluation.generatedTheme,
+      fieldErrors: {},
+      generationError: null,
+    },
+  };
+}

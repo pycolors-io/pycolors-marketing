@@ -112,7 +112,7 @@ describe("Blocks Marketing consistency", () => {
       const article = heading.closest("article");
       if (!article) throw new Error(`Missing catalog article for ${block.id}`);
       const scoped = within(article);
-      expect(article).toHaveTextContent(block.category);
+      expect(article.closest("section")).toHaveAccessibleName(block.category);
       expect(article).toHaveTextContent(block.description);
       expect(
         scoped.getByRole("link", {

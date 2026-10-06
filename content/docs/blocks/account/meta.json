@@ -1,6 +1,7 @@
 {
   "title": "Account & workspace",
   "pages": [
+    "onboarding-checklist",
     "settings-panel",
     "workspace-members",
     "workspace-invitations",

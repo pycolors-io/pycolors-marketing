@@ -1,12 +1,44 @@
 "use client";
 
 import * as React from "react";
-import { SlidersHorizontal, X } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+import {
+  ArrowDown,
+  Check,
+  ChevronDown,
+  LockKeyhole,
+  Maximize2,
+  RotateCcw,
+  SlidersHorizontal,
+} from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  cn,
+} from "@pycolors/ui";
 
 import { ThemeInputs } from "./theme-inputs";
+import { ThemeQuality } from "./theme-quality";
+import { ThemePalette, type ThemePaletteSelection } from "./theme-palette";
+import {
+  ThemeComponentsPreview,
+  INITIAL_THEME_COMPONENTS_STATE,
+} from "./theme-components-preview";
 import { ThemeOutput } from "./theme-output";
-import { ThemePreview } from "./theme-preview";
+import { ThemePreview, INITIAL_THEME_PREVIEW_VIEW } from "./theme-preview";
+import { ThemeModeControl } from "./theme-mode-control";
+import { ThemeConfigurationControls } from "./theme-configuration-controls";
+import { DEFAULT_THEME_FONT, THEME_FONTS } from "./theme-typography";
 import {
   createThemeBuilderState,
   resetThemeBuilderState,
@@ -16,7 +48,6 @@ import {
 import type {
   ThemeBuilderDraft,
   ThemeBuilderField,
-  ThemeBuilderFieldErrors,
   ThemeBuilderState,
 } from "./theme-builder-state";
 
@@ -82,6 +113,32 @@ const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
       lightBackgroundColor: "#f8fafc",
     },
   },
+  {
+    id: "rose-atelier",
+    name: "Rose Atelier",
+    category: "Creative teams",
+    description: "A warm rose accent with soft stone neutrals.",
+    brandColor: "#be185d",
+    draft: {
+      brandColor: "#be185d",
+      name: "Rose Atelier",
+      neutralColor: "#78716c",
+      lightBackgroundColor: "#fafafa",
+    },
+  },
+  {
+    id: "amber-foundry",
+    name: "Amber Foundry",
+    category: "Commerce and operations",
+    description: "Grounded amber with a warm, understated canvas.",
+    brandColor: "#b45309",
+    draft: {
+      brandColor: "#b45309",
+      name: "Amber Foundry",
+      neutralColor: "#78716c",
+      lightBackgroundColor: "#fafafa",
+    },
+  },
 ];
 
 function applyThemeBuilderPreset(
@@ -95,510 +152,398 @@ function applyThemeBuilderPreset(
   );
 }
 
-function generationWarningLabel(
-  warning: ReturnType<
-    typeof createThemeBuilderState
-  >["generatedTheme"]["warnings"][number],
-) {
-  switch (warning.code) {
-    case "neutral-derived":
-      return "A neutral scale was generated from your brand.";
-    case "gamut-mapped":
-      return "A color was refined to display reliably.";
-    case "foreground-fallback-used":
-      return "Text color was strengthened for readability.";
-    case "input-normalized":
-      return "A color value was normalized.";
-    default:
-      return warning.code.replaceAll("-", " ");
-  }
-}
+const PREVIEW_TABS = ["dashboard", "components", "palette"] as const;
+type PreviewTab = (typeof PREVIEW_TABS)[number];
 
-const focusableSelector = [
-  "a[href]",
-  "button:not([disabled])",
-  "input:not([disabled])",
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  "summary",
-  '[tabindex]:not([tabindex="-1"])',
-].join(",");
-
-type ThemeSettingsPanelProps = Readonly<{
-  draft: ThemeBuilderDraft;
-  errors: ThemeBuilderFieldErrors;
-  generationError: string | null;
-  onClose: () => void;
-  onReset: () => void;
-  onPresetSelect: (preset: ThemeBuilderPreset) => void;
-  onFieldChange: (field: ThemeBuilderField, value: string) => void;
-}>;
-
-function ThemeSettingsPanel({
-  draft,
-  errors,
-  generationError,
-  onClose,
-  onReset,
-  onPresetSelect,
-  onFieldChange,
-}: ThemeSettingsPanelProps) {
-  const hasFieldErrors = Object.keys(errors).length > 0;
-  const panelRef = React.useRef<HTMLElement>(null);
-  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
-
-  React.useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      closeButtonRef.current?.focus();
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      onClose();
-      return;
-    }
-
-    if (event.key !== "Tab") return;
-
-    const focusable = Array.from(
-      panelRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
-    );
-    if (focusable.length === 0) return;
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    } else if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    }
-  }
-
+function PreviewTabs() {
   return (
-    <aside
-      ref={panelRef}
-      id="theme-builder-settings-panel"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="theme-builder-settings-heading"
-      tabIndex={-1}
-      onKeyDown={handleKeyDown}
-      className="absolute inset-x-0 top-0 z-50 min-h-full rounded-[4px] border border-border-subtle/55 bg-surface shadow-medium"
+    <TabsList
+      aria-label="Preview content"
+      className="h-10 max-w-full gap-0.5 rounded-[5px] border border-border-subtle bg-background p-0.5"
     >
-      <div className="flex items-center justify-between gap-3 border-b border-border-subtle/55 bg-surface-muted/80 px-4 py-3 backdrop-blur-md">
-        <div className="min-w-0">
-          <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
-            01 · Configure brand
-          </p>
-          <h2
-            id="theme-builder-settings-heading"
-            className="mt-0.5 text-sm font-semibold tracking-tight"
-          >
-            Theme settings
-          </h2>
-        </div>
-        <Button
-          ref={closeButtonRef}
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          className="shrink-0 rounded-[4px]"
-          aria-label="Close theme settings"
-          onClick={onClose}
+      {PREVIEW_TABS.map((tab) => (
+        <TabsTrigger
+          key={tab}
+          value={tab}
+          className="min-h-8 rounded-[3px] px-2.5 text-xs capitalize data-[state=active]:bg-surface-muted data-[state=active]:text-foreground data-[state=active]:shadow-none"
         >
-          <X aria-hidden="true" />
-        </Button>
-      </div>
-
-      <div className="grid gap-5 p-4 sm:p-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] xl:gap-6 xl:p-6">
-        <div className="min-w-0 space-y-4">
-          <p className="rounded-[4px] border border-border-subtle bg-background/70 px-3 py-2 text-sm leading-6 text-muted-foreground">
-            Tune the brand foundation. The Northstar preview updates locally as
-            you type.
-          </p>
-
-          <ThemeInputs
-            draft={draft}
-            errors={errors}
-            onFieldChange={onFieldChange}
-          />
-
-          {hasFieldErrors ? (
-            <Alert variant="destructive" ariaLive="assertive">
-              <AlertTitle>Preview kept on the last valid theme</AlertTitle>
-              <AlertDescription>
-                Correct the field errors above before new semantic values are
-                applied.
-              </AlertDescription>
-            </Alert>
-          ) : null}
-
-          {generationError ? (
-            <Alert variant="destructive" ariaLive="assertive">
-              <AlertTitle>Theme generation could not complete</AlertTitle>
-              <AlertDescription>{generationError}</AlertDescription>
-            </Alert>
-          ) : null}
-        </div>
-
-        <section
-          aria-labelledby="theme-builder-presets-heading"
-          className="rounded-[4px] border border-pro-border-subtle bg-pro-surface-muted/60 p-4"
-        >
-          <div className="space-y-1">
-            <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-primary">
-              Professional foundations
-            </p>
-            <h3
-              id="theme-builder-presets-heading"
-              className="text-sm font-semibold tracking-tight"
-            >
-              Start with a balanced combination
-            </h3>
-            <p className="text-xs leading-5 text-muted-foreground">
-              Each starting point pairs your brand with a balanced neutral and
-              canvas foundation. Refine the source colors without weakening the
-              system.
-            </p>
-          </div>
-
-          <div className="mt-4 grid gap-2">
-            {THEME_BUILDER_PRESETS.map((preset) => (
-              <Button
-                key={preset.id}
-                type="button"
-                variant="outline"
-                className="h-auto min-h-16 justify-start rounded-[4px] border-pro-border bg-background px-3 py-3 text-left hover:border-foreground/30 hover:bg-background"
-                onClick={() => onPresetSelect(preset)}
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 size-3 shrink-0 rounded-full ring-1 ring-border"
-                  style={{ backgroundColor: preset.brandColor }}
-                />
-                <span className="min-w-0">
-                  <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                    <span className="text-sm font-medium text-foreground">
-                      {preset.name}
-                    </span>
-                    <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                      {preset.category}
-                    </span>
-                  </span>
-                  <span className="mt-0.5 block whitespace-normal text-xs font-normal leading-5 text-muted-foreground">
-                    {preset.description}
-                  </span>
-                </span>
-              </Button>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div className="flex items-center justify-between gap-3 border-t border-border-subtle/55 bg-surface p-4">
-        <p className="max-w-44 text-[11px] leading-4 text-muted-foreground">
-          Inputs stay in this browser and are never persisted.
-        </p>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          className="shrink-0 rounded-[4px]"
-          onClick={onReset}
-        >
-          Reset
-        </Button>
-      </div>
-    </aside>
+          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+        </TabsTrigger>
+      ))}
+    </TabsList>
   );
 }
 
 export function ThemeBuilder() {
   const [state, setState] = React.useState(createThemeBuilderState);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
-  const settingsTriggerRef = React.useRef<HTMLButtonElement>(null);
-  const settingsWereOpenRef = React.useRef(false);
+  const [expanded, setExpanded] = React.useState(false);
+  const [previewTab, setPreviewTab] = React.useState<PreviewTab>("dashboard");
+  const [paletteSelection, setPaletteSelection] =
+    React.useState<ThemePaletteSelection>({
+      type: "semantic",
+      role: "primary",
+    });
+  const [componentsView, setComponentsView] = React.useState(
+    INITIAL_THEME_COMPONENTS_STATE,
+  );
+  const [font, setFont] = React.useState(DEFAULT_THEME_FONT);
+  const [previewView, setPreviewView] = React.useState(
+    INITIAL_THEME_PREVIEW_VIEW,
+  );
+  const [inlineHeight, setInlineHeight] = React.useState(0);
+  const inlinePreviewRef = React.useRef<HTMLDivElement>(null);
+  const hasFieldErrors = Object.keys(state.fieldErrors).length > 0;
   const preview = state.generatedTheme.modes[state.previewMode];
-  const failedContrasts = state.generatedTheme.contrasts.filter(
-    (contrast) => contrast.status === "fail",
-  );
-  const generationWarnings = state.generatedTheme.warnings.filter(
-    (warning) => warning.code !== "contrast-below-target",
-  );
-  const passingContrastCount =
-    state.generatedTheme.contrasts.length - failedContrasts.length;
 
-  React.useEffect(() => {
-    if (settingsWereOpenRef.current && !settingsOpen) {
-      settingsTriggerRef.current?.focus();
-    }
-
-    settingsWereOpenRef.current = settingsOpen;
-  }, [settingsOpen]);
-
-  return (
-    <div className="space-y-6 sm:space-y-8">
-      <section
-        aria-label="Theme Builder workspace"
-        className={settingsOpen ? "relative z-30 min-w-0" : "min-w-0"}
-      >
-        <div className="group relative min-h-[320px] min-w-0 rounded-[5px] border border-border-subtle/55 bg-surface shadow-medium sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[600px]">
-          <div className="flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-border-subtle/55 bg-surface-muted/80 px-4 py-3 backdrop-blur-md sm:px-5">
-            <div className="flex min-w-0 items-center gap-2.5">
-              <span
-                aria-hidden="true"
-                className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-border-subtle/55 bg-background text-[11px] font-semibold text-primary"
-              >
-                P
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold tracking-tight">
-                  PyColors Theme Studio
-                </p>
-                <p className="truncate text-[11px] text-muted-foreground">
-                  Deterministic semantic token engine
-                </p>
-              </div>
-            </div>
-            <p className="inline-flex shrink-0 items-center gap-2 rounded-[4px] border border-success-border-subtle bg-success-muted px-2.5 py-1 text-[11px] font-medium text-success">
-              <span
-                aria-hidden="true"
-                className="size-1.5 rounded-full bg-success"
-              />
-              Local session
-            </p>
-          </div>
+  function renderPreview(fullScreen = false) {
+    return (
+      <TabsContent value={previewTab} className="mt-0 min-w-0">
+        {previewTab === "palette" ? (
+          <ThemePalette
+            theme={preview}
+            mode={state.previewMode}
+            selection={paletteSelection}
+            onSelect={setPaletteSelection}
+          />
+        ) : previewTab === "components" ? (
+          <ThemeComponentsPreview
+            theme={preview}
+            mode={state.previewMode}
+            fontFamily={font.previewFamily}
+            view={componentsView}
+            onViewChange={setComponentsView}
+          />
+        ) : (
           <ThemePreview
             mode={state.previewMode}
             theme={preview}
-            settingsOpen={settingsOpen}
+            fontFamily={font.previewFamily}
+            view={previewView}
+            onViewChange={setPreviewView}
             embedded
-            onModeChange={(previewMode) =>
-              setState((current) =>
-                selectThemeBuilderMode(current, previewMode),
-              )
-            }
-            settingsControl={
-              <div className="relative z-40">
-                <Button
-                  ref={settingsTriggerRef}
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="rounded-[4px] bg-background/80"
-                  aria-controls="theme-builder-settings-panel"
-                  aria-expanded={settingsOpen}
-                  onClick={() => setSettingsOpen((open) => !open)}
-                >
-                  <SlidersHorizontal aria-hidden="true" />
-                  Theme settings
-                </Button>
-              </div>
-            }
+            fullScreen={fullScreen}
           />
-          {settingsOpen ? (
-            <ThemeSettingsPanel
+        )}
+      </TabsContent>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <section
+        aria-label="Theme Builder workspace"
+        className="overflow-hidden rounded-[5px] border border-border-subtle bg-background"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-4 py-3 sm:px-5">
+          <div>
+            <h2 className="text-sm font-semibold">Theme workspace</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Customize, preview, export.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-start gap-2">
+            <ThemeConfigurationControls
+              state={state}
+              font={font}
+              onRestore={(configuration) => {
+                setState(configuration.state);
+                setFont(configuration.font);
+              }}
+            />
+            <Button asChild size="sm" className="min-h-10 rounded-[5px]">
+              <a href="#theme-builder-export">
+                Export theme
+                <ArrowDown aria-hidden="true" />
+              </a>
+            </Button>
+          </div>
+        </div>
+        <div className="grid min-w-0 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[16rem_minmax(0,1fr)]">
+          <div className="border-b border-border-subtle px-4 py-3 lg:hidden">
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 w-full justify-between rounded-[5px]"
+              aria-controls="theme-builder-settings-panel"
+              aria-expanded={settingsOpen}
+              onClick={() => setSettingsOpen((open) => !open)}
+            >
+              <span className="inline-flex items-center gap-2">
+                <SlidersHorizontal aria-hidden="true" />
+                Theme settings
+              </span>
+              <ChevronDown
+                aria-hidden="true"
+                className={cn(
+                  "transition-transform motion-reduce:transition-none",
+                  settingsOpen && "rotate-180",
+                )}
+              />
+            </Button>
+          </div>
+          <aside
+            id="theme-builder-settings-panel"
+            aria-labelledby="theme-builder-settings-heading"
+            className={cn(
+              "min-w-0 border-b border-border-subtle bg-background p-4 lg:block lg:border-r lg:border-b-0 lg:p-5",
+              !settingsOpen && "hidden",
+            )}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <h3
+                id="theme-builder-settings-heading"
+                className="text-sm font-semibold"
+              >
+                Customize your theme
+              </h3>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                className="size-10 shrink-0 rounded-[5px]"
+                aria-label="Reset theme"
+                onClick={() => {
+                  setState(resetThemeBuilderState());
+                  setFont(DEFAULT_THEME_FONT);
+                }}
+              >
+                <RotateCcw className="size-3.5" aria-hidden="true" />
+              </Button>
+            </div>
+            <p className="mt-1 mb-5 text-xs leading-5 text-muted-foreground">
+              Start with your brand color. Both modes update as you edit.
+            </p>
+            <ThemeInputs
               draft={state.draft}
               errors={state.fieldErrors}
-              generationError={state.generationError}
-              onClose={() => setSettingsOpen(false)}
-              onReset={() => setState(resetThemeBuilderState())}
-              onPresetSelect={(preset) =>
-                setState((current) => applyThemeBuilderPreset(current, preset))
-              }
               onFieldChange={(field, value) =>
                 setState((current) =>
                   updateThemeBuilderField(current, field, value),
                 )
               }
             />
-          ) : null}
-        </div>
-
-        <div className="mt-6 min-w-0 rounded-[5px] border border-border-subtle/55 bg-surface p-4 shadow-soft sm:p-6">
-          <section
-            aria-labelledby="theme-builder-notices-heading"
-            className="rounded-[5px] border border-border-subtle/55 bg-background/70 p-4 sm:p-5"
-          >
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div className="space-y-1">
-                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                  03 · Review the result
-                </p>
-                <h2
-                  id="theme-builder-notices-heading"
-                  className="text-base font-semibold tracking-tight"
-                >
-                  Theme quality
-                </h2>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  A short quality signal for the current theme. Details stay
-                  available when you need to review a real product context.
-                </p>
-              </div>
-
-              <p
-                className="w-fit rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted px-3 py-2 text-xs font-medium tabular-nums text-muted-foreground"
-                role="status"
+            <div className="mt-5">
+              <label
+                htmlFor="theme-builder-font"
+                className="text-sm font-medium"
               >
-                {failedContrasts.length > 0
-                  ? `${failedContrasts.length} items to review`
-                  : "Ready to export"}
+                Font family
+              </label>
+              <select
+                id="theme-builder-font"
+                value={font.id}
+                aria-describedby="theme-builder-font-help"
+                onChange={(event) => {
+                  const selected = THEME_FONTS.find(
+                    (item) => item.id === event.target.value,
+                  );
+                  if (selected) setFont(selected);
+                }}
+                className="mt-2 min-h-10 w-full min-w-0 rounded-[5px] border border-border bg-background px-3 text-sm text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                {THEME_FONTS.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+              <p
+                id="theme-builder-font-help"
+                className="mt-1.5 text-xs leading-4 text-muted-foreground"
+              >
+                Preview your typeface. Typography CSS is available with your
+                export.
               </p>
             </div>
-
-            <div className="mt-5 grid gap-4 xl:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]">
-              <section
-                aria-labelledby="theme-builder-generation-notes-heading"
-                className="rounded-[5px] border border-border-subtle bg-background/50 p-4"
+            {hasFieldErrors ? (
+              <Alert
+                variant="destructive"
+                ariaLive="assertive"
+                className="mt-4"
               >
-                <div className="space-y-1">
-                  <h3
-                    id="theme-builder-generation-notes-heading"
-                    className="text-sm font-medium"
-                  >
-                    Automatic safeguards
-                  </h3>
-                  <p className="text-xs leading-5 text-muted-foreground">
-                    {generationWarnings.length > 0
-                      ? `${generationWarnings.length} safeguards were applied to keep the generated values usable.`
-                      : "No automatic safeguards were needed for this theme."}
-                  </p>
-                </div>
-
-                {generationWarnings.length > 0 ? (
-                  <details className="group mt-4 border-t border-border-subtle pt-3">
-                    <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:content-none">
-                      <span className="inline-flex items-center gap-2">
-                        See automatic adjustments
-                        <span
-                          aria-hidden="true"
-                          className="text-muted-foreground transition-transform group-open:rotate-45"
-                        >
-                          +
-                        </span>
-                      </span>
-                    </summary>
-                    <ul className="mt-3 space-y-2">
-                      {generationWarnings.map((warning, index) => (
-                        <li
-                          key={`${warning.code}-${warning.mode ?? "all"}-${warning.role ?? "role"}-${index}`}
-                          className="border-l border-border-subtle pl-3"
-                        >
-                          <p className="text-xs font-medium text-foreground">
-                            {generationWarningLabel(warning)}
-                          </p>
-                          {warning.mode ? (
-                            <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
-                              Checked in {warning.mode} mode.
-                            </p>
-                          ) : null}
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                ) : (
-                  <p className="mt-4 border-t border-border-subtle pt-3 text-xs text-muted-foreground">
-                    Generated values were used without further adjustment.
-                  </p>
-                )}
-              </section>
-
-              <section
-                aria-labelledby="theme-builder-contrast-review-heading"
-                className="rounded-[5px] border border-border-subtle bg-background/50 p-4"
+                <AlertTitle>Showing the last valid theme</AlertTitle>
+                <AlertDescription>
+                  Correct the highlighted fields to update your preview and
+                  exports.
+                </AlertDescription>
+              </Alert>
+            ) : null}
+            {state.generationError ? (
+              <Alert
+                variant="destructive"
+                ariaLive="assertive"
+                className="mt-4"
               >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <div className="space-y-1">
-                    <h3
-                      id="theme-builder-contrast-review-heading"
-                      className="text-sm font-medium"
+                <AlertTitle>Theme generation could not complete</AlertTitle>
+                <AlertDescription>{state.generationError}</AlertDescription>
+              </Alert>
+            ) : null}
+            <section
+              aria-labelledby="theme-builder-presets-heading"
+              className="mt-6 border-t border-border-subtle pt-5"
+            >
+              <h3
+                id="theme-builder-presets-heading"
+                className="text-xs font-medium"
+              >
+                Or start with a preset
+              </h3>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                {THEME_BUILDER_PRESETS.map((preset) => {
+                  const selected = (
+                    Object.keys(preset.draft) as ThemeBuilderField[]
+                  ).every(
+                    (field) => state.draft[field] === preset.draft[field],
+                  );
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      aria-pressed={selected}
+                      title={preset.description}
+                      onClick={() =>
+                        setState((current) =>
+                          applyThemeBuilderPreset(current, preset),
+                        )
+                      }
+                      className={cn(
+                        "relative rounded-[5px] border p-2.5 text-left transition-colors hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                        selected
+                          ? "border-foreground bg-surface-muted"
+                          : "border-border-subtle",
+                      )}
                     >
-                      Visual contrast check
-                    </h3>
-                    <p className="text-xs leading-5 text-muted-foreground">
-                      {failedContrasts.length > 0
-                        ? `${failedContrasts.length} token pairs need a visual check before shipping. This is evidence, not a failed export.`
-                        : "Every checked token pair meets its target in both modes."}
-                    </p>
+                      <span aria-hidden="true" className="mb-2 flex gap-1">
+                        {[
+                          preset.brandColor,
+                          preset.draft.neutralColor,
+                          preset.draft.lightBackgroundColor,
+                        ].map((color, index) => (
+                          <span
+                            key={index}
+                            className="size-3.5 rounded-full border border-black/10"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
+                      </span>
+                      <span className="block text-[11px] font-medium leading-4">
+                        {preset.name}
+                      </span>
+                      {selected ? (
+                        <Check
+                          className="absolute top-2 right-2 size-3"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+            <p className="mt-5 flex items-start gap-2 text-[11px] leading-5 text-muted-foreground">
+              <LockKeyhole
+                aria-hidden="true"
+                className="mt-1 size-3 shrink-0"
+              />
+              No account. No uploads. Save a configuration file to continue
+              later.
+            </p>
+          </aside>
+          <div className="min-w-0 bg-surface-muted/30 p-3 sm:p-4">
+            <Tabs
+              value={previewTab}
+              onValueChange={(value) => {
+                if (PREVIEW_TABS.includes(value as PreviewTab))
+                  setPreviewTab(value as PreviewTab);
+              }}
+            >
+              <Dialog
+                open={expanded}
+                onOpenChange={(open) => {
+                  if (open)
+                    setInlineHeight(
+                      inlinePreviewRef.current?.getBoundingClientRect()
+                        .height ?? 0,
+                    );
+                  setExpanded(open);
+                }}
+              >
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                  {!expanded ? (
+                    <PreviewTabs />
+                  ) : (
+                    <span className="text-xs text-muted-foreground">
+                      Preview open in full screen
+                    </span>
+                  )}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <ThemeModeControl
+                      value={state.previewMode}
+                      onChange={(mode) =>
+                        setState((current) =>
+                          selectThemeBuilderMode(current, mode),
+                        )
+                      }
+                    />
+                    <DialogTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="min-h-10 rounded-[5px]"
+                        aria-label="Open full screen preview"
+                      >
+                        <Maximize2 className="size-3.5" aria-hidden="true" />
+                        <span>Full screen</span>
+                      </Button>
+                    </DialogTrigger>
                   </div>
                 </div>
-
-                {failedContrasts.length > 0 ? (
-                  <details className="group mt-4 border-t border-border-subtle pt-3">
-                    <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:content-none">
-                      <span className="inline-flex items-center gap-2">
-                        Review {failedContrasts.length} measured ratio
-                        {failedContrasts.length === 1 ? "" : "s"}
-                        <span
-                          aria-hidden="true"
-                          className="text-muted-foreground transition-transform group-open:rotate-45"
-                        >
-                          +
-                        </span>
-                      </span>
-                    </summary>
-                    <div className="mt-3 divide-y divide-border-subtle border-y border-border-subtle">
-                      <div className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="max-w-xl text-xs leading-5 text-muted-foreground">
-                          Inspect borders, inputs, focus rings, and destructive
-                          actions in the preview that matches your product.
-                        </p>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          className="w-fit rounded-[4px]"
-                          onClick={() => setSettingsOpen(true)}
-                        >
-                          Review foundation
-                        </Button>
-                      </div>
-                      <p className="border-t border-border-subtle py-2 text-xs tabular-nums text-muted-foreground">
-                        {passingContrastCount} pairs meet their target.
-                      </p>
-                      {failedContrasts.map((contrast) => (
-                        <div
-                          key={`${contrast.mode}-${contrast.foregroundRole}-${contrast.backgroundRole}-${contrast.target.usage}`}
-                          className="grid gap-1 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-4"
-                        >
-                          <div className="min-w-0">
-                            <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-foreground">
-                              <span className="rounded-[4px] border border-border-subtle bg-surface px-1.5 py-0.5 text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                                {contrast.mode}
-                              </span>
-                              <code className="font-mono text-[11px]">
-                                {contrast.foregroundRole} /{" "}
-                                {contrast.backgroundRole}
-                              </code>
-                            </p>
-                            <p className="mt-1 text-xs text-muted-foreground">
-                              {contrast.target.usage.replaceAll("-", " ")} ·
-                              needs {contrast.target.minimumRatio}:1
-                            </p>
-                          </div>
-                          <p className="font-mono text-sm font-medium tabular-nums text-foreground">
-                            {contrast.ratio.toFixed(2)}:1
-                          </p>
-                        </div>
-                      ))}
+                <div
+                  ref={inlinePreviewRef}
+                  className="overflow-hidden rounded-[5px] border border-border-subtle"
+                  style={expanded ? { height: inlineHeight } : undefined}
+                >
+                  {!expanded ? renderPreview() : null}
+                </div>
+                <DialogContent
+                  style={{ top: 0, borderRadius: 0 }}
+                  className="left-0 flex h-dvh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-hidden border-0 bg-background p-0 motion-reduce:animate-none [&>button]:right-3 [&>button]:top-3 [&>button]:grid [&>button]:size-10 [&>button]:place-items-center"
+                >
+                  <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border-subtle py-4 pr-16 pl-4 sm:pl-6">
+                    <div>
+                      <DialogTitle className="text-sm">
+                        Theme preview
+                      </DialogTitle>
+                      <DialogDescription className="mt-1 text-xs">
+                        Your colors and typography · Live preview
+                      </DialogDescription>
                     </div>
-                  </details>
-                ) : null}
-              </section>
-            </div>
-          </section>
+                    {expanded ? <PreviewTabs /> : null}
+                    <ThemeModeControl
+                      idPrefix="theme-builder-fullscreen-mode"
+                      value={state.previewMode}
+                      onChange={(mode) =>
+                        setState((current) =>
+                          selectThemeBuilderMode(current, mode),
+                        )
+                      }
+                    />
+                  </div>
+                  <div className="min-h-0 flex-1 overflow-auto overscroll-contain bg-surface-muted/30 p-2 sm:p-5">
+                    <div className="mx-auto max-w-400 overflow-hidden rounded-[5px] border border-border-subtle">
+                      {expanded ? renderPreview(true) : null}
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </Tabs>
+          </div>
         </div>
       </section>
-
-      <ThemeOutput theme={state.generatedTheme} />
+      <ThemeQuality theme={state.generatedTheme} />
+      <ThemeOutput theme={state.generatedTheme} font={font} />
     </div>
   );
 }

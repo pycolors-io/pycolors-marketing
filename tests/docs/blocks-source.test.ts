@@ -129,7 +129,6 @@ it("renders Authentication previews from canonical Blocks without service behavi
 
 it("renders missing canonical previews without service behavior", () => {
   for (const canonicalImport of [
-    "@/content/blocks/app-shells/responsive-sidebar",
     "@/content/blocks/account/audit-log",
     "@/content/blocks/account/workspace-invitations",
     "@/content/blocks/commerce/billing-overview",
@@ -164,4 +163,21 @@ it("keeps the existing code-block renderer and next-step destinations", () => {
   expect(guide).toContain("[Compare Starters](/starters)");
   expect(guide).toContain("[Explore the Blocks catalog](/blocks)");
   expect(guide).toContain("no `@pycolors/blocks` package");
+});
+
+it("renders the workspace preview from the canonical sidebar", () => {
+  const preview = readFileSync(
+    resolve(
+      marketingRoot,
+      "components/docs/blocks/responsive-sidebar-example.tsx",
+    ),
+    "utf8",
+  );
+  expect(preview).toContain(
+    'from "@/content/blocks/app-shells/responsive-sidebar"',
+  );
+  expect(canonicalExamples).toContain(
+    'export { ResponsiveSidebarExample } from "./responsive-sidebar-example"',
+  );
+  expect(preview).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
 });

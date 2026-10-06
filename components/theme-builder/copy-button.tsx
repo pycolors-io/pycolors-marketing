@@ -57,8 +57,10 @@ export function CopyButton({
     kind: "idle",
     message: "",
   });
+  const [copiedValue, setCopiedValue] = React.useState<string | null>(null);
 
   async function handleCopy() {
+    setCopiedValue(value);
     setStatus({ kind: "idle", message: "" });
     setStatus(await copyThemeOutput(value));
   }
@@ -81,7 +83,7 @@ export function CopyButton({
         role="status"
         className={cn("text-xs text-muted-foreground", statusClassName)}
       >
-        {status.message}
+        {copiedValue === value ? status.message : ""}
       </p>
     </div>
   );

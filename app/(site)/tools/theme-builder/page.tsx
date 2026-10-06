@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ArrowRight, BookOpen, Check, LockKeyhole } from "lucide-react";
+import { Button } from "@pycolors/ui";
 
 import { Container } from "@/components/container";
+import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { PageHero } from "@/components/marketing/page-hero";
 import { ThemeBuilder } from "@/components/theme-builder/theme-builder";
 import {
@@ -35,115 +38,110 @@ export const metadata: Metadata = {
 export default function ThemeBuilderPage() {
   return (
     <main id="content" className="bg-background text-foreground">
-      <Container className="py-18">
-        <PageHero
-          align="center"
-          maxWidth="5xl"
-          badges={[
-            { label: "Theme Builder", variant: "outline" },
-            { label: "Free · client-side", variant: "outline" },
-            { label: "Semantic token studio", variant: "outline" },
-          ]}
-          title="Build a PyColors theme from your brand colors"
-          description="Free, client-side, PyColors-compatible theme generation for production-shaped SaaS interfaces."
-          pills={[
-            "Light + dark semantic tokens",
-            "Real PyColors UI preview",
-            "Local-only generation",
-          ]}
-          extra={
-            <p className="mx-auto max-w-3xl text-sm leading-6 text-muted-foreground">
-              It runs locally in your browser. No account is required, and theme
-              inputs or generated tokens are not persisted or transmitted.
-            </p>
-          }
-          badgesClassName="gap-2"
-          extraClassName="mt-6"
-        />
+      <Container className="max-w-7xl pt-24 pb-8 sm:pt-28 sm:pb-10 lg:px-6">
+        <UiSectionNav active="themes" />
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <PageHero
+            variant="compact"
+            align="left"
+            badges={[{ label: "Theme Builder", variant: "outline" }]}
+            title="Your brand. Your theme."
+            description="Turn your brand color into a complete light and dark theme. Try it on real PyColors components, then take the tokens into your app."
+            contentClassName="mx-0 max-w-2xl"
+          />
+          <Button
+            asChild
+            variant="outline"
+            className="min-h-11 w-fit shrink-0 rounded-[5px]"
+          >
+            <Link href="/docs/ui/theming">
+              <BookOpen aria-hidden="true" />
+              Theming guide
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
+          <span className="inline-flex items-center gap-2">
+            <Check className="size-3.5" aria-hidden="true" />
+            Free, no account needed
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <Check className="size-3.5" aria-hidden="true" />
+            Light and dark included
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <LockKeyhole className="size-3.5" aria-hidden="true" />
+            Your colors stay in your browser
+          </span>
+        </div>
       </Container>
 
-      <section className="relative border-y border-border-subtle bg-surface-elevated/45 px-4 py-10 sm:px-6 sm:py-12 lg:py-16">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklch,var(--primary),transparent_94%),transparent_70%)]"
-        />
-        <div className="relative mx-auto max-w-7xl">
-          <ThemeBuilder />
-        </div>
-      </section>
+      <Container className="max-w-7xl pb-12 lg:px-6 lg:pb-16">
+        <ThemeBuilder />
+      </Container>
 
-      <section className="bg-surface-elevated/20">
-        <Container className="py-12 lg:py-14">
-          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 lg:gap-8">
-            <section
-              aria-labelledby="theme-builder-integration-heading"
-              className="min-w-0 rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft sm:p-6"
-            >
-              <div className="space-y-3">
-                <h2
-                  id="theme-builder-integration-heading"
-                  className="text-xl font-semibold tracking-tight"
-                >
-                  Apply generated overrides in the supported order
-                </h2>
-                <ol className="list-decimal space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-                  <li>
-                    Install and use <code>@pycolors/tokens</code>.
-                  </li>
-                  <li>
-                    Import <code>@pycolors/tokens/tokens.css</code> once in your
-                    global stylesheet.
-                  </li>
-                  <li>
-                    Place the generated CSS overrides after that token import.
-                  </li>
-                  <li>
-                    Keep application code on semantic utilities and public{" "}
-                    <code>@pycolors/ui</code> imports.
-                  </li>
-                  <li>
-                    Verify the complete interface in both light and dark modes.
-                  </li>
-                </ol>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  The generated overrides use the existing Tailwind v4{" "}
-                  <code>@theme inline</code> bridge in the token package; they
-                  do not create a second Tailwind theme contract. Read the{" "}
-                  <Link
-                    href="/docs/ui/theming"
-                    className="font-medium text-foreground underline underline-offset-4"
-                  >
-                    theming guide
-                  </Link>{" "}
-                  for the supported integration boundary.
-                </p>
-              </div>
+      <section className="border-t border-border-subtle">
+        <Container className="max-w-7xl py-10 lg:px-6 lg:py-14">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <section aria-labelledby="theme-builder-integration-heading">
+              <p className="text-xs font-medium text-muted-foreground">
+                From preview to product
+              </p>
+              <h2
+                id="theme-builder-integration-heading"
+                className="mt-2 text-xl font-semibold tracking-tight"
+              >
+                Make it part of your app.
+              </h2>
+              <ol className="mt-5 list-decimal space-y-3 pl-5 text-sm leading-6 text-muted-foreground">
+                <li>
+                  Install <code>@pycolors/tokens</code> and import{" "}
+                  <code>@pycolors/tokens/tokens.css</code> once in your global
+                  stylesheet.
+                </li>
+                <li>
+                  Paste your generated overrides after that import. Keep the
+                  existing Tailwind v4 <code>@theme inline</code> bridge.
+                </li>
+                <li>
+                  Use semantic utilities and public <code>@pycolors/ui</code>{" "}
+                  imports, then check your screens in both modes.
+                </li>
+              </ol>
+              <Link
+                href="/docs/ui/theming"
+                className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              >
+                Read the theming guide
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </section>
-
             <section
               aria-labelledby="theme-builder-limitations-heading"
-              className="min-w-0 rounded-[5px] border border-pro-border-subtle bg-pro-surface p-5 shadow-soft sm:p-6"
+              className="border-t border-border-subtle pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8"
             >
-              <div className="space-y-3">
-                <h2
-                  id="theme-builder-limitations-heading"
-                  className="text-xl font-semibold tracking-tight"
-                >
-                  Review the generated theme in context
-                </h2>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  Theme Builder is contrast-aware, not an accessibility
-                  certification. Review generated values in the real interface
-                  before shipping.
-                </p>
-                <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
-                  <li>Brand perception across your product and audience.</li>
-                  <li>Complete component and page context.</li>
-                  <li>Color-vision deficiencies and non-color cues.</li>
-                  <li>States communicated only by color.</li>
-                  <li>Real focus, hover, and disabled contexts.</li>
-                </ul>
-              </div>
+              <p className="text-xs font-medium text-muted-foreground">
+                Before you ship
+              </p>
+              <h2
+                id="theme-builder-limitations-heading"
+                className="mt-2 text-xl font-semibold tracking-tight"
+              >
+                Review it in context.
+              </h2>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                Theme Builder is contrast-aware, not an accessibility
+                certification. Review generated values in the real interface
+                before shipping.
+              </p>
+              <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm leading-6 text-muted-foreground">
+                <li>Brand perception across your product and audience.</li>
+                <li>Complete component and page context.</li>
+                <li>Color-vision deficiencies and non-color cues.</li>
+                <li>States communicated only by color.</li>
+                <li>Real focus, hover, and disabled contexts.</li>
+              </ul>
             </section>
           </div>
         </Container>

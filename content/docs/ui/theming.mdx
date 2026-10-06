@@ -140,6 +140,69 @@ contrast-aware rather than an accessibility certification, so review brand
 perception, focus, hover, disabled, color-vision, and complete page contexts
 before shipping.
 
+### Understand the color checks
+
+Open **Color readability** to see which text and controls may be difficult to
+read or identify. Results are grouped into **Light mode** and **Dark mode**, with
+examples of the actual generated colors and a suggested adjustment for each
+check that needs review.
+
+**Technical details** lists the affected CSS variables, measured contrast, target
+ratio, and automatic color adjustments. For precise fixes, adjust those variables
+after exporting your theme. These checks cover generated colors; review the
+complete interface and its interactive states before shipping. Borders that are
+needed to identify controls deserve particular attention; decorative dividers
+can remain subtle. See the [W3C guidance on control boundaries](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html#boundaries).
+
+### Preview typography with your colors
+
+Use the preview tabs to explore the same generated theme in three ways:
+
+- **Dashboard** shows a complete example workspace.
+- **Components** lets you try forms, buttons, checkboxes, feedback, and typography.
+- **Palette** displays 12 accent and 12 neutral shades for the selected mode.
+  Select a shade or named color role to inspect and copy its HEX or OKLCH value.
+
+The **Light background** field controls the light-mode page background. Clear it
+to let the engine generate that value. The dark-mode background remains generated.
+Color values shown in the palette come directly from the same engine result as
+the exports; named roles under **Colors by purpose** show how those colors are
+used in your theme.
+
+Theme Builder includes six color presets and a **Font family** selector for
+Mona Sans, Plus Jakarta Sans, System Sans, and System Mono. Use **Full screen**
+to inspect the dashboard with a wider navigation sidebar. Your selected font,
+light/dark mode, activity period, and project filters remain selected when you
+close the preview. Dashboard content is demo data.
+
+The selected preview tab, palette selection, and component demo controls also
+survive opening and closing full screen. Demo form values are only for exploring
+components; configuration files save theme settings, not demo content.
+
+Use **Copy typography CSS** or **Download typography CSS** in the export section
+to save the font configuration
+separately from the CSS, Tailwind v4, or JSON color output. For Mona Sans or Plus
+Jakarta Sans, download the provided font, save it at the indicated `public/fonts`
+path, and place the typography CSS after your token imports. System font options
+need no font file and use the fonts available on each visitor's device. Selecting
+a font does not change the color tokens or their contrast results.
+
+### Download and reopen your theme
+
+In **Export your theme**, choose **CSS**, **Tailwind v4**, or **JSON**, then use
+**Download** to save the displayed format. Color files include both light and
+dark modes. Typography stays in a separate CSS file.
+
+Use **Save configuration** to download a `.pycolors-theme.json` file containing
+your color inputs, theme name, selected font, and preview mode. Later, use
+**Open configuration** to restore those settings and regenerate the theme.
+Configuration files are checked before applying them; an invalid or unsupported
+file leaves your current settings unchanged. The JSON color-token export is a
+different format and cannot be reopened as an editable configuration.
+
+Files are processed locally without an account or uploads. There is no automatic
+save across page reloads: keep the configuration file to continue later.
+
 ## Apply dark mode at the app shell
 
 `@pycolors/tokens` defines its dark values under a `.dark` selector. Add the

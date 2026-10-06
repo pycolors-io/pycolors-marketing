@@ -48,6 +48,8 @@ export type ResponsiveSidebarProps = Readonly<{
   headerTitle?: React.ReactNode;
   headerActions?: React.ReactNode;
   contentId?: string;
+  /** Use div when embedding the shell inside an existing main landmark. */
+  contentAs?: "main" | "div";
   skipToContentLabel?: string;
   className?: string;
   children: React.ReactNode;
@@ -68,10 +70,10 @@ interface SidebarContentsProps extends NavigationItemsProps {
 }
 
 const linkClassName = cn(
-  "flex min-h-10 w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium",
+  "flex min-h-11 w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium sm:min-h-10",
   "text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
   "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-  "focus-visible:ring-offset-background",
+  "focus-visible:ring-offset-background motion-reduce:transition-none",
   "aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground",
 );
 
@@ -96,7 +98,9 @@ function NavigationItems({
                 {item.icon}
               </span>
             ) : null}
-            <span className="min-w-0 flex-1 truncate">{item.label}</span>
+            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+              {item.label}
+            </span>
             {item.badge ? (
               <span
                 className="shrink-0 rounded-sm bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground"
@@ -185,7 +189,7 @@ function SidebarContents({
               role="group"
             >
               <p
-                className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                className="mb-2 px-3 text-[11px] font-medium text-muted-foreground [overflow-wrap:anywhere]"
                 id={labelId}
               >
                 {group.label}
@@ -242,6 +246,7 @@ export function ResponsiveSidebar({
   children,
   className,
   contentId = "main-content",
+  contentAs: Content = "main",
   groups = [],
   headerActions,
   headerTitle,
@@ -299,7 +304,7 @@ export function ResponsiveSidebar({
             <SheetTrigger asChild>
               <Button
                 aria-label={mobileTriggerLabel}
-                className="md:hidden"
+                className="size-11 shrink-0 md:hidden"
                 data-slot="responsive-sidebar-mobile-trigger"
                 size="icon"
                 type="button"
@@ -310,11 +315,11 @@ export function ResponsiveSidebar({
             </SheetTrigger>
 
             <SheetContent
-              className="flex w-[min(20rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] flex-col gap-0 p-0"
+              className="top-0 flex h-dvh w-[min(18rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] flex-col gap-0 rounded-none p-0 [&_[data-slot=responsive-sidebar-brand]]:pr-12 [&>button]:right-3 [&>button]:top-2.5 [&>button]:grid [&>button]:size-11 [&>button]:place-items-center"
               data-slot="responsive-sidebar-mobile"
               side="left"
             >
-              <SheetHeader className="shrink-0 border-b border-border px-6 py-5 pr-12">
+              <SheetHeader className="sr-only">
                 <SheetTitle>{mobileTitle}</SheetTitle>
                 <SheetDescription>{mobileDescription}</SheetDescription>
               </SheetHeader>
@@ -337,7 +342,7 @@ export function ResponsiveSidebar({
           </div>
           {headerActions ? (
             <div
-              className="flex shrink-0 items-center gap-2"
+              className="flex min-w-0 max-w-[60%] flex-wrap items-center justify-end gap-2 py-2 [&>*]:max-w-full [&>*]:whitespace-normal [&>*]:[overflow-wrap:anywhere]"
               data-slot="responsive-sidebar-actions"
             >
               {headerActions}
@@ -345,14 +350,14 @@ export function ResponsiveSidebar({
           ) : null}
         </header>
 
-        <main
+        <Content
           className="min-w-0 flex-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
           data-slot="responsive-sidebar-main"
           id={contentId}
           tabIndex={-1}
         >
           {children}
-        </main>
+        </Content>
       </div>
     </div>
   );

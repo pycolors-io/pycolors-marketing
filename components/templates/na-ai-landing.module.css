@@ -1,0 +1,140 @@
+.page {
+  background-image:
+    radial-gradient(
+      ellipse at 80% 0%,
+      color-mix(in oklab, var(--primary) 9%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 10% 15%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 50%
+    );
+  background-size: 100% 48rem;
+  background-repeat: no-repeat;
+}
+
+.previewStage {
+  background:
+    radial-gradient(
+      ellipse at 8% 0%,
+      color-mix(in oklab, var(--primary) 18%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in oklab, var(--brand-platform) 13%, transparent),
+      transparent 65%
+    ),
+    var(--background);
+}
+
+.previewImage {
+  box-shadow: 0 16px 40px -24px
+    color-mix(in oklab, var(--primary) 40%, transparent);
+}
+
+.purchasePanel,
+.deliveryPanel {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in oklab, var(--primary) 13%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      color-mix(in oklab, var(--brand-platform) 7%, transparent),
+      transparent 65%
+    ),
+    var(--background);
+}
+
+.purchasePanel {
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
+}
+
+.sourcePanel {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 10%, var(--background)),
+    var(--background) 75%
+  );
+}
+
+.deliveryIcon,
+.includedCard > div > span[aria-hidden="true"] {
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
+  background: color-mix(in oklab, var(--primary) 9%, var(--background));
+  color: var(--primary);
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.breadcrumb [aria-current="page"] {
+  min-width: 0;
+  max-width: 8rem;
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.textLink:hover {
+  color: var(--primary);
+}
+
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.includedCard {
+  --card-accent: var(--primary);
+
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--card-accent) 7%, var(--background)),
+    var(--background) 55%
+  );
+}
+
+.includedCard:nth-child(2) {
+  --card-accent: var(--brand-platform);
+}
+
+.stepNumber {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid
+    color-mix(in oklab, var(--primary) 15%, var(--border-subtle));
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 5%, var(--background));
+  color: var(--primary);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.625rem;
+}

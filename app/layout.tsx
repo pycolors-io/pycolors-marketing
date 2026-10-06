@@ -1,19 +1,19 @@
-import type { Metadata } from 'next';
-import { RootProvider } from 'fumadocs-ui/provider/next';
-import { Analytics } from '@vercel/analytics/react';
+import type { Metadata } from "next";
+import { RootProvider } from "fumadocs-ui/provider/next";
+import { Analytics } from "@vercel/analytics/react";
 
-import './global.css';
-import { inter } from './fonts';
-import { JsonLd } from '@/components/seo/json-ld';
+import "./global.css";
+import { inter } from "./fonts";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
   SITE_NAME,
   SITE_URL,
   SITE_DESCRIPTION,
   SITE_DEFAULT_OG_IMAGE,
   SITE_DEFAULT_TWITTER_IMAGE,
-} from '@/lib/seo/website';
-import { PrivacyConsentBanner } from '@/components/privacy/privacy-consent-banner';
-import { ConsentGatedGtm } from '@/components/privacy/consent-gated-gtm';
+} from "@/lib/seo/website";
+import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
+import { ConsentGatedGtm } from "@/components/privacy/consent-gated-gtm";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -29,15 +29,15 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', type: 'image/png', sizes: '64x64' },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-  manifest: '/manifest.webmanifest',
+  manifest: "/manifest.webmanifest",
   openGraph: {
-    type: 'website',
+    type: "website",
     siteName: SITE_NAME,
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     images: [SITE_DEFAULT_OG_IMAGE],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     images: [SITE_DEFAULT_TWITTER_IMAGE],
@@ -53,51 +53,48 @@ export const metadata: Metadata = {
 };
 
 const siteJsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
-      alternateName: ['PyColors UI', 'pycolors.io'],
-      inLanguage: 'en',
+      alternateName: ["PyColors UI", "pycolors.io"],
+      inLanguage: "en",
       publisher: {
-        '@id': `${SITE_URL}/#organization`,
+        "@id": `${SITE_URL}/#organization`,
       },
       potentialAction: {
-        '@type': 'SearchAction',
+        "@type": "SearchAction",
         target: `${SITE_URL}/search?q={search_term_string}`,
-        'query-input': 'required name=search_term_string',
+        "query-input": "required name=search_term_string",
       },
     },
     {
-      '@type': 'Organization',
-      '@id': `${SITE_URL}/#organization`,
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
       url: SITE_URL,
       description:
-        'PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.',
+        "PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.",
       logo: {
-        '@type': 'ImageObject',
+        "@type": "ImageObject",
         url: `${SITE_URL}/logo.png`,
       },
-      sameAs: ['https://github.com/pycolors-io'],
+      sameAs: ["https://github.com/pycolors-io"],
     },
   ],
 };
 
-export default function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={inter.className}
+      data-scroll-behavior="smooth"
     >
       <head>
         <JsonLd id="pycolors-site" data={siteJsonLd} />
@@ -106,8 +103,8 @@ export default function Layout({
       <body className="flex min-h-screen flex-col">
         <RootProvider
           theme={{
-            defaultTheme: 'dark',
-            enableSystem: false,
+            defaultTheme: "dark",
+            enableSystem: true,
           }}
         >
           {children}

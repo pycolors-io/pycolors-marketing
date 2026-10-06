@@ -1,0 +1,140 @@
+---
+title: Onboarding checklist
+description: A copyable setup checklist with completion progress and application-owned actions.
+lastUpdated: "2026-10-05"
+appliesTo: Blocks
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { OnboardingChecklistExample } from "@/components/docs/blocks/onboarding-checklist-example";
+
+## Make the next step clear
+
+`OnboardingChecklist` groups the first tasks in a workspace into an ordered
+list with a progress indicator. Your application supplies completion state and
+native actions. The Block does not create workspaces, invite members, navigate,
+store progress or decide whether a setup step has actually been completed.
+
+The preview toggles fictional steps locally. Its controls do not perform the
+tasks described; they demonstrate how the UI responds to updated props.
+
+## Canonical identity
+
+- Category: **Account & workspace**, slug `account`.
+- Block: `onboarding-checklist`, export `OnboardingChecklist`.
+- Canonical source: `apps/marketing/content/blocks/account/onboarding-checklist/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/onboarding-checklist/index.tsx` in your application. Use
+the Source tab's copy button or select the code manually when clipboard access
+is unavailable. The full canonical file is included at build time.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <OnboardingChecklistExample />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/onboarding-checklist/index.tsx"'
+    >
+      ../../../blocks/account/onboarding-checklist/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+## Install by copying source
+
+Paste the complete file at the destination above. Keep the public `@pycolors/ui`
+import and the UI token setup. No extra dependency, Blocks package or Registry
+installer is needed. Your copy does not receive automatic updates; validate it
+in your application after copying and when adopting a later canonical revision.
+
+```tsx title="workspace-setup.tsx"
+import { Button } from "@pycolors/ui";
+import { OnboardingChecklist } from "./blocks/onboarding-checklist";
+
+export function WorkspaceSetup() {
+  return (
+    <OnboardingChecklist
+      id="workspace-setup"
+      heading="Set up your workspace"
+      steps={[
+        { id: "workspace", title: "Create a workspace", complete: true },
+        {
+          id: "project",
+          title: "Add your first project",
+          description: "Organize the work your team wants to ship.",
+          complete: false,
+          action: (
+            <Button asChild variant="outline">
+              <a href="/projects/new">Create project</a>
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+Replace the example destination and completion values with real application
+routes and validated state. The canonical Block has no `"use client"`
+directive and can render on the server. Callbacks belong in an appropriate
+client wrapper. In Next.js, mark that wrapper `"use client"`; do not pass
+ordinary functions across a Server Component boundary.
+
+## Props and responsibility
+
+`id`, `heading` and `steps` are required. Use a stable, nonempty HTML ID unique
+across the page, including the derived `${id}-heading` ID. Every step requires
+a unique stable `id`, a `title` and a boolean `complete`; `description` and
+`action` are optional. The progress value is derived from the provided completed
+steps. The Block never marks a step complete by itself.
+
+`headingLevel` defaults to `2` and accepts `2` through `6` to fit your page.
+`description` introduces the checklist. `completedLabel` and `incompleteLabel`
+default to “Completed” and “To do”; supply localized text as needed.
+`emptyMessage` defaults to “No setup steps available.” An empty list renders
+that message with no progress indicator or list. `className` applies to the
+root through public `cn`, with consumer classes taking precedence.
+
+Actions render unchanged, including refs, callbacks, link destinations,
+disabled semantics and native button types. Use `type="button"` for actions
+that must not submit an enclosing form. A completed step may keep an action,
+offer a different action or omit it; that decision belongs to your application.
+Completion indicators are presentation, never an authorization boundary.
+
+## Accessibility and responsive layout
+
+The named section contains an ordered list and a native progress indicator.
+Visible status labels communicate completion without relying on color. Long
+content wraps and actions move to another line when space is limited. Semantic
+tokens support light and dark themes.
+
+The Block does not move focus or announce updates. Your application owns those
+behaviors when completing a task changes the page. Keep a stable action or
+move focus deliberately if you remove the focused control. The demo preserves
+the same toggle button and announces a short local completion summary.
+
+## Validate and maintain your copy
+
+Run application lint, type checks, tests and a production build. Check empty,
+partially completed and fully completed lists; missing and disabled actions;
+keyboard focus; multiple instances; long text; narrow widths; and both themes.
+Network loading, errors, persistence and completion validation belong to your
+application and are not inferred by this Block.
+
+Keep local changes under version control. Review later canonical revisions
+deliberately; no synchronization occurs. Reverting the copied file changes
+presentation only and does not undo completed application tasks.
+
+Combine this with the [Responsive sidebar](/docs/blocks/app-shells/responsive-sidebar)
+or [Stats overview](/docs/blocks/data/stats-overview), and explore the
+[Blocks catalog](/blocks) for the next screen.

@@ -1,0 +1,39 @@
+.featuredGuide {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
+  );
+  transition: border-color 180ms ease;
+}
+
+.featuredGuide:hover {
+  border-color: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+
+.guideCard h4 {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.guideCard:hover {
+  background-color: color-mix(in oklab, var(--primary) 2%, var(--background));
+}
+
+.nextStep {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)),
+    var(--background) 80%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredGuide,
+  .featuredGuide svg,
+  .guideCard,
+  .guideCard svg {
+    transition: none;
+    transform: none;
+  }
+}

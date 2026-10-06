@@ -1,0 +1,54 @@
+.leadArticle {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
+  );
+}
+
+.featuredArticle {
+  transition: border-color 180ms ease;
+}
+
+.featuredArticle:hover {
+  border-color: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+
+.articleRow {
+  transition: background-color 180ms ease;
+}
+
+.articleRow:hover {
+  background-color: color-mix(in oklab, var(--primary) 2%, var(--background));
+}
+
+.nextSteps {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)),
+    var(--background) 80%
+  );
+}
+
+.tagDisclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.tagDisclosure[open] summary svg {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.page) {
+    scroll-behavior: auto;
+  }
+
+  .page a,
+  .page [data-slot="badge"],
+  .page svg,
+  .featuredArticle,
+  .articleRow {
+    transition: none;
+    transform: none;
+  }
+}

@@ -127,7 +127,7 @@ export function SettingsPanel({
       className={cn("min-w-0", className)}
       data-slot="settings-panel"
     >
-      <Card className="min-w-0 overflow-hidden">
+      <Card className="min-w-0 overflow-hidden rounded-[5px] border-border">
         <CardHeader className="border-b border-border">
           <CardTitle id={titleId}>{title}</CardTitle>
           {description ? (
@@ -150,7 +150,7 @@ export function SettingsPanel({
                 return (
                   <section
                     aria-labelledby={sectionTitleId}
-                    className="grid min-w-0 gap-5 p-6 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.5fr)] md:gap-8"
+                    className="grid min-w-0 gap-5 p-4 sm:p-6 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.5fr)] md:gap-8"
                     data-section-id={section.id}
                     data-slot="settings-panel-section"
                     key={section.id}
@@ -163,7 +163,7 @@ export function SettingsPanel({
                         {section.title}
                       </h4>
                       {section.description ? (
-                        <p className="mt-1 text-sm text-muted-foreground">
+                        <p className="mt-1 text-sm leading-6 text-muted-foreground">
                           {section.description}
                         </p>
                       ) : null}
@@ -194,7 +194,7 @@ export function SettingsPanel({
             </div>
 
             <div
-              className="flex min-w-0 flex-col gap-4 border-t border-border bg-muted/20 p-6 sm:flex-row sm:items-center sm:justify-between"
+              className="flex min-w-0 flex-col gap-4 border-t border-border bg-card p-4 sm:p-6 sm:flex-row sm:items-center sm:justify-between"
               data-slot="settings-panel-actions"
             >
               <div className="min-w-0 flex-1">
@@ -219,7 +219,7 @@ export function SettingsPanel({
               </div>
 
               <Button
-                className="w-full sm:w-auto"
+                className="h-auto min-h-11 w-full rounded-[5px] whitespace-normal text-sm sm:w-auto"
                 disabled={submitting || submitDisabled}
                 type="submit"
               >

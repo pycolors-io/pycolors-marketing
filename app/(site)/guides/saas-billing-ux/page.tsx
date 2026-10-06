@@ -1,116 +1,63 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import { ArrowRight } from 'lucide-react';
+import Link from "next/link";
+import type { Metadata } from "next";
 
-import { GuidePageShell } from '@/components/guides/guide-page-shell';
+import { GuidePageShell } from "@/components/guides/guide-page-shell";
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Button,
-  Card,
+  GuideSection as Section,
+  GuideCallout as Alert,
+  GuideCalloutTitle as AlertTitle,
+  GuideCalloutDescription as AlertDescription,
+  GuideNextSteps,
+  GuideChecklistCard as ChecklistCard,
+} from "@/components/guides/guide-content";
+
+import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export const metadata: Metadata = {
-  title: 'Billing Architecture & UX for SaaS Applications',
+  title: "Billing Architecture & UX for SaaS Applications",
   description:
-    'Learn how modern SaaS billing systems are designed across pricing visibility, subscriptions, usage metrics, invoices, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.',
+    "Learn how modern SaaS billing systems are designed across pricing visibility, subscriptions, usage metrics, invoices, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.",
   alternates: {
-    canonical: '/guides/saas-billing-ux',
+    canonical: "/guides/saas-billing-ux",
   },
 
   openGraph: {
-    title: 'Billing Architecture & UX for SaaS Applications',
+    title: "Billing Architecture & UX for SaaS Applications",
     description:
-      'A practical guide to SaaS billing architecture covering subscriptions, invoices, usage metrics, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.',
-    url: '/guides/saas-billing-ux',
-    images: ['/seo/og-main.png'],
+      "A practical guide to SaaS billing architecture covering subscriptions, invoices, usage metrics, upgrade flows, Stripe portals, payment recovery, and production-ready billing UX.",
+    url: "/guides/saas-billing-ux",
+    images: ["/seo/og-main.png"],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Billing Architecture & UX for SaaS Applications',
+    card: "summary_large_image",
+    title: "Billing Architecture & UX for SaaS Applications",
     description:
-      'Learn how modern SaaS billing systems are designed across subscriptions, pricing UX, invoices, usage metrics, and payment recovery.',
-    images: ['/seo/twitter-main.png'],
+      "Learn how modern SaaS billing systems are designed across subscriptions, pricing UX, invoices, usage metrics, and payment recovery.",
+    images: ["/seo/twitter-main.png"],
   },
 };
 
-function Section({
-  id,
-  title,
-  description,
-  children,
-}: {
-  id: string;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      id={id}
-      className="scroll-mt-28 border-t border-border/60 py-10 sm:py-12"
-    >
-      <div className="mb-5 space-y-1 sm:mb-6">
-        <h2 className="font-brand text-lg font-semibold tracking-tight">
-          {title}
-        </h2>
-
-        {description ? (
-          <p className="text-sm text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      <div className="space-y-5 text-sm leading-7 text-muted-foreground sm:text-[15px]">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-function ChecklistCard({
-  title,
-  items,
-}: {
-  title: string;
-  items: string[];
-}) {
-  return (
-    <Card className="p-5">
-      <div className="space-y-3">
-        <div className="text-sm font-medium">{title}</div>
-        <ul className="space-y-2 text-sm text-muted-foreground">
-          {items.map((item) => (
-            <li key={item}>• {item}</li>
-          ))}
-        </ul>
-      </div>
-    </Card>
-  );
-}
-
 const toc = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'why-billing-matters', label: 'Why billing matters' },
-  { id: 'pricing-visibility', label: 'Pricing visibility' },
-  { id: 'plan-state', label: 'Plan state' },
-  { id: 'usage-metrics', label: 'Usage metrics' },
-  { id: 'invoices-and-history', label: 'Invoices & history' },
-  { id: 'upgrade-downgrade', label: 'Upgrade & downgrade' },
-  { id: 'portal-and-self-serve', label: 'Portal & self-serve' },
-  { id: 'failed-payments', label: 'Failed payments' },
-  { id: 'common-mistakes', label: 'Common mistakes' },
-  { id: 'build-order', label: 'Build order' },
-  { id: 'next-steps', label: 'Next steps' },
+  { id: "overview", label: "Overview" },
+  { id: "why-billing-matters", label: "Why billing matters" },
+  { id: "pricing-visibility", label: "Pricing visibility" },
+  { id: "plan-state", label: "Plan state" },
+  { id: "usage-metrics", label: "Usage metrics" },
+  { id: "invoices-and-history", label: "Invoices & history" },
+  { id: "upgrade-downgrade", label: "Upgrade & downgrade" },
+  { id: "portal-and-self-serve", label: "Portal & self-serve" },
+  { id: "failed-payments", label: "Failed payments" },
+  { id: "common-mistakes", label: "Common mistakes" },
+  { id: "build-order", label: "Build order" },
+  { id: "next-steps", label: "Next steps" },
 ];
 
 export default function GuideSaaSBillingUxPage() {
@@ -119,86 +66,97 @@ export default function GuideSaaSBillingUxPage() {
       title="SaaS billing UX best practices"
       description="Learn the core UX patterns behind SaaS billing — from pricing visibility and plan state to usage metrics, invoices, upgrades, portals, and failed payment handling."
       toc={toc}
-      breadcrumb={[
-        { label: 'Home', href: '/' },
-        { label: 'Guides', href: '/guides' },
+      tags={["Next.js", "Billing"]}
+      documentation={{
+        title: "Billing docs",
+        href: "/docs/starter-pro/billing",
+      }}
+      relatedGuides={[
         {
-          label: 'SaaS billing UX best practices',
-          href: '/guides/saas-billing-ux',
+          title: "Authentication flows for SaaS",
+          href: "/guides/saas-auth-flows",
+        },
+        {
+          title: "Team & organization systems for SaaS",
+          href: "/guides/saas-organizations",
+        },
+      ]}
+      breadcrumb={[
+        { label: "Home", href: "/" },
+        { label: "Guides", href: "/guides" },
+        {
+          label: "SaaS billing UX best practices",
+          href: "/guides/saas-billing-ux",
         },
       ]}
     >
       <div>
-        <section
-          id="overview"
-          className="scroll-mt-28 py-10 sm:py-12"
-        >
+        <section id="overview" className="scroll-mt-28 py-10 sm:py-12">
           <div className="space-y-6">
             <Alert>
               <AlertTitle>Core idea</AlertTitle>
               <AlertDescription>
-                Billing UX is not a settings afterthought. In SaaS, it
-                is one of the clearest places where trust, clarity,
-                and monetization meet.
+                Billing UX is not a settings afterthought. In SaaS, it is one of
+                the clearest places where trust, clarity, and monetization meet.
               </AlertDescription>
             </Alert>
 
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <ChecklistCard
                 title="Core surfaces"
                 items={[
-                  'Current plan',
-                  'Usage and limits',
-                  'Invoices',
-                  'Upgrade actions',
+                  "Current plan",
+                  "Usage and limits",
+                  "Invoices",
+                  "Upgrade actions",
                 ]}
               />
               <ChecklistCard
                 title="Business goals"
                 items={[
-                  'Reduce confusion',
-                  'Increase upgrades',
-                  'Lower support load',
-                  'Build trust',
+                  "Reduce confusion",
+                  "Increase upgrades",
+                  "Lower support load",
+                  "Build trust",
                 ]}
               />
               <ChecklistCard
                 title="Operational needs"
                 items={[
-                  'Subscription state',
-                  'Portal access',
-                  'Payment recovery',
-                  'Billing history',
+                  "Subscription state",
+                  "Portal access",
+                  "Payment recovery",
+                  "Billing history",
                 ]}
               />
               <ChecklistCard
                 title="PyColors path"
                 items={[
-                  'Start with Free',
-                  'Validate billing UX',
-                  'Upgrade for real wiring',
-                  'Scale safely',
+                  "Start with Free",
+                  "Validate billing UX",
+                  "Upgrade for real wiring",
+                  "Scale safely",
                 ]}
               />
             </div>
 
             <p className="text-sm leading-7 text-muted-foreground sm:text-[15px]">
-              If you want to see how billing fits into a real SaaS
-              surface, explore the{' '}
+              If you want to see how billing fits into a real SaaS surface,
+              explore the{" "}
               <Link
-                href="/examples"
+                href="/ui/examples"
                 className="text-foreground underline underline-offset-4"
               >
                 examples
-              </Link>{' '}
-              or browse the{' '}
+              </Link>{" "}
+              or browse the{" "}
               <Link
                 href="/ui/patterns"
                 className="text-foreground underline underline-offset-4"
               >
                 UI patterns
-              </Link>{' '}
-              before starting with{' '}
+              </Link>{" "}
+              before starting with{" "}
               <Link
                 href="/starters/free"
                 className="text-foreground underline underline-offset-4"
@@ -216,35 +174,35 @@ export default function GuideSaaSBillingUxPage() {
           description="Billing is one of the most trust-sensitive areas of the product."
         >
           <p>
-            Users tolerate rough edges in some parts of a product, but
-            billing is not one of them. When money, limits, invoices,
-            and subscriptions are unclear, trust drops quickly.
+            Users tolerate rough edges in some parts of a product, but billing
+            is not one of them. When money, limits, invoices, and subscriptions
+            are unclear, trust drops quickly.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ChecklistCard
               title="What strong billing UX creates"
               items={[
-                'Clear expectations',
-                'Higher upgrade confidence',
-                'Lower billing support volume',
-                'A more trustworthy product',
+                "Clear expectations",
+                "Higher upgrade confidence",
+                "Lower billing support volume",
+                "A more trustworthy product",
               ]}
             />
             <ChecklistCard
               title="What weak billing UX causes"
               items={[
-                'Confusion about charges',
-                'Friction during upgrades',
-                'Subscription anxiety',
-                'More cancellations and tickets',
+                "Confusion about charges",
+                "Friction during upgrades",
+                "Subscription anxiety",
+                "More cancellations and tickets",
               ]}
             />
           </div>
 
           <p>
-            Good billing UX makes monetization feel integrated into
-            the product rather than bolted on after the fact.
+            Good billing UX makes monetization feel integrated into the product
+            rather than bolted on after the fact.
           </p>
         </Section>
 
@@ -254,9 +212,9 @@ export default function GuideSaaSBillingUxPage() {
           description="Users should not have to guess what plan they are on or what they are paying for."
         >
           <p>
-            Billing UX starts before checkout. The product should make
-            the current plan, the upgrade options, and the main
-            billing implications easy to understand.
+            Billing UX starts before checkout. The product should make the
+            current plan, the upgrade options, and the main billing implications
+            easy to understand.
           </p>
 
           <Table>
@@ -268,33 +226,21 @@ export default function GuideSaaSBillingUxPage() {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="font-medium">
-                  Current plan
-                </TableCell>
-                <TableCell>
-                  Reduces uncertainty about account status
-                </TableCell>
+                <TableCell className="font-medium">Current plan</TableCell>
+                <TableCell>Reduces uncertainty about account status</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">
                   Main limits or benefits
                 </TableCell>
-                <TableCell>
-                  Explains what the plan actually means
-                </TableCell>
+                <TableCell>Explains what the plan actually means</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">
-                  Upgrade path
-                </TableCell>
-                <TableCell>
-                  Helps users act without searching
-                </TableCell>
+                <TableCell className="font-medium">Upgrade path</TableCell>
+                <TableCell>Helps users act without searching</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">
-                  Billing cadence
-                </TableCell>
+                <TableCell className="font-medium">Billing cadence</TableCell>
                 <TableCell>
                   Prevents confusion around recurring charges
                 </TableCell>
@@ -303,8 +249,8 @@ export default function GuideSaaSBillingUxPage() {
           </Table>
 
           <p>
-            Visibility reduces friction. When users can immediately
-            understand their billing state, they feel more in control.
+            Visibility reduces friction. When users can immediately understand
+            their billing state, they feel more in control.
           </p>
         </Section>
 
@@ -314,35 +260,35 @@ export default function GuideSaaSBillingUxPage() {
           description="The plan card or billing summary is often the core of the billing page."
         >
           <p>
-            A billing page usually needs a clear “current state”
-            section: what plan the user has, whether it is active, and
-            what actions are available now.
+            A billing page usually needs a clear “current state” section: what
+            plan the user has, whether it is active, and what actions are
+            available now.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ChecklistCard
               title="A strong plan summary shows"
               items={[
-                'Current plan name',
-                'Billing status',
-                'Renewal or next charge date',
-                'Upgrade or manage actions',
+                "Current plan name",
+                "Billing status",
+                "Renewal or next charge date",
+                "Upgrade or manage actions",
               ]}
             />
             <ChecklistCard
               title="A weak plan summary causes"
               items={[
-                'Unclear account state',
-                'Hidden next charge timing',
-                'Confusion about cancellation',
-                'Friction around upgrades',
+                "Unclear account state",
+                "Hidden next charge timing",
+                "Confusion about cancellation",
+                "Friction around upgrades",
               ]}
             />
           </div>
 
           <p>
-            This block should feel trustworthy, not decorative. It is
-            often the first thing users look at on the billing page.
+            This block should feel trustworthy, not decorative. It is often the
+            first thing users look at on the billing page.
           </p>
         </Section>
 
@@ -352,35 +298,35 @@ export default function GuideSaaSBillingUxPage() {
           description="Usage-based billing requires clarity, context, and timing."
         >
           <p>
-            If the product uses credits, seats, storage, requests, or
-            other usage-based constraints, the billing UX needs to
-            make those limits visible before they become painful.
+            If the product uses credits, seats, storage, requests, or other
+            usage-based constraints, the billing UX needs to make those limits
+            visible before they become painful.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ChecklistCard
               title="Useful usage signals"
               items={[
-                'Current usage vs limit',
-                'Time period context',
-                'Warning before hitting limits',
-                'Link to upgrade or manage plan',
+                "Current usage vs limit",
+                "Time period context",
+                "Warning before hitting limits",
+                "Link to upgrade or manage plan",
               ]}
             />
             <ChecklistCard
               title="Common problems"
               items={[
-                'Usage shown without context',
-                'No time window or reset date',
-                'Warnings too late',
-                'Metrics separated from upgrade actions',
+                "Usage shown without context",
+                "No time window or reset date",
+                "Warnings too late",
+                "Metrics separated from upgrade actions",
               ]}
             />
           </div>
 
           <p>
-            Good usage UX helps upgrades feel logical. Bad usage UX
-            makes upgrades feel like a surprise penalty.
+            Good usage UX helps upgrades feel logical. Bad usage UX makes
+            upgrades feel like a surprise penalty.
           </p>
         </Section>
 
@@ -390,10 +336,9 @@ export default function GuideSaaSBillingUxPage() {
           description="Users need to trust what happened, not just what will happen."
         >
           <p>
-            Billing history is often where support questions begin.
-            Users should be able to quickly understand what they paid,
-            when they paid it, and where to go next if something looks
-            wrong.
+            Billing history is often where support questions begin. Users should
+            be able to quickly understand what they paid, when they paid it, and
+            where to go next if something looks wrong.
           </p>
 
           <Table>
@@ -406,9 +351,7 @@ export default function GuideSaaSBillingUxPage() {
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium">Date</TableCell>
-                <TableCell>
-                  Establishes timing and billing cadence
-                </TableCell>
+                <TableCell>Establishes timing and billing cadence</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Amount</TableCell>
@@ -421,19 +364,15 @@ export default function GuideSaaSBillingUxPage() {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">
-                  Invoice access
-                </TableCell>
-                <TableCell>
-                  Supports accounting and user trust
-                </TableCell>
+                <TableCell className="font-medium">Invoice access</TableCell>
+                <TableCell>Supports accounting and user trust</TableCell>
               </TableRow>
             </TableBody>
           </Table>
 
           <p>
-            Invoice history should feel boring in the best possible
-            way: clear, readable, and predictable.
+            Invoice history should feel boring in the best possible way: clear,
+            readable, and predictable.
           </p>
         </Section>
 
@@ -443,36 +382,35 @@ export default function GuideSaaSBillingUxPage() {
           description="Billing changes are product decisions, not just payment actions."
         >
           <p>
-            Upgrading should feel like a smooth product step.
-            Downgrading should feel controlled and transparent, even
-            if it is not the ideal business outcome.
+            Upgrading should feel like a smooth product step. Downgrading should
+            feel controlled and transparent, even if it is not the ideal
+            business outcome.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ChecklistCard
               title="Good upgrade UX"
               items={[
-                'Clear plan comparison',
-                'Visible benefits of the next tier',
-                'Obvious action buttons',
-                'Expected charge timing explained',
+                "Clear plan comparison",
+                "Visible benefits of the next tier",
+                "Obvious action buttons",
+                "Expected charge timing explained",
               ]}
             />
             <ChecklistCard
               title="Good downgrade UX"
               items={[
-                'Clear consequence messaging',
-                'No hidden penalties',
-                'Visible timing of plan change',
-                'Trust-preserving copy',
+                "Clear consequence messaging",
+                "No hidden penalties",
+                "Visible timing of plan change",
+                "Trust-preserving copy",
               ]}
             />
           </div>
 
           <p>
-            Billing changes should not feel risky. When the
-            consequences are transparent, users are more likely to
-            take action with confidence.
+            Billing changes should not feel risky. When the consequences are
+            transparent, users are more likely to take action with confidence.
           </p>
         </Section>
 
@@ -482,35 +420,35 @@ export default function GuideSaaSBillingUxPage() {
           description="Users should be able to manage billing without needing support."
         >
           <p>
-            Many SaaS products use a billing portal for payment
-            methods, invoices, and subscription changes. This is
-            useful, but the surrounding UX still matters.
+            Many SaaS products use a billing portal for payment methods,
+            invoices, and subscription changes. This is useful, but the
+            surrounding UX still matters.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ChecklistCard
               title="What your product should handle well"
               items={[
-                'Clear portal entrypoint',
-                'Context before users leave the app',
-                'Expected actions explained',
-                'Safe return path into the product',
+                "Clear portal entrypoint",
+                "Context before users leave the app",
+                "Expected actions explained",
+                "Safe return path into the product",
               ]}
             />
             <ChecklistCard
               title="What to avoid"
               items={[
-                'Vague “manage billing” buttons',
-                'No explanation of what happens next',
-                'Scattered billing actions',
-                'Broken flow after returning from portal',
+                "Vague “manage billing” buttons",
+                "No explanation of what happens next",
+                "Scattered billing actions",
+                "Broken flow after returning from portal",
               ]}
             />
           </div>
 
           <p>
-            Even when a third-party billing portal handles the action,
-            your product still owns the user experience around it.
+            Even when a third-party billing portal handles the action, your
+            product still owns the user experience around it.
           </p>
         </Section>
 
@@ -520,9 +458,9 @@ export default function GuideSaaSBillingUxPage() {
           description="Payment recovery should be clear, actionable, and calm."
         >
           <p>
-            Failed payments are one of the most delicate billing
-            moments. Users need to understand what happened, whether
-            access is affected, and what they should do next.
+            Failed payments are one of the most delicate billing moments. Users
+            need to understand what happened, whether access is affected, and
+            what they should do next.
           </p>
 
           <Table>
@@ -537,9 +475,7 @@ export default function GuideSaaSBillingUxPage() {
                 <TableCell className="font-medium">
                   Clear status messaging
                 </TableCell>
-                <TableCell>
-                  Prevents confusion and account anxiety
-                </TableCell>
+                <TableCell>Prevents confusion and account anxiety</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">
@@ -556,19 +492,15 @@ export default function GuideSaaSBillingUxPage() {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">
-                  Calm tone
-                </TableCell>
-                <TableCell>
-                  Preserves trust during a sensitive moment
-                </TableCell>
+                <TableCell className="font-medium">Calm tone</TableCell>
+                <TableCell>Preserves trust during a sensitive moment</TableCell>
               </TableRow>
             </TableBody>
           </Table>
 
           <p>
-            Recovery flows should feel operational and helpful, not
-            alarming or punitive.
+            Recovery flows should feel operational and helpful, not alarming or
+            punitive.
           </p>
         </Section>
 
@@ -581,26 +513,26 @@ export default function GuideSaaSBillingUxPage() {
             <ChecklistCard
               title="Typical mistakes"
               items={[
-                'Hiding the current plan state',
-                'Weak usage context',
-                'No invoice clarity',
-                'Confusing upgrade or downgrade consequences',
+                "Hiding the current plan state",
+                "Weak usage context",
+                "No invoice clarity",
+                "Confusing upgrade or downgrade consequences",
               ]}
             />
             <ChecklistCard
               title="Better approach"
               items={[
-                'Make billing status visible immediately',
-                'Explain limits and timing clearly',
-                'Keep invoice history simple',
-                'Design billing changes as trust moments',
+                "Make billing status visible immediately",
+                "Explain limits and timing clearly",
+                "Keep invoice history simple",
+                "Design billing changes as trust moments",
               ]}
             />
           </div>
 
           <p>
-            The strongest billing pages feel operationally calm. They
-            reduce ambiguity and help users feel in control.
+            The strongest billing pages feel operationally calm. They reduce
+            ambiguity and help users feel in control.
           </p>
         </Section>
 
@@ -631,24 +563,20 @@ export default function GuideSaaSBillingUxPage() {
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Phase 3</TableCell>
-                <TableCell>
-                  Invoice history and portal entrypoints
-                </TableCell>
+                <TableCell>Invoice history and portal entrypoints</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Phase 4</TableCell>
                 <TableCell>
-                  Payment recovery, subscription state, and real
-                  wiring
+                  Payment recovery, subscription state, and real wiring
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
 
           <p>
-            This sequence lets teams validate the billing surface
-            first, then wire Stripe and real subscription logic once
-            the UX is solid.
+            This sequence lets teams validate the billing surface first, then
+            wire Stripe and real subscription logic once the UX is solid.
           </p>
         </Section>
 
@@ -656,52 +584,14 @@ export default function GuideSaaSBillingUxPage() {
           <Alert>
             <AlertTitle>Mental model to keep</AlertTitle>
             <AlertDescription>
-              Great SaaS billing UX makes money-related decisions feel
-              clear, controlled, and trustworthy. Users should always
-              understand their current plan, their limits, and their
-              next billing action.
+              Great SaaS billing UX makes money-related decisions feel clear,
+              controlled, and trustworthy. Users should always understand their
+              current plan, their limits, and their next billing action.
             </AlertDescription>
           </Alert>
         </section>
 
-        <section
-          id="next-steps"
-          className="scroll-mt-28 border-t border-border/60 py-8 sm:py-10"
-        >
-          <Card className="p-6 sm:p-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <h2 className="font-brand text-lg font-semibold tracking-tight">
-                  Build your billing UX faster with PyColors
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Starter Free gives you a production-shaped billing
-                  surface now. PRO is the upgrade path when
-                  subscriptions, Stripe flows, and real billing wiring
-                  need to be handled.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href="/starters/free">
-                    Start with Starter Free
-                  </Link>
-                </Button>
-
-                <Button asChild variant="secondary">
-                  <Link href="/upgrade">
-                    Explore PRO
-                    <ArrowRight
-                      className="ml-2 h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </section>
+        <GuideNextSteps title="Build your billing UX faster with PyColors" />
       </div>
     </GuidePageShell>
   );

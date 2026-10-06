@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "next/link";
 import {
   act,
   cleanup,
@@ -14,14 +13,16 @@ import { axe } from "vitest-axe";
 
 import { DocsHeader } from "@/components/docs-header";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { DOCS_MENU_GROUPS, PRODUCT_MENU_GROUPS } from "@/lib/layout.shared";
+import { DocsSidebarPublications } from "@/components/docs/docs-sidebar-items";
 
 const route = vi.hoisted(() => ({ pathname: "/docs" }));
 vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
 vi.mock("next/link", () => ({
   default: (props: React.ComponentProps<"a">) => <a {...props} />,
 }));
-vi.mock("@/components/docs-logo", () => ({
-  DocsLogo: () => <Link href="/docs">PyColors Docs</Link>,
+vi.mock("@/components/wordmark-font", () => ({
+  wordmarkFont: { className: "wordmark-font" },
 }));
 vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
   FullSearchTrigger: () => <button type="button">Search documentation</button>,
@@ -44,12 +45,14 @@ const docsLinks = [
   { label: "Button", href: "/docs/ui/button" },
 ];
 const sections = [
-  "/docs",
-  "/docs/templates/na-ai-landing",
   "/docs/ui",
-  "/docs/patterns",
+  "/docs/blocks",
   "/docs/starter",
   "/docs/starter-pro",
+  "/docs/design-system",
+  "/docs/templates/na-ai-landing",
+  "/docs",
+  "/docs/patterns",
 ];
 let breakpointChange: (() => void) | undefined;
 const media = {
@@ -122,6 +125,52 @@ afterEach(async () => {
 });
 
 describe("DocsHeader navigation", () => {
+  it("shares dated article badges with the mobile list without marking product sections or quick links", () => {
+    const now = vi
+      .spyOn(Date, "now")
+      .mockReturnValue(Date.parse("2026-10-06T12:00:00Z"));
+    const links = [{ label: "Storybook", href: "/docs/ui/storybook" }];
+    const { unmount } = render(
+      <DocsSidebarPublications dates={{ "/docs/ui/storybook": "2026-09-25" }}>
+        <Fixture links={links} />
+      </DocsSidebarPublications>,
+    );
+    const { dialog } = openMobile();
+    fireEvent.click(within(dialog).getByText("All documentation pages"));
+    const allDocs = within(dialog).getByRole("navigation", {
+      name: "All documentation links",
+    });
+    const quick = within(dialog).getByRole("navigation", {
+      name: "Quick documentation links",
+    });
+    const article = within(allDocs).getByRole("link", {
+      name: "Storybook New",
+    });
+    expect(article).toHaveAttribute("href", "/docs/ui/storybook");
+    expect(
+      within(quick).getByRole("link", { name: "Storybook" }),
+    ).not.toHaveTextContent("New");
+    now.mockReturnValue(Date.parse("2026-10-25T00:00:00Z"));
+    fireEvent.focus(window);
+    expect(within(allDocs).getByRole("link", { name: "Storybook" })).toBe(
+      article,
+    );
+    expect(within(allDocs).getByText("New")).not.toBeVisible();
+    unmount();
+    now.mockRestore();
+  });
+
+  it("keeps the PyColors Docs identity in one link to the documentation home", () => {
+    render(<Fixture />);
+    const logo = screen.getByRole("link", { name: "PyColors Docs" });
+    expect(logo).toHaveAttribute("href", "/docs");
+    expect(logo).toHaveTextContent(/pycolors\s*Docs/);
+    expect(
+      screen.queryByRole("link", { name: "PyColors" }),
+    ).not.toBeInTheDocument();
+    expect(logo.querySelector("a")).toBeNull();
+  });
+
   it("keeps a closed disclosure hidden until its first activation, even after focus or hover", () => {
     render(<Fixture />);
     act(() => trigger().focus());
@@ -141,7 +190,7 @@ describe("DocsHeader navigation", () => {
     render(<Fixture />);
     const menu = openDesktop();
     expect(
-      within(menu.getByRole("list", { name: "Documentation sections" }))
+      within(menu.getByRole("navigation", { name: "Documentation sections" }))
         .getAllByRole("link")
         .map((a) => a.getAttribute("href")),
     ).toEqual(sections);
@@ -158,6 +207,9 @@ describe("DocsHeader navigation", () => {
     expect(pricing).toHaveTextContent(
       PRODUCT_DISPLAY["starter-pro"].priceLabel,
     );
+    expect(
+      menu.getByRole("link", { name: "Open Theme Builder" }),
+    ).toHaveAttribute("href", "/tools/theme-builder");
     expect(screen.getByRole("link", { name: "Explore Pro" })).toHaveAttribute(
       "href",
       "/starters/pro",
@@ -182,7 +234,7 @@ describe("DocsHeader navigation", () => {
       }),
     ).not.toBeInTheDocument();
     expect(within(panel()).getAllByRole("link")).toHaveLength(
-      sections.length + 1,
+      sections.length + 2,
     );
   });
 
@@ -191,7 +243,7 @@ describe("DocsHeader navigation", () => {
     render(<Fixture />);
     const menu = openDesktop();
     const section = within(
-      menu.getByRole("list", { name: "Documentation sections" }),
+      menu.getByRole("navigation", { name: "Documentation sections" }),
     ).getByRole("link", { current: "page" });
     expect(section).toHaveAttribute("href", "/docs/starter-pro");
     expect(
@@ -200,6 +252,67 @@ describe("DocsHeader navigation", () => {
       ).getByRole("link", { current: "page" }),
     ).toHaveAttribute("href", "/docs/starter-pro/billing");
   });
+
+  it("uses the same product families and names while linking to their documentation", () => {
+    render(<Fixture />);
+    const menu = openDesktop();
+    expect(DOCS_MENU_GROUPS.map((group) => group.title)).toEqual(
+      PRODUCT_MENU_GROUPS.map((group) => group.title),
+    );
+    for (const group of DOCS_MENU_GROUPS) {
+      const links = within(menu.getByRole("list", { name: group.title }));
+      for (const item of group.items) {
+        const link = links.getByRole("link", {
+          name: `${item.label} ${item.description}`,
+        });
+        expect(link).toHaveAttribute("href", item.href);
+        expect(item.href).toMatch(/^\/docs\//);
+      }
+    }
+    expect(menu.getByRole("link", { name: /UI Library/ })).toHaveAttribute(
+      "href",
+      "/docs/ui",
+    );
+    expect(menu.getByRole("link", { name: /Blocks/ })).toHaveAttribute(
+      "href",
+      "/docs/blocks",
+    );
+    expect(menu.getByRole("link", { name: /NA-AI Landing/ })).toHaveAttribute(
+      "href",
+      "/docs/templates/na-ai-landing",
+    );
+  });
+
+  it.each([
+    ["/docs/ui/button", "UI Library", "/docs/ui"],
+    ["/docs/blocks/auth/sign-in", "Blocks", "/docs/blocks"],
+    [
+      "/docs/templates/na-ai-landing/setup",
+      "NA-AI Landing",
+      "/docs/templates/na-ai-landing",
+    ],
+  ])(
+    "highlights one direct documentation section at %s",
+    (path, label, href) => {
+      route.pathname = path;
+      render(<Fixture />);
+      const current = screen.getByRole("link", {
+        name: label,
+        current: "page",
+      });
+      expect(current).toHaveAttribute("href", href);
+      expect(trigger()).not.toHaveClass("bg-surface-muted");
+    },
+  );
+
+  it.each(["/docs", "/docs/design-system/colors", "/docs/patterns"])(
+    "highlights the Docs overview trigger for sections without a direct header link at %s",
+    (path) => {
+      route.pathname = path;
+      render(<Fixture />);
+      expect(trigger()).toHaveClass("bg-surface-muted");
+    },
+  );
 
   it("preserves keyboard focus when the pointer leaves and restores it on Escape", () => {
     render(<Fixture />);
@@ -277,6 +390,17 @@ describe("DocsHeader navigation", () => {
       "href",
       "/docs/ui",
     );
+    expect(
+      within(dialog).queryByRole("navigation", {
+        name: "All documentation links",
+      }),
+    ).not.toBeVisible();
+    expect(
+      within(dialog).getByRole("navigation", {
+        name: "Quick documentation links",
+      }),
+    ).toBeVisible();
+    fireEvent.click(within(dialog).getByText("All documentation pages"));
     const allDocs = within(dialog).getByRole("navigation", {
       name: "All documentation links",
     });
@@ -288,6 +412,12 @@ describe("DocsHeader navigation", () => {
     expect(
       within(allDocs).getByRole("link", { current: "page" }),
     ).toHaveAttribute("href", "/docs/ui/button");
+    expect(
+      within(dialog).getByRole("link", { name: "Pricing" }),
+    ).toHaveAttribute("href", "/pricing");
+    expect(
+      within(dialog).getByRole("link", { name: "Theme Builder" }),
+    ).toHaveAttribute("href", "/tools/theme-builder");
     expect(
       within(dialog).getByRole("button", { name: "Toggle Theme" }),
     ).toBeVisible();

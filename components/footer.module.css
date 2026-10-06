@@ -1,0 +1,300 @@
+.footer {
+  border-top: 1px solid var(--border-subtle);
+  background:
+    radial-gradient(
+        ellipse at 100% 0%,
+        color-mix(in oklab, var(--primary) 6%, transparent),
+        transparent 65%
+      )
+      0 0 / 100% 16rem no-repeat,
+    var(--background);
+}
+.footer a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.invitation {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding-block: 2.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.invitation::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(110deg, transparent 40%, #000 100%);
+  opacity: 0.35;
+  pointer-events: none;
+  content: "";
+}
+.invitationCopy {
+  min-width: 0;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.eyebrow::before {
+  width: 1.25rem;
+  height: 1px;
+  background: var(--primary);
+  content: "";
+}
+.invitation h2 {
+  margin-top: 0.875rem;
+  max-width: 35rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.description {
+  max-width: 36rem;
+  margin-top: 0.875rem;
+  font-size: 0.8125rem;
+  line-height: 1.625rem;
+  color: var(--muted-foreground);
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.actions a {
+  min-height: 2.75rem;
+  white-space: nowrap;
+}
+.directory {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 2.5rem;
+}
+.brand {
+  min-width: 0;
+}
+.brandDescription {
+  max-width: 15rem;
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+  line-height: 1.625rem;
+  color: var(--muted-foreground);
+}
+.repositories {
+  margin-top: 1rem;
+}
+.repositoryHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
+}
+.repositories ul {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  margin-top: 0.25rem;
+}
+.repositories a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2.75rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1rem;
+}
+.groups h2 {
+  margin-bottom: 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+.directoryLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-block: 0.375rem;
+  border-radius: 3px;
+  font-size: 0.8125rem;
+  line-height: 1.5rem;
+  color: var(--muted-foreground);
+}
+.bottomBar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.legal,
+.utilities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+.legal {
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
+}
+.legal nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.legal a,
+.versions {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  border-radius: 3px;
+}
+.utilities {
+  justify-content: space-between;
+}
+.versions {
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.625rem;
+  color: var(--muted-foreground);
+}
+.appearance {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-muted) 60%, var(--background));
+}
+.appearance button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.appearance button[aria-pressed="true"] {
+  border-color: var(--border-subtle);
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+.appearance button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.appearance button:disabled {
+  cursor: default;
+}
+@media (hover: hover) {
+  .directoryLink:hover,
+  .repositories a:hover,
+  .legal a:hover,
+  .versions:hover {
+    color: var(--foreground);
+  }
+  .appearance button:not(:disabled):hover {
+    background: var(--surface-muted);
+    color: var(--foreground);
+  }
+}
+@media (pointer: coarse) {
+  .appearance button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .directoryLink,
+  .repositories a,
+  .legal a,
+  .versions,
+  .appearance button {
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+}
+@media (min-width: 640px) {
+  .invitation {
+    padding-block: 3.5rem;
+  }
+  .actions {
+    flex-direction: row;
+    align-items: center;
+  }
+  .directory {
+    padding-block: 3rem;
+  }
+  .groups {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+  .bottomBar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+@media (min-width: 1024px) {
+  .invitation {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .actions {
+    flex-shrink: 0;
+  }
+  .directory {
+    grid-template-columns: minmax(12rem, 1fr) minmax(0, 3fr);
+    column-gap: 4rem;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .brand {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2rem;
+  }
+  .repositories {
+    align-self: center;
+    margin-top: 0;
+  }
+}
+@media (min-width: 1280px) {
+  .directory {
+    column-gap: 6rem;
+  }
+}

@@ -28,8 +28,8 @@ const sourceLoader = read("lib/blocks/source.server.ts");
 
 describe("Blocks discovery", () => {
   it("keeps the canonical catalog and ordered categories", () => {
-    expect(BLOCKS_CATALOG).toHaveLength(14);
-    expect(new Set(BLOCKS_CATALOG.map((block) => block.id)).size).toBe(14);
+    expect(BLOCKS_CATALOG).toHaveLength(16);
+    expect(new Set(BLOCKS_CATALOG.map((block) => block.id)).size).toBe(16);
     expect(BLOCK_CATEGORIES.map((category) => category.slug)).toEqual([
       "app-shells",
       "auth",
@@ -65,16 +65,18 @@ describe("Blocks discovery", () => {
 
   it("keeps Preview interactive with safe local demo state", () => {
     expect(page).toContain(
-      "preview={<BlockCatalogPreview blockId={blockId} />}",
+      "preview={<BlockCatalogPreview blockId={blockId} headingLevel={5} />}",
     );
     expect(page).not.toContain('aria-hidden="true" inert');
-    expect(page).toContain("Interactive local demos");
-    expect(page).toContain("No account,");
+    expect(page).toContain("Demo uses fictional local state only.");
+    expect(page.replace(/\s+/gu, " ")).toContain(
+      "connect your app’s data and actions.",
+    );
     expect(catalogPreview).toContain("SignInExample");
     expect(catalogPreview).toContain("SignUpExample");
     expect(catalogPreview).toContain("PasswordRecoveryExample");
     expect(catalogPreview).toContain("PricingPlansExample");
-    expect(catalogPreview).toContain("DataTableExample");
+    expect(catalogPreview).toContain("DataTableQueryExample");
     expect(catalogPreview).toContain("SettingsPanelExample");
     expect(catalogPreview).toContain("WorkspaceMembersExample");
     expect(catalogPreview).toContain("EmptyStatePanelExample");
@@ -180,12 +182,12 @@ describe("Blocks discovery", () => {
   });
 
   it("keeps one bounded demo surface instead of wrapping every Block in a card", () => {
-    expect(page).toContain('<article className="space-y-5">');
+    expect(page).toContain('<article className="space-y-4">');
     expect(page).not.toContain(
       '<article className="overflow-hidden rounded-xl border border-border-subtle bg-card shadow-sm">',
     );
     expect(showcaseTabs).toContain(
-      "overflow-hidden rounded-xl border border-border-subtle bg-background",
+      "overflow-hidden rounded-[5px] border border-border-subtle bg-background",
     );
   });
 
