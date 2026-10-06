@@ -87,7 +87,7 @@ describe("Marketing FAQ integration", () => {
       title: "Questions buyers ask before paying",
       count: 14,
     },
-    { Page: TemplatePage, title: "Questions before buying", count: 4 },
+    { Page: TemplatePage, title: "Questions before buying", count: 5 },
     { Page: UpgradePage, title: "Clear scope. Clear decision.", count: 6 },
   ])(
     "keeps every question accessible on $title",
