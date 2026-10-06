@@ -140,7 +140,9 @@ describe("Starter Free product page", () => {
       ).toBeGreaterThan(3);
       fireEvent.click(screen.getByRole("button", { name: "Copy Text" }));
       await waitFor(() => expect(writeText).toHaveBeenCalledWith(code));
-      expect(screen.getByRole("button", { name: "Copied Text" })).toBeVisible();
+      expect(
+        await screen.findByRole("button", { name: "Copied Text" }),
+      ).toBeVisible();
     } finally {
       if (original) Object.defineProperty(navigator, "clipboard", original);
       else Reflect.deleteProperty(navigator, "clipboard");
