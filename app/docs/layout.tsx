@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import Link from "next/link";
+import { ArrowUpRight, BookOpen } from "lucide-react";
 
 import { getDocsNavLinks, source } from "@/lib/source";
 import { baseOptions } from "@/lib/layout.shared";
@@ -46,17 +48,27 @@ export const metadata: Metadata = {
 
 function SidebarBanner() {
   return (
-    <div className="rounded-[5px] border border-border-subtle bg-surface px-3 py-2.5">
-      <div className="space-y-1">
-        <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-          PyColors
-        </div>
-
-        <p className="text-xs leading-5 text-muted-foreground">
-          Templates, UI primitives, and production-ready SaaS foundations.
-        </p>
-      </div>
-    </div>
+    <Link
+      href="/docs"
+      className="group flex items-start gap-3 rounded-md border border-border-subtle bg-card p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      <BookOpen
+        className="mt-0.5 size-4 shrink-0 text-primary"
+        aria-hidden="true"
+      />
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm font-medium text-foreground">
+          Documentation
+        </span>
+        <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+          Setup, components, and guides.
+        </span>
+      </span>
+      <ArrowUpRight
+        className="mt-0.5 size-3.5 shrink-0 text-muted-foreground group-hover:text-foreground"
+        aria-hidden="true"
+      />
+    </Link>
   );
 }
 

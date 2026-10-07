@@ -216,42 +216,56 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 #nd-sidebar a,
 #nd-sidebar button {
   position: relative;
-  border-radius: 0;
-  transition: all 0.15s ease;
+  border-radius: 5px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 #nd-sidebar a:not([data-active="true"]),
 #nd-sidebar button {
-  color: color-mix(in oklch, var(--foreground), transparent 40%);
+  color: color-mix(in oklch, var(--foreground), transparent 30%);
 }
 
 #nd-sidebar a:hover,
 #nd-sidebar button:hover {
   color: var(--foreground);
-  background: transparent;
+  background: color-mix(in oklch, var(--muted), transparent 50%);
   cursor: pointer;
 }
 
 #nd-sidebar a[data-active="true"] {
   color: var(--foreground);
-  font-weight: normal;
-  background: color-mix(in oklch, var(--primary), transparent 92%);
+  font-weight: 500;
+  background: color-mix(in oklch, var(--primary), transparent 94%);
 }
 
 #nd-sidebar a[data-active="true"]::before {
   content: "";
   position: absolute;
   left: 6px;
-  top: 6px;
-  bottom: 6px;
+  top: 9px;
+  bottom: 9px;
   width: 2px;
-  border-radius: 0;
+  border-radius: 2px;
   background: var(--primary);
 }
 
 #nd-sidebar button[data-state="open"] {
   color: var(--foreground);
   font-weight: 500;
+}
+
+#nd-sidebar :is(a, button):focus-visible,
+#nd-toc a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #nd-sidebar :is(a, button) {
+    transition: none;
+  }
 }
 
 #nd-sidebar [data-state] > div a {
@@ -304,7 +318,9 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 }
 
 #nd-toc a {
-  color: color-mix(in oklch, var(--foreground), transparent 35%);
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 #nd-toc a:hover {
@@ -318,10 +334,6 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 #nd-toc a[data-active="true"] {
   color: var(--primary) !important;
   font-weight: 500;
-}
-
-#nd-toc a[data-active="false"] {
-  opacity: 0.75;
 }
 
 /* ==========================================================================
@@ -948,39 +960,84 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
   padding-right: 0 !important;
 }
 
-.docs-shell figure {
-  box-shadow: none !important;
-  border-radius: 8px !important;
+/* Scope presentation to documentation wrappers, never to the UI being previewed. */
+.docs-shell .docs-code-block > div:has(> figcaption) {
+  min-height: 2.75rem;
+  background: color-mix(in oklch, var(--muted), transparent 75%);
+  border-color: var(--border-subtle);
 }
 
-.docs-shell div[role="region"] {
-  border-radius: 0 !important;
+.docs-shell .docs-code-block figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
 }
 
-.docs-shell div[data-orientation="horizontal"] {
-  border-radius: 8px !important;
+.docs-shell .docs-code-block pre {
+  font-size: 0.8125rem;
+  line-height: 1.75;
 }
 
-.docs-shell figure div[role="region"] pre {
-  border-radius: 0 !important;
+.docs-shell .docs-code-block button[aria-label$="Text"] {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 }
 
-.docs-shell div[role="tablist"] button {
+.docs-shell .docs-code-block > div.absolute {
+  top: 0.25rem;
+}
+
+.docs-shell .docs-preview {
+  background-image: radial-gradient(
+    ellipse at top left,
+    color-mix(in oklch, var(--primary), transparent 97%),
+    transparent 70%
+  );
+}
+
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose):has(> [role="tablist"]) {
+  margin-block: 1.5rem;
+  border-radius: 8px;
+  border-color: var(--border-subtle);
+  background: var(--card);
+}
+
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose)
+  > [role="tablist"] {
+  background: color-mix(in oklch, var(--muted), transparent 75%);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose)
+  > [role="tablist"]
+  button {
+  min-height: 2.75rem;
   cursor: pointer;
 }
 
-.docs-shell div[data-state="active"] {
-  border-radius: 0 !important;
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose)
+  > [role="tabpanel"] {
+  border-radius: 0;
+  background: var(--card);
 }
 
-.docs-shell div[data-state="active"] div {
-  border-radius: 0 !important;
-  box-shadow: none !important;
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose)
+  > [role="tabpanel"]:has(> .docs-preview:only-child) {
+  padding: 0;
 }
 
-/* .docs-shell div {
-   border-radius: 0 !important;
-} */
+.docs-prose
+  > [data-orientation="horizontal"]:not(.not-prose)
+  > [role="tabpanel"]
+  > .docs-preview:only-child {
+  border: 0;
+  border-radius: 0;
+}
 
 /* ==========================================================================
    Fumadocs Steps

@@ -10,14 +10,14 @@ export function UiExplorerLink({
   if (!href) return null;
 
   return (
-    <p className="mb-6 text-sm text-muted-foreground">
+    <div className="mb-8 rounded-lg border border-border-subtle bg-muted/20 text-sm">
       <a
         href={href}
-        className="inline-flex items-center gap-2 rounded-sm font-medium text-foreground underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        className="flex items-center justify-between gap-4 rounded-lg px-4 py-3 font-medium leading-6 text-foreground transition-colors hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
       >
         Open interactive example in PyColors UI Explorer
         <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
       </a>
-    </p>
+    </div>
   );
 }

@@ -1,459 +1,161 @@
 ---
 title: PyColors Documentation
-description: From product idea to real SaaS. Launch a template, validate your SaaS surface, wire auth, billing, secure delivery, purchase recovery, and PWA-ready foundations, then ship with production-shaped systems.
+description: Install the UI library, compose your first screen, or set up a starter. Find the guides and examples for each part of your product.
 full: false
 hero: false
-lastUpdated: "2026-06-06"
+lastUpdated: "2026-10-07"
 appliesTo: PyColors
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Badge } from "@pycolors/ui";
 import {
   Blocks,
   Box,
-  Code2,
   CreditCard,
-  Database,
   Layers3,
   LayoutTemplate,
   LockKeyhole,
-  MonitorSmartphone,
+  PackageCheck,
+  Palette,
   Rocket,
   ShieldCheck,
-  Sparkles,
-  Smartphone,
 } from "lucide-react";
-
-import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
-import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
-import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
-
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">Docs</Badge>
-  <Badge>Template → Validate → Wire → Deliver → Launch</Badge>
-  <Badge variant="secondary">PWA-ready</Badge>
-</div>
-
-## From product idea to real SaaS
-
-PyColors helps developers build in the right order:
-
-1. launch a focused marketing page
-2. validate the product surface
-3. keep the UI system consistent
-4. wire the business layer
-5. deliver purchases reliably
-6. add app-like production foundations
-7. launch with stronger confidence
-8. reduce the distance between product work and revenue
-
-This documentation is designed for one goal:
-
-> help builders move from idea to credible SaaS, then from credible SaaS to a product that can charge customers.
-
-Use these docs to understand the PyColors ecosystem:
-
-- templates
-- UI foundations
-- product patterns
-- Starter Free
-- Starter Pro
-- authentication
-- billing
-- backend structure
-- product catalog architecture
-- PWA-ready foundations
-- secure delivery
-- purchase recovery
-- CI and automated tests
-- public mirror repositories
-- launch readiness
-
-<Callout title="The PyColors path">
-  Templates launch your offer. Starter Free helps you validate. Starter Pro helps you launch, monetize, deliver purchases, recover access, and reduce the infrastructure work that delays revenue.
-</Callout>
 
 ## Start here
 
+Add PyColors to an existing app, or explore the ecosystem before choosing a starting point.
+
 <DocsLinks
   variant="grid"
-  tone="platform"
   items={[
     {
-      title: 'NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
+      title: "Install PyColors UI",
+      href: "/docs/ui/installation",
       description:
-        'Launch a premium AI or SaaS landing page powered by PyColors UI and PyColors Tokens.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Starter Free',
-      href: '/docs/starter',
-      description:
-        'Validate your SaaS surface with real screens, flows, states, navigation, and product structure.',
+        "Set up the packages and styles, then render your first component.",
       icon: Box,
+      eyebrow: "Existing project",
     },
     {
-      title: 'Starter Pro',
-      href: '/docs/starter-pro',
+      title: "Find your starting point",
+      href: "/docs/getting-started",
       description:
-        'Launch with Auth.js, Stripe, Prisma, protected routes, PWA-ready app foundations, secure delivery, and purchase recovery.',
-      icon: Rocket,
-      tone: 'primary',
-      badge: 'Pro',
-    },
-    {
-      title: 'PyColors UI',
-      href: '/docs/ui',
-      description:
-        'Start from reusable SaaS primitives before composing product-level patterns.',
-      icon: Code2,
-    },
-  ]}
-/>
-
-### The business path
-
-PyColors documentation is not only a reference. It is a product path.
-
-It helps reduce the gap between:
-
-- a public offer
-- a validated product surface
-- a paid SaaS foundation
-- an app-like production baseline
-- a reliable purchase and delivery flow
-- a launch-ready system
-- a product that can support revenue over time
-
-<Callout type="info" title="Strategic goal">
-  The docs should reduce friction, increase trust, and make the upgrade path obvious. Every page should help a serious builder understand why PyColors saves time before launch.
-</Callout>
-
-### The build path
-
-<DocsConceptTabs
-  items={[
-    {
-      value: 'Launch',
-      title: 'Launch a focused marketing page',
-      icon: LayoutTemplate,
-      description: (
-        <>
-          <p>
-            Start with NA-AI Landing when you need a public offer, polished positioning, responsive sections, pricing, FAQ, and SEO-ready structure before the full product is ready.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Marketing page</Badge>
-            <Badge variant="outline">Pricing</Badge>
-            <Badge variant="outline">FAQ</Badge>
-            <Badge variant="outline">SEO baseline</Badge>
-          </div>
-        </>
-      ),
-    },
-    {
-      value: 'Validate',
-      title: 'Validate the product surface',
-      icon: Sparkles,
-      description: (
-        <>
-          <p>
-            Start with Starter Free when you need screens, navigation, UX states, product flows, and a credible SaaS surface before heavy wiring.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Dashboard</Badge>
-            <Badge variant="outline">Settings</Badge>
-            <Badge variant="outline">Mocked flows</Badge>
-            <Badge variant="outline">Product UX</Badge>
-          </div>
-        </>
-      ),
-    },
-    {
-      value: 'Wire',
-      title: 'Wire the business layer',
+        "Understand how the UI library, blocks, templates, and starters fit together.",
       icon: Layers3,
-      description: (
-        <>
-          <p>
-            Move to Starter Pro when Auth.js, Stripe checkout, protected routes, backend persistence, secure delivery, purchase recovery, and app-ready foundations become the work slowing launch.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Auth</Badge>
-            <Badge variant="outline">Billing</Badge>
-            <Badge variant="outline">Recovery</Badge>
-            <Badge variant="outline">Backend</Badge>
-            <Badge variant="outline">Protected routes</Badge>
-            <Badge variant="outline">PWA-ready</Badge>
-          </div>
-        </>
-      ),
-    },
-    {
-      value: 'Ship',
-      title: 'Launch with confidence',
-      icon: Rocket,
-      description: (
-        <>
-          <p>
-            Validate the production checklist, confirm real users, real payments, purchase recovery, installable app behavior, and production infrastructure, then ship the first version of your SaaS.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline">Production checklist</Badge>
-            <Badge variant="outline">Real users</Badge>
-            <Badge variant="outline">Real payments</Badge>
-            <Badge variant="outline">Recovery flow</Badge>
-            <Badge variant="outline">PWA validation</Badge>
-            <Badge variant="outline">Launch readiness</Badge>
-          </div>
-        </>
-      ),
+      eyebrow: "New project",
+      tone: "neutral",
     },
   ]}
 />
 
 ## Choose your next move
 
+Browse setup instructions, component APIs, and implementation guides by product.
+
 <DocsLinks
   variant="grid"
-  tone="platform"
+  tone="neutral"
   items={[
     {
-      title: 'Getting Started',
-      href: '/docs/getting-started',
-      description:
-        'Choose the right PyColors path: template, Starter Free, Starter Pro, UI, or Patterns.',
-      icon: Sparkles,
+      title: "UI Library",
+      href: "/docs/ui",
+      description: "Component APIs, accessible examples, and usage patterns.",
+      icon: Box,
     },
     {
-      title: 'Why buy instead of building',
-      href: '/docs/starter-pro/why-buy-instead-of-building',
-      description:
-        'Decide when buying Starter Pro is higher leverage than rebuilding auth, billing, backend, delivery, and app foundations.',
-      icon: Rocket,
-      tone: 'primary',
-    },
-    {
-      title: 'What is included',
-      href: '/docs/starter-pro/what-is-included',
-      description:
-        'See exactly what Starter Pro includes and what you still build yourself.',
+      title: "Blocks",
+      href: "/docs/blocks",
+      description: "Copy composed sections and adapt them to your application.",
       icon: Blocks,
     },
     {
-      title: 'Upgrade from Starter Free',
-      href: '/docs/starter/upgrade',
+      title: "Starter Free",
+      href: "/docs/starter",
       description:
-        'Know when mocked foundations stop being enough and Pro becomes the faster path.',
+        "Run the frontend starter and explore its demo product flows.",
       icon: Layers3,
-      tone: 'primary',
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Configure authentication, billing, and the application backend.",
+      icon: Rocket,
+    },
+    {
+      title: "NA-AI Landing",
+      href: "/docs/templates/na-ai-landing",
+      description:
+        "Set up and customize the landing page template for your launch.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Design system",
+      href: "/docs/design-system",
+      description: "Work with shared colors, typography, and design tokens.",
+      icon: Palette,
     },
   ]}
 />
 
-### Core systems
+## Connect your product
+
+These guides cover the integrations included in **Starter Pro**. Follow the setup instructions before connecting your own services.
 
 <DocsLinks
-  variant="grid"
-  tone="platform"
+  variant="list"
+  tone="neutral"
   items={[
     {
-      title: 'Authentication',
-      href: '/docs/starter-pro/auth',
-      description:
-        'Real users, sessions, OAuth, verification, password recovery, and protected account foundations.',
+      title: "Authentication",
+      href: "/docs/starter-pro/auth",
+      description: "Configure sign-in, sessions, and protected routes.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
-      href: '/docs/starter-pro/billing',
+      title: "Billing",
+      href: "/docs/starter-pro/billing",
       description:
-        'Secure Stripe Checkout, billing portal, subscriptions, invoices, webhooks, recovery-aware access, and plan-aware states.',
+        "Understand Stripe checkout, subscriptions, and webhook handling.",
       icon: CreditCard,
     },
     {
-      title: 'Backend',
-      href: '/docs/starter-pro/backend',
+      title: "Purchase delivery",
+      href: "/docs/starter-pro/delivery",
       description:
-        'Database-ready structure, Prisma foundations, ownership rules, server boundaries, and product data.',
-      icon: Database,
-    },
-    {
-      title: 'PWA-ready foundations',
-      href: '/docs/starter-pro/pwa',
-      description:
-        'Installable app behavior, standalone mode, professional icons, screenshots, and offline fallback routing.',
-      icon: Smartphone,
-      badge: 'New',
-    },
-    {
-      title: 'Secure delivery',
-      href: '/docs/starter-pro/delivery',
-      description:
-        'Controlled post-purchase access, private assets, token-based downloads, purchase recovery, and fulfillment flow.',
-      icon: ShieldCheck,
-    },
-    {
-      title: 'PWA production checklist',
-      href: '/docs/starter-pro/pwa-production-checklist',
-      description:
-        'Validate installability, service worker behavior, mobile surfaces, and offline fallback before release.',
-      icon: MonitorSmartphone,
-      badge: 'New',
+        "Follow the flow from a completed purchase to secure file access.",
+      icon: PackageCheck,
     },
   ]}
 />
 
-### Foundations
-
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: 'Templates',
-      href: '/docs/templates/na-ai-landing',
-      description:
-        'Launch focused marketing pages with production-ready frontend foundations.',
-      icon: LayoutTemplate,
-    },
-    {
-      title: 'Design System',
-      href: '/docs/design-system',
-      description:
-        'Understand tokens, colors, typography, radius, shadows, and consistency rules.',
-      icon: Sparkles,
-    },
-    {
-      title: 'UI Components',
-      href: '/docs/ui',
-      description:
-        'Explore PyColors UI primitives used to build dashboards, forms, overlays, and product surfaces.',
-      icon: Code2,
-    },
-    {
-      title: 'Patterns',
-      href: '/docs/patterns',
-      description:
-        'Use product-level blocks for data tables, overlays, async actions, and real SaaS behavior.',
-      icon: Layers3,
-    },
-  ]}
-/>
-
-## Why this matters for revenue
-
-Most SaaS projects do not fail because the first screen was impossible to build.
-
-They slow down when the product needs:
-
-- credible product UX
-- real accounts
-- protected access
-- Stripe billing
-- backend persistence
-- product catalog architecture
-- PWA-ready app polish
-- secure delivery
-- purchase recovery
-- CI and automated tests
-- public mirror repositories
-- launch confidence
-
-PyColors documentation is designed to reduce that delay.
-
-That matters because every week lost to repeated infrastructure work is a week not spent on positioning, distribution, user feedback, and revenue.
-
-<Callout title="Revenue-focused documentation">
-  The docs should help a serious builder trust the system, understand the upgrade path, and choose Starter Pro when infrastructure becomes the bottleneck.
-</Callout>
-
-## Decision
-
-<DocsDecisionGrid
-  columns={3}
-  items={[
-    {
-      eyebrow: 'Public offer',
-      title: 'Start with NA-AI Landing',
-      href: '/docs/templates/na-ai-landing',
-      icon: LayoutTemplate,
-      description:
-        'Use this path when the question is what your offer should look like publicly.',
-      items: [
-        'landing page',
-        'pricing',
-        'FAQ',
-        'SEO baseline',
-      ],
-      cta: 'Explore template →',
-    },
-    {
-      eyebrow: 'Product surface',
-      title: 'Start with Starter Free',
-      href: '/docs/starter',
-      icon: Sparkles,
-      description:
-        'Use this path when the question is what your product should look and feel like.',
-      items: [
-        'dashboard',
-        'settings',
-        'billing surfaces',
-        'mocked flows',
-      ],
-      cta: 'Explore Free →',
-    },
-    {
-      eyebrow: 'Production wiring',
-      title: 'Move to Starter Pro',
-      href: '/docs/starter-pro',
-      icon: Rocket,
-      tone: 'pro',
-      description:
-        'Use this path when auth, billing, backend, PWA-ready foundations, and delivery would slow the launch.',
-      items: [
-        'real auth',
-        'Stripe billing',
-        'backend-ready structure',
-        'installable app baseline',
-        'protected access',
-      ],
-      cta: 'Explore Pro →',
-    },
-  ]}
-/>
-
-<Callout title="Build fast. Validate early. Upgrade when ready.">
-  PyColors is designed around a simple path: idea → public offer → product surface → validation → production wiring → app-ready foundations → launch.
+<Callout title="Working with Starter Free?">
+  Its auth and billing screens use demo data. Read the [upgrade
+  guide](/docs/starter/upgrade) to understand what changes when you connect real
+  services.
 </Callout>
 
 ## Next step
 
+Before launching, review your configuration and test the flows your customers will use.
+
 <DocsLinks
-  variant="grid"
-  tone="platform"
+  variant="list"
+  tone="neutral"
   items={[
     {
-      title: 'Read Getting Started',
-      href: '/docs/getting-started',
+      title: "Production checklist",
+      href: "/docs/starter-pro/production-checklist",
       description:
-        'Choose the right starting point and understand the Template → Free → Pro path.',
-      icon: Sparkles,
+        "Review environment variables, security, billing, and delivery checks.",
+      icon: ShieldCheck,
     },
     {
-      title: 'View pricing',
-      href: '/pricing',
-      description:
-        'Compare templates, Starter Free, and Starter Pro when you are ready to move faster.',
-      icon: CreditCard,
-      tone: 'primary',
+      title: "Deployment guide",
+      href: "/docs/starter-pro/deployment",
+      description: "Prepare your Starter Pro app for a production deployment.",
+      icon: Rocket,
     },
   ]}
 />

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { cn } from '@pycolors/ui';
-import * as React from 'react';
+import { cn } from "@pycolors/ui";
+import * as React from "react";
 
 export function Preview({
   className,
@@ -10,7 +10,7 @@ export function Preview({
   return (
     <div
       className={cn(
-        'rounded-lg border bg-card text-card-foreground p-4 shadow-sm',
+        "docs-preview not-prose rounded-lg border border-border-subtle bg-card p-4 text-card-foreground sm:p-6",
         className,
       )}
       {...props}
