@@ -11,8 +11,8 @@ export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
     <section className="w-full min-w-0 max-w-full">
       <div
         className={cn(
-          "mx-auto w-full min-w-0 sm:px-2 lg:px-0",
-          full ? "max-w-none" : "max-w-205",
+          "mx-auto w-full min-w-0",
+          full ? "max-w-none" : "max-w-3xl",
         )}
       >
         {children}

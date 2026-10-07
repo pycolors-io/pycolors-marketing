@@ -107,9 +107,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
             }}
           >
             <ToastDocsProvider>
-              <div className="docs-shell contents lg:[&_#nd-page]:!pt-[calc(var(--fd-nav-height)+2rem)]">
-                {children}
-              </div>
+              <div className="docs-shell contents">{children}</div>
             </ToastDocsProvider>
           </DocsLayout>
         </DocsSidebarPublications>

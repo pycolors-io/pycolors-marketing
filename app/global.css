@@ -22,9 +22,9 @@
    ========================================================================== */
 
 :root {
+  /* Shared outer frame for marketing, blog, Docs, headers and footers. */
+  --site-frame-width: 90rem;
   --fd-nav-height: 64px !important;
-  --fd-sidebar-width: 248px;
-  --fd-toc-width: 240px;
 
   --font-sans:
     "Mona Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -76,20 +76,41 @@ span[data-slot="badge"] {
    ========================================================================== */
 
 #nd-docs-layout {
+  --fd-layout-width: var(--site-frame-width);
   width: 100%;
-  max-width: 1440px;
+  max-width: var(--fd-layout-width);
   margin-inline: auto;
-  padding-inline-start: 0 !important;
-  padding-inline-end: 0 !important;
+  padding-top: var(--fd-nav-height);
+}
+
+/* Keep Fumadocs' named grid areas and responsive column visibility. */
+#nd-page {
+  min-width: 0;
+  /* 48rem of content plus the two desktop article gutters. */
+  max-width: 52rem;
+}
+
+#nd-page[data-full="true"] {
+  max-width: none;
+}
+
+@media (min-width: 768px) {
+  #nd-docs-layout {
+    --fd-sidebar-width: 16rem;
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  #nd-docs-layout:has(#nd-toc, #nd-toc-placeholder) {
+    --fd-toc-width: 14rem;
+  }
 }
 
 /* Desktop docs shell */
 @media (min-width: 1024px) {
   #nd-docs-layout {
-    display: grid;
-    grid-template-columns: var(--fd-sidebar-width) minmax(0, 1fr);
-    column-gap: 20px;
-    padding: 0;
+    padding-inline: 2rem;
   }
 
   #nd-sidebar {
@@ -112,33 +133,17 @@ span[data-slot="badge"] {
 
   #nd-page {
     display: block !important;
-    width: 100% !important;
-    max-width: none !important;
-    padding-top: 0 !important;
-    padding-inline-end: 0 !important;
+    padding: 2rem 2rem 3rem;
     background: transparent;
     border-left: none;
     border-right: none;
   }
 
-  #nd-page > article {
-    width: 100%;
-    max-width: 800px;
-    margin-inline: 0 auto !important;
-    padding-top: 5.5rem !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    padding-bottom: 3rem;
-    gap: 0.75rem !important;
-  }
-
   #nd-toc {
-    width: 290px !important;
+    width: var(--fd-toc-width);
+    min-width: 0;
     height: calc(100vh - var(--fd-nav-height));
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-    padding-left: 1rem;
-    margin-right: 3rem;
+    padding: 2rem 0 1rem 1rem;
     align-self: start;
   }
 }
@@ -170,30 +175,10 @@ span[data-slot="badge"] {
 
 /* Mobile / tablet */
 @media (max-width: 1023px) {
-  #nd-docs-layout {
-    max-width: none;
-  }
-
   #nd-sidebar {
     width: auto !important;
     height: auto;
     background: var(--background);
-  }
-
-  #nd-page {
-    width: 100% !important;
-    max-width: none !important;
-    padding-inline: 0 !important;
-  }
-
-  #nd-page > article {
-    width: 100%;
-    max-width: none;
-    padding-top: 1rem !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    padding-bottom: 2.5rem;
-    padding-inline: 1rem !important;
   }
 
   #nd-toc {
@@ -345,6 +330,11 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 
 .docs-prose {
   @apply text-foreground;
+}
+
+/* Let code, tables and previews use the wider article column. */
+.docs-prose :where(p, ul, ol, blockquote):not(:where(.not-prose *)) {
+  max-width: 65ch;
 }
 
 .docs-prose > *:first-child {

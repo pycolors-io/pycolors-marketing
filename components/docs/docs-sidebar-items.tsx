@@ -103,8 +103,8 @@ export function DocsNewArticleBadge({ href }: { href: string }) {
       variant="outline"
       size="sm"
       className="shrink-0 rounded-[4px] border-primary/20 bg-primary/[0.06] px-1.5 text-[10px] leading-none text-primary transition-none"
-      // Retain its footprint before hydration and after expiration.
-      style={{ visibility: isNew ? "visible" : "hidden" }}
+      // Keep its footprint; current badges inherit the navigation's visibility.
+      style={{ visibility: isNew ? undefined : "hidden" }}
       aria-hidden={isNew ? undefined : true}
       title={`Published ${publishedAt} · New for 30 days`}
     >
