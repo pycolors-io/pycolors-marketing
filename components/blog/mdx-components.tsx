@@ -51,7 +51,7 @@ export function getBlogMDXComponents(
         role="region"
         aria-label="Article table"
         tabIndex={0}
-        className="my-8 max-w-full overflow-x-auto rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        className="my-8 max-w-full overflow-x-auto rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
       >
         <table {...props} className={cn("min-w-[32rem]", className)}>
           {children}

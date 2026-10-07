@@ -29,7 +29,7 @@ export function DocsPageHeader({
         <DocsBreadcrumb items={breadcrumbs} className="mb-6" />
       ) : null}
 
-      <DocsTitle className="m-0 text-balance font-brand text-3xl font-semibold leading-[1.16] tracking-[-0.04em] text-foreground sm:text-4xl">
+      <DocsTitle className="m-0 text-balance font-brand text-3xl font-semibold leading-[1.15] tracking-[-0.035em] text-foreground sm:text-[40px]">
         {title}
       </DocsTitle>
 

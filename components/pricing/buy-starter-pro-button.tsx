@@ -45,7 +45,7 @@ export function BuyStarterProButton({
         size={size}
         variant={variant}
         className={cn(
-          "h-auto min-h-11 max-w-full whitespace-normal rounded-[5px] px-6 py-2 text-sm font-medium transition-all duration-200 cursor-pointer ",
+          "h-auto min-h-11 max-w-full whitespace-normal rounded-md px-6 py-2 text-sm font-medium transition-all duration-200 cursor-pointer ",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           fullWidth && "w-full",
           variant === "default" && [

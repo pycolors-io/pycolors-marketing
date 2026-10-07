@@ -85,7 +85,7 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                     onClick={onNavigate}
                     aria-current={current ? "page" : undefined}
                     className={cn(
-                      "group flex gap-3 rounded-[5px] p-3 transition-colors motion-reduce:transition-none hover:bg-surface-muted",
+                      "group flex gap-3 rounded-md p-3 transition-colors motion-reduce:transition-none hover:bg-surface-muted",
                       current && "bg-surface-muted",
                       focusRing,
                     )}
@@ -102,7 +102,7 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                         {item.badge ? (
                           <Badge
                             variant="outline"
-                            className="h-auto shrink-0 rounded-[5px] px-2 py-0.5 text-xs leading-5"
+                            className="h-auto shrink-0 rounded-md px-2 py-0.5 text-xs leading-5"
                           >
                             {item.badge}
                           </Badge>
@@ -143,7 +143,7 @@ function NavigationLinks({
             }
             aria-current={activeHref === item.href ? "page" : undefined}
             className={cn(
-              "inline-flex min-h-11 items-center rounded-[5px] px-3 py-2 text-sm text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
+              "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
               activeHref === item.href && "bg-surface-muted text-foreground",
               focusRing,
             )}
@@ -242,7 +242,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           <a
             href="#content"
             className={cn(
-              "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] rounded-[5px] border border-border-subtle bg-background px-3 py-2 text-sm",
+              "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] rounded-md border border-border-subtle bg-background px-3 py-2 text-sm",
               focusRing,
             )}
           >
@@ -278,7 +278,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     aria-controls={productsId}
                     onClick={() => setIsProductsOpen((open) => !open)}
                     className={cn(
-                      "inline-flex min-h-11 items-center rounded-[5px] px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
+                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
                       (isProductsOpen ||
                         (activeProductHref && !activePrimaryHref)) &&
                         "bg-surface-muted text-foreground",
@@ -297,7 +297,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   <div
                     id={productsId}
                     hidden={!isProductsOpen}
-                    className="absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-[5px] border border-border-subtle bg-background shadow-medium"
+                    className="absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-medium"
                   >
                     <div className="p-5">
                       <ProductGroups
@@ -322,7 +322,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                       activePrimaryHref === item.href ? "page" : undefined
                     }
                     className={cn(
-                      "inline-flex min-h-11 items-center rounded-[5px] px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
+                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
                       activePrimaryHref === item.href &&
                         "bg-surface-muted text-foreground",
                       focusRing,
@@ -336,7 +336,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <Button
                   asChild
                   size="sm"
-                  className="h-9 rounded-[5px] px-4 text-[13px] font-medium"
+                  className="h-9 rounded-md px-4 text-[13px] font-medium"
                 >
                   <Link href="/starters/pro">
                     Explore Pro
@@ -351,7 +351,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                     ref={mobileButtonRef}
                     aria-label="Open navigation menu"
                     className={cn(
-                      "inline-flex size-11 items-center justify-center rounded-[5px] border border-border-subtle bg-surface",
+                      "inline-flex size-11 items-center justify-center rounded-md border border-border-subtle bg-surface",
                       focusRing,
                     )}
                   >
@@ -375,7 +375,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             productsButtonRef.current?.focus({ preventScroll: true });
           }
         }}
-        className="inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-2.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-[5px]"
+        className="inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-2.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-md"
       >
         <div className="flex min-h-16 shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-subtle py-2 pl-4 pr-16">
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">
@@ -383,7 +383,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           </SheetTitle>
           <ThemeToggle
             mode="light-dark"
-            className="inline-flex min-h-11 shrink-0 items-center rounded-[5px] border border-border-subtle bg-surface-muted px-1"
+            className="inline-flex min-h-11 shrink-0 items-center rounded-md border border-border-subtle bg-surface-muted px-1"
           />
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5">
@@ -420,7 +420,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
         <div className="shrink-0 border-t border-border-subtle px-4 pt-3 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
           <Button
             asChild
-            className="h-auto min-h-11 w-full whitespace-normal rounded-[5px] py-3 text-center"
+            className="h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
           >
             <Link href="/starters/pro" onClick={onNavigate}>
               Explore Pro

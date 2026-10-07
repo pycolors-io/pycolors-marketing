@@ -74,7 +74,7 @@ export function MarketingCtaPanel({
   return (
     <div
       className={cn(
-        "rounded-[5px] border px-6 py-10 shadow-soft sm:px-10",
+        "rounded-lg border px-6 py-10 shadow-soft sm:px-10",
         marketingSurfaceToneClass[tone],
         isCentered ? "text-center" : "text-left",
         className,
@@ -126,7 +126,7 @@ export function MarketingLinkButton({
       size="lg"
       variant={variant}
       className={cn(
-        "h-auto min-h-11 min-w-0 max-w-full shrink whitespace-normal rounded-[5px] px-6 py-2.5 text-center",
+        "h-auto min-h-11 min-w-0 max-w-full shrink whitespace-normal rounded-md px-6 py-2.5 text-center",
         className,
       )}
     >

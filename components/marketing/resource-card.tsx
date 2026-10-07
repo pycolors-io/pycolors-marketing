@@ -96,7 +96,7 @@ export function MarketingResourceCard({
       asChild
       interactive
       className={cn(
-        "group flex h-full flex-col justify-between rounded-[5px] p-5 shadow-soft transition-colors hover:border-border",
+        "group flex h-full flex-col justify-between rounded-lg p-5 shadow-soft transition-colors hover:border-border",
         marketingSurfaceToneClass[tone],
         className,
       )}

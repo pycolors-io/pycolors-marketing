@@ -52,7 +52,7 @@ export function MarketingSectionHeader({
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="max-w-full rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em]"
+            className="max-w-full rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em]"
           >
             {eyebrow}
           </Badge>
@@ -60,7 +60,7 @@ export function MarketingSectionHeader({
 
         <h2
           id={titleId}
-          className="text-balance font-brand text-2xl font-semibold leading-[1.2] tracking-[-0.035em] sm:text-3xl"
+          className="text-balance font-brand text-2xl font-semibold leading-[1.2] tracking-[-0.025em] sm:text-[28px]"
         >
           {title}
         </h2>

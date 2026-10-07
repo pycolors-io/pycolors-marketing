@@ -32,7 +32,7 @@ export function ArticleHeader({
         {category ? (
           <Link
             href={`/blog/categories/${normalizeTaxonomy(category)}`}
-            className="inline-flex min-h-11 items-center rounded-[5px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex min-h-11 items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <Badge
               variant="outline"
@@ -52,7 +52,7 @@ export function ArticleHeader({
       </div>
       <h1
         id="article-title"
-        className="mt-5 max-w-5xl text-balance font-brand text-3xl font-semibold leading-[1.15] tracking-[-0.04em] sm:text-4xl lg:text-5xl"
+        className="mt-5 max-w-5xl text-balance font-brand text-3xl font-semibold leading-[1.15] tracking-[-0.035em] sm:text-[40px]"
       >
         {title}
       </h1>

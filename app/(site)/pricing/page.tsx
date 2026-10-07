@@ -293,7 +293,7 @@ export default function PricingPage() {
                 key={offer.id}
                 aria-labelledby={`${offer.id}-heading`}
                 className={cn(
-                  "flex min-w-0 flex-col rounded-[5px] border bg-surface p-6 sm:p-7",
+                  "flex min-w-0 flex-col rounded-lg border bg-surface p-6 sm:p-7",
                   offer.id === "starter-pro"
                     ? "border-pro-border bg-pro-surface"
                     : "border-border-subtle",
@@ -306,7 +306,7 @@ export default function PricingPage() {
                   {offer.id === "starter-pro" && (
                     <Badge
                       variant="outline"
-                      className="rounded-[5px] border-pro-border text-xs"
+                      className="rounded-md border-pro-border text-xs"
                     >
                       Pro
                     </Badge>
@@ -345,7 +345,7 @@ export default function PricingPage() {
                     <Button
                       asChild
                       variant="outline"
-                      className="min-h-11 w-full rounded-[5px] text-sm"
+                      className="min-h-11 w-full rounded-md text-sm"
                     >
                       <Link href={INTERNAL.starterFree}>
                         Open Starter Free
@@ -448,11 +448,7 @@ export default function PricingPage() {
             title="See the screens you can build on"
             description="Existing Starter Pro interface captures, shown in the light theme. These previews show included screens, not proof of a live deployment, a completed payment, or a verified integration."
             action={
-              <Button
-                asChild
-                variant="outline"
-                className="min-h-11 rounded-[5px]"
-              >
+              <Button asChild variant="outline" className="min-h-11 rounded-md">
                 <a
                   href={EXTERNAL.starterDemo}
                   target="_blank"
@@ -471,7 +467,7 @@ export default function PricingPage() {
                   href={screenshot.src}
                   aria-label={`View ${screenshot.title.toLowerCase()} screenshot at full size`}
                   className={cn(
-                    "block overflow-hidden rounded-[5px] border border-border-subtle bg-surface",
+                    "block overflow-hidden rounded-lg border border-border-subtle bg-surface",
                     focusRing,
                   )}
                 >
@@ -494,7 +490,7 @@ export default function PricingPage() {
                   <a
                     href={screenshot.src}
                     className={cn(
-                      "inline-flex min-h-11 items-center rounded-[5px] text-sm font-medium text-foreground underline underline-offset-4",
+                      "inline-flex min-h-11 items-center rounded-md text-sm font-medium text-foreground underline underline-offset-4",
                       focusRing,
                     )}
                   >
@@ -540,7 +536,7 @@ export default function PricingPage() {
           <Button
             asChild
             variant="outline"
-            className="min-h-11 shrink-0 rounded-[5px]"
+            className="min-h-11 shrink-0 rounded-md"
           >
             <Link href={INTERNAL.starterFree}>
               Explore Starter Free

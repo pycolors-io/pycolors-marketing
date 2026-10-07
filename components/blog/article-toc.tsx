@@ -77,12 +77,12 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
   return (
     <>
       <div
-        className={`${styles.tocPanel} hidden overflow-hidden rounded-[5px] border border-border-subtle lg:block`}
+        className={`${styles.tocPanel} hidden overflow-hidden rounded-lg border border-border-subtle lg:block`}
       >
         <div
           className={`${styles.tocHeader} flex items-center gap-3 border-b border-border-subtle p-4`}
         >
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-[5px] border border-border-subtle bg-background">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-background">
             <List
               className="size-3.5 text-muted-foreground"
               aria-hidden="true"
@@ -104,7 +104,7 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
         <div className="border-t border-border-subtle px-4 py-1">
           <Link
             href="#article-title"
-            className="flex min-h-11 items-center justify-between gap-3 rounded-[5px] text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="flex min-h-11 items-center justify-between gap-3 rounded-md text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Back to top
             <ArrowUp className="size-3.5" aria-hidden="true" />
@@ -113,7 +113,7 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
       </div>
       <details
         ref={mobileDetails}
-        className={`${styles.mobileToc} ${styles.tocPanel} rounded-[5px] border border-border-subtle lg:hidden`}
+        className={`${styles.mobileToc} ${styles.tocPanel} rounded-lg border border-border-subtle lg:hidden`}
       >
         <summary
           className={`${styles.tocHeader} flex min-h-14 cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}

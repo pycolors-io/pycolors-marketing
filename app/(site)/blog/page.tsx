@@ -23,7 +23,7 @@ import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import styles from "@/components/blog/blog-index.module.css";
 
 const textLink =
-  "inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
+  "inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Engineering Blog",
@@ -82,7 +82,7 @@ export default function BlogPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="min-h-11 rounded-[5px] px-5"
+                  className="min-h-11 rounded-md px-5"
                 >
                   <Link
                     href={leadPost ? "#featured-articles" : "#latest-articles"}
@@ -230,7 +230,7 @@ export default function BlogPage() {
             }
           />
           <div
-            className={`${styles.nextSteps} grid rounded-[5px] border border-border-subtle md:grid-cols-2`}
+            className={`${styles.nextSteps} grid rounded-lg border border-border-subtle md:grid-cols-2`}
           >
             <div className="flex flex-col p-6 sm:p-8">
               <div className="flex items-center justify-between gap-4">
@@ -247,7 +247,7 @@ export default function BlogPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="min-h-11 rounded-[5px] px-5"
+                  className="min-h-11 rounded-md px-5"
                 >
                   <Link href="/starters/free">
                     Explore Starter Free{" "}

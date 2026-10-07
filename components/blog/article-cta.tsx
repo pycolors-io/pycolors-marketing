@@ -53,7 +53,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
     variantContent[cta.variant ?? "free"];
   return (
     <Card
-      className={`${styles.nextStep} rounded-[5px] border-border-subtle p-6 shadow-none sm:p-8`}
+      className={`${styles.nextStep} rounded-lg border-border-subtle p-6 shadow-none sm:p-8`}
     >
       <Badge
         variant="outline"
@@ -71,7 +71,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Button
           asChild
-          className="h-auto min-h-11 max-w-full whitespace-normal rounded-[5px] px-5 py-2 text-sm"
+          className="h-auto min-h-11 max-w-full whitespace-normal rounded-md px-5 py-2 text-sm"
         >
           <Link href={cta.href}>
             <span className="min-w-0 wrap-anywhere">{cta.label}</span>
@@ -80,7 +80,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
         </Button>
         <Link
           href="/guides"
-          className="inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
           Read Guides
           <ArrowRight className="size-3.5" aria-hidden="true" />

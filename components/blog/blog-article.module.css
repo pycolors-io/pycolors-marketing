@@ -35,13 +35,17 @@
   margin-bottom: 1rem;
   padding-top: 0;
   font-size: 1.625rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
 }
 .page .body h3 {
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  font-size: 1.1875rem;
-  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  letter-spacing: -0.015em;
+}
+.page .body h4 {
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 .page .body > :first-child {
   margin-top: 0;
@@ -50,7 +54,7 @@
 .page .body :where(p, ul, ol) {
   max-width: 72ch;
   font-size: 0.9375rem;
-  line-height: 1.875rem;
+  line-height: 1.75;
 }
 .page .body li::marker {
   color: var(--muted-foreground);
@@ -65,7 +69,7 @@
 }
 .page .body figure {
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: var(--site-radius-panel);
   background: color-mix(in oklab, var(--foreground) 2%, var(--background));
 }
 .page .body figure pre {
@@ -98,7 +102,7 @@
   min-width: 0;
 }
 .page .body .codeBlock button {
-  border-radius: 5px;
+  border-radius: var(--site-radius-control);
 }
 .page .body .codeBlock button:hover {
   background: var(--surface-muted);
@@ -204,10 +208,9 @@
 @media (min-width: 40rem) {
   .page .body :where(p, ul, ol) {
     font-size: 1rem;
-    line-height: 1.875rem;
   }
   .page .body h2 {
-    font-size: 1.875rem;
+    font-size: 1.75rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {

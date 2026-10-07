@@ -3,7 +3,7 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./global.css";
-import { inter } from "./fonts";
+import { geistSans, geistMono } from "./fonts";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   SITE_NAME,
@@ -93,7 +93,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={inter.className}
+      className={`${geistSans.variable} ${geistMono.variable}`}
       data-scroll-behavior="smooth"
     >
       <head>

@@ -21,7 +21,7 @@ export function ArticlePagination({ previous, next }: ArticlePaginationProps) {
           <Link
             key={post.slug}
             href={post.url}
-            className="group flex flex-col gap-3 rounded-[5px] border border-border-subtle p-5 transition-colors hover:bg-surface-muted/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            className="group flex flex-col gap-3 rounded-lg border border-border-subtle p-5 transition-colors hover:bg-surface-muted/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
             <span className="flex items-center gap-2 text-xs text-muted-foreground">
               <Icon className="size-3.5" aria-hidden="true" />

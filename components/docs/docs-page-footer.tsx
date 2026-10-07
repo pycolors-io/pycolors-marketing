@@ -103,7 +103,7 @@ export function DocsPageFooter({
             href={ctaHref}
             className={cn(
               "inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap",
-              "rounded-[5px] border border-transparent bg-primary px-5",
+              "rounded-md border border-transparent bg-primary px-5",
               "text-sm font-medium text-primary-foreground no-underline",
               "transition-colors duration-200 motion-reduce:transition-none",
               "hover:bg-brand-primary-hover",

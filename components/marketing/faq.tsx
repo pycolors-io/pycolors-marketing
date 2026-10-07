@@ -50,7 +50,7 @@ export function MarketingFaq({
       <div className="min-w-0 divide-y divide-border-subtle border-y border-border-subtle">
         {items.map((item) => (
           <details key={item.question} className={cn("group", styles.item)}>
-            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded-[5px] py-5 text-sm font-medium text-foreground transition-colors duration-150 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded-md py-5 text-sm font-medium text-foreground transition-colors duration-150 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
               <span>{item.question}</span>
               <span
                 aria-hidden="true"
@@ -71,7 +71,7 @@ export function MarketingFaq({
                       <li key={link.href}>
                         <Link
                           href={link.href}
-                          className="inline-flex min-h-11 items-center gap-2 rounded-[5px] py-2 font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                          className="inline-flex min-h-11 items-center gap-2 rounded-md py-2 font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                         >
                           {link.label}
                           <ArrowRight

@@ -35,7 +35,7 @@ export function BlogFeaturedArticle({
         interactive
         className={cn(
           styles.featuredArticle,
-          "group flex h-full flex-col justify-between rounded-[5px] border-border-subtle bg-background p-5 shadow-none hover:shadow-none sm:p-6 lg:p-8",
+          "group flex h-full flex-col justify-between rounded-lg border-border-subtle bg-background p-5 shadow-none hover:shadow-none sm:p-6 lg:p-8",
           lead && `${styles.leadArticle} p-6 sm:p-8 lg:p-10`,
         )}
       >
@@ -101,7 +101,7 @@ export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
       <Link
         href={post.url}
         aria-labelledby={titleId}
-        className={`${styles.articleRow} group grid gap-3 rounded-[5px] px-3 py-7 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6 sm:px-5 sm:py-8`}
+        className={`${styles.articleRow} group grid gap-3 rounded-lg px-3 py-7 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6 sm:px-5 sm:py-8`}
       >
         <time
           dateTime={post.date}

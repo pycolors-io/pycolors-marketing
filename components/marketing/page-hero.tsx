@@ -125,17 +125,19 @@ export function PageHero({
 
         <h1
           className={cn(
-            "text-balance font-brand font-semibold tracking-[-0.04em] text-foreground",
+            "text-balance font-brand font-semibold tracking-[-0.035em] text-foreground",
             isCompact
               ? "text-3xl leading-[1.15] sm:text-4xl lg:text-5xl"
-              : "text-4xl sm:text-5xl lg:text-[4rem] lg:leading-[0.98]",
+              : "text-4xl leading-[1.1] sm:text-5xl lg:text-[4rem]",
             badges.length > 0 ? (isCompact ? "mt-5" : "mt-7") : "mt-0",
           )}
         >
           {title}
 
           {subtitle ? (
-            <span className="mt-3 block text-muted-foreground">{subtitle}</span>
+            <span className="mt-3 block font-medium tracking-[-0.025em] text-muted-foreground">
+              {subtitle}
+            </span>
           ) : null}
         </h1>
 
