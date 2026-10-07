@@ -337,12 +337,38 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
   max-width: 65ch;
 }
 
+/* Article rhythm stays outside embedded previews and interactive examples. */
+.docs-prose > :where(p, ul, ol, blockquote) {
+  margin-block: 1rem 1.5rem;
+}
+
+.docs-prose > h2 {
+  margin-block: 3rem 1rem;
+  padding-top: 0;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.docs-prose > h3 {
+  margin-block: 2rem 0.75rem;
+  padding-top: 0;
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
 .docs-prose > *:first-child {
+  margin-top: 0;
+}
+
+.docs-prose > div:first-child + h2 {
   margin-top: 1.5rem;
 }
 
-.docs-prose > *:not(:first-child) {
-  margin-top: 0;
+@media (min-width: 640px) {
+  .docs-prose > h2 {
+    margin-top: 3.5rem;
+    font-size: 1.75rem;
+  }
 }
 
 .docs-prose :where(h1, h2, h3, h4) {
@@ -439,7 +465,7 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 }
 
 .docs-prose > *:last-child {
-  margin-top: 2rem;
+  margin-bottom: 0;
 }
 
 /* ==========================================================================

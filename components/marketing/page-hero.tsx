@@ -127,9 +127,9 @@ export function PageHero({
           className={cn(
             "text-balance font-brand font-semibold tracking-[-0.04em] text-foreground",
             isCompact
-              ? "text-3xl sm:text-4xl lg:text-5xl"
+              ? "text-3xl leading-[1.15] sm:text-4xl lg:text-5xl"
               : "text-4xl sm:text-5xl lg:text-[4rem] lg:leading-[0.98]",
-            badges.length > 0 ? (isCompact ? "mt-4" : "mt-7") : "mt-0",
+            badges.length > 0 ? (isCompact ? "mt-5" : "mt-7") : "mt-0",
           )}
         >
           {title}
@@ -142,8 +142,8 @@ export function PageHero({
         {description ? (
           <p
             className={cn(
-              "mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base",
-              isCentered ? "mx-auto max-w-3xl" : "max-w-3xl",
+              "mt-5 max-w-[65ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:mt-6 sm:text-base sm:leading-8",
+              isCentered && "mx-auto",
             )}
           >
             {description}
@@ -155,7 +155,7 @@ export function PageHero({
             className={cn(
               "flex flex-col gap-3 sm:flex-row",
               isCompact && "flex-wrap",
-              isCompact ? "mt-6" : "mt-8",
+              "mt-7 sm:mt-8",
               isCentered ? "justify-center" : "justify-start",
               actionsClassName,
             )}

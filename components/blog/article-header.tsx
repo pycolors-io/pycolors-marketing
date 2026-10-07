@@ -52,18 +52,18 @@ export function ArticleHeader({
       </div>
       <h1
         id="article-title"
-        className="mt-4 max-w-5xl text-balance font-brand text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl lg:leading-[1.12]"
+        className="mt-5 max-w-5xl text-balance font-brand text-3xl font-semibold leading-[1.15] tracking-[-0.04em] sm:text-4xl lg:text-5xl"
       >
         {title}
       </h1>
-      <p className="mt-5 max-w-3xl text-[15px] leading-8 text-muted-foreground sm:text-lg sm:leading-8">
+      <p className="mt-5 max-w-[65ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
         {description}
       </p>
-      <div className="mt-5">
-        <TagList tags={tags} />
-      </div>
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
-        {author ? <AuthorBadge name={author} /> : null}
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-6 gap-y-4">
+          {author ? <AuthorBadge name={author} /> : null}
+          <TagList tags={tags} />
+        </div>
         <ShareArticle title={title} url={shareUrl} />
       </div>
     </header>

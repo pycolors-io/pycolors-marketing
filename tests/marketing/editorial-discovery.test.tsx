@@ -201,7 +201,9 @@ describe("editorial discovery", () => {
 
   it("keeps real category/tag links, accurate category counts and the existing 12-tag limit", () => {
     render(<BlogPage />);
-    const sidebar = screen.getByRole("complementary");
+    const sidebar = screen.getByRole("complementary", {
+      name: "Explore the blog",
+    });
     const categoryLinks = within(sidebar)
       .getAllByRole("link")
       .filter((a) => a.getAttribute("href")?.startsWith("/blog/categories/"));
@@ -306,7 +308,7 @@ describe("editorial discovery", () => {
     expect(within(latest).getByText("No articles found yet.")).toBeVisible();
     expect(articleUrls(latest)).toEqual([]);
     expect(
-      within(screen.getByRole("complementary"))
+      within(screen.getByRole("complementary", { name: "Explore the blog" }))
         .getAllByRole("link")
         .every((a) => !a.getAttribute("href")?.startsWith("/blog/")),
     ).toBe(true);

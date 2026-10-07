@@ -1,7 +1,7 @@
-import { DocsDescription, DocsTitle } from 'fumadocs-ui/page';
-import { Badge } from '@pycolors/ui';
-import { Clock, Layers3 } from 'lucide-react';
-import { DocsBreadcrumb } from '@/components/docs/docs-breadcrumb';
+import { DocsDescription, DocsTitle } from "fumadocs-ui/page";
+import { Badge } from "@pycolors/ui";
+import { Clock, Layers3 } from "lucide-react";
+import { DocsBreadcrumb } from "@/components/docs/docs-breadcrumb";
 
 type DocsBreadcrumbItem = Readonly<{
   label: string;
@@ -24,44 +24,41 @@ export function DocsPageHeader({
   breadcrumbs = [],
 }: DocsPageHeaderProps) {
   return (
-    <header className="space-y-5 border-b border-border/50">
+    <header className="mb-8 border-b border-border-subtle pb-8 sm:mb-10 sm:pb-10">
       {breadcrumbs.length > 0 ? (
-        <DocsBreadcrumb items={breadcrumbs} />
+        <DocsBreadcrumb items={breadcrumbs} className="mb-6" />
+      ) : null}
+
+      <DocsTitle className="m-0 text-balance font-brand text-3xl font-semibold leading-[1.16] tracking-[-0.04em] text-foreground sm:text-4xl">
+        {title}
+      </DocsTitle>
+
+      {description ? (
+        <DocsDescription className="mb-0 mt-4 max-w-[65ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base sm:leading-8">
+          {description}
+        </DocsDescription>
       ) : null}
 
       {(lastUpdated || appliesTo) && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
           {appliesTo ? (
             <Badge
               variant="outline"
-              className="inline-flex items-center gap-1 text-[11px]"
+              className="inline-flex items-center gap-1.5 border-border-subtle px-2.5 text-[11px]"
             >
-              <Layers3 className="h-3 w-3" />
+              <Layers3 className="size-3" aria-hidden="true" />
               {appliesTo}
             </Badge>
           ) : null}
 
           {lastUpdated ? (
-            <Badge
-              variant="outline"
-              className="inline-flex items-center gap-1 text-[11px] text-muted-foreground"
-            >
-              <Clock className="h-3 w-3" />
+            <span className="inline-flex items-center gap-1.5 leading-5">
+              <Clock className="size-3" aria-hidden="true" />
               Updated {lastUpdated}
-            </Badge>
+            </span>
           ) : null}
         </div>
       )}
-
-      <DocsTitle className="font-brand text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-        {title}
-      </DocsTitle>
-
-      {description ? (
-        <DocsDescription className="max-w-2xl text-[15px] leading-7 text-muted-foreground sm:text-base">
-          {description}
-        </DocsDescription>
-      ) : null}
     </header>
   );
 }

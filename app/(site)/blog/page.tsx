@@ -66,7 +66,9 @@ export default function BlogPage() {
       className={`${styles.page} bg-background text-foreground`}
     >
       <Container className="pb-16 pt-24 sm:pt-28">
-        <div className="grid items-end gap-8 pb-14 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20">
+        <div
+          className={`${styles.intro} grid items-end gap-8 pb-12 sm:gap-10 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16`}
+        >
           <PageHero
             variant="compact"
             align="left"
@@ -99,7 +101,10 @@ export default function BlogPage() {
               </>
             }
           />
-          <div className="border-l border-border-subtle pl-5 lg:mb-1">
+          <aside
+            aria-label="About the blog"
+            className={`${styles.introNote} lg:mb-1`}
+          >
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
               From the workbench
             </p>
@@ -117,7 +122,7 @@ export default function BlogPage() {
                 {categories.length === 1 ? "topic" : "topics"}
               </span>
             </p>
-          </div>
+          </aside>
         </div>
 
         {leadPost ? (
@@ -128,10 +133,10 @@ export default function BlogPage() {
             className="scroll-mt-24 border-t border-border-subtle"
             aria-labelledby="featured-title"
           >
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 sm:mb-8">
               <h2
                 id="featured-title"
-                className="font-brand text-xl font-semibold tracking-tight"
+                className="font-brand text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl"
               >
                 Featured articles
               </h2>
@@ -144,11 +149,11 @@ export default function BlogPage() {
               </Link>
             </div>
             <div
-              className={`grid gap-4 ${supportingPosts.length > 0 ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}
+              className={`grid gap-5 sm:gap-6 ${supportingPosts.length > 0 ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}
             >
               <BlogFeaturedArticle post={leadPost} lead />
               {supportingPosts.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1">
                   {supportingPosts.map((post) => (
                     <BlogFeaturedArticle key={post.slug} post={post} />
                   ))}

@@ -5,7 +5,7 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: 3.5rem 0 3rem;
+  padding: 2rem 0 3rem;
 }
 .hero::before,
 .hero::after {
@@ -47,7 +47,8 @@
   justify-content: center;
   gap: 0.5rem 1.5rem;
   color: var(--muted-foreground);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
+  line-height: 1.65;
 }
 .heroProof span {
   display: inline-flex;
@@ -379,9 +380,12 @@
 }
 .sectionHeader h2 {
   max-width: 23ch;
+  line-height: 1.16;
 }
 .sectionHeader p {
   max-width: 42rem;
+  text-wrap: pretty;
+  line-height: 1.8;
 }
 
 .startingPointsFrame {
@@ -680,7 +684,7 @@
 
 @media (min-width: 640px) {
   .hero {
-    padding-top: 4rem;
+    padding-block: 4rem;
   }
   .showcase [data-showcase-frame] {
     padding: 1.5rem;

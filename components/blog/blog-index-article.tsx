@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Card, cn } from "@pycolors/ui";
+import { Badge, Card, cn } from "@pycolors/ui";
 
 import { formatDate } from "@/lib/blog/utils";
 import type { BlogPost } from "@/types/blog";
@@ -35,7 +35,7 @@ export function BlogFeaturedArticle({
         interactive
         className={cn(
           styles.featuredArticle,
-          "group flex h-full flex-col justify-between rounded-[5px] border-border-subtle bg-background p-6 shadow-none hover:shadow-none",
+          "group flex h-full flex-col justify-between rounded-[5px] border-border-subtle bg-background p-5 shadow-none hover:shadow-none sm:p-6 lg:p-8",
           lead && `${styles.leadArticle} p-6 sm:p-8 lg:p-10`,
         )}
       >
@@ -43,11 +43,14 @@ export function BlogFeaturedArticle({
           <div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs leading-5 text-muted-foreground">
               {post.category ? (
-                <span className="font-medium text-foreground">
+                <Badge
+                  variant="outline"
+                  size="sm"
+                  className="border-border-subtle bg-background/60 px-2 text-[11px] font-medium"
+                >
                   {post.category}
-                </span>
+                </Badge>
               ) : null}
-              {post.category ? <span aria-hidden="true">/</span> : null}
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             </div>
             <h3
@@ -62,7 +65,7 @@ export function BlogFeaturedArticle({
             </h3>
             <p
               className={cn(
-                "mt-3 text-sm leading-7 text-muted-foreground",
+                "mt-3 max-w-[60ch] text-pretty text-sm leading-7 text-muted-foreground",
                 lead && "mt-5 max-w-lg sm:text-base sm:leading-8",
               )}
             >
@@ -71,8 +74,8 @@ export function BlogFeaturedArticle({
           </div>
           <div
             className={cn(
-              "mt-6 flex items-end justify-between gap-4",
-              lead && "mt-10 border-t border-border-subtle pt-6",
+              "mt-6 flex items-end justify-between gap-4 border-t border-border-subtle pt-5",
+              lead && "mt-10 pt-6",
             )}
           >
             <ArticleByline post={post} />
@@ -116,7 +119,7 @@ export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
               ) : null}
               <h3
                 id={titleId}
-                className="mt-1 font-brand text-lg font-semibold leading-relaxed tracking-tight sm:text-xl"
+                className="mt-2 text-pretty font-brand text-lg font-semibold leading-snug tracking-tight sm:text-xl"
               >
                 {post.title}
               </h3>
