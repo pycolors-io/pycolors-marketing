@@ -252,8 +252,8 @@ export default function HomePage() {
   return (
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
-      <Container className={cn(styles.page, "pt-24 pb-8 lg:px-8")}>
-        <main id="content" tabIndex={-1} className="mx-auto w-full max-w-6xl">
+      <Container className={cn(styles.page, "pt-24 pb-8")}>
+        <main id="content" tabIndex={-1} className="w-full min-w-0">
           <PageHero
             variant="compact"
             maxWidth="4xl"

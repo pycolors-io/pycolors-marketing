@@ -504,7 +504,7 @@ export default function StarterProPage() {
   return (
     <main id="content" tabIndex={-1} className="bg-background text-foreground">
       <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
           <PageHero
             variant="compact"

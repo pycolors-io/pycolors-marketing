@@ -71,7 +71,7 @@ const REPOSITORIES = [
 export function Footer() {
   return (
     <FooterNavigation className={styles.footer}>
-      <Container className="max-w-7xl lg:px-6 xl:px-0">
+      <Container>
         <section
           className={styles.invitation}
           aria-labelledby="footer-invitation-title"

@@ -249,7 +249,7 @@ export default function PricingPage() {
   return (
     <Container className="pb-12 pt-20 sm:pb-16 sm:pt-24">
       <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
-      <div className="mx-auto max-w-6xl">
+      <div className="w-full min-w-0">
         <PageHero
           variant="compact"
           maxWidth="4xl"

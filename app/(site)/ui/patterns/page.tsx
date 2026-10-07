@@ -211,11 +211,11 @@ function PatternCard({ pattern, index }: { pattern: Pattern; index: number }) {
 export default function PatternsPage() {
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="max-w-7xl pb-16 pt-24 sm:pb-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
         <div className={styles.sectionNav}>
           <UiSectionNav active="patterns" />
         </div>
-        <div className="mx-auto max-w-6xl">
+        <div className="w-full min-w-0">
           <div className={styles.heroLayout}>
             <PageHero
               variant="compact"

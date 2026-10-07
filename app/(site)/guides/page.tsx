@@ -165,7 +165,7 @@ const textLink =
 export default function GuidesPage() {
   return (
     <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <div className="grid items-center gap-10 pb-14 sm:pb-16 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
           <PageHero
             variant="compact"

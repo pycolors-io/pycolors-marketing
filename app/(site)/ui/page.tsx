@@ -160,7 +160,7 @@ export default function UiPage() {
   const { generatedTheme } = createThemeBuilderState();
   return (
     <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="max-w-7xl pt-24 pb-10 sm:pt-28 sm:pb-12 lg:px-6">
+      <Container className="pt-24 pb-10 sm:pt-28 sm:pb-12">
         <UiSectionNav active="overview" />
         <PageHero
           variant="compact"
@@ -225,7 +225,7 @@ export default function UiPage() {
         </div>
       </Container>
 
-      <Container className="max-w-7xl pb-14 lg:px-6">
+      <Container className="pb-14">
         <section
           id="ui-preview"
           aria-label="Try PyColors UI"
@@ -239,7 +239,7 @@ export default function UiPage() {
         aria-labelledby="ui-components-heading"
         className="border-t border-border-subtle py-12 sm:py-16"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <p className="mb-2 text-xs font-medium text-muted-foreground">
             The component library
           </p>
@@ -304,7 +304,7 @@ export default function UiPage() {
         aria-labelledby="ui-themes-heading"
         className="border-t border-border-subtle py-12 sm:py-16"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
             <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
               <Palette
@@ -432,7 +432,7 @@ export default function UiPage() {
         aria-labelledby="ui-install-heading"
         className="border-t border-border-subtle py-12 sm:py-16"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <Terminal
@@ -530,7 +530,7 @@ export default function UiPage() {
         aria-labelledby="ui-next-heading"
         className="border-t border-border-subtle py-12 sm:py-16"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <Layers3
             aria-hidden="true"
             className="mb-4 size-5 text-muted-foreground"

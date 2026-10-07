@@ -46,6 +46,7 @@
   padding-top: 0;
 }
 .page .body :where(p, ul, ol) {
+  max-width: 72ch;
   font-size: 0.9375rem;
   line-height: 1.875rem;
 }

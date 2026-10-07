@@ -285,7 +285,7 @@ export default function TemplatesPage() {
       tabIndex={-1}
       className="bg-background text-foreground focus:outline-none"
     >
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <PageHero
           variant="compact"
           align="left"

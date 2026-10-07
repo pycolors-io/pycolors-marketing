@@ -17,7 +17,7 @@ export type MarketingSectionShellProps = Readonly<{
 
 const widthClass: Record<MarketingSectionWidth, string> = {
   full: "w-full",
-  content: "mx-auto w-full max-w-6xl",
+  content: "mx-auto w-full max-w-7xl",
   reading: "mx-auto w-full max-w-3xl",
 };
 

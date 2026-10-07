@@ -175,7 +175,7 @@ export default function UpgradePage() {
         styles.page,
       )}
     >
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14">
           <PageHero
             variant="compact"

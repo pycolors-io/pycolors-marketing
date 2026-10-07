@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function CheckoutCancelPage() {
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="max-w-7xl pb-16 pt-28 sm:pb-24 sm:pt-32 lg:px-6 xl:px-0">
+      <Container className="pb-16 pt-28 sm:pb-24 sm:pt-32">
         <PageHero
           variant="compact"
           align="left"

@@ -241,7 +241,7 @@ function RepositoryCard({
 export default function OpenSourcePage() {
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="max-w-7xl pb-16 pt-24 sm:pb-24 sm:pt-28 lg:px-6 xl:px-0">
+      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
         <Breadcrumb
           className={styles.breadcrumb}
           items={[

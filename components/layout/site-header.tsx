@@ -238,7 +238,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             : "border-b border-transparent bg-background/70 backdrop-blur-md",
         )}
       >
-        <div className="relative z-10 mx-auto max-w-fd-container">
+        <div className="relative z-10">
           <a
             href="#content"
             className={cn(

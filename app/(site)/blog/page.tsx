@@ -65,7 +65,7 @@ export default function BlogPage() {
       tabIndex={-1}
       className={`${styles.page} bg-background text-foreground`}
     >
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <div className="grid items-end gap-8 pb-14 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20">
           <PageHero
             variant="compact"

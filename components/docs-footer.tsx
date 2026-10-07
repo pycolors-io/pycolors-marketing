@@ -70,7 +70,7 @@ const REPOSITORIES = [
 export function DocsFooter() {
   return (
     <FooterNavigation className={styles.footer} label="PyColors Docs footer">
-      <Container className="max-w-7xl lg:px-6 xl:px-0">
+      <Container>
         <div className={styles.directory}>
           <div className={styles.brand}>
             <div>

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 export default function ThemeBuilderPage() {
   return (
     <main id="content" className="bg-background text-foreground">
-      <Container className="max-w-7xl pt-24 pb-8 sm:pt-28 sm:pb-10 lg:px-6">
+      <Container className="pt-24 pb-8 sm:pt-28 sm:pb-10">
         <UiSectionNav active="themes" />
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <PageHero
@@ -77,12 +77,12 @@ export default function ThemeBuilderPage() {
         </div>
       </Container>
 
-      <Container className="max-w-7xl pb-12 lg:px-6 lg:pb-16">
+      <Container className="pb-12 lg:pb-16">
         <ThemeBuilder />
       </Container>
 
       <section className="border-t border-border-subtle">
-        <Container className="max-w-7xl py-10 lg:px-6 lg:py-14">
+        <Container className="py-10 lg:py-14">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
             <section aria-labelledby="theme-builder-integration-heading">
               <p className="text-xs font-medium text-muted-foreground">

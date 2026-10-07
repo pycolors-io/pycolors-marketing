@@ -272,7 +272,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             : "border-b border-border-subtle/60 bg-background/78 backdrop-blur-md",
         )}
       >
-        <div className="relative z-10 mx-auto max-w-fd-container">
+        <div className="relative z-10">
           <a
             href="#content"
             className={cn(

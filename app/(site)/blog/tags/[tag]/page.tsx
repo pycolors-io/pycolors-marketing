@@ -1,19 +1,15 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import { ArrowRight, Hash, Sparkles } from 'lucide-react';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { ArrowRight, Hash, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, EmptyState, cn } from '@pycolors/ui';
+import { Badge, Button, Card, EmptyState, cn } from "@pycolors/ui";
 
-import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
-import { BlogList } from '@/components/blog/blog-list';
+import { Container } from "@/components/container";
+import { Breadcrumb } from "@/components/seo/breadcrumb";
+import { BlogList } from "@/components/blog/blog-list";
 
-import {
-  getAllTags,
-  getPostsByTag,
-  normalizeTaxonomy,
-} from '@/lib/blog/utils';
+import { getAllTags, getPostsByTag, normalizeTaxonomy } from "@/lib/blog/utils";
 
 type PageProps = {
   readonly params: Promise<{
@@ -22,7 +18,7 @@ type PageProps = {
 };
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export async function generateStaticParams() {
   return getAllTags().map((tag) => ({
@@ -36,13 +32,11 @@ export async function generateMetadata({
   const { tag } = await params;
   const tags = getAllTags();
 
-  const matchedTag = tags.find(
-    (item) => normalizeTaxonomy(item) === tag,
-  );
+  const matchedTag = tags.find((item) => normalizeTaxonomy(item) === tag);
 
   if (!matchedTag) {
     return {
-      title: 'Tag not found',
+      title: "Tag not found",
     };
   }
 
@@ -56,13 +50,13 @@ export async function generateMetadata({
       title: `${matchedTag} · Blog · PyColors`,
       description: `Technical articles from PyColors tagged with ${matchedTag}.`,
       url: `/blog/tags/${tag}`,
-      images: ['/seo/og-main.png'],
+      images: ["/seo/og-main.png"],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${matchedTag} · Blog · PyColors`,
       description: `Technical articles from PyColors tagged with ${matchedTag}.`,
-      images: ['/seo/twitter-main.png'],
+      images: ["/seo/twitter-main.png"],
     },
   };
 }
@@ -71,11 +65,11 @@ function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-[5px]',
-        'border border-primary/15',
-        'bg-[color-mix(in_oklch,var(--primary),transparent_96%)]',
-        'px-2.5 py-1',
-        'text-[11px] font-medium text-muted-foreground',
+        "inline-flex items-center rounded-[5px]",
+        "border border-primary/15",
+        "bg-[color-mix(in_oklch,var(--primary),transparent_96%)]",
+        "px-2.5 py-1",
+        "text-[11px] font-medium text-muted-foreground",
       )}
     >
       {children}
@@ -115,9 +109,7 @@ export default async function BlogTagPage({ params }: PageProps) {
   const { tag } = await params;
 
   const tags = getAllTags();
-  const matchedTag = tags.find(
-    (item) => normalizeTaxonomy(item) === tag,
-  );
+  const matchedTag = tags.find((item) => normalizeTaxonomy(item) === tag);
 
   if (!matchedTag) {
     notFound();
@@ -127,7 +119,7 @@ export default async function BlogTagPage({ params }: PageProps) {
 
   return (
     <Container className="py-16 sm:py-20">
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative min-w-0">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_95%),transparent_60%)]"
@@ -136,8 +128,8 @@ export default async function BlogTagPage({ params }: PageProps) {
         <div className="mb-10">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
               { label: matchedTag, href: `/blog/tags/${tag}` },
             ]}
           />
@@ -149,11 +141,11 @@ export default async function BlogTagPage({ params }: PageProps) {
               <Badge
                 variant="secondary"
                 className={cn(
-                  'gap-1.5 rounded-[5px]',
-                  'border border-primary/15',
-                  'bg-[color-mix(in_oklch,var(--primary),transparent_94%)]',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "gap-1.5 rounded-[5px]",
+                  "border border-primary/15",
+                  "bg-[color-mix(in_oklch,var(--primary),transparent_94%)]",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
                 <Hash className="h-3.5 w-3.5" aria-hidden="true" />
@@ -163,11 +155,11 @@ export default async function BlogTagPage({ params }: PageProps) {
               <Badge
                 variant="outline"
                 className={cn(
-                  'rounded-[5px]',
-                  'border-primary/15',
-                  'bg-[color-mix(in_oklch,var(--primary),transparent_96%)]',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "rounded-[5px]",
+                  "border-primary/15",
+                  "bg-[color-mix(in_oklch,var(--primary),transparent_96%)]",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
                 #{matchedTag}
@@ -176,17 +168,14 @@ export default async function BlogTagPage({ params }: PageProps) {
               <Badge
                 variant="outline"
                 className={cn(
-                  'gap-1.5 rounded-[5px]',
-                  'border-border-subtle',
-                  'bg-background/60',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "gap-1.5 rounded-[5px]",
+                  "border-border-subtle",
+                  "bg-background/60",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Technical writing
               </Badge>
             </div>
@@ -194,14 +183,14 @@ export default async function BlogTagPage({ params }: PageProps) {
             <div className="mx-auto max-w-4xl space-y-6">
               <h1
                 className={cn(
-                  'text-balance',
-                  'font-brand',
-                  'text-4xl font-semibold',
-                  'tracking-[-0.05em]',
-                  'text-foreground',
-                  'sm:text-5xl',
-                  'lg:text-[4.5rem]',
-                  'lg:leading-[0.95]',
+                  "text-balance",
+                  "font-brand",
+                  "text-4xl font-semibold",
+                  "tracking-[-0.05em]",
+                  "text-foreground",
+                  "sm:text-5xl",
+                  "lg:text-[4.5rem]",
+                  "lg:leading-[0.95]",
                 )}
               >
                 {matchedTag}
@@ -212,38 +201,31 @@ export default async function BlogTagPage({ params }: PageProps) {
 
               <p
                 className={cn(
-                  'mx-auto max-w-3xl',
-                  'text-balance',
-                  'text-[16px] leading-8',
-                  'text-muted-foreground',
-                  'sm:text-lg',
+                  "mx-auto max-w-3xl",
+                  "text-balance",
+                  "text-[16px] leading-8",
+                  "text-muted-foreground",
+                  "sm:text-lg",
                 )}
               >
-                Explore articles that reference the same
-                implementation topic, framework, or product concept
-                across the PyColors engineering and SaaS product
-                system.
+                Explore articles that reference the same implementation topic,
+                framework, or product concept across the PyColors engineering
+                and SaaS product system.
               </p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <Button
-                asChild
-                className={cn('rounded-[5px]', focusRing)}
-              >
+              <Button asChild className={cn("rounded-[5px]", focusRing)}>
                 <Link href="/blog">
                   Back to Blog
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
               <Button
                 asChild
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/guides">Browse Guides</Link>
               </Button>
@@ -251,7 +233,7 @@ export default async function BlogTagPage({ params }: PageProps) {
               <Button
                 asChild
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/starters/free">Starter Free</Link>
               </Button>
@@ -267,14 +249,14 @@ export default async function BlogTagPage({ params }: PageProps) {
           </div>
         </header>
 
-        <section className="mx-auto max-w-5xl pb-10">
+        <section className="pb-10">
           <Card
             className={cn(
-              'relative overflow-hidden rounded-[5px]',
-              'border border-primary/15',
-              'bg-[color-mix(in_oklch,var(--primary),transparent_97%)]',
-              'p-6 backdrop-blur-sm',
-              'sm:p-8',
+              "relative overflow-hidden rounded-[5px]",
+              "border border-primary/15",
+              "bg-[color-mix(in_oklch,var(--primary),transparent_97%)]",
+              "p-6 backdrop-blur-sm",
+              "sm:p-8",
             )}
           >
             <div
@@ -288,9 +270,9 @@ export default async function BlogTagPage({ params }: PageProps) {
                   <Badge
                     variant="outline"
                     className={cn(
-                      'rounded-[5px]',
-                      'border-primary/15',
-                      'bg-background/50',
+                      "rounded-[5px]",
+                      "border-primary/15",
+                      "bg-background/50",
                     )}
                   >
                     Why this tag exists
@@ -298,10 +280,9 @@ export default async function BlogTagPage({ params }: PageProps) {
                 </div>
 
                 <p className="max-w-3xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
-                  Tags help connect related technical ideas across
-                  categories, so readers can follow a narrower topic
-                  through multiple article angles and implementation
-                  contexts.
+                  Tags help connect related technical ideas across categories,
+                  so readers can follow a narrower topic through multiple
+                  article angles and implementation contexts.
                 </p>
               </div>
 
@@ -310,7 +291,7 @@ export default async function BlogTagPage({ params }: PageProps) {
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href="/guides">View Guides</Link>
                 </Button>
@@ -319,7 +300,7 @@ export default async function BlogTagPage({ params }: PageProps) {
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href="/upgrade">Explore PRO</Link>
                 </Button>
@@ -328,7 +309,7 @@ export default async function BlogTagPage({ params }: PageProps) {
           </Card>
         </section>
 
-        <section className="mx-auto max-w-5xl py-6 sm:py-8">
+        <section className="py-6 sm:py-8">
           <SectionHeader
             title="Articles with this tag"
             description="A narrower set of articles linked by the same technical topic."
@@ -337,7 +318,7 @@ export default async function BlogTagPage({ params }: PageProps) {
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/blog">All articles</Link>
               </Button>

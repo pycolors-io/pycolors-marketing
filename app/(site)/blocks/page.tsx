@@ -123,7 +123,7 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
 export default function BlocksPage() {
   return (
     <main id="content" tabIndex={-1}>
-      <Container className="max-w-7xl pt-24 pb-12 sm:pt-28 sm:pb-16 lg:px-6">
+      <Container className="pt-24 pb-12 sm:pt-28 sm:pb-16">
         <UiSectionNav active="blocks" />
         <PageHero
           variant="compact"
@@ -180,7 +180,7 @@ export default function BlocksPage() {
         id="block-catalog"
         width="full"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <div>
             <MarketingSectionHeader
               align="left"
@@ -266,7 +266,7 @@ export default function BlocksPage() {
         className="border-t border-border-subtle py-16 lg:py-20"
         width="full"
       >
-        <Container className="max-w-7xl lg:px-6">
+        <Container>
           <div>
             <MarketingCtaPanel
               actions={

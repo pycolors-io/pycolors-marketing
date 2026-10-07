@@ -83,7 +83,7 @@ export function TemplateStickyCta({
           <Container className="py-3">
             <div
               className={cn(
-                "relative mx-auto flex max-w-6xl flex-col gap-3 rounded-[5px] border border-border-subtle bg-background px-4 py-4 lg:flex-row lg:items-center lg:justify-between lg:gap-5",
+                "relative flex w-full flex-col gap-3 rounded-[5px] border border-border-subtle bg-background px-4 py-4 lg:flex-row lg:items-center lg:justify-between lg:gap-5",
                 className,
               )}
             >

@@ -209,7 +209,7 @@ export default function NaAiTemplatePage() {
       )}
     >
       <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
-      <Container className="max-w-7xl pb-16 pt-24 sm:pt-28 lg:px-6">
+      <Container className="pb-16 pt-24 sm:pt-28">
         <Breadcrumb
           className={cn("mb-8", styles.breadcrumb)}
           items={[

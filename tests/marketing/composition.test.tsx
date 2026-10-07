@@ -55,7 +55,7 @@ describe("MarketingSectionShell", () => {
     const section = container.querySelector("section");
 
     expect(section?.className).toContain("py-14");
-    expect(container.querySelector(".max-w-6xl")).not.toBeNull();
+    expect(container.querySelector(".max-w-7xl")).not.toBeNull();
   });
 });
 
