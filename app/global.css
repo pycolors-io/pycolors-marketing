@@ -148,19 +148,19 @@ span[data-slot="badge"] {
   }
 }
 
-.docs-prose ul {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)) {
   margin-block: 1.25rem;
   padding-left: 0;
   list-style: none;
 }
 
-.docs-prose ul > li {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)) > li {
   position: relative;
   padding-left: 1.25rem;
   color: var(--muted-foreground);
 }
 
-.docs-prose ul > li::before {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)) > li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -397,8 +397,8 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
    Docs prose lists
    ========================================================================== */
 
-.docs-prose ul,
-.docs-prose ol {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)),
+.docs-prose ol:not(:where(.not-prose, .not-prose *)) {
   margin-block: 1rem 1.25rem;
   max-width: 72ch;
   padding-left: 0;
@@ -409,14 +409,14 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
   line-height: 1.75;
 }
 
-.docs-prose ul > li,
-.docs-prose ol > li {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)) > li,
+.docs-prose ol:not(:where(.not-prose, .not-prose *)) > li {
   position: relative;
   margin-block: 0.25rem;
   padding-left: 1rem;
 }
 
-.docs-prose ul > li::before {
+.docs-prose ul:not(:where(.not-prose, .not-prose *)) > li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -429,16 +429,16 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
   background: color-mix(in oklch, var(--foreground), transparent 52%);
 }
 
-.docs-prose ol {
+.docs-prose ol:not(:where(.not-prose, .not-prose *)) {
   counter-reset: docs-list;
 }
 
-.docs-prose ol > li {
+.docs-prose ol:not(:where(.not-prose, .not-prose *)) > li {
   counter-increment: docs-list;
   padding-left: 1.5rem;
 }
 
-.docs-prose ol > li::before {
+.docs-prose ol:not(:where(.not-prose, .not-prose *)) > li::before {
   content: counter(docs-list) ".";
 
   position: absolute;

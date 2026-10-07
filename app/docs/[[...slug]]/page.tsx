@@ -50,6 +50,9 @@ function getFooterCta(slug?: string[]) {
     return {
       ctaLabel: "View pricing",
       ctaHref: "/pricing",
+      ctaTitle: "Choose the right starting point",
+      ctaDescription:
+        "Compare what is included before choosing a product for your project.",
     };
   }
 
@@ -57,6 +60,9 @@ function getFooterCta(slug?: string[]) {
     return {
       ctaLabel: "Explore Starter Pro",
       ctaHref: "/starters/pro",
+      ctaTitle: "Ready to connect real services?",
+      ctaDescription:
+        "Review the authentication, billing, and backend foundation included in Starter Pro.",
     };
   }
 
@@ -64,6 +70,9 @@ function getFooterCta(slug?: string[]) {
     return {
       ctaLabel: "See Starter Pro",
       ctaHref: "/docs/starter-pro",
+      ctaTitle: "Connect your interface to an application",
+      ctaDescription:
+        "Explore how Starter Pro brings product screens together with authentication and billing.",
     };
   }
 
@@ -71,12 +80,18 @@ function getFooterCta(slug?: string[]) {
     return {
       ctaLabel: "Explore Patterns",
       ctaHref: "/docs/patterns",
+      ctaTitle: "Put these components to work",
+      ctaDescription:
+        "Follow patterns for forms, data views, and feedback in a complete product flow.",
     };
   }
 
   return {
     ctaLabel: "Explore Starter Free",
     ctaHref: "/docs/starter",
+    ctaTitle: "Explore a complete frontend",
+    ctaDescription:
+      "See how components and blocks fit together in Starter Free, with demo data and product flows.",
   };
 }
 
@@ -91,8 +106,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const showDefaultHeader = page.data.hero !== true;
   const footerCta = getFooterCta(params.slug);
 
-  const currentUrl = `/docs/${params.slug?.join("/") ?? ""}`;
-  const { previous, next } = getPrevNextFromTree(source.pageTree, currentUrl);
+  const { previous, next } = getPrevNextFromTree(source.pageTree, page.url);
 
   const toc =
     Array.isArray(page.data.toc) && page.data.toc.length > 0
@@ -107,12 +121,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
       footer={{
         enabled: true,
         component: (
-          <DocsPageFooter
-            previous={previous}
-            next={next}
-            ctaLabel={footerCta.ctaLabel}
-            ctaHref={footerCta.ctaHref}
-          />
+          <DocsPageFooter previous={previous} next={next} {...footerCta} />
         ),
       }}
     >
@@ -127,7 +136,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
           />
         ) : null}
 
-        <UiExplorerLink slug={params.slug} />
+        <UiExplorerLink slug={params.slug} toc={page.data.toc} />
 
         <DocsBody className="docs-prose">
           <MdxContent
