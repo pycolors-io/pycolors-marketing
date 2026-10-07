@@ -33,7 +33,7 @@ export function Logomark() {
            H10Z"
         fill={BRAND}
         className={cn(
-          "transition-opacity duration-300 ease-out",
+          "transition-opacity duration-300 ease-out motion-reduce:transition-none",
           "group-hover:opacity-90",
         )}
       />
@@ -45,9 +45,9 @@ function Wordmark() {
     <span
       className={cn(
         wordmarkFont.className,
-        "select-none text-[18px] font-extrabold leading-none tracking-[-0.075em]",
+        "inline-flex h-[18px] w-18 shrink-0 items-center whitespace-nowrap select-none text-[18px] font-extrabold leading-none tracking-[-0.04em]",
         "text-foreground antialiased",
-        "transition-opacity duration-300 ease-out",
+        "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",
       )}
     >
@@ -68,16 +68,16 @@ export function Logo({
       href={isDocs ? "/docs" : "/"}
       aria-label={isDocs ? "PyColors Docs" : "PyColors"}
       className={cn(
-        "group inline-flex min-h-11 shrink-0 items-center gap-0.5 rounded-[5px]",
+        "group inline-flex min-h-11 shrink-0 items-center rounded-md",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
       )}
     >
       <Logomark />
-      {/* The badge must not change the wordmark's vertical position. */}
-      <span className="inline-flex h-[18px] items-baseline gap-2">
+      {/* A fixed wordmark width and centered badge keep both variants aligned. */}
+      <span className="inline-flex h-5 items-center gap-2">
         <Wordmark />
         {isDocs ? (
-          <span className="inline-flex h-5 shrink-0 items-center rounded border border-border bg-transparent px-1.5 text-xs font-medium leading-none text-muted-foreground">
+          <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
             Docs
           </span>
         ) : null}
