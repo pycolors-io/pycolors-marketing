@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu } from "lucide-react";
-import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
+import { MobileMenuAppearance } from "@/components/appearance-controls";
+import { FooterPalette as SitePalettePicker } from "@/components/footer-palette";
 
 import { Container } from "@/components/container";
 import {
@@ -305,12 +306,15 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                         onNavigate={onNavigate}
                       />
                     </div>
-                    <div className="border-t border-border-subtle bg-surface px-5 py-2">
+                    <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-border-subtle bg-surface px-5 py-2">
                       <NavigationLinks
                         items={PRODUCT_MENU_SECONDARY_ITEMS}
                         activeHref={activeProductHref}
                         onNavigate={onNavigate}
                       />
+                      <div className="ml-auto shrink-0 border-l border-border-subtle pl-5">
+                        <SitePalettePicker />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -336,7 +340,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 <Button
                   asChild
                   size="sm"
-                  className="h-9 rounded-md px-4 text-[13px] font-medium"
+                  className="site-primary-action h-9 rounded-md px-4 text-[13px] font-medium"
                 >
                   <Link href="/starters/pro">
                     Explore Pro
@@ -381,10 +385,6 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">
             Explore PyColors
           </SheetTitle>
-          <ThemeToggle
-            mode="light-dark"
-            className="inline-flex min-h-11 shrink-0 items-center rounded-md border border-border-subtle bg-surface-muted px-1"
-          />
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5">
           <nav aria-label="Products">
@@ -418,9 +418,10 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           </nav>
         </div>
         <div className="shrink-0 border-t border-border-subtle px-4 pt-3 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+          <MobileMenuAppearance />
           <Button
             asChild
-            className="h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
+            className="site-primary-action h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
           >
             <Link href="/starters/pro" onClick={onNavigate}>
               Explore Pro

@@ -104,7 +104,7 @@ export function TemplateStickyCta({
 
                     <Badge
                       variant="outline"
-                      className="rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
+                      className="site-success-surface rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
                     >
                       Instant access
                     </Badge>

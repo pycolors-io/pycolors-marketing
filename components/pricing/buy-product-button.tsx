@@ -58,6 +58,7 @@ export function BuyProductButton({
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           fullWidth && "w-full",
           variant === "default" && [
+            "site-primary-action",
             "border border-transparent",
             "bg-primary text-primary-foreground",
             "shadow-soft",

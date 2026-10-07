@@ -297,7 +297,7 @@ export default function TemplatesPage() {
             <>
               <Button
                 asChild
-                className="min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                className="site-primary-action min-h-11 rounded-[5px] px-5 text-sm shadow-none"
               >
                 <Link href="#templates">
                   Explore the template{" "}

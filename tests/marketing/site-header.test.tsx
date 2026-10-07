@@ -13,6 +13,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import { SiteHeader } from "@/components/layout/site-header";
+import { SITE_PALETTE_STORAGE_KEY } from "@/lib/site-palette";
 import {
   PRODUCT_MENU_GROUPS,
   PRODUCT_MENU_SECONDARY_ITEMS,
@@ -34,9 +35,8 @@ vi.mock("next/link", () => ({
 vi.mock("@/components/logo", () => ({
   Logo: () => <Link href="/">PyColors</Link>,
 }));
-vi.mock("fumadocs-ui/layouts/shared/slots/theme-switch", () => ({
-  ThemeSwitch: () => <button type="button">Toggle Theme</button>,
-}));
+const appearance = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
+vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => appearance }));
 
 let onBreakpointChange: (() => void) | undefined;
 const media = {
@@ -85,6 +85,9 @@ function resize(desktop: boolean) {
 }
 
 beforeEach(() => {
+  document.documentElement.dataset.sitePalette = "pycolors";
+  window.localStorage.clear();
+  appearance.setTheme.mockClear();
   route.pathname = "/";
   media.matches = true;
   media.addEventListener.mockClear();
@@ -97,6 +100,7 @@ beforeEach(() => {
 });
 afterEach(async () => {
   cleanup();
+  document.documentElement.removeAttribute("data-site-palette");
   // Radix restores focus on the next task after the modal unmounts.
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -170,6 +174,33 @@ describe("Marketing product discovery navigation", () => {
     fireEvent.click(trigger());
     expect(trigger()).toHaveAttribute("aria-expanded", "false");
     expect(panel()).not.toBeVisible();
+  });
+
+  it("changes the shared palette without closing Products and preserves the preference on reopen", () => {
+    render(<Fixture />);
+    const products = openProducts();
+    const palette = within(
+      products.getByRole("group", { name: "Site palette" }),
+    );
+    const monochrome = palette.getByRole("button", { name: "Monochrome" });
+    expect(palette.getByRole("button", { name: "PyColors" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    act(() => monochrome.focus());
+    fireEvent.click(monochrome);
+    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
+    expect(window.localStorage.getItem(SITE_PALETTE_STORAGE_KEY)).toBe(
+      "monochrome",
+    );
+    expect(monochrome).toHaveAttribute("aria-pressed", "true");
+    expect(panel()).toBeVisible();
+    expect(appearance.setTheme).not.toHaveBeenCalled();
+    fireEvent.keyDown(monochrome, { key: "Escape" });
+    expect(panel()).not.toBeVisible();
+    expect(trigger()).toHaveFocus();
+    openProducts();
+    expect(monochrome).toHaveAttribute("aria-pressed", "true");
   });
 
   it("closes on Escape and restores focus to the disclosure trigger", () => {
@@ -277,6 +308,18 @@ describe("Marketing product discovery navigation", () => {
     });
     const nav = within(dialog);
     expect(dialog).toHaveAttribute("aria-modal", "true");
+    const settings = within(nav.getByRole("region", { name: "Appearance" }));
+    fireEvent.click(settings.getByRole("button", { name: "Monochrome" }));
+    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
+    expect(
+      settings.getByRole("button", { name: "Monochrome" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(settings.getByRole("button", { name: "Dark theme" }));
+    expect(appearance.setTheme).toHaveBeenCalledWith("dark");
+    expect(
+      settings.getByRole("button", { name: "System theme" }),
+    ).toBeVisible();
+    expect(dialog).toBeVisible();
     const destinations = new Set(
       nav.getAllByRole("link").map((link) => link.getAttribute("href")),
     );

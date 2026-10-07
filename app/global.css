@@ -39,6 +39,51 @@
   --site-radius-dialog: 0.75rem;
 }
 
+/* Violet uses the public tokens; monochrome is an optional app-only palette. */
+:root[data-site-palette="monochrome"] {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(0.99 0 0);
+  --secondary: oklch(0.967 0 0);
+  --accent: oklch(0.96 0 0);
+  --muted: oklch(0.965 0 0);
+  --muted-foreground: oklch(0.53 0 0);
+  --border: oklch(0.92 0 0);
+  --surface-inverted: oklch(0.18 0 0);
+  --surface-inverted-foreground: oklch(0.985 0 0);
+}
+
+/* Preserve status colors and allow Theme Builder's inline palettes to override. */
+:root[data-site-palette="monochrome"],
+:root[data-site-palette="monochrome"] .dark {
+  --brand-primary: var(--foreground);
+  --brand-primary-hover: color-mix(
+    in oklab,
+    var(--foreground) 90%,
+    var(--background)
+  );
+  --brand-platform: var(--foreground);
+  --brand-platform-hover: var(--brand-primary-hover);
+  --brand-accent: var(--foreground);
+  --brand-accent-hover: var(--brand-primary-hover);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--background);
+}
+
+:root[data-site-palette="monochrome"].dark,
+:root[data-site-palette="monochrome"] .dark {
+  --background: #0b0b0b;
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.19 0 0);
+  --secondary: oklch(0.24 0 0);
+  --accent: oklch(0.28 0 0);
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.72 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --surface-inverted: oklch(0.985 0 0);
+  --surface-inverted-foreground: oklch(0.18 0 0);
+}
+
 /* App-only roles: public package tokens and interactive previews stay independent. */
 @theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -73,6 +118,31 @@ pre,
 kbd,
 samp {
   font-family: var(--font-mono);
+}
+
+/* Only the monochrome palette overrides site-owned conversion surfaces. */
+:root[data-site-palette="monochrome"] .site-primary-action {
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --brand-primary-hover: color-mix(
+    in oklab,
+    var(--foreground) 90%,
+    var(--background)
+  );
+}
+
+/* Keep Pro content surfaces neutral while retaining the shared tone vocabulary. */
+:root[data-site-palette="monochrome"] .site-pro-surface {
+  --pro-border: color-mix(in oklab, var(--foreground) 22%, var(--background));
+  --pro-border-subtle: var(--border-subtle);
+  --pro-surface: var(--surface);
+  --pro-surface-muted: var(--surface-muted);
+}
+
+/* Decorative marketing tones stay separate from functional success feedback. */
+:root[data-site-palette="monochrome"] .site-success-surface {
+  --brand-success-muted: var(--surface-muted);
+  --success-border-subtle: var(--border-subtle);
 }
 
 span[data-slot="badge"] {

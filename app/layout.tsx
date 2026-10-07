@@ -14,6 +14,7 @@ import {
 } from "@/lib/seo/website";
 import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
 import { ConsentGatedGtm } from "@/components/privacy/consent-gated-gtm";
+import { SITE_PALETTE_INIT_SCRIPT } from "@/lib/site-palette";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -95,8 +96,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
       data-scroll-behavior="smooth"
+      data-site-palette="pycolors"
     >
       <head>
+        <script
+          id="site-palette-init"
+          dangerouslySetInnerHTML={{ __html: SITE_PALETTE_INIT_SCRIPT }}
+        />
         <JsonLd id="pycolors-site" data={siteJsonLd} />
       </head>
 

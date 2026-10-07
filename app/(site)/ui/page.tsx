@@ -174,7 +174,10 @@ export default function UiPage() {
           contentClassName="mx-0 max-w-3xl"
           actions={
             <>
-              <Button asChild className={primaryAction}>
+              <Button
+                asChild
+                className={`site-primary-action ${primaryAction}`}
+              >
                 <Link href="/docs/ui/installation">
                   Start building <ArrowRight aria-hidden="true" />
                 </Link>
@@ -327,7 +330,10 @@ export default function UiPage() {
                 <span>Typography</span>
               </div>
               <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2">
-                <Button asChild className={primaryAction}>
+                <Button
+                  asChild
+                  className={`site-primary-action ${primaryAction}`}
+                >
                   <Link href="/tools/theme-builder">
                     Open Theme Builder <ArrowRight aria-hidden="true" />
                   </Link>
@@ -341,7 +347,7 @@ export default function UiPage() {
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-5 py-4 sm:px-7">
                 <p className="text-sm font-medium">One palette. Two modes.</p>
                 <span className="text-xs text-muted-foreground">
-                  PyColors violet
+                  Violet preset
                 </span>
               </div>
               {(["light", "dark"] as const).map((mode) => (

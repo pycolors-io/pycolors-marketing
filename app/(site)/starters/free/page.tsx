@@ -221,7 +221,11 @@ export default function StarterFreePage() {
           description="A free Next.js starter with a dashboard, project flows, auth screens and a shared design system. Shape your product with demo data, then connect the backend you choose."
           actions={
             <>
-              <Button asChild size="lg" className="min-h-11 rounded-[5px] px-5">
+              <Button
+                asChild
+                size="lg"
+                className="site-primary-action min-h-11 rounded-[5px] px-5"
+              >
                 <a
                   href={EXTERNAL.repo}
                   target="_blank"

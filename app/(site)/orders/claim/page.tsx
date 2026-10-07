@@ -128,7 +128,7 @@ export default async function ClaimOrderPage({
           status="missing_token"
         />
         <div className="flex flex-wrap gap-3">
-          <Button asChild>
+          <Button className="site-primary-action" asChild>
             <Link href="/pricing">Back to pricing</Link>
           </Button>
           <Button asChild variant="outline">
@@ -153,7 +153,7 @@ export default async function ClaimOrderPage({
           status="unavailable"
         />
         <div className="flex flex-wrap gap-3">
-          <Button asChild>
+          <Button className="site-primary-action" asChild>
             <Link href="/orders/support">Contact support</Link>
           </Button>
           <Button asChild variant="outline">
@@ -259,7 +259,7 @@ export default async function ClaimOrderPage({
                 <Button
                   asChild
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="site-primary-action h-11 rounded-xl px-6 text-sm font-medium"
                 >
                   <Link href={downloadUrl}>
                     Download package

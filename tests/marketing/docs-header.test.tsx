@@ -28,9 +28,8 @@ vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
   FullSearchTrigger: () => <button type="button">Search documentation</button>,
   SearchTrigger: () => <button type="button">Search documentation</button>,
 }));
-vi.mock("fumadocs-ui/layouts/shared/slots/theme-switch", () => ({
-  ThemeSwitch: () => <button type="button">Toggle Theme</button>,
-}));
+const appearance = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
+vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => appearance }));
 
 const docsLinks = [
   { label: "Getting Started", href: "/docs/getting-started" },
@@ -106,6 +105,9 @@ function openMobile() {
   };
 }
 beforeEach(() => {
+  document.documentElement.dataset.sitePalette = "pycolors";
+  window.localStorage.clear();
+  appearance.setTheme.mockClear();
   route.pathname = "/docs";
   media.matches = true;
   media.addEventListener.mockClear();
@@ -118,6 +120,7 @@ beforeEach(() => {
 });
 afterEach(async () => {
   cleanup();
+  document.documentElement.removeAttribute("data-site-palette");
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
@@ -418,9 +421,20 @@ describe("DocsHeader navigation", () => {
     expect(
       within(dialog).getByRole("link", { name: "Theme Builder" }),
     ).toHaveAttribute("href", "/tools/theme-builder");
+    const settings = within(
+      within(dialog).getByRole("region", { name: "Appearance" }),
+    );
+    fireEvent.click(settings.getByRole("button", { name: "Monochrome" }));
+    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
     expect(
-      within(dialog).getByRole("button", { name: "Toggle Theme" }),
+      settings.getByRole("button", { name: "Monochrome" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(settings.getByRole("button", { name: "Light theme" }));
+    expect(appearance.setTheme).toHaveBeenCalledWith("light");
+    expect(
+      settings.getByRole("button", { name: "System theme" }),
     ).toBeVisible();
+    expect(dialog).toBeVisible();
     expect(
       within(dialog).getByRole("link", { name: "Explore Starter Pro" }),
     ).toHaveAttribute("href", "/starters/pro");

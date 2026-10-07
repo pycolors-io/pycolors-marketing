@@ -127,6 +127,7 @@ export function MarketingLinkButton({
       variant={variant}
       className={cn(
         "h-auto min-h-11 min-w-0 max-w-full shrink whitespace-normal rounded-md px-6 py-2.5 text-center",
+        variant === "default" && "site-primary-action",
         className,
       )}
     >

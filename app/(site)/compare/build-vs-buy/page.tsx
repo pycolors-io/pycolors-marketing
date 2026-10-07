@@ -243,7 +243,11 @@ export default function BuildVsBuyComparisonPage() {
               contentClassName="max-w-none"
               actions={
                 <>
-                  <Button asChild size="lg" className="min-h-11 rounded-[5px]">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="site-primary-action min-h-11 rounded-[5px]"
+                  >
                     <Link href="#cost-time-comparison">
                       Compare the work{" "}
                       <ArrowDown className="size-4" aria-hidden="true" />

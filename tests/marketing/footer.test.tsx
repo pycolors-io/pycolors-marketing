@@ -236,7 +236,7 @@ describe("marketing footer", () => {
     const container = document.createElement("div");
     container.innerHTML = html;
     const buttons = container.querySelectorAll("button");
-    expect(buttons).toHaveLength(3);
+    expect(buttons).toHaveLength(5);
     for (const button of buttons) {
       expect(button).toHaveAttribute("disabled");
       expect(button).toHaveAttribute("aria-pressed", "false");

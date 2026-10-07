@@ -181,7 +181,14 @@
   font-size: 0.625rem;
   color: var(--muted-foreground);
 }
-.appearance {
+.preferences {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem 0.75rem;
+}
+.appearance,
+.palette {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -191,7 +198,8 @@
   border-radius: 999px;
   background: color-mix(in oklab, var(--surface-muted) 60%, var(--background));
 }
-.appearance button {
+.appearance button,
+.palette button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -202,17 +210,42 @@
   color: var(--muted-foreground);
   cursor: pointer;
 }
-.appearance button[aria-pressed="true"] {
+.palette button {
+  width: auto;
+  gap: 0.375rem;
+  padding-inline: 0.625rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.paletteSwatch {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in oklab, var(--foreground) 20%, transparent);
+  border-radius: 50%;
+}
+.paletteSwatch[data-palette-swatch="pycolors"] {
+  background: #6a30d4;
+}
+.paletteSwatch[data-palette-swatch="monochrome"] {
+  background: linear-gradient(135deg, #fff 50%, #111 50%);
+}
+.appearance button[aria-pressed="true"],
+.palette button[aria-pressed="true"] {
   border-color: var(--border-subtle);
   background: var(--background);
   color: var(--foreground);
   box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
 }
-.appearance button:focus-visible {
+.appearance button:focus-visible,
+.palette button:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: -2px;
 }
-.appearance button:disabled {
+.appearance button:disabled,
+.palette button:disabled {
   cursor: default;
 }
 @media (hover: hover) {
@@ -222,7 +255,8 @@
   .versions:hover {
     color: var(--foreground);
   }
-  .appearance button:not(:disabled):hover {
+  .appearance button:not(:disabled):hover,
+  .palette button:not(:disabled):hover {
     background: var(--surface-muted);
     color: var(--foreground);
   }
@@ -232,13 +266,17 @@
     width: 2.75rem;
     height: 2.75rem;
   }
+  .palette button {
+    height: 2.75rem;
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   .directoryLink,
   .repositories a,
   .legal a,
   .versions,
-  .appearance button {
+  .appearance button,
+  .palette button {
     transition:
       color 150ms ease,
       background-color 150ms ease,

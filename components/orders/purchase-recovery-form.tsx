@@ -168,7 +168,7 @@ export function PurchaseRecoveryForm() {
                   type="submit"
                   disabled={isLoading}
                   size="lg"
-                  className={styles.submitButton}
+                  className={`site-primary-action ${styles.submitButton}`}
                 >
                   {isLoading ? "Sending..." : "Resend access link"}
                   {isLoading ? (

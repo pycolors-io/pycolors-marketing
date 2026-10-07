@@ -15,7 +15,7 @@ import {
   FullSearchTrigger as LargeSearchToggle,
   SearchTrigger,
 } from "fumadocs-ui/layouts/shared/slots/search-trigger";
-import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
+import { MobileMenuAppearance } from "@/components/appearance-controls";
 
 import { Container } from "@/components/container";
 import {
@@ -463,10 +463,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">
             Documentation
           </SheetTitle>
-          <ThemeToggle
-            mode="light-dark"
-            className="inline-flex min-h-11 shrink-0 items-center rounded-md border border-border-subtle bg-surface-muted px-1"
-          />
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4">
           <nav aria-label="Documentation navigation">
@@ -526,9 +522,10 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           </nav>
         </div>
         <div className="shrink-0 border-t border-border-subtle px-4 pt-3 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+          <MobileMenuAppearance />
           <Button
             asChild
-            className="h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
+            className="site-primary-action h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
           >
             <Link href="/starters/pro" onClick={onNavigate}>
               Explore Starter Pro

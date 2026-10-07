@@ -228,7 +228,10 @@ export default async function BlogCategoryPage({ params }: PageProps) {
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild className={cn("rounded-[5px]", focusRing)}>
+              <Button
+                asChild
+                className={`site-primary-action ${cn("rounded-[5px]", focusRing)}`}
+              >
                 <Link href="/blog">
                   Back to Blog
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />

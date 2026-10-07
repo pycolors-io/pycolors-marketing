@@ -214,7 +214,7 @@ export default async function CheckoutSuccessPage({
           <CardContent className="space-y-6 px-6 pb-6 sm:px-8 sm:pb-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {sessionId ? (
-                <Button asChild>
+                <Button className="site-primary-action" asChild>
                   <a
                     href={`/checkout/success?session_id=${encodeURIComponent(sessionId)}`}
                   >

@@ -285,7 +285,7 @@ export default function PricingPage() {
         <section
           id="pricing-offers"
           aria-label="Choose a PyColors product"
-          className="scroll-mt-24"
+          className="site-pro-surface scroll-mt-24"
         >
           <div className="grid gap-4 lg:grid-cols-3">
             {offers.map((offer) => (

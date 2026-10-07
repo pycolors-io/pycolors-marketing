@@ -251,7 +251,11 @@ export function ThemeBuilder() {
                 setFont(configuration.font);
               }}
             />
-            <Button asChild size="sm" className="min-h-10 rounded-[5px]">
+            <Button
+              asChild
+              size="sm"
+              className="site-primary-action min-h-10 rounded-[5px]"
+            >
               <a href="#theme-builder-export">
                 Export theme
                 <ArrowDown aria-hidden="true" />

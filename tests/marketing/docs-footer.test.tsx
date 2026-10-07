@@ -93,6 +93,13 @@ describe("documentation footer", () => {
     vi.stubGlobal("scrollY", 1400);
     render(<DocsFooter />);
     const themes = screen.getByRole("group", { name: "Color theme" });
+    const palettes = screen.getByRole("group", { name: "Site palette" });
+    expect(
+      within(palettes).getByRole("button", { name: "PyColors" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      within(palettes).getByRole("button", { name: "Monochrome" }),
+    ).toBeEnabled();
     expect(within(themes).getAllByRole("button")).toHaveLength(3);
     fireEvent.click(
       within(themes).getByRole("button", { name: "Light theme" }),

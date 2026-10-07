@@ -367,7 +367,7 @@ export default function ExamplesPage() {
           description="Explore a dashboard, project workflows and account screens built with PyColors UI. Try the runnable Starter Free demo, inspect the source and bring the parts you need into your own app."
           actions={
             <>
-              <Button asChild className={actionClass}>
+              <Button asChild className={`site-primary-action ${actionClass}`}>
                 <Link href="#example-screens">
                   Explore the screens{" "}
                   <ArrowDown className="size-4" aria-hidden="true" />

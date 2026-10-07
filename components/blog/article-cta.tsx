@@ -71,7 +71,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Button
           asChild
-          className="h-auto min-h-11 max-w-full whitespace-normal rounded-md px-5 py-2 text-sm"
+          className="site-primary-action h-auto min-h-11 max-w-full whitespace-normal rounded-md px-5 py-2 text-sm"
         >
           <Link href={cta.href}>
             <span className="min-w-0 wrap-anywhere">{cta.label}</span>

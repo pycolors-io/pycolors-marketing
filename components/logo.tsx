@@ -6,13 +6,11 @@ import { cn } from "@pycolors/ui";
 
 import { wordmarkFont } from "./wordmark-font";
 
-const BRAND = "#6A30D4";
-
 export function Logomark() {
   return (
     <svg
       viewBox="0 0 44 40"
-      className="h-8.5 w-8.5 shrink-0"
+      className="h-8.5 w-8.5 shrink-0 text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -31,7 +29,7 @@ export function Logomark() {
            L17.5 29.9
            Q17 31 16.2 31
            H10Z"
-        fill={BRAND}
+        fill="currentColor"
         className={cn(
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
           "group-hover:opacity-90",

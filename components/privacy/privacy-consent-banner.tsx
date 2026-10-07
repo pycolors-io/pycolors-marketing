@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { X } from 'lucide-react';
+import * as React from "react";
+import Link from "next/link";
+import { X } from "lucide-react";
 
-import { Button, cn } from '@pycolors/ui';
+import { Button, cn } from "@pycolors/ui";
 
-const CONSENT_KEY = 'pycolors_privacy_consent';
+const CONSENT_KEY = "pycolors_privacy_consent";
 
-type ConsentValue = 'accepted' | 'denied';
+type ConsentValue = "accepted" | "denied";
 
 export function PrivacyConsentBanner() {
   const [mounted, setMounted] = React.useState(false);
@@ -26,7 +26,7 @@ export function PrivacyConsentBanner() {
     globalThis.localStorage.setItem(CONSENT_KEY, value);
 
     globalThis.dispatchEvent(
-      new CustomEvent('pycolors:privacy-consent', {
+      new CustomEvent("pycolors:privacy-consent", {
         detail: { value },
       }),
     );
@@ -45,22 +45,22 @@ export function PrivacyConsentBanner() {
         aria-labelledby="privacy-consent-title"
         aria-describedby="privacy-consent-description"
         className={cn(
-          'pointer-events-auto relative overflow-hidden rounded-[5px]',
-          'border border-border-subtle bg-background/92 backdrop-blur-xl',
-          'shadow-soft',
-          'animate-in fade-in slide-in-from-bottom-4 duration-500',
+          "pointer-events-auto relative overflow-hidden rounded-[5px]",
+          "border border-border-subtle bg-background/92 backdrop-blur-xl",
+          "shadow-soft",
+          "animate-in fade-in slide-in-from-bottom-4 duration-500",
         )}
       >
         <button
           type="button"
           aria-label="Close privacy banner"
-          onClick={() => saveConsent('denied')}
+          onClick={() => saveConsent("denied")}
           className={cn(
-            'absolute right-3 top-3 inline-flex size-7 items-center justify-center',
-            'rounded-[4px] text-muted-foreground/70 transition-colors',
-            'hover:bg-muted hover:text-foreground',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+            "absolute right-3 top-3 inline-flex size-7 items-center justify-center",
+            "rounded-[4px] text-muted-foreground/70 transition-colors",
+            "hover:bg-muted hover:text-foreground",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           )}
         >
           <X className="size-4" aria-hidden="true" />
@@ -79,9 +79,9 @@ export function PrivacyConsentBanner() {
               id="privacy-consent-description"
               className="mt-2 text-sm leading-6 text-muted-foreground"
             >
-              PyColors uses essential cookies to run the site and
-              optional analytics to improve product experience,
-              performance, and documentation quality.
+              PyColors uses essential cookies to run the site and optional
+              analytics to improve product experience, performance, and
+              documentation quality.
             </p>
           </div>
 
@@ -89,8 +89,8 @@ export function PrivacyConsentBanner() {
             <div className="flex items-center gap-2">
               <Button
                 size="sm"
-                className="h-7 rounded-[4px] px-2.5 text-[11px] font-medium"
-                onClick={() => saveConsent('accepted')}
+                className="site-primary-action h-7 rounded-[4px] px-2.5 text-[11px] font-medium"
+                onClick={() => saveConsent("accepted")}
               >
                 Accept all
               </Button>
@@ -99,7 +99,7 @@ export function PrivacyConsentBanner() {
                 size="sm"
                 variant="ghost"
                 className="h-7 rounded-[4px] px-2.5 text-[11px] font-medium"
-                onClick={() => saveConsent('denied')}
+                onClick={() => saveConsent("denied")}
               >
                 Deny
               </Button>
