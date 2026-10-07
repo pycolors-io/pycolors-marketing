@@ -16,6 +16,7 @@ import {
   SearchTrigger,
 } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 import { MobileMenuAppearance } from "@/components/appearance-controls";
+import { FooterPalette as SitePalettePicker } from "@/components/footer-palette";
 
 import { Container } from "@/components/container";
 import {
@@ -350,38 +351,43 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border-subtle bg-surface px-5 py-2">
-                      <Link
-                        href="/pricing"
-                        onClick={onNavigate}
-                        className={cn(
-                          "flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm hover:bg-surface",
-                          focusRing,
-                        )}
-                      >
-                        <span className="font-medium text-foreground">
-                          View pricing
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          Templates from {templatePriceLabel} · Starter Pro from{" "}
-                          {starterProPriceLabel}
-                        </span>
-                        <ChevronRight
-                          aria-hidden="true"
-                          className="size-3.5 shrink-0 text-muted-foreground"
-                        />
-                      </Link>
-                      <Link
-                        href="/tools/theme-builder"
-                        onClick={onNavigate}
-                        className={cn(
-                          "inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-surface-muted hover:text-foreground",
-                          focusRing,
-                        )}
-                      >
-                        Open Theme Builder
-                        <ArrowRight aria-hidden="true" className="size-3.5" />
-                      </Link>
+                    <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-border-subtle bg-surface px-5 py-2">
+                      <div className="flex min-w-0 flex-wrap items-center gap-2">
+                        <Link
+                          href="/pricing"
+                          onClick={onNavigate}
+                          className={cn(
+                            "flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm hover:bg-surface",
+                            focusRing,
+                          )}
+                        >
+                          <span className="font-medium text-foreground">
+                            View pricing
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            Templates from {templatePriceLabel} · Starter Pro
+                            from {starterProPriceLabel}
+                          </span>
+                          <ChevronRight
+                            aria-hidden="true"
+                            className="size-3.5 shrink-0 text-muted-foreground"
+                          />
+                        </Link>
+                        <Link
+                          href="/tools/theme-builder"
+                          onClick={onNavigate}
+                          className={cn(
+                            "inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                            focusRing,
+                          )}
+                        >
+                          Open Theme Builder
+                          <ArrowRight aria-hidden="true" className="size-3.5" />
+                        </Link>
+                      </div>
+                      <div className="ml-auto shrink-0 border-l border-border-subtle pl-5">
+                        <SitePalettePicker />
+                      </div>
                     </div>
                   </div>
                 </div>

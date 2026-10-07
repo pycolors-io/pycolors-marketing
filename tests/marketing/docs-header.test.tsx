@@ -12,6 +12,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import { DocsHeader } from "@/components/docs-header";
+import { SITE_PALETTE_STORAGE_KEY } from "@/lib/site-palette";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { DOCS_MENU_GROUPS, PRODUCT_MENU_GROUPS } from "@/lib/layout.shared";
 import { DocsSidebarPublications } from "@/components/docs/docs-sidebar-items";
@@ -316,6 +317,31 @@ describe("DocsHeader navigation", () => {
       expect(trigger()).toHaveClass("bg-surface-muted");
     },
   );
+
+  it("changes the shared palette without closing Docs and preserves the choice on reopen", () => {
+    render(<Fixture />);
+    const menu = openDesktop();
+    const palette = within(menu.getByRole("group", { name: "Site palette" }));
+    const monochrome = palette.getByRole("button", { name: "Monochrome" });
+    expect(palette.getByRole("button", { name: "PyColors" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    act(() => monochrome.focus());
+    fireEvent.click(monochrome);
+    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
+    expect(window.localStorage.getItem(SITE_PALETTE_STORAGE_KEY)).toBe(
+      "monochrome",
+    );
+    expect(monochrome).toHaveAttribute("aria-pressed", "true");
+    expect(panel()).toBeVisible();
+    expect(appearance.setTheme).not.toHaveBeenCalled();
+    fireEvent.keyDown(monochrome, { key: "Escape" });
+    expect(panel()).not.toBeVisible();
+    expect(trigger()).toHaveFocus();
+    openDesktop();
+    expect(monochrome).toHaveAttribute("aria-pressed", "true");
+  });
 
   it("preserves keyboard focus when the pointer leaves and restores it on Escape", () => {
     render(<Fixture />);

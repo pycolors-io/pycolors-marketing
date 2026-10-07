@@ -48,7 +48,7 @@ ecosystem:
 
 ## Appearance
 
-The footer, mobile navigation menus, and desktop Products menu offer two site
+The footer, mobile navigation menus, and desktop Products and Docs menus offer two site
 palettes: **PyColors** (violet, the default) and **Monochrome** (black, white, and
 neutral grays). This choice is separate from the Light, Dark, and System
 appearance controls.
