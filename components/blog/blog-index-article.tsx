@@ -56,7 +56,7 @@ export function BlogFeaturedArticle({
             <h3
               id={titleId}
               className={cn(
-                "mt-4 text-balance font-brand text-lg font-semibold leading-snug tracking-tight sm:text-xl",
+                "mt-4 text-balance font-brand text-lg font-semibold leading-snug tracking-subheading sm:text-xl",
                 lead &&
                   "mt-7 max-w-lg text-2xl leading-tight sm:text-3xl lg:text-4xl",
               )}
@@ -119,7 +119,7 @@ export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
               ) : null}
               <h3
                 id={titleId}
-                className="mt-2 text-pretty font-brand text-lg font-semibold leading-snug tracking-tight sm:text-xl"
+                className="mt-2 text-pretty font-brand text-lg font-semibold leading-snug tracking-subheading sm:text-xl"
               >
                 {post.title}
               </h3>

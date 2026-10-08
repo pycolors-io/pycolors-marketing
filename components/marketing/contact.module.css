@@ -88,7 +88,7 @@
 .card h2 {
   font-size: clamp(1.375rem, 2.2vw, 1.75rem);
   font-weight: 600;
-  letter-spacing: -0.035em;
+  letter-spacing: var(--site-heading-tracking);
   line-height: 1.25;
   text-wrap: balance;
 }
@@ -199,7 +199,7 @@
   margin-top: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
   line-height: 1.4;
 }
 

@@ -133,7 +133,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         </div>
         <h3
           id={`starter-${offer.slug}-title`}
-          className="mt-5 font-brand text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="mt-5 font-brand text-[22px] font-semibold leading-snug tracking-subheading sm:text-2xl"
         >
           {offer.name}
         </h3>

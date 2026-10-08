@@ -62,7 +62,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
         <Icon className="size-3" aria-hidden="true" />
         {badge}
       </Badge>
-      <h2 className="max-w-xl text-balance font-brand text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
+      <h2 className="max-w-xl text-balance font-brand text-xl font-semibold leading-snug tracking-heading sm:text-2xl">
         {title}
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">

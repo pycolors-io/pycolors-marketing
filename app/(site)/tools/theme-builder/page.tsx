@@ -90,7 +90,7 @@ export default function ThemeBuilderPage() {
               </p>
               <h2
                 id="theme-builder-integration-heading"
-                className="mt-2 text-xl font-semibold tracking-tight"
+                className="mt-2 text-xl font-semibold tracking-heading"
               >
                 Make it part of your app.
               </h2>
@@ -126,7 +126,7 @@ export default function ThemeBuilderPage() {
               </p>
               <h2
                 id="theme-builder-limitations-heading"
-                className="mt-2 text-xl font-semibold tracking-tight"
+                className="mt-2 text-xl font-semibold tracking-heading"
               >
                 Review it in context.
               </h2>

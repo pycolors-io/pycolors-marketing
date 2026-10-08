@@ -372,7 +372,7 @@ export default function UpgradePage() {
                     0{index + 1}
                   </span>
                   <div>
-                    <h3 className="text-base font-semibold tracking-tight">
+                    <h3 className="text-base font-semibold tracking-normal">
                       {step.title}
                     </h3>
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
@@ -401,7 +401,7 @@ export default function UpgradePage() {
               <span className={styles.iconFrame}>
                 <Code2 className="size-5" aria-hidden="true" />
               </span>
-              <h3 className="mt-5 text-xl font-semibold tracking-tight">
+              <h3 className="mt-5 text-xl font-semibold tracking-subheading">
                 Your product work comes with you.
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -548,7 +548,7 @@ export default function UpgradePage() {
           <div className="max-w-2xl">
             <h2
               id="upgrade-purchase-title"
-              className="text-2xl font-semibold tracking-tight sm:text-3xl"
+              className="text-2xl font-semibold tracking-heading sm:text-3xl"
             >
               Build your next stage on Pro.
             </h2>

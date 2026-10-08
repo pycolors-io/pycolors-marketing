@@ -280,7 +280,7 @@ export default function LicensePage() {
               </Badge>
               <h2
                 id="license-summary-heading"
-                className="mt-4 text-2xl font-semibold tracking-tight"
+                className="mt-4 text-2xl font-semibold tracking-heading"
               >
                 Simple commercial summary
               </h2>

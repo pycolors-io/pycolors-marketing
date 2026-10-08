@@ -275,7 +275,7 @@ export default function UiPage() {
                     {group.links.length} components
                   </span>
                 </div>
-                <h3 className="text-base font-semibold tracking-tight">
+                <h3 className="text-base font-semibold tracking-normal">
                   {group.title}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -571,7 +571,7 @@ export default function UiPage() {
                     {item.product}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold tracking-tight">
+                <h3 className="text-lg font-semibold tracking-normal">
                   {item.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">

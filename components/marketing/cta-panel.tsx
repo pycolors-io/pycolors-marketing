@@ -82,7 +82,7 @@ export function MarketingCtaPanel({
     >
       <Heading
         id={titleId}
-        className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl"
+        className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
       >
         {title}
       </Heading>

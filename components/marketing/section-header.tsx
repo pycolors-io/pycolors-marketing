@@ -41,7 +41,7 @@ export function MarketingSectionHeader({
   return (
     <div
       className={cn(
-        "mb-8 sm:mb-10",
+        "mb-10 sm:mb-12",
         isCentered
           ? "mx-auto max-w-3xl text-center"
           : "flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-8",
@@ -60,7 +60,7 @@ export function MarketingSectionHeader({
 
         <h2
           id={titleId}
-          className="text-balance font-brand text-2xl font-semibold leading-[1.2] tracking-[-0.025em] sm:text-[28px]"
+          className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
         >
           {title}
         </h2>

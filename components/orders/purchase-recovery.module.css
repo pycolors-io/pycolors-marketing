@@ -95,7 +95,7 @@
 .formContent h2 {
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: -0.035em;
+  letter-spacing: var(--site-heading-tracking);
   line-height: 1.3;
 }
 
@@ -251,7 +251,7 @@
 .confirmation h3 {
   font-size: 1rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .confirmation p {
@@ -308,7 +308,7 @@
   margin-top: 0.5rem;
   font-size: 1.125rem;
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 
 .expiryLabel {
@@ -395,7 +395,7 @@
 .helpHeading h2 {
   font-size: 0.9375rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .helpPanel .description {

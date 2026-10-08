@@ -24,7 +24,7 @@ export function GuideSection({
       <div className="mb-6 space-y-3">
         <h2
           id={`${id}-title`}
-          className="font-brand text-xl font-semibold leading-snug tracking-tight text-foreground sm:text-2xl"
+          className="font-brand text-xl font-semibold leading-snug tracking-heading text-foreground sm:text-2xl"
         >
           {title}
         </h2>
@@ -126,7 +126,7 @@ export function GuideNextSteps({
         </p>
         <h2
           id="next-steps-title"
-          className="mt-4 font-brand text-xl font-semibold tracking-tight sm:text-2xl"
+          className="mt-4 font-brand text-xl font-semibold tracking-heading sm:text-2xl"
         >
           {title}
         </h2>

@@ -376,7 +376,7 @@ export default function AboutPage() {
                   return (
                     <li key={product.name} className={styles.productRow}>
                       <div>
-                        <h3 className="flex items-center gap-3 text-base font-semibold tracking-tight">
+                        <h3 className="flex items-center gap-3 text-base font-semibold tracking-normal">
                           <Icon
                             className="size-4 shrink-0 text-primary"
                             aria-hidden="true"

@@ -464,7 +464,7 @@ function StarterProPreviews() {
                     <span className="font-mono">0{index + 1} / 05</span>
                     <span>Interface preview</span>
                   </p>
-                  <h3 className="mt-6 text-xl font-semibold tracking-tight">
+                  <h3 className="mt-6 text-xl font-semibold tracking-subheading">
                     {screenshot.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-foreground">
@@ -768,7 +768,7 @@ export default function StarterProPage() {
                             0{index + 1}
                           </span>
                         </div>
-                        <h3 className="mt-6 text-[22px] font-semibold tracking-tight sm:text-2xl">
+                        <h3 className="mt-6 text-[22px] font-semibold tracking-subheading sm:text-2xl">
                           {title}
                         </h3>
                         <p className="mt-2 text-sm leading-7 text-muted-foreground">
@@ -889,7 +889,7 @@ export default function StarterProPage() {
                         </span>
                       </div>
                       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                        <h3 className="text-lg font-semibold tracking-tight">
+                        <h3 className="text-lg font-semibold tracking-normal">
                           {title}
                         </h3>
                         <span className="font-mono text-[10px] text-muted-foreground">
@@ -1006,7 +1006,7 @@ export default function StarterProPage() {
                     SOURCE PACKAGE
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold tracking-tight">
+                <h3 className="text-xl font-semibold tracking-subheading">
                   From checkout to your code.
                 </h3>
                 <ol className="mt-7 space-y-6">
@@ -1190,7 +1190,7 @@ export default function StarterProPage() {
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
                 Configuration checklist
               </p>
-              <h3 className="mt-4 text-xl font-semibold tracking-tight">
+              <h3 className="mt-4 text-xl font-semibold tracking-subheading">
                 Prepare the services your app will use.
               </h3>
               <dl className="mt-6 divide-y divide-border-subtle">
@@ -1302,7 +1302,7 @@ export default function StarterProPage() {
           <div className="max-w-2xl">
             <h2
               id="starter-pro-next-step"
-              className="text-2xl font-semibold tracking-tight"
+              className="text-2xl font-semibold tracking-heading"
             >
               Start from the foundation. Build your product.
             </h2>

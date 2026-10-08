@@ -308,7 +308,7 @@ a.item:hover {
   min-width: 0;
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -373,7 +373,7 @@ a.item:hover {
   max-width: 15ch;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 600;
-  letter-spacing: -0.035em;
+  letter-spacing: var(--site-heading-tracking);
   line-height: 1.2;
 }
 

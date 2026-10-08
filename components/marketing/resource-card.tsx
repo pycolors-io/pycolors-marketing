@@ -64,7 +64,7 @@ export function MarketingResourceCard({
           <div className="text-xs text-muted-foreground">{meta}</div>
         ) : null}
 
-        <Heading className="text-base font-semibold tracking-tight">
+        <Heading className="font-brand text-base font-semibold leading-snug tracking-normal">
           {title}
           {isExternal ? (
             <span className="sr-only"> (opens in a new tab)</span>

@@ -30,7 +30,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
         </div>
 
         <div className="space-y-2.5">
-          <h3 className="font-brand text-base font-semibold leading-snug tracking-tight text-foreground">
+          <h3 className="font-brand text-base font-semibold leading-snug tracking-normal text-foreground">
             <Link href={post.url} className={cn("outline-none", focusRing)}>
               {post.title}
             </Link>

@@ -215,7 +215,7 @@
 .groupIntro h3 {
   font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: -0.015em;
+  letter-spacing: normal;
 }
 
 .groupIntro > p {
@@ -280,7 +280,7 @@
 .repoContent h4 {
   font-size: 1.125rem;
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
   line-height: 1.4;
 }
 
@@ -357,7 +357,7 @@
   margin-top: 1.25rem;
   font-size: 1rem;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
   line-height: 1.5;
 }
 
@@ -391,10 +391,10 @@
 }
 
 .modelIntro h2 {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+  line-height: 1.2;
+  letter-spacing: var(--site-heading-tracking);
 }
 
 .modelIntro p {
@@ -421,7 +421,7 @@
   margin-top: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 
 .modelOptions p {

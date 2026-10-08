@@ -51,7 +51,7 @@
 .sectionHeading h2 {
   font-size: 1.125rem;
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 
 .sectionHeading p {
@@ -120,7 +120,7 @@
 .option h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--site-subheading-tracking);
   line-height: 1.35;
   text-wrap: balance;
 }
@@ -172,7 +172,7 @@
 .guide h2 {
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: normal;
 }
 
 .guide p {

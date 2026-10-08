@@ -156,7 +156,7 @@
 
 .pathCard h3 {
   font-size: 1.125rem;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 
 .pathCard:focus-visible {

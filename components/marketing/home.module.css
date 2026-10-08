@@ -163,9 +163,9 @@
 }
 .showcase h2 {
   max-width: none;
-  font-size: clamp(2rem, 4.2vw, 3.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1.2;
+  letter-spacing: var(--site-heading-tracking);
 }
 .showcase [data-showcase-accent] {
   display: block;
@@ -380,7 +380,7 @@
 }
 .sectionHeader h2 {
   max-width: 23ch;
-  line-height: 1.16;
+  line-height: 1.2;
 }
 .sectionHeader p {
   max-width: 42rem;
@@ -675,8 +675,8 @@
 }
 .closing h2 {
   max-width: 23ch;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  letter-spacing: -0.04em;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  letter-spacing: var(--site-heading-tracking);
 }
 .closing p {
   max-width: 34rem;

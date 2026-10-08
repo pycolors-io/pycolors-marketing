@@ -92,7 +92,7 @@ function ResourceLink({
 
 const sectionHeaderClass = cn(
   styles.sectionHeader,
-  "mb-9 [&_h2]:max-w-2xl [&_h2]:text-3xl [&_h2]:tracking-[-0.04em] sm:[&_h2]:text-4xl [&_p]:max-w-2xl [&_[data-slot=badge]]:rounded-none [&_[data-slot=badge]]:border-0 [&_[data-slot=badge]]:bg-transparent [&_[data-slot=badge]]:px-0 [&_[data-slot=badge]]:text-muted-foreground",
+  "[&_h2]:max-w-2xl [&_p]:max-w-2xl [&_[data-slot=badge]]:rounded-none [&_[data-slot=badge]]:border-0 [&_[data-slot=badge]]:bg-transparent [&_[data-slot=badge]]:px-0 [&_[data-slot=badge]]:text-muted-foreground",
 );
 
 const starterPro = PRODUCT_DISPLAY["starter-pro"];
@@ -396,7 +396,7 @@ export default function HomePage() {
                         <Icon className="size-[18px]" strokeWidth={1.5} />
                       </span>
                       <div className="min-w-0">
-                        <h3 className="text-[15px] font-semibold tracking-tight">
+                        <h3 className="text-[15px] font-semibold tracking-normal">
                           {point.product}
                         </h3>
                         <p className="mt-1 text-xs leading-5 text-muted-foreground">
@@ -460,7 +460,7 @@ export default function HomePage() {
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <h3 className="text-lg font-semibold tracking-tight">
+                <h3 className="text-lg font-semibold tracking-normal">
                   Components and states
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
@@ -492,7 +492,7 @@ export default function HomePage() {
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <h3 className="text-lg font-semibold tracking-tight">
+                <h3 className="text-lg font-semibold tracking-normal">
                   Tokens and themes
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
@@ -519,7 +519,7 @@ export default function HomePage() {
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <h3 className="text-lg font-semibold tracking-tight">
+                <h3 className="text-lg font-semibold tracking-normal">
                   Product composition
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
@@ -573,7 +573,7 @@ export default function HomePage() {
                     Free · Open source
                   </Badge>
                 </div>
-                <h3 className="text-2xl font-semibold tracking-tight">
+                <h3 className="text-2xl font-semibold tracking-subheading">
                   PyColors Starter Free
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground lg:min-h-21">
@@ -617,7 +617,7 @@ export default function HomePage() {
                   </Badge>
                 </div>
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <h3 className="text-2xl font-semibold tracking-tight">
+                  <h3 className="text-2xl font-semibold tracking-subheading">
                     {starterPro.name}
                   </h3>
                   <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1">

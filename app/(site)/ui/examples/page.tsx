@@ -218,7 +218,7 @@ function AvailableNowCard() {
     <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-background">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-5 sm:px-7">
         <div className="flex flex-wrap items-center gap-3">
-          <h3 className="text-base font-semibold tracking-tight">
+          <h3 className="text-base font-semibold tracking-normal">
             PyColors Starter Free
           </h3>
           <Badge variant="outline" className="bg-background text-[11px]">
@@ -283,7 +283,7 @@ function AvailableNowCard() {
                     <span>0{index + 1} / 06</span>
                     <span>{screen.route}</span>
                   </div>
-                  <h4 className="mt-5 text-xl font-semibold tracking-tight">
+                  <h4 className="mt-5 text-xl font-semibold tracking-subheading">
                     {screen.title}
                   </h4>
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -606,7 +606,7 @@ export default function ExamplesPage() {
               >
                 Starter Pro
               </Badge>
-              <h3 className="text-2xl font-semibold tracking-tight">
+              <h3 className="text-2xl font-semibold tracking-subheading">
                 Ready to connect the business layer?
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">

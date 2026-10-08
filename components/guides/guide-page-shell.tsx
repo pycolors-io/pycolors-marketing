@@ -102,7 +102,7 @@ export function GuidePageShell({
                 </p>
                 <h2
                   id="related-guides-title"
-                  className="mt-3 text-2xl font-semibold tracking-tight"
+                  className="mt-3 text-2xl font-semibold tracking-heading"
                 >
                   Connect the next part of your product.
                 </h2>

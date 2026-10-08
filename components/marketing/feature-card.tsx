@@ -60,7 +60,7 @@ export function MarketingFeatureCard({
         ) : null}
 
         <div>
-          <Heading className="text-lg font-semibold tracking-tight">
+          <Heading className="font-brand text-lg font-semibold leading-snug tracking-normal">
             {title}
           </Heading>
 

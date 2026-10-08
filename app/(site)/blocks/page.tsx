@@ -85,7 +85,7 @@ function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
     <article className="space-y-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-3xl">
-          <h4 className="text-lg font-semibold tracking-tight sm:text-xl">
+          <h4 className="text-lg font-semibold tracking-subheading sm:text-xl">
             {block.title}
           </h4>
           <p className="mt-2 max-w-3xl text-sm leading-7 text-muted-foreground">
@@ -229,7 +229,7 @@ export default function BlocksPage() {
                     <div className="mb-7 flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle pb-5">
                       <div className="flex flex-wrap items-center gap-3">
                         <h3
-                          className="text-xl font-semibold tracking-tight"
+                          className="text-[22px] font-semibold leading-snug tracking-subheading sm:text-2xl"
                           id={`category-${category.slug}-title`}
                         >
                           {category.label}

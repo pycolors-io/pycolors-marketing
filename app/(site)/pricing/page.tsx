@@ -314,7 +314,7 @@ export default function PricingPage() {
                 </div>
                 <h2
                   id={`${offer.id}-heading`}
-                  className="mt-4 font-brand text-2xl font-semibold tracking-tight"
+                  className="mt-4 font-brand text-2xl font-semibold tracking-heading"
                 >
                   {offer.name}
                 </h2>
@@ -524,7 +524,7 @@ export default function PricingPage() {
           <div>
             <h2
               id="pricing-help-heading"
-              className="text-lg font-semibold tracking-tight"
+              className="text-lg font-semibold tracking-normal"
             >
               Still deciding where to start?
             </h2>

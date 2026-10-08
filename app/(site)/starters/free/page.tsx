@@ -340,7 +340,7 @@ export default function StarterFreePage() {
                       <span className="font-mono">{screen.route}</span>
                       <span>UI preview</span>
                     </div>
-                    <h3 className="mt-5 text-xl font-semibold tracking-tight">
+                    <h3 className="mt-5 text-xl font-semibold tracking-subheading">
                       {screen.title}
                     </h3>
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -398,7 +398,7 @@ export default function StarterFreePage() {
                   className="mb-6 size-5 text-muted-foreground"
                   aria-hidden="true"
                 />
-                <h3 className="font-semibold tracking-tight">{item.title}</h3>
+                <h3 className="font-semibold tracking-normal">{item.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
                   {item.description}
                 </p>
@@ -534,7 +534,7 @@ export default function StarterFreePage() {
               <p className="text-xs font-medium text-muted-foreground">
                 Starter Free
               </p>
-              <h3 className="mt-3 text-xl font-semibold tracking-tight">
+              <h3 className="mt-3 text-xl font-semibold tracking-subheading">
                 Shape the product experience.
               </h3>
               <p className="mt-5 flex flex-wrap items-baseline gap-3">
@@ -576,7 +576,7 @@ export default function StarterFreePage() {
               <p className="text-xs font-medium text-muted-foreground">
                 Starter Pro
               </p>
-              <h3 className="mt-3 text-xl font-semibold tracking-tight">
+              <h3 className="mt-3 text-xl font-semibold tracking-subheading">
                 Start with auth and billing foundations.
               </h3>
               <p className="mt-5 flex flex-wrap items-baseline gap-3">

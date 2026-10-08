@@ -222,7 +222,7 @@ export default function GuidesPage() {
               </div>
               <h2
                 id="recommended-guide-title"
-                className="mt-6 max-w-sm font-brand text-2xl font-semibold leading-tight tracking-tight sm:text-3xl"
+                className="mt-6 max-w-sm font-brand text-2xl font-semibold leading-tight tracking-heading sm:text-3xl"
               >
                 What should your SaaS starter include?
               </h2>
@@ -333,7 +333,7 @@ export default function GuidesPage() {
                     <div>
                       <h3
                         id={`${topic.id}-title`}
-                        className="text-lg font-semibold tracking-tight"
+                        className="text-lg font-semibold tracking-normal"
                       >
                         {topic.title}
                       </h3>
@@ -387,7 +387,7 @@ export default function GuidesPage() {
               <p className="mt-5 text-xs text-muted-foreground">
                 Components & patterns
               </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight">
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
                 Build the interface.
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -421,7 +421,7 @@ export default function GuidesPage() {
                 aria-hidden="true"
               />
               <p className="mt-5 text-xs text-muted-foreground">Starter Free</p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight">
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
                 Explore a full product.
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -446,7 +446,7 @@ export default function GuidesPage() {
                 aria-hidden="true"
               />
               <p className="mt-5 text-xs text-muted-foreground">Starter Pro</p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight">
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
                 Connect the foundations.
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">

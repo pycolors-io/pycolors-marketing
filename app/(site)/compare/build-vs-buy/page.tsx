@@ -276,7 +276,7 @@ export default function BuildVsBuyComparisonPage() {
               </p>
               <h2
                 id="decision-brief"
-                className="mt-3 text-xl font-semibold tracking-tight"
+                className="mt-3 text-xl font-semibold tracking-heading"
               >
                 Start with the fit.
               </h2>
@@ -352,7 +352,7 @@ export default function BuildVsBuyComparisonPage() {
                     </p>
                     <h3
                       id={`${option.id}-heading`}
-                      className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl"
+                      className="mt-2 text-xl font-semibold tracking-subheading sm:text-2xl"
                     >
                       {option.title}
                     </h3>
@@ -560,7 +560,7 @@ export default function BuildVsBuyComparisonPage() {
                       className="size-5 text-muted-foreground"
                       aria-hidden="true"
                     />
-                    <h3 className="mt-4 text-base font-semibold tracking-tight">
+                    <h3 className="mt-4 text-base font-semibold tracking-normal">
                       {item.title}
                     </h3>
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -600,7 +600,7 @@ export default function BuildVsBuyComparisonPage() {
                   </Badge>
                   <h2
                     id="next-step-heading"
-                    className="mt-4 text-balance text-2xl font-semibold tracking-tight sm:text-3xl"
+                    className="mt-4 text-balance text-2xl font-semibold tracking-heading sm:text-3xl"
                   >
                     Choose with the product in front of you.
                   </h2>

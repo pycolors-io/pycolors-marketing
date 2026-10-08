@@ -62,7 +62,7 @@ function SectionHeader({
 }>) {
   return (
     <div className="mb-10 space-y-3">
-      <h2 className="font-brand text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+      <h2 className="font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl">
         {title}
       </h2>
 

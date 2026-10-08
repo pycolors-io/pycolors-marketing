@@ -217,10 +217,10 @@
     );
 }
 .purposeHeading h2 {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.04em;
+  line-height: 1.2;
+  letter-spacing: var(--site-heading-tracking);
 }
 .purposeHeading > p {
   max-width: 25rem;
@@ -293,7 +293,7 @@
   margin-top: 1.5rem;
   font-size: 1.125rem;
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: normal;
 }
 .principle > p {
   margin-block: 1rem 1.5rem;
@@ -375,7 +375,7 @@
     padding: 2.5rem;
   }
   .purposeHeading h2 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
   .productRow {
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);

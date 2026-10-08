@@ -136,7 +136,7 @@ export default function BlogPage() {
             <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 sm:mb-8">
               <h2
                 id="featured-title"
-                className="font-brand text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl"
+                className="font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
               >
                 Featured articles
               </h2>
@@ -234,7 +234,7 @@ export default function BlogPage() {
           >
             <div className="flex flex-col p-6 sm:p-8">
               <div className="flex items-center justify-between gap-4">
-                <h3 className="font-brand text-lg font-semibold tracking-tight">
+                <h3 className="font-brand text-lg font-semibold tracking-normal">
                   Starter Free
                 </h3>
                 <span className="text-xs text-muted-foreground">Free</span>
@@ -258,7 +258,7 @@ export default function BlogPage() {
             </div>
             <div className="flex flex-col border-t border-border-subtle p-6 sm:p-8 md:border-l md:border-t-0">
               <div className="flex items-center justify-between gap-4">
-                <h3 className="font-brand text-lg font-semibold tracking-tight">
+                <h3 className="font-brand text-lg font-semibold tracking-normal">
                   Starter Pro
                 </h3>
                 <span className="text-xs text-muted-foreground">

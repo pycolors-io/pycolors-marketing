@@ -731,7 +731,7 @@ export default function NaAiTemplatePage() {
           <div className="max-w-2xl">
             <h2
               id="template-purchase-title"
-              className="text-2xl font-semibold tracking-tight sm:text-3xl"
+              className="text-2xl font-semibold tracking-heading sm:text-3xl"
             >
               Make the page your own.
             </h2>
