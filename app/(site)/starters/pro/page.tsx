@@ -44,6 +44,7 @@ import { StarterProCarousel } from "@/components/starters/starter-pro-carousel";
 import { StarterProFoundations } from "@/components/starters/starter-pro-foundations";
 import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 import styles from "@/components/starters/starter-pro.module.css";
+import detailStyles from "@/components/marketing/detail-card.module.css";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
@@ -748,7 +749,7 @@ export default function StarterProPage() {
                   <article
                     key={title}
                     data-foundation-card=""
-                    className={`${styles.featuredFoundation} flex min-w-0 flex-col bg-background`}
+                    className={`${styles.featuredFoundation} ${detailStyles.surface} flex min-w-0 flex-col`}
                   >
                     <div className={styles.foundationReveal}>
                       <div className="px-5 pt-6 sm:px-8 sm:pt-8">
@@ -776,7 +777,7 @@ export default function StarterProPage() {
                         </p>
                       </div>
                       <div
-                        className={`${styles.foundationMap} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
+                        className={`${detailStyles.preview} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
                       >
                         <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
                           <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
@@ -829,7 +830,7 @@ export default function StarterProPage() {
                         </ul>
                       </div>
                       <div
-                        className={`${styles.foundationSurface} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
+                        className={`${detailStyles.footer} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
                       >
                         <p className="text-xs leading-6 text-muted-foreground">
                           <span className="font-medium text-foreground">

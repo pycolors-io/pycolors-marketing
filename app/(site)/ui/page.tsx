@@ -23,6 +23,8 @@ import { Container } from "@/components/container";
 import { NpmBadges } from "@/components/npm-badges";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingDetailCard } from "@/components/marketing/detail-card";
+import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { UiLivePreview } from "@/components/marketing/ui-live-preview";
@@ -55,6 +57,7 @@ export const metadata: Metadata = {
 const componentGroups = [
   {
     title: "Actions",
+    illustration: "actions",
     icon: MousePointer2,
     description: "Make the next step clear.",
     links: [
@@ -65,6 +68,7 @@ const componentGroups = [
   },
   {
     title: "Forms",
+    illustration: "forms",
     icon: TextCursorInput,
     description: "Collect input with clear feedback.",
     links: [
@@ -76,6 +80,7 @@ const componentGroups = [
   },
   {
     title: "Overlays",
+    illustration: "overlays",
     icon: PanelsTopLeft,
     description: "Keep focused tasks in context.",
     links: [
@@ -85,6 +90,7 @@ const componentGroups = [
   },
   {
     title: "Data",
+    illustration: "data",
     icon: Table2,
     description: "Organize records and navigation.",
     links: [
@@ -94,6 +100,7 @@ const componentGroups = [
   },
   {
     title: "Feedback",
+    illustration: "feedback",
     icon: MessageSquare,
     description: "Show progress, results, and next steps.",
     links: [
@@ -105,6 +112,7 @@ const componentGroups = [
   },
   {
     title: "Structure",
+    illustration: "structure",
     icon: LayoutGrid,
     description: "Give every screen a shared language.",
     links: [
@@ -258,46 +266,35 @@ export default function UiPage() {
               </Link>
             }
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {componentGroups.map((group) => (
-              <div
+              <MarketingDetailCard
                 key={group.title}
-                className="min-w-0 bg-background p-5 sm:p-7"
-              >
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <span className="grid size-9 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/40">
-                    <group.icon
-                      aria-hidden="true"
-                      className="size-4 text-muted-foreground"
-                    />
-                  </span>
-                  <span className="text-xs tabular-nums text-muted-foreground">
-                    {group.links.length} components
-                  </span>
-                </div>
-                <h3 className="text-base font-semibold tracking-normal">
-                  {group.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  {group.description}
-                </p>
-                <ul className="mt-5 border-t border-border-subtle pt-3">
-                  {group.links.map(([label, slug]) => (
-                    <li key={slug}>
-                      <Link
-                        href={`/docs/ui/${slug}`}
-                        className="group -mx-2 flex min-h-10 items-center justify-between gap-3 rounded-[3px] px-2 text-sm text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
-                      >
-                        {label}
-                        <ArrowRight
-                          aria-hidden="true"
-                          className="size-3.5 shrink-0 opacity-40 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-                        />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                title={group.title}
+                description={group.description}
+                eyebrow="UI library"
+                icon={<group.icon />}
+                meta={`${group.links.length} components`}
+                visual={<MarketingCardIllustration kind={group.illustration} />}
+                footer={
+                  <ul className="divide-y divide-border-subtle">
+                    {group.links.map(([label, slug]) => (
+                      <li key={slug}>
+                        <Link
+                          href={`/docs/ui/${slug}`}
+                          className="group -mx-2 flex min-h-10 items-center justify-between gap-3 rounded-[3px] px-2 text-sm text-muted-foreground transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+                        >
+                          {label}
+                          <ArrowRight
+                            aria-hidden="true"
+                            className="size-3.5 shrink-0 opacity-40 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+                          />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                }
+              />
             ))}
           </div>
         </Container>

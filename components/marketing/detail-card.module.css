@@ -1,0 +1,35 @@
+/* Shared with Starter Pro's integration cards. All colors follow the site palette. */
+.surface {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background-color: var(--background);
+  background-image: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 3%, transparent),
+    transparent 55%
+  );
+}
+
+.preview {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--border-subtle) 1px, transparent 0),
+    radial-gradient(
+      ellipse at 50% 100%,
+      color-mix(in oklab, var(--primary) 5%, var(--background)),
+      var(--background) 80%
+    );
+  background-size:
+    16px 16px,
+    auto;
+}
+
+.footer {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 5%, var(--background)),
+    color-mix(in oklab, var(--primary) 1%, var(--background)) 55%,
+    var(--background) 100%
+  );
+}

@@ -26,6 +26,8 @@ import {
   MarketingPillList,
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingDetailCard } from "@/components/marketing/detail-card";
+import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { StarterFreePreview } from "@/components/starters/starter-free-preview";
 
@@ -134,6 +136,8 @@ const foundations = [
   {
     title: "Application structure",
     icon: FolderTree,
+    label: "App Router",
+    illustration: "architecture",
     description: "Start with routes and layouts you can follow.",
     items: [
       "Next.js App Router with TypeScript",
@@ -146,6 +150,8 @@ const foundations = [
   {
     title: "A shared design system",
     icon: Layers3,
+    label: "PyColors UI",
+    illustration: "components",
     description: "Keep every screen speaking the same language.",
     items: [
       "PyColors UI components included",
@@ -158,6 +164,8 @@ const foundations = [
   {
     title: "A focused local workflow",
     icon: Code2,
+    label: "Local development",
+    illustration: "workflow",
     description: "Explore the interface before choosing services.",
     items: [
       "Mock data and client-side examples",
@@ -388,33 +396,31 @@ export default function StarterFreePage() {
             title="A connected foundation for your first screens."
             description="Keep the structure, adapt the components and build on the same UI system used across PyColors."
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle lg:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-3">
             {foundations.map(({ icon: Icon, ...item }) => (
-              <div
+              <MarketingDetailCard
                 key={item.title}
-                className="flex flex-col bg-background p-6 sm:p-7"
+                title={item.title}
+                description={item.description}
+                icon={<Icon />}
+                eyebrow={item.label}
+                visual={<MarketingCardIllustration kind={item.illustration} />}
+                footer={
+                  <Link
+                    href={item.href}
+                    className={`${textLink} w-full justify-between text-xs`}
+                  >
+                    {item.link}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                }
               >
-                <Icon
-                  className="mb-6 size-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <h3 className="font-semibold tracking-normal">{item.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  {item.description}
-                </p>
-                <ul className="mb-5 mt-6 space-y-3">
+                <ul className="space-y-3">
                   {item.items.map((point) => (
                     <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
                   ))}
                 </ul>
-                <Link
-                  href={item.href}
-                  className={`${textLink} mt-auto text-xs`}
-                >
-                  {item.link}{" "}
-                  <ArrowRight className="size-3.5" aria-hidden="true" />
-                </Link>
-              </div>
+              </MarketingDetailCard>
             ))}
           </div>
           <div className="mt-5 flex flex-wrap items-center justify-between gap-3">

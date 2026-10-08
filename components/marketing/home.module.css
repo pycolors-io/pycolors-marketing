@@ -482,111 +482,12 @@
 
 .foundations {
   display: grid;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-panel);
-  background: var(--background);
+  gap: 1.5rem;
 }
-.foundationCard {
-  min-width: 0;
-  padding: 1.5rem;
-}
-.foundationCard + .foundationCard {
-  border-top: 1px solid var(--border-subtle);
-}
-.foundationCard > ul {
-  margin-top: 1.25rem;
-}
-.foundationCard > ul a {
+.foundations > article > div:last-child a {
   padding-inline: 0;
   font-size: 0.75rem;
 }
-.foundationVisual {
-  display: flex;
-  height: 9rem;
-  margin: -1.5rem -1.5rem 1.75rem;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-bottom: 1px solid var(--border-subtle);
-  background:
-    radial-gradient(ellipse at 15% 0%, var(--home-wash), transparent 75%),
-    var(--background);
-}
-.apiVisual {
-  display: grid;
-  gap: 0.75rem;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.625rem;
-}
-.apiVisual > span {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.apiVisual > div {
-  display: flex;
-  gap: 0.375rem;
-}
-.apiVisual > div > span {
-  padding: 0.4rem 0.6rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background: var(--background);
-  color: var(--muted-foreground);
-}
-.tokenVisual {
-  text-align: center;
-  font-size: 0.625rem;
-  color: var(--muted-foreground);
-}
-.tokenVisual > div {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.875rem;
-}
-.tokenVisual [data-token] {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-control);
-}
-.tokenVisual [data-token="background"] {
-  background: var(--background);
-}
-.tokenVisual [data-token="surface"] {
-  background: var(--surface-muted);
-}
-.tokenVisual [data-token="border"] {
-  background: var(--border);
-}
-.tokenVisual [data-token="primary"] {
-  background: var(--primary);
-}
-.compositionVisual {
-  display: grid;
-  gap: 0.375rem;
-  width: 11rem;
-}
-.compositionVisual span {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.65rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background: var(--background);
-  font-size: 0.625rem;
-  color: var(--muted-foreground);
-}
-.compositionVisual span:nth-child(2) {
-  margin-left: 0.75rem;
-}
-.compositionVisual span:nth-child(3) {
-  margin-left: 1.5rem;
-  color: var(--primary);
-}
-
 .starters {
   display: grid;
   gap: 1rem;
@@ -769,10 +670,6 @@
   }
   .foundations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .foundationCard + .foundationCard {
-    border-top: 0;
-    border-left: 1px solid var(--border-subtle);
   }
   .starters {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -24,6 +24,8 @@ import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingDetailCard } from "@/components/marketing/detail-card";
+import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import {
   MarketingActionGroup,
   MarketingCtaPanel,
@@ -177,50 +179,6 @@ const trustLinks = [
   ["Privacy", "/privacy"],
   ["Purchase support", "/orders/support"],
 ] as const;
-
-function FoundationVisual({
-  kind,
-}: {
-  kind: "components" | "tokens" | "composition";
-}) {
-  return (
-    <div className={styles.foundationVisual} aria-hidden="true">
-      {kind === "components" ? (
-        <div className={styles.apiVisual}>
-          <span>
-            <Package className="size-4" /> @pycolors/ui
-          </span>
-          <div>
-            {["Button", "Dialog", "Table"].map((name) => (
-              <span key={name}>{name}</span>
-            ))}
-          </div>
-        </div>
-      ) : kind === "tokens" ? (
-        <div className={styles.tokenVisual}>
-          <div>
-            {["background", "surface", "border", "primary"].map((token) => (
-              <span key={token} data-token={token} />
-            ))}
-          </div>
-          <span>One theme. Every surface.</span>
-        </div>
-      ) : (
-        <div className={styles.compositionVisual}>
-          <span>
-            <Box className="size-3.5" /> Primitives
-          </span>
-          <span>
-            <Blocks className="size-3.5" /> Blocks
-          </span>
-          <span>
-            <PanelsTopLeft className="size-3.5" /> Applications
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
 
 function StarterScope({ pro = false }: { pro?: boolean }) {
   const rows = pro
@@ -453,97 +411,79 @@ export default function HomePage() {
               className={sectionHeaderClass}
             />
             <div className={styles.foundations}>
-              <div className={styles.foundationCard}>
-                <FoundationVisual kind="components" />
-                <Code2
-                  className="mb-4 size-5 text-muted-foreground"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-                <h3 className="text-lg font-semibold tracking-normal">
-                  Components and states
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
-                  Review the APIs and keyboard behavior behind the table,
-                  filters and empty state.
-                </p>
-                <ul className="mt-6 divide-y divide-border-subtle">
-                  <li>
-                    <ResourceLink href="/docs/ui/installation">
-                      Read the installation guide
-                    </ResourceLink>
-                  </li>
-                  <li>
-                    <ResourceLink href="/docs/ui/accessibility">
-                      Read accessibility guidance
-                    </ResourceLink>
-                  </li>
-                  <li>
-                    <ResourceLink href="/docs/ui/storybook">
-                      Use the UI Explorer
-                    </ResourceLink>
-                  </li>
-                </ul>
-              </div>
-              <div className={styles.foundationCard}>
-                <FoundationVisual kind="tokens" />
-                <Palette
-                  className="mb-4 size-5 text-muted-foreground"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-                <h3 className="text-lg font-semibold tracking-normal">
-                  Tokens and themes
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
-                  The same semantic tokens support this page in light and dark.
-                  Adapt them to your product.
-                </p>
-                <ul className="mt-6 divide-y divide-border-subtle">
-                  <li>
-                    <ResourceLink href="/docs/ui/theming">
-                      See theming documentation
-                    </ResourceLink>
-                  </li>
-                  <li>
-                    <ResourceLink href="/tools/theme-builder">
-                      Open Theme Builder
-                    </ResourceLink>
-                  </li>
-                </ul>
-              </div>
-              <div className={styles.foundationCard}>
-                <FoundationVisual kind="composition" />
-                <Layers3
-                  className="mb-4 size-5 text-muted-foreground"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-                <h3 className="text-lg font-semibold tracking-normal">
-                  Product composition
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
-                  Combine primitives into your own screens, or inspect the
-                  available Starter Free application.
-                </p>
-                <ul className="mt-6 divide-y divide-border-subtle">
-                  <li>
-                    <ResourceLink href="/docs/ui/composition">
-                      Read composition guidance
-                    </ResourceLink>
-                  </li>
-                  <li>
-                    <ResourceLink href="/ui/patterns">
-                      Explore UI patterns
-                    </ResourceLink>
-                  </li>
-                  <li>
-                    <ResourceLink href="/ui/examples">
-                      Inspect available examples
-                    </ResourceLink>
-                  </li>
-                </ul>
-              </div>
+              <MarketingDetailCard
+                title="Components and states"
+                eyebrow="Public primitives"
+                icon={<Code2 />}
+                description="Review the APIs and keyboard behavior behind the table, filters and empty state."
+                visual={<MarketingCardIllustration kind="components" />}
+                footer={
+                  <ul className="divide-y divide-border-subtle">
+                    <li>
+                      <ResourceLink href="/docs/ui/installation">
+                        Read the installation guide
+                      </ResourceLink>
+                    </li>
+                    <li>
+                      <ResourceLink href="/docs/ui/accessibility">
+                        Read accessibility guidance
+                      </ResourceLink>
+                    </li>
+                    <li>
+                      <ResourceLink href="/docs/ui/storybook">
+                        Use the UI Explorer
+                      </ResourceLink>
+                    </li>
+                  </ul>
+                }
+              />
+              <MarketingDetailCard
+                title="Tokens and themes"
+                eyebrow="Visual foundation"
+                icon={<Palette />}
+                description="The same semantic tokens support this page in light and dark. Adapt them to your product."
+                visual={<MarketingCardIllustration kind="tokens" />}
+                footer={
+                  <ul className="divide-y divide-border-subtle">
+                    <li>
+                      <ResourceLink href="/docs/ui/theming">
+                        See theming documentation
+                      </ResourceLink>
+                    </li>
+                    <li>
+                      <ResourceLink href="/tools/theme-builder">
+                        Open Theme Builder
+                      </ResourceLink>
+                    </li>
+                  </ul>
+                }
+              />
+              <MarketingDetailCard
+                title="Product composition"
+                eyebrow="Application patterns"
+                icon={<Layers3 />}
+                description="Combine primitives into your own screens, or inspect the available Starter Free application."
+                visual={<MarketingCardIllustration kind="composition" />}
+                footer={
+                  <ul className="divide-y divide-border-subtle">
+                    <li>
+                      <ResourceLink href="/docs/ui/composition">
+                        Read composition guidance
+                      </ResourceLink>
+                    </li>
+                    <li>
+                      <ResourceLink href="/ui/patterns">
+                        Explore UI patterns
+                      </ResourceLink>
+                    </li>
+                    <li>
+                      <ResourceLink href="/ui/examples">
+                        Inspect available examples
+                      </ResourceLink>
+                    </li>
+                  </ul>
+                }
+              />
             </div>
           </MarketingSectionShell>
 
