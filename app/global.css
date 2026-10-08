@@ -33,15 +33,44 @@
   --site-pattern-ink: color-mix(in oklab, var(--foreground) 5%, transparent);
   --site-pattern-wash: color-mix(
     in oklab,
-    var(--primary) 2%,
+    var(--primary) 3%,
     var(--background)
   );
   --site-pattern-height: 1.5rem;
-  --site-pattern-background: repeating-linear-gradient(
-    -45deg,
-    transparent 0 7px,
-    var(--site-pattern-ink) 7px 8px
+  --site-pattern-fade: max(3rem, calc((100vw - var(--site-frame-width)) / 2));
+  --site-pattern-background:
+    linear-gradient(
+      90deg,
+      var(--background),
+      transparent var(--site-pattern-fade),
+      transparent calc(100% - var(--site-pattern-fade)),
+      var(--background)
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 9px,
+      var(--site-pattern-ink) 9px 10px
+    ),
+    linear-gradient(
+      90deg,
+      var(--background),
+      var(--site-pattern-wash),
+      var(--background)
+    );
+  --site-frame-marker: color-mix(
+    in srgb,
+    var(--foreground) 24%,
+    var(--background)
   );
+  --site-frame-markers:
+    linear-gradient(var(--site-frame-marker), var(--site-frame-marker)) left
+      center / 7px 1px no-repeat,
+    linear-gradient(var(--site-frame-marker), var(--site-frame-marker)) left 3px
+      center / 1px 7px no-repeat,
+    linear-gradient(var(--site-frame-marker), var(--site-frame-marker)) right
+      center / 7px 1px no-repeat,
+    linear-gradient(var(--site-frame-marker), var(--site-frame-marker)) right
+      3px center / 1px 7px no-repeat;
   --fd-nav-height: 64px !important;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -239,7 +268,7 @@ span[data-slot="badge"] {
     height: var(--site-pattern-height);
     transform: translateX(-50%);
     border-block: 1px solid var(--site-frame-line);
-    background: var(--site-pattern-background), var(--site-pattern-wash);
+    background: var(--site-pattern-background);
     pointer-events: none;
   }
 }
@@ -264,6 +293,22 @@ span[data-slot="badge"] {
     width: min(100%, var(--site-frame-width));
     margin-inline: auto;
     border-inline: 1px solid var(--site-frame-line);
+    pointer-events: none;
+  }
+}
+
+/* Small registration marks only where the frame has generous outer gutters. */
+@media (min-width: 1536px) {
+  .marketing-section-pattern::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    z-index: 21;
+    width: calc(var(--site-frame-width) + 6px);
+    height: 7px;
+    transform: translateX(-50%);
+    background: var(--site-frame-markers);
     pointer-events: none;
   }
 }

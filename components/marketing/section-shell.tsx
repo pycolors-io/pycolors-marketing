@@ -61,7 +61,7 @@ export function MarketingSectionShell({
       <div
         className={cn(
           widthClass[width],
-          divider === "pattern" && "pt-6 sm:pt-8",
+          divider === "pattern" && "pt-(--site-pattern-height)",
         )}
       >
         {children}
