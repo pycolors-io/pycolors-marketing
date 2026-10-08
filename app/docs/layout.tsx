@@ -4,7 +4,7 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import Link from "next/link";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 
-import { getDocsNavLinks, source } from "@/lib/source";
+import { source } from "@/lib/source";
 import { baseOptions } from "@/lib/layout.shared";
 import { ToastDocsProvider } from "@/content/docs/previews/toast-docs-provider";
 import { DocsFooter } from "@/components/docs-footer";
@@ -73,7 +73,6 @@ function SidebarBanner() {
 }
 
 export default function Layout({ children }: { readonly children: ReactNode }) {
-  const docsLinks = getDocsNavLinks();
   const publicationDates = Object.fromEntries(
     source
       .getPages()
@@ -110,7 +109,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
             }}
             nav={{
               enabled: true,
-              component: <DocsHeader docsLinks={docsLinks} />,
+              component: <DocsHeader />,
             }}
             sidebar={{
               collapsible: false,

@@ -172,6 +172,17 @@ span[data-slot="badge"] {
   max-width: none;
 }
 
+/* The mobile Docs header adds a separate entry point to the article sidebar. */
+@media (max-width: 767px) {
+  #nd-docs-layout {
+    --fd-nav-height: 6.75rem;
+  }
+
+  #nd-sidebar-mobile {
+    top: var(--fd-nav-height);
+  }
+}
+
 @media (min-width: 768px) {
   #nd-docs-layout {
     --fd-sidebar-width: 16rem;

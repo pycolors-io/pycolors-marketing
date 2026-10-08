@@ -31,7 +31,14 @@ import { Logo } from "../logo";
 import { useHeaderDisclosure } from "./use-header-disclosure";
 import styles from "./header-disclosure.module.css";
 
-type SiteHeaderProps = Readonly<{ docsLinks?: PrimaryNavItem[] }>;
+type SiteHeaderProps = Readonly<{
+  docsLinks?: PrimaryNavItem[];
+  logo?: React.ReactNode;
+  desktopActions?: React.ReactNode;
+  mobileActions?: React.ReactNode;
+  secondaryNavigation?: React.ReactNode;
+  onMobileMenuOpen?: () => void;
+}>;
 
 // Keep this media query aligned with the header's lg responsive utilities.
 const DESKTOP_NAV_QUERY = "(min-width: 64rem)";
@@ -281,7 +288,14 @@ function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
   );
 }
 
-export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
+export function SiteHeader({
+  docsLinks = [],
+  logo = <Logo />,
+  desktopActions,
+  mobileActions,
+  secondaryNavigation,
+  onMobileMenuOpen,
+}: SiteHeaderProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState<PrimaryMenu | null>(null);
@@ -366,8 +380,8 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
           </a>
           <Container>
             <div className="flex h-16 items-center gap-3">
-              <div className="flex shrink-0 items-center gap-3">
-                <Logo />
+              <div className="flex shrink-0 items-center gap-3 lg:min-w-40">
+                {logo}
               </div>
               <nav
                 ref={desktopNavRef}
@@ -457,6 +471,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                 )}
               </nav>
               <div className="hidden items-center gap-2 lg:flex">
+                {desktopActions}
                 <Button
                   asChild
                   size="sm"
@@ -468,12 +483,14 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
                   </Link>
                 </Button>
               </div>
-              <div className="ml-auto flex items-center gap-2 lg:hidden">
+              <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
+                {mobileActions}
                 <SheetTrigger asChild>
                   <button
                     type="button"
                     ref={mobileButtonRef}
                     aria-label="Open navigation menu"
+                    onClick={onMobileMenuOpen}
                     className={cn(
                       "inline-flex size-11 items-center justify-center rounded-md border border-border-subtle bg-surface",
                       focusRing,
@@ -486,6 +503,7 @@ export function SiteHeader({ docsLinks = [] }: SiteHeaderProps) {
             </div>
           </Container>
         </div>
+        {secondaryNavigation}
       </header>
       <SheetContent
         // The app's generic dialog CSS adds an offset and rounded corners.

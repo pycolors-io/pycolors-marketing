@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import {
   act,
   cleanup,
@@ -10,12 +11,19 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
+import { FrameworkProvider } from "fumadocs-core/framework";
+import {
+  SidebarDrawerContent,
+  SidebarProvider,
+} from "fumadocs-ui/components/sidebar/base";
 
 import { DocsHeader } from "@/components/docs-header";
 import { SITE_PALETTE_STORAGE_KEY } from "@/lib/site-palette";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
-import { DOCS_MENU_GROUPS, PRODUCT_MENU_GROUPS } from "@/lib/layout.shared";
-import { DocsSidebarPublications } from "@/components/docs/docs-sidebar-items";
+import {
+  PRODUCT_MENU_GROUPS,
+  PRODUCT_MENU_SECONDARY_ITEMS,
+  RESOURCE_MENU_ITEMS,
+} from "@/lib/layout.shared";
 
 const route = vi.hoisted(() => ({ pathname: "/docs" }));
 vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
@@ -26,98 +34,109 @@ vi.mock("@/components/wordmark-font", () => ({
   wordmarkFont: { className: "wordmark-font" },
 }));
 vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
-  FullSearchTrigger: () => <button type="button">Search documentation</button>,
-  SearchTrigger: () => <button type="button">Search documentation</button>,
+  FullSearchTrigger: (props: React.ComponentProps<"button">) => (
+    <button type="button" {...props}>
+      Search documentation
+    </button>
+  ),
+  SearchTrigger: (props: React.ComponentProps<"button">) => (
+    <button type="button" {...props}>
+      Search documentation
+    </button>
+  ),
 }));
 const appearance = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
 vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => appearance }));
 
-const docsLinks = [
-  { label: "Getting Started", href: "/docs/getting-started" },
-  {
-    label: "Project Structure",
-    href: "/docs/templates/na-ai-landing/project-structure",
-  },
-  { label: "Upgrade to Starter Pro", href: "/docs/starter/upgrade" },
-  { label: "What is included", href: "/docs/starter-pro/what-is-included" },
-  { label: "Billing", href: "/docs/starter-pro/billing" },
-  { label: "Backend", href: "/docs/starter-pro/backend" },
-  { label: "Button", href: "/docs/ui/button" },
-];
-const sections = [
-  "/docs/ui",
-  "/docs/blocks",
-  "/docs/starter",
-  "/docs/starter-pro",
-  "/docs/design-system",
-  "/docs/templates/na-ai-landing",
-  "/docs",
-  "/docs/patterns",
-];
-let breakpointChange: (() => void) | undefined;
-const media = {
-  matches: true,
-  addEventListener: vi.fn((_event: string, listener: () => void) => {
-    breakpointChange = listener;
-  }),
-  removeEventListener: vi.fn(),
-};
-function Fixture({ links = docsLinks }: { links?: typeof docsLinks }) {
+let viewportWidth = 1440;
+const listeners = new Set<() => void>();
+function resize(width: number) {
+  act(() => {
+    viewportWidth = width;
+    for (const listener of listeners) listener();
+  });
+}
+function Fixture() {
   return (
-    <div
-      onClick={(event) => {
-        // Let the component handle the click before suppressing jsdom navigation.
-        if ((event.target as HTMLElement).closest("a")) event.preventDefault();
-      }}
+    <FrameworkProvider
+      usePathname={() => route.pathname}
+      useParams={() => ({})}
+      useRouter={() => ({ push: vi.fn(), refresh: vi.fn() })}
     >
-      <DocsHeader docsLinks={links} />
-      <main id="content">
-        <h1>Documentation page</h1>
-        <a href="/outside">Outside link</a>
-      </main>
-    </div>
+      <SidebarProvider>
+        <div
+          onClick={(event) => {
+            if ((event.target as HTMLElement).closest("a"))
+              event.preventDefault();
+          }}
+        >
+          <DocsHeader />
+          <SidebarDrawerContent>
+            <nav aria-label="Documentation articles">
+              <Link href="/docs/ui/button">Button article</Link>
+            </nav>
+          </SidebarDrawerContent>
+          <main id="content">
+            <h1>Documentation page</h1>
+            <a href="/outside">Outside link</a>
+          </main>
+        </div>
+      </SidebarProvider>
+    </FrameworkProvider>
   );
 }
-function trigger() {
-  return screen.getByRole("button", { name: "Docs" });
+function trigger(name = "Products") {
+  return screen.getByRole("button", { name });
 }
-function panel() {
-  return document.getElementById(trigger().getAttribute("aria-controls")!)!;
+function panel(name = "Products") {
+  return document.getElementById(trigger(name).getAttribute("aria-controls")!)!;
 }
-function openDesktop() {
-  fireEvent.click(trigger());
-  return within(panel());
-}
-function resize(desktop: boolean) {
-  act(() => {
-    media.matches = desktop;
-    breakpointChange?.();
-  });
+function openDesktop(name = "Products") {
+  fireEvent.click(trigger(name));
+  return within(panel(name));
 }
 function openMobile() {
-  media.matches = false;
-  const button = screen.getByRole("button", {
-    name: "Open documentation menu",
-  });
+  resize(390);
+  const button = trigger("Open navigation menu");
   fireEvent.click(button);
   return {
     button,
-    dialog: screen.getByRole("dialog", { name: "Documentation" }),
+    dialog: screen.getByRole("dialog", { name: "Explore PyColors" }),
   };
 }
+
 beforeEach(() => {
   document.documentElement.dataset.sitePalette = "pycolors";
   window.localStorage.clear();
   appearance.setTheme.mockClear();
   route.pathname = "/docs";
-  media.matches = true;
-  media.addEventListener.mockClear();
-  media.removeEventListener.mockClear();
-  breakpointChange = undefined;
-  vi.stubGlobal(
-    "matchMedia",
-    vi.fn(() => media),
-  );
+  viewportWidth = 1440;
+  listeners.clear();
+  vi.stubGlobal("matchMedia", (query: string): MediaQueryList => ({
+    media: query,
+    get matches() {
+      if (query.includes("width < 768px")) return viewportWidth < 768;
+      if (query.includes("min-width: 64rem")) return viewportWidth >= 1024;
+      return query.includes("hover: hover");
+    },
+    onchange: null,
+    addListener() {},
+    removeListener() {},
+    addEventListener(
+      _event: string,
+      listener: EventListenerOrEventListenerObject | null,
+    ) {
+      if (typeof listener === "function") listeners.add(listener as () => void);
+    },
+    removeEventListener(
+      _event: string,
+      listener: EventListenerOrEventListenerObject | null,
+    ) {
+      if (typeof listener === "function")
+        listeners.delete(listener as () => void);
+    },
+    dispatchEvent: () => true,
+  }));
 });
 afterEach(async () => {
   cleanup();
@@ -127,500 +146,220 @@ afterEach(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
   vi.unstubAllGlobals();
+  document.body.style.overflow = "";
 });
 
-describe("DocsHeader hover", () => {
-  beforeEach(() => vi.useFakeTimers());
-
-  function advance(ms: number) {
-    act(() => vi.advanceTimersByTime(ms));
-  }
-
-  it("opens after intentional hover and stays open while entering the panel", () => {
-    render(<Fixture />);
-    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(100);
-    expect(panel()).not.toBeVisible();
-    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
-    advance(100);
-    expect(panel()).not.toBeVisible();
-    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(150);
-    expect(panel()).toBeVisible();
-    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
-    advance(100);
-    fireEvent.pointerEnter(panel(), { pointerType: "mouse" });
-    advance(250);
-    expect(panel()).toBeVisible();
-    fireEvent.pointerLeave(panel(), { pointerType: "mouse" });
-    advance(150);
-    expect(panel()).toBeVisible();
-    advance(50);
-    expect(panel()).not.toBeVisible();
-  });
-
-  it("dismisses hover with Escape without stealing focus from the article", () => {
-    render(<Fixture />);
-    const outside = screen.getByRole("link", { name: "Outside link" });
-    act(() => outside.focus());
-    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(150);
-    expect(panel()).toBeVisible();
-    expect(outside).toHaveFocus();
-    fireEvent.keyDown(outside, { key: "Escape" });
-    advance(300);
-    expect(panel()).not.toBeVisible();
-    expect(outside).toHaveFocus();
-  });
-
-  it("keeps the panel open for keyboard users after pointer exit", () => {
-    render(<Fixture />);
-    act(() => trigger().focus());
-    openDesktop();
-    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
-    advance(300);
-    expect(panel()).toBeVisible();
-    const link = within(panel()).getByRole("link", { name: /^UI Library/ });
-    act(() => link.focus());
-    fireEvent.pointerLeave(panel(), { pointerType: "mouse" });
-    advance(300);
-    expect(link).toHaveFocus();
-    expect(panel()).toBeVisible();
-    fireEvent.keyDown(link, { key: "Escape" });
-    expect(panel()).not.toBeVisible();
-    expect(trigger()).toHaveFocus();
-  });
-
-  it("retains tap activation and cancels pending hover on a responsive change", () => {
-    render(<Fixture />);
-    fireEvent.pointerEnter(trigger(), { pointerType: "touch" });
-    advance(300);
-    expect(panel()).not.toBeVisible();
-    openDesktop();
-    expect(panel()).toBeVisible();
-    fireEvent.click(trigger());
-    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    resize(false);
-    advance(300);
-    resize(true);
-    expect(panel()).not.toBeVisible();
-  });
-});
-
-describe("DocsHeader navigation", () => {
-  it("shares dated article badges with the mobile list without marking product sections or quick links", () => {
-    const now = vi
-      .spyOn(Date, "now")
-      .mockReturnValue(Date.parse("2026-10-06T12:00:00Z"));
-    const links = [{ label: "Storybook", href: "/docs/ui/storybook" }];
-    const { unmount } = render(
-      <DocsSidebarPublications dates={{ "/docs/ui/storybook": "2026-09-25" }}>
-        <Fixture links={links} />
-      </DocsSidebarPublications>,
-    );
-    const { dialog } = openMobile();
-    fireEvent.click(within(dialog).getByText("All documentation pages"));
-    const allDocs = within(dialog).getByRole("navigation", {
-      name: "All documentation links",
-    });
-    const quick = within(dialog).getByRole("navigation", {
-      name: "Quick documentation links",
-    });
-    const article = within(allDocs).getByRole("link", {
-      name: "Storybook New",
-    });
-    expect(article).toHaveAttribute("href", "/docs/ui/storybook");
-    expect(
-      within(quick).getByRole("link", { name: "Storybook" }),
-    ).not.toHaveTextContent("New");
-    now.mockReturnValue(Date.parse("2026-10-25T00:00:00Z"));
-    fireEvent.focus(window);
-    expect(within(allDocs).getByRole("link", { name: "Storybook" })).toBe(
-      article,
-    );
-    expect(within(allDocs).getByText("New")).not.toBeVisible();
-    unmount();
-    now.mockRestore();
-  });
-
-  it("keeps the PyColors Docs identity in one link to the documentation home", () => {
+describe("Shared navigation in documentation", () => {
+  it("keeps the Docs identity, global navigation and dedicated search", () => {
     render(<Fixture />);
     const logo = screen.getByRole("link", { name: "PyColors Docs" });
     expect(logo).toHaveAttribute("href", "/docs");
     expect(logo).toHaveTextContent(/pycolors\s*Docs/);
+    const primary = screen.getByRole("navigation", { name: "Primary" });
     expect(
-      screen.queryByRole("link", { name: "PyColors" }),
+      [...primary.children].map(
+        (item) => item.querySelector("button")?.textContent ?? item.textContent,
+      ),
+    ).toEqual(["Products", "Docs", "Resources", "Pricing"]);
+    expect(within(primary).getByRole("link", { name: "Docs" })).toHaveAttribute(
+      "href",
+      "/docs",
+    );
+    expect(
+      within(primary).getByRole("link", { name: "Pricing" }),
+    ).toHaveAttribute("href", "/pricing");
+    expect(
+      screen.queryByRole("button", { name: "Docs" }),
     ).not.toBeInTheDocument();
-    expect(logo.querySelector("a")).toBeNull();
-  });
-
-  it("keeps focus passive and supports explicit click activation", () => {
-    render(<Fixture />);
-    act(() => trigger().focus());
-    expect(trigger()).toHaveAttribute("aria-expanded", "false");
-    expect(panel()).not.toBeVisible();
-    expect(within(panel()).queryByRole("link")).not.toBeInTheDocument();
-    expect(trigger()).not.toHaveAttribute("aria-haspopup");
-    openDesktop();
-    expect(trigger()).toHaveAttribute("aria-expanded", "true");
-    expect(panel()).toBeVisible();
-    fireEvent.click(trigger());
-    expect(panel()).not.toBeVisible();
-  });
-
-  it("preserves all section, featured, pricing and Pro destinations as real links", () => {
-    render(<Fixture />);
-    const menu = openDesktop();
     expect(
-      within(menu.getByRole("navigation", { name: "Documentation sections" }))
-        .getAllByRole("link")
-        .map((a) => a.getAttribute("href")),
-    ).toEqual(sections);
-    expect(
-      within(menu.getByRole("list", { name: "Quick documentation links" }))
-        .getAllByRole("link")
-        .map((a) => a.getAttribute("href")),
-    ).toEqual(docsLinks.slice(0, 6).map((a) => a.href));
-    const pricing = menu.getByRole("link", { name: /View pricing/ });
-    expect(pricing).toHaveAttribute("href", "/pricing");
-    expect(pricing).toHaveTextContent(
-      PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
-    );
-    expect(pricing).toHaveTextContent(
-      PRODUCT_DISPLAY["starter-pro"].priceLabel,
-    );
-    expect(
-      menu.getByRole("link", { name: "Open Theme Builder" }),
-    ).toHaveAttribute("href", "/tools/theme-builder");
+      screen.getAllByRole("button", { name: "Search documentation" }),
+    ).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Explore Pro" })).toHaveAttribute(
       "href",
       "/starters/pro",
     );
-    expect(
-      screen.getAllByRole("button", { name: "Search documentation" }),
-    ).toHaveLength(2);
-    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
-    expect(screen.queryByRole("menuitem")).not.toBeInTheDocument();
   });
 
-  it("falls back to supplied docs links and works without them", () => {
-    const { rerender } = render(<Fixture links={[docsLinks[6]]} />);
-    expect(openDesktop().getByRole("link", { name: "Button" })).toHaveAttribute(
-      "href",
-      "/docs/ui/button",
-    );
-    rerender(<Fixture links={[]} />);
-    expect(
-      within(panel()).queryByRole("list", {
-        name: "Quick documentation links",
-      }),
-    ).not.toBeInTheDocument();
-    expect(within(panel()).getAllByRole("link")).toHaveLength(
-      sections.length + 2,
-    );
-  });
-
-  it("keeps only the most-specific section and quick link current", () => {
-    route.pathname = "/docs/starter-pro/billing";
+  it("uses the same product and resource destinations as marketing", () => {
     render(<Fixture />);
-    const menu = openDesktop();
-    const section = within(
-      menu.getByRole("navigation", { name: "Documentation sections" }),
-    ).getByRole("link", { current: "page" });
-    expect(section).toHaveAttribute("href", "/docs/starter-pro");
+    const products = openDesktop();
     expect(
-      within(
-        menu.getByRole("list", { name: "Quick documentation links" }),
-      ).getByRole("link", { current: "page" }),
-    ).toHaveAttribute("href", "/docs/starter-pro/billing");
-  });
-
-  it("keeps the dedicated docs families and documentation links for every marketing product", () => {
-    render(<Fixture />);
-    const menu = openDesktop();
-    expect(DOCS_MENU_GROUPS.map((group) => group.title)).toEqual([
-      "Build your interface",
-      "Start your application",
-      "Design and launch",
+      products.getAllByRole("link").map((link) => link.getAttribute("href")),
+    ).toEqual([
+      ...PRODUCT_MENU_GROUPS.flatMap((group) =>
+        group.items.map((item) => item.href),
+      ),
+      ...PRODUCT_MENU_SECONDARY_ITEMS.map((item) => item.href),
     ]);
     expect(
-      DOCS_MENU_GROUPS.flatMap((group) =>
-        group.items.map((item) => item.href),
-      ).sort(),
-    ).toEqual(
-      PRODUCT_MENU_GROUPS.flatMap((group) =>
-        group.items.map((item) => item.documentation.href),
-      ).sort(),
-    );
-    for (const group of DOCS_MENU_GROUPS) {
-      const links = within(menu.getByRole("list", { name: group.title }));
-      for (const item of group.items) {
-        const link = links.getByRole("link", {
-          name: `${item.label} ${item.description}`,
-        });
-        expect(link).toHaveAttribute("href", item.href);
-        expect(item.href).toMatch(/^\/docs\//);
-      }
-    }
-    expect(menu.getByRole("link", { name: /UI Library/ })).toHaveAttribute(
-      "href",
-      "/docs/ui",
-    );
-    expect(menu.getByRole("link", { name: /Blocks/ })).toHaveAttribute(
-      "href",
-      "/docs/blocks",
-    );
-    expect(menu.getByRole("link", { name: /NA-AI Landing/ })).toHaveAttribute(
-      "href",
-      "/docs/templates/na-ai-landing",
-    );
+      products.queryByRole("link", { name: "Button article" }),
+    ).not.toBeInTheDocument();
+    const resources = openDesktop("Resources");
+    expect(panel()).not.toBeVisible();
+    expect(
+      resources.getAllByRole("link").map((link) => link.getAttribute("href")),
+    ).toEqual([
+      ...RESOURCE_MENU_ITEMS.map((item) => item.href),
+      "https://github.com/pycolors",
+    ]);
   });
 
-  it.each([
-    ["/docs/ui/button", "UI Library", "/docs/ui"],
-    ["/docs/blocks/auth/sign-in", "Blocks", "/docs/blocks"],
-    [
-      "/docs/templates/na-ai-landing/setup",
-      "NA-AI Landing",
-      "/docs/templates/na-ai-landing",
-    ],
-  ])(
-    "highlights one direct documentation section at %s",
-    (path, label, href) => {
-      route.pathname = path;
+  it.each(["/docs", "/docs/ui/button", "/docs/starter-pro/billing"])(
+    "highlights only Docs in the global navigation at %s",
+    (pathname) => {
+      route.pathname = pathname;
       render(<Fixture />);
-      const current = screen.getByRole("link", {
-        name: label,
-        current: "page",
-      });
-      expect(current).toHaveAttribute("href", href);
+      const primary = within(
+        screen.getByRole("navigation", { name: "Primary" }),
+      );
+      expect(primary.getAllByRole("link", { current: "page" })).toHaveLength(1);
+      expect(primary.getByRole("link", { current: "page" })).toHaveAttribute(
+        "href",
+        "/docs",
+      );
       expect(trigger()).not.toHaveClass("bg-surface-muted/60");
+      expect(trigger("Resources")).not.toHaveClass("bg-surface-muted/60");
     },
   );
 
-  it.each(["/docs", "/docs/design-system/colors", "/docs/patterns"])(
-    "highlights the Docs overview trigger for sections without a direct header link at %s",
-    (path) => {
-      route.pathname = path;
+  it.each(["Products", "Resources"])(
+    "keeps hover and Escape working for %s",
+    (name) => {
+      vi.useFakeTimers();
       render(<Fixture />);
-      expect(trigger()).toHaveClass("bg-surface-muted/60");
+      const outside = screen.getByRole("link", { name: "Outside link" });
+      act(() => outside.focus());
+      fireEvent.pointerEnter(trigger(name), { pointerType: "mouse" });
+      act(() => vi.advanceTimersByTime(150));
+      expect(panel(name)).toBeVisible();
+      expect(outside).toHaveFocus();
+      fireEvent.pointerLeave(trigger(name), { pointerType: "mouse" });
+      act(() => vi.advanceTimersByTime(100));
+      fireEvent.pointerEnter(panel(name), { pointerType: "mouse" });
+      act(() => vi.advanceTimersByTime(250));
+      expect(panel(name)).toBeVisible();
+      fireEvent.keyDown(outside, { key: "Escape" });
+      expect(panel(name)).not.toBeVisible();
+      expect(outside).toHaveFocus();
     },
   );
 
-  it("changes the shared palette without closing Docs and preserves the choice on reopen", () => {
+  it("keeps the shared palette available and preserves native navigation", () => {
     render(<Fixture />);
-    const menu = openDesktop();
-    const palette = within(menu.getByRole("group", { name: "Site palette" }));
-    const monochrome = palette.getByRole("button", { name: "Monochrome" });
-    expect(palette.getByRole("button", { name: "PyColors" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
+    const products = openDesktop();
+    const palette = within(
+      products.getByRole("group", { name: "Site palette" }),
     );
-    act(() => monochrome.focus());
-    fireEvent.click(monochrome);
-    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
+    fireEvent.click(palette.getByRole("button", { name: "Monochrome" }));
     expect(window.localStorage.getItem(SITE_PALETTE_STORAGE_KEY)).toBe(
       "monochrome",
     );
-    expect(monochrome).toHaveAttribute("aria-pressed", "true");
     expect(panel()).toBeVisible();
     expect(appearance.setTheme).not.toHaveBeenCalled();
-    fireEvent.keyDown(monochrome, { key: "Escape" });
-    expect(panel()).not.toBeVisible();
-    expect(trigger()).toHaveFocus();
-    openDesktop();
-    expect(monochrome).toHaveAttribute("aria-pressed", "true");
-  });
-
-  it("preserves keyboard focus when the pointer leaves and restores it on Escape", () => {
-    render(<Fixture />);
-    const link = openDesktop().getByRole("link", { name: "Getting Started" });
-    act(() => link.focus());
-    fireEvent.mouseLeave(trigger().parentElement!);
-    expect(panel()).toBeVisible();
-    expect(link).toHaveFocus();
-    fireEvent.keyDown(link, { key: "Escape" });
-    expect(panel()).not.toBeVisible();
-    expect(trigger()).toHaveFocus();
-  });
-
-  it("closes when focus leaves without stealing that focus", () => {
-    render(<Fixture />);
-    const link = openDesktop().getByRole("link", { name: "Getting Started" });
-    act(() => link.focus());
-    const outside = screen.getByRole("link", { name: "Outside link" });
-    act(() => outside.focus());
-    expect(panel()).not.toBeVisible();
-    expect(outside).toHaveFocus();
-  });
-
-  it("closes on outside pointer interaction and route changes", () => {
-    const { rerender } = render(<Fixture />);
-    openDesktop();
-    fireEvent.pointerDown(screen.getByRole("main"));
-    expect(panel()).not.toBeVisible();
-    openDesktop();
-    route.pathname = "/docs/ui";
-    rerender(<Fixture />);
-    expect(panel()).not.toBeVisible();
-  });
-
-  it("keeps modifier-clicks native and closes on same-tab navigation", () => {
-    render(<Fixture />);
-    const link = openDesktop().getByRole("link", { name: "Getting Started" });
+    const link = products.getByRole("link", { name: /^UI Library/ });
     fireEvent.click(link, { ctrlKey: true });
-    expect(panel()).toBeVisible();
-    fireEvent.click(link, { metaKey: true });
     expect(panel()).toBeVisible();
     fireEvent.click(link);
     expect(panel()).not.toBeVisible();
   });
 
-  it("uses distinct controlled IDs when more than one header is rendered", () => {
-    render(
-      <>
-        <DocsHeader />
-        <DocsHeader />
-      </>,
-    );
-    const controls = screen
-      .getAllByRole("button", { name: "Docs" })
-      .map((b) => b.getAttribute("aria-controls"));
-    expect(new Set(controls).size).toBe(2);
-    for (const id of controls)
-      expect(document.getElementById(id!)).toHaveAttribute("hidden");
-  });
-
-  it("opens a named mobile modal with every docs link and preserves current state", () => {
-    route.pathname = "/docs/ui/button";
-    render(<Fixture />);
-    const { dialog } = openMobile();
-    expect(dialog).toHaveAttribute("aria-modal", "true");
-    const nav = within(dialog).getByRole("navigation", {
-      name: "Documentation navigation",
-    });
-    expect(
-      within(nav)
-        .getAllByRole("link")
-        .map((a) => a.getAttribute("href")),
-    ).toEqual(sections);
-    expect(within(nav).getByRole("link", { current: "page" })).toHaveAttribute(
-      "href",
-      "/docs/ui",
-    );
-    expect(
-      within(dialog).queryByRole("navigation", {
-        name: "All documentation links",
-      }),
-    ).not.toBeVisible();
-    expect(
-      within(dialog).getByRole("navigation", {
-        name: "Quick documentation links",
-      }),
-    ).toBeVisible();
-    fireEvent.click(within(dialog).getByText("All documentation pages"));
-    const allDocs = within(dialog).getByRole("navigation", {
-      name: "All documentation links",
-    });
-    expect(
-      within(allDocs)
-        .getAllByRole("link")
-        .map((a) => a.getAttribute("href")),
-    ).toEqual(docsLinks.map((a) => a.href));
-    expect(
-      within(allDocs).getByRole("link", { current: "page" }),
-    ).toHaveAttribute("href", "/docs/ui/button");
-    expect(
-      within(dialog).getByRole("link", { name: "Pricing" }),
-    ).toHaveAttribute("href", "/pricing");
-    expect(
-      within(dialog).getByRole("link", { name: "Theme Builder" }),
-    ).toHaveAttribute("href", "/tools/theme-builder");
-    const settings = within(
-      within(dialog).getByRole("region", { name: "Appearance" }),
-    );
-    fireEvent.click(settings.getByRole("button", { name: "Monochrome" }));
-    expect(document.documentElement.dataset.sitePalette).toBe("monochrome");
-    expect(
-      settings.getByRole("button", { name: "Monochrome" }),
-    ).toHaveAttribute("aria-pressed", "true");
-    fireEvent.click(settings.getByRole("button", { name: "Light theme" }));
-    expect(appearance.setTheme).toHaveBeenCalledWith("light");
-    expect(
-      settings.getByRole("button", { name: "System theme" }),
-    ).toBeVisible();
-    expect(dialog).toBeVisible();
-    expect(
-      within(dialog).getByRole("link", { name: "Explore Starter Pro" }),
-    ).toHaveAttribute("href", "/starters/pro");
-    expect(screen.queryByRole("main")).not.toBeInTheDocument();
-    expect(getComputedStyle(document.body).overflow).toBe("hidden");
-  });
-
-  it("dismisses the mobile modal and restores focus and existing body styles", async () => {
-    document.body.style.overflow = "auto";
+  it("exposes the same global mobile menu while articles stay in the sidebar", async () => {
     render(<Fixture />);
     const { button, dialog } = openMobile();
-    fireEvent.click(within(dialog).getByRole("button", { name: "Close" }));
+    const nav = within(dialog);
+    for (const href of [
+      "/ui",
+      "/blocks",
+      "/starters/free",
+      "/starters/pro",
+      "/templates/na-ai-landing",
+      "/tools/theme-builder",
+      "/docs",
+      "/pricing",
+      "/guides",
+      "/blog",
+    ]) {
+      expect(dialog.querySelector(`a[href="${href}"]`)).not.toBeNull();
+    }
+    expect(
+      nav.queryByRole("link", { name: "Button article" }),
+    ).not.toBeInTheDocument();
+    expect(nav.getByRole("link", { name: "Docs" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    const settings = within(nav.getByRole("region", { name: "Appearance" }));
+    fireEvent.click(settings.getByRole("button", { name: "Dark theme" }));
+    expect(appearance.setTheme).toHaveBeenCalledWith("dark");
+    fireEvent.click(nav.getByRole("button", { name: "Close" }));
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
     await waitFor(() => expect(button).toHaveFocus());
-    expect(document.body.style.overflow).toBe("auto");
-    document.body.style.overflow = "";
-  });
-
-  it("closes mobile navigation on route change and releases the scroll lock", async () => {
-    const { rerender } = render(<Fixture />);
-    openMobile();
-    route.pathname = "/docs/starter-pro";
-    rerender(<Fixture />);
-    await waitFor(() =>
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
-    );
     expect(getComputedStyle(document.body).overflow).not.toBe("hidden");
   });
 
-  it("closes both navigation modes across their breakpoint and restores visible focus", async () => {
+  it("opens the real article sidebar separately and closes it with Escape", () => {
+    viewportWidth = 390;
     render(<Fixture />);
-    const link = openDesktop().getByRole("link", { name: "Getting Started" });
-    act(() => link.focus());
-    resize(false);
-    expect(panel()).not.toBeVisible();
-    expect(
-      screen.getByRole("button", { name: "Open documentation menu" }),
-    ).toHaveFocus();
+    const browse = trigger("Browse documentation");
+    expect(browse).toHaveAttribute("aria-controls", "nd-sidebar-mobile");
+    expect(browse).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(browse);
+    expect(browse).toHaveAttribute("aria-expanded", "true");
+    expect(document.getElementById("nd-sidebar-mobile")).toHaveAttribute(
+      "data-state",
+      "open",
+    );
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    const article = screen.getByRole("link", { name: "Button article" });
+    act(() => article.focus());
+    fireEvent.keyDown(article, { key: "Escape" });
+    expect(browse).toHaveAttribute("aria-expanded", "false");
+    expect(browse).toHaveFocus();
+  });
+
+  it("closes the article sidebar before opening global navigation and on route changes", () => {
+    viewportWidth = 390;
+    const { rerender } = render(<Fixture />);
+    const browse = trigger("Browse documentation");
+    fireEvent.click(browse);
     openMobile();
-    resize(true);
+    expect(browse).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("dialog")).toBeVisible();
+    fireEvent.click(
+      within(screen.getByRole("dialog")).getByRole("button", { name: "Close" }),
+    );
+    fireEvent.click(browse);
+    route.pathname = "/docs/ui/button";
+    rerender(<Fixture />);
+    expect(browse).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("uses the same desktop breakpoint and restores focus when layouts change", async () => {
+    render(<Fixture />);
+    const link = openDesktop().getByRole("link", { name: /^UI Library/ });
+    act(() => link.focus());
+    resize(1023);
+    expect(panel()).not.toBeVisible();
+    expect(trigger("Open navigation menu")).toHaveFocus();
+    openMobile();
+    resize(1024);
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
     await waitFor(() => expect(trigger()).toHaveFocus());
-    expect(getComputedStyle(document.body).overflow).not.toBe("hidden");
   });
 
-  it("cleans listeners and modal effects on unmount", async () => {
-    const remove = vi.spyOn(document, "removeEventListener");
-    const { unmount } = render(<Fixture />);
-    openDesktop();
-    const installed = media.addEventListener.mock.calls[0][1];
-    openMobile();
-    unmount();
-    await waitFor(() =>
-      expect(getComputedStyle(document.body).overflow).not.toBe("hidden"),
-    );
-    expect(media.removeEventListener).toHaveBeenCalledWith("change", installed);
-    expect(remove).toHaveBeenCalledWith("pointerdown", expect.any(Function));
-    expect(document.body.style.pointerEvents).not.toBe("none");
-    remove.mockRestore();
-  });
-
-  it("passes axe for the closed/open header and mobile modal", async () => {
+  it("passes axe with global panels, mobile navigation and article navigation", async () => {
     const { container } = render(<Fixture />);
     expect((await axe(container)).violations).toEqual([]);
     openDesktop();
     expect((await axe(container)).violations).toEqual([]);
-    const { dialog } = openMobile();
-    expect((await axe(dialog)).violations).toEqual([]);
+    fireEvent.keyDown(trigger(), { key: "Escape" });
+    openDesktop("Resources");
+    expect((await axe(container)).violations).toEqual([]);
+    openMobile();
+    expect((await axe(document.body)).violations).toEqual([]);
   });
 });

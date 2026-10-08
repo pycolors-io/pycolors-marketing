@@ -135,8 +135,7 @@ const PRODUCT_FAMILIES: ProductMenuGroup[] = [
   },
 ];
 
-// Marketing groups the same products by starting point; Docs keeps its
-// installation families and documentation-specific descriptions.
+// The shared global menu groups products by starting point in both contexts.
 const products = PRODUCT_FAMILIES.flatMap((group) => group.items);
 
 export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
@@ -155,16 +154,6 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
     ),
   },
 ];
-
-export const DOCS_MENU_GROUPS = PRODUCT_FAMILIES.map((group) => ({
-  title: group.title,
-  items: group.items.map((item) => ({
-    label: item.documentation.label ?? item.label,
-    href: item.documentation.href,
-    description: item.documentation.description,
-    icon: item.icon,
-  })),
-}));
 
 export const PRODUCT_MENU_SECONDARY_ITEMS: PrimaryNavItem[] = [
   { label: "Compare Starters", href: "/starters" },
