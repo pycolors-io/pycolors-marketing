@@ -97,7 +97,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
     <>
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
-      <div className="min-h-screen">
+      <div className="site-frame relative min-h-screen">
         <DocsSidebarPublications dates={publicationDates}>
           <DocsLayout
             tree={docsTree}

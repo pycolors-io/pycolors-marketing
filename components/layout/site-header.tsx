@@ -362,10 +362,10 @@ export function SiteHeader({
     <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-colors duration-200 motion-reduce:transition-none",
+          "site-frame fixed inset-x-0 top-0 z-50 border-b border-border-subtle transition-colors duration-200 motion-reduce:transition-none",
           scrolled
-            ? "border-b border-border-subtle bg-background/88 backdrop-blur-xl"
-            : "border-b border-border-subtle/60 bg-background/78 backdrop-blur-md",
+            ? "bg-background/88 backdrop-blur-xl"
+            : "bg-background/78 backdrop-blur-md",
         )}
       >
         <div className="relative z-10">

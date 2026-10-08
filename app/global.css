@@ -149,6 +149,27 @@ span[data-slot="badge"] {
   border-radius: 20px;
 }
 
+/* Shared frame decoration does not consume space or intercept interactions. */
+@layer components {
+  /* Preserve hero spacing and compact CTA panels; callers can override borders. */
+  .marketing-section + .marketing-section-divided {
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+@media (min-width: 768px) {
+  .site-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    width: min(100%, var(--site-frame-width));
+    margin-inline: auto;
+    border-inline: 1px solid var(--border-subtle);
+    pointer-events: none;
+  }
+}
+
 /* ==========================================================================
    Fumadocs layout
    ========================================================================== */

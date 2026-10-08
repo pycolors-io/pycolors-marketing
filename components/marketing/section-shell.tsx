@@ -47,7 +47,12 @@ export function MarketingSectionShell({
       id={id}
       aria-labelledby={ariaLabelledBy}
       aria-label={ariaLabel}
-      className={cn(spacingClass[spacing], className)}
+      className={cn(
+        "marketing-section",
+        spacingClass[spacing],
+        spacing === "default" && "marketing-section-divided",
+        className,
+      )}
     >
       <div className={widthClass[width]}>{children}</div>
     </section>
