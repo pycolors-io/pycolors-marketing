@@ -1,17 +1,9 @@
 "use client";
 
-import * as React from "react";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
   Table,
   TableBody,
   TableCaption,
@@ -21,330 +13,27 @@ import {
   TableHeader,
   TableLoading,
   TableRow,
-  buildPaginationRange,
   cn,
 } from "@pycolors/ui";
 
-export type DataTableColumn<Row> = Readonly<{
-  id: string;
-  header: React.ReactNode;
-  cell: (row: Row) => React.ReactNode;
-  headerClassName?: string;
-  cellClassName?: string;
-  sortable?: boolean;
-}>;
+import { DataTableQueryControls } from "./query-controls";
+import {
+  DataTablePageSizeControls,
+  DataTablePaginationControls,
+  hasValidPagination,
+} from "./pagination";
+import type { DataTableProps } from "./types";
 
-export type DataTableSort = Readonly<{
-  columnId: string;
-  direction: "asc" | "desc";
-}>;
-
-export type DataTableSorting = Readonly<{
-  value: DataTableSort | null;
-  onSortChange: (sort: DataTableSort) => void;
-  ascendingLabel?: string;
-  descendingLabel?: string;
-}>;
-
-export type DataTablePageSize = Readonly<{
-  value: number;
-  options: readonly number[];
-  onPageSizeChange: (pageSize: number) => void;
-  label?: string;
-}>;
-
-export type DataTablePagination = Readonly<{
-  page: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  navigationLabel?: string;
-  previousLabel?: string;
-  nextLabel?: string;
-  summary?: React.ReactNode;
-}>;
-
-export type DataTableQuery = Readonly<{
-  label?: string;
-  search: Readonly<{
-    value: string;
-    label: string;
-    onValueChange: (value: string) => void;
-    placeholder?: string;
-    disabled?: boolean;
-    inputRef?: React.Ref<HTMLInputElement>;
-  }>;
-  filters?: React.ReactNode;
-  reset?: Readonly<{
-    label: string;
-    onReset: () => void;
-    disabled?: boolean;
-  }>;
-  summary?: React.ReactNode;
-}>;
-
-export type DataTableState =
-  | Readonly<{ status?: "ready" }>
-  | Readonly<{ status: "loading"; label?: string }>
-  | Readonly<{
-      status: "error";
-      title: string;
-      description?: string;
-      action?: React.ReactNode;
-    }>;
-
-export type DataTableProps<Row> = Readonly<{
-  caption: string;
-  columns: readonly DataTableColumn<Row>[];
-  rows: readonly Row[];
-  getRowId: (row: Row) => React.Key;
-  state?: DataTableState;
-  emptyTitle: string;
-  emptyDescription?: string;
-  emptyAction?: React.ReactNode;
-  renderRowActions?: (row: Row) => React.ReactNode;
-  rowActionsLabel?: string;
-  pagination?: DataTablePagination;
-  pageSize?: DataTablePageSize;
-  sorting?: DataTableSorting;
-  query?: DataTableQuery;
-  className?: string;
-}>;
-
-function DataTableQueryControls({
-  query,
-}: Readonly<{ query: DataTableQuery }>) {
-  const { filters, label = "Record filters", reset, search, summary } = query;
-  const hasFilters = React.Children.toArray(filters).some(
-    (node) => node !== "",
-  );
-  const hasSummary = React.Children.toArray(summary).some(
-    (node) => node !== "",
-  );
-
-  return (
-    <div
-      aria-label={label}
-      className="min-w-0 space-y-3"
-      data-slot="data-table-query"
-      role="group"
-    >
-      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
-        <label
-          className="flex min-w-0 flex-1 flex-col gap-1 text-sm"
-          data-slot="data-table-search-label"
-        >
-          <span className="text-muted-foreground">{search.label}</span>
-          <input
-            autoComplete="off"
-            className="min-h-11 sm:min-h-10 w-full min-w-0 rounded-md border border-border bg-background px-3 py-1 text-base text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
-            data-slot="data-table-search"
-            disabled={search.disabled}
-            onChange={(event) => {
-              if (!search.disabled) {
-                search.onValueChange(event.currentTarget.value);
-              }
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.nativeEvent.isComposing) {
-                event.preventDefault();
-              }
-            }}
-            placeholder={search.placeholder}
-            ref={search.inputRef}
-            type="search"
-            value={search.value}
-          />
-        </label>
-        {hasFilters ? (
-          <div
-            className="flex min-w-0 flex-wrap items-end gap-3"
-            data-slot="data-table-filters"
-          >
-            {filters}
-          </div>
-        ) : null}
-        {reset ? (
-          <button
-            className="inline-flex min-h-11 sm:min-h-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-background px-3 py-1 text-sm font-medium text-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            data-slot="data-table-query-reset"
-            disabled={reset.disabled}
-            onClick={reset.onReset}
-            type="button"
-          >
-            {reset.label}
-          </button>
-        ) : null}
-      </div>
-      {hasSummary ? (
-        <div
-          className="text-sm leading-6 text-muted-foreground"
-          data-slot="data-table-query-summary"
-        >
-          {summary}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function hasValidPagination(
-  pagination: DataTablePagination | undefined,
-): pagination is DataTablePagination {
-  if (!pagination) return false;
-
-  return (
-    Number.isSafeInteger(pagination.page) &&
-    Number.isSafeInteger(pagination.totalPages) &&
-    pagination.totalPages > 1 &&
-    pagination.page >= 1 &&
-    pagination.page <= pagination.totalPages
-  );
-}
-
-function DataTablePageSizeControls({
-  pageSize,
-}: Readonly<{ pageSize: DataTablePageSize }>) {
-  const { label = "Rows per page", onPageSizeChange, value } = pageSize;
-  const options = [
-    ...new Set(
-      pageSize.options.filter((size) => Number.isSafeInteger(size) && size > 0),
-    ),
-  ];
-
-  if (options.length < 2 || !options.includes(value)) return null;
-
-  return (
-    <label
-      className="flex min-w-0 flex-wrap items-center gap-2 text-sm"
-      data-slot="data-table-page-size"
-    >
-      <span className="text-muted-foreground">{label}</span>
-      <span className="relative inline-grid min-w-24 max-w-full">
-        <select
-          className="h-11 w-full min-w-0 appearance-none truncate rounded-[5px] border border-input bg-background py-2 pl-3 pr-9 text-base leading-5 text-foreground shadow-xs outline-none transition-colors hover:border-border focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm motion-reduce:transition-none"
-          data-slot="data-table-page-size-select"
-          onChange={(event) => {
-            const nextSize = Number(event.currentTarget.value);
-            if (nextSize !== value && options.includes(nextSize)) {
-              onPageSizeChange(nextSize);
-            }
-          }}
-          value={String(value)}
-        >
-          {options.map((size) => (
-            <option key={size} value={String(size)}>
-              {size}
-            </option>
-          ))}
-        </select>
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          viewBox="0 0 16 16"
-          fill="none"
-          className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground"
-        >
-          <path
-            d="m4 6 4 4 4-4"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-    </label>
-  );
-}
-
-function DataTablePaginationControls({
-  pagination,
-}: Readonly<{ pagination: DataTablePagination }>) {
-  const {
-    navigationLabel = "Table pagination",
-    nextLabel = "Next page",
-    onPageChange,
-    page,
-    previousLabel = "Previous page",
-    summary,
-    totalPages,
-  } = pagination;
-  const tokens = buildPaginationRange({ page, totalPages });
-
-  const requestPage = (nextPage: number) => {
-    if (
-      Number.isSafeInteger(nextPage) &&
-      nextPage >= 1 &&
-      nextPage <= totalPages &&
-      nextPage !== page
-    ) {
-      onPageChange(nextPage);
-    }
-  };
-
-  return (
-    <div
-      className={cn(
-        "flex min-w-0 flex-col gap-3",
-        "sm:flex-row sm:items-center sm:justify-between",
-      )}
-      data-slot="data-table-pagination"
-    >
-      {summary ? (
-        <div
-          className="text-sm leading-6 text-muted-foreground"
-          data-slot="data-table-pagination-summary"
-        >
-          {summary}
-        </div>
-      ) : (
-        <span aria-hidden="true" />
-      )}
-
-      <Pagination
-        aria-label={navigationLabel}
-        className="w-auto justify-start sm:justify-end [&_button]:min-h-11 sm:[&_button]:min-h-10"
-      >
-        <PaginationContent className="!m-0 !max-w-none !p-0 [&>li]:!m-0 [&>li]:!p-0 [&>li]:before:hidden">
-          <PaginationItem>
-            <PaginationPrevious
-              disabled={page === 1}
-              label={previousLabel}
-              onClick={() => requestPage(page - 1)}
-            />
-          </PaginationItem>
-
-          {tokens.map((token) =>
-            token.type === "ellipsis" ? (
-              <PaginationItem key={token.key}>
-                <PaginationEllipsis />
-              </PaginationItem>
-            ) : (
-              <PaginationItem key={token.value}>
-                <PaginationLink
-                  aria-label={`Page ${token.value}`}
-                  disabled={token.value === page}
-                  isActive={token.value === page}
-                  onClick={() => requestPage(token.value)}
-                >
-                  {token.value}
-                </PaginationLink>
-              </PaginationItem>
-            ),
-          )}
-
-          <PaginationItem>
-            <PaginationNext
-              disabled={page === totalPages}
-              label={nextLabel}
-              onClick={() => requestPage(page + 1)}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
-  );
-}
+export type {
+  DataTableColumn,
+  DataTableSort,
+  DataTableSorting,
+  DataTablePageSize,
+  DataTablePagination,
+  DataTableQuery,
+  DataTableState,
+  DataTableProps,
+} from "./types";
 
 /**
  * A source-copy record table with consumer-owned columns, rows, states,

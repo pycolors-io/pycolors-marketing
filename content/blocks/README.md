@@ -103,6 +103,12 @@ resulting code. They may customize structure, styling, and behavior for their
 product. The copied source has no automatic updates or synchronization path;
 consumers choose whether and how to compare future canonical changes.
 
+The public catalog also offers a browser-generated ZIP of the exact source
+displayed in its code explorer, preserving the suggested application folder
+structure. This is an export convenience for manual copying, not a hosted
+delivery service or installer. Export code belongs in the marketing application,
+outside canonical Block directories; archives contain only the displayed source.
+
 Copying a Block does not change a package version and does not require a
 Changeset. Consumers must install and use their own compatible public
 `@pycolors/ui` dependency.

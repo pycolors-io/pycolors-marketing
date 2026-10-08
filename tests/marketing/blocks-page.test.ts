@@ -154,16 +154,14 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('? "p-3"');
   });
 
-  it("exposes syntax-highlighted canonical source without repository path chrome", () => {
+  it("loads copyable files on the server and delegates source interaction", () => {
     expect(page).toContain("readBlockSource");
     expect(page).toContain('from "@/lib/blocks/source.server"');
     expect(page).not.toContain('from "node:fs"');
     expect(page).not.toContain('from "node:path"');
     expect(sourceLoader).toContain('from "node:fs"');
     expect(sourceLoader).toContain('from "node:path"');
-    expect(sourceLoader).toContain(
-      '"content", "blocks", block.id, "index.tsx"',
-    );
+    expect(sourceLoader).toContain('"content", "blocks", block.id');
     expect(page).toContain("BlockShowcaseTabs");
     expect(page).toContain("source={source}");
     expect(page).not.toContain("sourcePath");
@@ -173,12 +171,7 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('role="tabpanel"');
     expect(showcaseTabs).toContain("Preview");
     expect(showcaseTabs).toContain("Code");
-    expect(showcaseTabs).toContain("Copy code");
-    expect(showcaseTabs).toContain("navigator.clipboard.writeText(source)");
-    expect(showcaseTabs).toContain("DynamicCodeBlock");
-    expect(showcaseTabs).toContain('lang="tsx"');
-    expect(showcaseTabs).toContain('light: "github-light"');
-    expect(showcaseTabs).toContain('dark: "github-dark"');
+    expect(showcaseTabs).toContain("BlockSourceExplorer");
   });
 
   it("keeps one bounded demo surface instead of wrapping every Block in a card", () => {

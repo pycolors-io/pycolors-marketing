@@ -1,9 +1,6 @@
 "use client";
 
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import {
-  Check,
-  Copy,
   ExternalLink,
   Maximize2,
   Monitor,
@@ -20,6 +17,8 @@ import {
   type ReactNode,
 } from "react";
 
+import type { BlockSource } from "@/lib/blocks/source";
+import { BlockSourceExplorer } from "./block-source-explorer";
 import styles from "./block-showcase.module.css";
 
 type View = "preview" | "source";
@@ -104,15 +103,12 @@ export function BlockShowcaseTabs({
 }: Readonly<{
   preview: ReactNode;
   previewHref: string;
-  source: string;
+  source: BlockSource;
 }>) {
   const id = useId();
   const previewSurfaceRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<View>("preview");
   const [viewport, setViewport] = useState<Viewport>("desktop");
-  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">(
-    "idle",
-  );
   const [fullscreenAvailable, setFullscreenAvailable] = useState(false);
   const [fullscreenError, setFullscreenError] = useState(false);
   useEffect(() => {
@@ -128,15 +124,6 @@ export function BlockShowcaseTabs({
         ? "p-5"
         : "p-4 sm:p-6 lg:p-8";
   const simulationClassName = getSimulationClassName(viewport);
-
-  async function copySource() {
-    try {
-      await navigator.clipboard.writeText(source);
-      setCopyStatus("copied");
-    } catch {
-      setCopyStatus("failed");
-    }
-  }
 
   async function enterFullscreen() {
     if (!document.fullscreenEnabled || !previewSurfaceRef.current) return;
@@ -262,18 +249,9 @@ export function BlockShowcaseTabs({
             </button>
           </div>
         ) : (
-          <button
-            className={`${styles.control} inline-flex min-h-9 w-28 shrink-0 items-center justify-center gap-2 rounded-[5px] px-3 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
-            onClick={copySource}
-            type="button"
-          >
-            {copyStatus === "copied" ? (
-              <Check aria-hidden="true" className="size-3.5" />
-            ) : (
-              <Copy aria-hidden="true" className="size-3.5" />
-            )}
-            {copyStatus === "copied" ? "Copied" : "Copy code"}
-          </button>
+          <span className="px-2 text-xs text-muted-foreground">
+            {source.files.length} {source.files.length === 1 ? "file" : "files"}
+          </span>
         )}
       </div>
 
@@ -314,35 +292,11 @@ export function BlockShowcaseTabs({
         id={`${id}-source-panel`}
         role="tabpanel"
       >
-        <p
-          role="status"
-          className="min-h-9 px-4 py-2 text-xs text-muted-foreground"
-        >
-          {copyStatus === "failed"
-            ? "Copy unavailable. Select the code below and copy it manually."
-            : copyStatus === "copied"
-              ? "Complete source copied."
-              : "Complete source · Select the code to copy manually."}
-        </p>
-        <div
-          tabIndex={0}
-          aria-label="Complete Block source"
-          className="max-h-[36rem] overflow-auto [&_figure]:m-0 [&_figure]:rounded-none [&_pre]:max-h-none"
-        >
-          {view === "source" ? (
-            <DynamicCodeBlock
-              code={source}
-              lang="tsx"
-              codeblock={{ allowCopy: false }}
-              options={{
-                themes: {
-                  light: "github-light",
-                  dark: "github-dark",
-                },
-              }}
-            />
-          ) : null}
-        </div>
+        <BlockSourceExplorer
+          key={source.directory}
+          source={source}
+          active={view === "source"}
+        />
       </div>
     </div>
   );

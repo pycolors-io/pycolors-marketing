@@ -13,6 +13,8 @@ import {
   type ResponsiveSidebarProps,
 } from "../../content/blocks/app-shells/responsive-sidebar/index";
 import responsiveSidebarSource from "../../content/blocks/app-shells/responsive-sidebar/index.tsx?raw";
+import sidebarNavigationSource from "../../content/blocks/app-shells/responsive-sidebar/sidebar-navigation.tsx?raw";
+import sidebarTypesSource from "../../content/blocks/app-shells/responsive-sidebar/types.ts?raw";
 import { ResponsiveSidebarExample } from "../../components/docs/blocks/responsive-sidebar-example";
 
 const items = [
@@ -270,7 +272,11 @@ describe("ResponsiveSidebar", () => {
   });
 
   it("keeps canonical source on approved public and Block-local imports", () => {
-    const source = responsiveSidebarSource;
+    const source = [
+      responsiveSidebarSource,
+      sidebarNavigationSource,
+      sidebarTypesSource,
+    ].join("\n");
 
     expect(source).toContain('from "react"');
     expect(source).toContain('from "@pycolors/ui"');

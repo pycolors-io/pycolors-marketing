@@ -9,6 +9,9 @@ import {
   type DataTableProps,
 } from "../../content/blocks/data/data-table/index";
 import dataTableSource from "../../content/blocks/data/data-table/index.tsx?raw";
+import paginationSource from "../../content/blocks/data/data-table/pagination.tsx?raw";
+import queryControlsSource from "../../content/blocks/data/data-table/query-controls.tsx?raw";
+import dataTableTypesSource from "../../content/blocks/data/data-table/types.ts?raw";
 
 type ExampleRow = Readonly<{
   id: string;
@@ -291,7 +294,12 @@ describe("DataTable", () => {
   });
 
   it("keeps canonical source on approved public and Block-local imports", () => {
-    const source = dataTableSource;
+    const source = [
+      dataTableSource,
+      paginationSource,
+      queryControlsSource,
+      dataTableTypesSource,
+    ].join("\n");
 
     expect(source).toContain('from "react"');
     expect(source).toContain('from "@pycolors/ui"');

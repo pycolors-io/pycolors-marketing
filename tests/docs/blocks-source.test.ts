@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { readFileSync, readdirSync } from "node:fs";
-import { dirname, relative, resolve } from "node:path";
+import { dirname, extname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
@@ -84,7 +84,7 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
       expect(attributes).toContain(
         `title="src/components/blocks/${slug}/${filename}"`,
       );
-      expect(attributes).toMatch(/\blang=["']tsx["']/u);
+      expect(attributes).toContain(`lang="${extname(filename).slice(1)}"`);
       expect(attributes).not.toMatch(/\b(?:cwd|region|lines)\b/u);
     }
     expect(section).toContain("select the code manually");

@@ -20,7 +20,10 @@ function showcase() {
     <BlockShowcaseTabs
       preview={<Demo />}
       previewHref="/blocks/data/stats-overview/preview"
-      source={source}
+      source={{
+        directory: "src/components/blocks/action",
+        files: [{ path: "index.tsx", content: source, language: "tsx" }],
+      }}
     />,
   );
 }
@@ -59,17 +62,15 @@ describe("Block showcase", () => {
     vi.stubGlobal("navigator", { clipboard: { writeText } });
     showcase();
     fireEvent.click(screen.getByRole("tab", { name: "Code" }));
-    fireEvent.click(screen.getByRole("button", { name: "Copy code" }));
+    fireEvent.click(screen.getByRole("button", { name: "Copy file" }));
     await waitFor(() =>
-      expect(screen.getByRole("status")).toHaveTextContent(
-        "Complete source copied.",
-      ),
+      expect(screen.getByRole("status")).toHaveTextContent("index.tsx copied."),
     );
     expect(writeText).toHaveBeenCalledWith(source);
-    fireEvent.click(screen.getByRole("button", { name: "Copied" }));
+    fireEvent.click(screen.getByRole("button", { name: "File copied" }));
     await waitFor(() =>
       expect(screen.getByRole("status")).toHaveTextContent(
-        "Select the code below and copy it manually.",
+        "Select the code and copy it manually.",
       ),
     );
     expect(screen.getByTestId("highlighted-source").textContent).toBe(source);

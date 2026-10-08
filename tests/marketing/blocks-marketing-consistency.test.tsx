@@ -6,10 +6,19 @@ import { axe } from "vitest-axe";
 
 import { MarketingLinkButton } from "../../components/marketing/cta-panel";
 import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
+import type { BlockSource } from "../../lib/blocks/source";
 
 vi.mock("@/lib/blocks/source.server", () => ({
-  readBlockSource: () =>
-    "export default function CanonicalBlock() { return null; }",
+  readBlockSource: () => ({
+    directory: "src/components/blocks/example",
+    files: [
+      {
+        path: "index.tsx",
+        language: "tsx",
+        content: "export default function CanonicalBlock() { return null; }",
+      },
+    ],
+  }),
 }));
 
 vi.mock("@/components/marketing/blocks/block-catalog-preview", () => ({
@@ -17,8 +26,11 @@ vi.mock("@/components/marketing/blocks/block-catalog-preview", () => ({
 }));
 
 vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
-  BlockShowcaseTabs: ({ source }: Readonly<{ source: string }>) => (
-    <div data-testid="block-showcase" data-source-length={source.length}>
+  BlockShowcaseTabs: ({ source }: Readonly<{ source: BlockSource }>) => (
+    <div
+      data-testid="block-showcase"
+      data-source-length={source.files[0].content.length}
+    >
       Preview Code
     </div>
   ),

@@ -1,7 +1,7 @@
 ---
 title: Blocks installation
 description: Copy a PyColors Block source directory into your app, keep the source under your ownership, and validate it with public UI imports.
-lastUpdated: "2026-09-17"
+lastUpdated: "2026-10-08"
 appliesTo: Blocks
 ---
 
@@ -18,6 +18,21 @@ import { Badge } from "@pycolors/ui";
 authentication panel, commerce surface, data table, account/workspace surface,
 empty state or other documented pattern before following the installation steps
 below.
+
+In the catalog, open **Code** to inspect the complete source and its folder
+structure. The file tree is visible by default beside the code on desktop and
+above it on mobile. Use **Files** to hide or show it; blocks with multiple files
+also have a file selector on mobile.
+
+**Download ZIP** saves the complete block in one archive, preserving the displayed
+`src/components/blocks/<block-slug>/` structure. Extract it, then move the block's
+folder into your app. **Copy file** copies only the selected file; you can also
+select the code manually if copying is unavailable. Keep all files together and
+preserve their relative imports.
+
+Simple blocks stay in one file. Larger compositions use a few focused files with
+an `index.tsx` entry point. The ZIP contains the same source shown in the explorer;
+configure React, the public UI package and tokens in your own application.
 
 ## Copy source, then own it
 
@@ -112,6 +127,10 @@ practical. A preview is never an alternate implementation to copy from.
     such as `src/components/blocks/<block-slug>`. Keep the Block's local files
     together so its relative imports remain local to the copied source.
 
+    Use **Download ZIP** in the catalog's Code view to retrieve every file at
+    once, or copy each file individually. The archive is assembled in your browser
+    from the displayed source. It does not install dependencies or update your app.
+
   </Step>
 
   <Step>
@@ -198,13 +217,13 @@ code:
 - [Copy Workspace invitations](/docs/blocks/account/workspace-invitations#copy-source).
 - [Copy Audit log](/docs/blocks/account/audit-log#copy-source).
 
-Open **View and copy the complete source**, then use the code block's copy
-button or select the code manually. Save it at the application-owned path
+Open **Source**, choose a file when tabs are available, then use the code block's
+copy button or select the code manually. Save it at the application-owned path
 shown above the source and continue with that guide's usage example.
 Configure the [public UI package and tokens](/docs/ui/installation) first;
 copied source does not install dependencies or styles for you.
 
-The displayed file is included from canonical source when the documentation
+Each displayed file is included from canonical source when the documentation
 builds. Your application copy remains independent: review changes deliberately,
 validate your integration, and keep local customizations under version control.
 There is no new installer or automatic update service.
