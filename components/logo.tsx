@@ -7,28 +7,19 @@ import { cn } from "@pycolors/ui";
 import { wordmarkFont } from "./wordmark-font";
 
 export function Logomark() {
+  // Match the visible ink of the local wordmark font, not just its line box.
   return (
     <svg
       viewBox="0 0 44 40"
-      className="h-8.5 w-8.5 shrink-0 text-primary"
+      className="h-8.5 w-8.5 shrink-0 translate-y-[2.5px] text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
+      focusable="false"
     >
+      {/* Parallel sides and a half-scale cutout keep the mark clear at 20px. */}
       <path
-        d="M10 31
-           Q10.6 29.8 11.4 28.6
-           L20.2 10.8
-           Q21 9.2 22 9.2
-           Q23 9.2 23.8 10.8
-           L32.6 28.6
-           Q33.4 29.8 34 31
-           H27.8
-           Q27 31 26.5 29.9
-           L22 21
-           L17.5 29.9
-           Q17 31 16.2 31
-           H10Z"
+        d="M22 8.5 35 31H28.5L22 19.75 15.5 31H9Z"
         fill="currentColor"
         className={cn(
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
