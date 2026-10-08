@@ -106,7 +106,17 @@
   padding-block: 2.5rem;
 }
 .brand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7rem;
+  column-gap: 1rem;
   min-width: 0;
+}
+.brand > :first-child {
+  grid-column: 1 / -1;
+}
+.brandGeometry {
+  align-self: end;
+  pointer-events: none;
 }
 .brandDescription {
   max-width: 15rem;
@@ -383,6 +393,12 @@
   }
 }
 @media (min-width: 1024px) {
+  .brand {
+    display: block;
+  }
+  .brandGeometry {
+    margin-top: 1.5rem;
+  }
   .invitation {
     flex-direction: row;
     align-items: center;
@@ -399,9 +415,14 @@
 }
 @media (min-width: 640px) and (max-width: 1023px) {
   .brand {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto 7rem;
     column-gap: 2rem;
+  }
+  .brand > :first-child {
+    grid-column: auto;
+  }
+  .brandGeometry {
+    align-self: center;
   }
   .repositories {
     align-self: center;

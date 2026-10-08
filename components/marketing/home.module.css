@@ -7,20 +7,12 @@
   isolation: isolate;
   padding: 2rem 0 3rem;
 }
-.hero::before,
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-}
-.hero::before {
-  background:
-    linear-gradient(var(--border-subtle) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse at 50% 25%, #0005, transparent 70%);
 }
 .hero::after {
   background: radial-gradient(

@@ -17,6 +17,8 @@ export type PageHeroProps = {
   actions?: React.ReactNode;
   pills?: string[];
   extra?: React.ReactNode;
+  /** Optional decorative layer, outside the content's width constraint. */
+  background?: React.ReactNode;
   className?: string;
   contentClassName?: string;
   badgesClassName?: string;
@@ -56,6 +58,7 @@ export function PageHero({
   actions,
   pills = [],
   extra,
+  background,
   className,
   contentClassName,
   badgesClassName,
@@ -78,6 +81,7 @@ export function PageHero({
         className,
       )}
     >
+      {background}
       {!isCompact ? (
         <>
           {/* subtle premium glow */}

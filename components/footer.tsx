@@ -3,6 +3,7 @@ import { ArrowUpRight, GitBranch } from "lucide-react";
 
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
+import { FibonacciMark } from "@/components/marketing/fibonacci-background";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
@@ -127,6 +128,7 @@ export function Footer() {
                 ))}
               </ul>
             </nav>
+            <FibonacciMark className={styles.brandGeometry} />
           </div>
           <div className={styles.groups}>
             {GROUPS.map((group) => (

@@ -14,6 +14,8 @@ const entry = "app/(site)/page.tsx";
 const approved = new Set([
   entry,
   "components/marketing/home.module.css",
+  "components/marketing/fibonacci-background.tsx",
+  "components/marketing/fibonacci-background.module.css",
   "components/container.tsx",
   "components/site-button.tsx",
   "components/marketing/cta-panel.tsx",

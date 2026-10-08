@@ -22,6 +22,7 @@ import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
+import { FibonacciBackground } from "@/components/marketing/fibonacci-background";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingDetailCard } from "@/components/marketing/detail-card";
@@ -217,6 +218,7 @@ export default function HomePage() {
             maxWidth="4xl"
             align="center"
             className={styles.hero}
+            background={<FibonacciBackground />}
             badges={[
               {
                 label: `npm · @pycolors/ui v${UI_VERSION}`,
