@@ -103,6 +103,7 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   if (!page) notFound();
 
   const MdxContent = page.data.body as React.ComponentType<MDXContentProps>;
+  const isDocsHome = page.url === "/docs";
   const showDefaultHeader = page.data.hero !== true;
   const footerCta = getFooterCta(params.slug);
 
@@ -118,8 +119,9 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
       toc={toc}
       full={page.data.full}
       breadcrumb={{ enabled: false }}
+      tableOfContentPopover={isDocsHome ? { enabled: false } : undefined}
       footer={{
-        enabled: true,
+        enabled: !isDocsHome,
         component: (
           <DocsPageFooter previous={previous} next={next} {...footerCta} />
         ),
