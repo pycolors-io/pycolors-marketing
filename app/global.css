@@ -43,18 +43,27 @@
   --site-radius-dialog: 0.75rem;
 }
 
-/* Violet uses the public tokens; monochrome is an optional app-only palette. */
+/* PyColors keeps the public violet palette. Monochrome has its own neutral
+   surface hierarchy, without changing package tokens or semantic status colors. */
 :root[data-site-palette="monochrome"] {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(0.99 0 0);
-  --secondary: oklch(0.967 0 0);
-  --accent: oklch(0.96 0 0);
-  --muted: oklch(0.965 0 0);
-  --muted-foreground: oklch(0.53 0 0);
-  --border: oklch(0.92 0 0);
-  --surface-inverted: oklch(0.18 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+  --secondary: oklch(0.97 0 0);
+  --accent: oklch(0.955 0 0);
+  --muted: oklch(0.985 0 0);
+  --muted-foreground: oklch(0.51 0 0);
+  --border: oklch(0.915 0 0);
+  --border-subtle: oklch(0.955 0 0);
+  --border-strong: oklch(0.83 0 0);
+  --input: var(--border-strong);
+  --ring: oklch(0.556 0 0);
+  --surface-inverted: oklch(0.145 0 0);
   --surface-inverted-foreground: oklch(0.985 0 0);
+  --shadow-soft: 0 2px 8px oklch(0 0 0 / 4%);
+  --shadow-medium: 0 12px 32px oklch(0 0 0 / 6%);
+  --shadow-strong: 0 24px 64px oklch(0 0 0 / 10%);
 }
 
 /* Preserve status colors and allow Theme Builder's inline palettes to override. */
@@ -72,20 +81,51 @@
   --brand-accent-hover: var(--brand-primary-hover);
   --primary: var(--brand-primary);
   --primary-foreground: var(--background);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --accent-foreground: var(--foreground);
+  --surface: var(--card);
+  --surface-foreground: var(--foreground);
+  --surface-muted: var(--muted);
+  --surface-elevated: var(--popover);
+
+  /* Marketing tones share fine neutral borders rather than inheriting the
+     much stronger colored outlines designed for the violet palette. */
+  --brand-platform-muted: var(--surface-muted);
+  --brand-accent-muted: var(--surface-muted);
+  --pro-border: var(--border-strong);
+  --pro-border-subtle: var(--border);
+  --pro-surface: var(--surface);
+  --pro-surface-muted: var(--surface-muted);
+  --platform-border: var(--border-strong);
+  --platform-border-subtle: var(--border);
+  --platform-surface-muted: var(--surface-muted);
+  --accent-border: var(--border-strong);
+  --accent-border-subtle: var(--border);
+  --accent-surface-muted: var(--surface-muted);
 }
 
 :root[data-site-palette="monochrome"].dark,
 :root[data-site-palette="monochrome"] .dark {
   --background: #000000;
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.19 0 0);
-  --secondary: oklch(0.24 0 0);
-  --accent: oklch(0.28 0 0);
-  --muted: oklch(0.24 0 0);
-  --muted-foreground: oklch(0.72 0 0);
-  --border: oklch(1 0 0 / 10%);
+  --card: oklch(0.145 0 0);
+  --popover: oklch(0.178 0 0);
+  --secondary: oklch(0.205 0 0);
+  --accent: oklch(0.24 0 0);
+  --muted: oklch(0.178 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --border: oklch(0.269 0 0);
+  --border-subtle: oklch(0.205 0 0);
+  --border-strong: oklch(0.371 0 0);
+  --input: var(--border-strong);
+  --ring: oklch(0.708 0 0);
   --surface-inverted: oklch(0.985 0 0);
-  --surface-inverted-foreground: oklch(0.18 0 0);
+  --surface-inverted-foreground: oklch(0.145 0 0);
+  --shadow-soft: 0 2px 8px oklch(0 0 0 / 20%);
+  --shadow-medium: 0 12px 32px oklch(0 0 0 / 30%);
+  --shadow-strong: 0 24px 64px oklch(0 0 0 / 40%);
 }
 
 /* App-only roles: public package tokens and interactive previews stay independent. */
@@ -139,8 +179,8 @@ samp {
 
 /* Keep Pro content surfaces neutral while retaining the shared tone vocabulary. */
 :root[data-site-palette="monochrome"] .site-pro-surface {
-  --pro-border: color-mix(in oklab, var(--foreground) 22%, var(--background));
-  --pro-border-subtle: var(--border-subtle);
+  --pro-border: var(--border-strong);
+  --pro-border-subtle: var(--border);
   --pro-surface: var(--surface);
   --pro-surface-muted: var(--surface-muted);
 }
