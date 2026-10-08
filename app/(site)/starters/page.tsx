@@ -10,7 +10,8 @@ import {
   FileCode2,
 } from "lucide-react";
 
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
@@ -203,7 +204,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
           <Button
             asChild
             variant="outline"
-            className="h-auto min-h-11 rounded-[5px] px-4 py-2 text-sm shadow-none"
+            className="h-auto rounded-[5px] shadow-none"
           >
             <Link href={`/starters/${offer.slug}`}>
               Explore {offer.name}
@@ -214,14 +215,10 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
             <BuyStarterProButton
               label="Buy Starter Pro"
               loadingLabel="Opening checkout…"
-              className="px-4 shadow-none hover:shadow-none"
+              className="shadow-none hover:shadow-none"
             />
           ) : (
-            <Button
-              asChild
-              variant="ghost"
-              className="h-auto min-h-11 rounded-[5px] px-4 py-2 text-sm"
-            >
+            <Button asChild variant="ghost" className="h-auto rounded-[5px]">
               <a href={repositoryUrl} target="_blank" rel="noreferrer noopener">
                 View source on GitHub{" "}
                 <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
@@ -253,8 +250,9 @@ export default function StartersPage() {
           actions={
             <>
               <Button
+                size="lg"
                 asChild
-                className="site-primary-action min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                className="site-primary-action rounded-[5px] shadow-none"
               >
                 <Link href="#choose-starter">
                   Find your starting point{" "}
@@ -262,9 +260,10 @@ export default function StartersPage() {
                 </Link>
               </Button>
               <Button
+                size="lg"
                 asChild
                 variant="outline"
-                className="min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                className="rounded-[5px] shadow-none"
               >
                 <a href={demoUrl} target="_blank" rel="noreferrer noopener">
                   Try the Starter Free demo{" "}

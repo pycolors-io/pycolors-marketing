@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { ChevronUp, ExternalLink, Sparkles, X } from "lucide-react";
 
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { Container } from "@/components/container";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
@@ -70,7 +71,7 @@ export function TemplateStickyCta({
             size="sm"
             variant="outline"
             onClick={handleOpen}
-            className="pointer-events-auto min-h-11 rounded-[5px] border-border-subtle bg-background/95 px-4 shadow-medium backdrop-blur-xl"
+            className="pointer-events-auto rounded-[5px] border-border-subtle bg-background/95 shadow-medium backdrop-blur-xl"
             aria-label="Open sticky purchase bar"
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -129,14 +130,14 @@ export function TemplateStickyCta({
                   productSlug={productSlug}
                   label="Buy now"
                   size="sm"
-                  className="min-h-11 px-4 shadow-none hover:shadow-none"
+                  className="shadow-none hover:shadow-none"
                 />
 
                 <Button
                   asChild
                   size="sm"
                   variant="outline"
-                  className="min-h-11 rounded-[5px] px-4 shadow-none"
+                  className="rounded-[5px] shadow-none"
                 >
                   <Link
                     href={demoUrl}
@@ -155,7 +156,7 @@ export function TemplateStickyCta({
                   size="icon"
                   variant="ghost"
                   onClick={handleClose}
-                  className="absolute right-2 top-2 size-11 shrink-0 rounded-[5px] text-muted-foreground hover:text-foreground lg:static"
+                  className="absolute right-2 top-2 shrink-0 rounded-[5px] text-muted-foreground hover:text-foreground lg:static"
                   aria-label="Close sticky purchase bar"
                 >
                   <X className="h-4 w-4" aria-hidden="true" />

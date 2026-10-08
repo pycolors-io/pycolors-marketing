@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 const CONSENT_KEY = "pycolors_privacy_consent";
 

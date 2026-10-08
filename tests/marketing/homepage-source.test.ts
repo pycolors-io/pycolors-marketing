@@ -15,6 +15,7 @@ const approved = new Set([
   entry,
   "components/marketing/home.module.css",
   "components/container.tsx",
+  "components/site-button.tsx",
   "components/marketing/cta-panel.tsx",
   "components/marketing/detail-card.tsx",
   "components/marketing/detail-card.module.css",

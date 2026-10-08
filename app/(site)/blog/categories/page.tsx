@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, Layers3, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, cn } from "@pycolors/ui";
+import { Badge, Card, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { Container } from "@/components/container";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import {

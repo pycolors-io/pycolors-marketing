@@ -7,9 +7,14 @@ import { FooterPalette } from "./footer-palette";
 import styles from "./footer.module.css";
 
 const OPTIONS = [
-  { value: "light", label: "Light theme", icon: Sun },
-  { value: "dark", label: "Dark theme", icon: Moon },
-  { value: "system", label: "System theme", icon: Monitor },
+  { value: "light", label: "Light theme", shortLabel: "Light", icon: Sun },
+  { value: "dark", label: "Dark theme", shortLabel: "Dark", icon: Moon },
+  {
+    value: "system",
+    label: "System theme",
+    shortLabel: "System",
+    icon: Monitor,
+  },
 ] as const;
 
 const subscribe = () => () => {};
@@ -30,7 +35,7 @@ export function AppearanceControls() {
     <div className={styles.preferences}>
       <FooterPalette />
       <div role="group" aria-label="Color theme" className={styles.appearance}>
-        {OPTIONS.map(({ value, label, icon: Icon }) => (
+        {OPTIONS.map(({ value, label, shortLabel, icon: Icon }) => (
           <button
             key={value}
             type="button"
@@ -41,6 +46,9 @@ export function AppearanceControls() {
             onClick={() => setTheme(value)}
           >
             <Icon className="size-3.5" aria-hidden="true" />
+            <span className={styles.appearanceLabel} aria-hidden="true">
+              {shortLabel}
+            </span>
           </button>
         ))}
       </div>
@@ -51,10 +59,7 @@ export function AppearanceControls() {
 /** Shared settings area for the marketing and documentation mobile sheets. */
 export function MobileMenuAppearance() {
   return (
-    <section
-      aria-label="Appearance"
-      className="mb-3 space-y-2 [&_[role=group]>button]:min-h-11"
-    >
+    <section aria-label="Appearance" className="mb-3 space-y-2">
       <p className="text-xs font-medium text-muted-foreground">Appearance</p>
       <AppearanceControls />
     </section>

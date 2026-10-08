@@ -3,13 +3,13 @@
 import * as React from "react";
 import { FolderOpen, Save, X } from "lucide-react";
 import {
-  Button,
   Toast,
   ToastClose,
   ToastDescription,
   ToastProvider,
   ToastViewport,
 } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import type { ThemeBuilderState } from "./theme-builder-state";
 import type { ThemeFont } from "./theme-typography";
 import { downloadThemeFile } from "./theme-file";
@@ -142,7 +142,7 @@ export function ThemeConfigurationControls({
           type="button"
           variant="ghost"
           size="sm"
-          className="min-h-10 rounded-[5px]"
+          className="rounded-[5px]"
           disabled={reading}
           onClick={() => input.current?.click()}
         >
@@ -153,7 +153,7 @@ export function ThemeConfigurationControls({
           type="button"
           variant="outline"
           size="sm"
-          className="min-h-10 rounded-[5px]"
+          className="rounded-[5px]"
           disabled={hasErrors || reading}
           aria-describedby={
             hasErrors ? "theme-configuration-invalid" : undefined
@@ -190,7 +190,7 @@ export function ThemeConfigurationControls({
               type="button"
               variant="ghost"
               size="icon"
-              className="size-10 shrink-0"
+              className="shrink-0"
               aria-label="Dismiss configuration notification"
             >
               <X aria-hidden="true" />

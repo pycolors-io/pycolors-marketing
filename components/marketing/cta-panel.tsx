@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import {
   marketingSurfaceToneClass,
@@ -126,7 +127,7 @@ export function MarketingLinkButton({
       size="lg"
       variant={variant}
       className={cn(
-        "h-auto min-h-11 min-w-0 max-w-full shrink whitespace-normal rounded-md px-6 py-2.5 text-center",
+        "h-auto min-w-0 max-w-full shrink whitespace-normal rounded-md text-center",
         variant === "default" && "site-primary-action",
         className,
       )}

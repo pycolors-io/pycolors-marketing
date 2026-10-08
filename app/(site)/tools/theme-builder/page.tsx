@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookOpen, Check, LockKeyhole } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { Container } from "@/components/container";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
@@ -52,7 +52,7 @@ export default function ThemeBuilderPage() {
           <Button
             asChild
             variant="outline"
-            className="min-h-11 w-fit shrink-0 rounded-[5px]"
+            className="w-fit shrink-0 rounded-[5px]"
           >
             <Link href="/docs/ui/theming">
               <BookOpen aria-hidden="true" />

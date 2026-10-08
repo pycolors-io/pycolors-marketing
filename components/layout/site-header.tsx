@@ -9,13 +9,13 @@ import { FooterPalette as SitePalettePicker } from "@/components/footer-palette"
 
 import { Container } from "@/components/container";
 import {
-  Button,
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
   cn,
 } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import {
   GITHUB_NAV_ITEM,
   MOBILE_BROWSE_NAV_ITEMS,
@@ -474,8 +474,8 @@ export function SiteHeader({
                 {desktopActions}
                 <Button
                   asChild
-                  size="sm"
-                  className="site-primary-action h-9 rounded-md px-4 text-[13px] font-medium"
+                  size="default"
+                  className="site-primary-action rounded-md font-medium"
                 >
                   <Link href="/starters/pro">
                     Explore Pro
@@ -559,7 +559,7 @@ export function SiteHeader({
           <MobileMenuAppearance />
           <Button
             asChild
-            className="site-primary-action h-auto min-h-11 w-full whitespace-normal rounded-md py-3 text-center"
+            className="site-primary-action h-auto w-full whitespace-normal rounded-md text-center"
           >
             <Link href="/starters/pro" onClick={onNavigate}>
               Explore Pro

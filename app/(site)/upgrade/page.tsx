@@ -12,7 +12,8 @@ import {
   LockKeyhole,
   ShieldCheck,
 } from "lucide-react";
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
@@ -163,7 +164,7 @@ const faqs = [
     ],
   },
 ] as const;
-const actionClass = "min-h-11 rounded-[5px] px-5 text-sm shadow-none";
+const actionClass = "rounded-[5px] shadow-none";
 
 export default function UpgradePage() {
   return (
@@ -188,7 +189,12 @@ export default function UpgradePage() {
             description="Move beyond demo flows with authentication, Stripe billing and a PostgreSQL foundation. Bring your interface work into Starter Pro, configure your services and keep building your product."
             actions={
               <>
-                <Button asChild variant="outline" className={actionClass}>
+                <Button
+                  size="lg"
+                  asChild
+                  variant="outline"
+                  className={actionClass}
+                >
                   <Link href="#upgrade-comparison">
                     Compare Free and Pro{" "}
                     <ArrowDown className="size-4" aria-hidden="true" />

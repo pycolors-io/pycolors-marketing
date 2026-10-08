@@ -22,7 +22,7 @@ import {
   UserRound,
   Webhook,
 } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
 import { Container } from "@/components/container";
@@ -526,7 +526,7 @@ export default function StarterProPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="min-h-11 rounded-[5px] px-5"
+                  className="rounded-[5px]"
                 >
                   <a href="#product-preview">
                     Explore the product{" "}

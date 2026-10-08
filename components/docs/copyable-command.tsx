@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { Check, Copy } from "lucide-react";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;

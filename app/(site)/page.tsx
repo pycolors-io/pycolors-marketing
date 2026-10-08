@@ -579,7 +579,7 @@ export default function HomePage() {
                   <BuyStarterProButton
                     fullWidth
                     label={`Buy Starter Pro — ${starterPro.priceLabel}`}
-                    className="h-auto min-h-11 max-w-full whitespace-normal rounded-md py-2.5 motion-reduce:transition-none"
+                    className="h-auto max-w-full whitespace-normal rounded-md motion-reduce:transition-none"
                   />
                 </div>
                 <div className="mt-7 divide-y divide-pro-border-subtle border-t border-pro-border-subtle pt-2">

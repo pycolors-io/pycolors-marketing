@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import styles from "./purchase-support.module.css";
 
 export function SupportEmail({
@@ -38,7 +38,7 @@ export function SupportEmail({
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          size="icon-sm"
           className={styles.copyButton}
           aria-label={copyLabel}
           title={copyLabel}

@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowRight, Layers3, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, EmptyState, cn } from "@pycolors/ui";
+import { Badge, Card, EmptyState, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { Container } from "@/components/container";
 import { Breadcrumb } from "@/components/seo/breadcrumb";

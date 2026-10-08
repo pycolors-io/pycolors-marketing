@@ -36,7 +36,7 @@ const viewports = [
   icon: typeof Monitor;
 }[];
 
-const iconButtonClassName = `${styles.control} inline-flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground motion-reduce:transition-none`;
+const iconButtonClassName = `${styles.control} inline-flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-accent aria-pressed:text-foreground motion-reduce:transition-none`;
 
 const tabletSimulationClassName = [
   "[&_[data-slot=pricing-plans-list]]:!grid-cols-2",
@@ -175,7 +175,7 @@ export function BlockShowcaseTabs({
               <button
                 aria-controls={`${id}-${item}-panel`}
                 aria-selected={selected}
-                className={`${styles.control} inline-flex h-9 items-center justify-center rounded-[5px] px-3 text-xs font-medium text-muted-foreground transition-colors data-[selected=true]:bg-accent data-[selected=true]:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none`}
+                className={`${styles.control} inline-flex h-8 items-center justify-center rounded-[5px] px-3 text-xs font-medium text-muted-foreground transition-colors data-[selected=true]:bg-accent data-[selected=true]:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none`}
                 data-selected={selected}
                 id={`${id}-${item}-tab`}
                 key={item}

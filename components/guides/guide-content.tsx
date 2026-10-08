@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, Lightbulb } from "lucide-react";
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import styles from "./guide-article.module.css";
 
 export function GuideSection({
@@ -135,12 +136,7 @@ export function GuideNextSteps({
             "Explore the interface in Starter Free. Starter Pro adds auth, billing and database foundations; configure your providers and build the logic specific to your product."}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="min-h-11 rounded-[5px] px-5"
-          >
+          <Button asChild variant="outline" size="lg" className="rounded-[5px]">
             <Link href={primary?.href ?? "/starters/free"}>
               {primary?.label ?? "Start with Starter Free"}
             </Link>

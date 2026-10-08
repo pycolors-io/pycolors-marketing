@@ -11,7 +11,8 @@ import {
   LayoutTemplate,
 } from "lucide-react";
 
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -296,8 +297,9 @@ export default function TemplatesPage() {
           actions={
             <>
               <Button
+                size="lg"
                 asChild
-                className="site-primary-action min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                className="site-primary-action rounded-[5px] shadow-none"
               >
                 <Link href="#templates">
                   Explore the template{" "}
@@ -305,9 +307,10 @@ export default function TemplatesPage() {
                 </Link>
               </Button>
               <Button
+                size="lg"
                 asChild
                 variant="outline"
-                className="min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                className="rounded-[5px] shadow-none"
               >
                 <a
                   href={template.demoUrl}
@@ -449,7 +452,7 @@ export default function TemplatesPage() {
                   <Button
                     asChild
                     variant="outline"
-                    className="h-auto min-h-11 rounded-[5px] px-4 py-2 text-sm shadow-none"
+                    className="h-auto rounded-[5px] shadow-none"
                   >
                     <Link href={template.href}>
                       View template details{" "}
@@ -463,7 +466,7 @@ export default function TemplatesPage() {
                     productSlug={template.product.slug}
                     label="Buy NA-AI Landing"
                     loadingLabel="Opening checkout…"
-                    className="px-4 shadow-none hover:shadow-none"
+                    className="shadow-none hover:shadow-none"
                   />
                 </div>
                 <Link

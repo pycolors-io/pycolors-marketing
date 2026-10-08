@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Clock3 } from "lucide-react";
 
-import { Badge, Button, Card, cn } from "@pycolors/ui";
+import { Badge, Card, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { formatDate } from "@/lib/blog/utils";
 import { BlogPost } from "@/types/blog";
 
@@ -59,7 +60,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
           size="sm"
           variant="outline"
           className={cn(
-            "h-9 w-full rounded-md text-xs font-medium transition-colors group-hover:border-primary/40",
+            "w-full rounded-md font-medium transition-colors group-hover:border-primary/40",
             focusRing,
           )}
         >

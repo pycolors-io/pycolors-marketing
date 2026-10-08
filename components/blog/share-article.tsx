@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Check, Copy, Link as LinkIcon } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { LinkedinIcon, TwitterIcon } from "@/components/brand-icons";
 
 type ShareArticleProps = { readonly title: string; readonly url: string };
@@ -45,7 +45,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
   }
 
   const iconButton =
-    "size-11 shrink-0 rounded-[5px] text-muted-foreground hover:text-foreground";
+    "shrink-0 rounded-[5px] text-muted-foreground hover:text-foreground";
   return (
     <div className="max-w-full">
       <div
@@ -54,9 +54,10 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         aria-label="Share article"
       >
         <Button
+          size="sm"
           variant="outline"
           onClick={() => copy("link")}
-          className="h-11 w-28 shrink-0 rounded-[5px] text-xs"
+          className="w-28 shrink-0 rounded-[5px]"
         >
           {copied === "link" ? (
             <Check className="size-3.5" aria-hidden="true" />
@@ -67,7 +68,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         </Button>
         <Button
           variant="ghost"
-          size="icon"
+          size="icon-sm"
           onClick={() => copy("post")}
           aria-label="Copy post"
           title="Copy title and link"
@@ -79,7 +80,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
             <Copy className="size-4" aria-hidden="true" />
           )}
         </Button>
-        <Button asChild variant="ghost" size="icon" className={iconButton}>
+        <Button asChild variant="ghost" size="icon-sm" className={iconButton}>
           <a
             href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
             target="_blank"
@@ -90,7 +91,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
             <LinkedinIcon className="size-4" aria-hidden="true" />
           </a>
         </Button>
-        <Button asChild variant="ghost" size="icon" className={iconButton}>
+        <Button asChild variant="ghost" size="icon-sm" className={iconButton}>
           <a
             href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
             target="_blank"

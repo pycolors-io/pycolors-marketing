@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import styles from "./starter-pro.module.css";
 
 type StarterProCarouselProps = Readonly<{
@@ -121,8 +121,8 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
           <Button
             type="button"
             variant="ghost"
-            size="icon"
-            className="size-11 rounded-[5px]"
+            size="icon-sm"
+            className="rounded-[5px]"
             aria-label={playing ? "Pause slideshow" : "Play slideshow"}
             aria-controls={id}
             onPointerDown={() => {
@@ -153,8 +153,8 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
           <Button
             type="button"
             variant="ghost"
-            size="icon"
-            className="size-11 rounded-[5px]"
+            size="icon-sm"
+            className="rounded-[5px]"
             aria-label="Previous preview"
             aria-controls={id}
             onClick={() => select(active - 1)}
@@ -164,8 +164,8 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
           <Button
             type="button"
             variant="ghost"
-            size="icon"
-            className="size-11 rounded-[5px]"
+            size="icon-sm"
+            className="rounded-[5px]"
             aria-label="Next preview"
             aria-controls={id}
             onClick={() => select(active + 1)}

@@ -14,7 +14,6 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -26,6 +25,7 @@ import {
   TabsTrigger,
   cn,
 } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { ThemeInputs } from "./theme-inputs";
 import { ThemeQuality } from "./theme-quality";
@@ -254,7 +254,7 @@ export function ThemeBuilder() {
             <Button
               asChild
               size="sm"
-              className="site-primary-action min-h-10 rounded-[5px]"
+              className="site-primary-action rounded-[5px]"
             >
               <a href="#theme-builder-export">
                 Export theme
@@ -268,7 +268,7 @@ export function ThemeBuilder() {
             <Button
               type="button"
               variant="outline"
-              className="min-h-11 w-full justify-between rounded-[5px]"
+              className="w-full justify-between rounded-[5px]"
               aria-controls="theme-builder-settings-panel"
               aria-expanded={settingsOpen}
               onClick={() => setSettingsOpen((open) => !open)}
@@ -305,7 +305,7 @@ export function ThemeBuilder() {
                 type="button"
                 variant="ghost"
                 size="icon-sm"
-                className="size-10 shrink-0 rounded-[5px]"
+                className="shrink-0 rounded-[5px]"
                 aria-label="Reset theme"
                 onClick={() => {
                   setState(resetThemeBuilderState());
@@ -495,7 +495,7 @@ export function ThemeBuilder() {
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="min-h-10 rounded-[5px]"
+                        className="rounded-[5px]"
                         aria-label="Open full screen preview"
                       >
                         <Maximize2 className="size-3.5" aria-hidden="true" />

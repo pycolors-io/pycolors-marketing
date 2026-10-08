@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Code2 } from "lucide-react";
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import styles from "./docs-home.module.css";
 
@@ -20,12 +21,12 @@ export function DocsHomeHero({ children }: Readonly<{ children: ReactNode }>) {
           application. Start here and build one step at a time.
         </p>
         <div className="flex flex-wrap items-center gap-2.5">
-          <Button asChild className="site-primary-action h-10 gap-2 px-4">
+          <Button asChild size="lg" className="site-primary-action gap-2">
             <Link href="/docs/getting-started">
               Get started <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </Button>
-          <Button asChild variant="outline" className="h-10 gap-2 px-4">
+          <Button asChild size="lg" variant="outline" className="gap-2">
             <Link href="/docs/ui">
               <Code2 className="size-4" aria-hidden="true" />
               Browse components

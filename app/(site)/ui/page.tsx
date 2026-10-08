@@ -16,7 +16,7 @@ import {
   Terminal,
   TextCursorInput,
 } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { SCALE_STEPS } from "@pycolors/color-engine";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Container } from "@/components/container";
@@ -155,8 +155,7 @@ const nextSteps = [
 
 const textLink =
   "inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
-const primaryAction =
-  "h-auto min-h-11 max-w-full whitespace-normal rounded-[5px] px-5 py-2.5 text-sm";
+const primaryAction = "rounded-[5px]";
 
 const saveButtonCode = `import { Button } from "@pycolors/ui";
 
@@ -183,6 +182,7 @@ export default function UiPage() {
           actions={
             <>
               <Button
+                size="lg"
                 asChild
                 className={`site-primary-action ${primaryAction}`}
               >
@@ -190,7 +190,12 @@ export default function UiPage() {
                   Start building <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className={primaryAction}>
+              <Button
+                size="lg"
+                asChild
+                variant="outline"
+                className={primaryAction}
+              >
                 <a href="#ui-preview">Try the components</a>
               </Button>
             </>
@@ -490,7 +495,7 @@ export default function UiPage() {
             <div className="flex min-w-0 flex-col border-t border-border-subtle bg-surface-muted/20 lg:border-t-0 lg:border-l">
               <CopyableCommand
                 command="pnpm add @pycolors/ui @pycolors/tokens"
-                className="my-0 rounded-none border-0 border-b border-border-subtle bg-transparent [&_button]:h-10 [&_button]:text-xs"
+                className="my-0 rounded-none border-0 border-b border-border-subtle bg-transparent"
               />
               <div className="flex flex-1 flex-col">
                 <DynamicCodeBlock
@@ -506,7 +511,7 @@ export default function UiPage() {
                     ),
                     allowCopy: true,
                     className:
-                      "m-0 flex flex-1 flex-col rounded-none border-0 bg-transparent shadow-none [&>div:first-child]:h-12 [&_button]:size-10",
+                      "m-0 flex flex-1 flex-col rounded-none border-0 bg-transparent shadow-none [&>div:first-child]:h-12 [&_button]:size-8 max-sm:[&_button]:size-11 [@media(pointer:coarse)]:[&_button]:size-11",
                     viewportProps: {
                       "aria-label": "Button usage example",
                       className:

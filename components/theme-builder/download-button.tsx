@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Download } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { downloadThemeFile, type ThemeFile } from "./theme-file";
 
 export function DownloadButton({
@@ -40,7 +40,7 @@ export function DownloadButton({
         type="button"
         variant="outline"
         size="sm"
-        className="min-h-11 rounded-[5px]"
+        className="rounded-[5px]"
         onClick={handleDownload}
       >
         <Download aria-hidden="true" />

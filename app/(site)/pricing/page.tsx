@@ -6,7 +6,8 @@ import {
 import Image from "next/image";
 import type { Metadata } from "next";
 import { ArrowDown, ArrowRight, ExternalLink } from "lucide-react";
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
@@ -343,9 +344,10 @@ export default function PricingPage() {
                     />
                   ) : (
                     <Button
+                      size="lg"
                       asChild
                       variant="outline"
-                      className="min-h-11 w-full rounded-md text-sm"
+                      className="w-full rounded-md"
                     >
                       <Link href={INTERNAL.starterFree}>
                         Open Starter Free
@@ -448,7 +450,7 @@ export default function PricingPage() {
             title="See the screens you can build on"
             description="Existing Starter Pro interface captures, shown in the light theme. These previews show included screens, not proof of a live deployment, a completed payment, or a verified integration."
             action={
-              <Button asChild variant="outline" className="min-h-11 rounded-md">
+              <Button asChild variant="outline" className="rounded-md">
                 <a
                   href={EXTERNAL.starterDemo}
                   target="_blank"
@@ -533,11 +535,7 @@ export default function PricingPage() {
               foundation.
             </p>
           </div>
-          <Button
-            asChild
-            variant="outline"
-            className="min-h-11 shrink-0 rounded-md"
-          >
+          <Button asChild variant="outline" className="shrink-0 rounded-md">
             <Link href={INTERNAL.starterFree}>
               Explore Starter Free
               <ArrowRight className="size-4" aria-hidden="true" />

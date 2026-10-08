@@ -11,7 +11,8 @@ import {
   Shield,
 } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, CardHeader } from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 type CheckoutSuccessPageProps = {
@@ -354,7 +355,7 @@ export default async function CheckoutSuccessPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-auto min-h-11 whitespace-normal rounded-xl px-6 text-sm font-medium"
+                  className="h-auto whitespace-normal rounded-xl font-medium"
                 >
                   <Link href="/orders/recover">Resend access link</Link>
                 </Button>
@@ -363,7 +364,7 @@ export default async function CheckoutSuccessPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-auto min-h-11 whitespace-normal rounded-xl px-6 text-sm font-medium"
+                  className="h-auto whitespace-normal rounded-xl font-medium"
                 >
                   <Link href={docsHref}>
                     Start setup
@@ -496,7 +497,7 @@ export default async function CheckoutSuccessPage({
                 <Button
                   asChild
                   variant="outline"
-                  className="h-auto min-h-9 whitespace-normal rounded-xl"
+                  className="h-auto whitespace-normal rounded-xl"
                 >
                   <Link href={guidance.href}>
                     {guidance.cta}

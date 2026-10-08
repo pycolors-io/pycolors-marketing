@@ -14,7 +14,8 @@ import {
   Settings2,
   ShieldCheck,
 } from "lucide-react";
-import { Badge, Button } from "@pycolors/ui";
+import { Badge } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
@@ -246,7 +247,7 @@ export default function BuildVsBuyComparisonPage() {
                   <Button
                     asChild
                     size="lg"
-                    className="site-primary-action min-h-11 rounded-[5px]"
+                    className="site-primary-action rounded-[5px]"
                   >
                     <Link href="#cost-time-comparison">
                       Compare the work{" "}
@@ -257,7 +258,7 @@ export default function BuildVsBuyComparisonPage() {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="min-h-11 rounded-[5px]"
+                    className="rounded-[5px]"
                   >
                     <Link href="/starters/pro">
                       Inspect Starter Pro{" "}
@@ -641,7 +642,7 @@ export default function BuildVsBuyComparisonPage() {
                     {PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}
                   </p>
                   <BuyStarterProButton
-                    className="mt-5 min-h-11"
+                    className="mt-5"
                     label={`Buy Starter Pro — ${starterProPrice}`}
                   />
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">

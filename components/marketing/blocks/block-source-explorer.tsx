@@ -12,7 +12,7 @@ import {
   LoaderCircle,
   PanelLeft,
 } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import type { BlockSource, BlockSourceFile } from "@/lib/blocks/source";
 import styles from "./block-source-explorer.module.css";

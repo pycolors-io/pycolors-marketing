@@ -18,7 +18,8 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
@@ -232,9 +233,10 @@ export default function NaAiTemplatePage() {
             actions={
               <>
                 <Button
+                  size="lg"
                   asChild
                   variant="outline"
-                  className="min-h-11 rounded-[5px] px-5 text-sm shadow-none"
+                  className="rounded-[5px] shadow-none"
                 >
                   <Link href="#template-preview">
                     Explore the preview{" "}
@@ -309,7 +311,7 @@ export default function NaAiTemplatePage() {
             <Button
               asChild
               variant="outline"
-              className="mt-2 min-h-11 w-full rounded-[5px] text-sm shadow-none"
+              className="mt-2 w-full rounded-[5px] shadow-none"
             >
               <a
                 href={PRODUCT.demoUrl}

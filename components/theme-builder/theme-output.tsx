@@ -14,12 +14,12 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-  Button,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { CopyButton } from "./copy-button";
 import { DownloadButton } from "./download-button";
@@ -213,7 +213,7 @@ export function ThemeOutput({
               value={activeArtifact.content}
               label={`Copy ${activeFormatLabel}`}
               className="justify-start sm:justify-end"
-              buttonClassName="min-h-11 rounded-[5px] border-foreground bg-foreground text-background hover:bg-foreground/90 hover:text-background"
+              buttonClassName="rounded-[5px] border-foreground bg-foreground text-background hover:bg-foreground/90 hover:text-background"
             />
           </div>
         ) : null}
@@ -296,7 +296,7 @@ export function ThemeOutput({
             <Button
               type="button"
               variant="ghost"
-              className="min-h-11 rounded-[5px]"
+              className="rounded-[5px]"
               aria-expanded={codeVisible}
               aria-controls="theme-builder-generated-code"
               onClick={() => setCodeVisible((visible) => !visible)}
@@ -347,7 +347,7 @@ export function ThemeOutput({
                 <CopyButton
                   value={typographyCss}
                   label="Copy typography CSS"
-                  buttonClassName="min-h-11 rounded-[5px]"
+                  buttonClassName="rounded-[5px]"
                 />
               </div>
             </div>

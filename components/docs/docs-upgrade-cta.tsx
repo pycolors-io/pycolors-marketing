@@ -1,7 +1,8 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 
@@ -78,7 +79,7 @@ export function DocsUpgradeCTA({
           <Button
             asChild
             variant="outline"
-            className="h-11 w-full rounded-md px-5 text-sm font-medium no-underline sm:w-auto"
+            className="w-full rounded-md font-medium no-underline sm:w-auto"
           >
             <Link href={secondaryHref}>{secondaryLabel}</Link>
           </Button>

@@ -7,7 +7,8 @@ import {
   Layers3,
   type LucideIcon,
 } from "lucide-react";
-import { Badge, Button, Card } from "@pycolors/ui";
+import { Badge, Card } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import type { BlogCTA } from "@/types/blog";
 import styles from "./blog-article.module.css";
 
@@ -71,7 +72,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Button
           asChild
-          className="site-primary-action h-auto min-h-11 max-w-full whitespace-normal rounded-md px-5 py-2 text-sm"
+          className="site-primary-action h-auto max-w-full whitespace-normal rounded-md"
         >
           <Link href={cta.href}>
             <span className="min-w-0 wrap-anywhere">{cta.label}</span>

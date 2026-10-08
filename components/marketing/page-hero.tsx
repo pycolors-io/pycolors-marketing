@@ -155,7 +155,7 @@ export function PageHero({
         {actions ? (
           <div
             className={cn(
-              "flex flex-col gap-3 sm:flex-row",
+              "flex flex-col gap-3 sm:flex-row sm:items-center",
               isCompact && "flex-wrap",
               "mt-7 sm:mt-8",
               isCentered ? "justify-center" : "justify-start",

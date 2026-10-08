@@ -12,7 +12,7 @@ import {
   Palette,
   Terminal,
 } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
@@ -232,7 +232,7 @@ export default function StarterFreePage() {
               <Button
                 asChild
                 size="lg"
-                className="site-primary-action min-h-11 rounded-[5px] px-5"
+                className="site-primary-action rounded-[5px]"
               >
                 <a
                   href={EXTERNAL.repo}
@@ -247,7 +247,7 @@ export default function StarterFreePage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="min-h-11 rounded-[5px] px-5"
+                className="rounded-[5px]"
               >
                 <a
                   href={EXTERNAL.demo}
@@ -565,7 +565,7 @@ export default function StarterFreePage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="min-h-11 w-full rounded-[5px] sm:w-auto"
+                  className="w-full rounded-[5px] sm:w-auto"
                 >
                   <a
                     href={EXTERNAL.repo}

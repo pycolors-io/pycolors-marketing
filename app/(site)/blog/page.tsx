@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen } from "lucide-react";
 
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import {
@@ -82,7 +82,7 @@ export default function BlogPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="min-h-11 rounded-md px-5"
+                  className="rounded-md"
                 >
                   <Link
                     href={leadPost ? "#featured-articles" : "#latest-articles"}
@@ -244,11 +244,7 @@ export default function BlogPage() {
                 and billing screens use mocked data.
               </p>
               <div className="mt-auto">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="min-h-11 rounded-md px-5"
-                >
+                <Button asChild variant="outline" className="rounded-md">
                   <Link href="/starters/free">
                     Explore Starter Free{" "}
                     <ArrowRight className="size-4" aria-hidden="true" />

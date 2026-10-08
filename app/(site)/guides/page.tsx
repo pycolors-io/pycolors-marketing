@@ -16,7 +16,7 @@ import {
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
-import { Button } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
@@ -180,7 +180,7 @@ export default function GuidesPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="min-h-11 rounded-[5px] px-5"
+                  className="rounded-[5px]"
                 >
                   <Link href="#browse-guides">
                     Browse guides{" "}

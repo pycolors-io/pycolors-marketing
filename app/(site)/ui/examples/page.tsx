@@ -14,7 +14,8 @@ import {
   Terminal,
 } from "lucide-react";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
-import { Badge, Button, cn } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
@@ -211,7 +212,7 @@ const nextSteps = [
     href: "/tools/theme-builder",
   },
 ] as const;
-const actionClass = "min-h-11 rounded-[5px] px-5 text-sm shadow-none";
+const actionClass = "rounded-[5px] shadow-none";
 
 function AvailableNowCard() {
   return (
@@ -367,13 +368,22 @@ export default function ExamplesPage() {
           description="Explore a dashboard, project workflows and account screens built with PyColors UI. Try the runnable Starter Free demo, inspect the source and bring the parts you need into your own app."
           actions={
             <>
-              <Button asChild className={`site-primary-action ${actionClass}`}>
+              <Button
+                size="lg"
+                asChild
+                className={`site-primary-action ${actionClass}`}
+              >
                 <Link href="#example-screens">
                   Explore the screens{" "}
                   <ArrowDown className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className={actionClass}>
+              <Button
+                size="lg"
+                asChild
+                variant="outline"
+                className={actionClass}
+              >
                 <a
                   href={AVAILABLE_NOW.demoHref}
                   target="_blank"

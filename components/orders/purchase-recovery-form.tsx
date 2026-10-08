@@ -12,7 +12,8 @@ import {
   MailCheck,
   RefreshCcw,
 } from "lucide-react";
-import { Button, Input } from "@pycolors/ui";
+import { Input } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 import {
   recoverCommerceAccess,

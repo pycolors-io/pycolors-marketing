@@ -10,14 +10,8 @@ import {
   Shield,
 } from "lucide-react";
 
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 type ClaimOrderPageProps = {
@@ -259,7 +253,7 @@ export default async function ClaimOrderPage({
                 <Button
                   asChild
                   size="lg"
-                  className="site-primary-action h-11 rounded-xl px-6 text-sm font-medium"
+                  className="site-primary-action rounded-xl font-medium"
                 >
                   <Link href={downloadUrl}>
                     Download package
@@ -271,7 +265,7 @@ export default async function ClaimOrderPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="rounded-xl font-medium"
                 >
                   <Link href="/docs/starter-pro/getting-started">
                     Start setup
@@ -282,7 +276,7 @@ export default async function ClaimOrderPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="rounded-xl font-medium"
                 >
                   <Link href={productPageHref}>View product page</Link>
                 </Button>
