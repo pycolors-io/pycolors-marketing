@@ -156,34 +156,6 @@ export function BlockSourceExplorer({
           Files
         </Button>
 
-        <div
-          className={styles.filename}
-          data-multiple={multiple}
-          title={fullPath}
-        >
-          <FileCode2 aria-hidden="true" />
-          <span className={styles.directory}>{source.directory}/</span>
-          <span>{file.path}</span>
-        </div>
-
-        {multiple ? (
-          <div className={styles.mobileSelect}>
-            <FileCode2 aria-hidden="true" />
-            <select
-              aria-label="Source file"
-              value={file.path}
-              onChange={(event) => selectFile(event.target.value)}
-            >
-              {source.files.map((item) => (
-                <option key={item.path} value={item.path}>
-                  {item.path}
-                </option>
-              ))}
-            </select>
-            <ChevronDown aria-hidden="true" />
-          </div>
-        ) : null}
-
         <Button
           type="button"
           variant="ghost"
@@ -222,6 +194,34 @@ export function BlockSourceExplorer({
           )}
           Download ZIP
         </Button>
+
+        <div
+          className={styles.filename}
+          data-multiple={multiple}
+          title={fullPath}
+        >
+          <FileCode2 aria-hidden="true" />
+          <span className={styles.directory}>{source.directory}/</span>
+          <span>{file.path}</span>
+        </div>
+
+        {multiple ? (
+          <div className={styles.mobileSelect}>
+            <FileCode2 aria-hidden="true" />
+            <select
+              aria-label="Source file"
+              value={file.path}
+              onChange={(event) => selectFile(event.target.value)}
+            >
+              {source.files.map((item) => (
+                <option key={item.path} value={item.path}>
+                  {item.path}
+                </option>
+              ))}
+            </select>
+            <ChevronDown aria-hidden="true" />
+          </div>
+        ) : null}
       </div>
 
       <div className={styles.body} data-files-open={showFiles}>

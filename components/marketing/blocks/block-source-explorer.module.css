@@ -273,6 +273,7 @@
 
   .filename {
     min-height: 0;
+    order: 1;
   }
 
   .filename .directory {
@@ -297,6 +298,7 @@
   }
 
   .toolbar .copy {
+    order: 2;
     width: 6.5rem;
     height: 2.25rem;
     gap: 0.5rem;
@@ -304,6 +306,10 @@
 
   .copy span {
     display: inline;
+  }
+
+  .toolbar .download {
+    order: 3;
   }
 
   .mobileSelect {

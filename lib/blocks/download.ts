@@ -14,7 +14,7 @@ export function createBlockArchive(source: BlockSource) {
   const paths = new Set<string>();
   const entries = source.files.map((file) => {
     if (
-      /[\\:\u0000-\u001f\u007f]/u.test(file.path) ||
+      /[\\:\p{Cc}]/u.test(file.path) ||
       file.path
         .split("/")
         .some((part) => !part || part === "." || part === "..") ||
