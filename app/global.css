@@ -175,7 +175,8 @@ span[data-slot="badge"] {
 /* The mobile Docs header adds a separate entry point to the article sidebar. */
 @media (max-width: 767px) {
   #nd-docs-layout {
-    --fd-nav-height: 6.75rem;
+    /* 64px global row, 44px article navigation, and their two borders. */
+    --fd-nav-height: 6.875rem;
   }
 
   #nd-sidebar-mobile {
