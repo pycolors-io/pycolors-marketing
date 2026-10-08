@@ -71,7 +71,9 @@
       center / 7px 1px no-repeat,
     linear-gradient(var(--site-frame-marker), var(--site-frame-marker)) right
       3px center / 1px 7px no-repeat;
-  --fd-nav-height: 64px !important;
+  --site-header-height: 3.5rem;
+  --site-header-row-height: calc(var(--site-header-height) - 1px);
+  --fd-nav-height: var(--site-header-height) !important;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
@@ -339,8 +341,9 @@ span[data-slot="badge"] {
 /* The mobile Docs header adds a separate entry point to the article sidebar. */
 @media (max-width: 767px) {
   #nd-docs-layout {
-    /* 64px global row, 44px article navigation, and their two borders. */
-    --fd-nav-height: 6.875rem;
+    /* The shared header already includes its bottom border. Add the 44px
+       article navigation and its top border without counting either twice. */
+    --fd-nav-height: calc(var(--site-header-height) + 2.75rem + 1px);
   }
 
   #nd-sidebar-mobile {

@@ -206,10 +206,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
             variant="outline"
             className="h-auto rounded-[5px] shadow-none"
           >
-            <Link href={`/starters/${offer.slug}`}>
-              Explore {offer.name}
-              <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-            </Link>
+            <Link href={`/starters/${offer.slug}`}>Explore {offer.name}</Link>
           </Button>
           {isPro ? (
             <BuyStarterProButton

@@ -244,10 +244,7 @@ export default function HomePage() {
             actions={
               <MarketingActionGroup align="center" className="w-full">
                 <MarketingLinkButton className={styles.primaryAction}>
-                  <a href="#start-with-pycolors">
-                    Choose your starting point
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </a>
+                  <a href="#start-with-pycolors">Choose your starting point</a>
                 </MarketingLinkButton>
                 <MarketingLinkButton
                   variant="outline"
@@ -264,10 +261,7 @@ export default function HomePage() {
             actions={
               <MarketingActionGroup className={styles.showcaseActions}>
                 <MarketingLinkButton className={styles.primaryAction}>
-                  <Link href="/ui">
-                    Explore PyColors UI{" "}
-                    <ArrowRight className="size-3.5" aria-hidden="true" />
-                  </Link>
+                  <Link href="/ui">Explore PyColors UI</Link>
                 </MarketingLinkButton>
                 <Link
                   href="/docs/ui/installation"
@@ -648,7 +642,6 @@ export default function HomePage() {
                   <MarketingLinkButton className={styles.primaryAction}>
                     <a href="#start-with-pycolors">
                       Choose your starting point
-                      <ArrowRight className="size-4" aria-hidden="true" />
                     </a>
                   </MarketingLinkButton>
                   <MarketingLinkButton

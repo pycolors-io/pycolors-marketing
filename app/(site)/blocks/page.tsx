@@ -132,10 +132,7 @@ export default function BlocksPage() {
           actions={
             <MarketingActionGroup align="left">
               <MarketingLinkButton>
-                <Link href="#block-catalog">
-                  Explore Blocks
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+                <Link href="#block-catalog">Explore Blocks</Link>
               </MarketingLinkButton>
               <MarketingLinkButton variant="outline">
                 <Link href="/docs/blocks">Integration guide</Link>
@@ -190,7 +187,7 @@ export default function BlocksPage() {
               titleId="blocks-catalog-title"
             />
 
-            <div className="sticky top-16 z-20 mb-10 border-y border-border-subtle bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+            <div className="sticky top-(--site-header-height) z-20 mb-10 border-y border-border-subtle bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
               <nav
                 aria-label="Block categories"
                 className="flex min-w-0 overflow-x-auto"
@@ -273,10 +270,7 @@ export default function BlocksPage() {
               actions={
                 <MarketingActionGroup align="left">
                   <MarketingLinkButton>
-                    <Link href="/starters">
-                      Compare Starters
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </Link>
+                    <Link href="/starters">Compare Starters</Link>
                   </MarketingLinkButton>
                   <MarketingLinkButton variant="outline">
                     <Link href="/docs/blocks">Continue with Blocks</Link>

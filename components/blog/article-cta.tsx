@@ -76,7 +76,6 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
         >
           <Link href={cta.href}>
             <span className="min-w-0 wrap-anywhere">{cta.label}</span>
-            <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
           </Link>
         </Button>
         <Link

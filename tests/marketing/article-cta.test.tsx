@@ -183,10 +183,9 @@ describe("ArticleCTA presentation", () => {
       expect(screen.getByText(description)).toBeVisible();
       const primary = screen.getByRole("link", { name: cta.label });
       expect(primary).toHaveAttribute("href", cta.href);
-      expect(primary.querySelector("svg")).toHaveAttribute(
-        "aria-hidden",
-        "true",
-      );
+      for (const icon of container.querySelectorAll("svg")) {
+        expect(icon).toHaveAttribute("aria-hidden", "true");
+      }
       expect(screen.getByRole("link", { name: "Read Guides" })).toHaveAttribute(
         "href",
         "/guides",

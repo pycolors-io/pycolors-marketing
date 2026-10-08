@@ -2,7 +2,6 @@ import Link from "next/link";
 import { containerClassName } from "@/components/container";
 import { z } from "zod";
 import {
-  ArrowRight,
   BadgeCheck,
   CreditCard,
   FileText,
@@ -366,10 +365,7 @@ export default async function CheckoutSuccessPage({
                   size="lg"
                   className="h-auto whitespace-normal rounded-xl font-medium"
                 >
-                  <Link href={docsHref}>
-                    Start setup
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <Link href={docsHref}>Start setup</Link>
                 </Button>
               </div>
 
@@ -499,10 +495,7 @@ export default async function CheckoutSuccessPage({
                   variant="outline"
                   className="h-auto whitespace-normal rounded-xl"
                 >
-                  <Link href={guidance.href}>
-                    {guidance.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <Link href={guidance.href}>{guidance.cta}</Link>
                 </Button>
               </CardContent>
             </Card>

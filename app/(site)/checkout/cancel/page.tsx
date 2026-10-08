@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  ArrowLeft,
   ArrowRight,
   BookOpen,
   CircleHelp,
@@ -78,10 +79,7 @@ export default function CheckoutCancelPage() {
                 confirmation.
               </div>
               <MarketingLinkButton className={styles.action}>
-                <Link href="/orders/support">
-                  Contact support
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <Link href="/orders/support">Contact support</Link>
               </MarketingLinkButton>
             </section>
 
@@ -105,10 +103,7 @@ export default function CheckoutCancelPage() {
                 the product you purchased.
               </div>
               <MarketingLinkButton variant="outline" className={styles.action}>
-                <Link href="/orders/recover">
-                  Recover purchase access
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <Link href="/orders/recover">Recover purchase access</Link>
               </MarketingLinkButton>
             </section>
 
@@ -136,8 +131,8 @@ export default function CheckoutCancelPage() {
               </div>
               <MarketingLinkButton variant="outline" className={styles.action}>
                 <Link href="/pricing">
+                  <ArrowLeft className="size-4" aria-hidden="true" />
                   Return to pricing
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </MarketingLinkButton>
             </section>

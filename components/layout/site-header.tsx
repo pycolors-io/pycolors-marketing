@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ArrowUpRight, ChevronDown, Menu } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu } from "lucide-react";
 import { MobileMenuAppearance } from "@/components/appearance-controls";
 import { FooterPalette as SitePalettePicker } from "@/components/footer-palette";
 
@@ -205,7 +205,7 @@ function DesktopNavigationMenu({
   return (
     <div
       ref={rootRef}
-      className="relative flex h-16 items-center"
+      className="relative flex h-(--site-header-row-height) items-center"
       {...rootProps}
     >
       <button
@@ -215,7 +215,7 @@ function DesktopNavigationMenu({
         aria-controls={panelId}
         {...triggerProps}
         className={cn(
-          "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground",
+          "inline-flex min-h-8 items-center rounded-md px-2.5 py-1 text-[13px] leading-5 text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground [@media(pointer:coarse)]:min-h-11",
           (open || active) && "bg-surface-muted/60 text-foreground",
           focusRing,
         )}
@@ -235,7 +235,7 @@ function DesktopNavigationMenu({
         id={panelId}
         hidden={!open}
         className={cn(
-          "absolute left-0 top-full mt-2 max-h-[calc(100dvh-5rem)] max-w-[calc(100vw-2rem)] overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-soft",
+          "absolute left-0 top-full mt-2 max-h-[calc(100dvh-var(--site-header-height)-1rem)] max-w-[calc(100vw-2rem)] overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-soft",
           menu === "products" ? "w-[45rem]" : "w-[22rem]",
           styles.panel,
         )}
@@ -379,7 +379,7 @@ export function SiteHeader({
             Skip to content
           </a>
           <Container>
-            <div className="flex h-16 items-center gap-3">
+            <div className="flex h-(--site-header-row-height) items-center gap-3">
               <div className="flex shrink-0 items-center gap-3 lg:min-w-40">
                 {logo}
               </div>
@@ -398,7 +398,7 @@ export function SiteHeader({
                         activePrimaryHref === item.href ? "page" : undefined
                       }
                       className={cn(
-                        "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground",
+                        "inline-flex min-h-8 items-center rounded-md px-2.5 py-1 text-[13px] leading-5 text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground [@media(pointer:coarse)]:min-h-11",
                         activePrimaryHref === item.href &&
                           "bg-surface-muted/60 text-foreground",
                         focusRing,
@@ -477,10 +477,7 @@ export function SiteHeader({
                   size="default"
                   className="site-primary-action rounded-md font-medium"
                 >
-                  <Link href="/starters/pro">
-                    Explore Pro
-                    <ArrowRight aria-hidden="true" className="size-3.5" />
-                  </Link>
+                  <Link href="/starters/pro">Explore Pro</Link>
                 </Button>
               </div>
               <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
@@ -517,9 +514,9 @@ export function SiteHeader({
             productsButtonRef.current?.focus({ preventScroll: true });
           }
         }}
-        className="inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-2.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-md"
+        className="inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-1.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-md"
       >
-        <div className="flex min-h-16 shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-subtle py-2 pl-4 pr-16">
+        <div className="flex min-h-(--site-header-height) shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-subtle py-1.5 pl-4 pr-16">
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">
             Explore PyColors
           </SheetTitle>
@@ -563,7 +560,6 @@ export function SiteHeader({
           >
             <Link href="/starters/pro" onClick={onNavigate}>
               Explore Pro
-              <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
           </Button>
         </div>

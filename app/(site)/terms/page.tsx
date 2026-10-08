@@ -899,10 +899,7 @@ export default function TermsPage() {
                   </p>
                 </div>
                 <MarketingLinkButton variant="outline">
-                  <a href={`mailto:${COMPANY.email}`}>
-                    Contact
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </a>
+                  <a href={`mailto:${COMPANY.email}`}>Contact</a>
                 </MarketingLinkButton>
               </section>
             </div>

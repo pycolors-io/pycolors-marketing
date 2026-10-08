@@ -107,7 +107,6 @@ export default function PurchaseSupportPage() {
               <MarketingLinkButton>
                 <a href="mailto:support@pycolors.com?subject=PyColors%20purchase%20support">
                   Write to support
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </a>
               </MarketingLinkButton>
             </div>
@@ -147,10 +146,7 @@ export default function PurchaseSupportPage() {
             </div>
             <div className={styles.cardAction}>
               <MarketingLinkButton variant="outline">
-                <Link href="/orders/recover">
-                  Recover purchase access
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <Link href="/orders/recover">Recover purchase access</Link>
               </MarketingLinkButton>
             </div>
             <p className={styles.caption}>

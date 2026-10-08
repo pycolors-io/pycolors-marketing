@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { containerClassName } from "@/components/container";
 import {
-  ArrowRight,
   BadgeCheck,
   Download,
   LifeBuoy,
@@ -256,8 +255,8 @@ export default async function ClaimOrderPage({
                   className="site-primary-action rounded-xl font-medium"
                 >
                   <Link href={downloadUrl}>
+                    <Download className="size-4" aria-hidden="true" />
                     Download package
-                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
 

@@ -240,10 +240,7 @@ export default function PatternsPage() {
                     </a>
                   </MarketingLinkButton>
                   <MarketingLinkButton variant="outline">
-                    <Link href="/ui/examples">
-                      View examples
-                      <ArrowRight size={15} aria-hidden="true" />
-                    </Link>
+                    <Link href="/ui/examples">View examples</Link>
                   </MarketingLinkButton>
                 </>
               }
@@ -358,10 +355,7 @@ export default function PatternsPage() {
                   Authentication, billing, and product data are mocked.
                 </p>
                 <MarketingLinkButton variant="outline">
-                  <Link href="/starters/free">
-                    Explore Starter Free
-                    <ArrowRight size={15} aria-hidden="true" />
-                  </Link>
+                  <Link href="/starters/free">Explore Starter Free</Link>
                 </MarketingLinkButton>
               </div>
               <div className={styles.starterOption}>

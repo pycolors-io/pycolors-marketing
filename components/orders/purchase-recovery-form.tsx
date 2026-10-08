@@ -177,9 +177,7 @@ export function PurchaseRecoveryForm() {
                       className="size-4 animate-spin motion-reduce:animate-none"
                       aria-hidden="true"
                     />
-                  ) : (
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  )}
+                  ) : null}
                 </Button>
               </form>
               {error ? (

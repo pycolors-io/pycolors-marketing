@@ -22,9 +22,7 @@ export function DocsHomeHero({ children }: Readonly<{ children: ReactNode }>) {
         </p>
         <div className="flex flex-wrap items-center gap-2.5">
           <Button asChild size="lg" className="site-primary-action gap-2">
-            <Link href="/docs/getting-started">
-              Get started <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            <Link href="/docs/getting-started">Get started</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="gap-2">
             <Link href="/docs/ui">

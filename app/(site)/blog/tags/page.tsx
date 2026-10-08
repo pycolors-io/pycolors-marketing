@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Hash, Sparkles } from "lucide-react";
+import { ArrowLeft, Hash, Sparkles } from "lucide-react";
 
 import { Badge, Card, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -182,8 +182,8 @@ export default function BlogTagsPage() {
                 className={`site-primary-action ${cn("rounded-[5px]", focusRing)}`}
               >
                 <Link href="/blog">
+                  <ArrowLeft className="size-4" aria-hidden="true" />
                   Back to Blog
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
@@ -276,10 +276,6 @@ export default function BlogTagsPage() {
                     >
                       <Link href={`/blog/tags/${normalizeTaxonomy(tag)}`}>
                         View tag
-                        <ArrowRight
-                          className="ml-2 h-4 w-4"
-                          aria-hidden="true"
-                        />
                       </Link>
                     </Button>
                   </div>

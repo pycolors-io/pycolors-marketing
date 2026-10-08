@@ -509,10 +509,7 @@ export default function AboutPage() {
               actions={
                 <MarketingActionGroup>
                   <MarketingLinkButton>
-                    <Link href="/starters/free">
-                      Try Starter Free
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
+                    <Link href="/starters/free">Try Starter Free</Link>
                   </MarketingLinkButton>
                   <MarketingLinkButton variant="outline">
                     <Link href="/docs/getting-started">

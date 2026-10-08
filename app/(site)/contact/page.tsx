@@ -103,7 +103,6 @@ export default function ContactPage() {
               <MarketingLinkButton>
                 <a href="mailto:contact@pycolors.com?subject=PyColors%20enquiry">
                   Write to PyColors
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </a>
               </MarketingLinkButton>
               <p className={styles.caption}>
@@ -151,10 +150,7 @@ export default function ContactPage() {
             </div>
             <div className={styles.action}>
               <MarketingLinkButton variant="outline">
-                <Link href="/orders/support">
-                  Visit purchase support
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <Link href="/orders/support">Visit purchase support</Link>
               </MarketingLinkButton>
               <p className={styles.caption}>
                 You do not need a PyColors account to ask for help.

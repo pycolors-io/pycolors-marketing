@@ -41,7 +41,7 @@ export function DocsHeader() {
       onMobileMenuOpen={() => setOpen(false)}
       desktopActions={
         <FullSearchTrigger
-          className={`w-36 rounded-md text-foreground xl:w-44 ${focusRing}`}
+          className={`h-8 w-36 rounded-md text-[13px] text-foreground xl:w-44 [@media(pointer:coarse)]:min-h-11 ${focusRing}`}
         />
       }
       mobileActions={

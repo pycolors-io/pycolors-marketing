@@ -349,10 +349,7 @@ export default function PricingPage() {
                       variant="outline"
                       className="w-full rounded-md"
                     >
-                      <Link href={INTERNAL.starterFree}>
-                        Open Starter Free
-                        <ArrowRight className="size-4" aria-hidden="true" />
-                      </Link>
+                      <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
                     </Button>
                   )}
                 </div>
@@ -537,10 +534,7 @@ export default function PricingPage() {
             </p>
           </div>
           <Button asChild variant="outline" className="shrink-0 rounded-md">
-            <Link href={INTERNAL.starterFree}>
-              Explore Starter Free
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            <Link href={INTERNAL.starterFree}>Explore Starter Free</Link>
           </Button>
         </section>
         <p className="border-t border-border-subtle pt-6 text-xs leading-6 text-muted-foreground">

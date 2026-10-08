@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, GitBranch } from "lucide-react";
+import { ArrowUpRight, GitBranch } from "lucide-react";
 
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
@@ -86,10 +86,7 @@ export function Footer() {
           </div>
           <div className={styles.actions}>
             <MarketingLinkButton>
-              <Link href="/starters/pro">
-                Explore Starter Pro
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
+              <Link href="/starters/pro">Explore Starter Pro</Link>
             </MarketingLinkButton>
             <MarketingLinkButton variant="outline">
               <Link href="/pricing">Compare products</Link>

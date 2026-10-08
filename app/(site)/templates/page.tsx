@@ -455,13 +455,7 @@ export default function TemplatesPage() {
                     variant="outline"
                     className="h-auto rounded-[5px] shadow-none"
                   >
-                    <Link href={template.href}>
-                      View template details{" "}
-                      <ArrowRight
-                        className="size-4 shrink-0"
-                        aria-hidden="true"
-                      />
-                    </Link>
+                    <Link href={template.href}>View template details</Link>
                   </Button>
                   <BuyProductButton
                     productSlug={template.product.slug}

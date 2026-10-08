@@ -58,7 +58,6 @@ export default function ThemeBuilderPage() {
             <Link href="/docs/ui/theming">
               <BookOpen aria-hidden="true" />
               Theming guide
-              <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
         </div>

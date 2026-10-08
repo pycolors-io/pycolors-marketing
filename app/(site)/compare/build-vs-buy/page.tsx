@@ -260,10 +260,7 @@ export default function BuildVsBuyComparisonPage() {
                     size="lg"
                     className="rounded-[5px]"
                   >
-                    <Link href="/starters/pro">
-                      Inspect Starter Pro{" "}
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
+                    <Link href="/starters/pro">Inspect Starter Pro</Link>
                   </Button>
                 </>
               }

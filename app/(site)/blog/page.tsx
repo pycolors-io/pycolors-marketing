@@ -247,10 +247,7 @@ export default function BlogPage() {
               </p>
               <div className="mt-auto">
                 <Button asChild variant="outline" className="rounded-md">
-                  <Link href="/starters/free">
-                    Explore Starter Free{" "}
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </Link>
+                  <Link href="/starters/free">Explore Starter Free</Link>
                 </Button>
               </div>
             </div>

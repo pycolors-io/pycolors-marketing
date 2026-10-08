@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ArrowRight, Layers3, Sparkles } from "lucide-react";
+import { ArrowLeft, Layers3, Sparkles } from "lucide-react";
 
 import { Badge, Card, EmptyState, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -234,8 +234,8 @@ export default async function BlogCategoryPage({ params }: PageProps) {
                 className={`site-primary-action ${cn("rounded-[5px]", focusRing)}`}
               >
                 <Link href="/blog">
+                  <ArrowLeft className="size-4" aria-hidden="true" />
                   Back to Blog
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 

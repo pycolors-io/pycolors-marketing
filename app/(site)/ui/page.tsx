@@ -187,9 +187,7 @@ export default function UiPage() {
                 asChild
                 className={`site-primary-action ${primaryAction}`}
               >
-                <Link href="/docs/ui/installation">
-                  Start building <ArrowRight aria-hidden="true" />
-                </Link>
+                <Link href="/docs/ui/installation">Start building</Link>
               </Button>
               <Button
                 size="lg"
@@ -339,9 +337,7 @@ export default function UiPage() {
                   asChild
                   className={`site-primary-action ${primaryAction}`}
                 >
-                  <Link href="/tools/theme-builder">
-                    Open Theme Builder <ArrowRight aria-hidden="true" />
-                  </Link>
+                  <Link href="/tools/theme-builder">Open Theme Builder</Link>
                 </Button>
                 <Link href="/docs/ui/theming" className={textLink}>
                   Theming guide

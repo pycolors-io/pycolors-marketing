@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock3 } from "lucide-react";
+import { Clock3 } from "lucide-react";
 
 import { Badge, Card, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -64,10 +64,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
             focusRing,
           )}
         >
-          <Link href={post.url}>
-            Read article
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
+          <Link href={post.url}>Read article</Link>
         </Button>
       </div>
     </Card>

@@ -134,10 +134,7 @@ export default function RecoverOrderPage() {
               </p>
               <div className={styles.supportAction}>
                 <MarketingLinkButton variant="outline">
-                  <Link href="/orders/support">
-                    Contact support
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </Link>
+                  <Link href="/orders/support">Contact support</Link>
                 </MarketingLinkButton>
                 <p>No response-time guarantee is promised.</p>
               </div>

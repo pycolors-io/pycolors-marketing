@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -55,16 +55,14 @@ export function BuyProductButton({
         size={size}
         variant={variant}
         className={cn(
-          "group h-auto max-w-full whitespace-normal rounded-md font-medium transition-all duration-200 cursor-pointer",
+          "group h-auto max-w-full whitespace-normal rounded-md font-medium cursor-pointer",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           fullWidth && "w-full",
           variant === "default" && [
             "site-primary-action",
             "border border-transparent",
             "bg-primary text-primary-foreground",
-            "shadow-soft",
             "hover:bg-brand-primary-hover",
-            "hover:shadow-medium",
           ],
           variant === "outline" && [
             "border border-border-subtle",
@@ -91,14 +89,7 @@ export function BuyProductButton({
             {loadingLabel}
           </>
         ) : (
-          <>
-            {label}
-
-            <ArrowRight
-              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
-              aria-hidden="true"
-            />
-          </>
+          label
         )}
       </Button>
 
