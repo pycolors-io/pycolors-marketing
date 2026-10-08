@@ -10,6 +10,12 @@ import { axe } from "vitest-axe";
 import { BlockSourceExplorer } from "../../components/marketing/blocks/block-source-explorer";
 import type { BlockSource } from "../../lib/blocks/source";
 
+const { downloadBlockSource } = vi.hoisted(() => ({
+  downloadBlockSource: vi.fn(),
+}));
+
+vi.mock("../../lib/blocks/download", () => ({ downloadBlockSource }));
+
 vi.mock("fumadocs-ui/components/dynamic-codeblock", () => ({
   DynamicCodeBlock: ({ code, lang }: { code: string; lang: string }) => (
     <pre data-testid="source" data-language={lang}>
@@ -39,7 +45,10 @@ const source: BlockSource = {
   ],
 };
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  downloadBlockSource.mockReset();
+});
 
 describe("Block source explorer", () => {
   it("shows the full folder structure by default even for a single file", () => {
@@ -153,6 +162,53 @@ describe("Block source explorer", () => {
     rerender(<BlockSourceExplorer source={source} active />);
     expect(screen.getByTestId("source").textContent).toBe(
       source.files[2].content,
+    );
+  });
+
+  it("downloads the whole block once while preserving the selected file", async () => {
+    render(<BlockSourceExplorer source={source} active />);
+    fireEvent.change(screen.getByRole("combobox", { name: "Source file" }), {
+      target: { value: "parts/item.tsx" },
+    });
+    const download = screen.getByRole("button", {
+      name: "Download complete block as ZIP",
+    });
+    fireEvent.click(download);
+    expect(download).toBeDisabled();
+    expect(download).toHaveAttribute("aria-busy", "true");
+    fireEvent.click(download);
+    await waitFor(() => expect(download).toBeEnabled());
+    expect(downloadBlockSource).toHaveBeenCalledExactlyOnceWith(source);
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "ZIP download requested.",
+    );
+    expect(screen.getByTestId("source").textContent).toBe(
+      source.files[1].content,
+    );
+    expect(download).toHaveTextContent("Download ZIP");
+  });
+
+  it("offers a retry and file copying when a download fails", async () => {
+    downloadBlockSource.mockImplementationOnce(() => {
+      throw new Error("Download unavailable");
+    });
+    render(<BlockSourceExplorer source={source} active />);
+    const download = screen.getByRole("button", {
+      name: "Download complete block as ZIP",
+    });
+    fireEvent.click(download);
+    await waitFor(() =>
+      expect(screen.getByRole("status")).toHaveTextContent(
+        "Download could not start. Try again or copy each file.",
+      ),
+    );
+    expect(download).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Copy file" })).toBeEnabled();
+    fireEvent.click(download);
+    await waitFor(() =>
+      expect(screen.getByRole("status")).toHaveTextContent(
+        "ZIP download requested.",
+      ),
     );
   });
 

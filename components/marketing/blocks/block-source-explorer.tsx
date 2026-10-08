@@ -130,7 +130,8 @@ export function BlockSourceExplorer({
     try {
       const { downloadBlockSource } = await import("@/lib/blocks/download");
       downloadBlockSource(source);
-      if (request === feedbackRequest.current) setFeedback("download-requested");
+      if (request === feedbackRequest.current)
+        setFeedback("download-requested");
     } catch {
       if (request === feedbackRequest.current) setFeedback("download-failed");
     } finally {
@@ -212,7 +213,10 @@ export function BlockSourceExplorer({
           title={`Download all ${source.files.length} ${multiple ? "files" : "file"}`}
         >
           {isDownloading ? (
-            <LoaderCircle className="size-3.5 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+            <LoaderCircle
+              className="size-3.5 animate-spin motion-reduce:animate-none"
+              aria-hidden="true"
+            />
           ) : (
             <Download className="size-3.5" aria-hidden="true" />
           )}
