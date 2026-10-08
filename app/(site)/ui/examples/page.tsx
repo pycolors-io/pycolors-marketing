@@ -403,6 +403,7 @@ export default function ExamplesPage() {
           }
         />
         <MarketingSectionShell
+          divider="pattern"
           id="example-screens"
           aria-labelledby="example-screens-title"
           width="full"

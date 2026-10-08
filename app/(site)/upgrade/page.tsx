@@ -293,6 +293,7 @@ export default function UpgradePage() {
         </nav>
 
         <MarketingSectionShell
+          divider="pattern"
           id="upgrade-foundations"
           aria-labelledby="upgrade-foundations-title"
           width="full"

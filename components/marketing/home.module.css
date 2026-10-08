@@ -68,7 +68,7 @@
 }
 
 .showcase {
-  padding: 0;
+  padding: 3rem 0 0;
   margin-bottom: 3rem;
 }
 .showcase [data-showcase-intro] {

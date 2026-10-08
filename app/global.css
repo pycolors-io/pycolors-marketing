@@ -25,6 +25,23 @@
 :root {
   /* Shared outer frame for marketing, blog, Docs, headers and footers. */
   --site-frame-width: 90rem;
+  --site-frame-line: color-mix(
+    in srgb,
+    var(--foreground) 10%,
+    var(--background)
+  );
+  --site-pattern-ink: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --site-pattern-wash: color-mix(
+    in oklab,
+    var(--primary) 2%,
+    var(--background)
+  );
+  --site-pattern-height: 1.5rem;
+  --site-pattern-background: repeating-linear-gradient(
+    -45deg,
+    transparent 0 7px,
+    var(--site-pattern-ink) 7px 8px
+  );
   --fd-nav-height: 64px !important;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -197,9 +214,44 @@ span[data-slot="badge"] {
 
 /* Shared frame decoration does not consume space or intercept interactions. */
 @layer components {
+  .marketing-section {
+    position: relative;
+    /* Extend an existing top border without changing the content width or
+       adding scrollable overflow. A zero-width border stays undecorated. */
+    border-image: linear-gradient(
+        var(--site-frame-line),
+        var(--site-frame-line)
+      )
+      1 / 1 0 0 / 0 100vw stretch;
+  }
+
   /* Preserve hero spacing and compact CTA panels; callers can override borders. */
   .marketing-section + .marketing-section-divided {
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--site-frame-line);
+  }
+
+  .marketing-section-pattern::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: var(--site-pattern-height);
+    transform: translateX(-50%);
+    border-block: 1px solid var(--site-frame-line);
+    background: var(--site-pattern-background), var(--site-pattern-wash);
+    pointer-events: none;
+  }
+}
+
+/* The pattern owns both edges; don't stack another section border above it. */
+.marketing-section.marketing-section-pattern {
+  border-top: 0;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-pattern-height: 2rem;
   }
 }
 
@@ -211,7 +263,7 @@ span[data-slot="badge"] {
     z-index: 20;
     width: min(100%, var(--site-frame-width));
     margin-inline: auto;
-    border-inline: 1px solid var(--border-subtle);
+    border-inline: 1px solid var(--site-frame-line);
     pointer-events: none;
   }
 }

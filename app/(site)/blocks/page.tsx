@@ -175,6 +175,7 @@ export default function BlocksPage() {
       </Container>
 
       <MarketingSectionShell
+        divider="pattern"
         aria-labelledby="blocks-catalog-title"
         className="scroll-mt-24 border-t border-border-subtle py-16 lg:py-20"
         id="block-catalog"

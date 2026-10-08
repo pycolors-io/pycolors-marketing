@@ -1,5 +1,4 @@
 .footer {
-  border-top: 1px solid var(--border-subtle);
   background:
     radial-gradient(
         ellipse at 100% 0%,
@@ -8,6 +7,14 @@
       )
       0 0 / 100% 16rem no-repeat,
     var(--background);
+}
+.footer::before {
+  content: "";
+  display: block;
+  height: var(--site-pattern-height);
+  border-block: 1px solid var(--site-frame-line);
+  background: var(--site-pattern-background), var(--site-pattern-wash);
+  pointer-events: none;
 }
 .footer a:focus-visible {
   outline: 2px solid var(--ring);

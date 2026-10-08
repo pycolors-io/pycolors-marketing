@@ -316,6 +316,7 @@ export default function BuildVsBuyComparisonPage() {
           </nav>
 
           <MarketingSectionShell
+            divider="pattern"
             id="choose-your-path"
             width="full"
             aria-labelledby="choose-your-path-heading"

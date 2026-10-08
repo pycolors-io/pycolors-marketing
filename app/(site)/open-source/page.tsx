@@ -353,6 +353,7 @@ export default function OpenSourcePage() {
         </nav>
 
         <MarketingSectionShell
+          divider="pattern"
           id="repositories"
           width="full"
           aria-labelledby="open-source-repositories"

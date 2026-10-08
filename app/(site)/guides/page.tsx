@@ -260,6 +260,7 @@ export default function GuidesPage() {
         </div>
 
         <MarketingSectionShell
+          divider="pattern"
           id="browse-guides"
           width="full"
           className="scroll-mt-24 border-t border-border-subtle"

@@ -356,6 +356,7 @@ export default function NaAiTemplatePage() {
         </nav>
 
         <MarketingSectionShell
+          divider="pattern"
           id="template-preview"
           aria-labelledby="template-preview-title"
           width="full"

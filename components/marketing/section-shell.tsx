@@ -9,6 +9,8 @@ export type MarketingSectionShellProps = Readonly<{
   id?: string;
   width?: MarketingSectionWidth;
   spacing?: MarketingSectionSpacing;
+  /** A textured full-width transition for major marketing sections. */
+  divider?: "pattern";
   className?: string;
   /** Points at the id of the section heading rendered by the caller. */
   "aria-labelledby"?: string;
@@ -38,6 +40,7 @@ export function MarketingSectionShell({
   id,
   width = "content",
   spacing = "default",
+  divider,
   className,
   "aria-labelledby": ariaLabelledBy,
   "aria-label": ariaLabel,
@@ -51,10 +54,18 @@ export function MarketingSectionShell({
         "marketing-section",
         spacingClass[spacing],
         spacing === "default" && "marketing-section-divided",
+        divider === "pattern" && "marketing-section-pattern",
         className,
       )}
     >
-      <div className={widthClass[width]}>{children}</div>
+      <div
+        className={cn(
+          widthClass[width],
+          divider === "pattern" && "pt-6 sm:pt-8",
+        )}
+      >
+        {children}
+      </div>
     </section>
   );
 }

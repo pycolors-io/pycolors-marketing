@@ -18,6 +18,7 @@ export function SaasShowcase({
   return (
     <MarketingSectionShell
       spacing="compact"
+      divider="pattern"
       aria-labelledby="project-readiness-title"
       className={cn("min-w-0", className)}
     >

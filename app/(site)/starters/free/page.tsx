@@ -313,6 +313,7 @@ export default function StarterFreePage() {
         </nav>
 
         <MarketingSectionShell
+          divider="pattern"
           id="product-preview"
           width="full"
           className="scroll-mt-24"

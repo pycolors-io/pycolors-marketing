@@ -6,6 +6,7 @@ import { SiteButton as Button } from "@/components/site-button";
 import { Container } from "@/components/container";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { ThemeBuilder } from "@/components/theme-builder/theme-builder";
 import {
   THEME_BUILDER_DESCRIPTION,
@@ -77,9 +78,17 @@ export default function ThemeBuilderPage() {
         </div>
       </Container>
 
-      <Container className="pb-12 lg:pb-16">
-        <ThemeBuilder />
-      </Container>
+      <MarketingSectionShell
+        aria-label="Theme customization workspace"
+        divider="pattern"
+        spacing="compact"
+        width="full"
+        className="pb-12 lg:pb-16"
+      >
+        <Container>
+          <ThemeBuilder />
+        </Container>
+      </MarketingSectionShell>
 
       <section className="border-t border-border-subtle">
         <Container className="py-10 lg:py-14">

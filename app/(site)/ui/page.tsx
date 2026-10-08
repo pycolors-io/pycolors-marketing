@@ -22,6 +22,7 @@ import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Container } from "@/components/container";
 import { NpmBadges } from "@/components/npm-badges";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingDetailCard } from "@/components/marketing/detail-card";
 import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
@@ -241,15 +242,17 @@ export default function UiPage() {
         </div>
       </Container>
 
-      <Container className="pb-14">
-        <section
-          id="ui-preview"
-          aria-label="Try PyColors UI"
-          className="scroll-mt-24"
-        >
+      <MarketingSectionShell
+        id="ui-preview"
+        aria-label="Try PyColors UI"
+        divider="pattern"
+        width="full"
+        className="scroll-mt-24"
+      >
+        <Container>
           <UiLivePreview modes={generatedTheme.modes} />
-        </section>
-      </Container>
+        </Container>
+      </MarketingSectionShell>
 
       <section
         aria-labelledby="ui-components-heading"

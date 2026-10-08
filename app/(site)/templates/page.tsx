@@ -338,6 +338,7 @@ export default function TemplatesPage() {
         />
 
         <MarketingSectionShell
+          divider="pattern"
           id="templates"
           aria-labelledby="templates-title"
           width="full"

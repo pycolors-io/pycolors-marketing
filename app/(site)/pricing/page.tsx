@@ -404,6 +404,7 @@ export default function PricingPage() {
         </section>
 
         <MarketingSectionShell
+          divider="pattern"
           id="pricing-comparison"
           width="full"
           className="scroll-mt-20"

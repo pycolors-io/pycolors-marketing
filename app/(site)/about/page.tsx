@@ -242,6 +242,7 @@ export default function AboutPage() {
           </nav>
 
           <MarketingSectionShell
+            divider="pattern"
             id="about-purpose"
             width="full"
             aria-labelledby="about-why-pycolors-exists"

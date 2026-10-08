@@ -287,6 +287,7 @@ export default function StartersPage() {
         />
 
         <MarketingSectionShell
+          divider="pattern"
           id="choose-starter"
           aria-labelledby="choose-starter-title"
           width="full"

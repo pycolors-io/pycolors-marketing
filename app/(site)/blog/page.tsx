@@ -127,6 +127,7 @@ export default function BlogPage() {
 
         {leadPost ? (
           <MarketingSectionShell
+            divider="pattern"
             id="featured-articles"
             width="full"
             spacing="compact"
@@ -164,6 +165,7 @@ export default function BlogPage() {
         ) : null}
 
         <MarketingSectionShell
+          divider={leadPost ? undefined : "pattern"}
           id="latest-articles"
           width="full"
           className="scroll-mt-24"

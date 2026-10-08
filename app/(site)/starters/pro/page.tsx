@@ -417,6 +417,7 @@ const sectionClass = "scroll-mt-24 border-t border-border-subtle";
 function StarterProPreviews() {
   return (
     <MarketingSectionShell
+      divider="pattern"
       id="product-preview"
       width="full"
       className="scroll-mt-24"
