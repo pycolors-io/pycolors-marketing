@@ -31,6 +31,8 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { DocsLogo } from "@/components/docs-logo";
 import { DOCS_MENU_GROUPS } from "@/lib/layout.shared";
 import { DocsNewArticleBadge } from "@/components/docs/docs-sidebar-items";
+import { useHeaderDisclosure } from "@/components/layout/use-header-disclosure";
+import styles from "@/components/layout/header-disclosure.module.css";
 
 type DocsLink = Readonly<{
   label: string;
@@ -105,7 +107,17 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
   const [scrolled, setScrolled] = React.useState(false);
   const openBtnRef = React.useRef<HTMLButtonElement>(null);
   const docsButtonRef = React.useRef<HTMLButtonElement>(null);
-  const docsMenuRef = React.useRef<HTMLDivElement>(null);
+  const {
+    rootRef: docsMenuRef,
+    panelRef: docsPanelRef,
+    rootProps: docsMenuProps,
+    triggerProps: docsTriggerProps,
+  } = useHeaderDisclosure({
+    open: isDocsOpen,
+    onOpenChange: setIsDocsOpen,
+    triggerRef: docsButtonRef,
+    desktopQuery: DESKTOP_NAV_QUERY,
+  });
   const docsMenuId = `docs-menu-${React.useId()}`;
   const activeHref = getMostSpecificActiveHref(
     pathname,
@@ -143,7 +155,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     };
     media.addEventListener("change", onResize);
     return () => media.removeEventListener("change", onResize);
-  }, []);
+  }, [docsMenuRef]);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -151,20 +163,6 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  React.useEffect(() => {
-    if (!isDocsOpen) return;
-    const onPointerDown = (event: PointerEvent) => {
-      if (
-        event.target instanceof Node &&
-        !docsMenuRef.current?.contains(event.target)
-      ) {
-        setIsDocsOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [isDocsOpen]);
 
   function onNavigate(event: React.MouseEvent<HTMLAnchorElement>) {
     if (
@@ -192,20 +190,24 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
             onClick={onNavigate}
             aria-current={isCurrent ? "page" : undefined}
             className={cn(
-              "flex min-h-11 items-start gap-3 rounded-md p-3 text-sm transition-colors motion-reduce:transition-none hover:bg-surface-muted",
-              isCurrent && "bg-surface-muted",
+              "group/docs-link flex min-h-11 items-start gap-2.5 rounded-md px-2.5 py-2.5 text-[13px] leading-5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
+              isCurrent && "bg-surface-muted/60",
               focusRing,
             )}
           >
             <Icon
               aria-hidden="true"
-              className="mt-0.5 size-5 shrink-0 text-primary"
+              strokeWidth={1.5}
+              className={cn(
+                "mt-0.5 size-4 shrink-0 text-muted-foreground transition-colors group-hover/docs-link:text-primary motion-reduce:transition-none",
+                isCurrent && "text-primary",
+              )}
             />
             <span className="min-w-0">
-              <span className="block font-semibold text-foreground">
+              <span className="block font-medium text-foreground">
                 {item.label}
               </span>{" "}
-              <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+              <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
                 {item.description}
               </span>
             </span>
@@ -218,13 +220,13 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
   function documentationSections() {
     return (
       <>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-3 sm:gap-3">
           {DOCS_MENU_GROUPS.map((group) => (
             <div key={group.title} className="min-w-0">
-              <p className="mb-2 px-3 text-sm font-semibold text-muted-foreground">
+              <p className="mb-2 px-2.5 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
                 {group.title}
               </p>
-              <ul aria-label={group.title} className="space-y-1">
+              <ul aria-label={group.title} className="space-y-0.5">
                 {sectionLinks(group.items)}
               </ul>
             </div>
@@ -232,7 +234,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
         </div>
         <ul
           aria-label="Documentation resources"
-          className="mt-4 grid gap-1 border-t border-border-subtle pt-4 sm:grid-cols-2"
+          className="mt-3 grid gap-1 border-t border-border-subtle pt-3 sm:grid-cols-2"
         >
           {sectionLinks(DOCS_RESOURCE_ITEMS)}
         </ul>
@@ -248,15 +250,20 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
           onClick={onNavigate}
           aria-current={activeDocHref === item.href ? "page" : undefined}
           className={cn(
-            "flex min-h-11 items-center justify-between gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted hover:text-foreground",
-            activeDocHref === item.href && "bg-surface-muted text-foreground",
+            "group/docs-quick-link flex min-h-11 items-center justify-between gap-3 rounded-md px-2.5 py-2 text-[13px] leading-5 text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground xl:min-h-10 [@media(pointer:coarse)]:min-h-11",
+            activeDocHref === item.href &&
+              "bg-surface-muted/60 text-foreground",
             focusRing,
           )}
         >
           <span className="min-w-0 break-words">{item.label}</span>{" "}
           <span className="inline-flex shrink-0 items-center gap-2">
             {showNew && <DocsNewArticleBadge href={item.href} />}
-            <ChevronRight aria-hidden="true" className="size-3.5 shrink-0" />
+            <ChevronRight
+              aria-hidden="true"
+              strokeWidth={1.5}
+              className="size-3 shrink-0 text-muted-foreground/70 transition-colors group-hover/docs-quick-link:text-foreground motion-reduce:transition-none"
+            />
           </span>
         </Link>
       </li>
@@ -294,46 +301,42 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
               >
                 <div
                   ref={docsMenuRef}
-                  onBlur={(event) => {
-                    if (!event.currentTarget.contains(event.relatedTarget))
-                      setIsDocsOpen(false);
-                  }}
-                  onKeyDown={(event) => {
-                    if (isDocsOpen && event.key === "Escape") {
-                      event.preventDefault();
-                      setIsDocsOpen(false);
-                      docsButtonRef.current?.focus();
-                    }
-                  }}
+                  className="flex h-16 items-center"
+                  {...docsMenuProps}
                 >
                   <button
                     ref={docsButtonRef}
                     type="button"
                     aria-expanded={isDocsOpen}
                     aria-controls={docsMenuId}
-                    onClick={() => setIsDocsOpen((open) => !open)}
+                    {...docsTriggerProps}
                     className={cn(
-                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground",
                       ((activeHref && !isPrimarySection) || isDocsOpen) &&
-                        "bg-surface-muted text-foreground",
+                        "bg-surface-muted/60 text-foreground",
                       focusRing,
                     )}
                   >
                     Docs
                     <ChevronDown
                       aria-hidden="true"
+                      strokeWidth={1.5}
                       className={cn(
-                        "ml-1.5 size-3.5",
+                        "ml-1.5 size-3 transition-transform duration-150 motion-reduce:transition-none",
                         isDocsOpen && "rotate-180",
                       )}
                     />
                   </button>
                   <div
+                    ref={docsPanelRef}
                     id={docsMenuId}
                     hidden={!isDocsOpen}
-                    className="absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-medium"
+                    className={cn(
+                      "absolute inset-x-4 top-full mx-auto mt-2 max-h-[calc(100dvh-5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-soft",
+                      styles.panel,
+                    )}
                   >
-                    <div className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-6 p-5">
+                    <div className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-5 px-5 py-4">
                       <nav
                         aria-label="Documentation sections"
                         className="min-w-0"
@@ -342,7 +345,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                       </nav>
                       {featuredDocsLinks.length > 0 && (
                         <div className="min-w-0 border-l border-border-subtle pl-4">
-                          <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
+                          <p className="px-2.5 pb-2 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
                             Quick links
                           </p>
                           <ul aria-label="Quick documentation links">
@@ -351,13 +354,13 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-border-subtle bg-surface px-5 py-2">
+                    <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-border-subtle bg-surface/60 px-5 py-2">
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <Link
                           href="/pricing"
                           onClick={onNavigate}
                           className={cn(
-                            "flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm hover:bg-surface",
+                            "flex min-h-10 flex-wrap items-center gap-x-2 gap-y-1 rounded-md px-2.5 py-2 text-[13px] transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 [@media(pointer:coarse)]:min-h-11",
                             focusRing,
                           )}
                         >
@@ -370,22 +373,27 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                           </span>
                           <ChevronRight
                             aria-hidden="true"
-                            className="size-3.5 shrink-0 text-muted-foreground"
+                            strokeWidth={1.5}
+                            className="size-3 shrink-0 text-muted-foreground"
                           />
                         </Link>
                         <Link
                           href="/tools/theme-builder"
                           onClick={onNavigate}
                           className={cn(
-                            "inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                            "inline-flex min-h-10 items-center gap-2 rounded-md px-2.5 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground [@media(pointer:coarse)]:min-h-11",
                             focusRing,
                           )}
                         >
                           Open Theme Builder
-                          <ArrowRight aria-hidden="true" className="size-3.5" />
+                          <ArrowRight
+                            aria-hidden="true"
+                            strokeWidth={1.5}
+                            className="size-3.5"
+                          />
                         </Link>
                       </div>
-                      <div className="ml-auto shrink-0 border-l border-border-subtle pl-5">
+                      <div className="ml-auto shrink-0">
                         <SitePalettePicker />
                       </div>
                     </div>
@@ -398,9 +406,9 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                     onClick={onNavigate}
                     aria-current={activeHref === item.href ? "page" : undefined}
                     className={cn(
-                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+                      "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-[13px] text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-surface-muted/60 hover:text-foreground",
                       activeHref === item.href &&
-                        "bg-surface-muted text-foreground",
+                        "bg-surface-muted/60 text-foreground",
                       focusRing,
                     )}
                   >
@@ -480,7 +488,7 @@ export function DocsHeader({ docsLinks = [] }: DocsHeaderProps) {
                 aria-label="Quick documentation links"
                 className="mt-4 border-t border-border-subtle pt-4"
               >
-                <p className="px-3 pb-2 text-sm font-semibold text-muted-foreground">
+                <p className="px-2.5 pb-2 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
                   Quick links
                 </p>
                 <ul>{docLinks(featuredDocsLinks)}</ul>

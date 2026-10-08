@@ -46,7 +46,23 @@ ecosystem:
 
 ---
 
-## Appearance
+## Navigation and appearance
+
+The marketing header groups navigation into Products, Docs, Resources, and Pricing.
+Products opens beneath its trigger in a compact two-column panel: **Build your
+interface** (UI Library, Blocks, Theme Builder) and **Launch your product** (Starter
+Free, Starter Pro, NA-AI Landing). Compare Starters and All templates sit beside the
+palette picker at the bottom. Mobile navigation also retains UI examples and Pricing
+as direct links. The Docs menu keeps its dedicated installation families. Resources
+links to Guides, Blog, Changelog, and Roadmap, with GitHub as a secondary link.
+On devices with a mouse, the Products, Resources, and Docs desktop menus share
+the same interaction: they open after a 150 ms hover and close
+200 ms after the pointer leaves. Entering the panel cancels that dismissal; focused
+panel controls remain available to keyboard users. Click and keyboard activation
+also work, and only one panel can be open at a time. Escape dismisses the panel,
+returning focus to the trigger only when focus was inside the menu. Hover never
+moves focus. Opening motion respects reduced-motion preferences. Touch navigation
+uses taps, and mobile navigation exposes the same destinations in a scrollable sheet.
 
 The footer, mobile navigation menus, and desktop Products and Docs menus offer two site
 palettes: **PyColors** (violet, the default) and **Monochrome** (black, white, and

@@ -121,11 +121,90 @@ beforeEach(() => {
 });
 afterEach(async () => {
   cleanup();
+  vi.useRealTimers();
   document.documentElement.removeAttribute("data-site-palette");
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
   vi.unstubAllGlobals();
+});
+
+describe("DocsHeader hover", () => {
+  beforeEach(() => vi.useFakeTimers());
+
+  function advance(ms: number) {
+    act(() => vi.advanceTimersByTime(ms));
+  }
+
+  it("opens after intentional hover and stays open while entering the panel", () => {
+    render(<Fixture />);
+    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
+    advance(100);
+    expect(panel()).not.toBeVisible();
+    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
+    advance(100);
+    expect(panel()).not.toBeVisible();
+    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
+    advance(150);
+    expect(panel()).toBeVisible();
+    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
+    advance(100);
+    fireEvent.pointerEnter(panel(), { pointerType: "mouse" });
+    advance(250);
+    expect(panel()).toBeVisible();
+    fireEvent.pointerLeave(panel(), { pointerType: "mouse" });
+    advance(150);
+    expect(panel()).toBeVisible();
+    advance(50);
+    expect(panel()).not.toBeVisible();
+  });
+
+  it("dismisses hover with Escape without stealing focus from the article", () => {
+    render(<Fixture />);
+    const outside = screen.getByRole("link", { name: "Outside link" });
+    act(() => outside.focus());
+    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
+    advance(150);
+    expect(panel()).toBeVisible();
+    expect(outside).toHaveFocus();
+    fireEvent.keyDown(outside, { key: "Escape" });
+    advance(300);
+    expect(panel()).not.toBeVisible();
+    expect(outside).toHaveFocus();
+  });
+
+  it("keeps the panel open for keyboard users after pointer exit", () => {
+    render(<Fixture />);
+    act(() => trigger().focus());
+    openDesktop();
+    fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
+    advance(300);
+    expect(panel()).toBeVisible();
+    const link = within(panel()).getByRole("link", { name: /^UI Library/ });
+    act(() => link.focus());
+    fireEvent.pointerLeave(panel(), { pointerType: "mouse" });
+    advance(300);
+    expect(link).toHaveFocus();
+    expect(panel()).toBeVisible();
+    fireEvent.keyDown(link, { key: "Escape" });
+    expect(panel()).not.toBeVisible();
+    expect(trigger()).toHaveFocus();
+  });
+
+  it("retains tap activation and cancels pending hover on a responsive change", () => {
+    render(<Fixture />);
+    fireEvent.pointerEnter(trigger(), { pointerType: "touch" });
+    advance(300);
+    expect(panel()).not.toBeVisible();
+    openDesktop();
+    expect(panel()).toBeVisible();
+    fireEvent.click(trigger());
+    fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
+    resize(false);
+    advance(300);
+    resize(true);
+    expect(panel()).not.toBeVisible();
+  });
 });
 
 describe("DocsHeader navigation", () => {
@@ -175,10 +254,9 @@ describe("DocsHeader navigation", () => {
     expect(logo.querySelector("a")).toBeNull();
   });
 
-  it("keeps a closed disclosure hidden until its first activation, even after focus or hover", () => {
+  it("keeps focus passive and supports explicit click activation", () => {
     render(<Fixture />);
     act(() => trigger().focus());
-    fireEvent.mouseEnter(trigger().parentElement!);
     expect(trigger()).toHaveAttribute("aria-expanded", "false");
     expect(panel()).not.toBeVisible();
     expect(within(panel()).queryByRole("link")).not.toBeInTheDocument();
@@ -257,11 +335,22 @@ describe("DocsHeader navigation", () => {
     ).toHaveAttribute("href", "/docs/starter-pro/billing");
   });
 
-  it("uses the same product families and names while linking to their documentation", () => {
+  it("keeps the dedicated docs families and documentation links for every marketing product", () => {
     render(<Fixture />);
     const menu = openDesktop();
-    expect(DOCS_MENU_GROUPS.map((group) => group.title)).toEqual(
-      PRODUCT_MENU_GROUPS.map((group) => group.title),
+    expect(DOCS_MENU_GROUPS.map((group) => group.title)).toEqual([
+      "Build your interface",
+      "Start your application",
+      "Design and launch",
+    ]);
+    expect(
+      DOCS_MENU_GROUPS.flatMap((group) =>
+        group.items.map((item) => item.href),
+      ).sort(),
+    ).toEqual(
+      PRODUCT_MENU_GROUPS.flatMap((group) =>
+        group.items.map((item) => item.documentation.href),
+      ).sort(),
     );
     for (const group of DOCS_MENU_GROUPS) {
       const links = within(menu.getByRole("list", { name: group.title }));
@@ -305,7 +394,7 @@ describe("DocsHeader navigation", () => {
         current: "page",
       });
       expect(current).toHaveAttribute("href", href);
-      expect(trigger()).not.toHaveClass("bg-surface-muted");
+      expect(trigger()).not.toHaveClass("bg-surface-muted/60");
     },
   );
 
@@ -314,7 +403,7 @@ describe("DocsHeader navigation", () => {
     (path) => {
       route.pathname = path;
       render(<Fixture />);
-      expect(trigger()).toHaveClass("bg-surface-muted");
+      expect(trigger()).toHaveClass("bg-surface-muted/60");
     },
   );
 
