@@ -505,6 +505,12 @@ const pendingRoadmap = [
 ] as const;
 const releases = [
   [
+    "v1.27.0",
+    "2026-10-09",
+    "Clearer navigation and interactive product discovery",
+    "/blocks",
+  ],
+  [
     "v1.26.0",
     "2026-10-02",
     "Practical integration guidance and clearer product journeys",
