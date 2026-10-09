@@ -60,6 +60,8 @@ export function FooterPalette() {
         <button
           key={value}
           type="button"
+          aria-label={label}
+          title={label}
           aria-pressed={palette === value}
           disabled={palette === null}
           onClick={() => setPalette(value)}
@@ -69,7 +71,7 @@ export function FooterPalette() {
             data-palette-swatch={value}
             className={styles.paletteSwatch}
           />
-          {label}
+          <span className={styles.paletteLabel}>{label}</span>
         </button>
       ))}
     </div>
