@@ -63,6 +63,59 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.27.0",
+    title:
+      "PyColors Marketing v1.27.0: clearer navigation and interactive product discovery",
+    dateLabel: "Fri 9 Oct 2026",
+    dateISO: "2026-10-09",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary:
+      "This update makes PyColors easier to browse, compare, and try: product and Docs navigation behave more reliably across screen sizes, key product pages surface interactive previews, the Blocks catalog adds two practical starting points, and implementation guidance is more task-oriented.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Product and Docs navigation now use clearer, accessible disclosures with reliable keyboard, pointer, and mobile behavior.",
+          "Key Marketing pages present product choices and interactive previews more consistently across UI, Blocks, starters, templates, and the Theme Builder.",
+          "Starter Pro evaluation copy more clearly separates included product surfaces from configuration work. This release does not change pricing, licensing, or update policy.",
+          "Template documentation now links directly to common setup, customization, deployment, and license tasks.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Added documented Onboarding Checklist and Stats Overview Blocks with public previews and source-copy guidance. Applications retain ownership of data, persistence, navigation, and product behavior.",
+          "Added a tested guide for preventing stale asynchronous validation results in React forms.",
+          "Kept the displayed package baselines at PyColors UI v1.5.5 and PyColors Tokens v1.2.3; this Marketing release does not re-version either package.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Responsive navigation state, focus behavior, scroll handling, disclosure semantics, and reduced-motion behavior are covered by focused regression and browser checks.",
+          "Interactive previews use bounded demonstration state and do not claim backend integration or measured conversion gains.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Browse the refined product paths, inspect interactive previews, copy the new Blocks, and apply the documented asynchronous-validation pattern in your own application.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Evaluate the shipped public interfaces, source-copy examples, and explicit ownership boundaries without treating preview behavior as a production-service guarantee.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Explore PyColors Blocks",
+      href: "/blocks",
+    },
+  },
+  {
     version: "v1.26.0",
     title:
       "PyColors Marketing v1.26.0: practical integration guidance and clearer product journeys",
@@ -550,7 +603,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.17.3",
     title: "Starter Pro buyer trust and purchase-flow clarity",
@@ -593,7 +645,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.17.1",
     title: "NA-AI Landing checkout reliability fix",
@@ -620,7 +671,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/templates",
     },
   },
-
   {
     version: "v1.17.0",
     title:
@@ -695,7 +745,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.16.0",
     title:
@@ -726,7 +775,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Expanded reusable product-marketing patterns to reduce duplication and improve scalability across the platform.",
         ],
       },
-
       {
         title: "Projects, billing, and admin UX refined",
         items: [
@@ -736,7 +784,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Expanded product-oriented navigation and internal routing consistency across Starter Pro surfaces.",
         ],
       },
-
       {
         title: "Documentation architecture and patterns expanded",
         items: [
@@ -746,7 +793,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Improved docs readability, instructional clarity, and interactive guidance across UI and product documentation.",
         ],
       },
-
       {
         title: "Premium UI consistency and polish improved",
         items: [
@@ -756,7 +802,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Strengthened overall visual polish to better align PyColors with premium SaaS platform expectations.",
         ],
       },
-
       {
         title: "Navigation and mobile experience improved",
         items: [
@@ -773,7 +818,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/docs",
     },
   },
-
   {
     version: "v1.15.0",
     title:
@@ -784,6 +828,7 @@ const CHANGELOG: ChangelogItem[] = [
     releaseWeekLabel: "May 2026 (weekly release)",
     summary:
       "This release strengthens PyColors as a production-ready SaaS developer platform. It expands Starter Pro production documentation, improves upgrade messaging and commercial clarity, introduces a more scalable token radius architecture, hardens npm publishing infrastructure with Trusted Publishing, and refines documentation systems, sharing UX, overlays guidance, and reusable product decision surfaces. The focus is clear: improve long-term platform credibility, release reliability, onboarding quality, and Free-to-Pro conversion.",
+
     highlights: [
       {
         title: "Starter Pro production documentation expanded",
@@ -853,7 +898,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/docs",
     },
   },
-
   {
     version: "v1.14.0",
     title:
@@ -1534,8 +1578,7 @@ const CHANGELOG: ChangelogItem[] = [
         ],
       },
       {
-        title:
-          "Real user flows: registration, login, verification, reset password",
+        title: "Real user flows: registration, login, verification, reset password",
         items: [
           "Added server-side registration and login actions with validation, password hashing, and clearer error handling.",
           "Connected login and registration forms to real server actions with pending states, validation feedback, and improved submission UX.",
