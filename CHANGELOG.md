@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.27.0
+
+Released by PyColors Marketing on 9 October 2026 (2026-10-09).
+
+This update makes PyColors easier to browse, compare, and try: product and Docs navigation behave more reliably across screen sizes, key product pages surface interactive previews, the Blocks catalog adds two practical starting points, and implementation guidance is more task-oriented.
+
+### Applications updated
+
+- Product and Docs navigation now use clearer, accessible disclosures with reliable keyboard, pointer, and mobile behavior.
+- Key Marketing pages present product choices and interactive previews more consistently across UI, Blocks, starters, templates, and the Theme Builder.
+- Starter Pro evaluation copy more clearly separates included product surfaces from configuration work. This release does not change pricing, licensing, or update policy.
+- Template documentation now links directly to common setup, customization, deployment, and license tasks.
+
+### Platform and shared capabilities
+
+- Added documented Onboarding Checklist and Stats Overview Blocks with public previews and source-copy guidance. Applications retain ownership of data, persistence, navigation, and product behavior.
+- Added a tested guide for preventing stale asynchronous validation results in React forms.
+- Kept the displayed package baselines at PyColors UI v1.5.5 and PyColors Tokens v1.2.3; this Marketing release does not re-version either package.
+
+### Reliability and maintenance
+
+- Responsive navigation state, focus behavior, scroll handling, disclosure semantics, and reduced-motion behavior are covered by focused regression and browser checks.
+- Interactive previews use bounded demonstration state and do not claim backend integration or measured conversion gains.
+
+### For developers and candidates
+
+- Browse the refined product paths, inspect interactive previews, copy the new Blocks, and apply the documented asynchronous-validation pattern in your own application.
+
+### For companies and recruiters
+
+- Evaluate the shipped public interfaces, source-copy examples, and explicit ownership boundaries without treating preview behavior as a production-service guarantee.
+
+[Explore PyColors Blocks](https://pycolors.io/blocks).
+
 ## 1.26.0
 
 Released by PyColors Marketing on 2 October 2026 (2026-10-02).
