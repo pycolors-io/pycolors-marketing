@@ -17,12 +17,12 @@ export function Logomark() {
       aria-hidden="true"
       focusable="false"
     >
-      {/* Two forward facets share a 1:2 slope and 5-unit terminals.
+      {/* Two upward-facing facets share a 1:2 slope and 5-unit terminals.
           The trailing tip sits 8 units behind the leading tip; the open cut
           separates the facets without relying on color or opacity. */}
       <path
         d="M9 7 35 20 30 22.5 9 12ZM9 28 22 21.5 27 24 9 33Z"
-        transform="translate(0 40) scale(1 -1)"
+        transform="rotate(-90 22 20) translate(0 40) scale(1 -1)"
         fill="currentColor"
         className={cn(
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
