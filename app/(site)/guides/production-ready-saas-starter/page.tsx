@@ -97,12 +97,27 @@ export default function GuideProductionReadySaaSStarterPage() {
             <Alert>
               <AlertTitle>Core idea</AlertTitle>
               <AlertDescription>
-                A production-ready SaaS starter is not valuable because it
-                includes more features. It is valuable because it reduces
-                repetitive setup work and gives developers a credible product
-                surface from day one.
+                A useful SaaS starter reduces repetitive setup work and makes
+                its scope verifiable. Evaluate the included interface, the
+                connected systems, and the configuration and checks your
+                application still needs before launch.
               </AlertDescription>
             </Alert>
+
+            <p className="text-sm leading-7 text-muted-foreground sm:text-[15px]">
+              Starter Free keeps authentication, billing, and data mocked for
+              interface evaluation. Starter Pro includes authentication,
+              billing, and database foundations; you still configure providers,
+              adapt your product logic, and validate the result in your
+              environment. Use the{" "}
+              <Link
+                href="/docs/starter-pro/production-checklist"
+                className="text-foreground underline underline-offset-4"
+              >
+                Starter Pro production checklist
+              </Link>{" "}
+              to plan those checks before launch.
+            </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ChecklistCard
@@ -234,16 +249,16 @@ export default function GuideProductionReadySaaSStarterPage() {
                   Protected app area
                 </TableCell>
                 <TableCell>
-                  Makes the product surface feel coherent after login
+                  Enforces server-side session and authorization checks for
+                  protected data and actions
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
 
           <p>
-            This does not mean the starter must include every advanced auth edge
-            case. It means the user-facing auth surface should already feel
-            serious and complete.
+            Validate the documented sign-in, recovery, session expiry, and
+            server-side access rules in your configured application.
           </p>
 
           <p>
@@ -395,8 +410,9 @@ export default function GuideProductionReadySaaSStarterPage() {
           description="Billing is where the product starts behaving like a business."
         >
           <p>
-            You do not always need a fully wired billing engine on day one, but
-            you do need the right product surfaces.
+            Mocked billing screens are useful while prototyping. Before charging
+            customers, validate the configured payment flow, webhook handling,
+            and the access changes driven by billing state.
           </p>
 
           <Table>
@@ -431,8 +447,9 @@ export default function GuideProductionReadySaaSStarterPage() {
           </Table>
 
           <p>
-            This is one of the key differences between a UI demo and a
-            product-shaped starter.
+            The billing UI should reflect server-verified payment and
+            subscription state. Check failed payments, cancellation, and
+            recovery alongside the successful path.
           </p>
 
           <p>
@@ -593,7 +610,14 @@ export default function GuideProductionReadySaaSStarterPage() {
           </Alert>
         </section>
 
-        <GuideNextSteps title="Start from a stronger foundation" />
+        <GuideNextSteps
+          title="Evaluate the foundation for your project"
+          description="Review the included scope and setup requirements, then validate the configured application against the production checklist."
+          primary={{
+            href: "/docs/starter-pro/what-is-included",
+            label: "Review included scope",
+          }}
+        />
       </div>
     </GuidePageShell>
   );
