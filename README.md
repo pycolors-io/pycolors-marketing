@@ -56,6 +56,25 @@ or demonstrate production readiness.
 
 ---
 
+## Brand icons
+
+Favicons and mobile icons use the header's upward-facing, two-facet symbol in
+white on violet (`#6A30D4`), independently of the selected site palette. Regenerate
+the SVG, PNG, ICO and Explorer assets from `components/logo.tsx` with:
+
+```bash
+node apps/marketing/scripts/generate-brand-icons.mjs
+```
+
+Run from the monorepo root after installing dependencies. The script uses Next.js's
+installed Sharp renderer. The separate maskable icon keeps the complete symbol
+inside the central safe zone; Apple and mobile icons use an opaque square canvas
+so the operating system can apply its own mask. When replacing assets, update the
+version query in `app/layout.tsx` and `public/manifest.webmanifest` to refresh caches.
+These assets do not change the published UI package API or require a Changeset.
+
+---
+
 ## Navigation and appearance
 
 The marketing header groups navigation into Products, Docs, Resources, and Pricing.

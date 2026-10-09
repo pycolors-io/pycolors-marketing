@@ -30,13 +30,13 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { url: "/favicon.ico?v=2", sizes: "16x16 32x32 48x48" },
+      { url: "/favicon.svg?v=2", type: "image/svg+xml" },
+      { url: "/favicon.png?v=2", type: "image/png", sizes: "64x64" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "/apple-touch-icon.png?v=2", sizes: "180x180" }],
   },
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.webmanifest?v=2",
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -82,7 +82,7 @@ const siteJsonLd = {
         "PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/logo.png?v=2`,
       },
       sameAs: ["https://github.com/pycolors-io"],
     },
