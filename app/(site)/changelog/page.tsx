@@ -1578,7 +1578,8 @@ const CHANGELOG: ChangelogItem[] = [
         ],
       },
       {
-        title: "Real user flows: registration, login, verification, reset password",
+        title:
+          "Real user flows: registration, login, verification, reset password",
         items: [
           "Added server-side registration and login actions with validation, password hashing, and clearer error handling.",
           "Connected login and registration forms to real server actions with pending states, validation feedback, and improved submission UX.",
