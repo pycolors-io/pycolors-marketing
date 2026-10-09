@@ -183,7 +183,7 @@ const milestones: Array<{
     id: "Oct 2026",
     title: "October 2026",
     subtitle:
-      "PyColors Marketing v1.26.0, released on 2 October 2026, brings practical integration guidance and clearer product journeys.",
+      "PyColors Marketing v1.27.0, released on 9 October 2026, improves navigation, product previews, reusable Blocks, and task-oriented implementation guidance.",
   },
   {
     id: "H1 2026",
@@ -724,7 +724,6 @@ const items: RoadmapItem[] = [
     tags: ["Starter PRO", "Patterns", "Conversion"],
     href: "/docs/patterns/feature-showcase",
   },
-
   {
     title: "Upgrade Gate monetization patterns",
     description:
@@ -734,7 +733,6 @@ const items: RoadmapItem[] = [
     tags: ["Monetization", "Upgrade", "Patterns"],
     href: "/docs/patterns/upgrade-gate",
   },
-
   {
     title: "Starter Pro product-surface refinement",
     description:
@@ -744,7 +742,6 @@ const items: RoadmapItem[] = [
     tags: ["Starter PRO", "UX", "Product"],
     href: "/starters/pro",
   },
-
   {
     title: "Documentation modularity and decision systems",
     description:
@@ -817,7 +814,6 @@ const items: RoadmapItem[] = [
     tags: ["Blog", "Authority", "SEO"],
     href: "/blog",
   },
-
   {
     title: "Starter Pro conversion instrumentation",
     description:
