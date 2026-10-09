@@ -7,11 +7,11 @@ import { cn } from "@pycolors/ui";
 import { wordmarkFont } from "./wordmark-font";
 
 export function Logomark() {
-  // A compact, centered canvas gives the lockup an explicit icon-to-text gap.
+  // The inset shape at 17px matches the wordmark's ~14.6px visible glyph height.
   return (
     <svg
       viewBox="7 5 30 30"
-      className="h-5 w-5 shrink-0 text-primary"
+      className="size-[17px] shrink-0 text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -37,7 +37,8 @@ function Wordmark() {
     <span
       className={cn(
         wordmarkFont.className,
-        "inline-flex shrink-0 items-center whitespace-nowrap select-none text-[17px] font-semibold leading-none tracking-[-0.025em]",
+        // Geist's visible glyphs sit ~1.25px below the line box's center.
+        "inline-flex -translate-y-[1.25px] shrink-0 items-center whitespace-nowrap select-none text-[17px] font-semibold leading-5 tracking-[-0.025em]",
         "text-foreground antialiased",
         "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",

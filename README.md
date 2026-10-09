@@ -54,6 +54,12 @@ the demo alongside its local-only data notice. Table, board, filtering and proje
 review interactions remain available; this preview does not connect to a backend
 or demonstrate production readiness.
 
+Below the desktop breakpoint, project details start collapsed to keep the product
+entry points within easier reach. The labelled disclosure toggles the panel;
+selecting a project also opens its details. Desktop keeps the detail panel visible.
+The homepage uses the active palette for primary actions and a tighter mobile
+spacing scale while preserving touch targets and keyboard access.
+
 ---
 
 ## Brand icons

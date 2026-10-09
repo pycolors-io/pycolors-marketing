@@ -26,6 +26,24 @@ function detail(name: string) {
 }
 
 describe("public Project readiness workspace", () => {
+  it("toggles the mobile detail disclosure and opens it when a project is selected", () => {
+    render(<SaasShowcase />);
+    const toggle = screen.getByRole("button", { name: "Show project details" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(toggle).toHaveAttribute(
+      "aria-controls",
+      detail("Customer portal").id,
+    );
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAccessibleName("Hide project details");
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(openProject("Team workspace"));
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(detail("Team workspace")).toHaveTextContent("Settings layout");
+  });
+
   it("explains workspace totals and exposes each project's review coverage", () => {
     render(<SaasShowcase />);
     const totals = screen.getByLabelText("Workspace totals");

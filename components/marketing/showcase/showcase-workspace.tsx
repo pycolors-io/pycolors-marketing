@@ -30,6 +30,7 @@ import {
   Rows3,
   Activity,
   CircleDot,
+  ChevronDown,
 } from "lucide-react";
 import {
   projectsForFilter,
@@ -187,6 +188,7 @@ export function ShowcaseWorkspace() {
   );
   const [announcement, setAnnouncement] = React.useState("");
   const [view, setView] = React.useState<"table" | "board">("table");
+  const [mobileDetailsOpen, setMobileDetailsOpen] = React.useState(false);
   const allTab = React.useRef<HTMLButtonElement>(null);
   const detailId = React.useId();
   const detailHeadingId = React.useId();
@@ -232,6 +234,7 @@ export function ShowcaseWorkspace() {
 
   function selectProject(project: ShowcaseProject) {
     setSelectedId(project.id);
+    setMobileDetailsOpen(true);
     setAnnouncement(`${project.name} selected.`);
   }
 
@@ -495,11 +498,29 @@ export function ShowcaseWorkspace() {
                 </p>
               </div>
             </div>
+            <button
+              type="button"
+              aria-expanded={mobileDetailsOpen}
+              aria-controls={detailId}
+              onClick={() => setMobileDetailsOpen((open) => !open)}
+              className="flex min-h-11 w-full items-center justify-between gap-3 border-t border-border-subtle px-4 py-3 text-xs font-medium text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring lg:hidden"
+            >
+              {mobileDetailsOpen
+                ? "Hide project details"
+                : "Show project details"}
+              <ChevronDown
+                aria-hidden="true"
+                className={cn("size-3.5", mobileDetailsOpen && "rotate-180")}
+              />
+            </button>
             <section
               id={detailId}
               aria-labelledby={detailHeadingId}
               data-showcase-panel="detail"
-              className="min-h-128 min-w-0 border-t border-border-subtle bg-surface-muted/40 px-4 py-6 sm:px-6 lg:border-t-0 lg:border-l lg:py-8"
+              className={cn(
+                "min-h-128 min-w-0 border-t border-border-subtle bg-surface-muted/40 px-4 py-6 sm:px-6 lg:block lg:border-t-0 lg:border-l lg:py-8",
+                !mobileDetailsOpen && "hidden",
+              )}
             >
               <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                 <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
