@@ -11,7 +11,7 @@ export function Logomark() {
   return (
     <svg
       viewBox="7 5 30 30"
-      className="h-5.5 w-5.5 shrink-0 text-primary"
+      className="h-5 w-5 shrink-0 text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -37,7 +37,7 @@ function Wordmark() {
     <span
       className={cn(
         wordmarkFont.className,
-        "inline-flex shrink-0 items-center whitespace-nowrap select-none text-[18px] font-semibold leading-none tracking-[-0.025em]",
+        "inline-flex shrink-0 items-center whitespace-nowrap select-none text-[17px] font-semibold leading-none tracking-[-0.025em]",
         "text-foreground antialiased",
         "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",
@@ -60,7 +60,7 @@ export function Logo({
       href={isDocs ? "/docs" : "/"}
       aria-label={isDocs ? "PyColors Docs" : "PyColors"}
       className={cn(
-        "group inline-flex min-h-11 shrink-0 items-center gap-2 rounded-md",
+        "group inline-flex min-h-11 shrink-0 items-center gap-1 rounded-md",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
       )}
     >
