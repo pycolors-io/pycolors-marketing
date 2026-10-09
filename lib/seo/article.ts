@@ -1,21 +1,17 @@
-import type { Metadata } from 'next';
-import type { BlogPost } from '@/types/blog';
-import {
-  SITE_NAME,
-  SITE_URL,
-  SITE_TWITTER_HANDLE,
-} from '@/lib/seo/website';
+import type { Metadata } from "next";
+import type { BlogPost } from "@/types/blog";
+import { SITE_NAME, SITE_URL, SITE_TWITTER_HANDLE } from "@/lib/seo/website";
 
-const DEFAULT_BLOG_OG_IMAGE = '/seo/blog/og-blog-default.png';
+const DEFAULT_BLOG_OG_IMAGE = "/seo/blog/og-blog-default.png";
 
 const BLOG_CATEGORY_OG_IMAGES: Record<string, string> = {
-  'Next.js': '/seo/blog/og-blog-nextjs.png',
-  'SaaS Architecture': '/seo/blog/og-blog-saas.png',
+  "Next.js": "/seo/blog/og-blog-nextjs.png",
+  "SaaS Architecture": "/seo/blog/og-blog-saas.png",
 };
 
 function toAbsoluteUrl(path?: string) {
   if (!path) return undefined;
-  return path.startsWith('http') ? path : `${SITE_URL}${path}`;
+  return path.startsWith("http") ? path : `${SITE_URL}${path}`;
 }
 
 function getArticleImage(post: BlogPost) {
@@ -32,13 +28,13 @@ export function createArticleMetadata(post: BlogPost): Metadata {
   const imageUrl = toAbsoluteUrl(imagePath);
 
   return {
-    title: `${post.title} | ${SITE_NAME} Blog`,
+    title: { absolute: `${post.title} | ${SITE_NAME} Blog` },
     description: post.description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      type: 'article',
+      type: "article",
       url: canonicalUrl,
       title: post.title,
       description: post.description,
@@ -57,7 +53,7 @@ export function createArticleMetadata(post: BlogPost): Metadata {
         : undefined,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
       creator: SITE_TWITTER_HANDLE,
@@ -75,17 +71,17 @@ export function generateArticleJsonLd(post: BlogPost) {
   const imageUrl = toAbsoluteUrl(imagePath);
 
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+    "@context": "https://schema.org",
+    "@type": "Article",
     headline: post.title,
     description: post.description,
     datePublished: post.date,
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: post.author,
     },
     publisher: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: SITE_NAME,
       url: SITE_URL,
     },

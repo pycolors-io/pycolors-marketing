@@ -194,15 +194,15 @@ describe("showcase-first homepage", () => {
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {
     expect(metadata).toEqual({
       title: {
-        absolute: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        absolute: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
       },
       description:
-        "PyColors helps developers build and launch modern Next.js SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro with Auth.js, Prisma, Stripe commerce, secure delivery, purchase recovery, and SaaS architecture.",
+        "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
       alternates: { canonical: "https://pycolors.io" },
       openGraph: {
-        title: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
-          "Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, Stripe commerce, Prisma, secure delivery, purchase recovery, and protected app architecture.",
+          "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
         url: "https://pycolors.io",
         siteName: "PyColors",
         type: "website",
@@ -210,9 +210,9 @@ describe("showcase-first homepage", () => {
       },
       twitter: {
         card: "summary_large_image",
-        title: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
-          "Build modern SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro commerce foundations.",
+          "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
         images: ["/seo/twitter-main.png"],
       },
     });

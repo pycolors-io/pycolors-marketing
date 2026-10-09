@@ -62,9 +62,10 @@ describe("Block source explorer", () => {
       screen.getByRole("navigation", { name: "Block source files" }),
     ).toBeInTheDocument();
     for (const folder of ["src", "components", "blocks", "example"]) {
-      expect(
-        screen.getByRole("button", { name: folder, exact: true }),
-      ).toHaveAttribute("aria-expanded", "true");
+      expect(screen.getByRole("button", { name: folder })).toHaveAttribute(
+        "aria-expanded",
+        "true",
+      );
     }
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
     expect(screen.getByTestId("source").textContent).toBe(

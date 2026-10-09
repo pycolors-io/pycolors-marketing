@@ -39,22 +39,21 @@ import { UI_VERSION } from "@/lib/version";
 import { getUiExplorerUrl } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Next.js SaaS UI System, Templates & Starters · PyColors",
+    absolute: SITE_TITLE,
   },
-  description:
-    "PyColors helps developers build and launch modern Next.js SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro with Auth.js, Prisma, Stripe commerce, secure delivery, purchase recovery, and SaaS architecture.",
+  description: SITE_DESCRIPTION,
   alternates: {
     canonical: "https://pycolors.io",
   },
 
   openGraph: {
-    title: "Next.js SaaS UI System, Templates & Starters · PyColors",
+    title: SITE_TITLE,
 
-    description:
-      "Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, Stripe commerce, Prisma, secure delivery, purchase recovery, and protected app architecture.",
+    description: SITE_DESCRIPTION,
     url: "https://pycolors.io",
     siteName: "PyColors",
     type: "website",
@@ -63,9 +62,8 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Next.js SaaS UI System, Templates & Starters · PyColors",
-    description:
-      "Build modern SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro commerce foundations.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: ["/seo/twitter-main.png"],
   },
 };

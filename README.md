@@ -75,6 +75,28 @@ These assets do not change the published UI package API or require a Changeset.
 
 ---
 
+## Search metadata
+
+The homepage and site defaults share their title and description in
+`lib/seo/website.ts`. Each documentation page declares its own canonical URL and
+Open Graph/Twitter preview through `lib/seo/docs.ts`; it must not inherit `/docs`
+as the canonical URL for every article. Blog titles use an absolute title to avoid
+appending the site name twice.
+
+The sitemap includes public discovery pages, blog posts, taxonomy and documentation.
+Only known, valid editorial dates are used for `lastModified`; static pages and
+undated content omit it instead of claiming an update on every build. Google
+ignores `priority` and `changeFrequency`; these remain optional hints for other
+consumers. `robots.txt` allows crawling and points to the sitemap. Transactional
+pages retain their existing `noindex` metadata and stay outside the sitemap.
+Website structured data describes the real site and organization, without
+advertising an unavailable `/search` page.
+
+After deployment, validate canonical URLs and sitemap coverage in Search Console.
+These code changes do not submit URLs, guarantee indexing or claim ranking gains.
+
+---
+
 ## Navigation and appearance
 
 The marketing header groups navigation into Products, Docs, Resources, and Pricing.

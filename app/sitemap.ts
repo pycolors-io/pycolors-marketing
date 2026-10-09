@@ -8,7 +8,7 @@ import {
 } from "@/lib/blog/utils";
 import { source } from "@/lib/source";
 
-const BASE_URL = "https://pycolors.io";
+import { SITE_URL } from "@/lib/seo/website";
 
 /**
  * Core acquisition + conversion routes.
@@ -92,7 +92,7 @@ const STATIC_ROUTES = [
 
 /**
  * Sitemap priorities.
- * Signals relative business + SEO importance.
+ * Optional hints for consumers; Google ignores priority and changeFrequency.
  */
 function getPriority(route: string): number {
   if (route === "") return 1;
@@ -182,7 +182,7 @@ function getPriority(route: string): number {
 
 /**
  * Change frequency strategy.
- * Helps search engines understand update cadence.
+ * Optional cadence hints for consumers other than Google.
  */
 function getChangeFrequency(
   route: string,
@@ -239,28 +239,19 @@ function isPublicDocsPage(page: { readonly data: unknown }) {
   return data.draft !== true && data.private !== true;
 }
 
-function getDocsLastModified(
-  lastUpdated: SitemapDocData["lastUpdated"],
-  fallback: Date,
-) {
-  if (!lastUpdated) {
-    return fallback;
-  }
-
-  const lastModified = new Date(lastUpdated);
-
-  return Number.isNaN(lastModified.getTime()) ? fallback : lastModified;
+/** Publish only known dates, never the sitemap generation time. */
+function getLastModified(value: string | Date | undefined) {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   /**
    * Static routes
    */
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified: now,
+    url: `${SITE_URL}${route}`,
     changeFrequency: getChangeFrequency(route),
     priority: getPriority(route),
   }));
@@ -269,8 +260,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * Blog posts
    */
   const blogPosts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
-    url: `${BASE_URL}${post.url}`,
-    lastModified: post.date ? new Date(post.date) : now,
+    url: `${SITE_URL}${post.url}`,
+    lastModified: getLastModified(post.date),
     changeFrequency: "monthly",
     priority: 0.85,
   }));
@@ -280,8 +271,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
    */
   const blogCategories: MetadataRoute.Sitemap = getAllCategories().map(
     (category) => ({
-      url: `${BASE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
-      lastModified: now,
+      url: `${SITE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
       changeFrequency: "monthly",
       priority: 0.7,
     }),
@@ -291,8 +281,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * Blog tags
    */
   const blogTags: MetadataRoute.Sitemap = getAllTags().map((tag) => ({
-    url: `${BASE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
-    lastModified: now,
+    url: `${SITE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
     changeFrequency: "monthly",
     priority: 0.6,
   }));
@@ -307,8 +296,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const data = page.data as SitemapDocData;
 
       return {
-        url: `${BASE_URL}${page.url}`,
-        lastModified: getDocsLastModified(data.lastUpdated, now),
+        url: `${SITE_URL}${page.url}`,
+        lastModified: getLastModified(data.lastUpdated),
         changeFrequency: getChangeFrequency(page.url),
         priority: getPriority(page.url),
       };

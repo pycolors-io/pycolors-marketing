@@ -164,6 +164,9 @@ describe("blog article reading layout", () => {
     });
     expect(metadata.alternates?.canonical).toMatch(/\/blog\/current$/);
     expect(metadata.description).toBe("An original summary.");
+    expect(metadata.title).toEqual({
+      absolute: `${articles[1]!.data.title} | PyColors Blog`,
+    });
     await renderPage();
     const jsonLd = JSON.parse(
       document.getElementById("article-jsonld")!.textContent!,

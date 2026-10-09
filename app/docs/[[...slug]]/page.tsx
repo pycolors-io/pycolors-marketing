@@ -12,6 +12,7 @@ import { DocsPageHeader } from "@/components/docs/docs-page-header";
 import { UiExplorerLink } from "@/components/docs/ui-explorer-link";
 import { formatDate } from "@/lib/format-date";
 import { getPrevNextFromTree } from "@/lib/docs-navigation";
+import { createDocsMetadata } from "@/lib/seo/docs";
 
 type MDXContentProps = {
   components?: ReturnType<typeof getMDXComponents>;
@@ -164,11 +165,10 @@ export async function generateMetadata(
 
   if (!page) notFound();
 
-  return {
+  return createDocsMetadata({
     title: page.data.title,
     description: page.data.description,
-    openGraph: {
-      images: getPageImage(page).url,
-    },
-  };
+    url: page.url,
+    image: getPageImage(page).url,
+  });
 }

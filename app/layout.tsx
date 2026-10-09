@@ -7,6 +7,7 @@ import { geistSans, geistMono } from "./fonts";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   SITE_NAME,
+  SITE_TITLE,
   SITE_URL,
   SITE_DESCRIPTION,
   SITE_DEFAULT_OG_IMAGE,
@@ -21,7 +22,7 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: SITE_NAME,
+    default: SITE_TITLE,
     template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -40,14 +41,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
-    title: SITE_NAME,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     images: [SITE_DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: [SITE_DEFAULT_TWITTER_IMAGE],
   },
@@ -67,22 +68,18 @@ const siteJsonLd = {
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${SITE_URL}/search?q={search_term_string}`,
-        "query-input": "required name=search_term_string",
-      },
     },
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
       url: SITE_URL,
-      description:
-        "PyColors builds tools, starters, UI systems, and templates to help developers ship SaaS products faster.",
+      description: SITE_DESCRIPTION,
       logo: {
         "@type": "ImageObject",
         url: `${SITE_URL}/logo.png?v=2`,
+        width: 512,
+        height: 512,
       },
       sameAs: ["https://github.com/pycolors-io"],
     },
