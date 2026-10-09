@@ -10,7 +10,7 @@ import { getUiExplorerUrl } from "../../lib/docs/ui-explorer";
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
 const headings = [
-  "Your next interface starts here.",
+  "Built with PyColors UI",
   "Start with what your project needs now.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",

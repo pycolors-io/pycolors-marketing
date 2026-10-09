@@ -46,6 +46,16 @@ ecosystem:
 
 ---
 
+## Homepage product preview
+
+The interactive workspace follows the hero with a compact “Built with PyColors UI”
+heading and a single preview frame. Product and documentation actions sit below
+the demo alongside its local-only data notice. Table, board, filtering and project
+review interactions remain available; this preview does not connect to a backend
+or demonstrate production readiness.
+
+---
+
 ## Navigation and appearance
 
 The marketing header groups navigation into Products, Docs, Resources, and Pricing.
