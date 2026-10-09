@@ -1,6 +1,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .panel:not([hidden]) {
-    animation: reveal 150ms ease-out;
+    animation: reveal 100ms ease-out;
   }
 }
 

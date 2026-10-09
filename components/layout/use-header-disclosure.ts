@@ -85,7 +85,7 @@ export function useHeaderDisclosure({
         if (!window.matchMedia(desktopQuery).matches) return;
         keyboardOpenedRef.current = false;
         onOpenChange(true);
-      }, 150);
+      }, 50);
     },
     onPointerLeave: (event) => {
       if (event.pointerType !== "mouse") return;

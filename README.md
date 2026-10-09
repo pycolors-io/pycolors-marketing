@@ -61,7 +61,7 @@ separate **Documentation** row opens that sidebar; the global menu stays focused
 products and resources. Resources links to Guides, Blog, Changelog, and Roadmap,
 with GitHub as a secondary link.
 On devices with a mouse, the Products and Resources desktop menus share
-the same interaction: they open after a 150 ms hover and close
+the same interaction: they open after a 50 ms hover, reveal over 100 ms, and close
 200 ms after the pointer leaves. Entering the panel cancels that dismissal; focused
 panel controls remain available to keyboard users. Click and keyboard activation
 also work, and only one panel can be open at a time. Escape dismisses the panel,

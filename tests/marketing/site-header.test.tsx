@@ -142,9 +142,9 @@ describe("Desktop navigation hover", () => {
       const outside = screen.getByRole("link", { name: "Outside navigation" });
       act(() => outside.focus());
       fireEvent.pointerEnter(button, { pointerType: "mouse" });
-      advance(100);
+      advance(49);
       expect(content).not.toBeVisible();
-      advance(50);
+      advance(1);
       expect(content).toBeVisible();
       expect(outside).toHaveFocus();
 
@@ -167,7 +167,7 @@ describe("Desktop navigation hover", () => {
   it("ignores a quick pass over a trigger", () => {
     render(<Fixture />);
     fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(75);
+    advance(25);
     fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
     advance(300);
     expect(panel()).not.toBeVisible();
@@ -176,10 +176,10 @@ describe("Desktop navigation hover", () => {
   it("keeps the newly hovered menu open after the previous menu's close delay", () => {
     render(<Fixture />);
     fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(150);
+    advance(50);
     fireEvent.pointerLeave(trigger(), { pointerType: "mouse" });
     fireEvent.pointerEnter(resourcesTrigger(), { pointerType: "mouse" });
-    advance(150);
+    advance(50);
     expect(panel()).not.toBeVisible();
     expect(resourcesPanel()).toBeVisible();
     advance(300);
@@ -217,7 +217,7 @@ describe("Desktop navigation hover", () => {
     const outside = screen.getByRole("link", { name: "Outside navigation" });
     act(() => outside.focus());
     fireEvent.pointerEnter(trigger(), { pointerType: "mouse" });
-    advance(150);
+    advance(50);
     fireEvent.keyDown(outside, { key: "Escape" });
     expect(panel()).not.toBeVisible();
     expect(outside).toHaveFocus();

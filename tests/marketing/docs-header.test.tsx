@@ -230,7 +230,9 @@ describe("Shared navigation in documentation", () => {
       const outside = screen.getByRole("link", { name: "Outside link" });
       act(() => outside.focus());
       fireEvent.pointerEnter(trigger(name), { pointerType: "mouse" });
-      act(() => vi.advanceTimersByTime(150));
+      act(() => vi.advanceTimersByTime(49));
+      expect(panel(name)).not.toBeVisible();
+      act(() => vi.advanceTimersByTime(1));
       expect(panel(name)).toBeVisible();
       expect(outside).toHaveFocus();
       fireEvent.pointerLeave(trigger(name), { pointerType: "mouse" });
