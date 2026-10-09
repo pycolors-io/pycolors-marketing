@@ -1,570 +1,657 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUpRight,
+  Code2,
   CreditCard,
-  Eye,
-  ExternalLink,
   Layers3,
-  LayoutDashboard,
-  Lock,
-  Sparkles,
-  Users,
+  LockKeyhole,
+  Palette,
+  Table2,
+  Terminal,
 } from "lucide-react";
-
-import { Badge, Button, Card, CardContent, cn } from "@pycolors/ui";
+import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
+import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
+import { MarketingResourceCard } from "@/components/marketing/resource-card";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { StarterFreePreview } from "@/components/starters/starter-free-preview";
+import styles from "@/components/marketing/ui-examples.module.css";
 
+const description =
+  "Explore six Next.js SaaS interface examples from PyColors Starter Free: dashboard, projects, authentication, settings, billing and admin. Try the demo and run the source locally with sample data.";
 export const metadata: Metadata = {
   title: "Next.js SaaS Examples",
-  description:
-    "Explore production-shaped Next.js SaaS examples built with PyColors. Discover dashboards, billing flows, admin panels, team management, analytics surfaces, and runnable SaaS product experiences.",
-  alternates: {
-    canonical: "/examples",
-  },
-
+  description,
+  alternates: { canonical: "/ui/examples" },
   openGraph: {
     title: "Next.js SaaS Examples",
-    description:
-      "Production-ready SaaS examples for Next.js applications with dashboards, billing, analytics, admin systems, and product-oriented workflows.",
-    url: "/examples",
+    description,
+    url: "/ui/examples",
     siteName: "PyColors",
     type: "website",
     images: ["/seo/og-main.png"],
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Next.js SaaS Examples",
-    description:
-      "Explore production-shaped SaaS examples built for modern Next.js applications.",
+    description,
     images: ["/seo/twitter-main.png"],
   },
 };
-
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-
 const AVAILABLE_NOW = {
-  title: "PyColors Starter Free",
-  description:
-    "A runnable production-shaped SaaS starter available today with auth UX, dashboard, CRUD, billing entrypoints, settings, and admin surfaces.",
-  tag: "Available now",
   repoHref: "https://github.com/pycolors-io/pycolors-starter-free",
-  demoHref: "https://starter-demo.pycolors.io/",
+  demoHref: "https://starter-demo.pycolors.io",
 } as const;
-
-type ExampleDirection = {
-  title: string;
-  description: string;
-  category: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
-
-const exampleDirections: ExampleDirection[] = [
+const quickStart = `git clone https://github.com/pycolors-io/pycolors-starter-free.git
+cd pycolors-starter-free
+pnpm install
+pnpm dev`;
+const screens = [
   {
-    title: "AI SaaS Dashboard",
+    id: "dashboard",
+    label: "Dashboard",
+    route: "/dashboard",
+    title: "Make the overview useful.",
     description:
-      "Usage metrics, prompt history, credits, billing visibility, and product surfaces for AI-native SaaS products.",
-    category: "Usage",
-    icon: Sparkles,
+      "Sample metrics, project activity and clear next actions inside a responsive application shell.",
+    image: "/images/starters/free/dashboard-free-page-pycolors.png",
+    points: [
+      "Cards with a clear information hierarchy",
+      "Shared desktop and mobile navigation",
+    ],
+    note: "Metrics and activity use demonstration data.",
+    docs: "/docs/blocks/data/stats-overview",
+    docsLabel: "Explore the stats block",
   },
   {
-    title: "B2B SaaS Platform",
+    id: "projects",
+    label: "Projects",
+    route: "/projects",
+    title: "Give records a clear workflow.",
     description:
-      "Organization switching, team management, roles, permissions, and collaborative workflows for company-ready products.",
-    category: "Teams",
-    icon: Users,
+      "A project table, detail pages and contextual actions for creating, renaming and deleting records.",
+    image: "/images/starters/free/projects-page-pycolors.png",
+    points: ["Tables and row actions", "Dialogs for focused tasks"],
+    note: "Project changes use client-side demo state, not a database.",
+    docs: "/docs/blocks/data/data-table",
+    docsLabel: "Explore the table block",
   },
   {
-    title: "Analytics Product",
+    id: "auth",
+    label: "Auth",
+    route: "/login",
+    title: "Start with a considered sign-in.",
     description:
-      "Reports, KPI hierarchy, charts, filters, and metric-heavy product surfaces for data-oriented SaaS tools.",
-    category: "Data",
-    icon: LayoutDashboard,
+      "Sign-in, registration and password reset interfaces with form, loading and validation states.",
+    image: "/images/starters/free/auth-page-pycolors.png",
+    points: ["Email and password inputs", "Clear feedback and recovery paths"],
+    note: "These screens do not create real accounts or sessions.",
+    docs: "/docs/starter/auth-concept",
+    docsLabel: "Read the authentication scope",
   },
   {
-    title: "Subscription SaaS",
+    id: "settings",
+    label: "Settings",
+    route: "/settings",
+    title: "Make account changes predictable.",
     description:
-      "Plans, upgrades, invoices, usage metrics, and monetization-focused surfaces designed to support recurring revenue products.",
-    category: "Revenue",
+      "Profile, preferences and security sections with a consistent hierarchy for everyday and destructive actions.",
+    image: "/images/starters/free/settings-page-pycolors.png",
+    points: [
+      "Grouped account forms",
+      "Primary and destructive action patterns",
+    ],
+    note: "Connect saving and session management to your own services.",
+    docs: "/docs/blocks/account/settings-panel",
+    docsLabel: "Explore the settings block",
+  },
+  {
+    id: "billing",
+    label: "Billing",
+    route: "/billing",
+    title: "Design the subscription experience.",
+    description:
+      "Sample plans, payment details and invoice history bring the billing interface into the same design system.",
+    image: "/images/starters/free/billing-free-page-pycolors.png",
+    points: [
+      "Plan and subscription summaries",
+      "Invoice and payment information",
+    ],
+    note: "Checkout and the customer portal are not connected.",
+    docs: "/docs/starter/billing-concept",
+    docsLabel: "Read the billing scope",
+  },
+  {
+    id: "admin",
+    label: "Admin",
+    route: "/admin",
+    title: "Bring the workspace together.",
+    description:
+      "Member, role and invitation interfaces for shaping how people work together in your product.",
+    image: "/images/starters/free/admin-page-pycolors.png",
+    points: [
+      "Member lists and role controls",
+      "Invitation and management dialogs",
+    ],
+    note: "Authorization and invitation delivery need service integrations.",
+    docs: "/docs/blocks/account/workspace-members",
+    docsLabel: "Explore the members block",
+  },
+] as const;
+const buildingBlocks = [
+  {
+    title: "Records & actions",
+    icon: Table2,
+    label: "Projects · Admin",
+    description:
+      "Organize data, expose row actions and keep editing tasks in context.",
+    href: "/docs/blocks/data/data-table",
+    link: "Explore the data table",
+    components: [
+      ["Table", "table"],
+      ["Dialog", "dialog"],
+      ["Dropdown Menu", "dropdown-menu"],
+    ],
+  },
+  {
+    title: "Forms & account",
+    icon: LockKeyhole,
+    label: "Auth · Settings",
+    description:
+      "Compose labelled fields, clear actions and feedback for account flows.",
+    href: "/docs/blocks/auth/sign-in",
+    link: "Explore the sign-in block",
+    components: [
+      ["Input", "input"],
+      ["Password Input", "password-input"],
+      ["Alert", "alert"],
+    ],
+  },
+  {
+    title: "Plans & billing",
     icon: CreditCard,
-  },
-  {
-    title: "Admin Platform",
+    label: "Dashboard · Billing",
     description:
-      "Moderation tools, permissions, queues, and operational surfaces for products with stronger internal control needs.",
-    category: "Operations",
-    icon: Lock,
+      "Give plans, payment details and invoices a consistent visual hierarchy.",
+    href: "/docs/blocks/commerce/billing-overview",
+    link: "Explore the billing block",
+    components: [
+      ["Card", "card"],
+      ["Badge", "badge"],
+      ["Button", "button"],
+    ],
   },
+] as const;
+const nextSteps = [
   {
-    title: "Startup SaaS MVP",
-    description:
-      "A lighter product direction with dashboard, onboarding, project CRUD, and the minimum surface needed to feel credible fast.",
-    category: "MVP",
+    title: "Choose your building blocks",
     icon: Layers3,
-  },
-];
-
-const steps = [
-  {
-    eyebrow: "Step 01",
-    title: "Explore real product surfaces",
+    label: "Blocks",
     description:
-      "See how dashboards, billing pages, team systems, and admin surfaces feel when the product is structured and credible.",
+      "Copy focused sections into your existing app and adapt the source to your workflow.",
+    href: "/blocks",
   },
   {
-    eyebrow: "Step 02",
-    title: "Start from a runnable baseline",
+    title: "Make the theme your own",
+    icon: Palette,
+    label: "Theme Builder",
     description:
-      "Use Starter Free to move from inspiration to a real SaaS surface without starting from scratch.",
-  },
-  {
-    eyebrow: "Step 03",
-    title: "Upgrade when wiring matters",
-    description:
-      "Move to Starter Pro when auth, billing, backend foundations, and production wiring become the real blocker to launch.",
+      "Explore semantic colors, light and dark appearances, and typography for your interface.",
+    href: "/tools/theme-builder",
   },
 ] as const;
-
-const proofPoints = [
-  "Starter Free is the runnable product example available today.",
-  "Patterns explain how the SaaS surfaces are structured.",
-  "Starter Pro wires auth, billing, protected routes, and backend foundations.",
-] as const;
-
-const focusRing =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+const actionClass = "rounded-[5px] shadow-none";
 
 function AvailableNowCard() {
   return (
-    <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-      <CardContent className="p-6 sm:p-7">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12">
-          <div className="space-y-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="secondary" className="rounded-[5px]">
-                {AVAILABLE_NOW.tag}
-              </Badge>
-
-              <Badge variant="outline" className="rounded-[5px]">
-                Starter Free
-              </Badge>
-
-              <Badge variant="outline" className="rounded-[5px]">
-                Runnable demo
-              </Badge>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-2xl font-semibold tracking-tight">
-                {AVAILABLE_NOW.title}
-              </h3>
-
-              <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                {AVAILABLE_NOW.description}
-              </p>
-            </div>
-
-            <ul className="grid gap-2 sm:grid-cols-2">
-              <MarketingCheckItem>Dashboard surface</MarketingCheckItem>
-              <MarketingCheckItem>Auth UX screens</MarketingCheckItem>
-              <MarketingCheckItem>CRUD patterns</MarketingCheckItem>
-              <MarketingCheckItem>Billing entrypoints</MarketingCheckItem>
-              <MarketingCheckItem>Settings surface</MarketingCheckItem>
-              <MarketingCheckItem>Admin/member flows</MarketingCheckItem>
-            </ul>
-          </div>
-
-          <div className="flex flex-col gap-3 lg:items-end">
-            <Button
-              asChild
-              className="h-10 w-full rounded-[5px] text-sm lg:w-55"
-            >
-              <a
-                href={AVAILABLE_NOW.demoHref}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Open the Starter Free live demo"
-              >
-                Open live demo
-                <Eye className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-
-            <Button
-              asChild
-              variant="outline"
-              className="h-10 w-full rounded-[5px] text-sm lg:w-55"
-            >
-              <a
-                href={AVAILABLE_NOW.repoHref}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Open the Starter Free GitHub repository"
-              >
-                View GitHub repo
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-
-            <Button
-              asChild
-              variant="outline"
-              className="h-10 w-full rounded-[5px] text-sm lg:w-55"
-            >
-              <Link href="/starters/free">Read Starter Free details</Link>
-            </Button>
-          </div>
+    <div className="overflow-hidden rounded-[5px] border border-border-subtle bg-background">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-5 sm:px-7">
+        <div className="flex flex-wrap items-center gap-3">
+          <h3 className="text-base font-semibold tracking-normal">
+            PyColors Starter Free
+          </h3>
+          <Badge variant="outline" className="bg-background text-[11px]">
+            Open source · MIT
+          </Badge>
         </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ExampleDirectionCard({
-  title,
-  description,
-  category,
-  icon: Icon,
-}: ExampleDirection) {
-  return (
-    <Card className="flex h-full flex-col justify-between rounded-[5px] border border-border-subtle bg-surface shadow-soft transition-colors hover:border-border">
-      <CardContent className="flex h-full flex-col justify-between p-6">
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] border border-border-subtle bg-surface-muted text-muted-foreground">
-              <Icon className="h-4 w-4" aria-hidden="true" />
-            </div>
-
-            <Badge
-              variant="outline"
-              className="rounded-[5px] border-platform-border-subtle bg-platform-muted text-xs"
-            >
-              {category}
-            </Badge>
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="text-base font-semibold tracking-tight">{title}</h3>
-
-            <p className="text-sm leading-7 text-muted-foreground">
-              {description}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6 flex gap-2">
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="flex-1 rounded-[5px]"
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <span className="text-xs text-muted-foreground">
+            Next.js · TypeScript · PyColors UI
+          </span>
+          <a
+            href={AVAILABLE_NOW.repoHref}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="View source on GitHub (opens in a new tab)"
+            className={styles.textLink}
           >
-            <Link href="/starters/free">Starter Free</Link>
-          </Button>
-
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className="flex-1 rounded-[5px]"
-          >
-            <Link href="/ui/patterns">Browse patterns</Link>
-          </Button>
+            View source on GitHub{" "}
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </a>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+      <div className={styles.preview}>
+        <StarterFreePreview
+          screens={screens.map((screen, index) => ({
+            id: screen.id,
+            label: screen.label,
+            content: (
+              <figure className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_20rem]">
+                <div
+                  className={cn(
+                    "flex min-w-0 items-center border-b border-border-subtle p-4 sm:p-7 lg:border-b-0 lg:border-r",
+                    styles.previewStage,
+                  )}
+                >
+                  <div className={styles.browserWindow}>
+                    <div
+                      className="flex h-9 items-center gap-2 border-b border-border-subtle bg-background px-3 text-[10px] text-muted-foreground"
+                      aria-hidden="true"
+                    >
+                      <span className={styles.windowDot} />
+                      <span className={styles.windowDot} />
+                      <span className={styles.windowDot} />
+                      <span className="ml-2 truncate font-mono">
+                        starter-free{screen.route}
+                      </span>
+                    </div>
+                    <div className="relative aspect-16/10 bg-white">
+                      <Image
+                        src={screen.image}
+                        alt={`Starter Free ${screen.label.toLowerCase()} screen with demonstration data`}
+                        fill
+                        priority={index === 0}
+                        sizes="(min-width: 1280px) 850px, (min-width: 1024px) 65vw, 94vw"
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <figcaption className="flex flex-col p-5 sm:p-7">
+                  <div className="flex items-center justify-between gap-3 font-mono text-[10px] text-muted-foreground">
+                    <span>0{index + 1} / 06</span>
+                    <span>{screen.route}</span>
+                  </div>
+                  <h4 className="mt-5 text-xl font-semibold tracking-subheading">
+                    {screen.title}
+                  </h4>
+                  <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                    {screen.description}
+                  </p>
+                  <ul className="mt-5 space-y-3">
+                    {screen.points.map((point) => (
+                      <MarketingCheckItem
+                        key={point}
+                        className={styles.checkItem}
+                      >
+                        {point}
+                      </MarketingCheckItem>
+                    ))}
+                  </ul>
+                  <p className="mt-5 border-t border-border-subtle pt-4 text-xs leading-6 text-muted-foreground">
+                    {screen.note}
+                  </p>
+                  <div className="mt-auto flex flex-col items-start pt-4">
+                    <a
+                      href={`${AVAILABLE_NOW.demoHref}${screen.route}`}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={`Try ${screen.label.toLowerCase()} demo (opens in a new tab)`}
+                      className={styles.textLink}
+                    >
+                      Try {screen.label.toLowerCase()} demo{" "}
+                      <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </a>
+                    <Link
+                      href={screen.docs}
+                      className={cn(styles.textLink, "text-muted-foreground")}
+                    >
+                      {screen.docsLabel}{" "}
+                      <ArrowRight
+                        className="size-3.5 shrink-0"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </div>
+                </figcaption>
+              </figure>
+            ),
+          }))}
+        />
+      </div>
+      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-border-subtle px-5 py-3 sm:px-7">
+        <p className="max-w-3xl text-xs leading-6 text-muted-foreground">
+          Light-theme captures with sample data. Authentication, payments and
+          permissions are mocked.
+        </p>
+        <Link href="/starters/free" className={styles.textLink}>
+          Explore Starter Free{" "}
+          <ArrowRight className="size-3.5" aria-hidden="true" />
+        </Link>
+      </div>
+    </div>
   );
 }
 
 export default function ExamplesPage() {
   return (
-    <Container className="py-18">
-      <div className="mx-auto max-w-6xl">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={cn(
+        "bg-background text-foreground focus:outline-none",
+        styles.page,
+      )}
+    >
+      <Container className="pb-16 pt-24 sm:pt-28">
+        <div className={styles.sectionNav}>
+          <UiSectionNav active="examples" />
+        </div>
         <PageHero
-          maxWidth="5xl"
-          badges={[
-            {
-              label: "Examples",
-              variant: "secondary",
-              icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
-            },
-            {
-              label: "Product proof",
-              variant: "outline",
-            },
-            {
-              label: "Available now",
-              variant: "outline",
-            },
-          ]}
-          title="See what a PyColors SaaS product can feel like."
-          subtitle="Examples make the product direction visible before the business layer is fully wired."
-          description="Explore the runnable Starter Free demo available today, then see the SaaS directions PyColors is designed to support across dashboards, billing, teams, analytics, admin systems, and future Pro-ready products."
+          variant="compact"
+          align="left"
+          contentClassName="mx-0 max-w-4xl"
+          badges={[{ label: "PyColors UI / Examples", variant: "outline" }]}
+          title="See the components become a product."
+          description="Explore a dashboard, project workflows and account screens built with PyColors UI. Try the runnable Starter Free demo, inspect the source and bring the parts you need into your own app."
           actions={
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+            <>
               <Button
-                asChild
                 size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                asChild
+                className={`site-primary-action ${actionClass}`}
               >
-                <Link href="/starters/free">
-                  Start with Starter Free
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <Link href="#example-screens">
+                  Explore the screens{" "}
+                  <ArrowDown className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
-
               <Button
+                size="lg"
                 asChild
                 variant="outline"
-                size="lg"
-                className="h-11 rounded-[5px] px-6 text-sm font-medium"
+                className={actionClass}
               >
                 <a
                   href={AVAILABLE_NOW.demoHref}
                   target="_blank"
                   rel="noreferrer noopener"
+                  aria-label="Open live demo (opens in a new tab)"
                 >
-                  Open live demo
-                  <ExternalLink className="h-4 w-4" />
+                  Open live demo{" "}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
                 </a>
               </Button>
-
-              <BuyStarterProButton />
-            </div>
+            </>
           }
-          pills={[
-            "Runnable demo",
-            "Dashboards",
-            "Billing",
-            "Teams",
-            "Admin",
-            "Upgrade path",
-          ]}
           extra={
-            <div className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-3">
-              {proofPoints.map((point) => (
-                <MarketingCheckItem key={point}>{point}</MarketingCheckItem>
-              ))}
-            </div>
+            <p className="text-xs leading-6 text-muted-foreground">
+              Six screens · Full source code · Demo data · No account required
+            </p>
           }
         />
-
-        <section className="py-10 sm:py-12">
-          <Card className="rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-            <CardContent className="p-6 sm:p-7">
-              <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-                <div className="space-y-5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px] border-platform-border-subtle bg-platform-muted"
-                    >
-                      Why examples matter
-                    </Badge>
-
-                    <Badge variant="outline" className="rounded-[5px]">
-                      Product proof
-                    </Badge>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                      Examples turn product direction into something visible.
-                    </h2>
-
-                    <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                      Components explain the building blocks. Patterns explain
-                      the interface logic. Examples show what a real SaaS can
-                      feel like.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-5">
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    This page separates what is already available from the
-                    product directions PyColors is designed to support next, so
-                    builders can evaluate the ecosystem honestly before moving
-                    toward Starter Free or Starter Pro.
-                  </p>
-
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-[5px] border border-border-subtle bg-surface-muted p-4">
-                      <p className="text-sm font-medium">UI</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Primitives and patterns.
-                      </p>
-                    </div>
-
-                    <div className="rounded-[5px] border border-success-border-subtle bg-success-muted p-4">
-                      <p className="text-sm font-medium">Free</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Runnable product surface.
-                      </p>
-                    </div>
-
-                    <div className="rounded-[5px] border border-pro-border-subtle bg-pro-surface-muted p-4">
-                      <p className="text-sm font-medium">Pro</p>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        Auth and billing wiring.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <MarketingPillList aria-label="Example benefits">
-                      <MarketingPill>Runnable example</MarketingPill>
-                      <MarketingPill>Product-shaped UX</MarketingPill>
-                      <MarketingPill>Honest availability</MarketingPill>
-                      <MarketingPill>Upgrade path</MarketingPill>
-                      <MarketingPill>Conversion-aware</MarketingPill>
-                    </MarketingPillList>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
+        <MarketingSectionShell
+          divider="pattern"
+          id="example-screens"
+          aria-labelledby="example-screens-title"
+          width="full"
+          className="scroll-mt-24"
+        >
           <MarketingSectionHeader
-            eyebrow="Available now"
             align="left"
-            title="What you can actually explore today"
-            description="Starter Free is the current runnable example of the PyColors product direction."
+            titleId="example-screens-title"
+            title="One application. Six everyday workflows."
+            description="Select a screen to see the layout, understand its scope and open the corresponding demo."
           />
-
           <AvailableNowCard />
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
+        </MarketingSectionShell>
+        <MarketingSectionShell
+          id="example-components"
+          aria-labelledby="example-components-title"
+          width="full"
+          className="border-t border-border-subtle"
+        >
           <MarketingSectionHeader
-            eyebrow="Example directions"
             align="left"
-            title="Where the ecosystem is designed to go next"
-            description="These are not random inspiration cards. They reflect the kinds of SaaS products PyColors patterns and starters are built to support."
+            titleId="example-components-title"
+            title="Find the pieces behind the interface."
+            description="Explore related source-copy blocks and the primitives you can compose in your own product."
             action={
+              <Link href="/ui/patterns" className={styles.textLink}>
+                Browse patterns{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            }
+          />
+          <div className="grid gap-4 lg:grid-cols-3">
+            {buildingBlocks.map((block) => (
+              <MarketingFeatureCard
+                key={block.title}
+                title={block.title}
+                description={block.description}
+                icon={<block.icon className="size-4" />}
+                className={cn("shadow-none", styles.componentCard)}
+                meta={
+                  <div>
+                    <p className="mb-3 font-mono text-[10px] text-muted-foreground">
+                      {block.label}
+                    </p>
+                    <ul
+                      className="flex flex-wrap gap-x-4 gap-y-1"
+                      aria-label={`${block.title} components`}
+                    >
+                      {block.components.map(([label, slug]) => (
+                        <li key={slug}>
+                          <Link
+                            href={`/docs/ui/${slug}`}
+                            className={styles.textLink}
+                          >
+                            {label}{" "}
+                            <ArrowUpRight
+                              className="size-3"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
+                action={
+                  <Link href={block.href} className={styles.textLink}>
+                    {block.link}{" "}
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                }
+              />
+            ))}
+          </div>
+        </MarketingSectionShell>
+        <MarketingSectionShell
+          id="example-setup"
+          aria-labelledby="example-setup-title"
+          width="full"
+          className="border-t border-border-subtle"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="example-setup-title"
+            title="Take the example into your editor."
+            description="Run the public Starter Free repository locally. No database or API keys are needed to explore the included demo flows."
+          />
+          <div
+            className={cn(
+              "grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]",
+              styles.setupPanel,
+            )}
+          >
+            <div className="p-5 sm:p-8">
+              <ol
+                className="space-y-6"
+                aria-label="Run and customize the example"
+              >
+                {[
+                  [
+                    "Run the starter",
+                    "Use the Node.js and pnpm versions declared in the repository’s package.json.",
+                  ],
+                  [
+                    "Adapt a screen",
+                    "Replace sample content, adjust the components and try your own theme.",
+                  ],
+                  [
+                    "Connect your services",
+                    "Add real authentication, persistence and payment integrations when your product needs them.",
+                  ],
+                ].map(([title, detail], index) => (
+                  <li key={title} className="flex items-start gap-4">
+                    <span className={styles.stepNumber} aria-hidden="true">
+                      0{index + 1}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-medium leading-7">{title}</h3>
+                      <p className="mt-1 text-xs leading-6 text-muted-foreground">
+                        {detail}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-6 flex flex-wrap gap-x-5">
+                <Link
+                  href="/docs/starter/installation"
+                  className={styles.textLink}
+                >
+                  Installation guide{" "}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/docs/starter/project-structure"
+                  className={styles.textLink}
+                >
+                  Project structure{" "}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+            <div className="flex min-w-0 flex-col border-t border-border-subtle bg-background/80 lg:border-l lg:border-t-0">
+              <DynamicCodeBlock
+                lang="bash"
+                code={quickStart}
+                options={{
+                  themes: { light: "github-light", dark: "github-dark" },
+                }}
+                codeblock={{
+                  title: "Terminal",
+                  icon: <Terminal className="size-4" aria-hidden="true" />,
+                  allowCopy: true,
+                  className:
+                    "m-0 flex flex-1 flex-col rounded-none border-0 bg-transparent shadow-none [&>div:first-child]:h-14 [&_button]:size-11",
+                  viewportProps: {
+                    "aria-label": "Example setup commands",
+                    className:
+                      "flex-1 py-7 [&_pre]:text-xs [&_pre]:leading-8 sm:[&_pre]:text-sm",
+                  },
+                }}
+              />
+              <div className="flex items-center gap-2 border-t border-border-subtle px-5 py-4 text-xs text-muted-foreground">
+                <Code2 className="size-3.5 shrink-0" aria-hidden="true" />
+                Your local copy. Your components. Your services.
+              </div>
+            </div>
+          </div>
+        </MarketingSectionShell>
+        <MarketingSectionShell
+          aria-labelledby="example-next-title"
+          width="full"
+          className="border-t border-border-subtle"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="example-next-title"
+            title="Keep building from here."
+            description="Bring a section into an existing app, shape your theme or start connecting the business layer."
+          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {nextSteps.map((step) => (
+              <MarketingResourceCard
+                key={step.title}
+                title={step.title}
+                href={step.href}
+                description={step.description}
+                className={cn("p-6 shadow-none", styles.resourceCard)}
+                meta={
+                  <span className="mb-5 flex items-center gap-2 text-xs">
+                    <step.icon
+                      className="size-4 text-primary"
+                      aria-hidden="true"
+                    />
+                    {step.label}
+                  </span>
+                }
+              />
+            ))}
+          </div>
+          <div
+            className={cn(
+              "mt-4 grid items-center gap-7 rounded-[5px] border border-border-subtle p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_18rem]",
+              styles.proPanel,
+            )}
+          >
+            <div className="max-w-2xl">
+              <Badge
+                variant="outline"
+                className="mb-4 bg-background text-[11px]"
+              >
+                Starter Pro
+              </Badge>
+              <h3 className="text-2xl font-semibold tracking-subheading">
+                Ready to connect the business layer?
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Explore the authentication, Stripe billing, protected routes and
+                database foundations in Starter Pro. Review the scope before
+                choosing your starting point.
+              </p>
+              <Link
+                href="/starters/pro#free-vs-pro"
+                className={cn("mt-3", styles.textLink)}
+              >
+                Compare Free and Pro{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+            <div>
               <Button
                 asChild
-                size="sm"
                 variant="outline"
-                className="rounded-[5px]"
+                className={cn("mb-2 w-full", actionClass)}
               >
                 <Link href="/starters/pro">Explore Starter Pro</Link>
               </Button>
-            }
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {exampleDirections.map((example) => (
-              <ExampleDirectionCard key={example.title} {...example} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-12 sm:py-14 lg:py-16">
-          <MarketingSectionHeader
-            eyebrow="How examples fit the PyColors path"
-            title="Examples are not just inspiration. They help you see the product before the business layer is wired."
-            description="The point is to shorten the distance between product imagination and product execution."
-            align="center"
-          />
-
-          <div className="grid gap-4 lg:grid-cols-3">
-            {steps.map((step) => (
-              <Card
-                key={step.eyebrow}
-                className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft"
-              >
-                <div className="space-y-2">
-                  <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                    {step.eyebrow}
-                  </div>
-
-                  <div className="text-sm font-medium">{step.title}</div>
-
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    {step.description}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-11 rounded-[5px] px-6 text-sm font-medium"
-            >
-              <Link href="/ui/patterns">Browse patterns</Link>
-            </Button>
-          </div>
-        </section>
-
-        <section className="pt-4">
-          <Card className="rounded-[5px] border border-pro-border-subtle bg-pro-surface px-6 py-8 shadow-medium sm:px-8 sm:py-10">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="max-w-2xl space-y-3">
-                <Badge
-                  variant="outline"
-                  className="rounded-[5px] border-pro-border bg-pro-surface-muted"
-                >
-                  Next step
-                </Badge>
-
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  See the surface. Then wire the business layer.
-                </h2>
-
-                <p className="text-sm leading-7 text-muted-foreground">
-                  Use Starter Free to begin with a production-shaped SaaS
-                  surface today, then move to Starter Pro when authentication,
-                  billing, protected routes, and backend foundations need to be
-                  wired.
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  <MarketingPillList aria-label="Example path">
-                    <MarketingPill>Starter Free validates UX</MarketingPill>
-                    <MarketingPill>Starter Pro wires auth</MarketingPill>
-                    <MarketingPill>Starter Pro wires billing</MarketingPill>
-                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
-                  </MarketingPillList>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:min-w-60">
-                <Button
-                  asChild
-                  variant="outline"
-                  className={cn(
-                    "h-11 rounded-[5px] text-sm font-medium",
-                    focusRing,
-                  )}
-                >
-                  <Link href="/starters/free">Starter Free</Link>
-                </Button>
-
-                <BuyStarterProButton
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
-              </div>
+              <BuyStarterProButton
+                label={`Buy Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`}
+                className="shadow-none hover:shadow-none"
+              />
+              <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                One-time purchase. Configure the integrations for your product.
+              </p>
             </div>
-          </Card>
-        </section>
-      </div>
-    </Container>
+          </div>
+        </MarketingSectionShell>
+      </Container>
+    </main>
   );
 }

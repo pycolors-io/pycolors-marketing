@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
-import { cn } from '@pycolors/ui';
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import { cn } from "@pycolors/ui";
 
 type DocsBreadcrumbItem = Readonly<{
   label: string;
@@ -12,17 +12,14 @@ type DocsBreadcrumbProps = Readonly<{
   className?: string;
 }>;
 
-export function DocsBreadcrumb({
-  items,
-  className,
-}: DocsBreadcrumbProps) {
+export function DocsBreadcrumb({ items, className }: DocsBreadcrumbProps) {
   if (items.length === 0) return null;
 
   return (
     <nav
       aria-label="Breadcrumb"
       className={cn(
-        'flex flex-wrap items-center text-sm text-muted-foreground',
+        "flex flex-wrap items-center text-sm text-muted-foreground",
         className,
       )}
     >
@@ -45,8 +42,8 @@ export function DocsBreadcrumb({
               <Link
                 href={item.href}
                 className={cn(
-                  'rounded-md py-0.5 transition-colors hover:text-foreground',
-                  index === 0 ? 'pl-0 pr-1.5' : 'px-1.5',
+                  "rounded-md py-0.5 transition-colors hover:text-foreground",
+                  index === 0 ? "pl-0 pr-1.5" : "px-1.5",
                 )}
               >
                 {item.label}
@@ -54,10 +51,11 @@ export function DocsBreadcrumb({
             ) : (
               <span
                 className={cn(
-                  'rounded-md px-1.5 py-0.5',
-                  isLast ? 'font-medium text-foreground' : '',
+                  "rounded-md py-0.5",
+                  index === 0 ? "pl-0 pr-1.5" : "px-1.5",
+                  isLast ? "font-medium text-foreground" : "",
                 )}
-                aria-current={isLast ? 'page' : undefined}
+                aria-current={isLast ? "page" : undefined}
               >
                 {item.label}
               </span>

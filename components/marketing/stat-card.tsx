@@ -27,7 +27,7 @@ export function MarketingStatCard({
   return (
     <div
       className={cn(
-        "rounded-[5px] border px-4 py-3 shadow-soft",
+        "rounded-lg border px-4 py-3 shadow-soft",
         marketingSurfaceToneClass[tone],
         className,
       )}

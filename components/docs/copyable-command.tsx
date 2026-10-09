@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { Check, Copy } from "lucide-react";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;
@@ -49,9 +50,10 @@ export async function copyCommand(
 
 type CopyableCommandProps = Readonly<{
   command: string;
+  className?: string;
 }>;
 
-export function CopyableCommand({ command }: CopyableCommandProps) {
+export function CopyableCommand({ command, className }: CopyableCommandProps) {
   const [status, setStatus] = React.useState<CopyStatus>(IDLE_STATUS);
 
   async function handleCopy() {
@@ -60,16 +62,21 @@ export function CopyableCommand({ command }: CopyableCommandProps) {
   }
 
   return (
-    <div className="my-6 overflow-hidden rounded-xl border border-border bg-muted/30">
-      <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-2">
-        <span className="text-xs font-medium text-muted-foreground">
+    <div
+      className={cn(
+        "not-prose my-6 overflow-hidden rounded-lg border border-border-subtle bg-card",
+        className,
+      )}
+    >
+      <div className="flex items-center justify-between gap-3 border-b border-border-subtle bg-muted/25 px-4 py-2">
+        <span className="font-mono text-xs text-muted-foreground">
           Terminal
         </span>
         <Button
           type="button"
           variant="ghost"
           size="sm"
-          className="gap-2"
+          className="min-w-32 gap-2"
           onClick={handleCopy}
         >
           {status.kind === "success" ? (
@@ -80,7 +87,11 @@ export function CopyableCommand({ command }: CopyableCommandProps) {
           {status.kind === "success" ? "Copied" : "Copy command"}
         </Button>
       </div>
-      <pre className="overflow-x-auto px-4 py-3" tabIndex={0}>
+      <pre
+        className="overflow-x-auto px-4 py-4 leading-6 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        aria-label="Terminal command"
+        tabIndex={0}
+      >
         <code className="font-mono text-sm text-foreground">{command}</code>
       </pre>
       {status.message ? (

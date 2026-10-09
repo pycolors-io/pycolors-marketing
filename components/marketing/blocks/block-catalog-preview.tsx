@@ -11,7 +11,9 @@ import {
   ResponsiveSidebarExample,
   WorkspaceInvitationsExample,
 } from "@/components/docs/blocks/canonical-examples";
-import { DataTableExample } from "@/components/docs/blocks/data-table-example";
+import { DataTableQueryExample } from "@/components/docs/blocks/data-table-example";
+import { StatsOverviewExample } from "@/components/docs/blocks/stats-overview-example";
+import { OnboardingChecklistExample } from "@/components/docs/blocks/onboarding-checklist-example";
 import { EmptyStatePanelExample } from "@/components/docs/blocks/empty-state-panel-example";
 import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
 import { SettingsPanelExample } from "@/components/docs/blocks/settings-panel-example";
@@ -19,7 +21,8 @@ import { WorkspaceMembersExample } from "@/components/docs/blocks/workspace-memb
 
 export function BlockCatalogPreview({
   blockId,
-}: Readonly<{ blockId: string }>) {
+  headingLevel = 2,
+}: Readonly<{ blockId: string; headingLevel?: 2 | 3 | 4 | 5 | 6 }>) {
   switch (blockId) {
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
@@ -46,7 +49,11 @@ export function BlockCatalogPreview({
     case "audit-log":
       return <AuditLogExample />;
     case "data-table":
-      return <DataTableExample />;
+      return <DataTableQueryExample />;
+    case "stats-overview":
+      return <StatsOverviewExample headingLevel={headingLevel} />;
+    case "onboarding-checklist":
+      return <OnboardingChecklistExample headingLevel={headingLevel} />;
     case "empty-state-panel":
       return <EmptyStatePanelExample />;
     default:

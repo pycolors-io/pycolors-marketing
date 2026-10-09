@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Button, cn } from "@pycolors/ui";
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;
 
@@ -57,8 +58,10 @@ export function CopyButton({
     kind: "idle",
     message: "",
   });
+  const [copiedValue, setCopiedValue] = React.useState<string | null>(null);
 
   async function handleCopy() {
+    setCopiedValue(value);
     setStatus({ kind: "idle", message: "" });
     setStatus(await copyThemeOutput(value));
   }
@@ -81,7 +84,7 @@ export function CopyButton({
         role="status"
         className={cn("text-xs text-muted-foreground", statusClassName)}
       >
-        {status.message}
+        {copiedValue === value ? status.message : ""}
       </p>
     </div>
   );

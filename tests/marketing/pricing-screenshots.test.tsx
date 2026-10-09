@@ -11,7 +11,7 @@ vi.mock("@/lib/api/client", () => ({
 }));
 
 describe("Starter Pro pricing screenshots", () => {
-  it("renders two captioned, descriptive previews directly after the offers", () => {
+  it("renders two captioned, descriptive previews after the comparison", () => {
     render(<PricingPage />);
     const preview = screen.getByRole("region", {
       name: "See the screens you can build on",
@@ -51,14 +51,90 @@ describe("Starter Pro pricing screenshots", () => {
         link.getAttribute("href"),
       );
     }
-    expect(preview.previousElementSibling).toHaveTextContent("Buy Starter Pro");
+    expect(preview.previousElementSibling).toHaveAccessibleName(
+      "What’s included in each product",
+    );
     expect(preview.nextElementSibling).toHaveAccessibleName(
-      /Built to feel like a serious SaaS foundation/u,
+      "Your questions, answered.",
     );
     expect(preview).toHaveTextContent(
       "not proof of a live deployment, a completed payment, or a verified integration",
     );
     expect(preview).toHaveTextContent("shown in the light theme");
+  });
+
+  it("compares the same products in offer order and distinguishes demo from integrated flows", () => {
+    render(<PricingPage />);
+    const offers = screen.getByRole("region", {
+      name: "Choose a PyColors product",
+    });
+    expect(
+      within(offers)
+        .getAllByRole("heading", { level: 2 })
+        .map((heading) => heading.textContent),
+    ).toEqual(["NA-AI Landing", "Starter Free", "Starter Pro"]);
+    const table = screen.getByRole("table", {
+      name: "Compare NA-AI Landing, Starter Free and Starter Pro features",
+    });
+    expect(
+      within(table)
+        .getAllByRole("columnheader")
+        .slice(1)
+        .map((heading) => heading.textContent),
+    ).toEqual([
+      `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time`,
+      "Starter FreeFreePublic repository",
+      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time · Launch price`,
+    ]);
+    for (const [name, values] of [
+      [
+        "Email & password sign-in",
+        ["Not included", "Mock screens only", "Auth.js credentials"],
+      ],
+      [
+        "Stripe Checkout & portal",
+        ["Not included", "Not included", "Included"],
+      ],
+      [
+        "Sessions & protected routes",
+        ["Not included", "UI structure only", "Server-side guards"],
+      ],
+      [
+        "Data persistence",
+        ["Not included", "Mock data", "Prisma + PostgreSQL"],
+      ],
+    ] as const) {
+      const row = within(table).getByRole("rowheader", { name }).closest("tr")!;
+      expect(
+        within(row)
+          .getAllByRole("cell")
+          .map((cell) => cell.textContent),
+      ).toEqual(values);
+    }
+    expect(
+      screen.getByText(/Starter Pro is source code, not a hosted service/),
+    ).toBeVisible();
+  });
+
+  it("provides keyboard access to the comparison and valid section anchors", () => {
+    render(<PricingPage />);
+    const comparison = screen.getByRole("region", {
+      name: "Product comparison, scroll horizontally for all columns",
+    });
+    comparison.focus();
+    expect(comparison).toHaveFocus();
+    const navigation = screen.getByRole("navigation", {
+      name: "Pricing sections",
+    });
+    for (const link of within(navigation).getAllByRole("link")) {
+      const id = link.getAttribute("href")!.slice(1);
+      expect(document.getElementById(id)).not.toBeNull();
+    }
+  });
+
+  it("keeps offers, comparison and FAQ accessible", async () => {
+    const { container } = render(<PricingPage />);
+    expect((await axe(container)).violations).toEqual([]);
   });
 
   it("preserves purchase labels, product links and canonical pricing metadata", () => {

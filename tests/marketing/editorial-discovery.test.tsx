@@ -88,9 +88,9 @@ function expectBefore(first: Element, second: Element) {
 
 function articleUrls(region: HTMLElement) {
   return within(region)
-    .getAllByRole("heading", { level: 3 })
+    .queryAllByRole("heading", { level: 3 })
     .flatMap((heading) => {
-      const link = within(heading).queryByRole("link");
+      const link = heading.closest("a");
       return link ? [link.getAttribute("href")] : [];
     });
 }
@@ -134,19 +134,15 @@ describe("editorial discovery", () => {
     }, 15_000);
   }
 
-  it("puts featured then latest before explanation and retains their source-defined order and overlap", () => {
+  it("puts featured then latest before product next steps and retains their source-defined order and overlap", () => {
     render(<BlogPage />);
     const featured = screen.getByRole("region", { name: "Featured articles" });
     const latest = screen.getByRole("region", { name: "Latest articles" });
-    const explanation = screen.getByRole("region", {
-      name: "Real implementation work turned into durable technical content.",
-    });
     expectBefore(featured, latest);
-    expectBefore(latest, explanation);
     expectBefore(
-      explanation,
+      latest,
       screen.getByRole("region", {
-        name: "How the blog fits the PyColors path",
+        name: "Build on what you learn.",
       }),
     );
     expect(
@@ -168,21 +164,24 @@ describe("editorial discovery", () => {
       const title = within(latest).getByRole("link", {
         name: fixture.data.title,
       });
-      const card = title.closest('[data-slot="card"]')!;
+      const card = title.closest("article")!;
       expect(card).toHaveTextContent(fixture.data.description);
       expect(card).toHaveTextContent(fixture.data.category);
       expect(card).toHaveTextContent("7 min read");
+      expect(card).toHaveTextContent(fixture.data.author);
       expect(card).toHaveTextContent(
         new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
           new Date(String(fixture.data.date)),
         ),
       );
-      expect(
-        within(card as HTMLElement).getByRole("link", { name: "Read article" }),
-      ).toHaveAttribute("href", fixture.url);
+      expect(within(card).getAllByRole("link")).toHaveLength(1);
+      expect(title).toHaveAttribute("href", fixture.url);
+      expect(card.querySelector("time")).toHaveAttribute(
+        "datetime",
+        fixture.data.date,
+      );
     }
-    // Author/cover remain in the source contract; the specialized card's existing
-    // presentation does not render them. This migration must not invent them.
+    // Presentation never changes the source metadata or invents cover images.
     expect(getAllPosts()).toEqual(
       expect.arrayContaining(
         articleFixtures.map((fixture) =>
@@ -200,18 +199,29 @@ describe("editorial discovery", () => {
     );
   });
 
-  it("keeps real category/tag links, alphabetical taxonomy and the existing 12-tag limit", () => {
+  it("keeps real category/tag links, accurate category counts and the existing 12-tag limit", () => {
     render(<BlogPage />);
-    const sidebar = screen.getByRole("complementary");
+    const sidebar = screen.getByRole("complementary", {
+      name: "Explore the blog",
+    });
     const categoryLinks = within(sidebar)
       .getAllByRole("link")
       .filter((a) => a.getAttribute("href")?.startsWith("/blog/categories/"));
     expect(
-      categoryLinks.map((a) => [a.textContent, a.getAttribute("href")]),
+      categoryLinks.map((a) => [
+        a.firstElementChild?.textContent,
+        a.getAttribute("href"),
+      ]),
     ).toEqual([
       ["Architecture", "/blog/categories/architecture"],
       ["Product UX", "/blog/categories/product-ux"],
     ]);
+    expect(categoryLinks[0]).toHaveAccessibleName("Architecture 4 articles");
+    expect(categoryLinks[1]).toHaveAccessibleName("Product UX 1 article");
+    const disclosure = within(sidebar).getByText("Explore tags");
+    expect(disclosure.closest("details")).not.toHaveAttribute("open");
+    fireEvent.click(disclosure);
+    expect(disclosure.closest("details")).toHaveAttribute("open");
     const tagLinks = within(sidebar)
       .getAllByRole("link")
       .filter((a) => a.getAttribute("href")?.startsWith("/blog/tags/"));
@@ -224,6 +234,49 @@ describe("editorial discovery", () => {
     ]);
     expect(tagLinks[0]).toHaveAttribute("href", "/blog/tags/accessibility");
     expect(tagLinks[11]).toHaveAttribute("href", "/blog/tags/tag-11");
+  });
+
+  it("deduplicates tag destinations even when the source uses different capitalization", () => {
+    getPages.mockReturnValue([
+      {
+        ...articleFixtures[0],
+        data: {
+          ...articleFixtures[0]!.data,
+          tags: ["Monorepo", "monorepo", " Next.js "],
+        },
+      },
+    ]);
+    render(<BlogPage />);
+    fireEvent.click(screen.getByText("Explore tags"));
+    const links = within(
+      screen.getByRole("navigation", { name: "Blog tags" }),
+    ).getAllByRole("link");
+    expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "/blog/tags/monorepo",
+      "/blog/tags/next.js",
+    ]);
+  });
+
+  it("supports a single featured article without adding placeholder metadata", () => {
+    getPages.mockReturnValue([
+      {
+        ...articleFixtures[0],
+        data: {
+          ...articleFixtures[0]!.data,
+          author: "",
+          readingTime: undefined,
+          category: "",
+        },
+      },
+    ]);
+    render(<BlogPage />);
+    const featured = screen.getByRole("region", { name: "Featured articles" });
+    expect(articleUrls(featured)).toEqual(["/blog/old-featured"]);
+    expect(within(featured).getAllByRole("article")).toHaveLength(1);
+    expect(within(featured).queryByText("Editorial fixture author")).toBeNull();
+    expect(within(featured).queryByText("7 min read")).toBeNull();
+    expect(screen.getByText("1 article")).toBeVisible();
+    expect(screen.getByText("0 topics")).toBeVisible();
   });
 
   it("omits featured when none are selected and sends Browse articles to latest", () => {
@@ -255,7 +308,7 @@ describe("editorial discovery", () => {
     expect(within(latest).getByText("No articles found yet.")).toBeVisible();
     expect(articleUrls(latest)).toEqual([]);
     expect(
-      within(screen.getByRole("complementary"))
+      within(screen.getByRole("complementary", { name: "Explore the blog" }))
         .getAllByRole("link")
         .every((a) => !a.getAttribute("href")?.startsWith("/blog/")),
     ).toBe(true);
@@ -264,20 +317,20 @@ describe("editorial discovery", () => {
     ).toHaveAttribute("href", "#latest-articles");
   });
 
-  it("shows the eight curated guides before explanation with intact data/order and descriptive card links", () => {
+  it("groups the eight curated guides before product next steps with intact data/order and descriptive card links", () => {
     render(<GuidesPage />);
     const collection = screen.getByRole("region", {
-      name: "Focused guides for the surfaces and systems that matter most in SaaS",
+      name: "Find the guide for your next decision.",
     });
     expectBefore(
       collection,
-      screen.getByRole("region", { name: "Why these guides exist" }),
+      screen.getByRole("region", { name: "Put the ideas to work." }),
     );
     expect(screen.getByRole("link", { name: "Browse guides" })).toHaveAttribute(
       "href",
       "#browse-guides",
     );
-    const headings = within(collection).getAllByRole("heading", { level: 3 });
+    const headings = within(collection).getAllByRole("heading", { level: 4 });
     expect(headings.map((h) => h.textContent)).toEqual(
       contracts.guides.guides.map((g) => g.title),
     );
@@ -289,6 +342,26 @@ describe("editorial discovery", () => {
       expect(link).toHaveTextContent(guide.category);
       expect(link.querySelector("a,button")).toBeNull();
     });
+
+    const topics = within(
+      screen.getByRole("navigation", { name: "Guide topics" }),
+    ).getAllByRole("link");
+    expect(topics).toHaveLength(4);
+    for (const link of topics) {
+      const target = document.getElementById(
+        link.getAttribute("href")!.slice(1),
+      );
+      expect(target).not.toBeNull();
+      expect(target).toHaveAccessibleName();
+      expect(
+        within(target!).getAllByRole("heading", { level: 4 }),
+      ).toHaveLength(2);
+    }
+    expect(
+      screen.getByRole("link", {
+        name: "What should your SaaS starter include?",
+      }),
+    ).toHaveAttribute("href", contracts.guides.guides[0]!.href);
   });
 
   const commerceCases = [
@@ -297,14 +370,7 @@ describe("editorial discovery", () => {
       Page: BlogPage,
       index: 0,
       label: `Buy Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`,
-      count: 2,
-    },
-    {
-      route: "blog",
-      Page: BlogPage,
-      index: 1,
-      label: `Buy Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`,
-      count: 2,
+      count: 1,
     },
     {
       route: "guides",

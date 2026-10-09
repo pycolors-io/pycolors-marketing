@@ -1,38 +1,54 @@
-import { Badge, Card } from "@pycolors/ui";
-import { MarketingSectionHeader } from "../section-header";
+import type { ReactNode } from "react";
+import { Card, cn } from "@pycolors/ui";
 import { MarketingSectionShell } from "../section-shell";
 import { ShowcaseWorkspace } from "./showcase-workspace";
 
-/** Public product proof; #439 owns its page placement and surrounding CTAs. */
-export function SaasShowcase() {
+/** Public product proof; the page owns navigation and component handoffs. */
+export function SaasShowcase({
+  className,
+  actions,
+  footer,
+}: {
+  className?: string;
+  actions?: ReactNode;
+  footer?: ReactNode;
+}) {
   return (
     <MarketingSectionShell
       spacing="compact"
       aria-labelledby="project-readiness-title"
-      className="min-w-0"
+      className={cn("min-w-0", className)}
     >
-      <Card className="min-w-0 overflow-hidden rounded-[5px] border-border-subtle bg-surface shadow-soft">
-        <div className="border-b border-border-subtle px-4 py-5 sm:px-6 sm:py-6">
-          <MarketingSectionHeader
-            title="Project readiness workspace"
-            titleId="project-readiness-title"
-            eyebrow="Demo workspace"
-            align="left"
-            className="mb-0"
-            action={
-              <Badge variant="outline" className="rounded-[5px]">
-                Interface review
-              </Badge>
-            }
-          />
+      <div data-showcase-frame>
+        <h2
+          id="project-readiness-title"
+          className="mb-3 text-xs font-normal leading-5 text-muted-foreground"
+        >
+          Built with{" "}
+          <span className="font-semibold text-foreground">PyColors UI</span>
+        </h2>
+        <Card
+          data-showcase-preview
+          className="min-w-0 overflow-hidden rounded-[5px] border-border-subtle bg-surface shadow-none"
+        >
+          <ShowcaseWorkspace />
+        </Card>
+        <div
+          data-showcase-caption
+          className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+        >
+          <p className="max-w-xl text-xs leading-5 text-muted-foreground">
+            Synthetic demo data. Interactions stay local; nothing is saved and
+            no backend is connected.
+          </p>
+          {actions ? (
+            <div data-showcase-actions className="shrink-0">
+              {actions}
+            </div>
+          ) : null}
         </div>
-        <ShowcaseWorkspace />
-        <p className="border-t border-border-subtle bg-surface-muted/40 px-4 py-4 text-xs leading-5 text-muted-foreground sm:px-6">
-          Synthetic demo data. Interactions stay local; nothing is saved and no
-          backend is connected. This is an interface review, not production
-          readiness.
-        </p>
-      </Card>
+        {footer ? <div data-showcase-footer>{footer}</div> : null}
+      </div>
     </MarketingSectionShell>
   );
 }

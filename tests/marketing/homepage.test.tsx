@@ -5,12 +5,11 @@ import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
 import HomePage, { metadata } from "../../app/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
-import { getUiExplorerUrl } from "../../lib/docs/ui-explorer";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
 const headings = [
-  "Project readiness workspace",
+  "Built with PyColors UI",
   "Start with what your project needs now.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",
@@ -121,18 +120,41 @@ describe("showcase-first homepage", () => {
     ).toHaveAttribute("aria-pressed", "true");
   });
 
-  it("uses helper-owned Explorer URLs and precise documentation, trust and production handoffs", () => {
+  it("opens the Explorer and relevant component examples with precise documentation handoffs", () => {
     render(<HomePage />);
+    const showcase = screen.getByRole("region", { name: headings[0] });
+    expect(
+      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
+    ).toHaveAttribute("href", "https://ui.pycolors.io/");
+    expect(
+      within(showcase).getByRole("link", { name: "Read the docs" }),
+    ).toHaveAttribute("href", "/docs/ui/installation");
+    expect(
+      within(showcase).getByRole("navigation", {
+        name: "Explore the showcase primitives",
+      }),
+    ).toBeVisible();
     const links = within(
       screen.getByRole("navigation", {
         name: "Explore the showcase primitives",
       }),
     ).getAllByRole("link");
-    expect(links.map((a) => a.getAttribute("href"))).toEqual(
-      ["table", "tabs", "empty-state"].map((family) =>
-        getUiExplorerUrl(["ui", family]),
-      ),
-    );
+    expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "https://ui.pycolors.io/?path=/story/components-table--rows-and-empty-section",
+      "https://ui.pycolors.io/?path=/story/components-tabs--default",
+      "https://ui.pycolors.io/?path=/story/components-empty-state--with-action",
+    ]);
+    for (const link of [
+      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
+      ...links,
+    ]) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link).toHaveAccessibleDescription("Opens in a new tab");
+    }
+    expect(
+      screen.getByRole("link", { name: "Read the UI Explorer guide" }),
+    ).toHaveAttribute("href", "/docs/ui/storybook");
     for (const href of [
       "/docs/ui/installation",
       "/docs/ui/accessibility",
@@ -182,15 +204,15 @@ describe("showcase-first homepage", () => {
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {
     expect(metadata).toEqual({
       title: {
-        absolute: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        absolute: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
       },
       description:
-        "PyColors helps developers build and launch modern Next.js SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro with Auth.js, Prisma, Stripe commerce, secure delivery, purchase recovery, and SaaS architecture.",
+        "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
       alternates: { canonical: "https://pycolors.io" },
       openGraph: {
-        title: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
-          "Production-ready Next.js SaaS foundations including premium templates, UI systems, Starter Free, and Starter Pro with authentication, Stripe commerce, Prisma, secure delivery, purchase recovery, and protected app architecture.",
+          "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
         url: "https://pycolors.io",
         siteName: "PyColors",
         type: "website",
@@ -198,9 +220,9 @@ describe("showcase-first homepage", () => {
       },
       twitter: {
         card: "summary_large_image",
-        title: "Next.js SaaS UI System, Templates & Starters · PyColors",
+        title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
-          "Build modern SaaS products faster with premium templates, a production-ready UI system, Starter Free, and Starter Pro commerce foundations.",
+          "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
         images: ["/seo/twitter-main.png"],
       },
     });

@@ -42,12 +42,28 @@ export const BLOCKS_CATALOG = [
     href: "/docs/blocks/auth/password-recovery",
   },
   {
+    id: "data/stats-overview",
+    title: "Stats overview",
+    category: "Data & records",
+    description:
+      "Give your dashboard a clear summary with key metrics, comparison labels and reporting periods. Your application owns the values, formatting and calculations.",
+    href: "/docs/blocks/data/stats-overview",
+  },
+  {
     id: "data/data-table",
     title: "Data table",
     category: "Data & records",
     description:
       "Search, filter, sort and paginate records with a clear path out of empty results. Reuse controlled query and page-size controls while keeping your data layer and row actions.",
     href: "/docs/blocks/data/data-table",
+  },
+  {
+    id: "account/onboarding-checklist",
+    title: "Onboarding checklist",
+    category: "Account & workspace",
+    description:
+      "Guide new users through workspace setup with clear steps, progress and meaningful next actions. Your application owns completion, navigation and persistence.",
+    href: "/docs/blocks/account/onboarding-checklist",
   },
   {
     id: "account/settings-panel",

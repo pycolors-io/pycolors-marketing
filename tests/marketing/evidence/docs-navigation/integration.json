@@ -1,0 +1,639 @@
+{
+  "searchResultFound": true,
+  "searchEscapeRestoresFocus": false,
+  "searchFocusAfterEscape": "body",
+  "pages": [
+    {
+      "route": "/docs",
+      "fullPageAxe": [
+        {
+          "id": "landmark-one-main",
+          "targets": [["html"]]
+        },
+        {
+          "id": "link-name",
+          "targets": [[".text-\\[0\\.9375rem\\]"]]
+        },
+        {
+          "id": "region",
+          "targets": [
+            [".border-border\\/50 > .flex-wrap.gap-2.flex"],
+            ["h1"],
+            [".mb-8"],
+            [".docs-prose > .flex-wrap.gap-2.flex"],
+            ["#from-product-idea-to-real-saas"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(3)"],
+            [".list-decimal"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(5)"],
+            ["blockquote"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(7)"],
+            [".list-disc.ml-6.space-y-2:nth-child(8)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(9) > .flex-1.flex-col.gap-2"
+            ],
+            ["#start-here"],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(11) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"na-ai-landing\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"starter\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"starter-pro\"] > .min-w-0"
+            ],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(11) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href=\"/docs/ui\"] > .min-w-0"
+            ],
+            ["#the-business-path"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(13)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(14)"],
+            [".list-disc.ml-6.space-y-2:nth-child(15)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(16) > .flex-1.flex-col.gap-2"
+            ],
+            ["#the-build-path"],
+            [".mb-0"],
+            ["#radix-_R_4fd5fiuoqbradb_-content-Launch"],
+            ["#choose-your-next-move"],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(20) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"getting-started\"] > .min-w-0"
+            ],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(20) > .hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\].shadow-off:nth-child(2) > .min-w-0"
+            ],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(20) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\].shadow-off:nth-child(3) > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"upgrade\"] > .min-w-0"
+            ],
+            ["#core-systems"],
+            ["a[href$=\"auth\"] > .min-w-0"],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"billing\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"backend\"] > .min-w-0"
+            ],
+            ["a[href$=\"pwa\"] > .min-w-0"],
+            ["a[href$=\"delivery\"] > .min-w-0"],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\].shadow-off:nth-child(6) > .min-w-0"
+            ],
+            ["#foundations"],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(24) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"na-ai-landing\"] > .min-w-0"
+            ],
+            ["a[href$=\"design-system\"] > .min-w-0"],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(24) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href=\"/docs/ui\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"patterns\"] > .min-w-0"
+            ],
+            ["#why-this-matters-for-revenue"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(26)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(27)"],
+            [".list-disc.ml-6.space-y-2:nth-child(28)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(29)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(30)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(31) > .flex-1.flex-col.gap-2"
+            ],
+            ["#decision"],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .justify-between.gap-3.items-start > .min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"na-ai-landing\"] > .hover\\:-translate-y-0\\.5 > .mt-auto.pt-6"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .justify-between.gap-3.items-start > .min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".h-full.no-underline[href$=\"starter\"] > .hover\\:-translate-y-0\\.5 > .mt-auto.pt-6"
+            ],
+            [".bg-pro-surface > .justify-between.gap-3.items-start > .min-w-0"],
+            [
+              ".bg-pro-surface > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".bg-pro-surface > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".bg-pro-surface > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".bg-pro-surface > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".bg-pro-surface > .docs-list-none.mt-4.p-0 > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [
+              ".grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(5) > .text-\\[13px\\].leading-6.min-w-0"
+            ],
+            [".bg-pro-surface > .mt-auto.pt-6"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(34) > .flex-1.flex-col.gap-2"
+            ],
+            ["#next-step"],
+            [
+              ".my-2.sm\\:grid-cols-2.not-prose:nth-child(36) > .hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"getting-started\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"pricing\"] > .min-w-0"
+            ],
+            [".p-5.sm\\:p-6.mt-8"],
+            ["#toc-title"],
+            [".pt-0"],
+            [".py-1\\.5[href$=\"#start-here\"][data-active=\"false\"]"],
+            [
+              ".py-1\\.5[href$=\"#choose-your-next-move\"][data-active=\"false\"]"
+            ],
+            [
+              ".py-1\\.5[href=\"#why-this-matters-for-revenue\"][data-active=\"false\"]"
+            ],
+            [".py-1\\.5[href$=\"#decision\"][data-active=\"false\"]"],
+            [".pb-0"]
+          ]
+        }
+      ],
+      "title": "PyColors Documentation \u00b7 Docs \u00b7 PyColors"
+    },
+    {
+      "route": "/docs/ui/installation",
+      "fullPageAxe": [
+        {
+          "id": "landmark-one-main",
+          "targets": [["html"]]
+        },
+        {
+          "id": "landmark-unique",
+          "targets": [
+            [
+              "figure:nth-child(17) > .text-\\[0\\.8125rem\\].py-3\\.5.max-h-\\[600px\\]"
+            ]
+          ]
+        },
+        {
+          "id": "link-name",
+          "targets": [[".text-\\[0\\.9375rem\\]"]]
+        },
+        {
+          "id": "region",
+          "targets": [
+            [".border-border\\/50 > .flex-wrap.gap-2.flex"],
+            ["h1"],
+            [".mb-8"],
+            [".docs-prose > .flex-wrap.gap-2.flex"],
+            ["#install-the-primitive-layer-first"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(3)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(4) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#prerequisites"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(6)"],
+            [".ml-6.list-disc.space-y-2:nth-child(7)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(8)"],
+            ["#install-packages"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(10)"],
+            [
+              ".border-border.justify-between.gap-4 > .text-xs.font-medium.text-muted-foreground"
+            ],
+            [".py-3.overflow-x-auto"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(12)"],
+            ["#peer-dependencies"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(14)"],
+            [".overflow-x-auto.not-prose.my-6:nth-child(15)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(16)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(18)"],
+            ["#add-design-tokens"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(20)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(21)"],
+            ["figure:nth-child(22) > .h-9\\.5.px-4.border-b > figcaption"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(23)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(24)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(25)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(26)"],
+            [".ml-6.list-disc.space-y-2:nth-child(27)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(28) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#verify-components-in-storybook"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(30)"],
+            ["#import-from-the-public-entry-point"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(32)"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(33)"],
+            ["figure:nth-child(34) > .h-9\\.5.px-4.border-b > figcaption"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(35)"],
+            [
+              "section:nth-child(1) > .h-14.bg-muted\\/20 > .translate-y-px.text-\\[14px\\].m-0"
+            ],
+            [
+              "section:nth-child(1) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(1) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(2) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(3) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .h-14.bg-muted\\/20 > .translate-y-px.text-\\[14px\\].m-0"
+            ],
+            [
+              "section:nth-child(2) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(1) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(2) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .docs-list-none.divide-y.divide-border-subtle > .grid-cols-\\[20px_1fr\\].gap-2\\.5.px-3\\.5:nth-child(3) > .min-w-0"
+            ],
+            ["#server-and-client-component-boundaries"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(38)"],
+            ["figure:nth-child(39) > .h-9\\.5.px-4.border-b > figcaption"],
+            [".text-\\[15px\\].sm\\:text-base.leading-7:nth-child(40)"],
+            ["figure:nth-child(41) > .h-9\\.5.px-4.border-b > figcaption"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(42) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#verify-the-first-screen"],
+            ["#confirm-the-app-builds"],
+            [
+              ".fd-step:nth-child(1) > .text-\\[15px\\].sm\\:text-base.leading-7"
+            ],
+            [".fd-step:nth-child(2)"],
+            [".fd-step:nth-child(3)"],
+            [".fd-step:nth-child(4)"],
+            ["#common-mistakes"],
+            [".overflow-x-auto.not-prose.my-6:nth-child(46)"],
+            ["#next-steps"],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"usage-patterns\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"migration-guidance\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-platform\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"accessibility\"] > .min-w-0"
+            ],
+            ["a[href$=\"tokens\"] > .min-w-0"],
+            ["a[href$=\"release-policy\"] > .min-w-0"],
+            [".p-5"],
+            ["#toc-title"],
+            [".pt-0"],
+            [".py-1\\.5[href$=\"#prerequisites\"][data-active=\"true\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#install-packages\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#add-design-tokens\"]"],
+            [".py-1\\.5.scroll-m-4.prose:nth-child(6)"],
+            [".py-1\\.5.scroll-m-4.prose:nth-child(7)"],
+            [".py-1\\.5.scroll-m-4.prose:nth-child(8)"],
+            [".py-1\\.5.scroll-m-4[href$=\"#verify-the-first-screen\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#common-mistakes\"]"],
+            [".pb-0"]
+          ]
+        }
+      ],
+      "title": "Installation \u00b7 Docs \u00b7 PyColors"
+    },
+    {
+      "route": "/docs/starter-pro/getting-started",
+      "fullPageAxe": [
+        {
+          "id": "landmark-one-main",
+          "targets": [["html"]]
+        },
+        {
+          "id": "landmark-unique",
+          "targets": [
+            [
+              ".fd-step:nth-child(2) > figure > .text-\\[0\\.8125rem\\].py-3\\.5.max-h-\\[600px\\]"
+            ]
+          ]
+        },
+        {
+          "id": "link-name",
+          "targets": [[".text-\\[0\\.9375rem\\]"]]
+        },
+        {
+          "id": "region",
+          "targets": [
+            [".border-border\\/50 > .flex-wrap.gap-2.flex"],
+            ["h1"],
+            [".mb-8"],
+            [".docs-prose > .flex-wrap.gap-2.flex"],
+            ["#get-from-purchase-to-product-work-faster"],
+            [".docs-prose > .sm\\:text-base.text-\\[15px\\]:nth-child(3)"],
+            [".list-disc.ml-6.space-y-2:nth-child(4)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(5)"],
+            [".docs-prose > .sm\\:text-base.text-\\[15px\\]:nth-child(6)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(7) > .flex-1.flex-col.min-w-0"
+            ],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(8) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#first-30-minutes-after-purchase"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(10)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(11)"],
+            [".list-decimal:nth-child(12)"],
+            ["#payment-or-access-is-blocked"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(14)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(15)"],
+            ["#local-setup-is-blocked"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(17)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(18)"],
+            ["#what-this-page-helps-you-do"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(20)"],
+            [".list-disc.ml-6.space-y-2:nth-child(21)"],
+            ["#the-fastest-serious-path"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(23)"],
+            [".list-disc.ml-6.space-y-2:nth-child(24)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(25)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(26)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(27) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#setup-flow"],
+            [".fd-step:nth-child(1)"],
+            ["#install-dependencies"],
+            [
+              ".fd-step:nth-child(2) > figure > .h-9\\.5.border-b.px-4 > figcaption"
+            ],
+            [
+              ".fd-step:nth-child(2) > .sm\\:text-base.text-\\[15px\\]:nth-child(3)"
+            ],
+            [
+              ".fd-step:nth-child(2) > .sm\\:text-base.text-\\[15px\\]:nth-child(4)"
+            ],
+            ["#configure-local-environment"],
+            [
+              ".fd-step:nth-child(3) > .sm\\:text-base.text-\\[15px\\]:nth-child(2)"
+            ],
+            [
+              ".fd-step:nth-child(3) > figure:nth-child(3) > .h-9\\.5.border-b.px-4 > figcaption"
+            ],
+            [
+              ".fd-step:nth-child(3) > .sm\\:text-base.text-\\[15px\\]:nth-child(4)"
+            ],
+            ["figure:nth-child(5) > .h-9\\.5.border-b.px-4 > figcaption"],
+            [
+              ".fd-step:nth-child(3) > .sm\\:text-base.text-\\[15px\\]:nth-child(6)"
+            ],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(7)"],
+            ["#run-database-setup"],
+            [
+              ".fd-step:nth-child(4) > figure > .h-9\\.5.border-b.px-4 > figcaption"
+            ],
+            [
+              ".fd-step:nth-child(4) > .sm\\:text-base.text-\\[15px\\]:nth-child(3)"
+            ],
+            [
+              ".fd-step:nth-child(4) > .sm\\:text-base.text-\\[15px\\]:nth-child(4)"
+            ],
+            ["#start-the-app"],
+            [
+              ".fd-step:nth-child(5) > figure:nth-child(2) > .h-9\\.5.border-b.px-4 > figcaption"
+            ],
+            [
+              ".fd-step:nth-child(5) > figure:nth-child(3) > .h-9\\.5.border-b.px-4 > figcaption"
+            ],
+            [".fd-step:nth-child(5) > .sm\\:text-base.text-\\[15px\\]"],
+            [".fd-step:nth-child(6)"],
+            [".fd-step:nth-child(7)"],
+            [".fd-step:nth-child(8)"],
+            ["#validation-priorities"],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .justify-between.gap-3.items-start > .min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(1) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(5) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .justify-between.gap-3.items-start > .min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(2) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(5) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .justify-between.gap-3.items-start > .min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-2\\.5.\\[\\&_code\\]\\:text-\\[11px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(1) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(2) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(3) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(4) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            [
+              ".h-full.hover\\:-translate-y-0\\.5:nth-child(3) > .mt-4.p-0.docs-list-none > .grid-cols-\\[8px_1fr\\].items-start.grid:nth-child(5) > .leading-6.text-\\[13px\\].min-w-0"
+            ],
+            ["#what-to-avoid"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(33)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(34)"],
+            [".list-decimal:nth-child(35)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(36)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(37)"],
+            ["blockquote:nth-child(38)"],
+            ["#decision-guide"],
+            [
+              "section:nth-child(1) > .h-14.bg-muted\\/20 > .translate-y-px.text-\\[14px\\].mt-2"
+            ],
+            [
+              "section:nth-child(1) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(1) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(2) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(3) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(4) > .min-w-0"
+            ],
+            [
+              "section:nth-child(1) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(5) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .h-14.bg-muted\\/20 > .translate-y-px.text-\\[14px\\].mt-2"
+            ],
+            [
+              "section:nth-child(2) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(1) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(2) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(3) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(4) > .min-w-0"
+            ],
+            [
+              "section:nth-child(2) > .divide-y.divide-border-subtle.docs-list-none > .grid-cols-\\[20px_1fr\\].gap-2\\.5.py-2\\.5:nth-child(5) > .min-w-0"
+            ],
+            ["#fastest-path-to-value"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(42)"],
+            [".list-decimal:nth-child(43)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(44)"],
+            [
+              ".ps-1.text-fd-card-foreground.shadow-md:nth-child(45) > .flex-1.flex-col.min-w-0"
+            ],
+            ["#first-product-changes"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(47)"],
+            [".list-disc.ml-6.space-y-2:nth-child(48)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(49)"],
+            [".list-disc.ml-6.space-y-2:nth-child(50)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(51)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(52)"],
+            ["#when-it-becomes-worth-buying"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(54)"],
+            ["blockquote:nth-child(55)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(56)"],
+            ["blockquote:nth-child(57)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(58)"],
+            [".sm\\:text-base.text-\\[15px\\]:nth-child(59)"],
+            [".hover\\:bg-muted\\/18:nth-child(1) > .m-0"],
+            [
+              ".hover\\:bg-muted\\/18:nth-child(1) > .max-w-none.\\[\\&_code\\]\\:text-\\[12px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [".hover\\:bg-muted\\/18:nth-child(2) > .m-0"],
+            [
+              ".hover\\:bg-muted\\/18:nth-child(2) > .max-w-none.\\[\\&_code\\]\\:text-\\[12px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            [".hover\\:bg-muted\\/18:nth-child(3) > .m-0"],
+            [
+              ".hover\\:bg-muted\\/18:nth-child(3) > .max-w-none.\\[\\&_code\\]\\:text-\\[12px\\].\\[\\&_code\\]\\:rounded-\\[4px\\]"
+            ],
+            ["#next-steps"],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\].no-underline:nth-child(1) > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\].no-underline:nth-child(2) > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"auth\"] > .min-w-0"
+            ],
+            [
+              ".hover\\:bg-primary\\/\\[0\\.025\\].grid-cols-\\[32px_1fr_auto\\][href$=\"billing\"] > .min-w-0"
+            ],
+            [".p-5"],
+            ["#toc-title"],
+            [".pt-0"],
+            [".py-1\\.5.scroll-m-4.prose:nth-child(3)"],
+            [".py-1\\.5.scroll-m-4[href=\"#what-this-page-helps-you-do\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#setup-flow\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#validation-priorities\"]"],
+            [".py-1\\.5.scroll-m-4[href$=\"#decision-guide\"]"],
+            [".py-1\\.5.scroll-m-4[href=\"#when-it-becomes-worth-buying\"]"],
+            [".pb-0"]
+          ]
+        }
+      ],
+      "title": "Getting started \u00b7 Docs \u00b7 PyColors"
+    }
+  ],
+  "headerBounds": [
+    {
+      "width": 320,
+      "largeText": false,
+      "outside": []
+    },
+    {
+      "width": 768,
+      "largeText": false,
+      "outside": []
+    },
+    {
+      "width": 1279,
+      "largeText": false,
+      "outside": []
+    },
+    {
+      "width": 1280,
+      "largeText": false,
+      "outside": []
+    },
+    {
+      "width": 1440,
+      "largeText": false,
+      "outside": []
+    },
+    {
+      "width": 320,
+      "largeText": true,
+      "outside": []
+    }
+  ],
+  "errors": ""
+}

@@ -1,12 +1,13 @@
 ---
 title: Responsive sidebar
 description: A source-copy application shell with persistent desktop navigation and an accessible mobile Sheet.
-lastUpdated: "2026-09-15"
+lastUpdated: "2026-10-08"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import { ResponsiveSidebarExample } from "@/components/docs/blocks/canonical-examples";
@@ -50,11 +51,33 @@ or generated JSON.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/responsive-sidebar/index.tsx` in your application. Use
-the Source tab's copy button when available, or select the code manually when
-clipboard access is unavailable. This is the complete canonical file, not the
-usage example or a second implementation. Keep the imports and client directive
-when copying.
+`src/components/blocks/responsive-sidebar/` in your application. Copy all three
+files below, keeping their relative imports and client directives. In the Source
+tab, choose a file and use its copy button, or select the code manually when
+clipboard access is unavailable.
+
+To retrieve all three files at once, open **Code → Download ZIP** in the
+[Blocks catalog](/blocks#category-app-shells). Extract the archive and move its
+`src/components/blocks/responsive-sidebar/` folder into your application.
+
+### File structure
+
+<Files>
+  <Folder name="src/components/blocks/responsive-sidebar" defaultOpen>
+    <File name="index.tsx" />
+    <File name="sidebar-navigation.tsx" />
+    <File name="types.ts" />
+  </Folder>
+</Files>
+
+| File                     | Responsibility                                          |
+| ------------------------ | ------------------------------------------------------- |
+| `index.tsx`              | Application layout, mobile Sheet and public exports.    |
+| `sidebar-navigation.tsx` | Shared desktop and mobile navigation, brand and footer. |
+| `types.ts`               | Navigation items, router adapter and component props.   |
+
+Import `ResponsiveSidebar` and its types from the directory's `index.tsx` entry
+point. Customize the navigation without changing the surrounding layout.
 
 <Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
   <Tab value="Preview">
@@ -64,19 +87,39 @@ when copying.
   </Tab>
 
   <Tab value="Source">
-    <include
-      lang="tsx"
-      meta='title="src/components/blocks/responsive-sidebar/index.tsx"'
-    >
-      ../../../blocks/app-shells/responsive-sidebar/index.tsx
-    </include>
+    <Tabs items={["index.tsx", "sidebar-navigation.tsx", "types.ts"]}>
+      <Tab value="index.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/responsive-sidebar/index.tsx"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/index.tsx
+        </include>
+      </Tab>
+      <Tab value="sidebar-navigation.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/responsive-sidebar/sidebar-navigation.tsx"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/sidebar-navigation.tsx
+        </include>
+      </Tab>
+      <Tab value="types.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/responsive-sidebar/types.ts"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/types.ts
+        </include>
+      </Tab>
+    </Tabs>
   </Tab>
 </Tabs>
 
 The Preview tab renders the real canonical `ResponsiveSidebar` with fictional
 consumer navigation and content. Its links stay inside the preview document and
 no network or product service behavior is added. The Source tab includes the
-complete canonical file at build time, not a duplicated implementation.
+complete canonical files at build time, not a duplicated implementation.
 
 Your application copy does not receive automatic updates. Follow the usage
 example below, connect your own behavior, and validate it in your application.
@@ -125,24 +168,38 @@ decorative and keeps the visible item label as the link's accessible name.
 
 ## Props
 
-| Prop                 | Type                                   | Default                     | Purpose                                                   |
-| -------------------- | -------------------------------------- | --------------------------- | --------------------------------------------------------- |
-| `brand`              | `ReactNode`                            | required                    | Consumer brand or workspace identity.                     |
-| `navigationLabel`    | `string`                               | required                    | Accessible label shared by desktop and mobile navigation. |
-| `mobileTitle`        | `string`                               | required                    | Accessible Sheet title.                                   |
-| `mobileDescription`  | `string`                               | `Navigate the application.` | Accessible Sheet description.                             |
-| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Accessible name for the icon-only mobile trigger.         |
-| `items`              | `readonly ResponsiveSidebarNavItem[]`  | required                    | Primary ungrouped navigation items.                       |
-| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Optional labelled navigation groups.                      |
-| `activeItemId`       | `string`                               | none                        | Stable item ID that receives `aria-current="page"`.       |
-| `renderLink`         | `(props) => ReactNode`                 | native anchor               | Router adapter seam.                                      |
-| `sidebarFooter`      | `ReactNode`                            | none                        | Optional consumer footer content.                         |
-| `headerTitle`        | `ReactNode`                            | none                        | Header title or context.                                  |
-| `headerActions`      | `ReactNode`                            | none                        | Consumer actions for the header.                          |
-| `contentId`          | `string`                               | `main-content`              | Main landmark ID and skip-link target.                    |
-| `skipToContentLabel` | `string`                               | `Skip to content`           | Visible-on-focus skip-link text.                          |
-| `className`          | `string`                               | none                        | Root layout customization.                                |
-| `children`           | `ReactNode`                            | required                    | Main application content.                                 |
+The preview includes local Overview, Projects and Team views, grouped navigation,
+a workspace identity and a member footer. “Add demo project” adds a fictional row
+only in the preview; no project is saved or sent to a backend. The integration
+guide links are ordinary navigation. Use the preview's Reset control to return
+to the initial state.
+
+When embedding the shell inside an existing page, pass `contentAs="div"` to
+avoid nesting main landmarks. The default remains `contentAs="main"` for a full
+application shell. The skip link still targets the focusable content element.
+The mobile Sheet has a visually hidden accessible title and description so the
+workspace brand appears once. Navigation labels wrap, and narrow-screen
+navigation links and the menu trigger have at least 44px height.
+
+| Prop                 | Type                                   | Default                     | Purpose                                                      |
+| -------------------- | -------------------------------------- | --------------------------- | ------------------------------------------------------------ |
+| `brand`              | `ReactNode`                            | required                    | Consumer brand or workspace identity.                        |
+| `navigationLabel`    | `string`                               | required                    | Accessible label shared by desktop and mobile navigation.    |
+| `mobileTitle`        | `string`                               | required                    | Accessible Sheet title.                                      |
+| `mobileDescription`  | `string`                               | `Navigate the application.` | Accessible Sheet description.                                |
+| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Accessible name for the icon-only mobile trigger.            |
+| `items`              | `readonly ResponsiveSidebarNavItem[]`  | required                    | Primary ungrouped navigation items.                          |
+| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Optional labelled navigation groups.                         |
+| `activeItemId`       | `string`                               | none                        | Stable item ID that receives `aria-current="page"`.          |
+| `renderLink`         | `(props) => ReactNode`                 | native anchor               | Router adapter seam.                                         |
+| `sidebarFooter`      | `ReactNode`                            | none                        | Optional consumer footer content.                            |
+| `headerTitle`        | `ReactNode`                            | none                        | Header title or context.                                     |
+| `headerActions`      | `ReactNode`                            | none                        | Consumer actions for the header.                             |
+| `contentAs`          | `"main" \| "div"`                      | `main`                      | Content element; use `div` inside an existing main landmark. |
+| `contentId`          | `string`                               | `main-content`              | Main landmark ID and skip-link target.                       |
+| `skipToContentLabel` | `string`                               | `Skip to content`           | Visible-on-focus skip-link text.                             |
+| `className`          | `string`                               | none                        | Root layout customization.                                   |
+| `children`           | `ReactNode`                            | required                    | Main application content.                                    |
 
 Navigation item IDs must be unique and stable across `items` and every group.
 The Block never derives active behavior from labels or URLs.

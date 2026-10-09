@@ -142,24 +142,33 @@ describe("ArticleCTA presentation", () => {
       badge: "Starter Free",
       label: "Get the production-ready starter",
       href: "/starters",
+      title: "Explore the interface behind the ideas.",
+      description:
+        "Start with the dashboard, settings and product UI. Starter Free uses mocked authentication and billing data so you can explore the interface first.",
     },
     {
       variant: "pro",
       badge: "Starter Pro",
       label: "Explore Starter Pro",
       href: "/starters/pro",
+      title: "Start with the connected foundation.",
+      description:
+        "Explore the Auth.js, Prisma and Stripe foundation, with documentation to configure the services for your own product.",
     },
     {
       variant: "blocks",
       badge: "Advanced Blocks",
       label: "Explore blocks",
       href: "/blocks",
+      title: "Put the pattern into your product.",
+      description:
+        "Explore reusable product sections for dashboards, settings and everyday SaaS workflows, built with PyColors UI.",
     },
   ] as const;
 
   it.each(legacyCases)(
-    "preserves $variant copy, label and destination",
-    async ({ badge, ...cta }) => {
+    "describes the $variant resource while preserving its label and destination",
+    async ({ badge, title, description, ...cta }) => {
       const { container } = render(
         <main>
           <ArticleCTA cta={loadArticle(cta).cta} />
@@ -168,27 +177,15 @@ describe("ArticleCTA presentation", () => {
       expect(screen.getByText(badge)).toBeVisible();
       expect(
         screen.getByRole("heading", {
-          name: "Turn this article into shipping leverage.",
+          name: title,
         }),
       ).toBeVisible();
-      expect(
-        screen.getByText(
-          "Use the reasoning from this article to move faster with the PyColors product path: learn the pattern, validate with Starter Free, and upgrade when implementation wiring becomes the bottleneck.",
-        ),
-      ).toBeVisible();
-      for (const step of [
-        "Read the logic",
-        "Validate the surface",
-        "Upgrade when ready",
-      ]) {
-        expect(screen.getByText(step)).toBeVisible();
-      }
+      expect(screen.getByText(description)).toBeVisible();
       const primary = screen.getByRole("link", { name: cta.label });
       expect(primary).toHaveAttribute("href", cta.href);
-      expect(primary.querySelector("svg")).toHaveAttribute(
-        "aria-hidden",
-        "true",
-      );
+      for (const icon of container.querySelectorAll("svg")) {
+        expect(icon).toHaveAttribute("aria-hidden", "true");
+      }
       expect(screen.getByRole("link", { name: "Read Guides" })).toHaveAttribute(
         "href",
         "/guides",

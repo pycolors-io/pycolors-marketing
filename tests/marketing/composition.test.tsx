@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
@@ -9,6 +10,7 @@ import {
   MarketingCtaPanel,
 } from "../../components/marketing/cta-panel";
 import { MarketingFeatureCard } from "../../components/marketing/feature-card";
+import { MarketingDetailCard } from "../../components/marketing/detail-card";
 import {
   MarketingPill,
   MarketingPillList,
@@ -55,7 +57,9 @@ describe("MarketingSectionShell", () => {
     const section = container.querySelector("section");
 
     expect(section?.className).toContain("py-14");
-    expect(container.querySelector(".max-w-6xl")).not.toBeNull();
+    expect(section?.firstElementChild).toHaveClass(
+      "max-w-(--site-frame-width)",
+    );
   });
 });
 
@@ -180,6 +184,62 @@ describe("MarketingFeatureCard", () => {
     expect(container.firstElementChild?.className).toContain(
       "border-border-subtle",
     );
+  });
+});
+
+describe("MarketingDetailCard", () => {
+  it("keeps the heading, overview and independent resource links accessible", async () => {
+    const { container } = render(
+      <MarketingDetailCard
+        title="Application structure"
+        description="Explore routes and layouts before connecting services."
+        eyebrow="App Router"
+        icon={<svg aria-label="Decorative folder" />}
+        headingLevel={2}
+        visual={
+          <ol aria-label="Application overview">
+            <li>Routes</li>
+            <li>Layouts</li>
+            <li>Screens</li>
+          </ol>
+        }
+        footer={
+          <>
+            <Link href="/docs/starter/project-structure">
+              Explore the structure
+            </Link>
+            <Link href="/docs/starter/getting-started">Get started</Link>
+          </>
+        }
+      >
+        <ul>
+          <MarketingCheckItem>
+            Mock data for local exploration
+          </MarketingCheckItem>
+        </ul>
+      </MarketingDetailCard>,
+    );
+
+    const card = screen.getByRole("article");
+    expect(
+      within(card).getByRole("heading", {
+        level: 2,
+        name: "Application structure",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(
+        screen.getByRole("list", { name: "Application overview" }),
+      ).getAllByRole("listitem"),
+    ).toHaveLength(3);
+    expect(within(card).getAllByRole("link")).toHaveLength(2);
+    expect(
+      screen.getByRole("link", { name: "Explore the structure" }),
+    ).toHaveAttribute("href", "/docs/starter/project-structure");
+    expect(card.closest("a")).toBeNull();
+    expect(card).not.toHaveAttribute("tabindex");
+    expect(screen.queryByRole("img", { name: "Decorative folder" })).toBeNull();
+    await expect(axe(container)).resolves.toHaveNoViolations();
   });
 });
 

@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { readFileSync, readdirSync } from "node:fs";
-import { dirname, relative, resolve } from "node:path";
+import { dirname, extname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
@@ -84,7 +84,7 @@ describe.each(BLOCKS_CATALOG)("$title source-copy guide", ({ id, href }) => {
       expect(attributes).toContain(
         `title="src/components/blocks/${slug}/${filename}"`,
       );
-      expect(attributes).toMatch(/\blang=["']tsx["']/u);
+      expect(attributes).toContain(`lang="${extname(filename).slice(1)}"`);
       expect(attributes).not.toMatch(/\b(?:cwd|region|lines)\b/u);
     }
     expect(section).toContain("select the code manually");
@@ -129,7 +129,6 @@ it("renders Authentication previews from canonical Blocks without service behavi
 
 it("renders missing canonical previews without service behavior", () => {
   for (const canonicalImport of [
-    "@/content/blocks/app-shells/responsive-sidebar",
     "@/content/blocks/account/audit-log",
     "@/content/blocks/account/workspace-invitations",
     "@/content/blocks/commerce/billing-overview",
@@ -164,4 +163,21 @@ it("keeps the existing code-block renderer and next-step destinations", () => {
   expect(guide).toContain("[Compare Starters](/starters)");
   expect(guide).toContain("[Explore the Blocks catalog](/blocks)");
   expect(guide).toContain("no `@pycolors/blocks` package");
+});
+
+it("renders the workspace preview from the canonical sidebar", () => {
+  const preview = readFileSync(
+    resolve(
+      marketingRoot,
+      "components/docs/blocks/responsive-sidebar-example.tsx",
+    ),
+    "utf8",
+  );
+  expect(preview).toContain(
+    'from "@/content/blocks/app-shells/responsive-sidebar"',
+  );
+  expect(canonicalExamples).toContain(
+    'export { ResponsiveSidebarExample } from "./responsive-sidebar-example"',
+  );
+  expect(preview).not.toMatch(/\bfetch\s*\(|\baxios\b|https?:\/\//u);
 });

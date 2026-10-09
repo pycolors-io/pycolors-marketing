@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { containerClassName } from "@/components/container";
 import { z } from "zod";
 import {
-  ArrowRight,
   BadgeCheck,
   CreditCard,
   FileText,
@@ -10,7 +10,8 @@ import {
   Shield,
 } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, CardHeader } from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 type CheckoutSuccessPageProps = {
@@ -196,7 +197,7 @@ export default async function CheckoutSuccessPage({
     const message = getUnconfirmedMessage(result?.session);
 
     return (
-      <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+      <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
         {pageEvent}
         <Card className="rounded-[28px]">
           <CardHeader className="space-y-4 p-6 sm:p-8">
@@ -213,7 +214,7 @@ export default async function CheckoutSuccessPage({
           <CardContent className="space-y-6 px-6 pb-6 sm:px-8 sm:pb-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {sessionId ? (
-                <Button asChild>
+                <Button className="site-primary-action" asChild>
                   <a
                     href={`/checkout/success?session_id=${encodeURIComponent(sessionId)}`}
                   >
@@ -254,7 +255,7 @@ export default async function CheckoutSuccessPage({
   const supportSubject = encodeURIComponent(`${productName} order help`);
 
   return (
-    <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
       {pageEvent}
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
@@ -353,7 +354,7 @@ export default async function CheckoutSuccessPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-auto min-h-11 whitespace-normal rounded-xl px-6 text-sm font-medium"
+                  className="h-auto whitespace-normal rounded-xl font-medium"
                 >
                   <Link href="/orders/recover">Resend access link</Link>
                 </Button>
@@ -362,12 +363,9 @@ export default async function CheckoutSuccessPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-auto min-h-11 whitespace-normal rounded-xl px-6 text-sm font-medium"
+                  className="h-auto whitespace-normal rounded-xl font-medium"
                 >
-                  <Link href={docsHref}>
-                    Start setup
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <Link href={docsHref}>Start setup</Link>
                 </Button>
               </div>
 
@@ -495,12 +493,9 @@ export default async function CheckoutSuccessPage({
                 <Button
                   asChild
                   variant="outline"
-                  className="h-auto min-h-9 whitespace-normal rounded-xl"
+                  className="h-auto whitespace-normal rounded-xl"
                 >
-                  <Link href={guidance.href}>
-                    {guidance.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <Link href={guidance.href}>{guidance.cta}</Link>
                 </Button>
               </CardContent>
             </Card>

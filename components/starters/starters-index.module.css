@@ -1,0 +1,62 @@
+.previewStage {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
+  );
+}
+
+.proHeader,
+.resources {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)),
+    var(--background) 75%
+  );
+}
+
+.previewLink img {
+  transition: transform 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .previewLink:hover img {
+    transform: scale(1.015);
+  }
+}
+
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--foreground) 7%, transparent);
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.textLink:hover {
+  color: var(--primary);
+}
+
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .previewLink img,
+  .resources svg {
+    transition: none;
+    transform: none;
+  }
+}

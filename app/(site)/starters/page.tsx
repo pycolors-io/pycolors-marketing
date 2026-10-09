@@ -1,36 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
-  CreditCard,
-  ExternalLink,
-  LayoutDashboard,
-  LayoutTemplate,
-  Lock,
-  Sparkles,
+  Code2,
+  FileCode2,
 } from "lucide-react";
 
+import { Badge, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  cn,
-} from "@pycolors/ui";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+  PRODUCT_DISPLAY,
+  STARTER_FREE_PRICE_LABEL,
+} from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 import {
   MarketingPill,
   MarketingPillList,
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingResourceCard } from "@/components/marketing/resource-card";
+import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
+import styles from "@/components/starters/starters-index.module.css";
 
 export const metadata: Metadata = {
   title: "SaaS Starters for Next.js",
@@ -61,691 +59,340 @@ export const metadata: Metadata = {
   },
 };
 
-const INTERNAL = {
-  patterns: "/ui/patterns",
-  examples: "/ui/examples",
-  guides: "/guides",
-  pricing: "/pricing",
-  starterFree: "/starters/free",
-  starterPro: "/starters/pro",
-  docsStarter: "/docs/starter",
-  docsUpgrade: "/docs/starter/upgrade",
-  upgrade: "/upgrade",
-} as const;
-
-const EXTERNAL = {
-  starterDemo: "https://starter-demo.pycolors.io",
-} as const;
-
 const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
+const demoUrl = "https://starter-demo.pycolors.io";
+const repositoryUrl = "https://github.com/pycolors-io/pycolors-starter-free";
 
-const cardClass =
-  "rounded-[5px] border border-border-subtle bg-surface text-surface-foreground shadow-soft";
-
-const proCardClass =
-  "rounded-[5px] border border-pro-border bg-pro-surface text-surface-foreground shadow-medium";
-
-const primaryButtonClass =
-  "h-11 rounded-[5px] bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-brand-primary-hover";
-
-const starterFreeHighlights = [
-  "Production-shaped SaaS screens",
-  "Auth UX and account surfaces",
-  "Dashboard, CRUD, settings, billing",
-  "Mocked by design",
-  "No backend required",
-  "Fast product validation",
-] as const;
-
-const starterProHighlights = [
-  "Real authentication",
-  "Google and GitHub OAuth",
-  "Stripe Checkout",
-  "Billing portal and webhooks",
-  "Protected app architecture",
-  "Prisma + PostgreSQL foundation",
-] as const;
-
-const comparison = [
+const offers = [
   {
-    cap: "Product surface",
-    free: "Realistic SaaS screens and flows",
-    pro: "Same surface with production wiring",
+    slug: "free",
+    name: "Starter Free",
+    label: "Validate your interface",
+    description:
+      "Explore the screens. Shape your workflows. Make the product your own.",
+    price: STARTER_FREE_PRICE_LABEL,
+    access: "Public repository",
+    priceNote: "Clone the source and start building your UI.",
+    image: "/images/starters/free/dashboard-free-page-pycolors.png",
+    imageAlt:
+      "Starter Free dashboard with navigation, sample metrics and activity",
+    scope: "UI with mock data",
+    highlights: [
+      "Dashboard, projects and settings screens",
+      "Auth and billing interface examples",
+      "Responsive layouts with PyColors UI",
+      "Mock data; no backend setup required",
+    ],
+    setup:
+      "No real accounts, payments or database. Add those integrations when your product needs them.",
   },
   {
-    cap: "Authentication",
-    free: "Screens, UX states, placeholders",
-    pro: "Email/password, OAuth, sessions, protected routes",
-  },
-  {
-    cap: "Billing",
-    free: "Billing screens and upgrade entrypoints",
-    pro: "Stripe Checkout, portal, webhooks, invoices",
-  },
-  {
-    cap: "Backend",
-    free: "Frontend-first with mock sources",
-    pro: "Prisma, PostgreSQL, env foundations, integrations",
-  },
-  {
-    cap: "Best for",
-    free: "Validation, demos, product direction",
-    pro: "Launch, revenue, customer onboarding",
-  },
-];
-
-const journey = [
-  {
-    title: "Explore",
-    heading: "See the product surface",
-    text: "Open the demo and understand the screens, flows, and UX direction before wiring infrastructure.",
-    href: INTERNAL.starterFree,
-    cta: "Open Starter Free",
-    tone: "success",
-    external: false,
-  },
-  {
-    title: "Validate",
-    heading: "Adapt the UX",
-    text: "Use the free starter to test positioning, navigation, dashboard structure, billing entrypoints, and product credibility.",
-    href: EXTERNAL.starterDemo,
-    cta: "View live demo",
-    external: true,
-    tone: "platform",
-  },
-  {
-    title: "Decide",
-    heading: "Measure the blocker",
-    text: "When auth, billing, sessions, protected routes, and database foundations become the bottleneck, move to Pro.",
-    href: INTERNAL.pricing,
-    cta: "View pricing",
-    tone: "default",
-    external: false,
-  },
-  {
-    title: "Launch",
-    heading: "Buy the business layer",
-    text: "Starter Pro helps you skip repeated SaaS wiring and focus on product logic, customers, onboarding, and growth.",
-    href: INTERNAL.starterPro,
-    cta: "Explore Pro",
-    tone: "pro",
-    external: false,
+    slug: "pro",
+    name: "Starter Pro",
+    label: "Connect your product",
+    description:
+      "Build on authentication, billing and database foundations. Focus on your product logic.",
+    price: launchPrice,
+    access: "One-time payment",
+    priceNote: `Current launch price. Regular price planned at ${regularPrice}.`,
+    image: "/images/starters/pro/dashboard-pycolors.png",
+    imageAlt:
+      "Starter Pro dashboard with workspace navigation, sample metrics and product activity",
+    scope: "Auth, billing & data foundations",
+    highlights: [
+      "Auth.js credentials and Google/GitHub OAuth",
+      "Stripe Checkout, portal and webhooks",
+      "Prisma + PostgreSQL foundations",
+      "Protected routes and installable PWA",
+    ],
+    setup:
+      "Configure your providers, database and Stripe, then validate before deployment. Source ZIP delivered by claim email.",
   },
 ] as const;
 
-function ResourceCard({
-  icon,
-  title,
-  description,
-  href,
-  cta,
-  tone = "default",
-}: {
-  readonly icon: React.ReactNode;
-  readonly title: string;
-  readonly description: string;
-  readonly href: string;
-  readonly cta: string;
-  readonly tone?: "default" | "platform" | "success" | "pro";
-}) {
+type StarterOffer = (typeof offers)[number];
+
+function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
+  const isPro = offer.slug === "pro";
   return (
-    <MarketingFeatureCard
-      title={title}
-      description={description}
-      icon={icon}
-      tone={tone === "default" ? "neutral" : tone}
-      action={
-        <Button
-          asChild
-          size="lg"
-          variant="outline"
-          className="h-11 rounded-[5px] px-5 text-sm font-medium"
-        >
-          <Link href={href}>
-            {cta}
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
-        </Button>
-      }
-    />
-  );
-}
-
-function StarterCard({
-  badge,
-  title,
-  subtitle,
-  description,
-  highlights,
-  primaryAction,
-  secondaryAction,
-  pro = false,
-}: {
-  readonly badge: React.ReactNode;
-  readonly title: string;
-  readonly subtitle: string;
-  readonly description: string;
-  readonly highlights: readonly string[];
-  readonly primaryAction: React.ReactNode;
-  readonly secondaryAction?: React.ReactNode;
-  readonly pro?: boolean;
-}) {
-  return (
-    <Card className={cn(pro ? proCardClass : cardClass, "p-6")}>
-      <CardHeader className="space-y-4 px-0 pt-0">
-        <div className="space-y-3">
-          <div>{badge}</div>
-
-          <div>
-            <CardTitle className="text-xl">{title}</CardTitle>
-            <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
-          </div>
+    <article
+      aria-labelledby={`starter-${offer.slug}-title`}
+      className="flex min-w-0 flex-col overflow-hidden rounded-[5px] border border-border-subtle bg-background md:row-span-3 md:grid md:grid-rows-subgrid"
+    >
+      <div className={cn("p-5 sm:p-7", isPro && styles.proHeader)}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs font-medium text-muted-foreground">
+            {offer.label}
+          </p>
+          <Badge
+            variant="outline"
+            className="rounded-[5px] border-border-subtle bg-background/70 text-[11px]"
+          >
+            {isPro ? "Integration foundations" : "Frontend starter"}
+          </Badge>
         </div>
-      </CardHeader>
+        <h3
+          id={`starter-${offer.slug}-title`}
+          className="mt-5 font-brand text-[22px] font-semibold leading-snug tracking-subheading sm:text-2xl"
+        >
+          {offer.name}
+        </h3>
+        <p className="mt-3 max-w-md text-sm leading-7 text-muted-foreground md:min-h-14">
+          {offer.description}
+        </p>
+        <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span className="text-3xl font-semibold tracking-[-0.04em]">
+            {offer.price}
+          </span>
+          <span className="text-xs text-muted-foreground">{offer.access}</span>
+        </div>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">
+          {offer.priceNote}
+        </p>
+      </div>
 
-      <CardContent className="space-y-6 px-0 pb-0">
-        <p className="text-sm leading-7 text-muted-foreground">{description}</p>
+      <figure
+        className={cn(
+          "border-y border-border-subtle px-5 pt-5 sm:px-7 sm:pt-7",
+          styles.previewStage,
+        )}
+      >
+        <Link
+          href={`/starters/${offer.slug}`}
+          className={cn(
+            "group relative block aspect-[16/10] overflow-hidden rounded-t-[4px] border border-b-0 border-border-subtle bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+            styles.previewLink,
+          )}
+          aria-label={`Explore the ${offer.name} preview`}
+        >
+          <Image
+            src={offer.image}
+            alt={offer.imageAlt}
+            fill
+            sizes="(min-width: 1280px) 540px, (min-width: 768px) 43vw, 90vw"
+            className="object-cover object-top"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute bottom-3 right-3 flex size-8 items-center justify-center rounded-[5px] border border-border-subtle bg-background text-foreground shadow-sm transition-colors group-hover:bg-surface-muted"
+          >
+            <ArrowUpRight className="size-4" />
+          </span>
+        </Link>
+        <figcaption className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 py-3 text-[11px] text-muted-foreground">
+          <span className="font-medium text-foreground">{offer.scope}</span>
+          <span>Dashboard preview · Sample data</span>
+        </figcaption>
+      </figure>
 
-        <ul className="grid gap-2 sm:grid-cols-2">
-          {highlights.map((item) => (
-            <MarketingCheckItem key={item}>{item}</MarketingCheckItem>
+      <div className="flex flex-1 flex-col p-5 sm:p-7">
+        <p className="text-xs font-medium text-foreground">
+          What you start with
+        </p>
+        <ul aria-label={`${offer.name} highlights`} className="mt-4 space-y-3">
+          {offer.highlights.map((highlight) => (
+            <MarketingCheckItem key={highlight} className={styles.checkItem}>
+              {highlight}
+            </MarketingCheckItem>
           ))}
         </ul>
-
-        <div className="flex flex-col gap-3 sm:flex-row">
-          {primaryAction}
-          {secondaryAction}
+        <p className="mb-6 mt-5 border-t border-border-subtle pt-4 text-xs leading-6 text-muted-foreground">
+          {offer.setup}
+        </p>
+        <div className="mt-auto grid gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+          <Button
+            asChild
+            variant="outline"
+            className="h-auto rounded-[5px] shadow-none"
+          >
+            <Link href={`/starters/${offer.slug}`}>Explore {offer.name}</Link>
+          </Button>
+          {isPro ? (
+            <BuyStarterProButton
+              label="Buy Starter Pro"
+              loadingLabel="Opening checkout…"
+              className="shadow-none hover:shadow-none"
+            />
+          ) : (
+            <Button asChild variant="ghost" className="h-auto rounded-[5px]">
+              <a href={repositoryUrl} target="_blank" rel="noreferrer noopener">
+                View source on GitHub{" "}
+                <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+          )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 }
 
 export default function StartersPage() {
   return (
-    <main className="bg-background text-foreground">
-      <Container className="py-18">
-        <div className="pointer-events-none absolute left-1/2 top-20 -z-10 h-112 w-md -translate-x-1/2 rounded-[5px] bg-primary/10 blur-3xl" />
-
-        <div className="mx-auto max-w-6xl">
-          <PageHero
-            maxWidth="5xl"
-            badges={[
-              {
-                label: "Starter Free available",
-                variant: "secondary",
-                icon: (
-                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+    <main
+      id="content"
+      tabIndex={-1}
+      className="bg-background text-foreground focus:outline-none"
+    >
+      <Container className="pb-16 pt-24 sm:pt-28">
+        <PageHero
+          variant="compact"
+          align="left"
+          contentClassName="mx-0 max-w-3xl"
+          badges={[{ label: "SaaS starters", variant: "outline" }]}
+          title="A head start for your next SaaS."
+          description="Start with a considered interface. Choose Free to validate your screens, or Pro when you're ready to connect real accounts, billing and data. Both start with Next.js and PyColors UI."
+          actions={
+            <>
+              <Button
+                size="lg"
+                asChild
+                className="site-primary-action rounded-[5px] shadow-none"
+              >
+                <Link href="#choose-starter">
+                  Find your starting point{" "}
+                  <ArrowDown className="size-4" aria-hidden="true" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                asChild
+                variant="outline"
+                className="rounded-[5px] shadow-none"
+              >
+                <a href={demoUrl} target="_blank" rel="noreferrer noopener">
+                  Try the Starter Free demo{" "}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </Button>
+            </>
+          }
+          extra={
+            <MarketingPillList aria-label="Shared starter stack">
+              {["Next.js", "React", "TypeScript", "Tailwind CSS"].map(
+                (technology) => (
+                  <MarketingPill key={technology} className="bg-background">
+                    {technology}
+                  </MarketingPill>
                 ),
-              },
-              {
-                label: `Starter Pro ${launchPrice}`,
-                variant: "outline",
-              },
-              {
-                label: `${regularPrice} regular price`,
-                variant: "outline",
-              },
-            ]}
-            title="Start free. Upgrade when launch friction appears."
-            subtitle="Validate the SaaS surface first. Buy the business layer when auth, billing, and protected architecture become the bottleneck."
-            description="PyColors starters give you a clear path: use Starter Free to explore product UX, dashboards, settings, billing screens, and CRUD flows. Move to Starter Pro when you need real authentication, Stripe billing, Prisma foundations, protected routes, and a faster path to revenue."
-            actions={
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                <Button asChild size="lg" className={primaryButtonClass}>
-                  <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
-                </Button>
+              )}
+            </MarketingPillList>
+          }
+        />
 
-                <BuyStarterProButton
-                  variant="outline"
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
-
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                >
-                  <a
-                    href={EXTERNAL.starterDemo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Try the live demo
-                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </a>
-                </Button>
-
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                >
-                  <Link href={INTERNAL.pricing}>View pricing</Link>
-                </Button>
-              </div>
-            }
-            pills={[
-              "Validation-first",
-              "Production-shaped UX",
-              "Real upgrade path",
-              "Auth + billing in Pro",
-              "Built on PyColors UI",
-            ]}
-            extra={
-              <ul className="mx-auto grid max-w-4xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-                <MarketingCheckItem>Free validates UX</MarketingCheckItem>
-                <MarketingCheckItem>Pro wires auth</MarketingCheckItem>
-                <MarketingCheckItem>Pro wires billing</MarketingCheckItem>
-                <MarketingCheckItem>Pro accelerates launch</MarketingCheckItem>
-              </ul>
+        <MarketingSectionShell
+          divider="pattern"
+          id="choose-starter"
+          aria-labelledby="choose-starter-title"
+          width="full"
+          className="scroll-mt-24"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="choose-starter-title"
+            title="Two starting points. One design foundation."
+            description="Choose by what you need to build next."
+            action={
+              <Link href="#compare-starters" className={styles.textLink}>
+                Compare every capability{" "}
+                <ArrowDown className="size-3.5" aria-hidden="true" />
+              </Link>
             }
           />
+          <div className="grid items-stretch gap-5 md:grid-cols-2 md:grid-rows-[auto_auto_1fr] md:gap-y-0">
+            {offers.map((offer) => (
+              <StarterOfferCard key={offer.slug} offer={offer} />
+            ))}
+          </div>
+          <p className="mt-5 flex items-start gap-2.5 text-xs leading-6 text-muted-foreground">
+            <Code2 className="mt-1 size-4 shrink-0" aria-hidden="true" />
+            Both starters share PyColors UI and design tokens. Pro adds
+            integration foundations; you own the configuration, product logic
+            and deployment.
+          </p>
+        </MarketingSectionShell>
 
-          <section className="py-12 sm:py-14 lg:py-16">
-            <MarketingSectionHeader
-              eyebrow="Choose your layer"
-              title="Use the starter that matches your current bottleneck."
-              description="Do not buy complexity too early. Start with the surface if you need validation. Move to Pro when repeated SaaS wiring blocks launch."
-              align="center"
-            />
-
-            <div className="grid gap-6 lg:grid-cols-2">
-              <StarterCard
-                badge={
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="gap-2 rounded-[5px] border-success-border-subtle bg-success-surface-muted text-success"
-                    >
-                      <span className="inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-                      Free
-                    </Badge>
-                    <Badge variant="outline" className="rounded-[5px]">
-                      Validate first
-                    </Badge>
-                  </div>
-                }
-                title="Starter Free"
-                subtitle="For validating product shape before backend complexity."
-                description="A production-shaped SaaS surface with auth screens, dashboard, CRUD patterns, settings, billing entrypoints, and B2B member management. Mocked by design so you can move fast without infrastructure overhead."
-                highlights={starterFreeHighlights}
-                primaryAction={
-                  <Button asChild size="lg" className={primaryButtonClass}>
-                    <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
-                  </Button>
-                }
-                secondaryAction={
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                  >
-                    <a
-                      href={EXTERNAL.starterDemo}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      Live demo
-                      <ExternalLink
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
-                }
-              />
-
-              <StarterCard
-                pro
-                badge={
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge className="gap-2 rounded-[5px] border-pro-border-subtle bg-pro-surface-muted text-primary">
-                      <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                      Pro
-                    </Badge>
-                    <Badge className="rounded-[5px] border-pro-border-subtle bg-pro-surface-muted text-muted-foreground">
-                      Best launch path
-                    </Badge>
-                  </div>
-                }
-                title="Starter Pro"
-                subtitle="For launching faster with real auth and billing."
-                description="Move from product-shaped starter to a real commercial SaaS baseline with authentication, Stripe billing, webhook synchronization, protected app foundations, Prisma, PostgreSQL, and stronger launch-ready architecture."
-                highlights={starterProHighlights}
-                primaryAction={
-                  <BuyStarterProButton
-                    fullWidth={false}
-                    label={`Buy Starter Pro — ${launchPrice}`}
-                  />
-                }
-                secondaryAction={
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="h-11 rounded-[5px] border-pro-border-subtle px-6 text-sm font-medium"
-                  >
-                    <Link href={INTERNAL.starterPro}>
-                      Explore Starter Pro
-                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                    </Link>
-                  </Button>
-                }
-              />
-            </div>
-          </section>
-
-          <section className="py-12 sm:py-14 lg:py-16">
-            <MarketingSectionHeader
-              eyebrow="Free vs Pro"
-              title="Free validates the surface. Pro wires the business."
-              description="Pro is not just more screens. It is less repeated engineering work between your product idea and your first customers."
-              action={
-                <Button
-                  asChild
-                  size="sm"
-                  variant="outline"
-                  className="rounded-[5px]"
-                >
-                  <Link href={INTERNAL.pricing}>See pricing</Link>
-                </Button>
-              }
-            />
-
-            <Card className={cn(cardClass, "p-6 sm:p-7")}>
-              <div className="overflow-hidden rounded-[5px] border border-border-subtle">
-                <div className="grid grid-cols-1 bg-surface-muted sm:grid-cols-3">
-                  <div className="border-b border-border-subtle px-4 py-2 text-xs font-medium text-muted-foreground sm:border-b-0 sm:border-r">
-                    Capability
-                  </div>
-                  <div className="border-b border-border-subtle px-4 py-2 text-xs font-medium text-muted-foreground sm:border-b-0 sm:border-r">
-                    Starter Free
-                  </div>
-                  <div className="px-4 py-2 text-xs font-medium text-muted-foreground">
-                    Starter Pro
-                  </div>
-                </div>
-
-                {comparison.map((row) => (
-                  <div
-                    key={row.cap}
-                    className="grid grid-cols-1 sm:grid-cols-3"
-                  >
-                    <div className="border-t border-border-subtle px-4 py-3 text-sm font-medium text-foreground">
-                      {row.cap}
-                    </div>
-                    <div className="border-t border-border-subtle px-4 py-3 text-sm text-muted-foreground sm:border-l">
-                      {row.free}
-                    </div>
-                    <div className="border-t border-border-subtle px-4 py-3 text-sm font-medium text-foreground sm:border-l">
-                      {row.pro}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-                <Button asChild size="lg" className={primaryButtonClass}>
-                  <Link href={INTERNAL.starterFree}>Start with Free</Link>
-                </Button>
-
-                <BuyStarterProButton
-                  fullWidth={false}
-                  label={`Buy Starter Pro — ${launchPrice}`}
-                />
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                >
-                  <a
-                    href={EXTERNAL.starterDemo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Try the live demo
-                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </a>
-                </Button>
-              </div>
-            </Card>
-          </section>
-
-          <section className="py-12 sm:py-14 lg:py-16">
-            <MarketingSectionHeader
-              eyebrow="Builder journey"
-              title="A simple path from validation to launch."
-              description="The ecosystem is designed to reduce decision fatigue: explore the product surface, validate the UX, then upgrade when infrastructure becomes the real blocker."
-              align="center"
-            />
-
-            <div className="grid gap-4 lg:grid-cols-4">
-              {journey.map((item, index) => (
-                <Card
-                  key={item.title}
-                  className={cn(
-                    cardClass,
-                    "p-5",
-                    item.tone === "platform" && "border-platform-border-subtle",
-                    item.tone === "success" && "border-success-border-subtle",
-                    item.tone === "pro" && "border-pro-border-subtle",
-                  )}
-                >
-                  <div className="space-y-3">
-                    <div
-                      className={cn(
-                        "text-xs font-medium text-muted-foreground",
-                        item.tone === "platform" && "text-platform",
-                        item.tone === "success" && "text-success",
-                        item.tone === "pro" && "text-primary",
-                      )}
-                    >
-                      {index + 1}. {item.title}
-                    </div>
-
-                    <div className="text-sm font-medium text-foreground">
-                      {item.heading}
-                    </div>
-
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      {item.text}
-                    </p>
-
-                    <div className="pt-3">
-                      <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className={cn(
-                          "h-11 rounded-[5px] px-5 text-sm font-medium",
-                          item.tone === "platform" &&
-                            "border-platform-border-subtle",
-                          item.tone === "success" &&
-                            "border-success-border-subtle",
-                          item.tone === "pro" && "border-pro-border-subtle",
-                        )}
-                      >
-                        {item.external ? (
-                          <a
-                            href={item.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {item.cta}
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        ) : (
-                          <Link href={item.href}>{item.cta}</Link>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          <section className="py-12 sm:py-14 lg:py-16">
-            <MarketingSectionHeader
-              eyebrow="Developer platform"
-              title="Use the ecosystem to understand the product logic first."
-              description="The starter becomes more valuable when it is connected to guides, examples, and patterns instead of treated like an isolated repository."
-            />
-
-            <div className="grid gap-4 lg:grid-cols-3">
-              <ResourceCard
-                tone="platform"
-                icon={<BookOpen className="h-4 w-4" aria-hidden="true" />}
-                title="Guides"
-                description="Learn how SaaS products structure dashboards, auth, billing, team systems, project and admin surfaces."
-                href={INTERNAL.guides}
-                cta="Read guides"
-              />
-
-              <ResourceCard
-                icon={<LayoutTemplate className="h-4 w-4" aria-hidden="true" />}
-                title="UI Patterns"
-                description="Explore production-shaped interface patterns before choosing how your own product should feel."
-                href={INTERNAL.patterns}
-                cta="Browse patterns"
-              />
-
-              <ResourceCard
-                tone="success"
-                icon={<Sparkles className="h-4 w-4" aria-hidden="true" />}
-                title="Examples"
-                description="Study real SaaS surface directions and what is already available today through Starter Free."
-                href={INTERNAL.examples}
-                cta="See examples"
-              />
-            </div>
-          </section>
-
-          <section className="py-12 sm:py-14 lg:py-16">
-            <MarketingSectionHeader
-              eyebrow="Why Pro exists"
-              title="Starter Pro is for the work that delays revenue."
-              description="The expensive part is not drawing another dashboard. It is wiring the secure business layer correctly enough to launch and charge customers."
-              align="center"
-            />
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <ResourceCard
-                tone="pro"
-                icon={<Lock className="h-4 w-4" aria-hidden="true" />}
-                title="Authentication"
-                description="Email/password auth, OAuth providers, sessions, account flows, and protected routes already wired."
-                href={INTERNAL.starterPro}
-                cta="Review Pro"
-              />
-
-              <ResourceCard
-                tone="pro"
-                icon={<CreditCard className="h-4 w-4" aria-hidden="true" />}
-                title="Billing"
-                description="Stripe Checkout, billing portal, invoices, webhook synchronization, and subscription lifecycle flows."
-                href={INTERNAL.starterPro}
-                cta="Review billing"
-              />
-
-              <ResourceCard
-                tone="pro"
-                icon={
-                  <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
-                }
-                title="Protected app"
-                description="Protected app architecture, account areas, settings, billing-aware surfaces, and launch-ready foundations."
-                href={INTERNAL.starterPro}
-                cta="Review architecture"
-              />
-            </div>
-          </section>
-
-          <section className="mt-10">
-            <Card className={cn(proCardClass, "p-6 sm:p-8")}>
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                <div className="max-w-2xl space-y-3">
-                  <Badge
-                    variant="outline"
-                    className="rounded-[5px] border-pro-border bg-pro-surface-muted"
-                  >
-                    Final decision
-                  </Badge>
-
-                  <h2 className="text-2xl font-semibold tracking-tight">
-                    Start with the surface. Buy Pro when the business layer
-                    matters.
-                  </h2>
-
-                  <p className="text-sm leading-7 text-muted-foreground">
-                    Use Starter Free now to validate UX. Move to Starter Pro
-                    when you want real authentication, Stripe billing, protected
-                    architecture, and the path to revenue shortened.
-                  </p>
-
-                  <MarketingPillList aria-label="Starter decision points">
-                    <MarketingPill>Free validates UX</MarketingPill>
-                    <MarketingPill>Pro wires auth</MarketingPill>
-                    <MarketingPill>Pro wires billing</MarketingPill>
-                    <MarketingPill>Launch price {launchPrice}</MarketingPill>
-                  </MarketingPillList>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:min-w-64">
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                  >
-                    <Link href={INTERNAL.starterFree}>Open Starter Free</Link>
-                  </Button>
-
-                  <BuyStarterProButton
-                    label={`Buy Starter Pro — ${launchPrice}`}
-                  />
-
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="h-11 rounded-[5px] px-6 text-sm font-medium"
-                  >
-                    <a
-                      href={EXTERNAL.starterDemo}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      Try the live demo
-                      <ExternalLink
-                        className="ml-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              Starter docs live under{" "}
-              <Link
-                href={INTERNAL.docsStarter}
-                className="font-mono text-foreground underline underline-offset-4"
-              >
-                {INTERNAL.docsStarter}
+        <MarketingSectionShell
+          id="compare-starters"
+          aria-labelledby="compare-starters-title"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="compare-starters-title"
+            title="Know exactly what you're starting with."
+            description="The screens, integrations and setup work, side by side."
+            action={
+              <Link href="/pricing" className={styles.textLink}>
+                All products & pricing{" "}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
               </Link>
-              .
-            </p>
-          </section>
-        </div>
+            }
+          />
+          <StarterComparisonTable />
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
+          aria-labelledby="starter-next-steps-title"
+          width="full"
+          className="border-t border-border-subtle pb-0"
+        >
+          <div
+            className={cn(
+              "rounded-[5px] border border-border-subtle p-5 sm:p-8",
+              styles.resources,
+            )}
+          >
+            <MarketingSectionHeader
+              align="left"
+              titleId="starter-next-steps-title"
+              title="Your next step, documented."
+              description="Inspect the setup, plan the transition and make the interface your own."
+            />
+            <div className="grid gap-3 md:grid-cols-3">
+              <MarketingResourceCard
+                href="/docs/starter"
+                title="Start with the docs"
+                description="Get oriented in the starter structure and local setup."
+                meta={
+                  <span className="inline-flex items-center gap-2">
+                    <BookOpen className="size-3.5" aria-hidden="true" />
+                    Getting started
+                  </span>
+                }
+                className="bg-background shadow-none hover:shadow-none"
+              />
+              <MarketingResourceCard
+                href="/docs/starter/upgrade"
+                title="Plan your move to Pro"
+                description="Understand which UI work carries over and which integrations to configure."
+                meta={
+                  <span className="inline-flex items-center gap-2">
+                    <FileCode2 className="size-3.5" aria-hidden="true" />
+                    Free → Pro
+                  </span>
+                }
+                className="bg-background shadow-none hover:shadow-none"
+              />
+              <MarketingResourceCard
+                href="/tools/theme-builder"
+                title="Make it your brand"
+                description="Explore colors and typography, then copy your theme tokens."
+                meta={
+                  <span className="inline-flex items-center gap-2">
+                    <Code2 className="size-3.5" aria-hidden="true" />
+                    Theme Builder
+                  </span>
+                }
+                className="bg-background shadow-none hover:shadow-none"
+              />
+            </div>
+          </div>
+        </MarketingSectionShell>
       </Container>
     </main>
   );

@@ -1,13 +1,12 @@
 ---
 title: Installation
 description: Install @pycolors/ui, load the token CSS, and verify your first public import in a React or Next.js app.
-lastUpdated: "2026-09-18"
+lastUpdated: "2026-10-07"
 appliesTo: UI
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Badge } from "@pycolors/ui";
 import {
   Accessibility,
   Code2,
@@ -16,24 +15,23 @@ import {
   Route,
 } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsSectionLinks } from "@/components/docs/docs-section-links";
 import { CopyableCommand } from "@/components/docs/copyable-command";
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">UI</Badge>
-  <Badge>Installation</Badge>
-</div>
+<DocsSectionLinks
+  label="Installation steps"
+  items={[
+    { title: "1. Packages", href: "#install-packages" },
+    { title: "2. Styles", href: "#add-design-tokens" },
+    { title: "3. First screen", href: "#import-from-the-public-entry-point" },
+    { title: "4. Verify", href: "#verify-the-first-screen" },
+  ]}
+/>
 
 ## Install the primitive layer first
 
-`@pycolors/ui` is the public primitive package for PyColors product interfaces.
-Install it when you want reusable React primitives for SaaS surfaces such as
-forms, settings, dashboards, billing panels, overlays, and data views.
-
-<Callout title="Core idea">
-  Install the package, load the semantic token CSS your app needs, import from
-  `@pycolors/ui`, then verify one small screen before migrating more UI.
-</Callout>
+This guide takes you from an existing React app to a styled PyColors component. You will install the packages, connect the CSS, and verify a small screen in your own app.
 
 ## Prerequisites
 

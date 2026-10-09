@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { containerClassName } from "@/components/container";
 import {
-  ArrowRight,
   BadgeCheck,
   Download,
   LifeBuoy,
@@ -9,14 +9,8 @@ import {
   Shield,
 } from "lucide-react";
 
-import {
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 type ClaimOrderPageProps = {
@@ -57,7 +51,7 @@ function StatusShell({
   children?: React.ReactNode;
 }) {
   return (
-    <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8">
           <Badge
@@ -127,7 +121,7 @@ export default async function ClaimOrderPage({
           status="missing_token"
         />
         <div className="flex flex-wrap gap-3">
-          <Button asChild>
+          <Button className="site-primary-action" asChild>
             <Link href="/pricing">Back to pricing</Link>
           </Button>
           <Button asChild variant="outline">
@@ -152,7 +146,7 @@ export default async function ClaimOrderPage({
           status="unavailable"
         />
         <div className="flex flex-wrap gap-3">
-          <Button asChild>
+          <Button className="site-primary-action" asChild>
             <Link href="/orders/support">Contact support</Link>
           </Button>
           <Button asChild variant="outline">
@@ -185,7 +179,7 @@ export default async function ClaimOrderPage({
   const supportSubject = encodeURIComponent(`${productName} support`);
 
   return (
-    <main className="mx-auto mt-10 max-w-5xl px-6 py-16 sm:py-20">
+    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
       <MoneyPathPageEvent
         event="claim_page_viewed"
         productSlug={productSlug}
@@ -258,11 +252,11 @@ export default async function ClaimOrderPage({
                 <Button
                   asChild
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="site-primary-action rounded-xl font-medium"
                 >
                   <Link href={downloadUrl}>
+                    <Download className="size-4" aria-hidden="true" />
                     Download package
-                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
 
@@ -270,7 +264,7 @@ export default async function ClaimOrderPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="rounded-xl font-medium"
                 >
                   <Link href="/docs/starter-pro/getting-started">
                     Start setup
@@ -281,7 +275,7 @@ export default async function ClaimOrderPage({
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-11 rounded-xl px-6 text-sm font-medium"
+                  className="rounded-xl font-medium"
                 >
                   <Link href={productPageHref}>View product page</Link>
                 </Button>

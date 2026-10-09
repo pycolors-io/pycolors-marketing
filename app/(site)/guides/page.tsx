@@ -1,26 +1,30 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
-
-import { Badge, Button } from "@pycolors/ui";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  Boxes,
+  CreditCard,
+  KeyRound,
+  Layers3,
+  LayoutDashboard,
+  PanelTop,
+  ShieldCheck,
+  Smartphone,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
-
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
-import {
-  MarketingActionGroup,
-  MarketingCtaPanel,
-  MarketingLinkButton,
-} from "@/components/marketing/cta-panel";
 import { MarketingResourceCard } from "@/components/marketing/resource-card";
+import styles from "@/components/guides/guides-index.module.css";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Architecture Guides",
@@ -54,6 +58,7 @@ type Guide = {
   description: string;
   href: string;
   category: string;
+  icon: LucideIcon;
 };
 
 const guides: Guide[] = [
@@ -63,6 +68,7 @@ const guides: Guide[] = [
       "The essential product surfaces and foundations that make a SaaS starter genuinely useful, without unnecessary complexity.",
     href: "/guides/production-ready-saas-starter",
     category: "Foundations",
+    icon: Layers3,
   },
   {
     title: "How to build a production-ready SaaS with Next.js",
@@ -70,6 +76,7 @@ const guides: Guide[] = [
       "Architecture, product surface, authentication, billing, and deployment basics.",
     href: "/guides/build-saas-nextjs",
     category: "Foundations",
+    icon: Boxes,
   },
   {
     title: "Why PWA foundations matter for modern SaaS",
@@ -77,6 +84,7 @@ const guides: Guide[] = [
       "Installability, standalone mode, offline resilience, and app-like UX patterns for modern SaaS products.",
     href: "/guides/pwa-for-saas",
     category: "PWA",
+    icon: Smartphone,
   },
   {
     title: "SaaS dashboard design patterns",
@@ -84,6 +92,7 @@ const guides: Guide[] = [
       "How modern SaaS dashboards are structured: KPIs, activity feeds, hierarchy, and actions.",
     href: "/guides/saas-dashboard-design",
     category: "Product UX",
+    icon: LayoutDashboard,
   },
   {
     title: "Authentication flows for SaaS",
@@ -91,6 +100,7 @@ const guides: Guide[] = [
       "Login, register, password reset, OAuth, sessions, and protected product access.",
     href: "/guides/saas-auth-flows",
     category: "Auth",
+    icon: KeyRound,
   },
   {
     title: "SaaS billing UX best practices",
@@ -98,6 +108,7 @@ const guides: Guide[] = [
       "Plans, usage metrics, invoices, upgrade flows, and billing trust patterns.",
     href: "/guides/saas-billing-ux",
     category: "Billing",
+    icon: CreditCard,
   },
   {
     title: "Team & organization systems",
@@ -105,6 +116,7 @@ const guides: Guide[] = [
       "How SaaS products structure organizations, members, roles, invitations, and collaboration.",
     href: "/guides/saas-organizations",
     category: "B2B",
+    icon: UsersRound,
   },
   {
     title: "Admin panels for SaaS products",
@@ -112,218 +124,363 @@ const guides: Guide[] = [
       "Moderation tools, operational queues, audit logs, roles, and admin workflows.",
     href: "/guides/saas-admin-panels",
     category: "Operations",
+    icon: ShieldCheck,
   },
 ];
 
+const guideTopics = [
+  {
+    id: "foundations",
+    title: "Foundations",
+    description: "Define the scope and architecture before adding features.",
+    categories: ["Foundations"],
+  },
+  {
+    id: "product-experience",
+    title: "Product experience",
+    description: "Make everyday screens and mobile interactions easier to use.",
+    categories: ["PWA", "Product UX"],
+  },
+  {
+    id: "auth-and-billing",
+    title: "Auth & billing",
+    description: "Design the flows where access, payments and trust meet.",
+    categories: ["Auth", "Billing"],
+  },
+  {
+    id: "teams-and-operations",
+    title: "Teams & operations",
+    description:
+      "Plan for collaboration, permissions and the work behind the product.",
+    categories: ["B2B", "Operations"],
+  },
+].map((topic) => ({
+  ...topic,
+  guides: guides.filter((guide) => topic.categories.includes(guide.category)),
+}));
+
+const textLink =
+  "inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
+
 export default function GuidesPage() {
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-16 pt-24">
-        <div className="mx-auto max-w-6xl">
+    <main id="content" tabIndex={-1} className="bg-background text-foreground">
+      <Container className="pb-16 pt-24 sm:pt-28">
+        <div className="grid items-center gap-10 pb-14 sm:pb-16 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
           <PageHero
             variant="compact"
             align="left"
-            maxWidth="5xl"
-            contentClassName="mx-0"
-            badges={[
-              {
-                label: "Guides",
-                variant: "secondary",
-                icon: <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />,
-              },
-              { label: "SaaS knowledge base", variant: "outline" },
-              {
-                label: "Product-first",
-                variant: "outline",
-                icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
-              },
-            ]}
+            contentClassName="mx-0 max-w-2xl"
+            badges={[{ label: "Guides", variant: "outline" }]}
             title="SaaS building guides for developers."
-            description="Learn how stronger SaaS products are structured before you build them."
+            description="Make the architecture and product decisions behind a better SaaS. Practical guides to dashboards, authentication, billing and the systems that connect them."
             actions={
-              <MarketingLinkButton variant="outline">
-                <Link href="#browse-guides">Browse guides</Link>
-              </MarketingLinkButton>
+              <>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="rounded-[5px]"
+                >
+                  <Link href="#browse-guides">
+                    Browse guides{" "}
+                    <ArrowDown className="size-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+                <Link
+                  href="/docs"
+                  className={`${textLink} justify-center sm:px-2`}
+                >
+                  Open documentation{" "}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </Link>
+              </>
+            }
+            extra={
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+                <span>{guides.length} practical guides</span>
+                <span aria-hidden="true">/</span>
+                <span>From product structure to implementation</span>
+              </p>
             }
           />
-
-          <MarketingSectionShell
-            id="browse-guides"
-            aria-labelledby="guides-title"
-            spacing="compact"
-            className="scroll-mt-20"
+          <Link
+            href="/guides/production-ready-saas-starter"
+            aria-labelledby="recommended-guide-title"
+            aria-describedby="recommended-guide-summary"
+            className={`${styles.featuredGuide} group block rounded-[5px] border border-border-subtle focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}
           >
-            <MarketingSectionHeader
-              titleId="guides-title"
-              align="left"
-              eyebrow="Browse guides"
-              title="Focused guides for the surfaces and systems that matter most in SaaS"
-              description="These guides are designed to help developers think more clearly about product structure before moving into implementation."
-              action={
-                <MarketingLinkButton variant="outline">
-                  <Link href="/docs/starter">Starter docs</Link>
-                </MarketingLinkButton>
-              }
-            />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {guides.map(({ category, ...guide }) => (
-                <MarketingResourceCard
-                  key={guide.href}
-                  {...guide}
-                  meta={
-                    <Badge
-                      variant="outline"
-                      className="rounded-[5px] border-border-subtle bg-surface-muted text-xs"
-                    >
-                      {category}
-                    </Badge>
-                  }
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                  Recommended starting point
+                </p>
+                <BookOpen
+                  className="size-4 shrink-0 text-muted-foreground"
+                  aria-hidden="true"
                 />
+              </div>
+              <h2
+                id="recommended-guide-title"
+                className="mt-6 max-w-sm font-brand text-2xl font-semibold leading-tight tracking-heading sm:text-3xl"
+              >
+                What should your SaaS starter include?
+              </h2>
+              <p
+                id="recommended-guide-summary"
+                className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground"
+              >
+                Understand the essential screens, integrations and architecture
+                before choosing your foundation.
+              </p>
+              <div className="mt-7 grid grid-cols-3 divide-x divide-border-subtle border-y border-border-subtle py-4 text-center">
+                {[
+                  { label: "Interface", icon: PanelTop },
+                  { label: "Integrations", icon: Boxes },
+                  { label: "Architecture", icon: Layers3 },
+                ].map(({ label, icon: Icon }) => (
+                  <div key={label} className="space-y-2 px-1">
+                    <Icon
+                      className="mx-auto size-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    <p className="text-[11px] font-medium">{label}</p>
+                  </div>
+                ))}
+              </div>
+              <span
+                className="mt-5 flex min-h-6 items-center justify-between gap-3 text-sm font-medium"
+                aria-hidden="true"
+              >
+                Read the foundations guide
+                <ArrowRight className="size-4 shrink-0 transition-transform motion-safe:group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <MarketingSectionShell
+          divider="pattern"
+          id="browse-guides"
+          width="full"
+          className="scroll-mt-24 border-t border-border-subtle"
+          aria-labelledby="guides-title"
+        >
+          <MarketingSectionHeader
+            titleId="guides-title"
+            align="left"
+            eyebrow="The guide library"
+            title="Find the guide for your next decision."
+            description="Start with the foundations, or go straight to the product challenge in front of you."
+          />
+          <div className="grid items-start gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12">
+            <aside className="lg:sticky lg:top-24">
+              <nav aria-label="Guide topics">
+                <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                  Browse by topic
+                </p>
+                <ul className="grid grid-cols-2 gap-1 lg:grid-cols-1">
+                  {guideTopics.map((topic) => (
+                    <li key={topic.id}>
+                      <Link
+                        href={`#${topic.id}`}
+                        className="flex min-h-11 items-center justify-between gap-2 rounded-[5px] px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-surface-muted/50 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm"
+                      >
+                        <span>{topic.title}</span>
+                        <span
+                          className="font-mono text-[11px]"
+                          aria-label={`${topic.guides.length} guides`}
+                        >
+                          {String(topic.guides.length).padStart(2, "0")}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <div className="mt-6 hidden border-t border-border-subtle pt-5 lg:block">
+                <BookOpen
+                  className="size-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <p className="mt-3 text-sm font-medium">Ready to implement?</p>
+                <p className="mt-2 text-xs leading-6 text-muted-foreground">
+                  Find installation steps and API references in the docs.
+                </p>
+                <Link
+                  href="/docs/starter"
+                  className={`${textLink} mt-2 text-xs`}
+                >
+                  Starter docs{" "}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </aside>
+            <div className="min-w-0 space-y-10 sm:space-y-12">
+              {guideTopics.map((topic, index) => (
+                <section
+                  key={topic.id}
+                  id={topic.id}
+                  className="scroll-mt-24"
+                  aria-labelledby={`${topic.id}-title`}
+                >
+                  <div className="mb-5 flex items-start gap-4">
+                    <span
+                      className="pt-1 font-mono text-xs text-muted-foreground"
+                      aria-hidden="true"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3
+                        id={`${topic.id}-title`}
+                        className="text-lg font-semibold tracking-normal"
+                      >
+                        {topic.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        {topic.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {topic.guides.map(({ category, icon: Icon, ...guide }) => (
+                      <MarketingResourceCard
+                        key={guide.href}
+                        {...guide}
+                        headingLevel={4}
+                        className={`${styles.guideCard} bg-background p-6 shadow-none`}
+                        meta={
+                          <div className="mb-5 flex items-center gap-3">
+                            <span className="grid size-9 shrink-0 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/20 text-foreground">
+                              <Icon className="size-4" aria-hidden="true" />
+                            </span>
+                            <span className="text-xs">{category}</span>
+                          </div>
+                        }
+                      />
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
-          </MarketingSectionShell>
+          </div>
+        </MarketingSectionShell>
 
-          <MarketingSectionShell aria-labelledby="why-guides-title">
-            <MarketingSectionHeader
-              titleId="why-guides-title"
-              align="left"
-              title="Why these guides exist"
-            />
-            <div className="max-w-3xl space-y-6">
-              <p className="text-sm leading-7 text-muted-foreground">
-                Learn how modern SaaS products are designed and structured —
-                from dashboards and authentication to billing, installable PWA
-                experiences, admin workflows, and production-ready product
-                foundations.
-              </p>
-              <MarketingPillList>
-                {["Architecture", "Auth", "Billing", "PWA", "Admin UX"].map(
-                  (label) => (
-                    <MarketingPill key={label}>{label}</MarketingPill>
-                  ),
-                )}
-              </MarketingPillList>
-              <p className="text-sm leading-7 text-muted-foreground">
-                The guides are educational on purpose: they help you understand
-                the product logic first, so your UI, starter, and monetization
-                decisions become clearer.
-              </p>
-              <p className="text-sm leading-7 text-muted-foreground">
-                PyColors is not only a UI library or a starter. It is a system
-                for building SaaS products with stronger structure, clearer UX,
-                and less rework.
-              </p>
-              <p className="text-sm leading-7 text-muted-foreground">
-                These guides explain the product patterns behind that system so
-                you can make better product decisions before implementation
-                complexity takes over.
-              </p>
-              <MarketingPillList>
-                {[
-                  "Production-ready thinking",
-                  "SaaS-first UX",
-                  "PWA-ready UX",
-                  "System design",
-                  "Developer-focused",
-                ].map((label) => (
-                  <MarketingPill key={label}>{label}</MarketingPill>
-                ))}
-              </MarketingPillList>
-              <MarketingActionGroup>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/pricing">View pricing</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/starters/pro">See Starter Pro</Link>
-                </MarketingLinkButton>
-              </MarketingActionGroup>
-            </div>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell aria-labelledby="guides-path-title">
-            <MarketingSectionHeader
-              titleId="guides-path-title"
-              eyebrow="How the guides fit the PyColors path"
-              title="The guides are educational on purpose"
-              description="They help you understand the product logic before you choose the interface patterns, starter path, or business wiring."
-              align="left"
-            />
-            <div className="grid gap-4 lg:grid-cols-3">
-              <MarketingFeatureCard
-                meta="Step 01"
-                title="Learn the product logic"
-                description="Use the guides to understand how strong SaaS products structure dashboards, auth, billing, settings, and operations."
+        <MarketingSectionShell
+          width="full"
+          className="border-t border-border-subtle"
+          aria-labelledby="guides-next-title"
+        >
+          <MarketingSectionHeader
+            titleId="guides-next-title"
+            align="left"
+            eyebrow="From reading to building"
+            title="Put the ideas to work."
+            description="Explore an interface, try a complete frontend, or inspect the integrations your product needs."
+          />
+          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-3">
+            <div className="flex flex-col p-6 sm:p-8">
+              <PanelTop
+                className="size-5 text-muted-foreground"
+                aria-hidden="true"
               />
-              <MarketingFeatureCard
-                meta="Step 02"
-                title="Explore patterns and examples"
-                description="Move from concepts to real interfaces with examples and UI patterns built around the same product surfaces."
-              />
-              <MarketingFeatureCard
-                meta="Step 03"
-                title="Build with Starter Free, upgrade with Starter Pro"
-                description="Start with a production-shaped SaaS surface today, then move to Starter Pro when auth, billing, backend wiring, and installable PWA foundations become the blocker."
-              />
-            </div>
-            <MarketingActionGroup className="mt-6">
-              <MarketingLinkButton>
-                <Link href="/starters/free">
-                  Start with Starter Free
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+              <p className="mt-5 text-xs text-muted-foreground">
+                Components & patterns
+              </p>
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
+                Build the interface.
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Turn product decisions into screens with PyColors UI, composed
+                blocks and working examples.
+              </p>
+              <div className="mt-auto pt-5">
+                <Link href="/ui/patterns" className={textLink}>
+                  Browse UI patterns{" "}
+                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
-              </MarketingLinkButton>
-              <Button
-                asChild
-                variant="secondary"
-                size="lg"
-                className="h-auto min-h-11 whitespace-normal rounded-[5px] px-6 py-2.5 text-sm font-medium"
-              >
-                <Link href="/examples">Explore Examples</Link>
-              </Button>
-              <MarketingLinkButton variant="outline">
-                <Link href="/ui/patterns">Browse UI Patterns</Link>
-              </MarketingLinkButton>
-            </MarketingActionGroup>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell
-            aria-labelledby="guides-next-title"
-            spacing="compact"
-          >
-            <Badge
-              variant="outline"
-              className="mb-4 rounded-[5px] border-border-subtle bg-surface-muted"
-            >
-              Build faster
-            </Badge>
-            <MarketingCtaPanel
-              titleId="guides-next-title"
-              title="Build your SaaS faster with PyColors"
-              description="Use Starter Free to validate a real SaaS product surface now, then move to Starter Pro when auth, billing, backend workflows, and installable PWA foundations need to be wired seriously."
-              actions={
-                <div className="space-y-6">
-                  <MarketingPillList>
-                    {["Starter Free", "Starter Pro", "Production-shaped"].map(
-                      (label) => (
-                        <MarketingPill key={label}>{label}</MarketingPill>
-                      ),
-                    )}
-                  </MarketingPillList>
-                  <MarketingActionGroup className="sm:max-w-60 sm:flex-col sm:items-stretch">
-                    <MarketingLinkButton>
-                      <Link href="/starters/free">Starter Free</Link>
-                    </MarketingLinkButton>
-                    <BuyStarterProButton
-                      fullWidth={true}
-                      label={`Starter Pro — ${starterProPriceLabel}`}
-                      variant="outline"
-                    />
-                  </MarketingActionGroup>
+                <div className="flex flex-wrap gap-x-5">
+                  <Link
+                    href="/blocks"
+                    className={`${textLink} text-xs text-muted-foreground`}
+                  >
+                    Explore Blocks
+                  </Link>
+                  <Link
+                    href="/ui/examples"
+                    className={`${textLink} text-xs text-muted-foreground`}
+                  >
+                    View examples
+                  </Link>
                 </div>
-              }
-            />
-          </MarketingSectionShell>
-        </div>
+              </div>
+            </div>
+            <div className="flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0">
+              <LayoutDashboard
+                className="size-5 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <p className="mt-5 text-xs text-muted-foreground">Starter Free</p>
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
+                Explore a full product.
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Validate dashboards, settings and workflows in a complete SaaS
+                frontend, with mocked auth and billing.
+              </p>
+              <div className="mt-auto pt-5">
+                <Link href="/starters/free" className={textLink}>
+                  Start with Starter Free{" "}
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
+                <p className="mt-2 text-xs leading-6 text-muted-foreground">
+                  Public source code · Free to explore
+                </p>
+              </div>
+            </div>
+            <div
+              className={`${styles.nextStep} flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0`}
+            >
+              <Boxes
+                className="size-5 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <p className="mt-5 text-xs text-muted-foreground">Starter Pro</p>
+              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
+                Connect the foundations.
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Start with Auth.js, Stripe and Prisma foundations. Configure
+                your providers and validate the integrations before launch.
+              </p>
+              <div className="mt-auto pt-5">
+                <Link href="/starters/pro" className={`${textLink} mb-3`}>
+                  Explore Starter Pro{" "}
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
+                <BuyStarterProButton
+                  fullWidth
+                  label={`Starter Pro — ${starterProPriceLabel}`}
+                  variant="outline"
+                />
+                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  One-time payment · Source code license
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1">
+            <Link href="/pricing" className={textLink}>
+              Compare all products{" "}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link href="/docs" className={`${textLink} text-muted-foreground`}>
+              Explore the documentation{" "}
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </MarketingSectionShell>
       </Container>
     </main>
   );

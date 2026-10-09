@@ -1,0 +1,503 @@
+.page {
+  background: radial-gradient(
+      ellipse at 75% 0%,
+      color-mix(in oklab, var(--primary) 5%, transparent),
+      transparent 65%
+    )
+    0 0 / 100% 40rem no-repeat;
+}
+
+.backLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.hero {
+  padding-bottom: 2.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.125rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+
+.hero p {
+  max-width: 38rem;
+}
+
+.accountNote {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.workspace {
+  display: grid;
+  align-items: start;
+  gap: 2rem;
+}
+
+.formPanel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background:
+    radial-gradient(
+      ellipse at 0% 0%,
+      color-mix(in oklab, var(--primary) 5%, transparent),
+      transparent 60%
+    ),
+    var(--background);
+  box-shadow: 0 4px 12px color-mix(in oklab, var(--foreground) 2%, transparent);
+}
+
+.formContent {
+  padding: 1.5rem;
+}
+
+.formHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.formIcon,
+.confirmationIcon {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--primary);
+}
+
+.eyebrow {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.formContent h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: var(--site-heading-tracking);
+  line-height: 1.3;
+}
+
+.description {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.formStage {
+  min-height: 20rem;
+  margin-top: 2rem;
+}
+
+.form {
+  display: grid;
+  min-width: 0;
+  gap: 1.5rem;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.form p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+.emailInput {
+  border-radius: 5px;
+}
+
+.emailInput input {
+  min-width: 0;
+}
+
+.productField,
+.selectWrapper {
+  min-width: 0;
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+.productSelect {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 2.75rem;
+  appearance: none;
+  overflow: hidden;
+  padding: 0 2.75rem 0 1rem;
+  border: 1px solid var(--input);
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.productSelect:invalid {
+  color: var(--muted-foreground);
+}
+
+.productSelect option {
+  color: var(--foreground);
+}
+
+.productSelect:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.selectWrapper > svg {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.productSelect:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.submitButton {
+  width: 100%;
+  height: auto;
+  margin-top: 0.25rem;
+  border-radius: 5px;
+  white-space: normal;
+}
+
+.formFooter {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in oklab, var(--muted) 15%, var(--background));
+}
+
+.formFooter > p {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.formFooter .textLink {
+  margin-top: 0.75rem;
+}
+
+.confirmation {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.confirmation:focus {
+  outline: none;
+}
+
+.confirmation:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.confirmationIcon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.5rem;
+  background: color-mix(in oklab, var(--primary) 4%, var(--background));
+}
+
+.confirmation h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.confirmation p {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--destructive) 30%, var(--border-subtle));
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--destructive) 4%, var(--background));
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.error > svg {
+  color: var(--destructive);
+}
+
+.error p + p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.guidance {
+  display: grid;
+  min-width: 0;
+  gap: 1.5rem;
+}
+
+.stepsPanel {
+  padding: 1.5rem 0;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sectionHeader h2 {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.expiryLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.steps {
+  margin-top: 1.75rem;
+}
+
+.steps li {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.steps li:last-child {
+  padding-bottom: 0;
+}
+
+.steps li:not(:last-child)::before {
+  position: absolute;
+  top: 2rem;
+  bottom: 0;
+  left: 1rem;
+  width: 1px;
+  background: var(--border-subtle);
+  content: "";
+}
+
+.stepIcon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--muted-foreground);
+}
+
+.steps h3 {
+  padding-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.steps p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+
+.helpPanel {
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background:
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 75%
+    ),
+    var(--background);
+}
+
+.helpHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.helpHeading h2 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.helpPanel .description {
+  font-size: 0.8125rem;
+}
+
+.supportAction {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.supportAction > p {
+  flex: 1 1 10rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+}
+
+.pageNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.pageNote > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  max-width: 47rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.pageNote > p svg {
+  margin-top: 0.125rem;
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.inlineLink {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.backLink,
+.textLink,
+.inlineLink {
+  border-radius: 3px;
+  transition: color 150ms ease;
+}
+
+.backLink:hover,
+.textLink:hover,
+.inlineLink:hover {
+  color: var(--primary);
+}
+
+.backLink:focus-visible,
+.textLink:focus-visible,
+.inlineLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@media (min-width: 640px) {
+  .formContent,
+  .helpPanel {
+    padding: 2rem;
+  }
+
+  .formFooter {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backLink,
+  .textLink,
+  .inlineLink {
+    transition: none;
+  }
+}

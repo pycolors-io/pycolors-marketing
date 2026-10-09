@@ -2,8 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
-import RecoverOrderPage from "../../app/(site)/orders/recover/page";
+import RecoverOrderPage, {
+  metadata,
+} from "../../app/(site)/orders/recover/page";
 import { recoverCommerceAccess } from "@/lib/api/client";
+import { trackMoneyPathEvent } from "@/lib/analytics";
 
 vi.mock("@/lib/api/client", () => ({
   recoverCommerceAccess: vi.fn(),
@@ -54,9 +57,25 @@ describe("Purchase recovery guidance", () => {
   it("keeps the recovery and support steps accessible before submission", async () => {
     const { container } = render(<RecoverOrderPage />);
 
+    expect(metadata.title).toBe("Recover purchase access");
+    expect(screen.getByRole("main")).toHaveAttribute("id", "content");
+    expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
+    expect(trackMoneyPathEvent).toHaveBeenCalledExactlyOnceWith({
+      event: "recovery_page_viewed",
+      page: "/orders/recover",
+      status: "viewed",
+    });
     expect(
       screen.getByRole("textbox", { name: /^Purchase email/ }),
     ).toBeRequired();
+    expect(
+      screen.getByRole("textbox", { name: /^Purchase email/ }),
+    ).toHaveAttribute("autocomplete", "email");
+    expect(
+      screen.getByRole("textbox", { name: /^Purchase email/ }),
+    ).toHaveAccessibleDescription(
+      "Use the same email address you used during checkout.",
+    );
     expect(
       screen.getByRole("link", { name: "Starter Pro purchase recovery guide" }),
     ).toHaveAttribute("href", "/docs/starter-pro/purchase-recovery");
@@ -67,6 +86,9 @@ describe("Purchase recovery guidance", () => {
     const product = screen.getByRole("combobox", { name: "Product" });
     expect(product).toBeRequired();
     expect(product).toHaveValue("");
+    expect(product).toHaveAccessibleDescription(
+      "Choose the product whose access you want to recover.",
+    );
     expect(
       screen.getByRole("option", { name: "PyColors Starter Pro" }),
     ).toHaveValue("starter-pro");
@@ -91,6 +113,9 @@ describe("Purchase recovery guidance", () => {
     expect(screen.getByRole("button", { name: "Sending..." })).toBeDisabled();
     expect(screen.queryByRole("status")).not.toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Product" })).toBeDisabled();
+    expect(
+      screen.getByRole("textbox", { name: /^Purchase email/ }),
+    ).toBeDisabled();
     // Reentrant submit events must not create a second request while pending.
     fireEvent.submit(
       screen.getByRole("button", { name: "Sending..." }).closest("form")!,
@@ -104,6 +129,7 @@ describe("Purchase recovery guidance", () => {
       "does not verify a purchase or email delivery",
     );
     expect(status).not.toHaveTextContent("has been sent");
+    expect(status).toHaveFocus();
     expect(recoverCommerceAccess).toHaveBeenCalledExactlyOnceWith({
       email: "buyer@example.com",
       productSlug: "starter-pro",
@@ -128,6 +154,9 @@ describe("Purchase recovery guidance", () => {
     expect(
       screen.getByRole("textbox", { name: /^Purchase email/ }),
     ).toHaveValue("buyer@example.com");
+    expect(
+      screen.getByRole("textbox", { name: /^Purchase email/ }),
+    ).toBeEnabled();
     expect(screen.getByRole("combobox", { name: "Product" })).toHaveValue(
       "starter-pro",
     );

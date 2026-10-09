@@ -1,0 +1,131 @@
+.page {
+  --guide-anchor-offset: 6rem;
+}
+
+.breadcrumb li:not(:last-child) {
+  flex-shrink: 0;
+}
+
+.breadcrumb li:last-child {
+  min-width: 0;
+  flex: 1;
+}
+.breadcrumb [aria-current="page"] {
+  max-width: min(28rem, 100%);
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: color 180ms ease;
+}
+.textLink:hover {
+  color: var(--primary);
+}
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.body {
+  font-size: 0.9375rem;
+  line-height: 1.875rem;
+}
+.body :where(p, ul, ol) {
+  max-width: 72ch;
+}
+.body section[id] {
+  scroll-margin-top: var(--guide-anchor-offset);
+}
+.body > div > section:first-child {
+  padding-top: 0;
+}
+.body [data-slot="card"] {
+  border-color: var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow: none;
+}
+.body div:has(> table) {
+  border-color: var(--border-subtle);
+  border-radius: 5px;
+}
+.body table {
+  line-height: 1.75rem;
+}
+.body th {
+  padding-block: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--foreground);
+}
+.body td {
+  vertical-align: top;
+}
+.body tr {
+  border-color: var(--border-subtle);
+}
+.body thead {
+  background: color-mix(in oklab, var(--foreground) 3%, var(--background));
+}
+
+.callout,
+.nextSteps {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 5%, var(--background)),
+    var(--background) 80%
+  );
+  box-shadow: none;
+}
+.tocLink {
+  display: block;
+  min-height: 2.25rem;
+  padding: 0.5rem 0.875rem;
+  border-left: 2px solid transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+.tocLink:hover {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 3%, transparent);
+}
+.tocLink[aria-current="location"] {
+  border-left-color: var(--foreground);
+  color: var(--foreground);
+  font-weight: 500;
+}
+.tocLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.mobileToc summary::-webkit-details-marker {
+  display: none;
+}
+.mobileToc[open] summary > svg:last-child {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 63.999rem), (pointer: coarse) {
+  .tocLink {
+    min-height: 2.75rem;
+    padding-block: 0.75rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.page) {
+    scroll-behavior: auto;
+  }
+  .textLink,
+  .tocLink {
+    transition: none;
+  }
+}

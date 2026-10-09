@@ -2,7 +2,9 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
-import CheckoutCancelPage from "../../app/(site)/checkout/cancel/page";
+import CheckoutCancelPage, {
+  metadata,
+} from "../../app/(site)/checkout/cancel/page";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
@@ -41,6 +43,9 @@ describe("Interrupted checkout", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Checkout interrupted",
     );
+    expect(metadata.title).toBe("Checkout interrupted");
+    expect(screen.getByRole("main")).toHaveAttribute("id", "content");
+    expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
     expect(screen.getByText(/This page cannot confirm/)).toHaveTextContent(
       "whether a payment went through",
     );
@@ -53,6 +58,20 @@ describe("Interrupted checkout", () => {
     expect(
       screen.getByRole("link", { name: /Return to pricing/ }),
     ).toHaveAttribute("href", "/pricing");
+    expect(screen.getByText(/Opening this page/)).toHaveTextContent(
+      "does not cancel a payment or change an existing order",
+    );
+    expect(
+      screen.getByRole("region", { name: "Payment declined or interrupted?" }),
+    ).toHaveTextContent(
+      "If you have not completed a payment and are not waiting for a pending one",
+    );
+    expect(
+      screen.getByRole("region", { name: "Already tried to pay?" }),
+    ).toHaveTextContent("contact support before starting another checkout");
+    expect(
+      screen.getByRole("link", { name: "Starter Pro purchase help" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/purchase-recovery");
     expect(fetch).not.toHaveBeenCalled();
     await expect(axe(container)).resolves.toHaveNoViolations();
   });

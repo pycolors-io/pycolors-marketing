@@ -1,19 +1,20 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import { ArrowRight, Layers3, Sparkles } from 'lucide-react';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { ArrowLeft, Layers3, Sparkles } from "lucide-react";
 
-import { Badge, Button, Card, EmptyState, cn } from '@pycolors/ui';
+import { Badge, Card, EmptyState, cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
-import { Container } from '@/components/container';
-import { Breadcrumb } from '@/components/seo/breadcrumb';
-import { BlogList } from '@/components/blog/blog-list';
+import { Container } from "@/components/container";
+import { Breadcrumb } from "@/components/seo/breadcrumb";
+import { BlogList } from "@/components/blog/blog-list";
 
 import {
   getAllCategories,
   getPostsByCategory,
   normalizeTaxonomy,
-} from '@/lib/blog/utils';
+} from "@/lib/blog/utils";
 
 type PageProps = {
   readonly params: Promise<{
@@ -22,7 +23,7 @@ type PageProps = {
 };
 
 const focusRing =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export async function generateStaticParams() {
   return getAllCategories().map((category) => ({
@@ -42,7 +43,7 @@ export async function generateMetadata({
 
   if (!matchedCategory) {
     return {
-      title: 'Category not found',
+      title: "Category not found",
     };
   }
 
@@ -56,13 +57,13 @@ export async function generateMetadata({
       title: `${matchedCategory} · Blog · PyColors`,
       description: `Technical articles from PyColors about ${matchedCategory.toLowerCase()} and related SaaS implementation decisions.`,
       url: `/blog/categories/${category}`,
-      images: ['/seo/og-main.png'],
+      images: ["/seo/og-main.png"],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${matchedCategory} · Blog · PyColors`,
       description: `Technical articles from PyColors about ${matchedCategory.toLowerCase()} and related SaaS implementation decisions.`,
-      images: ['/seo/twitter-main.png'],
+      images: ["/seo/twitter-main.png"],
     },
   };
 }
@@ -71,11 +72,11 @@ function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-[5px]',
-        'border border-border-subtle',
-        'bg-background/50',
-        'px-2.5 py-1',
-        'text-[11px] font-medium text-muted-foreground',
+        "inline-flex items-center rounded-[5px]",
+        "border border-border-subtle",
+        "bg-background/50",
+        "px-2.5 py-1",
+        "text-[11px] font-medium text-muted-foreground",
       )}
     >
       {children}
@@ -95,7 +96,7 @@ function SectionHeader({
   return (
     <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="space-y-3">
-        <h2 className="font-brand text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+        <h2 className="font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl">
           {title}
         </h2>
 
@@ -111,9 +112,7 @@ function SectionHeader({
   );
 }
 
-export default async function BlogCategoryPage({
-  params,
-}: PageProps) {
+export default async function BlogCategoryPage({ params }: PageProps) {
   const { category } = await params;
 
   const categories = getAllCategories();
@@ -130,7 +129,7 @@ export default async function BlogCategoryPage({
 
   return (
     <Container className="py-16 sm:py-20">
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative min-w-0">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_95%),transparent_60%)]"
@@ -139,8 +138,8 @@ export default async function BlogCategoryPage({
         <div className="mb-10">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
               {
                 label: matchedCategory,
                 href: `/blog/categories/${category}`,
@@ -155,11 +154,11 @@ export default async function BlogCategoryPage({
               <Badge
                 variant="secondary"
                 className={cn(
-                  'gap-1.5 rounded-[5px]',
-                  'border border-border-subtle',
-                  'bg-surface-muted/80',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "gap-1.5 rounded-[5px]",
+                  "border border-border-subtle",
+                  "bg-surface-muted/80",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
                 <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />
@@ -169,11 +168,11 @@ export default async function BlogCategoryPage({
               <Badge
                 variant="outline"
                 className={cn(
-                  'rounded-[5px]',
-                  'border-border-subtle',
-                  'bg-background/60',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "rounded-[5px]",
+                  "border-border-subtle",
+                  "bg-background/60",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
                 {matchedCategory}
@@ -182,17 +181,14 @@ export default async function BlogCategoryPage({
               <Badge
                 variant="outline"
                 className={cn(
-                  'gap-1.5 rounded-[5px]',
-                  'border-border-subtle',
-                  'bg-background/60',
-                  'px-2.5 py-1',
-                  'text-[11px] font-medium',
+                  "gap-1.5 rounded-[5px]",
+                  "border-border-subtle",
+                  "bg-background/60",
+                  "px-2.5 py-1",
+                  "text-[11px] font-medium",
                 )}
               >
-                <Sparkles
-                  className="h-3.5 w-3.5"
-                  aria-hidden="true"
-                />
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Technical writing
               </Badge>
             </div>
@@ -200,14 +196,14 @@ export default async function BlogCategoryPage({
             <div className="mx-auto max-w-4xl space-y-6">
               <h1
                 className={cn(
-                  'text-balance',
-                  'font-brand',
-                  'text-4xl font-semibold',
-                  'tracking-[-0.05em]',
-                  'text-foreground',
-                  'sm:text-5xl',
-                  'lg:text-[4.5rem]',
-                  'lg:leading-[0.95]',
+                  "text-balance",
+                  "font-brand",
+                  "text-4xl font-semibold",
+                  "tracking-[-0.05em]",
+                  "text-foreground",
+                  "sm:text-5xl",
+                  "lg:text-[4.5rem]",
+                  "lg:leading-[0.95]",
                 )}
               >
                 {matchedCategory}
@@ -218,38 +214,35 @@ export default async function BlogCategoryPage({
 
               <p
                 className={cn(
-                  'mx-auto max-w-3xl',
-                  'text-balance',
-                  'text-[16px] leading-8',
-                  'text-muted-foreground',
-                  'sm:text-lg',
+                  "mx-auto max-w-3xl",
+                  "text-balance",
+                  "text-[16px] leading-8",
+                  "text-muted-foreground",
+                  "sm:text-lg",
                 )}
               >
-                Focused technical articles connected to{' '}
+                Focused technical articles connected to{" "}
                 {matchedCategory.toLowerCase()}, product structure,
-                implementation tradeoffs, and production-ready SaaS
-                engineering decisions inside PyColors.
+                implementation tradeoffs, and production-ready SaaS engineering
+                decisions inside PyColors.
               </p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
               <Button
                 asChild
-                className={cn('rounded-[5px]', focusRing)}
+                className={`site-primary-action ${cn("rounded-[5px]", focusRing)}`}
               >
                 <Link href="/blog">
+                  <ArrowLeft className="size-4" aria-hidden="true" />
                   Back to Blog
-                  <ArrowRight
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
                 </Link>
               </Button>
 
               <Button
                 asChild
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/guides">Browse Guides</Link>
               </Button>
@@ -257,7 +250,7 @@ export default async function BlogCategoryPage({
               <Button
                 asChild
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/starters/free">Starter Free</Link>
               </Button>
@@ -273,14 +266,14 @@ export default async function BlogCategoryPage({
           </div>
         </header>
 
-        <section className="mx-auto max-w-5xl pb-10">
+        <section className="pb-10">
           <Card
             className={cn(
-              'rounded-[5px]',
-              'border border-border-subtle',
-              'bg-background/45',
-              'p-6 backdrop-blur-sm',
-              'sm:p-8',
+              "rounded-[5px]",
+              "border border-border-subtle",
+              "bg-background/45",
+              "p-6 backdrop-blur-sm",
+              "sm:p-8",
             )}
           >
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
@@ -292,10 +285,9 @@ export default async function BlogCategoryPage({
                 </div>
 
                 <p className="max-w-3xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
-                  This category groups articles around the same
-                  product surface, engineering concern, or
-                  implementation domain so readers can explore a topic
-                  with stronger continuity and less noise.
+                  This category groups articles around the same product surface,
+                  engineering concern, or implementation domain so readers can
+                  explore a topic with stronger continuity and less noise.
                 </p>
               </div>
 
@@ -304,7 +296,7 @@ export default async function BlogCategoryPage({
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href="/guides">View Guides</Link>
                 </Button>
@@ -313,7 +305,7 @@ export default async function BlogCategoryPage({
                   asChild
                   size="sm"
                   variant="outline"
-                  className={cn('rounded-[5px]', focusRing)}
+                  className={cn("rounded-[5px]", focusRing)}
                 >
                   <Link href="/upgrade">Explore PRO</Link>
                 </Button>
@@ -322,7 +314,7 @@ export default async function BlogCategoryPage({
           </Card>
         </section>
 
-        <section className="mx-auto max-w-5xl py-6 sm:py-8">
+        <section className="py-6 sm:py-8">
           <SectionHeader
             title="Articles in this category"
             description="A focused set of articles around the same technical and product domain."
@@ -331,7 +323,7 @@ export default async function BlogCategoryPage({
                 asChild
                 size="sm"
                 variant="outline"
-                className={cn('rounded-[5px]', focusRing)}
+                className={cn("rounded-[5px]", focusRing)}
               >
                 <Link href="/blog">All articles</Link>
               </Button>

@@ -17,6 +17,8 @@ export type PageHeroProps = {
   actions?: React.ReactNode;
   pills?: string[];
   extra?: React.ReactNode;
+  /** Optional decorative layer, outside the content's width constraint. */
+  background?: React.ReactNode;
   className?: string;
   contentClassName?: string;
   badgesClassName?: string;
@@ -56,6 +58,7 @@ export function PageHero({
   actions,
   pills = [],
   extra,
+  background,
   className,
   contentClassName,
   badgesClassName,
@@ -78,6 +81,7 @@ export function PageHero({
         className,
       )}
     >
+      {background}
       {!isCompact ? (
         <>
           {/* subtle premium glow */}
@@ -125,25 +129,27 @@ export function PageHero({
 
         <h1
           className={cn(
-            "text-balance font-brand font-semibold tracking-[-0.04em] text-foreground",
+            "text-balance font-brand font-semibold tracking-[-0.035em] text-foreground",
             isCompact
-              ? "text-3xl sm:text-4xl lg:text-5xl"
-              : "text-4xl sm:text-5xl lg:text-[4rem] lg:leading-[0.98]",
-            badges.length > 0 ? (isCompact ? "mt-4" : "mt-7") : "mt-0",
+              ? "text-3xl leading-[1.15] sm:text-4xl lg:text-5xl"
+              : "text-4xl leading-[1.1] sm:text-5xl lg:text-[4rem]",
+            badges.length > 0 ? (isCompact ? "mt-5" : "mt-7") : "mt-0",
           )}
         >
           {title}
 
           {subtitle ? (
-            <span className="mt-3 block text-muted-foreground">{subtitle}</span>
+            <span className="mt-3 block font-medium tracking-[-0.025em] text-muted-foreground">
+              {subtitle}
+            </span>
           ) : null}
         </h1>
 
         {description ? (
           <p
             className={cn(
-              "mt-6 text-[15px] leading-7 text-muted-foreground sm:text-base",
-              isCentered ? "mx-auto max-w-3xl" : "max-w-3xl",
+              "mt-5 max-w-[65ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:mt-6 sm:text-base sm:leading-8",
+              isCentered && "mx-auto",
             )}
           >
             {description}
@@ -153,9 +159,9 @@ export function PageHero({
         {actions ? (
           <div
             className={cn(
-              "flex flex-col gap-3 sm:flex-row",
+              "flex flex-col gap-3 sm:flex-row sm:items-center",
               isCompact && "flex-wrap",
-              isCompact ? "mt-6" : "mt-8",
+              "mt-7 sm:mt-8",
               isCentered ? "justify-center" : "justify-start",
               actionsClassName,
             )}

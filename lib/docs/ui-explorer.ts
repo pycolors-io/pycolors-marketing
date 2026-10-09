@@ -1,3 +1,5 @@
+export const UI_EXPLORER_URL = "https://ui.pycolors.io/";
+
 // Stable public story IDs verified against the production Explorer catalog.
 // Keep this explicit: documentation guides do not necessarily have a story.
 export const uiExplorerStories: Readonly<Record<string, string>> = {
@@ -25,5 +27,5 @@ export function getUiExplorerUrl(slug: readonly string[] = []) {
   if (slug.length !== 2 || slug[0] !== "ui") return undefined;
   const family = slug[1];
   if (!family || !Object.hasOwn(uiExplorerStories, family)) return undefined;
-  return `https://ui.pycolors.io/?path=/story/${uiExplorerStories[family]}`;
+  return `${UI_EXPLORER_URL}?path=/story/${uiExplorerStories[family]}`;
 }

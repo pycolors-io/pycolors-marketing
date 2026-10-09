@@ -6,10 +6,19 @@ import { axe } from "vitest-axe";
 
 import { MarketingLinkButton } from "../../components/marketing/cta-panel";
 import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
+import type { BlockSource } from "../../lib/blocks/source";
 
 vi.mock("@/lib/blocks/source.server", () => ({
-  readBlockSource: () =>
-    "export default function CanonicalBlock() { return null; }",
+  readBlockSource: () => ({
+    directory: "src/components/blocks/example",
+    files: [
+      {
+        path: "index.tsx",
+        language: "tsx",
+        content: "export default function CanonicalBlock() { return null; }",
+      },
+    ],
+  }),
 }));
 
 vi.mock("@/components/marketing/blocks/block-catalog-preview", () => ({
@@ -17,8 +26,11 @@ vi.mock("@/components/marketing/blocks/block-catalog-preview", () => ({
 }));
 
 vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
-  BlockShowcaseTabs: ({ source }: Readonly<{ source: string }>) => (
-    <div data-testid="block-showcase" data-source-length={source.length}>
+  BlockShowcaseTabs: ({ source }: Readonly<{ source: BlockSource }>) => (
+    <div
+      data-testid="block-showcase"
+      data-source-length={source.files[0].content.length}
+    >
       Preview Code
     </div>
   ),
@@ -41,8 +53,13 @@ function getHero() {
 function expectLinkButton(link: HTMLElement, primary: boolean) {
   expect(link.tagName).toBe("A");
   expect(link).toHaveAttribute("data-slot", "button");
-  expect(link).toHaveClass("min-h-11", "h-auto", "whitespace-normal");
-  expect(link).toHaveClass("rounded-[5px]", "focus-visible:ring-[3px]");
+  expect(link).toHaveClass(
+    "min-h-8.5",
+    "max-sm:min-h-11",
+    "h-auto",
+    "whitespace-normal",
+  );
+  expect(link).toHaveClass("rounded-md", "focus-visible:ring-[3px]");
   expect(link).not.toHaveAttribute("role", "button");
   if (primary) {
     expect(link).toHaveClass("bg-primary", "text-primary-foreground");
@@ -112,7 +129,7 @@ describe("Blocks Marketing consistency", () => {
       const article = heading.closest("article");
       if (!article) throw new Error(`Missing catalog article for ${block.id}`);
       const scoped = within(article);
-      expect(article).toHaveTextContent(block.category);
+      expect(article.closest("section")).toHaveAccessibleName(block.category);
       expect(article).toHaveTextContent(block.description);
       expect(
         scoped.getByRole("link", {
@@ -241,8 +258,8 @@ describe("MarketingLinkButton", () => {
     );
     const link = screen.getByRole("link", { name: label });
     expect(link).toHaveClass("max-w-full", "min-w-0", "whitespace-normal");
-    expect(link).toHaveClass("h-auto", "min-h-11", "px-8", "rounded-lg");
-    for (const token of ["px-6", "rounded-[5px]", "h-10"]) {
+    expect(link).toHaveClass("h-auto", "min-h-8.5", "px-8", "rounded-lg");
+    for (const token of ["px-6", "rounded-md", "h-10"]) {
       expect(link).not.toHaveClass(token);
     }
   });

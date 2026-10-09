@@ -9,6 +9,15 @@ import { describe, expect, it } from "vitest";
 const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 describe("Starter comparison source contracts", () => {
+  it("uses the same comparison on the Starter discovery page", () => {
+    const page = readFileSync(
+      resolve(marketingRoot, "app/(site)/starters/page.tsx"),
+      "utf8",
+    );
+    expect(page).toContain("<StarterComparisonTable />");
+    expect(page).not.toMatch(/const comparison(?:Rows)?\s*=/u);
+  });
+
   it("keeps every comparison link on an existing internal route", () => {
     const component = readFileSync(
       resolve(
@@ -51,6 +60,7 @@ describe("Starter comparison source contracts", () => {
     expect(page).not.toContain("const comparisonRows =");
     expect(page).toContain("BuyStarterProButton");
     expect(page).toContain("Try the Starter Free demo");
-    expect(page).toContain("starterProBuyerFaqs.map");
+    expect(page).toContain("<MarketingFaq");
+    expect(page).toContain("items={starterProBuyerFaqs}");
   });
 });

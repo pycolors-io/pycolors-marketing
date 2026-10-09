@@ -1,0 +1,230 @@
+.page {
+  --article-anchor-offset: 6rem;
+}
+
+.breadcrumb li:not(:last-child) {
+  flex-shrink: 0;
+}
+.breadcrumb li:last-child {
+  min-width: 0;
+  flex: 1;
+}
+.breadcrumb [aria-current="page"] {
+  max-width: min(28rem, 100%);
+}
+.breadcrumb a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.page .body {
+  width: 100%;
+  max-width: none;
+  overflow-wrap: anywhere;
+}
+.page .body :where(h2, h3, h4) {
+  scroll-margin-top: var(--article-anchor-offset);
+  line-height: 1.35;
+}
+.page h1 {
+  scroll-margin-top: var(--article-anchor-offset);
+}
+.page .body h2 {
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-top: 0;
+  font-size: 1.5rem;
+  letter-spacing: var(--site-heading-tracking);
+}
+.page .body h3 {
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  letter-spacing: var(--site-subheading-tracking);
+}
+.page .body h4 {
+  font-weight: 500;
+  letter-spacing: normal;
+}
+.page .body > :first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+.page .body :where(p, ul, ol) {
+  max-width: 72ch;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+.page .body li::marker {
+  color: var(--muted-foreground);
+}
+.page .body a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.page .body :where(figure, pre, div:has(> table)) {
+  min-width: 0;
+  max-width: 100%;
+}
+.page .body figure {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--site-radius-panel);
+  background: color-mix(in oklab, var(--foreground) 2%, var(--background));
+}
+.page .body figure pre {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  overflow: visible;
+  padding: 1.25rem !important;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+.page .body figure button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+.page .body .codeBlock > div:has(> figcaption) {
+  height: 3rem;
+  min-width: 0;
+  padding-inline: 1rem;
+  border-color: var(--border-subtle);
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.page .body .codeBlock figcaption {
+  min-width: 0;
+}
+.page .body .codeBlock button {
+  border-radius: var(--site-radius-control);
+}
+.page .body .codeBlock button:hover {
+  background: var(--surface-muted);
+}
+.page .body .codeViewport {
+  max-height: min(32rem, 70dvh);
+  padding: 0 !important;
+  background: transparent !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.page .body code:not(pre code) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.page .body table {
+  margin-block: 0;
+  line-height: 1.75;
+}
+.page .body th {
+  background: color-mix(in oklab, var(--foreground) 3%, var(--background));
+}
+.page .body td {
+  vertical-align: top;
+}
+.page .body blockquote {
+  border-left-width: 2px;
+  font-style: normal;
+}
+.page .body :where([data-slot="alert"], [data-slot="card"]) {
+  border-color: var(--border-subtle);
+  box-shadow: none;
+}
+.nextStep {
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)),
+    var(--background) 80%
+  );
+}
+.tocPanel {
+  background: var(--background);
+}
+.tocHeader {
+  background: linear-gradient(
+    120deg,
+    color-mix(in oklab, var(--primary) 4%, var(--background)),
+    var(--background)
+  );
+}
+.tocPanel nav {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.tocLink {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  min-height: 2.25rem;
+  padding: 0.625rem;
+  border-left: 2px solid transparent;
+  border-radius: 3px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+.tocLink:hover {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 3%, transparent);
+}
+.tocLink[aria-current="location"] {
+  border-left-color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 5%, var(--background));
+  color: var(--foreground);
+  font-weight: 500;
+}
+.tocNumber {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+}
+.tocLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.mobileToc summary::-webkit-details-marker {
+  display: none;
+}
+.mobileToc[open] summary > svg:last-child {
+  transform: rotate(180deg);
+}
+@media (max-width: 63.999rem), (pointer: coarse) {
+  .tocLink {
+    min-height: 2.75rem;
+    padding-block: 0.75rem;
+  }
+}
+@media (min-width: 40rem) {
+  .page .body :where(p, ul, ol) {
+    font-size: 1rem;
+  }
+  .page .body h2 {
+    margin-top: 3.5rem;
+    font-size: 1.75rem;
+  }
+  .page .body h3 {
+    font-size: 1.375rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.page) {
+    scroll-behavior: auto;
+  }
+  .page a,
+  .page button,
+  .page [data-slot="badge"],
+  .tocLink {
+    transition: none;
+  }
+}

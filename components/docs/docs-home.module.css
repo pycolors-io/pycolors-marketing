@@ -1,0 +1,151 @@
+.home {
+  min-width: 0;
+  color: var(--foreground);
+}
+
+.hero {
+  display: grid;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 0.75rem 2.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.intro h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 48ch;
+  margin: 1.25rem 0 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--muted-foreground);
+}
+
+.quickstart {
+  min-width: 0;
+}
+
+.quickstart > div {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.quickstart [role="tablist"] {
+  gap: 1.25rem;
+  padding-inline: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.quickstart [role="tab"] {
+  min-height: 2.75rem;
+  padding-inline: 0.125rem;
+  font-size: 0.8125rem;
+}
+
+.quickstart [role="tab"][data-state="active"] {
+  border-color: var(--foreground);
+  color: var(--foreground);
+}
+
+.quickstart [role="tab"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -3px;
+}
+
+.quickstart [role="tabpanel"] {
+  min-height: 15rem;
+  padding: 1rem 0 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.quickstart :global(.docs-code-block) {
+  margin: 0;
+  border-radius: var(--site-radius-panel);
+  background: var(--background);
+}
+
+.quickstart :global(.docs-code-block) [role="region"] {
+  height: 9.5rem;
+}
+
+.quickstart [role="tabpanel"] > p {
+  margin: 0.875rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+.quickstart [role="tabpanel"] > p a {
+  color: var(--foreground);
+  text-underline-offset: 3px;
+}
+
+.section {
+  margin-top: 2.5rem;
+}
+
+.sectionHeading {
+  margin-bottom: 1.25rem;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  scroll-margin-top: 8rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: var(--site-heading-tracking);
+}
+
+.sectionHeading p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+
+.section > div:last-child {
+  margin-block: 0;
+}
+
+.help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-block: 1.5rem 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 1200px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 2.5rem;
+    padding-block: 1.25rem 3rem;
+  }
+
+  .section {
+    margin-top: 3rem;
+  }
+}

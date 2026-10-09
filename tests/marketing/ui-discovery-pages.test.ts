@@ -25,7 +25,8 @@ describe("UI discovery page composition contracts", () => {
     for (const page of pages) {
       expect(page).toContain("MarketingSectionHeader");
       expect(page).toContain("MarketingCheckItem");
-      expect(page).toContain("MarketingPillList");
+      expect(page).toContain("PageHero");
+      expect(page).toContain("UiSectionNav");
       expect(page).not.toMatch(/function (SectionHeader|CheckItem|Pill)\b/u);
     }
   });
@@ -36,7 +37,7 @@ describe("UI discovery page composition contracts", () => {
       /canonical:\s*['"]\/ui\/patterns['"]/u,
     );
     expect(readPage("examples/page.tsx")).toMatch(
-      /canonical:\s*['"]\/examples['"]/u,
+      /canonical:\s*['"]\/ui\/examples['"]/u,
     );
 
     expect(readPage("page.tsx")).toContain("@pycolors/ui");

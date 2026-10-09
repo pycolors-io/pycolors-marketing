@@ -1,0 +1,786 @@
+.stage {
+  container: marketing-illustration / inline-size;
+  position: relative;
+  display: grid;
+  height: 14rem;
+  min-width: 0;
+  place-items: center;
+  padding: 1.125rem;
+  isolation: isolate;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  line-height: 1.5;
+  user-select: none;
+  pointer-events: none;
+}
+
+.stage svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+  stroke-width: 1.5;
+}
+
+.window,
+.menu,
+.notification,
+.upload,
+.compositionLayer {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--background);
+  box-shadow:
+    0 2px 4px color-mix(in oklab, var(--foreground) 3%, transparent),
+    0 10px 24px -12px color-mix(in oklab, var(--foreground) 18%, transparent);
+}
+
+.window {
+  max-width: 20rem;
+  overflow: hidden;
+}
+.windowHeader {
+  display: flex;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.5625rem;
+}
+.windowHeader > span,
+.inline,
+.field,
+.selection,
+.primaryButton,
+.secondaryButton,
+.miniButton {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.inline {
+  justify-content: space-between;
+}
+.caption,
+.muted,
+.fieldLabel {
+  color: var(--muted-foreground);
+}
+.caption {
+  font-size: 0.5625rem;
+}
+.fieldLabel {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.5625rem;
+}
+.primaryButton,
+.secondaryButton {
+  min-height: 1.75rem;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.primaryButton {
+  border-color: transparent;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.secondaryButton {
+  background: var(--background);
+}
+.field {
+  min-height: 1.75rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 0.5625rem;
+}
+.checkbox {
+  display: grid;
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 3px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.checkbox svg {
+  width: 0.625rem;
+  height: 0.625rem;
+  stroke-width: 2;
+}
+.toggle {
+  display: flex;
+  width: 1.375rem;
+  height: 0.8125rem;
+  margin-left: auto;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2px;
+  border-radius: 1rem;
+  background: var(--primary);
+}
+.toggle::after {
+  content: "";
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  background: var(--primary-foreground);
+}
+
+.componentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.componentTile {
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+.componentTile:nth-child(odd) {
+  border-right: 1px solid var(--border-subtle);
+}
+.componentTile:nth-child(-n + 2) {
+  border-bottom: 1px solid var(--border-subtle);
+}
+.componentTile > .inline {
+  min-height: 1.75rem;
+  font-size: 0.5rem;
+}
+.componentTile .statusActive {
+  justify-self: start;
+  margin-top: 0.2rem;
+}
+.status,
+.statusActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.375rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.status > span,
+.statusActive > span,
+.terminalHint > span {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.statusActive {
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
+  background: color-mix(in oklab, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.paletteBody {
+  padding: 0.875rem;
+}
+.palette {
+  display: grid;
+  height: 2rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 3px;
+}
+.palette > span {
+  border: 1px solid color-mix(in oklab, var(--foreground) 7%, transparent);
+  border-radius: 3px;
+}
+.paletteLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.themeSamples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.themeSamples > div {
+  padding: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  font-size: 0.5rem;
+}
+.themeSamples i {
+  display: block;
+  width: 70%;
+  height: 3px;
+  margin-block: 0.375rem 0.625rem;
+  background: currentColor;
+  opacity: 0.18;
+}
+.invertedSample {
+  background: var(--foreground);
+  color: var(--background);
+}
+.sampleAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+.sampleAction svg {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.composition {
+  width: 100%;
+  max-width: 19rem;
+}
+.compositionLayer {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem;
+}
+.layerLabel {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.5625rem;
+}
+.miniButton,
+.miniChip,
+.miniField {
+  min-height: 1.25rem;
+  padding: 0.125rem 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  font-size: 0.4375rem;
+}
+.miniButton svg {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+.miniField {
+  width: 1.375rem;
+}
+.connector {
+  display: grid;
+  height: 1rem;
+  place-items: center;
+}
+.connector span {
+  width: 1px;
+  height: 100%;
+  background: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+.miniLayout {
+  display: grid;
+  width: 2.5rem;
+  grid-template-columns: 0.5rem 1fr;
+  gap: 3px;
+  padding: 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+}
+.miniLayout i {
+  grid-row: span 2;
+  background: var(--muted);
+}
+.miniLayout span {
+  height: 0.375rem;
+  background: var(--muted);
+}
+.compositionResult {
+  border-color: color-mix(in oklab, var(--primary) 25%, var(--border-subtle));
+}
+.composedScreen {
+  display: grid;
+  width: 3.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+}
+.composedScreen i {
+  height: 3px;
+  grid-column: 1 / -1;
+  background: var(--muted);
+}
+.composedScreen > span {
+  height: 0.625rem;
+  background: color-mix(in oklab, var(--primary) 12%, var(--background));
+}
+.accentIcon {
+  color: var(--primary);
+}
+
+.fileTree {
+  padding: 0.625rem 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+}
+.fileTree > span,
+.fileBranch > span {
+  display: flex;
+  min-height: 1.5625rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fileTree svg {
+  color: var(--muted-foreground);
+}
+.fileBranch {
+  margin-left: 0.375rem;
+  padding-left: 0.875rem;
+  border-left: 1px solid var(--border-subtle);
+}
+.fileHint {
+  margin-left: auto;
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.5rem;
+}
+.fileSelected {
+  color: var(--primary);
+}
+.fileSelected svg {
+  color: inherit;
+}
+.terminalBody {
+  padding: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+}
+.terminalBody > div {
+  display: flex;
+  min-height: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+.terminalBody code {
+  color: var(--foreground);
+  font-size: inherit;
+}
+.terminalBody > div > svg {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-left: auto;
+  color: var(--primary);
+}
+.prompt {
+  color: var(--muted-foreground);
+}
+.terminalHint {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0.5rem 0.875rem;
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.caret {
+  width: 4px;
+  height: 0.6875rem;
+  background: var(--primary);
+}
+.terminalBody > .checks {
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.5rem;
+}
+.checks > span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.checks svg {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.actionScene {
+  position: relative;
+  width: 100%;
+  max-width: 17rem;
+}
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.menu {
+  width: 78%;
+  margin-left: auto;
+  padding: 0.375rem;
+}
+.menu > span {
+  display: flex;
+  min-height: 1.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.5625rem;
+}
+.menuSelected {
+  background: var(--muted);
+}
+.menuSelected > svg:last-child,
+.shortcut {
+  margin-left: auto;
+}
+.shortcut {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--muted-foreground);
+}
+.stage .cursor {
+  position: absolute;
+  right: 16%;
+  bottom: 3.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: var(--foreground);
+  stroke: var(--background);
+  stroke-width: 1.25;
+  filter: drop-shadow(
+    0 2px 2px color-mix(in oklab, var(--foreground) 20%, transparent)
+  );
+}
+.formBody,
+.dialogBody {
+  padding: 0.875rem;
+}
+.focusedField {
+  justify-content: space-between;
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--border-subtle));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 9%, transparent);
+  color: var(--foreground);
+}
+.focusedField svg {
+  width: 0.6875rem;
+  height: 0.6875rem;
+  color: var(--primary);
+}
+.formBottom {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.formBottom .field > svg:last-child {
+  margin-left: auto;
+}
+.selection {
+  min-height: 1.75rem;
+  font-size: 0.5rem;
+}
+.overlayScene {
+  position: relative;
+  width: 100%;
+  max-width: 18rem;
+  padding: 0.75rem;
+}
+.overlayBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  grid-template-columns: 0.25fr 1fr;
+  gap: 0.5rem;
+  padding: 0.625rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+}
+.overlayBackdrop > div {
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  background: var(--background);
+}
+.dialog {
+  position: relative;
+  transform: translate(0.25rem, 0.25rem);
+}
+.dialog .windowHeader > svg {
+  visibility: hidden;
+}
+.stage .closeIcon {
+  position: absolute;
+  top: 0.6875rem;
+  right: 0.75rem;
+  width: 0.6875rem;
+  height: 0.6875rem;
+  color: var(--muted-foreground);
+}
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+}
+
+.table {
+  padding-inline: 0.75rem;
+}
+.tableHeader,
+.tableRow {
+  display: flex;
+  min-height: 1.875rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.625rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.5625rem;
+}
+.tableHeader {
+  min-height: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.tableRow > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.tableRow:last-child {
+  border-bottom: 0;
+}
+.projectMark {
+  display: grid;
+  width: 0.875rem;
+  height: 0.875rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+}
+.tableFooter {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.tableFooter > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--foreground);
+}
+.tableFooter svg {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+.feedbackStack {
+  position: relative;
+  width: 100%;
+  max-width: 18rem;
+}
+.notificationGhost {
+  position: absolute;
+  inset: -0.5rem 0.625rem auto;
+  z-index: -1;
+  height: 2rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--background);
+}
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem;
+}
+.notificationIcon {
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid
+    color-mix(in oklab, var(--primary) 20%, var(--border-subtle));
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 6%, var(--background));
+  color: var(--primary);
+}
+.notification > div {
+  display: grid;
+  gap: 0.125rem;
+  font-size: 0.5625rem;
+}
+.notification strong {
+  font-weight: 500;
+}
+.notification > div > span {
+  color: var(--muted-foreground);
+  font-size: 0.5rem;
+}
+.notification > svg {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-left: auto;
+  color: var(--muted-foreground);
+}
+.upload {
+  width: calc(100% - 1rem);
+  margin: 0.75rem auto 0;
+  padding: 0.75rem;
+  font-size: 0.5625rem;
+}
+.progress {
+  height: 4px;
+  margin-block: 0.625rem;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--muted);
+}
+.progress > span {
+  display: block;
+  width: 75%;
+  height: 100%;
+  background: var(--primary);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  min-height: 9rem;
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0.375rem;
+  border-right: 1px solid var(--border-subtle);
+  background: color-mix(in oklab, var(--muted) 25%, var(--background));
+}
+.sidebar > span {
+  display: flex;
+  min-height: 1.25rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 3px;
+  color: var(--muted-foreground);
+  font-size: 0.4375rem;
+}
+.sidebar svg {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+.sidebar > .selected {
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 0 0 1px var(--border-subtle);
+}
+.sidebar > .sidebarAccount {
+  margin-top: auto;
+}
+.sidebarAccount > span {
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+}
+.dashboardBody {
+  min-width: 0;
+  padding: 0.625rem;
+}
+.dashboardBody strong {
+  font-size: 0.5625rem;
+  font-weight: 500;
+}
+.dashboardBody > .inline > svg {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+  margin-top: 0.5rem;
+}
+.metrics > div {
+  padding: 0.375rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+}
+.metrics span {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.4375rem;
+}
+.metrics strong {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+}
+.metrics i {
+  display: block;
+  width: 65%;
+  height: 2px;
+  margin-top: 0.25rem;
+  background: var(--muted);
+}
+.chart {
+  display: flex;
+  height: 2rem;
+  align-items: flex-end;
+  gap: 0.25rem;
+  margin-top: 0.625rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.chart i {
+  min-width: 0;
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  background: color-mix(in oklab, var(--primary) 16%, var(--background));
+}
+.chart i:last-child {
+  background: var(--primary);
+}
+
+/* Preserve the composition at the narrowest supported card width. */
+@container marketing-illustration (max-width: 17rem) {
+  .componentTile {
+    padding: 0.625rem;
+  }
+  .componentTile .toggle,
+  .miniField {
+    display: none;
+  }
+  .fileHint {
+    font-size: 0.4375rem;
+  }
+}

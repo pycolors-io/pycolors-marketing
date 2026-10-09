@@ -31,22 +31,30 @@ export function PasswordRecoveryPanel({
 
   return (
     <section className={sectionClassName}>
-      <div className="space-y-6 rounded-xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+      <div className="space-y-6 rounded-[5px] border border-border bg-card p-5 text-card-foreground sm:p-6">
         <header className="space-y-2">
-          <h2 className="text-xl font-semibold">{title}</h2>
+          <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
           {description ? (
-            <div className="text-sm text-muted-foreground">{description}</div>
+            <div className="text-sm leading-6 text-muted-foreground">
+              {description}
+            </div>
           ) : null}
         </header>
 
         {error ? (
-          <div role="alert" className="text-sm text-destructive">
+          <div
+            role="alert"
+            className="rounded-md border border-destructive/25 bg-destructive/5 px-3 py-2 text-sm leading-6 text-destructive"
+          >
             {error}
           </div>
         ) : null}
 
         {status ? (
-          <div role="status" className="text-sm text-muted-foreground">
+          <div
+            role="status"
+            className="text-sm leading-6 text-muted-foreground"
+          >
             {status}
           </div>
         ) : null}
@@ -54,11 +62,13 @@ export function PasswordRecoveryPanel({
         <div>{form}</div>
 
         {help ? (
-          <div className="text-sm text-muted-foreground">{help}</div>
+          <div className="text-sm leading-6 text-muted-foreground">{help}</div>
         ) : null}
 
         {footer ? (
-          <footer className="text-sm text-muted-foreground">{footer}</footer>
+          <footer className="border-t border-border pt-5 text-xs leading-6 text-muted-foreground">
+            {footer}
+          </footer>
         ) : null}
       </div>
     </section>

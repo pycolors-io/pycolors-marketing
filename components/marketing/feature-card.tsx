@@ -44,7 +44,7 @@ export function MarketingFeatureCard({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col justify-between rounded-[5px] border p-6 shadow-soft",
+        "flex h-full flex-col justify-between rounded-lg border p-6 shadow-soft",
         marketingSurfaceToneClass[tone],
         className,
       )}
@@ -53,14 +53,14 @@ export function MarketingFeatureCard({
         {icon ? (
           <span
             aria-hidden="true"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-[5px] border border-border-subtle bg-surface text-muted-foreground"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border-subtle bg-surface text-muted-foreground"
           >
             {icon}
           </span>
         ) : null}
 
         <div>
-          <Heading className="text-lg font-semibold tracking-tight">
+          <Heading className="font-brand text-lg font-semibold leading-snug tracking-normal">
             {title}
           </Heading>
 

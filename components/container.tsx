@@ -1,4 +1,8 @@
-import { cn } from '@pycolors/ui';
+import { cn } from "@pycolors/ui";
+
+/** Shares the global Docs frame with marketing, blog and site chrome. */
+export const containerClassName =
+  "mx-auto w-full max-w-(--site-frame-width) px-4 sm:px-6 lg:px-8";
 
 type ContainerProps = Readonly<
   React.HTMLAttributes<HTMLDivElement> & {
@@ -6,20 +10,9 @@ type ContainerProps = Readonly<
   }
 >;
 
-export function Container({
-  className,
-  children,
-  ...props
-}: ContainerProps) {
+export function Container({ className, children, ...props }: ContainerProps) {
   return (
-    <div
-      className={cn(
-        'mx-auto max-w-360 px-4',
-        'sm:px-6 lg:px-0',
-        className,
-      )}
-      {...props}
-    >
+    <div className={cn(containerClassName, className)} {...props}>
       {children}
     </div>
   );

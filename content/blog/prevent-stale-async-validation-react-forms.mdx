@@ -1,0 +1,418 @@
+---
+title: "How to stop stale async validation from overwriting React form state"
+description: "Reproduce an out-of-order validation response, then use request ownership to protect React field errors, loading feedback, and accessible form state."
+author: Patrice Parny
+date: "2026-10-05"
+category: React
+tags:
+  - React
+  - Forms
+  - Accessibility
+featured: false
+readingTime: 9 min read
+cover: /seo/blog/og-blog-default.png
+---
+
+An old validation response can put an error back after a user has corrected a
+field. Clearing the error on input change does not prevent this: the old
+request still has permission to update state when it finishes.
+
+Give each validation attempt a generation number. Increment it whenever the
+input changes, capture it before awaiting the result, and update feedback only
+if that attempt still owns the current generation. Apply the same rule to
+errors, success messages, and loading state.
+
+This article builds a small username field and reproduces the failure with
+manually resolved promises. No server, account data, artificial network delay,
+or PyColors-specific validation API is required. The application owns the
+validation policy; UI primitives display the resulting state.
+
+## Reproduce the ordering problem
+
+Consider this sequence. A successful check returns `null`; an invalid name
+returns an explanatory string.
+
+| Step | Input or result                           | Correct feedback        |
+| ---- | ----------------------------------------- | ----------------------- |
+| 1    | Start request A for `taken`               | Checking                |
+| 2    | Change to `available`; start B            | Checking the new value  |
+| 3    | B resolves with `null`                    | The current name passed |
+| 4    | A resolves with “This username is taken.” | Keep B's result         |
+
+The network does not promise to preserve the order in which requests started.
+React's [Effect documentation](https://react.dev/reference/react/useEffect#fetching-data-with-effects)
+shows a cleanup flag that ignores outdated responses. The event-driven example
+here applies that ownership principle to validation initiated by an input
+change.
+
+Here is the broken part of a handler. It is an excerpt, not a complete component;
+`check` returns `Promise<string | null>` and the setters belong to the field.
+
+```tsx title="broken-handler.tsx"
+async function onValueChange(nextValue: string) {
+  setValue(nextValue);
+  setError(null);
+  setLoading(true);
+  try {
+    const error = await check(nextValue);
+    setError(error);
+  } catch {
+    setError("Could not check this name.");
+  } finally {
+    setLoading(false);
+  }
+}
+```
+
+At step 2, `setError(null)` removes the previous message. At step 4, A calls
+`setError` again. Both updates are valid React operations; the missing rule is
+which request is still allowed to write.
+
+The `finally` block has a second bug. If A finishes while B is still pending,
+A turns off the loading indicator for work it does not own. Guarding only
+`setError` leaves that problem intact. Debouncing reduces requests but also
+does not revoke an already-started request's ownership.
+
+## Let the latest attempt own feedback
+
+Save the following complete component as `username-field.tsx` in a React
+application. In Next.js App Router, it is a client component; supply `check`
+from client-side code rather than passing an ordinary function from a Server
+Component. `check` must perform a read-only validation and return an error
+message or `null`. A rejected promise means the check was unavailable, not that
+the input was invalid.
+
+The implementation uses a single feedback state, so an accepted completion
+also ends loading. There is no unguarded `finally` update.
+
+```tsx title="username-field.tsx"
+"use client";
+
+import { useEffect, useId, useRef, useState } from "react";
+
+export type CheckUsername = (value: string) => Promise<string | null>;
+type Feedback =
+  | { status: "idle" | "checking" | "valid" }
+  | { status: "invalid" | "unavailable"; message: string };
+
+export function UsernameField({ check }: { check: CheckUsername }) {
+  const [value, setValue] = useState("");
+  const [feedback, setFeedback] = useState<Feedback>({ status: "idle" });
+  const generation = useRef(0);
+  const id = useId();
+  const helpId = `${id}-help`;
+  const errorId = `${id}-error`;
+
+  useEffect(() => {
+    return () => {
+      generation.current += 1;
+    };
+  }, []);
+
+  async function validate(nextValue: string) {
+    const attempt = ++generation.current;
+    setValue(nextValue);
+    if (nextValue.trim() === "") {
+      setFeedback({ status: "idle" });
+      return;
+    }
+    setFeedback({ status: "checking" });
+    try {
+      const error = await check(nextValue);
+      if (attempt !== generation.current) return;
+      setFeedback(
+        error === null
+          ? { status: "valid" }
+          : { status: "invalid", message: error },
+      );
+    } catch {
+      if (attempt !== generation.current) return;
+      setFeedback({
+        status: "unavailable",
+        message: "Could not check this name. Edit it to try again.",
+      });
+    }
+  }
+
+  const invalid = feedback.status === "invalid";
+  const message =
+    feedback.status === "invalid" || feedback.status === "unavailable"
+      ? feedback.message
+      : feedback.status === "checking"
+        ? "Checking username…"
+        : feedback.status === "valid"
+          ? "Username passed this check."
+          : "";
+
+  return (
+    <div>
+      <label htmlFor={id}>Username</label>
+      <input
+        id={id}
+        name="username"
+        autoComplete="username"
+        value={value}
+        onChange={(event) => void validate(event.currentTarget.value)}
+        aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? `${helpId} ${errorId}` : helpId}
+      />
+      <p id={helpId}>Try a name. Clearing the field cancels its feedback.</p>
+      <p role="status" aria-atomic="true">
+        <span id={invalid ? errorId : undefined}>{message}</span>
+      </p>
+    </div>
+  );
+}
+```
+
+The generation is incremented **before** the empty-input branch. Even when the
+new value does not need a request, the previous request loses its right to
+change feedback. The same rule must apply to reset, dependent-field changes,
+and edits made before a debounced request begins.
+
+A generation distinguishes attempts, not just strings. If the user enters
+`alice`, then `bob`, then `alice` again, the first `alice` result is still old.
+Comparing its value with the current text would miss that distinction.
+
+The ref is only read or written in the handler, its asynchronous continuation,
+and Effect cleanup. [React's `useRef` reference](https://react.dev/reference/react/useRef)
+explains that refs retain non-rendering information across renders without
+triggering a render. Displayed feedback belongs in state. Cleanup increments
+the generation so a completion after unmount cannot pass the ownership check;
+it does not stop the underlying operation.
+
+Starting the validation in the change handler makes the invalidation immediate.
+It also follows React's distinction between
+[interaction logic and Effects](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers).
+For validation driven by external props instead, model the complete dependency
+set and cleanup lifecycle explicitly; do not copy an empty dependency array
+around prop-dependent work.
+
+## Test the race without timing guesses
+
+Use deferred promises to choose completion order directly. The test does not
+sleep or depend on a fast machine. It renders the component, changes the input
+twice, resolves B, and then resolves A.
+
+The reproduction was checked on 5 October 2026 with React and React DOM
+**19.3.0**, TypeScript **6.0.3**, Vitest **4.1.11**, Testing Library React
+**16.3.2**, jsdom **29.1.1**, Node **24.18.1**, and pnpm **10.32.1**.
+The Marketing app's lockfile also resolves Next.js **16.1.1**; this component
+experiment does not rely on a Next.js API.
+
+To run it separately, place `username-field.tsx`, the configuration and the
+test below in an empty directory. These commands install public test packages;
+they do not call a real validation service.
+
+```sh
+pnpm init
+pnpm add -E react@19.3.0 react-dom@19.3.0
+pnpm add -DE typescript@6.0.3 vitest@4.1.11 jsdom@29.1.1 \
+  @testing-library/react@16.3.2 @types/react@19.3.0 @types/react-dom@19.3.0
+pnpm exec vitest run
+```
+
+```ts title="vitest.config.mts"
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: { environment: "jsdom" },
+});
+```
+
+```tsx title="username-field.test.tsx"
+import * as React from "react";
+import { StrictMode } from "react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react";
+import { afterEach, expect, it, vi } from "vitest";
+import { UsernameField } from "./username-field";
+
+afterEach(cleanup);
+function deferred() {
+  let resolve!: (value: string | null) => void;
+  let reject!: (reason: Error) => void;
+  const promise = new Promise<string | null>((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+it("keeps the newer success when an older error arrives last", async () => {
+  const older = deferred();
+  const newer = deferred();
+  const check = vi
+    .fn()
+    .mockReturnValueOnce(older.promise)
+    .mockReturnValueOnce(newer.promise);
+  render(
+    <StrictMode>
+      <UsernameField check={check} />
+    </StrictMode>,
+  );
+  const input = screen.getByRole("textbox", { name: "Username" });
+  input.focus();
+  fireEvent.change(input, { target: { value: "taken" } });
+  fireEvent.change(input, { target: { value: "available" } });
+  await act(async () => newer.resolve(null));
+  expect(screen.getByRole("status").textContent).toBe(
+    "Username passed this check.",
+  );
+  await act(async () => older.resolve("This username is taken."));
+  expect(screen.getByRole("status").textContent).toBe(
+    "Username passed this check.",
+  );
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+  expect(document.activeElement).toBe(input);
+});
+
+it("keeps loading until the latest request settles, including an older rejection", async () => {
+  const older = deferred();
+  const newer = deferred();
+  const check = vi
+    .fn()
+    .mockReturnValueOnce(older.promise)
+    .mockReturnValueOnce(newer.promise);
+  render(<UsernameField check={check} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "first" } });
+  fireEvent.change(input, { target: { value: "second" } });
+  await act(async () => older.reject(new Error("offline")));
+  expect(screen.getByRole("status").textContent).toBe("Checking username…");
+  await act(async () => newer.resolve("Choose another username."));
+  expect(input.getAttribute("aria-invalid")).toBe("true");
+  const ids = input.getAttribute("aria-describedby")!.split(" ");
+  expect(document.getElementById(ids[1])?.textContent).toBe(
+    "Choose another username.",
+  );
+});
+
+it("invalidates even when the changed input does not start a new request", async () => {
+  const pending = deferred();
+  const check = vi.fn().mockReturnValue(pending.promise);
+  render(<UsernameField check={check} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "taken" } });
+  fireEvent.change(input, { target: { value: "" } });
+  await act(async () => pending.resolve("This username is taken."));
+  expect(check).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole("status").textContent).toBe("");
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+});
+
+it("distinguishes a service failure from invalid input", async () => {
+  const pending = deferred();
+  render(<UsernameField check={() => pending.promise} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "name" } });
+  await act(async () => pending.reject(new Error("offline")));
+  expect(screen.getByRole("status").textContent).toContain("Could not check");
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+});
+```
+
+All four tests pass with the guarded component. As a negative control, remove
+both `if (attempt !== generation.current) return;` lines: the newer-success,
+stale-loading and cleared-input tests fail. Clearing feedback remains in place,
+so those failures demonstrate why clearing alone is insufficient.
+
+These are DOM tests. They verify state, focus retention and the error's ID
+association, not the words spoken by a screen reader or a real network's
+cancellation behavior.
+
+## Ignoring results and cancelling transport solve different problems
+
+The generation check decides whether a result may update this field. An
+[`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
+asks a cooperating operation, such as `fetch`, to stop. Ignoring a result does
+not save its network work; aborting does not automatically define the ownership
+of every asynchronous step in your application.
+
+When adding fetch cancellation:
+
+1. Increment the generation to revoke old ownership before cancelling.
+2. Abort the previous controller and create a fresh controller for the new
+   attempt. Pass its `signal` to `fetch`.
+3. Keep the generation check after awaited work and in the rejection path.
+4. Abort on cleanup as well as invalidating the generation.
+
+An old abort rejection must not replace a new request's loading state with an
+error. If the user explicitly cancels the _current_ attempt without starting a
+replacement, invalidate it and set the chosen idle/cancelled UI state yourself;
+merely swallowing `AbortError` can leave a loading indicator running.
+
+Abort cannot undo a server-side mutation. This field's check should be
+read-only. Saving data requires its own server-side validation, consistency and
+submission rules, even if the field most recently passed a client check.
+
+## Keep feedback accessible without taking focus away
+
+The native input has a visible associated label. When the latest check reports
+invalid input, it receives `aria-invalid="true"`, and `aria-describedby` links
+to both the instructions and the current error. Empty and unchecked values are
+not declared invalid merely because they have not passed a check. This follows
+[WAI's guidance for `aria-invalid`](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21).
+
+The persistent `role="status"` region provides polite feedback without moving
+focus. Text distinguishes checking, invalid input and service failure; color
+is not the only signal. Avoid combining an assertive alert and a second live
+region that both announce the same error. A production form may validate on
+blur or debounce announcements to avoid excessive feedback while typing, but
+must still invalidate ownership immediately on every change.
+
+Do not refocus the field on each asynchronous completion. The user may already
+be editing another field. After an explicit failed submit, an error summary
+with links to affected fields, or deliberate focus on the first invalid field,
+can support correction. See
+[WAI's form notifications tutorial](https://www.w3.org/WAI/tutorials/forms/notifications/)
+and [WCAG status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+Test announcement timing with your actual browser and assistive-technology
+combination; adding ARIA attributes is not an accessibility certification.
+
+## Know the limits before integrating
+
+This example intentionally covers one locally controlled field. It does not
+reserve usernames, submit a form, or establish a backend security boundary.
+A successful check can become outdated on the server immediately afterward.
+
+For several independent fields, give each field its own ownership scope. For a
+cross-field rule, invalidate when **any** input to that rule changes, including
+an organization or account context. If `check` changes because the context
+changes, reset/remount the field or explicitly invalidate pending work. The
+example does not detect those changes for you.
+
+A generation guard does not add timeouts, caching, rate limiting or a retry
+policy. An indefinitely pending latest request stays pending. A form library
+may already manage async validation ownership: inspect and test its behavior
+before adding a competing source of errors or loading state.
+
+When adopting PyColors primitives, keep the same separation of responsibilities.
+The [Input reference](/docs/ui/input) documents the presentation API; the
+[forms guide](/docs/guides/forms-with-validation) covers composition, and the
+[accessibility reference](/docs/ui/accessibility) describes consumer duties.
+PyColors UI does not supply the generation guard or your business rules.
+
+## Verification checklist
+
+- Resolve the newer success before the older error; the success must remain.
+- Resolve an old request while the current one is pending; keep checking.
+- Reject an old request; do not show its failure as a current failure.
+- Clear the field while a request is pending; its response must not restore
+  feedback. Repeat for reset and dependent-field changes in your integration.
+- Try A → B → A; only the final attempt may publish feedback.
+- Unmount or change form context while checking; invalidate outstanding work.
+- Check invalid input and service failure separately. Associate actual field
+  errors with the control and retain a visible label.
+- Use the keyboard and a screen reader. Confirm feedback does not steal focus,
+  is announced appropriately, and does not produce duplicate announcements.
+- Test cancellation and timeouts with the actual transport if you add them.
+- Revalidate on the server when saving; a client-side success is not authority.
+
+Once the field's ownership rules are explicit, choose the primitives that
+render its labels, controls and feedback: [Explore PyColors UI](/ui).

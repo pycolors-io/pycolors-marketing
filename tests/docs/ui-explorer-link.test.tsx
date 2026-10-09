@@ -38,4 +38,48 @@ describe("canonical UI Explorer links", () => {
     );
     expect((await axe(container)).violations).toEqual([]);
   });
+
+  it("links directly to the component sections present in the page table of contents", async () => {
+    const { container } = render(
+      <UiExplorerLink
+        slug={["ui", "button"]}
+        toc={[
+          { url: "#actions-users-can-trust" },
+          { url: "#basic-usage" },
+          { url: "#api" },
+          { url: "#accessibility" },
+        ]}
+      />,
+    );
+    expect(
+      screen.getByRole("navigation", { name: "Component sections" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Usage" })).toHaveAttribute(
+      "href",
+      "#basic-usage",
+    );
+    expect(screen.getByRole("link", { name: "API" })).toHaveAttribute(
+      "href",
+      "#api",
+    );
+    expect(screen.getByRole("link", { name: "Accessibility" })).toHaveAttribute(
+      "href",
+      "#accessibility",
+    );
+    expect((await axe(container)).violations).toEqual([]);
+  });
+
+  it("omits shortcuts for sections that are absent instead of creating broken anchors", () => {
+    render(<UiExplorerLink slug={["ui", "button"]} toc={[{ url: "#api" }]} />);
+    expect(screen.getByRole("link", { name: "API" })).toHaveAttribute(
+      "href",
+      "#api",
+    );
+    expect(
+      screen.queryByRole("link", { name: "Usage" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: "Accessibility" }),
+    ).not.toBeInTheDocument();
+  });
 });

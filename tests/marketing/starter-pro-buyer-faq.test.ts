@@ -107,7 +107,7 @@ describe("Starter Pro buyer FAQ", () => {
       "No response-time SLA is promised",
     );
     expect(findFaq("What is the refund policy?").answer).toContain(
-      "unless required by applicable law",
+      "Digital delivery does not automatically remove consumer withdrawal or conformity rights",
     );
     expect(
       findFaq("What is the refund policy?").links.map((link) => link.href),
@@ -120,20 +120,16 @@ describe("Starter Pro buyer FAQ", () => {
       "utf8",
     );
     const section = page.match(
-      /<section id="buyer-faq"[\s\S]*?<\/section>/u,
+      /<section\s+id="buyer-faq"[\s\S]*?<\/section>/u,
     )?.[0];
 
     expect(page).toContain("@/lib/products/starter-pro-buyer-faq");
     expect(page).not.toMatch(/["']use client["']/u);
     expect(page).not.toContain("const faqs =");
     expect(section).toBeDefined();
-    expect(section).toContain("starterProBuyerFaqs.map");
-    expect(section).toContain("{faq.question}");
-    expect(section).toContain("{faq.answer}");
-    expect(section).toContain("faq.links.map");
-    expect(section).toContain("<ul");
-    expect(section).toContain("<li key={link.href}>");
-    expect(section).toContain("href={link.href}");
-    expect(section).toContain("{link.label}");
+    expect(section).toContain("<MarketingFaq");
+    expect(section).toContain("items={starterProBuyerFaqs}");
+    expect(section).toContain('aria-labelledby="buyer-faq-heading"');
+    expect(section).toContain('titleId="buyer-faq-heading"');
   });
 });

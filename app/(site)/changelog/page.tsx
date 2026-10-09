@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Calendar, Tag, CheckCircle2 } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  GitCommitHorizontal,
+  Link2,
+} from "lucide-react";
 
 import { PageHero } from "@/components/marketing/page-hero";
-import { MarketingSectionShell } from "@/components/marketing/section-shell";
-import {
-  MarketingActionGroup,
-  MarketingLinkButton,
-} from "@/components/marketing/cta-panel";
+import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import { Container } from "@/components/container";
-import { Badge, cn, Card, CardHeader, CardContent } from "@pycolors/ui";
+import { Badge, cn } from "@pycolors/ui";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
+import styles from "@/components/marketing/changelog.module.css";
+import disclosureStyles from "@/components/marketing/faq.module.css";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Product Changelog",
@@ -57,6 +62,59 @@ type ChangelogItem = {
 };
 
 const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "v1.27.0",
+    title:
+      "PyColors Marketing v1.27.0: clearer navigation and interactive product discovery",
+    dateLabel: "Fri 9 Oct 2026",
+    dateISO: "2026-10-09",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary:
+      "This update makes PyColors easier to browse, compare, and try: product and Docs navigation behave more reliably across screen sizes, key product pages surface interactive previews, the Blocks catalog adds two practical starting points, and implementation guidance is more task-oriented.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Product and Docs navigation now use clearer, accessible disclosures with reliable keyboard, pointer, and mobile behavior.",
+          "Key Marketing pages present product choices and interactive previews more consistently across UI, Blocks, starters, templates, and the Theme Builder.",
+          "Starter Pro evaluation copy more clearly separates included product surfaces from configuration work. This release does not change pricing, licensing, or update policy.",
+          "Template documentation now links directly to common setup, customization, deployment, and license tasks.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Added documented Onboarding Checklist and Stats Overview Blocks with public previews and source-copy guidance. Applications retain ownership of data, persistence, navigation, and product behavior.",
+          "Added a tested guide for preventing stale asynchronous validation results in React forms.",
+          "Kept the displayed package baselines at PyColors UI v1.5.5 and PyColors Tokens v1.2.3; this Marketing release does not re-version either package.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Responsive navigation state, focus behavior, scroll handling, disclosure semantics, and reduced-motion behavior are covered by focused regression and browser checks.",
+          "Interactive previews use bounded demonstration state and do not claim backend integration or measured conversion gains.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Browse the refined product paths, inspect interactive previews, copy the new Blocks, and apply the documented asynchronous-validation pattern in your own application.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Evaluate the shipped public interfaces, source-copy examples, and explicit ownership boundaries without treating preview behavior as a production-service guarantee.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Explore PyColors Blocks",
+      href: "/blocks",
+    },
+  },
   {
     version: "v1.26.0",
     title:
@@ -545,7 +603,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.17.3",
     title: "Starter Pro buyer trust and purchase-flow clarity",
@@ -588,7 +645,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.17.1",
     title: "NA-AI Landing checkout reliability fix",
@@ -615,7 +671,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/templates",
     },
   },
-
   {
     version: "v1.17.0",
     title:
@@ -690,7 +745,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/starters/pro",
     },
   },
-
   {
     version: "v1.16.0",
     title:
@@ -721,7 +775,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Expanded reusable product-marketing patterns to reduce duplication and improve scalability across the platform.",
         ],
       },
-
       {
         title: "Projects, billing, and admin UX refined",
         items: [
@@ -731,7 +784,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Expanded product-oriented navigation and internal routing consistency across Starter Pro surfaces.",
         ],
       },
-
       {
         title: "Documentation architecture and patterns expanded",
         items: [
@@ -741,7 +793,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Improved docs readability, instructional clarity, and interactive guidance across UI and product documentation.",
         ],
       },
-
       {
         title: "Premium UI consistency and polish improved",
         items: [
@@ -751,7 +802,6 @@ const CHANGELOG: ChangelogItem[] = [
           "Strengthened overall visual polish to better align PyColors with premium SaaS platform expectations.",
         ],
       },
-
       {
         title: "Navigation and mobile experience improved",
         items: [
@@ -768,7 +818,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/docs",
     },
   },
-
   {
     version: "v1.15.0",
     title:
@@ -779,6 +828,7 @@ const CHANGELOG: ChangelogItem[] = [
     releaseWeekLabel: "May 2026 (weekly release)",
     summary:
       "This release strengthens PyColors as a production-ready SaaS developer platform. It expands Starter Pro production documentation, improves upgrade messaging and commercial clarity, introduces a more scalable token radius architecture, hardens npm publishing infrastructure with Trusted Publishing, and refines documentation systems, sharing UX, overlays guidance, and reusable product decision surfaces. The focus is clear: improve long-term platform credibility, release reliability, onboarding quality, and Free-to-Pro conversion.",
+
     highlights: [
       {
         title: "Starter Pro production documentation expanded",
@@ -848,7 +898,6 @@ const CHANGELOG: ChangelogItem[] = [
       href: "/docs",
     },
   },
-
   {
     version: "v1.14.0",
     title:
@@ -2049,40 +2098,146 @@ const CHANGELOG: ChangelogItem[] = [
   },
 ];
 
-function StatusPill({ status }: { status: ChangelogStatus }) {
-  const tone =
-    status === "Stable"
-      ? "bg-primary"
-      : status === "Beta"
-        ? "bg-primary/70"
-        : "bg-muted-foreground";
+function releaseId(entry: ChangelogItem) {
+  return `release-${entry.version
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-$/, "")}`;
+}
 
+const monthFormatter = new Intl.DateTimeFormat("en", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+const releaseMonths = CHANGELOG.reduce<
+  Array<{ key: string; label: string; href: string; count: number }>
+>((months, entry) => {
+  const key = entry.dateISO.slice(0, 7);
+  const month = months.find((item) => item.key === key);
+  if (month) {
+    month.count += 1;
+  } else {
+    months.push({
+      key,
+      label: monthFormatter.format(new Date(`${entry.dateISO}T00:00:00Z`)),
+      href: `#${releaseId(entry)}`,
+      count: 1,
+    });
+  }
+  return months;
+}, []);
+
+function StatusPill({ status }: { status: ChangelogStatus }) {
   return (
-    <Badge variant="outline" className="gap-2 rounded-[5px]">
-      <span className={cn("inline-flex h-1.5 w-1.5 rounded-full", tone)} />
+    <Badge variant="outline" className={styles.status}>
+      <span
+        aria-hidden="true"
+        className={cn(styles.statusDot, status === "Stable" && styles.stable)}
+      />
       {status}
     </Badge>
   );
 }
 
-function TimelineDot() {
+function ReleaseEntry({
+  entry,
+  latest,
+}: {
+  entry: ChangelogItem;
+  latest: boolean;
+}) {
+  const id = releaseId(entry);
+  const marketingPrefix = `PyColors Marketing ${entry.version}: `;
+  const headline = entry.title.startsWith(marketingPrefix)
+    ? entry.title.slice(marketingPrefix.length)
+    : entry.title;
+
   return (
-    <div className="relative flex h-9 w-9 items-center justify-center">
-      <div className="absolute inset-0 rounded-[5px] border border-border-subtle bg-surface shadow-soft" />
-      <CheckCircle2
-        className="relative h-4 w-4 text-primary"
-        aria-hidden="true"
-      />
-    </div>
+    <article
+      id={id}
+      tabIndex={-1}
+      aria-labelledby={`${id}-title`}
+      className={cn(styles.release, latest && styles.latest)}
+    >
+      <header className={styles.releaseHeader}>
+        <div className={styles.releaseMeta}>
+          <div className={styles.versionGroup}>
+            <Badge variant="secondary" className={styles.version}>
+              {entry.version}
+            </Badge>
+            <StatusPill status={entry.status} />
+            {latest ? (
+              <span className={styles.latestLabel}>Latest release</span>
+            ) : null}
+          </div>
+          <time dateTime={entry.dateISO}>{entry.dateLabel}</time>
+        </div>
+        <h2 id={`${id}-title`}>
+          {headline.charAt(0).toUpperCase() + headline.slice(1)}
+        </h2>
+        <p className={styles.summary}>{entry.summary}</p>
+        <div className={styles.releaseActions}>
+          {entry.cta ? (
+            <Link href={entry.cta.href} className={styles.textLink}>
+              {entry.cta.label}
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          ) : null}
+          <a
+            href={`#${id}`}
+            className={styles.permalink}
+            aria-label={`Permanent link to ${entry.version}`}
+          >
+            <Link2 size={15} aria-hidden="true" />
+          </a>
+        </div>
+      </header>
+
+      <details
+        open={latest}
+        className={cn(disclosureStyles.item, styles.notes)}
+      >
+        <summary className={styles.notesToggle}>
+          <span>
+            Release notes<span className="sr-only"> for {entry.version}</span>
+          </span>
+          <span className={styles.notesCount}>
+            {entry.highlights.length} sections
+          </span>
+          <ChevronDown
+            size={15}
+            aria-hidden="true"
+            className={disclosureStyles.indicator}
+          />
+        </summary>
+        <div className={disclosureStyles.content}>
+          <div className={styles.highlights}>
+            <p className={styles.releasePeriod}>{entry.releaseWeekLabel}</p>
+            {entry.highlights.map((block) => (
+              <section key={block.title} className={styles.highlight}>
+                <h3>{block.title}</h3>
+                <ul>
+                  {block.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
+      </details>
+    </article>
   );
 }
 
 export default function ChangelogPage() {
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-10 pt-20 sm:pb-14">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8">
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className="pb-16 pt-20 sm:pb-24">
+        <div className="w-full min-w-0">
+          <div className={styles.breadcrumb}>
             <Breadcrumb
               items={[
                 { label: "Home", href: "/" },
@@ -2091,178 +2246,122 @@ export default function ChangelogPage() {
             />
           </div>
 
-          <PageHero
-            variant="compact"
-            badges={[{ label: "Ecosystem updates", variant: "secondary" }]}
-            title="Changelog"
-            description="Product updates across PyColors: UI, Starters, Templates, docs, and commercial product growth."
-            actions={
-              <>
-                <MarketingLinkButton>
-                  <Link href="/docs">Read the docs</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/roadmap">View roadmap</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/pricing">View pricing</Link>
-                </MarketingLinkButton>
-              </>
-            }
-            extra={
-              <>
-                <p className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground">
-                  Changelog entries reflect shipped work and public-facing
-                  release notes. For current product direction, use the roadmap
-                  and pricing pages.
-                </p>{" "}
-              </>
-            }
-          />
-
-          <MarketingSectionShell spacing="compact">
-            <Card className="rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft">
-              <p className="text-sm leading-7 text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  Release philosophy.
-                </span>{" "}
-                PyColors ships in public through release-driven iterations. The
-                changelog records shipped work. The roadmap summarizes current
-                priorities. Pricing defines the commercial path.
+          <div className={styles.heroLayout}>
+            <PageHero
+              variant="compact"
+              align="left"
+              className={styles.hero}
+              contentClassName="!max-w-none"
+              badges={[
+                {
+                  label: "Product updates",
+                  variant: "outline",
+                  icon: <GitCommitHorizontal size={13} aria-hidden="true" />,
+                },
+              ]}
+              title="Changelog"
+              description="What changed. Why it matters. Follow the improvements to PyColors UI, starters, templates, and the tools around them."
+              actions={
+                <>
+                  <MarketingLinkButton>
+                    <a href={`#${releaseId(CHANGELOG[0]!)}`}>
+                      Read the latest release
+                      <ArrowDown size={15} aria-hidden="true" />
+                    </a>
+                  </MarketingLinkButton>
+                  <MarketingLinkButton variant="outline">
+                    <Link href="/roadmap">View roadmap</Link>
+                  </MarketingLinkButton>
+                </>
+              }
+            />
+            <aside
+              aria-label="About this changelog"
+              className={styles.heroNote}
+            >
+              <span className={styles.noteIcon}>
+                <GitCommitHorizontal size={19} aria-hidden="true" />
+              </span>
+              <p className={styles.eyebrow}>A record of what ships</p>
+              <p>
+                Each entry keeps its original date, version, and release notes.
+                Explore the changes, then go straight to the product or
+                documentation.
               </p>
-            </Card>
-          </MarketingSectionShell>
+              <span className={styles.entryCount}>
+                {CHANGELOG.length} published entries
+              </span>
+            </aside>
+          </div>
 
-          <MarketingSectionShell spacing="compact">
-            <div className="relative">
-              <div
-                className="absolute left-[18px] top-0 hidden h-full w-px bg-border-subtle sm:block"
-                aria-hidden="true"
-              />
+          <div className={styles.historyLayout}>
+            <nav aria-label="Release archive" className={styles.archive}>
+              <p className={styles.eyebrow}>Browse by month</p>
+              <ul>
+                {releaseMonths.map((month) => (
+                  <li key={month.key}>
+                    <a href={month.href}>
+                      <span>{month.label}</span>
+                      <span className={styles.monthCount}>
+                        {month.count}
+                        <span className="sr-only">
+                          {month.count === 1 ? " release" : " releases"}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.archiveNote}>
+                <p>Looking ahead?</p>
+                <p>See the current priorities and planned work.</p>
+                <Link href="/roadmap" className={styles.textLink}>
+                  Explore the roadmap
+                  <ArrowUpRight size={13} aria-hidden="true" />
+                </Link>
+              </div>
+            </nav>
 
-              <ol aria-label="Release history" className="space-y-8">
-                {CHANGELOG.map((entry) => (
+            <div className={styles.history}>
+              <ol aria-label="Release history" className={styles.releaseList}>
+                {CHANGELOG.map((entry, index) => (
                   <li key={entry.version}>
-                    <article className="relative sm:pl-14">
-                      <div className="absolute left-0 top-1 hidden sm:block">
-                        <TimelineDot />
-                      </div>
-
-                      <Card className="overflow-hidden rounded-[5px] border border-border-subtle bg-surface shadow-soft">
-                        <CardHeader className="p-4 sm:p-6 border-b border-border-subtle bg-surface-muted">
-                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                            <div className="min-w-0 space-y-3">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <Badge
-                                  variant="secondary"
-                                  className="rounded-[5px] font-medium"
-                                >
-                                  {entry.version}
-                                </Badge>
-
-                                <StatusPill status={entry.status} />
-                              </div>
-
-                              <div className="space-y-2">
-                                <h2 className="font-brand text-xl font-semibold tracking-tight">
-                                  {entry.title}
-                                </h2>
-
-                                <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                                  <span className="inline-flex items-center gap-1.5">
-                                    <Calendar
-                                      className="h-4 w-4 shrink-0"
-                                      aria-hidden="true"
-                                    />
-                                    <time dateTime={entry.dateISO}>
-                                      {entry.dateLabel}
-                                    </time>
-                                  </span>
-
-                                  <span className="inline-flex items-center gap-1.5">
-                                    <Tag
-                                      className="h-4 w-4 shrink-0"
-                                      aria-hidden="true"
-                                    />
-                                    {entry.releaseWeekLabel}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-
-                            {entry.cta ? (
-                              <MarketingLinkButton variant="outline">
-                                <Link href={entry.cta.href}>
-                                  {entry.cta.label}
-                                  <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                              </MarketingLinkButton>
-                            ) : null}
-                          </div>
-                        </CardHeader>
-
-                        <CardContent className="space-y-6 p-4 sm:p-6">
-                          <p className="max-w-3xl text-pretty text-sm leading-7 text-muted-foreground sm:text-base">
-                            {entry.summary}
-                          </p>
-
-                          <div className="space-y-6">
-                            {entry.highlights.map((block) => (
-                              <div key={block.title} className="space-y-3">
-                                <h3 className="text-sm font-semibold tracking-tight">
-                                  {block.title}
-                                </h3>
-
-                                <ul className="space-y-2 text-sm leading-7 text-muted-foreground">
-                                  {block.items.map((it) => (
-                                    <li key={it} className="flex gap-2">
-                                      <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                                      <span className="text-pretty">{it}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
-
-                          <div className="border-t border-border-subtle pt-4">
-                            <p className="text-sm leading-7 text-muted-foreground">
-                              <span className="font-medium text-foreground">
-                                Strategy.
-                              </span>{" "}
-                              Weekly releases build trust. PyColors ships usable
-                              foundations, documents what is real, and keeps
-                              product direction grounded in roadmap and offer
-                              pages.
-                            </p>
-                          </div>
-
-                          <MarketingActionGroup>
-                            <MarketingLinkButton>
-                              <Link href="/docs/ui">
-                                Browse components
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                              </Link>
-                            </MarketingLinkButton>
-
-                            <MarketingLinkButton variant="outline">
-                              <Link href="/docs">Read docs</Link>
-                            </MarketingLinkButton>
-                          </MarketingActionGroup>
-                        </CardContent>
-                      </Card>
-                    </article>
+                    <ReleaseEntry entry={entry} latest={index === 0} />
                   </li>
                 ))}
               </ol>
+              <p className={styles.historyNote}>
+                Changelog entries reflect shipped work. Internal tasks, strategy
+                changes, and in-progress commercial scope may be grouped or
+                summarized.
+              </p>
             </div>
+          </div>
 
-            <p className="mt-6 text-center text-xs leading-6 text-muted-foreground">
-              Changelog entries reflect shipped work. Internal tasks, strategy
-              changes, and in-progress commercial scope may be grouped or
-              summarized.
-            </p>
-          </MarketingSectionShell>
+          <section aria-labelledby="changelog-next" className={styles.nextStep}>
+            <div>
+              <p className={styles.eyebrow}>Keep exploring</p>
+              <h2 id="changelog-next">Put the updates to work.</h2>
+              <p>
+                Find the implementation details, explore the source, or share
+                feedback on your experience.
+              </p>
+            </div>
+            <div className={styles.nextLinks}>
+              <Link href="/docs" className={styles.resourceLink}>
+                Read the documentation
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+              <Link href="/open-source" className={styles.resourceLink}>
+                Explore open source
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+              <Link href="/contact" className={styles.resourceLink}>
+                Contact PyColors
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
         </div>
       </Container>
     </main>

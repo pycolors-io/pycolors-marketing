@@ -26,6 +26,68 @@ function detail(name: string) {
 }
 
 describe("public Project readiness workspace", () => {
+  it("toggles the mobile detail disclosure and opens it when a project is selected", () => {
+    render(<SaasShowcase />);
+    const toggle = screen.getByRole("button", { name: "Show project details" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(toggle).toHaveAttribute(
+      "aria-controls",
+      detail("Customer portal").id,
+    );
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAccessibleName("Hide project details");
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(openProject("Team workspace"));
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(detail("Team workspace")).toHaveTextContent("Settings layout");
+  });
+
+  it("explains workspace totals and exposes each project's review coverage", () => {
+    render(<SaasShowcase />);
+    const totals = screen.getByLabelText("Workspace totals");
+    expect(
+      within(totals).getByText("Projects").nextElementSibling,
+    ).toHaveTextContent("3");
+    expect(
+      within(totals).getByText("Active").nextElementSibling,
+    ).toHaveTextContent("2");
+    expect(
+      within(totals).getByText("In review").nextElementSibling,
+    ).toHaveTextContent("1");
+    expect(openProject("Customer portal")).toHaveAccessibleDescription(
+      "1 of 3 reviewed",
+    );
+    expect(openProject("Team workspace")).toHaveAccessibleDescription(
+      "2 of 3 reviewed",
+    );
+    filter("Active");
+    expect(screen.getByText("2 shown")).toBeVisible();
+    expect(
+      within(screen.getByLabelText("Workspace totals")).getByText("Projects")
+        .nextElementSibling,
+    ).toHaveTextContent("3");
+  });
+
+  it("derives the next review area from the selected project's remaining work", () => {
+    render(<SaasShowcase />);
+    for (const [name, next, remaining] of [
+      ["Customer portal", "Empty states", "2 remaining"],
+      ["Team workspace", "Settings layout", "1 remaining"],
+      ["Help center", "Navigation", "2 remaining"],
+    ]) {
+      fireEvent.click(openProject(name));
+      const panel = detail(name);
+      expect(panel).toHaveTextContent(remaining);
+      expect(
+        within(panel).getByText("Next area to review").parentElement,
+      ).toHaveTextContent(next);
+    }
+    filter("Archived");
+    expect(screen.queryByText("Next area to review")).not.toBeInTheDocument();
+  });
+
   it("renders the approved deterministic projects and initial review without JavaScript", () => {
     const html = renderToString(<SaasShowcase />);
     for (const project of showcaseProjects)
@@ -117,6 +179,79 @@ describe("public Project readiness workspace", () => {
     expect(screen.getAllByRole("row")).toHaveLength(4);
   });
 
+  it("keeps selection and focus when switching between table and board layouts", () => {
+    render(<SaasShowcase />);
+    fireEvent.click(openProject("Team workspace"));
+    const board = screen.getByRole("button", { name: "Board" });
+    board.focus();
+    fireEvent.click(board);
+    expect(board).toHaveFocus();
+    expect(board).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Projects board" })).toBeVisible();
+    expect(openProject("Team workspace")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(openProject("Team workspace")).toHaveAccessibleDescription(
+      "2 of 3 areas reviewed",
+    );
+    const help = openProject("Help center");
+    help.focus();
+    fireEvent.click(help);
+    expect(help).toHaveFocus();
+    expect(detail("Help center")).toHaveAttribute(
+      "id",
+      help.getAttribute("aria-controls"),
+    );
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Help center selected.",
+    );
+    const table = screen.getByRole("button", { name: "Table" });
+    table.focus();
+    fireEvent.click(table);
+    expect(table).toHaveFocus();
+    expect(screen.getByRole("table", { name: "Projects" })).toBeVisible();
+    expect(
+      screen.queryByRole("list", { name: "Projects board" }),
+    ).not.toBeInTheDocument();
+    expect(openProject("Help center")).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("filters board projects and preserves the layout after empty-state recovery", () => {
+    render(<SaasShowcase />);
+    fireEvent.click(screen.getByRole("button", { name: "Board" }));
+    fireEvent.click(openProject("Help center"));
+    filter("Active");
+    const board = screen.getByRole("list", { name: "Projects board" });
+    expect(within(board).getAllByRole("button")).toHaveLength(2);
+    expect(within(board).getByText("No projects in this view.")).toBeVisible();
+    expect(openProject("Customer portal")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    filter("Archived");
+    expect(
+      screen.queryByRole("list", { name: "Projects board" }),
+    ).not.toBeInTheDocument();
+    expect(detail("No project selected")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Show all projects" }));
+    expect(screen.getByRole("tab", { name: "All" })).toHaveFocus();
+    expect(screen.getByRole("button", { name: "Board" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(
+      within(screen.getByRole("list", { name: "Projects board" })).getAllByRole(
+        "button",
+      ),
+    ).toHaveLength(3);
+    expect(openProject("Customer portal")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
   it("supports Radix arrow/Home/End keyboard filtering", async () => {
     render(<SaasShowcase />);
     screen.getByRole("tab", { name: "All" }).focus();
@@ -154,6 +289,9 @@ describe("public Project readiness workspace", () => {
       render(<SaasShowcase />);
       for (const project of showcaseProjects)
         fireEvent.click(openProject(project.name));
+      fireEvent.click(screen.getByRole("button", { name: "Board" }));
+      for (const project of showcaseProjects)
+        fireEvent.click(openProject(project.name));
       filter("Active");
       filter("Archived");
       fireEvent.click(
@@ -167,10 +305,18 @@ describe("public Project readiness workspace", () => {
     }
   });
 
-  it.each(["All", "Active", "Archived"])(
-    "has no automated accessibility violations in %s",
-    async (name) => {
+  it.each([
+    ["Table", "All"],
+    ["Table", "Active"],
+    ["Table", "Archived"],
+    ["Board", "All"],
+    ["Board", "Active"],
+    ["Board", "Archived"],
+  ])(
+    "has no automated accessibility violations in %s / %s",
+    async (layout, name) => {
       const { container } = render(<SaasShowcase />);
+      fireEvent.click(screen.getByRole("button", { name: layout }));
       filter(name);
       expect(await axe(container)).toHaveNoViolations();
     },

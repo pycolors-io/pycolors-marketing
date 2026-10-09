@@ -1,0 +1,45 @@
+.item {
+  --faq-duration: 280ms;
+  --faq-easing: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.indicator {
+  display: inline-flex;
+}
+
+.item[open] .indicator {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .indicator {
+    transition: transform var(--faq-duration) var(--faq-easing);
+  }
+
+  /* Keep native disclosures as the fallback, including without JavaScript. */
+  @supports selector(::details-content) and
+    (transition-behavior: allow-discrete) {
+    .item::details-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows var(--faq-duration) var(--faq-easing),
+        opacity 180ms ease-out,
+        content-visibility var(--faq-duration) allow-discrete;
+    }
+
+    .item[open]::details-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .content {
+      min-height: 0;
+      overflow: hidden;
+      /* Leave room for the links' keyboard focus outlines while clipping height. */
+      margin-inline: -0.375rem;
+      padding-inline: 0.375rem;
+    }
+  }
+}

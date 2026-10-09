@@ -1,0 +1,212 @@
+@font-face {
+  font-family: "PyColors Preview Jakarta";
+  src: url("/fonts/plus-jakarta-sans/latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+.preview {
+  --preview-frame-border: color-mix(in oklab, var(--border) 50%, transparent);
+
+  container-type: inline-size;
+}
+
+.layout,
+.stats,
+.insights,
+.projectGrid,
+.states {
+  display: grid;
+  min-width: 0;
+}
+
+.stats,
+.states {
+  gap: 0.75rem;
+}
+
+.insights,
+.projectGrid {
+  gap: 1rem;
+}
+
+.navigation {
+  min-width: 0;
+  border-bottom: 1px solid var(--preview-frame-border);
+  padding: 0.5rem;
+}
+
+.links {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+}
+
+.workspacePlan {
+  display: none;
+}
+
+/* The dashboard card owns the table border; retain the table's scroll wrapper. */
+.projectTable > div {
+  border: 0;
+  border-radius: 0;
+}
+
+.paletteScale {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.paletteRoles {
+  display: grid;
+  min-width: 0;
+  gap: 1rem;
+}
+
+.componentGallery,
+.componentScales {
+  display: grid;
+  min-width: 0;
+  gap: 1.5rem;
+}
+
+.galleryForm {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 4%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 10%, var(--background)) 45%
+  );
+}
+
+.compactControl {
+  min-height: 2.25rem;
+}
+
+@media (pointer: coarse), (max-width: 639px) {
+  .compactControl {
+    min-height: 2.75rem;
+  }
+}
+
+@container (min-width: 24rem) {
+  .paletteScale {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .paletteRoles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 40rem) {
+  .componentScales {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .componentGallery {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .galleryControls,
+  .galleryContent {
+    grid-column: 1;
+  }
+
+  .galleryForm {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+}
+
+@container (min-width: 64rem) {
+  .componentGallery {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .galleryControls,
+  .galleryForm,
+  .galleryContent {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@container (min-width: 50rem) {
+  .paletteScale {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .paletteRoles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 20rem) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 40rem) {
+  .layout {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+
+  .navigation {
+    border-right: 1px solid var(--preview-frame-border);
+    border-bottom: 0;
+    padding: 0.75rem;
+  }
+
+  .links {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .workspacePlan {
+    display: block;
+  }
+}
+
+@container (min-width: 50rem) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .states {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 48rem) {
+  .expanded .layout {
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .expanded .navigation {
+    padding: 1rem;
+  }
+}
+
+@container (min-width: 58rem) {
+  .insights {
+    grid-template-columns: minmax(0, 1.65fr) minmax(15rem, 1fr);
+  }
+}
+
+@container (min-width: 75rem) {
+  .layout {
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .navigation {
+    padding: 1rem;
+  }
+
+  .projectGrid {
+    grid-template-columns: minmax(0, 1fr) 16rem;
+  }
+}

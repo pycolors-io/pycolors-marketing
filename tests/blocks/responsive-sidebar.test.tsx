@@ -13,6 +13,9 @@ import {
   type ResponsiveSidebarProps,
 } from "../../content/blocks/app-shells/responsive-sidebar/index";
 import responsiveSidebarSource from "../../content/blocks/app-shells/responsive-sidebar/index.tsx?raw";
+import sidebarNavigationSource from "../../content/blocks/app-shells/responsive-sidebar/sidebar-navigation.tsx?raw";
+import sidebarTypesSource from "../../content/blocks/app-shells/responsive-sidebar/types.ts?raw";
+import { ResponsiveSidebarExample } from "../../components/docs/blocks/responsive-sidebar-example";
 
 const items = [
   {
@@ -51,6 +54,47 @@ function renderSidebar(props: Partial<ResponsiveSidebarProps> = {}) {
 }
 
 describe("ResponsiveSidebar", () => {
+  it("supports embedded content without nesting main landmarks", () => {
+    render(
+      <main>
+        <ResponsiveSidebar {...baseProps} contentAs="div">
+          Embedded content
+        </ResponsiveSidebar>
+      </main>,
+    );
+    expect(screen.getAllByRole("main")).toHaveLength(1);
+    const content = screen.getByText("Embedded content");
+    expect(content.tagName).toBe("DIV");
+    expect(content).toHaveAttribute("id", "workspace-content");
+    expect(content).toHaveAttribute("tabindex", "-1");
+    expect(
+      screen.getByRole("link", { name: "Skip to content" }),
+    ).toHaveAttribute("href", "#workspace-content");
+  });
+
+  it("navigates the local workspace and adds a demo project without replacing focus", () => {
+    render(<ResponsiveSidebarExample />);
+    const navigation = screen.getByRole("navigation", {
+      name: "Preview workspace navigation",
+    });
+    fireEvent.click(within(navigation).getByRole("link", { name: /Team/ }));
+    expect(screen.getByText("Sam Rivera")).toBeVisible();
+    expect(
+      within(navigation).getByRole("link", { name: /Team/ }),
+    ).toHaveAttribute("aria-current", "page");
+    const action = screen.getByRole("button", { name: "Add demo project" });
+    action.focus();
+    fireEvent.click(action);
+    expect(action).toHaveFocus();
+    expect(screen.getByText("Demo project 1")).toBeVisible();
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Nothing is saved or sent.",
+    );
+    expect(
+      within(navigation).getByRole("link", { name: /Projects.*4/ }),
+    ).toHaveAttribute("aria-current", "page");
+  });
+
   it("renders the minimal consumer-owned shell and landmarks", () => {
     const { container } = render(
       <ResponsiveSidebar
@@ -228,7 +272,11 @@ describe("ResponsiveSidebar", () => {
   });
 
   it("keeps canonical source on approved public and Block-local imports", () => {
-    const source = responsiveSidebarSource;
+    const source = [
+      responsiveSidebarSource,
+      sidebarNavigationSource,
+      sidebarTypesSource,
+    ].join("\n");
 
     expect(source).toContain('from "react"');
     expect(source).toContain('from "@pycolors/ui"');

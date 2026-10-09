@@ -1,154 +1,139 @@
 ---
-title: Overview
-description: Composable UI primitives built for real SaaS interfaces. Designed to scale from product validation to production.
-lastUpdated: "2026-08-18"
+title: UI Library
+description: React components for forms, content, navigation, and feedback. Find an example, inspect its API, and compose it into your application.
+lastUpdated: "2026-10-07"
 appliesTo: UI
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
-import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import { Step, Steps } from "fumadocs-ui/components/steps";
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import {
-  AlertTriangle,
-  ArrowRight,
-  Bell,
   Box,
-  CheckCircle,
-  CreditCard,
-  FormInput,
-  Layers3,
-  LayoutTemplate,
-  MenuSquare,
-  MousePointerClick,
+  Palette,
   PanelsTopLeft,
-  PanelTop,
-  ShieldCheck,
-  Sparkles,
-  Table2,
-  Tags,
-  XCircle,
+  Accessibility,
+  Code2,
+  Route,
 } from "lucide-react";
-import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsComponentCatalog } from "@/components/docs/docs-component-catalog";
+import { DocsSectionLinks } from "@/components/docs/docs-section-links";
 
-<div className="flex flex-wrap items-center gap-2">
-  <Badge variant="outline">UI</Badge>
-  <Badge>Composable primitives</Badge>
-</div>
+<DocsSectionLinks
+  items={[
+    { title: "Setup", href: "#build-interfaces-that-scale-with-your-product" },
+    { title: "Components", href: "#start-with-the-essentials" },
+    { title: "Live examples", href: "#interactive-component-examples" },
+  ]}
+/>
 
 ## Build interfaces that scale with your product
 
-PyColors UI components are **small, composable primitives** built for real SaaS interfaces.
+Start with a React app and Tailwind CSS v4. Install the public packages, load the styles, and verify one component before building a larger screen.
 
-They are designed to help you build:
+<DocsLinks
+  variant="list"
+  tone="neutral"
+  items={[
+    {
+      title: "Install the library",
+      href: "/docs/ui/installation",
+      description:
+        "Add the packages, configure Tailwind, and render your first component.",
+      icon: Box,
+    },
+    {
+      title: "Make it your own",
+      href: "/docs/ui/theming",
+      description:
+        "Apply your brand through shared tokens and light and dark themes.",
+      icon: Palette,
+    },
+  ]}
+/>
 
-- dashboards
-- forms
-- settings pages
-- billing surfaces
-- admin tools
-- auth flows
-- data-heavy product views
+## Start with the essentials
 
-This is not a UI kit for isolated demos.
+Each component reference includes a working preview, copyable code, API details, and accessibility guidance.
 
-It is a component foundation for products that need to evolve without becoming inconsistent.
-
-<Callout title="Core idea">
-  UI components are the lowest product layer. They should stay small,
-  token-driven, and predictable.
-</Callout>
-
-### Where UI fits
-
-PyColors is organized as a product system, not only a component library.
-
-<Tabs items={["Design System", "UI Components", "Guides", "Patterns", "Starters"]}>
-  <Tab value="Design System">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Design System
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Tokens, colors, typography, radius, and shadows define the visual foundation.
-      </div>
-    </div>
-  </Tab>
-
-<Tab value="UI Components">
-  <div className="rounded-2xl border border-border/60 bg-card p-6">
-    <div className="text-sm font-medium text-foreground">UI Components</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Small reusable primitives consume the design system and stay easy to
-      compose.
-    </div>
-  </div>
-</Tab>
-
-<Tab value="Guides">
-  <div className="rounded-2xl border border-border/60 bg-card p-6">
-    <div className="text-sm font-medium text-foreground">Guides</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Guides explain how primitives behave inside real product experiences.
-    </div>
-  </div>
-</Tab>
-
-<Tab value="Patterns">
-  <div className="rounded-2xl border border-border/60 bg-card p-6">
-    <div className="text-sm font-medium text-foreground">Patterns</div>
-    <div className="mt-2 text-sm leading-6 text-muted-foreground">
-      Patterns combine components, state, behavior, and UX into reusable product
-      blocks.
-    </div>
-  </div>
-</Tab>
-
-  <Tab value="Starters">
-    <div className="rounded-2xl border border-border/60 bg-card p-6">
-      <div className="text-sm font-medium text-foreground">
-        Starters
-      </div>
-      <div className="mt-2 text-sm leading-6 text-muted-foreground">
-        Starter Free and Starter Pro connect primitives into full SaaS product foundations.
-      </div>
-    </div>
-  </Tab>
-</Tabs>
-
-### Mental model
-
-> Tokens define the system.
-> Components stay small.
-> Guides explain usage.
-> Patterns handle complexity.
-> Starters connect everything into a product.
-
-This keeps the UI layer focused.
-
-If a primitive starts carrying too much product logic, the abstraction is probably in the wrong place.
+<DocsComponentCatalog />
 
 ## Interactive component examples
 
-Storybook is the canonical interactive component example system for `@pycolors/ui`.
-Use it to inspect isolated component states, exercise keyboard and pointer behavior,
-and compare the PyColors light and dark themes. These Fumadocs pages remain the
-public usage documentation and product-context examples; Storybook does not replace
-them.
+Open [PyColors UI Explorer](https://ui.pycolors.io) to try component states and keyboard interactions in light and dark themes. Each component page links directly to its example.
 
-Open [PyColors UI Explorer](https://ui.pycolors.io) to try the public catalog
-without cloning the repository. Each component page links to its exact example.
-To use PyColors in your own application’s Storybook, follow the
-[consumer Storybook guide](/docs/ui/storybook).
+To set up examples in your own app, follow the [consumer Storybook guide](/docs/ui/storybook). You can also try a [complete interface preview](/ui#ui-preview) or create a palette in [Theme Builder](/tools/theme-builder).
 
-Contributors can also run Storybook from the repository root:
+## Composition rules
+
+Keep the parts small and connect them in your application:
+
+- **Use semantic tokens.** Utilities such as `bg-card`, `text-muted-foreground`, and `border-border` keep components consistent across themes.
+- **Compose a screen from primitives.** Combine fields, buttons, cards, and feedback around one task.
+- **Keep product logic in your app.** Routing, data fetching, authentication, and billing remain application responsibilities.
+
+<Callout title="Start with one working screen">
+  Verify styling, keyboard focus, and the app build before replacing a larger
+  product area. The [installation
+  checklist](/docs/ui/installation#verify-the-first-screen) covers these checks.
+</Callout>
+
+## When to use Patterns
+
+Use a component for one part of an interface. Use a pattern when several components need to work together, such as validation, pagination, or mutation feedback.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Compose common flows",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Try settings forms, dialogs, paginated tables, and save feedback.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Build from a block",
+      href: "/docs/blocks",
+      description:
+        "Copy a composed section when you need a larger starting point.",
+      icon: Code2,
+    },
+  ]}
+/>
+
+## Next steps
+
+<DocsLinks
+  variant="list"
+  tone="neutral"
+  items={[
+    {
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
+      description:
+        "Review labels, keyboard behavior, focus, and feedback in your application.",
+      icon: Accessibility,
+    },
+    {
+      title: "Migration guidance",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adopt components incrementally in an existing React or Next.js app.",
+      icon: Route,
+    },
+  ]}
+/>
+
+<Accordions className="mt-8">
+  <Accordion title="Contributing to the component examples" id="maintaining-examples">
+
+Contributors can run Storybook from the repository root:
 
 ```bash
 pnpm --filter @pycolors/ui storybook
 ```
-
-### Maintaining examples
 
 Canonical examples live in `packages/ui/stories/components/<family>.stories.tsx`.
 The public `src/index.ts` barrel remains the source of truth for supported families.
@@ -177,227 +162,7 @@ When a public component or meaningful state changes:
 Story-only changes do not need a package release. Public API/behavior changes
 retain their normal Changeset, test and documentation requirements. Public stories
 must contain only public primitives and fixtures: no Pro source, private imports,
-credentials or customer data. Public Explorer hosting and a full consumer
-integration guide remain separate work; no production Explorer URL is assumed.
+credentials or customer data. See `packages/ui/stories/README.md` in the repository for contributor setup and story ID conventions.
 
-## Start with the essentials
-
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: "Button",
-      href: "/docs/ui/button",
-      description:
-        "The action primitive used for intent, hierarchy, submission, and navigation.",
-      icon: MousePointerClick,
-    },
-    {
-      title: "Card",
-      href: "/docs/ui/card",
-      description:
-        "The primary surface primitive for grouping content, metrics, sections, and product panels.",
-      icon: PanelTop,
-    },
-    {
-      title: "Input",
-      href: "/docs/ui/input",
-      description:
-        "The form primitive for labels, values, helper text, and validation states.",
-      icon: FormInput,
-    },
-    {
-      title: "Badge",
-      href: "/docs/ui/badge",
-      description:
-        "Compact metadata and status labels used to clarify information without becoming actions.",
-      icon: Tags,
-    },
-  ]}
-/>
-
-### Component categories
-
-<DocsLinks
-  variant="list"
-  tone="platform"
-  items={[
-    {
-      title: "Surfaces",
-      href: "/docs/ui",
-      description:
-        "Use surfaces to group content, create hierarchy, and communicate structure.",
-      icon: Box,
-      badges: ["Card", "Alert", "EmptyState", "Skeleton"],
-    },
-    {
-      title: "Actions",
-      href: "/docs/ui/button",
-      description:
-        "Use action primitives to represent user intent and interaction hierarchy.",
-      icon: MousePointerClick,
-      badges: ["Button", "DropdownMenu", "Dialog", "Sheet"],
-    },
-    {
-      title: "Inputs",
-      href: "/docs/ui/input",
-      description:
-        "Use inputs to collect values, communicate validation, and support form workflows.",
-      icon: FormInput,
-      badges: ["Input", "PasswordInput"],
-    },
-    {
-      title: "Data and navigation",
-      href: "/docs/ui/table",
-      description:
-        "Use data primitives for tables, paging, tabs, and product navigation states.",
-      icon: Table2,
-      badges: ["Table", "Pagination", "Tabs", "Toast"],
-    },
-  ]}
-/>
-
-## Composition rules
-
-<Steps>
-  <Step>
-    ### Start with semantic tokens
-
-    Use token-driven utilities such as `bg-card`, `text-muted-foreground`, `border-border`, and `shadow-sm`.
-
-    Components should consume meaning, not raw visual values.
-
-  </Step>
-
-  <Step>
-    ### Compose before configuring
-
-    Prefer composition over large prop APIs.
-
-    If a component needs too many product-specific props, extract the product behavior into a pattern.
-
-  </Step>
-
-  <Step>
-    ### Keep interaction ownership clear
-
-    A primitive should usually own one interaction responsibility.
-
-    Complex flows like forms, tables, overlays, and async actions belong in Guides or Patterns.
-
-  </Step>
-
-  <Step>
-    ### Use UI for structure, not business logic
-
-    Components should render state clearly.
-
-    Product rules, billing checks, auth ownership, and backend decisions should stay outside the primitive layer.
-
-  </Step>
-</Steps>
-
-## When to use Patterns
-
-Use a UI component when you need a primitive.
-
-Use a Pattern when you need a product behavior.
-
-| Need                                           | Use          |
-| ---------------------------------------------- | ------------ |
-| Button action                                  | UI component |
-| Form input                                     | UI component |
-| Form validation flow                           | Guide        |
-| Data table with loading, empty, error, filters | Pattern      |
-| Dropdown vs Dialog vs Sheet decision           | Pattern      |
-| Mutation feedback with toast, retry, undo      | Pattern      |
-
-<Callout type="info" title="Rule of thumb">
-  Components render building blocks. Patterns explain how those blocks behave in
-  a real product.
-</Callout>
-
-## What to avoid
-
-<PreferAvoid
-  prefer={[
-    "small primitives",
-    "semantic tokens",
-    "composition-first APIs",
-    "clear accessibility defaults",
-    "patterns for complex flows",
-  ]}
-  avoid={[
-    "hardcoded one-off styles",
-    "giant components with too many variants",
-    "business logic inside primitives",
-    "using badges as buttons",
-    "duplicating the same product flow repeatedly",
-  ]}
-/>
-
-### Explore core components
-
-<DocsLinks
-  variant="grid"
-  tone="platform"
-  items={[
-    {
-      title: "Button",
-      href: "/docs/ui/button",
-      description:
-        "Action hierarchy, intent, loading states, and interaction patterns.",
-      icon: MousePointerClick,
-    },
-    {
-      title: "Input",
-      href: "/docs/ui/input",
-      description:
-        "Accessible form primitives with validation and consistent UX behavior.",
-      icon: FormInput,
-    },
-    {
-      title: "Card",
-      href: "/docs/ui/card",
-      description:
-        "Surface primitives used to structure dashboards and product interfaces.",
-      icon: PanelTop,
-    },
-    {
-      title: "Dialog",
-      href: "/docs/ui/dialog",
-      description:
-        "Focused modal flows for confirmations, forms, and product actions.",
-      icon: PanelsTopLeft,
-    },
-  ]}
-/>
-
-## Next steps
-
-<DocsLinks
-  variant="compact"
-  tone="platform"
-  items={[
-    {
-      title: "Why PyColors UI",
-      href: "/docs/ui/why-pycolors-ui",
-      description:
-        "Understand the product philosophy behind the component system.",
-      icon: Sparkles,
-    },
-    {
-      title: "Patterns",
-      href: "/docs/patterns",
-      description:
-        "Move from primitives to reusable feature-level product blocks.",
-      icon: LayoutTemplate,
-    },
-  ]}
-/>
-
-<Callout title="Build the primitive once. Compose the product many times.">
-  PyColors UI is designed to keep your components simple while your SaaS grows
-  in complexity.
-</Callout>
+  </Accordion>
+</Accordions>

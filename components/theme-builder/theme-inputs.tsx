@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 import { SIX_DIGIT_HEX_COLOR_PATTERN } from "@pycolors/color-engine";
 import { Input as UiInput } from "@pycolors/ui";
 
@@ -16,7 +14,7 @@ type ThemeInputsProps = Readonly<{
 }>;
 
 type ColorFieldProps = Readonly<{
-  field: Extract<ThemeBuilderField, "brandColor" | "neutralColor">;
+  field: Exclude<ThemeBuilderField, "name">;
   label: string;
   helperText: string;
   required?: boolean;
@@ -25,26 +23,6 @@ type ColorFieldProps = Readonly<{
   pickerFallback: string;
   onFieldChange: ThemeInputsProps["onFieldChange"];
 }>;
-
-type ThemeSettingProps = Readonly<{
-  title: string;
-  description: string;
-  children: ReactNode;
-}>;
-
-function ThemeSetting({ title, description, children }: ThemeSettingProps) {
-  return (
-    <div className="grid min-w-0 gap-3 border-b border-border-subtle p-3.5 last:border-b-0 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-4">
-      <div className="space-y-1">
-        <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-foreground">
-          {title}
-        </h3>
-        <p className="text-xs leading-5 text-muted-foreground">{description}</p>
-      </div>
-      <div className="min-w-0 sm:pt-0.5">{children}</div>
-    </div>
-  );
-}
 
 function ColorField({
   field,
@@ -99,55 +77,47 @@ export function ThemeInputs({
   onFieldChange,
 }: ThemeInputsProps) {
   return (
-    <fieldset className="overflow-hidden rounded-[4px] border border-border-subtle bg-background">
+    <fieldset className="min-w-0 space-y-5">
       <legend className="sr-only">Theme settings</legend>
 
-      <ThemeSetting
-        title="Brand color"
-        description="Required source for both generated modes."
-      >
-        <ColorField
-          field="brandColor"
-          label="Hex value"
-          required
-          value={draft.brandColor}
-          error={errors.brandColor}
-          helperText="Required · #RRGGBB"
-          pickerFallback="#6a30d4"
-          onFieldChange={onFieldChange}
-        />
-      </ThemeSetting>
-
-      <ThemeSetting
-        title="Theme name"
-        description="Optional label included in generated metadata."
-      >
-        <UiInput
-          id="theme-builder-name"
-          label="Name"
-          value={draft.name}
-          error={errors.name}
-          helperText="Optional"
-          onChange={(event) => onFieldChange("name", event.target.value)}
-          maxLength={64}
-          className="max-w-md"
-        />
-      </ThemeSetting>
-
-      <ThemeSetting
-        title="Neutral hue"
-        description="Optional tonal balance for the generated scale."
-      >
-        <ColorField
-          field="neutralColor"
-          label="Hex value"
-          value={draft.neutralColor}
-          error={errors.neutralColor}
-          helperText="Optional · derives from brand"
-          pickerFallback="#71717a"
-          onFieldChange={onFieldChange}
-        />
-      </ThemeSetting>
+      <ColorField
+        field="brandColor"
+        label="Brand color"
+        required
+        value={draft.brandColor}
+        error={errors.brandColor}
+        helperText="Your primary color · #RRGGBB"
+        pickerFallback="#6a30d4"
+        onFieldChange={onFieldChange}
+      />
+      <ColorField
+        field="neutralColor"
+        label="Neutral color"
+        value={draft.neutralColor}
+        error={errors.neutralColor}
+        helperText="Optional · derives from your brand"
+        pickerFallback="#71717a"
+        onFieldChange={onFieldChange}
+      />
+      <ColorField
+        field="lightBackgroundColor"
+        label="Light background"
+        value={draft.lightBackgroundColor}
+        error={errors.lightBackgroundColor}
+        helperText="Light mode only · leave empty for automatic"
+        pickerFallback="#fafafa"
+        onFieldChange={onFieldChange}
+      />
+      <UiInput
+        id="theme-builder-name"
+        label="Theme name"
+        value={draft.name}
+        error={errors.name}
+        helperText="Optional · included in your export"
+        onChange={(event) => onFieldChange("name", event.target.value)}
+        maxLength={64}
+        className="max-w-md"
+      />
     </fieldset>
   );
 }

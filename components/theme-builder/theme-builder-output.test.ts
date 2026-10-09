@@ -132,7 +132,7 @@ test("renders Northstar as a branded application shell instead of a component de
   assert.match(previewSource, /Focus-ready action/u);
   assert.match(previewSource, /bg-primary\/5/u);
   assert.match(previewSource, /data-\[state=active\]:bg-primary/u);
-  assert.match(previewSource, /id="northstar-projects"/u);
+  assert.match(previewSource, /aria-label="Northstar projects"/u);
   assert.doesNotMatch(
     previewSource,
     /Manage the project defaults used by your delivery team\./u,
@@ -165,14 +165,8 @@ test("highlights local token exports with Rehype Pretty Code", () => {
   assert.match(outputSource, /Hide generated code/u);
   assert.match(outputSource, /aria-expanded=\{codeVisible\}/u);
   assert.match(outputSource, /hidden=\{!codeVisible\}/u);
-  assert.match(
-    outputSource,
-    /active=\{codeVisible && activeFormat === "css"\}/u,
-  );
-  assert.match(
-    outputSource,
-    /Compact example of the current generated CSS override[\s\S]*generatedCssExample\(css\.content\)/u,
-  );
+  assert.match(outputSource, /active=\{codeVisible\}/u);
+  assert.match(outputSource, /content=\{activeArtifact\.content\}/u);
   assert.match(highlighterSource, /from "rehype-pretty-code"/u);
   assert.match(highlighterSource, /"github-light"/u);
   assert.match(highlighterSource, /"github-dark"/u);
@@ -180,13 +174,9 @@ test("highlights local token exports with Rehype Pretty Code", () => {
   assert.doesNotMatch(highlighterSource, /fetch\s*\(/u);
 });
 
-test("keeps the preview full width while settings open in a full Studio overlay", () => {
+test("keeps customization inline and exports reachable outside the preview", () => {
   const builderSource = readFileSync(
     new URL("./theme-builder.tsx", import.meta.url),
-    "utf8",
-  );
-  const inputsSource = readFileSync(
-    new URL("./theme-inputs.tsx", import.meta.url),
     "utf8",
   );
   const previewSource = readFileSync(
@@ -198,68 +188,25 @@ test("keeps the preview full width while settings open in a full Studio overlay"
     "utf8",
   );
 
-  assert.match(
-    builderSource,
-    /const \[settingsOpen, setSettingsOpen\] = React\.useState\(false\)/u,
+  const qualitySource = readFileSync(
+    new URL("./theme-quality.tsx", import.meta.url),
+    "utf8",
   );
+
+  assert.match(builderSource, /aria-controls="theme-builder-settings-panel"/u);
+  assert.match(builderSource, /aria-expanded=\{settingsOpen\}/u);
   assert.match(
     builderSource,
     /aria-labelledby="theme-builder-settings-heading"/u,
   );
-  assert.match(
-    builderSource,
-    /aria-controls="theme-builder-settings-panel"[\s\S]*aria-expanded=\{settingsOpen\}/u,
-  );
-  assert.match(
-    builderSource,
-    /absolute inset-x-0 top-0 z-50 min-h-full rounded-\[4px\] border border-border-subtle\/55 bg-surface shadow-medium/u,
-  );
-  assert.match(builderSource, /<ThemeSettingsPanel/u);
-  assert.match(builderSource, /<ThemePreview[\s\S]*settingsControl=\{/u);
-  assert.match(builderSource, /<ThemeOutput theme=\{state\.generatedTheme\}/u);
-  assert.match(builderSource, /settingsOpen=\{settingsOpen\}/u);
-  assert.match(builderSource, /Professional foundations/u);
-  assert.match(builderSource, /Start with a balanced combination/u);
-  assert.match(builderSource, /applyThemeBuilderPreset/u);
-  assert.match(builderSource, /role="dialog"/u);
-  assert.match(builderSource, /aria-modal="true"/u);
-  assert.match(builderSource, /focusableSelector/u);
-  assert.match(builderSource, /event\.key === "Escape"/u);
-  assert.match(builderSource, /settingsTriggerRef/u);
-  assert.match(builderSource, /Theme quality/u);
-  assert.match(builderSource, /Automatic safeguards/u);
-  assert.match(builderSource, /Visual contrast check/u);
-  assert.match(builderSource, /Tune the brand foundation/u);
-  assert.match(
-    builderSource,
-    /xl:grid-cols-\[minmax\(0,1\.15fr\)_minmax\(20rem,0\.85fr\)\]/u,
-  );
-  assert.match(
-    builderSource,
-    /group relative min-h-\[320px\] min-w-0 rounded-\[5px\] border border-border-subtle\/55 bg-surface shadow-medium/u,
-  );
-  assert.match(builderSource, /PyColors Theme Studio/u);
-  assert.match(previewSource, /settingsOpen[\s\S]*overflow-visible/u);
-  assert.match(previewSource, /embedded = false/u);
-  assert.match(
-    inputsSource,
-    /<fieldset className="overflow-hidden rounded-\[4px\] border border-border-subtle bg-background">/u,
-  );
-  assert.match(
-    inputsSource,
-    /<legend className="sr-only">Theme settings<\/legend>/u,
-  );
-  assert.equal((inputsSource.match(/<ThemeSetting/g) ?? []).length, 3);
-  assert.doesNotMatch(inputsSource, /Advanced override/u);
-  assert.doesNotMatch(inputsSource, /lightBackgroundColor/u);
-  assert.match(
-    inputsSource,
-    /grid min-w-0 gap-3 border-b border-border-subtle p-3\.5 last:border-b-0 sm:grid-cols-\[8rem_minmax\(0,1fr\)\] sm:gap-4/u,
-  );
-  assert.match(inputsSource, /max-w-md/u);
-  assert.match(inputsSource, /Choose \{label\.toLowerCase\(\)\}/u);
-  assert.doesNotMatch(builderSource, /lg:grid-cols-\[minmax\(17rem/u);
-  assert.doesNotMatch(builderSource, /lg:grid-cols-5/u);
+  assert.doesNotMatch(builderSource, /aria-modal|role="dialog"/u);
+  assert.match(builderSource, /href="#theme-builder-export"/u);
+  assert.match(outputSource, /id="theme-builder-export"/u);
+  assert.match(builderSource, /<ThemeQuality theme=\{state.generatedTheme\}/u);
+  assert.match(qualitySource, /Color readability/u);
+  assert.match(qualitySource, /Automatic color adjustments/u);
+  assert.match(qualitySource, /Technical details/u);
+  assert.doesNotMatch(previewSource, /ThemeModeControl|settingsControl/u);
   assert.match(outputSource, /Integration checklist/u);
   assert.match(outputSource, /INTEGRATION_STEPS/u);
 });

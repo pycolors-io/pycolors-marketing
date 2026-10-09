@@ -13,8 +13,16 @@ const entry = "app/(site)/page.tsx";
 // showcase and retain their own behavioral tests; no backend source is allowed.
 const approved = new Set([
   entry,
+  "components/marketing/home.module.css",
+  "components/marketing/fibonacci-background.tsx",
+  "components/marketing/fibonacci-background.module.css",
   "components/container.tsx",
+  "components/site-button.tsx",
   "components/marketing/cta-panel.tsx",
+  "components/marketing/detail-card.tsx",
+  "components/marketing/detail-card.module.css",
+  "components/marketing/card-illustration.tsx",
+  "components/marketing/card-illustration.module.css",
   "components/marketing/page-hero.tsx",
   "components/marketing/section-header.tsx",
   "components/marketing/section-shell.tsx",
@@ -56,6 +64,11 @@ function inspectGraph(overrides: Readonly<Record<string, string>> = {}) {
     seen.add(file);
     const text = overrides[file] ?? readFileSync(absolute, "utf8");
     inspectText(text, file);
+    if (file.endsWith(".css")) {
+      if (/@import|url\s*\(/i.test(text))
+        throw new Error("External stylesheet input");
+      return;
+    }
     // #419's inspectModule restricts URLs to Explorer-owned resources, so the
     // homepage uses TypeScript traversal plus its shared credential/path check.
     const source = ts.createSourceFile(

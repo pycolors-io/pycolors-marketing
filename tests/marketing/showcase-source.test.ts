@@ -17,7 +17,6 @@ const sources = new Set([
   entry,
   "showcase/showcase-workspace.tsx",
   "showcase/showcase-fixtures.ts",
-  "section-header.tsx",
   "section-shell.tsx",
 ]);
 const external = new Set(["react", "@pycolors/ui", "lucide-react"]);
@@ -59,7 +58,6 @@ describe("showcase public source contract", () => {
     ]);
     const frame = readFileSync(resolve(root, entry), "utf8");
     expect(frame).not.toContain('"use client"');
-    expect(frame).toContain("MarketingSectionHeader");
     expect(frame).toContain("MarketingSectionShell");
   });
 

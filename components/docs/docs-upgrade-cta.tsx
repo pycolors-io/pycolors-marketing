@@ -1,9 +1,10 @@
-import * as React from 'react';
-import Link from 'next/link';
+import * as React from "react";
+import Link from "next/link";
 
-import { Button, cn } from '@pycolors/ui';
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
-import { BuyProductButton } from '@/components/pricing/buy-product-button';
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
 
 type DocsUpgradeCTAProps = Readonly<{
   title?: string;
@@ -28,19 +29,19 @@ export function DocsUpgradeCTA({
   buyLabel,
   secondaryHref,
   secondaryLabel,
-  trustText = 'One-time payment · Instant access after purchase',
+  trustText = "One-time payment · Instant access after purchase",
   showTrustText = true,
   className,
 }: DocsUpgradeCTAProps) {
   return (
     <section
       className={cn(
-        'not-prose my-8 rounded-[8px]',
-        'border border-border-subtle bg-card',
-        'p-5 shadow-none transition-all duration-200 sm:p-6',
-        'hover:-translate-y-px',
-        'hover:border-border',
-        'hover:shadow-soft',
+        "not-prose my-8 rounded-[8px]",
+        "border border-border-subtle bg-card",
+        "p-5 shadow-none transition-all duration-200 sm:p-6",
+        "hover:-translate-y-px",
+        "hover:border-border",
+        "hover:shadow-soft",
         className,
       )}
     >
@@ -62,9 +63,9 @@ export function DocsUpgradeCTA({
 
       <div
         className={cn(
-          'flex flex-col gap-3',
-          title || description ? 'mt-5' : '',
-          'sm:flex-row sm:items-center',
+          "flex flex-col gap-3",
+          title || description ? "mt-5" : "",
+          "sm:flex-row sm:items-center",
         )}
       >
         <BuyProductButton
@@ -78,7 +79,7 @@ export function DocsUpgradeCTA({
           <Button
             asChild
             variant="outline"
-            className="h-11 w-full rounded-[5px] px-5 text-sm font-medium no-underline sm:w-auto"
+            className="w-full rounded-md font-medium no-underline sm:w-auto"
           >
             <Link href={secondaryHref}>{secondaryLabel}</Link>
           </Button>

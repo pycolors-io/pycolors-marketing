@@ -1,0 +1,439 @@
+.previewStage {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
+  );
+}
+
+.nextSteps {
+  background: radial-gradient(
+    ellipse at 0% 0%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)),
+    var(--background) 70%
+  );
+}
+
+.workflowGrid {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.workflowStep {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.workflowStep + .workflowStep {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.stepNumber {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+}
+
+.workflowPreview {
+  padding: 1.5rem;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    color-mix(in oklab, var(--primary) 5%, transparent),
+    transparent 70%
+  );
+}
+
+.previewWindow {
+  overflow: hidden;
+  height: 10rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow: 0 4px 16px -8px
+    color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.windowBar {
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-inline: 0.875rem;
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+}
+
+.windowDot {
+  width: 0.25rem;
+  height: 0.25rem;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.fileRows {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.875rem;
+  font-size: 0.625rem;
+  line-height: 1.375rem;
+}
+
+.fileRows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.fileRows > div > :last-child {
+  color: var(--muted-foreground);
+}
+
+.brandPreview {
+  display: grid;
+  height: calc(100% - 2.5rem);
+  align-content: space-between;
+  padding: 0.875rem;
+}
+
+.brandHeadline,
+.brandSubline,
+.brandAction {
+  display: block;
+  height: 0.375rem;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--foreground) 14%, var(--background));
+}
+
+.brandHeadline {
+  width: 70%;
+}
+.brandSubline {
+  width: 48%;
+  background: var(--border-subtle);
+}
+.brandAction {
+  width: 3.5rem;
+  height: 1.125rem;
+  background: color-mix(in oklab, var(--primary) 65%, var(--background));
+}
+
+.swatches {
+  display: flex;
+  gap: 0.25rem;
+}
+.swatches i {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--foreground);
+}
+.swatches i:nth-child(2) {
+  background: var(--primary);
+}
+.swatches i:nth-child(3) {
+  background: var(--background);
+}
+
+.pathCard {
+  position: relative;
+  padding: 1.5rem;
+  transition: background-color 180ms ease;
+}
+
+.pathCard h3 {
+  font-size: 1.125rem;
+  letter-spacing: normal;
+}
+
+.pathCard:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -3px;
+  box-shadow: none;
+}
+.pathCard p {
+  max-width: 27rem;
+}
+
+.pathCard > span:last-child {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.pathCard > div {
+  padding-bottom: 2.5rem;
+}
+
+.productPreview {
+  display: grid;
+  height: 10rem;
+  overflow: hidden;
+  align-items: end;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  padding: 1.25rem 1.25rem 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 2%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 6%, var(--background)) 45%
+  );
+}
+
+.starterPreview {
+  background: linear-gradient(
+    225deg,
+    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
+    color-mix(in oklab, var(--primary) 8%, var(--background)) 45%
+  );
+}
+
+.productWindow {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  background: var(--background);
+}
+.productWindowBar {
+  display: flex;
+  height: 1.5rem;
+  align-items: center;
+  gap: 0.2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.5rem;
+}
+.productWindowBar > span {
+  width: 0.2rem;
+  height: 0.2rem;
+  border-radius: 50%;
+  background: var(--border);
+}
+.productWindowBar > i {
+  height: 0.25rem;
+  width: 3rem;
+  margin-inline: auto;
+  border-radius: 2px;
+  background: var(--border-subtle);
+}
+.blockTiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 0.5rem;
+  padding: 0.875rem;
+}
+.blockTiles > div {
+  display: flex;
+  min-width: 0;
+  height: 4.75rem;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.4rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 0.625rem;
+}
+.blockTiles > div > i {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 18%, var(--background));
+}
+.blockTiles > div > span {
+  width: 85%;
+  height: 0.2rem;
+  border-radius: 2px;
+  background: var(--border-subtle);
+}
+.blockTiles > div > span:nth-child(3) {
+  width: 60%;
+}
+.blockTiles > div > b {
+  width: 60%;
+  height: 0.5rem;
+  margin-top: auto;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 50%, var(--background));
+}
+.miniChart {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  align-items: end;
+  gap: 0.25rem;
+}
+.miniChart i {
+  flex: 1;
+  height: 45%;
+  border-radius: 2px 2px 0 0;
+  background: color-mix(in oklab, var(--primary) 20%, var(--background));
+}
+.miniChart i:nth-child(2) {
+  height: 65%;
+}
+.miniChart i:nth-child(3) {
+  height: 52%;
+}
+.miniChart i:nth-child(4) {
+  height: 85%;
+}
+.miniChart i:nth-child(5) {
+  height: 100%;
+  background: color-mix(in oklab, var(--primary) 45%, var(--background));
+}
+.appCanvas {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 22% 1fr;
+}
+.appSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  border-right: 1px solid var(--border-subtle);
+  padding: 0.75rem 0.5rem;
+}
+.appSidebar > i {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 40%, var(--background));
+}
+.appSidebar > span {
+  height: 0.25rem;
+  width: 75%;
+  border-radius: 2px;
+  background: var(--border-subtle);
+}
+.appContent {
+  min-width: 0;
+  padding: 0.75rem;
+}
+.appContent > span {
+  display: block;
+  height: 0.3rem;
+  width: 40%;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--foreground) 16%, var(--background));
+}
+.metricTiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+.metricTiles i {
+  height: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 3%, var(--background));
+}
+.appTable {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.appTable span {
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+@media (min-width: 640px) {
+  .workflowPreview {
+    padding-inline: 1.75rem;
+  }
+  .pathCard {
+    padding: 2rem;
+  }
+  .pathCard > span:last-child {
+    right: 2rem;
+    bottom: 2rem;
+  }
+  .productPreview {
+    height: 11rem;
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .workflowGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .workflowStep + .workflowStep {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+
+.previewImage {
+  transition: transform 300ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .previewLink:hover .previewImage {
+    transform: scale(1.012);
+  }
+}
+
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--foreground) 7%, transparent);
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.textLink:hover {
+  color: var(--primary);
+}
+
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .previewImage,
+  .pathCard,
+  .nextSteps svg {
+    transition: none;
+    transform: none;
+  }
+
+  .pathCard:hover svg {
+    translate: none;
+  }
+}

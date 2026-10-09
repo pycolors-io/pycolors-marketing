@@ -1,12 +1,13 @@
 ---
 title: Data table
 description: A source-copy records workflow with controlled search, custom filters, sorting, page size, pagination and empty-result recovery.
-lastUpdated: "2026-09-15"
+lastUpdated: "2026-10-08"
 appliesTo: Blocks
 ---
 
 import { Badge } from "@pycolors/ui";
 import { Callout } from "fumadocs-ui/components/callout";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/docs/preview";
 import {
@@ -57,9 +58,35 @@ delivery service.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation), then create
-`src/components/blocks/data-table/index.tsx` in your application. Use the Source
-tab's copy button when available, or select the code manually when clipboard
-access is unavailable. Keep the complete file, its imports and client directive.
+`src/components/blocks/data-table/` in your application. Copy all four files
+below, keeping their relative imports and client directives. In the Source tab,
+choose a file and use its copy button, or select the code manually when clipboard
+access is unavailable.
+
+To retrieve all four files at once, open **Code → Download ZIP** for Data table in
+the [Blocks catalog](/blocks#category-data). Extract the archive and move its
+`src/components/blocks/data-table/` folder into your application.
+
+### File structure
+
+<Files>
+  <Folder name="src/components/blocks/data-table" defaultOpen>
+    <File name="index.tsx" />
+    <File name="pagination.tsx" />
+    <File name="query-controls.tsx" />
+    <File name="types.ts" />
+  </Folder>
+</Files>
+
+| File                 | Responsibility                                                          |
+| -------------------- | ----------------------------------------------------------------------- |
+| `index.tsx`          | Table composition, sorting controls, display states and public exports. |
+| `pagination.tsx`     | Page navigation, page-size selection and pagination validation.         |
+| `query-controls.tsx` | Search input, filter slots, reset action and result summary.            |
+| `types.ts`           | Typed columns, rows, controllers and component props.                   |
+
+Import `DataTable` and its types from the directory's `index.tsx` entry point.
+The separate controls keep customization local; data operations remain yours.
 
 <Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
   <Tab value="Preview">
@@ -69,18 +96,46 @@ access is unavailable. Keep the complete file, its imports and client directive.
   </Tab>
 
   <Tab value="Source">
-    <include
-      lang="tsx"
-      meta='title="src/components/blocks/data-table/index.tsx"'
-    >
-      ../../../blocks/data/data-table/index.tsx
-    </include>
+    <Tabs items={["index.tsx", "pagination.tsx", "query-controls.tsx", "types.ts"]}>
+      <Tab value="index.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/index.tsx"'
+        >
+          ../../../blocks/data/data-table/index.tsx
+        </include>
+      </Tab>
+      <Tab value="pagination.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/pagination.tsx"'
+        >
+          ../../../blocks/data/data-table/pagination.tsx
+        </include>
+      </Tab>
+      <Tab value="query-controls.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/query-controls.tsx"'
+        >
+          ../../../blocks/data/data-table/query-controls.tsx
+        </include>
+      </Tab>
+      <Tab value="types.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/data-table/types.ts"'
+        >
+          ../../../blocks/data/data-table/types.ts
+        </include>
+      </Tab>
+    </Tabs>
   </Tab>
 </Tabs>
 
 The Preview tab renders the real canonical `DataTable` through its deterministic
 local fixture. It performs no data fetch or network request. The Source tab
-includes the complete canonical file at build time, not a duplicated
+includes the complete canonical files at build time, not a duplicated
 implementation.
 
 Your application copy does not receive automatic updates. Review later

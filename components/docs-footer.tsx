@@ -1,193 +1,184 @@
-"use client";
-
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import { ThemeSwitch as ThemeToggle } from "fumadocs-ui/layouts/shared/slots/theme-switch";
+import { ArrowRight, ArrowUpRight, GitBranch } from "lucide-react";
 
 import { Container } from "@/components/container";
-import { cn } from "@pycolors/ui";
-import { UI_VERSION, TOKENS_VERSION, APP_VERSION } from "@/lib/version";
+import { FibonacciMark } from "@/components/marketing/fibonacci-background";
+import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
+import { FooterAppearance } from "./footer-appearance";
+import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
+import styles from "./footer.module.css";
 
-const focusRing =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-const CURRENT_YEAR = new Date().getFullYear();
-
-type FooterLink = {
-  readonly label: string;
-  readonly href: string;
-  readonly external?: boolean;
-  readonly ariaLabel?: string;
-};
-
-const GROUPS: Array<{
-  title: string;
-  links: FooterLink[];
-}> = [
+const GROUPS = [
   {
-    title: "Products",
+    title: "Documentation",
     links: [
-      { label: "Starter Pro", href: "/starters/pro" },
-      { label: "Starter Free", href: "/starters/free" },
-      { label: "Compare Starters", href: "/starters" },
-      { label: "Upgrade", href: "/upgrade" },
-      { label: "Templates", href: "/templates" },
-      {
-        label: "NA-AI Landing",
-        href: "/templates/na-ai-landing",
-      },
-      { label: "Pricing", href: "/pricing" },
+      { label: "Getting started", href: "/docs/getting-started" },
+      { label: "UI Library", href: "/docs/ui" },
+      { label: "Blocks", href: "/docs/blocks" },
+      { label: "Design system", href: "/docs/design-system" },
+      { label: "Starter Free", href: "/docs/starter" },
+      { label: "Starter Pro", href: "/docs/starter-pro" },
+      { label: "NA-AI Landing", href: "/docs/templates/na-ai-landing" },
     ],
   },
   {
-    title: "Platform",
+    title: "Build",
     links: [
-      { label: "PyColors UI", href: "/ui" },
       { label: "Theme Builder", href: "/tools/theme-builder" },
-      { label: "Patterns", href: "/ui/patterns" },
-      { label: "Examples", href: "/ui/examples" },
-      { label: "Docs", href: "/docs" },
-      { label: "Guides", href: "/guides" },
+      { label: "UI examples", href: "/ui/examples" },
+      { label: "Patterns", href: "/docs/patterns" },
+      { label: "Compare starters", href: "/starters" },
+      { label: "Starter Pro", href: "/starters/pro" },
+      { label: "Templates", href: "/templates" },
+      { label: "Pricing", href: "/pricing" },
     ],
   },
   {
     title: "Resources",
     links: [
+      { label: "UI Explorer", href: UI_EXPLORER_URL },
+      { label: "Guides", href: "/guides" },
       { label: "Blog", href: "/blog" },
       { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
-      { label: "Recover purchase", href: "/orders/recover" },
-      { label: "Open Source", href: "/open-source" },
+      { label: "Open source", href: "/open-source" },
     ],
   },
   {
-    title: "Company",
+    title: "Help",
     links: [
-      { label: "About", href: "/about" },
-      { label: "License", href: "/license" },
-      { label: "Terms", href: "/terms" },
-      { label: "Privacy", href: "/privacy" },
+      { label: "Purchase support", href: "/orders/support" },
+      { label: "Recover purchase", href: "/orders/recover" },
+      { label: "About PyColors", href: "/about" },
+      { label: "Contact", href: "/contact" },
     ],
   },
-];
+] as const;
 
-const EXTERNAL: FooterLink[] = [
+const REPOSITORIES = [
   {
-    label: "PyColors UI",
+    label: "UI",
+    name: "PyColors UI",
     href: "https://github.com/pycolors-io/pycolors-ui",
-    external: true,
-    ariaLabel: "Open PyColors UI repository on GitHub",
   },
   {
     label: "Starter Free",
+    name: "PyColors Starter Free",
     href: "https://github.com/pycolors-io/pycolors-starter-free",
-    external: true,
-    ariaLabel: "Open PyColors Starter Free repository on GitHub",
   },
-];
-function FooterLinkItem(link: FooterLink) {
-  const className = cn(
-    "inline-flex items-center gap-1 rounded-[5px] text-sm text-muted-foreground transition-colors hover:text-foreground",
-    focusRing,
-  );
-
-  if (link.external) {
-    return (
-      <a
-        key={link.label}
-        href={link.href}
-        target="_blank"
-        rel="noreferrer noopener"
-        aria-label={link.ariaLabel ?? `${link.label} (opens in a new tab)`}
-        className={className}
-      >
-        {link.label}
-        <ExternalLink className="h-4 w-4" aria-hidden="true" />
-      </a>
-    );
-  }
-
-  return (
-    <Link key={link.label} href={link.href} className={className}>
-      {link.label}
-    </Link>
-  );
-}
+] as const;
 
 export function DocsFooter() {
   return (
-    <footer className="w-full border-t border-border-subtle bg-background">
-      <div className="mx-auto max-w-fd-container">
-        <Container>
-          <div className="py-12 sm:py-16">
-            <section className="grid gap-12 lg:grid-cols-[1.1fr_1.4fr]">
-              <div className="space-y-5">
-                <div className="space-y-3">
-                  <Logo />
-
-                  <p className="max-w-sm text-sm leading-7 text-muted-foreground">
-                    Documentation for building with PyColors UI, templates,
-                    product surfaces, and production-ready SaaS starter
-                    foundations.
-                  </p>
-                </div>
-
-                <nav
-                  className="flex flex-wrap gap-x-4 gap-y-2"
-                  aria-label="External links"
-                >
-                  {EXTERNAL.map(FooterLinkItem)}
-                </nav>
-              </div>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
-                {GROUPS.map((group) => (
-                  <div key={group.title} className="space-y-3">
-                    <div className="text-sm font-medium text-foreground">
-                      {group.title}
-                    </div>
-
-                    <nav
-                      className="flex flex-col gap-2"
-                      aria-label={`${group.title} links`}
+    <FooterNavigation className={styles.footer} label="PyColors Docs footer">
+      <Container>
+        <div className={styles.directory}>
+          <div className={styles.brand}>
+            <div>
+              <Logo variant="docs" />
+              <p className={styles.brandDescription}>
+                Reference, examples, and guides for building with PyColors.
+              </p>
+              <Link href="/" className={styles.directoryLink}>
+                Back to PyColors
+                <ArrowRight className="ml-1.5 size-3" aria-hidden="true" />
+              </Link>
+            </div>
+            <nav
+              aria-label="Docs repositories on GitHub"
+              className={styles.repositories}
+            >
+              <p className={styles.repositoryHeading}>
+                <GitBranch className="size-3.5" aria-hidden="true" />
+                On GitHub
+              </p>
+              <ul>
+                {REPOSITORIES.map((repo) => (
+                  <li key={repo.href}>
+                    <a
+                      href={repo.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${repo.name} on GitHub (opens in a new tab)`}
                     >
-                      {group.links.map(FooterLinkItem)}
-                    </nav>
-                  </div>
+                      {repo.label}
+                      <ArrowUpRight className="size-3" aria-hidden="true" />
+                    </a>
+                  </li>
                 ))}
-              </div>
-            </section>
-
-            <section className="mt-12 flex flex-col gap-4 border-t border-border-subtle pt-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-              <div className="text-xs text-muted-foreground">
-                © {CURRENT_YEAR} PyColors · UI {UI_VERSION} · Tokens{" "}
-                {TOKENS_VERSION} · App {APP_VERSION}
-              </div>
-
-              <div className="flex items-center justify-center sm:justify-end">
-                <ThemeToggle
-                  mode="light-dark"
-                  className={cn(
-                    "h-8 border border-border-subtle/80 bg-surface/60 backdrop-blur-sm",
-                    "rounded-[20px] px-1 shadow-sm",
-                    "opacity-80 transition-all duration-200 ease-out",
-                    "hover:border-border hover:bg-accent/30 hover:opacity-100",
-                    "cursor-pointer",
-                    "[&_button]:h-6.5",
-                    "[&_button]:w-6.5",
-                    "[&_button]:rounded-[4px]",
-                    "[&_button]:bg-transparent",
-                    "[&_button]:transition-all",
-                    "[&_button]:duration-200",
-                    "[&_button:hover]:bg-accent/50",
-                    "[&_button]:cursor-pointer",
-                  )}
-                />
-              </div>
-            </section>
+              </ul>
+            </nav>
+            <FibonacciMark className={styles.brandGeometry} />
           </div>
-        </Container>
-      </div>
-    </footer>
+
+          <div className={styles.groups}>
+            {GROUPS.map((group) => (
+              <nav key={group.title} aria-label={`Docs footer ${group.title}`}>
+                <h2>{group.title}</h2>
+                <ul>
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={styles.directoryLink}
+                        target={
+                          link.href.startsWith("https://")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel={
+                          link.href.startsWith("https://")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        aria-description={
+                          link.href.startsWith("https://")
+                            ? "Opens in a new tab"
+                            : undefined
+                        }
+                      >
+                        {link.label}
+                        {link.href.startsWith("https://") && (
+                          <ArrowUpRight
+                            className="ml-1.5 size-3"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.bottomBar}>
+          <div className={styles.legal}>
+            <p>© {new Date().getFullYear()} PyColors</p>
+            <nav aria-label="Docs footer legal information">
+              <Link href="/license">License</Link>
+              <Link href="/terms">Terms</Link>
+              <Link href="/privacy">Privacy</Link>
+            </nav>
+          </div>
+          <div className={styles.utilities}>
+            <Link
+              href="/changelog"
+              className={styles.versions}
+              aria-label={`Release history: UI ${UI_VERSION}, Tokens ${TOKENS_VERSION}`}
+            >
+              <span>UI {UI_VERSION}</span>
+              <span aria-hidden="true">·</span>
+              <span>Tokens {TOKENS_VERSION}</span>
+              <ArrowUpRight className="size-3" aria-hidden="true" />
+            </Link>
+            <FooterAppearance />
+          </div>
+        </div>
+      </Container>
+    </FooterNavigation>
   );
 }

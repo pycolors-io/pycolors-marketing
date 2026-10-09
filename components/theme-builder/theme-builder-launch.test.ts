@@ -35,16 +35,10 @@ test("publishes the Theme Builder SEO contract and launch limitations", () => {
   assert.match(page, /canonical: THEME_BUILDER_PATH/u);
   assert.match(page, /openGraph:/u);
   assert.match(page, /twitter:/u);
-  assert.match(page, /Build a PyColors theme from your brand colors/u);
-  assert.match(
-    page,
-    /Free, client-side, PyColors-compatible theme generation for\s+production-shaped SaaS interfaces\./u,
-  );
-  assert.match(page, /Semantic token studio/u);
-  assert.match(page, /border border-pro-border-subtle bg-pro-surface/u);
-  assert.match(page, /<Container className="py-18">/u);
-  assert.match(page, /relative mx-auto max-w-7xl/u);
-  assert.match(page, /mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 lg:gap-8/u);
+  assert.match(page, /Your brand\. Your theme\./u);
+  assert.match(page, /Free, no account needed/u);
+  assert.match(page, /Light and dark included/u);
+  assert.match(page, /Your colors stay in your browser/u);
   assert.match(page, /contrast-aware, not an accessibility\s+certification/u);
   for (const reviewContext of [
     "Brand perception",
@@ -81,8 +75,12 @@ test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
     navigation,
     /title: "UI system"[\s\S]*label: "Patterns"/u,
   );
-  assert.match(footer, /title: "Platform"[\s\S]*Theme Builder/u);
-  assert.match(docsFooter, /title: "Platform"[\s\S]*Theme Builder/u);
+  for (const footerSource of [footer, docsFooter]) {
+    assert.match(
+      footerSource,
+      /label: "Theme Builder", href: "\/tools\/theme-builder"/u,
+    );
+  }
   assert.match(sitemap, /["']\/tools\/theme-builder["']/u);
   for (const document of docs) {
     assert.match(document, /\/tools\/theme-builder/u);
@@ -125,7 +123,7 @@ test("uses current serializer output without analytics or a second Tailwind cont
   if (!serialized.ok) throw new Error("Expected Theme Builder CSS output.");
   assert.match(serialized.value.content, /^:root \{/u);
   assert.match(serialized.value.content, /\.dark \{/u);
-  assert.match(output, /generatedCssExample\(css\.content\)/u);
+  assert.match(output, /content=\{activeArtifact\.content\}/u);
   assert.match(page, /@pycolors\/tokens\/tokens\.css/u);
   assert.match(page, /@theme inline/u);
   assert.match(output, /existing Tailwind v4 semantic utilities/u);

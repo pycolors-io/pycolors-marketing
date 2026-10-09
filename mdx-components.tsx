@@ -1,16 +1,16 @@
-import * as React from 'react';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
-import type { MDXComponents } from 'mdx/types';
-import Link from 'next/link';
-import { Link as LinkIcon } from 'lucide-react';
-import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
-import { Tabs as DocsTabs, Tab } from 'fumadocs-ui/components/tabs';
+import * as React from "react";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import type { MDXComponents } from "mdx/types";
+import Link from "next/link";
+import { Link as LinkIcon } from "lucide-react";
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import { Tabs as DocsTabs, Tab } from "fumadocs-ui/components/tabs";
 import {
   Cards as LinkCards,
   Card as LinkCard,
-} from 'fumadocs-ui/components/card';
+} from "fumadocs-ui/components/card";
 
-import { Preview } from '@/components/docs/preview';
+import { Preview } from "@/components/docs/preview";
 
 import {
   Alert,
@@ -67,15 +67,15 @@ import {
   TabsTrigger,
   TabsContent,
   Table,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 function getTextContent(children: unknown): string {
-  if (typeof children === 'string' || typeof children === 'number') {
+  if (typeof children === "string" || typeof children === "number") {
     return String(children);
   }
 
   if (Array.isArray(children)) {
-    return children.map(getTextContent).join('');
+    return children.map(getTextContent).join("");
   }
 
   if (
@@ -85,17 +85,17 @@ function getTextContent(children: unknown): string {
     return getTextContent(children.props.children);
   }
 
-  return '';
+  return "";
 }
 
 function slugify(value: string) {
   return value
     .toLowerCase()
     .trim()
-    .replaceAll(/['’]/g, '')
-    .replaceAll(/[^a-z0-9\s-]/g, '')
-    .replaceAll(/\s+/g, '-')
-    .replaceAll(/-+/g, '-');
+    .replaceAll(/['’]/g, "")
+    .replaceAll(/[^a-z0-9\s-]/g, "")
+    .replaceAll(/\s+/g, "-")
+    .replaceAll(/-+/g, "-");
 }
 
 function HeadingAnchor({ id }: Readonly<{ id: string }>) {
@@ -111,16 +111,19 @@ function HeadingAnchor({ id }: Readonly<{ id: string }>) {
   );
 }
 
-export function getMDXComponents(
-  components?: MDXComponents,
-): MDXComponents {
+export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
 
     pre: (props) => (
       <CodeBlock
         {...props}
-        className="my-6 rounded-2xl border border-border/60 bg-card shadow-sm"
+        className="docs-code-block my-6 rounded-lg border border-border-subtle bg-card shadow-none"
+        viewportProps={{
+          style: {
+            "--padding-right": props.title ? undefined : "3.75rem",
+          } as React.CSSProperties,
+        }}
       >
         <Pre>{props.children}</Pre>
       </CodeBlock>
@@ -130,11 +133,11 @@ export function getMDXComponents(
       <h1
         {...props}
         className={[
-          'font-brand scroll-mt-28 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl',
+          "font-brand scroll-mt-28 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl",
           className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       >
         {children}
       </h1>
@@ -148,11 +151,11 @@ export function getMDXComponents(
           id={headingId}
           {...props}
           className={[
-            'group mt-10 scroll-mt-28 pt-6 font-brand text-2xl font-semibold tracking-tight text-foreground sm:text-3xl',
+            "group mt-10 scroll-mt-28 pt-6 font-brand text-2xl font-semibold tracking-tight text-foreground sm:text-3xl",
             className,
           ]
             .filter(Boolean)
-            .join(' ')}
+            .join(" ")}
         >
           <span className="inline-flex items-center">
             <span>{children}</span>
@@ -170,11 +173,11 @@ export function getMDXComponents(
           id={headingId}
           {...props}
           className={[
-            'group mt-8 scroll-mt-24 pt-6 font-brand text-xl font-semibold tracking-tight text-foreground sm:text-2xl',
+            "group mt-8 scroll-mt-24 pt-6 font-brand text-xl font-semibold tracking-tight text-foreground sm:text-2xl",
             className,
           ]
             .filter(Boolean)
-            .join(' ')}
+            .join(" ")}
         >
           <span className="inline-flex items-center">
             <span>{children}</span>
@@ -188,22 +191,22 @@ export function getMDXComponents(
       <p
         {...props}
         className={[
-          'text-[15px] leading-7 text-muted-foreground sm:text-base',
+          "text-[15px] leading-7 text-muted-foreground sm:text-base",
           props.className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
-    a: ({ href = '', ...props }) => {
-      const isExternal = href.startsWith('http');
+    a: ({ href = "", ...props }) => {
+      const isExternal = href.startsWith("http");
       const cls = [
-        'font-medium text-foreground underline underline-offset-4 decoration-border transition-opacity hover:opacity-70',
+        "font-medium text-foreground underline underline-offset-4 decoration-border transition-opacity hover:opacity-70",
         (props as { className?: string }).className,
       ]
         .filter(Boolean)
-        .join(' ');
+        .join(" ");
 
       if (isExternal) {
         return (
@@ -224,11 +227,11 @@ export function getMDXComponents(
       <ul
         {...props}
         className={[
-          'my-4 ml-6 list-disc space-y-2 text-muted-foreground',
+          "my-4 ml-6 list-disc space-y-2 text-muted-foreground",
           props.className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
@@ -236,29 +239,27 @@ export function getMDXComponents(
       <ol
         {...props}
         className={[
-          'my-4 ml-6 list-decimal space-y-2 text-muted-foreground',
+          "my-4 ml-6 list-decimal space-y-2 text-muted-foreground",
           props.className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
     li: (props) => (
       <li
         {...props}
-        className={['leading-7', props.className]
-          .filter(Boolean)
-          .join(' ')}
+        className={["leading-7", props.className].filter(Boolean).join(" ")}
       />
     ),
 
     hr: (props) => (
       <hr
         {...props}
-        className={['my-8 border-border/40', props.className]
+        className={["my-8 border-border/40", props.className]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
@@ -266,11 +267,11 @@ export function getMDXComponents(
       <blockquote
         {...props}
         className={[
-          'my-6 rounded-r-xl border-l-2 border-primary/40 bg-muted/30 px-4 py-3 text-sm text-foreground/80',
+          "my-6 rounded-r-xl border-l-2 border-primary/40 bg-muted/30 px-4 py-3 text-sm text-foreground/80",
           props.className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
     table: ({ className, ...props }) => (
@@ -278,26 +279,26 @@ export function getMDXComponents(
         <table
           {...props}
           className={[
-            'w-full min-w-160 border-collapse text-sm',
-            '[&_thead]:border-b [&_thead]:border-border-subtle',
-            '[&_tbody_tr]:border-b [&_tbody_tr]:border-border-subtle',
-            '[&_tbody_tr:last-child]:border-b-0',
-            '[&_th]:h-11 [&_th]:px-4 [&_th]:text-left',
-            '[&_th]:align-middle [&_th]:font-medium',
-            '[&_th]:text-foreground [&_th]:whitespace-nowrap',
-            '[&_td]:p-4 [&_td]:align-middle',
-            '[&_td]:text-muted-foreground',
-            '[&_tr]:transition-colors',
-            '[&_tbody_tr:hover]:bg-muted/20',
-            '[&_code]:whitespace-nowrap',
-            '[&_thead]:bg-muted/20',
-            '[&_th]:text-[13px]',
-            '[&_td]:leading-6',
-            '[&_td]:text-[13px]',
+            "w-full min-w-160 border-collapse text-sm",
+            "[&_thead]:border-b [&_thead]:border-border-subtle",
+            "[&_tbody_tr]:border-b [&_tbody_tr]:border-border-subtle",
+            "[&_tbody_tr:last-child]:border-b-0",
+            "[&_th]:h-11 [&_th]:px-4 [&_th]:text-left",
+            "[&_th]:align-middle [&_th]:font-medium",
+            "[&_th]:text-foreground [&_th]:whitespace-nowrap",
+            "[&_td]:p-4 [&_td]:align-middle",
+            "[&_td]:text-muted-foreground",
+            "[&_tr]:transition-colors",
+            "[&_tbody_tr:hover]:bg-muted/20",
+            "[&_code]:whitespace-nowrap",
+            "[&_thead]:bg-muted/20",
+            "[&_th]:text-[13px]",
+            "[&_td]:leading-6",
+            "[&_td]:text-[13px]",
             className,
           ]
             .filter(Boolean)
-            .join(' ')}
+            .join(" ")}
         />
       </div>
     ),
@@ -305,33 +306,27 @@ export function getMDXComponents(
     thead: ({ className, ...props }) => (
       <thead
         {...props}
-        className={[
-          'border-b border-border/60 bg-muted/[0.55]',
-          className,
-        ]
+        className={["border-b border-border/60 bg-muted/[0.55]", className]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
     tbody: ({ className, ...props }) => (
       <tbody
         {...props}
-        className={['[&_tr:nth-child(even)]:bg-muted/18', className]
+        className={["[&_tr:nth-child(even)]:bg-muted/18", className]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
     tr: ({ className, ...props }) => (
       <tr
         {...props}
-        className={[
-          'border-b border-border/4ro0 transition-colors',
-          className,
-        ]
+        className={["border-b border-border/4ro0 transition-colors", className]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
@@ -339,11 +334,11 @@ export function getMDXComponents(
       <th
         {...props}
         className={[
-          'whitespace-nowrap px-3 py-2.5 text-left text-[13px] font-medium text-foreground',
+          "whitespace-nowrap px-3 py-2.5 text-left text-[13px] font-medium text-foreground",
           className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 
@@ -351,11 +346,11 @@ export function getMDXComponents(
       <td
         {...props}
         className={[
-          'px-3 py-2.5 align-top text-[13px] leading-6 text-muted-foreground',
+          "px-3 py-2.5 align-top text-[13px] leading-6 text-muted-foreground",
           className,
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
       />
     ),
 

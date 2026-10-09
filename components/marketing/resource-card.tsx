@@ -64,7 +64,7 @@ export function MarketingResourceCard({
           <div className="text-xs text-muted-foreground">{meta}</div>
         ) : null}
 
-        <Heading className="text-base font-semibold tracking-tight">
+        <Heading className="font-brand text-base font-semibold leading-snug tracking-normal">
           {title}
           {isExternal ? (
             <span className="sr-only"> (opens in a new tab)</span>
@@ -96,7 +96,7 @@ export function MarketingResourceCard({
       asChild
       interactive
       className={cn(
-        "group flex h-full flex-col justify-between rounded-[5px] p-5 shadow-soft transition-colors hover:border-border",
+        "group flex h-full flex-col justify-between rounded-lg p-5 shadow-soft transition-colors hover:border-border",
         marketingSurfaceToneClass[tone],
         className,
       )}

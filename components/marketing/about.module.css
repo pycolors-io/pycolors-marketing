@@ -1,0 +1,441 @@
+.page {
+  background: radial-gradient(
+      ellipse at 80% 0%,
+      color-mix(in oklab, var(--primary) 6%, transparent),
+      transparent 65%
+    )
+    0 0 / 100% 48rem no-repeat;
+}
+.heroLayout {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+  padding: 1rem 0 3rem;
+}
+.hero h1 {
+  max-width: 44rem;
+  font-size: clamp(2rem, 5.5vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+.hero p {
+  max-width: 34rem;
+}
+.breadcrumb a,
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.textLink:hover {
+  color: var(--primary);
+}
+.breadcrumb a:focus-visible,
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.systemVisual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background:
+    radial-gradient(
+      ellipse at 55% 40%,
+      color-mix(in oklab, var(--primary) 13%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at 10% 100%,
+      color-mix(in oklab, var(--brand-platform) 7%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+.visualGrid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, #0008, transparent 70%);
+}
+.visualHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+.visualDot {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.systemCore {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 17rem);
+  margin: 3rem auto 0;
+  padding: 1.5rem 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--primary) 20%, var(--border-subtle));
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow: 0 16px 48px -24px
+    color-mix(in oklab, var(--primary) 40%, transparent);
+}
+.systemCore::after {
+  position: absolute;
+  content: "";
+  bottom: -1.5rem;
+  left: 50%;
+  width: 1px;
+  height: 1.5rem;
+  background: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+.coreMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 12%, var(--background)),
+    var(--background)
+  );
+  color: var(--primary);
+}
+.systemBranches {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+.systemBranches::before {
+  position: absolute;
+  content: "";
+  height: 1px;
+  top: -1.5rem;
+  left: calc((100% - 1rem) / 6);
+  right: calc((100% - 1rem) / 6);
+  background: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+.systemNode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.125rem 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+.systemNode::before {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 1.5rem;
+  top: calc(-1.5rem - 1px);
+  left: 50%;
+  background: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+}
+.visualCaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-top: 2.5rem;
+  font-size: 0.625rem;
+  line-height: 1.5rem;
+}
+.visualCaption span {
+  color: var(--muted-foreground);
+}
+.sectionNav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 1.5rem;
+  padding-block: 0.75rem;
+  border-block: 1px solid var(--border-subtle);
+}
+.sectionNav .textLink {
+  gap: 0.75rem;
+}
+.eyebrow {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.purposePanel {
+  overflow: hidden;
+  display: grid;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+.purposeHeading {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background:
+    radial-gradient(
+      ellipse at 0% 0%,
+      color-mix(in oklab, var(--primary) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 75%
+    );
+}
+.purposeHeading h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: var(--site-heading-tracking);
+}
+.purposeHeading > p {
+  max-width: 25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.75rem;
+  color: var(--muted-foreground);
+}
+.founder {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.founderInitials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.purposeBody {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.purposeBody > p + p {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.875rem;
+  color: var(--muted-foreground);
+}
+.purposeNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+}
+.purposeNote svg {
+  margin-top: 0.25rem;
+}
+.principleGrid {
+  display: grid;
+}
+.principle {
+  display: flex;
+  flex-direction: column;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.principleNumber {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+.principle h3 {
+  max-width: 18rem;
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+.principle > p {
+  margin-block: 1rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.75rem;
+  color: var(--muted-foreground);
+}
+.principle .textLink {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.ecosystemLayout {
+  display: grid;
+  gap: 2rem;
+}
+.ecosystemNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  color: var(--muted-foreground);
+}
+.ecosystemNote svg {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+.productRow {
+  display: grid;
+  gap: 1rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.progressPanel {
+  border-top: 1px solid var(--border-subtle);
+}
+.progressPanel > div {
+  padding-inline: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.cta {
+  box-shadow: none;
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in oklab, var(--primary) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+@media (min-width: 640px) {
+  .heroLayout {
+    padding-block: 2rem 4rem;
+  }
+  .systemVisual {
+    padding: 2rem;
+  }
+  .systemCore {
+    margin-top: 3.5rem;
+  }
+  .systemNode {
+    flex-direction: row;
+    justify-content: center;
+    padding-block: 1.25rem;
+  }
+  .sectionNav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .purposeHeading,
+  .purposeBody {
+    padding: 2.5rem;
+  }
+  .purposeHeading h2 {
+    font-size: 2.25rem;
+  }
+  .productRow {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 2rem;
+  }
+}
+@media (min-width: 768px) {
+  .principle h3 {
+    min-height: 3rem;
+    line-height: 1.5rem;
+  }
+  .principleGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+  .purposePanel {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  .purposeBody {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+  .sectionIntro {
+    max-width: 48rem;
+  }
+  .principleGrid {
+    column-gap: 4rem;
+  }
+  .ecosystemLayout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.5fr);
+    gap: 6rem;
+  }
+  .ecosystemIntro {
+    align-self: start;
+    position: sticky;
+    top: 6rem;
+  }
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 4rem;
+    align-items: center;
+  }
+  .cta h2,
+  .cta > p {
+    grid-column: 1;
+  }
+  .cta > div {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    margin-top: 0;
+  }
+  .cta > div > div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

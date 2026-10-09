@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { X } from 'lucide-react';
+import * as React from "react";
+import Link from "next/link";
 
-import { Button, cn } from '@pycolors/ui';
+import { cn } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 
-const CONSENT_KEY = 'pycolors_privacy_consent';
+const CONSENT_KEY = "pycolors_privacy_consent";
 
-type ConsentValue = 'accepted' | 'denied';
+type ConsentValue = "accepted" | "denied";
 
 export function PrivacyConsentBanner() {
   const [mounted, setMounted] = React.useState(false);
@@ -26,7 +26,7 @@ export function PrivacyConsentBanner() {
     globalThis.localStorage.setItem(CONSENT_KEY, value);
 
     globalThis.dispatchEvent(
-      new CustomEvent('pycolors:privacy-consent', {
+      new CustomEvent("pycolors:privacy-consent", {
         detail: { value },
       }),
     );
@@ -39,95 +39,58 @@ export function PrivacyConsentBanner() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-4 left-4 z-50 w-full max-w-110 px-4 sm:px-0">
-      <div
-        role="alertdialog"
-        aria-labelledby="privacy-consent-title"
-        aria-describedby="privacy-consent-description"
-        className={cn(
-          'pointer-events-auto relative overflow-hidden rounded-[5px]',
-          'border border-border-subtle bg-background/92 backdrop-blur-xl',
-          'shadow-soft',
-          'animate-in fade-in slide-in-from-bottom-4 duration-500',
-        )}
+    <section
+      aria-labelledby="privacy-consent-title"
+      aria-describedby="privacy-consent-description"
+      className={cn(
+        "fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 p-4 sm:inset-x-auto sm:bottom-4 sm:left-4 sm:w-96",
+        "max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-lg border border-border bg-background text-foreground shadow-soft",
+        "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200",
+      )}
+    >
+      <h2
+        id="privacy-consent-title"
+        className="text-[13px] font-semibold leading-5"
       >
-        <button
-          type="button"
-          aria-label="Close privacy banner"
-          onClick={() => saveConsent('denied')}
-          className={cn(
-            'absolute right-3 top-3 inline-flex size-7 items-center justify-center',
-            'rounded-[4px] text-muted-foreground/70 transition-colors',
-            'hover:bg-muted hover:text-foreground',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-          )}
-        >
-          <X className="size-4" aria-hidden="true" />
-        </button>
-
-        <div className="p-5">
-          <div className="pr-8">
-            <p
-              id="privacy-consent-title"
-              className="font-brand text-[13px] font-semibold tracking-tight text-foreground"
-            >
-              Your privacy
-            </p>
-
-            <p
-              id="privacy-consent-description"
-              className="mt-2 text-sm leading-6 text-muted-foreground"
-            >
-              PyColors uses essential cookies to run the site and
-              optional analytics to improve product experience,
-              performance, and documentation quality.
-            </p>
-          </div>
-
-          <div className="mt-5 flex items-center justify-between gap-4 border-t border-border-subtle pt-4">
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                className="h-7 rounded-[4px] px-2.5 text-[11px] font-medium"
-                onClick={() => saveConsent('accepted')}
-              >
-                Accept all
-              </Button>
-
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-7 rounded-[4px] px-2.5 text-[11px] font-medium"
-                onClick={() => saveConsent('denied')}
-              >
-                Deny
-              </Button>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Link
-                href="/privacy"
-                className="transition-colors hover:text-foreground"
-              >
-                Privacy
-              </Link>
-
-              <span
-                aria-hidden="true"
-                className="h-1 w-1 rounded-full bg-border"
-              />
-
-              <Link
-                href="/terms"
-                className="transition-colors hover:text-foreground"
-              >
-                Terms
-              </Link>
-            </div>
-          </div>
-        </div>
+        Cookie preferences
+      </h2>
+      <p
+        id="privacy-consent-description"
+        className="mt-1.5 text-[13px] leading-5 text-muted-foreground"
+      >
+        Essential cookies keep PyColors working. Optional analytics help us
+        improve the site and documentation.
+      </p>
+      <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
+        {[
+          { label: "Privacy", href: "/privacy" },
+          { label: "Terms", href: "/terms" },
+        ].map(({ label, href }) => (
+          <Link
+            key={href}
+            href={href}
+            className="inline-flex min-h-8 items-center rounded-sm underline underline-offset-4 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none max-sm:min-h-11 [@media(pointer:coarse)]:min-h-11"
+          >
+            {label}
+          </Link>
+        ))}
       </div>
-    </div>
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => saveConsent("denied")}
+        >
+          Reject optional
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => saveConsent("accepted")}
+        >
+          Accept optional
+        </Button>
+      </div>
+    </section>
   );
 }

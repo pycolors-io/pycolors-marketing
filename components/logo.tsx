@@ -6,38 +6,26 @@ import { cn } from "@pycolors/ui";
 
 import { wordmarkFont } from "./wordmark-font";
 
-const BRAND = "#6A30D4";
-
 export function Logomark() {
+  // The inset shape at 17px matches the wordmark's ~14.6px visible glyph height.
   return (
     <svg
-      viewBox="0 0 44 40"
-      className={cn(
-        "h-8.5 w-8.5 shrink-0",
-        "transition-transform duration-300 ease-out",
-        "group-hover:scale-[1.03]",
-      )}
+      viewBox="7 5 30 30"
+      className="size-[17px] shrink-0 text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
+      focusable="false"
     >
+      {/* Two upward-facing facets share a 1:2 slope and 5-unit terminals.
+          The trailing tip sits 8 units behind the leading tip; the open cut
+          separates the facets without relying on color or opacity. */}
       <path
-        d="M10 31
-           Q10.6 29.8 11.4 28.6
-           L20.2 10.8
-           Q21 9.2 22 9.2
-           Q23 9.2 23.8 10.8
-           L32.6 28.6
-           Q33.4 29.8 34 31
-           H27.8
-           Q27 31 26.5 29.9
-           L22 21
-           L17.5 29.9
-           Q17 31 16.2 31
-           H10Z"
-        fill={BRAND}
+        d="M9 7 35 20 30 22.5 9 12ZM9 28 22 21.5 27 24 9 33Z"
+        transform="rotate(-90 22 20) translate(0 40) scale(1 -1)"
+        fill="currentColor"
         className={cn(
-          "transition-opacity duration-300 ease-out",
+          "transition-opacity duration-300 ease-out motion-reduce:transition-none",
           "group-hover:opacity-90",
         )}
       />
@@ -49,9 +37,10 @@ function Wordmark() {
     <span
       className={cn(
         wordmarkFont.className,
-        "select-none text-[18px] font-extrabold leading-none tracking-[-0.075em]",
+        // Geist's visible glyphs sit ~1.25px below the line box's center.
+        "inline-flex -translate-y-[1.25px] shrink-0 items-center whitespace-nowrap select-none text-[17px] font-semibold leading-5 tracking-[-0.025em]",
         "text-foreground antialiased",
-        "transition-opacity duration-300 ease-out",
+        "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",
       )}
     >
@@ -60,15 +49,32 @@ function Wordmark() {
   );
 }
 
-export function Logo() {
+export function Logo({
+  variant = "default",
+}: {
+  readonly variant?: "default" | "docs";
+}) {
+  const isDocs = variant === "docs";
+
   return (
     <Link
-      href="/"
-      aria-label="PyColors"
-      className={cn("group inline-flex items-center gap-0.5")}
+      href={isDocs ? "/docs" : "/"}
+      aria-label={isDocs ? "PyColors Docs" : "PyColors"}
+      className={cn(
+        "group inline-flex min-h-11 shrink-0 items-center gap-1 rounded-md",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+      )}
     >
       <Logomark />
-      <Wordmark />
+      {/* Natural text width keeps the Docs badge clear of the wordmark. */}
+      <span className="inline-flex items-center gap-2.5">
+        <Wordmark />
+        {isDocs ? (
+          <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
+            Docs
+          </span>
+        ) : null}
+      </span>
     </Link>
   );
 }

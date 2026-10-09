@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { ResponsiveSidebar } from "@/content/blocks/app-shells/responsive-sidebar";
+export { ResponsiveSidebarExample } from "./responsive-sidebar-example";
 import { AuditLogPanel } from "@/content/blocks/account/audit-log";
 import { WorkspaceInvitationsPanel } from "@/content/blocks/account/workspace-invitations";
 import { BillingOverviewPanel } from "@/content/blocks/commerce/billing-overview";
@@ -10,9 +10,9 @@ import { InvoiceHistoryPanel } from "@/content/blocks/commerce/invoice-history";
 import { PaymentMethodPanel } from "@/content/blocks/commerce/payment-method";
 
 const actionClassName =
-  "inline-flex min-h-9 items-center justify-center rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex min-h-11 sm:min-h-10 items-center justify-center rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 const primaryActionClassName =
-  "inline-flex min-h-9 items-center justify-center rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex min-h-11 sm:min-h-10 items-center justify-center rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 const statusClassName =
   "inline-flex items-center rounded-md border border-border px-2 py-1 text-xs font-medium text-foreground";
 
@@ -43,68 +43,13 @@ function DemoAction({
   );
 }
 
-export function ResponsiveSidebarExample() {
-  const contentId = usePreviewId("responsive-sidebar-preview");
-
-  return (
-    <div className="not-prose overflow-hidden rounded-lg border border-border">
-      <ResponsiveSidebar
-        activeItemId="overview"
-        brand={<strong className="text-sm">Northstar</strong>}
-        className="min-h-[30rem] [&_[data-slot=responsive-sidebar-desktop]]:h-[30rem]"
-        contentId={contentId}
-        headerActions={
-          <DemoAction
-            label="New project"
-            primary
-            selectedLabel="Project action selected"
-          />
-        }
-        headerTitle={<strong>Overview</strong>}
-        items={[
-          { id: "overview", label: "Overview", href: `#${contentId}` },
-          {
-            id: "projects",
-            label: "Projects",
-            href: `#${contentId}`,
-            badge: "4",
-          },
-        ]}
-        mobileDescription="Choose a fictional workspace destination."
-        mobileTitle="Workspace navigation"
-        navigationLabel="Preview workspace navigation"
-        sidebarFooter={<span className="text-xs">Fictional workspace</span>}
-      >
-        <div className="space-y-3 p-5 sm:p-6">
-          <p className="text-sm text-muted-foreground">
-            Canonical application shell with consumer-owned navigation and page
-            content.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-lg border border-border bg-card p-4">
-              <p className="text-sm font-medium">Projects</p>
-              <p className="mt-1 text-2xl font-semibold">4</p>
-            </div>
-            <div className="rounded-lg border border-border bg-card p-4">
-              <p className="text-sm font-medium">Environment</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Interactive local preview
-              </p>
-            </div>
-          </div>
-        </div>
-      </ResponsiveSidebar>
-    </div>
-  );
-}
-
 export function BillingOverviewExample() {
   return (
-    <div className="not-prose">
+    <div className="not-prose mx-auto max-w-3xl">
       <BillingOverviewPanel
         billingLabel="Billing"
         billingValue="Monthly"
-        description="Fictional values supplied by the preview consumer."
+        description="Your plan, renewal date and payment details. Fictional demo data."
         paymentLabel="Payment method"
         paymentValue="Visa ending in 4242"
         planLabel="Plan"
@@ -122,7 +67,15 @@ export function BillingOverviewExample() {
           <DemoAction label="View plans" selectedLabel="Plans selected" />
         }
         statusLabel="Status"
-        statusValue="Active"
+        statusValue={
+          <span className="inline-flex items-center gap-1.5 text-xs">
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-success"
+            />
+            Active
+          </span>
+        }
         title="Billing"
       />
     </div>
@@ -131,11 +84,11 @@ export function BillingOverviewExample() {
 
 export function PaymentMethodExample() {
   return (
-    <div className="not-prose">
+    <div className="not-prose mx-auto max-w-3xl">
       <PaymentMethodPanel
         contactLabel="Billing contact"
         contactValue="billing@example.com"
-        description="Redacted fictional payment details for presentation only."
+        description="The payment method used for your workspace. Fictional demo data."
         expiryLabel="Expires"
         expiryValue="10 / 28"
         methodLabel="Method"
@@ -156,15 +109,23 @@ export function PaymentMethodExample() {
 
 export function InvoiceHistoryExample() {
   return (
-    <div className="not-prose">
+    <div className="not-prose mx-auto max-w-4xl">
       <InvoiceHistoryPanel
-        description="Fictional records supplied by the preview consumer."
+        description="A clear record of your workspace billing. Fictional demo invoices."
         invoices={[
           {
             id: "invoice-example-1",
             date: "September 1, 2026",
             amount: "$49.00",
-            status: <span className={statusClassName}>Paid</span>,
+            status: (
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-success/25 bg-success/5 px-2 py-1 text-xs">
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 rounded-full bg-success"
+                />
+                Paid
+              </span>
+            ),
             action: (
               <DemoAction
                 label="View invoice"
@@ -176,7 +137,15 @@ export function InvoiceHistoryExample() {
             id: "invoice-example-2",
             date: "August 1, 2026",
             amount: "$49.00",
-            status: <span className={statusClassName}>Paid</span>,
+            status: (
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-success/25 bg-success/5 px-2 py-1 text-xs">
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 rounded-full bg-success"
+                />
+                Paid
+              </span>
+            ),
           },
         ]}
         title="Invoice history"

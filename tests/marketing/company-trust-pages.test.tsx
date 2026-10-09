@@ -1,4 +1,6 @@
 import * as React from "react";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import Link from "next/link";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -19,19 +21,19 @@ import ChangelogPage, {
 import { PageHero } from "../../components/marketing/page-hero";
 
 const pages = [
-  [
-    "about",
-    AboutPage,
-    aboutMetadata,
-    "PyColors helps developers ship credible SaaS products faster.",
-  ],
+  ["about", AboutPage, aboutMetadata, "Ship credible SaaS products faster."],
   [
     "open-source",
     OpenSourcePage,
     openSourceMetadata,
-    "Open-source foundations behind PyColors.",
+    "Read the code. Build with confidence.",
   ],
-  ["roadmap", RoadmapPage, roadmapMetadata, "Roadmap"],
+  [
+    "roadmap",
+    RoadmapPage,
+    roadmapMetadata,
+    "The work ahead. The progress so far.",
+  ],
   ["changelog", ChangelogPage, changelogMetadata, "Changelog"],
 ] as const;
 
@@ -71,44 +73,61 @@ describe("company and trust pages", () => {
     // runners. Keep the functional checks on Vitest's default deadline.
     it(`${route} has no automated accessibility violations across the full page`, async () => {
       const { container } = render(<Page />);
+      container.querySelectorAll("details").forEach((details) => {
+        details.open = true;
+      });
       expect(await axe(container)).toHaveNoViolations();
     }, 15_000);
   }
 
-  it("keeps the About progression table and the existing product destinations", () => {
+  it("connects the About ecosystem to available products with clear scope", () => {
     render(<AboutPage />);
-    const table = screen.getByRole("table", {
-      name: "How the ecosystem works",
+    const products = within(
+      screen.getByRole("list", { name: "PyColors products" }),
+    ).getAllByRole("listitem");
+    const expected = [
+      ["PyColors UI", "/ui", "Open source"],
+      ["Blocks", "/blocks", "Free"],
+      ["Theme Builder", "/tools/theme-builder", "Free tool"],
+      ["Starter Free", "/starters/free", "Open source"],
+      ["Starter Pro", "/starters/pro", "Commercial"],
+      ["Templates", "/templates", "Commercial"],
+    ];
+    expect(products).toHaveLength(expected.length);
+    expected.forEach(([name, href, availability], i) => {
+      const product = within(products[i]!);
+      expect(product.getByRole("heading", { level: 3 })).toHaveTextContent(
+        name!,
+      );
+      expect(product.getByRole("link")).toHaveAttribute("href", href);
+      expect(product.getByText(availability!, { exact: true })).toBeVisible();
     });
-    const rows = within(table).getAllByRole("row");
-    expect(rows).toHaveLength(5);
+    expect(products[3]).toHaveTextContent(
+      "Auth, billing and product data are mocked",
+    );
+    expect(products[4]).toHaveTextContent(
+      "Configure your services, add product logic and validate before launch",
+    );
+    expect(screen.getByRole("link", { name: "View examples" })).toHaveAttribute(
+      "href",
+      "/ui/examples",
+    );
     expect(
-      within(rows[0]!)
-        .getAllByRole("columnheader")
-        .map((n) => n.textContent),
-    ).toEqual(["Stage", "What it means", "Where to go", "Why it matters"]);
+      screen.getByRole("link", { name: "Explore patterns" }),
+    ).toHaveAttribute("href", "/ui/patterns");
     expect(
-      rows
-        .slice(1)
-        .map((row) => within(row).getAllByRole("cell")[0]!.textContent),
-    ).toEqual(["Learn", "Explore", "Validate", "Launch"]);
+      screen.getByRole("link", { name: "Read the guides" }),
+    ).toHaveAttribute("href", "/guides");
     expect(
-      within(table)
-        .getAllByRole("link")
-        .map((link) => link.getAttribute("href")),
-    ).toEqual([
-      "/guides",
-      "/ui/patterns",
-      "/examples",
-      "/starters/free",
-      "/starters/pro",
-      "/pricing",
-    ]);
-    expect(
-      screen.getByRole("heading", { name: "Today", level: 3 }),
+      screen.getByRole("heading", { name: "What has shipped", level: 3 }),
     ).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Next", level: 3 }),
+      screen.getByRole("heading", { name: "What is planned", level: 3 }),
+    ).toBeVisible();
+    expect(
+      screen.getByText(
+        /Planned items are not part of the current product scope/,
+      ),
     ).toBeVisible();
     expect(
       screen.getByRole("link", { name: "View changelog" }),
@@ -119,53 +138,125 @@ describe("company and trust pages", () => {
     );
   });
 
+  it("keeps founder attribution and reachable About destinations", () => {
+    render(<AboutPage />);
+    expect(screen.getByText("Patrice Parny", { exact: true })).toBeVisible();
+    expect(screen.getByText("Founder of PyColors")).toBeVisible();
+    const ids = [...document.querySelectorAll("[id]")].map((node) => node.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const link of within(screen.getByRole("main")).getAllByRole("link")) {
+      const href = link.getAttribute("href")!;
+      if (href.startsWith("#")) {
+        expect(document.getElementById(href.slice(1))).toHaveAccessibleName();
+        continue;
+      }
+      if (!href.startsWith("/")) continue;
+      const route = href.split("#")[0]!;
+      const candidates = route.startsWith("/docs/")
+        ? [
+            resolve("content", `${route.slice(1)}.mdx`),
+            resolve("content", route.slice(1), "index.mdx"),
+          ]
+        : route === "/docs"
+          ? [resolve("app/docs/[[...slug]]/page.tsx")]
+          : [resolve("app/(site)", route.slice(1), "page.tsx")];
+      expect(candidates.some(existsSync), href).toBe(true);
+    }
+  });
+
   it("keeps all six repositories, their categories, safe links and license boundary", () => {
     render(<OpenSourcePage />);
-    const repositories = screen.getByRole("region", { name: "Repositories" });
-    const links = within(repositories).getAllByRole("link");
-    expect(links).toHaveLength(6);
+    const repositories = screen.getByRole("region", {
+      name: "The code behind the ecosystem.",
+    });
+    const articles = within(repositories).getAllByRole("article");
+    expect(articles).toHaveLength(6);
     const expected = [
-      ["pycolors-ui", "Core foundations"],
-      ["pycolors-tokens", "Core foundations"],
-      ["pycolors-eslint-config", "Developer tooling"],
-      ["pycolors-typescript-config", "Developer tooling"],
-      ["pycolors-starter-free", "Starters"],
-      ["pycolors-marketing", "Website"],
+      ["pycolors-ui", "UI components"],
+      ["pycolors-tokens", "Design tokens"],
+      ["pycolors-eslint-config", "Code quality"],
+      ["pycolors-typescript-config", "Type checking"],
+      ["pycolors-starter-free", "Frontend demo"],
+      ["pycolors-marketing", "Marketing & docs"],
     ];
     expected.forEach(([name, category], i) => {
-      expect(links[i]).toHaveAttribute(
+      const link = within(articles[i]!).getByRole("link", {
+        name: `View ${name} on GitHub (opens in a new tab)`,
+      });
+      expect(link).toHaveAttribute(
         "href",
         `https://github.com/pycolors-io/${name}`,
       );
-      expect(links[i]).toHaveAccessibleName(expect.stringContaining(name!));
-      expect(links[i]).toHaveTextContent(category!);
-      expect(
-        within(links[i]!).getByRole("heading", { level: 4 }),
-      ).toHaveTextContent(name!);
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noreferrer noopener");
+      expect(articles[i]).toHaveTextContent(category!);
+      expect(articles[i]).toHaveAccessibleName();
     });
+    expect(articles[4]).toHaveTextContent(
+      "Auth, billing and product data are mocked",
+    );
     expect(
       screen.getByText(
         /Public repositories are governed by their repository licenses/,
       ),
     ).toBeVisible();
+    const commercial = screen.getByRole("region", {
+      name: "Start with more already connected.",
+    });
     expect(
-      within(
-        screen.getByRole("table", { name: "Open-core strategy" }),
-      ).getAllByRole("row"),
-    ).toHaveLength(4);
+      within(commercial).getByRole("link", { name: "Starter Pro" }),
+    ).toHaveAttribute("href", "/starters/pro");
+    expect(
+      within(commercial).getByRole("link", { name: "NA-AI Landing" }),
+    ).toHaveAttribute("href", "/templates/na-ai-landing");
+    expect(commercial).toHaveTextContent(
+      "Configure, customize and validate before launch.",
+    );
+    expect(screen.queryByText(/shipping weekly|weekly shipping/i)).toBeNull();
+    for (const link of within(screen.getByRole("main")).getAllByRole("link")) {
+      const href = link.getAttribute("href")!;
+      if (href.startsWith("#")) {
+        expect(document.getElementById(href.slice(1))).toHaveAccessibleName();
+      } else if (href.startsWith("/")) {
+        const candidates = href.startsWith("/docs/")
+          ? [
+              resolve("content", `${href.slice(1)}.mdx`),
+              resolve("content", href.slice(1), "index.mdx"),
+            ]
+          : [resolve("app/(site)", href.slice(1), "page.tsx")];
+        expect(candidates.some(existsSync), href).toBe(true);
+      }
+    }
   });
 
   it("preserves all milestone groups and distinguishes active, planned and shipped work", () => {
-    render(<RoadmapPage />);
+    const { container } = render(<RoadmapPage />);
     const totals = within(
       screen.getByRole("list", { name: "Roadmap status totals" }),
     ).getAllByRole("listitem");
-    expect(totals.map((n) => n.textContent)).toEqual([
-      "shipped78",
-      "now3",
-      "next4",
-      "later0",
-    ]);
+    expect(totals).toHaveLength(4);
+    ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
+      expect(totals[index]).toHaveTextContent(status);
+      expect(totals[index]).toHaveTextContent(String([3, 4, 0, 78][index]));
+      const href = within(totals[index]!)
+        .getByRole("link")
+        .getAttribute("href")!;
+      const target = document.getElementById(href.slice(1));
+      expect(target).toHaveAccessibleName();
+      expect(target).toHaveAttribute("tabindex", "-1");
+    });
+    const disclosures = [...container.querySelectorAll("details")];
+    expect(disclosures).toHaveLength(12);
+    expect(disclosures[0]).toHaveAttribute("open");
+    expect(disclosures[0]?.querySelector("summary")).toHaveTextContent(
+      "October 2026",
+    );
+    disclosures
+      .slice(1)
+      .forEach((details) => expect(details).not.toHaveAttribute("open"));
+    disclosures.forEach((details) => {
+      details.open = true;
+    });
     const groups = [
       "Release Week",
       "January 2026",
@@ -180,17 +271,31 @@ describe("company and trust pages", () => {
       "October 2026",
       "H1 2026",
     ];
-    const rows = groups.flatMap((name) =>
+    const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
+    expect(historyRows).toHaveLength(78);
+    historyRows.forEach((row) =>
+      expect(
+        within(row as HTMLElement).getByText("Shipped", { exact: true }),
+      ).toBeVisible(),
+    );
+    const activeRows = ["Now", "Next"].flatMap((status) =>
+      within(
+        screen.getByRole("list", { name: `${status} roadmap items` }),
+      ).getAllByRole("listitem"),
+    );
+    const rows = [...activeRows, ...historyRows];
     expect(rows).toHaveLength(85);
     expect(
-      rows.map(
-        (row) =>
-          within(row as HTMLElement).getByRole("heading", { level: 3 })
-            .textContent,
-      ),
-    ).toEqual(roadmapTitles);
+      rows
+        .map(
+          (row) =>
+            within(row as HTMLElement).getByRole("heading", { level: 3 })
+              .textContent,
+        )
+        .sort(),
+    ).toEqual([...roadmapTitles].sort());
     for (const [title, status] of pendingRoadmap) {
       const card = screen
         .getByRole("heading", { level: 3, name: title })
@@ -200,6 +305,12 @@ describe("company and trust pages", () => {
     }
     expect(
       screen.getByText(/Package-based distribution remains planned/),
+    ).toBeVisible();
+    expect(
+      screen.getByText(/No longer-term items are listed yet/),
+    ).toBeVisible();
+    expect(
+      screen.getByText(/It is not a contractual delivery promise/),
     ).toBeVisible();
   });
 
@@ -223,8 +334,53 @@ describe("company and trust pages", () => {
         "href",
         href,
       );
+      const notes = article.querySelector("details")!;
+      expect(notes.open).toBe(i === 0);
+      expect(notes.querySelector("summary")).toHaveTextContent(
+        `Release notes for ${version}`,
+      );
+      notes.open = true;
       expect(within(article).getAllByRole("list").length).toBeGreaterThan(0);
     });
+  });
+
+  it("links every archive month and release permalink to a unique, focusable entry", () => {
+    const { container } = render(<ChangelogPage />);
+    const archive = screen.getByRole("navigation", { name: "Release archive" });
+    const monthLinks = within(within(archive).getByRole("list")).getAllByRole(
+      "link",
+    );
+    const months = [...new Set(releases.map(([, date]) => date.slice(0, 7)))];
+    expect(monthLinks).toHaveLength(months.length);
+    monthLinks.forEach((link, index) => {
+      const month = months[index]!;
+      const entries = releases.filter(([, date]) => date.startsWith(month));
+      expect(link).toHaveTextContent(
+        `${entries.length} ${entries.length === 1 ? "release" : "releases"}`,
+      );
+      const target = container.querySelector(link.getAttribute("href")!)!;
+      expect(target.tagName).toBe("ARTICLE");
+      expect(target).toHaveAttribute("tabindex", "-1");
+      expect(target.querySelector("time")).toHaveAttribute(
+        "datetime",
+        entries[0]![1],
+      );
+    });
+    const permalinks = screen.getAllByRole("link", {
+      name: /^Permanent link to /,
+    });
+    expect(permalinks).toHaveLength(releases.length);
+    expect(
+      new Set(permalinks.map((link) => link.getAttribute("href"))).size,
+    ).toBe(releases.length);
+    permalinks.forEach((link) => {
+      expect(container.querySelector(link.getAttribute("href")!)).toBe(
+        link.closest("article"),
+      );
+    });
+    expect(
+      screen.getByRole("link", { name: "Read the latest release" }),
+    ).toHaveAttribute("href", permalinks[0]!.getAttribute("href"));
   });
 
   it("keeps the existing hero default and supports a compact introduction with identical content", () => {
@@ -349,33 +505,29 @@ const pendingRoadmap = [
 ] as const;
 const releases = [
   [
-    "v1.26.0",
-    "2026-10-02",
-    "PyColors Marketing v1.26.0: practical integration guidance and clearer product journeys",
-    "/docs",
-  ],
-  [
-    "v1.25.0",
-    "2026-09-25",
-    "PyColors Marketing v1.25.0: clearer product proof and purchase guidance",
-    "/",
-  ],
-  [
-    "v1.24.0",
-    "2026-09-18",
-    "PyColors Marketing v1.24.0: from setup to working UI examples",
-    "/docs/getting-started",
-  ],
-  [
-    "v1.23.0",
-    "2026-09-11",
-    "PyColors Marketing v1.23.0: discover, copy, and adapt Blocks",
+    "v1.27.0",
+    "2026-10-09",
+    "Clearer navigation and interactive product discovery",
     "/blocks",
   ],
   [
+    "v1.26.0",
+    "2026-10-02",
+    "Practical integration guidance and clearer product journeys",
+    "/docs",
+  ],
+  ["v1.25.0", "2026-09-25", "Clearer product proof and purchase guidance", "/"],
+  [
+    "v1.24.0",
+    "2026-09-18",
+    "From setup to working UI examples",
+    "/docs/getting-started",
+  ],
+  ["v1.23.0", "2026-09-11", "Discover, copy, and adapt Blocks", "/blocks"],
+  [
     "v1.22.0",
     "2026-09-04",
-    "PyColors Marketing v1.22.0: a more practical path to implementation",
+    "A more practical path to implementation",
     "/tools/theme-builder",
   ],
   [

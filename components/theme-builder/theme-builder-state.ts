@@ -29,9 +29,8 @@ export type ThemeBuilderState = Readonly<{
 }>;
 
 /**
- * These defaults match the existing PyColors violet branding, use a generated
- * neutral, and use a restrained off-white light background that remains
- * explicit and reproducible.
+ * This violet demo preset is independent of the selected site palette. Its
+ * generated neutral and explicit off-white background remain reproducible.
  */
 export const THEME_BUILDER_DEFAULTS: ThemeBuilderDraft = {
   brandColor: "#6a30d4",
@@ -157,4 +156,32 @@ export function selectThemeBuilderMode(
 /** Restores the documented deterministic defaults without reloading the page. */
 export function resetThemeBuilderState(): ThemeBuilderState {
   return createThemeBuilderState();
+}
+
+/** Validate a complete saved draft once before replacing any editor state. */
+export function restoreThemeBuilderState(
+  draft: ThemeBuilderDraft,
+  previewMode: ThemeMode,
+):
+  | Readonly<{ ok: true; state: ThemeBuilderState }>
+  | Readonly<{ ok: false; message: string }> {
+  const evaluation = evaluateDraft(draft);
+  if (!evaluation.ok) {
+    return {
+      ok: false,
+      message:
+        evaluation.generationError ??
+        Object.values(evaluation.fieldErrors).join(" "),
+    };
+  }
+  return {
+    ok: true,
+    state: {
+      draft,
+      previewMode,
+      generatedTheme: evaluation.generatedTheme,
+      fieldErrors: {},
+      generationError: null,
+    },
+  };
 }

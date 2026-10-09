@@ -1,0 +1,57 @@
+.documentEmail {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+.documentEmail:hover {
+  color: var(--primary);
+}
+.documentEmail:focus-visible,
+.readingLayout:focus-visible,
+.page section[tabindex="-1"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.readingLayout:focus-visible {
+  outline-offset: 6px;
+}
+.related h2 {
+  max-width: 32ch;
+  font-size: 1.0625rem;
+}
+.related > .footnote {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1.75rem;
+}
+@media (max-width: 1023px) {
+  .documentInfo dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .documentInfo dl > div {
+    margin: 0;
+  }
+  .documentInfo dl > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .documentInfo dl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .documentInfo dl > div:last-child {
+    grid-column: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.page) {
+    scroll-behavior: auto;
+  }
+}

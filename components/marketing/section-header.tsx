@@ -41,18 +41,18 @@ export function MarketingSectionHeader({
   return (
     <div
       className={cn(
-        "mb-8",
+        "mb-10 sm:mb-12",
         isCentered
           ? "mx-auto max-w-3xl text-center"
-          : "flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between",
+          : "flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-8",
         className,
       )}
     >
-      <div className="space-y-3">
+      <div className="min-w-0 space-y-4">
         {eyebrow ? (
           <Badge
             variant="outline"
-            className="rounded-[5px] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em]"
+            className="max-w-full rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em]"
           >
             {eyebrow}
           </Badge>
@@ -60,7 +60,7 @@ export function MarketingSectionHeader({
 
         <h2
           id={titleId}
-          className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
         >
           {title}
         </h2>
@@ -68,8 +68,8 @@ export function MarketingSectionHeader({
         {description ? (
           <p
             className={cn(
-              "text-sm leading-7 text-muted-foreground",
-              isCentered ? "mx-auto max-w-3xl" : "max-w-3xl",
+              "max-w-2xl text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base",
+              isCentered && "mx-auto",
             )}
           >
             {description}
@@ -79,7 +79,7 @@ export function MarketingSectionHeader({
 
       {action ? (
         <div
-          className={cn(isCentered ? "flex justify-center pt-1" : "shrink-0")}
+          className={cn(isCentered ? "mt-6 flex justify-center" : "shrink-0")}
         >
           {action}
         </div>

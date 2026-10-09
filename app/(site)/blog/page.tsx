@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen } from "lucide-react";
 
-import { Badge } from "@pycolors/ui";
+import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
-import { BlogList } from "@/components/blog/blog-list";
+import {
+  BlogArticleRow,
+  BlogFeaturedArticle,
+} from "@/components/blog/blog-index-article";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { PageHero } from "@/components/marketing/page-hero";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
@@ -15,21 +18,12 @@ import {
   getAllTags,
   getFeaturedPosts,
 } from "@/lib/blog/utils";
-
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import {
-  MarketingPill,
-  MarketingPillList,
-} from "@/components/marketing/pill-list";
-import { MarketingFeatureCard } from "@/components/marketing/feature-card";
-import {
-  MarketingActionGroup,
-  MarketingCtaPanel,
-  MarketingLinkButton,
-} from "@/components/marketing/cta-panel";
+import styles from "@/components/blog/blog-index.module.css";
 
-const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
+const textLink =
+  "inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Engineering Blog",
@@ -61,222 +55,231 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   const posts = getAllPosts();
   const featuredPosts = getFeaturedPosts(3);
+  const [leadPost, ...supportingPosts] = featuredPosts;
   const categories = getAllCategories();
   const tags = getAllTags();
 
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-16 pt-24">
-        <div className="mx-auto max-w-6xl">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${styles.page} bg-background text-foreground`}
+    >
+      <Container className="pb-16 pt-24 sm:pt-28">
+        <div
+          className={`${styles.intro} grid items-end gap-8 pb-12 sm:gap-10 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16`}
+        >
           <PageHero
             variant="compact"
             align="left"
-            maxWidth="5xl"
-            contentClassName="mx-0"
-            badges={[
-              {
-                label: "Blog",
-                variant: "secondary",
-                icon: <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />,
-              },
-              { label: "Technical writing", variant: "outline" },
-              {
-                label: "Product-first",
-                variant: "outline",
-                icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
-              },
-            ]}
+            contentClassName="mx-0 max-w-3xl"
+            badges={[{ label: "Blog", variant: "outline" }]}
             title="Technical articles for developers"
-            description="building real SaaS products with better structure."
+            description="Architecture decisions, implementation notes and lessons from building PyColors. Practical reading for your next SaaS product."
             actions={
-              <MarketingLinkButton variant="outline">
-                <Link
-                  href={
-                    featuredPosts.length > 0
-                      ? "#featured-articles"
-                      : "#latest-articles"
-                  }
+              <>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="rounded-md"
                 >
-                  Browse articles
+                  <Link
+                    href={leadPost ? "#featured-articles" : "#latest-articles"}
+                  >
+                    Browse articles{" "}
+                    <ArrowDown className="size-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+                <Link
+                  href="/guides"
+                  className={`${textLink} justify-center sm:px-2`}
+                >
+                  Explore guides{" "}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
                 </Link>
-              </MarketingLinkButton>
+              </>
             }
           />
-
-          {featuredPosts.length > 0 ? (
-            <MarketingSectionShell
-              id="featured-articles"
-              aria-labelledby="featured-title"
-              spacing="compact"
-              className="scroll-mt-20"
-            >
-              <MarketingSectionHeader
-                titleId="featured-title"
-                align="left"
-                title="Featured articles"
-                description="Start with the highest-signal articles connected to real product and engineering decisions."
-                action={
-                  <MarketingLinkButton variant="outline">
-                    <Link href="/starters">Explore Starters</Link>
-                  </MarketingLinkButton>
-                }
-              />
-              <BlogList posts={featuredPosts} />
-            </MarketingSectionShell>
-          ) : null}
-
-          <MarketingSectionShell
-            id="latest-articles"
-            aria-labelledby="latest-title"
-            spacing="compact"
-            className="scroll-mt-20"
+          <aside
+            aria-label="About the blog"
+            className={`${styles.introNote} lg:mb-1`}
           >
-            <MarketingSectionHeader
-              titleId="latest-title"
-              align="left"
-              title="Latest articles"
-              description="Focused content for the product surfaces and implementation decisions that matter most."
-              action={
-                <MarketingLinkButton variant="outline">
-                  <Link href="/docs/starter">Starter docs</Link>
-                </MarketingLinkButton>
-              }
-            />
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
-              <BlogList posts={posts} />
-              <BlogSidebar categories={categories} tags={tags} />
-            </div>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell aria-labelledby="why-blog-title">
-            <MarketingSectionHeader
-              titleId="why-blog-title"
-              align="left"
-              eyebrow="Why this blog exists"
-              title="Real implementation work turned into durable technical content."
-            />
-            <div className="max-w-3xl space-y-6">
-              <p className="text-sm leading-7 text-muted-foreground">
-                The PyColors blog turns real product work into useful technical
-                content: SaaS architecture, Next.js decisions, design systems,
-                billing, product surfaces, and production-ready implementation
-                tradeoffs.
-              </p>
-              <MarketingPillList>
-                {[
-                  "Next.js",
-                  "SaaS Architecture",
-                  "Billing",
-                  "Design Systems",
-                  "Product UX",
-                ].map((label) => (
-                  <MarketingPill key={label}>{label}</MarketingPill>
-                ))}
-              </MarketingPillList>
-              <p className="text-sm leading-7 text-muted-foreground">
-                This blog is not built for generic tutorials. It documents
-                concrete decisions around SaaS architecture, product surfaces,
-                UI systems, business wiring, and production-ready tradeoffs
-                while building the PyColors ecosystem.
-              </p>
-              <MarketingPillList>
-                {[
-                  "Product engineering",
-                  "Architecture notes",
-                  "Conversion lessons",
-                  "Docs-first thinking",
-                ].map((label) => (
-                  <MarketingPill key={label}>{label}</MarketingPill>
-                ))}
-              </MarketingPillList>
-              <MarketingActionGroup>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/guides">View Guides</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/ui/patterns">Browse Patterns</Link>
-                </MarketingLinkButton>
-                <MarketingLinkButton variant="outline">
-                  <Link href="/upgrade">Explore Upgrade</Link>
-                </MarketingLinkButton>
-              </MarketingActionGroup>
-            </div>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell aria-labelledby="blog-path-title">
-            <MarketingSectionHeader
-              titleId="blog-path-title"
-              align="left"
-              title="How the blog fits the PyColors path"
-              description="The blog builds authority, clarifies the product logic, and naturally bridges education to implementation."
-            />
-            <div className="grid gap-4 lg:grid-cols-3">
-              <MarketingFeatureCard
-                meta="Step 01"
-                title="Learn from real decisions"
-                description="Use articles to understand how strong SaaS products are structured across auth, billing, UI systems, settings, and dashboard surfaces."
-              />
-              <MarketingFeatureCard
-                meta="Step 02"
-                title="Move from concept to pattern"
-                description="Connect the article logic to examples, guides, and reusable UI patterns built around the same product surfaces."
-              />
-              <MarketingFeatureCard
-                meta="Step 03"
-                title="Build faster with PyColors"
-                description="Start with Starter Free, then move to Starter Pro when architecture, authentication, billing, and business wiring become the bottleneck."
-              />
-            </div>
-            <MarketingActionGroup className="mt-6">
-              <MarketingLinkButton>
-                <Link href="/starters/free">
-                  Start with Starter Free
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </Link>
-              </MarketingLinkButton>
-              <MarketingLinkButton variant="outline">
-                <Link href="/guides">Browse Guides</Link>
-              </MarketingLinkButton>
-              <BuyStarterProButton
-                fullWidth={false}
-                label={`Buy Starter Pro — ${starterProPriceLabel}`}
-              />
-            </MarketingActionGroup>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell
-            aria-labelledby="blog-next-title"
-            spacing="compact"
-          >
-            <Badge variant="outline" className="mb-4 rounded-[5px]">
-              Next step
-            </Badge>
-            <MarketingCtaPanel
-              titleId="blog-next-title"
-              title="Turn reading into implementation leverage."
-              description="Use the blog to understand the reasoning, then use PyColors to ship the product surface faster."
-              actions={
-                <div className="space-y-6">
-                  <MarketingPillList>
-                    {[
-                      "Read the logic",
-                      "Validate with Free",
-                      "Upgrade when ready",
-                    ].map((label) => (
-                      <MarketingPill key={label}>{label}</MarketingPill>
-                    ))}
-                  </MarketingPillList>
-                  <MarketingActionGroup className="sm:max-w-60 sm:flex-col sm:items-stretch">
-                    <MarketingLinkButton variant="outline">
-                      <Link href="/starters/free">Starter Free</Link>
-                    </MarketingLinkButton>
-                    <BuyStarterProButton />
-                  </MarketingActionGroup>
-                </div>
-              }
-            />
-          </MarketingSectionShell>
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+              From the workbench
+            </p>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">
+              The decisions behind the code, from interface details to
+              production systems.
+            </p>
+            <p className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+              <span>
+                {posts.length} {posts.length === 1 ? "article" : "articles"}
+              </span>
+              <span aria-hidden="true">/</span>
+              <span>
+                {categories.length}{" "}
+                {categories.length === 1 ? "topic" : "topics"}
+              </span>
+            </p>
+          </aside>
         </div>
+
+        {leadPost ? (
+          <MarketingSectionShell
+            divider="pattern"
+            id="featured-articles"
+            width="full"
+            spacing="compact"
+            className="scroll-mt-24 border-t border-border-subtle"
+            aria-labelledby="featured-title"
+          >
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 sm:mb-8">
+              <h2
+                id="featured-title"
+                className="font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
+              >
+                Featured articles
+              </h2>
+              <Link
+                href="#latest-articles"
+                className={`${textLink} text-muted-foreground`}
+              >
+                View all articles{" "}
+                <ArrowDown className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <div
+              className={`grid gap-5 sm:gap-6 ${supportingPosts.length > 0 ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}
+            >
+              <BlogFeaturedArticle post={leadPost} lead />
+              {supportingPosts.length > 0 ? (
+                <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1">
+                  {supportingPosts.map((post) => (
+                    <BlogFeaturedArticle key={post.slug} post={post} />
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </MarketingSectionShell>
+        ) : null}
+
+        <MarketingSectionShell
+          divider={leadPost ? undefined : "pattern"}
+          id="latest-articles"
+          width="full"
+          className="scroll-mt-24"
+          aria-labelledby="latest-title"
+        >
+          <MarketingSectionHeader
+            titleId="latest-title"
+            align="left"
+            title="Latest articles"
+            description="Explore the complete archive, or follow a topic that matters to your product."
+          />
+          <div className="grid items-start gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12">
+            <BlogSidebar categories={categories} tags={tags} posts={posts} />
+            <div className="min-w-0 border-y border-border-subtle">
+              <div className="flex items-center justify-between gap-4 border-b border-border-subtle px-3 py-4 text-xs text-muted-foreground sm:px-5">
+                <span>
+                  All articles{" "}
+                  <span className="ml-2 font-mono">
+                    {String(posts.length).padStart(2, "0")}
+                  </span>
+                </span>
+                <span>Newest first</span>
+              </div>
+              {posts.length > 0 ? (
+                <div className="divide-y divide-border-subtle">
+                  {posts.map((post) => (
+                    <BlogArticleRow key={post.slug} post={post} />
+                  ))}
+                </div>
+              ) : (
+                <div className="px-5 py-12">
+                  <BookOpen
+                    className="mb-4 size-5 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    No articles found yet.
+                  </p>
+                  <Link href="/guides" className={`${textLink} mt-3`}>
+                    Read the guides{" "}
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
+          width="full"
+          className="border-t border-border-subtle"
+          aria-labelledby="blog-next-title"
+        >
+          <MarketingSectionHeader
+            titleId="blog-next-title"
+            align="left"
+            title="Build on what you learn."
+            description="Explore the interface first, or start with connected SaaS foundations."
+            action={
+              <Link href="/pricing" className={textLink}>
+                Compare the options{" "}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </Link>
+            }
+          />
+          <div
+            className={`${styles.nextSteps} grid rounded-lg border border-border-subtle md:grid-cols-2`}
+          >
+            <div className="flex flex-col p-6 sm:p-8">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-brand text-lg font-semibold tracking-normal">
+                  Starter Free
+                </h3>
+                <span className="text-xs text-muted-foreground">Free</span>
+              </div>
+              <p className="mb-6 mt-3 max-w-md text-sm leading-7 text-muted-foreground">
+                Explore the dashboard, settings and product UI. Authentication
+                and billing screens use mocked data.
+              </p>
+              <div className="mt-auto">
+                <Button asChild variant="outline" className="rounded-md">
+                  <Link href="/starters/free">Explore Starter Free</Link>
+                </Button>
+              </div>
+            </div>
+            <div className="flex flex-col border-t border-border-subtle p-6 sm:p-8 md:border-l md:border-t-0">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-brand text-lg font-semibold tracking-normal">
+                  Starter Pro
+                </h3>
+                <span className="text-xs text-muted-foreground">
+                  One-time purchase
+                </span>
+              </div>
+              <p className="mb-6 mt-3 max-w-md text-sm leading-7 text-muted-foreground">
+                Build from the connected foundation: Auth.js, Prisma and Stripe,
+                with setup guides for your own services.
+              </p>
+              <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2">
+                <BuyStarterProButton
+                  fullWidth={false}
+                  label={`Buy Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`}
+                />
+                <Link
+                  href="/starters/pro"
+                  className={`${textLink} text-muted-foreground`}
+                >
+                  See what’s included{" "}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </MarketingSectionShell>
       </Container>
     </main>
   );

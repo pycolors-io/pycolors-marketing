@@ -1,0 +1,174 @@
+.page {
+  background: radial-gradient(
+      ellipse at 85% 0%,
+      color-mix(in oklab, var(--primary) 7%, transparent),
+      transparent 65%
+    )
+    0 0 / 100% 46rem no-repeat;
+}
+.brief,
+.proOption,
+.nextStep {
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in oklab, var(--primary) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      color-mix(in oklab, var(--brand-platform) 5%, transparent),
+      transparent 70%
+    ),
+    var(--background);
+}
+.breadcrumb a,
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.textLink:hover {
+  color: var(--primary);
+}
+.breadcrumb a:focus-visible,
+.textLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.options {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+.option {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.option + .option {
+  border-top: 1px solid var(--border-subtle);
+}
+.iconFrame,
+.foundationCard > div > span[aria-hidden="true"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+.proOption .iconFrame,
+.foundationCard > div > span[aria-hidden="true"] {
+  color: var(--primary);
+  border-color: color-mix(in oklab, var(--primary) 15%, var(--border-subtle));
+  background: color-mix(in oklab, var(--primary) 5%, var(--background));
+}
+.checkItem > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+.proOption .checkItem > span:first-child {
+  background: color-mix(in oklab, var(--primary) 9%, transparent);
+}
+.comparisonTable {
+  width: 100%;
+  min-width: 42rem;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: left;
+}
+.comparisonTable th,
+.comparisonTable td {
+  padding: 1.25rem;
+  vertical-align: top;
+}
+.comparisonTable thead th {
+  padding-block: 1.75rem;
+}
+.comparisonTable tbody tr {
+  border-top: 1px solid var(--border-subtle);
+}
+.comparisonTable tr > :last-child {
+  border-left: 1px solid var(--border-subtle);
+  background: color-mix(in oklab, var(--primary) 3%, var(--background));
+}
+.comparisonTable thead th:last-child {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 8%, var(--background)),
+    color-mix(in oklab, var(--primary) 3%, var(--background))
+  );
+}
+.foundationGrid {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+.foundationCard {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.foundationCard + .foundationCard {
+  border-top: 1px solid var(--border-subtle);
+}
+.foundationCard h3 {
+  font-size: 1rem;
+}
+@media (min-width: 640px) {
+  .option {
+    padding: 2rem;
+  }
+  .comparisonTable th,
+  .comparisonTable td {
+    padding-inline: 1.5rem;
+  }
+  .comparisonTable tr > :first-child {
+    position: sticky;
+    left: 0;
+    background: var(--background);
+  }
+  .foundationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .foundationCard:nth-child(2) {
+    border-top: 0;
+  }
+  .foundationCard:nth-child(even) {
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+@media (min-width: 768px) {
+  .options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .option + .option {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+@media (min-width: 1024px) {
+  .foundationGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .foundationCard + .foundationCard {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+}

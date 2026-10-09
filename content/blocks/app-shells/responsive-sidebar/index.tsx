@@ -12,206 +12,15 @@ import {
   cn,
 } from "@pycolors/ui";
 
-export type ResponsiveSidebarNavItem = Readonly<{
-  id: string;
-  label: string;
-  href: string;
-  icon?: React.ReactNode;
-  badge?: React.ReactNode;
-}>;
+import { SidebarContents } from "./sidebar-navigation";
+import type { ResponsiveSidebarProps } from "./types";
 
-export type ResponsiveSidebarNavGroup = Readonly<{
-  id: string;
-  label: string;
-  items: readonly ResponsiveSidebarNavItem[];
-}>;
-
-export type ResponsiveSidebarRenderLinkProps = Readonly<{
-  item: ResponsiveSidebarNavItem;
-  active: boolean;
-  className: string;
-  children: React.ReactNode;
-  onNavigate: () => void;
-}>;
-
-export type ResponsiveSidebarProps = Readonly<{
-  brand: React.ReactNode;
-  navigationLabel: string;
-  mobileTitle: string;
-  mobileDescription?: string;
-  mobileTriggerLabel?: string;
-  items: readonly ResponsiveSidebarNavItem[];
-  groups?: readonly ResponsiveSidebarNavGroup[];
-  activeItemId?: string;
-  renderLink?: (props: ResponsiveSidebarRenderLinkProps) => React.ReactNode;
-  sidebarFooter?: React.ReactNode;
-  headerTitle?: React.ReactNode;
-  headerActions?: React.ReactNode;
-  contentId?: string;
-  skipToContentLabel?: string;
-  className?: string;
-  children: React.ReactNode;
-}>;
-
-interface NavigationItemsProps {
-  activeItemId?: string;
-  items: readonly ResponsiveSidebarNavItem[];
-  onNavigate: () => void;
-  renderLink?: ResponsiveSidebarProps["renderLink"];
-}
-
-interface SidebarContentsProps extends NavigationItemsProps {
-  brand: React.ReactNode;
-  groups: readonly ResponsiveSidebarNavGroup[];
-  navigationLabel: string;
-  sidebarFooter?: React.ReactNode;
-}
-
-const linkClassName = cn(
-  "flex min-h-10 w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium",
-  "text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
-  "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-  "focus-visible:ring-offset-background",
-  "aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground",
-);
-
-function NavigationItems({
-  activeItemId,
-  items,
-  onNavigate,
-  renderLink,
-}: NavigationItemsProps) {
-  return (
-    <ul className="space-y-1" role="list">
-      {items.map((item) => {
-        const active = item.id === activeItemId;
-        const children = (
-          <>
-            {item.icon ? (
-              <span
-                aria-hidden="true"
-                className="flex size-4 shrink-0 items-center justify-center"
-                data-slot="responsive-sidebar-item-icon"
-              >
-                {item.icon}
-              </span>
-            ) : null}
-            <span className="min-w-0 flex-1 truncate">{item.label}</span>
-            {item.badge ? (
-              <span
-                className="shrink-0 rounded-sm bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground"
-                data-slot="responsive-sidebar-item-badge"
-              >
-                {item.badge}
-              </span>
-            ) : null}
-          </>
-        );
-
-        return (
-          <li key={item.id}>
-            {renderLink ? (
-              renderLink({
-                item,
-                active,
-                className: linkClassName,
-                children,
-                onNavigate,
-              })
-            ) : (
-              <a
-                aria-current={active ? "page" : undefined}
-                className={linkClassName}
-                data-slot="responsive-sidebar-link"
-                href={item.href}
-                onClick={onNavigate}
-              >
-                {children}
-              </a>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-function SidebarContents({
-  activeItemId,
-  brand,
-  groups,
-  items,
-  navigationLabel,
-  onNavigate,
-  renderLink,
-  sidebarFooter,
-}: SidebarContentsProps) {
-  const groupLabelPrefix = React.useId();
-
-  return (
-    <div
-      className="flex min-h-0 flex-1 flex-col"
-      data-slot="responsive-sidebar-contents"
-    >
-      <div
-        className="flex min-h-16 shrink-0 items-center border-b border-border px-4"
-        data-slot="responsive-sidebar-brand"
-      >
-        {brand}
-      </div>
-
-      <nav
-        aria-label={navigationLabel}
-        className="min-h-0 flex-1 space-y-5 overflow-y-auto px-3 py-4"
-        data-slot="responsive-sidebar-navigation"
-      >
-        {items.length > 0 ? (
-          <NavigationItems
-            activeItemId={activeItemId}
-            items={items}
-            onNavigate={onNavigate}
-            renderLink={renderLink}
-          />
-        ) : null}
-
-        {groups.map((group, index) => {
-          const labelId = `${groupLabelPrefix}-${index}`;
-
-          return (
-            <div
-              aria-labelledby={labelId}
-              data-slot="responsive-sidebar-group"
-              key={group.id}
-              role="group"
-            >
-              <p
-                className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
-                id={labelId}
-              >
-                {group.label}
-              </p>
-              <NavigationItems
-                activeItemId={activeItemId}
-                items={group.items}
-                onNavigate={onNavigate}
-                renderLink={renderLink}
-              />
-            </div>
-          );
-        })}
-      </nav>
-
-      {sidebarFooter ? (
-        <div
-          className="shrink-0 border-t border-border p-4"
-          data-slot="responsive-sidebar-footer"
-        >
-          {sidebarFooter}
-        </div>
-      ) : null}
-    </div>
-  );
-}
+export type {
+  ResponsiveSidebarNavItem,
+  ResponsiveSidebarNavGroup,
+  ResponsiveSidebarRenderLinkProps,
+  ResponsiveSidebarProps,
+} from "./types";
 
 function MenuIcon() {
   return (
@@ -242,6 +51,7 @@ export function ResponsiveSidebar({
   children,
   className,
   contentId = "main-content",
+  contentAs: Content = "main",
   groups = [],
   headerActions,
   headerTitle,
@@ -299,7 +109,7 @@ export function ResponsiveSidebar({
             <SheetTrigger asChild>
               <Button
                 aria-label={mobileTriggerLabel}
-                className="md:hidden"
+                className="size-11 shrink-0 md:hidden"
                 data-slot="responsive-sidebar-mobile-trigger"
                 size="icon"
                 type="button"
@@ -310,11 +120,11 @@ export function ResponsiveSidebar({
             </SheetTrigger>
 
             <SheetContent
-              className="flex w-[min(20rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] flex-col gap-0 p-0"
+              className="top-0 flex h-dvh w-[min(18rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] flex-col gap-0 rounded-none p-0 [&_[data-slot=responsive-sidebar-brand]]:pr-12 [&>button]:right-3 [&>button]:top-2.5 [&>button]:grid [&>button]:size-11 [&>button]:place-items-center"
               data-slot="responsive-sidebar-mobile"
               side="left"
             >
-              <SheetHeader className="shrink-0 border-b border-border px-6 py-5 pr-12">
+              <SheetHeader className="sr-only">
                 <SheetTitle>{mobileTitle}</SheetTitle>
                 <SheetDescription>{mobileDescription}</SheetDescription>
               </SheetHeader>
@@ -337,7 +147,7 @@ export function ResponsiveSidebar({
           </div>
           {headerActions ? (
             <div
-              className="flex shrink-0 items-center gap-2"
+              className="flex min-w-0 max-w-[60%] flex-wrap items-center justify-end gap-2 py-2 [&>*]:max-w-full [&>*]:whitespace-normal [&>*]:[overflow-wrap:anywhere]"
               data-slot="responsive-sidebar-actions"
             >
               {headerActions}
@@ -345,14 +155,14 @@ export function ResponsiveSidebar({
           ) : null}
         </header>
 
-        <main
+        <Content
           className="min-w-0 flex-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
           data-slot="responsive-sidebar-main"
           id={contentId}
           tabIndex={-1}
         >
           {children}
-        </main>
+        </Content>
       </div>
     </div>
   );

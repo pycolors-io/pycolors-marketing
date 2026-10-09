@@ -1,0 +1,137 @@
+---
+title: Stats overview
+description: A copyable dashboard summary with formatted values, comparison labels and reporting periods.
+lastUpdated: "2026-10-05"
+appliesTo: Blocks
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { StatsOverviewExample } from "@/components/docs/blocks/stats-overview-example";
+
+## Put the key numbers first
+
+`StatsOverview` presents a named dashboard section with a reporting period and
+a responsive grid of metrics. Each metric can include a comparison and a short
+explanation. Your application supplies formatted values and decides whether a
+change is positive, negative or neutral; an increase is not always good news.
+
+The preview uses fictional workspace data. It does not query an analytics
+service, calculate trends, track visitors or persist information.
+
+## Canonical identity
+
+- Category: **Data & records**, slug `data`.
+- Block: `stats-overview`, export `StatsOverview`.
+- Canonical source: `apps/marketing/content/blocks/data/stats-overview/`.
+- Complete entry point: `index.tsx`.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation), then create
+`src/components/blocks/stats-overview/index.tsx` in your application. Use the
+Source tab's copy button or select the code manually if clipboard access is
+unavailable. The complete file is included from canonical source at build time.
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0 overflow-hidden">
+      <StatsOverviewExample />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/stats-overview/index.tsx"'
+    >
+      ../../../blocks/data/stats-overview/index.tsx
+    </include>
+  </Tab>
+</Tabs>
+
+## Install by copying source
+
+Paste the complete source at the destination above and import your local copy.
+Keep the public `@pycolors/ui` import and your UI token setup. No additional
+dependency, Blocks package or Registry installation is needed. Your copy does
+not receive automatic updates; validate it in your application after copying
+and whenever you adopt a later canonical revision.
+
+```tsx title="workspace-summary.tsx"
+import { StatsOverview } from "./blocks/stats-overview";
+
+export function WorkspaceSummary() {
+  return (
+    <StatsOverview
+      id="workspace-summary"
+      heading="Workspace overview"
+      periodLabel="September 2026"
+      metrics={[
+        {
+          id: "projects",
+          label: "Active projects",
+          value: "24",
+          change: { label: "Up 4 from August", tone: "positive" },
+          description: "Across all workspace teams",
+        },
+      ]}
+    />
+  );
+}
+```
+
+Replace the sample with your own validated data. The Block is presentation-only
+and requires neither state nor a `"use client"` directive. It can render in a
+Next.js Server Component. A client wrapper may supply updated props when your
+application needs filtering or live data; the Block does not fetch them itself.
+
+## Props and content
+
+| Prop           | Purpose                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| `id`           | Required stable, nonempty HTML ID, unique across the page and the derived `${id}-heading` ID.             |
+| `heading`      | Required section name.                                                                                    |
+| `headingLevel` | `2` by default; choose `2` through `6` to match the surrounding heading hierarchy.                        |
+| `description`  | Optional explanation below the heading.                                                                   |
+| `periodLabel`  | Optional reporting period, displayed as text rather than a date picker.                                   |
+| `metrics`      | Readonly array of metrics. Each requires a stable, unique `id`, a `label` and a formatted string `value`. |
+| `emptyMessage` | Message for an empty array; defaults to “No metrics available.”                                           |
+| `className`    | Root customization through public `cn`, with consumer classes taking precedence.                          |
+
+A metric's optional `description` explains its scope. Its optional `change`
+contains a visible `label` and a `tone`: `positive`, `negative` or `neutral`
+(the default). Include the direction, units and comparison period in the label,
+such as “Down 3 from August.” Color supplements that text.
+
+Format currencies, percentages, units and localized dates before passing them.
+Use a meaningful placeholder such as “Unavailable” when a value is missing;
+do not substitute zero for unavailable data. With no metrics, the Block shows
+only the heading, optional context and empty message, with no empty grid.
+
+## Layout and accessibility
+
+Metrics use a description list (`dl`, `dt`, `dd`) to associate labels with their
+values and context. The region uses its heading as its accessible name. Supply
+distinct IDs when rendering multiple overviews. There are no focusable controls,
+automatic announcements or focus changes; your application owns announcements
+when values update dynamically.
+
+The grid uses one column on narrow screens, two from `sm`, and four from `xl`.
+One to four metrics work best for a concise overview; additional metrics wrap.
+Long labels, values and comparison text can wrap. Semantic color tokens support
+light and dark themes. Review your own content at narrow widths and with zoom.
+
+## Validate and maintain your copy
+
+Run your application's lint, type checks, tests and production build. Verify
+populated and empty content, metrics without comparison labels, reordered data,
+multiple instances, long values, and both color themes. No loading, error,
+filtering or data permission behavior is built in; those remain with your app.
+
+Keep the copied source under version control. Review later canonical changes
+deliberately and preserve your local customizations. Reverting the local file
+rolls back the presentation without changing your underlying data.
+
+Pair this summary with the [Data table](/docs/blocks/data/data-table), explore
+the [Blocks catalog](/blocks), or customize the shared colors in
+[Theme Builder](/tools/theme-builder).
