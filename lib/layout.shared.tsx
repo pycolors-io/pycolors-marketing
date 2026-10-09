@@ -6,12 +6,14 @@ import {
   Layers3,
   LayoutTemplate,
   Package2,
+  PanelsTopLeft,
   Newspaper,
   Map,
   Rocket,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
@@ -167,6 +169,12 @@ export const MOBILE_BROWSE_NAV_ITEMS: PrimaryNavItem[] = [
 ];
 
 export const RESOURCE_MENU_ITEMS = [
+  {
+    label: "UI Explorer",
+    href: UI_EXPLORER_URL,
+    description: "Try components, variants and interactions.",
+    icon: PanelsTopLeft,
+  },
   {
     label: "Guides",
     href: "/guides",

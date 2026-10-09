@@ -5,6 +5,7 @@ import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import { FibonacciMark } from "@/components/marketing/fibonacci-background";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
@@ -27,6 +28,7 @@ const GROUPS = [
     title: "Resources",
     links: [
       { label: "Documentation", href: "/docs" },
+      { label: "UI Explorer", href: UI_EXPLORER_URL },
       { label: "Guides", href: "/guides" },
       { label: "UI examples", href: "/ui/examples" },
       { label: "Patterns", href: "/ui/patterns" },
@@ -137,8 +139,32 @@ export function Footer() {
                 <ul>
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={styles.directoryLink}>
+                      <Link
+                        href={link.href}
+                        className={styles.directoryLink}
+                        target={
+                          link.href.startsWith("https://")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel={
+                          link.href.startsWith("https://")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        aria-description={
+                          link.href.startsWith("https://")
+                            ? "Opens in a new tab"
+                            : undefined
+                        }
+                      >
                         {link.label}
+                        {link.href.startsWith("https://") && (
+                          <ArrowUpRight
+                            className="ml-1.5 size-3"
+                            aria-hidden="true"
+                          />
+                        )}
                       </Link>
                     </li>
                   ))}

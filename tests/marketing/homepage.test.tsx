@@ -5,7 +5,6 @@ import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
 import HomePage, { metadata } from "../../app/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
-import { getUiExplorerUrl } from "../../lib/docs/ui-explorer";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -121,12 +120,12 @@ describe("showcase-first homepage", () => {
     ).toHaveAttribute("aria-pressed", "true");
   });
 
-  it("uses helper-owned Explorer URLs and precise documentation, trust and production handoffs", () => {
+  it("opens the Explorer and relevant component examples with precise documentation handoffs", () => {
     render(<HomePage />);
     const showcase = screen.getByRole("region", { name: headings[0] });
     expect(
-      within(showcase).getByRole("link", { name: "Explore PyColors UI" }),
-    ).toHaveAttribute("href", "/ui");
+      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
+    ).toHaveAttribute("href", "https://ui.pycolors.io/");
     expect(
       within(showcase).getByRole("link", { name: "Read the docs" }),
     ).toHaveAttribute("href", "/docs/ui/installation");
@@ -140,11 +139,22 @@ describe("showcase-first homepage", () => {
         name: "Explore the showcase primitives",
       }),
     ).getAllByRole("link");
-    expect(links.map((a) => a.getAttribute("href"))).toEqual(
-      ["table", "tabs", "empty-state"].map((family) =>
-        getUiExplorerUrl(["ui", family]),
-      ),
-    );
+    expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "https://ui.pycolors.io/?path=/story/components-table--rows-and-empty-section",
+      "https://ui.pycolors.io/?path=/story/components-tabs--default",
+      "https://ui.pycolors.io/?path=/story/components-empty-state--with-action",
+    ]);
+    for (const link of [
+      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
+      ...links,
+    ]) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link).toHaveAccessibleDescription("Opens in a new tab");
+    }
+    expect(
+      screen.getByRole("link", { name: "Read the UI Explorer guide" }),
+    ).toHaveAttribute("href", "/docs/ui/storybook");
     for (const href of [
       "/docs/ui/installation",
       "/docs/ui/accessibility",

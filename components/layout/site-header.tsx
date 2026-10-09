@@ -150,6 +150,11 @@ function NavigationLinks({
             href={item.href}
             onClick={onNavigate}
             target={item.href.startsWith("https://") ? "_blank" : undefined}
+            aria-description={
+              item.href.startsWith("https://")
+                ? "Opens in a new tab"
+                : undefined
+            }
             rel={
               item.href.startsWith("https://")
                 ? "noreferrer noopener"
@@ -252,11 +257,15 @@ function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
       {RESOURCE_MENU_ITEMS.map((item) => {
         const Icon = item.icon;
         const current = activeHref === item.href;
+        const external = item.href.startsWith("https://");
         return (
           <li key={item.href}>
             <Link
               href={item.href}
               onClick={onNavigate}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+              aria-description={external ? "Opens in a new tab" : undefined}
               aria-current={current ? "page" : undefined}
               className={cn(
                 "group/resource-link flex min-h-11 items-start gap-2.5 rounded-md px-3 py-2.5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
@@ -273,8 +282,11 @@ function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
                 )}
               />
               <span className="min-w-0">
-                <span className="block text-[13px] leading-5 font-medium text-foreground">
+                <span className="flex items-center gap-1.5 text-[13px] leading-5 font-medium text-foreground">
                   {item.label}
+                  {external && (
+                    <ArrowUpRight className="size-3" aria-hidden="true" />
+                  )}
                 </span>
                 <span className="mt-0.5 block text-xs leading-5 font-normal text-muted-foreground">
                   {item.description}

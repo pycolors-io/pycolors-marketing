@@ -36,7 +36,7 @@ import { SaasShowcase } from "@/components/marketing/showcase/saas-showcase";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { UI_VERSION } from "@/lib/version";
-import { getUiExplorerUrl } from "@/lib/docs/ui-explorer";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
@@ -150,21 +150,21 @@ const startingPoints = [
 
 const explorerLinks = [
   {
-    family: "table",
-    label: "Table states",
-    description: "Rows, selection & status",
+    storyId: "components-table--rows-and-empty-section",
+    label: "Data tables",
+    description: "Rows, status & empty states",
     icon: Table2,
   },
   {
-    family: "tabs",
-    label: "Tab interactions",
-    description: "Filters & keyboard control",
+    storyId: "components-tabs--default",
+    label: "Interactive tabs",
+    description: "Panels & keyboard navigation",
     icon: MousePointer2,
   },
   {
-    family: "empty-state",
+    storyId: "components-empty-state--with-action",
     label: "Empty states",
-    description: "Clear recovery actions",
+    description: "Empty content with an action",
     icon: PanelTop,
   },
 ] as const;
@@ -261,7 +261,15 @@ export default function HomePage() {
             actions={
               <MarketingActionGroup className={styles.showcaseActions}>
                 <MarketingLinkButton className={styles.primaryAction}>
-                  <Link href="/ui">Explore PyColors UI</Link>
+                  <a
+                    href={UI_EXPLORER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-description="Opens in a new tab"
+                  >
+                    Open UI Explorer
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
                 </MarketingLinkButton>
                 <Link
                   href="/docs/ui/installation"
@@ -287,10 +295,13 @@ export default function HomePage() {
                   className={styles.proofLinks}
                 >
                   {explorerLinks.map(
-                    ({ family, label, description, icon: Icon }) => (
+                    ({ storyId, label, description, icon: Icon }) => (
                       <a
-                        key={family}
-                        href={getUiExplorerUrl(["ui", family])}
+                        key={storyId}
+                        href={`${UI_EXPLORER_URL}?path=/story/${storyId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-description="Opens in a new tab"
                         aria-label={label}
                       >
                         <span className={styles.proofLinkTitle}>
@@ -425,7 +436,7 @@ export default function HomePage() {
                     </li>
                     <li>
                       <ResourceLink href="/docs/ui/storybook">
-                        Use the UI Explorer
+                        Read the UI Explorer guide
                       </ResourceLink>
                     </li>
                   </ul>

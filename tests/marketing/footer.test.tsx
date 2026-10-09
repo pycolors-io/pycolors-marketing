@@ -81,6 +81,11 @@ describe("marketing footer", () => {
       "/privacy",
     ];
     const links = within(footer).getAllByRole("link");
+    const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
+    expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
+    expect(explorer).toHaveAttribute("target", "_blank");
+    expect(explorer).toHaveAttribute("rel", "noopener noreferrer");
+    expect(explorer).toHaveAccessibleDescription("Opens in a new tab");
     expect(links.map((link) => link.getAttribute("href"))).toEqual(
       expect.arrayContaining(expected),
     );

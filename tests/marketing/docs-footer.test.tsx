@@ -68,6 +68,11 @@ describe("documentation footer", () => {
       "href",
       "/docs/blocks",
     );
+    const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
+    expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
+    expect(explorer).toHaveAttribute("target", "_blank");
+    expect(explorer).toHaveAttribute("rel", "noopener noreferrer");
+    expect(explorer).toHaveAccessibleDescription("Opens in a new tab");
     for (const link of within(footer).getAllByRole("link")) {
       const href = link.getAttribute("href")!;
       expect(link).toHaveAccessibleName();

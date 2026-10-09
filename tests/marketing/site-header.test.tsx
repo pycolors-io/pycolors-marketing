@@ -481,7 +481,7 @@ describe("Marketing product discovery navigation", () => {
     expect(current).toHaveAttribute("aria-current", "page");
   });
 
-  it("groups editorial pages in Resources and keeps a single desktop panel open", () => {
+  it("groups the Explorer and editorial pages in Resources with a single desktop panel open", () => {
     render(<Fixture />);
     expect(resourcesPanel()).not.toBeVisible();
     expect(
@@ -493,6 +493,7 @@ describe("Marketing product discovery navigation", () => {
     expect(trigger()).toHaveAttribute("aria-expanded", "false");
     expect(resourcesTrigger()).toHaveAttribute("aria-expanded", "true");
     expect(RESOURCE_MENU_ITEMS.map((item) => item.label)).toEqual([
+      "UI Explorer",
       "Guides",
       "Blog",
       "Changelog",
@@ -503,6 +504,11 @@ describe("Marketing product discovery navigation", () => {
         resources.getByRole("link", { name: new RegExp(`^${item.label}`) }),
       ).toHaveAttribute("href", item.href);
     }
+    const explorer = resources.getByRole("link", { name: /^UI Explorer/ });
+    expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
+    expect(explorer).toHaveAttribute("target", "_blank");
+    expect(explorer).toHaveAttribute("rel", "noopener noreferrer");
+    expect(explorer).toHaveAccessibleDescription("Opens in a new tab");
     const github = resources.getByRole("link", { name: "GitHub" });
     expect(github).toHaveAttribute("target", "_blank");
     expect(github).toHaveAttribute("rel", "noreferrer noopener");
