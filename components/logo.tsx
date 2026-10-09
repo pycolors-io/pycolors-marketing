@@ -17,9 +17,12 @@ export function Logomark() {
       aria-hidden="true"
       focusable="false"
     >
-      {/* Parallel sides and a half-scale cutout keep the mark clear at 20px. */}
+      {/* Two forward facets share a 1:2 slope and 5-unit terminals.
+          The trailing tip sits 8 units behind the leading tip; the open cut
+          separates the facets without relying on color or opacity. */}
       <path
-        d="M22 8.5 35 31H28.5L22 19.75 15.5 31H9Z"
+        d="M9 7 35 20 30 22.5 9 12ZM9 28 22 21.5 27 24 9 33Z"
+        transform="translate(0 40) scale(1 -1)"
         fill="currentColor"
         className={cn(
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
