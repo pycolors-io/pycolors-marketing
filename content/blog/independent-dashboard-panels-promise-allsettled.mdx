@@ -18,13 +18,31 @@ cta:
   variant: blocks
 ---
 
-One unreliable dashboard request should not automatically blank every independent widget. If a page waits for projects, alerts, and activity through a single `Promise.all()`, a failed alerts request rejects the combined promise—even when the projects and activity requests have already succeeded.
+One unreliable dashboard request should not automatically blank every independent
+widget. If a page waits for projects, alerts, and activity through a single
+`Promise.all()`, a failed alerts request rejects the combined promise—even when
+the projects and activity requests have already succeeded.
 
-When those panels are genuinely independent, use **`Promise.allSettled()` at their shared aggregation boundary**, then give each panel its own `ready` or `error` outcome. A successful empty array is still a successful result, not an error. The example below reproduces the difference with local promises, no credentials, and no API calls.
+When those panels are genuinely independent, use **`Promise.allSettled()` at
+their shared aggregation boundary**, then give each panel its own `ready` or
+`error` outcome. A successful empty array is still a successful result, not an
+error. The example below reproduces the difference with local promises, no
+credentials, and no API calls.
 
-**Verified version boundary (October 12, 2026):** the current PyColors Marketing manifest specifies Next.js **16.1.1**, React and React DOM **^19.3.0**, TypeScript **^6.0.3**, Node **24.x**, and pnpm **10.32.1**. Those are repository declarations, not a newly installed public consumer. The standalone `dashboard-outcomes.ts` test below was compiled with **TypeScript 5.8.3** and run with **Node 22.16.0** in an isolated local directory. A complete Marketing/React app build and a browser or screen-reader test were not run before opening this draft PR. The example uses standard `Promise` functionality and does not import a private PyColors library.
+**Verified version boundary (October 12, 2026):** the current PyColors Marketing
+manifest specifies Next.js **16.1.1**, React and React DOM **^19.3.0**,
+TypeScript **^6.0.3**, Node **24.x**, and pnpm **10.32.1**. Those are repository
+declarations, not a newly installed public consumer. The standalone
+`dashboard-outcomes.ts` test below was compiled with **TypeScript 5.8.3** and
+run with **Node 22.16.0** in an isolated local directory. A complete
+Marketing/React app build and a browser or screen-reader test were not run before
+opening this draft PR. The example uses standard `Promise` functionality and
+does not import a private PyColors library.
 
-This is an application data-flow decision, not a PyColors component feature. The [Empty, loading, and error states guide](/docs/guides/empty-loading-error) explains the visual role of each state; this article focuses on **preventing an unrelated failure from hiding valid sibling results**.
+This is an application data-flow decision, not a PyColors component feature.
+The [Empty, loading, and error states guide](/docs/guides/empty-loading-error)
+explains the visual role of each state; this article focuses on **preventing an
+unrelated failure from hiding valid sibling results**.
 
 ## Reproduce the all-or-nothing result
 
@@ -34,7 +52,8 @@ Imagine three independently useful dashboard sources:
 - Alerts: recent workspace notices.
 - Activity: recent event descriptions.
 
-The straightforward aggregation loses all three *as a combined result* when any one rejects:
+The straightforward aggregation loses all three as a combined result when any
+one rejects:
 
 ```ts title="dashboard-broken.ts"
 async function loadDashboardBroken() {
@@ -48,13 +67,22 @@ async function loadDashboardBroken() {
 }
 ```
 
-The projects and activity promises still settle successfully; `Promise.all()` does **not** cancel them. However, the enclosing `await` rejects, so this function never returns their values. A page that catches the single exception and renders one global error discards usable information.
+The projects and activity promises still settle successfully; `Promise.all()`
+does **not** cancel them. However, the enclosing `await` rejects, so this
+function never returns their values. A page that catches the single exception
+and renders one global error discards usable information.
 
-That is correct behavior when *every result is required for one atomic decision*. It is the wrong behavior when the cards represent independent information a reader could still use separately. [MDN's `Promise.all()` reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) documents its first-rejection behavior.
+That is correct behavior when **every result is required for one atomic
+decision**. It is the wrong behavior when the cards represent independent
+information a reader could still use separately.
+[MDN's `Promise.all()` reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
+documents its first-rejection behavior.
 
 ## Keep an outcome for each panel
 
-The code below is a complete, framework-independent TypeScript module. The three data sources are injected so the test can use local fixtures. In an application, each source would be implemented by your own trusted data layer.
+The code below is a complete, framework-independent TypeScript module. The three
+data sources are injected so the test can use local fixtures. In an application,
+each source would be implemented by your own trusted data layer.
 
 ```ts title="dashboard-outcomes.ts"
 export type Panel<T> =
@@ -91,15 +119,26 @@ export async function loadDashboard(sources: DashboardSources) {
 }
 ```
 
-The return value is now a typed result for **each** source. No `any`, swallowed unknown exception message, or fabricated fallback value is needed.
+The return value is now a typed result for **each** source. No `any`, swallowed
+unknown exception message, or fabricated fallback value is needed.
 
-`Promise.allSettled()` waits until every input has either fulfilled or rejected, then returns results in **input order**, not completion order. It does not retry, abort, cache, or deduplicate any request. Those decisions remain separate. See [MDN's `Promise.allSettled()` reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+`Promise.allSettled()` waits until every input has either fulfilled or
+rejected, then returns results in **input order**, not completion order. It does
+not retry, abort, cache, or deduplicate any request. Those decisions remain
+separate. See
+[MDN's `Promise.allSettled()` reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
 
-This is a *final aggregate result* pattern: it waits for the slowest input before returning. If a page needs each panel to stream or update independently as soon as it settles, use separate async boundaries or the framework's supported streaming primitives rather than claiming `allSettled()` makes rendering progressive.
+This is a **final aggregate result** pattern: it waits for the slowest input
+before returning. If a page needs each panel to stream or update independently
+as soon as it settles, use separate async boundaries or the framework's
+supported streaming primitives rather than claiming `allSettled()` makes
+rendering progressive.
 
 ## Test a failure without timing guesses
 
-Save the module as `dashboard-outcomes.ts`, then add this independent Node test file. The test uses only built-in `node:test` and `node:assert`; none of the example sources call a live service.
+Save the module as `dashboard-outcomes.ts`, then add this independent Node test
+file. The test uses only built-in `node:test` and `node:assert`; none of the
+example sources call a live service.
 
 ```js title="dashboard-outcomes.test.mjs"
 import assert from "node:assert/strict";
@@ -174,11 +213,15 @@ tsc --strict --target ES2022 --module ES2022 --moduleResolution node \
 node --test dashboard-outcomes.test.mjs
 ```
 
-The tests verify the narrow outcome contract, not real backend behavior. Before integrating it into a Next.js application, run the same cases through your real data adapters and application build.
+The tests verify the narrow outcome contract, not real backend behavior. Before
+integrating it into a Next.js application, run the same cases through your real
+data adapters and application build.
 
 ## Rendering is a separate decision
 
-A `ready` panel can still be empty. Do not infer failure from `data.length === 0`, and do not substitute zero for missing metrics. For a projects panel, the display boundary can follow a small, explicit order:
+A `ready` panel can still be empty. Do not infer failure from
+`data.length === 0`, and do not substitute zero for missing metrics. For a
+projects panel, the display boundary can follow a small, explicit order:
 
 ```tsx title="projects-panel.tsx"
 import type { Panel } from "./dashboard-outcomes";
@@ -215,41 +258,84 @@ export function ProjectsPanel({
 }
 ```
 
-This is a presentational integration sketch. It assumes `/dashboard` is your application's own route and unique project names in the small fixture; use stable record IDs in real lists. In a server-rendered page, a plain link reloads or navigates to the dashboard rather than retrying just one source. If a widget needs local retry without reloading the page, that interaction and its loading state belong in a separate client-side boundary or data-fetching abstraction.
+This is a presentational integration sketch. It assumes `/dashboard` is your
+application's own route and unique project names in the small fixture; use
+stable record IDs in real lists. In a server-rendered page, a plain link reloads
+or navigates to the dashboard rather than retrying just one source. If a widget
+needs local retry without reloading the page, that interaction and its loading
+state belong in a separate client-side boundary or data-fetching abstraction.
 
-A request still in progress needs a **loading** state; this aggregation function only produces outcomes after all three promises settle. Use a surrounding route-level loading state or separate panel boundaries while work is pending. Do not show “No projects yet” before a successful response says the list is empty.
+A request still in progress needs a **loading** state; this aggregation function
+only produces outcomes after all three promises settle. Use a surrounding
+route-level loading state or separate panel boundaries while work is pending. Do
+not show “No projects yet” before a successful response says the list is empty.
 
-The existing [PyColors async-states guide](/docs/guides/empty-loading-error) explains where `Skeleton`, `EmptyState`, and `Alert` fit, including keyboard and messaging considerations. This example does not claim to test actual screen-reader speech or certify accessibility.
+The existing
+[PyColors async-states guide](/docs/guides/empty-loading-error) explains where
+`Skeleton`, `EmptyState`, and `Alert` fit, including keyboard and messaging
+considerations. This example does not claim to test actual screen-reader speech
+or certify accessibility.
 
 ## When not to use this pattern
 
-`Promise.allSettled()` is useful for **independent read-only presentation data**. It is not an idempotency mechanism, an authorization check, an orchestration queue, or a transaction boundary. Do not apply this partial-success model to a payment/entitlement flow in which multiple writes must either agree or be reconciled durably. A successful project list does not justify pretending a failed billing summary is healthy.
+`Promise.allSettled()` is useful for **independent read-only presentation
+data**. It is not an idempotency mechanism, an authorization check, an
+orchestration queue, or a transaction boundary. Do not apply this partial-success
+model to a payment/entitlement flow in which multiple writes must either agree
+or be reconciled durably. A successful project list does not justify pretending
+a failed billing summary is healthy.
 
-It also does not protect against an outdated request overwriting newer UI state during repeated navigation or input changes. That separate race is covered by [How to stop stale async validation from overwriting React form state](/blog/prevent-stale-async-validation-react-forms).
+It also does not protect against an outdated request overwriting newer UI state
+during repeated navigation or input changes. That separate race is covered by
+[How to stop stale async validation from overwriting React form state](/blog/prevent-stale-async-validation-react-forms).
 
-Finally, this example does not define retry budgets, backoff, caching, deadlines, cancellation, or error observability. Add those based on your application's actual behavior and approved data boundaries. Log meaningful internal failures through your existing safe diagnostics; display neutral user-facing copy rather than raw service errors.
+Finally, this example does not define retry budgets, backoff, caching, deadlines,
+cancellation, or error observability. Add those based on your application's
+actual behavior and approved data boundaries. Log meaningful internal failures
+through your existing safe diagnostics; display neutral user-facing copy rather
+than raw service errors.
 
 ## Verification checklist
 
 Before using partial dashboard results in a SaaS application:
 
-- [ ] Confirm every source really is independently useful; do not split one financial or authorization decision into fake partial success.
+- [ ] Confirm every source really is independently useful; do not split one
+      financial or authorization decision into fake partial success.
 - [ ] Test all sources ready, one rejected, and all rejected.
 - [ ] Confirm a successful empty list remains `ready`, distinct from a failure.
-- [ ] Keep the return types bound to the correct panel when promises complete out of order.
-- [ ] Confirm unknown service errors are not embedded in rendered content or telemetry.
-- [ ] Decide whether waiting for the slowest request is acceptable; use separate boundaries when it is not.
-- [ ] Give each failed panel a meaningful recovery action without implying a retry already happened.
-- [ ] Verify loading treatment independently from the final `ready`/`error` result.
-- [ ] Test mobile layouts, keyboard navigation, focus, contrast, and empty/error copy in the real consuming app.
-- [ ] Treat server-side data validation, authorization, and consistency as application responsibilities.
+- [ ] Keep the return types bound to the correct panel when promises complete out
+      of order.
+- [ ] Confirm unknown service errors are not embedded in rendered content or
+      telemetry.
+- [ ] Decide whether waiting for the slowest request is acceptable; use separate
+      boundaries when it is not.
+- [ ] Give each failed panel a meaningful recovery action without implying a
+      retry already happened.
+- [ ] Verify loading treatment independently from the final `ready`/`error`
+      result.
+- [ ] Test mobile layouts, keyboard navigation, focus, contrast, and empty/error
+      copy in the real consuming app.
+- [ ] Treat server-side data validation, authorization, and consistency as
+      application responsibilities.
 
 ## Sources and next steps
 
-Primary platform references: [MDN `Promise.all()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) and [MDN `Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+Primary platform references:
+[MDN `Promise.all()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
+and
+[MDN `Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
 
-Product references: [PyColors async-state guide](/docs/guides/empty-loading-error), [Data Table Block](/docs/blocks/data/data-table), and [Stats Overview Block](/docs/blocks/data/stats-overview).
+Product references:
+[PyColors async-state guide](/docs/guides/empty-loading-error),
+[Data Table Block](/docs/blocks/data/data-table), and
+[Stats Overview Block](/docs/blocks/data/stats-overview).
 
-The [Stats Overview Block](/docs/blocks/data/stats-overview) renders a responsive metric summary from values **your application supplies**. It does not fetch data, recover failures, or assemble `Promise.allSettled()` results. Use it as a presentation layer only after deciding which data is actually available.
+The [Stats Overview Block](/docs/blocks/data/stats-overview) renders a responsive
+metric summary from values **your application supplies**. It does not fetch data,
+recover failures, or assemble `Promise.allSettled()` results. Use it as a
+presentation layer only after deciding which data is actually available.
 
-Use the [Stats Overview Block](/docs/blocks/data/stats-overview) when you want a copyable presentation layer for the metrics that did load. Your application remains responsible for data loading, state ownership, permissions, and recovery.
+Use the [Stats Overview Block](/docs/blocks/data/stats-overview) when you want a
+copyable presentation layer for the metrics that did load. Your application
+remains responsible for data loading, state ownership, permissions, and
+recovery.
