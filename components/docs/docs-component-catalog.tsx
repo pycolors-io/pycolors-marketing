@@ -10,6 +10,7 @@ const groups = [
       ["Button", "button"],
       ["Input", "input"],
       ["Textarea", "textarea"],
+      ["AIComposer", "ai-composer"],
       ["Checkbox", "checkbox"],
       ["PasswordInput", "password-input"],
       ["DropdownMenu", "dropdown-menu"],
