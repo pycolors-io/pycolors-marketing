@@ -86,8 +86,7 @@ each source would be implemented by your own trusted data layer.
 
 ```ts title="dashboard-outcomes.ts"
 export type Panel<T> =
-  | { status: "ready"; data: T }
-  | { status: "error"; message: string };
+  { status: "ready"; data: T } | { status: "error"; message: string };
 
 export type DashboardSources = {
   projects: () => Promise<readonly string[]>;
