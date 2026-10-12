@@ -55,7 +55,7 @@ Imagine three independently useful dashboard sources:
 The straightforward aggregation loses all three as a combined result when any
 one rejects:
 
-```text title="dashboard-broken.ts"
+```ts title="dashboard-broken.ts"
 async function loadDashboardBroken() {
   const [projects, alerts, activity] = await Promise.all([
     Promise.resolve(["Atlas"]),
@@ -84,7 +84,7 @@ The code below is a complete, framework-independent TypeScript module. The three
 data sources are injected so the test can use local fixtures. In an application,
 each source would be implemented by your own trusted data layer.
 
-```text title="dashboard-outcomes.ts"
+```ts title="dashboard-outcomes.ts"
 export type Panel<T> =
   | { status: "ready"; data: T }
   | { status: "error"; message: string };
@@ -140,7 +140,7 @@ Save the module as `dashboard-outcomes.ts`, then add this independent Node test
 file. The test uses only built-in `node:test` and `node:assert`; none of the
 example sources call a live service.
 
-```text title="dashboard-outcomes.test.mjs"
+```js title="dashboard-outcomes.test.mjs"
 import assert from "node:assert/strict";
 import test from "node:test";
 import { loadDashboard } from "./dist/dashboard-outcomes.js";
@@ -223,7 +223,7 @@ A `ready` panel can still be empty. Do not infer failure from
 `data.length === 0`, and do not substitute zero for missing metrics. For a
 projects panel, the display boundary can follow a small, explicit order:
 
-```text title="projects-panel.tsx"
+```tsx title="projects-panel.tsx"
 import type { Panel } from "./dashboard-outcomes";
 
 export function ProjectsPanel({
