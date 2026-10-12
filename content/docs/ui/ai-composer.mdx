@@ -1,0 +1,104 @@
+---
+title: AI Composer
+description: A controlled chat input with accessible send and stop actions, using your application’s state and transport.
+lastUpdated: "2026-10-12"
+appliesTo: UI
+---
+
+## A focused input for your chat
+
+`AIComposer` composes PyColors `Textarea` and `Button`. Your application owns the draft, request lifecycle, cancellation and errors. The component does not connect to a model, store messages or upload files.
+
+This additive API is introduced by the composer Changeset. Until that release is published, use the repository workspace version; it is not available in `@pycolors/ui@1.5.5`.
+
+Use ordinary [Textarea](/docs/ui/textarea) and [Button](/docs/ui/button) for general forms. Use the composer when you need their shared chat keyboard and submit/stop behavior. It renders its own form: **do not nest it inside another form**.
+
+## Controlled integration
+
+This example accepts your real send and stop functions. Update the draft synchronously in `onChange`, set `busy` immediately when accepting a submission, and catch request failures in the application. Drafts remain intact until you deliberately update them.
+
+```tsx title="chat-input.tsx"
+"use client";
+
+import { useState } from "react";
+import { AIComposer } from "@pycolors/ui";
+
+export function ChatInput({
+  send,
+  stop,
+}: {
+  send: (message: string) => Promise<void>;
+  stop: () => void;
+}) {
+  const [draft, setDraft] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+
+  async function submit() {
+    if (busy || !draft.trim()) return;
+    setBusy(true);
+    setError(undefined);
+    try {
+      await send(draft);
+    } catch {
+      setError("Your message could not be sent. Your draft is still here.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <AIComposer
+      label="Message"
+      value={draft}
+      onChange={(event) => setDraft(event.target.value)}
+      onSubmit={() => {
+        void submit();
+      }}
+      busy={busy}
+      onStop={stop}
+      error={error}
+      helperText="Enter sends on desktop. Shift+Enter adds a line."
+    />
+  );
+}
+```
+
+`send` should settle when your request or stream finishes, including after cancellation. `stop` requests cancellation through your transport; it does not announce completion or clear `busy` by itself. The input stays editable while busy. Avoid clearing the current draft when an older request finishes: the user may already be writing their next message.
+
+For interactive local examples, open **Components → Forms → AI Composer** in [Storybook](/docs/ui/storybook). These examples explicitly use local state without a model.
+
+## Keyboard and submission
+
+- Desktop Enter submits; Shift+Enter inserts a newline. Alt, Control and Meta combinations remain available to the browser/application.
+- IME composition and its confirmation Enter never submit. Held Enter does not repeat submission.
+- Touch-first devices (coarse pointer without hover) use the visible send button; Enter remains a newline. Set `submitOnEnter={false}` to require explicit submission on every device.
+- Your `onKeyDown` runs first. Call `preventDefault()` to cancel the composer’s shortcut.
+- Empty or whitespace-only drafts, `disabled`, and `busy` prevent submission. Native form validation remains active.
+- Duplicate submission events in the same event turn are ignored. Set `busy` synchronously to cover the complete asynchronous request; server-side idempotency remains your application’s responsibility.
+- No automatic draft clearing, focus movement, resizing, attachment buttons or microphone controls occur.
+
+## API
+
+| Prop                                                                           | Type                                      | Default           | Purpose                                       |
+| ------------------------------------------------------------------------------ | ----------------------------------------- | ----------------- | --------------------------------------------- |
+| `value`                                                                        | `string`                                  | Required          | Consumer-owned draft                          |
+| `onChange`                                                                     | `ChangeEventHandler<HTMLTextAreaElement>` | Required          | Synchronous controlled update                 |
+| `onSubmit`                                                                     | `() => void`                              | Required          | Accept a submission; consumer reads its draft |
+| `busy`                                                                         | `boolean`                                 | `false`           | Prevent sends while a request is active       |
+| `onStop`                                                                       | `() => void`                              | —                 | Show the stop action while busy               |
+| `submitLabel`                                                                  | `string`                                  | `"Send message"`  | Localizable action label                      |
+| `stopLabel`                                                                    | `string`                                  | `"Stop response"` | Localizable cancellation label                |
+| `submitOnEnter`                                                                | `boolean`                                 | `true`            | Enable desktop Enter shortcut                 |
+| `ref`                                                                          | `Ref<HTMLTextAreaElement>`                | —                 | Underlying textarea                           |
+| `label`, `helperText`, `error`, `disabled`, `className`, native textarea props | [Textarea props](/docs/ui/textarea)       | Textarea defaults | Existing field behavior and styling           |
+
+`defaultValue`, `children` and external `form` association are excluded: the draft is controlled and the composer owns its form. `className` and `style` apply to the textarea. Place the composer in your own container to size or decorate the whole surface. The wrapper exposes `data-slot="ai-composer"`; the action row exposes `data-slot="ai-composer-actions"`.
+
+## Accessibility and layout
+
+Provide a visible `label`, or an accessible name with `aria-label` / `aria-labelledby`. Placeholder text is not a label. Field descriptions, errors and generated IDs are inherited from Textarea, including multiple composers on one page.
+
+Send and stop are native buttons with visible names and at least 44px height. Labels wrap in narrow layouts. Error text is announced through Textarea’s alert. Provide an application-level status region for meaningful request progress; the composer does not invent network status.
+
+Use `resize="vertical"` for user-controlled height, or a bounded height in `className`. There is no automatic animation or autosizing. Colors and focus styles follow PyColors tokens in light and dark themes.
