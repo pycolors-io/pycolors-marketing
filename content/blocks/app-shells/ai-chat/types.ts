@@ -26,6 +26,7 @@ export interface AIChatProps {
   onCopy: (message: ChatMessage) => Promise<void>;
   suggestions?: readonly ChatSuggestion[];
   agentDefinition?: AgentDefinitionControl;
+  attachments?: ChatAttachmentsControl;
   errorMessage?: string;
   disabled?: boolean;
   className?: string;
@@ -64,3 +65,40 @@ export type AgentDefinitionControl = AgentDefinitionState & {
   /** Cancel this revision locally; this does not delete a remote resource. */
   onCancel: (identity: Pick<AgentDefinitionDraft, "id" | "revision">) => void;
 };
+
+export type ChatAttachment = {
+  id: string;
+  name: string;
+  size: number;
+} & (
+  | { status: "selected" | "reading" | "cancelled" }
+  | { status: "error"; errorMessage: string }
+  | {
+      status: "ready";
+      excerpt: string;
+      truncated: boolean;
+      sourceReference: { id: string; label: string };
+    }
+);
+
+/** Presentation only. The consumer validates, reads and owns every file. */
+export interface ChatAttachmentsControl {
+  policy: {
+    accept: string;
+    formatsLabel: string;
+    readLabel: string;
+    maxFiles: number;
+    maxBytes: number;
+    description: string;
+  };
+  items: readonly ChatAttachment[];
+  errorMessage?: string;
+  announcement?: string;
+  onSelect: (files: readonly File[]) => void;
+  onRead: (id: string) => void;
+  onRetry: (id: string) => void;
+  onCancel: (id: string) => void;
+  onRemove: (id: string) => void;
+  /** May prefill a prompt, but must not submit or confirm a definition. */
+  onUse?: (id: string) => void;
+}

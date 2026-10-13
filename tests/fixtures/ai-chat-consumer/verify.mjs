@@ -42,6 +42,20 @@ const agentRecipe =
 if (!agentRecipe)
   throw new Error("The complete documented agent recipe is missing.");
 write("src/components/agent-chat.tsx", agentRecipe);
+for (const [filename, language] of [
+  ["use-local-chat-file.ts", "ts"],
+  ["local-file-chat.tsx", "tsx"],
+]) {
+  const start = doc.indexOf(
+    "```" + language + ' title="src/components/' + filename + '"\n',
+  );
+  const code =
+    start < 0
+      ? ""
+      : doc.slice(doc.indexOf("\n", start) + 1).split("\n```", 1)[0];
+  if (!code) throw new Error(`Missing complete file recipe: ${filename}`);
+  write(`src/components/${filename}`, code);
+}
 
 cpSync(
   resolve(fixture, "consumer.test.tsx.txt"),
@@ -91,7 +105,7 @@ write(
 );
 write(
   "src/main.tsx",
-  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\nimport { AgentChat } from "./components/agent-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /><AgentChat /></React.StrictMode>);',
+  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\nimport { AgentChat } from "./components/agent-chat";\nimport { LocalFileChat } from "./components/local-file-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /><AgentChat /><LocalFileChat /></React.StrictMode>);',
 );
 write(
   "vitest.config.ts",

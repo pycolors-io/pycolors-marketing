@@ -142,3 +142,40 @@ it("preserves failed confirmation edits and retries the same revision", async ()
   expect(confirm.mock.calls[1][0]).toEqual(confirm.mock.calls[0][0]);
   expect(screen.getByText("Definition created locally")).toBeVisible();
 });
+
+import { LocalFileChat } from "./src/components/local-file-chat";
+
+async function useFileReference() {
+  fireEvent.change(screen.getByLabelText("Choose reference file"), { target: { files: [new File(["RAW_FILE_CONTENT_SENTINEL"], "source.md", { type: "text/markdown" })] } });
+  expect(screen.queryByRole("button", { name: "Use as reference" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Read locally" }));
+  await screen.findByRole("button", { name: "Use as reference" });
+  fireEvent.click(screen.getByRole("button", { name: "Use as reference" }));
+  expect(screen.queryByRole("heading", { name: "Agent definition" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+}
+it("reads real local text, confirms a source-linked definition and excludes the raw file", async () => {
+  render(<LocalFileChat />);
+  await useFileReference();
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "Source reviewer" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+  const json = screen.getByLabelText("Confirmed definition JSON").textContent!;
+  expect(json).toContain("source.md"); expect(json).not.toContain("RAW_FILE_CONTENT_SENTINEL");
+  fireEvent.click(screen.getByRole("button", { name: "Remove source.md" }));
+  expect(screen.queryByRole("button", { name: "Copy JSON" })).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Agent name/ })).toHaveValue("Source reviewer");
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});
+it("rejects late confirmation after source removal in the documented file recipe", async () => {
+  let done!: (snapshot: AgentDefinitionDraft) => void;
+  let submitted!: AgentDefinitionDraft;
+  render(<LocalFileChat confirm={(snapshot) => { submitted = snapshot; return new Promise((resolve) => { done = resolve; }); }} />);
+  await useFileReference();
+  fireEvent.click(screen.getByRole("button", { name: "Confirm definition" }));
+  fireEvent.click(screen.getByRole("button", { name: "Remove source.md" }));
+  await act(async () => done(submitted));
+  expect(screen.queryByText("Definition created locally")).toBeNull();
+  expect(screen.queryByRole("button", { name: "Copy JSON" })).toBeNull();
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});

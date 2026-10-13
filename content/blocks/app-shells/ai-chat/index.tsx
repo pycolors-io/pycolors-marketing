@@ -3,11 +3,14 @@
 import * as React from "react";
 import { AIComposer, Alert, Button, cn } from "@pycolors/ui";
 import { AgentDefinition } from "./agent-definition";
+import { ChatAttachments } from "./attachments";
 import { ChatThread } from "./chat-thread";
 import type { AIChatProps } from "./types";
 
 export type {
   AIChatProps,
+  ChatAttachment,
+  ChatAttachmentsControl,
   AgentDefinitionControl,
   AgentDefinitionDraft,
   AgentDefinitionFields,
@@ -31,6 +34,7 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
       onCopy,
       suggestions = [],
       agentDefinition,
+      attachments,
       errorMessage,
       disabled = false,
       className,
@@ -162,6 +166,13 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             >
               Retry response
             </Button>
+          ) : null}
+          {attachments ? (
+            <ChatAttachments
+              control={attachments}
+              disabled={disabled}
+              onPrefill={() => input.current?.focus({ preventScroll: true })}
+            />
           ) : null}
           <label htmlFor={`${id}-input`} className="sr-only">
             Message

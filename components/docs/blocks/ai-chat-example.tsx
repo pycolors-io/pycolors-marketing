@@ -10,6 +10,11 @@ import {
   type ChatStatus,
 } from "@/content/blocks/app-shells/ai-chat";
 
+import { useLocalChatFile } from "./use-local-chat-file";
+
+const filePrompt =
+  "Create a local definition using the selected file as a reference.";
+
 const agentPrompt = "Create a local definition for a product review assistant.";
 
 const response =
@@ -64,6 +69,34 @@ export function AIChatExample() {
       });
     }, 900);
   }
+
+  const fileIntent = React.useRef<string | null>(null);
+  const localFile = useLocalChatFile({
+    onUseSource: (source) => {
+      fileIntent.current = source.id;
+      setDraft(filePrompt);
+    },
+    onRemoveSource: (id) => {
+      if (fileIntent.current === id) fileIntent.current = null;
+      if (!agent?.draft.sourceReferences?.some((source) => source.id === id))
+        return;
+      cancelAgent();
+      setAgent((current) =>
+        current
+          ? {
+              status: "draft",
+              draft: {
+                ...current.draft,
+                revision: current.draft.revision + 1,
+                sourceReferences: current.draft.sourceReferences?.filter(
+                  (source) => source.id !== id,
+                ),
+              },
+            }
+          : current,
+      );
+    },
+  });
 
   const timer = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const run = React.useRef(0);
@@ -150,6 +183,8 @@ export function AIChatExample() {
             onClick={() => {
               cancel();
               cancelAgent();
+              localFile.reset();
+              fileIntent.current = null;
               setAgent(undefined);
               setFailConfirmation(false);
               setMessages([]);
@@ -168,6 +203,7 @@ export function AIChatExample() {
         draft={draft}
         status={status}
         onDraftChange={setDraft}
+        attachments={localFile.control}
         agentDefinition={
           agent
             ? {
@@ -221,7 +257,25 @@ export function AIChatExample() {
           lastResponse.current = `${id}-reply`;
           setMessages((current) => [...current, { id, role: "user", text }]);
           setDraft("");
-          if (text.trim() === agentPrompt) {
+          const fileRequest = text.trim() === filePrompt;
+          const fileSource =
+            fileRequest && localFile.source?.id === fileIntent.current
+              ? localFile.source
+              : undefined;
+          if (fileRequest && !fileSource) {
+            lastResponse.current = null;
+            setStatus("idle");
+            setMessages((current) => [
+              ...current,
+              {
+                id: `${id}-reply`,
+                role: "assistant",
+                text: "Read a supported local file and choose Use as reference before sending this sample request. No definition was created.",
+              },
+            ]);
+            return;
+          }
+          if (text.trim() === agentPrompt || fileSource) {
             cancelAgent();
             setAgent({
               draft: {
@@ -233,6 +287,7 @@ export function AIChatExample() {
                   "Review clarity, keyboard access and error recovery. Explain tradeoffs. Ask before recommending changes outside the supplied context.",
                 requestedCapabilities: ["Read user-provided product context"],
                 sourceReferences: [
+                  ...(fileSource ? [fileSource] : []),
                   {
                     id: id,
                     label: "Explicit sample request in this conversation",
@@ -248,7 +303,9 @@ export function AIChatExample() {
               {
                 id: `${id}-reply`,
                 role: "assistant",
-                text: "Simulated draft from the exact sample request. Review the fields below, then confirm explicitly. No agent is running.",
+                text: fileSource
+                  ? "Sample definition with a locally read source reference. The file was not analyzed by a model and its text is not part of the JSON. Review and confirm explicitly."
+                  : "Simulated draft from the exact sample request. Review the fields below, then confirm explicitly. No agent is running.",
               },
             ]);
           } else begin(lastResponse.current);
@@ -268,9 +325,10 @@ export function AIChatExample() {
       />
       <p className="text-xs leading-5 text-muted-foreground">
         Responses and agent drafts are fixed examples. Only the exact agent
-        sample request opens a definition. Nothing is sent to a provider or
-        stored remotely. Confirmed definitions can be copied or downloaded
-        locally.
+        sample requests open a definition. A file is read only when you choose
+        Read locally; it is not analyzed by a model. Nothing is sent to a
+        provider or stored remotely. Confirmed definitions can be copied or
+        downloaded locally.
       </p>
     </div>
   );
