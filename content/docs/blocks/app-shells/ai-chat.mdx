@@ -1,6 +1,6 @@
 ---
 title: AI chat
-description: A controlled chat with accessible input, streaming states, stop, retry and complete source you can copy.
+description: A controlled chat with accessible input, streaming states, stop, retry, inline agent definitions and complete source you can copy.
 lastUpdated: "2026-10-13"
 appliesTo: Blocks
 ---
@@ -33,7 +33,7 @@ Configure the [public UI package and tokens](/docs/ui/installation). This Block
 requires `@pycolors/ui` **1.6.0 or later**, which includes AIComposer. The isolated
 consumer was tested with UI 1.6.0; test newer versions in your own application.
 
-Copy **all three files**, keeping their relative imports. Use the copy button or
+Copy **all five files**, keeping their relative imports. Use the copy button or
 select the code manually if clipboard permission is unavailable. The
 [Blocks catalog](/blocks) also offers **Code → Download ZIP** with the same complete
 source. No Registry, CLI or hosted chat service is needed.
@@ -43,6 +43,8 @@ source. No Registry, CLI or hosted chat service is needed.
     <File name="index.tsx" />
     <File name="chat-thread.tsx" />
     <File name="types.ts" />
+    <File name="agent-definition.tsx" />
+    <File name="agent-definition-export.ts" />
   </Folder>
 </Files>
 
@@ -53,7 +55,15 @@ source. No Registry, CLI or hosted chat service is needed.
     </Preview>
   </Tab>
   <Tab value="Source">
-    <Tabs items={["index.tsx", "chat-thread.tsx", "types.ts"]}>
+    <Tabs
+      items={[
+        "index.tsx",
+        "chat-thread.tsx",
+        "types.ts",
+        "agent-definition.tsx",
+        "agent-definition-export.ts",
+      ]}
+    >
       <Tab value="index.tsx">
         <include
           lang="tsx"
@@ -78,13 +88,32 @@ source. No Registry, CLI or hosted chat service is needed.
           ../../../blocks/app-shells/ai-chat/types.ts
         </include>
       </Tab>
+      <Tab value="agent-definition.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/ai-chat/agent-definition.tsx"'
+        >
+          ../../../blocks/app-shells/ai-chat/agent-definition.tsx
+        </include>
+      </Tab>
+      <Tab value="agent-definition-export.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/ai-chat/agent-definition-export.ts"'
+        >
+          ../../../blocks/app-shells/ai-chat/agent-definition-export.ts
+        </include>
+      </Tab>
     </Tabs>
   </Tab>
 </Tabs>
 
 This preview uses fictional, fixed local responses. Try **Fail next response**,
 stop a response, edit the next message, then retry. Nothing is sent or stored;
-a successful demo does not prove a provider integration.
+a successful demo does not prove a provider integration. **Define an agent (demo)**
+prefills an exact sample request. Send it to open a simulated draft, edit its
+fields, then confirm explicitly. Try **Fail next confirmation** or cancel while
+confirming. Only confirmed local definitions offer copy/download.
 
 ## Install by copying source
 
@@ -128,6 +157,208 @@ failure. Copy during streaming copies the text at click time, not future tokens.
 Keep submitted text in your message/request state before clearing an accepted
 draft. Failures must preserve newer edits. Stop/retry must keep partial output
 visible until replacement starts and must not duplicate the user message.
+
+## Define an agent in the conversation
+
+Pass the optional `agentDefinition` prop to add inline review. Omitting it keeps
+basic chat unchanged. A supplied draft, a suggestion click or model text never
+confirms anything. Only the separate **Confirm definition** action calls your
+consumer. The composer and the review form are independent sibling forms.
+
+| Field or callback            | Contract                                                                                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `draft`                      | Required `id`, `revision`, `name`, `purpose`, `instructions`. Keep IDs stable; increment revision on every edit, including capabilities and provenance.                   |
+| `status`                     | `draft`, `confirming`, `created`, `error` or `cancelled`, supplied by your application.                                                                                   |
+| `requestedCapabilities`      | Optional read-only strings describing requests. These are **not granted permissions**.                                                                                    |
+| `sourceReferences`           | Optional read-only `{ id, label }` provenance. Labels render as text; no links are fetched and no file content is read.                                                   |
+| `onChange(fields)`           | Receives only editable name/purpose/instructions. Preserve the other fields, increment revision and clear resolved validation errors.                                     |
+| `errors`, `errorMessage`     | Safe field errors and confirmation error. Name/purpose/instructions must be nonblank; perform authoritative validation in your consumer.                                  |
+| `onConfirm(snapshot)`        | Detached snapshot of the reviewed ID, revision and allowlisted fields. Set `confirming` synchronously and settle every attempt.                                           |
+| `onCancel({ id, revision })` | Invalidate pending work and set `cancelled`. This is not remote deletion. Values remain readable.                                                                         |
+| `confirmed`                  | Required with `created`: the actual consumer-confirmed snapshot. Copy/export is offered only when identity, revision and approved fields still match the displayed draft. |
+
+Pending confirmation disables editing and repeated submission; cancel remains
+available. Retry keeps edits and submits the current revision. The Block prevents
+duplicate UI confirmation, but backend validation, idempotency, request identity,
+transport cancellation and persistence remain your responsibility. Ignore stale
+results after cancellation, replacement or unmount. Any server-modified definition
+must return as a new draft for review, not as a silently approved result.
+
+This complete local consumer maps **one exact sample request** to a draft. It does
+not infer intent from arbitrary text. Its default confirmation returns the
+reviewed snapshot in memory. The `confirm` callback is an application seam, not a
+bundled backend or provider. A real intent/model adapter supplies the same typed
+draft after validating untrusted output; it must still require explicit review.
+
+```tsx title="src/components/agent-chat.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  AIChat,
+  type AgentDefinitionDraft,
+  type AgentDefinitionState,
+  type ChatMessage,
+} from "./blocks/ai-chat";
+
+const sampleRequest = "Define a product review assistant.";
+
+// Local definition creation only. No provider, storage or agent runtime.
+export function AgentChat({
+  confirm = async (snapshot) => snapshot,
+}: {
+  confirm?: (snapshot: AgentDefinitionDraft) => Promise<AgentDefinitionDraft>;
+}) {
+  const [text, setText] = React.useState("");
+  const [messages, setMessages] = React.useState<ChatMessage[]>([]);
+  const [agent, setAgent] = React.useState<AgentDefinitionState>();
+  const generation = React.useRef(0);
+  const sequence = React.useRef(0);
+  const pending = React.useRef(false);
+  React.useEffect(
+    () => () => {
+      generation.current++;
+    },
+    [],
+  );
+
+  return (
+    <AIChat
+      messages={messages}
+      draft={text}
+      status="idle"
+      onDraftChange={setText}
+      onCopy={(message) => navigator.clipboard.writeText(message.text)}
+      suggestions={[
+        {
+          id: "sample",
+          label: "Define an agent (sample)",
+          prompt: sampleRequest,
+        },
+      ]}
+      onSubmit={(prompt) => {
+        const id = `request-${++sequence.current}`;
+        setMessages((current) => [
+          ...current,
+          { id, role: "user", text: prompt },
+          {
+            id: `${id}-reply`,
+            role: "assistant",
+            text:
+              prompt.trim() === sampleRequest
+                ? "Simulated draft from the exact sample request. Review and confirm below."
+                : "This example recognizes only the exact sample request. It does not interpret arbitrary text.",
+          },
+        ]);
+        setText("");
+        if (prompt.trim() !== sampleRequest) return;
+        generation.current++;
+        pending.current = false;
+        setAgent({
+          status: "draft",
+          draft: {
+            id,
+            revision: 0,
+            name: "Product reviewer",
+            purpose: "Review a supplied product interface.",
+            instructions:
+              "Check clarity, keyboard access and error recovery. Ask before expanding scope.",
+          },
+        });
+      }}
+      agentDefinition={
+        agent
+          ? {
+              ...agent,
+              onChange: (fields) => {
+                generation.current++;
+                setAgent((current) =>
+                  current
+                    ? {
+                        status: "draft",
+                        draft: {
+                          ...current.draft,
+                          ...fields,
+                          revision: current.draft.revision + 1,
+                        },
+                      }
+                    : current,
+                );
+              },
+              onCancel: ({ id, revision }) => {
+                generation.current++;
+                pending.current = false;
+                setAgent((current) =>
+                  current?.draft.id === id &&
+                  current.draft.revision === revision
+                    ? { status: "cancelled", draft: current.draft }
+                    : current,
+                );
+              },
+              onConfirm: async (snapshot) => {
+                if (pending.current) return;
+                pending.current = true;
+                const token = ++generation.current;
+                setAgent({ status: "confirming", draft: snapshot });
+                try {
+                  const confirmed = await confirm(snapshot);
+                  if (token !== generation.current) return;
+                  // This contract confirms the reviewed snapshot, never changed server output.
+                  // If validation changes fields, return a new draft for another review instead.
+                  setAgent((current) =>
+                    current?.status === "confirming" &&
+                    current.draft.id === snapshot.id &&
+                    current.draft.revision === snapshot.revision
+                      ? { status: "created", draft: current.draft, confirmed }
+                      : current,
+                  );
+                } catch {
+                  if (token === generation.current)
+                    setAgent({
+                      status: "error",
+                      draft: snapshot,
+                      errorMessage:
+                        "Confirmation failed. Your edits are preserved; retry when ready.",
+                    });
+                } finally {
+                  if (token === generation.current) pending.current = false;
+                }
+              },
+            }
+          : undefined
+      }
+    />
+  );
+}
+```
+
+### Copy and download contract
+
+After the consumer confirms the matching revision, the Block shows **Definition
+created locally**. It does not mean deployed, running, connected or stored remotely.
+Copy awaits the browser clipboard result; failures leave selectable JSON under
+**Definition JSON**. Download requests a local `agent-definition.json` file and
+reports the request, not proof that the browser saved it.
+
+JSON uses this PyColors example format, not a universal cross-provider standard:
+
+```json
+{
+  "schemaVersion": 1,
+  "kind": "pycolors-agent-definition",
+  "name": "Product reviewer",
+  "purpose": "Review a supplied product interface.",
+  "instructions": "Check clarity and keyboard access."
+}
+```
+
+Optional `requestedCapabilities: string[]` and `sourceReferences: { id, label }[]`
+are included when present. Export uses an explicit allowlist; draft identity,
+revision, unknown properties, hidden grants and raw file payload properties are
+excluded. It **does not redact secrets typed into allowed fields**. Do not supply
+credentials, tokens, private file content or sensitive provenance labels. Export
+is a view definition; interpreting it, storing it and authorizing tools require
+your own separately reviewed application integration.
 
 ## Optional AI SDK integration
 
@@ -290,6 +521,10 @@ The composer owns a form, so do not nest the Block in another form.
 The message list is not a token-by-token live region. A separate status announces
 request transitions. Focus stays in the composer when sending and returns there
 when a focused stop/retry control disappears. Incoming text does not steal focus.
+The agent review uses labelled fields and a separate status. Incoming drafts do
+not autofocus. Confirmation/cancellation returns focus to its result only when
+the initiating focus is still inside the form or was lost; other controls keep
+focus. Failed required validation focuses the first invalid field.
 Scrolling up pauses following; **Jump to latest** explicitly resumes it.
 
 The source uses semantic tokens, text wrapping and reduced-motion-safe controls.

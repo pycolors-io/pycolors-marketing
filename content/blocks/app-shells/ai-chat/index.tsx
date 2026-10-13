@@ -2,11 +2,16 @@
 
 import * as React from "react";
 import { AIComposer, Alert, Button, cn } from "@pycolors/ui";
+import { AgentDefinition } from "./agent-definition";
 import { ChatThread } from "./chat-thread";
 import type { AIChatProps } from "./types";
 
 export type {
   AIChatProps,
+  AgentDefinitionControl,
+  AgentDefinitionDraft,
+  AgentDefinitionFields,
+  AgentDefinitionState,
   ChatMessage,
   ChatStatus,
   ChatSuggestion,
@@ -25,6 +30,7 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
       onRetry,
       onCopy,
       suggestions = [],
+      agentDefinition,
       errorMessage,
       disabled = false,
       className,
@@ -120,6 +126,13 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             ) : null}
           </div>
         )}
+        {agentDefinition ? (
+          <AgentDefinition
+            key={agentDefinition.draft.id}
+            control={agentDefinition}
+            disabled={disabled}
+          />
+        ) : null}
         <div className="space-y-4 border-t border-border bg-muted/20 px-5 py-5 sm:px-8">
           <p
             id={`${id}-status`}

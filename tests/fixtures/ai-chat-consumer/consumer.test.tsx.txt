@@ -88,3 +88,57 @@ it("aborts transport when its consumer unmounts", async () => {
   await act(async () => {});
   expect(mock.aborted).toBe(true);
 });
+
+import { AgentChat } from "./src/components/agent-chat";
+import type { AgentDefinitionDraft } from "./src/components/blocks/ai-chat";
+
+it("creates only the explicitly reviewed agent revision and exports the edited definition", async () => {
+  const confirm = vi.fn(async (snapshot: AgentDefinitionDraft) => snapshot);
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  expect(confirm).not.toHaveBeenCalled();
+  expect(screen.queryByRole("heading", { name: "Agent definition" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  expect(confirm).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "My consumer reviewer" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(confirm).toHaveBeenCalledOnce();
+  expect(confirm.mock.calls[0][0].revision).toBe(1);
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+  expect(JSON.parse(screen.getByLabelText("Confirmed definition JSON").textContent!)).toMatchObject({ schemaVersion: 1, name: "My consumer reviewer" });
+});
+it("ignores a delayed consumer result after cancellation and replacement", async () => {
+  let done!: (snapshot: AgentDefinitionDraft) => void;
+  let submitted!: AgentDefinitionDraft;
+  const confirm = vi.fn((snapshot: AgentDefinitionDraft) => { submitted = snapshot; return new Promise<AgentDefinitionDraft>((resolve) => { done = resolve; }); });
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.click(screen.getByRole("button", { name: "Confirm definition" }));
+  fireEvent.click(screen.getByRole("button", { name: "Cancel definition" }));
+  expect(screen.getByText(/Definition cancelled/)).toBeVisible();
+  await act(async () => {});
+  fireEvent.change(screen.getByRole("textbox", { name: "Message" }), { target: { value: "Define a product review assistant." } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "New draft" } });
+  await act(async () => done(submitted));
+  expect(screen.queryByText("Definition created locally")).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Agent name/ })).toHaveValue("New draft");
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});
+it("preserves failed confirmation edits and retries the same revision", async () => {
+  const confirm = vi.fn<(snapshot: AgentDefinitionDraft) => Promise<AgentDefinitionDraft>>()
+    .mockRejectedValueOnce(new Error("Private backend detail"))
+    .mockImplementation(async (snapshot) => snapshot);
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.change(screen.getByRole("textbox", { name: /Instructions/ }), { target: { value: "Keep my changes" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(screen.queryByText("Private backend detail")).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Instructions/ })).toHaveValue("Keep my changes");
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Retry confirmation" })));
+  expect(confirm).toHaveBeenCalledTimes(2);
+  expect(confirm.mock.calls[1][0]).toEqual(confirm.mock.calls[0][0]);
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+});

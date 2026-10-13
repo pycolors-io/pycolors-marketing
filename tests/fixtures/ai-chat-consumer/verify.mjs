@@ -35,6 +35,14 @@ const recipe =
   )?.[1];
 if (!recipe) throw new Error("The complete documented SDK recipe is missing.");
 write("src/components/connected-chat.tsx", recipe);
+const agentRecipe =
+  /```tsx title="src\/components\/agent-chat.tsx"\n([\s\S]*?)\n```/u.exec(
+    doc,
+  )?.[1];
+if (!agentRecipe)
+  throw new Error("The complete documented agent recipe is missing.");
+write("src/components/agent-chat.tsx", agentRecipe);
+
 cpSync(
   resolve(fixture, "consumer.test.tsx.txt"),
   resolve(output, "consumer.test.tsx"),
@@ -83,7 +91,7 @@ write(
 );
 write(
   "src/main.tsx",
-  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /></React.StrictMode>);',
+  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\nimport { AgentChat } from "./components/agent-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /><AgentChat /></React.StrictMode>);',
 );
 write(
   "vitest.config.ts",
