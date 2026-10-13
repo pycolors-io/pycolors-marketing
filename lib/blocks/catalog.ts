@@ -10,6 +10,14 @@ export const BLOCK_CATEGORIES = [
 
 export const BLOCKS_CATALOG = [
   {
+    id: "app-shells/ai-chat",
+    title: "AI chat",
+    category: "Application shells",
+    description:
+      "A controlled conversation with streaming, stop, retry and honest copy feedback. Bring your own messages and transport; copy the complete source.",
+    href: "/docs/blocks/app-shells/ai-chat",
+  },
+  {
     id: "app-shells/responsive-sidebar",
     title: "Responsive sidebar",
     category: "Application shells",

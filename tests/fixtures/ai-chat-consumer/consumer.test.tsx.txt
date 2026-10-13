@@ -1,0 +1,90 @@
+import * as React from "react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { expect, it, vi } from "vitest";
+import type { ChatTransport, UIMessage, UIMessageChunk } from "ai";
+import { ConnectedChat } from "./src/components/connected-chat";
+
+function mockTransport() {
+  let controller: ReadableStreamDefaultController<UIMessageChunk>;
+  let abortSignal: AbortSignal | undefined;
+  let count = 0;
+  const sendMessages = vi.fn<ChatTransport<UIMessage>["sendMessages"]>(async (options) => {
+    abortSignal = options.abortSignal;
+    return new ReadableStream<UIMessageChunk>({ start(value) {
+      controller = value;
+      controller.enqueue({ type: "start", messageId: `answer-${++count}` });
+      controller.enqueue({ type: "text-start", id: "text" });
+      abortSignal?.addEventListener("abort", () => controller.error(new DOMException("Aborted", "AbortError")), { once: true });
+    } });
+  });
+  return {
+    transport: { sendMessages, reconnectToStream: async () => null } satisfies ChatTransport<UIMessage>,
+    sendMessages,
+    push(text: string) { controller.enqueue({ type: "text-delta", id: "text", delta: text }); },
+    unsupported() { controller.enqueue({ type: "reasoning-start", id: "reason" }); controller.enqueue({ type: "reasoning-delta", id: "reason", delta: "Hidden?" }); controller.enqueue({ type: "reasoning-end", id: "reason" }); },
+    fail() { controller.error(new Error("Private provider error")); },
+    finish() { controller.enqueue({ type: "text-end", id: "text" }); controller.enqueue({ type: "finish" }); controller.close(); },
+    get aborted() { return abortSignal?.aborted; },
+  };
+}
+async function send(text = "Make a plan") {
+  fireEvent.change(screen.getByRole("textbox"), { target: { value: text } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  await act(async () => {});
+}
+
+it("streams the copied Block using the real SDK and a mock transport", async () => {
+  const mock = mockTransport();
+  render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  expect(mock.sendMessages).toHaveBeenCalledOnce();
+  expect(mock.sendMessages.mock.calls[0][0].messages[0].parts).toEqual([{ type: "text", text: "Make a plan" }]);
+  await act(async () => mock.push("First result"));
+  expect(screen.getByText("First result")).toBeVisible();
+  expect(screen.getByRole("button", { name: "Stop response" })).toBeEnabled();
+  await act(async () => mock.finish());
+  expect(screen.getByText("Ready for your next message.")).toBeVisible();
+});
+it("preserves partial output and newer edits through failure and retry without duplicating the user", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  await act(async () => mock.push("Partial response"));
+  fireEvent.change(screen.getByRole("textbox"), { target: { value: "Newer question" } });
+  await act(async () => mock.fail());
+  expect(screen.queryByText("Private provider error")).not.toBeInTheDocument();
+  expect(screen.getByText("Partial response")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Retry response" }));
+  await waitFor(() => expect(mock.sendMessages).toHaveBeenCalledTimes(2));
+  expect(screen.getByText("Partial response")).toBeVisible();
+  expect(mock.sendMessages.mock.calls[1][0].trigger).toBe("regenerate-message");
+  await act(async () => { mock.push("Replacement"); mock.finish(); });
+  expect(screen.queryByText("Partial response")).not.toBeInTheDocument();
+  expect(screen.getAllByText("Make a plan")).toHaveLength(1);
+  expect(screen.getByRole("textbox")).toHaveValue("Newer question");
+});
+it("awaits cancellation, ignores late chunks and allows a fresh request", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send(); await act(async () => mock.push("Kept output"));
+  fireEvent.click(screen.getByRole("button", { name: "Stop response" }));
+  await waitFor(() => expect(screen.getByText(/may be incomplete/)).toBeVisible());
+  expect(mock.aborted).toBe(true);
+  expect(() => mock.push("Late chunk")).toThrow();
+  expect(screen.queryByText(/Late chunk/)).not.toBeInTheDocument();
+  expect(screen.getByText("Kept output")).toBeVisible();
+  await send("A fresh request");
+  await act(async () => { mock.push("Fresh result"); mock.finish(); });
+  expect(screen.getByText("Ready for your next message.")).toBeVisible();
+});
+it("marks unsupported rich content instead of silently declaring success", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  await act(async () => { mock.unsupported(); mock.push("Text"); mock.finish(); });
+  expect(screen.getByText(/Configure a text-only response/)).toBeVisible();
+  expect(screen.getByText(/Unsupported response content/)).toBeVisible();
+});
+it("aborts transport when its consumer unmounts", async () => {
+  const mock = mockTransport(); const { unmount } = render(<ConnectedChat transport={mock.transport} />);
+  await send(); unmount();
+  await act(async () => {});
+  expect(mock.aborted).toBe(true);
+});

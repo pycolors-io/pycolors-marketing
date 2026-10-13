@@ -1,0 +1,297 @@
+---
+title: AI chat
+description: A controlled chat with accessible input, streaming states, stop, retry and complete source you can copy.
+lastUpdated: "2026-10-13"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { AIChatExample } from "@/components/docs/blocks/ai-chat-example";
+
+<div className="flex flex-wrap gap-2">
+  <Badge variant="outline">Application shells</Badge>
+  <Badge>Free</Badge>
+</div>
+
+## A conversation that fits your application
+
+`AIChat` brings a clear empty state, readable conversation and accessible
+[AIComposer](/docs/ui/ai-composer) together. You supply messages, draft and request
+state. Your application owns the backend, credentials, storage and cancellation.
+The Block has no AI runtime dependency and makes no network requests.
+
+Send, stop, retry and copy remain useful Free features. There are no file uploads,
+tools, agent deployment, voice, rich Markdown or message persistence in this Block.
+Text is rendered literally, including code and HTML characters.
+
+## Copy source
+
+Configure the [public UI package and tokens](/docs/ui/installation). This Block
+requires `@pycolors/ui` **1.6.0 or later**, which includes AIComposer. The isolated
+consumer was tested with UI 1.6.0; test newer versions in your own application.
+
+Copy **all three files**, keeping their relative imports. Use the copy button or
+select the code manually if clipboard permission is unavailable. The
+[Blocks catalog](/blocks) also offers **Code → Download ZIP** with the same complete
+source. No Registry, CLI or hosted chat service is needed.
+
+<Files>
+  <Folder name="src/components/blocks/ai-chat" defaultOpen>
+    <File name="index.tsx" />
+    <File name="chat-thread.tsx" />
+    <File name="types.ts" />
+  </Folder>
+</Files>
+
+<Tabs groupId="blocks-doc-view" items={["Preview", "Source"]}>
+  <Tab value="Preview">
+    <Preview className="my-0">
+      <AIChatExample />
+    </Preview>
+  </Tab>
+  <Tab value="Source">
+    <Tabs items={["index.tsx", "chat-thread.tsx", "types.ts"]}>
+      <Tab value="index.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/ai-chat/index.tsx"'
+        >
+          ../../../blocks/app-shells/ai-chat/index.tsx
+        </include>
+      </Tab>
+      <Tab value="chat-thread.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/ai-chat/chat-thread.tsx"'
+        >
+          ../../../blocks/app-shells/ai-chat/chat-thread.tsx
+        </include>
+      </Tab>
+      <Tab value="types.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/ai-chat/types.ts"'
+        >
+          ../../../blocks/app-shells/ai-chat/types.ts
+        </include>
+      </Tab>
+    </Tabs>
+  </Tab>
+</Tabs>
+
+This preview uses fictional, fixed local responses. Try **Fail next response**,
+stop a response, edit the next message, then retry. Nothing is sent or stored;
+a successful demo does not prove a provider integration.
+
+## Install by copying source
+
+Use React 18 or later and the public UI/token setup above, including its
+`lucide-react` peer dependency (tested with 1.49.0). Preserve the client
+directives. Import your copied entry point; never import marketing internals or
+package source paths. Configure Tailwind to scan your copied files.
+
+The source does not receive automatic updates. Customize and validate it in your application.
+
+```tsx title="src/components/chat-panel.tsx"
+"use client";
+
+import { AIChat, type AIChatProps } from "./blocks/ai-chat";
+
+// Supply controlled state and request callbacks from your application.
+export function ChatPanel(props: AIChatProps) {
+  return <AIChat {...props} />;
+}
+```
+
+## State and action ownership
+
+| Prop                     | Responsibility                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| `messages`               | Ordered user/assistant text with stable unique IDs. Update the same ID while streaming.           |
+| `draft`, `onDraftChange` | Your controlled input. Suggestions prefill without sending.                                       |
+| `status`                 | `idle`, `submitting`, `streaming`, `stopped` or `error`.                                          |
+| `onSubmit(draft)`        | Accept a nonblank request and set busy synchronously. The Block never clears the draft.           |
+| `onStop`                 | Optional transport cancellation. Set stopped only after cancellation settles; reject late chunks. |
+| `onRetry`                | Optional retry of the last failed/stopped request, not the newer draft. No automatic retry.       |
+| `onCopy(message)`        | Promise resolving after a successful clipboard write, rejecting on failure.                       |
+| `errorMessage`           | Safe user-facing error. Never expose raw provider errors or credentials.                          |
+| `disabled`               | Disable input and mutation actions while retaining readable messages.                             |
+| `ref`                    | Native textarea ref for consumer focus management.                                                |
+
+Pass `onCopy={(message) => navigator.clipboard.writeText(message.text)}` in a client
+component. The UI confirms only completed copies and offers manual selection on
+failure. Copy during streaming copies the text at click time, not future tokens.
+
+Keep submitted text in your message/request state before clearing an accepted
+draft. Failures must preserve newer edits. Stop/retry must keep partial output
+visible until replacement starts and must not duplicate the user message.
+
+## Optional AI SDK integration
+
+The Block works without an SDK. If your application uses AI SDK, the recipe below
+maps its state to the same controlled props. It was checked with `ai@7.0.138` and
+`@ai-sdk/react@4.0.141` in an isolated consumer using a mock transport. Real-provider
+execution was **not run**. Install these only in your consuming application;
+never add a provider dependency to the copied Block.
+
+Your server owns `/api/chat`, authentication, input validation, credentials,
+limits and cancellation. This guide does not provision that endpoint. Client
+cancellation alone cannot guarantee that upstream generation or billing stops.
+Review the [official useChat reference](https://ai-sdk.dev/docs/reference/ai-sdk-ui/use-chat)
+for your installed version.
+
+```tsx title="src/components/connected-chat.tsx"
+"use client";
+
+import * as React from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, type ChatTransport, type UIMessage } from "ai";
+import { AIChat, type ChatMessage, type ChatStatus } from "./blocks/ai-chat";
+
+// Keep this adapter in your application, outside the copied Block.
+export function ConnectedChat({
+  transport,
+}: {
+  transport?: ChatTransport<UIMessage>;
+}) {
+  const [defaultTransport] = React.useState(
+    () => new DefaultChatTransport({ api: "/api/chat" }),
+  );
+  const chat = useChat({ transport: transport ?? defaultTransport });
+  const [draft, setDraft] = React.useState("");
+  const [pending, setPending] = React.useState(false);
+  const [stopped, setStopped] = React.useState(false);
+  const [localError, setLocalError] = React.useState(false);
+  const [previous, setPrevious] = React.useState<ChatMessage[] | null>(null);
+  const inFlight = React.useRef(false);
+  const mounted = React.useRef(false);
+  React.useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      void chat.stop();
+    };
+  }, [chat.stop]);
+
+  const messages: ChatMessage[] = chat.messages.flatMap((message) => {
+    if (message.role !== "user" && message.role !== "assistant") return [];
+    const text = message.parts
+      .filter((part) => part.type === "text")
+      .map((part) => part.text)
+      .join("");
+    const unsupported = message.parts.some(
+      (part) => part.type !== "text" && part.type !== "step-start",
+    );
+    return [
+      {
+        id: message.id,
+        role: message.role,
+        text: unsupported
+          ? `${text}\n[Unsupported response content. This example supports text only.]`
+          : text,
+      },
+    ];
+  });
+  const unsupported = chat.messages.some((message) =>
+    message.parts.some(
+      (part) => part.type !== "text" && part.type !== "step-start",
+    ),
+  );
+  const busy =
+    pending || chat.status === "submitted" || chat.status === "streaming";
+  const status: ChatStatus =
+    chat.status === "streaming"
+      ? "streaming"
+      : busy
+        ? "submitting"
+        : unsupported || localError || chat.status === "error"
+          ? "error"
+          : stopped
+            ? "stopped"
+            : "idle";
+  const latest = messages.at(-1);
+  // regenerate removes the old assistant message immediately. Preserve it until
+  // its replacement has content; also retain it if retry fails before a chunk.
+  const visible =
+    previous && !(latest?.role === "assistant" && latest.text)
+      ? previous
+      : messages;
+
+  async function request(retry: boolean, text: string) {
+    if (inFlight.current || (!retry && !text.trim())) return;
+    inFlight.current = true;
+    setPending(true);
+    setStopped(false);
+    setLocalError(false);
+    setPrevious(retry ? visible : null);
+    chat.clearError();
+    try {
+      if (retry) await chat.regenerate();
+      else await chat.sendMessage({ text });
+    } catch {
+      if (mounted.current) setLocalError(true);
+    } finally {
+      inFlight.current = false;
+      if (mounted.current) setPending(false);
+    }
+  }
+
+  return (
+    <AIChat
+      messages={visible}
+      draft={draft}
+      onDraftChange={setDraft}
+      status={status}
+      onSubmit={(text) => {
+        void request(false, text);
+      }}
+      onRetry={
+        chat.messages.some((message) => message.role === "user")
+          ? () => {
+              void request(true, "");
+            }
+          : undefined
+      }
+      onStop={() => {
+        void chat
+          .stop()
+          .then(() => {
+            if (mounted.current) setStopped(true);
+          })
+          .catch(() => {
+            if (mounted.current) setLocalError(true);
+          });
+      }}
+      onCopy={(message) => navigator.clipboard.writeText(message.text)}
+      errorMessage={
+        unsupported
+          ? "The endpoint returned unsupported content. Configure a text-only response."
+          : "The response could not be completed. Your text is preserved; you can retry."
+      }
+    />
+  );
+}
+```
+
+This example retains the draft until you edit it. A production consumer may clear
+an accepted draft after retaining its request snapshot; never overwrite newer edits.
+Keep the transport instance stable. Supply a custom `transport` only for your
+application integration or tests; no provider or transport is bundled in the Block.
+
+## Accessibility and limitations
+
+Desktop Enter sends; Shift+Enter inserts a newline. IME composition never submits.
+On touch-first devices Enter stays a newline; the explicit send action remains.
+The composer owns a form, so do not nest the Block in another form.
+
+The message list is not a token-by-token live region. A separate status announces
+request transitions. Focus stays in the composer when sending and returns there
+when a focused stop/retry control disappears. Incoming text does not steal focus.
+Scrolling up pauses following; **Jump to latest** explicitly resumes it.
+
+The source uses semantic tokens, text wrapping and reduced-motion-safe controls.
+Test your own callbacks, labels, locale, screen reader and physical mobile/IME
+behavior. Automated accessibility checks do not certify an integration.
