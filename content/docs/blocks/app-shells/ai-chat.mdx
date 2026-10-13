@@ -1,6 +1,6 @@
 ---
 title: AI chat
-description: A controlled chat with accessible input, streaming states, stop, retry, inline agent definitions and complete source you can copy.
+description: A controlled chat with accessible input, streaming states, stop, retry, inline agent definitions, task progress and complete source you can copy.
 lastUpdated: "2026-10-13"
 appliesTo: Blocks
 ---
@@ -35,7 +35,7 @@ Configure the [public UI package and tokens](/docs/ui/installation). This Block
 requires `@pycolors/ui` **1.6.0 or later**, which includes AIComposer. The isolated
 consumer was tested with UI 1.6.0; test newer versions in your own application.
 
-Copy **all six files**, keeping their relative imports. Use the copy button or
+Copy **all seven files**, keeping their relative imports. Use the copy button or
 select the code manually if clipboard permission is unavailable. The
 [Blocks catalog](/blocks) also offers **Code → Download ZIP** with the same complete
 source. No Registry, CLI or hosted chat service is needed.
@@ -48,6 +48,7 @@ source. No Registry, CLI or hosted chat service is needed.
     <File name="agent-definition.tsx" />
     <File name="agent-definition-export.ts" />
     <File name="attachments.tsx" />
+    <File name="work.tsx" />
   </Folder>
 </Files>
 
@@ -66,6 +67,7 @@ source. No Registry, CLI or hosted chat service is needed.
         "agent-definition.tsx",
         "agent-definition-export.ts",
         "attachments.tsx",
+        "work.tsx",
       ]}
     >
       <Tab value="index.tsx">
@@ -116,6 +118,14 @@ source. No Registry, CLI or hosted chat service is needed.
           ../../../blocks/app-shells/ai-chat/attachments.tsx
         </include>
       </Tab>
+      <Tab value="work.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/ai-chat/work.tsx"'
+        >
+          ../../../blocks/app-shells/ai-chat/work.tsx
+        </include>
+      </Tab>
     </Tabs>
   </Tab>
 </Tabs>
@@ -125,7 +135,9 @@ stop a response, edit the next message, then retry. Nothing is sent or stored;
 a successful demo does not prove a provider integration. **Define an agent (demo)**
 prefills an exact sample request. Send it to open a simulated draft, edit its
 fields, then confirm explicitly. Try **Fail next confirmation** or cancel while
-confirming. Only confirmed local definitions offer copy/download.
+confirming. Only confirmed local definitions offer copy/download. **Review a task plan (demo)**
+prefills the Work sample: submit it, then open **Work simulation controls** to supply
+fictional states explicitly. No background task runs.
 
 ## Install by copying source
 
@@ -848,6 +860,481 @@ export function LocalFileChat({
 The external-consumer fixture compiles these exact recipes with the published UI
 package and exercises real local reading, source-linked confirmation and source
 removal. Its results are engineering evidence, not adoption or provider evidence.
+
+## Inline task progress and results
+
+Pass optional `work` to the same `AIChat` to present one task beside the
+conversation. Omitting it preserves the basic chat. The Block never starts a
+task, calls a tool or infers progress from chat text. Chat `status` and Work
+`status` describe separate operations; stopping a response does not cancel Work.
+
+### Consumer-owned truth
+
+| Field                       | Consumer responsibility                                                                                                                                                                         |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`, `attempt`, `revision` | Stable task ID; a new attempt number for a retry; increment revision for each accepted update within that attempt. Never reuse a previous identity.                                             |
+| `title`, `description?`     | Short public text describing the task.                                                                                                                                                          |
+| `status`                    | `planned`, `running`, `waiting-for-approval`, `succeeded`, `failed`, `cancelled` or `unknown`. Supply actual task truth.                                                                        |
+| `steps`                     | Ordered `{id, label, status, detail?}` values with stable unique IDs. Step states are `pending`, `running`, `succeeded`, `failed`, `cancelled`. Details are optional public activity summaries. |
+| `errorMessage?`             | Safe task error text. Raw exceptions, credentials, hidden reasoning and private tool payloads must never enter this presentation.                                                               |
+| `result?`                   | Actual `{text, links?: [{id, label, href}]}` content. Partial results remain labelled as partial until the global state is `succeeded`.                                                         |
+| `pendingAction?`            | `approve`, `reject`, `cancel` or `retry` while your application awaits confirmation. It disables all task actions, without changing task state.                                                 |
+| `actionError?`              | Safe request failure text, separate from task failure. Clear it when the request is retried or superseded.                                                                                      |
+
+Exported copied-source types are `ChatWorkControl`, `ChatWorkState`,
+`ChatWorkIdentity`, `ChatWorkStep`, `ChatWorkStatus` and `ChatWorkAction`.
+No npm package export or runtime dependency is added.
+
+| Callback                                     | Visible when supplied and meaningful                     |
+| -------------------------------------------- | -------------------------------------------------------- |
+| `onApprove(identity)` / `onReject(identity)` | Only `waiting-for-approval`.                             |
+| `onCancel(identity)`                         | `planned`, `running`, `waiting-for-approval`, `unknown`. |
+| `onRetry(identity)`                          | `failed`, `cancelled`, `unknown`.                        |
+
+Callbacks receive only `{id, attempt, revision}` and may return a promise.
+Resolution acknowledges the request; it **does not confirm success, cancellation
+or a new attempt**. The Block prevents repeat clicks while the callback is
+pending and ignores stale callback feedback after an identity change or unmount.
+A rejected callback displays a generic polite error, keeping the task unchanged
+and allowing another request. `disabled` disables task actions and removes link
+navigation while leaving content readable.
+
+Your consumer must synchronously reject duplicate and stale identities, enforce
+permissions at its authoritative boundary, and reject late task updates after
+retry, cancellation, reset or unmount. Maintain `pendingAction` until confirmation
+if the callback resolves before your task update arrives. The UI's request guard
+is not a durable idempotency or security layer. Approval expresses user intent;
+it does not grant file access, agent capabilities or application permissions.
+
+Use `unknown` when the current state cannot be established. Do not convert a lost
+connection into success or cancellation. All steps can be completed while the
+global task is still running. Only an explicit supplied `succeeded` state changes
+the result label. A completed task without `result` says that no result was supplied.
+No percentage or timer-derived completion is invented.
+
+### Results and readable details
+
+Text is escaped, never executable HTML, Markdown or generated code. Supply only
+existing, authorized result destinations: absolute HTTPS URLs without credentials
+or root-relative paths (one leading slash). Other schemes, protocol-relative URLs,
+credentials, whitespace, control characters and backslashes render as non-clickable
+labels. This checks destination syntax, not authorization, resource existence or
+external site trust. Do not pass signed secrets, fabricated artifacts or private data.
+The Block neither fetches nor verifies destinations and does not fabricate downloads.
+
+Details use native `details`/`summary` controls; step state is written in text and
+does not depend on color. One bounded status message announces overall state or
+an action request politely. Step detail/result bodies are not live regions.
+If a focused task action disappears, focus returns to the task summary unless the
+user has moved elsewhere. Long text wraps, and no animation is required to understand
+progress. Verify keyboard and assistive technology behavior in your own application.
+
+### Complete local Work consumer
+
+Copy these two additional files beside your seven-file Block to reproduce the
+preview's **Work simulation**. The exact suggestion only prefills the composer;
+Send supplies a fictional plan. Open the native simulation controls, request
+approval, then approve explicitly. Advance steps one at a time. Even after all
+steps complete, **Supply sample result** is a separate action. The displayed sample
+checklist is actual local text; it is not a generated document or a downloadable artifact.
+
+Try failure, unknown status, cancellation and retry. **Cancel task** leaves the
+previous status and partial result visible until **Confirm simulated cancellation**.
+Retry creates a new attempt; reset clears the simulation. Every transition is
+explicit and checks its captured identity. No timer, background process, network,
+model, tool, file write, persistence or analytics is used by this recipe.
+The existing message copy action writes to the clipboard only after an explicit click.
+
+```tsx title="src/components/work-simulation.tsx"
+"use client";
+
+import * as React from "react";
+import { Button } from "@pycolors/ui";
+import type {
+  ChatWorkControl,
+  ChatWorkIdentity,
+  ChatWorkState,
+  ChatWorkStep,
+} from "./blocks/ai-chat";
+
+export const workSamplePrompt = "Show a sample launch review task plan.";
+const sampleResult =
+  "Sample checklist (fictional):\n- Make the primary action clear.\n- Verify keyboard access.\n- Explain how to recover from an error.";
+const steps = (): ChatWorkStep[] => [
+  {
+    id: "brief",
+    label: "Review the supplied brief",
+    status: "pending",
+    detail:
+      "Example activity summary only. This demo does not read a real project or inspect a file.",
+  },
+  {
+    id: "gaps",
+    label: "Identify usability gaps",
+    status: "pending",
+    detail:
+      "Fictional checks: clear labels, keyboard access and error recovery.",
+  },
+  {
+    id: "checklist",
+    label: "Prepare the review checklist",
+    status: "pending",
+    detail:
+      "The sample text is already present locally. No model generates it.",
+  },
+];
+type Transition =
+  | "request-approval"
+  | "approve"
+  | "reject"
+  | "cancel"
+  | "confirm-cancel"
+  | "retry"
+  | "advance"
+  | "complete"
+  | "fail"
+  | "unknown";
+
+/** Demo consumer only. Every transition requires an explicit user action. */
+export function useWorkSimulation() {
+  const [state, setState] = React.useState<ChatWorkState>();
+  const current = React.useRef<ChatWorkState | undefined>(undefined);
+  const sequence = React.useRef(0);
+  const mounted = React.useRef(true);
+  React.useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      current.current = undefined;
+    };
+  }, []);
+  function update(next: ChatWorkState | undefined) {
+    if (!mounted.current) return;
+    current.current = next;
+    setState(next);
+  }
+  function change(
+    identity: ChatWorkIdentity | undefined,
+    transition: Transition,
+  ) {
+    const value = current.current;
+    if (
+      !mounted.current ||
+      !value ||
+      !identity ||
+      value.id !== identity.id ||
+      value.attempt !== identity.attempt ||
+      value.revision !== identity.revision
+    )
+      return;
+    if (value.pendingAction && transition !== "confirm-cancel") return;
+    const next = { ...value, revision: value.revision + 1 };
+    switch (transition) {
+      case "request-approval":
+        if (value.status === "planned")
+          update({ ...next, status: "waiting-for-approval" });
+        break;
+      case "approve":
+        if (value.status === "waiting-for-approval")
+          update({
+            ...next,
+            status: "running",
+            steps: value.steps.map((step, index) => ({
+              ...step,
+              status: index === 0 ? "running" : "pending",
+            })),
+          });
+        break;
+      case "reject":
+        if (value.status === "waiting-for-approval")
+          update({
+            ...next,
+            status: "cancelled",
+            steps: value.steps.map((step) => ({
+              ...step,
+              status: "cancelled",
+            })),
+          });
+        break;
+      case "cancel":
+        if (
+          ["planned", "running", "waiting-for-approval", "unknown"].includes(
+            value.status,
+          )
+        )
+          update({ ...next, pendingAction: "cancel" });
+        break;
+      case "confirm-cancel":
+        if (value.pendingAction === "cancel")
+          update({
+            ...next,
+            pendingAction: undefined,
+            status: "cancelled",
+            steps: value.steps.map((step) => ({
+              ...step,
+              status: step.status === "succeeded" ? "succeeded" : "cancelled",
+            })),
+          });
+        break;
+      case "retry":
+        if (["failed", "cancelled", "unknown"].includes(value.status))
+          update({
+            ...next,
+            attempt: value.attempt + 1,
+            revision: 0,
+            status: "planned",
+            steps: steps(),
+            result: undefined,
+            errorMessage: undefined,
+          });
+        break;
+      case "advance": {
+        const active = value.steps.findIndex(
+          (step) => step.status === "running",
+        );
+        if (value.status !== "running" || active === -1) break;
+        update({
+          ...next,
+          result: {
+            text: "Sample finding (fictional): verify that the primary action has a clear label.",
+          },
+          steps: value.steps.map((step, index) => ({
+            ...step,
+            status:
+              index === active
+                ? "succeeded"
+                : index === active + 1
+                  ? "running"
+                  : step.status,
+          })),
+        });
+        break;
+      }
+      case "complete":
+        if (
+          value.status === "running" &&
+          value.steps.length > 0 &&
+          value.steps.every((step) => step.status === "succeeded")
+        )
+          update({
+            ...next,
+            status: "succeeded",
+            result: { text: sampleResult },
+          });
+        break;
+      case "fail":
+        if (value.status === "running")
+          update({
+            ...next,
+            status: "failed",
+            errorMessage:
+              "Simulated failure. The supplied partial result is kept; you can retry with a new attempt.",
+            steps: value.steps.map((step) => ({
+              ...step,
+              status: step.status === "running" ? "failed" : step.status,
+            })),
+          });
+        break;
+      case "unknown":
+        if (
+          ["planned", "running", "waiting-for-approval"].includes(value.status)
+        )
+          update({ ...next, status: "unknown" });
+        break;
+    }
+  }
+  const work: ChatWorkControl | undefined = state
+    ? {
+        ...state,
+        onApprove: (identity) => change(identity, "approve"),
+        onReject: (identity) => change(identity, "reject"),
+        onCancel: (identity) => change(identity, "cancel"),
+        onRetry: (identity) => change(identity, "retry"),
+      }
+    : undefined;
+  return {
+    work,
+    start: () =>
+      update({
+        id: `sample-work-${++sequence.current}`,
+        attempt: 1,
+        revision: 0,
+        title: "Review a launch plan",
+        description:
+          "Work simulation. Fictional steps and results; no background task or model is running.",
+        status: "planned",
+        steps: steps(),
+      }),
+    reset: () => update(undefined),
+    requestApproval: () => change(state, "request-approval"),
+    advance: () => change(state, "advance"),
+    complete: () => change(state, "complete"),
+    fail: () => change(state, "fail"),
+    unknown: () => change(state, "unknown"),
+    confirmCancellation: () => change(state, "confirm-cancel"),
+  };
+}
+
+export function WorkSimulationControls({
+  simulation,
+}: {
+  simulation: ReturnType<typeof useWorkSimulation>;
+}) {
+  const work = simulation.work;
+  if (!work) return null;
+  const blocked = Boolean(work.pendingAction);
+  return (
+    <details className="rounded-lg border border-border px-4 py-3">
+      <summary className="cursor-pointer text-sm font-medium">
+        Work simulation controls
+      </summary>
+      <p className="mt-3 text-xs leading-5 text-muted-foreground">
+        These buttons supply fictional states manually. They do not execute
+        work, call a model or write a file.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={blocked || work.status !== "planned"}
+          onClick={simulation.requestApproval}
+        >
+          Simulate approval request
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={
+            blocked ||
+            work.status !== "running" ||
+            !work.steps.some((step) => step.status === "running")
+          }
+          onClick={simulation.advance}
+        >
+          Advance one step
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={
+            blocked ||
+            work.status !== "running" ||
+            !work.steps.every((step) => step.status === "succeeded")
+          }
+          onClick={simulation.complete}
+        >
+          Supply sample result
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={blocked || work.status !== "running"}
+          onClick={simulation.fail}
+        >
+          Simulate failure
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={
+            blocked ||
+            !["planned", "running", "waiting-for-approval"].includes(
+              work.status,
+            )
+          }
+          onClick={simulation.unknown}
+        >
+          Simulate unknown status
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-auto min-h-11 max-w-full whitespace-normal py-2 [overflow-wrap:anywhere]"
+          disabled={work.pendingAction !== "cancel"}
+          onClick={simulation.confirmCancellation}
+        >
+          Confirm simulated cancellation
+        </Button>
+      </div>
+    </details>
+  );
+}
+```
+
+```tsx title="src/components/work-chat.tsx"
+"use client";
+
+import * as React from "react";
+import { Button } from "@pycolors/ui";
+import { AIChat, type ChatMessage } from "./blocks/ai-chat";
+import {
+  useWorkSimulation,
+  WorkSimulationControls,
+  workSamplePrompt,
+} from "./work-simulation";
+
+/** Local simulation only. Replace the consumer, not the copied presentation. */
+export function WorkChat() {
+  const simulation = useWorkSimulation();
+  const [draft, setDraft] = React.useState("");
+  const [messages, setMessages] = React.useState<ChatMessage[]>([]);
+  const sequence = React.useRef(0);
+  return (
+    <div className="space-y-4">
+      <p>Work simulation · fictional states and results, supplied manually.</p>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => {
+          simulation.reset();
+          setDraft("");
+          setMessages([]);
+        }}
+      >
+        Reset simulation
+      </Button>
+      <AIChat
+        messages={messages}
+        draft={draft}
+        status="idle"
+        onDraftChange={setDraft}
+        onCopy={(message) => navigator.clipboard.writeText(message.text)}
+        work={simulation.work}
+        suggestions={[
+          {
+            id: "work",
+            label: "Review a task plan (sample)",
+            prompt: workSamplePrompt,
+          },
+        ]}
+        onSubmit={(text) => {
+          const sample = text.trim() === workSamplePrompt;
+          if (sample) simulation.start();
+          const id = ++sequence.current;
+          setMessages((previous) => [
+            ...previous,
+            { id: `user-${id}`, role: "user", text },
+            {
+              id: `assistant-${id}`,
+              role: "assistant",
+              text: sample
+                ? "Sample plan supplied. Open Work simulation controls to review the states. No task has run."
+                : "This local example only recognizes the exact sample prompt; it does not call a model.",
+            },
+          ]);
+          setDraft("");
+        }}
+      />
+      <WorkSimulationControls simulation={simulation} />
+    </div>
+  );
+}
+```
 
 ## Optional AI SDK integration
 

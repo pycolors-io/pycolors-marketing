@@ -45,6 +45,8 @@ write("src/components/agent-chat.tsx", agentRecipe);
 for (const [filename, language] of [
   ["use-local-chat-file.ts", "ts"],
   ["local-file-chat.tsx", "tsx"],
+  ["work-simulation.tsx", "tsx"],
+  ["work-chat.tsx", "tsx"],
 ]) {
   const start = doc.indexOf(
     "```" + language + ' title="src/components/' + filename + '"\n',
@@ -105,7 +107,7 @@ write(
 );
 write(
   "src/main.tsx",
-  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\nimport { AgentChat } from "./components/agent-chat";\nimport { LocalFileChat } from "./components/local-file-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /><AgentChat /><LocalFileChat /></React.StrictMode>);',
+  'import * as React from "react";\nimport { createRoot } from "react-dom/client";\nimport { ConnectedChat } from "./components/connected-chat";\nimport { AgentChat } from "./components/agent-chat";\nimport { LocalFileChat } from "./components/local-file-chat";\nimport { WorkChat } from "./components/work-chat";\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><ConnectedChat /><AgentChat /><LocalFileChat /><WorkChat /></React.StrictMode>);',
 );
 write(
   "vitest.config.ts",

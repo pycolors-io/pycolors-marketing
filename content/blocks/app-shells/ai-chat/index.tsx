@@ -5,10 +5,17 @@ import { AIComposer, Alert, Button, cn } from "@pycolors/ui";
 import { AgentDefinition } from "./agent-definition";
 import { ChatAttachments } from "./attachments";
 import { ChatThread } from "./chat-thread";
+import { ChatWork } from "./work";
 import type { AIChatProps } from "./types";
 
 export type {
   AIChatProps,
+  ChatWorkAction,
+  ChatWorkControl,
+  ChatWorkIdentity,
+  ChatWorkState,
+  ChatWorkStatus,
+  ChatWorkStep,
   ChatAttachment,
   ChatAttachmentsControl,
   AgentDefinitionControl,
@@ -35,6 +42,7 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
       suggestions = [],
       agentDefinition,
       attachments,
+      work,
       errorMessage,
       disabled = false,
       className,
@@ -130,6 +138,7 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             ) : null}
           </div>
         )}
+        {work ? <ChatWork control={work} disabled={disabled} /> : null}
         {agentDefinition ? (
           <AgentDefinition
             key={agentDefinition.draft.id}

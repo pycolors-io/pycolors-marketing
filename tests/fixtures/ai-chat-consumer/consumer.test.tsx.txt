@@ -179,3 +179,47 @@ it("rejects late confirmation after source removal in the documented file recipe
   expect(screen.queryByRole("button", { name: "Copy JSON" })).toBeNull();
   expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
 });
+
+import { WorkChat } from "./src/components/work-chat";
+
+async function startWork() {
+  fireEvent.click(screen.getByRole("button", { name: "Review a task plan (sample)" }));
+  expect(screen.queryByRole("region", { name: "Review a launch plan" })).toBeNull();
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Send message" })));
+  expect(screen.getByText("Planned", { selector: '[data-slot="badge"]' })).toBeVisible();
+  fireEvent.click(screen.getByText("Work simulation controls", { selector: "summary" }));
+  fireEvent.click(screen.getByRole("button", { name: "Simulate approval request" }));
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Approve", exact: true })));
+}
+it("keeps completion explicit in the copied Work recipe with published UI", async () => {
+  const fetchSpy = vi.spyOn(globalThis, "fetch");
+  try {
+    render(<WorkChat />);
+    await startWork();
+    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByRole("button", { name: "Advance one step" }));
+    expect(screen.getByText("In progress", { selector: '[data-slot="badge"]' })).toBeVisible();
+    expect(screen.getByText("Partial result · not final")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Supply sample result" }));
+    expect(screen.getByText("Completed", { selector: '[data-slot="badge"]' })).toBeVisible();
+    expect(screen.getByText(/Sample checklist \(fictional\)/)).toBeVisible();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Reset simulation" }));
+    expect(screen.queryByRole("region", { name: "Review a launch plan" })).toBeNull();
+  } finally { fetchSpy.mockRestore(); }
+});
+it("awaits cancellation confirmation, keeps partial text and retries as a fresh attempt", async () => {
+  render(<WorkChat />);
+  await startWork();
+  fireEvent.click(screen.getByRole("button", { name: "Advance one step" }));
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Cancel task" })));
+  expect(screen.getByText("In progress", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.getByText(/Cancellation requested/)).toBeVisible();
+  expect(screen.getByRole("button", { name: "Advance one step" })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Confirm simulated cancellation" }));
+  expect(screen.getByText("Cancelled", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.getByText(/Sample finding \(fictional\)/)).toBeVisible();
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Retry task" })));
+  expect(screen.getByText("Task progress · Attempt 2")).toBeVisible();
+  expect(screen.getByText("Planned", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.queryByText(/Sample finding \(fictional\)/)).toBeNull();
+});

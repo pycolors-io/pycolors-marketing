@@ -27,6 +27,7 @@ export interface AIChatProps {
   suggestions?: readonly ChatSuggestion[];
   agentDefinition?: AgentDefinitionControl;
   attachments?: ChatAttachmentsControl;
+  work?: ChatWorkControl;
   errorMessage?: string;
   disabled?: boolean;
   className?: string;
@@ -101,4 +102,49 @@ export interface ChatAttachmentsControl {
   onRemove: (id: string) => void;
   /** May prefill a prompt, but must not submit or confirm a definition. */
   onUse?: (id: string) => void;
+}
+
+export type ChatWorkStatus =
+  | "planned"
+  | "running"
+  | "waiting-for-approval"
+  | "succeeded"
+  | "failed"
+  | "cancelled"
+  | "unknown";
+export type ChatWorkAction = "approve" | "reject" | "cancel" | "retry";
+export interface ChatWorkIdentity {
+  id: string;
+  /** A new attempt must have a new number, even after cancellation. */
+  attempt: number;
+  /** Increment on each accepted update; reject actions for older revisions. */
+  revision: number;
+}
+export interface ChatWorkStep {
+  id: string;
+  label: string;
+  status: "pending" | "running" | "succeeded" | "failed" | "cancelled";
+  detail?: string;
+}
+export interface ChatWorkState extends ChatWorkIdentity {
+  title: string;
+  description?: string;
+  status: ChatWorkStatus;
+  steps: readonly ChatWorkStep[];
+  errorMessage?: string;
+  result?: {
+    text: string;
+    links?: readonly { id: string; label: string; href: string }[];
+  };
+  /** Accepted request still awaiting consumer confirmation, not a task outcome. */
+  pendingAction?: ChatWorkAction;
+  actionError?: string;
+}
+/** Presentation only. Consumers own execution, authorization and idempotence. */
+export interface ChatWorkControl extends ChatWorkState {
+  /** Resolving a callback acknowledges a request, not completion of the task. */
+  onApprove?: (identity: ChatWorkIdentity) => void | Promise<void>;
+  onReject?: (identity: ChatWorkIdentity) => void | Promise<void>;
+  onCancel?: (identity: ChatWorkIdentity) => void | Promise<void>;
+  onRetry?: (identity: ChatWorkIdentity) => void | Promise<void>;
 }

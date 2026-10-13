@@ -11,6 +11,11 @@ import {
 } from "@/content/blocks/app-shells/ai-chat";
 
 import { useLocalChatFile } from "./use-local-chat-file";
+import {
+  useWorkSimulation,
+  WorkSimulationControls,
+  workSamplePrompt,
+} from "./work-simulation";
 
 const filePrompt =
   "Create a local definition using the selected file as a reference.";
@@ -21,6 +26,7 @@ const response =
   "Start with one clear outcome.\n\n1. Describe the person using your product and the task they need to finish.\n2. Build the smallest useful flow, including empty, loading and error states.\n3. Validate it in a real project before adding more features.\n\nThis is a fixed local example, not a generated answer.";
 
 export function AIChatExample() {
+  const workSimulation = useWorkSimulation();
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [draft, setDraft] = React.useState("");
   const [status, setStatus] = React.useState<ChatStatus>("idle");
@@ -184,6 +190,7 @@ export function AIChatExample() {
               cancel();
               cancelAgent();
               localFile.reset();
+              workSimulation.reset();
               fileIntent.current = null;
               setAgent(undefined);
               setFailConfirmation(false);
@@ -204,6 +211,7 @@ export function AIChatExample() {
         status={status}
         onDraftChange={setDraft}
         attachments={localFile.control}
+        work={workSimulation.work}
         agentDefinition={
           agent
             ? {
@@ -238,6 +246,11 @@ export function AIChatExample() {
             : undefined
         }
         suggestions={[
+          {
+            id: "work",
+            label: "Review a task plan (demo)",
+            prompt: workSamplePrompt,
+          },
           { id: "agent", label: "Define an agent (demo)", prompt: agentPrompt },
           {
             id: "plan",
@@ -257,6 +270,20 @@ export function AIChatExample() {
           lastResponse.current = `${id}-reply`;
           setMessages((current) => [...current, { id, role: "user", text }]);
           setDraft("");
+          if (text.trim() === workSamplePrompt) {
+            workSimulation.start();
+            lastResponse.current = null;
+            setStatus("idle");
+            setMessages((current) => [
+              ...current,
+              {
+                id: `${id}-reply`,
+                role: "assistant",
+                text: "Work simulation only. Review the fictional plan below, then use the simulation controls to supply states. No task is executing.",
+              },
+            ]);
+            return;
+          }
           const fileRequest = text.trim() === filePrompt;
           const fileSource =
             fileRequest && localFile.source?.id === fileIntent.current
@@ -323,11 +350,12 @@ export function AIChatExample() {
         }
         onCopy={(message) => navigator.clipboard.writeText(message.text)}
       />
+      <WorkSimulationControls simulation={workSimulation} />
       <p className="text-xs leading-5 text-muted-foreground">
-        Responses and agent drafts are fixed examples. Only the exact agent
-        sample requests open a definition. A file is read only when you choose
-        Read locally; it is not analyzed by a model. Nothing is sent to a
-        provider or stored remotely. Confirmed definitions can be copied or
+        Responses, agent drafts and Work states are fixed examples. Only the
+        exact agent sample requests open a definition. A file is read only when
+        you choose Read locally; it is not analyzed by a model. Nothing is sent
+        to a provider or stored remotely. Confirmed definitions can be copied or
         downloaded locally.
       </p>
     </div>
