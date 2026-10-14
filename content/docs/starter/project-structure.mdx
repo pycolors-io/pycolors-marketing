@@ -10,13 +10,7 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { File, Folder, Files } from "fumadocs-ui/components/files";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -32,7 +26,7 @@ import {
   Table2,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
 
@@ -55,7 +49,8 @@ Understanding the structure early helps you:
 - avoid refactors caused by mixed responsibilities
 
 <Callout title="Key idea">
-  You are not only learning where files live. You are learning how product architecture scales from a mocked SaaS surface to a real product.
+  You are not only learning where files live. You are learning how product
+  architecture scales from a mocked SaaS surface to a real product.
 </Callout>
 
 ### Mental model
@@ -64,10 +59,10 @@ Understanding the structure early helps you:
 > Components define features.
 > UI defines primitives.
 
-| Layer | Responsibility |
-| --- | --- |
-| `app/` | Routing, layouts, and product entry points |
-| `components/` | Feature composition and interaction logic |
+| Layer          | Responsibility                                  |
+| -------------- | ----------------------------------------------- |
+| `app/`         | Routing, layouts, and product entry points      |
+| `components/`  | Feature composition and interaction logic       |
 | `@pycolors/ui` | Stateless UI primitives used across the product |
 
 <Callout type="info" title="System rule">
@@ -80,13 +75,13 @@ Paths here are relative to your Starter Free checkout. In the source monorepo,
 that checkout is `apps/starter-free`; do not import private monorepo packages
 into the independently delivered starter.
 
-| File | Start here for |
-| --- | --- |
-| `app/layout.tsx` | App name, page metadata, and the root document |
-| `app/(app)/layout.tsx` | App-header branding and the application shell |
-| `app/globals.css` | Styles and semantic tokens for both themes |
-| `lib/getting-started.ts` | The dashboard's informational guide content and links |
-| `components/app/app-sidebar.tsx` | Desktop application navigation |
+| File                             | Start here for                                        |
+| -------------------------------- | ----------------------------------------------------- |
+| `app/layout.tsx`                 | App name, page metadata, and the root document        |
+| `app/(app)/layout.tsx`           | App-header branding and the application shell         |
+| `app/globals.css`                | Styles and semantic tokens for both themes            |
+| `lib/getting-started.ts`         | The dashboard's informational guide content and links |
+| `components/app/app-sidebar.tsx` | Desktop application navigation                        |
 
 Keep the appearance bootstrap and existing theme control when changing
 branding. The dashboard guide does not track completion or own project state.
@@ -139,6 +134,7 @@ before changing the project feature.
 
       <File name="layout.tsx" />
     </Folder>
+
   </Folder>
 
   <Folder name="components" defaultOpen>
@@ -155,6 +151,7 @@ before changing the project feature.
     <Folder name="app">
       <File name="page-shell.tsx" />
     </Folder>
+
   </Folder>
   <Folder name="lib" defaultOpen>
     <File name="project-storage.ts" />
@@ -239,7 +236,8 @@ A page should describe the product surface. Feature components should own intera
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ### App directory
@@ -301,6 +299,7 @@ It defines:
         <File name="page.tsx" />
       </Folder>
     </Folder>
+
   </Folder>
 </Files>
 <br />
@@ -426,12 +425,12 @@ Dialogs are isolated from the page and controlled by their parent feature.
 <br />
 Recommended ownership:
 
-| Concern | Owner |
-| --- | --- |
-| Open state | Parent feature component |
-| Form UI | Dialog component |
-| API call later | Feature/service layer |
-| Visual primitive | `@pycolors/ui` Dialog |
+| Concern          | Owner                    |
+| ---------------- | ------------------------ |
+| Open state       | Parent feature component |
+| Form UI          | Dialog component         |
+| API call later   | Feature/service layer    |
+| Visual primitive | `@pycolors/ui` Dialog    |
 
 This makes rename and delete flows easier to wire later without changing page structure.
 
@@ -450,6 +449,7 @@ mkdir -p 'app/(app)/reports' components/reports
 ```
 
     Use the quoted route-group path so the new page shares the application layout.
+
   </Step>
 
   <Step>
@@ -462,6 +462,7 @@ export function ReportPanel() {
   return <p>No reports yet. Connect your own report data when ready.</p>;
 }
 ```
+
   </Step>
 
   <Step>
@@ -485,6 +486,7 @@ export default function ReportsPage() {
 Open `/reports` in the running starter. Both files can remain Server Components;
 add a client leaf only when real interaction requires it. Run the checks in your
 checkout's package scripts before committing your customization.
+
   </Step>
 </Steps>
 
@@ -508,18 +510,18 @@ Avoid changing the structure if:
 
 <PreferAvoid
   prefer={[
-    'feature-based folders',
-    'thin pages',
-    'mock data close to the feature',
-    'isolated dialogs and row actions',
-    'UI primitives that stay stateless',
+    "feature-based folders",
+    "thin pages",
+    "mock data close to the feature",
+    "isolated dialogs and row actions",
+    "UI primitives that stay stateless",
   ]}
   avoid={[
-    'putting feature logic directly in pages',
-    'fetching data inside UI primitives',
-    'placing all mock data in one global file',
-    'duplicating dialog logic across routes',
-    'deleting structure before understanding it',
+    "putting feature logic directly in pages",
+    "fetching data inside UI primitives",
+    "placing all mock data in one global file",
+    "duplicating dialog logic across routes",
+    "deleting structure before understanding it",
   ]}
 />
 
@@ -527,13 +529,13 @@ Avoid changing the structure if:
 
 When you connect a backend, the structure stays familiar.
 
-| Today | Later |
-| --- | --- |
+| Today                                      | Later                                               |
+| ------------------------------------------ | --------------------------------------------------- |
 | Browser-local project provider and storage | Your authorized, database-backed project operations |
-| local dialog state | server action or API mutation |
-| disabled billing portal | Stripe billing portal |
-| mocked auth screens | real auth provider |
-| static members | organization members from backend |
+| local dialog state                         | server action or API mutation                       |
+| disabled billing portal                    | Stripe billing portal                               |
+| mocked auth screens                        | real auth provider                                  |
+| static members                             | organization members from backend                   |
 
 The goal is to reuse the presentation while implementing a real product boundary,
 not simply substitute a database call for local storage. Starter Pro supplies
@@ -542,7 +544,9 @@ Review [what is included](/docs/starter-pro/what-is-included) and the
 [upgrade guide](/docs/starter/upgrade) before planning your integration.
 
 <Callout title="Upgrade when wiring becomes the blocker">
-  Starter Free validates the product surface. Starter Pro wires the business layer with production-shaped auth, billing, backend, and delivery foundations. → `/docs/starter-pro`
+  Starter Free validates the product surface. Starter Pro wires the business
+  layer with production-shaped auth, billing, backend, and delivery foundations.
+  → `/docs/starter-pro`
 </Callout>
 
 ### Common questions
@@ -552,9 +556,10 @@ Review [what is included](/docs/starter-pro/what-is-included) and the
     The `app/` directory should stay focused on routes and layout composition. Feature folders make behavior easier to reuse, test, and replace later.
   </Accordion>
 
-  <Accordion title="Should mock data live globally?">
-    Usually no. Keeping mock data near the feature makes it easier to replace with backend data later without searching through unrelated files.
-  </Accordion>
+<Accordion title="Should mock data live globally?">
+  Usually no. Keeping mock data near the feature makes it easier to replace with
+  backend data later without searching through unrelated files.
+</Accordion>
 
   <Accordion title="Can I move features into a features/ directory?">
     Yes. The important rule is the boundary, not the exact folder name. Keep route files thin and feature behavior grouped.
@@ -567,33 +572,33 @@ Review [what is included](/docs/starter-pro/what-is-included) and the
   variant="grid"
   items={[
     {
-      title: 'Authentication concept',
-      href: '/docs/starter/auth-concept',
+      title: "Authentication concept",
+      href: "/docs/starter/auth-concept",
       description:
-        'Understand how authentication is modeled before wiring a real provider.',
+        "Understand how authentication is modeled before wiring a real provider.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing concept',
-      href: '/docs/starter/billing-concept',
+      title: "Billing concept",
+      href: "/docs/starter/billing-concept",
       description:
-        'See how monetization surfaces are prepared before Stripe integration.',
+        "See how monetization surfaces are prepared before Stripe integration.",
       icon: CreditCard,
     },
     {
-      title: 'Upgrade to Starter Pro',
-      href: '/docs/starter/upgrade',
+      title: "Upgrade to Starter Pro",
+      href: "/docs/starter/upgrade",
       description:
-        'Know when Starter Free stops being enough and Starter Pro becomes the faster path.',
+        "Know when Starter Free stops being enough and Starter Pro becomes the faster path.",
       icon: ArrowUpRight,
-      badge: 'Pro',
-      tone: 'primary',
+      badge: "Pro",
+      tone: "primary",
     },
     {
-      title: 'Data table pattern',
-      href: '/docs/patterns/data-table',
+      title: "Data table pattern",
+      href: "/docs/patterns/data-table",
       description:
-        'Learn the production-ready pattern behind the Projects table.',
+        "Learn the production-ready pattern behind the Projects table.",
       icon: Table2,
     },
   ]}
