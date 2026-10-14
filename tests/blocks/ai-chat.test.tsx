@@ -278,6 +278,164 @@ describe("AIChat", () => {
   });
 });
 
+describe("AIChat layout changes", () => {
+  function resizeHarness() {
+    const observers: TestResizeObserver[] = [];
+    class TestResizeObserver implements ResizeObserver {
+      targets = new Set<Element>();
+      constructor(private callback: ResizeObserverCallback) {
+        observers.push(this);
+      }
+      observe(target: Element) {
+        this.targets.add(target);
+      }
+      unobserve(target: Element) {
+        this.targets.delete(target);
+      }
+      disconnect() {
+        this.targets.clear();
+      }
+      notify(target: Element) {
+        if (this.targets.has(target)) this.callback([], this);
+      }
+    }
+    vi.stubGlobal("ResizeObserver", TestResizeObserver);
+    return (target: Element) =>
+      act(() => {
+        for (const observer of observers) observer.notify(target);
+      });
+  }
+  function dimensions(region: HTMLElement, height: number, viewport = 200) {
+    Object.defineProperties(region, {
+      scrollHeight: { configurable: true, value: height },
+      clientHeight: { configurable: true, value: viewport },
+    });
+  }
+  function scrollTo(region: HTMLElement, top: number) {
+    region.scrollTop = top;
+    fireEvent.scroll(region);
+  }
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("follows message reflow without new props or moving focus", () => {
+    const resize = resizeHarness();
+    render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000);
+    resize(region);
+    scrollTo(region, 800);
+    screen.getByRole("textbox").focus();
+    dimensions(region, 1400);
+    resize(screen.getByRole("list", { name: "Messages" }));
+    expect(region.scrollTop).toBe(1400);
+    expect(screen.getByRole("textbox")).toHaveFocus();
+    expect(screen.queryByRole("button", { name: "Jump to latest" })).toBeNull();
+  });
+
+  it("keeps the latest response visible when the viewport becomes shorter", () => {
+    const resize = resizeHarness();
+    render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000, 400);
+    resize(region);
+    scrollTo(region, 600);
+    dimensions(region, 1000, 200);
+    resize(region);
+    expect(region.scrollTop).toBe(1000);
+  });
+
+  it("does not mistake a browser scroll during reflow for leaving the latest content", () => {
+    const resize = resizeHarness();
+    render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000);
+    resize(region);
+    scrollTo(region, 800);
+    dimensions(region, 1400);
+    // A scroll event can arrive before the resize observer after layout changes.
+    fireEvent.scroll(region);
+    resize(region);
+    expect(region.scrollTop).toBe(1400);
+    expect(screen.queryByRole("button", { name: "Jump to latest" })).toBeNull();
+  });
+
+  it("preserves a reader's position on reflow until they explicitly jump", () => {
+    const resize = resizeHarness();
+    render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000);
+    resize(region);
+    scrollTo(region, 150);
+    dimensions(region, 1400);
+    resize(screen.getByRole("list", { name: "Messages" }));
+    resize(region);
+    expect(region.scrollTop).toBe(150);
+    fireEvent.click(screen.getByRole("button", { name: "Jump to latest" }));
+    expect(region.scrollTop).toBe(1400);
+    expect(region).toHaveFocus();
+    dimensions(region, 1600);
+    resize(screen.getByRole("list", { name: "Messages" }));
+    expect(region.scrollTop).toBe(1600);
+  });
+
+  it("resumes following when the entire history fits after a resize", () => {
+    const resize = resizeHarness();
+    render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000);
+    resize(region);
+    scrollTo(region, 150);
+    expect(
+      screen.getByRole("button", { name: "Jump to latest" }),
+    ).toBeVisible();
+    dimensions(region, 200, 400);
+    region.scrollTop = 0;
+    resize(region);
+    expect(screen.queryByRole("button", { name: "Jump to latest" })).toBeNull();
+    dimensions(region, 1000, 400);
+    resize(screen.getByRole("list", { name: "Messages" }));
+    expect(region.scrollTop).toBe(1000);
+  });
+
+  it("isolates multiple threads and disconnects on unmount under Strict Mode", () => {
+    const resize = resizeHarness();
+    const { unmount } = render(
+      <React.StrictMode>
+        <AIChat {...base} messages={[message]} />
+        <AIChat {...base} messages={[message]} />
+      </React.StrictMode>,
+    );
+    const [first, second] = screen.getAllByRole("group", {
+      name: "Conversation",
+    });
+    dimensions(first, 1000);
+    dimensions(second, 1000);
+    resize(first);
+    resize(second);
+    scrollTo(first, 800);
+    scrollTo(second, 150);
+    dimensions(first, 1200);
+    resize(first);
+    expect(first.scrollTop).toBe(1200);
+    expect(second.scrollTop).toBe(150);
+    unmount();
+    first.scrollTop = 0;
+    resize(first);
+    expect(first.scrollTop).toBe(0);
+  });
+
+  it("still follows new messages when ResizeObserver is unavailable", () => {
+    vi.stubGlobal("ResizeObserver", undefined);
+    const { rerender } = render(<AIChat {...base} messages={[message]} />);
+    const region = screen.getByRole("group", { name: "Conversation" });
+    dimensions(region, 1000);
+    scrollTo(region, 800);
+    dimensions(region, 1200);
+    rerender(<AIChat {...base} messages={[{ ...message, text: "Updated" }]} />);
+    expect(region.scrollTop).toBe(1200);
+  });
+});
+
 describe("AIChat local demo", () => {
   it("runs error, retry, streaming, stop and completion without network or duplicate messages", async () => {
     vi.useFakeTimers();

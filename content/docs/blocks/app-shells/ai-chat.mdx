@@ -1504,7 +1504,13 @@ focus. Failed required validation focuses the first invalid field. Attachment re
 returns focus to the file picker button only when its removed control owned focus;
 read/cancel completion similarly restores the row status without taking focus
 from another field. Limits, errors and progress never depend on color alone.
-Scrolling up pauses following; **Jump to latest** explicitly resumes it.
+The conversation follows new messages and layout changes only while you are at
+its latest content. Scrolling up pauses following, so incoming text and viewport
+resizes preserve your reading position. **Jump to latest** explicitly resumes
+following and focuses the conversation. If a resize makes the entire history fit,
+following resumes automatically. Resize updates do not move keyboard focus or
+animate scrolling. Browsers without `ResizeObserver` still follow message updates;
+automatic following of layout-only changes requires that browser API.
 
 The source uses semantic tokens, text wrapping and reduced-motion-safe controls.
 Test your own callbacks, labels, locale, screen reader and physical mobile/IME
