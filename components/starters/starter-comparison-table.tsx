@@ -215,8 +215,8 @@ export function StarterComparisonTable(): React.ReactElement {
             Stay on Free while validating screens and workflows. Choose Pro when
             real accounts and payments become the next implementation step. Pro
             is separate source code to configure. Bring your existing UI work
-            across deliberately; buying Pro does not unlock the running Free
-            demo or automatically migrate your app or data.
+            across deliberately; buying Pro does not automatically migrate your
+            app or data. It does not unlock the running Free demo.
           </p>
         </div>
       </div>

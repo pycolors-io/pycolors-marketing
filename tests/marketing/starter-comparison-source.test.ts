@@ -117,7 +117,7 @@ describe("Starter comparison source contracts", () => {
     const headings = [...upgradeGuide.matchAll(/^## (.+)$/gmu)].map(
       (match) => match[1],
     );
-    const checkpoints = [...upgradeGuide.matchAll(/^    ### (.+)$/gmu)].map(
+    const checkpoints = [...upgradeGuide.matchAll(/^ {4}### (.+)$/gmu)].map(
       (match) => match[1],
     );
 

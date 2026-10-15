@@ -228,6 +228,7 @@ Replace or implement deliberately:
     README and compare the delivered versions before adapting your UI. Follow
     [delivery](/docs/starter-pro/delivery) and
     [Getting started](/docs/starter-pro/getting-started) for access and setup.
+
   </Step>
 
   <Step>
@@ -239,6 +240,7 @@ Replace or implement deliberately:
     [environment guide](/docs/starter-pro/environment-variables). Keep secrets
     private and use local development or test services, not production data.
     Confirm the baseline runs before porting a product-specific UI slice.
+
   </Step>
 
   <Step>
@@ -248,6 +250,7 @@ Replace or implement deliberately:
     Configure credentials, email, and the OAuth providers you need, then verify
     sign-in and session behavior with the [auth guide](/docs/starter-pro/auth).
     A rendered login screen is not proof that authentication works.
+
   </Step>
 
   <Step>
@@ -256,6 +259,7 @@ Replace or implement deliberately:
     Bring across one reviewed page or component at a time. Keep Pro's existing
     guards and add server-side permissions appropriate to your domain. Validate
     both allowed and denied access; hiding a link in the UI is not authorization.
+
   </Step>
 
   <Step>
@@ -265,6 +269,7 @@ Replace or implement deliberately:
     Follow [billing testing](/docs/starter-pro/billing-testing) in test mode and
     check resulting billing state, not just whether the billing page renders.
     The purchase of Starter Pro does not configure your own Stripe account.
+
   </Step>
 
   <Step>
@@ -275,6 +280,7 @@ Replace or implement deliberately:
     Free's local projects into shared records. Treat any data transfer as a
     separate, explicitly designed implementation; do not point demo code at a
     production database or assume browser data is trusted.
+
   </Step>
 </Steps>
 
@@ -354,17 +360,17 @@ this guide does not establish a measured time or revenue saving.
     buying Pro does not modify or automatically migrate your Free app or data.
   </Accordion>
 
-  <Accordion title="Can I upgrade later?">
-    Yes. Free already supports browser-local project workflows. Pro is a
-    separate source-code foundation to configure when your product needs
-    connected accounts, payments, and server-backed data.
-  </Accordion>
+<Accordion title="Can I upgrade later?">
+  Yes. Free already supports browser-local project workflows. Pro is a separate
+  source-code foundation to configure when your product needs connected
+  accounts, payments, and server-backed data.
+</Accordion>
 
-  <Accordion title="Do I need to migrate everything at once?">
-    No. Validate the configured Pro baseline first, then port one UI slice at a
-    time. Implement your own domain persistence and data-transfer plan; local
-    projects are not transferred automatically.
-  </Accordion>
+<Accordion title="Do I need to migrate everything at once?">
+  No. Validate the configured Pro baseline first, then port one UI slice at a
+  time. Implement your own domain persistence and data-transfer plan; local
+  projects are not transferred automatically.
+</Accordion>
 
   <Accordion title="Why not stay on Starter Free?">
     Stay on Free for local validation, or keep it and build your own
