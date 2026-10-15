@@ -25,10 +25,7 @@ describe("Starter comparison source contracts", () => {
 
   it("keeps every comparison link on an existing internal route", () => {
     const component = readFileSync(
-      resolve(
-        marketingRoot,
-        "components/starters/starter-comparison-table.tsx",
-      ),
+      resolve(marketingRoot, "components/starters/starter-comparison-table.tsx"),
       "utf8",
     );
     const destinations = [...component.matchAll(/href="([^"]+)"/gu)].map(
@@ -146,7 +143,9 @@ describe("Starter comparison source contracts", () => {
       expect(upgradeGuide).toContain(`### ${heading}`);
     }
     expect(guideText).toContain("keep the last working version available");
-    expect(guideText).toContain("a successful local run is not production approval");
+    expect(guideText).toContain(
+      "a successful local run is not production approval",
+    );
   });
 
   it("keeps upgrade guidance on existing Marketing and documentation routes", () => {
