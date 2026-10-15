@@ -25,7 +25,10 @@ describe("Starter comparison source contracts", () => {
 
   it("keeps every comparison link on an existing internal route", () => {
     const component = readFileSync(
-      resolve(marketingRoot, "components/starters/starter-comparison-table.tsx"),
+      resolve(
+        marketingRoot,
+        "components/starters/starter-comparison-table.tsx",
+      ),
       "utf8",
     );
     const destinations = [...component.matchAll(/href="([^"]+)"/gu)].map(
@@ -73,7 +76,9 @@ describe("Starter comparison source contracts", () => {
     expect(guideText).toContain("this browser's `localStorage`");
     expect(guideText).toContain("when storage is available");
     expect(guideText).toContain("Reset demo");
-    expect(guideText).toContain("Clearing browser storage removes your changes");
+    expect(guideText).toContain(
+      "Clearing browser storage removes your changes",
+    );
     expect(guideText).toContain("current visit only");
     expect(guideText).toContain("Use sample data, not sensitive information");
     expect(guideText).toContain(
