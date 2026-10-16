@@ -6,6 +6,16 @@ appliesTo: Starter Free
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  FileJson,
+  FolderTree,
+  MessageSquare,
+  Workflow,
+} from "lucide-react";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
 ## Start with the interface
 
@@ -26,19 +36,82 @@ local agent-definition editing, file references and sample task states.
 Source availability in the monorepo does not imply that an older downloaded
 starter or deployed demo already contains this route. Check your delivered copy.
 
+## What you can explore
+
+<DocsFeatureGrid
+  columns={3}
+  items={[
+    {
+      title: "Conversation and recovery",
+      description:
+        "Prefill a suggestion, send a message, stop a sample response and retry without losing your edits.",
+      icon: MessageSquare,
+    },
+    {
+      title: "Local definitions",
+      description:
+        "Edit and confirm an agent definition, attach a locally read reference and export the approved fields as JSON.",
+      icon: FileJson,
+    },
+    {
+      title: "Simulated Work states",
+      description:
+        "Review a fictional plan and advance its approval, progress and result states with explicit controls.",
+      icon: Workflow,
+    },
+  ]}
+/>
+
 ## Try it in a few minutes
 
-| Try                             | What happens                                                 | What it demonstrates                        |
-| ------------------------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| Select a suggestion             | The message is prefilled; you still choose Send              | No implicit submission                      |
-| Send a message                  | A fixed response appears progressively                       | Controlled response and busy states         |
-| Stop, then Retry                | The local timer stops; Retry replays the sample              | Cancellation and recovery UI                |
-| Open Test recovery              | You can fail the next response or definition confirmation    | Explicit error states and retained edits    |
-| Define an agent                 | Review and edit the sample fields, then confirm              | Local definition, not a deployed agent      |
-| Copy or download the definition | A versioned JSON document is exported                        | Only approved fields and visible provenance |
-| Select a text file              | Nothing is read until Read locally                           | Explicit local file processing              |
-| Review a task plan              | Reviewer controls supply fictional states                    | Work presentation, not execution            |
-| New chat                        | The session clears and pending local callbacks are cancelled | A fresh starting point                      |
+<Steps>
+
+<Step>
+
+### Start a conversation
+
+Select a suggestion to prefill the composer, then choose **Send**. A fixed sample
+response appears progressively. Choose **Stop**, then **Retry** to replay it.
+Open **Test recovery** to fail the next response and check that your edits remain.
+
+</Step>
+
+<Step>
+
+### Review and export a definition
+
+Choose **Define an agent**, send the sample request and edit the fields.
+Confirm the definition before copying or downloading its versioned JSON.
+Only approved fields and visible source references are exported.
+**Test recovery** also lets you fail the next definition confirmation.
+
+</Step>
+
+<Step>
+
+### Try a local reference and a task plan
+
+Choose **Add a reference** and select a supported text file. Selection alone does
+not read it: choose **Read locally**, then **Use as reference** and send the
+prefilled request. Review the filename before confirming the definition.
+
+Choose **Review a task plan**, send it and expand **Work simulation controls**.
+Use the controls to supply fictional approval, progress and result states.
+No task executes in the background.
+
+</Step>
+
+<Step>
+
+### Start fresh
+
+Choose **New chat** to clear the session and cancel pending local callbacks.
+Leaving the page or reloading also clears messages, drafts and references.
+Files already downloaded to your computer are kept.
+
+</Step>
+
+</Steps>
 
 The composer supports keyboard use and explicit Send/Stop controls. Suggestions
 never start a task or confirm a definition. Confirming a definition does not run
@@ -108,7 +181,35 @@ assistant compositions remain a future product decision, not an available offer.
 
 ## Related guides
 
-- [Getting started](/docs/starter/getting-started)
-- [AI Chat complete source and consumer recipe](/docs/blocks/app-shells/ai-chat)
-- [AIComposer](/docs/ui/ai-composer)
-- [Project structure](/docs/starter/project-structure)
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Getting started",
+      href: "/docs/starter/getting-started",
+      description:
+        "Explore the starter's first-session flow and application shell.",
+      icon: BookOpen,
+    },
+    {
+      title: "AI Chat Block",
+      href: "/docs/blocks/app-shells/ai-chat",
+      description:
+        "Read the complete source, controlled contract and integration recipe.",
+      icon: MessageSquare,
+    },
+    {
+      title: "AIComposer",
+      href: "/docs/ui/ai-composer",
+      description: "Understand the composer API and its interaction states.",
+      icon: FileJson,
+    },
+    {
+      title: "Project structure",
+      href: "/docs/starter/project-structure",
+      description:
+        "Find the right place for your application and backend code.",
+      icon: FolderTree,
+    },
+  ]}
+/>
