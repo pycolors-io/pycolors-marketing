@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.28.0
+
+Released by PyColors Marketing on 16 October 2026 (2026-10-16).
+
+This update makes the next PyColors starting point easier to evaluate and adapt: Starter Free now guides a useful browser-local first session, the AI Chat example is complete and copyable with explicit application-owned boundaries, and Starter Pro guidance is easier to search and compare.
+
+### Applications updated
+
+- Starter Free now supports browser-local project creation, rename, deletion and reset, a guided first session, persistent appearance controls, and a clearly labelled local assistant playground. The playground connects to no hosted model or backend service.
+- Free-to-Pro comparison and upgrade guidance now separates local demonstration data from separately configured Starter Pro source. Purchasing Pro does not migrate or unlock the Free demo automatically.
+- Added a searchable Starter Pro FAQ hub with direct destinations for setup, purchase, delivery and recovery questions.
+- Added a tested engineering guide for preserving independent dashboard results when concurrent requests settle differently.
+
+### Platform and shared capabilities
+
+- Added complete source-copy AI Chat guidance covering messages, cancellation, retry, copy actions, agent-definition review and export, local text references, and bounded Work progress. Consuming applications remain responsible for models, authentication, storage, permissions and tool execution.
+- Advanced the displayed package baseline to PyColors UI v1.6.1 while PyColors Tokens remains v1.2.3. This Marketing release does not re-version either package and does not claim package availability for later source-only conversation primitives.
+
+### Reliability and maintenance
+
+- AI Chat reading-position handling now remains predictable as content and viewport size change, while an explicit Jump to latest action preserves user control.
+- Starter documentation and regression coverage reinforce which state is browser-local, illustrative or application-owned before teams connect production services.
+
+### For developers and candidates
+
+- Try the local Starter Free workflow, inspect and copy the AI Chat example, and replace each bounded demonstration adapter with your own validated application services.
+
+### For companies and recruiters
+
+- Evaluate the shipped UI, source-copy examples and ownership boundaries without treating local demonstrations as hosted AI, backend integration or a production-service guarantee.
+
+[Explore the AI Chat Block](https://pycolors.io/docs/blocks/app-shells/ai-chat).
+
 ## 1.27.0
 
 Released by PyColors Marketing on 9 October 2026 (2026-10-09).
