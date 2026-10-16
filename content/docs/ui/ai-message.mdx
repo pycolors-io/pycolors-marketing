@@ -3,8 +3,12 @@ title: AI Message
 description: A semantic conversation item with a visible speaker, consumer content and optional actions.
 lastUpdated: "2026-10-16"
 appliesTo: UI
+publishedAt: "2026-10-16"
+icon: MessageSquare
 ---
 
+import { AIMessageExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import { Copy, MessagesSquare } from "lucide-react";
 import { Callout } from "fumadocs-ui/components/callout";
 import { DocsLinks } from "@/components/docs/docs-links";
 
@@ -19,6 +23,13 @@ native list. It does not infer roles, generate replies or interpret message text
   the repository workspace until publication; UI 1.6.1 and earlier do not export
   it.
 </Callout>
+
+## Preview
+
+<AIMessageExample />
+
+The example runs here in the documentation. The Explorer link appears when this
+story is available in the published catalog; otherwise use this inline preview.
 
 ```tsx
 import { AIMessage } from "@pycolors/ui";
@@ -61,11 +72,13 @@ streaming token.
   items={[
     {
       title: "AI Conversation",
+      icon: MessagesSquare,
       href: "/docs/ui/ai-conversation",
       description: "Provide the labelled scroll viewport and message list.",
     },
     {
       title: "AI Message Actions",
+      icon: Copy,
       href: "/docs/ui/ai-message-actions",
       description: "Add application-owned copy and recovery feedback.",
     },

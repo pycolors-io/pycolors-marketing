@@ -3,8 +3,12 @@ title: AI Message Actions
 description: Explicit copy actions with pending, success and recoverable error feedback.
 lastUpdated: "2026-10-16"
 appliesTo: UI
+publishedAt: "2026-10-16"
+icon: Copy
 ---
 
+import { AIMessageActionsExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import { MessageSquare, MessagesSquare } from "lucide-react";
 import { Callout } from "fumadocs-ui/components/callout";
 import { DocsLinks } from "@/components/docs/docs-links";
 
@@ -19,6 +23,13 @@ accesses the clipboard by itself.
   This API is introduced by the conversation primitives minor Changeset. Use the
   repository workspace until publication; UI 1.6.1 and earlier do not export it.
 </Callout>
+
+## Preview
+
+<AIMessageActionsExample />
+
+The example runs here in the documentation. The Explorer link appears when this
+story is available in the published catalog; otherwise use this inline preview.
 
 ```tsx
 "use client";
@@ -72,11 +83,13 @@ should export only complete messages.
   items={[
     {
       title: "AI Message",
+      icon: MessageSquare,
       href: "/docs/ui/ai-message",
       description: "Place the action beside its visible source text.",
     },
     {
       title: "AI Conversation",
+      icon: MessagesSquare,
       href: "/docs/ui/ai-conversation",
       description: "See a complete message-list composition.",
     },

@@ -3,8 +3,20 @@ title: AI Conversation
 description: Compose a reader-aware conversation viewport with messages and explicit copy feedback.
 lastUpdated: "2026-10-16"
 appliesTo: UI
+publishedAt: "2026-10-16"
+icon: MessagesSquare
 ---
 
+import { AIConversationExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import {
+  ArrowDownToLine,
+  BookOpen,
+  Cable,
+  Copy,
+  Keyboard,
+  MessageSquare,
+  MessagesSquare,
+} from "lucide-react";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
@@ -28,21 +40,31 @@ Your application supplies messages and transport; this component makes no model 
   items={[
     {
       title: "Follow the reader",
+      icon: BookOpen,
       description:
         "New content follows the viewport only while the reader remains at the end.",
     },
     {
       title: "Return explicitly",
+      icon: ArrowDownToLine,
       description:
         "Jump to latest returns to the end and restores focus to the conversation viewport.",
     },
     {
       title: "Keep application ownership",
+      icon: Cable,
       description:
         "Supply message content, model transport, persistence and clipboard callbacks yourself.",
     },
   ]}
 />
+
+## Preview
+
+<AIConversationExample />
+
+The example runs here in the documentation. The Explorer link appears when this
+story is available in the published catalog; otherwise use this inline preview.
 
 ## Controlled composition
 
@@ -145,21 +167,25 @@ focus behavior. Use a stable component key to reset an entire conversation.
   items={[
     {
       title: "AI Message",
+      icon: MessageSquare,
       href: "/docs/ui/ai-message",
       description: "Render a speaker, content and optional actions.",
     },
     {
       title: "AI Message Actions",
+      icon: Copy,
       href: "/docs/ui/ai-message-actions",
       description: "Copy with pending, success and recoverable error feedback.",
     },
     {
       title: "AI Composer",
+      icon: Keyboard,
       href: "/docs/ui/ai-composer",
       description: "Connect a controlled input to your application.",
     },
     {
       title: "AI Chat Block",
+      icon: MessagesSquare,
       href: "/docs/blocks/app-shells/ai-chat",
       description: "Use the complete Free composition and local examples.",
     },

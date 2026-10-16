@@ -1,6 +1,7 @@
 export const UI_EXPLORER_URL = "https://ui.pycolors.io/";
 
-// Stable public story IDs verified against the production Explorer catalog.
+// Canonical story IDs verified against the repository Explorer catalog.
+// Newly introduced pages also check publication before exposing the public link.
 // Keep this explicit: documentation guides do not necessarily have a story.
 export const uiExplorerStories: Readonly<Record<string, string>> = {
   "ai-conversation": "components-ai-conversation--default",
