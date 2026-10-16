@@ -1,3 +1,4 @@
+import { AIChatExample } from "@/components/docs/blocks/ai-chat-example";
 import {
   PasswordRecoveryExample,
   SignInExample,
@@ -24,6 +25,8 @@ export function BlockCatalogPreview({
   headingLevel = 2,
 }: Readonly<{ blockId: string; headingLevel?: 2 | 3 | 4 | 5 | 6 }>) {
   switch (blockId) {
+    case "ai-chat":
+      return <AIChatExample />;
     case "responsive-sidebar":
       return <ResponsiveSidebarExample />;
     case "sign-in":

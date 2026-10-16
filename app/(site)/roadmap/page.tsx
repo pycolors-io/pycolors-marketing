@@ -183,7 +183,7 @@ const milestones: Array<{
     id: "Oct 2026",
     title: "October 2026",
     subtitle:
-      "PyColors Marketing v1.27.0, released on 9 October 2026, improves navigation, product previews, reusable Blocks, and task-oriented implementation guidance.",
+      "PyColors Marketing v1.28.0, released on 16 October 2026, adds local Starter Free workflows, copyable AI Chat guidance, clearer Starter Pro evaluation, and the PyColors UI v1.6.1 baseline.",
   },
   {
     id: "H1 2026",
@@ -194,6 +194,42 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.28.0",
+    description:
+      "Released on 16 October 2026 with browser-local Starter Free workflows, copyable AI Chat guidance, clearer Starter Pro evaluation, and the PyColors UI v1.6.1 baseline.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Marketing", "Starters", "AI UI"],
+    href: "/changelog",
+  },
+  {
+    title: "Starter Free local product workflow",
+    description:
+      "Create and manage browser-local projects, follow a guided first session, persist appearance preferences, and try a clearly labelled local assistant playground without a hosted model or backend.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Starter Free", "DX", "Trust"],
+    href: "/starters/free",
+  },
+  {
+    title: "Copyable AI Chat workflow",
+    description:
+      "Inspect and copy a complete chat UI with consumer-owned messages, agent definitions, local text references, and bounded Work progress. Applications own models, permissions, storage, and tool execution.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Blocks", "AI UI", "DX"],
+    href: "/docs/blocks/app-shells/ai-chat",
+  },
+  {
+    title: "Starter Pro evaluation and FAQ clarity",
+    description:
+      "Compare Free and Pro boundaries and search setup, purchase, delivery, and recovery guidance without implying automatic migration or unlock behavior.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Starter Pro", "Trust", "Docs"],
+    href: "/starters/pro/faq",
+  },
   {
     title: "PyColors Marketing v1.26.0",
     description:
@@ -227,9 +263,9 @@ const items: RoadmapItem[] = [
     href: "/orders/recover",
   },
   {
-    title: "PyColors UI v1.5.5 baseline",
+    title: "PyColors UI v1.6.1 baseline",
     description:
-      "The displayed PyColors UI baseline is v1.5.5; PyColors Tokens remains v1.2.3. No additional package version is introduced by this Marketing release.",
+      "The displayed PyColors UI baseline is v1.6.1; PyColors Tokens remains v1.2.3. No additional package version or unpublished conversation primitive is introduced by this Marketing release.",
     status: "Shipped",
     milestone: "Oct 2026",
     href: "/docs/ui",

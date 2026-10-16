@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from "react";
+import { useId, type ReactNode, type CSSProperties } from "react";
 import { Check, Settings2 } from "lucide-react";
 import {
   SCALE_STEPS,
@@ -46,7 +46,9 @@ export function ThemeComponentsPreview({
   fontFamily,
   view,
   onViewChange,
+  children,
 }: Readonly<{
+  children?: ReactNode;
   theme: ThemeModeResult;
   mode: ThemeMode;
   fontFamily: string;
@@ -77,8 +79,9 @@ export function ThemeComponentsPreview({
             Your theme in use
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-            One palette, across buttons, forms, navigation, and content. Try the
-            components below.
+            {children
+              ? "One palette, from workspace settings to assistant conversations. Try the controls, then see how the same theme brings a conversation together."
+              : "One palette, across buttons, forms, navigation, and content. Try the components below."}
           </p>
         </div>
         <span className="inline-flex min-h-7 items-center gap-2 text-xs text-muted-foreground">
@@ -388,6 +391,7 @@ export function ThemeComponentsPreview({
           </dl>
         </div>
       </div>
+      {children}
     </section>
   );
 }

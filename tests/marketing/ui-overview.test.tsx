@@ -109,6 +109,63 @@ describe("UI overview", () => {
     }
   });
 
+  it("composes themed conversation primitives with working copy, reset and documentation links", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
+    try {
+      render(<UiPage />);
+      const section = screen.getByRole("region", {
+        name: "Your assistant. Your visual language.",
+      });
+      const demo = within(section);
+      expect(
+        screen.getByRole("region", { name: "Your theme in use" }),
+      ).toContainElement(section);
+      expect(
+        screen.getByRole("link", { name: "Try conversation primitives" }),
+      ).toHaveAttribute("href", "#conversation-primitives");
+      for (const [name, slug] of [
+        ["AIConversation", "ai-conversation"],
+        ["AIMessage", "ai-message"],
+        ["AIMessageActions", "ai-message-actions"],
+      ]) {
+        expect(demo.getByRole("link", { name })).toHaveAttribute(
+          "href",
+          `/docs/ui/${slug}`,
+        );
+      }
+      fireEvent.click(
+        demo.getByRole("button", { name: "Copy sample response 1" }),
+      );
+      await waitFor(() =>
+        expect(writeText).toHaveBeenCalledWith(
+          expect.stringContaining("Start with one useful flow."),
+        ),
+      );
+      fireEvent.click(
+        demo.getByRole("button", { name: "Add sample exchange" }),
+      );
+      expect(demo.getAllByRole("listitem").length).toBe(7);
+      fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
+      expect(
+        demo.getByText("4 sample messages · Stored only in this preview."),
+      ).toBeVisible();
+      for (let i = 0; i < 8; i++)
+        fireEvent.click(
+          demo.getByRole("button", { name: "Add sample exchange" }),
+        );
+      expect(
+        demo.getByRole("button", { name: "Add sample exchange" }),
+      ).toBeDisabled();
+      fireEvent.click(demo.getByRole("button", { name: "Reset conversation" }));
+      expect(
+        demo.getByText("2 sample messages · Stored only in this preview."),
+      ).toBeVisible();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("passes structural accessibility checks with the real component demo", async () => {
     const { container } = render(<UiPage />);
     expect(

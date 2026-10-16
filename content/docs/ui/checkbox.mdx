@@ -1,7 +1,7 @@
 ---
 title: Checkbox
 description: Boolean selection control for settings, forms, filters, consent, and multi-select product flows in PyColors UI.
-lastUpdated: "2026-05-11"
+lastUpdated: "2026-10-14"
 appliesTo: UI
 ---
 
@@ -304,6 +304,36 @@ export function ControlledCheckbox() {
 ### Indeterminate state
 
 Use the indeterminate state for parent checkboxes when only some child items are selected.
+
+Use `checked="indeterminate"` when your application owns the state, or
+`defaultChecked="indeterminate"` for an uncontrolled initial partial selection.
+Pressing Space selects an uncontrolled partial checkbox. Inside a form, a native
+reset button restores its initial state, including the partial-selection dash.
+
+```tsx
+import { Button, Checkbox, CheckboxField, CheckboxLabel } from "@pycolors/ui";
+
+export function PartialSelection() {
+  return (
+    <form>
+      <CheckboxField>
+        <Checkbox
+          id="project-selection"
+          name="projects"
+          value="all"
+          defaultChecked="indeterminate"
+        />
+        <CheckboxLabel htmlFor="project-selection">
+          Select projects
+        </CheckboxLabel>
+      </CheckboxField>
+      <Button type="reset" variant="outline">
+        Reset selection
+      </Button>
+    </form>
+  );
+}
+```
 
 <Tabs items={["Preview", "Code"]}>
   <Tab value="Preview">

@@ -17,7 +17,7 @@ import styles from "./starter-pro.module.css";
 const comparisonRows = [
   {
     label: "Product interface",
-    free: "Dashboard, projects, settings, and billing UI to validate your UX.",
+    free: "Dashboard, settings, billing UI, and a local project workflow: create, view details, rename, and delete.",
     pro: "SaaS app surfaces with auth and billing integration foundations.",
   },
   {
@@ -37,7 +37,7 @@ const comparisonRows = [
   },
   {
     label: "Data persistence",
-    free: "Mock product data and client-side state; add your persistence layer.",
+    free: "Projects persist in this browser's localStorage when available; no shared database or cross-device synchronization.",
     pro: "Prisma + PostgreSQL foundations for auth and billing; wire your own domain data.",
   },
   {
@@ -213,9 +213,10 @@ export function StarterComparisonTable(): React.ReactElement {
           </h3>
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
             Stay on Free while validating screens and workflows. Choose Pro when
-            real accounts and payments become the next implementation step.
-            Bring your existing UI work across deliberately; buying Pro does not
-            automatically migrate your app or data.
+            real accounts and payments become the next implementation step. Pro
+            is separate source code to configure. Bring your existing UI work
+            across deliberately; buying Pro does not automatically migrate your
+            app or data. It does not unlock the running Free demo.
           </p>
         </div>
       </div>

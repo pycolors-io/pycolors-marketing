@@ -1,7 +1,7 @@
 ---
 title: Getting Started
-description: Understand what Starter Free gives you, what it does not include, and how to ship your first SaaS screen in under 30 minutes.
-lastUpdated: "2026-04-27"
+description: Try browser-local projects, personalize your app, and understand when to choose Starter Pro.
+lastUpdated: "2026-10-14"
 appliesTo: Starter Free
 ---
 
@@ -9,13 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -30,7 +24,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -55,8 +49,69 @@ The goal is simple:
 > run it in minutes, understand it quickly, and adapt your first product surface fast.
 
 <Callout title="Why this matters">
-  Most SaaS projects lose time before users ever see the product. Starter Free helps you make the product visible earlier, so you can validate UX, messaging, and flows before wiring the full business layer.
+  Most SaaS projects lose time before users ever see the product. Starter Free
+  helps you make the product visible earlier, so you can validate UX, messaging,
+  and flows before wiring the full business layer.
 </Callout>
+
+## Your first session
+
+Start with the [installation guide](/docs/starter/installation), then open
+`http://localhost:3000/dashboard` in your running starter. To explore without
+installing, [open the Starter Free demo](https://starter-demo.pycolors.io/dashboard).
+Paths such as `/projects` below belong to the starter, not the Marketing site.
+
+The dashboard guide presents four suggestions, not a completion checklist.
+Following a link does not complete a step or save onboarding progress.
+
+1. **Try the project workflow.** Open `/projects`, choose **New project**, enter
+   a sample name, and select **Create**. Open that project's details from its
+   row, return to the list, and rename it using the row actions. Reload to check
+   browser-local persistence before deleting your disposable example.
+2. **Explore the assistant interface.** Open `/assistant` and choose a sample
+   prompt. The [assistant guide](/docs/starter/assistant) explains the local chat,
+   editable definitions and task simulation. No AI model is connected; leaving
+   the page or reloading clears this session.
+3. **Make the app yours.** In your own checkout, edit `app/layout.tsx` for the
+   app name and metadata, `app/(app)/layout.tsx` for app-header branding, and
+   `app/globals.css` for styles and semantic tokens. The
+   [project structure guide](/docs/starter/project-structure) explains the files
+   and the existing provider boundary; do not introduce a second project store.
+4. **Evaluate connected foundations.** [Explore Starter Pro](/starters/pro) and
+   [see what is included](/docs/starter-pro/what-is-included) when you need
+   Auth.js authentication, protected routes, Prisma/PostgreSQL, and Stripe
+   billing foundations. Pro is source code to configure and adapt. Buying it
+   does not unlock the running Free demo or automatically migrate local projects;
+   your project data model and workflows remain yours to implement. Use the
+   [upgrade guide](/docs/starter/upgrade) to plan that work.
+
+### Local data and reset
+
+Project changes use this browser's `localStorage` when it is available. There
+is no account, shared database, authorization, or synchronization between
+browsers or devices. Use sample data, not sensitive information. The hosted
+demo and a localhost checkout have separate browser storage.
+
+**Reset demo** asks for confirmation, then replaces your local projects with
+the original samples. It cannot be undone and does not reset the theme.
+Clearing the starter's browser storage also removes saved projects. If saving
+is unavailable, the visible **Local storage notice** explains that changes are
+kept for the current visit only and will be lost after reloading. An unreadable
+saved record falls back to samples with a notice rather than proving your old
+projects were recovered.
+
+Dashboard metrics, trends, activity, and gated previews remain fictional.
+Keep the **Illustrative demo data** notice when adapting those values; they
+are not live billing or analytics, and they do not count your local projects.
+Authentication, billing, admin, and settings screens are still demo surfaces,
+not connected account or payment services.
+
+### Appearance
+
+Use the sun/moon control to switch light and dark mode. First visits follow
+the system preference; a saved explicit choice takes precedence on reload.
+The preference is browser/origin-local, not an account setting. With unavailable
+storage, switching works on the current page but may not survive a reload.
 
 ## What you’ll learn
 
@@ -65,21 +120,21 @@ The goal is simple:
   tone="platform"
   items={[
     {
-      title: 'Product surface',
+      title: "Product surface",
       description:
-        'Understand the screens, layouts, states, and flows included in Starter Free.',
+        "Understand the screens, layouts, states, and flows included in Starter Free.",
       icon: LayoutDashboard,
     },
     {
-      title: 'Fast validation',
+      title: "Fast validation",
       description:
-        'Adapt the starter into a first vertical slice without rebuilding the product surface.',
+        "Adapt the starter into a first vertical slice without rebuilding the product surface.",
       icon: Rocket,
     },
     {
-      title: 'Upgrade path',
+      title: "Upgrade path",
       description:
-        'Know what is mocked, what is production-ready, and when Starter Pro becomes the next step.',
+        "Know what is mocked, what is production-ready, and when Starter Pro becomes the next step.",
       icon: LockKeyhole,
     },
   ]}
@@ -106,7 +161,10 @@ You replace later:
 - database contracts
 
 <Callout type="info" title="Frontend-first by design">
-  Starter Free is intentionally mocked. This lets you evaluate structure and UX first, then wire auth, data, and billing progressively when the product needs it.
+  Projects support browser-local creation, details, renaming, deletion, and
+  reset. Authentication, billing, admin, settings, and dashboard figures remain
+  demo surfaces. You still connect your own backend for shared, protected
+  product data.
 </Callout>
 
 ## Steps
@@ -118,22 +176,23 @@ You replace later:
 
 Starter Free gives you the main surface area of a SaaS product.
 
-| Surface | What it gives you |
-| --- | --- |
-| Auth UX | Login, register, forgot password, loading and error-ready states |
-| Dashboard | Layout, navigation, KPI cards, and structured product surface |
-| Projects | Table, loading state, empty state, rename dialog, delete confirmation, details page |
-| Admin | Members list, invitations, roles, and invite workflow |
-| Billing | Current plan, invoice table, portal entry point, and payment method surface |
-| Settings | Profile, organization, security, and danger zone structure |
+| Surface   | What it gives you                                                                       |
+| --------- | --------------------------------------------------------------------------------------- |
+| Auth UX   | Login, register, forgot password, loading and error-ready states                        |
+| Dashboard | Four-step getting-started guide, navigation, and clearly labelled illustrative metrics  |
+| Projects  | Browser-local create, details, rename, delete, persistence, and confirmed reset         |
+| Admin     | Demo members, roles, and invitation surfaces; no real invitation service                |
+| Billing   | Illustrative plan, invoices, portal entry, and payment-method surfaces; no real payment |
+| Settings  | Profile, organization, security, and danger zone structure                              |
 
 This is enough to validate a real product direction before wiring production services.
+
 </Step>
 
 <Step>
 ### Know what is intentionally mocked
 
-Starter Free does not connect to production services.
+Starter Free does not connect these demo workflows to production business services. Browser-local project persistence is not a backend or an access-control boundary.
 
 It does not include:
 
@@ -149,44 +208,30 @@ That is intentional.
 ```txt title="starter-free-boundary.txt"
 Starter Free
   UI surface
-  product flows
-  mock data
-  realistic states
+  browser-local project workflow
+  illustrative business data
+  light/dark appearance
 
 Starter Pro
   auth wiring
   billing wiring
-  backend foundation
-  production flows
+  Prisma/PostgreSQL foundation
+  your own product workflows to implement
 ```
 
 The goal is to avoid backend friction before you know the product surface is worth wiring.
+
 </Step>
 
 <Step>
 ### Explore the vertical slice
 
-After installation, inspect the starter as a user would.
+Follow [your first session](#your-first-session) before inspecting the remaining
+`/admin`, `/billing`, and `/settings` demo surfaces. Open project details from an
+existing row; `/projects/[id]` describes the route pattern, not a literal URL to
+paste. Keep the loading, empty, unavailable-storage, and missing-project states
+when adapting the workflow.
 
-Open:
-
-- `/dashboard`
-- `/projects`
-- `/projects/[id]`
-- `/admin`
-- `/billing`
-- `/settings`
-
-Then test:
-
-- table loading and empty states
-- rename dialog
-- delete confirmation
-- member invitation flow
-- billing surface
-- settings tabs
-
-This gives you the product logic before you start changing code.
 </Step>
 
 <Step>
@@ -197,13 +242,14 @@ Start small. Rename one core entity and adjust the first product flow.
 Good first changes:
 
 - rename “Projects” to your domain entity
-- update dashboard KPIs
+- adapt illustrative dashboard KPIs without removing their demo notice
 - change empty state copy
 - adjust navigation labels
 - add one new route
 - update brand tokens
 
 This is enough to create a credible demo or first MVP surface.
+
 </Step>
 
 </Steps>
@@ -272,21 +318,22 @@ This is enough to create a credible demo or first MVP surface.
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ### What you can ship quickly
 
 After installation, you can produce a credible first version by changing:
 
-| Task | Outcome |
-| --- | --- |
-| Rename “Projects” | Makes the starter match your domain |
-| Update dashboard KPIs | Makes the product story specific |
-| Rewrite empty states | Makes the UX feel intentional |
-| Adjust navigation labels | Makes the product easier to demo |
-| Change brand tokens | Makes the interface feel owned |
-| Add one route | Proves the structure can grow |
+| Task                              | Outcome                                                  |
+| --------------------------------- | -------------------------------------------------------- |
+| Rename “Projects”                 | Makes the starter match your domain                      |
+| Adapt illustrative dashboard KPIs | Keeps the demo story specific without claiming live data |
+| Rewrite empty states              | Makes the UX feel intentional                            |
+| Adjust navigation labels          | Makes the product easier to demo                         |
+| Change brand tokens               | Makes the interface feel owned                           |
+| Add one route                     | Proves the structure can grow                            |
 
 That is enough to:
 
@@ -306,62 +353,55 @@ Use Starter Free if:
 - you want product structure before backend
 - you need something credible fast
 
-Move to Starter Pro when you need:
-
-- real authentication
-- Stripe billing
-- backend APIs
-- protected routes
-- database-backed product flows
-- role-based access control
-- production delivery
+Evaluate Starter Pro when you need Auth.js authentication, protected routes,
+Prisma/PostgreSQL, and Stripe billing foundations. Review
+[what is included](/docs/starter-pro/what-is-included) rather than assuming every
+demo screen becomes a connected feature. You still configure providers and
+implement your product-specific data model, authorization, and workflows.
 
 <PreferAvoid
   prefer={[
-    'explore the full vertical slice first',
-    'adapt one domain entity before rewriting structure',
-    'keep mock data while validating UX',
-    'wire backend only when the product direction is clear',
-    'upgrade when auth, billing, and data become the blocker',
+    "explore the full vertical slice first",
+    "adapt one domain entity before rewriting structure",
+    "keep mock data while validating UX",
+    "wire backend only when the product direction is clear",
+    "upgrade when auth, billing, and data become the blocker",
   ]}
   avoid={[
-    'treating Starter Free like a complete SaaS backend',
-    'rewriting the structure before understanding it',
-    'mixing UI and business logic too early',
-    'removing product surfaces before testing the full flow',
-    'adding backend complexity before validating the product',
+    "treating Starter Free like a complete SaaS backend",
+    "rewriting the structure before understanding it",
+    "mixing UI and business logic too early",
+    "removing product surfaces before testing the full flow",
+    "adding backend complexity before validating the product",
   ]}
 />
 
 ### First run path
 
-Follow this sequence after cloning:
-
-1. open `/dashboard`
-2. open `/projects`
-3. rename a project
-4. delete a project
-5. open a project details page
-6. open `/admin`
-7. open `/billing`
-8. open `/settings`
-
-This path shows the product shape: dashboard, entity workflow, admin surface, billing surface, and settings structure.
+Use the [four-step first-session path](#your-first-session): try a disposable
+project, explore the local assistant, personalize your checkout, then evaluate
+connected foundations. The
+first useful result is a project you can create, open, rename, and reload in
+this browser, not a fictional metric or a checked onboarding counter.
 
 <Callout title="Upgrade when wiring becomes the blocker">
-  Starter Free validates the product surface. Starter Pro wires the business layer with production-shaped auth, billing, backend, and delivery foundations. → `/docs/starter-pro`
+  Starter Free validates the product surface. Starter Pro wires the business
+  layer with production-shaped auth, billing, backend, and delivery foundations.
+  → `/docs/starter-pro`
 </Callout>
 
 ## Common questions
 
 <Accordions type="single">
   <Accordion title="Is Starter Free a full SaaS backend?">
-    No. Starter Free is frontend-first and mock-data based. It is designed to validate UX and product structure before production wiring.
+    No. Projects work locally in the browser, while the business surfaces use illustrative data. Shared accounts, protected data, and payments require your own backend integration or separately configured Starter Pro foundations.
   </Accordion>
 
-  <Accordion title="Can I use it for a real MVP?">
-    Yes, especially for demos, validation, frontend-first MVPs, and product exploration. For real users, real payments, and protected data, move to Starter Pro or wire your own backend.
-  </Accordion>
+<Accordion title="Can I use it for a real MVP?">
+  Yes, especially for demos, validation, frontend-first MVPs, and product
+  exploration. For real users, real payments, and protected data, move to
+  Starter Pro or wire your own backend.
+</Accordion>
 
   <Accordion title="Should I delete the mocked features immediately?">
     No. First explore the flows. The mocked surfaces teach the intended product structure and give you a stronger starting point for your own implementation.
@@ -374,34 +414,34 @@ This path shows the product shape: dashboard, entity workflow, admin surface, bi
   variant="grid"
   items={[
     {
-      title: 'Installation',
-      href: '/docs/starter/installation',
+      title: "Installation",
+      href: "/docs/starter/installation",
       description:
-        'Run Starter Free locally and explore the real application screens and flows.',
+        "Run Starter Free locally and explore the real application screens and flows.",
       icon: Terminal,
     },
     {
-      title: 'Project structure',
-      href: '/docs/starter/project-structure',
+      title: "Project structure",
+      href: "/docs/starter/project-structure",
       description:
-        'Understand how the starter is organized before extending product features.',
+        "Understand how the starter is organized before extending product features.",
       icon: FolderTree,
     },
     {
-      title: 'Authentication concept',
-      href: '/docs/starter/auth-concept',
+      title: "Authentication concept",
+      href: "/docs/starter/auth-concept",
       description:
-        'Learn how authentication is modeled before connecting a real provider.',
+        "Learn how authentication is modeled before connecting a real provider.",
       icon: LockKeyhole,
     },
     {
-      title: 'Upgrade to Starter Pro',
-      href: '/docs/starter/upgrade',
+      title: "Upgrade to Starter Pro",
+      href: "/docs/starter/upgrade",
       description:
-        'Know when Starter Free stops being enough and Starter Pro becomes the faster launch path.',
+        "Know when Starter Free stops being enough and Starter Pro becomes the faster launch path.",
       icon: ArrowUpRight,
-      badge: 'Pro',
-      tone: 'primary',
+      badge: "Pro",
+      tone: "primary",
     },
   ]}
 />

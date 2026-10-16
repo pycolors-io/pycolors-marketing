@@ -42,6 +42,15 @@ describe("Starter Free and Pro comparison", () => {
     }
   });
 
+  it("describes the delivered local project workflow", () => {
+    const [freeInterface] = cellsFor("Product interface");
+
+    expect(freeInterface).toHaveTextContent("local project workflow");
+    expect(freeInterface).toHaveTextContent(
+      "create, view details, rename, and delete",
+    );
+  });
+
   it("distinguishes mocked auth from configurable real integrations", () => {
     const [freeAuth, proAuth] = cellsFor("Authentication");
     const [freeAccess, proAccess] = cellsFor("Session and access checks");
@@ -60,18 +69,30 @@ describe("Starter Free and Pro comparison", () => {
     expect(freeBilling).toHaveTextContent("Mock plans and invoices");
     expect(freeBilling).toHaveTextContent("no Stripe Checkout");
     expect(proBilling).toHaveTextContent("configure and test");
-    expect(freeData).toHaveTextContent("add your persistence layer");
+    expect(freeData).toHaveTextContent("this browser's localStorage");
+    expect(freeData).toHaveTextContent("when available");
+    expect(freeData).toHaveTextContent(
+      "no shared database or cross-device synchronization",
+    );
+    expect(proData).toHaveTextContent("Prisma + PostgreSQL foundations");
     expect(proData).toHaveTextContent("wire your own domain data");
   });
 
   it("states deployment and migration responsibilities near the table", () => {
     const table = screen.getByRole("table");
+    const migration = screen.getByText(
+      /automatically migrate your app or data/u,
+    );
 
     expect(table).toHaveAccessibleDescription(/not a hosted service/u);
     expect(table).toHaveAccessibleDescription(/does not provision or deploy/u);
-    expect(
-      screen.getByText(/automatically migrate your app or data/u),
-    ).toHaveTextContent("Stay on Free while validating screens and workflows");
+    expect(migration).toHaveTextContent(
+      "Stay on Free while validating screens and workflows",
+    );
+    expect(migration).toHaveTextContent("separate source code to configure");
+    expect(migration).toHaveTextContent(
+      "does not unlock the running Free demo",
+    );
     for (const cell of cellsFor("Work you still own")) {
       expect(cell).toHaveTextContent("deploy and operate your app");
     }

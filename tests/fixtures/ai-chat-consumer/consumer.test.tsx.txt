@@ -1,0 +1,225 @@
+import * as React from "react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { expect, it, vi } from "vitest";
+import type { ChatTransport, UIMessage, UIMessageChunk } from "ai";
+import { ConnectedChat } from "./src/components/connected-chat";
+
+function mockTransport() {
+  let controller: ReadableStreamDefaultController<UIMessageChunk>;
+  let abortSignal: AbortSignal | undefined;
+  let count = 0;
+  const sendMessages = vi.fn<ChatTransport<UIMessage>["sendMessages"]>(async (options) => {
+    abortSignal = options.abortSignal;
+    return new ReadableStream<UIMessageChunk>({ start(value) {
+      controller = value;
+      controller.enqueue({ type: "start", messageId: `answer-${++count}` });
+      controller.enqueue({ type: "text-start", id: "text" });
+      abortSignal?.addEventListener("abort", () => controller.error(new DOMException("Aborted", "AbortError")), { once: true });
+    } });
+  });
+  return {
+    transport: { sendMessages, reconnectToStream: async () => null } satisfies ChatTransport<UIMessage>,
+    sendMessages,
+    push(text: string) { controller.enqueue({ type: "text-delta", id: "text", delta: text }); },
+    unsupported() { controller.enqueue({ type: "reasoning-start", id: "reason" }); controller.enqueue({ type: "reasoning-delta", id: "reason", delta: "Hidden?" }); controller.enqueue({ type: "reasoning-end", id: "reason" }); },
+    fail() { controller.error(new Error("Private provider error")); },
+    finish() { controller.enqueue({ type: "text-end", id: "text" }); controller.enqueue({ type: "finish" }); controller.close(); },
+    get aborted() { return abortSignal?.aborted; },
+  };
+}
+async function send(text = "Make a plan") {
+  fireEvent.change(screen.getByRole("textbox"), { target: { value: text } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  await act(async () => {});
+}
+
+it("streams the copied Block using the real SDK and a mock transport", async () => {
+  const mock = mockTransport();
+  render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  expect(mock.sendMessages).toHaveBeenCalledOnce();
+  expect(mock.sendMessages.mock.calls[0][0].messages[0].parts).toEqual([{ type: "text", text: "Make a plan" }]);
+  await act(async () => mock.push("First result"));
+  expect(screen.getByText("First result")).toBeVisible();
+  expect(screen.getByRole("button", { name: "Stop response" })).toBeEnabled();
+  await act(async () => mock.finish());
+  expect(screen.getByText("Ready for your next message.")).toBeVisible();
+});
+it("preserves partial output and newer edits through failure and retry without duplicating the user", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  await act(async () => mock.push("Partial response"));
+  fireEvent.change(screen.getByRole("textbox"), { target: { value: "Newer question" } });
+  await act(async () => mock.fail());
+  expect(screen.queryByText("Private provider error")).not.toBeInTheDocument();
+  expect(screen.getByText("Partial response")).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Retry response" }));
+  await waitFor(() => expect(mock.sendMessages).toHaveBeenCalledTimes(2));
+  expect(screen.getByText("Partial response")).toBeVisible();
+  expect(mock.sendMessages.mock.calls[1][0].trigger).toBe("regenerate-message");
+  await act(async () => { mock.push("Replacement"); mock.finish(); });
+  expect(screen.queryByText("Partial response")).not.toBeInTheDocument();
+  expect(screen.getAllByText("Make a plan")).toHaveLength(1);
+  expect(screen.getByRole("textbox")).toHaveValue("Newer question");
+});
+it("awaits cancellation, ignores late chunks and allows a fresh request", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send(); await act(async () => mock.push("Kept output"));
+  fireEvent.click(screen.getByRole("button", { name: "Stop response" }));
+  await waitFor(() => expect(screen.getByText(/may be incomplete/)).toBeVisible());
+  expect(mock.aborted).toBe(true);
+  expect(() => mock.push("Late chunk")).toThrow();
+  expect(screen.queryByText(/Late chunk/)).not.toBeInTheDocument();
+  expect(screen.getByText("Kept output")).toBeVisible();
+  await send("A fresh request");
+  await act(async () => { mock.push("Fresh result"); mock.finish(); });
+  expect(screen.getByText("Ready for your next message.")).toBeVisible();
+});
+it("marks unsupported rich content instead of silently declaring success", async () => {
+  const mock = mockTransport(); render(<ConnectedChat transport={mock.transport} />);
+  await send();
+  await act(async () => { mock.unsupported(); mock.push("Text"); mock.finish(); });
+  expect(screen.getByText(/Configure a text-only response/)).toBeVisible();
+  expect(screen.getByText(/Unsupported response content/)).toBeVisible();
+});
+it("aborts transport when its consumer unmounts", async () => {
+  const mock = mockTransport(); const { unmount } = render(<ConnectedChat transport={mock.transport} />);
+  await send(); unmount();
+  await act(async () => {});
+  expect(mock.aborted).toBe(true);
+});
+
+import { AgentChat } from "./src/components/agent-chat";
+import type { AgentDefinitionDraft } from "./src/components/blocks/ai-chat";
+
+it("creates only the explicitly reviewed agent revision and exports the edited definition", async () => {
+  const confirm = vi.fn(async (snapshot: AgentDefinitionDraft) => snapshot);
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  expect(confirm).not.toHaveBeenCalled();
+  expect(screen.queryByRole("heading", { name: "Agent definition" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  expect(confirm).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "My consumer reviewer" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(confirm).toHaveBeenCalledOnce();
+  expect(confirm.mock.calls[0][0].revision).toBe(1);
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+  expect(JSON.parse(screen.getByLabelText("Confirmed definition JSON").textContent!)).toMatchObject({ schemaVersion: 1, name: "My consumer reviewer" });
+});
+it("ignores a delayed consumer result after cancellation and replacement", async () => {
+  let done!: (snapshot: AgentDefinitionDraft) => void;
+  let submitted!: AgentDefinitionDraft;
+  const confirm = vi.fn((snapshot: AgentDefinitionDraft) => { submitted = snapshot; return new Promise<AgentDefinitionDraft>((resolve) => { done = resolve; }); });
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.click(screen.getByRole("button", { name: "Confirm definition" }));
+  fireEvent.click(screen.getByRole("button", { name: "Cancel definition" }));
+  expect(screen.getByText(/Definition cancelled/)).toBeVisible();
+  await act(async () => {});
+  fireEvent.change(screen.getByRole("textbox", { name: "Message" }), { target: { value: "Define a product review assistant." } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "New draft" } });
+  await act(async () => done(submitted));
+  expect(screen.queryByText("Definition created locally")).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Agent name/ })).toHaveValue("New draft");
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});
+it("preserves failed confirmation edits and retries the same revision", async () => {
+  const confirm = vi.fn<(snapshot: AgentDefinitionDraft) => Promise<AgentDefinitionDraft>>()
+    .mockRejectedValueOnce(new Error("Private backend detail"))
+    .mockImplementation(async (snapshot) => snapshot);
+  render(<AgentChat confirm={confirm} />);
+  fireEvent.click(screen.getByRole("button", { name: "Define an agent (sample)" }));
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.change(screen.getByRole("textbox", { name: /Instructions/ }), { target: { value: "Keep my changes" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(screen.queryByText("Private backend detail")).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Instructions/ })).toHaveValue("Keep my changes");
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Retry confirmation" })));
+  expect(confirm).toHaveBeenCalledTimes(2);
+  expect(confirm.mock.calls[1][0]).toEqual(confirm.mock.calls[0][0]);
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+});
+
+import { LocalFileChat } from "./src/components/local-file-chat";
+
+async function useFileReference() {
+  fireEvent.change(screen.getByLabelText("Choose reference file"), { target: { files: [new File(["RAW_FILE_CONTENT_SENTINEL"], "source.md", { type: "text/markdown" })] } });
+  expect(screen.queryByRole("button", { name: "Use as reference" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Read locally" }));
+  await screen.findByRole("button", { name: "Use as reference" });
+  fireEvent.click(screen.getByRole("button", { name: "Use as reference" }));
+  expect(screen.queryByRole("heading", { name: "Agent definition" })).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+}
+it("reads real local text, confirms a source-linked definition and excludes the raw file", async () => {
+  render(<LocalFileChat />);
+  await useFileReference();
+  fireEvent.change(screen.getByRole("textbox", { name: /Agent name/ }), { target: { value: "Source reviewer" } });
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Confirm definition" })));
+  expect(screen.getByText("Definition created locally")).toBeVisible();
+  const json = screen.getByLabelText("Confirmed definition JSON").textContent!;
+  expect(json).toContain("source.md"); expect(json).not.toContain("RAW_FILE_CONTENT_SENTINEL");
+  fireEvent.click(screen.getByRole("button", { name: "Remove source.md" }));
+  expect(screen.queryByRole("button", { name: "Copy JSON" })).toBeNull();
+  expect(screen.getByRole("textbox", { name: /Agent name/ })).toHaveValue("Source reviewer");
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});
+it("rejects late confirmation after source removal in the documented file recipe", async () => {
+  let done!: (snapshot: AgentDefinitionDraft) => void;
+  let submitted!: AgentDefinitionDraft;
+  render(<LocalFileChat confirm={(snapshot) => { submitted = snapshot; return new Promise((resolve) => { done = resolve; }); }} />);
+  await useFileReference();
+  fireEvent.click(screen.getByRole("button", { name: "Confirm definition" }));
+  fireEvent.click(screen.getByRole("button", { name: "Remove source.md" }));
+  await act(async () => done(submitted));
+  expect(screen.queryByText("Definition created locally")).toBeNull();
+  expect(screen.queryByRole("button", { name: "Copy JSON" })).toBeNull();
+  expect(screen.getByRole("button", { name: "Confirm definition" })).toBeEnabled();
+});
+
+import { WorkChat } from "./src/components/work-chat";
+
+async function startWork() {
+  fireEvent.click(screen.getByRole("button", { name: "Review a task plan (sample)" }));
+  expect(screen.queryByRole("region", { name: "Review a launch plan" })).toBeNull();
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Send message" })));
+  expect(screen.getByText("Planned", { selector: '[data-slot="badge"]' })).toBeVisible();
+  fireEvent.click(screen.getByText("Work simulation controls", { selector: "summary" }));
+  fireEvent.click(screen.getByRole("button", { name: "Simulate approval request" }));
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Approve", exact: true })));
+}
+it("keeps completion explicit in the copied Work recipe with published UI", async () => {
+  const fetchSpy = vi.spyOn(globalThis, "fetch");
+  try {
+    render(<WorkChat />);
+    await startWork();
+    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByRole("button", { name: "Advance one step" }));
+    expect(screen.getByText("In progress", { selector: '[data-slot="badge"]' })).toBeVisible();
+    expect(screen.getByText("Partial result · not final")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Supply sample result" }));
+    expect(screen.getByText("Completed", { selector: '[data-slot="badge"]' })).toBeVisible();
+    expect(screen.getByText(/Sample checklist \(fictional\)/)).toBeVisible();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Reset simulation" }));
+    expect(screen.queryByRole("region", { name: "Review a launch plan" })).toBeNull();
+  } finally { fetchSpy.mockRestore(); }
+});
+it("awaits cancellation confirmation, keeps partial text and retries as a fresh attempt", async () => {
+  render(<WorkChat />);
+  await startWork();
+  fireEvent.click(screen.getByRole("button", { name: "Advance one step" }));
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Cancel task" })));
+  expect(screen.getByText("In progress", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.getByText(/Cancellation requested/)).toBeVisible();
+  expect(screen.getByRole("button", { name: "Advance one step" })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Confirm simulated cancellation" }));
+  expect(screen.getByText("Cancelled", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.getByText(/Sample finding \(fictional\)/)).toBeVisible();
+  await act(async () => fireEvent.click(screen.getByRole("button", { name: "Retry task" })));
+  expect(screen.getByText("Task progress · Attempt 2")).toBeVisible();
+  expect(screen.getByText("Planned", { selector: '[data-slot="badge"]' })).toBeVisible();
+  expect(screen.queryByText(/Sample finding \(fictional\)/)).toBeNull();
+});

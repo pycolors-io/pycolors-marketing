@@ -1,0 +1,193 @@
+---
+title: AI Conversation
+description: Compose a reader-aware conversation viewport with messages and explicit copy feedback.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+publishedAt: "2026-10-16"
+icon: MessagesSquare
+---
+
+import { AIConversationExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import {
+  ArrowDownToLine,
+  BookOpen,
+  Cable,
+  Copy,
+  Keyboard,
+  MessageSquare,
+  MessagesSquare,
+} from "lucide-react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Compose your conversation
+
+`AIConversation` displays a scrollable, labelled message list. It follows new content
+while the reader is at the end and preserves their position when they scroll back.
+Your application supplies messages and transport; this component makes no model requests.
+
+<Callout title="Package availability">
+  AIConversation, AIMessage and AIMessageActions are introduced by the
+  conversation primitives minor Changeset. Use the repository workspace until
+  that release is published. They are not exported by `@pycolors/ui@1.6.1` or
+  earlier.
+</Callout>
+
+<DocsFeatureGrid
+  columns={3}
+  items={[
+    {
+      title: "Follow the reader",
+      icon: BookOpen,
+      description:
+        "New content follows the viewport only while the reader remains at the end.",
+    },
+    {
+      title: "Return explicitly",
+      icon: ArrowDownToLine,
+      description:
+        "Jump to latest returns to the end and restores focus to the conversation viewport.",
+    },
+    {
+      title: "Keep application ownership",
+      icon: Cable,
+      description:
+        "Supply message content, model transport, persistence and clipboard callbacks yourself.",
+    },
+  ]}
+/>
+
+## Preview
+
+<AIConversationExample />
+
+The example runs here in the documentation. The Explorer link appears when this
+story is available in the published catalog; otherwise use this inline preview.
+
+## Controlled composition
+
+```tsx title="conversation.tsx"
+"use client";
+
+import { AIConversation, AIMessage, AIMessageActions } from "@pycolors/ui";
+
+type Message = { id: string; author: string; text: string };
+
+export function Conversation({ messages }: { messages: Message[] }) {
+  return (
+    <AIConversation
+      label="Support conversation"
+      messagesLabel="Support messages"
+    >
+      {messages.map((message) => (
+        <AIMessage
+          key={message.id}
+          author={message.author}
+          actions={
+            <AIMessageActions
+              value={message.text}
+              copyAriaLabel={`Copy ${message.author} message`}
+              onCopy={(text) => navigator.clipboard.writeText(text)}
+            />
+          }
+        >
+          {message.text}
+        </AIMessage>
+      ))}
+    </AIConversation>
+  );
+}
+```
+
+Place [AIComposer](/docs/ui/ai-composer) after the conversation. Keep request errors,
+retry and cancellation in your consumer, or use the [AI Chat Block](/docs/blocks/app-shells/ai-chat)
+for the complete composed surface. This component does not parse Markdown or HTML.
+
+## Behavior and accessibility
+
+<Steps>
+
+<Step>
+
+### Supply semantic messages
+
+Children belong to an ordered list. Render `AIMessage` or native `li` elements,
+with stable keys. The empty state belongs outside that list. Use a meaningful
+`label` and `messagesLabel` when more than one conversation appears on the page.
+
+</Step>
+
+<Step>
+
+### Respect reading position
+
+The focusable viewport follows content and resize changes while at the end.
+Scrolling more than 32 pixels away pauses following. Returning near the end or
+choosing **Jump to latest** resumes it. Layout changes do not force a reader back
+to the bottom. Without ResizeObserver, React child updates still follow.
+
+</Step>
+
+<Step>
+
+### Announce request state in your application
+
+The message list is not a live region: streaming tokens must not repeatedly
+interrupt a screen reader. Provide concise request-status announcements outside
+the list. Jumping uses immediate scrolling and restores viewport focus without
+animated motion. Keyboard and screen-reader verification remain part of your
+application's integration checks.
+
+</Step>
+
+</Steps>
+
+## API
+
+| Prop                          | Default          | Purpose                                               |
+| ----------------------------- | ---------------- | ----------------------------------------------------- |
+| `children`                    | —                | Semantic list items, usually AIMessage instances      |
+| `label`                       | `Conversation`   | Accessible viewport name                              |
+| `messagesLabel`               | `Messages`       | Accessible ordered-list name                          |
+| `jumpLabel`                   | `Jump to latest` | Visible return button label                           |
+| `viewportClassName`           | —                | Override the default `max-h-[28rem]` viewport styling |
+| `className`, native div props | —                | Outer wrapper attributes and styling                  |
+| `ref`                         | —                | Outer HTMLDivElement, not the inner viewport          |
+
+Slots: `ai-conversation` and `ai-conversation-viewport`. Caller classes use the
+standard PyColors `cn()` precedence. The viewport owns its scroll handling and
+focus behavior. Use a stable component key to reset an entire conversation.
+
+## Related components
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "AI Message",
+      icon: MessageSquare,
+      href: "/docs/ui/ai-message",
+      description: "Render a speaker, content and optional actions.",
+    },
+    {
+      title: "AI Message Actions",
+      icon: Copy,
+      href: "/docs/ui/ai-message-actions",
+      description: "Copy with pending, success and recoverable error feedback.",
+    },
+    {
+      title: "AI Composer",
+      icon: Keyboard,
+      href: "/docs/ui/ai-composer",
+      description: "Connect a controlled input to your application.",
+    },
+    {
+      title: "AI Chat Block",
+      icon: MessagesSquare,
+      href: "/docs/blocks/app-shells/ai-chat",
+      description: "Use the complete Free composition and local examples.",
+    },
+  ]}
+/>

@@ -28,8 +28,8 @@ const sourceLoader = read("lib/blocks/source.server.ts");
 
 describe("Blocks discovery", () => {
   it("keeps the canonical catalog and ordered categories", () => {
-    expect(BLOCKS_CATALOG).toHaveLength(16);
-    expect(new Set(BLOCKS_CATALOG.map((block) => block.id)).size).toBe(16);
+    expect(BLOCKS_CATALOG).toHaveLength(17);
+    expect(new Set(BLOCKS_CATALOG.map((block) => block.id)).size).toBe(17);
     expect(BLOCK_CATEGORIES.map((category) => category.slug)).toEqual([
       "app-shells",
       "auth",
