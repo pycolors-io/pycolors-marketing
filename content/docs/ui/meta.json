@@ -16,6 +16,9 @@
     "input",
     "textarea",
     "ai-composer",
+    "ai-conversation",
+    "ai-message",
+    "ai-message-actions",
     "checkbox",
     "password-input",
 

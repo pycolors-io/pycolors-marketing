@@ -126,6 +126,15 @@ const componentGroups = [
 
 const nextSteps = [
   {
+    title: "Compose an assistant interface",
+    product: "Free UI",
+    icon: MessageSquare,
+    description:
+      "Explore conversation, message and copy-feedback primitives alongside AIComposer. Check the guide for package-version availability; your application supplies the model connection.",
+    href: "/docs/ui/ai-conversation",
+    label: "Read the conversation guide",
+  },
+  {
     title: "Compose a screen",
     product: "Patterns",
     icon: Layers3,
@@ -555,7 +564,7 @@ export default function UiPage() {
               </Link>
             }
           />
-          <div className="mt-8 grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-3">
+          <div className="mt-8 grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-2">
             {nextSteps.map((item) => (
               <div
                 key={item.title}

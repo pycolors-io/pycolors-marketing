@@ -1,0 +1,73 @@
+---
+title: AI Message
+description: A semantic conversation item with a visible speaker, consumer content and optional actions.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Make each speaker clear
+
+`AIMessage` renders a semantic `li`, visible `author` label, wrapping content and
+optional `actions`. Use it inside [AIConversation](/docs/ui/ai-conversation) or a
+native list. It does not infer roles, generate replies or interpret message text.
+
+<Callout title="Package availability">
+  This additive API belongs to the conversation primitives minor Changeset. Use
+  the repository workspace until publication; UI 1.6.1 and earlier do not export
+  it.
+</Callout>
+
+```tsx
+import { AIMessage } from "@pycolors/ui";
+
+export function Example() {
+  return (
+    <ol>
+      <AIMessage author="You">What should I build first?</AIMessage>
+      <AIMessage author="Assistant">
+        Start with one useful flow, including recovery from errors.
+      </AIMessage>
+    </ol>
+  );
+}
+```
+
+## API and semantics
+
+| Prop                         | Purpose                                                   |
+| ---------------------------- | --------------------------------------------------------- |
+| `author: string`             | Required visible speaker name; supply localized labels    |
+| `children: ReactNode`        | Application-provided message body                         |
+| `actions: ReactNode`         | Optional actions below the body, such as AIMessageActions |
+| Native li props, `className` | Attributes and caller style overrides                     |
+| `ref`                        | HTMLLIElement                                             |
+
+Slots: `ai-message` and `ai-message-content`. Whitespace and line breaks are
+preserved; long text wraps. Strings are rendered as text. If you supply a Markdown
+renderer or rich React children, your application owns their safety, link behavior
+and accessible semantics. Do not render this list item directly inside a `div`.
+
+The author is visible text rather than a role inferred from color. Message bodies
+are not live regions. Announce request state separately to avoid reading every
+streaming token.
+
+## Compose with other primitives
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "AI Conversation",
+      href: "/docs/ui/ai-conversation",
+      description: "Provide the labelled scroll viewport and message list.",
+    },
+    {
+      title: "AI Message Actions",
+      href: "/docs/ui/ai-message-actions",
+      description: "Add application-owned copy and recovery feedback.",
+    },
+  ]}
+/>

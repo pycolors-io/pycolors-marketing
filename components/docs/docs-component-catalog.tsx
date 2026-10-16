@@ -11,6 +11,7 @@ const groups = [
       ["Input", "input"],
       ["Textarea", "textarea"],
       ["AIComposer", "ai-composer"],
+      ["AIMessageActions", "ai-message-actions"],
       ["Checkbox", "checkbox"],
       ["PasswordInput", "password-input"],
       ["DropdownMenu", "dropdown-menu"],
@@ -22,6 +23,7 @@ const groups = [
     icon: Layers3,
     components: [
       ["Card", "card"],
+      ["AIMessage", "ai-message"],
       ["Badge", "badge"],
       ["Alert", "alert"],
       ["Toast", "toast"],
@@ -40,6 +42,7 @@ const groups = [
       ["Table", "table"],
       ["Pagination", "pagination"],
       ["Separator", "separator"],
+      ["AIConversation", "ai-conversation"],
     ],
   },
 ] as const;

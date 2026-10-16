@@ -32,8 +32,13 @@ Text is rendered literally, including code and HTML characters.
 ## Copy source
 
 Configure the [public UI package and tokens](/docs/ui/installation). This Block
-requires `@pycolors/ui` **1.6.0 or later**, which includes AIComposer. The isolated
-consumer was tested with UI 1.6.0; test newer versions in your own application.
+now composes [AIConversation](/docs/ui/ai-conversation),
+[AIMessage](/docs/ui/ai-message) and [AIMessageActions](/docs/ui/ai-message-actions)
+alongside AIComposer. This source requires the workspace version containing those
+exports, or the minor release that publishes them. **UI 1.6.1 and earlier do not
+contain the new conversation primitives.** Check the installed exports before
+copying this revision; the existing Starter Free snapshot remains independently
+versioned and does not require this source upgrade.
 
 Copy **all seven files**, keeping their relative imports. Use the copy button or
 select the code manually if clipboard permission is unavailable. The

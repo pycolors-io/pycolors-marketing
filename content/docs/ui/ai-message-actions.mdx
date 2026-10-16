@@ -1,0 +1,84 @@
+---
+title: AI Message Actions
+description: Explicit copy actions with pending, success and recoverable error feedback.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Give copy actions honest feedback
+
+`AIMessageActions` invokes your `onCopy` callback with a snapshot of `value`.
+It reports success only when the callback resolves. Rejection or a synchronous
+error displays recovery text and enables another attempt. The component never
+accesses the clipboard by itself.
+
+<Callout title="Package availability">
+  This API is introduced by the conversation primitives minor Changeset. Use the
+  repository workspace until publication; UI 1.6.1 and earlier do not export it.
+</Callout>
+
+```tsx
+"use client";
+
+import { AIMessageActions } from "@pycolors/ui";
+
+export function CopyResponse({ text }: { text: string }) {
+  return (
+    <AIMessageActions
+      value={text}
+      copyAriaLabel="Copy assistant response"
+      onCopy={(snapshot) => navigator.clipboard.writeText(snapshot)}
+    />
+  );
+}
+```
+
+Clipboard access may require a secure context and user permission. Keep the
+original message selectable when copying fails. Return or await the actual promise
+from `onCopy`; a fire-and-forget callback cannot report failure accurately.
+
+## API
+
+| Prop                                   | Default                   | Purpose                                                   |
+| -------------------------------------- | ------------------------- | --------------------------------------------------------- |
+| `value: string`                        | Required                  | Text snapshot supplied to the copy callback               |
+| `onCopy(value): void \| Promise<void>` | Required                  | Application action, overrides the native div copy handler |
+| `disabled`                             | `false`                   | Disable the action during application-controlled states   |
+| `copyLabel`                            | `Copy`                    | Visible button label                                      |
+| `copyAriaLabel`                        | `Copy message`            | Accessible action name                                    |
+| `pendingLabel`                         | `Copying…`                | Pending status text                                       |
+| `successLabel`                         | `Copied.`                 | Resolved status text                                      |
+| `errorLabel`                           | Manual-copy recovery text | Rejected status text                                      |
+| `children`                             | —                         | Additional application actions in the row                 |
+| Native div props, `className`, `ref`   | —                         | Outer HTMLDivElement attributes, styles and ref           |
+
+The slot is `ai-message-actions`. The native button supports keyboard activation
+and is disabled when empty, disabled by the consumer or pending. Repeated clicks
+cannot launch duplicate pending copies. A `role="status"` region announces concise
+feedback. Labels can be localized independently.
+
+Changing `value` clears feedback and invalidates stale settlements. Unmounting also
+invalidates pending feedback; neither operation cancels your clipboard promise.
+Use stable message keys, and disable copying during streaming if your product
+should export only complete messages.
+
+## Related guides
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "AI Message",
+      href: "/docs/ui/ai-message",
+      description: "Place the action beside its visible source text.",
+    },
+    {
+      title: "AI Conversation",
+      href: "/docs/ui/ai-conversation",
+      description: "See a complete message-list composition.",
+    },
+  ]}
+/>
