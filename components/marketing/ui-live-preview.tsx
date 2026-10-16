@@ -9,6 +9,7 @@ import {
   ThemeComponentsPreview,
   INITIAL_THEME_COMPONENTS_STATE,
 } from "@/components/theme-builder/theme-components-preview";
+import { UiConversationPreview } from "./ui-conversation-preview";
 import { ThemeModeControl } from "@/components/theme-builder/theme-mode-control";
 import { DEFAULT_THEME_FONT } from "@/components/theme-builder/theme-typography";
 
@@ -28,6 +29,12 @@ export function UiLivePreview({
           Live components
         </p>
         <div className="flex flex-wrap items-center gap-2">
+          <a
+            href="#conversation-primitives"
+            className="inline-flex min-h-11 items-center px-2 text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Try a conversation
+          </a>
           <ThemeModeControl
             idPrefix="ui-showcase-mode"
             value={mode}
@@ -52,7 +59,9 @@ export function UiLivePreview({
         fontFamily={DEFAULT_THEME_FONT.previewFamily}
         view={view}
         onViewChange={setView}
-      />
+      >
+        <UiConversationPreview />
+      </ThemeComponentsPreview>
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-border-subtle bg-background px-4 py-3 text-xs text-muted-foreground sm:px-5">
         <p>Demo content · Built with public PyColors components.</p>
         <Link

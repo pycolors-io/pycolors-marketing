@@ -131,8 +131,8 @@ const nextSteps = [
     icon: MessageSquare,
     description:
       "Explore conversation, message and copy-feedback primitives alongside AIComposer. Check the guide for package-version availability; your application supplies the model connection.",
-    href: "/docs/ui/ai-conversation",
-    label: "Read the conversation guide",
+    href: "#conversation-primitives",
+    label: "Try conversation primitives",
   },
   {
     title: "Compose a screen",
