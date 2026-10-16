@@ -106,7 +106,7 @@ const includedGroups = [
       "AI, security and revenue insight sections",
       "Analytics-style charts and product visuals",
       "Monthly/yearly pricing and comparison table",
-      "Testimonials, FAQ and frontend contact form",
+      "Sample testimonials, native FAQ and local contact demo",
     ],
   },
   {
@@ -119,7 +119,7 @@ const includedGroups = [
       "Dark and light appearances",
       "PyColors UI and shared design tokens",
       "Radix primitives and Lucide icons",
-      "Tailwind CSS v4 and Framer Motion",
+      "Finite motion with reduced-motion support",
     ],
   },
   {
@@ -408,9 +408,9 @@ export default function NaAiTemplatePage() {
                       <Image
                         src={preview.src}
                         alt={`NA-AI Landing hero and illustrative analytics preview in ${preview.mode} mode`}
-                        width={3452}
-                        height={1916}
-                        sizes="(min-width: 1280px) 1180px, 92vw"
+                        width={2880}
+                        height={2000}
+                        sizes="(min-width: 1440px) 1312px, 92vw"
                         className="h-auto w-full"
                       />
                     </a>
