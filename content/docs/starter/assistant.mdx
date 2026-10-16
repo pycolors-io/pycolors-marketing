@@ -1,0 +1,114 @@
+---
+title: Assistant playground
+description: Explore the Free assistant interface, understand its local demo states, and connect your own application.
+lastUpdated: "2026-10-16"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Start with the interface
+
+In your running Starter Free checkout, open `/assistant` or choose **Assistant**
+in the desktop or mobile navigation. The dashboard's getting-started guide links
+there too. This route belongs to the starter, not the Marketing website.
+
+The page brings the Free [AI Chat Block](/docs/blocks/app-shells/ai-chat) into the
+existing application shell: one composer, suggestions, a readable conversation,
+local agent-definition editing, file references and sample task states.
+
+<Callout title="Local simulation — no model connected">
+  Replies and task results are fixed examples. Use sample text and non-sensitive
+  files. This assistant does not send requests to an AI provider or store the
+  session. Leaving the page or reloading clears messages, drafts and references.
+</Callout>
+
+Source availability in the monorepo does not imply that an older downloaded
+starter or deployed demo already contains this route. Check your delivered copy.
+
+## Try it in a few minutes
+
+| Try                             | What happens                                                 | What it demonstrates                        |
+| ------------------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| Select a suggestion             | The message is prefilled; you still choose Send              | No implicit submission                      |
+| Send a message                  | A fixed response appears progressively                       | Controlled response and busy states         |
+| Stop, then Retry                | The local timer stops; Retry replays the sample              | Cancellation and recovery UI                |
+| Open Test recovery              | You can fail the next response or definition confirmation    | Explicit error states and retained edits    |
+| Define an agent                 | Review and edit the sample fields, then confirm              | Local definition, not a deployed agent      |
+| Copy or download the definition | A versioned JSON document is exported                        | Only approved fields and visible provenance |
+| Select a text file              | Nothing is read until Read locally                           | Explicit local file processing              |
+| Review a task plan              | Reviewer controls supply fictional states                    | Work presentation, not execution            |
+| New chat                        | The session clears and pending local callbacks are cancelled | A fresh starting point                      |
+
+The composer supports keyboard use and explicit Send/Stop controls. Suggestions
+never start a task or confirm a definition. Confirming a definition does not run
+an agent, grant access or create a remote resource.
+
+### Local file limits
+
+Choose **Add a reference**, then select one UTF-8 `.txt` or `.md` file, at most **512 KiB**. PDF, Office documents,
+images, URLs, audio and binary content are unsupported. The page shows at most
+2,000 Unicode characters and discloses truncation. Read failures keep the recovery
+action visible; removing a reference invalidates its pending read.
+
+**Use as reference** fills a sample request. Sending it creates an editable sample
+definition with the selected filename as provenance. There is no semantic analysis,
+indexing or RAG. The JSON excludes the file's contents and excerpt; the visible
+filename may be exported, so review it before confirming.
+
+The assistant adds no prompt, filename or file-content analytics. Existing
+starter site analytics are separate. Reset does not delete files already saved
+to your computer and is not a secure-memory wipe.
+
+## Adapt your copy
+
+The source is deliberately delivered inside the starter:
+
+| File                                            | Responsibility                                         |
+| ----------------------------------------------- | ------------------------------------------------------ |
+| `app/(app)/assistant/page.tsx`                  | Server-rendered page, context and integration guidance |
+| `components/assistant/assistant-playground.tsx` | Local conversation and definition consumer             |
+| `components/assistant/chat/`                    | Complete source-copy UI Block                          |
+| `components/assistant/use-local-chat-file.ts`   | Local file validation, reading and cleanup             |
+| `components/assistant/work-simulation.tsx`      | Explicit sample Work transitions                       |
+| `components/assistant/source-provenance.json`   | Canonical revision and snapshot checksums              |
+
+There is no runtime import from Marketing. Keep the complete `chat/` directory
+when copying it elsewhere. The local README explains provenance and deliberate
+updates; copied source does not receive automatic fixes.
+
+### Replace the sample consumer
+
+Start with the [controlled Block contract and integration recipe](/docs/blocks/app-shells/ai-chat).
+Your application supplies messages, draft, status, submit, stop, retry and copy
+callbacks. Keep optional file, definition and Work controls tied to actual
+supported behavior. Remove simulation controls when replacing the demo.
+
+Your server owns provider credentials, authorization, validation, rate limits and
+costs. Your application owns persistence, model-output handling and task execution.
+Keep credentials out of browser props and exported definitions. Client-side Stop
+must be connected to transport cancellation and does not prove upstream billing
+has stopped. Validate success, errors, stale responses and cancellation before
+connecting real customer data.
+
+Run the starter's tests, lint, type checks and build after adapting it. Review
+keyboard navigation, long content, narrow screens and light/dark themes. The
+example does not certify a provider, production deployment or screen-reader setup.
+
+## Free now, a deliberate Pro path later
+
+The assistant UI, accessibility, errors/recovery and local definition export are
+included in Free. You can connect your own backend without purchasing Pro.
+
+[Starter Pro's included foundations](/docs/starter-pro/what-is-included) cover
+configurable authentication, database and billing. Buying Pro does not connect a
+model, unlock the Free demo or migrate its data. Follow the
+[Free-to-Pro guide](/docs/starter/upgrade) for deliberate source reuse. Premium
+assistant compositions remain a future product decision, not an available offer.
+
+## Related guides
+
+- [Getting started](/docs/starter/getting-started)
+- [AI Chat complete source and consumer recipe](/docs/blocks/app-shells/ai-chat)
+- [AIComposer](/docs/ui/ai-composer)
+- [Project structure](/docs/starter/project-structure)

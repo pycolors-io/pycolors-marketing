@@ -22,7 +22,7 @@ const text = firstSession.replace(/\s+/g, " ");
 
 // Documentation contracts only: these do not certify browser behavior or Pro.
 describe("Starter Free first-session documentation", () => {
-  it("introduces three informational steps before detailed guidance", () => {
+  it("introduces four informational steps before detailed guidance", () => {
     expect(start).toBeGreaterThan(-1);
     expect(start).toBeLessThan(guide.indexOf("## Steps"));
     const steps = Array.from(
@@ -31,6 +31,7 @@ describe("Starter Free first-session documentation", () => {
     );
     expect(steps).toEqual([
       "Try the project workflow.",
+      "Explore the assistant interface.",
       "Make the app yours.",
       "Evaluate connected foundations.",
     ]);
