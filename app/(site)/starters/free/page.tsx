@@ -76,7 +76,10 @@ const screens = [
     title: "A home for your product.",
     description:
       "An overview with sample metrics, project activity and clear next actions. Start with a complete page structure and make it relevant to your product.",
-    image: "/images/starters/free/dashboard-free-page-pycolors.png",
+    images: {
+      light: "/images/starters/free/product-preview/dashboard-light.png",
+      dark: "/images/starters/free/product-preview/dashboard-dark.png",
+    },
     route: "/dashboard",
     points: ["Responsive app navigation", "Sample KPIs and summary cards"],
   },
@@ -86,19 +89,38 @@ const screens = [
     title: "Give your workflows a shape.",
     description:
       "Explore a project table, detail routes and create, rename and delete dialogs. Use the client-side examples to shape your own data workflows.",
-    image: "/images/starters/free/projects-page-pycolors.png",
+    images: {
+      light: "/images/starters/free/product-preview/projects-light.png",
+      dark: "/images/starters/free/product-preview/projects-dark.png",
+    },
     route: "/projects",
     points: ["Tables and contextual actions", "Dialogs and empty states"],
+  },
+  {
+    id: "assistant",
+    label: "Assistant",
+    title: "Try a conversation inside your product.",
+    description:
+      "Explore sample replies, local agent definitions and task states. This playground runs in your browser; no AI service is connected.",
+    images: {
+      light: "/images/starters/free/product-preview/assistant-light.png",
+      dark: "/images/starters/free/product-preview/assistant-dark.png",
+    },
+    route: "/assistant",
+    points: ["Conversation and attachment UI", "Local agent and task previews"],
   },
   {
     id: "auth",
     label: "Authentication",
     title: "Design the first interaction.",
     description:
-      "Sign-in, registration and password reset screens with form and loading states. These are UI examples; they do not create accounts or sessions.",
-    image: "/images/starters/free/auth-page-pycolors.png",
+      "Try local sign-in, registration and password reset feedback. These interface previews do not create accounts, sessions or emails.",
+    images: {
+      light: "/images/starters/free/product-preview/auth-light.png",
+      dark: "/images/starters/free/product-preview/auth-dark.png",
+    },
     route: "/login",
-    points: ["Email and password forms", "Loading and validation patterns"],
+    points: ["Labelled account forms", "Local validation and feedback"],
   },
   {
     id: "settings",
@@ -106,7 +128,10 @@ const screens = [
     title: "Make account details feel at home.",
     description:
       "Profile, preferences and security sections with clear action hierarchy. Connect saving and session management to your own backend.",
-    image: "/images/starters/free/settings-page-pycolors.png",
+    images: {
+      light: "/images/starters/free/product-preview/settings-light.png",
+      dark: "/images/starters/free/product-preview/settings-dark.png",
+    },
     route: "/settings",
     points: ["Profile and security layouts", "Destructive action patterns"],
   },
@@ -116,7 +141,10 @@ const screens = [
     title: "Explore the paid experience.",
     description:
       "Sample plans, invoices and payment details help you design the subscription experience. Checkout and the customer portal are not connected.",
-    image: "/images/starters/free/billing-free-page-pycolors.png",
+    images: {
+      light: "/images/starters/free/product-preview/billing-light.png",
+      dark: "/images/starters/free/product-preview/billing-dark.png",
+    },
     route: "/billing",
     points: ["Plan and subscription UI", "Invoice and payment layouts"],
   },
@@ -126,7 +154,10 @@ const screens = [
     title: "Plan a workspace for your team.",
     description:
       "Member, role and invitation screens give your workspace a clear structure. Add real authorization and invitation delivery when you connect your services.",
-    image: "/images/starters/free/admin-page-pycolors.png",
+    images: {
+      light: "/images/starters/free/product-preview/admin-light.png",
+      dark: "/images/starters/free/product-preview/admin-dark.png",
+    },
     route: "/admin",
     points: ["Member and role layouts", "Invitation UI examples"],
   },
@@ -324,7 +355,7 @@ export default function StarterFreePage() {
             align="left"
             eyebrow="Product preview"
             title="Explore the screens. See the starting point."
-            description="Six areas of a SaaS interface, ready to explore with demo data. Select a screen or open the live demo to try the flows."
+            description="Seven areas of a SaaS interface, ready to explore with demo data. Select a screen or open the live demo to try the flows."
           />
           <StarterFreePreview
             screens={screens.map((screen, index) => ({
@@ -333,14 +364,24 @@ export default function StarterFreePage() {
               content: (
                 <figure className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_19rem]">
                   <div className="flex min-w-0 items-center border-b border-border-subtle bg-[linear-gradient(135deg,color-mix(in_oklch,var(--primary),transparent_95%),var(--background)_50%,color-mix(in_oklch,var(--primary),transparent_97%))] p-3 sm:p-6 lg:border-b-0 lg:border-r">
-                    <div className="relative aspect-16/10 w-full overflow-hidden rounded-[3px] border border-border-subtle bg-white shadow-sm">
+                    <div className="relative aspect-16/10 w-full overflow-hidden rounded-[3px] border border-border-subtle bg-background shadow-sm">
                       <Image
-                        src={screen.image}
-                        alt={`Starter Free ${screen.label.toLowerCase()} interface with demonstration data`}
+                        src={screen.images.light}
+                        alt={`Starter Free ${screen.label.toLowerCase()} interface with demonstration data, light theme`}
+                        data-preview-theme="light"
                         fill
                         priority={index === 0}
                         sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
-                        className="object-contain"
+                        className="object-contain dark:hidden"
+                      />
+                      <Image
+                        src={screen.images.dark}
+                        alt={`Starter Free ${screen.label.toLowerCase()} interface with demonstration data, dark theme`}
+                        data-preview-theme="dark"
+                        fill
+                        priority={index === 0}
+                        sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
+                        className="hidden object-contain dark:block"
                       />
                     </div>
                   </div>
@@ -379,8 +420,9 @@ export default function StarterFreePage() {
             }))}
           />
           <p className="mt-4 text-xs leading-6 text-muted-foreground">
-            Captures show the light theme with sample data. Authentication,
-            payments and access control still need real service integrations.
+            Captures follow your light or dark appearance with sample data.
+            Authentication, payments and access control still need real service
+            integrations.
           </p>
         </MarketingSectionShell>
 

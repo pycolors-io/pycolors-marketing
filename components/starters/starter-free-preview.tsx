@@ -23,7 +23,7 @@ export function StarterFreePreview({ screens }: StarterFreePreviewProps) {
     >
       <TabsList
         aria-label="Starter Free screens"
-        className="grid h-auto w-full grid-cols-3 gap-0 rounded-none border-b border-border-subtle bg-transparent p-0 sm:flex sm:justify-start"
+        className="grid h-auto w-full grid-cols-3 gap-0 rounded-none border-b border-border-subtle bg-transparent p-0 sm:flex sm:flex-wrap sm:justify-start"
       >
         {screens.map((screen) => (
           <TabsTrigger
