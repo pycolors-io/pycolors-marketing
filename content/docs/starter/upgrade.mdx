@@ -1,7 +1,7 @@
 ---
 title: Upgrade to Starter Pro
-description: Learn when Starter Free reaches its limits, what Starter Pro adds, and how to move from product-shaped validation to a real SaaS foundation.
-lastUpdated: "2026-04-27"
+description: Compare browser-local Starter Free workflows with configurable Starter Pro foundations, and plan a deliberate move without an automatic migration.
+lastUpdated: "2026-10-15"
 appliesTo: Starter Free
 ---
 
@@ -33,7 +33,20 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 Starter Free helps you **validate the product surface**.
 
-Starter Pro helps you **launch the business layer**.
+Starter Pro provides **configurable authentication, billing, and database foundations**.
+
+Free already lets you create a project, view its details, rename it, and delete
+it. Projects persist in this browser's `localStorage` when storage is available.
+Use **Reset demo** to restore the sample projects after confirmation. This is a
+local project workflow, not a connected multi-user application: there is no real
+account, shared database, authorization, or cross-device synchronization.
+
+Use sample data, not sensitive information. Clearing browser storage removes
+your changes. If storage is unavailable, changes last for the current visit
+only and the app displays a notice. Project status, member counts, update labels,
+and dashboard metrics remain illustrative. Try the
+[Starter Free getting-started guide](/docs/starter/getting-started) before deciding
+whether you need server-backed foundations.
 
 Upgrade when the blocker is no longer the UI, but the production wiring behind it:
 
@@ -44,9 +57,16 @@ Upgrade when the blocker is no longer the UI, but the production wiring behind i
 - webhook-driven billing state
 - backend-ready product structure
 
+<Callout type="info" title="Separate source, not a demo unlock">
+  Starter Pro is separate source code to download, configure, and adapt. Buying
+  Pro does not unlock the running Free demo or automatically migrate your app or
+  local projects. It does not provision your services or deploy your app. You
+  still implement your own domain data model, permissions, and workflows.
+</Callout>
+
 <DocsUpgradeCTA
-  title="Starter Free validates the product. Starter Pro wires the business."
-  description="Move to Starter Pro when mocked flows stop being enough and auth, billing, protected routes, and backend foundations become the launch blocker."
+  title="Keep your UI direction. Build on connected foundations."
+  description="Choose Starter Pro when you need authentication, billing, and database foundations to configure and validate for your own product."
   productSlug="starter-pro"
   buyLabel="Get Starter Pro"
   secondaryHref="/docs/starter-pro/what-is-included"
@@ -54,7 +74,8 @@ Upgrade when the blocker is no longer the UI, but the production wiring behind i
 />
 
 <Callout title="Simple rule">
-  Starter Free validates the product. Starter Pro wires the business.
+  Keep Free for local product validation. Choose Pro when configurable
+  server-backed foundations are the next useful step.
 </Callout>
 
 ### The upgrade moment
@@ -63,11 +84,13 @@ Starter Free is the right choice when your question is:
 
 > What should the product feel like?
 
-Starter Pro becomes the faster path when your question becomes:
+Starter Pro becomes relevant when your question becomes:
 
-> How do I launch this without spending weeks wiring auth, billing, and protected flows?
+> How do I build on existing auth, billing, and database foundations?
 
-That is the moment where staying on mocked foundations starts costing more than upgrading.
+The decision is about integration depth, not whether Free can save a local
+project. Compare the [included scope](/docs/starter-pro/what-is-included) with
+what your product needs; configuration and validation still belong to you.
 
 ### What changes with Pro
 
@@ -76,21 +99,21 @@ That is the moment where staying on mocked foundations starts costing more than 
   tone="platform"
   items={[
     {
-      title: 'Real auth',
+      title: "Real auth",
       description:
-        'Credentials, OAuth, verification, reset flows, sessions, and safer account foundations.',
+        "Credentials, OAuth, verification, reset flows, and sessions; configure and validate your providers.",
       icon: LockKeyhole,
     },
     {
-      title: 'Real billing',
+      title: "Real billing",
       description:
-        'Stripe Checkout, customer portal, invoices, subscriptions, and webhook synchronization.',
+        "Stripe Checkout, customer portal, subscriptions, and webhooks; configure and test your Stripe account.",
       icon: CreditCard,
     },
     {
-      title: 'Protected foundation',
+      title: "Protected foundation",
       description:
-        'Protected routes, session-aware UI, billing-aware access, and production-ready structure.',
+        "Server-side guards and Prisma/PostgreSQL foundations; implement your product permissions and domain data.",
       icon: ShieldCheck,
     },
   ]}
@@ -98,24 +121,26 @@ That is the moment where staying on mocked foundations starts costing more than 
 
 ## Free vs Pro
 
-| Capability | Starter Free | Starter Pro |
-| --- | --- | --- |
-| Product-shaped UI surfaces | Included | Included |
-| Auth screens and UX states | Included | Included + wired |
-| Email and password auth | Mocked | Real |
-| Google and GitHub OAuth | Not included | Real |
-| Email verification | Not included | Real |
-| Password reset and change | Mocked | Real |
-| Stripe Checkout | UI only | Real |
-| Billing portal | UI only | Real |
-| Webhook sync | Not included | Real |
-| Invoices and subscriptions | Mocked | Real |
-| Protected app foundations | Partial | Production-ready |
-| Data layer | Mocked | Real-ready |
-| Best use case | Validate UX | Launch faster |
+| Capability                 | Starter Free                                               | Starter Pro                                                  |
+| -------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| Product-shaped UI surfaces | Included, with a local project workflow                    | Included, with integration foundations                       |
+| Auth screens and UX states | Mocked                                                     | Included; configure and validate auth                        |
+| Email and password auth    | Mocked                                                     | Included; configure and validate                             |
+| Google and GitHub OAuth    | Not included                                               | Included; configure provider apps                            |
+| Email verification         | Not included                                               | Included; configure email delivery                           |
+| Password reset and change  | Mocked                                                     | Included; configure and validate                             |
+| Stripe Checkout            | UI only                                                    | Included; configure and test Stripe                          |
+| Billing portal             | UI only                                                    | Included; configure and test Stripe                          |
+| Webhook sync               | Not included                                               | Included; configure and test endpoints                       |
+| Invoices and subscriptions | Mocked                                                     | Stripe-backed foundations to configure                       |
+| Protected app foundations  | No real authorization                                      | Server-side guards to configure and extend                   |
+| Data layer                 | Browser-local projects in localStorage; no shared database | Prisma + PostgreSQL foundations; implement your domain model |
+| Best use case              | Validate UI and local workflows                            | Build on configurable SaaS foundations                       |
 
-<Callout title="Free to validate. Pro to launch.">
-  Starter Free helps you shape the product. Starter Pro removes the wiring that delays revenue.
+<Callout title="Free to validate. Pro for connected foundations.">
+  Local persistence is useful for a demo. Accounts, shared data, authorization,
+  and payments require server-backed behavior. Pro supplies foundations, not a
+  finished implementation of your product.
 </Callout>
 
 ## When to upgrade
@@ -124,114 +149,167 @@ That is the moment where staying on mocked foundations starts costing more than 
   columns={2}
   items={[
     {
-      eyebrow: 'Starter Free',
-      title: 'Stay on Free while validating',
+      eyebrow: "Starter Free",
+      title: "Stay on Free while validating",
       icon: Sparkles,
       description:
-        'Starter Free is still the right layer while product direction, UX, and positioning are changing.',
+        "Starter Free is still the right layer while product direction, UX, and positioning are changing.",
       items: [
-        'you are shaping the product',
-        'you are validating UX',
-        'you are changing the domain model',
-        'you are preparing a demo',
-        'you are exploring positioning',
+        "you are shaping the product",
+        "you are validating UX",
+        "you are changing the domain model",
+        "you are preparing a demo",
+        "you are exploring positioning",
       ],
-      cta: 'Explore Starter Free →',
-      href: '/starters/free',
+      cta: "Explore Starter Free →",
+      href: "/starters/free",
     },
     {
-      eyebrow: 'Starter Pro',
-      title: 'Move to Pro when launch wiring becomes the blocker',
+      eyebrow: "Starter Pro",
+      title: "Move to Pro when launch wiring becomes the blocker",
       icon: Rocket,
-      tone: 'pro',
+      tone: "pro",
       description:
-        'Starter Pro becomes higher leverage when real users, payments, protection, and backend state become required.',
+        "Starter Pro becomes relevant when real users, payments, protection, and backend state become required.",
       items: [
-        'real users',
-        'real sessions',
-        'real payments',
-        'protected routes',
-        'plan-aware product behavior',
-        'backend-backed data',
-        'production confidence',
+        "real users",
+        "real sessions",
+        "real payments",
+        "protected routes",
+        "plan-aware product behavior",
+        "backend-backed data",
+        "production validation",
       ],
-      cta: 'Explore Starter Pro →',
-      href: '/starters/pro',
+      cta: "Explore Starter Pro →",
+      href: "/starters/pro",
     },
   ]}
 />
 
 ### What you keep
 
-Upgrade is **incremental**, not destructive.
+You can reuse your product direction and selected UI work, but there is **no
+automatic in-place upgrade**. Keep your Free source under version control before
+starting and work with the Pro source in a separate directory or repository.
 
-You keep:
+Review what is useful to bring across:
 
-- routes
-- pages
-- components
-- layouts
-- design system
-- product surface
+- routes and pages
+- components and layouts
+- design-system customizations
+- product copy and interaction decisions
 
-You replace:
+Port one small UI slice at a time. Compare the actual imports, layouts, public
+APIs, and versions in your downloaded release rather than overwriting Pro's
+configured authentication or billing foundations with demo code.
 
-- mock auth → real auth
-- mock billing → real Stripe
-- mock access → protected routes
-- mock data → backend-ready data flows
+Replace or implement deliberately:
 
-<Callout type="info" title="No wasted work">
-  You are not throwing away Starter Free. You are replacing mocked wiring with production wiring.
+- mock auth → configured real authentication
+- mock billing → configured and tested Stripe integration
+- mock access → server-side checks and product-specific permissions
+- browser-local project data → your own domain model and server-backed workflows
+
+<Callout type="info" title="Preserve your Free work">
+  Your original Free source remains your reference. Local demo records are not
+  imported into Pro automatically. Any data transfer needs an explicit mapping,
+  validation, and authorization design that you implement; no migration command
+  or automatic transfer is provided by this guide.
 </Callout>
 
 ## Upgrade flow
 
 <Steps>
   <Step>
+    ### Preserve Free and inspect the Pro source
+
+    Save your Free work under version control. After purchase, use the claim
+    email to download and unzip Starter Pro into a separate directory. Read its
+    README and compare the delivered versions before adapting your UI. Follow
+    [delivery](/docs/starter-pro/delivery) and
+    [Getting started](/docs/starter-pro/getting-started) for access and setup.
+
+  </Step>
+
+  <Step>
+    ### Configure and validate locally
+
+    Follow the downloaded release instructions for Node.js, pnpm, dependencies,
+    a local PostgreSQL database, and environment variables. Configure the
+    providers you intend to exercise using the
+    [environment guide](/docs/starter-pro/environment-variables). Keep secrets
+    private and use local development or test services, not production data.
+    Confirm the baseline runs before porting a product-specific UI slice.
+
+  </Step>
+
+  <Step>
     ### Add authentication
 
-    Replace mocked auth UX with real sessions, credentials, OAuth, verification, and reset flows.
+    Use Pro's included auth foundation instead of copying Free's mock behavior.
+    Configure credentials, email, and the OAuth providers you need, then verify
+    sign-in and session behavior with the [auth guide](/docs/starter-pro/auth).
+    A rendered login screen is not proof that authentication works.
+
   </Step>
 
   <Step>
     ### Protect product routes
 
-    Add session-aware routing for dashboard, projects, admin, billing, and settings.
+    Bring across one reviewed page or component at a time. Keep Pro's existing
+    guards and add server-side permissions appropriate to your domain. Validate
+    both allowed and denied access; hiding a link in the UI is not authorization.
+
   </Step>
 
   <Step>
     ### Connect billing
 
-    Wire Stripe Checkout, billing portal, invoices, subscriptions, and webhook sync.
+    Configure the included Stripe Checkout, portal, and webhook foundations.
+    Follow [billing testing](/docs/starter-pro/billing-testing) in test mode and
+    check resulting billing state, not just whether the billing page renders.
+    The purchase of Starter Pro does not configure your own Stripe account.
+
   </Step>
 
   <Step>
     ### Replace mock data
 
-    Move from mocked records to backend-backed product flows.
+    Define your own project or domain model, persistence, validation, permissions,
+    and workflows. Pro's Prisma/PostgreSQL foundations do not automatically turn
+    Free's local projects into shared records. Treat any data transfer as a
+    separate, explicitly designed implementation; do not point demo code at a
+    production database or assume browser data is trusted.
+
   </Step>
 </Steps>
 
+After each ported slice, run the release's applicable checks and keep the last
+working version available for rollback. Record unconfigured integrations as
+unverified. Complete the
+[production checklist](/docs/starter-pro/production-checklist) before deployment;
+a successful local run is not production approval.
+
 ### Why not build it yourself?
 
-You can.
+You can keep Free and implement the integrations yourself.
 
-The real question is whether you want to spend days or weeks rebuilding the same launch blockers before you can charge users.
+Compare that work with adopting and configuring Pro's included foundations:
 
-Starter Pro is not about “more code”.
-
-It is about removing the work that usually delays launch:
-
-- auth complexity
-- Stripe complexity
-- webhook reliability
+- authentication
+- Stripe billing
+- webhook handling
 - route protection
 - billing-state synchronization
-- production setup uncertainty
+- database and production setup
 
-<Callout title="Time-to-revenue decision">
-  If auth and billing are blocking launch, Starter Pro is not a UI upgrade. It is a business acceleration layer.
+Neither choice removes your responsibility for product logic, validation,
+deployment, or operation. Choose the path that fits your actual requirements;
+this guide does not establish a measured time or revenue saving.
+
+<Callout title="An integration-depth decision">
+  Pro is useful when its included foundations match work you would otherwise
+  implement. Review what ships and what still needs configuration before buying.
 </Callout>
 
 ## Decision guide
@@ -240,35 +318,35 @@ It is about removing the work that usually delays launch:
   columns={2}
   items={[
     {
-      eyebrow: 'Stay on Free',
-      title: 'Keep validating the product surface',
+      eyebrow: "Stay on Free",
+      title: "Keep validating the product surface",
       icon: CheckCircle,
       description:
-        'Stay on Starter Free while your product surface, navigation, and UX are still the main learning loop.',
+        "Stay on Starter Free while your product surface, navigation, and UX are still the main learning loop.",
       items: [
-        'you are still shaping the product',
-        'you need a credible demo',
-        'you are validating UX and navigation',
-        'backend work would slow learning',
-        'payments are not required yet',
+        "you are still shaping the product",
+        "you need a credible demo",
+        "you are validating UX and navigation",
+        "backend work would slow learning",
+        "payments are not required yet",
       ],
     },
     {
-      eyebrow: 'Move to Pro',
-      title: 'Wire the business layer',
+      eyebrow: "Move to Pro",
+      title: "Build on connected foundations",
       icon: Rocket,
-      tone: 'pro',
+      tone: "pro",
       description:
-        'Move to Starter Pro when the business layer becomes the work slowing down launch.',
+        "Move to Starter Pro when its included foundations match the integrations you need to configure next.",
       items: [
-        'you are ready to launch',
-        'auth is becoming a blocker',
-        'Stripe must charge customers',
-        'routes need protection',
-        'billing state must control access',
+        "you are preparing a connected product",
+        "auth is becoming a blocker",
+        "Stripe must charge customers",
+        "routes need protection",
+        "billing state must control access",
       ],
-      href: '/pricing',
-      cta: 'View pricing →',
+      href: "/pricing",
+      cta: "View pricing →",
     },
   ]}
 />
@@ -277,29 +355,39 @@ It is about removing the work that usually delays launch:
 
 <Accordions type="single">
   <Accordion title="Will I lose my Starter Free work?">
-    No. Starter Pro upgrades the wiring. Your product surface, design system, routes, and components remain useful.
+    Keep your original Free source under version control and set up Pro
+    separately. Reuse selected UI deliberately after checking compatibility;
+    buying Pro does not modify or automatically migrate your Free app or data.
   </Accordion>
 
-  <Accordion title="Can I upgrade later?">
-    Yes. Starter Free is designed as a validation layer. Starter Pro becomes useful when production wiring becomes the blocker.
-  </Accordion>
+<Accordion title="Can I upgrade later?">
+  Yes. Free already supports browser-local project workflows. Pro is a separate
+  source-code foundation to configure when your product needs connected
+  accounts, payments, and server-backed data.
+</Accordion>
 
-  <Accordion title="Do I need to migrate everything at once?">
-    No. Upgrade incrementally: auth first, then protected routes, then billing, then backend data.
-  </Accordion>
+<Accordion title="Do I need to migrate everything at once?">
+  No. Validate the configured Pro baseline first, then port one UI slice at a
+  time. Implement your own domain persistence and data-transfer plan; local
+  projects are not transferred automatically.
+</Accordion>
 
   <Accordion title="Why not stay on Starter Free?">
-    You can stay on Free while validating. Once you need real users, real payments, and protected access, mocked foundations become the expensive path.
+    Stay on Free for local validation, or keep it and build your own
+    integrations. Choose Pro when its configurable auth, billing, and database
+    foundations fit your requirements. Either path still needs product
+    implementation and checks before launch.
   </Accordion>
 </Accordions>
 
 ### Ready to move faster?
 
-If you are still exploring, stay on Starter Free. If the business layer is slowing you down, move to Starter Pro.
+If you are still exploring, stay on Starter Free. If connected foundations are
+your next need, review the Pro scope and setup responsibilities before buying.
 
 <DocsUpgradeCTA
-  title="Free to validate. Pro to monetize."
-  description="Starter Free proves the product surface. Starter Pro helps you charge customers with production-shaped auth, billing, backend, and delivery."
+  title="Choose the foundations your product needs."
+  description="Starter Free supports local validation. Starter Pro provides auth, billing, and database foundations that you configure, validate, and extend."
   productSlug="starter-pro"
   buyLabel="Get Starter Pro"
   secondaryHref="/pricing"
@@ -312,20 +400,20 @@ If you are still exploring, stay on Starter Free. If the business layer is slowi
   variant="grid"
   items={[
     {
-      title: 'Starter Pro overview',
-      href: '/docs/starter-pro',
+      title: "Starter Pro overview",
+      href: "/docs/starter-pro",
       description:
-        'Understand the production-ready foundation included in Starter Pro.',
+        "Review the included foundations and their configuration responsibilities.",
       icon: Layers3,
-      tone: 'platform',
+      tone: "platform",
     },
     {
-      title: 'View pricing',
-      href: '/pricing',
+      title: "View pricing",
+      href: "/pricing",
       description:
-        'Review the Starter Pro offer and decide when the upgrade becomes the higher-leverage path.',
+        "Review the existing Starter Pro offer against your product requirements.",
       icon: CreditCard,
-      tone: 'primary',
+      tone: "primary",
     },
   ]}
 />
