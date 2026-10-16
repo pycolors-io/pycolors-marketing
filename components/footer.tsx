@@ -42,6 +42,7 @@ const GROUPS = [
     links: [
       { label: "Pricing", href: "/pricing" },
       { label: "Compare starters", href: "/starters" },
+      { label: "Starter Pro FAQ", href: "/starters/pro/faq" },
       { label: "Build vs. buy", href: "/compare/build-vs-buy" },
       { label: "Upgrade to Pro", href: "/upgrade" },
       { label: "Open source", href: "/open-source" },
