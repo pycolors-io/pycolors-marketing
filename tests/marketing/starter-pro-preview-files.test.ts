@@ -37,7 +37,10 @@ describe("Starter Pro preview assets", () => {
       resolve(marketing, "public/images/starters/pro/dashboard-pycolors.png"),
     );
     const dark = readFileSync(
-      resolve(marketing, "public/images/starters/pro/dashboard-dark-pycolors.png"),
+      resolve(
+        marketing,
+        "public/images/starters/pro/dashboard-dark-pycolors.png",
+      ),
     );
     expect(light.readUInt32BE(16)).toBeGreaterThanOrEqual(1200);
     expect(light.readUInt32BE(20)).toBeGreaterThanOrEqual(600);

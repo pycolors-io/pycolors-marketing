@@ -1,13 +1,15 @@
 // @vitest-environment node
 
 import { readFileSync } from "node:fs";
-import { extname, resolve, sep } from "node:path";
-import { dirname } from "node:path";
+import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 
-const publicDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../public");
+const publicDir = resolve(
+  dirname(fileURLToPath(import.meta.url)),
+  "../../public",
+);
 
 describe("commercial product capture contracts", () => {
   it.each(Object.entries(PRODUCT_PREVIEW_MEDIA))(
@@ -25,9 +27,7 @@ describe("commercial product capture contracts", () => {
         expect(bytes.length).toBeLessThan(350_000);
 
         if (extname(path) === ".png") {
-          expect(bytes.subarray(0, 8).toString("hex")).toBe(
-            "89504e470d0a1a0a",
-          );
+          expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
           expect(bytes.readUInt32BE(16)).toBeGreaterThan(800);
           expect(bytes.readUInt32BE(20)).toBeGreaterThan(400);
         } else {
