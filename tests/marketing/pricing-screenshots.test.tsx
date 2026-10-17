@@ -11,6 +11,25 @@ vi.mock("@/lib/api/client", () => ({
 }));
 
 describe("Starter Pro pricing screenshots", () => {
+  it("shows a distinct real product preview in all three pricing offers", () => {
+    render(<PricingPage />);
+    const offers = screen.getByRole("region", {
+      name: "Choose a PyColors product",
+    });
+    for (const [name, product, caption] of [
+      ["NA-AI Landing", "na-ai-landing", "Illustrative content"],
+      ["Starter Free", "starter-free", "Mock data"],
+      ["Starter Pro", "starter-pro", "Demo workspace"],
+    ] as const) {
+      const card = within(offers).getByRole("article", { name });
+      const media = card.querySelector(`[data-product-preview="${product}"]`);
+      expect(media).not.toBeNull();
+      expect(within(card).getByRole("img")).toHaveAccessibleName();
+      expect(card.querySelector("figcaption")).toHaveTextContent(caption);
+      expect(media?.querySelectorAll("img")).toHaveLength(2);
+    }
+  });
+
   it("renders two captioned, descriptive previews after the comparison", () => {
     render(<PricingPage />);
     const preview = screen.getByRole("region", {
