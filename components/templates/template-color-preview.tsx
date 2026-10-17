@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useTheme } from "fumadocs-ui/provider/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
 
 type TemplateColorPreviewProps = Readonly<{
@@ -13,8 +14,25 @@ type TemplateColorPreviewProps = Readonly<{
 
 /** The page owns the screenshots; only color-mode selection runs on the client. */
 export function TemplateColorPreview({ previews }: TemplateColorPreviewProps) {
+  const { resolvedTheme } = useTheme();
   return (
-    <Tabs defaultValue="dark" className="flex h-full min-w-0 flex-col gap-0">
+    <PreviewTabs
+      key={resolvedTheme ?? "system"}
+      previews={previews}
+      defaultMode={resolvedTheme === "light" ? "light" : "dark"}
+    />
+  );
+}
+
+function PreviewTabs({
+  previews,
+  defaultMode,
+}: TemplateColorPreviewProps & { defaultMode: "light" | "dark" }) {
+  return (
+    <Tabs
+      defaultValue={defaultMode}
+      className="flex h-full min-w-0 flex-col gap-0"
+    >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle bg-background px-4 py-2 sm:px-6">
         <span className="text-xs font-medium text-muted-foreground">
           Template preview

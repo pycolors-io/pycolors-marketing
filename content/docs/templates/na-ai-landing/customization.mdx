@@ -1,7 +1,7 @@
 ---
 title: Customization
 description: Customize NA-AI Landing content, branding, pricing, sections, SEO, and assets using its data-driven structure.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-10-17"
 appliesTo: NA-AI Landing
 ---
 
@@ -10,13 +10,7 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import { Badge } from "@pycolors/ui";
-import {
-  FolderTree,
-  Palette,
-  Rocket,
-  Search,
-  Sparkles,
-} from "lucide-react";
+import { FolderTree, Palette, Rocket, Search, Sparkles } from "lucide-react";
 
 import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
@@ -55,7 +49,8 @@ This makes the template easier to adapt because you can:
 />
 
 <Callout title="Core idea">
-  Start by changing the data, not the components. Rewrite the product story before you rewrite the UI.
+  Start by changing the data, not the components. Rewrite the product story
+  before you rewrite the UI.
 </Callout>
 
 ## Recommended customization order
@@ -77,6 +72,7 @@ src/config/site.ts
     - site URL
     - SEO title
     - social preview configuration
+
   </Step>
 
   <Step>
@@ -97,6 +93,7 @@ src/@data
     - FAQ
     - CTA
     - contact
+
   </Step>
 
   <Step>
@@ -109,6 +106,7 @@ src/@data
     - Open Graph images
     - Twitter preview images
     - manifest assets
+
   </Step>
 
   <Step>
@@ -122,12 +120,14 @@ src/@data
     - product visuals
 
     Do this only after the content direction becomes clear.
+
   </Step>
 
   <Step>
     ### Test and deploy
 
     Run the production build, inspect both themes, and validate responsive layouts before deployment.
+
   </Step>
 </Steps>
 
@@ -138,47 +138,47 @@ src/@data
   tone="platform"
   items={[
     {
-      title: 'Centralized content',
+      title: "Centralized content",
       icon: FolderTree,
       description:
-        'Most sections are controlled through dedicated data files instead of deeply nested components.',
+        "Most sections are controlled through dedicated data files instead of deeply nested components.",
     },
     {
-      title: 'SEO-ready structure',
+      title: "SEO-ready structure",
       icon: Search,
       description:
-        'Metadata, Open Graph assets, Twitter previews, sitemap, and robots configuration are easy to customize.',
+        "Metadata, Open Graph assets, Twitter previews, sitemap, and robots configuration are easy to customize.",
     },
     {
-      title: 'PyColors design foundation',
+      title: "PyColors design foundation",
       icon: Palette,
       description:
-        'Shared tokens and UI primitives provide a stable visual baseline across light and dark mode.',
+        "Shared tokens and UI primitives provide a stable visual baseline across light and dark mode.",
     },
     {
-      title: 'Fast launch workflow',
+      title: "Fast launch workflow",
       icon: Sparkles,
       description:
-        'The structure prioritizes fast iteration on positioning, pricing, branding, and product messaging.',
+        "The structure prioritizes fast iteration on positioning, pricing, branding, and product messaging.",
     },
   ]}
 />
 
 ### Data files
 
-| Section | File |
-| --- | --- |
-| Hero | `src/@data/hero.ts` |
-| Features | `src/@data/features.ts` |
-| Integrations | `src/@data/integrations.ts` |
-| Pricing | `src/@data/pricing.ts` |
+| Section       | File                         |
+| ------------- | ---------------------------- |
+| Hero          | `src/@data/hero.ts`          |
+| Features      | `src/@data/features.ts`      |
+| Integrations  | `src/@data/integrations.ts`  |
+| Pricing       | `src/@data/pricing.ts`       |
 | Pricing Table | `src/@data/pricing-table.ts` |
-| Testimonials | `src/@data/customers.ts` |
-| FAQ | `src/@data/faq.ts` |
-| CTA | `src/@data/cta.ts` |
-| Contact | `src/@data/contact.ts` |
-| Footer | `src/@data/footer.ts` |
-| Navbar | `src/@data/navbar.ts` |
+| Testimonials  | `src/@data/customers.ts`     |
+| FAQ           | `src/@data/faq.ts`           |
+| CTA           | `src/@data/cta.ts`           |
+| Contact       | `src/@data/contact.ts`       |
+| Footer        | `src/@data/footer.ts`        |
+| Navbar        | `src/@data/navbar.ts`        |
 
 ### Site configuration
 
@@ -222,27 +222,85 @@ The shared tokens provide a stable visual foundation for:
 - dark and light mode
 
 <Callout title="Design rule">
-  Prefer semantic tokens over raw color values. This keeps the page visually consistent across themes.
+  Prefer semantic tokens over raw color values. This keeps the page visually
+  consistent across themes.
 </Callout>
 
 ## Content strategy
 
 <PreferAvoid
   prefer={[
-    'clear product promise',
-    'specific AI or SaaS use case',
-    'short feature labels',
-    'proof-oriented sections',
-    'pricing aligned with your offer',
+    "clear product promise",
+    "specific AI or SaaS use case",
+    "short feature labels",
+    "proof-oriented sections",
+    "pricing aligned with your offer",
   ]}
   avoid={[
-    'generic AI buzzwords',
-    'changing every component first',
-    'too many competing CTAs',
-    'removing trust sections',
-    'publishing with default SEO assets',
+    "generic AI buzzwords",
+    "changing every component first",
+    "too many competing CTAs",
+    "removing trust sections",
+    "publishing with default SEO assets",
   ]}
 />
+
+### Preview identity and destinations
+
+`src/config/template.ts` centralizes the preview notice and the links to the
+PyColors product page, documentation and support. Replace these links and adapt
+the banner in `components/layout/navbar.tsx` when launching your own product.
+Navigation and footer sections remain configured in `src/@data`.
+
+<Callout title="Replace sample content">
+  NA-AI Analytics is fictional. Metrics, testimonials, integrations, SaaS plans
+  and capability descriptions illustrate the layout. Replace them with accurate
+  content for your product before publishing. The sample plans are separate from
+  the purchase price of NA-AI Landing.
+</Callout>
+
+### Appearance and motion
+
+The app-scoped light and dark palette, radii and layout helpers are defined in
+`src/app/globals.css`. Use the existing semantic tokens in your sections so both
+appearances stay consistent.
+
+Entrance animations run once and respect the visitor's reduced-motion preference.
+`components/motion/reveal.tsx` keeps content visible in server-rendered HTML and
+adds motion after the section enters the viewport. The FAQ uses native disclosures
+so answers can be opened with a keyboard, including without JavaScript.
+
+### Connect the contact form
+
+The form in `components/sections/contact.tsx` is a local demonstration: it validates
+required fields, then confirms that no message was sent. Entries are neither sent
+nor saved. Submission is disabled without JavaScript.
+
+<Steps>
+  <Step>
+    ### Add your own submission handler
+
+    Connect your backend, validate the input on the server, and handle errors
+    before showing a delivery confirmation. No email service is included.
+
+  </Step>
+  <Step>
+    ### Adapt the copy
+
+    Update `src/@data/contact.ts`, the demo notice and confirmation message to
+    describe what your handler actually does. Legacy sales contact settings are
+    not used by the local demo.
+
+  </Step>
+  <Step>
+    ### Check the complete interaction
+
+    Test invalid input, keyboard focus, success and failure states on mobile
+    and desktop. Verify the receiving service before claiming that a message
+    has been delivered.
+
+  </Step>
+</Steps>
 
 ### Customize pricing
 
@@ -302,7 +360,8 @@ A high-leverage customization path usually looks like this:
 This keeps the launch process focused on clarity and conversion before visual overengineering.
 
 <Callout title="Positioning principle">
-  A landing page becomes valuable when the offer is clear, believable, and easy to understand quickly.
+  A landing page becomes valuable when the offer is clear, believable, and easy
+  to understand quickly.
 </Callout>
 
 ## Common questions
@@ -312,13 +371,15 @@ This keeps the launch process focused on clarity and conversion before visual ov
     Yes. NA-AI Landing is optimized for AI and analytics positioning, but the structure works well for many B2B SaaS products.
   </Accordion>
 
-  <Accordion title="Can I add a backend later?">
-    Yes. Keep API logic outside the presentational section components and connect forms or analytics through dedicated modules.
-  </Accordion>
+<Accordion title="Can I add a backend later?">
+  Yes. Keep API logic outside the presentational section components and connect
+  forms or analytics through dedicated modules.
+</Accordion>
 
-  <Accordion title="Should I replace PyColors UI?">
-    Usually no. Keep PyColors UI and tokens unless you have a strong reason to rebuild the UI foundation.
-  </Accordion>
+<Accordion title="Should I replace PyColors UI?">
+  Usually no. Keep PyColors UI and tokens unless you have a strong reason to
+  rebuild the UI foundation.
+</Accordion>
 
   <Accordion title="Can I remove sections?">
     Yes. Remove sections only after checking that the page still explains the offer, proof, pricing, objections, and next action clearly.
@@ -331,17 +392,17 @@ This keeps the launch process focused on clarity and conversion before visual ov
   variant="grid"
   items={[
     {
-      title: 'Project structure',
-      href: '/docs/templates/na-ai-landing/project-structure',
+      title: "Project structure",
+      href: "/docs/templates/na-ai-landing/project-structure",
       description:
-        'Understand where content, sections, layout, configuration, and assets live.',
+        "Understand where content, sections, layout, configuration, and assets live.",
       icon: FolderTree,
     },
     {
-      title: 'Deployment',
-      href: '/docs/templates/na-ai-landing/deployment',
+      title: "Deployment",
+      href: "/docs/templates/na-ai-landing/deployment",
       description:
-        'Deploy your customized landing page to a production environment.',
+        "Deploy your customized landing page to a production environment.",
       icon: Rocket,
     },
   ]}

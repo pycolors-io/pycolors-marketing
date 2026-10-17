@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   act,
@@ -70,6 +70,7 @@ describe("Starter Free product page", () => {
     const expected = [
       ["Dashboard", "/dashboard"],
       ["Projects", "/projects"],
+      ["Assistant", "/assistant"],
       ["Authentication", "/login"],
       ["Settings", "/settings"],
       ["Billing", "/billing"],
@@ -88,10 +89,19 @@ describe("Starter Free product page", () => {
         "href",
         `https://starter-demo.pycolors.io${route}`,
       );
-      const image = within(panel).getByRole("img");
-      const src = new URL(image.getAttribute("src")!, "http://localhost");
-      const path = src.searchParams.get("url") ?? src.pathname;
-      expect(existsSync(resolve("public", path.slice(1))), path).toBe(true);
+      const images = within(panel).getAllByRole("img");
+      expect(images).toHaveLength(2);
+      for (const [index, theme] of ["light", "dark"].entries()) {
+        const image = images[index]!;
+        expect(image).toHaveAttribute("data-preview-theme", theme);
+        const src = new URL(image.getAttribute("src")!, "http://localhost");
+        const path = src.searchParams.get("url") ?? src.pathname;
+        expect(path).toContain(`-${theme}.png`);
+        const bytes = readFileSync(resolve("public", path.slice(1)));
+        expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+        expect(bytes.readUInt32BE(16)).toBe(1600);
+        expect(bytes.readUInt32BE(20)).toBe(1000);
+      }
       for (const other of screen
         .getAllByRole("tabpanel", { hidden: true })
         .filter((node) => node !== panel)) {

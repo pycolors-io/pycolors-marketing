@@ -383,8 +383,8 @@ export default function TemplatesPage() {
                           <Image
                             src={preview.src}
                             alt={`NA-AI Landing hero and illustrative analytics preview in ${preview.mode} mode`}
-                            width={3452}
-                            height={1916}
+                            width={2880}
+                            height={2000}
                             sizes="(min-width: 1280px) 640px, (min-width: 1024px) 52vw, 90vw"
                             className={cn("h-auto w-full", styles.previewImage)}
                           />

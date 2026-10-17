@@ -1,7 +1,7 @@
 ---
 title: Project Structure
 description: Understand how NA-AI Landing is organized so you can customize it without breaking the architecture.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-10-17"
 appliesTo: NA-AI Landing
 ---
 
@@ -59,7 +59,8 @@ before touching the visual implementation.
 />
 
 <Callout title="Key idea">
-  The template is designed so product content can evolve without constantly rewriting the visual foundation.
+  The template is designed so product content can evolve without constantly
+  rewriting the visual foundation.
 </Callout>
 
 ### Architecture overview
@@ -69,28 +70,28 @@ before touching the visual implementation.
   tone="platform"
   items={[
     {
-      title: 'Data-driven structure',
+      title: "Data-driven structure",
       icon: FolderTree,
       description:
-        'Content, pricing, navigation, FAQ, testimonials, and CTA copy live in centralized data files.',
+        "Content, pricing, navigation, FAQ, testimonials, and CTA copy live in centralized data files.",
     },
     {
-      title: 'Composable sections',
+      title: "Composable sections",
       icon: LayoutTemplate,
       description:
-        'Landing page blocks are isolated into reusable presentational sections.',
+        "Landing page blocks are isolated into reusable presentational sections.",
     },
     {
-      title: 'Shared UI primitives',
+      title: "Shared UI primitives",
       icon: Boxes,
       description:
-        'The visual layer is powered by PyColors UI and semantic design tokens.',
+        "The visual layer is powered by PyColors UI and semantic design tokens.",
     },
     {
-      title: 'Fast customization workflow',
+      title: "Fast customization workflow",
       icon: Sparkles,
       description:
-        'The architecture prioritizes quick branding, positioning, and product iteration.',
+        "The architecture prioritizes quick branding, positioning, and product iteration.",
     },
   ]}
 />
@@ -131,7 +132,7 @@ before touching the visual implementation.
         <File name="navbar.tsx" />
         <File name="section-header.tsx" />
         <File name="theme-provider.tsx" />
-        <File name="toggle-theme.tsx" />
+        <File name="toogle-theme.tsx" />
       </Folder>
 
       <Folder name="sections">
@@ -154,7 +155,9 @@ before touching the visual implementation.
     <Folder name="config">
       <File name="fonts.ts" />
       <File name="site.ts" />
+      <File name="template.ts" />
     </Folder>
+
   </Folder>
 
   <Folder name="public" defaultOpen>
@@ -255,27 +258,29 @@ components/layout
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Data directory
 
-| File | Responsibility |
-| --- | --- |
-| `hero.ts` | Hero copy, CTA, badges, and visual content |
-| `features.ts` | AI analytics feature cards and section content |
-| `integrations.ts` | Integration categories and integration cards |
-| `pricing.ts` | Pricing plans and billing toggle content |
-| `pricing-table.ts` | Pricing comparison rows |
-| `customers.ts` | Testimonials and customer proof |
-| `faq.ts` | FAQ content |
-| `contact.ts` | Contact form copy and goal options |
-| `cta.ts` | Final conversion section |
-| `navbar.ts` | Navigation links |
-| `footer.ts` | Footer links and footer copy |
+| File               | Responsibility                                 |
+| ------------------ | ---------------------------------------------- |
+| `hero.ts`          | Hero copy, CTA, badges, and visual content     |
+| `features.ts`      | AI analytics feature cards and section content |
+| `integrations.ts`  | Integration categories and integration cards   |
+| `pricing.ts`       | Pricing plans and billing toggle content       |
+| `pricing-table.ts` | Pricing comparison rows                        |
+| `customers.ts`     | Testimonials and customer proof                |
+| `faq.ts`           | FAQ content                                    |
+| `contact.ts`       | Contact form copy and goal options             |
+| `cta.ts`           | Final conversion section                       |
+| `navbar.ts`        | Navigation links                               |
+| `footer.ts`        | Footer links and footer copy                   |
 
 <Callout title="Customization rule">
-  Change data first. Edit section components only when the current structure no longer supports the product story.
+  Change data first. Edit section components only when the current structure no
+  longer supports the product story.
 </Callout>
 
 ## Add a new section
@@ -287,6 +292,7 @@ components/layout
 ```bash title="terminal"
 touch src/@data/use-cases.ts
 ```
+
   </Step>
 
   <Step>
@@ -295,6 +301,7 @@ touch src/@data/use-cases.ts
 ```bash title="terminal"
 touch src/components/sections/use-cases.tsx
 ```
+
   </Step>
 
   <Step>
@@ -307,6 +314,7 @@ export default function Page() {
   return <UseCasesSection />;
 }
 ```
+
   </Step>
 </Steps>
 
@@ -314,18 +322,18 @@ export default function Page() {
 
 <PreferAvoid
   prefer={[
-    'data-driven content',
-    'small section components',
-    'shared PyColors primitives',
-    'semantic tokens',
-    'isolated template-specific UI',
+    "data-driven content",
+    "small section components",
+    "shared PyColors primitives",
+    "semantic tokens",
+    "isolated template-specific UI",
   ]}
   avoid={[
-    'hardcoding all copy in components',
-    'putting backend logic in sections',
-    'duplicating layout wrappers',
-    'removing token imports',
-    'forking shared UI primitives unnecessarily',
+    "hardcoding all copy in components",
+    "putting backend logic in sections",
+    "duplicating layout wrappers",
+    "removing token imports",
+    "forking shared UI primitives unnecessarily",
   ]}
 />
 
@@ -343,7 +351,8 @@ As landing pages grow, problems usually come from unclear boundaries:
 This structure reduces those problems by keeping responsibilities separate from the beginning.
 
 <Callout title="Scaling principle">
-  A good landing page architecture should make iteration cheaper over time, not more fragile.
+  A good landing page architecture should make iteration cheaper over time, not
+  more fragile.
 </Callout>
 
 ## Common questions
@@ -353,13 +362,15 @@ This structure reduces those problems by keeping responsibilities separate from 
     It keeps section components focused on presentation and makes the landing page easier to customize quickly.
   </Accordion>
 
-  <Accordion title="Can I move data elsewhere?">
-    Yes. Keep the same separation: content should stay independent from presentational components.
-  </Accordion>
+<Accordion title="Can I move data elsewhere?">
+  Yes. Keep the same separation: content should stay independent from
+  presentational components.
+</Accordion>
 
-  <Accordion title="Can I connect a CMS?">
-    Yes. Replace the local data source gradually while keeping section components stable.
-  </Accordion>
+<Accordion title="Can I connect a CMS?">
+  Yes. Replace the local data source gradually while keeping section components
+  stable.
+</Accordion>
 
   <Accordion title="Can I remove PyColors UI?">
     You can, but it is usually not recommended unless you want to rebuild the UI foundation yourself.
@@ -372,17 +383,15 @@ This structure reduces those problems by keeping responsibilities separate from 
   variant="grid"
   items={[
     {
-      title: 'Customization',
-      href: '/docs/templates/na-ai-landing/customization',
-      description:
-        'Update copy, sections, branding, SEO metadata, and assets.',
+      title: "Customization",
+      href: "/docs/templates/na-ai-landing/customization",
+      description: "Update copy, sections, branding, SEO metadata, and assets.",
       icon: Palette,
     },
     {
-      title: 'Deployment',
-      href: '/docs/templates/na-ai-landing/deployment',
-      description:
-        'Deploy the landing page to production after customization.',
+      title: "Deployment",
+      href: "/docs/templates/na-ai-landing/deployment",
+      description: "Deploy the landing page to production after customization.",
       icon: Rocket,
     },
   ]}
