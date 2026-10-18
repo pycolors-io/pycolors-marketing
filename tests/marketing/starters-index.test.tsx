@@ -99,6 +99,10 @@ describe("Starter discovery page", () => {
         name === "Starter Free" ? "/starters/free" : "/starters/pro",
       );
       expect(within(preview).getByRole("img")).toHaveAccessibleName();
+      const captures = preview.querySelectorAll("img");
+      expect(captures).toHaveLength(2);
+      expect(captures[0]?.getAttribute("src")).toContain("dashboard");
+      expect(captures[1]?.getAttribute("src")).toContain("dashboard-dark");
       expect(article.querySelector("figcaption")).toHaveTextContent(
         "Dashboard preview · Sample data",
       );

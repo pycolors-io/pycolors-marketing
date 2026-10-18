@@ -19,6 +19,8 @@ import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingFaq } from "@/components/marketing/faq";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
+import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
@@ -322,6 +324,15 @@ export default function PricingPage() {
                 <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
                   {offer.description}
                 </p>
+                <figure className="mt-5 min-w-0">
+                  <ProductPreviewMedia
+                    product={offer.id}
+                    sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
+                  />
+                  <figcaption className="mt-2 text-xs leading-5 text-muted-foreground">
+                    {PRODUCT_PREVIEW_MEDIA[offer.id].caption}
+                  </figcaption>
+                </figure>
                 <div className="mt-6">
                   <p className="font-brand text-4xl font-semibold tracking-tight">
                     {offer.price}

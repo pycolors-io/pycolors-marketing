@@ -12,7 +12,7 @@ const page = readFileSync(
 );
 
 describe("Starter Pro preview assets", () => {
-  it("uses five existing original PNGs with known intrinsic dimensions", () => {
+  it("uses five existing PNGs, including the refreshed dashboard capture", () => {
     const captures = [
       ...page.matchAll(/image: "(\/images\/starters\/pro\/[^"\n]+)"/gu),
     ];
@@ -23,13 +23,31 @@ describe("Starter Pro preview assets", () => {
       "/images/starters/pro/pricing-pycolors.png",
       "/images/starters/pro/pwa-pycolors.png",
     ]);
-    const heights = [3790, 1928, 2752, 5426, 1926];
+    const legacyHeights = [1928, 2752, 5426, 1926];
     captures.forEach(([, path], index) => {
       const bytes = readFileSync(resolve(marketing, `public${path}`));
       expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-      expect(bytes.readUInt32BE(16)).toBe(3456);
-      expect(bytes.readUInt32BE(20)).toBe(heights[index]);
+      if (index > 0) {
+        expect(bytes.readUInt32BE(16)).toBe(3456);
+        expect(bytes.readUInt32BE(20)).toBe(legacyHeights[index - 1]);
+      }
     });
+
+    const light = readFileSync(
+      resolve(marketing, "public/images/starters/pro/dashboard-pycolors.png"),
+    );
+    const dark = readFileSync(
+      resolve(
+        marketing,
+        "public/images/starters/pro/dashboard-dark-pycolors.png",
+      ),
+    );
+    expect(light.readUInt32BE(16)).toBeGreaterThanOrEqual(1200);
+    expect(light.readUInt32BE(20)).toBeGreaterThanOrEqual(600);
+    expect(dark.subarray(0, 8)).toEqual(light.subarray(0, 8));
+    expect(dark.readUInt32BE(16)).toBe(light.readUInt32BE(16));
+    expect(dark.readUInt32BE(20)).toBe(light.readUInt32BE(20));
+    expect(dark).not.toEqual(light);
   });
 
   it("keeps the product page server-rendered with its purchase component", () => {

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -20,6 +19,7 @@ import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
 import {
   MarketingPill,
   MarketingPillList,
@@ -74,9 +74,7 @@ const offers = [
     price: STARTER_FREE_PRICE_LABEL,
     access: "Public repository",
     priceNote: "Clone the source and start building your UI.",
-    image: "/images/starters/free/dashboard-free-page-pycolors.png",
-    imageAlt:
-      "Starter Free dashboard with navigation, sample metrics and activity",
+    previewId: "starter-free",
     scope: "UI with mock data",
     highlights: [
       "Dashboard, projects and settings screens",
@@ -96,9 +94,7 @@ const offers = [
     price: launchPrice,
     access: "One-time payment",
     priceNote: `Current launch price. Regular price planned at ${regularPrice}.`,
-    image: "/images/starters/pro/dashboard-pycolors.png",
-    imageAlt:
-      "Starter Pro dashboard with workspace navigation, sample metrics and product activity",
+    previewId: "starter-pro",
     scope: "Auth, billing & data foundations",
     highlights: [
       "Auth.js credentials and Google/GitHub OAuth",
@@ -161,17 +157,15 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         <Link
           href={`/starters/${offer.slug}`}
           className={cn(
-            "group relative block aspect-[16/10] overflow-hidden rounded-t-[4px] border border-b-0 border-border-subtle bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+            "group relative block overflow-hidden rounded-t-[4px] border border-b-0 border-border-subtle bg-background focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
             styles.previewLink,
           )}
           aria-label={`Explore the ${offer.name} preview`}
         >
-          <Image
-            src={offer.image}
-            alt={offer.imageAlt}
-            fill
+          <ProductPreviewMedia
+            product={offer.previewId}
             sizes="(min-width: 1280px) 540px, (min-width: 768px) 43vw, 90vw"
-            className="object-cover object-top"
+            className="rounded-b-none border-0"
           />
           <span
             aria-hidden="true"
