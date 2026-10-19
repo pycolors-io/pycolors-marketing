@@ -238,7 +238,7 @@ The following is a small, **synthetic PostgreSQL exercise**, not a reproduction 
 
 Start from an empty disposable schema:
 
-\`\`\`sql
+```sql
 CREATE TYPE job_state AS ENUM ('queued', 'running');
 
 CREATE TABLE demo_jobs (
@@ -248,14 +248,14 @@ CREATE TABLE demo_jobs (
 
 INSERT INTO demo_jobs (state) VALUES ('queued');
 SELECT id, state FROM demo_jobs;
-\`\`\`
+```
 
 The initial insert is expected to succeed. In a **separate statement**, attempt the value that has not been added:
 
-\`\`\`sql
+```sql
 -- Expected to fail: 'paused' is not yet a member of job_state.
 INSERT INTO demo_jobs (state) VALUES ('paused');
-\`\`\`
+```
 
 The database is expected to reject this statement rather than silently accept an unknown enum member. Do not treat this deliberately failing step as part of a migration transaction that must succeed.
 
@@ -263,7 +263,7 @@ The database is expected to reject this statement rather than silently accept an
 
 PostgreSQL documents an important transaction boundary: when an enum value is added inside a transaction block, it cannot be used until after that transaction commits.
 
-\`\`\`sql
+```sql
 BEGIN;
 ALTER TYPE job_state ADD VALUE 'paused';
 COMMIT;
@@ -272,37 +272,37 @@ COMMIT;
 INSERT INTO demo_jobs (state) VALUES ('paused');
 
 SELECT id, state FROM demo_jobs ORDER BY id;
-\`\`\`
+```
 
-The final insert and query are expected to succeed on a compatible PostgreSQL version. As a separate negative-control exercise, a reviewer can attempt the insert **between** the \`ALTER TYPE\` and \`COMMIT\` statements in a fresh disposable database. That statement is expected to fail and can abort the surrounding transaction; roll it back and reset the fixture before repeating the successful path. Never copy a failed transaction's state into a purported passing result.
+The final insert and query are expected to succeed on a compatible PostgreSQL version. As a separate negative-control exercise, a reviewer can attempt the insert **between** the `ALTER TYPE` and `COMMIT` statements in a fresh disposable database. That statement is expected to fail and can abort the surrounding transaction; roll it back and reset the fixture before repeating the successful path. Never copy a failed transaction's state into a purported passing result.
 
 This verifies a narrow database rule **only after actually running the fixture**. It does not verify application behavior, migration ordering across deployments, existing data, access control, or any payment/entitlement flow.
 
 ### Step 3: protect readers that may overlap the rollout
 
-An old process can still have code that recognizes only the original states. A database accepting \`paused\` does not make that reader compatible.
+An old process can still have code that recognizes only the original states. A database accepting `paused` does not make that reader compatible.
 
-\`\`\`ts
+```ts
 type KnownJobState = "queued" | "running";
 
 function readJobState(value: string): KnownJobState {
   if (value === "queued" || value === "running") return value;
   throw new Error("Unsupported job state");
 }
-\`\`\`
+```
 
-With this deliberately strict old-reader example, \`readJobState("paused")\` is expected to throw. That behavior makes the incompatibility visible; it is **not** a general-purpose runtime decoder or a reason to expose internal errors to users. A real rollout needs an explicitly designed old-reader policy (for example, delaying new writes until compatible readers are deployed) and integration tests for that policy.
+With this deliberately strict old-reader example, `readJobState("paused")` is expected to throw. That behavior makes the incompatibility visible; it is **not** a general-purpose runtime decoder or a reason to expose internal errors to users. A real rollout needs an explicitly designed old-reader policy (for example, delaying new writes until compatible readers are deployed) and integration tests for that policy.
 
 ### Step 4: separate migrations from readiness
 
-PyColors' database package currently declares Prisma CLI \`7.9.1\` and \`@prisma/client\` \`7.10.0\` in its manifest. These are **declared dependency versions, not versions tested by this article**. The repository's \`db:deploy\` script delegates to \`prisma migrate deploy --config ./prisma.config.ts\`; resolve and test the installed versions in a real checkout before presenting this as a validated runtime recipe.
+PyColors' database package currently declares Prisma CLI `7.9.1` and `@prisma/client` `7.10.0` in its manifest. These are **declared dependency versions, not versions tested by this article**. The repository's `db:deploy` script delegates to `prisma migrate deploy --config ./prisma.config.ts`; resolve and test the installed versions in a real checkout before presenting this as a validated runtime recipe.
 
-The [Prisma ORM v7 development and production workflow](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/development-and-production) distinguishes \`migrate dev\` (development) from \`migrate deploy\` (applying pending migrations in testing/production). Crucially, \`migrate deploy\` does not detect schema drift and is not an application compatibility test. Do not run it against a production database just to try this example.
+The [Prisma ORM v7 development and production workflow](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/development-and-production) distinguishes `migrate dev` (development) from `migrate deploy` (applying pending migrations in testing/production). Crucially, `migrate deploy` does not detect schema drift and is not an application compatibility test. Do not run it against a production database just to try this example.
 
 ### Deployment verification checklist
 
 - [ ] Use a disposable database for the example; record its **actual** PostgreSQL server version.
-- [ ] Confirm the baseline insert works and the pre-expansion \`paused\` insert fails.
+- [ ] Confirm the baseline insert works and the pre-expansion `paused` insert fails.
 - [ ] Add the enum value, commit, then confirm the new insert and resulting row.
 - [ ] Verify separately that using a just-added value before commit is rejected; reset the failed transaction.
 - [ ] Exercise both old and new application readers against new-state data, with an explicitly approved fallback or rollout gate.
