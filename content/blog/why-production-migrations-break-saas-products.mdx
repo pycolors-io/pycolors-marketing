@@ -232,7 +232,7 @@ That creates resilience.
 
 A successful application build does not prove that the database accepts a new state. An applied migration does not prove that an older application instance can read the new state. Check **database expansion**, **new writes**, and **old-reader behavior** separately before enabling the new path.
 
-The following is a small, **synthetic PostgreSQL exercise**, not a reproduction of the incident described above, a Prisma integration test, or a claim about PyColors customer data. Run it only in a **disposable local database**. The example has not been executed as part of this editorial draft; the negative and positive outcomes below are expectations that the reviewer must verify.
+The following is a small, **synthetic PostgreSQL exercise**, not a reproduction of the incident described above, a Prisma integration test, or a claim about PyColors customer data. Run it only in a **disposable local database**. The SQL fixture was verified on **PostgreSQL 16.13 (Homebrew)** on 19 October 2026 in a disposable local database. The baseline insert and post-commit insert succeeded; the missing-value and pre-commit attempts failed with SQLSTATE `22P02` and `55P04`, respectively. The database was removed after validation. Re-run these checks on your own database version.
 
 ### Step 1: reproduce the missing-value boundary
 
@@ -301,17 +301,17 @@ The [Prisma ORM v7 development and production workflow](https://www.prisma.io/do
 
 ### Deployment verification checklist
 
-- [ ] Use a disposable database for the example; record its **actual** PostgreSQL server version.
-- [ ] Confirm the baseline insert works and the pre-expansion `paused` insert fails.
-- [ ] Add the enum value, commit, then confirm the new insert and resulting row.
-- [ ] Verify separately that using a just-added value before commit is rejected; reset the failed transaction.
-- [ ] Exercise both old and new application readers against new-state data, with an explicitly approved fallback or rollout gate.
-- [ ] Review migrations and backups; confirm reversibility assumptions rather than assuming a code rollback removes stored values.
-- [ ] Run deployment-specific checks for the relevant business workflow, not only an app build or migration command.
+- Use a disposable database for the example; record its **actual** PostgreSQL server version.
+- Confirm the baseline insert works and the pre-expansion `paused` insert fails.
+- Add the enum value, commit, then confirm the new insert and resulting row.
+- Verify separately that using a just-added value before commit is rejected; reset the failed transaction.
+- Exercise both old and new application readers against new-state data, with an explicitly approved fallback or rollout gate.
+- Review migrations and backups; confirm reversibility assumptions rather than assuming a code rollback removes stored values.
+- Run deployment-specific checks for the relevant business workflow, not only an app build or migration command.
 
 **Limits:** An additive enum migration can still cause trouble for older readers. This toy SQL example does not test Prisma Client, concurrency, webhook idempotency, payment state, rollback safety or production configuration. A passing local fixture is evidence for that fixture, not a production-readiness certificate.
 
-**Primary references:** [PostgreSQL 18 — ALTER TYPE](https://www.postgresql.org/docs/18/sql-altertype.html) (enum addition and transaction notes); [Prisma ORM v7 — development and production](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/development-and-production) (migration command boundaries). Check these against the actual installed/database versions when validating the article.
+**Primary references:** [PostgreSQL 16 — ALTER TYPE](https://www.postgresql.org/docs/16/sql-altertype.html) (enum addition and transaction notes); [Prisma ORM v7 — development and production](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/development-and-production) (migration command boundaries). Check these against the actual installed/database versions when validating the article.
 
 **Next step:** [Review the PyColors deployment checklist](/docs/starter-pro/deployment) and adapt its operational steps to your own application. This documentation link is guidance, not a claim that a UI starter itself applies database migrations.
 
