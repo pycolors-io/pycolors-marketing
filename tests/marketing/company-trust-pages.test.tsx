@@ -237,7 +237,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([3, 4, 0, 89][index]));
+      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 89][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -286,7 +286,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(96);
+    expect(rows).toHaveLength(97);
     expect(
       rows
         .map(
@@ -408,6 +408,7 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "Starter Pro persistent workspace and isolated demo",
   "Ship v1.0 — UI Core",
   "Docs quality pass",
   "Release hygiene",
@@ -506,6 +507,7 @@ const roadmapTitles = [
   "Documentation-to-product conversion loop",
 ] as const;
 const pendingRoadmap = [
+  ["Starter Pro persistent workspace and isolated demo", "Now"],
   ["Authority engineering content engine", "Now"],
   ["Starter Pro hosted demo", "Next"],
   ["Starter Pro video walkthrough", "Next"],

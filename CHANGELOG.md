@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add an optional configured Starter Pro demo CTA beside purchase, with explicit testable scope. Public enablement depends on verified demo deployment and matching buyer source delivery.
+
 ## 1.29.0
 
 Released by PyColors Marketing on 23 October 2026 (2026-10-23).
