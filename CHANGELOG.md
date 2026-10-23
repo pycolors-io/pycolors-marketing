@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.29.0
+
+Prepared for Friday 23 October 2026 (2026-10-23); publication requires successful CI and maintainer approval.
+
+This maintenance-focused update improves the reliability of product documentation and source-copy examples, clarifies database schema compatibility checks, and incorporates tested dependency updates. It does not add a hosted service or change commercial terms.
+
+### Documentation and developer guidance
+
+- Expanded the existing schema-migration article with a reproducible PostgreSQL enum expansion example and a TypeScript reader compatibility check (#753). Examples are synthetic and do not represent production migrations.
+- Improved article code-block contrast and accessible checklist rendering (#753).
+
+### Reliability and maintenance
+
+- Corrected release-policy classification for Playwright-only test-tooling updates (#754) and synchronized the standalone Starter Free lockfile (#756).
+- Integrated reviewed dependency updates, including Next.js 16.4.2, Playwright 1.64.1, React Accordion and Tooltip, and Hook Form resolvers (#746–#750). These updates do not themselves establish new customer-facing features.
+- Kept the displayed PyColors UI v1.6.1 and Tokens v1.2.3 baselines unchanged. This Marketing release does not publish public packages.
+
+### Release safety
+
+- The isolated Registry clean-room check previously failed to resolve `@typescript-eslint/parser@8.72.0` from public npm. Re-run the current candidate CI; investigate the external registry response or fixture dependency pin before merging if it recurs. No tests are disabled.
+
+[Explore PyColors documentation](https://pycolors.io/docs).
+
+
 ## 1.28.0
 
 Released by PyColors Marketing on 16 October 2026 (2026-10-16).
