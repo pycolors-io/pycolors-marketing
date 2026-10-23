@@ -195,6 +195,15 @@ const milestones: Array<{
 
 const items: RoadmapItem[] = [
   {
+    title: "Starter Pro persistent workspace and isolated demo",
+    description:
+      "Prepare PostgreSQL-backed projects, workspace collaboration and a data-derived dashboard, with a private temporary public demo. Public availability depends on deployment verification and the matching Starter Pro source archive.",
+    status: "Now",
+    milestone: "Oct 2026",
+    tags: ["Starter Pro", "Trust"],
+    href: "/starters/pro",
+  },
+  {
     title: "PyColors Marketing v1.29.0",
     description:
       "Released on 23 October 2026 with refined Starter Free, Starter Pro and NA-AI presentation, authentic theme-aware previews, and clearer schema compatibility guidance. Product configuration and demo boundaries remain explicit.",
