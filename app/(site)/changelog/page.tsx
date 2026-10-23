@@ -63,6 +63,55 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.29.0",
+    title:
+      "PyColors Marketing v1.29.0: refined product experiences and clearer previews",
+    dateLabel: "Fri 23 Oct 2026",
+    dateISO: "2026-10-23",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary:
+      "This update makes PyColors easier to evaluate through consistent starter and template interfaces, authentic light/dark product previews, and clearer implementation guidance. Demo content stays explicitly separate from configured application services.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Starter Free now presents a consistent light/dark demo and seven current product-gallery screens. Account-form feedback stays local and does not create a real account, session or email.",
+          "Starter Pro has clearer workspace navigation, a more focused dashboard and readable optional examples. Sample project and team content stays distinct from existing account and billing flows that require buyer configuration.",
+          "NA-AI Landing has more consistent presentation, reduced-motion-aware transitions, usable navigation and explicit sample-content disclosures. Its local contact demonstration does not send or store messages.",
+          "Pricing and starter discovery now show authentic theme-aware product captures with sample content disclosed. Existing prices, checkout behavior and commercial terms are unchanged.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Expanded the existing migration guide with a reproducible synthetic enum-expansion exercise and a strict reader compatibility check. The guide distinguishes committed schema changes from compatibility with older application readers.",
+          "Aligned the displayed PyColors UI baseline with the already-applied v1.7.0 repository version. PyColors Tokens remains v1.2.3; this Marketing release does not re-version or publish either package.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Starter Pro preserves appearance preferences through missing-project recovery and improves keyboard access to horizontally scrolling invoices.",
+          "Article code blocks have improved contrast, and the migration checklist uses accessible list semantics.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Inspect the current product previews, try the local demo, and use the documented boundaries to identify the services and validation your application still needs.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Evaluate the actual interfaces and implementation guidance without treating sample content as a hosted service, a production guarantee or a measured conversion result.",
+        ],
+      },
+    ],
+    cta: { label: "Compare the starters", href: "/starters" },
+  },
+  {
     version: "v1.28.0",
     title:
       "PyColors Marketing v1.28.0: local starter workflows and copyable AI chat patterns",
@@ -472,7 +521,7 @@ const CHANGELOG: ChangelogItem[] = [
         title: "@pycolors/ui v1.1.4 alignment",
         items: [
           "Aligned the public UI baseline with the accessibility and reliability work versioned in the monorepo.",
-          "Kept the Card React Server Component contract explicit: `interactive` remains visual, while native links and buttons provide focus, keyboard, and click semantics.",
+          "Kept the Card composition model focused on real native elements for actions and navigation.",
           "Reflected the current UI package version across marketing surfaces that display the PyColors UI baseline.",
         ],
       },
@@ -749,7 +798,7 @@ const CHANGELOG: ChangelogItem[] = [
         items: [
           "Introduced shared public shell, public header, marketing layout wrapper, and auth-layout integration for consistent unauthenticated pages.",
           "Added sticky header behavior, safe-area CSS variables, dynamic viewport height handling, and mobile-safe spacing for app and public layouts.",
-          "Refined homepage, auth, pricing, settings, security, connected accounts, project, admin, and not-found surfaces with subtler borders and stronger responsive behavior.",
+          "Refined homepage, auth, pricing, settings, security, connected accounts, project, admin, and not-found surfaces with subtler borders and stronger responsive viewport behavior.",
           "Improved empty states and accessibility details, including clearer not-found guidance and decorative icon handling.",
         ],
       },
@@ -1085,7 +1134,7 @@ const CHANGELOG: ChangelogItem[] = [
         items: [
           "Refactored blog UI for clearer spacing, stronger editorial surfaces, better badge and card styling, and improved sectioning.",
           "Removed in-article “On This Page” navigation to simplify article reading.",
-          "Refined prose typography, article metadata, sharing actions, navigation UI, focus states, and rounded-corner consistency.",
+          "Refined prose typography, article metadata, sharing actions, navigation UI, focus states, and related content discovery.",
           "Improved accessibility and engagement across blog surfaces.",
         ],
       },
@@ -1415,7 +1464,7 @@ const CHANGELOG: ChangelogItem[] = [
       {
         title: "Docs, README, and commercial credibility improved",
         items: [
-          "Refined the upgrade guide to better explain when Starter Free is enough and when Starter Pro becomes the right move.",
+          "Refined the upgrade guide to better explain when Starter Free is enough and when Pro becomes the right move.",
           "Added and improved Starter Pro documentation, including auth, billing, backend, and secure delivery guidance.",
           "Revamped the README with clearer setup, environment, billing, auth, seed, and usage documentation for real product evaluation.",
           "Clarified proprietary license terms for team usage, organizations, updates, and client work to reduce ambiguity for buyers.",
@@ -1899,7 +1948,7 @@ const CHANGELOG: ChangelogItem[] = [
         items: [
           "Revamped Starter Free page with product-focused UX: clearer Free vs Pro comparison, CTAs, and a more actionable quickstart.",
           "Redesigned UI page messaging around shipping outcomes instead of generic component lists, with richer structure and trust indicators.",
-          "Enhanced homepage with a dedicated UI section, improved starter links, and clearer CTA plus demo paths.",
+          "Enhanced homepage with a dedicated UI section, improved starter links, and a more actionable demo path.",
           "Refined About copy and added open-source links for better transparency and discoverability.",
         ],
       },

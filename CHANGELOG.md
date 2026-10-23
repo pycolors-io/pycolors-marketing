@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.29.0
+
+Released by PyColors Marketing on 23 October 2026 (2026-10-23).
+
+This update makes PyColors easier to evaluate through consistent starter and template interfaces, authentic light/dark product previews, and clearer implementation guidance. Demo content stays explicitly separate from configured application services.
+
+### Applications updated
+
+- Starter Free now presents a consistent light/dark demo and seven current product-gallery screens. Account-form feedback stays local and does not create a real account, session or email.
+- Starter Pro has clearer workspace navigation, a more focused dashboard and readable optional examples. Sample project and team content stays distinct from existing account and billing flows that require buyer configuration.
+- NA-AI Landing has more consistent presentation, reduced-motion-aware transitions, usable navigation and explicit sample-content disclosures. Its local contact demonstration does not send or store messages.
+- Pricing and starter discovery now show authentic theme-aware product captures with sample content disclosed. Existing prices, checkout behavior and commercial terms are unchanged.
+
+### Platform and shared capabilities
+
+- Expanded the existing migration guide with a reproducible synthetic enum-expansion exercise and a strict reader compatibility check. The guide distinguishes committed schema changes from compatibility with older application readers.
+- Aligned the displayed PyColors UI baseline with the already-applied v1.7.0 repository version. PyColors Tokens remains v1.2.3; this Marketing release does not re-version or publish either package.
+
+### Reliability and maintenance
+
+- Starter Pro preserves appearance preferences through missing-project recovery and improves keyboard access to horizontally scrolling invoices.
+- Article code blocks have improved contrast, and the migration checklist uses accessible list semantics.
+
+### For developers and candidates
+
+- Inspect the current product previews, try the local demo, and use the documented boundaries to identify the services and validation your application still needs.
+
+### For companies and recruiters
+
+- Evaluate the actual interfaces and implementation guidance without treating sample content as a hosted service, a production guarantee or a measured conversion result.
+
+[Compare the starters](https://pycolors.io/starters).
+
 ## 1.28.0
 
 Released by PyColors Marketing on 16 October 2026 (2026-10-16).
