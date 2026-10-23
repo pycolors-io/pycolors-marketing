@@ -508,6 +508,7 @@ const pendingRoadmap = [
   ["Documentation-to-product conversion loop", "Now"],
 ] as const;
 const releases = [
+  ["v1.29.0", "2026-10-23", "Clearer migration guidance and release reliability", "/docs"],
   [
     "v1.28.0",
     "2026-10-16",
