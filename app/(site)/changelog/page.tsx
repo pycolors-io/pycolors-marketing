@@ -63,6 +63,33 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.29.0",
+    title: "PyColors Marketing v1.29.0: clearer migration guidance and release reliability",
+    dateLabel: "Fri 23 Oct 2026",
+    dateISO: "2026-10-23",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary: "This maintenance-focused update improves the reliability of product documentation and source-copy examples, clarifies database schema compatibility checks, and incorporates tested dependency updates. It does not add a hosted service or change commercial terms.",
+    highlights: [
+      {
+        title: "Documentation and developer guidance",
+        items: [
+          "Expanded the existing migration article with a reproducible PostgreSQL enum exercise and old-reader compatibility limits; examples are synthetic.",
+          "Improved code-block contrast and checklist accessibility in the article.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Corrected Playwright test-tooling release classification and synchronized the Starter Free standalone lockfile.",
+          "Integrated reviewed dependency updates including Next.js and Playwright, without claiming new customer-facing features.",
+          "PyColors UI remains v1.6.1 and Tokens remains v1.2.3; no public package is published by this Marketing update.",
+        ],
+      },
+    ],
+    cta: { label: "Explore the documentation", href: "/docs" },
+  },
+  {
     version: "v1.28.0",
     title:
       "PyColors Marketing v1.28.0: local starter workflows and copyable AI chat patterns",
