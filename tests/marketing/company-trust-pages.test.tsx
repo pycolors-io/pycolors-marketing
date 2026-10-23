@@ -237,7 +237,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([3, 4, 0, 82][index]));
+      expect(totals[index]).toHaveTextContent(String([3, 4, 0, 89][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -274,7 +274,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(82);
+    expect(historyRows).toHaveLength(89);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -286,7 +286,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(89);
+    expect(rows).toHaveLength(96);
     expect(
       rows
         .map(
@@ -489,6 +489,13 @@ const roadmapTitles = [
   "Starter Free local product workflow",
   "Copyable AI Chat workflow",
   "Starter Pro evaluation and FAQ clarity",
+  "PyColors Marketing v1.29.0",
+  "Starter Free presentation and theme-aware gallery",
+  "Starter Pro workspace clarity",
+  "NA-AI template interaction and demo clarity",
+  "Theme-aware product proof near pricing",
+  "Schema expansion and reader compatibility guidance",
+  "PyColors UI v1.7.0 baseline",
   "Reusable SaaS feature showcase system",
   "Upgrade Gate monetization patterns",
   "Starter Pro product-surface refinement",
@@ -508,7 +515,12 @@ const pendingRoadmap = [
   ["Documentation-to-product conversion loop", "Now"],
 ] as const;
 const releases = [
-  ["v1.29.0", "2026-10-23", "Clearer migration guidance and release reliability", "/docs"],
+  [
+    "v1.29.0",
+    "2026-10-23",
+    "Refined product experiences and clearer previews",
+    "/starters",
+  ],
   [
     "v1.28.0",
     "2026-10-16",

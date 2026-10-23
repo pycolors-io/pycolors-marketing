@@ -183,7 +183,7 @@ const milestones: Array<{
     id: "Oct 2026",
     title: "October 2026",
     subtitle:
-      "PyColors Marketing v1.28.0, released on 16 October 2026, adds local Starter Free workflows, copyable AI Chat guidance, clearer Starter Pro evaluation, and the PyColors UI v1.6.1 baseline.",
+      "PyColors Marketing v1.29.0, released on 23 October 2026, brings refined starter and template experiences, authentic theme-aware product previews, clearer schema compatibility guidance, and the already-applied PyColors UI v1.7.0 baseline.",
   },
   {
     id: "H1 2026",
@@ -194,6 +194,69 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.29.0",
+    description:
+      "Released on 23 October 2026 with refined Starter Free, Starter Pro and NA-AI presentation, authentic theme-aware previews, and clearer schema compatibility guidance. Product configuration and demo boundaries remain explicit.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Marketing", "Starters", "Templates"],
+    href: "/changelog",
+  },
+  {
+    title: "Starter Free presentation and theme-aware gallery",
+    description:
+      "Explore a consistent light/dark demo and seven current product screens. Account-form feedback stays local; no real account, session or email is created.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Starter Free", "DX", "Trust"],
+    href: "/starters/free",
+  },
+  {
+    title: "Starter Pro workspace clarity",
+    description:
+      "Navigate a more consistent workspace with readable optional examples, clearer sample-data labels and improved theme recovery. Existing authentication and billing foundations still require buyer configuration.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Starter Pro", "UX", "Trust"],
+    href: "/starters/pro",
+  },
+  {
+    title: "NA-AI template interaction and demo clarity",
+    description:
+      "Inspect a more consistent template with reduced-motion-aware transitions, usable navigation and explicit sample content. The local contact demonstration does not send or store messages.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Templates", "Accessibility", "Docs"],
+    href: "/templates/na-ai-landing",
+  },
+  {
+    title: "Theme-aware product proof near pricing",
+    description:
+      "Compare Starter Free, Starter Pro and NA-AI using authentic light/dark product captures beside the offers, with sample content disclosed and existing prices and checkout unchanged.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Marketing", "Product", "Trust"],
+    href: "/pricing",
+  },
+  {
+    title: "Schema expansion and reader compatibility guidance",
+    description:
+      "Reproduce a synthetic PostgreSQL enum expansion and a strict TypeScript reader check. The guide distinguishes committed schema changes from compatibility with older application readers.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Docs", "Testing", "DX"],
+    href: "/blog/why-production-migrations-break-saas-products",
+  },
+  {
+    title: "PyColors UI v1.7.0 baseline",
+    description:
+      "Align the displayed UI version with the already-applied v1.7.0 repository baseline. PyColors Tokens remains v1.2.3; this Marketing release does not re-version or publish either package.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["UI", "Docs"],
+    href: "/docs/ui",
+  },
   {
     title: "PyColors Marketing v1.28.0",
     description:

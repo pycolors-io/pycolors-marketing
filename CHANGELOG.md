@@ -2,27 +2,36 @@
 
 ## 1.29.0
 
-Prepared for Friday 23 October 2026 (2026-10-23); publication requires successful CI and maintainer approval.
+Released by PyColors Marketing on 23 October 2026 (2026-10-23).
 
-This maintenance-focused update improves the reliability of product documentation and source-copy examples, clarifies database schema compatibility checks, and incorporates tested dependency updates. It does not add a hosted service or change commercial terms.
+This update makes PyColors easier to evaluate through consistent starter and template interfaces, authentic light/dark product previews, and clearer implementation guidance. Demo content stays explicitly separate from configured application services.
 
-### Documentation and developer guidance
+### Applications updated
 
-- Expanded the existing schema-migration article with a reproducible PostgreSQL enum expansion example and a TypeScript reader compatibility check (#753). Examples are synthetic and do not represent production migrations.
-- Improved article code-block contrast and accessible checklist rendering (#753).
+- Starter Free now presents a consistent light/dark demo and seven current product-gallery screens. Account-form feedback stays local and does not create a real account, session or email.
+- Starter Pro has clearer workspace navigation, a more focused dashboard and readable optional examples. Sample project and team content stays distinct from existing account and billing flows that require buyer configuration.
+- NA-AI Landing has more consistent presentation, reduced-motion-aware transitions, usable navigation and explicit sample-content disclosures. Its local contact demonstration does not send or store messages.
+- Pricing and starter discovery now show authentic theme-aware product captures with sample content disclosed. Existing prices, checkout behavior and commercial terms are unchanged.
+
+### Platform and shared capabilities
+
+- Expanded the existing migration guide with a reproducible synthetic enum-expansion exercise and a strict reader compatibility check. The guide distinguishes committed schema changes from compatibility with older application readers.
+- Aligned the displayed PyColors UI baseline with the already-applied v1.7.0 repository version. PyColors Tokens remains v1.2.3; this Marketing release does not re-version or publish either package.
 
 ### Reliability and maintenance
 
-- Corrected release-policy classification for Playwright-only test-tooling updates (#754) and synchronized the standalone Starter Free lockfile (#756).
-- Integrated reviewed dependency updates, including Next.js 16.4.2, Playwright 1.64.1, React Accordion and Tooltip, and Hook Form resolvers (#746–#750). These updates do not themselves establish new customer-facing features.
-- Kept the displayed PyColors UI v1.6.1 and Tokens v1.2.3 baselines unchanged. This Marketing release does not publish public packages.
+- Starter Pro preserves appearance preferences through missing-project recovery and improves keyboard access to horizontally scrolling invoices.
+- Article code blocks have improved contrast, and the migration checklist uses accessible list semantics.
 
-### Release safety
+### For developers and candidates
 
-- The isolated Registry clean-room check previously failed to resolve `@typescript-eslint/parser@8.72.0` from public npm. Re-run the current candidate CI; investigate the external registry response or fixture dependency pin before merging if it recurs. No tests are disabled.
+- Inspect the current product previews, try the local demo, and use the documented boundaries to identify the services and validation your application still needs.
 
-[Explore PyColors documentation](https://pycolors.io/docs).
+### For companies and recruiters
 
+- Evaluate the actual interfaces and implementation guidance without treating sample content as a hosted service, a production guarantee or a measured conversion result.
+
+[Compare the starters](https://pycolors.io/starters).
 
 ## 1.28.0
 
