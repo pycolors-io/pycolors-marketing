@@ -183,7 +183,7 @@ const milestones: Array<{
     id: "Oct 2026",
     title: "October 2026",
     subtitle:
-      "PyColors Marketing v1.29.0, released on 23 October 2026, brings refined starter and template experiences, authentic theme-aware product previews, clearer schema compatibility guidance, and the already-applied PyColors UI v1.7.0 baseline.",
+      "PyColors Marketing v1.30.0, dated 30 October 2026, highlights a clearer Starter Pro workspace, guided first steps, and useful project and team journeys.",
   },
   {
     id: "H1 2026",
@@ -194,6 +194,24 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.30.0",
+    description:
+      "Released on 30 October 2026 with clearer first steps in Starter Pro, a more readable workspace, and useful project and team journeys.",
+    status: "Shipped",
+    milestone: "Oct 2026",
+    tags: ["Marketing", "Starter Pro", "Product"],
+    href: "/changelog",
+  },
+  {
+    title: "Starter Pro persistent workspace and isolated demo",
+    description:
+      "Prepare a more complete Starter Pro evaluation, with projects, team collaboration and a useful workspace overview. A hosted demo and matching buyer delivery remain in preparation.",
+    status: "Now",
+    milestone: "Oct 2026",
+    tags: ["Starter Pro", "Trust"],
+    href: "/starters/pro",
+  },
   {
     title: "PyColors Marketing v1.29.0",
     description:

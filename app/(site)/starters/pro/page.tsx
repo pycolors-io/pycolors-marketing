@@ -1,3 +1,5 @@
+import { ProDemoLink } from "@/components/marketing/pro-demo-link";
+import { proDemoUrl } from "@/lib/pro-demo-url";
 import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -518,6 +520,7 @@ export default function StarterProPage() {
             actions={
               <>
                 <div className="lg:hidden">
+                  <ProDemoLink />
                   <BuyStarterProButton
                     fullWidth={false}
                     className="w-full sm:w-auto"
@@ -591,6 +594,14 @@ export default function StarterProPage() {
                 </StarterProCheckItem>
               </ul>
               <BuyStarterProButton />
+              <ProDemoLink />
+              {proDemoUrl() ? (
+                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  Try persistent projects, a live workspace dashboard and
+                  simulated member invitations. Each visitor gets a private,
+                  temporary workspace.
+                </p>
+              ) : null}
               <p className="mt-3 text-xs leading-6 text-muted-foreground">
                 Access follows payment confirmation and delivery processing.
               </p>

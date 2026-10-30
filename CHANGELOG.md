@@ -1,5 +1,39 @@
 # Changelog
 
+## Unreleased
+
+- Add an optional configured Starter Pro demo CTA beside purchase, with explicit testable scope. Public enablement depends on verified demo deployment and matching buyer source delivery.
+
+## 1.30.0
+
+Released by PyColors Marketing on 30 October 2026 (2026-10-30).
+
+A clearer workspace, a more guided start, and more useful project and team journeys.
+
+### Applications updated
+
+- Find your bearings in Starter Pro with guided setup, a clearer dashboard, and connected project and team pages.
+- Keep projects moving with useful detail, status, assignment and archiving controls.
+- Make the workspace feel familiar with profile and appearance preferences, activity and notifications close to hand.
+
+### A consistent experience
+
+- Navigation, charts and everyday pages feel more coherent across light and dark appearances and common screen sizes.
+
+### Reliability and maintenance
+
+- More helpful feedback through setup and routine workspace actions keeps the next steps visible.
+
+### For developers and candidates
+
+- Explore the experience and decide how it fits the application you want to build.
+
+### For companies and recruiters
+
+- Review key project and team journeys before choosing a starting point.
+
+[Explore Starter Pro](https://pycolors.io/starters/pro).
+
 ## 1.29.0
 
 Released by PyColors Marketing on 23 October 2026 (2026-10-23).
