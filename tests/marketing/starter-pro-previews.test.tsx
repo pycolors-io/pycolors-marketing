@@ -49,7 +49,7 @@ describe("Starter Pro product page", () => {
       expect(card).toHaveTextContent(offer.priceLabel);
       expect(
         within(card).getByRole("link", { name: offer.action }),
-      ).toHaveAttribute("href", "/contact");
+      ).toHaveAttribute("href", offer.href);
     }
     expect(
       within(service).queryByRole("button", { name: /Buy Starter Pro/u }),
@@ -414,7 +414,9 @@ describe("Starter Pro product page", () => {
     for (const link of within(screen.getByRole("main")).getAllByRole("link")) {
       const href = link.getAttribute("href")!;
       if (!href.startsWith("/")) continue;
-      const route = href.split("#")[0]!;
+      const target = new URL(href, "https://pycolors.io");
+      expect(target.origin).toBe("https://pycolors.io");
+      const route = target.pathname;
       const paths = route.startsWith("/docs/")
         ? [
             resolve("content", `${route.slice(1)}.mdx`),

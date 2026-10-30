@@ -28,6 +28,7 @@ const STATIC_ROUTES = [
   "/starters/pro/faq",
   "/compare/build-vs-buy",
   "/pricing",
+  "/request-a-quote",
   "/upgrade",
   "/starters/free",
 

@@ -48,7 +48,7 @@ export const starterProBuyerFaqs = [
         href: "/docs/starter-pro/implementation-support",
         label: "Review implementation scope",
       },
-      { href: "/contact", label: "Discuss your project" },
+      { href: "/request-a-quote", label: "Discuss your project" },
     ],
   },
   {

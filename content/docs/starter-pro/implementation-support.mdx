@@ -39,7 +39,7 @@ import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
       items: [
         "Implementation is quoted after scope review and is separate from the source-only checkout.",
       ],
-      href: "/contact",
+      href: "/request-a-quote",
       cta: "Discuss your project",
     },
   ]}
@@ -55,8 +55,8 @@ import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
     eyebrow: service.priceLabel,
     description: service.description,
     icon: Layers3,
-    items: [...service.features, service.scope],
-    href: "/contact",
+    items: [...service.features, service.deliverable, service.scope],
+    href: service.href,
     cta: service.action,
   }))}
 />
@@ -65,6 +65,17 @@ These are starting service fees. The source licence and third-party provider
 costs are itemized separately in your quote. Confirm the deliverables, target
 environment, acceptance checks, total price and included follow-up in writing
 before work begins. A quote can exceed the displayed starting price.
+
+## Request a written proposal
+
+Use the [project brief form](/request-a-quote) to describe the workflow, choose
+setup or business adaptation, and share an indicative budget. Company and
+desired timeline are optional. Keep credentials and customer data out of the brief.
+
+The confirmation provides a request reference after the email provider accepts
+the transmission to PyColors. It does not certify inbox delivery or confirm a
+price, booking or delivery date. We review the request before agreeing on a
+written scope. Use the displayed reference when following up with PyColors.
 
 ## Standard starter support
 

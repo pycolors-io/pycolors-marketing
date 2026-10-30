@@ -601,7 +601,7 @@ export default function HomePage() {
                   <ResourceLink href="/pricing">
                     Compare product pricing
                   </ResourceLink>
-                  <ResourceLink href="/pricing#implementation">
+                  <ResourceLink href="/request-a-quote?service=guided-setup">
                     {`Guided setup · ${STARTER_PRO_SERVICES.setup.priceLabel}`}
                   </ResourceLink>
                 </div>

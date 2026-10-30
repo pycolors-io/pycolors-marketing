@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   BookOpen,
+  Check,
   Database,
   Download,
   Layers3,
@@ -154,13 +155,16 @@ export function StarterProImplementation() {
             <p className="mt-4 font-brand text-3xl font-semibold tracking-tight">
               {service.priceLabel}
             </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Starting service fee · Written scope
+            </p>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {service.description}
             </p>
             <ul className="my-6 space-y-3 border-y border-border-subtle py-5">
               {service.features.map((feature) => (
                 <li key={feature} className="flex gap-3 text-sm leading-6">
-                  <ShieldCheck
+                  <Check
                     className="mt-1 size-4 shrink-0 text-primary"
                     aria-hidden="true"
                   />
@@ -168,11 +172,17 @@ export function StarterProImplementation() {
                 </li>
               ))}
             </ul>
+            <div className="mb-5">
+              <h4 className="text-xs font-medium">What you receive</h4>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {service.deliverable}
+              </p>
+            </div>
             <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
               {service.scope}
             </p>
             <SiteButton variant="outline" asChild className="w-full">
-              <Link href="/contact">{service.action}</Link>
+              <Link href={service.href}>{service.action}</Link>
             </SiteButton>
           </article>
         ))}
