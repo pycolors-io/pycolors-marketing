@@ -63,6 +63,55 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.30.0",
+    title:
+      "PyColors Marketing v1.30.0: a clearer workspace from the first step",
+    dateLabel: "Fri 30 Oct 2026",
+    dateISO: "2026-10-30",
+    status: "Stable",
+    releaseWeekLabel: "Oct 2026 (weekly release)",
+    summary:
+      "A clearer workspace, a more guided start, and more useful project and team journeys.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Find your bearings in Starter Pro with guided setup, a clearer dashboard, and connected project and team pages.",
+          "Keep projects moving with useful detail, status, assignment and archiving controls.",
+          "Make the workspace feel familiar with profile and appearance preferences, activity and notifications close to hand.",
+        ],
+      },
+      {
+        title: "A consistent experience",
+        items: [
+          "Navigation, charts and everyday pages feel more coherent across light and dark appearances and common screen sizes.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "More helpful feedback through setup and routine workspace actions keeps the next steps visible.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Explore the experience and decide how it fits the application you want to build.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Review key project and team journeys before choosing a starting point.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Explore Starter Pro",
+      href: "/starters/pro",
+    },
+  },
+  {
     version: "v1.29.0",
     title:
       "PyColors Marketing v1.29.0: refined product experiences and clearer previews",
