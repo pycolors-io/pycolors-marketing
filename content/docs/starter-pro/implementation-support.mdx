@@ -5,12 +5,42 @@ lastUpdated: "2026-10-30"
 appliesTo: Starter Pro
 ---
 
-## Start with the source licence
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, FileText, Layers3, ShieldCheck } from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
 
-The displayed Starter Pro price covers the source package and the rights in its
-[licence](/license). Your order and supplied terms define update access, support
-period and any service commitments. This guide does not replace those terms or
-reduce rights granted with an existing purchase.
+## Choose your starting point
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Source licence",
+      icon: FileText,
+      description:
+        "The displayed Starter Pro price covers the source package and the rights in its licence.",
+      items: [
+        "Your order and supplied terms define update access, support period and service commitments.",
+      ],
+      href: "/license",
+      cta: "Review the licence",
+    },
+    {
+      title: "Scoped implementation",
+      icon: Layers3,
+      description:
+        "Discuss an assisted starting point for a named workflow and target environment.",
+      items: [
+        "Implementation is quoted after scope review and is separate from the source-only checkout.",
+      ],
+      href: "/contact",
+      cta: "Discuss your project",
+    },
+  ]}
+/>
 
 Installation guidance and reproducible defects in the supplied starter belong
 to the support scope of your purchased offer. Purchase access and recovery use
@@ -18,29 +48,74 @@ to the support scope of your purchased offer. Purchase access and recovery use
 diagnostic code and a redacted screenshot; keep secrets, session cookies and
 customer data out of support messages.
 
-## Discuss a scoped implementation
+<Callout title="Your purchased terms remain authoritative">
+  This guide does not replace the terms supplied with your order or reduce
+  rights granted with an existing purchase. Business-specific features, hosting,
+  ongoing operation and upgrades of customized code require an agreed scope. No
+  default SLA, response deadline or 24/7 coverage is promised by this page.
+</Callout>
 
-For an assisted starting point, [contact PyColors](/contact) with the workflow
-you need and the environment you plan to use. A written engagement can define:
+## Define the engagement
 
-- **Licence and baseline:** the source release and licensed entity involved.
-- **Initial configuration:** the agreed database, authentication, email and
-  billing setup for your target environment.
-- **Targeted adaptation:** a named workflow, integration or design change with
-  explicit acceptance criteria.
-- **Validation and handover:** agreed checks, operating notes and ownership of
-  credentials, backups and alerts.
-- **Bounded follow-up:** the support period, included assistance and escalation
-  route agreed for that engagement.
+A written engagement can define the following steps with PyColors:
 
-The implementation price is quoted after scope review. It is separate from the
-source-only checkout. Business-specific features, hosting, ongoing operation and
-upgrades of customized code require an agreed scope. No default SLA, response
-deadline or 24/7 coverage is promised by this page.
+<Steps>
+  <Step>
+    ### Licence and baseline
+
+    Identify the source release and the licensed entity involved.
+
+  </Step>
+  <Step>
+    ### Initial configuration
+
+    Agree on the database, authentication, email and billing setup for your
+    target environment.
+
+  </Step>
+  <Step>
+    ### Targeted adaptation
+
+    Name the workflow, integration or design change and its acceptance criteria.
+
+  </Step>
+  <Step>
+    ### Validation and handover
+
+    Agree on checks, operating notes and ownership of credentials, backups
+    and alerts.
+
+  </Step>
+  <Step>
+    ### Bounded follow-up
+
+    Record the support period, included assistance and escalation route for
+    that engagement.
+
+  </Step>
+</Steps>
 
 ## Prepare for handover
 
 Confirm who operates the application, manages provider accounts and can restore
 the database. Record the delivered revision, acceptance results and outstanding
-operator setup. The [validation guide](/docs/starter-pro/release-readiness) and
-[operations guide](/docs/starter-pro/operations) make that review concrete.
+operator setup.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Review automated checks and your launch acceptance.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Production operations",
+      href: "/docs/starter-pro/operations",
+      description: "Define monitoring, backups and recovery responsibilities.",
+      icon: BookOpen,
+    },
+  ]}
+/>

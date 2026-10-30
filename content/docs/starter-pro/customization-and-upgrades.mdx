@@ -5,29 +5,79 @@ lastUpdated: "2026-10-30"
 appliesTo: Starter Pro
 ---
 
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  CreditCard,
+  GitBranch,
+  ShieldCheck,
+  SlidersHorizontal,
+} from "lucide-react";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
 ## Configure your product
 
-`config/product.ts` groups the brand, navigation, feature presentation, offer
-copy, email identity and resource limits. Keep credentials in the environment.
+`config/product.ts` groups your product settings. Keep credentials in the
+server environment.
 
-| Setting                        | Responsibility                                                             |
-| ------------------------------ | -------------------------------------------------------------------------- |
-| `brand`, `links`, `navigation` | Names, documentation destinations and menu structure                       |
-| `modules`                      | Presentation switches; server authorization remains independent            |
-| `email`                        | Accent, contact and Reply-To identity; the sender still needs verification |
-| `billing.trialDays`            | Checkout trial configuration                                               |
-| `workspaces.limits`            | Account workspace-creation caps                                            |
-| `entitlements`                 | Server-enforced projects, members and invitations per workspace            |
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Identity and presentation",
+      icon: SlidersHorizontal,
+      description:
+        "Adapt the brand and navigation through the existing entry points.",
+      items: [
+        <span>
+          <code>brand</code>, <code>links</code> and <code>navigation</code>{" "}
+          control names, documentation destinations and menu structure.
+        </span>,
+        <span>
+          <code>modules</code> changes presentation; server authorization
+          remains independent.
+        </span>,
+        <span>
+          <code>email</code> controls accent, contact and Reply-To identity. The
+          sender still needs verification.
+        </span>,
+      ],
+    },
+    {
+      title: "Plans and capacity",
+      icon: CreditCard,
+      description:
+        "Connect your own offer to checkout and server-enforced limits.",
+      items: [
+        <span>
+          <code>billing.trialDays</code> configures the checkout trial.
+        </span>,
+        <span>
+          <code>workspaces.limits</code> caps workspace creation per account.
+        </span>,
+        <span>
+          <code>entitlements</code> sets projects, members and invitations per
+          workspace.
+        </span>,
+      ],
+    },
+  ]}
+/>
 
-Quotas default to `null`, meaning **uncapped**. Set non-negative integers when
-your own product offer requires limits and test the boundary and upgrade path.
-Billing remains personal; an organization-owned subscription needs a separate
-design.
+<Callout title="Quotas and billing ownership">
+  Quotas default to `null`, meaning **uncapped**. Use non-negative integers when
+  your offer needs limits, then test the boundary and upgrade path. Billing
+  remains personal; an organization-owned subscription needs a separate design.
+</Callout>
 
 Customize provides palette, typography, geometry, interface scale and sidebar
 controls in the browser. Language and time zone are account preferences. Review
-your changes in both themes, French/English, narrow layouts and reduced motion.
-The shipped `docs/customization.md` explains the logo, icon and email entry points.
+changes in both themes, French/English, narrow layouts and reduced motion. The
+shipped `docs/customization.md` explains logo, icon and email entry points.
 
 ## Keep an upgrade baseline
 
@@ -38,18 +88,80 @@ adaptations through review. Future-version access follows the purchased offer.
 
 ## Rehearse migrations
 
-1. Review the changelog, pending SQL and environment changes.
-2. Restore a recoverable backup into restricted staging.
-3. Install the supplied lockfile and inspect `pnpm exec prisma migrate status`.
-4. Apply reviewed migrations with `pnpm exec prisma migrate deploy`.
-5. Run diagnostics, tests, a production build and your affected user journeys.
-6. Verify provider integration in a sandbox before rollout.
+<Steps>
+  <Step>
+    ### Review the incoming release
 
-The project-work migration adds task/comment tables and preserves existing
-projects. Keep migrations already applied to retained data immutable. Session
-registry upgrades can require users to sign in again.
+    Read the changelog, pending SQL and environment changes before installing.
 
-Retain the previous application artifact, check its schema/session compatibility
-and plan recovery before deployment. There is no automatic destructive
-down-migration. A database restore can lose writes after the chosen recovery
-point; use your incident procedure. See [operations](/docs/starter-pro/operations).
+  </Step>
+  <Step>
+    ### Prepare restricted staging
+
+    Restore a recoverable backup into a restricted staging environment.
+
+  </Step>
+  <Step>
+    ### Install and inspect migration status
+
+    <CopyableCommand command="pnpm install --frozen-lockfile" />
+    <CopyableCommand command="pnpm exec prisma migrate status" />
+
+  </Step>
+  <Step>
+    ### Apply reviewed migrations
+
+    <CopyableCommand command="pnpm exec prisma migrate deploy" />
+
+    Keep migrations already applied to retained data immutable. The project-work
+    migration adds task/comment tables and preserves existing projects.
+
+  </Step>
+  <Step>
+    ### Validate the application
+
+    Run diagnostics, tests, a production build and the affected user journeys.
+    Session-registry upgrades can require users to sign in again.
+
+  </Step>
+  <Step>
+    ### Verify providers before rollout
+
+    Check provider integration in a sandbox before deploying the reviewed result.
+
+  </Step>
+</Steps>
+
+<Callout title="Plan recovery before deployment">
+  Retain the previous application artifact and check schema/session
+  compatibility before rollback. There is no automatic destructive
+  down-migration. A database restore can lose writes after the chosen recovery
+  point; use your incident procedure.
+</Callout>
+
+## Continue your handover
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Production operations",
+      href: "/docs/starter-pro/operations",
+      description: "Prepare monitoring, backups and a verified restore.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Implementation and support",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Define the adaptation and support scope.",
+      icon: BookOpen,
+    },
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Inspect the checks behind the delivered source.",
+      icon: GitBranch,
+    },
+  ]}
+/>

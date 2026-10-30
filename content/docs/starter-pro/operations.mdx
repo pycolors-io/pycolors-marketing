@@ -5,54 +5,155 @@ lastUpdated: "2026-10-30"
 appliesTo: Starter Pro
 ---
 
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Activity,
+  BookOpen,
+  GitBranch,
+  ShieldCheck,
+  Terminal,
+} from "lucide-react";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
 ## Diagnose your environment
 
-Run `pnpm ops:diagnose` from the installed starter. It checks core configuration,
-email, paired OAuth credentials, billing completeness and demo/seed isolation.
-Output contains check codes and remediation rather than secret values. An
-unconfigured optional billing integration leaves checkout unavailable.
+Run the diagnostic from the installed starter before rollout:
 
-Configure HTTPS, your own credentials and a migrated database before rollout.
-Disable development fixtures and keep demo deployments on a separate database.
+<CopyableCommand command="pnpm ops:diagnose" />
+
+It checks core configuration, email, paired OAuth credentials, billing
+completeness and demo/seed isolation. Output contains check codes and remediation
+rather than secret values. Unconfigured optional billing leaves checkout
+unavailable.
+
+Configure HTTPS, your own credentials and a migrated database. Disable
+development fixtures and keep demo deployments on a separate database.
 Diagnostics do not contact providers to certify their configuration.
 
 ## Monitor and alert
 
-| Signal              | Purpose                                                                    |
-| ------------------- | -------------------------------------------------------------------------- |
-| `/api/health`       | Uncached process liveness                                                  |
-| `/api/readiness`    | Configuration and required schema checks; HTTP 200 or 503                  |
-| `pnpm ops:check`    | Five-second readiness probe; structured result and nonzero exit on failure |
-| `starter-pro.error` | Controlled request/billing failure code and correlation reference          |
+<DocsFeatureGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Process liveness",
+      eyebrow: "GET /api/health",
+      icon: Activity,
+      description:
+        "Uncached process health, independent of account or workspace data.",
+    },
+    {
+      title: "Application readiness",
+      eyebrow: "GET /api/readiness",
+      icon: ShieldCheck,
+      description:
+        "Configuration and required schema checks return HTTP 200 or 503.",
+    },
+    {
+      title: "Scheduled probe",
+      eyebrow: "pnpm ops:check",
+      icon: Terminal,
+      description:
+        "A five-second readiness probe emits a structured result and exits nonzero on failure.",
+    },
+    {
+      title: "Error references",
+      eyebrow: "starter-pro.error",
+      icon: BookOpen,
+      description:
+        "Request and billing failures emit a controlled code and correlation reference.",
+    },
+  ]}
+/>
 
-Connect these signals to your platform's monitoring. Choose an operator and
-destination for repeated readiness failures and billing webhook failures, then
-exercise a deliberate staging incident and recovery. The starter supplies hooks;
-it does not provision a monitoring account or send alerts to a preset recipient.
+<Steps>
+  <Step>
+    ### Connect the signals
 
-Use references to investigate failures alongside provider dashboards and failed
-webhook receipts. Fix the cause before resending an event from Stripe. Duplicate
-retries are reconciled; manually granting plans or deleting billing history is
-not a recovery procedure.
+    Configure your platform's monitoring, an operator and an alert destination
+    for repeated readiness failures and billing webhook failures. The starter
+    supplies hooks; it does not provision a monitoring account or send alerts to
+    a preset recipient.
+
+  </Step>
+  <Step>
+    ### Exercise an incident in staging
+
+    Trigger a deliberate failure, verify that the chosen destination receives
+    the alert and check recovery before relying on the integration.
+
+  </Step>
+  <Step>
+    ### Investigate and replay
+
+    Follow references alongside provider dashboards and failed webhook
+    receipts. Fix the cause before resending an event from Stripe. Duplicate
+    retries are reconciled; manually granting plans or deleting billing history
+    is not a recovery procedure.
+
+  </Step>
+</Steps>
 
 ## Rehearse restoration
 
-With PostgreSQL client tools matching the server major version, run:
+<Steps>
+  <Step>
+    ### Match the PostgreSQL tools
 
-```sh
-STARTER_PRO_TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5433/pycolors_workspace_restore pnpm ops:verify-restore
-```
+    Install `pg_dump` and `pg_restore` matching the server's major version.
+    The verification command uses disposable localhost QA databases.
 
-This creates two disposable localhost databases, migrates and seeds synthetic
-data, backs it up, restores it in a transaction and compares every table's row
-count and fingerprint. It removes the databases it created and retains a report.
-It cannot target an existing application database.
+  </Step>
+  <Step>
+    ### Run the isolated drill
 
-For production, configure encrypted backups and retention with your operator.
-Restore an actual backup into a restricted isolated environment and record the
-recovery point, verification and access procedure. A synthetic drill does not
-establish the freshness or accessibility of a production backup.
+    <CopyableCommand command="STARTER_PRO_TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5433/pycolors_workspace_restore pnpm ops:verify-restore" />
+
+    The command creates two databases, migrates and seeds synthetic data, makes
+    a backup and restores it in a transaction. It cannot target an existing
+    application database.
+
+  </Step>
+  <Step>
+    ### Review the verification report
+
+    The command compares every table's row count and fingerprint, retains the
+    report and removes the databases it created.
+
+  </Step>
+</Steps>
+
+<Callout title="Verify your production backups">
+  Configure encrypted backups and retention with your operator. Restore an
+  actual backup into a restricted isolated environment and record the recovery
+  point, verification and access procedure. A synthetic drill does not establish
+  the freshness or accessibility of a production backup.
+</Callout>
 
 Keep the previous application artifact and review schema/session compatibility
-before rollback. Follow [customization and upgrades](/docs/starter-pro/customization-and-upgrades)
-and the full `docs/operations.md` shipped with the source.
+before rollback. The full `docs/operations.md` remains available in your source.
+
+## Related guides
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Customization and upgrades",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description: "Rehearse migrations and plan rollback.",
+      icon: GitBranch,
+    },
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Separate automated checks from launch acceptance.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

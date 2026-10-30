@@ -27,6 +27,11 @@ const getToday = () => Math.floor(Date.now() / DAY_IN_MS) * DAY_IN_MS;
 // Cached HTML must never advertise an expired badge before hydration.
 const getServerToday = () => null;
 
+// The custom header and banner own docs identity; omit the empty default link.
+export function DocsSidebarNavTitle() {
+  return null;
+}
+
 function subscribeToDayChange(onChange: () => void) {
   let timer: ReturnType<typeof setTimeout>;
 

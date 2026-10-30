@@ -13,6 +13,7 @@ import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
 import {
   DocsSidebarItem,
+  DocsSidebarNavTitle,
   DocsSidebarPublications,
 } from "@/components/docs/docs-sidebar-items";
 
@@ -102,6 +103,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
           <DocsLayout
             tree={docsTree}
             {...baseOptions()}
+            slots={{ navTitle: DocsSidebarNavTitle }}
             containerProps={{
               style: {
                 "--fd-banner-height": "var(--fd-nav-height)",
