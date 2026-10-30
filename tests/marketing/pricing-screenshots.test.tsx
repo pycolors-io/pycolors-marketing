@@ -74,7 +74,7 @@ describe("Starter Pro pricing screenshots", () => {
       "What’s included in each product",
     );
     expect(preview.nextElementSibling).toHaveAccessibleName(
-      "A starting point tailored to your product.",
+      "An assisted start, scoped to your product.",
     );
     expect(preview).toHaveTextContent(
       "not proof of a live deployment, a completed payment, or a verified integration",
@@ -103,7 +103,7 @@ describe("Starter Pro pricing screenshots", () => {
     ).toEqual([
       `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time`,
       "Starter FreeFreePublic repository",
-      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time · Launch price`,
+      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time`,
     ]);
     for (const [name, values] of [
       [

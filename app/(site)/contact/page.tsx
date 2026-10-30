@@ -116,7 +116,10 @@ export default function ContactPage() {
               />
               <p>
                 <strong>A helpful first message</strong>
-                The product, a little project context and your question.
+                The product, a little project context and your question. For
+                Starter Pro setup or adaptation, include your workflow, target
+                environment, requested changes and budget range so we can define
+                a written scope.
               </p>
             </div>
           </section>

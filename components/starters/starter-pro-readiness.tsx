@@ -11,6 +11,8 @@ import {
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { SiteButton } from "@/components/site-button";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 
 const foundations = [
   {
@@ -129,73 +131,67 @@ export function StarterProImplementation() {
       aria-labelledby="starter-pro-implementation-heading"
       className="scroll-mt-24"
     >
-      <div className="grid gap-8 rounded-[5px] border border-pro-border bg-pro-surface p-6 sm:p-8 lg:grid-cols-[1.25fr_1fr] lg:gap-12">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-            Scoped implementation · Separate engagement
-          </p>
-          <h2
-            id="starter-pro-implementation-heading"
-            className="mt-4 text-2xl font-semibold tracking-subheading sm:text-3xl"
+      <MarketingSectionHeader
+        titleId="starter-pro-implementation-heading"
+        align="left"
+        eyebrow="Optional services · Written quote"
+        title="An assisted start, scoped to your product."
+        description={`The complete source licence is ${PRODUCT_DISPLAY["starter-pro"].priceLabel}. Choose an engagement when you want help with setup or a specific business workflow.`}
+      />
+      <div className="grid gap-4 lg:grid-cols-2">
+        {Object.values(STARTER_PRO_SERVICES).map((service) => (
+          <article
+            key={service.id}
+            aria-labelledby={`${service.id}-heading`}
+            className="flex min-w-0 flex-col rounded-[5px] border border-border-subtle bg-card p-6 sm:p-8"
           >
-            A starting point tailored to your product.
-          </h2>
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">
-            Discuss a focused engagement around the source licence, initial
-            configuration, an agreed product adaptation and a documented
-            handover. Scope, acceptance checks, price and support period are
-            agreed in writing before work begins.
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <SiteButton asChild>
-              <Link href="/contact">Discuss your project</Link>
-            </SiteButton>
-            <Link
-              href="/docs/starter-pro/implementation-support"
-              className="inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            <h3
+              id={`${service.id}-heading`}
+              className="text-lg font-semibold tracking-tight"
             >
-              Review scope and handover
-              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-        <ol className="divide-y divide-pro-border-subtle border-y border-pro-border-subtle">
-          {[
-            [
-              "Define the outcome",
-              "Choose the workflow, environment and acceptance criteria.",
-            ],
-            [
-              "Configure and adapt",
-              "Agree on the initial setup and the specific changes to deliver.",
-            ],
-            [
-              "Validate and hand over",
-              "Review the result, operating notes and bounded follow-up support.",
-            ],
-          ].map(([title, detail], index) => (
-            <li key={title} className="flex gap-4 py-5">
-              <span
-                className="pt-0.5 font-mono text-[10px] text-muted-foreground"
-                aria-hidden="true"
-              >
-                0{index + 1}
-              </span>
-              <div>
-                <h3 className="text-sm font-medium">{title}</h3>
-                <p className="mt-2 text-xs leading-6 text-muted-foreground">
-                  {detail}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
+              {service.title}
+            </h3>
+            <p className="mt-4 font-brand text-3xl font-semibold tracking-tight">
+              {service.priceLabel}
+            </p>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">
+              {service.description}
+            </p>
+            <ul className="my-6 space-y-3 border-y border-border-subtle py-5">
+              {service.features.map((feature) => (
+                <li key={feature} className="flex gap-3 text-sm leading-6">
+                  <ShieldCheck
+                    className="mt-1 size-4 shrink-0 text-primary"
+                    aria-hidden="true"
+                  />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
+              {service.scope}
+            </p>
+            <SiteButton variant="outline" asChild className="w-full">
+              <Link href="/contact">{service.action}</Link>
+            </SiteButton>
+          </article>
+        ))}
       </div>
-      <p className="mt-3 text-xs leading-6 text-muted-foreground">
-        The source licence is available separately at the displayed product
-        price. Bespoke implementation and ongoing operations are scoped
-        separately; service commitments follow the agreed offer.
-      </p>
+      <div className="mt-5 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
+        <p className="max-w-3xl">
+          Starting service fees. The source licence and provider costs are
+          itemized separately in your quote. Deliverables, acceptance checks,
+          total price and follow-up support are agreed in writing before work
+          begins.
+        </p>
+        <Link
+          href="/docs/starter-pro/implementation-support"
+          className="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium text-foreground hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        >
+          Review scope and handover
+          <ArrowUpRight className="size-3.5" aria-hidden="true" />
+        </Link>
+      </div>
     </MarketingSectionShell>
   );
 }

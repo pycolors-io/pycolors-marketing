@@ -71,7 +71,7 @@ describe("Starter upgrade page", () => {
     });
     expect(within(purchase).getByText(product.priceLabel)).toBeVisible();
     expect(purchase).toHaveTextContent(
-      `Planned regular price ${product.regularPriceLabel}`,
+      "Complete source licence. Implementation services are quoted separately.",
     );
     expect(purchase).toHaveTextContent("One-time payment");
     expect(purchase).toHaveTextContent(

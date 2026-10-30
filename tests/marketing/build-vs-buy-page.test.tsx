@@ -113,7 +113,7 @@ describe("Build versus buy decision page", () => {
       "Starter Free uses mocked auth, billing and product data.",
     );
     expect(nextStep).toHaveTextContent(
-      `Planned regular price ${PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}`,
+      "Provider costs and implementation services are separate.",
     );
     expect(nextStep).toHaveTextContent(
       "after payment confirmation and delivery processing",

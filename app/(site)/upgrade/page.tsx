@@ -48,8 +48,7 @@ export const metadata: Metadata = {
   },
 };
 const PRICING = {
-  launch: PRODUCT_DISPLAY["starter-pro"].priceLabel,
-  regular: PRODUCT_DISPLAY["starter-pro"].regularPriceLabel,
+  source: PRODUCT_DISPLAY["starter-pro"].priceLabel,
 } as const;
 
 const foundations = [
@@ -149,8 +148,8 @@ const faqs = [
     ],
   },
   {
-    question: "What does the launch offer include?",
-    answer: `Starter Pro is available for ${PRICING.launch} as a one-time purchase, with a planned regular price of ${PRICING.regular}. It includes the source package and commercial usage under the PyColors license.`,
+    question: "What does the source licence include?",
+    answer: `Starter Pro is available for ${PRICING.source} as a one-time source licence. Implementation services are quoted separately. It includes the source package and commercial usage under the PyColors license.`,
     links: [{ href: "/pricing", label: "Review pricing" }],
   },
   {
@@ -229,19 +228,20 @@ export default function UpgradePage() {
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-medium">Starter Pro</p>
               <Badge variant="outline" className="bg-background text-[11px]">
-                Launch offer
+                Source licence
               </Badge>
             </div>
             <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-4xl font-semibold tracking-[-0.04em]">
-                {PRICING.launch}
+                {PRICING.source}
               </span>
               <span className="text-xs text-muted-foreground">
                 One-time payment
               </span>
             </div>
             <p className="mt-2 text-xs leading-6 text-muted-foreground">
-              Planned regular price {PRICING.regular}
+              Complete source licence. Implementation services are quoted
+              separately.
             </p>
             <ul
               className="my-5 space-y-3"
@@ -258,7 +258,7 @@ export default function UpgradePage() {
               ))}
             </ul>
             <BuyStarterProButton
-              label={`Buy Starter Pro — ${PRICING.launch}`}
+              label={`Buy Starter Pro — ${PRICING.source}`}
               className="shadow-none hover:shadow-none"
             />
             <p className="mt-4 text-xs leading-6 text-muted-foreground">
@@ -576,7 +576,7 @@ export default function UpgradePage() {
           </div>
           <div>
             <BuyStarterProButton
-              label={`Upgrade to Starter Pro — ${PRICING.launch}`}
+              label={`Upgrade to Starter Pro — ${PRICING.source}`}
               className="shadow-none hover:shadow-none"
             />
             <p className="mt-3 text-xs leading-6 text-muted-foreground">

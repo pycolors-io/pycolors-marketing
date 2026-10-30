@@ -72,7 +72,7 @@ describe("Starter discovery page", () => {
       within(pro).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
     ).toBeVisible();
     expect(pro).toHaveTextContent(
-      `Regular price planned at ${PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}`,
+      "Complete source licence. Implementation services are quoted separately.",
     );
     expect(pro).toHaveTextContent("One-time payment");
     expect(pro).toHaveTextContent(

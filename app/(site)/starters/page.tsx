@@ -59,8 +59,7 @@ export const metadata: Metadata = {
   },
 };
 
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
+const sourcePrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 const demoUrl = "https://starter-demo.pycolors.io";
 const repositoryUrl = "https://github.com/pycolors-io/pycolors-starter-free";
 
@@ -91,9 +90,10 @@ const offers = [
     label: "Connect your product",
     description:
       "Build on authentication, billing and database foundations. Focus on your product logic.",
-    price: launchPrice,
+    price: sourcePrice,
     access: "One-time payment",
-    priceNote: `Current launch price. Regular price planned at ${regularPrice}.`,
+    priceNote:
+      "Complete source licence. Implementation services are quoted separately.",
     previewId: "starter-pro",
     scope: "Auth, billing & data foundations",
     highlights: [

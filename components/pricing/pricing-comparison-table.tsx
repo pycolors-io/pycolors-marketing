@@ -191,7 +191,7 @@ export function PricingComparisonTable() {
                 [
                   "Starter Pro",
                   PRODUCT_DISPLAY["starter-pro"].priceLabel,
-                  "One-time · Launch price",
+                  "One-time",
                 ],
               ].map(([name, price, payment]) => (
                 <th

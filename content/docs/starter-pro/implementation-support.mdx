@@ -10,6 +10,8 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { BookOpen, FileText, Layers3, ShieldCheck } from "lucide-react";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
 import { DocsLinks } from "@/components/docs/docs-links";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 
 ## Choose your starting point
 
@@ -19,6 +21,7 @@ import { DocsLinks } from "@/components/docs/docs-links";
   items={[
     {
       title: "Source licence",
+      eyebrow: PRODUCT_DISPLAY["starter-pro"].priceLabel,
       icon: FileText,
       description:
         "The displayed Starter Pro price covers the source package and the rights in its licence.",
@@ -41,6 +44,29 @@ import { DocsLinks } from "@/components/docs/docs-links";
     },
   ]}
 />
+
+## Optional implementation services
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={Object.values(STARTER_PRO_SERVICES).map((service) => ({
+    title: service.title,
+    eyebrow: service.priceLabel,
+    description: service.description,
+    icon: Layers3,
+    items: [...service.features, service.scope],
+    href: "/contact",
+    cta: service.action,
+  }))}
+/>
+
+These are starting service fees. The source licence and third-party provider
+costs are itemized separately in your quote. Confirm the deliverables, target
+environment, acceptance checks, total price and included follow-up in writing
+before work begins. A quote can exceed the displayed starting price.
+
+## Standard starter support
 
 Installation guidance and reproducible defects in the supplied starter belong
 to the support scope of your purchased offer. Purchase access and recovery use
@@ -94,6 +120,15 @@ A written engagement can define the following steps with PyColors:
 
   </Step>
 </Steps>
+
+## Adapt one shared foundation
+
+Use the included workspaces, projects, assigned tasks, due dates and discussions
+as the first reusable business example. Keep branding and product settings in
+their documented entry points, and build domain-specific workflows on that
+baseline. A specialized workflow or integration belongs in the agreed scope and
+acceptance criteria. Review [included capabilities](/docs/starter-pro/what-is-included)
+before defining your adaptation.
 
 ## Prepare for handover
 

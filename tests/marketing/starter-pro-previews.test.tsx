@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import StarterProPage, { metadata } from "../../app/(site)/starters/pro/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -35,15 +36,21 @@ describe("Starter Pro product page", () => {
       }),
     ).toHaveAttribute("href", "/docs/starter-pro/release-readiness");
     const service = screen.getByRole("region", {
-      name: "A starting point tailored to your product.",
+      name: "An assisted start, scoped to your product.",
     });
-    expect(service).toHaveTextContent("Separate engagement");
+    expect(service).toHaveTextContent("Optional services");
     expect(service).toHaveTextContent(
-      "price and support period are agreed in writing",
+      "total price and follow-up support are agreed in writing",
     );
-    expect(
-      within(service).getByRole("link", { name: "Discuss your project" }),
-    ).toHaveAttribute("href", "/contact");
+    expect(service).toHaveTextContent("itemized separately in your quote");
+    expect(within(service).getAllByRole("article")).toHaveLength(2);
+    for (const offer of Object.values(STARTER_PRO_SERVICES)) {
+      const card = within(service).getByRole("article", { name: offer.title });
+      expect(card).toHaveTextContent(offer.priceLabel);
+      expect(
+        within(card).getByRole("link", { name: offer.action }),
+      ).toHaveAttribute("href", "/contact");
+    }
     expect(
       within(service).queryByRole("button", { name: /Buy Starter Pro/u }),
     ).toBeNull();
@@ -376,7 +383,7 @@ describe("Starter Pro product page", () => {
     });
     expect(offer).toHaveTextContent(PRODUCT_DISPLAY["starter-pro"].priceLabel);
     expect(offer).toHaveTextContent(
-      `Regular price planned at ${PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}`,
+      "Complete source licence. Provider costs and implementation services are separate.",
     );
     expect(offer).toHaveTextContent("One-time payment");
     expect(offer).toHaveTextContent(

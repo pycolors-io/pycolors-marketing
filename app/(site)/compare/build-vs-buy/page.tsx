@@ -148,7 +148,7 @@ const comparisonRows = [
       "Estimate build effort and recurring infrastructure costs for your own stack.",
     pro: `${starterProPrice} + adaptation + services.`,
     proDetail:
-      "One-time launch price for the source. Hosting, database, email and other providers are separate.",
+      "One-time source licence. Hosting, database, email and other providers are separate.",
   },
   {
     factor: "Long-term ownership",
@@ -625,7 +625,7 @@ export default function BuildVsBuyComparisonPage() {
                 <div className="border-t border-border-subtle pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <h3 className="text-sm font-medium">Starter Pro</h3>
-                    <Badge variant="secondary">Launch offer</Badge>
+                    <Badge variant="secondary">Source licence</Badge>
                   </div>
                   <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <p className="text-3xl font-semibold tracking-tight">
@@ -636,8 +636,7 @@ export default function BuildVsBuyComparisonPage() {
                     </span>
                   </div>
                   <p className="mt-2 text-xs leading-6 text-muted-foreground">
-                    Planned regular price{" "}
-                    {PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}
+                    Provider costs and implementation services are separate.
                   </p>
                   <BuyStarterProButton
                     className="mt-5"

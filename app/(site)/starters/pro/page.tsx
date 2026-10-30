@@ -79,8 +79,7 @@ export const metadata: Metadata = {
   },
 };
 
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
+const sourcePrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 const starterProJsonLd = generateProductOfferJsonLd({
   product: PRODUCT_DISPLAY["starter-pro"],
@@ -584,14 +583,15 @@ export default function StarterProPage() {
               </div>
               <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                 <span className="font-brand text-5xl font-semibold tracking-tight">
-                  {launchPrice}
+                  {sourcePrice}
                 </span>
                 <span className="text-xs text-muted-foreground">
                   One-time payment
                 </span>
               </p>
               <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                Current launch price. Regular price planned at {regularPrice}.
+                Complete source licence. Provider costs and implementation
+                services are separate.
               </p>
               <ul className="my-6 space-y-3">
                 <StarterProCheckItem>
@@ -1122,7 +1122,7 @@ export default function StarterProPage() {
             </div>
             <div className="flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
               <p className="text-sm">
-                {launchPrice} · One-time payment · Full source code
+                {sourcePrice} · One-time payment · Full source code
               </p>
               <p className="text-xs leading-6 text-muted-foreground">
                 Legal scope and usage terms are governed by{" "}

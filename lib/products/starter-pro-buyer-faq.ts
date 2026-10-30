@@ -3,6 +3,8 @@ import {
   PURCHASE_SUPPORT_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
 } from "./commercial-policy";
+import { PRODUCT_DISPLAY } from "./public-catalog";
+import { STARTER_PRO_SERVICES } from "./starter-pro-services";
 
 interface BuyerFaq {
   readonly question: string;
@@ -40,8 +42,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "Can I discuss a tailored implementation?",
-    answer:
-      "Yes. Contact PyColors to discuss initial configuration, a specific product adaptation, acceptance checks and handover. Implementation is a separate engagement quoted after scope review; price, support period and commitments are agreed in writing before work begins.",
+    answer: `Yes. The complete source licence is ${PRODUCT_DISPLAY["starter-pro"].priceLabel}. Guided setup starts at ${STARTER_PRO_SERVICES.setup.priceLabel.replace("From ", "")} and business adaptation at ${STARTER_PRO_SERVICES.adaptation.priceLabel.replace("From ", "")}. These are separate service engagements; the source licence and provider costs are itemized separately. Scope, deliverables, acceptance checks, total price and support period are agreed in writing before work begins.`,
     links: [
       {
         href: "/docs/starter-pro/implementation-support",

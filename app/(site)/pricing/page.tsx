@@ -71,8 +71,7 @@ const EXTERNAL = { starterDemo: "https://starter-demo.pycolors.io" } as const;
 const PRICING = {
   naAiLanding: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
   starterFree: STARTER_FREE_PRICE_LABEL,
-  starterProLaunch: PRODUCT_DISPLAY["starter-pro"].priceLabel,
-  starterProRegular: PRODUCT_DISPLAY["starter-pro"].regularPriceLabel,
+  starterPro: PRODUCT_DISPLAY["starter-pro"].priceLabel,
 } as const;
 
 const pricingJsonLd = {
@@ -160,8 +159,8 @@ const offers = [
     category: "Build your SaaS business",
     description:
       "Connected accounts, workspaces, billing and project workflows, with automated checks and buyer guides.",
-    price: PRICING.starterProLaunch,
-    payment: "One-time payment · Launch price",
+    price: PRICING.starterPro,
+    payment: "One-time payment · Complete source licence",
     features: [
       "Full Starter Pro source code",
       "Auth.js, revocable sessions and profile editing",
@@ -245,8 +244,8 @@ const faqs = [
     answer: DIGITAL_REFUND_SUMMARY,
   },
   {
-    question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
-    answer: `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
+    question: "Does the Starter Pro licence include implementation?",
+    answer: `The ${PRICING.starterPro} one-time purchase covers the complete source licence. Assisted setup and business adaptations are separate engagements, quoted with written deliverables and acceptance criteria.`,
   },
 ] as const;
 
@@ -254,7 +253,7 @@ export default function PricingPage() {
   return (
     <Container className="pb-12 pt-20 sm:pb-16 sm:pt-24">
       <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
-      <div className="w-full min-w-0">
+      <main id="content" tabIndex={-1} className="w-full min-w-0">
         <PageHero
           variant="compact"
           maxWidth="4xl"
@@ -272,6 +271,7 @@ export default function PricingPage() {
             ["#pricing-offers", "Products"],
             ["#pricing-comparison", "Compare features"],
             ["#pricing-preview", "Product preview"],
+            ["#implementation", "Services"],
             ["#pricing-faq", "FAQ"],
           ].map(([href, label]) => (
             <a
@@ -346,7 +346,7 @@ export default function PricingPage() {
                 <div className="mt-6">
                   {offer.id === "starter-pro" ? (
                     <BuyStarterProButton
-                      label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
+                      label={`Buy Starter Pro — ${PRICING.starterPro}`}
                     />
                   ) : offer.id === "na-ai-landing" ? (
                     <BuyProductButton
@@ -396,9 +396,9 @@ export default function PricingPage() {
           </div>
           <div className="mt-5 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
-              Paid products are one-time purchases. Starter Pro is currently{" "}
-              {PRICING.starterProLaunch}; regular price planned at{" "}
-              {PRICING.starterProRegular}.
+              Paid products are one-time purchases. The complete Starter Pro
+              source licence is {PRICING.starterPro}. Implementation services
+              are quoted separately.
             </p>
             <a
               href="#pricing-comparison"
@@ -568,7 +568,7 @@ export default function PricingPage() {
           </Link>
           .
         </p>
-      </div>
+      </main>
     </Container>
   );
 }

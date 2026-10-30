@@ -40,6 +40,7 @@ const approved = new Set([
   "lib/api/checkout-navigation.ts",
   "lib/docs/ui-explorer.ts",
   "lib/products/public-catalog.ts",
+  "lib/products/starter-pro-services.ts",
   "lib/seo/breadcrumb.ts",
   "lib/seo/website.ts",
   "lib/version.ts",
@@ -181,7 +182,8 @@ describe("homepage ownership and source contract", () => {
     expect(links.size).toBeGreaterThan(15);
     for (const href of links) {
       if (!href.startsWith("/")) continue;
-      const path = href.replace(/^\//, "");
+      // Fragment targets are exercised by the destination's navigation tests.
+      const path = href.split(/[?#]/u)[0]!.replace(/^\//, "");
       const candidates = path.startsWith("docs/")
         ? [`content/${path}.mdx`, `content/${path}/index.mdx`]
         : [`app/(site)/${path}/page.tsx`, `app/(tools)/${path}/page.tsx`];

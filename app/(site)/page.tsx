@@ -35,6 +35,7 @@ import {
 import { SaasShowcase } from "@/components/marketing/showcase/saas-showcase";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { UI_VERSION } from "@/lib/version";
 import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
@@ -570,7 +571,7 @@ export default function HomePage() {
                       {starterPro.priceLabel}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      Launch price
+                      One-time payment
                     </span>
                   </p>
                 </div>
@@ -600,8 +601,8 @@ export default function HomePage() {
                   <ResourceLink href="/pricing">
                     Compare product pricing
                   </ResourceLink>
-                  <ResourceLink href="/docs/starter-pro/implementation-support">
-                    Plan a scoped implementation
+                  <ResourceLink href="/pricing#implementation">
+                    {`Guided setup · ${STARTER_PRO_SERVICES.setup.priceLabel}`}
                   </ResourceLink>
                 </div>
               </div>
