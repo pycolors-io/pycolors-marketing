@@ -55,6 +55,7 @@ const GROUPS = [
       { label: "Purchase support", href: "/orders/support" },
       { label: "Recover purchase", href: "/orders/recover" },
       { label: "Contact", href: "/contact" },
+      { label: "Request a quote", href: "/request-a-quote" },
     ],
   },
 ] as const;
