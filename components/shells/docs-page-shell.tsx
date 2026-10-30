@@ -8,7 +8,11 @@ type DocsPageShellProps = Readonly<{
 
 export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
   return (
-    <section className="w-full min-w-0 max-w-full">
+    <section
+      id="content"
+      tabIndex={-1}
+      className="w-full min-w-0 max-w-full scroll-mt-28"
+    >
       <div
         className={cn(
           "mx-auto w-full min-w-0",
