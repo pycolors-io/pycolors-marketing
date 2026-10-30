@@ -20,7 +20,7 @@ describe("pricing screenshot assets", () => {
     ];
     expect(captures.map(([, path]) => path)).toEqual([
       "/images/starters/pro/auth-pycolors.png",
-      "/images/starters/pro/pwa-pycolors.png",
+      "/images/starters/pro/project-work-pycolors.png",
     ]);
     for (const [, path, width, height] of captures) {
       const bytes = readFileSync(resolve(marketing, `public${path}`));

@@ -1,0 +1,58 @@
+---
+title: Production operations
+description: Prepare diagnostics, health checks, error references, alert routing and a verified restore procedure.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+## Diagnose your environment
+
+Run `pnpm ops:diagnose` from the installed starter. It checks core configuration,
+email, paired OAuth credentials, billing completeness and demo/seed isolation.
+Output contains check codes and remediation rather than secret values. An
+unconfigured optional billing integration leaves checkout unavailable.
+
+Configure HTTPS, your own credentials and a migrated database before rollout.
+Disable development fixtures and keep demo deployments on a separate database.
+Diagnostics do not contact providers to certify their configuration.
+
+## Monitor and alert
+
+| Signal              | Purpose                                                                    |
+| ------------------- | -------------------------------------------------------------------------- |
+| `/api/health`       | Uncached process liveness                                                  |
+| `/api/readiness`    | Configuration and required schema checks; HTTP 200 or 503                  |
+| `pnpm ops:check`    | Five-second readiness probe; structured result and nonzero exit on failure |
+| `starter-pro.error` | Controlled request/billing failure code and correlation reference          |
+
+Connect these signals to your platform's monitoring. Choose an operator and
+destination for repeated readiness failures and billing webhook failures, then
+exercise a deliberate staging incident and recovery. The starter supplies hooks;
+it does not provision a monitoring account or send alerts to a preset recipient.
+
+Use references to investigate failures alongside provider dashboards and failed
+webhook receipts. Fix the cause before resending an event from Stripe. Duplicate
+retries are reconciled; manually granting plans or deleting billing history is
+not a recovery procedure.
+
+## Rehearse restoration
+
+With PostgreSQL client tools matching the server major version, run:
+
+```sh
+STARTER_PRO_TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5433/pycolors_workspace_restore pnpm ops:verify-restore
+```
+
+This creates two disposable localhost databases, migrates and seeds synthetic
+data, backs it up, restores it in a transaction and compares every table's row
+count and fingerprint. It removes the databases it created and retains a report.
+It cannot target an existing application database.
+
+For production, configure encrypted backups and retention with your operator.
+Restore an actual backup into a restricted isolated environment and record the
+recovery point, verification and access procedure. A synthetic drill does not
+establish the freshness or accessibility of a production backup.
+
+Keep the previous application artifact and review schema/session compatibility
+before rollback. Follow [customization and upgrades](/docs/starter-pro/customization-and-upgrades)
+and the full `docs/operations.md` shipped with the source.

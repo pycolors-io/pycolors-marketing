@@ -4,13 +4,16 @@
     "index",
     "why-buy-instead-of-building",
     "what-is-included",
+    "release-readiness",
     "architecture",
     "getting-started",
+    "implementation-support",
     "purchase-recovery",
     "purchase-documents",
     "local-development",
     "testing-fixtures",
     "environment-variables",
+    "customization-and-upgrades",
     "deployment",
     "pwa",
     "pwa-setup",
@@ -22,6 +25,7 @@
     "backend",
     "delivery",
     "production-checklist",
+    "operations",
     "releases-history"
   ]
 }

@@ -23,6 +23,35 @@ function renderPreviews() {
 }
 
 describe("Starter Pro product page", () => {
+  it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {
+    render(<StarterProPage />);
+    const readiness = screen.getByRole("region", {
+      name: "More of the product journey, already connected.",
+    });
+    expect(within(readiness).getAllByRole("article")).toHaveLength(6);
+    expect(
+      within(readiness).getByRole("link", {
+        name: "Inspect the packaging gate",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/release-readiness");
+    const service = screen.getByRole("region", {
+      name: "A starting point tailored to your product.",
+    });
+    expect(service).toHaveTextContent("Separate engagement");
+    expect(service).toHaveTextContent(
+      "price and support period are agreed in writing",
+    );
+    expect(
+      within(service).getByRole("link", { name: "Discuss your project" }),
+    ).toHaveAttribute("href", "/contact");
+    expect(
+      within(service).queryByRole("button", { name: /Buy Starter Pro/u }),
+    ).toBeNull();
+    expect(
+      screen.getByRole("region", { name: "Starter Pro" }),
+    ).toHaveTextContent(PRODUCT_DISPLAY["starter-pro"].priceLabel);
+  });
+
   it("keeps all five previews and their explanations without full-size links", () => {
     const region = renderPreviews();
     const images = within(region).getAllByRole("img", { hidden: true });
@@ -41,7 +70,7 @@ describe("Starter Pro product page", () => {
         "pricing",
         "not the purchase terms for the Starter Pro source package",
       ],
-      ["Offline fallback", "pwa", "does not mean every feature works offline"],
+      ["Project work", "project-work", "Archived projects remain readable"],
     ].entries()) {
       const image = images[index]!;
       expect(image).toHaveAccessibleName(/Starter Pro/u);
@@ -91,7 +120,7 @@ describe("Starter Pro product page", () => {
     fireEvent.click(previous);
     fireEvent.click(previous);
     expect(
-      within(region).getByRole("group", { name: "5 of 5: Offline fallback" }),
+      within(region).getByRole("group", { name: "5 of 5: Project work" }),
     ).toBeVisible();
     expect(
       within(region).getByRole("button", { name: "Play slideshow" }),
@@ -198,7 +227,7 @@ describe("Starter Pro product page", () => {
       "Authentication",
       "Billing",
       "Pricing example",
-      "Offline fallback",
+      "Project work",
       "Dashboard",
     ]) {
       act(() => vi.advanceTimersByTime(5000));
@@ -308,6 +337,8 @@ describe("Starter Pro product page", () => {
     const links = within(navigation).getAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "#product-preview",
+      "#readiness",
+      "#implementation",
       "#included",
       "#purchase",
       "#free-vs-pro",

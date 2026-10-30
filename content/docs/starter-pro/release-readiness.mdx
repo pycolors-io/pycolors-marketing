@@ -1,0 +1,45 @@
+---
+title: Validation and release readiness
+description: Inspect the packaging gate, billing regressions and browser coverage supplied with Starter Pro.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+## Check the delivered foundation
+
+Starter Pro connects account creation, workspace onboarding, invitations and a
+first project to a persisted application. Its validation follows those journeys.
+
+| Layer            | Automated evidence                                                                                                                                      | Your launch acceptance                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Buyer package    | Extract outside the monorepo, install the frozen lockfile, migrate an empty database, run unit tests, compile and complete a first-user browser journey | Install the delivered release with your environment                         |
+| Billing          | Signed, simulated-provider PostgreSQL regressions for simultaneous/duplicate/reordered events, failed payments, cancellations and replay                | Validate your Stripe sandbox, webhook destination and offered plans         |
+| Product journeys | Onboarding, live workspace access, task/comment persistence and account flows                                                                           | Check your own domain rules and permissions                                 |
+| Interface        | English/French, Customize, mobile/desktop, both themes and accessibility checks                                                                         | Review your content, branding and adaptations                               |
+| Operations       | Configuration diagnostics, health/readiness and a backup/restore drill with synthetic data                                                              | Configure monitoring, alert destinations and recoverable production backups |
+
+The required CI validation gate waits for source validation and the selected
+browser suite. A skipped or missing selected check cannot make the gate pass.
+Provider interception keeps these tests independent of live email and payments.
+It does not establish live delivery or a successful real transaction.
+
+## Know what you receive
+
+The ZIP includes a standalone manifest, lockfile, reviewed dependency patches,
+Prisma migrations and buyer guides. `PYCOLORS_RELEASE.json` records its version,
+source commit and source-file hashes. Save it with the original delivery before
+customizing the application. The inventory identifies a baseline; intentional
+edits naturally change file hashes.
+
+The included `docs/quickstart.md`, `docs/customization.md`, `docs/upgrading.md`,
+`docs/operations.md` and `docs/support.md` remain available with your source.
+
+## Keep the boundary clear
+
+Application billing belongs to the **user account**. Workspace creation and
+resource quotas are configurable and **uncapped by default**. Organization-owned
+billing is an extension requiring its own ownership and migration design.
+
+The source licence, your application's subscription and a separately agreed
+implementation service are distinct purchases. Read [included scope](/docs/starter-pro/what-is-included),
+[operations](/docs/starter-pro/operations) and [implementation/support](/docs/starter-pro/implementation-support).

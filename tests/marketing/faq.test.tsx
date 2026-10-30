@@ -85,7 +85,7 @@ describe("Marketing FAQ integration", () => {
     {
       Page: StarterProPage,
       title: "Questions buyers ask before paying",
-      count: 14,
+      count: starterProBuyerFaqs.length,
     },
     { Page: TemplatePage, title: "Questions before buying", count: 5 },
     { Page: UpgradePage, title: "Clear scope. Clear decision.", count: 6 },

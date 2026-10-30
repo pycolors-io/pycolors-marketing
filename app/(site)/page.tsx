@@ -182,9 +182,9 @@ const trustLinks = [
 function StarterScope({ pro = false }: { pro?: boolean }) {
   const rows = pro
     ? [
-        ["Interface", "Application foundation"],
-        ["Services", "Auth, database, billing & email"],
-        ["Next step", "Configure, integrate, validate"],
+        ["Interface", "FR/EN, Customize & real workspace data"],
+        ["Services", "Accounts, billing, projects & team workflows"],
+        ["Handover", "Validated ZIP, guides & operational checks"],
       ]
     : [
         ["Interface", "Runnable frontend"],
@@ -502,7 +502,7 @@ export default function HomePage() {
               titleId="home-production-heading"
               eyebrow="From evaluation to implementation"
               title="Choose the infrastructure your project needs."
-              description="Starter Free demonstrates application UX with mock data. Starter Pro supplies the documented infrastructure foundation; your project still needs configuration, integration and production checks."
+              description="Explore app UX with Starter Free, then build on persisted workspaces, billing and project workflows with Starter Pro. Inspect the included source, validation and handover. Your launch still needs configuration, integration and production checks."
               align="left"
               className={sectionHeaderClass}
             />
@@ -575,9 +575,9 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground lg:min-h-21">
-                  Auth.js, Prisma/PostgreSQL, Stripe billing, transactional
-                  email, protected routes and PWA foundations. Review included
-                  scope and setup before buying.
+                  Accounts, team workspaces, Stripe billing and projects with
+                  assigned tasks and discussions. Start with a validated ZIP,
+                  product configuration and a documented path to operations.
                 </p>
                 <StarterScope pro />
                 <div className="mt-7">
@@ -599,6 +599,9 @@ export default function HomePage() {
                   </ResourceLink>
                   <ResourceLink href="/pricing">
                     Compare product pricing
+                  </ResourceLink>
+                  <ResourceLink href="/docs/starter-pro/implementation-support">
+                    Plan a scoped implementation
                   </ResourceLink>
                 </div>
               </div>

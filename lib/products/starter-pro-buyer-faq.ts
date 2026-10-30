@@ -17,6 +17,40 @@ interface BuyerFaq {
 // These answers explain the next buyer action; they do not define new terms.
 export const starterProBuyerFaqs = [
   {
+    question: "What validation comes with the source?",
+    answer:
+      "Packaging requires a standalone ZIP install, empty-database migrations, a production build and a first-user browser journey. PostgreSQL and browser suites cover billing reconciliation, workspaces, project tasks, English/French and Customize with synthetic data. Configure and validate your own providers before launch.",
+    links: [
+      {
+        href: "/docs/starter-pro/release-readiness",
+        label: "Inspect validation and launch checks",
+      },
+    ],
+  },
+  {
+    question: "Is billing owned by a workspace or a person?",
+    answer:
+      "Billing belongs to the user account. Multiple workspaces and resource quotas are configurable; quotas are uncapped by default. Organization-owned billing requires a separate extension and ownership design.",
+    links: [
+      {
+        href: "/docs/starter-pro/what-is-included",
+        label: "Review billing and workspace boundaries",
+      },
+    ],
+  },
+  {
+    question: "Can I discuss a tailored implementation?",
+    answer:
+      "Yes. Contact PyColors to discuss initial configuration, a specific product adaptation, acceptance checks and handover. Implementation is a separate engagement quoted after scope review; price, support period and commitments are agreed in writing before work begins.",
+    links: [
+      {
+        href: "/docs/starter-pro/implementation-support",
+        label: "Review implementation scope",
+      },
+      { href: "/contact", label: "Discuss your project" },
+    ],
+  },
+  {
     question: "What should I prepare before local setup?",
     answer:
       "Review the Node.js and pnpm requirements in your downloaded release, prepare a local PostgreSQL database, and follow the environment guide for the integrations you want to test. Buying the source code does not provision your database, email sender, OAuth apps, or Stripe account.",

@@ -12,7 +12,7 @@ const page = readFileSync(
 );
 
 describe("Starter Pro preview assets", () => {
-  it("uses five existing PNGs, including the refreshed dashboard capture", () => {
+  it("uses five existing PNGs, from the refreshed synthetic workspace", () => {
     const captures = [
       ...page.matchAll(/image: "(\/images\/starters\/pro\/[^"\n]+)"/gu),
     ];
@@ -21,16 +21,14 @@ describe("Starter Pro preview assets", () => {
       "/images/starters/pro/auth-pycolors.png",
       "/images/starters/pro/billing-pycolors.png",
       "/images/starters/pro/pricing-pycolors.png",
-      "/images/starters/pro/pwa-pycolors.png",
+      "/images/starters/pro/project-work-pycolors.png",
     ]);
-    const legacyHeights = [1928, 2752, 5426, 1926];
+    const heights = [1000, 1000, 1000, 3390, 1000];
     captures.forEach(([, path], index) => {
       const bytes = readFileSync(resolve(marketing, `public${path}`));
       expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-      if (index > 0) {
-        expect(bytes.readUInt32BE(16)).toBe(3456);
-        expect(bytes.readUInt32BE(20)).toBe(legacyHeights[index - 1]);
-      }
+      expect(bytes.readUInt32BE(16)).toBe(1440);
+      expect(bytes.readUInt32BE(20)).toBe(heights[index]);
     });
 
     const light = readFileSync(

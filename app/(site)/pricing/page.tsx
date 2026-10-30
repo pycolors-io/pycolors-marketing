@@ -24,6 +24,7 @@ import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { StarterProImplementation } from "@/components/starters/starter-pro-readiness";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Pricing",
@@ -96,21 +97,21 @@ const pricingJsonLd = {
 const starterProScreenshots = [
   {
     src: "/images/starters/pro/auth-pycolors.png",
-    width: 3456,
-    height: 1928,
+    width: 1440,
+    height: 1000,
     title: "Sign-in screen",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
     caption:
       "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
   },
   {
-    src: "/images/starters/pro/pwa-pycolors.png",
-    width: 3456,
-    height: 1926,
-    title: "Offline fallback",
-    alt: "Starter Pro offline screen with reload and dashboard links",
+    src: "/images/starters/pro/project-work-pycolors.png",
+    width: 1440,
+    height: 1000,
+    title: "Project work",
+    alt: "Starter Pro project with assigned tasks, due dates and a discussion",
     caption:
-      "Give users a clear fallback when their connection drops, with a message and navigation back to the application.",
+      "Adapt a persisted workspace workflow with assigned tasks, due dates, comments and archiving.",
   },
 ] as const;
 
@@ -158,18 +159,19 @@ const offers = [
     name: "Starter Pro",
     category: "Build your SaaS business",
     description:
-      "A SaaS foundation with authentication, payments and database integrations to build on.",
+      "Connected accounts, workspaces, billing and project workflows, with automated checks and buyer guides.",
     price: PRICING.starterProLaunch,
     payment: "One-time payment · Launch price",
     features: [
       "Full Starter Pro source code",
-      "Auth.js credentials and OAuth",
-      "Stripe Checkout and billing portal",
-      "Prisma + PostgreSQL foundations",
-      "Email and installable PWA foundations",
+      "Auth.js, revocable sessions and profile editing",
+      "Stripe billing and tested webhook reconciliation",
+      "Workspaces, project tasks and discussions",
+      "FR/EN, Customize and browser regressions",
+      "Validated ZIP, diagnostics and restore drill",
     ],
     scope:
-      "Configure your services, validate integrations and deploy your app.",
+      "Personal billing; configurable quotas are uncapped by default. Configure providers and operations for your deployment.",
     href: INTERNAL.starterPro,
     link: "Explore Starter Pro",
   },
@@ -513,6 +515,7 @@ export default function PricingPage() {
           </div>
         </MarketingSectionShell>
 
+        <StarterProImplementation />
         <MarketingSectionShell
           id="pricing-faq"
           width="full"

@@ -1,0 +1,55 @@
+---
+title: Customization and upgrades
+description: Adapt the centralized product configuration and maintain a reviewable baseline for future migrations.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+## Configure your product
+
+`config/product.ts` groups the brand, navigation, feature presentation, offer
+copy, email identity and resource limits. Keep credentials in the environment.
+
+| Setting                        | Responsibility                                                             |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| `brand`, `links`, `navigation` | Names, documentation destinations and menu structure                       |
+| `modules`                      | Presentation switches; server authorization remains independent            |
+| `email`                        | Accent, contact and Reply-To identity; the sender still needs verification |
+| `billing.trialDays`            | Checkout trial configuration                                               |
+| `workspaces.limits`            | Account workspace-creation caps                                            |
+| `entitlements`                 | Server-enforced projects, members and invitations per workspace            |
+
+Quotas default to `null`, meaning **uncapped**. Set non-negative integers when
+your own product offer requires limits and test the boundary and upgrade path.
+Billing remains personal; an organization-owned subscription needs a separate
+design.
+
+Customize provides palette, typography, geometry, interface scale and sidebar
+controls in the browser. Language and time zone are account preferences. Review
+your changes in both themes, French/English, narrow layouts and reduced motion.
+The shipped `docs/customization.md` explains the logo, icon and email entry points.
+
+## Keep an upgrade baseline
+
+Commit the original delivery into a private repository before customization.
+Retain `PYCOLORS_RELEASE.json`, the lockfile, patches, changelog, licence and order
+terms. Compare a newly available delivery against that baseline and merge your
+adaptations through review. Future-version access follows the purchased offer.
+
+## Rehearse migrations
+
+1. Review the changelog, pending SQL and environment changes.
+2. Restore a recoverable backup into restricted staging.
+3. Install the supplied lockfile and inspect `pnpm exec prisma migrate status`.
+4. Apply reviewed migrations with `pnpm exec prisma migrate deploy`.
+5. Run diagnostics, tests, a production build and your affected user journeys.
+6. Verify provider integration in a sandbox before rollout.
+
+The project-work migration adds task/comment tables and preserves existing
+projects. Keep migrations already applied to retained data immutable. Session
+registry upgrades can require users to sign in again.
+
+Retain the previous application artifact, check its schema/session compatibility
+and plan recovery before deployment. There is no automatic destructive
+down-migration. A database restore can lose writes after the chosen recovery
+point; use your incident procedure. See [operations](/docs/starter-pro/operations).

@@ -44,10 +44,10 @@ describe("Starter Pro pricing screenshots", () => {
         "email and password fields",
       ],
       [
-        "Offline fallback",
-        "Starter Pro offline screen with reload and dashboard links",
-        "pwa",
-        "when their connection drops",
+        "Project work",
+        "Starter Pro project with assigned tasks, due dates and a discussion",
+        "project-work",
+        "assigned tasks, due dates, comments and archiving",
       ],
     ]) {
       const image = within(preview).getByRole("img", { name: alt });
@@ -74,7 +74,7 @@ describe("Starter Pro pricing screenshots", () => {
       "What’s included in each product",
     );
     expect(preview.nextElementSibling).toHaveAccessibleName(
-      "Your questions, answered.",
+      "A starting point tailored to your product.",
     );
     expect(preview).toHaveTextContent(
       "not proof of a live deployment, a completed payment, or a verified integration",
@@ -116,7 +116,11 @@ describe("Starter Pro pricing screenshots", () => {
       ],
       [
         "Sessions & protected routes",
-        ["Not included", "UI structure only", "Server-side guards"],
+        [
+          "Not included",
+          "UI structure only",
+          "Revocable sessions & workspace roles",
+        ],
       ],
       [
         "Data persistence",

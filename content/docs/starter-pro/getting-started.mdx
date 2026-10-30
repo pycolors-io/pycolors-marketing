@@ -1,7 +1,7 @@
 ---
 title: Getting started
 description: See how to go from purchase to first local run with Starter Pro, and understand the fastest path from setup to launch.
-lastUpdated: "2026-09-24"
+lastUpdated: "2026-10-30"
 appliesTo: Starter Pro
 ---
 
@@ -176,10 +176,11 @@ The fastest path is validating what already exists, then replacing only what bel
     ### Install dependencies
 
 ```bash title="terminal"
-pnpm install
+cp .env.example .env
+pnpm install --frozen-lockfile
 ```
 
-    Start by installing the workspace dependencies.
+    Use Node 24.x and pnpm 10.32.1 from the extracted ZIP. Keep its lockfile and patches directory.
 
     This gives you the local baseline required to run the app,
     generate the database client,
@@ -192,25 +193,32 @@ pnpm install
 
     Start with the core variables first.
 
-```bash title=".env.local"
+```bash title=".env"
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-DATABASE_URL=
+APP_BASE_URL=http://localhost:3000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/starter_pro
 AUTH_SECRET=
+SEED_AUTH_FIXTURES=false
+SEED_DEV_USER=false
 ```
 
     Add optional variables only when you are ready to validate those systems.
 
-```bash title=".env.local"
+Generate a private `AUTH_SECRET` with `openssl rand -base64 32`.
+Prisma and Next.js both read this `.env` file.
+
+```bash title=".env"
 AUTH_GITHUB_ID=
 AUTH_GITHUB_SECRET=
 AUTH_GOOGLE_ID=
 AUTH_GOOGLE_SECRET=
 
 STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 STRIPE_WEBHOOK_SECRET=
-STRIPE_PRICE_STARTER_PRO_ONE_TIME=
+STRIPE_PRICE_PRO_MONTHLY=
 
-RESEND_API_KEY=
+AUTH_RESEND_API_KEY=
 AUTH_EMAIL_FROM=
 ```
 
@@ -224,14 +232,18 @@ AUTH_EMAIL_FROM=
     ### Run database setup
 
 ```bash title="terminal"
+pnpm db:up
+pnpm exec prisma migrate deploy
 pnpm db:generate
-pnpm db:migrate
-pnpm db:seed
 ```
 
-    Generate the database client,
-    run migrations,
-    and seed local fixtures.
+    Start the Docker PostgreSQL service on port 5433, apply committed migrations
+    and generate the database client. For a populated local workspace, explicitly
+    run `pnpm db:seed:local`; keep this synthetic database separate from real users.
+
+    The local example login is documented in the shipped `docs/quickstart.md`.
+    For a fresh registration journey, configure Resend so the user can verify
+    their address. See [local development](/docs/starter-pro/local-development).
 
     This helps you validate auth,
     users,

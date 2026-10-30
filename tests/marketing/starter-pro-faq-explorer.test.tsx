@@ -47,7 +47,9 @@ describe("Starter Pro FAQ explorer", () => {
     const input = searchInput();
 
     expect(input).toBeEnabled();
-    expect(screen.getByRole("status")).toHaveTextContent("14 of 14 questions");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      `${starterProBuyerFaqs.length} of ${starterProBuyerFaqs.length} questions`,
+    );
     fireEvent.click(screen.getByRole("button", { name: "Purchase & access" }));
     expect(
       screen.getByRole("button", { name: "Purchase & access" }),
@@ -58,7 +60,9 @@ describe("Starter Pro FAQ explorer", () => {
     );
     expect(disclosures(container)).toHaveLength(2);
     fireEvent.change(input, { target: { value: "spam" } });
-    expect(screen.getByRole("status")).toHaveTextContent("1 of 14 questions");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      `1 of ${starterProBuyerFaqs.length} questions`,
+    );
     const result = disclosures(container)[0];
     expect(result?.querySelector("summary")).toHaveTextContent(
       "What if I do not receive my purchase email?",
@@ -75,7 +79,9 @@ describe("Starter Pro FAQ explorer", () => {
     expect(
       screen.getByRole("heading", { name: "No matching questions" }),
     ).toBeVisible();
-    expect(screen.getByRole("status")).toHaveTextContent("0 of 14 questions");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      `0 of ${starterProBuyerFaqs.length} questions`,
+    );
     expect(disclosures(container)).toHaveLength(0);
     const reset = screen.getByRole("button", { name: "Reset filters" });
     reset.focus();
