@@ -14,9 +14,6 @@ import {
   PanelsTopLeft,
   Server,
   Check,
-  Table2,
-  MousePointer2,
-  PanelTop,
 } from "lucide-react";
 import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -32,12 +29,10 @@ import {
   MarketingCtaPanel,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { SaasShowcase } from "@/components/marketing/showcase/saas-showcase";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { UI_VERSION } from "@/lib/version";
-import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
@@ -149,27 +144,6 @@ const startingPoints = [
   },
 ] as const;
 
-const explorerLinks = [
-  {
-    storyId: "components-table--rows-and-empty-section",
-    label: "Data tables",
-    description: "Rows, status & empty states",
-    icon: Table2,
-  },
-  {
-    storyId: "components-tabs--default",
-    label: "Interactive tabs",
-    description: "Panels & keyboard navigation",
-    icon: MousePointer2,
-  },
-  {
-    storyId: "components-empty-state--with-action",
-    label: "Empty states",
-    description: "Empty content with an action",
-    icon: PanelTop,
-  },
-] as const;
-
 const trustLinks = [
   ["Public roadmap", "/roadmap"],
   ["Changelog", "/changelog"],
@@ -254,70 +228,6 @@ export default function HomePage() {
                   <Link href="/starters/free">Explore Starter Free</Link>
                 </MarketingLinkButton>
               </MarketingActionGroup>
-            }
-          />
-
-          <SaasShowcase
-            className={styles.showcase}
-            actions={
-              <MarketingActionGroup className={styles.showcaseActions}>
-                <MarketingLinkButton className={styles.primaryAction}>
-                  <a
-                    href={UI_EXPLORER_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-description="Opens in a new tab"
-                  >
-                    Open UI Explorer
-                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                  </a>
-                </MarketingLinkButton>
-                <Link
-                  href="/docs/ui/installation"
-                  className={styles.showcaseDocsLink}
-                >
-                  Read the docs{" "}
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </Link>
-              </MarketingActionGroup>
-            }
-            footer={
-              <div className={styles.proofCaption}>
-                <div className={styles.proofPackage}>
-                  <p>Explore the building blocks.</p>
-                  <a href="https://www.npmjs.com/package/@pycolors/ui">
-                    <Package className="size-3.5" aria-hidden="true" />
-                    @pycolors/ui <span>v{UI_VERSION}</span>
-                    <ArrowUpRight className="size-3" aria-hidden="true" />
-                  </a>
-                </div>
-                <nav
-                  aria-label="Explore the showcase primitives"
-                  className={styles.proofLinks}
-                >
-                  {explorerLinks.map(
-                    ({ storyId, label, description, icon: Icon }) => (
-                      <a
-                        key={storyId}
-                        href={`${UI_EXPLORER_URL}?path=/story/${storyId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-description="Opens in a new tab"
-                        aria-label={label}
-                      >
-                        <span className={styles.proofLinkTitle}>
-                          <Icon className="size-3.5" aria-hidden="true" />
-                          {label}
-                          <ArrowUpRight className="size-3" aria-hidden="true" />
-                        </span>
-                        <span className={styles.proofLinkDescription}>
-                          {description}
-                        </span>
-                      </a>
-                    ),
-                  )}
-                </nav>
-              </div>
             }
           />
 
@@ -412,7 +322,7 @@ export default function HomePage() {
               titleId="home-foundations-heading"
               eyebrow="Inspect the foundation"
               title="From the interface to your implementation."
-              description="The workspace shows public primitives in context. Inspect their behavior in the UI Explorer; use the documentation for installation, composition and integration."
+              description="Explore public components in the UI Explorer. Use the documentation to install, theme and compose them in your application."
               align="left"
               className={sectionHeaderClass}
             />
@@ -421,7 +331,7 @@ export default function HomePage() {
                 title="Components and states"
                 eyebrow="Public primitives"
                 icon={<Code2 />}
-                description="Review the APIs and keyboard behavior behind the table, filters and empty state."
+                description="Inspect component APIs, interaction states and keyboard behavior in the public UI Explorer."
                 visual={<MarketingCardIllustration kind="components" />}
                 footer={
                   <ul className="divide-y divide-border-subtle">
@@ -457,8 +367,8 @@ export default function HomePage() {
                       </ResourceLink>
                     </li>
                     <li>
-                      <ResourceLink href="/tools/theme-builder">
-                        Open Theme Builder
+                      <ResourceLink href="/docs/design-system/tokens">
+                        Read token documentation
                       </ResourceLink>
                     </li>
                   </ul>
@@ -604,6 +514,90 @@ export default function HomePage() {
                   <ResourceLink href="/request-a-quote?service=guided-setup">
                     {`Guided setup · ${STARTER_PRO_SERVICES.setup.priceLabel}`}
                   </ResourceLink>
+                </div>
+              </div>
+            </div>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell
+            spacing="default"
+            width="full"
+            aria-labelledby="home-theme-builder-heading"
+            className={styles.section}
+          >
+            <div className={styles.themeTeaser}>
+              <div className={styles.themeContent}>
+                <MarketingSectionHeader
+                  titleId="home-theme-builder-heading"
+                  eyebrow="Theme Builder"
+                  title="Your brand. Your interface."
+                  description="Build light and dark themes from your brand color. Preview components and export the CSS tokens."
+                  align="left"
+                  className={cn(sectionHeaderClass, styles.themeHeading)}
+                />
+                <ul
+                  className={styles.themeCapabilities}
+                  aria-label="Theme Builder capabilities"
+                >
+                  <li>Color system</li>
+                  <li>Typography</li>
+                  <li>CSS export</li>
+                </ul>
+                <div className={styles.themeAction}>
+                  <MarketingLinkButton className={styles.primaryAction}>
+                    <Link href="/tools/theme-builder">Open Theme Builder</Link>
+                  </MarketingLinkButton>
+                  <p>Free · No account needed</p>
+                </div>
+              </div>
+              <div className={styles.themeVisual} aria-hidden="true">
+                <div className={styles.themeVisualHeader}>
+                  <span>
+                    <Code2 />
+                    theme.css
+                  </span>
+                  <div className={styles.themeSwatches}>
+                    {[100, 65, 30, 10].map((strength) => (
+                      <i
+                        key={strength}
+                        style={{
+                          background: `color-mix(in oklab, var(--primary) ${strength}%, var(--background))`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.themeSamples}>
+                  {["Light", "Dark"].map((mode) => (
+                    <div
+                      key={mode}
+                      className={cn(
+                        styles.themeSample,
+                        mode === "Dark" ? styles.themeDark : styles.themeLight,
+                      )}
+                    >
+                      <div className={styles.themeMode}>
+                        <span />
+                        {mode}
+                      </div>
+                      <div className={styles.themeSampleBody}>
+                        <span className={styles.themeSpecimen}>Aa</span>
+                        <div className={styles.themeSampleFooter}>
+                          <span>Interface</span>
+                          <span className={styles.themeSampleSwatches}>
+                            <i />
+                            <i />
+                            <i />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.themeTokens}>
+                  <code>--primary</code>
+                  <code>--background</code>
+                  <code>--foreground</code>
                 </div>
               </div>
             </div>
