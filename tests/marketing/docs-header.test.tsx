@@ -30,9 +30,6 @@ vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
 vi.mock("next/link", () => ({
   default: (props: React.ComponentProps<"a">) => <a {...props} />,
 }));
-vi.mock("@/components/wordmark-font", () => ({
-  wordmarkFont: { className: "wordmark-font" },
-}));
 vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
   FullSearchTrigger: (props: React.ComponentProps<"button">) => (
     <button type="button" {...props}>
@@ -154,7 +151,7 @@ describe("Shared navigation in documentation", () => {
     render(<Fixture />);
     const logo = screen.getByRole("link", { name: "PyColors Docs" });
     expect(logo).toHaveAttribute("href", "/docs");
-    expect(logo).toHaveTextContent(/pycolors\s*Docs/);
+    expect(logo).toHaveTextContent(/PYCOLORS\s*Docs/);
     const primary = screen.getByRole("navigation", { name: "Primary" });
     expect(
       [...primary.children].map(

@@ -4,25 +4,20 @@ import Link from "next/link";
 
 import { cn } from "@pycolors/ui";
 
-import { wordmarkFont } from "./wordmark-font";
+import { MARKETING_BRAND } from "@/lib/brand-identity";
 
 export function Logomark() {
-  // The inset shape at 17px matches the wordmark's ~14.6px visible glyph height.
   return (
     <svg
-      viewBox="7 5 30 30"
-      className="size-[17px] shrink-0 text-primary"
+      viewBox={MARKETING_BRAND.mark.viewBox}
+      className="size-[15px] shrink-0 text-primary"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
     >
-      {/* Two upward-facing facets share a 1:2 slope and 5-unit terminals.
-          The trailing tip sits 8 units behind the leading tip; the open cut
-          separates the facets without relying on color or opacity. */}
       <path
-        d="M9 7 35 20 30 22.5 9 12ZM9 28 22 21.5 27 24 9 33Z"
-        transform="rotate(-90 22 20) translate(0 40) scale(1 -1)"
+        d={MARKETING_BRAND.mark.path}
         fill="currentColor"
         className={cn(
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
@@ -32,20 +27,28 @@ export function Logomark() {
     </svg>
   );
 }
-function Wordmark() {
+function BrandSignature() {
   return (
-    <span
+    <svg
+      viewBox={MARKETING_BRAND.viewBox}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
       className={cn(
-        wordmarkFont.className,
-        // Geist's visible glyphs sit ~1.25px below the line box's center.
-        "inline-flex -translate-y-[1.25px] shrink-0 items-center whitespace-nowrap select-none text-[17px] font-semibold leading-5 tracking-[-0.025em]",
-        "text-foreground antialiased",
+        "h-[15px] w-auto shrink-0 text-foreground",
         "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",
       )}
     >
-      pycolors
-    </span>
+      <g transform={MARKETING_BRAND.mark.transform} className="text-primary">
+        <path d={MARKETING_BRAND.mark.path} fill="currentColor" />
+      </g>
+      <g transform={MARKETING_BRAND.wordmark.transform} fill="currentColor">
+        {MARKETING_BRAND.wordmark.paths.map((path) => (
+          <path key={path.transform} d={path.d} transform={path.transform} />
+        ))}
+      </g>
+    </svg>
   );
 }
 
@@ -61,20 +64,17 @@ export function Logo({
       href={isDocs ? "/docs" : "/"}
       aria-label={isDocs ? "PyColors Docs" : "PyColors"}
       className={cn(
-        "group inline-flex min-h-11 shrink-0 items-center gap-1 rounded-md",
+        "group inline-flex min-h-11 shrink-0 items-center gap-2.5 rounded-[4px]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
       )}
     >
-      <Logomark />
-      {/* Natural text width keeps the Docs badge clear of the wordmark. */}
-      <span className="inline-flex items-center gap-2.5">
-        <Wordmark />
-        {isDocs ? (
-          <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
-            Docs
-          </span>
-        ) : null}
-      </span>
+      <BrandSignature />
+      <span className="sr-only">PYCOLORS</span>
+      {isDocs ? (
+        <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
+          Docs
+        </span>
+      ) : null}
     </Link>
   );
 }
