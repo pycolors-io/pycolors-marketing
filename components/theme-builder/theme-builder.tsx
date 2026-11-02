@@ -26,6 +26,11 @@ import {
   DialogDescription,
   DialogTitle,
   DialogTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
   Tabs,
   TabsContent,
   TabsList,
@@ -45,7 +50,11 @@ import { ThemeOutput } from "./theme-output";
 import { ThemePreview, INITIAL_THEME_PREVIEW_VIEW } from "./theme-preview";
 import { ThemeModeControl } from "./theme-mode-control";
 import { ThemeConfigurationControls } from "./theme-configuration-controls";
-import { DEFAULT_THEME_FONT, THEME_FONTS } from "./theme-typography";
+import {
+  DEFAULT_THEME_FONT,
+  THEME_FONTS,
+  type ThemeFont,
+} from "./theme-typography";
 import {
   createThemeBuilderState,
   resetThemeBuilderState,
@@ -56,6 +65,91 @@ import {
 
 const PREVIEW_TABS = ["dashboard", "components", "palette"] as const;
 type PreviewTab = (typeof PREVIEW_TABS)[number];
+
+function FontFamilyControl({
+  font,
+  onChange,
+}: {
+  font: ThemeFont;
+  onChange: (font: ThemeFont["id"]) => void;
+}) {
+  const id = React.useId();
+
+  return (
+    <div className="mt-5">
+      <label id={`${id}-label`} htmlFor={id} className="text-sm font-medium">
+        Font family
+      </label>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            id={id}
+            type="button"
+            variant="outline"
+            aria-labelledby={`${id}-label ${id}-value`}
+            aria-describedby={`${id}-help`}
+            className="group mt-2 min-h-10 w-full justify-start gap-2.5 rounded-[4px] border-border-subtle bg-background px-3 text-sm font-normal data-[state=open]:bg-surface-muted"
+          >
+            <span
+              aria-hidden="true"
+              style={{ fontFamily: font.previewFamily }}
+              className="flex size-6 shrink-0 items-center justify-center border-r border-border-subtle pr-2 text-base text-muted-foreground"
+            >
+              Aa
+            </span>
+            <span id={`${id}-value`} className="truncate">
+              {font.label}
+            </span>
+            <ChevronDown
+              aria-hidden="true"
+              className="ml-auto size-3.5 shrink-0 text-muted-foreground transition-transform duration-150 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+            />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          aria-label="Font family choices"
+          align="start"
+          sideOffset={6}
+          collisionPadding={12}
+          className="max-h-[var(--radix-dropdown-menu-content-available-height)] w-[var(--radix-dropdown-menu-trigger-width)] min-w-0 overflow-y-auto rounded-[5px] border-border-subtle p-1 shadow-lg motion-reduce:animate-none"
+        >
+          <DropdownMenuRadioGroup
+            value={font.id}
+            onValueChange={(value) => {
+              const selected = THEME_FONTS.find((item) => item.id === value);
+              if (selected) onChange(selected.id);
+            }}
+          >
+            {THEME_FONTS.map((item) => (
+              <DropdownMenuRadioItem
+                key={item.id}
+                value={item.id}
+                textValue={item.label}
+                aria-label={item.label}
+                className="min-h-10 cursor-pointer gap-3 rounded-[3px] pr-3 data-[state=checked]:bg-surface-muted data-[state=checked]:font-medium max-sm:min-h-11"
+                style={{ fontFamily: item.previewFamily }}
+              >
+                <span
+                  aria-hidden="true"
+                  className="w-6 shrink-0 text-base text-muted-foreground"
+                >
+                  Aa
+                </span>
+                <span className="truncate">{item.label}</span>
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <p
+        id={`${id}-help`}
+        className="mt-1.5 text-xs leading-4 text-muted-foreground"
+      >
+        Preview your typeface. Typography CSS is available with your export.
+      </p>
+    </div>
+  );
+}
 
 function PreviewTabs() {
   return (
@@ -236,43 +330,12 @@ export function ThemeBuilder() {
                 )
               }
             />
-            <div className="mt-5">
-              <label
-                htmlFor="theme-builder-font"
-                className="text-sm font-medium"
-              >
-                Font family
-              </label>
-              <select
-                id="theme-builder-font"
-                value={font.id}
-                aria-describedby="theme-builder-font-help"
-                onChange={(event) => {
-                  const selected = THEME_FONTS.find(
-                    (item) => item.id === event.target.value,
-                  );
-                  if (selected)
-                    setAppearance((current) => ({
-                      ...current,
-                      font: selected.id,
-                    }));
-                }}
-                className="mt-2 min-h-10 w-full min-w-0 rounded-[5px] border border-border bg-background px-3 text-sm text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-              >
-                {THEME_FONTS.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-              <p
-                id="theme-builder-font-help"
-                className="mt-1.5 text-xs leading-4 text-muted-foreground"
-              >
-                Preview your typeface. Typography CSS is available with your
-                export.
-              </p>
-            </div>
+            <FontFamilyControl
+              font={font}
+              onChange={(value) =>
+                setAppearance((current) => ({ ...current, font: value }))
+              }
+            />
             <ThemeAppearanceControls
               value={appearance}
               mode={state.previewMode}

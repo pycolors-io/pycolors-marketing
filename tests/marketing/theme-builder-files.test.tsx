@@ -79,9 +79,10 @@ describe("Theme Builder files", () => {
         mediaType,
       });
     }
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "mono" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Geist Mono" }));
     fireEvent.click(
       screen.getByRole("button", { name: "Download typography CSS" }),
     );
@@ -97,9 +98,12 @@ describe("Theme Builder files", () => {
   it("saves and reopens a theme after a fresh editor mount", async () => {
     const first = render(<ThemeBuilder />);
     fireEvent.click(screen.getByRole("button", { name: "Indigo Ledger" }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "plus-jakarta-sans" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(
+      screen.getByRole("menuitemradio", { name: "Plus Jakarta Sans" }),
+    );
     fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
     const originalPreview = screen
       .getByRole("region", { name: "Dashboard" })
@@ -125,9 +129,9 @@ describe("Theme Builder files", () => {
     expect(screen.getByRole("textbox", { name: "Neutral color" })).toHaveValue(
       "#64748b",
     );
-    expect(screen.getByRole("combobox", { name: "Font family" })).toHaveValue(
-      "plus-jakarta-sans",
-    );
+    expect(
+      screen.getByRole("button", { name: "Font family Plus Jakarta Sans" }),
+    ).toBeVisible();
     expect(
       screen.getByRole("region", { name: "Dashboard" }).getAttribute("style"),
     ).toBe(originalPreview);

@@ -185,9 +185,12 @@ describe("Theme Builder workspace", () => {
   it("previews and copies typography separately, keeps it in full screen, and resets it", async () => {
     render(<ThemeBuilder />);
     const outsideFont = document.documentElement.style.fontFamily;
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "plus-jakarta-sans" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(
+      screen.getByRole("menuitemradio", { name: "Plus Jakarta Sans" }),
+    );
     expect(preview().style.fontFamily).toContain("Plus Jakarta Sans");
     expect(document.documentElement.style.fontFamily).toBe(outsideFont);
     expect(screen.getByRole("link", { name: "Download font" })).toHaveAttribute(
@@ -222,9 +225,10 @@ describe("Theme Builder workspace", () => {
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "system" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "System" }));
     expect(
       screen.queryByRole("link", { name: "Download font" }),
     ).not.toBeInTheDocument();
@@ -235,9 +239,9 @@ describe("Theme Builder workspace", () => {
     expect(writeText.mock.calls[2][0]).toContain("--font-sans: ui-sans-serif");
     expect(writeText.mock.calls[2][0]).not.toContain("@font-face");
     fireEvent.click(screen.getByRole("button", { name: "Reset theme" }));
-    expect(screen.getByRole("combobox", { name: "Font family" })).toHaveValue(
-      "geist",
-    );
+    expect(
+      screen.getByRole("button", { name: "Font family Geist" }),
+    ).toBeVisible();
     expect(preview().style.fontFamily).toContain("--font-geist-sans");
   });
 

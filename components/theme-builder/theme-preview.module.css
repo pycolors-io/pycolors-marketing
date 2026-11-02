@@ -144,7 +144,7 @@
 
 @container (min-width: 40rem) {
   .layout {
-    grid-template-columns: 9rem minmax(0, 1fr);
+    grid-template-columns: clamp(11.5rem, 20%, 15rem) minmax(0, 1fr);
   }
 
   .navigation {

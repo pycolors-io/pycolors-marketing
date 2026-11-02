@@ -150,9 +150,10 @@ describe("Theme Builder exploration", () => {
       { target: { value: "Aurora Studio" } },
     );
     fireEvent.click(screen.getByRole("checkbox", { name: /Weekly summary/ }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "mono" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Geist Mono" }));
     fireEvent.click(screen.getByRole("button", { name: "Save demo settings" }));
     expect(
       screen.getByText("Demo settings saved in this preview."),
