@@ -197,7 +197,13 @@ These are deliberate, honest boundaries in Starter Free. They make its billing l
 
 ### Reproduce the source audit without a payment account
 
-From a checkout of the [public Starter Free repository](https://github.com/pycolors-io/pycolors-starter-free), run this original, dependency-free Node.js check. It inspects one source snapshot; it does not connect to Stripe, create test payments, or inspect private code.
+Use a disposable checkout of the [public Starter Free repository](https://github.com/pycolors-io/pycolors-starter-free) at the inspected revision, then save the following script as `check-billing-preview.mjs` at its root. The check uses only Node.js built-ins: no dependency installation or payment account is needed. It inspects source text; it does not start the application, connect to Stripe, create test payments, or inspect private code.
+
+```sh
+git clone --no-checkout https://github.com/pycolors-io/pycolors-starter-free.git starter-free-inspection
+cd starter-free-inspection
+git checkout --detach a65f170b4216faf6647a41a4717a0ca8d64a1376
+```
 
 ```js title="check-billing-preview.mjs"
 import assert from "node:assert/strict";
@@ -225,14 +231,18 @@ for (const [name, observed] of Object.entries(evidence)) {
 node check-billing-preview.mjs
 ```
 
-All four checks matched the current public mirror source during this article's source review. The test file itself has **not** been run in a complete Starter Free checkout or in the repository's declared Node 24/pnpm environment for this draft. These assertions intentionally depend on present source wording; a harmless refactor may require updating them.
+On November 2, 2026, this exact script ran with **Node.js 22.16.0** against an isolated, byte-identical copy of the pinned public billing file: all four assertions passed. The file's Git blob SHA was verified as `78c47de6c7ef5d7853f567d6cf73b0096f43ce0b`. Four separate negative controls each changed one expected marker in a temporary copy; each exited with the corresponding assertion failure, and the original file was restored.
 
-A positive result answers a narrow question: *does this source still disclose and implement the known demo boundary?* It does **not** prove the absence of every backend integration elsewhere, or establish whether another starter has secure server-side billing. Likewise, if a check fails after a change, inspect the source before treating that failure as a regression.
+To try a negative control, rename `const MOCK_INVOICES` in a disposable copy and rerun the check: it should exit nonzero with `Expected demo evidence missing: fixtureInvoices`. Restore the original file before continuing. This checks that missing evidence is detected, not that a billing backend is correct.
+
+The application was **not** installed or started for this experiment, and the script was not tested under Node 24. These assertions intentionally depend on present source wording; a harmless refactor may require updating them.
+
+A positive result answers a narrow question: _does this source still disclose and implement the known demo boundary?_ It does **not** prove the absence of every backend integration elsewhere, or establish whether another starter has secure server-side billing. Likewise, if a check fails after a change, inspect the source before treating that failure as a regression.
 
 ### Ask for different evidence when the feature must be real
 
-| Reader question                    | Evidence to look for                                                                                              |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Reader question                   | Evidence to look for                                                                                            |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Can I evaluate the billing screen? | Sample plans, responsive layout, accessible controls, clear demo disclosure                                       |
 | Can a customer actually sign in?   | A configured identity provider, server-validated sessions, and protected-route tests                              |
 | Can a subscription change access?  | Provider test-mode events, server-side entitlement checks, replay/failure handling, and an observed test workflow |
