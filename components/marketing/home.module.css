@@ -418,6 +418,66 @@
 .starterScope dd {
   font-weight: 500;
 }
+.implementation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--card);
+}
+.implementationCopy {
+  min-width: 0;
+}
+.implementationEyebrow {
+  font-size: 0.625rem;
+  line-height: 1.6;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.implementation h3 {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: var(--site-subheading-tracking);
+}
+.implementationDescription {
+  max-width: 62ch;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: var(--muted-foreground);
+}
+.implementationFees {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1rem;
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.implementationScope {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+@media (min-width: 768px) {
+  .implementation {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
 .trust > div {
   display: grid;
   gap: 1.5rem;

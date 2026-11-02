@@ -511,12 +511,42 @@ export default function HomePage() {
                   <ResourceLink href="/pricing">
                     Compare product pricing
                   </ResourceLink>
-                  <ResourceLink href="/request-a-quote?service=guided-setup">
-                    {`Guided setup · ${STARTER_PRO_SERVICES.setup.priceLabel}`}
-                  </ResourceLink>
                 </div>
               </div>
             </div>
+            <aside
+              aria-labelledby="home-implementation-heading"
+              className={styles.implementation}
+            >
+              <div className={styles.implementationCopy}>
+                <p className={styles.implementationEyebrow}>
+                  Starter Pro · Implementation
+                </p>
+                <h3 id="home-implementation-heading">
+                  Implementation, scoped to your product.
+                </h3>
+                <p className={styles.implementationDescription}>
+                  Guided setup or a targeted business adaptation, with agreed
+                  deliverables and a written proposal.
+                </p>
+                <ul
+                  aria-label="Implementation starting fees"
+                  className={styles.implementationFees}
+                >
+                  {Object.values(STARTER_PRO_SERVICES).map((service) => (
+                    <li key={service.id}>
+                      {service.title} · {service.priceLabel}
+                    </li>
+                  ))}
+                </ul>
+                <p className={styles.implementationScope}>
+                  Source licence and provider costs are separate.
+                </p>
+              </div>
+              <MarketingLinkButton variant="outline" className="shrink-0">
+                <Link href="/request-a-quote">Request a quote</Link>
+              </MarketingLinkButton>
+            </aside>
           </MarketingSectionShell>
 
           <MarketingSectionShell

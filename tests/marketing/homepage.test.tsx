@@ -5,6 +5,7 @@ import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
 import HomePage, { metadata } from "../../app/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -172,6 +173,25 @@ describe("product homepage", () => {
     expect(
       within(production).getByRole("button", { name: /Buy Starter Pro/ }),
     ).toBeVisible();
+  });
+
+  it("provides a clear project-quote handoff alongside the starters", () => {
+    render(<HomePage />);
+    const production = screen.getByRole("region", { name: headings[2] });
+    const implementation = within(production).getByRole("complementary", {
+      name: "Implementation, scoped to your product.",
+    });
+    expect(
+      within(implementation).getByRole("link", { name: "Request a quote" }),
+    ).toHaveAttribute("href", "/request-a-quote");
+    expect(implementation).toHaveTextContent("written proposal");
+    expect(implementation).toHaveTextContent(
+      "Source licence and provider costs are separate.",
+    );
+    for (const service of Object.values(STARTER_PRO_SERVICES))
+      expect(implementation).toHaveTextContent(
+        `${service.title} · ${service.priceLabel}`,
+      );
   });
 
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {
