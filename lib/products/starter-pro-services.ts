@@ -6,7 +6,12 @@ export const STARTER_PRO_SERVICES = {
     priceLabel: "From 3,000 €",
     href: "/request-a-quote?service=guided-setup",
     description:
-      "A defined starting point for your team, built on the complete Starter Pro foundation.",
+      "Configure one agreed environment, connect your providers and verify the first user journey.",
+    highlights: [
+      "Branding, sign-in, email and billing configuration",
+      "Account, workspace and project checks",
+      "Operating notes and a handover session",
+    ],
     features: [
       "A discovery brief and setup checklist for one agreed environment",
       "Branding and configuration of your email, sign-in and billing providers",
@@ -26,7 +31,12 @@ export const STARTER_PRO_SERVICES = {
     priceLabel: "From 7,500 €",
     href: "/request-a-quote?service=business-adaptation",
     description:
-      "Adapt the shared foundation to a named workflow, integration or product requirement.",
+      "Implement a defined business workflow or integration, with written acceptance criteria and validation.",
+    highlights: [
+      "Agreed interface, API and data model changes",
+      "Permissions and regression checks",
+      "Recorded validation and documented handover",
+    ],
     features: [
       "Discovery and written acceptance criteria for a prioritized workflow",
       "Agreed interface, API, data model and integration changes",

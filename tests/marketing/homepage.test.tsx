@@ -181,17 +181,32 @@ describe("product homepage", () => {
     const implementation = within(production).getByRole("complementary", {
       name: "Implementation, scoped to your product.",
     });
-    expect(
-      within(implementation).getByRole("link", { name: "Request a quote" }),
-    ).toHaveAttribute("href", "/request-a-quote");
     expect(implementation).toHaveTextContent("written proposal");
     expect(implementation).toHaveTextContent(
       "Source licence and provider costs are separate.",
     );
-    for (const service of Object.values(STARTER_PRO_SERVICES))
-      expect(implementation).toHaveTextContent(
-        `${service.title} · ${service.priceLabel}`,
-      );
+    const process = within(implementation).getByRole("list", {
+      name: "Implementation process",
+    });
+    expect(within(process).getAllByRole("listitem")).toHaveLength(3);
+    for (const service of Object.values(STARTER_PRO_SERVICES)) {
+      const offer = within(implementation).getByRole("region", {
+        name: service.title,
+      });
+      expect(offer).toHaveTextContent(service.priceLabel);
+      expect(offer).toHaveTextContent(service.description);
+      expect(offer).toHaveTextContent(service.deliverable);
+      for (const highlight of service.highlights)
+        expect(offer).toHaveTextContent(highlight);
+      expect(
+        within(offer).getByRole("link", { name: service.action }),
+      ).toHaveAttribute("href", service.href);
+    }
+    expect(
+      within(implementation).getByRole("link", {
+        name: "Review scope & support",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/implementation-support");
   });
 
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {

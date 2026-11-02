@@ -518,34 +518,88 @@ export default function HomePage() {
               aria-labelledby="home-implementation-heading"
               className={styles.implementation}
             >
-              <div className={styles.implementationCopy}>
-                <p className={styles.implementationEyebrow}>
-                  Starter Pro · Implementation
-                </p>
-                <h3 id="home-implementation-heading">
-                  Implementation, scoped to your product.
-                </h3>
-                <p className={styles.implementationDescription}>
-                  Guided setup or a targeted business adaptation, with agreed
-                  deliverables and a written proposal.
-                </p>
-                <ul
-                  aria-label="Implementation starting fees"
-                  className={styles.implementationFees}
+              <div className={styles.implementationHeader}>
+                <div className={styles.implementationCopy}>
+                  <p className={styles.implementationEyebrow}>
+                    Starter Pro · Implementation services
+                  </p>
+                  <h3 id="home-implementation-heading">
+                    Implementation, scoped to your product.
+                  </h3>
+                  <p className={styles.implementationDescription}>
+                    Work with PyColors to configure your foundation or build a
+                    defined business workflow. Start with agreed deliverables
+                    and a written proposal.
+                  </p>
+                </div>
+                <ol
+                  aria-label="Implementation process"
+                  className={styles.implementationProcess}
                 >
-                  {Object.values(STARTER_PRO_SERVICES).map((service) => (
-                    <li key={service.id}>
-                      {service.title} · {service.priceLabel}
-                    </li>
-                  ))}
-                </ul>
-                <p className={styles.implementationScope}>
-                  Source licence and provider costs are separate.
-                </p>
+                  {["Scope", "Implementation", "Handover"].map(
+                    (step, index) => (
+                      <li key={step}>
+                        <span aria-hidden="true">0{index + 1}</span>
+                        {step}
+                      </li>
+                    ),
+                  )}
+                </ol>
               </div>
-              <MarketingLinkButton variant="outline" className="shrink-0">
-                <Link href="/request-a-quote">Request a quote</Link>
-              </MarketingLinkButton>
+              <div className={styles.implementationServices}>
+                {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
+                  <section
+                    key={service.id}
+                    aria-labelledby={`home-service-${service.id}`}
+                    className={styles.implementationService}
+                  >
+                    <div className={styles.implementationServiceHeading}>
+                      <h4 id={`home-service-${service.id}`}>{service.title}</h4>
+                      <span aria-hidden="true">0{index + 1}</span>
+                    </div>
+                    <p className={styles.implementationPrice}>
+                      {service.priceLabel}
+                    </p>
+                    <p className={styles.implementationServiceDescription}>
+                      {service.description}
+                    </p>
+                    <ul
+                      aria-label={`${service.title} includes`}
+                      className={styles.implementationHighlights}
+                    >
+                      {service.highlights.map((highlight) => (
+                        <li key={highlight}>
+                          <Check aria-hidden="true" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <dl className={styles.implementationDeliverable}>
+                      <dt>You receive</dt>
+                      <dd>{service.deliverable}</dd>
+                    </dl>
+                    <div className={styles.implementationAction}>
+                      <MarketingLinkButton variant="outline" className="w-full">
+                        <Link href={service.href}>{service.action}</Link>
+                      </MarketingLinkButton>
+                    </div>
+                  </section>
+                ))}
+              </div>
+              <div className={styles.implementationFooter}>
+                <p className={styles.implementationScope}>
+                  Starting service fees. Source licence and provider costs are
+                  separate. The quote defines your scope, acceptance checks and
+                  included follow-up.
+                </p>
+                <Link
+                  href="/docs/starter-pro/implementation-support"
+                  className={styles.implementationScopeLink}
+                >
+                  Review scope &amp; support
+                  <ArrowUpRight aria-hidden="true" />
+                </Link>
+              </div>
             </aside>
           </MarketingSectionShell>
 
