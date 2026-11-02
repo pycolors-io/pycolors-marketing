@@ -1,7 +1,7 @@
 ---
 title: Theming
 description: Load PyColors tokens, understand their Tailwind v4 mappings, and keep UI primitives consistent across light and dark themes.
-lastUpdated: "2026-08-25"
+lastUpdated: "2026-11-02"
 appliesTo: UI
 ---
 
@@ -169,8 +169,8 @@ Color values shown in the palette come directly from the same engine result as
 the exports; named roles under **Colors by purpose** show how those colors are
 used in your theme.
 
-Theme Builder includes six color presets and a **Font family** selector for
-Mona Sans, Plus Jakarta Sans, System Sans, and System Mono. Use **Full screen**
+Theme Builder includes the same ten color presets as Starter Pro, with Monochrome and PyColors first, and a **Font family** selector for
+Geist, System, Geist Mono, Mona Sans, and Plus Jakarta Sans. Use **Full screen**
 to inspect the dashboard with a wider navigation sidebar. Your selected font,
 light/dark mode, activity period, and project filters remain selected when you
 close the preview. Dashboard content is demo data.
@@ -181,10 +181,9 @@ components; configuration files save theme settings, not demo content.
 
 Use **Copy typography CSS** or **Download typography CSS** in the export section
 to save the font configuration
-separately from the CSS, Tailwind v4, or JSON color output. For Mona Sans or Plus
-Jakarta Sans, download the provided font, save it at the indicated `public/fonts`
-path, and place the typography CSS after your token imports. System font options
-need no font file and use the fonts available on each visitor's device. Selecting
+separately from the CSS, Tailwind v4, or JSON color output. For a bundled font, download the provided asset and license, save it at the indicated `public/fonts`
+path, and place the typography CSS after your token imports. System
+needs no font file and uses the fonts available on each visitor's device. Selecting
 a font does not change the color tokens or their contrast results.
 
 ### Download and reopen your theme
@@ -194,14 +193,34 @@ In **Export your theme**, choose **CSS**, **Tailwind v4**, or **JSON**, then use
 dark modes. Typography stays in a separate CSS file.
 
 Use **Save configuration** to download a `.pycolors-theme.json` file containing
-your color inputs, theme name, selected font, and preview mode. Later, use
+your color inputs, theme name, preset, font, radius, preview mode and dashboard settings. Later, use
 **Open configuration** to restore those settings and regenerate the theme.
+New files use version 2; existing version 1 files remain readable, including
+legacy System Sans/System Mono font identifiers.
 Configuration files are checked before applying them; an invalid or unsupported
 file leaves your current settings unchanged. The JSON color-token export is a
 different format and cannot be reopened as an editable configuration.
 
 Files are processed locally without an account or uploads. There is no automatic
 save across page reloads: keep the configuration file to continue later.
+
+### Shared appearance and Starter Pro
+
+Named presets use the same semantic light/dark tokens in the builder and Starter
+Pro. Editing a brand or neutral color creates a generated custom theme. Editing
+only the light background retains the preset's dark colors. Contrast evidence
+is recalculated for the resulting colors.
+
+The **Radius** control uses None / SM / MD / LG / XL. **Dashboard preview** adds
+scale (100%, 110%, 125%), density, content width, sidebar display/style/background,
+header, canvas and motion. These settings affect the preview, independently of
+the surrounding website. Font and radius CSS is exported separately from colors.
+
+Choose **Download Starter Pro config** to generate `appearance.ts`. Replace
+`config/appearance.ts` in your starter and restart it. In a browser with existing
+preferences, use Customize → Reset to restore the new product defaults. Both
+color modes and the selected appearance settings are included; no private package
+or Theme Builder runtime is needed by the buyer's application.
 
 ## Apply dark mode at the app shell
 

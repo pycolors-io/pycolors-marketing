@@ -1,7 +1,7 @@
 ---
 title: Customization and upgrades
 description: Adapt the centralized product configuration and maintain a reviewable baseline for future migrations.
-lastUpdated: "2026-10-30"
+lastUpdated: "2026-11-02"
 appliesTo: Starter Pro
 ---
 
@@ -78,6 +78,27 @@ Customize provides palette, typography, geometry, interface scale and sidebar
 controls in the browser. Language and time zone are account preferences. Review
 changes in both themes, French/English, narrow layouts and reduced motion. The
 shipped `docs/customization.md` explains logo, icon and email entry points.
+
+## Configure appearance
+
+Use the [Theme Builder](/tools/theme-builder) for the shared palettes, fonts and
+radius scale. Open **Dashboard preview** to choose density, interface scale,
+sidebar, content width, canvas and motion.
+
+1. Choose your colors and appearance settings.
+2. Select **Download Starter Pro config**, then replace `config/appearance.ts`.
+3. Restart the app. In a browser with saved preferences, use Customize → Reset.
+
+Saved browser choices take precedence over product defaults. The selected preview
+mode becomes the initial light/dark mode; set `mode: "system"` in the config to
+follow the device. Named presets use the bundled shared tokens. Custom colors
+include both semantic color maps and appear as **Custom** in Customize.
+
+This export requires Starter Pro source with `lib/appearance-contract.ts`. For an older
+project, upgrade first or use the CSS exports.
+
+The buyer ZIP includes the configuration contract, color snapshots and local font
+assets. It does not require a private workspace package or a Theme Builder server.
 
 ## Keep an upgrade baseline
 

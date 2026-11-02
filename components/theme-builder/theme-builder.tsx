@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  APPEARANCE_DEFAULTS,
+  type AppearancePreferences,
+} from "@/lib/appearance-contract";
+import { THEME_BUILDER_PRESETS } from "./theme-presets";
+import { ThemeAppearanceControls } from "./theme-appearance-controls";
+
 import * as React from "react";
 import {
   ArrowDown,
@@ -43,114 +50,9 @@ import {
   createThemeBuilderState,
   resetThemeBuilderState,
   selectThemeBuilderMode,
+  selectThemeBuilderPreset,
   updateThemeBuilderField,
 } from "./theme-builder-state";
-import type {
-  ThemeBuilderDraft,
-  ThemeBuilderField,
-  ThemeBuilderState,
-} from "./theme-builder-state";
-
-type ThemeBuilderPreset = Readonly<{
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  brandColor: string;
-  draft: ThemeBuilderDraft;
-}>;
-
-const THEME_BUILDER_PRESETS: readonly ThemeBuilderPreset[] = [
-  {
-    id: "violet-studio",
-    name: "Violet Studio",
-    category: "Product SaaS",
-    description: "A composed default for polished product interfaces.",
-    brandColor: "#6a30d4",
-    draft: {
-      brandColor: "#6a30d4",
-      name: "Violet Studio",
-      neutralColor: "#71717a",
-      lightBackgroundColor: "#fafafa",
-    },
-  },
-  {
-    id: "indigo-ledger",
-    name: "Indigo Ledger",
-    category: "Finance and workflow",
-    description: "Crisp indigo with a calm slate foundation.",
-    brandColor: "#4f46e5",
-    draft: {
-      brandColor: "#4f46e5",
-      name: "Indigo Ledger",
-      neutralColor: "#64748b",
-      lightBackgroundColor: "#f8fafc",
-    },
-  },
-  {
-    id: "emerald-console",
-    name: "Emerald Console",
-    category: "Operations",
-    description: "A measured green for operational SaaS products.",
-    brandColor: "#0f9d72",
-    draft: {
-      brandColor: "#0f9d72",
-      name: "Emerald Console",
-      neutralColor: "#5f6b7a",
-      lightBackgroundColor: "#f7faf9",
-    },
-  },
-  {
-    id: "graphite-atlas",
-    name: "Graphite Atlas",
-    category: "Developer tooling",
-    description: "Quiet graphite with a precise, neutral canvas.",
-    brandColor: "#334155",
-    draft: {
-      brandColor: "#334155",
-      name: "Graphite Atlas",
-      neutralColor: "#64748b",
-      lightBackgroundColor: "#f8fafc",
-    },
-  },
-  {
-    id: "rose-atelier",
-    name: "Rose Atelier",
-    category: "Creative teams",
-    description: "A warm rose accent with soft stone neutrals.",
-    brandColor: "#be185d",
-    draft: {
-      brandColor: "#be185d",
-      name: "Rose Atelier",
-      neutralColor: "#78716c",
-      lightBackgroundColor: "#fafafa",
-    },
-  },
-  {
-    id: "amber-foundry",
-    name: "Amber Foundry",
-    category: "Commerce and operations",
-    description: "Grounded amber with a warm, understated canvas.",
-    brandColor: "#b45309",
-    draft: {
-      brandColor: "#b45309",
-      name: "Amber Foundry",
-      neutralColor: "#78716c",
-      lightBackgroundColor: "#fafafa",
-    },
-  },
-];
-
-function applyThemeBuilderPreset(
-  state: ThemeBuilderState,
-  preset: ThemeBuilderPreset,
-): ThemeBuilderState {
-  return (Object.keys(preset.draft) as ThemeBuilderField[]).reduce(
-    (nextState, field) =>
-      updateThemeBuilderField(nextState, field, preset.draft[field]),
-    state,
-  );
-}
 
 const PREVIEW_TABS = ["dashboard", "components", "palette"] as const;
 type PreviewTab = (typeof PREVIEW_TABS)[number];
@@ -187,7 +89,11 @@ export function ThemeBuilder() {
   const [componentsView, setComponentsView] = React.useState(
     INITIAL_THEME_COMPONENTS_STATE,
   );
-  const [font, setFont] = React.useState(DEFAULT_THEME_FONT);
+  const [appearance, setAppearance] =
+    React.useState<AppearancePreferences>(APPEARANCE_DEFAULTS);
+  const font =
+    THEME_FONTS.find((item) => item.id === appearance.font) ??
+    DEFAULT_THEME_FONT;
   const [previewView, setPreviewView] = React.useState(
     INITIAL_THEME_PREVIEW_VIEW,
   );
@@ -211,6 +117,7 @@ export function ThemeBuilder() {
             theme={preview}
             mode={state.previewMode}
             fontFamily={font.previewFamily}
+            appearance={appearance}
             view={componentsView}
             onViewChange={setComponentsView}
           />
@@ -219,6 +126,7 @@ export function ThemeBuilder() {
             mode={state.previewMode}
             theme={preview}
             fontFamily={font.previewFamily}
+            appearance={appearance}
             view={previewView}
             onViewChange={setPreviewView}
             embedded
@@ -246,9 +154,10 @@ export function ThemeBuilder() {
             <ThemeConfigurationControls
               state={state}
               font={font}
+              appearance={appearance}
               onRestore={(configuration) => {
                 setState(configuration.state);
-                setFont(configuration.font);
+                setAppearance(configuration.appearance);
               }}
             />
             <Button
@@ -290,7 +199,7 @@ export function ThemeBuilder() {
             id="theme-builder-settings-panel"
             aria-labelledby="theme-builder-settings-heading"
             className={cn(
-              "min-w-0 border-b border-border-subtle bg-background p-4 lg:block lg:border-r lg:border-b-0 lg:p-5",
+              "min-w-0 border-b border-border-subtle bg-background p-4 lg:block lg:max-h-[min(56rem,calc(100dvh-8rem))] lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:thin] lg:border-r lg:border-b-0 lg:p-5",
               !settingsOpen && "hidden",
             )}
           >
@@ -309,7 +218,7 @@ export function ThemeBuilder() {
                 aria-label="Reset theme"
                 onClick={() => {
                   setState(resetThemeBuilderState());
-                  setFont(DEFAULT_THEME_FONT);
+                  setAppearance(APPEARANCE_DEFAULTS);
                 }}
               >
                 <RotateCcw className="size-3.5" aria-hidden="true" />
@@ -342,7 +251,11 @@ export function ThemeBuilder() {
                   const selected = THEME_FONTS.find(
                     (item) => item.id === event.target.value,
                   );
-                  if (selected) setFont(selected);
+                  if (selected)
+                    setAppearance((current) => ({
+                      ...current,
+                      font: selected.id,
+                    }));
                 }}
                 className="mt-2 min-h-10 w-full min-w-0 rounded-[5px] border border-border bg-background px-3 text-sm text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
@@ -360,6 +273,14 @@ export function ThemeBuilder() {
                 export.
               </p>
             </div>
+            <ThemeAppearanceControls
+              value={appearance}
+              mode={state.previewMode}
+              dashboard={previewTab === "dashboard"}
+              onChange={(update) =>
+                setAppearance((current) => ({ ...current, ...update }))
+              }
+            />
             {hasFieldErrors ? (
               <Alert
                 variant="destructive"
@@ -395,20 +316,19 @@ export function ThemeBuilder() {
               </h3>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 {THEME_BUILDER_PRESETS.map((preset) => {
-                  const selected = (
-                    Object.keys(preset.draft) as ThemeBuilderField[]
-                  ).every(
-                    (field) => state.draft[field] === preset.draft[field],
-                  );
+                  const selected =
+                    state.presetId === preset.value &&
+                    state.draft.lightBackgroundColor.toLowerCase() ===
+                      preset.draft.lightBackgroundColor;
                   return (
                     <button
-                      key={preset.id}
+                      key={preset.value}
                       type="button"
                       aria-pressed={selected}
-                      title={preset.description}
+                      title={preset.label}
                       onClick={() =>
                         setState((current) =>
-                          applyThemeBuilderPreset(current, preset),
+                          selectThemeBuilderPreset(current, preset.value),
                         )
                       }
                       className={cn(
@@ -420,19 +340,19 @@ export function ThemeBuilder() {
                     >
                       <span aria-hidden="true" className="mb-2 flex gap-1">
                         {[
-                          preset.brandColor,
+                          preset.draft.brandColor,
                           preset.draft.neutralColor,
                           preset.draft.lightBackgroundColor,
                         ].map((color, index) => (
                           <span
                             key={index}
-                            className="size-3.5 rounded-full border border-black/10"
+                            className="size-3.5 rounded-[2px] border border-black/10"
                             style={{ backgroundColor: color }}
                           />
                         ))}
                       </span>
                       <span className="block text-[11px] font-medium leading-4">
-                        {preset.name}
+                        {preset.label}
                       </span>
                       {selected ? (
                         <Check
@@ -547,7 +467,13 @@ export function ThemeBuilder() {
         </div>
       </section>
       <ThemeQuality theme={state.generatedTheme} />
-      <ThemeOutput theme={state.generatedTheme} font={font} />
+      <ThemeOutput
+        theme={state.generatedTheme}
+        font={font}
+        appearance={appearance}
+        presetId={state.presetId}
+        previewMode={state.previewMode}
+      />
     </div>
   );
 }

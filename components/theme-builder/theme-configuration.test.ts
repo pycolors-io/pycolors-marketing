@@ -57,7 +57,7 @@ test("rejects malformed files, unsupported versions, fonts, modes, and invalid f
     "{broken",
     "null",
     "[]",
-    JSON.stringify({ ...saved, version: 2 }),
+    JSON.stringify({ ...saved, version: 3 }),
     JSON.stringify({ ...saved, previewMode: "auto" }),
     JSON.stringify({
       ...saved,

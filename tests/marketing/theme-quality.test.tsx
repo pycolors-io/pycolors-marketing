@@ -1,11 +1,24 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ThemeQuality } from "@/components/theme-builder/theme-quality";
-import { createThemeBuilderState } from "@/components/theme-builder/theme-builder-state";
+import {
+  createThemeBuilderState,
+  restoreThemeBuilderState,
+} from "@/components/theme-builder/theme-builder-state";
 
 describe("Color readability", () => {
   it("explains every failed check in the correct mode and retains its technical evidence", () => {
-    const theme = createThemeBuilderState().generatedTheme;
+    const fixture = restoreThemeBuilderState(
+      {
+        brandColor: "#6a30d4",
+        name: "Contrast sample",
+        neutralColor: "",
+        lightBackgroundColor: "#fafafa",
+      },
+      "light",
+    );
+    if (!fixture.ok) throw new Error(fixture.message);
+    const theme = fixture.state.generatedTheme;
     render(<ThemeQuality theme={theme} />);
     expect(screen.getByText("6 checks need review")).toBeVisible();
     fireEvent.click(screen.getByText("Color readability"));

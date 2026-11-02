@@ -1,3 +1,8 @@
+import {
+  APPEARANCE_DEFAULTS,
+  type AppearancePreferences,
+} from "@/lib/appearance-contract";
+import { appearancePreviewVariables } from "./theme-appearance-preview";
 import * as React from "react";
 import {
   Activity,
@@ -58,6 +63,7 @@ type ThemePreviewProps = Readonly<{
   embedded?: boolean;
   fullScreen?: boolean;
   fontFamily?: string;
+  appearance?: AppearancePreferences;
 }>;
 
 const navigation = [
@@ -196,15 +202,21 @@ export function ThemePreview({
   embedded = false,
   fullScreen = false,
   fontFamily,
+  appearance = APPEARANCE_DEFAULTS,
 }: ThemePreviewProps) {
   const id = React.useId();
   const style = React.useMemo(
     () =>
       ({
         ...createThemePreviewVariables(theme),
+        ...appearancePreviewVariables(appearance),
+        "--preview-sidebar-primary":
+          theme.semantic.primary.srgbHex === theme.semantic.foreground.srgbHex
+            ? "#f5f5f5"
+            : `color-mix(in srgb, ${theme.semantic.primary.srgbHex} 60%, white)`,
         ...(fontFamily ? { fontFamily, "--font-sans": fontFamily } : {}),
       }) as React.CSSProperties,
-    [theme, fontFamily],
+    [theme, fontFamily, appearance],
   );
   const period = periods[view.period];
   const completed = period.values.reduce((total, value) => total + value, 0);
@@ -228,10 +240,24 @@ export function ThemePreview({
       aria-labelledby={`${id}-heading`}
       aria-describedby={`${id}-description`}
       data-theme-builder-preview={mode}
+      tabIndex={0}
+      data-preview-sidebar={
+        appearance.sidebar === "expanded"
+          ? "expanded"
+          : appearance.sidebarCollapse
+      }
+      data-preview-sidebar-style={appearance.sidebarVariant}
+      data-preview-density={appearance.density}
+      data-preview-width={appearance.width}
+      data-preview-header={appearance.header}
+      data-preview-canvas={appearance.canvas}
+      data-preview-motion={appearance.motion}
       style={style}
       className={`${styles.preview} ${fullScreen ? styles.expanded : ""} relative min-w-0 overflow-hidden bg-background text-foreground ${embedded ? "" : "rounded-[5px] border border-border/50"}`}
     >
-      <header className="flex min-h-16 flex-wrap items-center gap-3 border-b border-border/50 px-4 py-3">
+      <header
+        className={`${styles.header} flex min-h-16 flex-wrap items-center gap-3 border-b border-border/50 px-4 py-3`}
+      >
         <div className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden="true"
@@ -279,13 +305,21 @@ export function ThemePreview({
         </div>
       </header>
       <div className={styles.layout}>
-        <nav aria-label="Northstar workspace" className={styles.navigation}>
+        <nav
+          aria-label="Northstar workspace"
+          className={styles.navigation}
+          data-preview-sidebar-background={
+            mode === "light" ? appearance.sidebarLight : appearance.sidebarDark
+          }
+        >
           <div className={styles.links}>
             {navigation.map(({ label, icon: Icon, active }) => (
               <a
                 key={label}
                 href={`#${id}-${label === "Projects" ? "projects" : "overview"}`}
                 aria-current={active ? "page" : undefined}
+                aria-label={label}
+                title={appearance.sidebar === "collapsed" ? label : undefined}
                 className={
                   active
                     ? "flex shrink-0 items-center gap-2 rounded-[4px] bg-primary px-2.5 py-2.5 text-xs font-medium text-primary-foreground"
@@ -293,7 +327,7 @@ export function ThemePreview({
                 }
               >
                 <Icon className="size-3.5" aria-hidden="true" />
-                {label}
+                <span className={styles.navigationLabel}>{label}</span>
               </a>
             ))}
           </div>
@@ -318,7 +352,10 @@ export function ThemePreview({
             </p>
           </div>
         </nav>
-        <div id={`${id}-overview`} className="min-w-0 bg-muted/15 p-3.5 sm:p-5">
+        <div
+          id={`${id}-overview`}
+          className={`${styles.main} min-w-0 bg-muted/15 p-3.5 sm:p-5`}
+        >
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-[11px] text-muted-foreground">
@@ -636,7 +673,12 @@ export function ThemePreview({
                   value={view.projectTab}
                   className={`${styles.projectTable} mt-3`}
                 >
-                  <Table aria-label="Northstar projects" id={`${id}-projects`}>
+                  <Table
+                    aria-label="Northstar projects"
+                    id={`${id}-projects`}
+                    tabIndex={0}
+                    className="outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+                  >
                     <TableHeader className="bg-muted/15">
                       <TableRow className="border-border/40 hover:bg-transparent">
                         <TableHead>Project</TableHead>
