@@ -89,7 +89,7 @@ describe("starter demo discovery", () => {
     for (const [name, destination] of [
       ["Explore dashboard", "/dashboard"],
       ["Explore team workflows", "/admin"],
-      ["Preview Free → Pro", "/billing"],
+      ["Preview billing", "/billing"],
     ]) {
       const link = screen.getByRole("link", { name });
       const target = new URL(link.getAttribute("href")!);

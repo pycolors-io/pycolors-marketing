@@ -48,10 +48,10 @@ const journeys = [
     icon: Users,
   },
   {
-    title: "Try Free → Pro",
+    title: "Preview billing",
     description:
       "Review and confirm a plan preview. No card, charge or subscription is created.",
-    action: "Preview Free → Pro",
+    action: "Preview billing",
     destination: "/billing",
     icon: CreditCard,
   },
