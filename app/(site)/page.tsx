@@ -582,6 +582,10 @@ export default function HomePage() {
                       <dt>You receive</dt>
                       <dd>{service.deliverable}</dd>
                     </dl>
+                    <Link href={service.example.href} className={linkClass}>
+                      View example delivery
+                      <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </Link>
                     <div className={styles.implementationAction}>
                       <MarketingLinkButton variant="outline" className="w-full">
                         <Link href={service.href}>{service.action}</Link>

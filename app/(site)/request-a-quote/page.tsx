@@ -65,6 +65,12 @@ export default async function QuoteRequestPage({
                   <h3 id={`quote-${service.id}-title`}>{service.title}</h3>
                   <strong>{service.priceLabel}</strong>
                   <p>{service.deliverable}</p>
+                  <Link
+                    href={service.example.href}
+                    className="mt-2 inline-flex min-h-11 items-center text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                  >
+                    View example delivery
+                  </Link>
                 </section>
               ))}
             </div>

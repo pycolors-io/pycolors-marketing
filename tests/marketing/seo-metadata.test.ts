@@ -97,6 +97,7 @@ describe("sitemap date integrity", () => {
       "",
       "/pricing",
       "/showcase/product-studio",
+      "/starters/pro/implementation-example",
       "/docs",
       "/docs/ui/card",
       "/blog/undated",

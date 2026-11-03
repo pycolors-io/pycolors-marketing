@@ -177,6 +177,13 @@ export function StarterProImplementation() {
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 {service.deliverable}
               </p>
+              <Link
+                href={service.example.href}
+                className="mt-2 inline-flex min-h-11 items-center gap-2 text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              >
+                View example delivery
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </Link>
             </div>
             <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
               {service.scope}

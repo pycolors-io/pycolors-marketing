@@ -1,4 +1,6 @@
 // Service engagements use a written quote, independently of source checkout.
+export const IMPLEMENTATION_EXAMPLE_PATH =
+  "/starters/pro/implementation-example";
 export const STARTER_PRO_SERVICES = {
   setup: {
     id: "guided-setup",
@@ -23,6 +25,12 @@ export const STARTER_PRO_SERVICES = {
       "A configured environment, validation checklist and handover notes.",
     scope:
       "Business-specific development, existing customer-data migrations, hosting and ongoing operation are quoted separately.",
+    example: {
+      href: `${IMPLEMENTATION_EXAMPLE_PATH}#guided-setup`,
+      title: "A first workspace your team can take over",
+      outcome:
+        "A branded preview, a recorded first-user journey and operating notes.",
+    },
     action: "Request a setup quote",
   },
   adaptation: {
@@ -48,6 +56,12 @@ export const STARTER_PRO_SERVICES = {
       "An implemented workflow, validation results and handover notes.",
     scope:
       "The quote defines the workflow and integration boundaries. Larger engagements can exceed 10,000 €; hosting and ongoing operation are separate.",
+    example: {
+      href: `${IMPLEMENTATION_EXAMPLE_PATH}#business-adaptation`,
+      title: "An internal client-delivery workflow",
+      outcome:
+        "An agreed delivery view, permission checks and developer handover notes.",
+    },
     action: "Discuss a business adaptation",
   },
 } as const;

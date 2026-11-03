@@ -26,6 +26,7 @@ const STATIC_ROUTES = [
   "/templates/na-ai-landing",
   "/starters/pro",
   "/starters/pro/faq",
+  "/starters/pro/implementation-example",
   "/compare/build-vs-buy",
   "/pricing",
   "/request-a-quote",
