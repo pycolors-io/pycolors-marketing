@@ -13,7 +13,7 @@ afterEach(() => {
 });
 
 describe("starter demo discovery", () => {
-  it("distinguishes the mock Free app from Pro workspace journeys and provides a tour when Pro is unavailable", () => {
+  it("prioritizes the connected Pro demo while keeping the Free frontend clearly separate", () => {
     vi.stubEnv("NEXT_PUBLIC_STARTER_PRO_DEMO_URL", "");
     render(<DemoPage />);
     expect(metadata.alternates).toEqual({ canonical: "/demo" });
@@ -23,15 +23,19 @@ describe("starter demo discovery", () => {
     const pro = screen.getByRole("article", { name: "Starter Pro" });
     expect(free).toHaveTextContent("No real accounts, database or payments");
     expect(pro).toHaveTextContent("saved workspace changes");
-    expect(pro).toHaveTextContent("Free → Pro preview without a real payment");
+    expect(pro).toHaveTextContent("No card, charge or subscription is created");
+    expect(screen.getAllByRole("article")[0]).toBe(pro);
     expect(
       within(free).getByRole("link", { name: "Open Free demo" }),
     ).toHaveAttribute("href", "https://starter-demo.pycolors.io/");
     expect(
-      within(pro).getByRole("link", { name: "Watch Pro tour" }),
-    ).toHaveAttribute("href", "/starters/pro#product-tour");
+      within(pro).getByRole("link", { name: "Open Pro demo" }),
+    ).toHaveAttribute(
+      "href",
+      "https://pro-demo.pycolors.io/demo?destination=%2Fdashboard",
+    );
     expect(
-      within(pro).queryByRole("link", { name: "Open Pro demo" }),
+      within(pro).queryByRole("link", { name: "Watch Pro tour" }),
     ).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
@@ -73,7 +77,29 @@ describe("starter demo discovery", () => {
     );
     expect(
       screen.getByRole("article", { name: "Starter Pro" }),
-    ).toHaveTextContent("A private workspace for two hours");
+    ).toHaveTextContent("saved workspace changes stay private for two hours");
+  });
+
+  it("keeps all three journeys on the configured deployment with allowlisted destinations", () => {
+    vi.stubEnv(
+      "NEXT_PUBLIC_STARTER_PRO_DEMO_URL",
+      "https://demo.example.test/demo",
+    );
+    render(<DemoPage />);
+    for (const [name, destination] of [
+      ["Explore dashboard", "/dashboard"],
+      ["Explore team workflows", "/admin"],
+      ["Preview Free → Pro", "/billing"],
+    ]) {
+      const link = screen.getByRole("link", { name });
+      const target = new URL(link.getAttribute("href")!);
+      expect(target.origin).toBe("https://demo.example.test");
+      expect(target.pathname).toBe("/demo");
+      expect(target.searchParams.get("destination")).toBe(destination);
+      link.addEventListener("click", (event) => event.preventDefault());
+      fireEvent.click(link);
+    }
+    expect(analytics.track).toHaveBeenCalledTimes(3);
   });
 
   it("uses existing labelled captures and valid product/comparison destinations", () => {

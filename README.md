@@ -53,17 +53,20 @@ mobile navigation and footer link to it. Starter Free keeps its existing
 `https://starter-demo.pycolors.io/` deployment; its screens use mock data and
 client-side interactions.
 
-For Starter Pro, set `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** only after
-verifying the isolated demo deployment. The dedicated PyColors demo project is
-`pycolors-pro-demo`, with the domain `https://pro-demo.pycolors.io/demo`. Leave the value empty until that
-deployment, its dedicated database, guest journeys and expiry cleanup are ready.
-The URL is configuration, not a hostname the source provisions automatically.
+Marketing defaults to the verified public Pro demo at
+`https://pro-demo.pycolors.io/demo`, hosted by the dedicated `pycolors-pro-demo`
+project. `/demo` leads with Pro, its actual workspace captures and three direct
+journey entry points: Dashboard, Members and the Free → Pro plan preview. Free
+has a separate frontend demo section. Captures follow the site's light/dark mode.
+The Pro `demo-dashboard-light.png` / `demo-dashboard-dark.png` captures come from
+the same English, Monochrome workspace in local demo browser QA, with fictitious
+data. Keep the page, locale and viewport consistent when refreshing the pair.
 
-With a valid configured URL, `/demo` and the Starter Pro product page open the Pro
-deployment directly. Without one, the discovery card offers the product tour;
-the Pro preview section links back to `/demo`. Invalid URL configuration never
-creates an outbound Pro demo link. The Marketing build does not need the demo's
-database credentials, auth secrets or cleanup secret.
+Override `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** to use another
+verified isolated deployment. Missing or empty values use the public PyColors
+demo; invalid non-empty values hide outbound demo links and offer the clearly
+separate product tour. The Starter Free app retains its own opt-in configuration.
+The Marketing build does not need database credentials, auth or cleanup secrets.
 
 Deploy Pro separately in demo mode using the configuration in
 `apps/starter-pro/DEMO.md` in the canonical monorepo. Keep the marketing site and
