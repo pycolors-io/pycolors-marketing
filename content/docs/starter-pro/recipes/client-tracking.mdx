@@ -1,0 +1,103 @@
+---
+title: Client tracking
+description: Use projects for client engagements, tasks for follow-ups and comments for internal delivery notes.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, LifeBuoy } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Track an engagement
+
+Use an internal workspace to coordinate a client delivery. The example starts
+with **Northstar — website launch**, a scope description and an internal owner.
+It uses the included Projects module and requires no new schema.
+
+| Your vocabulary   | Existing model                                 | Example                                    |
+| ----------------- | ---------------------------------------------- | ------------------------------------------ |
+| Client engagement | Project name and description                   | Northstar — website launch                 |
+| Internal owner    | Project responsible membership                 | A member of your workspace                 |
+| Follow-up         | Task title, description, assignee and due date | Confirm the launch copy                    |
+| Delivery note     | Task comment                                   | Copy reviewed; two wording changes remain. |
+
+## Try the workflow
+
+<Steps>
+  <Step>
+    ### Create the engagement
+
+    Open **Projects → Create project**, enter the name and scope, choose a
+    responsible member and save. Open its detail page.
+
+  </Step>
+  <Step>
+    ### Plan the follow-ups
+
+    Add **Confirm the launch copy**, **Review the delivery** and **Prepare the
+    handover** as tasks. Give each a responsible member and calendar due date.
+
+  </Step>
+  <Step>
+    ### Work and verify persistence
+
+    Move the first task from `TODO` to `IN_PROGRESS`, post the internal note and
+    reload. Confirm that its status, assignee, date and discussion persist.
+
+  </Step>
+  <Step>
+    ### Complete and retain the engagement
+
+    Mark completed follow-ups `DONE`, then update the project's own status
+    separately. Archive it to pause task/comment edits; restore before editing
+    again. Deleting the project removes its tasks and comments.
+
+  </Step>
+</Steps>
+
+<Callout title="Internal records share workspace access">
+  All active workspace members can see these client records and notes. A project
+  does not isolate one client's data from another. Decide the customer/workspace
+  model and server permissions before inviting external clients or building a
+  portal.
+</Callout>
+
+## Adapt the presentation
+
+The shipped `docs/recipes/client-tracking.md` identifies the existing source
+entry points and includes a scoped assistant prompt. Start with the project
+detail page, `config/product.ts` navigation and the English/French UI copy.
+Keep persisted status codes and workspace service guards. Use page-specific
+engagement labels if the application also contains other project workflows.
+
+## Check before adopting
+
+- A MEMBER can create a follow-up and post a note; assignment does not limit
+  editing to its named owner.
+- Another workspace's project, task, comment or assignee ID is rejected.
+- Reload and language changes retain user-authored names and notes.
+- Archive blocks task/comment writes until restored; it is not permanent retention.
+
+A contacts directory, customer account history, customer-specific access and
+billing per client are extensions to design. The baseline does not add them.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Business recipe foundation",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description: "Review shared access, status and date rules.",
+    },
+    {
+      title: "Support requests",
+      icon: LifeBuoy,
+      href: "/docs/starter-pro/recipes/support-requests",
+      description: "Apply task work to an internal support queue.",
+    },
+  ]}
+/>

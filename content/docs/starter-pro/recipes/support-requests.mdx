@@ -1,0 +1,103 @@
+---
+title: Support requests
+description: Reuse a project as an internal support queue, with assigned request tasks and investigation comments.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, ClipboardCheck } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Organize an internal queue
+
+Start with a **Product support** project. Each task represents one request;
+its comments hold investigation notes. This is a manual internal workflow over
+the existing model, with no new schema or provider.
+
+| Your vocabulary       | Existing model                           | Example                                                |
+| --------------------- | ---------------------------------------- | ------------------------------------------------------ |
+| Queue                 | Project                                  | Product support                                        |
+| Request               | Task title and description               | CSV export misses the last column                      |
+| Agent and target date | Responsible membership and task due date | A teammate and a chosen calendar target                |
+| Investigation         | Task comments                            | Reproduced with a synthetic CSV; fix ready for review. |
+
+## Try the workflow
+
+<Steps>
+  <Step>
+    ### Open the queue
+
+    Create the Product support project and describe its scope. Keep the queue
+    project active while the team is handling requests.
+
+  </Step>
+  <Step>
+    ### Record a request
+
+    Create the example task with expected/observed behavior and safe reproduction
+    steps. Assign an active teammate and choose a target date.
+
+  </Step>
+  <Step>
+    ### Investigate and resolve
+
+    Move `TODO` to `IN_PROGRESS`, add an internal comment, then reload. Record
+    the resolution and mark the task `DONE`. Return it to `IN_PROGRESS` if work
+    resumes; no enforced ticket-transition state machine is added.
+
+  </Step>
+  <Step>
+    ### Keep queue and request states separate
+
+    Closing one task does not close the queue project. Archiving the project
+    blocks task/comment changes for every request in it until restored.
+
+  </Step>
+</Steps>
+
+<Callout title="Internal notes and calendar targets">
+  Comments are visible to workspace members and are not replies to customers. A
+  task due date does not send reminders, measure response time or enforce an
+  SLA. Email ingestion, customer replies and a customer portal are extensions.
+</Callout>
+
+## Adapt the presentation
+
+The shipped `docs/recipes/support-requests.md` includes source entry points and
+an assistant prompt. Reuse the task view, validated fields and workspace service.
+Add localized queue/request labels in that view without changing the shared
+status codes. The assignee is a workspace membership, not a requester identity
+or a permission that hides the ticket from other members.
+
+## Check before adopting
+
+- MEMBER can create, assign, edit and comment on requests, and remove its own notes.
+- OWNER/ADMIN can delete tasks and moderate other members' comments; MEMBER cannot.
+- Foreign record IDs and revoked memberships are rejected.
+- Resolution and reopening preserve the discussion; archiving blocks work changes.
+
+Priority, customer references, attachments, waiting-for-customer states and
+mailbox automation need explicit domain fields or integrations. Define them
+before presenting the adaptation as a complete help desk.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Business recipe foundation",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description: "Review the shared model, access and acceptance checks.",
+    },
+    {
+      title: "Internal validation",
+      icon: ClipboardCheck,
+      href: "/docs/starter-pro/recipes/internal-validation",
+      description:
+        "Coordinate review work without implying approval authority.",
+    },
+  ]}
+/>

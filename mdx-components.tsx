@@ -275,7 +275,12 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
       />
     ),
     table: ({ className, ...props }) => (
-      <div className="not-prose relative my-6 overflow-x-auto rounded-[8px] border border-border-subtle bg-card shadow-off">
+      <div
+        role="region"
+        aria-label={props["aria-label"] ?? "Scrollable table"}
+        tabIndex={0}
+        className="not-prose relative my-6 overflow-x-auto rounded-[8px] border border-border-subtle bg-card shadow-off focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
         <table
           {...props}
           className={[
