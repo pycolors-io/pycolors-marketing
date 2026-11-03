@@ -43,6 +43,7 @@ import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingFaq } from "@/components/marketing/faq";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
 import { StarterProCarousel } from "@/components/starters/starter-pro-carousel";
+import { StarterProTour } from "@/components/starters/starter-pro-tour";
 import { StarterProFoundations } from "@/components/starters/starter-pro-foundations";
 import {
   StarterProReadiness,
@@ -429,7 +430,6 @@ const sectionClass = "scroll-mt-24 border-t border-border-subtle";
 function StarterProPreviews() {
   return (
     <MarketingSectionShell
-      divider="pattern"
       id="product-preview"
       width="full"
       className="scroll-mt-24"
@@ -542,8 +542,8 @@ export default function StarterProPage() {
                   size="lg"
                   className="rounded-[5px]"
                 >
-                  <a href="#product-preview">
-                    Explore the product{" "}
+                  <a href="#product-tour">
+                    Watch the product tour{" "}
                     <ArrowDown className="size-4" aria-hidden="true" />
                   </a>
                 </Button>
@@ -656,6 +656,7 @@ export default function StarterProPage() {
           className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-b border-border-subtle pb-3"
         >
           {[
+            ["#product-tour", "Product tour"],
             ["#product-preview", "Product preview"],
             ["#readiness", "Validation & workflows"],
             ["#implementation", "Scoped implementation"],
@@ -675,6 +676,7 @@ export default function StarterProPage() {
           ))}
         </nav>
 
+        <StarterProTour />
         <StarterProPreviews />
         <StarterProReadiness />
         <StarterProImplementation />

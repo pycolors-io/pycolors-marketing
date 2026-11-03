@@ -499,6 +499,9 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="mt-7 divide-y divide-pro-border-subtle border-t border-pro-border-subtle pt-2">
+                  <ResourceLink href="/starters/pro#product-tour">
+                    Watch the product tour
+                  </ResourceLink>
                   <ResourceLink href="/docs/starter-pro/what-is-included">
                     Review what is included
                   </ResourceLink>

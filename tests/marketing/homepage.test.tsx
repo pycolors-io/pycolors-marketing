@@ -27,6 +27,15 @@ const destinations = [
 ];
 
 describe("product homepage", () => {
+  it("hands off to the product tour without embedding a video on the homepage", () => {
+    const { container } = render(<HomePage />);
+    expect(
+      screen.getByRole("link", { name: "Watch the product tour" }),
+    ).toHaveAttribute("href", "/starters/pro#product-tour");
+    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("iframe")).toBeNull();
+  });
+
   it("prioritizes products and starters before the complementary Theme Builder", () => {
     render(<HomePage />);
     const main = screen.getByRole("main");

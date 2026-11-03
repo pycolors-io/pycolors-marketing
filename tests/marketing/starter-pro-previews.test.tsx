@@ -343,6 +343,7 @@ describe("Starter Pro product page", () => {
     });
     const links = within(navigation).getAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "#product-tour",
       "#product-preview",
       "#readiness",
       "#implementation",
