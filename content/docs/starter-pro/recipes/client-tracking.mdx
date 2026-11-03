@@ -7,7 +7,12 @@ appliesTo: Starter Pro
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { BookOpen, LifeBuoy } from "lucide-react";
+import {
+  BookOpen,
+  ClipboardCheck,
+  LifeBuoy,
+  SlidersHorizontal,
+} from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 ## Track an engagement
@@ -83,9 +88,10 @@ engagement labels if the application also contains other project workflows.
 A contacts directory, customer account history, customer-specific access and
 billing per client are extensions to design. The baseline does not add them.
 
+## Related guides
+
 <DocsLinks
   variant="grid"
-  tone="neutral"
   items={[
     {
       title: "Business recipe foundation",
@@ -98,6 +104,20 @@ billing per client are extensions to design. The baseline does not add them.
       icon: LifeBuoy,
       href: "/docs/starter-pro/recipes/support-requests",
       description: "Apply task work to an internal support queue.",
+    },
+    {
+      title: "Internal validation",
+      href: "/docs/starter-pro/recipes/internal-validation",
+      description:
+        "Coordinate review tasks and outcome notes on the same foundation.",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "Product customization",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Localize engagement labels and adapt your product navigation.",
+      icon: SlidersHorizontal,
     },
   ]}
 />

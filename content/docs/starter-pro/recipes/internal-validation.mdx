@@ -7,7 +7,7 @@ appliesTo: Starter Pro
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { BookOpen, SlidersHorizontal } from "lucide-react";
+import { BookOpen, LifeBuoy, SlidersHorizontal, Users } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 ## Coordinate a review
@@ -84,9 +84,10 @@ retention. A separate guarded operation and structured decision record may
 require a reviewed schema. Follow the permission extension guide after those
 product decisions are explicit.
 
+## Related guides
+
 <DocsLinks
   variant="grid"
-  tone="neutral"
   items={[
     {
       title: "Business recipe foundation",
@@ -99,6 +100,20 @@ product decisions are explicit.
       icon: SlidersHorizontal,
       href: "/docs/starter-pro/customization-and-upgrades",
       description: "Find the delivered resource and permission recipes.",
+    },
+    {
+      title: "Client tracking",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      description:
+        "Coordinate engagement follow-ups using the same project/task model.",
+      icon: Users,
+    },
+    {
+      title: "Support requests",
+      href: "/docs/starter-pro/recipes/support-requests",
+      description:
+        "Reuse assigned work and discussion for an internal support queue.",
+      icon: LifeBuoy,
     },
   ]}
 />

@@ -9,8 +9,10 @@ import { Callout } from "fumadocs-ui/components/callout";
 import {
   ClipboardCheck,
   LifeBuoy,
+  Rocket,
   ShieldCheck,
   SlidersHorizontal,
+  Terminal,
   Users,
 } from "lucide-react";
 import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
@@ -24,7 +26,6 @@ presentation changes and domain extensions to review.
 
 <DocsDecisionGrid
   columns={3}
-  tone="neutral"
   items={[
     {
       title: "Client tracking",
@@ -106,23 +107,37 @@ cross-workspace ID rejection, revoked access and archived-task rejection. Review
 new UI in French/English, light/dark appearance, keyboard navigation and a narrow
 viewport. Add tests for any new domain behavior.
 
+## Continue the implementation
+
 <DocsLinks
   variant="grid"
-  tone="neutral"
   items={[
     {
+      title: "Install Starter Pro",
+      href: "/docs/starter-pro/getting-started",
+      description: "Prepare your source, environment and first workspace.",
+      icon: Rocket,
+    },
+    {
       title: "Customize and extend",
-      icon: SlidersHorizontal,
       href: "/docs/starter-pro/customization-and-upgrades",
       description:
         "Use the existing configuration and guarded extension recipes.",
+      icon: SlidersHorizontal,
+    },
+    {
+      title: "Test the workspace locally",
+      href: "/docs/starter-pro/local-development",
+      description:
+        "Try the walkthroughs with isolated sample data and your own local setup.",
+      icon: Terminal,
     },
     {
       title: "Validation coverage",
-      icon: ShieldCheck,
       href: "/docs/starter-pro/release-readiness",
       description:
         "Understand the existing package and business-workflow checks.",
+      icon: ShieldCheck,
     },
   ]}
 />

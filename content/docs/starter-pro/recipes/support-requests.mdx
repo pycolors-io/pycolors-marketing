@@ -7,7 +7,12 @@ appliesTo: Starter Pro
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
-import { BookOpen, ClipboardCheck } from "lucide-react";
+import {
+  BookOpen,
+  ClipboardCheck,
+  SlidersHorizontal,
+  Users,
+} from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 ## Organize an internal queue
@@ -82,9 +87,10 @@ Priority, customer references, attachments, waiting-for-customer states and
 mailbox automation need explicit domain fields or integrations. Define them
 before presenting the adaptation as a complete help desk.
 
+## Related guides
+
 <DocsLinks
   variant="grid"
-  tone="neutral"
   items={[
     {
       title: "Business recipe foundation",
@@ -98,6 +104,20 @@ before presenting the adaptation as a complete help desk.
       href: "/docs/starter-pro/recipes/internal-validation",
       description:
         "Coordinate review work without implying approval authority.",
+    },
+    {
+      title: "Client tracking",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      description:
+        "Use projects and follow-ups for internal client delivery work.",
+      icon: Users,
+    },
+    {
+      title: "Guarded customization",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Find the service and permission extension recipes before adding domain rules.",
+      icon: SlidersHorizontal,
     },
   ]}
 />
