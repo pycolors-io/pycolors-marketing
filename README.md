@@ -58,9 +58,9 @@ Marketing defaults to the verified public Pro demo at
 project. `/demo` leads with Pro, its actual workspace captures and three direct
 journey entry points: Dashboard, Members and the Free → Pro plan preview. Free
 has a separate frontend demo section. Captures follow the site's light/dark mode.
-The Pro `demo-dashboard-light.png` / `demo-dashboard-dark.png` captures come from
-the same English, Monochrome workspace in local demo browser QA, with fictitious
-data. Keep the page, locale and viewport consistent when refreshing the pair.
+The Pro `demo-dashboard-indigo-light-2x.png` / `demo-dashboard-indigo-dark-2x.png` captures come from
+the same English, Indigo Ledger workspace in local demo browser QA, with
+fictitious data. They use 2× device pixel ratio (2880 × 2000) and image quality 100. Keep the page, locale, palette and viewport consistent when refreshing the pair.
 
 Override `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** to use another
 verified isolated deployment. Missing or empty values use the public PyColors

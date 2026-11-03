@@ -55,6 +55,7 @@ export function StarterProTourPlayer({
           <Image
             src={poster}
             alt=""
+            quality={100}
             width={1920}
             height={1080}
             sizes="(min-width: 1440px) 1360px, 95vw"

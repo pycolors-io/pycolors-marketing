@@ -82,8 +82,8 @@ describe("PyColors-owned product reference", () => {
       );
       for (const bytes of captures) {
         expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-        expect(bytes.readUInt32BE(16)).toBe(1440);
-        expect(bytes.readUInt32BE(20)).toBe(1100);
+        expect(bytes.readUInt32BE(16)).toBe(2880);
+        expect(bytes.readUInt32BE(20)).toBe(2200);
       }
       expect(captures[0]).not.toEqual(captures[1]);
     }

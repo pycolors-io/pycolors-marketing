@@ -9,13 +9,13 @@ export const productStudio = {
     "A shared workspace for planning a product release, assigning work and keeping review notes with the task.",
   images: {
     dashboard: {
-      light: "/images/showcase/product-studio/dashboard-light.png",
-      dark: "/images/showcase/product-studio/dashboard-dark.png",
+      light: "/images/showcase/product-studio/dashboard-coral-light.png",
+      dark: "/images/showcase/product-studio/dashboard-coral-dark.png",
       alt: "Product studio dashboard with fictional projects, workspace activity and a project creation chart",
     },
     project: {
-      light: "/images/showcase/product-studio/project-light.png",
-      dark: "/images/showcase/product-studio/project-dark.png",
+      light: "/images/showcase/product-studio/project-coral-light.png",
+      dark: "/images/showcase/product-studio/project-coral-dark.png",
       alt: "Launch checklist project with fictional assigned tasks, due dates and a task discussion",
     },
   },

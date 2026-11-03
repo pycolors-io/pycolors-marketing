@@ -275,7 +275,8 @@ const heroScreenshots = [
     label: "Dashboard",
     description: "Saved workspace metrics, a weekly chart and team roles.",
     alt: "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
-    image: "/images/starters/pro/dashboard-pycolors.png",
+    image: "/images/starters/pro/dashboard-pycolors-2x.png",
+    palette: "PyColors",
     annotation:
       "Project counts, weekly creation history and team roles come from a seeded PostgreSQL workspace. These captures use demonstration data, not customer results.",
   },
@@ -284,7 +285,8 @@ const heroScreenshots = [
     label: "Authentication",
     description: "Email sign-in, provider choices and password recovery.",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
-    image: "/images/starters/pro/auth-pycolors.png",
+    image: "/images/starters/pro/auth-indigo-2x.png",
+    palette: "Indigo Ledger",
     annotation:
       "The right-hand form combines email and password fields, Google and GitHub buttons, password recovery and account creation. Configure your own provider credentials before using these options.",
   },
@@ -292,8 +294,9 @@ const heroScreenshots = [
     title: "Billing",
     label: "Billing",
     description: "Plan summary, invoice area and billing portal actions.",
-    alt: "Starter Pro billing screen showing a demonstration trial plan and an empty invoice table",
-    image: "/images/starters/pro/billing-pycolors.png",
+    alt: "Starter Pro billing screen showing a synthetic subscription, billing status and sample invoices",
+    image: "/images/starters/pro/billing-emerald-2x.png",
+    palette: "Emerald Console",
     annotation:
       "Personal billing connects subscriptions, invoices and the customer portal. The seeded plan and figures are not evidence of a payment or a verified Stripe integration. Organization-owned billing needs a separate extension.",
   },
@@ -302,7 +305,8 @@ const heroScreenshots = [
     label: "Pricing example",
     description: "An example SaaS offer with features and trial actions.",
     alt: "Starter Pro example SaaS pricing page with feature lists and trial buttons",
-    image: "/images/starters/pro/pricing-pycolors.png",
+    image: "/images/starters/pro/pricing-cyan-2x.png",
+    palette: "Arctic Cyan",
     annotation:
       "The SaaS plan catalog uses the configured Stripe price and server-side entitlements. Values shown in this synthetic test workspace are not the purchase terms for the Starter Pro source package. Resource caps are configurable and uncapped by default.",
   },
@@ -311,7 +315,8 @@ const heroScreenshots = [
     label: "Project work",
     description: "Assigned tasks, calendar due dates and project discussions.",
     alt: "Starter Pro project with assigned tasks, due dates and a task discussion",
-    image: "/images/starters/pro/project-work-pycolors.png",
+    image: "/images/starters/pro/project-work-coral-2x.png",
+    palette: "Coral Signal",
     annotation:
       "Tasks, responsible members and comments persist in the selected workspace. Archived projects remain readable and reject work changes until restored. This is an adaptable business example, not a complete project-management product.",
   },
@@ -465,7 +470,8 @@ function StarterProPreviews() {
                     alt={screenshot.alt}
                     fill
                     priority={index === 0}
-                    sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
+                    quality={100}
+                    sizes="(min-width: 1440px) 1024px, (min-width: 1024px) calc(100vw - 416px), 95vw"
                     className={`${styles.media} object-cover object-top`}
                   />
                 </div>
@@ -474,7 +480,7 @@ function StarterProPreviews() {
                 <div className={`${styles.caption} flex h-full flex-col`}>
                   <p className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
                     <span className="font-mono">0{index + 1} / 05</span>
-                    <span>Interface preview</span>
+                    <span>{screenshot.palette}</span>
                   </p>
                   <h3 className="mt-6 text-xl font-semibold tracking-subheading">
                     {screenshot.title}

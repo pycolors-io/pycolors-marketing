@@ -16,8 +16,8 @@ export const PRODUCT_PREVIEW_MEDIA = {
     caption: "Runnable frontend · Mock data",
   },
   "starter-pro": {
-    light: "/images/starters/pro/dashboard-pycolors.png",
-    dark: "/images/starters/pro/dashboard-dark-pycolors.png",
+    light: "/images/starters/pro/dashboard-pycolors-2x.png",
+    dark: "/images/starters/pro/dashboard-dark-pycolors-2x.png",
     alt: "Starter Pro dashboard with sample projects and workspace metrics",
     caption: "SaaS foundation · Demo workspace",
   },

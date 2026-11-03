@@ -65,19 +65,31 @@ describe("Starter Pro product page", () => {
     expect(images).toHaveLength(5);
     expect(within(region).queryByRole("tablist")).toBeNull();
     for (const [index, [title, file, annotation]] of [
-      ["Dashboard", "dashboard", "demonstration data, not customer results"],
-      ["Authentication", "auth", "Configure your own provider credentials"],
+      [
+        "Dashboard",
+        "dashboard-pycolors-2x",
+        "demonstration data, not customer results",
+      ],
+      [
+        "Authentication",
+        "auth-indigo-2x",
+        "Configure your own provider credentials",
+      ],
       [
         "Billing",
-        "billing",
+        "billing-emerald-2x",
         "not evidence of a payment or a verified Stripe integration",
       ],
       [
         "Pricing example",
-        "pricing",
+        "pricing-cyan-2x",
         "not the purchase terms for the Starter Pro source package",
       ],
-      ["Project work", "project-work", "Archived projects remain readable"],
+      [
+        "Project work",
+        "project-work-coral-2x",
+        "Archived projects remain readable",
+      ],
     ].entries()) {
       const image = images[index]!;
       expect(image).toHaveAccessibleName(/Starter Pro/u);
@@ -95,7 +107,7 @@ describe("Starter Pro product page", () => {
       expect(within(note).getByRole("heading", { level: 3 })).toHaveTextContent(
         title!,
       );
-      expect(image.getAttribute("src")).toContain(`${file}-pycolors.png`);
+      expect(image.getAttribute("src")).toContain(`${file}.png`);
       expect(within(note).queryByRole("link")).toBeNull();
       expect(note).not.toHaveAttribute("inert");
       for (const slide of region.querySelectorAll(

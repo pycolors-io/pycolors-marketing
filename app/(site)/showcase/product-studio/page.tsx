@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: productStudio.images.dashboard.light,
-        width: 1440,
-        height: 1100,
+        width: 2880,
+        height: 2200,
         alt: productStudio.images.dashboard.alt,
       },
     ],
@@ -111,7 +111,8 @@ export default function ProductStudioPage() {
           <ProductStudioCapture priority />
           <figcaption className="mt-3 text-xs leading-6 text-muted-foreground">
             Product studio · Workspace overview. Unedited application capture
-            with fictional data, shown in the PyColors palette.
+            with fictional data, shown in the Coral Signal palette from
+            Customize.
           </figcaption>
         </figure>
       </Container>

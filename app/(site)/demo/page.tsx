@@ -79,6 +79,7 @@ function DemoCapture({
         src={light}
         alt={`${product} dashboard with fictional data, light theme`}
         fill
+        quality={product === "Starter Pro" ? 100 : 75}
         sizes={sizes}
         className="object-contain dark:hidden"
       />
@@ -86,6 +87,7 @@ function DemoCapture({
         src={dark}
         alt={`${product} dashboard with fictional data, dark theme`}
         fill
+        quality={product === "Starter Pro" ? 100 : 75}
         sizes={sizes}
         className="hidden object-contain dark:block"
       />
@@ -193,12 +195,12 @@ export default function DemoPage() {
                 </div>
                 <DemoCapture
                   product="Starter Pro"
-                  light="/images/starters/pro/demo-dashboard-light.png"
-                  dark="/images/starters/pro/demo-dashboard-dark.png"
+                  light="/images/starters/pro/demo-dashboard-indigo-light-2x.png"
+                  dark="/images/starters/pro/demo-dashboard-indigo-dark-2x.png"
                   sizes="(min-width: 1440px) 720px, (min-width: 1024px) 55vw, 100vw"
                 />
                 <figcaption className="text-[11px] leading-5 text-muted-foreground">
-                  Example workspace · Fictional data
+                  Indigo Ledger palette · Fictional data
                 </figcaption>
               </figure>
             </div>

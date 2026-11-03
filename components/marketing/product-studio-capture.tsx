@@ -21,8 +21,9 @@ export function ProductStudioCapture({
         src={media.light}
         alt=""
         aria-hidden="true"
-        width={1440}
-        height={1100}
+        width={2880}
+        height={2200}
+        quality={100}
         sizes={sizes}
         priority={priority}
         className="h-auto w-full dark:hidden"
@@ -31,8 +32,9 @@ export function ProductStudioCapture({
         src={media.dark}
         alt=""
         aria-hidden="true"
-        width={1440}
-        height={1100}
+        width={2880}
+        height={2200}
+        quality={100}
         sizes={sizes}
         className="hidden h-auto w-full dark:block"
       />

@@ -40,13 +40,13 @@ describe("Starter Pro pricing screenshots", () => {
       [
         "Sign-in screen",
         "Starter Pro sign-in screen with email, password, Google and GitHub options",
-        "auth",
+        "auth-indigo-2x",
         "email and password fields",
       ],
       [
         "Project work",
         "Starter Pro project with assigned tasks, due dates and a discussion",
-        "project-work",
+        "project-work-coral-2x",
         "assigned tasks, due dates, comments and archiving",
       ],
     ]) {
@@ -58,10 +58,7 @@ describe("Starter Pro pricing screenshots", () => {
       const link = within(preview).getByRole("link", {
         name: `View ${title!.toLowerCase()} at full size`,
       });
-      expect(link).toHaveAttribute(
-        "href",
-        `/images/starters/pro/${file}-pycolors.png`,
-      );
+      expect(link).toHaveAttribute("href", `/images/starters/pro/${file}.png`);
       expect(link).not.toHaveAttribute("target");
       link.focus();
       expect(link).toHaveFocus();

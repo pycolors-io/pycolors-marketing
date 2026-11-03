@@ -93,18 +93,18 @@ const pricingJsonLd = {
 // Existing public Starter Pro captures; provenance and scope are recorded in the PR.
 const starterProScreenshots = [
   {
-    src: "/images/starters/pro/auth-pycolors.png",
-    width: 1440,
-    height: 1000,
+    src: "/images/starters/pro/auth-indigo-2x.png",
+    width: 2880,
+    height: 2000,
     title: "Sign-in screen",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
     caption:
       "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
   },
   {
-    src: "/images/starters/pro/project-work-pycolors.png",
-    width: 1440,
-    height: 1000,
+    src: "/images/starters/pro/project-work-coral-2x.png",
+    width: 2880,
+    height: 2000,
     title: "Project work",
     alt: "Starter Pro project with assigned tasks, due dates and a discussion",
     caption:
@@ -478,9 +478,10 @@ export default function PricingPage() {
                   <Image
                     src={screenshot.src}
                     alt={screenshot.alt}
+                    quality={100}
                     width={screenshot.width}
                     height={screenshot.height}
-                    sizes="(min-width: 1280px) 564px, (min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
                     className="h-auto w-full"
                   />
                 </a>
