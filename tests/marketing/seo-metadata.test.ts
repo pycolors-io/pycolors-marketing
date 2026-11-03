@@ -96,6 +96,7 @@ describe("sitemap date integrity", () => {
     for (const path of [
       "",
       "/pricing",
+      "/showcase/product-studio",
       "/docs",
       "/docs/ui/card",
       "/blog/undated",

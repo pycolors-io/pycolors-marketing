@@ -26,6 +26,8 @@ const approved = new Set([
   "components/marketing/page-hero.tsx",
   "components/marketing/section-header.tsx",
   "components/marketing/section-shell.tsx",
+  "components/marketing/product-studio-reference.tsx",
+  "components/marketing/product-studio-capture.tsx",
   "components/marketing/tones.ts",
   "components/pricing/buy-starter-pro-button.tsx",
   "components/pricing/checkout-failure-notice.tsx",
@@ -40,11 +42,13 @@ const approved = new Set([
   "lib/seo/breadcrumb.ts",
   "lib/seo/website.ts",
   "lib/version.ts",
+  "lib/showcase/product-studio.ts",
 ]);
 const external = new Set([
   "react",
   "next",
   "next/link",
+  "next/image",
   "next/navigation",
   "next/script",
   "@pycolors/ui",

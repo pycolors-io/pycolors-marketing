@@ -32,6 +32,7 @@ const STATIC_ROUTES = [
   "/upgrade",
   "/starters/free",
   "/demo",
+  "/showcase/product-studio",
 
   /**
    * Acquisition

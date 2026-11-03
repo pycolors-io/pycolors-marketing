@@ -36,6 +36,7 @@ import { UI_VERSION } from "@/lib/version";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
+import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 
 export const metadata: Metadata = {
   title: {
@@ -605,6 +606,8 @@ export default function HomePage() {
               </div>
             </aside>
           </MarketingSectionShell>
+
+          <ProductStudioReference />
 
           <MarketingSectionShell
             spacing="default"

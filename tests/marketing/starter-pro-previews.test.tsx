@@ -345,6 +345,7 @@ describe("Starter Pro product page", () => {
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "#product-tour",
       "#product-preview",
+      "#built-with-pycolors",
       "#readiness",
       "#implementation",
       "#included",

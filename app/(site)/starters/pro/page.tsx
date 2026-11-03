@@ -52,6 +52,7 @@ import {
 import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 import styles from "@/components/starters/starter-pro.module.css";
 import detailStyles from "@/components/marketing/detail-card.module.css";
+import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
@@ -655,6 +656,7 @@ export default function StarterProPage() {
           {[
             ["#product-tour", "Product tour"],
             ["#product-preview", "Product preview"],
+            ["#built-with-pycolors", "Built with Starter Pro"],
             ["#readiness", "Validation & workflows"],
             ["#implementation", "Scoped implementation"],
             ["#included", "What’s included"],
@@ -675,6 +677,7 @@ export default function StarterProPage() {
 
         <StarterProTour />
         <StarterProPreviews />
+        <ProductStudioReference />
         <StarterProReadiness />
         <StarterProImplementation />
 

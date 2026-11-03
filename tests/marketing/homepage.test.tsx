@@ -13,6 +13,7 @@ const headings = [
   "Start with what your project needs now.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",
+  "A working example. A foundation to adapt.",
   "Your brand. Your interface.",
   "Inspect the project before you commit.",
   "Choose the foundation for your next step.",
@@ -51,10 +52,11 @@ describe("product homepage", () => {
     const sections = Array.from(main.children).filter(
       (el) => el.tagName === "SECTION",
     );
-    expect(sections).toHaveLength(7);
+    expect(sections).toHaveLength(8);
     expect(sections[1]).toBe(screen.getByRole("region", { name: headings[0] }));
     expect(screen.queryByRole("table", { name: "Projects" })).toBeNull();
     expect(sections[4]).toBe(screen.getByRole("region", { name: headings[3] }));
+    expect(sections[5]).toBe(screen.getByRole("region", { name: headings[4] }));
     expect(screen.getByRole("region", { name: headings[0] })).toHaveAttribute(
       "id",
       "start-with-pycolors",
@@ -101,7 +103,7 @@ describe("product homepage", () => {
       expect(within(rows[i]!).getByRole("link")).toHaveAttribute("href", href);
     });
     expect(rows[0]).toHaveTextContent(PRODUCT_DISPLAY["na-ai-landing"].name);
-    const closing = screen.getByRole("region", { name: headings[5] });
+    const closing = screen.getByRole("region", { name: headings[6] });
     expect(
       within(closing)
         .getAllByRole("link")
@@ -111,7 +113,7 @@ describe("product homepage", () => {
 
   it("offers one clear handoff to the complete Theme Builder without a second editor", () => {
     render(<HomePage />);
-    const section = screen.getByRole("region", { name: headings[3] });
+    const section = screen.getByRole("region", { name: headings[4] });
     expect(within(section).getAllByRole("link")).toHaveLength(1);
     expect(
       within(section).getByRole("link", { name: "Open Theme Builder" }),
