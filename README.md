@@ -54,8 +54,8 @@ mobile navigation and footer link to it. Starter Free keeps its existing
 client-side interactions.
 
 For Starter Pro, set `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** only after
-verifying the isolated demo deployment. The proposed public address is
-`https://starter-pro-demo.pycolors.io/demo`. Leave the value empty until that
+verifying the isolated demo deployment. The dedicated PyColors demo project is
+`pycolors-pro-demo`, with the domain `https://pro-demo.pycolors.io/demo`. Leave the value empty until that
 deployment, its dedicated database, guest journeys and expiry cleanup are ready.
 The URL is configuration, not a hostname the source provisions automatically.
 

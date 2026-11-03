@@ -55,13 +55,13 @@ describe("starter demo discovery", () => {
   it("opens the configured Pro deployment directly and measures only the demo click", () => {
     vi.stubEnv(
       "NEXT_PUBLIC_STARTER_PRO_DEMO_URL",
-      "https://starter-pro-demo.pycolors.io/demo",
+      "https://pro-demo.pycolors.io/demo",
     );
     render(<DemoPage />);
     const link = screen.getByRole("link", { name: "Open Pro demo" });
     expect(link).toHaveAttribute(
       "href",
-      "https://starter-pro-demo.pycolors.io/demo?destination=%2Fdashboard",
+      "https://pro-demo.pycolors.io/demo?destination=%2Fdashboard",
     );
     expect(
       screen.queryByRole("link", { name: "Watch Pro tour" }),
@@ -104,7 +104,7 @@ describe("starter demo discovery", () => {
     ).toHaveAttribute("href", "/starters");
   });
 
-  it.each(["", "https://starter-pro-demo.pycolors.io/demo"])(
+  it.each(["", "https://pro-demo.pycolors.io/demo"])(
     "has no automated accessibility violations with configuration %s",
     async (value) => {
       vi.stubEnv("NEXT_PUBLIC_STARTER_PRO_DEMO_URL", value);
