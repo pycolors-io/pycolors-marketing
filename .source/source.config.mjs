@@ -70,6 +70,13 @@ var blog = defineCollections({
 });
 var source_config_default = defineConfig({
   mdxOptions: {
+    // Configure the active Fumadocs highlighter before additional rehype plugins.
+    rehypeCodeOptions: {
+      themes: {
+        light: "github-light-high-contrast",
+        dark: "github-dark-high-contrast",
+      },
+    },
     rehypePlugins: [
       [
         rehypePrettyCode,
