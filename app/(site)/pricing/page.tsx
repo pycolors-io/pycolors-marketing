@@ -5,7 +5,7 @@ import {
 } from "@/lib/products/commercial-policy";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { ArrowDown, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { Badge, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import {
@@ -65,8 +65,6 @@ const INTERNAL = {
   license: "/license",
   terms: "/terms",
 } as const;
-
-const EXTERNAL = { starterDemo: "https://starter-demo.pycolors.io" } as const;
 
 const PRICING = {
   naAiLanding: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
@@ -462,14 +460,7 @@ export default function PricingPage() {
             description="Existing Starter Pro interface captures, shown in the light theme. These previews show included screens, not proof of a live deployment, a completed payment, or a verified integration."
             action={
               <Button asChild variant="outline" className="rounded-md">
-                <a
-                  href={EXTERNAL.starterDemo}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Try the live demo
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
+                <Link href="/demo">Explore the demos</Link>
               </Button>
             }
           />

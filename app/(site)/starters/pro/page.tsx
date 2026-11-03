@@ -114,10 +114,6 @@ const INTERNAL = {
   terms: "/terms",
 } as const;
 
-const EXTERNAL = {
-  starterDemo: "https://starter-demo.pycolors.io",
-} as const;
-
 const stackItems = [
   "Next.js",
   "React",
@@ -442,15 +438,16 @@ function StarterProPreviews() {
         title="Inspect the screens you can build on"
         description="Explore the dashboard, account flows and billing interface. Each preview shows the foundation you can adapt to your product."
         action={
-          <a
-            href={EXTERNAL.starterDemo}
-            target="_blank"
-            rel="noreferrer noopener"
-            className={`${textLink} text-xs`}
-          >
-            Try the Starter Free demo
-            <ExternalLink className="size-3.5" aria-hidden="true" />
-          </a>
+          proDemoUrl() ? (
+            <ProDemoLink appearance="text">
+              Open the Pro demo
+              <ExternalLink className="size-3.5" aria-hidden="true" />
+            </ProDemoLink>
+          ) : (
+            <Link href="/demo" className={`${textLink} text-xs`}>
+              Compare the demos
+            </Link>
+          )
         }
       />
       <StarterProCarousel

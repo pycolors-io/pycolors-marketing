@@ -346,6 +346,7 @@ describe("Marketing product discovery navigation", () => {
       "Products",
       "Docs",
       "Resources",
+      "Demos",
       "Pricing",
     ]);
     for (const item of PRIMARY_NAV_ITEMS) {
@@ -459,6 +460,7 @@ describe("Marketing product discovery navigation", () => {
 
   it.each([
     { path: "/pricing", label: "Pricing" },
+    { path: "/demo", label: "Demos" },
     { path: "/pricing/details", label: "Pricing" },
     { path: "/docs", label: "Docs" },
     { path: "/docs/ui/button", label: "Docs" },

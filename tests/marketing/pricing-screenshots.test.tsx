@@ -178,9 +178,9 @@ describe("Starter Pro pricing screenshots", () => {
       expect(link).toHaveAttribute("href", "/starters/pro");
     }
     for (const link of screen.getAllByRole("link", {
-      name: "Try the live demo",
+      name: "Explore the demos",
     })) {
-      expect(link).toHaveAttribute("href", "https://starter-demo.pycolors.io");
+      expect(link).toHaveAttribute("href", "/demo");
     }
     expect(metadata.alternates?.canonical).toBe("/pricing");
   });

@@ -61,6 +61,7 @@ describe("marketing footer", () => {
       "/templates",
       "/templates/na-ai-landing",
       "/docs",
+      "/demo",
       "/guides",
       "/ui/examples",
       "/ui/patterns",

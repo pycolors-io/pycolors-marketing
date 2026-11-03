@@ -31,6 +31,7 @@ const STATIC_ROUTES = [
   "/request-a-quote",
   "/upgrade",
   "/starters/free",
+  "/demo",
 
   /**
    * Acquisition

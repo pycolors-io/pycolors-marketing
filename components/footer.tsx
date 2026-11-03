@@ -27,6 +27,7 @@ const GROUPS = [
   {
     title: "Resources",
     links: [
+      { label: "Demos", href: "/demo" },
       { label: "Documentation", href: "/docs" },
       { label: "UI Explorer", href: UI_EXPLORER_URL },
       { label: "Guides", href: "/guides" },

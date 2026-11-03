@@ -46,6 +46,30 @@ ecosystem:
 
 ---
 
+## Starter demo entry points
+
+`/demo` is the marketing discovery page for the two starters. The global header,
+mobile navigation and footer link to it. Starter Free keeps its existing
+`https://starter-demo.pycolors.io/` deployment; its screens use mock data and
+client-side interactions.
+
+For Starter Pro, set `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** only after
+verifying the isolated demo deployment. The proposed public address is
+`https://starter-pro-demo.pycolors.io/demo`. Leave the value empty until that
+deployment, its dedicated database, guest journeys and expiry cleanup are ready.
+The URL is configuration, not a hostname the source provisions automatically.
+
+With a valid configured URL, `/demo` and the Starter Pro product page open the Pro
+deployment directly. Without one, the discovery card offers the product tour;
+the Pro preview section links back to `/demo`. Invalid URL configuration never
+creates an outbound Pro demo link. The Marketing build does not need the demo's
+database credentials, auth secrets or cleanup secret.
+
+Deploy Pro separately in demo mode using the configuration in
+`apps/starter-pro/DEMO.md` in the canonical monorepo. Keep the marketing site and
+normal Starter Pro application out of demo mode. This change does not alter DNS,
+deploy an application or enable payments.
+
 ## Homepage product preview
 
 The interactive workspace follows the hero with a compact “Built with PyColors UI”
