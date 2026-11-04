@@ -63,6 +63,53 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.31.0",
+    title: "PyColors Marketing v1.31.0: from evaluation to implementation",
+    dateLabel: "Wed 4 Nov 2026",
+    dateISO: "2026-11-04",
+    status: "Stable",
+    releaseWeekLabel: "Nov 2026 (product delivery)",
+    summary:
+      "Evaluate the workflow, adapt the source, and plan a handover your team can use.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Explore three guided Starter Pro demo journeys, current light/dark captures and a short product tour. The plan preview identifies its simulated billing behavior.",
+          "Starter Pro 1.4.0 connects project tasks, due dates and discussions with practical installation, customization and upgrade guidance.",
+          "Review the PyColors Product Studio reference case and a scoped implementation example before discussing an engagement.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Adapt appearance with aligned Theme Builder and Starter Pro controls, then use tested coding-agent examples to extend the source.",
+          "The displayed PyColors UI baseline is 1.7.1; Tokens remains 1.2.3. Neither package is published or re-versioned by this Marketing release.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "The buyer ZIP is checked outside the development workspace through a clean installation, database setup, production build and first-user journey.",
+          "English/French, appearance and workspace journeys have automated browser coverage. Buyers still verify production services in their own environment.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Use the documented client-tracking, support-request and internal-review recipes to adapt one reusable application foundation.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Inspect the implementation scope, acceptance checklist and downloadable handover example before requesting a written quote. Reference content and sample deliverables are explicitly illustrative.",
+        ],
+      },
+    ],
+    cta: { label: "Explore Starter Pro", href: "/starters/pro" },
+  },
+  {
     version: "v1.30.0",
     title:
       "PyColors Marketing v1.30.0: a clearer workspace from the first step",
