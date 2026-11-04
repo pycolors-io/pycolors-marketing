@@ -7,6 +7,8 @@ const browserCollections = {
   blog: create.doc("blog", {
     "email-verification-nextjs-authjs.md": () =>
       import("../content/blog/email-verification-nextjs-authjs.md?collection=blog"),
+    "filtered-table-stale-pagination.mdx": () =>
+      import("../content/blog/filtered-table-stale-pagination.mdx?collection=blog"),
     "independent-dashboard-panels-promise-allsettled.mdx": () =>
       import("../content/blog/independent-dashboard-panels-promise-allsettled.mdx?collection=blog"),
     "npm-trusted-publishing-github-actions-monorepo.mdx": () =>
