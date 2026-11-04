@@ -10,7 +10,7 @@ tags:
   - Architecture
   - Product Engineering
 featured: true
-readingTime: 8 min read
+readingTime: 11 min read
 cover: /seo/blog/og-blog-saas.png
 cta:
   label: Explore Starter Free
@@ -181,6 +181,83 @@ It improved:
 - onboarding speed
 - implementation confidence
 - upgrade path between free and pro
+
+## A source-level check: is the billing screen actually connected?
+
+A starter can display an "Active" subscription, invoice rows, and an attractive billing layout without processing a payment. **A rendered billing state is evidence of the interface, not evidence of a billing integration.** Before selecting a starter, identify which system owns each value and what test would prove it is real.
+
+For a concrete example, consider the [public Starter Free billing source](https://github.com/pycolors-io/pycolors-starter-free/blob/a65f170b4216faf6647a41a4717a0ca8d64a1376/app/%28app%29/billing/page.tsx). The file inspected on November 2, 2026, contains four independently checkable signs of a preview:
+
+- `MOCK_INVOICES` provides fixed example invoice records.
+- A local `plan` object includes a literal `active` status. That badge is not derived from a provider or entitlement lookup.
+- The page explicitly tells readers that amounts and invoices are fictional and that no payment service is connected.
+- **Manage billing** is a disabled button, rather than a link to a working customer portal.
+
+These are deliberate, honest boundaries in Starter Free. They make its billing layout useful for evaluating copy, navigation, loading states, and the information hierarchy. They do **not** establish provider configuration, account ownership, payment settlement, customer access, or subscription lifecycle handling.
+
+### Reproduce the source audit without a payment account
+
+Use a disposable checkout of the [public Starter Free repository](https://github.com/pycolors-io/pycolors-starter-free) at the inspected revision, then save the following script as `check-billing-preview.mjs` at its root. The check uses only Node.js built-ins: no dependency installation or payment account is needed. It inspects source text; it does not start the application, connect to Stripe, create test payments, or inspect private code.
+
+```sh
+git clone --no-checkout https://github.com/pycolors-io/pycolors-starter-free.git starter-free-inspection
+cd starter-free-inspection
+git checkout --detach a65f170b4216faf6647a41a4717a0ca8d64a1376
+```
+
+```js title="check-billing-preview.mjs"
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+const source = readFileSync("app/(app)/billing/page.tsx", "utf8");
+
+const evidence = {
+  fixtureInvoices: /\bconst MOCK_INVOICES\b/.test(source),
+  literalPlan: /\bconst plan = \{[\s\S]*?\bstatus: "active"/.test(source),
+  demoDisclosure:
+    /Sample billing workspace/.test(source) &&
+    /No\s+payment service is connected\./.test(source),
+  disabledAction:
+    /<Button size="sm" type="button" disabled>\s*Manage billing/.test(source),
+};
+
+for (const [name, observed] of Object.entries(evidence)) {
+  assert.ok(observed, "Expected demo evidence missing: " + name);
+  console.log("PASS: " + name);
+}
+```
+
+```sh
+node check-billing-preview.mjs
+```
+
+On November 2, 2026, this exact script ran with **Node.js 22.16.0** against an isolated, byte-identical copy of the pinned public billing file: all four assertions passed. The file's Git blob SHA was verified as `78c47de6c7ef5d7853f567d6cf73b0096f43ce0b`. Four separate negative controls each changed one expected marker in a temporary copy; each exited with the corresponding assertion failure, and the original file was restored.
+
+To try a negative control, rename `const MOCK_INVOICES` in a disposable copy and rerun the check: it should exit nonzero with `Expected demo evidence missing: fixtureInvoices`. Restore the original file before continuing. This checks that missing evidence is detected, not that a billing backend is correct.
+
+The application was **not** installed or started for this experiment, and the script was not tested under Node 24. These assertions intentionally depend on present source wording; a harmless refactor may require updating them.
+
+A positive result answers a narrow question: _does this source still disclose and implement the known demo boundary?_ It does **not** prove the absence of every backend integration elsewhere, or establish whether another starter has secure server-side billing. Likewise, if a check fails after a change, inspect the source before treating that failure as a regression.
+
+### Ask for different evidence when the feature must be real
+
+| Reader question                    | Evidence to look for                                                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Can I evaluate the billing screen? | Sample plans, responsive layout, accessible controls, clear demo disclosure                                       |
+| Can a customer actually sign in?   | A configured identity provider, server-validated sessions, and protected-route tests                              |
+| Can a subscription change access?  | Provider test-mode events, server-side entitlement checks, replay/failure handling, and an observed test workflow |
+| Can users find their own invoices? | An authorized customer-to-invoice lookup and tests that prohibit cross-account access                             |
+| Can I launch the product?          | Environment-specific integration, migrations, security review, operational checks, and an approved launch process |
+
+No screenshot, passing UI test, or disabled portal button substitutes for those backend checks. Conversely, a deliberately mocked surface is not a defect when the goal is to evaluate the interface before choosing a backend.
+
+**Verification checklist:** inspect the current public files rather than relying on screenshots; distinguish literal sample values from server responses; try the demo with fabricated data only; check whether actions are disabled or simulated; require separate test-mode and authorization evidence for any connected claim; record the installed versions when running a real integration test.
+
+For the canonical setup and product-boundary details, use [Starter Free getting started](/docs/starter/getting-started) and [the SaaS starter evaluation guide](/guides/production-ready-saas-starter). The code excerpt above is not copied from the Pro starter, does not authenticate a user, and does not handle real billing.
+
+**Checked source context (November 2, 2026):** the public Starter Free manifest declares version `1.2.3`, Next.js `16.4.2`, React `^19.3.1`, Node `>=20.19.0`, and pnpm `10.32.1`. These are **manifest declarations, not tested install versions**. The official [Node.js assertion](https://nodejs.org/api/assert.html) and [file-system](https://nodejs.org/api/fs.html) references describe the built-in APIs used above.
+
+This experiment adds an inspectable evidence boundary to the decision in this article. To actually explore that interface before choosing your own services, **Explore Starter Free** using the primary link below.
 
 ## Blog content vs guide content
 

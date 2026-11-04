@@ -1,0 +1,217 @@
+---
+title: Your table is not empty. Your pagination is stale.
+description: Reproduce a false empty state after filtering, reset query pagination, and test page bounds before connecting a React data table.
+author: Patrice Parny
+date: "2026-11-02"
+category: SaaS Engineering
+tags:
+  - React
+  - Data Tables
+  - Pagination
+  - Testing
+featured: true
+readingTime: 8 min read
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Explore Data Table
+  href: /docs/blocks/data/data-table
+  variant: blocks
+---
+
+## Three matches, zero visible rows
+
+A user reaches page three of a table, applies a filter, and sees “No matching records.” The filter actually found three records. The application is still asking for the third page of a result set that now fits on page one.
+
+**Reset the page when the query changes, clamp an out-of-range page before slicing, and calculate the rows and pagination summary from the same filtered collection.** Changing the empty-state copy does not repair an invalid page.
+
+This article reproduces that failure with a complete, in-memory collection and tests the repair without a UI framework or backend. It is not a report of a defect in a PyColors product. Remote pagination needs a different data boundary, covered below.
+
+## Reproduce the false empty state
+
+Here are 24 fictional projects. Three match the active filter. A page size of ten makes page three valid before filtering, but invalid afterward.
+
+```js title="reproduce.mjs"
+const records = Array.from({ length: 24 }, (_, index) => ({
+  id: `project-${index + 1}`,
+  active: index < 3,
+}));
+
+const page = 3;
+const pageSize = 10;
+const matches = records.filter((record) => record.active);
+const start = (page - 1) * pageSize;
+const visibleRows = matches.slice(start, start + pageSize);
+
+console.log({ matches: matches.length, visible: visibleRows.length });
+// { matches: 3, visible: 0 }
+```
+
+Nothing failed to load. The requested offset is simply outside the filtered collection. JavaScript's [array slicing behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) returns an empty array when the start is at or beyond its length.
+
+That gives us three different situations, not one generic “empty” condition:
+
+- The complete, successfully loaded collection is empty: offer a suitable first-use action.
+- The collection contains records but the current query matches none: offer filter recovery.
+- The query matches records but the requested page is out of range: repair the page before interpreting the result.
+
+A failed or pending request belongs to neither successful-empty category. Keep those states separate using the [loading, empty and error guide](/docs/guides/empty-loading-error).
+
+## Reset intent, then normalize bounds
+
+Resetting and clamping solve different problems.
+
+**Reset on a new query.** Starting a different search on page one is the explicit behavior chosen for this example, even when the old page number would still be valid. Change the query and page together instead of relying on a later side effect to notice the mismatch. React's [state-structure guidance](https://react.dev/learn/choosing-the-state-structure) recommends grouping related state and deriving values rather than keeping redundant copies.
+
+**Clamp after the collection changes.** A background refresh or deletion can remove the only record on the final page without changing the query. A reset handler alone cannot protect that transition. Normalize the requested page against the resulting count before calculating its offset.
+
+Save the next listing as `table-page.mjs`. It accepts the complete collection _after_ filtering and ordering. It neither mutates that array nor performs those operations itself.
+
+```js title="table-page.mjs"
+export function paginate(rows, requestedPage, pageSize) {
+  if (!Array.isArray(rows)) {
+    throw new TypeError("rows must be an array");
+  }
+
+  for (const value of [requestedPage, pageSize]) {
+    if (!Number.isSafeInteger(value) || value < 1) {
+      throw new RangeError("page and pageSize must be positive safe integers");
+    }
+  }
+
+  const totalRows = rows.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / pageSize));
+  const page = Math.min(requestedPage, totalPages);
+  const start = (page - 1) * pageSize;
+
+  return {
+    page,
+    totalPages,
+    totalRows,
+    rows: rows.slice(start, start + pageSize),
+  };
+}
+
+export function changeQuery(state, query) {
+  return { ...state, query, page: 1 };
+}
+```
+
+For zero matches, this helper uses page one and a one-page lower bound as an internal convention. That is not evidence that records exist. Show the empty state and hide page navigation when `totalRows` is zero; do not advertise a fictional result page.
+
+Use the returned `page` for the controls and summary, not the original out-of-range value. This function computes a view; it does not persist corrected state. When a refresh shrinks the collection, reconcile that returned page with your controller or URL at the boundary that accepts the new data. Otherwise an old requested page could reappear when the collection grows again.
+
+For query changes, call `changeQuery` inside the owning state update. For a page-size change, choose and implement an explicit policy too: resetting to page one is the simplest option; preserving the first visible record is another, but needs different arithmetic and tests. Neither behavior should happen accidentally.
+
+## Test the transitions, not only the happy path
+
+Save this second file alongside the helper. The first test demonstrates the original failure. The remaining tests exercise the corrected boundary, including query reset, last-page deletion, genuine zero matches, invalid inputs and array preservation.
+
+```js title="table-page.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { changeQuery, paginate } from "./table-page.mjs";
+
+const records = Array.from({ length: 24 }, (_, index) => ({
+  id: `project-${index + 1}`,
+  active: index < 3,
+}));
+
+const matches = records.filter((record) => record.active);
+
+test("reproduces an empty page despite three matching records", () => {
+  assert.equal(matches.length, 3);
+  assert.deepEqual(matches.slice(20, 30), []);
+});
+
+test("clamps before slicing the filtered collection", () => {
+  const view = paginate(matches, 3, 10);
+  assert.equal(view.page, 1);
+  assert.equal(view.totalRows, 3);
+  assert.deepEqual(view.rows, matches);
+});
+
+test("a new query resets even when page 3 would still be valid", () => {
+  const previous = { query: "old", page: 3, pageSize: 10 };
+  const next = changeQuery(previous, "new");
+  assert.deepEqual(next, { query: "new", page: 1, pageSize: 10 });
+  assert.equal(previous.page, 3);
+  assert.equal(paginate(records, next.page, next.pageSize).page, 1);
+});
+
+test("removing the final row of page 3 returns page 2", () => {
+  const before = records.slice(0, 21);
+  assert.equal(paginate(before, 3, 10).rows.length, 1);
+  const after = paginate(before.slice(0, 20), 3, 10);
+  assert.equal(after.page, 2);
+  assert.equal(after.rows.length, 10);
+});
+
+test("zero matches remain a genuine empty result", () => {
+  assert.deepEqual(paginate([], 3, 10), {
+    page: 1,
+    totalPages: 1,
+    totalRows: 0,
+    rows: [],
+  });
+});
+
+test("rejects invalid page numbers and sizes", () => {
+  for (const invalid of [0, -1, 1.5, NaN, Infinity, "2"]) {
+    assert.throws(() => paginate(records, invalid, 10), RangeError);
+    assert.throws(() => paginate(records, 1, invalid), RangeError);
+  }
+  assert.throws(() => paginate(null, 1, 10), TypeError);
+});
+
+test("does not mutate the supplied collection", () => {
+  const frozen = Object.freeze([...records]);
+  const view = paginate(frozen, 2, 10);
+  assert.deepEqual(view.rows, records.slice(10, 20));
+  assert.notEqual(view.rows, frozen);
+  assert.equal(frozen.length, 24);
+});
+```
+
+Run the built-in Node.js test runner:
+
+```sh
+node --test table-page.test.mjs
+```
+
+**Verification baseline:** these exact standalone files passed all seven tests with Node.js **22.16.0** on November 2, 2026. As a negative control, replacing the clamp with the unmodified requested page caused three tests to fail. Restoring the clamp returned the suite to green. No React application, PyColors package or payment service was installed for this experiment.
+
+This is evidence for the data transformation and its selected transitions, not a browser, accessibility or backend integration test. The [versioned Node.js test-runner documentation](https://nodejs.org/download/release/v22.16.0/docs/api/test.html) describes the test APIs used here.
+
+## Keep the table and the data owner in agreement
+
+The [PyColors Data Table Block](/docs/blocks/data/data-table) accepts consumer-owned rows and controlled query, sorting, page-size and pagination values. Its public contract uses one-based page numbers. It does not fetch, filter, sort or slice records, and it does not reset your page for you.
+
+For a complete local collection, the integration boundary should therefore produce one coherent view: filter the full collection, apply deterministic ordering, normalize the page, then slice. Pass that slice to the table and pass the same view's effective page and total-page count to its controls. Derive the result summary from the matching total, not the length of the page slice.
+
+This article's helper is original application logic, not an exported PyColors API. Adopt the Block through its documented source-copy flow and retain ownership of the copied files and data layer. The Block supplies presentation and control requests; it cannot repair contradictory values supplied by a consumer.
+
+## Do not filter a downloaded page as though it were the dataset
+
+The example assumes you already possess the complete collection. When the API returns only one page, filtering that page can miss matching records on other pages. Its array length is not the total number of server-side matches.
+
+For server pagination, make query, filter, sort and page-size changes part of the request contract. Use totals and ordering for that same query. Define how the server and client recover from an out-of-range request; do not relabel an empty response as page one without fetching the corresponding rows.
+
+Overlapping requests introduce a separate stale-response problem. Associate responses with the request that owns them and prevent an older query from replacing the current result. The [async validation article](/blog/prevent-stale-async-validation-react-forms) explains a related response-ownership failure; the local pagination helper here does not implement cancellation, cache identity or race protection.
+
+Cursor pagination also needs its own design. A cursor is not a numbered page, and this offset-based helper must not be applied to opaque cursors.
+
+## A verification checklist before integration
+
+- [ ] Start on a later page, apply a restrictive filter, and verify that matching records remain visible.
+- [ ] Change the query while several pages remain valid; confirm the intended reset behavior.
+- [ ] Remove the last record from the last page and verify the effective page, displayed rows and summary together.
+- [ ] Separate a genuinely empty collection, a query with no matches, loading and request failure.
+- [ ] Test page-size changes, invalid URL values and browser back/forward navigation in the real application.
+- [ ] Keep remote rows and totals tied to the same query; never infer a server total from one downloaded page.
+- [ ] Review keyboard focus, result announcements and small-screen rendering after state changes. The pure-function tests do not cover them.
+
+## Next step
+
+**Explore Data Table** to inspect the public Block, its source-copy installation and controlled pagination contract. Connect it to a tested data owner rather than expecting a presentation component to infer the correct records or page.
+
+The practical rule is simple: **an empty slice is not enough evidence for an empty-result message.** Check the query's total and the validity of the requested page first.
