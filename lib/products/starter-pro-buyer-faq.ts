@@ -2,6 +2,7 @@ import {
   DIGITAL_REFUND_SUMMARY,
   PURCHASE_SUPPORT_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
+  STARTER_PRO_UPDATES_SUMMARY,
 } from "./commercial-policy";
 import { PRODUCT_DISPLAY } from "./public-catalog";
 import { STARTER_PRO_SERVICES } from "./starter-pro-services";
@@ -165,8 +166,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "Do I get future Starter Pro updates?",
-    answer:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability.",
+    answer: STARTER_PRO_UPDATES_SUMMARY,
     links: [{ href: "/changelog", label: "Review release history" }],
   },
   {

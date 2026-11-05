@@ -4,6 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 import LicensePage, { metadata } from "@/app/(site)/license/page";
+import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 
 describe("License page", () => {
   it("preserves metadata, document date, publisher and a reachable main landmark", () => {
@@ -16,11 +17,11 @@ describe("License page", () => {
     const info = screen.getByRole("complementary", {
       name: "License document information",
     });
-    expect(info).toHaveTextContent("October 6, 2026");
+    expect(info).toHaveTextContent("November 5, 2026");
     expect(info).toHaveTextContent("Py Colors SASU");
     expect(container.querySelector("time")).toHaveAttribute(
       "datetime",
-      "2026-10-06",
+      "2026-11-05",
     );
     const breadcrumb = JSON.parse(
       container.querySelector('script[type="application/ld+json"]')!
@@ -61,7 +62,7 @@ describe("License page", () => {
       "5. Restrictions across paid products",
       "6. Updates, access, and support",
     ];
-    const counts = [5, 5, 6, 6, 6, 5];
+    const counts = [5, 5, 6, 6, 6, 7];
     names.forEach((name, i) => {
       const region = screen.getByRole("region", { name });
       expect(within(region).getAllByRole("listitem")).toHaveLength(counts[i]!);
@@ -164,6 +165,24 @@ describe("License page", () => {
           href,
         ).toBe(true);
     }
+  });
+
+  it("aligns the published update promise with the delivered licence without adding a release schedule", () => {
+    render(<LicensePage />);
+    const licence = readFileSync(
+      resolve("../starter-pro/LICENSE"),
+      "utf8",
+    ).replace(/\s+/g, " ");
+    expect(licence).toContain(STARTER_PRO_UPDATES_SUMMARY.replace(/\.$/, ""));
+    expect(licence).not.toContain(
+      "Future updates may be provided at the discretion",
+    );
+    expect(licence).toContain(
+      "No release schedule or access to separate future products is promised",
+    );
+    expect(
+      screen.getByRole("region", { name: "6. Updates, access, and support" }),
+    ).toHaveTextContent(STARTER_PRO_UPDATES_SUMMARY);
   });
 
   it("has no automated accessibility violations", async () => {

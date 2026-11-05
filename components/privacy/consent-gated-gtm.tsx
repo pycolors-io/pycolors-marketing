@@ -1,44 +1,32 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Script from 'next/script';
+import * as React from "react";
+import Script from "next/script";
+import { readPrivacyConsent } from "@/lib/privacy-consent";
 
-export const PRIVACY_CONSENT_KEY = 'pycolors_privacy_consent';
+export { PRIVACY_CONSENT_KEY } from "@/lib/privacy-consent";
 
 type ConsentEvent = CustomEvent<{
-  value: 'accepted' | 'denied';
+  value: "accepted" | "denied";
 }>;
 
-export function ConsentGatedGtm({
-  gtmId,
-}: {
-  readonly gtmId?: string;
-}) {
+export function ConsentGatedGtm({ gtmId }: { readonly gtmId?: string }) {
   const [hasConsent, setHasConsent] = React.useState(false);
 
   React.useEffect(() => {
     if (!gtmId) return;
 
-    setHasConsent(
-      globalThis.localStorage.getItem(PRIVACY_CONSENT_KEY) ===
-        'accepted',
-    );
+    setHasConsent(readPrivacyConsent() === "accepted");
 
     function handleConsent(event: Event) {
       const consentEvent = event as ConsentEvent;
-      setHasConsent(consentEvent.detail.value === 'accepted');
+      setHasConsent(consentEvent.detail.value === "accepted");
     }
 
-    globalThis.addEventListener(
-      'pycolors:privacy-consent',
-      handleConsent,
-    );
+    globalThis.addEventListener("pycolors:privacy-consent", handleConsent);
 
     return () => {
-      globalThis.removeEventListener(
-        'pycolors:privacy-consent',
-        handleConsent,
-      );
+      globalThis.removeEventListener("pycolors:privacy-consent", handleConsent);
     };
   }, [gtmId]);
 

@@ -27,6 +27,7 @@ import {
 import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
+import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -163,8 +164,7 @@ const postPurchaseDetails = [
   },
   {
     title: "Updates and access support",
-    description:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability. Installation assistance and reproducible starter bugs follow the support scope and period of your offer. Tailored implementation is quoted separately. No response-time SLA is promised.",
+    description: `${STARTER_PRO_UPDATES_SUMMARY} Installation assistance and reproducible starter bugs follow the support scope and period of your offer. Tailored implementation is quoted separately. No response-time SLA is promised.`,
     icon: ShieldCheck,
     links: [
       {

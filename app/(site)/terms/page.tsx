@@ -15,8 +15,10 @@ import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import {
   LEGAL_REVISION,
+  LEGAL_COMPANY as COMPANY,
   NA_AI_USAGE_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
+  STARTER_PRO_UPDATES_SUMMARY,
   PURCHASE_SUPPORT_SUMMARY,
 } from "@/lib/products/commercial-policy";
 import styles from "@/components/marketing/legal-page.module.css";
@@ -48,14 +50,6 @@ export const metadata: Metadata = {
   },
 };
 
-const COMPANY = {
-  name: "Py Colors SASU",
-  email: "contact@pycolors.com",
-  addressLine1: "6 rue d’Armaillé",
-  postalCode: "75017 Paris",
-  country: "France",
-};
-
 const sections = [
   {
     id: "company",
@@ -67,6 +61,10 @@ const sections = [
           <span className="font-medium text-foreground">{COMPANY.name}</span>,
           located at {COMPANY.addressLine1}, {COMPANY.postalCode},{" "}
           {COMPANY.country}.
+        </p>
+        <p>
+          SIREN: {COMPANY.siren}. SIRET: {COMPANY.siret}. Registration:{" "}
+          {COMPANY.registration}. EU VAT number: {COMPANY.vatNumber}.
         </p>
 
         <p>
@@ -97,6 +95,7 @@ const sections = [
           <li>Starter Free and other free PyColors resources;</li>
           <li>premium templates, including NA-AI Landing;</li>
           <li>Starter Pro and other paid source-code products;</li>
+          <li>implementation services expressly agreed in a written quote;</li>
           <li>
             checkout flows, downloads, order recovery, and customer support
             interactions.
@@ -258,6 +257,12 @@ const sections = [
           service or a finished SaaS business.
         </p>
         <p>{STARTER_PRO_USAGE_SUMMARY}</p>
+        <p>{STARTER_PRO_UPDATES_SUMMARY}</p>
+        <p>
+          No release schedule or access to separate future products is promised.
+          Applying updates to a customized application requires a separate
+          agreement unless included in your purchased offer.
+        </p>
         <p>
           You configure and operate your own application and third-party
           accounts. Your product logic, customer onboarding, security review,
@@ -278,6 +283,43 @@ const sections = [
             href="/docs/starter-pro/what-is-included"
           >
             included foundations
+          </Link>
+          .
+        </p>
+        <h3>Separately scoped implementation</h3>
+        <p>
+          Guided setup and business adaptation are services quoted separately
+          from the source licence. Published starting service fees are
+          indicative. Submitting a project brief does not confirm a booking,
+          price, delivery date or accepted proposal.
+        </p>
+        <p>
+          Before work begins, the written agreement records the licensed entity,
+          scope and exclusions, target environment, deliverables, total price
+          and taxes, payment schedule, acceptance checks and included follow-up.
+          The source licence and provider costs are itemized separately. Changes
+          to the agreed scope require written agreement on their impact before
+          the additional work begins.
+        </p>
+        <p>
+          Handover records the delivered revision, observed validation results,
+          remaining actions and operating responsibilities. Hosting, ongoing
+          operation, custom development and service-level commitments are
+          included only where expressly agreed. A client requiring source access
+          needs their own Starter Pro licence. Specific agreed terms remain
+          subject to mandatory law and existing purchase rights.
+        </p>
+        <p>
+          Review the{" "}
+          <Link
+            className={styles.inlineLink}
+            href="/docs/starter-pro/implementation-support"
+          >
+            implementation and support scope
+          </Link>{" "}
+          or submit a{" "}
+          <Link className={styles.inlineLink} href="/request-a-quote">
+            project brief
           </Link>
           .
         </p>

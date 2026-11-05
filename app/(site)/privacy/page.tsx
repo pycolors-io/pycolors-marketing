@@ -14,6 +14,11 @@ import { Container } from "@/components/container";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
+import { PrivacyConsentSettings } from "@/components/privacy/privacy-consent-banner";
+import {
+  LEGAL_COMPANY as COMPANY,
+  LEGAL_REVISION,
+} from "@/lib/products/commercial-policy";
 import styles from "@/components/marketing/legal-page.module.css";
 import privacyStyles from "@/components/marketing/privacy-page.module.css";
 
@@ -44,16 +49,6 @@ export const metadata: Metadata = {
   },
 };
 
-const COMPANY = {
-  name: "Py Colors SASU",
-  email: "contact@pycolors.io",
-  addressLine1: "6 rue d’Armaillé",
-  postalCode: "75017 Paris",
-  country: "France",
-};
-
-const LAST_UPDATED = "May 14, 2026";
-
 const sections = [
   {
     id: "controller",
@@ -65,6 +60,14 @@ const sections = [
           described in this policy is{" "}
           <span className="font-medium text-foreground">{COMPANY.name}</span>,{" "}
           {COMPANY.addressLine1}, {COMPANY.postalCode}, {COMPANY.country}.
+        </p>
+        <p>
+          Company registration: {COMPANY.registration}. SIREN: {COMPANY.siren}.
+          Full company identifiers are available in the{" "}
+          <Link className={styles.inlineLink} href="/terms#terms-company">
+            company details
+          </Link>
+          .
         </p>
 
         <p>
@@ -104,10 +107,17 @@ const sections = [
             and digital delivery;
           </li>
           <li>
-            future account areas, customer portals, download pages, or premium
-            access systems operated by PyColors.
+            the public Starter Pro demo at pro-demo.pycolors.io, including its
+            temporary workspace and session;
           </li>
         </ul>
+
+        <p>
+          When you deploy purchased source in your own accounts, you control
+          that application&apos;s data and providers. This policy describes the
+          services operated by PyColors; it does not replace the privacy
+          information for your own product.
+        </p>
 
         <p>
           Third-party providers used for payments, hosting, analytics, email, or
@@ -122,6 +132,19 @@ const sections = [
     title: "3. Data we may collect",
     content: (
       <>
+        <p>
+          A project brief includes your name, email, selected service,
+          indicative budget and description. Company and desired timeline are
+          optional. We use these details to assess and respond to the request;
+          do not include credentials or confidential customer data.
+        </p>
+        <p>
+          The public demo creates a temporary generated identity and workspace.
+          Changes you make to example projects, tasks or comments are stored in
+          that workspace. Session cookies, workspace identifiers and derived
+          address keys support access and abuse prevention. Do not enter real
+          personal, payment or confidential data in the demo.
+        </p>
         <ul className={styles.clauses}>
           <li>
             <span className="font-medium text-foreground">Contact data</span>{" "}
@@ -254,6 +277,13 @@ const sections = [
             fraud prevention requirements.
           </li>
         </ul>
+        <p>
+          Responding to a requested quote is a pre-contractual step; fulfilling
+          an order and providing its support are contractual purposes. Billing
+          records may also be required for legal obligations. Access controls
+          and abuse prevention support our legitimate interest in securing the
+          service. Optional Google tags use the browser choice described below.
+        </p>
       </>
     ),
   },
@@ -263,22 +293,35 @@ const sections = [
     content: (
       <>
         <p>
-          PyColors may use cookies or similar technologies for site
-          functionality, analytics, performance monitoring, conversion
-          measurement, security, and abuse prevention.
+          Browser storage remembers your light, dark or system theme, your
+          colour palette and your optional Google tracking choice. These
+          preferences remain in that browser until you change them or clear site
+          data. Demo session and workspace cookies provide access to the
+          temporary workspace.
         </p>
 
-        <p>Current or future tools may include:</p>
+        <p>Audience measurement and optional Google tags are separate:</p>
 
         <ul className={styles.clauses}>
-          <li>Vercel for hosting and infrastructure-related telemetry;</li>
           <li>
-            Google Analytics or similar analytics tools for traffic and product
-            measurement;
+            Vercel Web Analytics provides aggregated page-view measurement and
+            is loaded separately from the optional Google tag controls. Vercel
+            documents its cookie-free measurement and the data involved in its{" "}
+            <a
+              className={styles.inlineLink}
+              href="https://vercel.com/docs/analytics/privacy-policy"
+            >
+              analytics privacy documentation
+            </a>
+            . Rejecting optional Google tags does not disable this separate
+            integration.
           </li>
           <li>
-            strictly necessary cookies or storage required for checkout, account
-            access, download flows, or security.
+            Where Google Tag Manager is configured, it loads only after you
+            choose Accept optional. Its configured tags may include Google
+            Analytics. You can reopen this choice below and select Reject
+            optional; after a previous acceptance the page reloads to unload the
+            previously loaded tags. This does not erase data already sent.
           </li>
         </ul>
 
@@ -286,6 +329,7 @@ const sections = [
           Where legally required, optional analytics or non-essential cookies
           should only be activated after appropriate consent.
         </p>
+        <PrivacyConsentSettings />
       </>
     ),
   },
@@ -353,9 +397,11 @@ const sections = [
         </p>
 
         <p>
-          Email delivery may be handled by third-party email providers.
-          Marketing emails, if introduced, should include unsubscribe options
-          where required by law.
+          Resend handles transactional email delivery, including product access,
+          recovery and project brief transmission. A submitted project brief is
+          forwarded to PyColors with your email as the reply address. It is not
+          a newsletter subscription. Marketing emails, if introduced, require
+          their own applicable basis and unsubscribe controls.
         </p>
       </>
     ),
@@ -373,12 +419,19 @@ const sections = [
         <p>These providers may include:</p>
 
         <ul className={styles.clauses}>
-          <li>hosting and deployment providers, such as Vercel;</li>
           <li>
-            analytics providers, such as Google Analytics or similar tools;
+            Vercel for hosting, private download storage and Web Analytics;
+          </li>
+          <li>
+            Google for configured optional tags after the recorded choice;
           </li>
           <li>payment and billing providers, such as Stripe;</li>
-          <li>email delivery and communication providers;</li>
+          <li>
+            Resend for transactional email and project brief transmission;
+          </li>
+          <li>
+            Neon for the isolated public Pro demo&apos;s PostgreSQL database;
+          </li>
           <li>storage, logging, security, and operational providers;</li>
           <li>
             professional advisors where required for accounting, legal, tax, or
@@ -424,8 +477,11 @@ const sections = [
 
         <ul className={styles.clauses}>
           <li>
-            contact messages may be retained to manage support and customer
-            history;
+            project briefs and correspondence are kept while assessing and
+            responding to the request, then where needed for an agreed
+            engagement, support or a dispute. The submitted email and provider
+            delivery records are separate from the temporary request-limiting
+            counters;
           </li>
           <li>
             transaction records may be retained for accounting, tax, fraud
@@ -436,14 +492,30 @@ const sections = [
             and protect paid products;
           </li>
           <li>
-            analytics data may be retained according to the settings of the
-            applicable analytics provider;
+            analytics and infrastructure logs follow the configured provider
+            retention. This page does not equate a provider&apos;s
+            visitor-session lifetime with deletion of its aggregate statistics;
           </li>
           <li>
             account or entitlement data may be retained while access remains
             active and for a reasonable period afterward.
           </li>
         </ul>
+        <p>
+          Public Pro demo access expires after two hours. Expired workspaces and
+          their generated identities are eligible for the next cleanup run;
+          removal is not guaranteed at the exact expiry instant. The cleanup
+          also removes demo-start rate-limit records older than 24 hours.
+          Infrastructure logs and provider backups have separate retention.
+        </p>
+        <p>
+          Quote-request rate-limit counters are held in application-instance
+          memory, use derived address and email keys, and expire after 15
+          minutes. Expired counters are discarded when subsequent requests are
+          processed; restarting an instance also clears them. This is not the
+          retention period of your emailed project brief. Contact us for a
+          deletion request or details of the retention applicable to your case.
+        </p>
       </>
     ),
   },
@@ -488,7 +560,14 @@ const sections = [
 
         <p>
           You may also have the right to lodge a complaint with a data
-          protection authority.
+          protection authority, including the{" "}
+          <a
+            className={styles.inlineLink}
+            href="https://www.cnil.fr/fr/plaintes"
+          >
+            CNIL
+          </a>{" "}
+          in France.
         </p>
       </>
     ),
@@ -597,7 +676,9 @@ export default function PrivacyPage() {
                 <div>
                   <dt>Last updated</dt>
                   <dd>
-                    <time dateTime="2026-05-14">{LAST_UPDATED}</time>
+                    <time dateTime={LEGAL_REVISION.date}>
+                      {LEGAL_REVISION.label}
+                    </time>
                   </dd>
                 </div>
                 <div>

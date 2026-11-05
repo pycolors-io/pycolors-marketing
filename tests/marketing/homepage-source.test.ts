@@ -35,6 +35,7 @@ const approved = new Set([
   "components/privacy/consent-gated-gtm.tsx",
   "components/seo/json-ld.tsx",
   "lib/analytics.ts",
+  "lib/privacy-consent.ts",
   "lib/api/client.ts",
   "lib/api/checkout-navigation.ts",
   "lib/products/public-catalog.ts",
