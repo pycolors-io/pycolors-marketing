@@ -5,6 +5,8 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // Multiple static root documents provide the correct initial EN/FR language.
+  experimental: { globalNotFound: true },
   transpilePackages: ["@pycolors/ui", "@pycolors/tokens"],
 
   images: {

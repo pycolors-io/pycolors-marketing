@@ -4,6 +4,8 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import Link from "next/link";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 
+import { RootDocument, baseMetadata } from "@/components/layout/root-document";
+
 import { source } from "@/lib/source";
 import { baseOptions } from "@/lib/layout.shared";
 import { ToastDocsProvider } from "@/content/docs/previews/toast-docs-provider";
@@ -18,6 +20,7 @@ import {
 } from "@/components/docs/docs-sidebar-items";
 
 export const metadata: Metadata = {
+  ...baseMetadata,
   alternates: {
     canonical: "/docs",
   },
@@ -95,7 +98,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
   ]);
 
   return (
-    <>
+    <RootDocument>
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
       <div className="site-frame relative min-h-screen">
@@ -126,6 +129,6 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
         </DocsSidebarPublications>
         <DocsFooter />
       </div>
-    </>
+    </RootDocument>
   );
 }

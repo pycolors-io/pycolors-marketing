@@ -3,6 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
+import { localizedAlternates } from "@/lib/i18n/routes";
 import HomePage, { metadata } from "../../app/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
@@ -227,8 +228,13 @@ describe("product homepage", () => {
       },
       description:
         "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
-      alternates: { canonical: "https://pycolors.io" },
+      alternates: {
+        canonical: "https://pycolors.io",
+        languages: localizedAlternates("home", "en").languages,
+      },
       openGraph: {
+        locale: "en_US",
+        alternateLocale: "fr_FR",
         title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
           "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",

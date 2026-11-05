@@ -7,6 +7,7 @@ import {
 
 type ProductPreviewMediaProps = Readonly<{
   product: ProductPreviewId;
+  alt?: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -18,6 +19,7 @@ type ProductPreviewMediaProps = Readonly<{
  */
 export function ProductPreviewMedia({
   product,
+  alt,
   className,
   sizes = "(min-width: 1280px) 520px, (min-width: 768px) 43vw, 95vw",
   priority = false,
@@ -28,7 +30,7 @@ export function ProductPreviewMedia({
     <div
       data-product-preview={product}
       role="img"
-      aria-label={media.alt}
+      aria-label={alt ?? media.alt}
       className={cn(
         "relative isolate aspect-[16/10] w-full overflow-hidden rounded-[5px] border border-border-subtle bg-surface-muted/60 p-2 sm:p-3",
         className,

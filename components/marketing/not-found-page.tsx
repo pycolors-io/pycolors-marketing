@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import type { ReactNode } from 'react';
-import Link from 'next/link';
+import type { ReactNode } from "react";
+import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
@@ -13,14 +13,14 @@ import {
   Rocket,
   Search,
   Sparkles,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Container } from '@/components/container';
-import { Footer } from '@/components/footer';
-import { SiteHeader } from '@/components/layout/site-header';
-import { BuyStarterProButton } from '@/components/pricing/buy-starter-pro-button';
-import { Badge, Button, Card, cn } from '@pycolors/ui';
-import { PRODUCT_DISPLAY } from '@/lib/products/public-catalog';
+import { Container } from "@/components/container";
+import { Footer } from "@/components/footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { Badge, Button, Card, cn } from "@pycolors/ui";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
 type QuickLink = {
   title: string;
@@ -39,83 +39,82 @@ type RecoveryPath = {
   icon: ReactNode;
 };
 
-const starterProPriceLabel = PRODUCT_DISPLAY['starter-pro'].priceLabel;
+const starterProPriceLabel = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 const quickLinks: QuickLink[] = [
   {
-    title: 'Starter Free',
+    title: "Starter Free",
     description:
-      'Start with a production-shaped SaaS foundation and validate faster.',
-    href: '/starters/free',
+      "Start with a production-shaped SaaS foundation and validate faster.",
+    href: "/starters/free",
     icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Best entry point',
+    badge: "Best entry point",
     featured: true,
   },
   {
-    title: 'Starter Pro',
+    title: "Starter Pro",
     description:
-      'Move to authentication, billing, protected app surfaces, and SaaS patterns.',
-    href: '/starters/pro',
+      "Move to authentication, billing, protected app surfaces, and SaaS patterns.",
+    href: "/starters/pro",
     icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Premium',
+    badge: "Premium",
   },
   {
-    title: 'Pricing',
+    title: "Pricing",
     description:
-      'Compare the path from Starter Free to Starter Pro and choose the right plan.',
-    href: '/pricing',
+      "Compare the path from Starter Free to Starter Pro and choose the right plan.",
+    href: "/pricing",
     icon: <CreditCard className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Decision',
+    badge: "Decision",
   },
   {
-    title: 'Documentation',
+    title: "Documentation",
     description:
-      'Explore the PyColors docs, implementation notes, and product foundations.',
-    href: '/docs',
+      "Explore the PyColors docs, implementation notes, and product foundations.",
+    href: "/docs",
     icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Docs',
+    badge: "Docs",
   },
   {
-    title: 'Patterns',
+    title: "Patterns",
     description:
-      'Browse reusable SaaS and UI patterns designed for production surfaces.',
-    href: '/docs/patterns',
+      "Browse reusable SaaS and UI patterns designed for production surfaces.",
+    href: "/docs/patterns",
     icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Patterns',
+    badge: "Patterns",
   },
   {
-    title: 'Roadmap',
-    description:
-      'See what is planned next across the PyColors ecosystem.',
-    href: '/roadmap',
+    title: "Roadmap",
+    description: "See what is planned next across the PyColors ecosystem.",
+    href: "/roadmap",
     icon: <Map className="h-4 w-4" aria-hidden="true" />,
-    badge: 'Direction',
+    badge: "Direction",
   },
 ];
 
 const recoveryPaths: RecoveryPath[] = [
   {
-    label: 'Looking for docs?',
-    title: 'Go to documentation',
+    label: "Looking for docs?",
+    title: "Go to documentation",
     description:
-      'Find product guides, implementation notes, release policies, and framework foundations.',
-    href: '/docs',
+      "Find product guides, implementation notes, release policies, and framework foundations.",
+    href: "/docs",
     icon: <BookOpen className="h-4 w-4" aria-hidden="true" />,
   },
   {
-    label: 'Looking for a starter?',
-    title: 'Compare starters',
+    label: "Looking for a starter?",
+    title: "Compare starters",
     description:
-      'Start with Starter Free or move directly to Starter Pro for auth, billing, and app surfaces.',
-    href: '/starters',
+      "Start with Starter Free or move directly to Starter Pro for auth, billing, and app surfaces.",
+    href: "/starters",
     icon: <Rocket className="h-4 w-4" aria-hidden="true" />,
   },
   {
-    label: 'Looking for product depth?',
-    title: 'Explore patterns',
+    label: "Looking for product depth?",
+    title: "Explore patterns",
     description:
-      'Review reusable SaaS patterns built for dashboards, billing, onboarding, and upgrades.',
-    href: '/docs/patterns',
+      "Review reusable SaaS patterns built for dashboards, billing, onboarding, and upgrades.",
+    href: "/docs/patterns",
     icon: <Layers3 className="h-4 w-4" aria-hidden="true" />,
   },
 ];
@@ -147,9 +146,8 @@ export default function NotFound() {
 
             <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
               The route may be outdated, renamed, or removed. Use the
-              recommended paths below to get back to the product,
-              docs, pricing, or starter that best matches what you
-              were looking for.
+              recommended paths below to get back to the product, docs, pricing,
+              or starter that best matches what you were looking for.
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -218,19 +216,14 @@ export default function NotFound() {
               </h2>
 
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-                PyColors is structured around a simple progression:
-                learn, explore, validate, then upgrade when the
-                business layer matters.
+                PyColors is structured around a simple progression: learn,
+                explore, validate, then upgrade when the business layer matters.
               </p>
             </div>
 
             <div className="grid gap-4 lg:grid-cols-3">
               {recoveryPaths.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block"
-                >
+                <Link key={item.href} href={item.href} className="block">
                   <Card className="h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted">
                     <div className="flex h-full flex-col">
                       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -248,10 +241,7 @@ export default function NotFound() {
 
                       <div className="mt-5 flex items-center text-sm font-medium text-foreground">
                         Open page
-                        <ArrowRight
-                          className="h-4 w-4"
-                          aria-hidden="true"
-                        />
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </div>
                     </div>
                   </Card>
@@ -275,33 +265,22 @@ export default function NotFound() {
                 </h2>
               </div>
 
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-[5px]"
-              >
+              <Button asChild variant="outline" className="rounded-[5px]">
                 <Link href="/changelog">
                   Latest updates
-                  <ArrowRight
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {quickLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block"
-                >
+                <Link key={item.href} href={item.href} className="block">
                   <Card
                     className={cn(
-                      'h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted',
+                      "h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted",
                       item.featured &&
-                        'border-pro-border-subtle bg-pro-surface shadow-medium',
+                        "border-pro-border-subtle bg-pro-surface shadow-medium",
                     )}
                   >
                     <div className="flex h-full flex-col">
@@ -309,8 +288,8 @@ export default function NotFound() {
                         <div className="flex items-start gap-3">
                           <div
                             className={cn(
-                              'inline-flex h-6 w-6 items-center justify-center text-muted-foreground',
-                              item.featured && 'text-primary',
+                              "inline-flex h-6 w-6 items-center justify-center text-muted-foreground",
+                              item.featured && "text-primary",
                             )}
                           >
                             {item.icon}
@@ -329,9 +308,7 @@ export default function NotFound() {
 
                         {item.badge ? (
                           <Badge
-                            variant={
-                              item.featured ? 'secondary' : 'outline'
-                            }
+                            variant={item.featured ? "secondary" : "outline"}
                             className="shrink-0 rounded-[5px] text-[11px]"
                           >
                             {item.badge}
@@ -341,10 +318,7 @@ export default function NotFound() {
 
                       <div className="mt-5 flex items-center text-sm font-medium text-foreground">
                         Open page
-                        <ArrowRight
-                          className="h-4 w-4"
-                          aria-hidden="true"
-                        />
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </div>
                     </div>
                   </Card>
@@ -370,66 +344,65 @@ export default function NotFound() {
                   </h2>
 
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    PyColors is organized around docs, starters,
-                    patterns, pricing, and product direction. Start
-                    from the surface closest to what you were trying
-                    to reach.
+                    PyColors is organized around docs, starters, patterns,
+                    pricing, and product direction. Start from the surface
+                    closest to what you were trying to reach.
                   </p>
                 </div>
 
                 <div className="divide-y divide-border-subtle">
                   {[
                     {
-                      title: 'Learn',
+                      title: "Learn",
                       icon: BookOpen,
                       links: [
-                        { label: 'Documentation', href: '/docs' },
-                        { label: 'Guides', href: '/guides' },
-                        { label: 'Changelog', href: '/changelog' },
+                        { label: "Documentation", href: "/docs" },
+                        { label: "Guides", href: "/guides" },
+                        { label: "Changelog", href: "/changelog" },
                       ],
                     },
                     {
-                      title: 'Build',
+                      title: "Build",
                       icon: Rocket,
                       links: [
                         {
-                          label: 'Starter Free',
-                          href: '/starters/free',
+                          label: "Starter Free",
+                          href: "/starters/free",
                         },
                         {
-                          label: 'Starter Pro',
-                          href: '/starters/pro',
+                          label: "Starter Pro",
+                          href: "/starters/pro",
                         },
-                        { label: 'Patterns', href: '/docs/patterns' },
+                        { label: "Patterns", href: "/docs/patterns" },
                       ],
                     },
                     {
-                      title: 'Upgrade',
+                      title: "Upgrade",
                       icon: CreditCard,
                       links: [
-                        { label: 'Pricing', href: '/pricing' },
+                        { label: "Pricing", href: "/pricing" },
                         {
-                          label: 'Starter Pro docs',
-                          href: '/docs/starter-pro',
+                          label: "Starter Pro docs",
+                          href: "/docs/starter-pro",
                         },
                         {
-                          label: 'Billing',
-                          href: '/docs/starter-pro/billing',
+                          label: "Billing",
+                          href: "/docs/starter-pro/billing",
                         },
                       ],
                     },
                     {
-                      title: 'Explore',
+                      title: "Explore",
                       icon: Compass,
                       links: [
-                        { label: 'Roadmap', href: '/roadmap' },
+                        { label: "Roadmap", href: "/roadmap" },
                         {
-                          label: 'Release policy',
-                          href: '/docs/project/release-policy',
+                          label: "Release policy",
+                          href: "/docs/project/release-policy",
                         },
                         {
-                          label: 'Versioning policy',
-                          href: '/docs/project/versioning-policy',
+                          label: "Versioning policy",
+                          href: "/docs/project/versioning-policy",
                         },
                       ],
                     },
@@ -470,36 +443,29 @@ export default function NotFound() {
               <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-2 text-left">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
-                    <LifeBuoy
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
+                    <LifeBuoy className="h-4 w-4" aria-hidden="true" />
                     Ready to choose the right path?
                   </div>
 
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Compare Starter Free and Starter Pro to decide
-                    whether you want to validate first or start from a
-                    production-ready SaaS foundation.
+                    Compare Starter Free and Starter Pro to decide whether you
+                    want to validate first or start from a production-ready SaaS
+                    foundation.
                   </p>
                 </div>
 
                 <Button asChild className="rounded-[5px]">
                   <Link href="/pricing">
                     View pricing
-                    <ArrowRight
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
               </div>
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              PyColors is maintained as an evolving SaaS ecosystem:
-              starters, docs, patterns, changelog, and roadmap move
-              together.
+              PyColors is maintained as an evolving SaaS ecosystem: starters,
+              docs, patterns, changelog, and roadmap move together.
             </p>
           </section>
         </Container>

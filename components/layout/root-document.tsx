@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Analytics } from "@vercel/analytics/react";
 
-import "./global.css";
-import { geistSans, geistMono } from "./fonts";
+import "@/app/global.css";
+import { geistSans, geistMono } from "@/app/fonts";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   SITE_NAME,
@@ -19,7 +19,7 @@ import { SITE_PALETTE_INIT_SCRIPT } from "@/lib/site-palette";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
-export const metadata: Metadata = {
+export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
@@ -64,7 +64,7 @@ const siteJsonLd = {
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
       alternateName: ["PyColors UI", "pycolors.io"],
-      inLanguage: "en",
+      inLanguage: ["en", "fr"],
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },
@@ -86,15 +86,22 @@ const siteJsonLd = {
   ],
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export function RootDocument({
+  children,
+  locale = "en",
+}: {
+  children: React.ReactNode;
+  locale?: "en" | "fr";
+}) {
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
       data-scroll-behavior="smooth"
       data-site-palette="pycolors"
     >
+      {/* eslint-disable-next-line @next/next/no-head-element -- Shared App Router root document; native head preserves pre-hydration palette setup. */}
       <head>
         <script
           id="site-palette-init"
@@ -112,7 +119,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         >
           {children}
           <ConsentGatedGtm gtmId={GTM_ID} />
-          <PrivacyConsentBanner />
+          <PrivacyConsentBanner locale={locale} />
         </RootProvider>
         <Analytics />
       </body>

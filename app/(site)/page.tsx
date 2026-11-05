@@ -1,3 +1,4 @@
+import { localizedAlternates } from "@/lib/i18n/routes";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -45,9 +46,12 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   alternates: {
     canonical: "https://pycolors.io",
+    languages: localizedAlternates("home", "en").languages,
   },
 
   openGraph: {
+    locale: "en_US",
+    alternateLocale: "fr_FR",
     title: SITE_TITLE,
 
     description: SITE_DESCRIPTION,

@@ -26,7 +26,12 @@ export function PrivacyConsentSettings() {
   );
 }
 
-export function PrivacyConsentBanner() {
+export function PrivacyConsentBanner({
+  locale = "en",
+}: {
+  locale?: "en" | "fr";
+}) {
+  const fr = locale === "fr";
   const [mounted, setMounted] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const rejectRef = React.useRef<HTMLButtonElement>(null);
@@ -96,20 +101,20 @@ export function PrivacyConsentBanner() {
         id="privacy-consent-title"
         className="text-[13px] font-semibold leading-5"
       >
-        Cookie preferences
+        {fr ? "Préférences de confidentialité" : "Cookie preferences"}
       </h2>
       <p
         id="privacy-consent-description"
         className="mt-1.5 text-[13px] leading-5 text-muted-foreground"
       >
-        Essential storage keeps PyColors working. Optional Google tags load only
-        after acceptance. Vercel Web Analytics is separate; see Privacy for
-        details.
+        {fr
+          ? "Le stockage essentiel assure le fonctionnement de PyColors. Les balises Google facultatives se chargent après votre accord. Vercel Web Analytics est distinct ; consultez notre politique de confidentialité pour les détails."
+          : "Essential storage keeps PyColors working. Optional Google tags load only after acceptance. Vercel Web Analytics is separate; see Privacy for details."}
       </p>
       <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
         {[
-          { label: "Privacy", href: "/privacy" },
-          { label: "Terms", href: "/terms" },
+          { label: fr ? "Confidentialité · EN" : "Privacy", href: "/privacy" },
+          { label: fr ? "Conditions · EN" : "Terms", href: "/terms" },
         ].map(({ label, href }) => (
           <Link
             key={href}
@@ -127,14 +132,14 @@ export function PrivacyConsentBanner() {
           ref={rejectRef}
           onClick={() => saveConsent("denied")}
         >
-          Reject optional
+          {fr ? "Refuser les facultatifs" : "Reject optional"}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={() => saveConsent("accepted")}
         >
-          Accept optional
+          {fr ? "Accepter les facultatifs" : "Accept optional"}
         </Button>
       </div>
     </section>

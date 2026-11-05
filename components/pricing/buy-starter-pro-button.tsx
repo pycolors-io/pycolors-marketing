@@ -10,6 +10,7 @@ import { useProductCheckout } from "./use-product-checkout";
 import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
 type BuyStarterProButtonProps = {
+  locale?: "en" | "fr";
   className?: string;
   fullWidth?: boolean;
   size?: "default" | "sm" | "lg" | "icon";
@@ -24,6 +25,7 @@ const STARTER_PRO = PRODUCT_DISPLAY["starter-pro"];
 
 export function BuyStarterProButton({
   className,
+  locale = "en",
   fullWidth = true,
   size = "lg",
   variant = "default",
@@ -87,7 +89,7 @@ export function BuyStarterProButton({
         <p className="text-xs text-muted-foreground">{trustText}</p>
       ) : null}
 
-      {hasError ? <CheckoutFailureNotice /> : null}
+      {hasError ? <CheckoutFailureNotice locale={locale} /> : null}
     </div>
   );
 }

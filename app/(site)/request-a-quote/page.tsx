@@ -1,3 +1,4 @@
+import { localizedAlternates } from "@/lib/i18n/routes";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/container";
@@ -13,8 +14,13 @@ const description =
 export const metadata: Metadata = {
   title: "Request a quote · Starter Pro",
   description,
-  alternates: { canonical: "/request-a-quote" },
+  alternates: {
+    canonical: "/request-a-quote",
+    languages: localizedAlternates("quote", "en").languages,
+  },
   openGraph: {
+    locale: "en_US",
+    alternateLocale: "fr_FR",
     title: "Request a quote · Starter Pro",
     description,
     url: "/request-a-quote",

@@ -1,3 +1,8 @@
+import {
+  findLocalizedPage,
+  LOCALIZED_ROUTES,
+  localizedAlternates,
+} from "@/lib/i18n/routes";
 import type { MetadataRoute } from "next";
 
 import {
@@ -255,11 +260,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   /**
    * Static routes
    */
-  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
-    url: `${SITE_URL}${route}`,
-    changeFrequency: getChangeFrequency(route),
-    priority: getPriority(route),
-  }));
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => {
+    const page = findLocalizedPage(route || "/");
+    return {
+      url: `${SITE_URL}${route}`,
+      changeFrequency: getChangeFrequency(route),
+      priority: getPriority(route),
+      ...(page
+        ? {
+            alternates: {
+              languages: localizedAlternates(page, "en").languages,
+            },
+          }
+        : {}),
+    };
+  });
 
   /**
    * Blog posts
@@ -313,6 +328,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
    */
   const entries = [
     ...staticEntries,
+    ...Object.entries(LOCALIZED_ROUTES).map(([, routes]) => ({
+      url: `${SITE_URL}${routes.fr}`,
+      changeFrequency: getChangeFrequency(routes.en),
+      priority: getPriority(routes.en === "/" ? "" : routes.en),
+      alternates: {
+        languages: {
+          en: `${SITE_URL}${routes.en}`,
+          fr: `${SITE_URL}${routes.fr}`,
+          "x-default": `${SITE_URL}${routes.en}`,
+        },
+      },
+    })),
     ...blogPosts,
     ...blogCategories,
     ...blogTags,

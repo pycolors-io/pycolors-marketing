@@ -17,23 +17,31 @@ import {
   QuoteSubmissionError,
   submitQuoteRequest,
 } from "@/lib/quotes/submit-quote-request";
+import { QUOTE_COPY } from "@/lib/i18n/quote-copy";
+import { FRENCH_SERVICES } from "@/lib/i18n/french-commercial";
 import styles from "./quote-request.module.css";
-
-const fieldErrors: Record<QuoteField, string> = {
-  name: "Enter a name between 2 and 100 characters.",
-  email: "Enter a valid email address.",
-  company: "Keep the company name under 120 characters.",
-  service: "Choose a service.",
-  budget: "Choose a budget range or To be scoped.",
-  timeline: "Keep the timeline under 100 characters.",
-  brief: "Describe your project in 40–4,000 characters.",
-};
 
 export function QuoteRequestForm({
   initialService = "",
+  locale = "en",
 }: {
   initialService?: QuoteService | "";
+  locale?: "en" | "fr";
 }) {
+  const copy = QUOTE_COPY[locale];
+  const fieldErrors = copy.fields;
+  const services =
+    locale === "fr" ? FRENCH_SERVICES : Object.values(STARTER_PRO_SERVICES);
+  const budgets =
+    locale === "fr"
+      ? {
+          "3k-5k": "3 000–5 000 €",
+          "5k-10k": "5 000–10 000 €",
+          "10k-20k": "10 000–20 000 €",
+          "20k-plus": "20 000 € ou plus",
+          "to-define": "À définir",
+        }
+      : QUOTE_BUDGETS;
   const [busy, setBusy] = React.useState(false);
   const [reference, setReference] = React.useState("");
   const [attemptId, setAttemptId] = React.useState("");
@@ -118,30 +126,26 @@ export function QuoteRequestForm({
         className={styles.confirmation}
       >
         <Check className="size-6" aria-hidden="true" />
-        <h2>Request submitted.</h2>
-        <p>
-          Your request has been sent to PyColors. We’ll use your email to
-          discuss the scope before preparing a written quote.
-        </p>
+        <h2>{copy.successTitle}</h2>
+        <p>{copy.successBody}</p>
         <div className={styles.reference}>
-          <span>Request reference</span>
+          <span>{copy.reference}</span>
           <code>{reference}</code>
         </div>
-        <p>
-          Keep this reference for any follow-up. The scope, final price and
-          commitments will be agreed in writing.
-        </p>
+        <p>{copy.successNote}</p>
         <SiteButton asChild variant="outline">
-          <Link href="/pricing">Back to pricing</Link>
+          <Link href={locale === "fr" ? "/fr/tarifs" : "/pricing"}>
+            {copy.back}
+          </Link>
         </SiteButton>
       </div>
     );
   return (
     <section className={styles.panel} aria-labelledby="quote-form-heading">
       <div className={styles.formHeader}>
-        <span className={styles.eyebrow}>Your project</span>
-        <h2 id="quote-form-heading">Let’s define the next step.</h2>
-        <p>Share the essentials. Company and timeline are optional.</p>
+        <span className={styles.eyebrow}>{copy.eyebrow}</span>
+        <h2 id="quote-form-heading">{copy.heading}</h2>
+        <p>{copy.intro}</p>
       </div>
       <form
         method="post"
@@ -150,10 +154,10 @@ export function QuoteRequestForm({
         aria-busy={busy}
       >
         <fieldset disabled={busy} className={styles.fields}>
-          <legend className="sr-only">Project brief</legend>
+          <legend className="sr-only">{copy.legend}</legend>
           <div className={styles.row}>
             <div className={styles.field}>
-              <label htmlFor="quote-name">Name</label>
+              <label htmlFor="quote-name">{copy.name}</label>
               <Input
                 id="quote-name"
                 name="name"
@@ -166,7 +170,7 @@ export function QuoteRequestForm({
               />
             </div>
             <div className={styles.field}>
-              <label htmlFor="quote-email">Email</label>
+              <label htmlFor="quote-email">{copy.email}</label>
               <Input
                 id="quote-email"
                 name="email"
@@ -183,7 +187,7 @@ export function QuoteRequestForm({
           </div>
           <div className={styles.field}>
             <label htmlFor="quote-company">
-              Company <span>(optional)</span>
+              {copy.company} <span>{copy.optional}</span>
             </label>
             <Input
               id="quote-company"
@@ -196,7 +200,7 @@ export function QuoteRequestForm({
           </div>
           <div className={styles.row}>
             <div className={styles.field}>
-              <label htmlFor="quote-service">Service</label>
+              <label htmlFor="quote-service">{copy.service}</label>
               <div className={styles.select}>
                 <select
                   id="quote-service"
@@ -208,9 +212,9 @@ export function QuoteRequestForm({
                   aria-describedby={hint("service")}
                 >
                   <option value="" disabled>
-                    Choose a service
+                    {copy.servicePlaceholder}
                   </option>
-                  {Object.values(STARTER_PRO_SERVICES).map((service) => (
+                  {services.map((service) => (
                     <option key={service.id} value={service.id}>
                       {service.title}
                     </option>
@@ -221,7 +225,7 @@ export function QuoteRequestForm({
               {message("service")}
             </div>
             <div className={styles.field}>
-              <label htmlFor="quote-budget">Indicative budget</label>
+              <label htmlFor="quote-budget">{copy.budget}</label>
               <div className={styles.select}>
                 <select
                   id="quote-budget"
@@ -233,9 +237,9 @@ export function QuoteRequestForm({
                   aria-describedby={hint("budget")}
                 >
                   <option value="" disabled>
-                    Choose a range
+                    {copy.budgetPlaceholder}
                   </option>
-                  {Object.entries(QUOTE_BUDGETS).map(([key, label]) => (
+                  {Object.entries(budgets).map(([key, label]) => (
                     <option key={key} value={key}>
                       {label}
                     </option>
@@ -248,19 +252,19 @@ export function QuoteRequestForm({
           </div>
           <div className={styles.field}>
             <label htmlFor="quote-timeline">
-              Desired timeline <span>(optional)</span>
+              {copy.timeline} <span>{copy.optional}</span>
             </label>
             <Input
               id="quote-timeline"
               name="timeline"
               maxLength={100}
-              placeholder="Next quarter, or flexible"
+              placeholder={copy.timelinePlaceholder}
               className={styles.control}
               error={hint("timeline") ? fieldErrors.timeline : undefined}
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor="quote-brief">What would you like to build?</label>
+            <label htmlFor="quote-brief">{copy.brief}</label>
             <Textarea
               id="quote-brief"
               name="brief"
@@ -273,12 +277,11 @@ export function QuoteRequestForm({
               aria-describedby="quote-brief-help"
             />
             <p id="quote-brief-help" className={styles.help}>
-              Describe the workflow, users and outcome. Keep passwords, API keys
-              and customer data out of your brief.
+              {copy.briefHelp}
             </p>
           </div>
           <div className={styles.trap} aria-hidden="true">
-            <label htmlFor="quote-website">Leave this field empty</label>
+            <label htmlFor="quote-website">{copy.trap}</label>
             <input
               id="quote-website"
               name="website"
@@ -288,11 +291,15 @@ export function QuoteRequestForm({
             />
           </div>
           <p className={styles.privacy}>
-            We use these details to review your request and contact you about
-            this project. Read our{" "}
-            <Link href="/privacy" target="_blank" rel="noopener noreferrer">
-              privacy policy
-              <span className="sr-only"> (opens in a new tab)</span>
+            {copy.privacy}{" "}
+            <Link
+              href="/privacy"
+              hrefLang="en"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {copy.privacyLink}
+              <span className="sr-only"> {copy.newTab}</span>
             </Link>
             .
           </p>
@@ -307,7 +314,7 @@ export function QuoteRequestForm({
                 aria-hidden="true"
               />
             )}
-            {busy ? "Submitting your brief…" : "Request a quote"}
+            {busy ? copy.submitting : copy.submit}
           </SiteButton>
         </fieldset>
       </form>
@@ -317,20 +324,20 @@ export function QuoteRequestForm({
           <div>
             <p>
               {error.fields.length
-                ? "Review the highlighted fields."
+                ? copy.validation
                 : error.rateLimited
-                  ? "Too many requests. Please wait 15 minutes before trying again."
-                  : "We couldn’t confirm your submission. Your brief is still here; you can retry."}
+                  ? copy.rateLimited
+                  : copy.failed}
             </p>
             <p>
-              If you need help,{" "}
+              {copy.help}{" "}
               <a href="mailto:contact@pycolors.com?subject=Starter%20Pro%20quote%20request">
-                email PyColors
+                {copy.emailSupport}
               </a>
               {attemptId ? (
                 <>
                   {" "}
-                  and include reference <code>{attemptId}</code>
+                  {copy.includeReference} <code>{attemptId}</code>
                 </>
               ) : null}
               .

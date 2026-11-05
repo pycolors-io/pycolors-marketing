@@ -54,14 +54,16 @@ function BrandSignature() {
 
 export function Logo({
   variant = "default",
+  href,
 }: {
+  readonly href?: string;
   readonly variant?: "default" | "docs";
 }) {
   const isDocs = variant === "docs";
 
   return (
     <Link
-      href={isDocs ? "/docs" : "/"}
+      href={href ?? (isDocs ? "/docs" : "/")}
       aria-label={isDocs ? "PyColors Docs" : "PyColors"}
       className={cn(
         "group inline-flex min-h-11 shrink-0 items-center gap-2.5 rounded-[4px]",

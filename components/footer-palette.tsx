@@ -51,11 +51,15 @@ function setPalette(palette: SitePalette) {
   window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
 }
 
-export function FooterPalette() {
+export function FooterPalette({ locale = "en" }: { locale?: "en" | "fr" }) {
   const palette = useSyncExternalStore(subscribe, getPalette, getServerPalette);
 
   return (
-    <div role="group" aria-label="Site palette" className={styles.palette}>
+    <div
+      role="group"
+      aria-label={locale === "fr" ? "Palette du site" : "Site palette"}
+      className={styles.palette}
+    >
       {OPTIONS.map(({ value, label }) => (
         <button
           key={value}

@@ -12,6 +12,7 @@ import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
 type BuyProductButtonProps = {
   productSlug: string;
+  locale?: "en" | "fr";
   className?: string;
   fullWidth?: boolean;
   size?: "default" | "sm" | "lg" | "icon";
@@ -26,6 +27,7 @@ type BuyProductButtonProps = {
 export function BuyProductButton({
   productSlug,
   className,
+  locale = "en",
   fullWidth = true,
   size = "lg",
   variant = "default",
@@ -97,7 +99,7 @@ export function BuyProductButton({
         <p className="text-xs text-muted-foreground">{trustText}</p>
       ) : null}
 
-      {hasError ? <CheckoutFailureNotice /> : null}
+      {hasError ? <CheckoutFailureNotice locale={locale} /> : null}
     </div>
   );
 }

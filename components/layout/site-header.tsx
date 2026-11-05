@@ -27,6 +27,7 @@ import {
   type PrimaryMenu,
   type PrimaryNavItem,
 } from "@/lib/layout.shared";
+import { LanguageSwitcher } from "./language-switcher";
 import { Logo } from "../logo";
 import { useHeaderDisclosure } from "./use-header-disclosure";
 import styles from "./header-disclosure.module.css";
@@ -483,6 +484,7 @@ export function SiteHeader({
                 )}
               </nav>
               <div className="hidden items-center gap-2 lg:flex">
+                <LanguageSwitcher />
                 {desktopActions}
                 <Button
                   asChild
@@ -493,6 +495,7 @@ export function SiteHeader({
                 </Button>
               </div>
               <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
+                <LanguageSwitcher />
                 {mobileActions}
                 <SheetTrigger asChild>
                   <button

@@ -21,7 +21,12 @@ const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
-export function AppearanceControls() {
+export function AppearanceControls({
+  locale = "en",
+}: {
+  locale?: "en" | "fr";
+}) {
+  const fr = locale === "fr";
   const { theme, setTheme } = useTheme();
   // The server cannot know the saved preference. Keep the same three controls
   // during hydration, then reveal the selected state without a layout shift.
@@ -33,21 +38,53 @@ export function AppearanceControls() {
 
   return (
     <div className={styles.preferences}>
-      <FooterPalette />
-      <div role="group" aria-label="Color theme" className={styles.appearance}>
+      <FooterPalette locale={locale} />
+      <div
+        role="group"
+        aria-label={fr ? "Thème de couleur" : "Color theme"}
+        className={styles.appearance}
+      >
         {OPTIONS.map(({ value, label, shortLabel, icon: Icon }) => (
           <button
             key={value}
             type="button"
-            aria-label={label}
-            title={label}
+            aria-label={
+              fr
+                ? (
+                    {
+                      light: "Thème clair",
+                      dark: "Thème sombre",
+                      system: "Thème système",
+                    } as const
+                  )[value]
+                : label
+            }
+            title={
+              fr
+                ? (
+                    {
+                      light: "Clair",
+                      dark: "Sombre",
+                      system: "Système",
+                    } as const
+                  )[value]
+                : label
+            }
             aria-pressed={mounted && theme === value}
             disabled={!mounted}
             onClick={() => setTheme(value)}
           >
             <Icon className="size-3.5" aria-hidden="true" />
             <span className={styles.appearanceLabel} aria-hidden="true">
-              {shortLabel}
+              {fr
+                ? (
+                    {
+                      light: "Clair",
+                      dark: "Sombre",
+                      system: "Système",
+                    } as const
+                  )[value]
+                : shortLabel}
             </span>
           </button>
         ))}
@@ -57,11 +94,20 @@ export function AppearanceControls() {
 }
 
 /** Shared settings area for the marketing and documentation mobile sheets. */
-export function MobileMenuAppearance() {
+export function MobileMenuAppearance({
+  locale = "en",
+}: {
+  locale?: "en" | "fr";
+}) {
   return (
-    <section aria-label="Appearance" className="mb-3 space-y-2">
-      <p className="text-xs font-medium text-muted-foreground">Appearance</p>
-      <AppearanceControls />
+    <section
+      aria-label={locale === "fr" ? "Apparence" : "Appearance"}
+      className="mb-3 space-y-2"
+    >
+      <p className="text-xs font-medium text-muted-foreground">
+        {locale === "fr" ? "Apparence" : "Appearance"}
+      </p>
+      <AppearanceControls locale={locale} />
     </section>
   );
 }

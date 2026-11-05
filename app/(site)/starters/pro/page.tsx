@@ -1,3 +1,4 @@
+import { localizedAlternates } from "@/lib/i18n/routes";
 import { ProDemoLink } from "@/components/marketing/pro-demo-link";
 import { proDemoUrl } from "@/lib/pro-demo-url";
 import Link from "next/link";
@@ -61,9 +62,12 @@ export const metadata: Metadata = {
     "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
   alternates: {
     canonical: "/starters/pro",
+    languages: localizedAlternates("starterPro", "en").languages,
   },
 
   openGraph: {
+    locale: "en_US",
+    alternateLocale: "fr_FR",
     title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
       "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",

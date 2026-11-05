@@ -207,3 +207,25 @@ Website → https://pycolors.io \
 Docs → https://pycolors.io/docs \
 UI → https://github.com/pycolors-io/pycolors-ui \
 Tokens → https://github.com/pycolors-io/pycolors-tokens
+
+## English and French commercial pages
+
+English URLs remain stable. French acquisition pages are `/fr`, `/fr/starters/pro`,
+`/fr/tarifs` and `/fr/demande-de-devis`. The route map in `lib/i18n/routes.ts`
+is the allowlist for reciprocal HTML language alternates and sitemap entries.
+Add a route only after its full page and navigation copy are translated.
+Each translation has its own canonical; `x-default` points to English.
+The language switcher uses ordinary document links, with no browser/IP redirect.
+Untranslated documentation and legal pages remain in English and are labelled
+accordingly from the French journey.
+
+Static EN/FR root documents share `components/layout/root-document.tsx` so the
+initial HTML exposes the correct `lang` without request headers or a new i18n
+dependency. Next.js's `experimental.globalNotFound` supplies the existing global
+404 with multiple root layouts; verify English, French, docs and unknown URLs
+when upgrading Next.js. Quote submission and checkout retain their existing API
+contracts; only the client-facing copy is localized.
+
+Verify with Marketing lint, types, tests and production build. Check canonical,
+reciprocal hreflang, sitemap, desktop/mobile language links, French form errors
+and confirmation, theme/palette persistence, and the English docs/404 pages.

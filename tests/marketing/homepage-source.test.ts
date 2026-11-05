@@ -42,6 +42,7 @@ const approved = new Set([
   "lib/products/starter-pro-services.ts",
   "lib/seo/breadcrumb.ts",
   "lib/seo/website.ts",
+  "lib/i18n/routes.ts",
   "lib/version.ts",
   "lib/showcase/product-studio.ts",
 ]);

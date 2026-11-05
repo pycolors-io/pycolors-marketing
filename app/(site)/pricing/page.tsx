@@ -1,3 +1,4 @@
+import { localizedAlternates } from "@/lib/i18n/routes";
 import Link from "next/link";
 import {
   DIGITAL_REFUND_SUMMARY,
@@ -32,9 +33,12 @@ export const metadata: Metadata = {
     "Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with Auth.js, secure Stripe checkout, Prisma, purchase recovery, and production-ready foundations.",
   alternates: {
     canonical: "/pricing",
+    languages: localizedAlternates("pricing", "en").languages,
   },
 
   openGraph: {
+    locale: "en_US",
+    alternateLocale: "fr_FR",
     title: "Next.js SaaS Pricing",
     description:
       "Compare templates, Starter Free, and Starter Pro for modern Next.js SaaS products with auth, secure checkout, purchase recovery, dashboards, and production-ready architecture.",

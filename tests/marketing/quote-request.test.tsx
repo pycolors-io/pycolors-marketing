@@ -73,7 +73,14 @@ describe("Project quote requests", () => {
       "A clear scope for your next product.",
     );
     expect(screen.getByLabelText("Service")).toHaveValue("business-adaptation");
-    expect(metadata.alternates).toEqual({ canonical: "/request-a-quote" });
+    expect(metadata.alternates).toMatchObject({
+      canonical: "/request-a-quote",
+      languages: {
+        en: "https://pycolors.io/request-a-quote",
+        fr: "https://pycolors.io/fr/demande-de-devis",
+        "x-default": "https://pycolors.io/request-a-quote",
+      },
+    });
     for (const service of Object.values(STARTER_PRO_SERVICES))
       expect(screen.getByText(service.priceLabel)).toBeVisible();
     expect(fetchMock).not.toHaveBeenCalled();
