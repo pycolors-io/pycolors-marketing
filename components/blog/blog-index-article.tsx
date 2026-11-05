@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 import { Badge, Card, cn } from "@pycolors/ui";
 
@@ -7,13 +8,15 @@ import type { BlogPost } from "@/types/blog";
 import styles from "./blog-index.module.css";
 
 function ArticleByline({ post }: { readonly post: BlogPost }) {
+  const tSite = useCopy();
+
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
-      {post.author ? <span>{post.author}</span> : null}
+      {post.author ? <span>{tSite(post.author)}</span> : null}
       {post.author && post.readingTime ? (
         <span aria-hidden="true">·</span>
       ) : null}
-      {post.readingTime ? <span>{post.readingTime}</span> : null}
+      {post.readingTime ? <span>{tSite(post.readingTime)}</span> : null}
     </div>
   );
 }
@@ -26,6 +29,8 @@ export function BlogFeaturedArticle({
   readonly post: BlogPost;
   readonly lead?: boolean;
 }) {
+  const tSite = useCopy();
+
   const titleId = `featured-${post.slug}`;
 
   return (
@@ -48,10 +53,12 @@ export function BlogFeaturedArticle({
                   size="sm"
                   className="border-border-subtle bg-background/60 px-2 text-[11px] font-medium"
                 >
-                  {post.category}
+                  {tSite(post.category)}
                 </Badge>
               ) : null}
-              <time dateTime={post.date}>{formatDate(post.date)}</time>
+              <time dateTime={post.date}>
+                {tSite(formatDate(post.date, tSite.locale))}
+              </time>
             </div>
             <h3
               id={titleId}
@@ -61,7 +68,7 @@ export function BlogFeaturedArticle({
                   "mt-7 max-w-lg text-2xl leading-tight sm:text-3xl lg:text-4xl",
               )}
             >
-              {post.title}
+              {tSite(post.title)}
             </h3>
             <p
               className={cn(
@@ -69,7 +76,7 @@ export function BlogFeaturedArticle({
                 lead && "mt-5 max-w-lg sm:text-base sm:leading-8",
               )}
             >
-              {post.description}
+              {tSite(post.description)}
             </p>
           </div>
           <div
@@ -94,6 +101,8 @@ export function BlogFeaturedArticle({
 
 /** A compact archive row keeps long titles and publication details readable. */
 export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
+  const tSite = useCopy();
+
   const titleId = `article-${post.slug}`;
 
   return (
@@ -107,21 +116,21 @@ export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
           dateTime={post.date}
           className="text-xs leading-6 text-muted-foreground"
         >
-          {formatDate(post.date)}
+          {tSite(formatDate(post.date, tSite.locale))}
         </time>
         <div className="min-w-0">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               {post.category ? (
                 <p className="text-xs font-medium leading-6 text-muted-foreground">
-                  {post.category}
+                  {tSite(post.category)}
                 </p>
               ) : null}
               <h3
                 id={titleId}
                 className="mt-2 text-pretty font-brand text-lg font-semibold leading-snug tracking-subheading sm:text-xl"
               >
-                {post.title}
+                {tSite(post.title)}
               </h3>
             </div>
             <ArrowRight
@@ -130,7 +139,7 @@ export function BlogArticleRow({ post }: { readonly post: BlogPost }) {
             />
           </div>
           <p className="mt-2 max-w-2xl text-sm leading-7 text-muted-foreground">
-            {post.description}
+            {tSite(post.description)}
           </p>
           <div className="mt-3">
             <ArticleByline post={post} />

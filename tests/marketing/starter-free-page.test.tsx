@@ -10,8 +10,14 @@ import {
 } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import StarterFreePage, { metadata } from "@/app/(site)/starters/free/page";
+import StarterFreePage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/starters/free/page";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -21,7 +27,7 @@ describe("Starter Free product page", () => {
     expect(screen.getAllByRole("main")).toHaveLength(1);
     expect(screen.getByRole("main")).toHaveAttribute("id", "content");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(metadata.alternates).toEqual({ canonical: "/starters/free" });
+    expect(metadata.alternates).toMatchObject({ canonical: "/starters/free" });
     expect(
       screen.getByRole("link", { name: "Get Starter Free" }),
     ).toHaveAttribute(
@@ -60,7 +66,7 @@ describe("Starter Free product page", () => {
             resolve("content", `${route.slice(1)}.mdx`),
             resolve("content", route.slice(1), "index.mdx"),
           ]
-        : [resolve("app/(site)", route.slice(1), "page.tsx")];
+        : [resolve("app/[locale]/(site)", route.slice(1), "page.tsx")];
       expect(candidates.some(existsSync), href).toBe(true);
     }
   });

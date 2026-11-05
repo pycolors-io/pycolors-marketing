@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
@@ -18,6 +19,8 @@ export function StarterProTourPlayer({
   captions,
   duration,
 }: StarterProTourPlayerProps) {
+  const tSite = useCopy();
+
   const [started, setStarted] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
 
@@ -34,7 +37,7 @@ export function StarterProTourPlayer({
         <video
           ref={video}
           className="block aspect-video w-full focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-white"
-          aria-label="Starter Pro product tour"
+          aria-label={tSite("Starter Pro product tour")}
           controls
           playsInline
           preload="none"
@@ -42,13 +45,22 @@ export function StarterProTourPlayer({
           src={source}
           tabIndex={0}
         >
-          <track kind="captions" src={captions} srcLang="en" label="English" />
-          Read the tour transcript below if your browser cannot play this video.
+          <track
+            kind="captions"
+            src={captions}
+            srcLang="en"
+            label={tSite("English")}
+          />
+          {tSite(
+            "Read the tour transcript below if your browser cannot play this video.",
+          )}
         </video>
       ) : (
         <button
           type="button"
-          aria-label={`Play Starter Pro product tour (${duration})`}
+          aria-label={tSite("Play Starter Pro product tour ({value0})", {
+            value0: duration,
+          })}
           className="group relative block aspect-video w-full cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
           onClick={() => setStarted(true)}
         >
@@ -63,9 +75,9 @@ export function StarterProTourPlayer({
           />
           <span className="absolute bottom-[12%] left-[5%] inline-flex min-h-11 items-center gap-3 rounded-[3px] border border-white/20 bg-white px-4 py-2.5 text-xs font-medium text-zinc-950 transition-colors group-hover:bg-zinc-200 motion-reduce:transition-none sm:text-sm">
             <Play className="size-4 fill-current" aria-hidden="true" />
-            Watch the tour
+            {tSite("Watch the tour")}
             <span className="border-l border-zinc-300 pl-3 font-mono text-[11px] text-zinc-600">
-              {duration}
+              {tSite(duration)}
             </span>
           </span>
         </button>

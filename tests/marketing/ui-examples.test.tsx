@@ -18,9 +18,15 @@ import {
   vi,
 } from "vitest";
 import { axe } from "vitest-axe";
-import ExamplesPage, { metadata } from "@/app/(site)/ui/examples/page";
+import ExamplesPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/ui/examples/page";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.hoisted(() =>
   vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.example.com"),
@@ -175,7 +181,7 @@ describe("UI Examples page", () => {
             resolve("content", `${route.slice(1)}.mdx`),
             resolve("content", route.slice(1), "index.mdx"),
           ]
-        : [resolve("app/(site)", route.slice(1), "page.tsx")];
+        : [resolve("app/[locale]/(site)", route.slice(1), "page.tsx")];
       expect(candidates.some(existsSync), href).toBe(true);
     }
   });

@@ -1,0 +1,273 @@
+---
+title: Vue d’ensemble
+description: Starter Free - une surface SaaS adaptées à la production pour
+  valider, démo et lancer plus rapidement.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardHeader, CardContent, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Compass,
+  CreditCard,
+  FolderTree,
+  LayoutDashboard,
+  LockKeyhole,
+  Rocket,
+  Settings,
+  Sparkles,
+  Terminal,
+  Users,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Gratuit</Badge>
+</div>
+
+## Construire une véritable surface SaaS en quelques minutes [#build-a-real-saas-surface-in-minutes]
+
+Starter Free est un **Prochaine.js surface SaaS** conçu pour vous aider à valider une idée de produit plus rapidement.
+
+Ce n'est pas un dépôt blanc. Ce n'est pas une démo de jouets. Ce n'est pas un boilerplate lourd.
+
+Il vous donne une interface produit crédible que vous pouvez:
+
+- Exécutez localement en quelques minutes
+- Explorez comme une vraie application
+- s'adapter à votre propre domaine
+- Présenter aux utilisateurs, clients ou investisseurs
+
+<Callout title="Idée de base">
+  Starter Free vous donne la surface d'un vrai produit SaaS. Vous câblez la
+  couche métier lorsque la direction du produit est claire.
+
+</Callout>
+
+## Ce qui est inclus [#what-you-get]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Surface du tableau de bord",
+      description:
+        "Navigation réelle, structure de page, KPI, cartes et bases de mise en page de produits.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Flux de produits",
+      description:
+        "Flux d'entités de type CRUD, surfaces d'administration, membres, dialogues et états UX réalistes.",
+      icon: Users,
+    },
+    {
+      title: "Surface de facturation",
+      description:
+        "Tarification, plan actuel, historique des factures, surfaces des méthodes de paiement et points d'entrée de facturation.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+## Modèle mental [#mental-model]
+
+> Construire la surface du produit en premier. Câblage du système en second.
+
+Starter Free vous aide à répondre :
+
+- Le produit vous semble-t-il crédible ?
+- La navigation a-t-elle un sens ?
+- Les principaux flux se sentent-ils complets?
+- Est-ce que cela peut devenir un vrai SaaS ?
+
+Starter Pro vous aide à répondre :
+
+- Comment les utilisateurs se connectent-ils pour de vrai?
+- Comment les clients paient-ils?
+- Comment fonctionnent les routes protégées ?
+- Comment l'état du backend remplace-t-il les simulacres ?
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Starter Free",
+      title: "Valider la surface du produit",
+      href: "/docs/starter",
+      icon: Sparkles,
+      description:
+        "Utilisez Starter Free pour façonner les routes, les écrans, les états UX, la langue du produit et la navigation avant le câblage de production.",
+      items: [
+        "écrans SaaS réels",
+        "tableau de bord et navigation",
+        "États de l'IU simulés",
+        "Validation MVP rapide",
+        "frontend-première itération",
+      ],
+      cta: "Explore Starter Free →",
+    },
+    {
+      eyebrow: "Starter Pro",
+      title: "Câblage de la couche métier",
+      href: "/docs/starter-pro",
+      icon: Rocket,
+      tone: "pro",
+      description:
+        "Déplacez-vous vers Starter Pro lorsque l'authentification, la facturation, les routes protégés, les fondations backend et les flux de production deviennent le bloqueur.",
+      items: [
+        "Authentification réelle",
+        "Stripe facturation",
+        "Routes protégées",
+        "fondations backend",
+        "flux prêts à la production",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+## Ce que c'est [#what-it-is]
+
+Starter Free est :
+
+- Une première fondation SaaS
+- une surface d'interface utilisateur adaptées à la production
+- une véritable structure de produit
+- un outil de validation pour votre idée
+- un moyen rapide de créer une démo SaaS crédible
+
+Starter Free n'est pas :
+
+- un backend SaaS complet
+- un système d'auth entièrement câblé
+- un vrai moteur de facturation Stripe
+- un produit soutenu par une base de données
+- un faux terrain de jeu
+
+<Callout type="info" title="Frontend-first par design">
+  Starter Free conserve l'authentification, la facturation et les données
+  simulées afin que vous puissiez valider le produit avant de vous engager dans
+  la complexité du backend.
+
+</Callout>
+
+## Pour qui c'est ? [#who-it-is-for]
+
+Utilisez Starter Free si vous êtes :
+
+- Construire un MVP SaaS
+- Valider une idée de produit
+- Créer une démo pour les utilisateurs ou les investisseurs
+- Concevoir un produit avant les décisions du backend
+- Expédition rapide avec une approche frontend-first
+
+Il est particulièrement utile lorsque vous avez besoin d'une surface de produit crédible avant que l'infrastructure de production en vale le coût.
+
+## Chemin de documentation [#documentation-path]
+
+Suivez les pages dans l'ordre.
+
+<DocsLinks
+  variant="steps"
+  items={[
+    {
+      title: "Premiers pas",
+      href: "/docs/starter/getting-started",
+      description:
+        "Comprendre ce que Starter Free comprend, ce qui est simulé, et comment aborder le starter.",
+      icon: Compass,
+    },
+    {
+      title: "Installation",
+      href: "/docs/starter/installation",
+      description:
+        "Exécutez le starter localement et validez les principales routes SaaS et les flux d'interface utilisateur.",
+      icon: Terminal,
+    },
+    {
+      title: "Structure du projet",
+      href: "/docs/starter/project-structure",
+      description:
+        "Découvrez comment les routes, les composants de fonctionnalités, les données simulées et les primitives d'interface utilisateur sont organisées.",
+      icon: FolderTree,
+    },
+    {
+      title: "Concept d'authentification",
+      href: "/docs/starter/auth-concept",
+      description:
+        "Comprendre le contrat d'authentification UX avant de câblodistribuer un fournisseur réel.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Concept de facturation",
+      href: "/docs/starter/billing-concept",
+      description:
+        "Découvrez comment la monétisation et l'état de l'abonnement sont modélisés avant l'intégration de Stripe.",
+      icon: CreditCard,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter/deployment",
+      description: "Déployez tôt et validez la surface SaaS en ligne.",
+      icon: Rocket,
+    },
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Sachez quand Starter Free cesse d'être suffisant et Starter Pro devient le chemin de lancement le plus rapide.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+  ]}
+/>
+
+## Moment de mise à niveau [#upgrade-moment]
+
+Starter Free vous aide à démarrer rapidement.
+
+Passez à Starter Pro lorsque votre produit a besoin :
+
+- Authentification réelle
+- Stripe Checkout
+- Routes protégées
+- API backend
+- Accès basé sur les rôles
+- données de production
+
+<Callout title="Libre de valider. Pro pour monétiser.">
+  Starter Free prouve la surface du produit. Starter Pro vous aide à facturer
+  les clients avec une auth, une facturation, un backend et une livraison en
+  forme de production.{" "}
+  <a href="/pricing" className="font-medium underline underline-offset-4">
+    Mise à niveau vers Starter Pro
+  </a>
+
+</Callout>
+
+## Pourquoi cela compte [#why-this-matters]
+
+La plupart des projets ralentissent avant que les utilisateurs ne voient le produit parce que:
+
+- UX est construit trop tard
+- La complexité du backend commence trop tôt
+- la surface du produit n'est pas assez visible
+- facturation et auth deviennent des bloqueurs avant validation
+
+Starter Free corrige cela en vous donnant quelque chose de réel tôt.
+
+<Callout title="Construisez vite. Valider tôt. Mise à niveau lorsque prêt.">
+  C'est le chemin PyColors: idée à la surface du produit à la validation au
+  câblage de production.
+
+</Callout>

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 
 import { cn } from "@pycolors/ui";
 
@@ -59,22 +60,24 @@ export function Logo({
   readonly href?: string;
   readonly variant?: "default" | "docs";
 }) {
+  const tSite = useCopy();
+
   const isDocs = variant === "docs";
 
   return (
     <Link
       href={href ?? (isDocs ? "/docs" : "/")}
-      aria-label={isDocs ? "PyColors Docs" : "PyColors"}
+      aria-label={tSite(isDocs ? "PyColors Docs" : "PyColors")}
       className={cn(
         "group inline-flex min-h-11 shrink-0 items-center gap-2.5 rounded-[4px]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
       )}
     >
       <BrandSignature />
-      <span className="sr-only">PYCOLORS</span>
+      <span className="sr-only">{tSite("PYCOLORS")}</span>
       {isDocs ? (
         <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
-          Docs
+          {tSite("Docs")}
         </span>
       ) : null}
     </Link>

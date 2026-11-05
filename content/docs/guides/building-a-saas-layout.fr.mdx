@@ -1,0 +1,283 @@
+---
+title: Construire une mise en page SaaS
+description: Composez les primitives PyColors UI dans une mise en page SaaS
+  évolutive et prête pour la production.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import {
+  Blocks,
+  LayoutDashboard,
+  LayoutPanelTop,
+  Monitor,
+  PanelLeft,
+  PanelsTopLeft,
+  Smartphone,
+  Settings,
+  Table,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>Mise en page SaaS</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+La plupart des bibliothèques d'interface s'arrêtent aux composants.
+
+Les produits Real SaaS nécessitent une structure :
+
+- navigation
+- en-tête
+- orchestration de contenu
+- Comportement réactif
+- Évolutivité à long terme
+
+Ce guide montre comment composer des primitives PyColors dans un **réelle mise en page du produit** qui survit à la croissance.
+
+<Callout title="Idée de base">
+  La disposition n'est pas un composant. C’est une composition de
+  responsabilités qui évolue au fil du temps.
+
+</Callout>
+
+## Ce que vous construisez [#what-youre-building]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Navigation",
+      description:
+        "Barre latérale de bureau persistante avec des modèles de navigation adaptatifs pour les petits écrans.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Contexte",
+      description:
+        "Les en-têtes fournissent l'orientation, les actions, les miettes de pain et les contrôles au niveau de l'espace de travail.",
+      icon: LayoutPanelTop,
+    },
+    {
+      title: "Contenu",
+      description:
+        "Surfaces flexibles conçues pour les tableaux de bord, les vues riches en données et les flux de configuration de produits.",
+      icon: Blocks,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+```tsx title="conceptual-layout.tsx"
+<AppShell>
+  <Sidebar />
+  <Main>
+    <Header />
+    <Content />
+  </Main>
+</AppShell>
+```
+
+Ce n'est pas une API. Il s’agit d’une séparation des préoccupations :
+
+- Navigation vers où vont les utilisateurs
+- En-tête où les utilisateurs comprennent le contexte
+- Contenu où les utilisateurs agissent
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Définir les responsabilités de mise en page [#define-layout-responsibilities]
+
+Ne commencez pas par les composants. Commencez par les responsabilités :
+
+- navigation (global)
+- contexte (page-level)
+- contenu (niveau de fonctionnalité)
+
+Cela empêche les abstractions prématurées.
+
+</Step>
+
+<Step>
+### Construire la navigation desktop-first [#build-desktop-first-navigation]
+
+La disposition du bureau doit :
+
+- garder la barre latérale visible
+- préserver le balayage vertical
+- Prise en charge des vues denses (tableaux, tableaux de bord)
+
+La mise en page mobile devrait :
+
+- Déplacer la navigation dans un panneau latéral
+- prioriser le contenu
+- exposer la navigation via un déclencheur
+
+</Step>
+
+<Step>
+### Gardez l'en-tête léger [#keep-header-lightweight]
+
+L'en-tête doit contenir :
+
+- titre de la page
+- description facultative
+- action primaire
+- menu utilisateur
+
+Évitez de transformer l'en-tête en panneau de contrôle.
+
+</Step>
+
+<Step>
+### Support de plusieurs types de contenu [#support-multiple-content-types]
+
+Votre mise en page doit gérer :
+
+- vues de données (tables, listes)
+- flux de paramètres (formulaires, onglets)
+- interactions modales (dialogues)
+
+Une bonne mise en page ne change pas lorsque le contenu change.
+
+</Step>
+
+</Steps>
+
+## Primaires de base [#core-primitives]
+
+| Primitif       | Rôle                     |
+| -------------- | ------------------------ |
+| Bouton         | actions et déclencheurs  |
+| Sheet          | navigation mobile        |
+| Menu déroulant | actions contextuelles    |
+| Onglets        | paramètres de navigation |
+| Tableau        | Données structurées      |
+| boîte dialogue | confirmations            |
+
+<Callout type="info" title="Principe clé">
+  Vous n’avez pas besoin d’un « système de mise en page ». Vous avez besoin de
+  primitives fiables et d'une bonne composition.
+
+</Callout>
+
+### Stratégie réactive [#responsive-strategy]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Desktop',
+      title: "Disposition du bureau",
+      icon: Monitor,
+      description: (
+        <>
+          <p>
+            Desktop layouts prioritize persistent navigation and higher information density.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Sidebar visible</Badge>
+            <Badge variant="plan">Persistent navigation</Badge>
+            <Badge variant="plan">Dense layout</Badge>
+            <Badge variant="plan">Full-height views</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Mobile',
+      title: "Mise en page mobile",
+      icon: Smartphone,
+      description: (
+        <>
+          <p>
+            Mobile layouts prioritize focused content and progressive navigation disclosure.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Sidebar hidden</Badge>
+            <Badge variant="plan">Sheet navigation</Badge>
+            <Badge variant="plan">Header trigger</Badge>
+            <Badge variant="plan">Content-first layout</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Exemples de produits réels [#real-product-examples]
+
+#### Page de données [#data-page]
+
+- Tableau
+- Filtres
+- Actions en ligne
+- Pagination
+
+#### Page de paramètres [#settings-page]
+
+- Onglets
+- Formulaires
+- Dialogues
+- Validation
+
+Même mise en page. Des contenus différents.
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  prefer={[
+    "Composition sur abstraction",
+    "Une séparation claire des préoccupations",
+    "adaptabilité mobile-first",
+    "Petites primitives réutilisables",
+  ]}
+  avoid={[
+    "monolithique AppShell trop tôt",
+    "logique de mise en page codée en dur",
+    "couplage de la navigation avec le contenu",
+    "Abstractions sur-conçues",
+  ]}
+/>
+
+## Quand introduire un AppShell [#when-to-introduce-an-appshell]
+
+Créez votre propre AppShell lorsque :
+
+- La répétition devient réelle
+- Plusieurs équipes contribuent
+- La complexité de la navigation augmente
+- La cohérence devient critique
+
+Pas avant.
+
+### Résumé [#summary]
+
+- La disposition est une composition, pas un composant
+- Séparer les responsabilités
+- Utiliser des primitives, pas des abstractions magiques
+- Structure d'échelle seulement quand nécessaire
+
+<Callout title="Prochaine étape">
+  Combinez cette disposition avec des états et des formes asynchrones pour
+  atteindre l'UX au niveau de la production.
+
+</Callout>

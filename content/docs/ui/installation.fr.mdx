@@ -1,0 +1,312 @@
+---
+title: Installation
+description: Installez  — pycolors/ui, chargez le token CSS et vérifiez votre
+  première importation publique dans une application React ou Next.js.
+lastUpdated: "2026-10-07"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Accessibility,
+  Code2,
+  Layers3,
+  PackageCheck,
+  Route,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsSectionLinks } from "@/components/docs/docs-section-links";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<DocsSectionLinks
+  label="Étapes d'installation"
+  items={[
+    { title: "1. Paquets", href: "#install-packages" },
+    { title: "2. Styles", href: "#add-design-tokens" },
+    { title: "3. Premier écran", href: "#import-from-the-public-entry-point" },
+    { title: "4. Vérifier", href: "#verify-the-first-screen" },
+  ]}
+/>
+
+## Installer la couche primitive en premier [#install-the-primitive-layer-first]
+
+Ce guide vous emmène d'une application React existante à un composant PyColors de style. Vous installerez les paquets, connecterez le CSS et vérifierez un petit écran dans votre propre application.
+
+## Préalables [#prerequisites]
+
+Avant l'installation, confirmez que l'application consommatrice a déjà:
+
+- React et React DOM installés ;
+- Tailwind CSS v4 configuré dans l'application stylesheet/build;
+- une feuille de style globale où le token CSS peut être importé ;
+- une configuration React ou Next.js qui prend en charge les packages ESM.
+
+`@pycolors/ui` est Tailwind-friendly et token-driven. Les composants utilisent des utilitaires sémantiques comme `bg-card`, `text-muted-foreground`, `border-border`et `ring-ring`. Ces utilitaires ont besoin de tokens de conception correspondants dans l'application de consommation.
+
+## Installer les packages [#install-packages]
+
+Installez les primitives publiques et leurs tokens sémantiques ensemble. C'est la commande canonique first-install pour un projet pnpm.
+
+<CopyableCommand command="pnpm add @pycolors/ui @pycolors/tokens" />
+
+Utilisez l'équivalent `npm install` ou `yarn add` commande lorsque l'application n'utilise pas pnpm. Conservez les deux noms de paquet dans la commande afin que les composants et leur contrat de token arrivent ensemble.
+
+### Dépendances entre pairs [#peer-dependencies]
+
+`@pycolors/ui` déclare ces dépendances entre pairs :
+
+| Paquet         | Exigence    | Notes                                                                                                                   |
+| -------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `react`        | `>=18`      | Requis par les primitives React.                                                                                        |
+| `react-dom`    | `>=18`      | Requis pour les apps React DOM.                                                                                         |
+| `lucide-react` | `>=0.300.0` | Dépendance entre pairs optionnelle. Installez-le lorsque votre application ou vos exemples utilisent des icônes Lucide. |
+
+Le paquet README documente cette commande d'installation pour les dépendances de pairs :
+
+```bash
+pnpm add react react-dom lucide-react
+```
+
+Utilisez la commande équivalente npm ou yarn lorsque l'application n'utilise pas pnpm.
+
+## Ajouter des tokens de conception [#add-design-tokens]
+
+La commande canonique install ci-dessus inclut `@pycolors/tokens`. Utilisez son token CSS lorsque votre application ne fournit pas déjà les variables sémantiques PyColors et les mappages Tailwind v4.
+
+Dans une application Next.js avec un `app/` à la racine du projet, ajoutez ce qui suit à votre feuille de style globale et importez cette feuille de style `app/layout.tsx`. Conservez tous les styles d'application existants après ces directives.
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+
+@source "../node_modules/@pycolors/ui/dist";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+```
+
+Tailwind ignore `node_modules` lors de la détection automatique de la source. Les [`@source` directive](https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources) inclut les classes de composants installées afin que leurs utilitaires soient générés. Il s'agit d'un chemin d'analyse CSS; les importations JavaScript utilisent toujours uniquement `@pycolors/ui`.
+
+Le chemin est relatif à la feuille de style. Pour `src/app/globals.css`, utiliser `../../node_modules/@pycolors/ui/dist` Au lieu de cela. Dans d'autres configurations React, ajustez le chemin d'accès pour atteindre le package installé de l'application consommatrice et chargez cette feuille de style à partir du point d'entrée de l'application. N'ajoutez pas une seconde importation Tailwind si elle existe déjà.
+
+Les règles de base appliquent les couleurs sémantiques des bordures et des pages. Fusionnez-les avec vos styles de base existants si l’application définit déjà ces rôles.
+
+Le token CSS fournit:
+
+- les variables CSS sémantiques telles que `--background`, `--foreground`, `--card`,
+  `--primary`, `--border`et `--ring`;
+- valeurs claires et sombres à l'aide d'un `.dark` stratégie de classe;
+- Tailwind v4 `@theme inline` mappages pour les utilitaires sémantiques.
+
+<Callout type="info" title="Mode sombre">
+  `@pycolors/tokens` utilise a `.dark` stratégie de classe. Ajouter ou supprimer
+  le `dark` classe à la racine du document à travers votre logique de thème
+  existante. Les [`@custom-variant`
+  directive](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually)
+  Fait le Tailwind `dark:` Les services publics suivent cette même classe.
+
+</Callout>
+
+## Vérifier les composants dans Storybook [#verify-components-in-storybook]
+
+Utilisez le [guide du consommateur Storybook](/docs/ui/storybook) pour rendre PyColors dans votre propre Storybook React/Vite avec des tokens, des utilitaires Tailwind générés et une barre d'outils claire/sombre. Pour des exemples sans configuration locale, ouvrez [PyColors UI Explorer](https://ui.pycolors.io).
+
+## Importation à partir du point d'entrée public [#import-from-the-public-entry-point]
+
+Importer des primitives prises en charge à partir `@pycolors/ui`.
+
+Dans la même application Next.js, utilisez cette page pour vérifier l'installation. D’autres applications React peuvent effectuer le rendu du composant exporté à partir de leur route ou point d’entrée existant.
+
+```tsx title="app/page.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+
+export default function FirstPyColorsCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>PyColors UI installed</CardTitle>
+        <CardDescription>
+          Your app can now compose token-driven product primitives.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button asChild>
+          <a href="https://pycolors.io/docs/ui/usage-patterns">
+            Explore usage patterns
+          </a>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+Ne pas importer à partir des internes du paquet.
+
+<PreferAvoid
+  prefer={[
+    "importations à partir de `@pycolors/ui`",
+    "utilitaires de token sémantique tels que `bg-card` et `text-muted-foreground`",
+    "un écran vérifié avant une large migration",
+  ]}
+  avoid={[
+    "importations à partir de `@pycolors/ui/src/*`",
+    "importations à partir de `@pycolors/ui/dist/*`",
+    "couleur brute remplace les tokens de contournement",
+  ]}
+/>
+
+## Limites des composants serveur et client [#server-and-client-component-boundaries]
+
+La composition primitive statique peut rester server-rendered dans une application Next.js App Router. Ajouter `"use client"` uniquement lorsque le fichier possède l'état du navigateur, les effets, les gestionnaires d'événements ou l'état interactif de superposition / toast.
+
+```tsx title="server-safe-card.tsx"
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+
+export function BillingCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Billing ready</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button asChild>
+          <a href="/settings/billing">Manage billing</a>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+Utilisez une limite client pour l'état d'interaction locale.
+
+```tsx title="client-action.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+
+export function SaveButton() {
+  return (
+    <Button type="button" onClick={() => window.alert("Saved")}>
+      Save
+    </Button>
+  );
+}
+```
+
+<Callout title="Règle des frontières">
+  Gardez les pages et les données de chargement côté serveur lorsque cela est
+  possible. Déplacez uniquement le panneau latéral interactive dans un composant client.
+
+</Callout>
+
+## Vérifier le premier écran [#verify-the-first-screen]
+
+<Steps>
+  <Step>
+    ### Confirmer la construction de l'application [#confirm-the-app-builds]
+
+    Exécutez les scripts type-check et production-build déclarés dans vos applications consommatrices `package.json`. Par exemple, lorsqu'il définit `types:check` et `build`:
+
+    ```bash
+    pnpm types:check
+    pnpm build
+    ```
+
+</Step>
+
+  <Step>
+    ### Vérifier la sortie du token [#check-token-output]
+
+    Ouvrez l'écran en mode clair et sombre. Confirmer les utilitaires sémantiques tels que     `bg-card`, `text-foreground`, `border-border`et `ring-ring` Résolvez les vrais styles.
+
+</Step>
+
+  <Step>
+    ### Vérifier les bases de l'accessibilité [#check-accessibility-basics]
+
+    Onglet à travers les éléments interactifs, vérifiez le focus visible, confirmez que les liens ont un texte descriptif et évitez les commentaires en couleur uniquement.
+
+</Step>
+
+  <Step>
+    ### Développer une surface à la fois [#expand-one-surface-at-a-time]
+
+    Une fois que le premier écran fonctionne, passez aux modèles d’utilisation et aux conseils de migration avant de remplacer une zone de produit complète.
+
+</Step>
+
+</Steps>
+
+## Erreurs courantes [#common-mistakes]
+
+| Erreur                                                                                       | Chemin plus sûr                                                                                                                       |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Importation de `@pycolors/ui/src/*` ou `@pycolors/ui/dist/*`                                 | Importer de `@pycolors/ui`.                                                                                                           |
+| Installation de l'interface utilisateur sans token CSS ou variables sémantiques équivalentes | Charger `@pycolors/tokens/tokens.css` ou fournir les mêmes rôles sémantiques intentionnellement.                                      |
+| Rendu des composants sans espacement ni styles de variantes                                  | Enregistrez le package d'interface utilisateur installé avec `@source`, en utilisant un chemin relatif à la feuille de style globale. |
+| Ajouter `"use client"` à chaque page                                                         | Ajoutez une limite client uniquement là où le comportement du navigateur est possédé.                                                 |
+| Remplacement de la logique du produit par des primitives UI                                  | Conservez le routage, l'authentification, la facturation, la validation et la récupération des données dans le code de l'application. |
+| Styling avec des couleurs brutes d'abord                                                     | Utilisez des utilitaires sémantiques et personnalisez les tokens de manière centralisée en cas de besoin.                             |
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Utilisations",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Composez des primitives publiques en formes SaaS réelles, superpositions, vues de données et commentaires.",
+      icon: Code2,
+    },
+    {
+      title: "Orientation en matière de migration",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adoptez l'interface utilisateur PyColors progressivement dans une base de code React ou Next.js existante.",
+      icon: Route,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Passez en revue les exigences en matière de sémantique, d'étiquettes, de comportement du clavier, de focus et de feedback.",
+      icon: Accessibility,
+    },
+    {
+      title: "tokens de conception",
+      href: "/docs/design-system/tokens",
+      description:
+        "Comprendre la couche de token sémantique qui garde PyColors UI thème-sécurité.",
+      icon: Layers3,
+    },
+    {
+      title: "Politique de publication",
+      href: "/docs/project/release-policy",
+      description:
+        "Comprendre comment les paquets publics sont versionnés, publiés et mis en miroir.",
+      icon: PackageCheck,
+    },
+  ]}
+/>

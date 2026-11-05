@@ -1,0 +1,464 @@
+---
+title: Orientation en matière de migration
+description: Adoptez PyColors UI dans une base de code React ou Next.js
+  existante sans réécritures générales, importations privées ou modifications
+  d'API publiques.
+lastUpdated: "2026-08-02"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  Accessibility,
+  Code2,
+  GitPullRequest,
+  Layers3,
+  Route,
+  ShieldCheck,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Orientation en matière de migration</Badge>
+</div>
+
+## Migrer une surface de produit à la fois [#migrate-one-product-surface-at-a-time]
+
+Utilisez ce guide lorsque vous avez déjà une application React ou Next.js et que vous souhaitez l'adopter. `@pycolors/ui` sans réécrire toute l'interface.
+
+La migration la plus sûre est incrémentale :
+
+1. confirmer les prérequis paquet, Tailwind et token
+2. remplacer les importations primitives privées ou locales par des importations publiques `@pycolors/ui` Importations
+3. Migrer les primitives à faible risque en premier
+4. conserver l'état du produit, le routage, la validation et le chargement des données dans votre application
+5. vérifier l'accessibilité et le comportement de régression avant de passer à la surface suivante
+
+<Callout title="Idée de base">
+  Traitez PyColors UI comme un calque primitif. Migrer les importations et la
+  composition en premier; garder le comportement du produit là où il appartient
+  déjà.
+
+</Callout>
+
+## Avant de migrer [#before-you-migrate]
+
+Confirmez ces conditions préalables avant de modifier les importations de composants.
+
+| Vérifier                                                           | Pourquoi c'est important                                                                                                    |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `@pycolors/ui` est installé                                        | Les consommateurs doivent importer les primitives prises en charge à partir du point d'entrée du paquet.                    |
+| React et React DOM sont installés                                  | Ce sont des dépendances de pairs du paquet UI.                                                                              |
+| Les utilitaires Tailwind sont disponibles                          | Les composants de l'interface utilisateur PyColors sont pilotés par des tokens et compatibles avec Tailwind.                |
+| Le token PyColors CSS est chargé si nécessaire                     | Les composants attendent des tokens de conception sémantique tels que `bg-card`, `border-border`et `text-muted-foreground`. |
+| Le comportement existant est couvert manuellement ou par des tests | La migration ne doit pas modifier les flux de produits de manière inattendue.                                               |
+
+Utilisez les documents du système de conception pour la configuration des tokens et les documents des composants pour les accessoires exacts avant de remplacer les abstractions locales.
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "tokens de conception",
+      href: "/docs/design-system/tokens",
+      description:
+        "Passez en revue les tokens sémantiques utilisés par les composants PyColors UI.",
+      icon: Layers3,
+    },
+    {
+      title: "Utilisations",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Voyez comment les primitives composent de véritables surfaces de produits.",
+      icon: Code2,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Passez en revue les contrôles qui devraient passer après chaque surface migrée.",
+      icon: Accessibility,
+    },
+  ]}
+/>
+
+## Importer uniquement à partir du paquet public [#import-only-from-the-public-package]
+
+Le point d'entrée public supporté est `@pycolors/ui`.
+
+```tsx title="supported-imports.tsx"
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Dialog,
+  Input,
+  Pagination,
+  Sheet,
+  Table,
+  Tabs,
+  Toast,
+} from "@pycolors/ui";
+```
+
+N'importez pas à partir de sources, de sorties générées ou d'internes de dépôt en miroir.
+
+<PreferAvoid
+  prefer={[
+    "Importation de primitives depuis `@pycolors/ui`",
+    "Déplacer une zone de caractéristique à la fois",
+    "Conserver le comportement spécifique à l'application dans le code de l'application",
+  ]}
+  avoid={[
+    "import à partir de `@pycolors/ui/src/*`",
+    "import à partir de `@pycolors/ui/dist/*`",
+    "réécriture de chaque écran en une seule migration PR",
+  ]}
+/>
+
+```tsx title="replace-private-imports.tsx"
+// Before
+import { Button } from "@/components/ui/button";
+
+// After
+import { Button } from "@pycolors/ui";
+```
+
+Si votre composant local a un comportement spécifique au produit, conservez ce comportement dans un emballage local et déplacez uniquement le rendu primitif vers l'interface utilisateur PyColors.
+
+```tsx title="keep-product-behavior-local.tsx"
+import { Button } from "@pycolors/ui";
+
+export function BillingPortalButton() {
+  return (
+    <Button asChild>
+      <a href="/settings/billing">Manage billing</a>
+    </Button>
+  );
+}
+```
+
+## Ordre de migration recommandé [#recommended-migration-order]
+
+Commencez par les primitives qui ont un faible risque comportemental, puis passez à la composition interactive.
+
+| Commande | Primitif                                   | Note sur les migrations                                                                                        |
+| -------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| 1        | `Button`, `Badge`, `Card`, `Alert`         | primitives visuelles et sémantiques à faible risque.                                                           |
+| 2        | `Input`, `Checkbox`                        | Vérifiez les étiquettes, les descriptions, les erreurs et le comportement de soumission de formulaire.         |
+| 3        | `Table`, `Pagination`, `Tabs`              | Conservez la récupération des données, le routage, le filtrage et l'état de la page en dehors de la primitive. |
+| 4        | `Dialog`, `Sheet`, `DropdownMenu`, `Toast` | Ajoutez une limite client et vérifiez le comportement clavier/focus.                                           |
+
+Ne migrez pas toute une zone de produit jusqu'à ce que la surface migrée précédente passe toujours les contrôles de comportement visibles par l'utilisateur.
+
+## Limites des composants de serveur React [#react-server-component-boundaries]
+
+Dans une application Next.js App Router, conservez le chargement des pages et des données en tant que composants de serveur lorsque cela est possible. Ajouter `"use client"` uniquement au plus petit fichier qui possède l'état du navigateur, les gestionnaires d'événements, les effets ou l'état interactif de superposition / toast.
+
+```tsx title="server-rendered-status.tsx"
+import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+
+export function AccountStatus() {
+  return (
+    <section className="space-y-4">
+      <Alert>
+        <AlertTitle>Workspace ready</AlertTitle>
+        <AlertDescription>
+          Your setup is complete. Invite teammates when you are ready.
+        </AlertDescription>
+      </Alert>
+
+      <Button asChild>
+        <a href="/settings/team">Open team settings</a>
+      </Button>
+    </section>
+  );
+}
+```
+
+Utilisez un composant client lorsque la surface migrée possède un état d'interaction.
+
+```tsx title="client-dialog-migration.tsx"
+"use client";
+
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
+
+export function ArchiveProjectDialog() {
+  function archiveProject() {
+    // Call your action, mutation, or route handler here.
+  }
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Archive project</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Archive project?</DialogTitle>
+          <DialogDescription>
+            The project will be hidden from active dashboards.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <Button variant="destructive" onClick={archiveProject}>
+            Archive
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+<Callout type="info" title="Règle de limite client">
+  Un composant peut importer l'interface utilisateur PyColors à partir d'un
+  fichier de composant serveur lorsque la composition est statique. Ajouter
+  `"use client"` lorsque votre fichier ajoute un état ou des gestionnaires
+  appartenant au navigateur.
+
+</Callout>
+
+## Formulaires et validation [#forms-and-validation]
+
+Lors de la migration des formulaires, conservez les étiquettes, les descriptions, l'état requis et les messages d'erreur. Ne remplacez pas la logique de validation de formulaire par des primitives UI.
+
+```tsx title="settings-form-migration.tsx"
+import {
+  Button,
+  Checkbox,
+  CheckboxDescription,
+  CheckboxField,
+  CheckboxLabel,
+  Input,
+} from "@pycolors/ui";
+
+export function NotificationSettingsForm() {
+  return (
+    <form className="space-y-4">
+      <Input
+        id="billing-email"
+        label="Billing email"
+        helperText="Invoices and payment notices are sent here."
+        type="email"
+      />
+
+      <CheckboxField>
+        <Checkbox id="weekly-summary" />
+        <div>
+          <CheckboxLabel htmlFor="weekly-summary">
+            Send weekly workspace summary
+          </CheckboxLabel>
+          <CheckboxDescription>
+            Includes usage, billing, and team activity.
+          </CheckboxDescription>
+        </div>
+      </CheckboxField>
+
+      <Button type="submit">Save settings</Button>
+    </form>
+  );
+}
+```
+
+Contrôles de régression:
+
+- la soumission du formulaire appelle toujours la même action
+- États requis et handicapés travaillent encore
+- Les erreurs sont annoncées sous forme de texte, pas seulement de couleur
+- les étiquettes et les descriptions restent associées au contrôle
+
+## Tables et pagination [#tables-and-pagination]
+
+Gardez l'accès aux données et le routage à l'extérieur `@pycolors/ui`. Migrez d'abord la structure de la table visible, puis remettez l'état existant dans le même flux de produit.
+
+```tsx title="table-pagination-migration.tsx"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@pycolors/ui";
+
+export function MembersTable() {
+  return (
+    <div className="space-y-4">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Role</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Ada Lovelace</TableCell>
+            <TableCell>Owner</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationLink isActive>1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>2</PaginationLink>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
+  );
+}
+```
+
+Revoir le comportement de la table existante après la migration :
+
+- les en-têtes de colonne décrivent toujours les données
+- Les états de chargement et de vide sont toujours accessibles
+- l'état de pagination correspond toujours aux paramètres de routage ou de requête
+- les actions de ligne utilisent toujours des boutons, des liens, des boîtes de dialogue ou des menus accessibles
+
+## Tabs, draps et toasts [#tabs-sheets-and-toasts]
+
+Les primitives interactives doivent préserver le comportement du clavier et se concentrer sur la propriété. Migrez la structure primitive sans cacher les décisions de produit dans les composants de l'interface utilisateur partagée.
+
+```tsx title="interactive-surface-migration.tsx"
+"use client";
+
+import {
+  Button,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Toast,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@pycolors/ui";
+
+export function BillingWorkspace() {
+  return (
+    <ToastProvider>
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="invoices">Invoices</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Open filters</Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Invoice filters</SheetTitle>
+                <SheetDescription>
+                  Narrow the invoice list without leaving the page.
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        </TabsContent>
+      </Tabs>
+
+      <Toast variant="success" open>
+        <ToastTitle>Billing updated</ToastTitle>
+        <ToastDescription>Your changes were saved.</ToastDescription>
+      </Toast>
+      <ToastViewport />
+    </ToastProvider>
+  );
+}
+```
+
+Après avoir migré les surfaces interactives, testez :
+
+- Comportement de l'onglet et de la flèche, le cas échéant
+- L'évasion ferme les superpositions
+- focus revient au déclencheur après la fermeture
+- Les annonces de toasts correspondent à l'urgence du message
+- Les actions sur le produit nécessitent toujours la même confirmation ou autorisation
+
+## Liste de contrôle des migrations [#migration-checklist]
+
+Utilisez cette liste de contrôle pour chaque page, fonctionnalité ou groupe de composants migré.
+
+- [ ] Les importations proviennent de `@pycolors/ui`.
+- [ ] Pas d'importation de code de `@pycolors/ui/src/*` ou `@pycolors/ui/dist/*`.
+- [ ] Le comportement des produits existants est inchangé.
+- [ ] Les étiquettes, les descriptions, les erreurs et les états désactivés sont conservés.
+- [ ] Les limites serveur/client sont explicites et minimales.
+- [ ] Le clavier et le comportement de focus passent l'examen manuel.
+- [ ] Les emballages locaux ne contiennent que le comportement du produit, pas le style primitif dupliqué.
+- [ ] Les liens vers les documents adjacents sont mis à jour lorsqu'un nouveau modèle public est documenté.
+
+## Que faire ensuite [#what-to-do-next]
+
+Utilisez les pages de référence des composants lors du remplacement d'une primitive spécifique, puis utilisez les documents d'utilisation et de composition pour migrer des surfaces de produit entières.
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Utilisations",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Composez des primitives publiques en formes, superpositions, tables et commentaires.",
+      icon: GitPullRequest,
+    },
+    {
+      title: "Composition",
+      href: "/docs/ui/composition",
+      description:
+        "Décidez de ce qui appartient aux primitives, aux modèles et aux surfaces des produits.",
+      icon: Layers3,
+    },
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Commencez par la primitive d'action la plus courante avant de passer à des surfaces plus lourdes.",
+      icon: Route,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Exécutez des contrôles d’accessibilité avant de traiter une surface migrée comme complète.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

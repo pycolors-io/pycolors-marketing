@@ -1,0 +1,376 @@
+---
+title: Patterns
+description: Modèles de fonctionnalités prêts pour la production combinant
+  l'interface utilisateur, le comportement, l'état, l'interaction, la
+  monétisation et la structure UX pour de vrais produits SaaS.
+lastUpdated: "2026-06-04"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  Layers,
+  Layers3,
+  LayoutTemplate,
+  LoaderCircle,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Table2,
+  Workflow,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Production UX</Badge>
+</div>
+
+## Transformez l'interface utilisateur en comportement réel du produit [#turn-ui-into-real-product-behavior]
+
+Les patterns sont là où l’UI devient produit.
+
+Ils sont **Structures de caractéristiques prêtes à la production** combinaison:
+
+- primitives UI
+- Traitement étatique
+- Règles d'interaction
+- Comportement async
+- logique de monétisation
+- Conventions SaaS UX
+- décisions d'architecture évolutives
+
+Au lieu d'assembler des caractéristiques à partir de composants isolés, vous commencez à **système de produit de travail**.
+
+<Callout title="Pourquoi les patterns existent">
+  La plupart des systèmes d'interface utilisateur échouent au niveau de la couche de fonctionnalités.
+
+Les composants sont visuellement corrects, mais :
+
+- Les Etats sont incohérents
+- UX se sent déconnecté
+- Le comportement async se brise sous la pression
+- monétisation se sent boulonné sur
+- Les décisions UX varient entre les pages
+
+Patterns résout ce problème en définissant une façon par défaut de créer le comportement du produit de manière cohérente.
+
+</Callout>
+
+## Ce qui est inclus [#what-you-get]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Structure des caractéristiques",
+      description:
+        "Architecture réutilisable au niveau des fonctionnalités combinant la disposition, les actions, l'état et le comportement du produit.",
+      icon: Layers,
+    },
+    {
+      title: "Manipulation par l'État",
+      description:
+        "Chargement explicite, vide, succès, comportement destructeur et mutation sur l'ensemble du produit.",
+      icon: Workflow,
+    },
+    {
+      title: "Production UX",
+      description:
+        "Des interactions prévisibles, des décisions UX évolutives et une structure de produits SaaS.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Les composants rendent l'interface utilisateur. Les motifs définissent le comportement des caractéristiques.
+
+Un motif n'est pas seulement visuel.
+
+Il comprend:
+
+- structure
+- état
+- interaction
+- Feedback
+- logique du produit
+- Règles UX
+- Limites de monétisation
+
+## Positionnement du système [#system-positioning]
+
+| Couche        | Objet                      | Produit                                             |
+| ------------- | -------------------------- | --------------------------------------------------- |
+| composants UI | Construire des primitives  | Éléments d'interface utilisateur sans état          |
+| Guides        | Expliquer les décisions    | Raisonnement UX et jugement produit                 |
+| Motifs        | Caractéristiques du navire | UI + état + comportement + structure du produit     |
+| Starter Pro   | Expédier un SaaS           | Auth, facturation, backend, livraison, monétisation |
+
+<Callout type="info" title="Règle du système">
+  Si une fonctionnalité répète une structure, une gestion d'état, des règles de
+  monétisation ou un comportement d'interaction, elle devrait devenir un
+  Pattern.
+
+</Callout>
+
+## Motifs disponibles [#available-patterns]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Tableaux de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Créez des tables SaaS avec filtrage, pagination, actions en ligne et états explicites.",
+      icon: Table2,
+    },
+    {
+      title: "Menus, dialogues et panneaux",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choisissez la superposition droite (Dialogue, Sheet, Dropdown) avec des règles UX plus fortes.",
+      icon: Layers3,
+    },
+    {
+      title: "Actions asynchrones",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevoir une mutation UX avec réessayer, annuler, charger et gérer les commentaires.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "Modèle de vitrine",
+      href: "/docs/patterns/feature-showcase",
+      description:
+        "Présentez l'extensibilité, les capacités avancées et l'évolution SaaS évolutive sans faux positionnement d'entreprise.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Mettre à niveau le modèle de porte",
+      href: "/docs/patterns/upgrade-gate",
+      description:
+        "Structurez les limites des primes, les fonctionnalités et la monétisation de l'expérience utilisateur sans nuire à la crédibilité du produit.",
+      icon: Lock,
+    },
+  ]}
+/>
+
+## Pourquoi les Patterns sont importants pour le SaaS [#why-patterns-matter-for-saas]
+
+Les produits SaaS deviennent finalement complexes :
+
+- plus d'entités
+- Plus de permissions
+- Comportement plus asynchrone
+- Plus de monétisation
+- plus de collaboration
+- plus de cas de bord
+
+Sans motifs :
+
+- Dérives UX
+- Les équipes ralentissent
+- La monétisation devient incohérente
+- Le comportement du produit devient fragile
+
+Avec Patterns :
+
+- Les caractéristiques deviennent prévisibles
+- Les utilisateurs font plus confiance au produit
+- Les équipes avancent plus vite
+- L’évolution des produits devient gérable
+
+<Callout title="Les schémas réduisent les décisions répétées">
+  Les modèles rendent les équipes plus rapides non pas en ajoutant plus
+  d'interface utilisateur, mais en supprimant les décisions répétées sur les
+  produits.
+
+</Callout>
+
+## Ce que les patterns ne [#what-patterns-are-not]
+
+Les patrons ne sont pas :
+
+- Kits d'interface utilisateur
+- bibliothèques de composants
+- modèles isolés
+- Extraits visuels
+- sections marketing
+
+Des modèles existent pour structurer :
+
+- comportement du produit
+- feature architecture
+- Traitement étatique
+- Conventions SaaS UX
+- Flux de monétisation
+
+## Quand utiliser Patterns [#when-to-use-patterns]
+
+Utilisez Patterns lorsque :
+
+- vous construisez de vraies fonctionnalités SaaS
+- les mêmes UX se répètent à travers les pages
+- Le comportement async est important
+- La monétisation entre dans le produit
+- plusieurs développeurs touchent les mêmes workflows
+- La cohérence du produit devient importante
+
+C’est le moment où :
+
+> L'interface utilisateur cesse d'être des écrans et commence à devenir un système évolutif.
+
+## Erreurs courantes [#common-mistakes]
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "structure au niveau des fonctionnalités",
+    "Comportement asynchrone prévisible",
+    "limites claires de monétisation",
+    "conventions de produit évolutives",
+    "systèmes d'interaction réutilisables",
+  ]}
+  avoid={[
+    "Construire des caractéristiques uniquement avec des primitives",
+    "Charge incohérente et états vides",
+    "fausse entreprise UX",
+    "Mélanger la logique métier en composants",
+    "Reconstruire le comportement du produit à plusieurs reprises",
+  ]}
+/>
+
+## PyColors philosophie [#pycolors-philosophy]
+
+Les motifs PyColors sont intentionnellement :
+
+- sobre
+- orientées architecture
+- produit d'abord
+- évolutif
+- SaaS-aware
+
+L’objectif n’est pas :
+
+> plus UI
+
+L’objectif est :
+
+> de meilleurs systèmes de produits.
+
+Les motifs aident les produits à se sentir:
+
+- cohérent
+- prévisible
+- digne de confiance
+- évolutif
+- prêt pour la production
+
+## Guide de décision [#decision-guide]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "UI",
+      title:
+        "Utiliser des composants d'interface utilisateur pour les primitives",
+      icon: Layers,
+      description:
+        "Utilisez des primitives pour résoudre des problèmes de rendu ou de composition visuelle isolés.",
+      items: ["boutons", "entrées", "cartes", "badges", "dialogues"],
+    },
+    {
+      eyebrow: "Motifs",
+      title: "Utiliser Patterns pour le comportement des fonctionnalités",
+      icon: Workflow,
+      tone: "pro",
+      description:
+        "Utilisez Patterns lorsque les fonctionnalités nécessitent une gestion d'état répétée, des règles d'interaction ou une logique de monétisation.",
+      items: [
+        "tableaux",
+        "actions async",
+        "upgrade UX",
+        "feature showcases",
+        "systèmes de superposition",
+      ],
+    },
+    {
+      eyebrow: "Starter Pro",
+      title: "Utiliser Starter Pro pour l'infrastructure de lancement",
+      href: "/docs/starter-pro",
+      icon: Sparkles,
+      description:
+        "Utilisez Starter Pro lorsque l'authentification, la facturation, le backend, la livraison et la monétisation deviennent des bloqueurs de lancement.",
+      items: [
+        "Authentification",
+        "facturation",
+        "backend",
+        "Abonnements",
+        "Routes protégées",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+## Prochaine étape [#next-step]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Explorer la table de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Un modèle SaaS de base utilisé dans les tableaux de bord, les produits d'administration et l'outillage opérationnel.",
+      icon: Table2,
+    },
+    {
+      title: "Explorez Feature Showcase",
+      href: "/docs/patterns/feature-showcase",
+      description:
+        "Présentez l'évolution évolutive des produits sans faux positionnement d'entreprise.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Explorez Upgrade Gate",
+      href: "/docs/patterns/upgrade-gate",
+      description:
+        "Structurer les limites de monétisation et l'expérience utilisateur premium de manière plus crédible.",
+      icon: Lock,
+    },
+  ]}
+/>
+
+<Callout title="Construire des systèmes de produits, pas des écrans isolés">
+  Les motifs vous donnent le calque de fonctionnalité.
+
+Starter Pro vous offre une infrastructure d'authentification, de facturation, de backend et de production.
+
+Ensemble, ils transforment l'interface utilisateur en un véritable système de produits SaaS.
+
+</Callout>
+
+<DocsUpgradeCTA
+  title="Passer des composants aux systèmes produits."
+  description="Starter Pro utilise ces modèles dans les flux de facturation, d'administration, de tableau de bord, de projets, d'authentification et de monétisation."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

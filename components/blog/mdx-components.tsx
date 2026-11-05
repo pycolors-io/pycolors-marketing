@@ -1,7 +1,8 @@
+import { SiteText } from "@/components/site-text";
 import type { MDXComponents } from "mdx/types";
 import defaultComponents from "fumadocs-ui/mdx";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { Alert, Badge, Card, CardContent, cn } from "@pycolors/ui";
 import styles from "./blog-article.module.css";
 
@@ -30,7 +31,7 @@ export function getBlogMDXComponents(
       if (isInternal) {
         return (
           <Link href={href} {...props}>
-            {children}
+            {<SiteText text={children} />}
           </Link>
         );
       }
@@ -42,7 +43,7 @@ export function getBlogMDXComponents(
           rel={isExternal ? "noreferrer noopener" : undefined}
           {...props}
         >
-          {children}
+          {<SiteText text={children} />}
         </a>
       );
     },
@@ -54,7 +55,7 @@ export function getBlogMDXComponents(
         className="my-8 max-w-full overflow-x-auto rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
       >
         <table {...props} className={cn("min-w-[32rem]", className)}>
-          {children}
+          {<SiteText text={children} />}
         </table>
       </div>
     ),
@@ -67,18 +68,20 @@ export function getBlogMDXComponents(
     }) => (
       <Alert role="note">
         <div className="space-y-2">
-          <p className="font-medium">{title}</p>
-          <div>{children}</div>
+          <p className="font-medium">{<SiteText text={title} />}</p>
+          <div>{<SiteText text={children} />}</div>
         </div>
       </Alert>
     ),
     Note: ({ children }: { children: React.ReactNode }) => (
       <Card>
-        <CardContent className="p-4">{children}</CardContent>
+        <CardContent className="p-4">
+          {<SiteText text={children} />}
+        </CardContent>
       </Card>
     ),
     Tag: ({ children }: { children: React.ReactNode }) => (
-      <Badge variant="secondary">{children}</Badge>
+      <Badge variant="secondary">{<SiteText text={children} />}</Badge>
     ),
     ...components,
   };

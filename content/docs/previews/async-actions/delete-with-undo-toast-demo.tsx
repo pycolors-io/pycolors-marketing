@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { useCopy } from "@/lib/i18n/use-copy";
+import * as React from "react";
 import {
   Button,
   Dialog,
@@ -12,14 +13,16 @@ import {
   Toast,
   ToastTitle,
   ToastDescription,
-} from '@pycolors/ui';
-import { useToastController } from './use-toast-controller';
+} from "@pycolors/ui";
+import { useToastController } from "./use-toast-controller";
 
 function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
 export function DeleteWithUndoToastDemo() {
+  const tSite = useCopy();
+
   const { open, setOpen, payload, trigger } = useToastController();
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -36,10 +39,10 @@ export function DeleteWithUndoToastDemo() {
     undoRef.current = undo;
 
     trigger({
-      variant: 'warning',
-      title: 'Item deleted',
-      description: 'You can undo this action.',
-      actionLabel: 'Undo',
+      variant: "warning",
+      title: "Item deleted",
+      description: "You can undo this action.",
+      actionLabel: "Undo",
       onAction: undo,
     });
 
@@ -50,10 +53,10 @@ export function DeleteWithUndoToastDemo() {
       // rollback
       setDeleted(false);
       trigger({
-        variant: 'destructive',
-        title: 'Delete failed',
-        description: 'Please retry.',
-        actionLabel: 'Retry',
+        variant: "destructive",
+        title: "Delete failed",
+        description: "Please retry.",
+        actionLabel: "Retry",
         onAction: () => void onDelete(),
       });
     }
@@ -63,40 +66,36 @@ export function DeleteWithUndoToastDemo() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/20 p-4">
         <div className="text-sm">
-          Status:{' '}
+          {tSite("Status:")}
+          {tSite(" ")}
           <span className="font-medium">
-            {deleted ? 'Deleted' : 'Active'}
+            {tSite(deleted ? "Deleted" : "Active")}
           </span>
         </div>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="destructive" disabled={deleted}>
-              Delete
+              {tSite("Delete")}
             </Button>
           </DialogTrigger>
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Delete item</DialogTitle>
+              <DialogTitle>{tSite("Delete item")}</DialogTitle>
               <DialogDescription>
-                This action removes the item. Undo is available for a
-                short time.
+                {tSite(
+                  "This action removes the item. Undo is available for a short time.",
+                )}
               </DialogDescription>
             </DialogHeader>
 
             <div className="mt-4 flex justify-end gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setDialogOpen(false)}
-              >
-                Cancel
+              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                {tSite("Cancel")}
               </Button>
-              <Button
-                variant="destructive"
-                onClick={() => void onDelete()}
-              >
-                Confirm delete
+              <Button variant="destructive" onClick={() => void onDelete()}>
+                {tSite("Confirm delete")}
               </Button>
             </div>
           </DialogContent>
@@ -110,9 +109,9 @@ export function DeleteWithUndoToastDemo() {
         duration={4200}
       >
         <div className="min-w-0">
-          <ToastTitle>{payload.title}</ToastTitle>
+          <ToastTitle>{tSite(payload.title)}</ToastTitle>
           {payload.description ? (
-            <ToastDescription>{payload.description}</ToastDescription>
+            <ToastDescription>{tSite(payload.description)}</ToastDescription>
           ) : null}
 
           {payload.actionLabel && payload.onAction ? (
@@ -122,7 +121,7 @@ export function DeleteWithUndoToastDemo() {
                 variant="outline"
                 onClick={() => payload.onAction?.()}
               >
-                {payload.actionLabel}
+                {tSite(payload.actionLabel)}
               </Button>
             </div>
           ) : null}

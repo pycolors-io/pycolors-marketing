@@ -116,7 +116,12 @@ describe("Starter Pro purchase delivery guidance", () => {
       }
       const path = href.startsWith("/docs/")
         ? resolve(marketingRoot, `content${href}.mdx`)
-        : resolve(marketingRoot, "app/(site)", href.slice(1), "page.tsx");
+        : resolve(
+            marketingRoot,
+            "app/[locale]/(site)",
+            href.slice(1),
+            "page.tsx",
+          );
 
       expect(existsSync(path), `Missing delivery destination: ${href}`).toBe(
         true,

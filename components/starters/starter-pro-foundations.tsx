@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useEffect, useRef, type ReactNode } from "react";
 import styles from "./starter-pro.module.css";
 
@@ -8,6 +9,8 @@ export function StarterProFoundations({
   introduction,
   children,
 }: Readonly<{ introduction: ReactNode; children: ReactNode }>) {
+  const tSite = useCopy();
+
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export function StarterProFoundations({
 
   return (
     <div className={styles.foundationStory}>
-      <div className={styles.foundationIntro}>{introduction}</div>
+      <div className={styles.foundationIntro}>{tSite(introduction)}</div>
       <div
         ref={cardsRef}
         className={styles.foundationCards}
@@ -76,7 +79,7 @@ export function StarterProFoundations({
           if (card) card.dataset.reveal = "focused";
         }}
       >
-        {children}
+        {tSite(children)}
       </div>
     </div>
   );

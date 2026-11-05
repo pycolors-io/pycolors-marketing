@@ -1,0 +1,115 @@
+---
+title: Aperçu de la facturation
+description: Un résumé de la facturation de présentation seulement avec le plan
+  appartenant au consommateur, l'état de facturation, le renouvellement, les
+  détails de paiement et les actions.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { BillingOverviewExample } from "@/components/docs/blocks/canonical-examples";
+
+## Présenter le contexte de facturation sans posséder la logique de facturation [#present-billing-context-without-owning-billing-logic]
+
+`BillingOverviewPanel` donne à une application un résumé de facturation compact tout en gardant la vérité de facturation et chaque action dans le produit consommateur. Utilisez-le pour afficher les informations de plan, de cadence de facturation, de statut, de renouvellement et de paiement que votre propre couche de facturation a déjà résolues.
+
+<Callout title="Présentation seulement">
+  Le Bloc n’interroge pas Stripe, ne calcule pas les périodes de facturation, ne
+  modifie pas un forfait, n’ouvre pas un portail, ne renouvelle pas un
+  abonnement ou n’autorise pas une action. Fournissez des valeurs véridiques et
+  connectez les actions via votre propre limite de facturation validée.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Commerce**limace `commerce`.
+- Bloquer : `billing-overview`, exportation `BillingOverviewPanel`.
+- Source canonique : `apps/marketing/content/blocks/commerce/billing-overview/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/billing-overview/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible. Si l'accès au presse-papiers n'est pas disponible, sélectionnez le code manuellement.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <BillingOverviewExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/billing-overview/index.tsx"'
+    >
+      ../../../blocks/commerce/billing-overview/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `BillingOverviewPanel` des valeurs déterministes fictives et des contrôles locaux inertes. Il n'effectue aucune facturation ou opération de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Examinez délibérément les modifications futures et validez-les dans votre application avant leur adoption. Retour à l'accueil [Blocage du catalogue](/blocks) Comparer un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `billing-overview` répertoire dans votre chemin Blocks appartenant à l'application.
+2. Configurez le paquet public PyColors UI et les tokens via le [Guide d'installation](/docs/ui/installation).
+3. Fournissez des faits et des actions de facturation à partir de votre propre état d'application.
+4. Exécutez lint, contrôlez, testez et construisez, puis passez en revue les largeurs étroites, les valeurs longues, les thèmes et le comportement du clavier.
+
+```tsx title="src/components/billing-summary.tsx"
+"use client";
+
+import { BillingOverviewPanel } from "./blocks/billing-overview";
+
+export function BillingSummary() {
+  return (
+    <BillingOverviewPanel
+      title="Billing"
+      description="Example values supplied by your application."
+      planLabel="Plan"
+      planValue="Growth"
+      billingLabel="Billing"
+      billingValue="Monthly"
+      statusLabel="Status"
+      statusValue="Active"
+      renewalLabel="Renews"
+      renewalValue="October 15"
+      paymentLabel="Payment method"
+      paymentValue="Visa ending in 4242"
+      primaryAction={
+        <button type="button" onClick={() => undefined}>
+          Manage billing
+        </button>
+      }
+    />
+  );
+}
+```
+
+L'exemple est intentionnellement local. Remplacez-le par votre propre route ou votre flux de facturation sauvegardé par le serveur uniquement après validation des autorisations et de l'état de facturation actuel.
+
+## Contrat de consommation [#consumer-owned-contract]
+
+`title`, `planLabel` et `planValue` sont nécessaires. La description, la facturation, le statut, le renouvellement et les paires de paiement sont facultatifs. Fournissez à la fois l'étiquette et la valeur pour un détail facultatif lorsque vous voulez qu'il soit rendu.
+
+`primaryAction` et `secondaryAction` sont des noeuds React fournis inchangés par le consommateur. Le Blocage ne permet pas de savoir si un utilisateur peut modifier des plans, annuler, mettre à jour les détails de paiement ou ouvrir un portail de facturation. L'autorisation reste en dehors de la couche de présentation.
+
+## Notes réactives et d'accessibilité [#responsive-and-accessibility-notes]
+
+Le résumé utilise une étiquette `section`, le balisage de la liste de définitions sémantiques et une grille de détails réactive à deux colonnes. Les valeurs longues s'enroulent au lieu de forcer la largeur de la page. Préservez les noms d'action significatifs, le focus visible et la sémantique native désactivée dans les contrôles que vous fournissez.
+
+## Propriété et limites [#ownership-and-boundaries]
+
+Votre application possède les données de facturation, la vérité de tarification, l'état de l'abonnement, l'intégration de Stripe ou d'autres fournisseurs, les autorisations, les mutations, les redirections et la gestion des erreurs. Le Blocage n’inclut pas le paiement, le Portail Client, les webhooks, la persistance, les droits, l’authentification, l’analytique, le Registre ou le comportement de l’interface de ligne de commande.
+
+Explorez le [Blocage du catalogue](/blocks), comparer [Plans tarifaires](/docs/blocks/commerce/pricing-plans)ou [Comparer les Starters](/starters) pour une fondation d'application complète.

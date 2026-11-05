@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import Image from "next/image";
 import { productStudio } from "@/lib/showcase/product-studio";
 
@@ -10,11 +11,13 @@ export function ProductStudioCapture({
   sizes?: string;
   priority?: boolean;
 }>) {
+  const tSite = useCopy();
+
   const media = productStudio.images[view];
   return (
     <div
       role="img"
-      aria-label={media.alt}
+      aria-label={tSite(media.alt)}
       className="overflow-hidden rounded-sm border border-border-subtle bg-surface"
     >
       <Image

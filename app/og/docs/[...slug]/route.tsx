@@ -7,11 +7,14 @@ import { SITE_NAME } from "@/lib/seo/website";
 export const revalidate = false;
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: RouteContext<"/og/docs/[...slug]">,
 ) {
   const { slug } = await params;
-  const page = source.getPage(slug.slice(0, -1));
+  const page = source.getPage(
+    slug.slice(0, -1),
+    new URL(req.url).searchParams.get("locale") === "fr" ? "fr" : "en",
+  );
   if (!page) notFound();
 
   return new ImageResponse(

@@ -1,0 +1,439 @@
+---
+title: Authentification (PRO)
+description: Authentification prête pour la production avec des flux réels,
+  OAuth, gestion de session et bases de sécurité pour de vrais produits SaaS.
+lastUpdated: "2026-05-18"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  Database,
+  KeyRound,
+  LockKeyhole,
+  MailCheck,
+  Package,
+  RefreshCcw,
+  ShieldCheck,
+  UserRoundCheck,
+} from "lucide-react";
+
+import { GithubIcon } from "@/components/brand-icons";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Res</Badge>
+</div>
+
+## Authentification qui expédie réellement [#authentication-that-actually-ships]
+
+Starter Free vous donne **auth écrans et états UX**.
+
+Starter Pro vous offre **un système d'authentification prêt pour la production** pour de vrais produits SaaS :
+
+- Les vrais utilisateurs
+- De vraies sessions
+- Les vrais fournisseurs
+- flux de tokens réels
+- De véritables routes protégées
+- Fondements du cycle de vie des comptes réels
+
+C'est le calque qui transforme les pages de connexion en un système de produit fonctionnel.
+
+<DocsUpgradeCTA
+  title="Navire une fois. Embarquez-le correctement."
+  description="Le coût d'une auth faible est généralement payé plus tard. Starter Pro vous aide à éviter cela en partant d’une base plus solide."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Idée de base">
+  Auth n'est pas UI. Auth est le cycle de vie, la sécurité, l'état, les
+  redirections, les règles du fournisseur et la confiance.
+
+</Callout>
+
+## Ce que cela résout [#what-this-solves]
+
+L'authentification est généralement l'un des premiers bloqueurs sérieux avant le lancement.
+
+Il semble simple au niveau de l'interface utilisateur:
+
+- connexion
+- enregistrer
+- mot de passe oublié
+- Boutons OAuth
+
+Mais la production auth a également besoin:
+
+- mot de passe hashing
+- session persistance
+- e-mail vérification
+- mot de passe reset tokens
+- compte fournisseur reliant
+- comportement de la route protégée
+- Règles de déconnexion sécurisées
+- Taux limitant les fondations
+- Gestion des erreurs sécurisées
+
+Starter Pro vous donne une base structurée pour cette couche afin que vous ne reconstruisiez pas le cycle de vie complet à partir de zéro.
+
+### Ce qui est inclus [#what-is-included]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Pouvoirs",
+      description:
+        "Authentification par e-mail et par mot de passe avec création de compte, validation du mot de passe, réinitialisation du mot de passe et modification du mot de passe.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Fournisseurs OAuth",
+      description:
+        "Google et GitHub OAuth fondent avec des modèles de compte connectés et une gestion plus sûre du cycle de vie des fournisseurs.",
+      icon: GithubIcon,
+    },
+    {
+      title: "Vérification et tokens",
+      description:
+        "Vérification des e-mails, réinitialisation du mot de passe, expiration des tokens et flux de récupération structurés pour une utilisation en production.",
+      icon: MailCheck,
+    },
+    {
+      title: "Fondations protégées",
+      description:
+        "Interface utilisateur sensible aux sessions, routes protégées, logique backend sensible aux auth et modèles de sécurité des comptes.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Flux d'auth [#auth-flows]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Se connecter",
+      title: "Se connecter Flux",
+      icon: LockKeyhole,
+      description:
+        "Un flux de connexion de production a besoin de plus qu'une forme. Il a besoin d'état, d'erreurs, de redirections et de création de session.",
+      items: [
+        "email et mot de passe",
+        "OAuth se connecter",
+        "création de session",
+        "error-aware UX",
+        "rediriger vers la surface protégée de l'application",
+      ],
+    },
+    {
+      eyebrow: "Registre",
+      title: "Flux d'enregistrement",
+      icon: UserRoundCheck,
+      description:
+        "L'enregistrement transforme les utilisateurs anonymes en comptes réels avec un cycle de vie qui peut prendre en charge la vérification et l'intégration.",
+      items: [
+        "Création de compte réel",
+        "validation du mot de passe",
+        "cycle de vie e-mail verification-ready",
+        "chemin d'inscription du fournisseur",
+        "chemin d'intégration conscient de la session",
+      ],
+    },
+    {
+      eyebrow: "Mot de passe",
+      title: "Cycle de vie du mot de passe",
+      icon: KeyRound,
+      description:
+        "Les flux de mot de passe nécessitent une récupération sécurisée, des tokens sensibles à l'expiration et des règles de sécurité de compte claires.",
+      items: [
+        "Mot de passe oublié",
+        "Réinitialiser le mot de passe",
+        "expiration-conscient flux de récupération",
+        "Changement de mot de passe en session",
+        "ajouter un mot de passe pour les utilisateurs OAuth",
+      ],
+    },
+    {
+      eyebrow: "Fournisseurs",
+      title: "Comptes connectés",
+      icon: RefreshCcw,
+      description:
+        "Les flux fournisseurs ont besoin d'un comportement de connexion, de liaison, de déconnexion et de repli pour que les utilisateurs ne soient pas bloqués.",
+      items: [
+        "Connexion au compte Google",
+        "Connexion au compte GitHub",
+        "modèles de liaison de fournisseur",
+        "Règles de déconnexion sécurisées",
+        "comportement de repli du compte",
+      ],
+    },
+  ]}
+/>
+
+## Starter Free vs Starter Pro [#starter-free-vs-starter-pro]
+
+| Capacité                                       | Starter Free       | Starter Pro                    |
+| ---------------------------------------------- | ------------------ | ------------------------------ |
+| Autres écrans                                  | Inclus             | Inclus                         |
+| Pouvoirs                                       | Faux               | Réel                           |
+| Google OAuth                                   | Non inclus         | Réel                           |
+| Github OAuth                                   | Non inclus         | Réel                           |
+| Sessions                                       | Fausse / partielle | Réel                           |
+| Vérification par e-mail                        | Non inclus         | Réel                           |
+| Mot de passe oublié                            | UI uniquement      | Flux réel                      |
+| Réinitialiser mot de passe                     | UI uniquement      | Token-based                    |
+| Changement de mot de passe en session          | Non inclus         | Inclus                         |
+| OAuth lien de compte                           | Non inclus         | Inclus                         |
+| Règles de déconnexion sécurisée du fournisseur | Non inclus         | Inclus                         |
+| Routes protégées                               | Conceptuel         | Fondement prêt à la production |
+| Taux limitant les fondations                   | Non inclus         | Modèle inclus                  |
+
+<Callout title="Une distinction simple">
+  Starter Free simule auth. Starter Pro gère les utilisateurs réels.
+
+</Callout>
+
+## Architecture [#architecture]
+
+### Responsabilités du modèle de données [#data-model-responsibilities]
+
+Starter Pro auth est conçu autour des structures dont un SaaS sérieux a généralement besoin.
+
+Les responsabilités typiques de l'auth comprennent:
+
+| Zone              | Objet                                                                     |
+| ----------------- | ------------------------------------------------------------------------- |
+| Utilisateur       | Identité, email, image de profil, état de vérification                    |
+| Compte            | Comptes fournisseurs OAuth et liens de compte                             |
+| Session           | Sessions utilisateur actives                                              |
+| VerificationToken | Flux de vérification compatibles avec Auth.js                             |
+| UserToken         | Cycle de vie de la vérification et de la réinitialisation du mot de passe |
+| AuthAttempt       | Audit et base de limitation de taux                                       |
+
+<Callout type="info" title="Pourquoi cela compte">
+  Production auth ne consiste pas seulement à se connecter. Il s'agit de stocker
+  suffisamment d'état pour sécuriser le cycle de vie du compte, la récupération
+  et la logique du fournisseur.
+
+</Callout>
+
+### Routes protégées [#protected-routes]
+
+L'Auth devient précieux lorsqu'il protège les surfaces réelles des produits.
+
+Starter Pro est conçu pour que la couche auth puisse protéger :
+
+- tableau de bord
+- paramètres
+- facturation
+- admin
+- données client
+- zones de produits plan-conscient
+
+```txt title="protected-routes.txt"
+/dashboard
+/settings
+/billing
+/admin
+```
+
+Un bon système de routes protégées devrait :
+
+- rediriger les utilisateurs anonymes
+- Préserver les limites sécurisées des applications
+- exposer l'interface utilisateur consciente de la session
+- éviter les fuites d'état privé
+- travailler avec les règles de facturation et de propriété backend
+
+### Intégration avec la facturation [#integration-with-billing]
+
+Auth et la facturation sont connectés dans un SaaS réel.
+
+Un client n’est pas seulement un enregistrement de paiement. Un client appartient à un utilisateur ou à une organisation.
+
+Cela signifie qu'auth doit prendre en charge :
+
+- identité du compte
+- propriété du client
+- accès abonnement
+- accès au portail de facturation
+- Fonctionnalités adapté à l’offre
+
+<Callout title="Pourquoi Auth est important pour les revenus">
+  Vous ne pouvez pas facturer les clients de manière fiable tant que vous ne
+  pouvez pas les identifier de manière fiable.
+
+</Callout>
+
+### Règles de sécurité [#security-rules]
+
+Utilisez ces règles lors de l'adaptation de la couche d'authentification.
+
+<PreferAvoid
+  prefer={[
+    "Validation côté serveur pour les actions d'authentification",
+    "tokens de courte durée pour les flux de récupération",
+    "générique oublié-mot de passe confirmation copie",
+    "Effacer les redirections session-conscient",
+    "Règles de déconnexion du fournisseur qui ne verrouillent jamais les utilisateurs",
+  ]}
+  avoid={[
+    "Savoir si un email existe",
+    "permettant aux utilisateurs de déconnecter leur seule méthode de connexion",
+    "faire confiance à l'état d'authentification côté client pour les données protégées",
+    "Retourner des erreurs d'authentification trop spécifiques",
+    "mélange de la logique d'authentification dans des composants de produits non liés",
+  ]}
+/>
+
+## Guide de décision [#decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Starter Pro",
+      title: "Utiliser Starter Pro auth quand auth devient réel",
+      href: "/docs/starter-pro/getting-started",
+      icon: ShieldCheck,
+      tone: "pro",
+      description:
+        "Utilisez Starter Pro lorsque l'authentification fait partie de la fondation de lancement et pas seulement un écran simulé.",
+      items: [
+        "Les vrais utilisateurs ont besoin de comptes",
+        "Les séances doivent persister",
+        "Les fournisseurs OAuth sont importants",
+        "Le mot de passe doit fonctionner",
+        "Les routes ont besoin de protection",
+        "La facturation dépend de l'identité",
+        "Compte Lifecycle Edge Cases",
+      ],
+      cta: "Start setup →",
+    },
+    {
+      eyebrow: "Starter Free",
+      title: "Restez en Free tout en validant UX",
+      icon: UserRoundCheck,
+      description:
+        "Restez sur Starter Free lorsque vous testez toujours la surface du produit et que vous n'avez pas encore besoin d'utilisateurs réels.",
+      items: [
+        "vous êtes toujours en train de valider UX",
+        "vous n'avez pas encore besoin d'utilisateurs réels",
+        "Auth ne bloque pas le progrès",
+        "tu ne t'es pas préparé",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Mettre à niveau quand Auth devient réel">
+  Starter Free vous aide à concevoir la surface d'auth. Starter Pro vous donne
+  le système d'auth derrière lui.
+
+</Callout>
+
+### Liste de contrôle de mise en œuvre [#implementation-checklist]
+
+Avant de traiter l'auth comme prêt au lancement, validez :
+
+- identifiants de connexion
+- OAuth se connecter
+- enregistrement
+- e-mail vérification
+- mot de passe oublié
+- réinitialiser le mot de passe
+- changement de mot de passe
+- route protégée redirige
+- navigation de session-conscient
+- Comportement du compte connecté
+- Règles de déconnexion du fournisseur
+- Facturation des droits d'accès
+
+<Callout type="info" title="Principe de validation">
+  Ne personnalisez pas profondément avant de valider les flux par défaut.
+  Confirmez d'abord la fondation, puis adaptez le produit.
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Est-ce que c'est juste UI autour de Auth?">
+    Non. Starter Pro se concentre sur le comportement réel de l'authentification : sessions, fournisseurs, tokens, routes protégées et structure du cycle de vie du compte.
+  </Accordion>
+
+<Accordion title="Puis-je supprimer un fournisseur ?">
+  Oui. Les fournisseurs doivent être traités comme des points d'entrée
+  configurables. Gardez les règles de secours de compte sécurisé si vous
+  autorisez les utilisateurs à déconnecter les fournisseurs.
+</Accordion>
+
+<Accordion title="La facturation doit-elle dépendre d’auth ?">
+  Oui. Dans un SaaS, l’état de facturation doit être connecté à une identité
+  d’utilisateur, de client ou d’organisation. Auth est le fondement de cette
+  propriété.
+</Accordion>
+
+  <Accordion title="Puis-je remplacer le fournisseur d'authentification plus tard?">
+    Vous pouvez, mais Auth touche de nombreuses parties d'un produit. Remplacez-le délibérément et gardez les mêmes limites autour des sessions, des tokens et des accès protégés.
+  </Accordion>
+</Accordions>
+
+<DocsUpgradeCTA
+  title="L'authentification est l'infrastructure de lancement."
+  description="Déplacez-vous vers Starter Pro lorsque les pages de connexion doivent devenir un système de compte sécurisé avec des sessions, des fournisseurs, une récupération et un accès protégé."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Connectez les utilisateurs authentifiés aux clients, aux abonnements et à l'accès aux forfaits.",
+      icon: CreditCard,
+    },
+    {
+      title: "fondations",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Comprendre comment l'authentification s'intègre à la propriété des données et à la logique côté serveur.",
+      icon: Database,
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validez l'authentification, la facturation, le backend et la livraison avant le lancement.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Ce qui est inclus",
+      href: "/docs/starter-pro/what-is-included",
+      description: "Consultez la base de données Starter Pro complète.",
+      icon: Package,
+    },
+  ]}
+/>

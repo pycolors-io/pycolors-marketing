@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 
 const startersRoot = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../../app/(site)/starters",
+  "../../app/[locale]/(site)/starters",
 );
 
 function readPage(path: string) {

@@ -1,8 +1,9 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link } from "@/lib/i18n/navigation";
+import { usePathname } from "@/lib/i18n/navigation";
 import { ArrowUpRight, ChevronDown, Menu } from "lucide-react";
 import { MobileMenuAppearance } from "@/components/appearance-controls";
 import { FooterPalette as SitePalettePicker } from "@/components/footer-palette";
@@ -81,14 +82,16 @@ type NavigationContentProps = Readonly<{
 }>;
 
 function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
+  const tSite = useCopy();
+
   return (
     <div className="grid gap-5 sm:grid-cols-2 sm:gap-3">
       {PRODUCT_MENU_GROUPS.map((group) => (
         <div key={group.title} className="min-w-0">
           <p className="mb-2 px-2.5 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
-            {group.title}
+            {tSite(group.title)}
           </p>
-          <ul aria-label={group.title} className="space-y-0.5">
+          <ul aria-label={tSite(group.title)} className="space-y-0.5">
             {group.items.map((item) => {
               const Icon = item.icon;
               const current = activeHref === item.href;
@@ -115,16 +118,16 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span className="font-medium text-foreground">
-                          {item.label}
+                          {tSite(item.label)}
                         </span>
                         {item.badge ? (
                           <span className="ml-auto shrink-0 text-[11px] leading-4 font-normal text-muted-foreground tabular-nums">
-                            {item.badge}
+                            {tSite(item.badge)}
                           </span>
                         ) : null}
                       </span>
                       <span className="mt-0.5 block text-xs leading-5 font-normal text-muted-foreground">
-                        {item.description}
+                        {tSite(item.description)}
                       </span>
                     </span>
                   </Link>
@@ -143,6 +146,8 @@ function NavigationLinks({
   activeHref,
   onNavigate,
 }: NavigationContentProps & Readonly<{ items: PrimaryNavItem[] }>) {
+  const tSite = useCopy();
+
   return (
     <ul className="flex flex-wrap gap-1">
       {items.map((item) => (
@@ -151,11 +156,11 @@ function NavigationLinks({
             href={item.href}
             onClick={onNavigate}
             target={item.href.startsWith("https://") ? "_blank" : undefined}
-            aria-description={
+            aria-description={tSite(
               item.href.startsWith("https://")
                 ? "Opens in a new tab"
-                : undefined
-            }
+                : undefined,
+            )}
             rel={
               item.href.startsWith("https://")
                 ? "noreferrer noopener"
@@ -168,7 +173,7 @@ function NavigationLinks({
               focusRing,
             )}
           >
-            {item.label}
+            {tSite(item.label)}
             {item.href.startsWith("https://") && (
               <ArrowUpRight
                 aria-hidden="true"
@@ -200,6 +205,8 @@ function DesktopNavigationMenu({
   triggerRef: React.RefObject<HTMLButtonElement | null>;
   children: React.ReactNode;
 }>) {
+  const tSite = useCopy();
+
   const { rootRef, panelRef, rootProps, triggerProps } = useHeaderDisclosure({
     open,
     onOpenChange,
@@ -226,7 +233,7 @@ function DesktopNavigationMenu({
           focusRing,
         )}
       >
-        {label}
+        {tSite(label)}
         <ChevronDown
           aria-hidden="true"
           strokeWidth={1.5}
@@ -246,15 +253,20 @@ function DesktopNavigationMenu({
           styles.panel,
         )}
       >
-        {children}
+        {tSite(children)}
       </div>
     </div>
   );
 }
 
 function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
+  const tSite = useCopy();
+
   return (
-    <ul aria-label="Learning and product updates" className="space-y-0.5 p-2">
+    <ul
+      aria-label={tSite("Learning and product updates")}
+      className="space-y-0.5 p-2"
+    >
       {RESOURCE_MENU_ITEMS.map((item) => {
         const Icon = item.icon;
         const current = activeHref === item.href;
@@ -266,7 +278,9 @@ function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
               onClick={onNavigate}
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
-              aria-description={external ? "Opens in a new tab" : undefined}
+              aria-description={tSite(
+                external ? "Opens in a new tab" : undefined,
+              )}
               aria-current={current ? "page" : undefined}
               className={cn(
                 "group/resource-link flex min-h-11 items-start gap-2.5 rounded-md px-3 py-2.5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
@@ -284,13 +298,13 @@ function ResourceLinks({ activeHref, onNavigate }: NavigationContentProps) {
               />
               <span className="min-w-0">
                 <span className="flex items-center gap-1.5 text-[13px] leading-5 font-medium text-foreground">
-                  {item.label}
+                  {tSite(item.label)}
                   {external && (
                     <ArrowUpRight className="size-3" aria-hidden="true" />
                   )}
                 </span>
                 <span className="mt-0.5 block text-xs leading-5 font-normal text-muted-foreground">
-                  {item.description}
+                  {tSite(item.description)}
                 </span>
               </span>
             </Link>
@@ -309,6 +323,8 @@ export function SiteHeader({
   secondaryNavigation,
   onMobileMenuOpen,
 }: SiteHeaderProps) {
+  const tSite = useCopy();
+
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState<PrimaryMenu | null>(null);
@@ -389,16 +405,16 @@ export function SiteHeader({
               focusRing,
             )}
           >
-            Skip to content
+            {tSite("Skip to content")}
           </a>
           <Container>
             <div className="flex h-(--site-header-row-height) items-center gap-3">
               <div className="flex shrink-0 items-center gap-3 lg:min-w-40">
-                {logo}
+                {tSite(logo)}
               </div>
               <nav
                 ref={desktopNavRef}
-                aria-label="Primary"
+                aria-label={tSite("Primary")}
                 className="ml-4 hidden flex-1 items-center gap-1 text-[13px] font-medium lg:flex"
               >
                 {PRIMARY_NAV_ITEMS.map((item) =>
@@ -417,13 +433,13 @@ export function SiteHeader({
                         focusRing,
                       )}
                     >
-                      {item.label}
+                      {tSite(item.label)}
                     </Link>
                   ) : (
                     <DesktopNavigationMenu
                       key={item.menu}
                       menu={item.menu}
-                      label={item.label}
+                      label={tSite(item.label)}
                       open={openMenu === item.menu}
                       active={
                         item.menu === "products"
@@ -485,23 +501,23 @@ export function SiteHeader({
               </nav>
               <div className="hidden items-center gap-2 lg:flex">
                 <LanguageSwitcher />
-                {desktopActions}
+                {tSite(desktopActions)}
                 <Button
                   asChild
                   size="default"
                   className="site-primary-action rounded-md font-medium"
                 >
-                  <Link href="/starters/pro">Explore Pro</Link>
+                  <Link href="/starters/pro">{tSite("Explore Pro")}</Link>
                 </Button>
               </div>
               <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
                 <LanguageSwitcher />
-                {mobileActions}
+                {tSite(mobileActions)}
                 <SheetTrigger asChild>
                   <button
                     type="button"
                     ref={mobileButtonRef}
-                    aria-label="Open navigation menu"
+                    aria-label={tSite("Open navigation menu")}
                     onClick={onMobileMenuOpen}
                     className={cn(
                       "inline-flex size-11 items-center justify-center rounded-md border border-border-subtle bg-surface",
@@ -515,7 +531,7 @@ export function SiteHeader({
             </div>
           </Container>
         </div>
-        {secondaryNavigation}
+        {tSite(secondaryNavigation)}
       </header>
       <SheetContent
         // The app's generic dialog CSS adds an offset and rounded corners.
@@ -533,18 +549,18 @@ export function SiteHeader({
       >
         <div className="flex min-h-(--site-header-height) shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-subtle py-1.5 pl-4 pr-16">
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">
-            Explore PyColors
+            {tSite("Explore PyColors")}
           </SheetTitle>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-          <nav aria-label="Products">
+          <nav aria-label={tSite("Products")}>
             <ProductGroups
               activeHref={activeMobileHref}
               onNavigate={onNavigate}
             />
           </nav>
           <nav
-            aria-label="Compare and browse"
+            aria-label={tSite("Compare and browse")}
             className="mt-4 border-t border-border-subtle pt-3"
           >
             <NavigationLinks
@@ -554,11 +570,11 @@ export function SiteHeader({
             />
           </nav>
           <nav
-            aria-label="Resources"
+            aria-label={tSite("Resources")}
             className="mt-4 border-t border-border-subtle pt-4"
           >
             <p className="mb-2 px-2.5 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
-              Resources
+              {tSite("Resources")}
             </p>
             <NavigationLinks
               items={resources}
@@ -574,7 +590,7 @@ export function SiteHeader({
             className="site-primary-action h-auto w-full whitespace-normal rounded-md text-center"
           >
             <Link href="/starters/pro" onClick={onNavigate}>
-              Explore Pro
+              {tSite("Explore Pro")}
             </Link>
           </Button>
         </div>

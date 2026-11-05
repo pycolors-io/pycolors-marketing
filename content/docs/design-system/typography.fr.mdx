@@ -1,0 +1,395 @@
+---
+title: Typographie
+description: Échelle de typographie, rôles de texte et hiérarchie utilisés dans
+  l'interface utilisateur de PyColors.
+lastUpdated: "2026-05-18"
+appliesTo: Design System
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  CheckCircle,
+  FormInput,
+  ListTree,
+  MousePointerClick,
+  Palette,
+  Ruler,
+  ShieldCheck,
+  Type,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Système de conception</Badge>
+  <Badge>Typographie</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+La typographie est l'un des signaux les plus forts de la qualité du produit. Il donne à chaque interface une structure lisible avant que la couleur, l'espacement, le mouvement ou la décoration ne soient ajoutés.
+
+PyColors traite la typographie comme un **système**Pas comme style de page locale. L'objectif est de garder les tableaux de bord, la documentation, les pages de paramètres, les sections marketing, les formulaires et les flux de produits lisibles et cohérents à mesure que le produit se développe.
+
+À la fin de cette page, vous comprendrez comment PyColors gère :
+
+- rôles de police
+- Hiérarchie des titres
+- densité du corps du texte
+- étiquettes et métadonnées
+- Rôles sémantiques de texte
+- règles d'utilisation de la production
+
+<Callout title="Pourquoi cela compte">
+  Un système de type faible rend un produit inachevé même lorsque les composants
+  de l'interface utilisateur sont corrects. Une typographie stable améliore la
+  numérisation, réduit le bruit visuel et rend l'interface plus délibérée.
+
+</Callout>
+
+## Ce que vous allez définir [#what-youll-define]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Rôles de police",
+      description:
+        "Séparez le texte de l'interface utilisateur, les accents de la marque et les valeurs techniques avec des variables de police prévisibles.",
+      icon: Type,
+    },
+    {
+      title: "Hiérarchie",
+      description:
+        "Utilisez une échelle de titre limitée pour que les pages restent numérisables sans surcharger la table des matières.",
+      icon: ListTree,
+    },
+    {
+      title: "Règles d'utilisation",
+      description:
+        "Conservez la sémantique des rôles de texte afin que les composants réutilisables restent cohérents en mode clair et sombre.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Utiliser les rôles de police au lieu des choix de police [#use-font-roles-instead-of-font-choices]
+
+PyColors expose les polices en tant que variables et utilitaires CSS. Les composants doivent dépendre du rôle de la police et non d'une famille codée en dur.
+
+```tsx title="app/layout.tsx" {1}
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans", // highlight
+});
+```
+
+Les rôles communs sont :
+
+| Rôle               | Utilité      | Objet                                          |
+| ------------------ | ------------ | ---------------------------------------------- |
+| UI et contenu      | `font-sans`  | Interface par défaut et contenu lisible        |
+| Accent de marque   | `font-brand` | Rubriques, sections de héros, identité premium |
+| Valeurs techniques | `font-mono`  | Code, identifiants, tokens, sortie CLI         |
+
+<Callout type="info" title="Note d ' exécution">
+  La famille de polices exacte peut changer avec le temps. La partie importante est que les composants continuent de consommer des rôles de police stables.
+
+</Callout>
+
+</Step>
+
+<Step>
+### Choisir la densité par surface [#choose-density-by-surface]
+
+PyColors maintient la densité du texte simple. Les interfaces produits devraient rester efficaces, tandis que la documentation et le contenu marketing devraient être plus faciles à lire.
+
+| Surface                     | Par défaut  | Motif                                             |
+| --------------------------- | ----------- | ------------------------------------------------- |
+| UI et tableaux de bord SaaS | `text-sm`   | Assez dense pour les workflows de produits        |
+| Docs, guides et marketing   | `text-base` | Plus confortable pour la lecture                  |
+| Étiquettes et métadonnées   | `text-xs`   | Contexte compact sans concurrence avec les titres |
+
+Cette division maintient les tableaux de bord efficaces tout en rendant la documentation calme et premium.
+
+</Step>
+
+<Step>
+### Construire la hiérarchie avec une échelle limitée [#build-hierarchy-with-a-limited-scale]
+
+Les titres doivent rendre la structure évidente sans transformer chaque section en un événement visuel.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <div className="not-prose rounded-[5px] border border-border-subtle bg-card p-6 shadow-soft">
+      <div className="space-y-4">
+        <div className="text-4xl font-semibold tracking-tight text-foreground">
+          Titre de la page
+        </div>
+        <div className="text-3xl font-semibold tracking-tight text-foreground">
+          Titre de section
+        </div>
+        <div className="text-2xl font-semibold tracking-tight text-foreground">
+          Sous-section Titre
+        </div>
+        <div className="text-xl font-medium tracking-tight text-foreground">
+          Rubrique mineure
+        </div>
+        <div className="text-base leading-7 text-muted-foreground">
+          Texte lisible avec suffisamment de rythme pour la documentation et la copie du produit.
+        </div>
+      </div>
+    </div>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx filename="components/heading-hierarchy.tsx"
+export function HeadingHierarchy() {
+  return (
+    <div className="space-y-4">
+      <h1 className="text-4xl font-semibold tracking-tight">Page title</h1>
+      <h2 className="text-3xl font-semibold tracking-tight">Section title</h2>
+      <h3 className="text-2xl font-semibold tracking-tight">
+        Subsection title
+      </h3>
+      <h4 className="text-xl font-medium tracking-tight">Minor heading</h4>
+      <p className="text-base leading-7 text-muted-foreground">
+        Readable body text.
+      </p>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+</Steps>
+
+## Pourquoi c'est important [#why-it-matters]
+
+La typographie est l’endroit où la qualité du produit devient visible. Les utilisateurs peuvent ne pas remarquer le système de type directement, mais ils remarquent lorsque le produit se sent plus difficile à numériser, moins structuré ou visuellement incohérent.
+
+Sans un système de typographie stable, vous pourrez :
+
+- inventer des tailles d'en-tête page par page
+- surutiliser le poids de la police pour créer l'emphase
+- rendre les tableaux de bord visuellement bruyants
+- réduire la confiance dans les surfaces de produits et de documentation
+- rendre les composants plus difficiles à réutiliser de manière cohérente
+
+Avec un système stable, chaque page semble plus calme, plus intentionnelle et plus facile à comprendre.
+
+<Callout title="Principe du produit">
+  La typographie devrait réduire la charge cognitive. Il devrait guider le
+  lecteur à travers le produit, pas rivaliser pour l'attention.
+
+</Callout>
+
+### Rôles de texte [#text-roles]
+
+<Tabs items={["Corps", "Étiquettes", "États"]}>
+  <Tab value="Corps">
+    <div className="max-w-prose space-y-3 rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-base leading-7 text-foreground">
+        Le texte principal est utilisé pour le contenu principal qu'un utilisateur doit lire ou sur lequel il doit agir.
+      </div>
+
+      <div className="text-sm leading-6 text-muted-foreground">
+        Le texte secondaire prend en charge le message principal avec des descriptions, une copie d'aide et des détails contextuels.
+      </div>
+
+      <div className="text-xs leading-5 text-muted-foreground">
+        Les métadonnées sont réservées aux horodatages, aux étiquettes, aux indications de statut et aux informations secondaires compactes.
+      </div>
+    </div>
+
+</Tab>
+
+<Tab value="Étiquettes">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      Statut du produit
+    </div>
+    <div className="mt-2 text-base font-medium text-foreground">
+      Prêt pour la révision de la production
+    </div>
+    <div className="mt-1 text-sm leading-6 text-muted-foreground">
+      Les étiquettes aident à l'orientation sans devenir des titres.
+    </div>
+  </div>
+
+</Tab>
+
+  <Tab value="États">
+    <div className="grid gap-3 sm:grid-cols-3">
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-foreground">Par défaut</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Information produit neutre.
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-destructive">
+          Destructif
+        </div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Erreurs et actions dangereuses.
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-border/60 bg-card p-4">
+        <div className="text-sm font-medium text-primary">Mesures prises</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Les liens et l’intention première.
+        </div>
+      </div>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+| Rôle                     | Utilité                 | Utilisation                                      |
+| ------------------------ | ----------------------- | ------------------------------------------------ |
+| Texte principal          | `text-foreground`       | Principaux contenus lisibles                     |
+| Texte secondaire         | `text-muted-foreground` | Descriptions, texte d'aide, copie d'appui        |
+| Marque ou texte d'action | `text-primary`          | Liens et actions mises en avant                  |
+| Texte destructeur        | `text-destructive`      | Erreurs, flux de suppression, messages dangereux |
+| Texte technique          | `font-mono`             | Code, tokens, identifiants, valeurs CLI          |
+
+### Règles d'utilisation [#usage-rules]
+
+Utilisez des rôles de typographie pour créer des surfaces de produit cohérentes au lieu de styliser le texte à partir de zéro à chaque fois.
+
+```tsx filename="components/product-summary.tsx"
+export function ProductSummary() {
+  return (
+    <section className="space-y-2">
+      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        Starter Pro
+      </p>
+      <h2 className="text-2xl font-semibold tracking-tight">
+        Production-shaped SaaS foundation
+      </h2>
+      <p className="max-w-prose text-sm leading-6 text-muted-foreground">
+        Use semantic text roles to keep product copy, labels, and descriptions
+        predictable across reusable surfaces.
+      </p>
+    </section>
+  );
+}
+```
+
+## Guide de décision [#decision-guide]
+
+Utilisez ce système de typographie si :
+
+- vous créez des tableaux de bord SaaS, des documents, des paramètres ou des pages marketing
+- vous avez besoin d'une hiérarchie cohérente entre plusieurs domaines de produits
+- vous voulez que les composants réutilisables soient cohérents sans surcharges locales
+- vous vous souciez de la lisibilité en mode clair et sombre
+
+Ne pas outrepasser si :
+
+- le changement ne résout qu'une préférence visuelle locale
+- le même besoin apparaît dans plusieurs endroits et devrait devenir un token
+- la nouvelle taille, le poids ou la couleur affaiblit la cohérence hiérarchique
+
+<Callout title="Prêt à passer du système de conception à la base du produit?">
+  Starter Pro vous donne une base SaaS plus forte avec auth, facturation,
+  structure backend et flux adaptées à la production. `/docs/starter-pro`
+
+</Callout>
+
+## Erreurs courantes [#common-mistakes]
+
+<PreferAvoid
+  prefer={[
+    "tailles de cap limitées",
+    "Couleurs sémantiques du texte",
+    "helper copy",
+    "étiquettes pour les métadonnées",
+    "Longueurs de ligne raisonnables",
+  ]}
+  avoid={[
+    "trop de tailles de police dans un seul panneau",
+    "copie majuscule longue forme",
+    "Valeurs de couleur brutes pour le texte",
+    "tailles de titre aléatoires entre les pages",
+    "Le poids au lieu de la structure",
+  ]}
+/>
+
+<Accordions type="single">
+  <Accordion title="Pourquoi ne pas utiliser une plus grande échelle partout ?">
+    Les grandes échelles rendent les pages de destination expressives, mais elles peuvent rendre les produits SaaS plus difficiles à numériser. PyColors maintient la balance par défaut limitée afin que les tableaux de bord, les documents et les flux de produits restent prévisibles.
+  </Accordion>
+
+<Accordion title="Les étiquettes doivent-elles être des titres ?">
+  Non. Les étiquettes fournissent un contexte. Les rubriques définissent la
+  structure. Leur séparation rend le contenu plus facile à analyser et empêche
+  la table des matières de devenir trop longue.
+</Accordion>
+
+  <Accordion title="Puis-je personnaliser la famille de polices ?">
+    Oui. Conservez les mêmes variables basées sur les rôles et remplacez la famille sous-jacente. Les composants doivent continuer à utiliser `font-sans`, `font-brand`et `font-mono`.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Associez la typographie aux rôles de couleur sémantiques pour le texte, les surfaces et les états.",
+      icon: Palette,
+    },
+    {
+      title: "Arrondi",
+      href: "/docs/design-system/tokens/radius",
+      description:
+        "Comprendre comment la géométrie d'angle prend en charge les surfaces de produits lisibles.",
+      icon: Ruler,
+    },
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Voyez comment la typographie se comporte à l'intérieur des éléments interactifs.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Entrées",
+      href: "/docs/ui/input",
+      description:
+        "Revoir les étiquettes, le texte d'aide, la copie de validation et la lisibilité du formulaire.",
+      icon: FormInput,
+    },
+  ]}
+/>

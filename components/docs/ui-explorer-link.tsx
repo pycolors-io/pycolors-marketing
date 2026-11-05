@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import { VerifiedExplorerLink } from "@/components/docs/verified-explorer-link";
 import { ExternalLink } from "lucide-react";
 import { getUiExplorerUrl } from "@/lib/docs/ui-explorer";
@@ -17,6 +18,8 @@ export function UiExplorerLink({
   readonly slug?: readonly string[];
   readonly toc?: readonly { url: string }[];
 }) {
+  const tSite = useCopy();
+
   const href = getUiExplorerUrl(slug);
   if (!href) return null;
   const sections = componentSections.filter((section) =>
@@ -25,7 +28,7 @@ export function UiExplorerLink({
 
   return (
     <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
-      <DocsSectionLinks items={sections} label="Component sections" />
+      <DocsSectionLinks items={sections} label={tSite("Component sections")} />
       {slug?.[1] &&
       ["ai-message", "ai-message-actions", "ai-conversation"].includes(
         slug[1],
@@ -39,10 +42,10 @@ export function UiExplorerLink({
       ) : (
         <a
           href={href}
-          aria-label="Open interactive example in PyColors UI Explorer"
+          aria-label={tSite("Open interactive example in PyColors UI Explorer")}
           className="inline-flex min-h-10 items-center gap-2 rounded-md px-1 text-xs font-medium text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
         >
-          Open in UI Explorer
+          {tSite("Open in UI Explorer")}
           <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
         </a>
       )}

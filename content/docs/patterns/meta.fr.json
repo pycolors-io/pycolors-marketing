@@ -1,0 +1,12 @@
+{
+  "title": "Modèles d’interface",
+  "pages": [
+    "index",
+    "why-patterns",
+    "data-table",
+    "async-actions",
+    "overlays",
+    "feature-showcase",
+    "upgrade-gate"
+  ]
+}

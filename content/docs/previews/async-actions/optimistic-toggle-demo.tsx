@@ -1,19 +1,17 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import {
-  Button,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-} from '@pycolors/ui';
-import { useToastController } from './use-toast-controller';
+import { useCopy } from "@/lib/i18n/use-copy";
+import * as React from "react";
+import { Button, Toast, ToastTitle, ToastDescription } from "@pycolors/ui";
+import { useToastController } from "./use-toast-controller";
 
 function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
 export function OptimisticToggleDemo() {
+  const tSite = useCopy();
+
   const { open, setOpen, payload, trigger } = useToastController();
   const [enabled, setEnabled] = React.useState(false);
   const [pending, setPending] = React.useState(false);
@@ -29,22 +27,22 @@ export function OptimisticToggleDemo() {
 
     try {
       await sleep(700);
-      if (Math.random() < 0.25) throw new Error('toggle_failed');
+      if (Math.random() < 0.25) throw new Error("toggle_failed");
 
       trigger({
-        variant: 'success',
-        title: 'Updated',
-        description: `Setting is now ${!prev ? 'enabled' : 'disabled'}.`,
+        variant: "success",
+        title: "Updated",
+        description: `Setting is now ${!prev ? "enabled" : "disabled"}.`,
       });
     } catch {
       // rollback
       setEnabled(prev);
 
       trigger({
-        variant: 'destructive',
-        title: 'Update failed',
-        description: 'Your change was not saved. Please retry.',
-        actionLabel: 'Retry',
+        variant: "destructive",
+        title: "Update failed",
+        description: "Your change was not saved. Please retry.",
+        actionLabel: "Retry",
         onAction: () => void onToggle(),
       });
     } finally {
@@ -55,9 +53,10 @@ export function OptimisticToggleDemo() {
   return (
     <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/20 p-4">
       <div className="text-sm">
-        Feature:{' '}
+        {tSite("Feature:")}
+        {tSite(" ")}
         <span className="font-medium">
-          {enabled ? 'Enabled' : 'Disabled'}
+          {tSite(enabled ? "Enabled" : "Disabled")}
         </span>
       </div>
 
@@ -67,7 +66,7 @@ export function OptimisticToggleDemo() {
           onClick={() => void onToggle()}
           disabled={pending}
         >
-          {pending ? 'Updating…' : 'Toggle'}
+          {tSite(pending ? "Updating…" : "Toggle")}
         </Button>
 
         <Toast
@@ -77,11 +76,9 @@ export function OptimisticToggleDemo() {
           duration={3600}
         >
           <div className="min-w-0">
-            <ToastTitle>{payload.title}</ToastTitle>
+            <ToastTitle>{tSite(payload.title)}</ToastTitle>
             {payload.description ? (
-              <ToastDescription>
-                {payload.description}
-              </ToastDescription>
+              <ToastDescription>{tSite(payload.description)}</ToastDescription>
             ) : null}
 
             {payload.actionLabel && payload.onAction ? (
@@ -91,7 +88,7 @@ export function OptimisticToggleDemo() {
                   variant="outline"
                   onClick={() => payload.onAction?.()}
                 >
-                  {payload.actionLabel}
+                  {tSite(payload.actionLabel)}
                 </Button>
               </div>
             ) : null}

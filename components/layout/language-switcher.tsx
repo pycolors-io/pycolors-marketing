@@ -1,37 +1,108 @@
 "use client";
+
+import { useState, type MouseEvent } from "react";
+import { Check, ChevronDown, Languages } from "lucide-react";
+import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
-  findLocalizedPage,
-  LOCALIZED_ROUTES,
-  type SiteLocale,
-} from "@/lib/i18n/routes";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@pycolors/ui";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { localizedHref, type SiteLocale } from "@/lib/i18n/routing";
+import styles from "./language-switcher.module.css";
 
-export function LanguageSwitcher({ locale = "en" }: { locale?: SiteLocale }) {
-  const path = usePathname() ?? "/";
-  const page = findLocalizedPage(path);
-  const target = locale === "en" ? "fr" : "en";
-  const href = LOCALIZED_ROUTES[page ?? "home"][target];
-  const label =
-    target === "fr" ? (page ? "Français" : "Français — accueil") : "English";
-  // A document navigation also switches between the two language root layouts.
+const LANGUAGES = [
+  { locale: "en", label: "English", code: "EN" },
+  { locale: "fr", label: "Français", code: "FR" },
+] as const;
+
+export function LanguageSwitcher({
+  variant = "header",
+}: Readonly<{ variant?: "header" | "footer" }>) {
+  const tSite = useCopy();
+  const locale = useLocale();
+  const pathname = usePathname() ?? "/";
+  const current = locale === "fr" ? LANGUAGES[1] : LANGUAGES[0];
+  const [open, setOpen] = useState(false);
+  const [suffix, setSuffix] = useState("");
+
+  function onOpenChange(nextOpen: boolean) {
+    if (nextOpen) setSuffix(window.location.search + window.location.hash);
+    setOpen(nextOpen);
+  }
+
+  function onLanguageClick(
+    event: MouseEvent<HTMLAnchorElement>,
+    target: SiteLocale,
+  ) {
+    event.currentTarget.href =
+      localizedHref(pathname, target) +
+      window.location.search +
+      window.location.hash;
+    if (
+      target === current.locale &&
+      event.button === 0 &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.shiftKey &&
+      !event.altKey
+    ) {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
   return (
-    <a
-      href={href}
-      hrefLang={target}
-      lang={target}
-      aria-label={label}
-      onClick={(event) => {
-        if (page === "quote") {
-          const service = new URLSearchParams(window.location.search).get(
-            "service",
+    <DropdownMenu modal={false} open={open} onOpenChange={onOpenChange}>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          aria-label={tSite("Language: {value0}", { value0: current.label })}
+          data-variant={variant}
+          className={styles.trigger}
+        >
+          <Languages aria-hidden="true" className="size-3.5 shrink-0" />
+          <span lang={current.locale}>
+            {variant === "footer" ? current.label : current.code}
+          </span>
+          <ChevronDown aria-hidden="true" className={styles.chevron} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        side={variant === "footer" ? "top" : "bottom"}
+        sideOffset={8}
+        collisionPadding={12}
+        className={styles.content}
+      >
+        {LANGUAGES.map((language) => {
+          const selected = language.locale === current.locale;
+          return (
+            <DropdownMenuItem key={language.locale} asChild>
+              <a
+                href={localizedHref(pathname, language.locale) + suffix}
+                hrefLang={language.locale}
+                lang={language.locale}
+                aria-current={selected ? "page" : undefined}
+                data-native-navigation=""
+                onClick={(event) => onLanguageClick(event, language.locale)}
+                className={styles.item}
+              >
+                <span>{language.label}</span>
+                <span aria-hidden="true" className={styles.code}>
+                  {language.code}
+                </span>
+                <span aria-hidden="true" className={styles.indicator}>
+                  {selected ? <Check className="size-3.5" /> : null}
+                </span>
+              </a>
+            </DropdownMenuItem>
           );
-          if (service === "guided-setup" || service === "business-adaptation")
-            event.currentTarget.href = `${href}?service=${service}`;
-        }
-      }}
-      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm px-2 text-xs font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:min-h-8"
-    >
-      {target.toUpperCase()}
-    </a>
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

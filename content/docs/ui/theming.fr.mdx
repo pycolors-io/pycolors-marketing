@@ -1,0 +1,267 @@
+---
+title: Theming
+description: Chargez les tokens PyColors, comprenez leurs mappages Tailwind v4
+  et gardez les primitives de l'interface utilisateur cohérentes sur les thèmes
+  clairs et sombres.
+lastUpdated: "2026-11-02"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import { BookOpen, Layers3, Palette, Route } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Theming</Badge>
+</div>
+
+## Donnez à chaque primitive le même thème sémantique [#give-every-primitive-the-same-semantic-theme]
+
+`@pycolors/ui` Les primitives utilisent des rôles sémantiques tels que `background`, `card`,
+`primary`, `border`et `ring`. Chargez ces rôles une fois avec `@pycolors/tokens`, puis laissez les composants les consommer via les utilitaires Tailwind.
+
+<Callout title="Idée de base">
+  Le paquet de tokens possède des valeurs de thème et des mappages Tailwind. Les
+  primitives UI consomment les utilitaires sémantiques résultants. Votre
+  application est propriétaire lorsque `dark` La classe est appliquée.
+
+</Callout>
+
+## Installer et charger les tokens [#install-and-load-the-tokens]
+
+Installez les packages d'interface utilisateur et de tokens s'ils ne sont pas déjà des dépendances de votre application.
+
+```bash
+pnpm add @pycolors/ui @pycolors/tokens
+```
+
+Importez une fois la feuille de style de token publique à partir de votre feuille de style globale. Dans une application Tailwind CSS v4, gardez les deux importations en haut de cette feuille de style.
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+```
+
+Ne pas copier `tokens.css` dans votre application ou importez un chemin d'accès à l'intérieur du package. La feuille de style publique supportée est `@pycolors/tokens/tokens.css`.
+
+## Comprendre la chaîne de tokens [#understand-the-token-chain]
+
+La feuille de style du token relie quatre couches :
+
+| Couche                  | Exemple de carte            | Responsabilité                                                   |
+| ----------------------- | --------------------------- | ---------------------------------------------------------------- |
+| Variable CSS sémantique | `--card`                    | Définit la valeur actuelle du thème pour une surface de carte.   |
+| Mappage de Tailwind v4  | `--color-card: var(--card)` | Expose le rôle de Tailwind à travers `@theme inline`.            |
+| Utilitaire sémantique   | `bg-card`                   | Permet à l'application et au code composant de demander ce rôle. |
+| UI primitive            | `Card`                      | Utilise le rôle partagé sans posséder de valeur de thème.        |
+
+Le package inclut des mappages comme ceux-ci :
+
+```css title="@pycolors/tokens/tokens.css"
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+```
+
+Tailwind v4 transforme ces mappages en utilitaires tels que `bg-background`,
+`text-foreground`, `bg-card`, `text-card-foreground`, `bg-primary`,
+`border-border`et `ring-ring`. La modification d'une valeur de thème ne nécessite donc pas de réécriture de classes de composants.
+
+## Utiliser des rôles sémantiques dans l'interface utilisateur du produit [#use-semantic-roles-in-product-ui]
+
+Importer des primitives depuis le public `@pycolors/ui` point d'entrée et de garder la composition locale token-driven.
+
+```tsx title="account-summary.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+
+export function AccountSummary() {
+  return (
+    <Card className="border-border bg-card text-card-foreground">
+      <CardHeader>
+        <CardTitle>Workspace theme</CardTitle>
+        <CardDescription>
+          Components follow the semantic theme selected by your app.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground">
+          Surfaces, text, borders, and focus rings update together.
+        </p>
+      </CardContent>
+      <CardFooter>
+        <Button>Save preference</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+L'exemple utilise des utilitaires sémantiques plutôt que des valeurs de couleur brutes. La même composante reste valable dans les deux thèmes.
+
+## Générer un point de départ sémantique [#generate-a-semantic-starting-point]
+
+[Créateur de thèmes PyColors](/tools/theme-builder) génère un jeu de départ côté client, sensible au contraste, des mêmes variables CSS sémantiques. Utilisez-le lorsque vous voulez commencer à partir d'une couleur de marque sans créer un nouveau contrat de token.
+
+Maintenez l'ordre d'intégration inchangé :
+
+1. import `@pycolors/tokens/tokens.css` une fois;
+2. placer les remplacements générés après cette importation;
+3. utiliser des utilitaires sémantiques et publics `@pycolors/ui` les importations; et
+4. vérifier l'interface complète en modes clair et sombre.
+
+Les remplacements générés fonctionnent avec les packages existants `@theme inline` pont. Ils ne définissent pas un deuxième thème Tailwind. La sortie de Theme Builder est sensible au contraste plutôt qu'une certification d'accessibilité, alors examinez la perception de la marque, le focus, le hover, le disabled, la vision des couleurs et les contextes de page complets avant l'expédition.
+
+### Comprendre les contrôles de couleur [#understand-the-color-checks]
+
+Ouvrir **Lisibilité des couleurs** de voir quels textes et quels contrôles peuvent être difficiles à lire ou à identifier. Les résultats sont regroupés en **Mode lumière** et **Mode sombre**, avec des exemples des couleurs réelles générées et un ajustement suggéré pour chaque vérification qui doit être revue.
+
+**Détails techniques** répertorie les variables CSS affectées, le contraste mesuré, le rapport cible et les réglages de couleur automatiques. Pour des corrections précises, ajustez ces variables après l'exportation de votre thème. Ces contrôles couvrent les couleurs générées; examiner l'interface complète et ses états interactifs avant l'expédition. Les bordures nécessaires pour identifier les contrôles méritent une attention particulière; les cloisons décoratives peuvent rester subtiles. Voir la [Directives du W3C sur les limites de contrôle](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html#boundaries).
+
+### Prévisualiser la typographie avec vos couleurs [#preview-typography-with-your-colors]
+
+Utilisez les onglets d'aperçu pour explorer le même thème généré de trois manières :
+
+- **Tableau de bord** affiche un exemple d'espace de travail complet.
+- **Composants** vous permet d'essayer les formulaires, les boutons, les cases à cocher, les commentaires et la typographie.
+- **Palette** affiche 12 accents et 12 nuances neutres pour le mode sélectionné. Sélectionnez une nuance ou un rôle de couleur nommé pour inspecter et copier sa valeur HEX ou OKLCH.
+
+Les **Fond clair** field contrôle l'arrière-plan de la page en mode lumière. Effacez-le pour laisser le moteur générer cette valeur. L'arrière-plan en mode sombre reste généré. Les valeurs de couleur affichées dans la palette proviennent directement du même résultat de moteur que les exportations ; **Couleurs par but** Montrez comment ces couleurs sont utilisées dans votre thème.
+
+Theme Builder inclut les mêmes dix préréglages de couleur que Starter Pro, avec Monochrome et PyColors en premier, et un **Police de caractères** sélecteur pour Geist, System, Geist Mono, Mona Sans et Plus Jakarta Sans. Utilisation **Plein écran** pour inspecter le tableau de bord avec une barre latérale de navigation plus large. La police, le mode lumière/obscurité, la période d’activité et les filtres de projet que vous avez sélectionnés restent sélectionnés lorsque vous fermez l’aperçu. Le contenu du tableau de bord est des données de démonstration.
+
+Le site de **PyColors / Monochrome** sélecteur utilise les mêmes valeurs de couleur que Starter Pro sur les pages marketing, le blog et la documentation. La lumière, l'obscurité et l'apparence du système restent indépendantes de votre choix de palette. Les autres préréglages sont disponibles dans Theme Builder et la démo Starter Pro. Les paramètres d'aperçu restent à l'intérieur de l'aperçu et ne changent pas l'apparence du site.
+
+L'onglet d'aperçu sélectionné, la sélection de palettes et les contrôles de démo des composants survivent également à l'ouverture et à la fermeture en plein écran. Les valeurs de formulaire de démonstration sont uniquement pour explorer les composants ; les fichiers de configuration enregistrent les paramètres du thème, pas le contenu de démonstration.
+
+Utilisation **Copier la typographie CSS** ou **Télécharger typographie CSS** dans la section d'exportation pour enregistrer la configuration de police séparément de la sortie couleur CSS, Tailwind v4 ou JSON. Pour une police groupée, téléchargez la ressource et la licence fournies, enregistrez-la au niveau indiqué. `public/fonts` chemin, et placez la typographie CSS après vos importations de tokens. Le système n'a pas besoin de fichier de polices et utilise les polices disponibles sur l'appareil de chaque visiteur. La sélection d'une police ne modifie pas les tokens de couleur ou leurs résultats de contraste.
+
+### Télécharger et rouvrir votre thème [#download-and-reopen-your-theme]
+
+En **Exporter votre thème**, choisissez **CSS**, **Tailwind v4**ou **JSON**, puis utiliser **Télécharger** pour enregistrer le format affiché. Les fichiers de couleur incluent à la fois les modes clair et sombre. La typographie reste dans un fichier CSS séparé.
+
+Utilisation **Enregistrer la configuration** pour télécharger une `.pycolors-theme.json` fichier contenant vos entrées de couleur, nom du thème, preset, police, radius, mode d'aperçu et paramètres du tableau de bord. Plus tard, utilisez **Configuration ouverte** pour restaurer ces paramètres et régénérer le thème. Les nouveaux fichiers utilisent la version 2 ; les fichiers existants de la version 1 restent lisibles, y compris les anciens identifiants de police System Sans/System Mono. Les fichiers de configuration sont vérifiés avant de les appliquer ; un fichier invalide ou non pris en charge laisse vos paramètres actuels inchangés. L'exportation de tokens de couleur JSON est un format différent et ne peut pas être rouverte en tant que configuration modifiable.
+
+Les fichiers sont traités localement sans compte ni téléchargement. Il n'y a pas d'enregistrement automatique entre les rechargements de page : conservez le fichier de configuration pour continuer plus tard.
+
+### Apparence partagée et Starter Pro [#shared-appearance-and-starter-pro]
+
+Les préréglages nommés utilisent les mêmes tokens de lumière/obscurité sémantiques dans le constructeur et Starter Pro. La modification d'une marque ou d'une couleur neutre crée un thème personnalisé généré. La modification de l'arrière-plan clair conserve les couleurs sombres du préréglage. La preuve de contraste est recalculée pour les couleurs résultantes.
+
+Les **Arrondi** contrôle utilise Aucun / SM / MD / LG / XL. **Aperçu du tableau de bord** ajoute l'échelle (100%, 110%, 125%), la densité, la largeur du contenu, l'affichage de la barre latérale / style / fond, en-tête, toile et mouvement. Ces paramètres affectent l'aperçu, indépendamment du site Web environnant. La police et le rayon CSS sont exportés séparément des couleurs.
+
+Choisir **Télécharger Starter Pro config** pour générer `appearance.ts`. Remplacer `config/appearance.ts` dans votre starter et redémarrez-le. Dans un navigateur avec des préférences existantes, utilisez Personnaliser pour réinitialiser pour restaurer les valeurs par défaut du nouveau produit. Les deux modes de couleur et les paramètres d'apparence sélectionnés sont inclus ; aucun package privé ou Theme Builder n'est requis par l'application de l'acheteur.
+
+## Appliquer le mode sombre au shell de l'application [#apply-dark-mode-at-the-app-shell]
+
+`@pycolors/tokens` définit ses valeurs sombres sous un `.dark` sélecteur. Ajoutez la classe à la racine du document ou à l'interpréteur de commandes de l'application via votre logique de thème existante.
+
+```tsx title="document-shell.tsx"
+export function DocumentShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="dark">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Supprimez la classe pour le thème par défaut. Une application réelle devrait dériver cette classe de sa stratégie existante de préférence, de stockage ou de thème rendu par le serveur.
+
+<Callout type="info" title="Responsabilité de l'application">
+  PyColors fournit les `.dark` Valeurs symboliques. Il ne fournit pas de bascule
+  de thème, d'API de persistance, de fournisseur React ou de stratégie de
+  prévention flash. Gardez ces décisions dans votre application.
+
+</Callout>
+
+## Personnaliser sans créer de dérive de thème [#customize-without-creating-theme-drift]
+
+Commencez par les rôles sémantiques existants. Si votre produit a besoin de valeurs de thème différentes, modifiez-les une fois dans le calque de thème global de l'application après l'importation du package et examinez ensemble les rôles clairs et sombres correspondants.
+
+Gardez ces limites explicites :
+
+- Préserver les noms de rôle tels que `primary`, `card`, `destructive`et `ring`;
+- conserver le code des composants sur les utilitaires sémantiques au lieu des valeurs palette ou brutes;
+- vérifier le contraste du texte, la visibilité de la focus, les états désactivés et le retour d'état dans les deux thèmes;
+- N'éditez pas de fichiers dans `node_modules` ou importer des internes de paquet ;
+- ne pas disperser les redéfinitions de tokens entre les composants ou les feuilles de style des fonctionnalités;
+- traiter un nouveau rôle public comme une décision de système de conception, et non comme une solution de contournement de composant local.
+
+<PreferAvoid
+  prefer={[
+    "une importation mondiale de `@pycolors/tokens/tokens.css`",
+    "utilitaires sémantiques tels que `bg-card` et `text-muted-foreground`",
+    "la classe `.dark` contrôlée par la logique de thème d'application",
+    "Changements de thème central revus en mode clair et sombre",
+  ]}
+  avoid={[
+    "valeurs de couleur brutes dans les composants réutilisables",
+    "Copies locales de variables sémantiques",
+    "les importations privées à partir de l'interface utilisateur ou des paquets de tokens",
+    "utiliser la couleur seule pour communiquer le statut ou les erreurs",
+  ]}
+/>
+
+## Liste de vérification [#verification-checklist]
+
+- [ ] La feuille de style de token est importée une fois à partir de son chemin public.
+- [ ] Tailwind v4 reconnaît les utilitaires sémantiques des mappages de tokens.
+- [ ] Les importations d'interface utilisateur utilisent le public `@pycolors/ui` point d'entrée.
+- [ ] Les composants réutilisables ne contiennent aucune couleur de thème brute.
+- [ ] Le shell app ajoute et supprime `.dark` La logique thématique existante.
+- [ ] Le texte, les commandes, les anneaux de focus et les commentaires restent compréhensibles dans les deux thèmes.
+
+## Docs associés [#related-docs]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "tokens de conception",
+      href: "/docs/design-system/tokens",
+      description:
+        "Comprendre les décisions, les variables et les mappages d'utilitaires derrière la couche d'interface utilisateur.",
+      icon: Layers3,
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Passez en revue les rôles de couleur sémantiques, les attentes de contraste et l'utilisation sécurisée du thème.",
+      icon: Palette,
+    },
+    {
+      title: "Utilisations",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Composez des primitives publiques dans des surfaces de produit réelles sans changer leur API.",
+      icon: BookOpen,
+    },
+    {
+      title: "Orientation en matière de migration",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adoptez l'interface utilisateur PyColors progressivement tout en préservant le comportement des produits et les importations publiques.",
+      icon: Route,
+    },
+  ]}
+/>

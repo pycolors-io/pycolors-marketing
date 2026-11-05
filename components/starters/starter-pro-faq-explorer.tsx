@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useId, useRef, useState, useSyncExternalStore } from "react";
 import { Input } from "@pycolors/ui";
 import { MarketingFaq } from "@/components/marketing/faq";
@@ -17,6 +18,8 @@ const getServerSnapshot = () => false;
 
 /** Answers render on the server; search controls enhance them after hydration. */
 export function StarterProFaqExplorer() {
+  const tSite = useCopy();
+
   const id = useId();
   const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -26,7 +29,7 @@ export function StarterProFaqExplorer() {
     getClientSnapshot,
     getServerSnapshot,
   );
-  const results = filterStarterProFaqs(query, topic);
+  const results = filterStarterProFaqs(query, topic, tSite);
   const hasFilters = query.length > 0 || topic !== "all";
   const titleId = `${id}-title`;
   const resultsId = `${id}-results`;
@@ -43,12 +46,16 @@ export function StarterProFaqExplorer() {
         disabled={!hydrated}
         className="min-w-0 space-y-5 rounded-xl border border-border bg-card p-5 sm:p-6"
       >
-        <legend className="sr-only">Search and filter buyer questions</legend>
+        <legend className="sr-only">
+          {tSite("Search and filter buyer questions")}
+        </legend>
         <Input
           ref={searchRef}
           id={`${id}-search`}
-          label="Search Starter Pro questions"
-          helperText="Try setup, Stripe, client projects, or purchase email."
+          label={tSite("Search Starter Pro questions")}
+          helperText={tSite(
+            "Try setup, Stripe, client projects, or purchase email.",
+          )}
           type="search"
           size="lg"
           value={query}
@@ -62,7 +69,7 @@ export function StarterProFaqExplorer() {
         />
         <div
           role="group"
-          aria-label="Filter questions by topic"
+          aria-label={tSite("Filter questions by topic")}
           className="flex flex-wrap gap-2"
         >
           <SiteButton
@@ -73,7 +80,7 @@ export function StarterProFaqExplorer() {
             onClick={() => setTopic("all")}
             className="min-h-11"
           >
-            All topics
+            {tSite("All topics")}
           </SiteButton>
           {starterProFaqTopics.map((item) => (
             <SiteButton
@@ -85,13 +92,13 @@ export function StarterProFaqExplorer() {
               onClick={() => setTopic(item.id)}
               className="min-h-11"
             >
-              {item.label}
+              {tSite(item.label)}
             </SiteButton>
           ))}
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-muted-foreground">
-            Search filters these answers on this page only.
+            {tSite("Search filters these answers on this page only.")}
           </p>
           <SiteButton
             type="button"
@@ -100,14 +107,15 @@ export function StarterProFaqExplorer() {
             disabled={!hasFilters}
             className="min-h-11"
           >
-            Reset filters
+            {tSite("Reset filters")}
           </SiteButton>
         </div>
       </fieldset>
 
       <noscript>
-        All answers are available below without JavaScript. Search and topic
-        filters require JavaScript; open any question to read its answer.
+        {tSite(
+          "All answers are available below without JavaScript. Search and topic filters require JavaScript; open any question to read its answer.",
+        )}
       </noscript>
 
       <p
@@ -116,26 +124,29 @@ export function StarterProFaqExplorer() {
         aria-atomic="true"
         className="text-sm text-muted-foreground"
       >
-        {results.length} of {starterProBuyerFaqs.length} questions
+        {tSite(results.length)} {tSite(" of ")}
+        {tSite(starterProBuyerFaqs.length)} {tSite(" questions")}
       </p>
 
       <div id={resultsId}>
         {results.length > 0 ? (
           <MarketingFaq
-            title="Find your answer"
+            title={tSite("Find your answer")}
             titleId={titleId}
-            description="The same buyer answers as the Starter Pro overview, with links to the next useful step."
+            description={tSite(
+              "The same buyer answers as the Starter Pro overview, with links to the next useful step.",
+            )}
             items={results}
           />
         ) : (
           <div className="rounded-xl border border-border bg-card p-6">
             <h2 id={titleId} className="text-xl font-semibold text-foreground">
-              No matching questions
+              {tSite("No matching questions")}
             </h2>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              Try fewer words, select another topic, or reset the filters above.
-              The setup, purchase support, and recovery links below remain
-              available.
+              {tSite(
+                "Try fewer words, select another topic, or reset the filters above. The setup, purchase support, and recovery links below remain available.",
+              )}
             </p>
           </div>
         )}

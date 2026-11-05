@@ -1,0 +1,447 @@
+---
+title: Présentation des fonctionnalités
+description: Modèle prêt à la production pour présenter des capacités SaaS
+  avancées, l'extensibilité et l'évolution du produit sans fausses
+  fonctionnalités ou des ventes incitatives trompeuses.
+lastUpdated: "2026-06-04"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  LayoutTemplate,
+  Layers3,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Positionnement des produits</Badge>
+</div>
+
+## Transformez des fonctionnalités avancées en levier produit [#turn-advanced-features-into-product-leverage]
+
+La plupart des produits SaaS finissent par atteindre le même problème :
+
+> Comment présentez-vous des capacités avancées sans faire en sorte que le produit se sente faux, gonflé ou trop axé sur le marketing?
+
+C'est ici `FeatureShowcase` devient utile.
+
+Il s'agit d'un modèle prêt à la production conçu pour:
+
+- extensibilité de prévisualisation
+- Présenter des capacités avancées
+- démontrer une architecture évolutive
+- communiquer la direction du produit
+- renforcer la crédibilité des produits
+
+sans prétendre que les traits inachevés existent déjà.
+
+<Callout title="Idée de base">
+  FeatureShowcase n'est pas une bannière marketing.
+
+Il s’agit d’un modèle de produit structuré utilisé pour démontrer :
+
+- extensibilité
+- workflows avancés
+- futures surfaces capacitives
+- architecture SaaS réutilisable
+
+</Callout>
+
+## Quel problème cela résout [#what-problem-this-solves]
+
+De nombreux produits SaaS font la même erreur :
+
+- Fausses fonctionnalités d'entreprise
+- Tableaux de bord irréalistes
+- Analytique inventée
+- Allégations trompeuses « prêtes pour l’IA »
+- vide premium upsells
+
+Cela endommage la confiance.
+
+FeatureShowcase résout ce problème en séparant :
+
+| Couche                   | Objet                                        |
+| ------------------------ | -------------------------------------------- |
+| Fonctionnalité existante | Comportement réel du produit                 |
+| Afficher le calque       | Extensibilité réaliste et modèles évolutifs  |
+| Capacités futures        | Une direction honnête sans fausses promesses |
+
+Le résultat se sent:
+
+- plus crédible
+- plus premium
+- plus orienté produit
+- plus proche des produits SaaS réels comme Vercel, Supabase ou Linear
+
+### Qu'est-ce que FeatureShowcase [#what-featureshowcase-actually-is]
+
+FeatureShowcase est un motif de superposition réutilisable combinant:
+
+- surfaces de prévisualisation floues
+- Capacité de cadrage
+- positionnement du produit
+- Regroupement de caractéristiques
+- messagerie d'extensibilité
+- Points d'entrée CTA
+
+Il se situe entre :
+
+- Produit UX
+- Onboarding
+- Mise à niveau de positionnement
+- architecture communication
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Capacité de cadrage",
+      description:
+        "Présenter des fonctionnalités avancées du produit sans faire de réclamations non étayées.",
+      icon: Sparkles,
+    },
+    {
+      title: "Positionnement réutilisable",
+      description:
+        "Réutilisez le même système de cadrage de produit sur le tableau de bord, la facturation, l'administration et les projets.",
+      icon: Layers3,
+    },
+    {
+      title: "Architecture évolutive",
+      description:
+        "Démontrez comment le produit peut évoluer vers des workflows SaaS plus avancés.",
+      icon: LayoutTemplate,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Les composants rendent l'interface utilisateur. Les motifs façonnent la perception du produit.
+
+FeatureShowcase existe pour communiquer :
+
+- « Ce système est à l’échelle »
+- « Cette fondation est extensible »
+- « Ce SaaS peut évoluer »
+
+sans avoir besoin de toutes les fonctionnalités avancées mises en œuvre immédiatement.
+
+## Bonne vs mauvaise utilisation [#good-vs-bad-usage]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Mauvaise utilisation",
+      title: "Faux positionnement d'entreprise",
+      icon: AlertTriangle,
+      description:
+        "L’utilisation de fausses analyses, de fausses IA, de fausses fonctionnalités RBAC ou imaginaires nuit à la confiance et à la crédibilité du produit.",
+      items: [
+        "métriques inventées",
+        "Fausses réclamations d'entreprise",
+        "Autorisations inexistantes",
+        "Positionnement trompeur de l'IA",
+        "surfaces marketing-lourdes",
+        "template-like UX",
+      ],
+    },
+    {
+      eyebrow: "Bonne utilisation",
+      title: "Extensibilité réaliste",
+      icon: CheckCircle,
+      tone: "pro",
+      description:
+        "Les motifs de vitrines démontrent une évolution crédible du produit tout en restant ancrés dans une architecture réelle.",
+      items: [
+        "Fondations de produits existantes",
+        "capacité de cadrage honnête",
+        "évolution réaliste du produit",
+        "structures SaaS réutilisables",
+        "direction d'entreprise crédible",
+        "positionnement de mise à niveau claire",
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Importante distinction">
+  FeatureShowcase doit communiquer : « cela peut évoluer vers des workflows avancés. »
+
+Pas : "cela existe déjà".
+
+</Callout>
+
+## Où FeatureShowcase fonctionne le mieux [#where-featureshowcase-works-best]
+
+### Facturation [#billing]
+
+Utilisez FeatureShowcase pour présenter :
+
+- abonnement intelligence
+- Prix basé sur l'utilisation
+- analyse des revenus
+- systèmes de facturation
+
+### Projets [#projects]
+
+Utilisez FeatureShowcase pour présenter :
+
+- organisation de l'espace de travail
+- systèmes d'entités évolutifs
+- Les structures de collaboration
+- Flux de produits opérationnels
+
+### Admin [#admin]
+
+Utilisez FeatureShowcase pour présenter :
+
+- systèmes d'invitation
+- Structures d'équipe
+- modèles de propriété
+- modèles de collaboration évolutifs
+
+### Paramètres [#settings]
+
+Utilisez FeatureShowcase pour présenter :
+
+- centres de sécurité
+- gestion des comptes connectés
+- sessions
+- Extensions du cycle de vie du compte
+
+### Exemple de positionnement [#example-positioning]
+
+#### Bon [#good]
+
+```txt
+Can later extend into analytics, quotas, permissions, AI tooling, or billing-aware workflows.
+```
+
+#### Mauvais [#bad]
+
+```txt
+Enterprise AI analytics with advanced RBAC and predictive automation.
+```
+
+si ces systèmes n'existent pas réellement.
+
+### Philosophie des produits [#product-philosophy]
+
+FeatureShowcase est intentionnellement:
+
+- sobre
+- structurées
+- orientées produits
+- architecture-conscient
+
+Il ne devrait jamais ressentir :
+
+- flashy
+- Crypto-like
+- startup-template-heavy
+- trop de gradient
+- Fake-Entreprise
+
+L’objectif est :
+
+> Une évolution SaaS crédible
+
+Pas de hype.
+
+### Relation avec UpgradeGate [#relationship-with-upgradegate]
+
+FeatureShowcase et UpgradeGate résolvent différents problèmes.
+
+| Motif           | Rôle                                                       |
+| --------------- | ---------------------------------------------------------- |
+| upgradegate     | Restreindre ou restreindre l'accès à une fonctionnalité    |
+| FeatureShowcase | Extensibilité actuelle et évolution évolutive des produits |
+
+### upgradegate [#upgradegate]
+
+Utilisez UpgradeGate lorsque :
+
+- une fonctionnalité est restreinte
+- L'accès dépend du plan
+- monétisation contrôle la visibilité
+- une capacité est intentionnellement verrouillée
+
+### FeatureShowcase [#featureshowcase]
+
+Utilisez FeatureShowcase lorsque :
+
+- La capacité existe déjà conceptuellement
+- l'architecture supporte l'extension
+- vous souhaitez présenter une direction de produit évolutive
+- vous souhaitez renforcer la crédibilité SaaS
+
+<Callout title="Une distinction simple">
+  UpgradeGate bloque l'accès.
+
+FeatureShowcase explique l'évolution du produit.
+
+</Callout>
+
+## Erreurs courantes [#common-mistakes]
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "cadrage de capacité réaliste",
+    "Une évolution honnête du produit",
+    "positionnement SaaS évolutif",
+    "Groupement de caractéristiques lié à l'architecture réelle",
+    "présentation sobre orientée entreprise",
+  ]}
+  avoid={[
+    "Fausses réclamations d'entreprise",
+    "Analytique inventée",
+    "Systèmes d'IA imaginaires",
+    "superpositions lourdes",
+    "Caractéristiques inachevées surpromettant",
+  ]}
+/>
+
+## Principes visuels [#visual-principles]
+
+Une bonne FeatureShowcase devrait se sentir:
+
+- intégré dans le produit
+- subtile
+- prime
+- architecture-conscient
+- orientée vers la production
+
+Coiffure recommandée :
+
+- flou doux
+- superpositions à faible contraste
+- frontières minces
+- gradients minimaux
+- Ombres restreintes
+- espacement de type produit
+
+Éviter :
+
+- glassmorphisme
+- lueur agressive
+- gradients surdimensionnés
+- crypto esthétique
+- template-heavy marketing
+
+### Quand ne pas l'utiliser [#when-not-to-use-it]
+
+N'utilisez pas FeatureShowcase :
+
+- sur chaque page
+- pour les composants d'interface utilisateur primitifs
+- en remplacement de l’onboarding
+- pour fausse pression de monétisation
+- pour compenser la faiblesse du produit UX
+
+FeatureShowcase devrait soutenir le produit.
+
+Il ne doit pas dominer le produit.
+
+### Approche PyColors [#pycolors-approach]
+
+PyColors utilise FeatureShowcase comme :
+
+- une couche de positionnement SaaS
+- une couche de communication d'architecture
+- une couche de renforcement de la crédibilité
+
+Il aide les produits à se sentir:
+
+- évolutif
+- extensible
+- prêt pour la production
+
+Sans sacrifier l’honnêteté.
+
+## Guide de décision [#decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Utiliser FeatureShowcase",
+      title: "Quand l’extensibilité compte",
+      icon: Wand2,
+      tone: "pro",
+      description:
+        "Utilisez FeatureShowcase lorsque l'architecture du produit peut évoluer de manière réaliste vers des flux de travail SaaS avancés.",
+      items: [
+        "Systèmes d'espace de travail",
+        "évolution de la facturation",
+        "surfaces d'analyse",
+        "Extensions IA",
+        "workflows d'équipe",
+        "positionnement SaaS avancé",
+      ],
+    },
+    {
+      eyebrow: "Eviter FeatureShowcase",
+      title: "Lorsque la fonctionnalité est fausse",
+      icon: AlertTriangle,
+      description:
+        "N'utilisez pas FeatureShowcase pour simuler la maturité du produit qui n'existe pas.",
+      items: [
+        "Faux tableaux de bord",
+        "Analytique imaginaire",
+        "Faux systèmes d'IA",
+        "Outils d'entreprise inexistants",
+        "Couches de produits uniquement marketing",
+      ],
+    },
+  ]}
+/>
+
+## Prochaine étape [#next-step]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Mettre à niveau le modèle de porte",
+      href: "/docs/patterns/upgrade-gate",
+      description:
+        "Limitez et monétisez les fonctionnalités avec des limites de mise à niveau plus claires.",
+      icon: Sparkles,
+    },
+    {
+      title: "Actions Async",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevoir des flux de mutation plus sûrs avec des états de rétroaction et de chargement explicites.",
+      icon: Wand2,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Transformez les surfaces de produits en fondations SaaS crédibles."
+  description="Starter Pro utilise les modèles FeatureShowcase sur les surfaces de facturation, de projets, d'administration et de positionnement des produits."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

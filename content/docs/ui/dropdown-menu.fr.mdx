@@ -1,0 +1,728 @@
+---
+title: Dropdown Menu
+description: Composant de menu contextuel construit sur Radix DropdownMenu.
+  Prend en charge les groupes, les sous-menus, les éléments de case à
+  cocher/radio et les raccourcis clavier.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import {
+  Badge,
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  ChevronRight,
+  CircleDot,
+  Layers3,
+  ListChecks,
+  Menu,
+  MoreHorizontal,
+  MousePointerClick,
+  PanelTop,
+  PanelsTopLeft,
+  Settings2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+import { ClientOnly } from "../previews/client-only";
+import {
+  CheckboxMenuPreview,
+  RadioMenuPreview,
+} from "../previews/dropdown-menu-previews";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Menu déroulant</Badge>
+</div>
+
+## Actions compactes dans le contexte [#compact-actions-in-context]
+
+Les **Menu déroulant** Composant affiche une liste d'actions à l'intérieur d'une surface flottante ancrée à un déclencheur.
+
+Utilisez-le pour:
+
+- actions en ligne
+- Menus de compte
+- menus de l'éditeur
+- listes de commandes compactes
+- Actions secondaires
+- sélecteurs d'options
+- petits choix contextuels
+
+Le menu déroulant est construit sur **Radix DropdownMenu** et stylisé avec des tokens PyColors tels que `bg-popover`, `border-border`et `text-popover-foreground`.
+
+<Callout title="Idée de base">
+  Le menu déroulant est pour les actions contextuelles compactes. Il ne devrait
+  pas devenir une surface de flux de travail complète.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="dropdown-menu-import.tsx"
+import { DropdownMenu } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisation `DropdownMenuTrigger asChild` avec un déclencheur sémantique, généralement un bouton.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Ouvrir le menu</Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Profil</DropdownMenuItem>
+        <DropdownMenuItem>Paramètres</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive">Supprimer</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-dropdown-menu.tsx"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
+
+export function BasicDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Open menu
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle de déclenchement">
+  Préférez `asChild` donc le déclencheur conserve la sémantique de l'élément que
+  vous passez, comme un bouton réel.
+
+</Callout>
+
+## Quand utiliser le menu déroulant [#when-to-use-dropdown-menu]
+
+Utilisez le menu déroulant lorsque les actions sont secondaires, contextuelles ou compactes.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Actions en ligne",
+      description:
+        "Utiliser pour renommer, dupliquer, archiver, exporter ou supprimer des actions sur un enregistrement.",
+      icon: MoreHorizontal,
+    },
+    {
+      title: "Préférences",
+      description:
+        "Utilisez la case à cocher ou les éléments radio pour la sélection d'options compactes.",
+      icon: Settings2,
+    },
+    {
+      title: "Menu Compte",
+      description:
+        "Utilisez-le pour une navigation compacte au niveau de l'utilisateur, comme le profil, les paramètres ou la déconnexion.",
+      icon: Menu,
+    },
+  ]}
+/>
+
+### Groupement, étiquettes et raccourcis [#grouping-labels-and-shortcuts]
+
+Utilisez des étiquettes et des groupes lorsqu'un menu a plus d'un type d'action.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Actions</Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Projet</DropdownMenuLabel>
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Renommer<DropdownMenuShortcut>— R</DropdownMenuShortcut></DropdownMenuItem>
+          <DropdownMenuItem>Dupliquer<DropdownMenuShortcut>— D</DropdownMenuShortcut></DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">Supprimer<DropdownMenuShortcut>⌫</DropdownMenuShortcut></DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="grouped-dropdown-menu.tsx"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from "@pycolors/ui";
+
+export function GroupedDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Actions
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Project</DropdownMenuLabel>
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            Rename
+            <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Duplicate
+            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">
+          Delete
+          <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle de raccourci">
+  `DropdownMenuShortcut` est visuelle. Il n'enregistre pas automatiquement les
+  raccourcis clavier.
+
+</Callout>
+
+### Case à cocher [#checkbox-items]
+
+Utilisez des cases à cocher pour les bascules indépendantes.
+
+Les exemples interactifs avec state doivent résider dans un composant client.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <CheckboxMenuPreview />
+    </ClientOnly>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="checkbox-menu-preview.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
+
+export function CheckboxMenuPreview() {
+  const [enabled, setEnabled] = React.useState(true);
+  const [pinned, setPinned] = React.useState(false);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Options
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuCheckboxItem
+          checked={enabled}
+          onCheckedChange={(value) => setEnabled(Boolean(value))}
+        >
+          Enabled
+        </DropdownMenuCheckboxItem>
+
+        <DropdownMenuCheckboxItem
+          checked={pinned}
+          onCheckedChange={(value) => setPinned(Boolean(value))}
+        >
+          Pinned
+        </DropdownMenuCheckboxItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuCheckboxItem checked disabled>
+          Disabled option
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Groupe de radio [#radio-group]
+
+Utilisez des articles de radio pour une sélection exclusive.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <RadioMenuPreview />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="radio-menu-preview.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
+
+export function RadioMenuPreview() {
+  const [theme, setTheme] = React.useState("system");
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          Theme
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+
+        <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+          <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuRadioItem value="contrast" disabled>
+          High contrast (soon)
+        </DropdownMenuRadioItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Sous-menus [#submenus]
+
+Utilisez les sous-menus avec parcimonie.
+
+Ils sont utiles lorsqu'une seule action a un petit choix secondaire, tel que le format d'exportation.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">Plus</Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Renommer</DropdownMenuItem>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Exportation</DropdownMenuSubTrigger>
+
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>PDF</DropdownMenuItem>
+            <DropdownMenuItem>CSV</DropdownMenuItem>
+            <DropdownMenuItem>JSON</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">Supprimer</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+
+  </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="dropdown-submenu.tsx"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuSeparator,
+} from "@pycolors/ui";
+
+export function DropdownSubmenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          More
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem>Rename</DropdownMenuItem>
+
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>PDF</DropdownMenuItem>
+            <DropdownMenuItem>CSV</DropdownMenuItem>
+            <DropdownMenuItem>JSON</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle du submenu">
+  Gardez la profondeur du sous-menu à un niveau chaque fois que possible. Les
+  menus profondément imbriqués sont plus difficiles à analyser et à naviguer.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Commencez par le déclencheur [#start-with-the-trigger]
+
+    Utilisez un déclencheur clair tel que `Actions`, `More`ou un bouton d'icône avec une étiquette accessible.
+
+</Step>
+
+  <Step>
+    #### Gardez les éléments orientés vers l'action [#keep-items-action-oriented]
+
+    Préférez les étiquettes verbe-first : Renommer, Dupliquer, Archiver, Exporter, Supprimer.
+
+</Step>
+
+  <Step>
+    #### Groupe seulement si nécessaire [#group-only-when-needed]
+
+    Utilisez des étiquettes et des séparateurs pour clarifier la structure, pas pour décorer le menu.
+
+</Step>
+
+  <Step>
+    #### Confirmer les actions destructrices [#confirm-destructive-actions]
+
+    Un élément de menu destructeur devrait généralement ouvrir une boîte de dialogue avant l'action finale.
+
+</Step>
+
+  <Step>
+    #### Déplacer des workflows complexes ailleurs [#move-complex-workflows-elsewhere]
+
+    Si le menu contient des formulaires, du contenu long ou des décisions en plusieurs étapes, utilisez Sheet, Boîte de dialogue ou une page.
+
+</Step>
+
+</Steps>
+
+## Menu déroulant vs Dialog vs Sheet [#dropdown-menu-vs-dialog-vs-sheet]
+
+| Situation                            | Utilisation    |
+| ------------------------------------ | -------------- |
+| Actions en ligne                     | menu déroulant |
+| Menu Compte                          | menu déroulant |
+| Petit sélecteur de préférences       | menu déroulant |
+| Confirmation destructive             | boîte dialogue |
+| Filtres avancés                      | Sheet          |
+| Flux de travail des paramètres longs | Sheet ou page  |
+| Débit en plusieurs étapes            | Page           |
+
+<Callout type="info" title="Règle de décision">
+  DropdownMenu expose les choix compacts. Le dialogue confirme les décisions
+  ciblées. Sheet gère des flux de travail latéraux plus importants.
+
+</Callout>
+
+## API [#api]
+
+#### Composante [#component]
+
+| Composante                 | Désignation                                    |
+| -------------------------- | ---------------------------------------------- |
+| `DropdownMenu`             | Récipient racine                               |
+| `DropdownMenuTrigger`      | Élément d'ancrage, généralement avec `asChild` |
+| `DropdownMenuContent`      | Surface de menu flottante                      |
+| `DropdownMenuItem`         | Mesure standard                                |
+| `DropdownMenuCheckboxItem` | Élément à bascule indépendant                  |
+| `DropdownMenuRadioGroup`   | Groupe de sélection exclusif                   |
+| `DropdownMenuRadioItem`    | Élément dans un groupe de radio                |
+| `DropdownMenuLabel`        | Étiquette de section                           |
+| `DropdownMenuSeparator`    | Diviseur                                       |
+| `DropdownMenuShortcut`     | Raccourci visuel aligné à droite               |
+| `DropdownMenuGroup`        | Emballage de groupe                            |
+| `DropdownMenuSub`          | Sous-menu racine                               |
+| `DropdownMenuSubTrigger`   | Élément déclencheur du sous-menu               |
+| `DropdownMenuSubContent`   | Sous-menu                                      |
+| `DropdownMenuPortal`       | Portal wrapper pour le contenu du menu         |
+
+#### Ajouts d'emballage [#wrapper-additions]
+
+| Composante               | Ajout de prop     | Objet                                                     |
+| ------------------------ | ----------------- | --------------------------------------------------------- |
+| `DropdownMenuItem`       | `inset?: boolean` | Aligner l'élément avec l'espacement des indicateurs       |
+| `DropdownMenuLabel`      | `inset?: boolean` | Aligner l'étiquette sur les éléments insérés              |
+| `DropdownMenuSubTrigger` | `inset?: boolean` | Aligner le trigger du sous-menu avec les éléments insérés |
+
+Les composants du menu déroulant étendent leurs accessoires Radix respectifs.
+
+```ts title="dropdown-menu-props.ts"
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>;
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>;
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>;
+React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>;
+```
+
+### Accessibilité [#accessibility]
+
+Le menu déroulant est construit sur les primitives Radix DropdownMenu.
+
+La prise en charge du clavier comprend :
+
+- Entrer ou Espace active un élément
+- Touches fléchées pour naviguer
+- Escape ferme le menu
+- Sous-menus support clavier navigation
+- Le focus revient au déclencheur lorsqu'il est fermé
+
+Directives :
+
+- utilisation `DropdownMenuTrigger asChild` avec un déclencheur sémantique
+- fournir un `aria-label` pour les déclencheurs icon-only
+- éviter les entrées complexes dans les menus déroulants
+- Ne comptez pas sur le texte de raccourci comme seule instruction
+- confirmer les actions destructrices dans une boîte de dialogue si nécessaire
+
+<Callout title="Règle d'accessibilité">
+  Un menu déroulant devrait être rapide à numériser et rapide à quitter. Si les
+  utilisateurs doivent penser, lire ou taper, utilisez une autre surface.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Étiquettes d'action courte",
+    "Déclencheurs sémantiques",
+    "groupes uniquement lorsqu'ils améliorent la numérisation",
+    "Confirmation de la boîte de dialogue pour les actions destructrices",
+    "sous-menus uniquement pour les petits choix secondaires",
+  ]}
+  avoid={[
+    "longs paragraphes à l'intérieur des menus",
+    "sous-menus imbriqués profonds",
+    "formulaires ou entrées complexes dans une liste déroulante",
+    "Des actions destructrices sans confirmation",
+    "Utiliser les menus pour les actions principales",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes des éléments de menu doivent être courtes et orientées vers l'action.
+
+<Tabs items={["Bon", "Éviter"]}>
+  <Tab value="Bon">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Renommer</li>
+        <li>Dupliquer</li>
+        <li>Archive</li>
+        <li>Exporter CSV</li>
+        <li>Supprimer</li>
+      </ul>
+    </div>
+
+</Tab>
+
+  <Tab value="Éviter">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Cliquez ici pour renommer ce projet</li>
+        <li>Faire une autre copie de ce projet</li>
+        <li>Retirer pour toujours immédiatement</li>
+        <li>Ouvrir un autre flux compliqué</li>
+      </ul>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Un menu déroulant peut-il contenir un formulaire ?">
+    Habituellement non. Utilisez Sheet, Dialog ou une page dédiée pour les formulaires. Les menus déroulants sont les meilleurs pour les actions courtes et les choix compacts.
+  </Accordion>
+
+<Accordion title="Les actions destructrices devraient-elles vivre dans le menu déroulant?">
+  Le menu peut exposer l'action destructrice, mais la confirmation finale
+  devrait généralement se produire dans une boîte de dialogue.
+</Accordion>
+
+<Accordion title="Quand dois-je utiliser la case à cocher ou les éléments de menu radio?">
+  Utilisez des cases à cocher pour les bascules indépendantes. Utilisez des
+  éléments radio quand exactement une option doit être sélectionnée.
+</Accordion>
+
+  <Accordion title="Les raccourcis sont-ils automatiques ?">
+    Non. `DropdownMenuShortcut` Il est uniquement visuel. L'enregistrement du raccourci clavier doit être mis en œuvre séparément.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Utilisez des boutons sémantiques pour les déclencheurs et les actions primaires.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "boîte dialogue",
+      href: "/docs/ui/dialog",
+      description:
+        "Utilisez la boîte de dialogue pour confirmer les actions destructrices à partir d'un menu.",
+      icon: PanelTop,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Utilisez Sheet pour des flux de travail, des filtres ou des panneaux de détails plus importants.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Motif de recouvrements",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choisissez entre menu déroulant, boîte de dialogue et feuille pour les flux de produits.",
+      icon: Layers3,
+    },
+  ]}
+/>

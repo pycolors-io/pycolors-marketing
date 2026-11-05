@@ -1,0 +1,450 @@
+---
+title: Formulaires avec validation
+description: Créez des formulaires accessibles, prévisibles et prêts pour la
+  production à l'aide des primitives PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+} from "@pycolors/ui";
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  FileText,
+  FormInput,
+  LoaderCircle,
+  Rocket,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>Formulaires</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Les formes sont l’une des parties les plus fragiles d’un produit SaaS.
+
+Ils combinent l'entrée utilisateur, les règles de validation, la soumission asynchrone, l'accessibilité, les états de chargement et la gestion des erreurs. Un bon modèle de forme rend ces responsabilités explicites au lieu de les cacher dans une abstraction opaque.
+
+Ce guide montre comment construire des formulaires prévisibles en utilisant :
+
+- **React Hook Form** pour le form state
+- **Zod** pour la validation du schéma
+- **PyColors UI** pour les primitives d'interface accessibles
+
+<Callout title="Pourquoi cela compte">
+  Les formulaires sont l’endroit où les utilisateurs interagissent directement
+  avec la logique de votre produit. Si la validation, les erreurs et les états
+  de chargement ne semblent pas clairs, la confiance diminue rapidement.
+
+</Callout>
+
+## Ce que vous allez construire [#what-youll-build]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Première validation du schéma",
+      description:
+        "Gardez les règles de validation proches du modèle de données avec des schémas explicites réutilisables.",
+      icon: FileText,
+    },
+    {
+      title: "Feedback accessible",
+      description:
+        "Erreurs de champ de surface, échecs asynchrones et états de chargement avec sémantique accessible.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Flux de production",
+      description:
+        "Gérer de manière prévisible les soumissions asynchrones, les tentatives, les états en attente et les échecs au niveau du formulaire.",
+      icon: CircleAlert,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Etat d'affichage des entrées. Les schémas définissent la vérité. Les formes coordonnent le flux.
+
+Séparez ces responsabilités :
+
+| Couche                | Responsabilité                                                     |
+| --------------------- | ------------------------------------------------------------------ |
+| Schéma                | Définit ce que les données valides signifient                      |
+| État de la forme      | Suivi des valeurs, des erreurs, de l'état sale et de la soumission |
+| primitives UI         | Rendu des étiquettes, des champs, des boutons et des commentaires  |
+| Logique de soumission | Appelle le serveur et gère le succès ou l'échec                    |
+
+<Callout type="info" title="Règle du système">
+  Les motifs de forme PyColors doivent rester explicites. Évitez les
+  abstractions qui cachent les responsabilités de validation, de soumission et
+  d’accessibilité derrière trop d’accessoires.
+
+</Callout>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Définir le schéma [#define-the-schema]
+
+Les règles de validation doivent être proches du modèle de données et non à l'intérieur du composant d'entrée visuel.
+
+```ts title="lib/forms/account-schema.ts"
+import { z } from "zod";
+
+export const accountFormSchema = z.object({
+  email: z.string().email("Enter a valid email address"),
+  password: z.string().min(8, "Password must contain at least 8 characters"),
+});
+
+export type AccountFormValues = z.infer<typeof accountFormSchema>;
+```
+
+Cela vous donne un contrat réutilisable pour la validation côté client et la validation côté serveur.
+
+</Step>
+
+<Step>
+### Se connecter React Hook Form [#connect-react-hook-form]
+
+React Hook Form coordonne les valeurs des champs, la sortie de validation et l'état de soumission.
+
+```tsx title="components/account-form.tsx"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import {
+  accountFormSchema,
+  type AccountFormValues,
+} from "@/lib/forms/account-schema";
+
+const form = useForm<AccountFormValues>({
+  resolver: zodResolver(accountFormSchema),
+  defaultValues: {
+    email: "",
+    password: "",
+  },
+});
+```
+
+<Callout type="info" title="Note d ' exécution">
+  Gardez les valeurs par défaut explicites. Cela rend le formulaire plus facile à raisonner, à tester et à réinitialiser après une soumission réussie.
+
+</Callout>
+
+</Step>
+
+<Step>
+### Rendre les champs avec des erreurs explicites [#render-fields-with-explicit-errors]
+
+Les primitives PyColors UI rendent l'état. Ils ne possèdent pas les règles de validation.
+
+```tsx title="components/account-form.tsx"
+<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+  <Input
+    label="Email"
+    type="email"
+    autoComplete="email"
+    {...form.register("email")}
+    error={form.formState.errors.email?.message}
+  />
+
+  <Input
+    label="Password"
+    type="password"
+    autoComplete="current-password"
+    {...form.register("password")}
+    error={form.formState.errors.password?.message}
+  />
+
+  <Button type="submit" disabled={form.formState.isSubmitting}>
+    {form.formState.isSubmitting ? "Saving…" : "Save changes"}
+  </Button>
+</form>
+```
+
+Cela permet de garder le contrat de composant simple: le champ reçoit le message d'erreur, le formulaire possède la validation, et le bouton reflète l'état de soumission.
+
+</Step>
+
+<Step>
+### Ajouter une rétroaction au niveau du formulaire [#add-form-level-feedback]
+
+Certaines erreurs ne sont pas des erreurs de champ. Les défaillances du réseau, les problèmes d'autorisation et les erreurs inattendues du serveur nécessitent un retour au niveau du formulaire.
+
+```tsx title="components/account-form.tsx"
+{
+  formError ? (
+    <Alert variant="destructive">
+      <AlertTitle>Submission failed</AlertTitle>
+      <AlertDescription>{formError}</AlertDescription>
+    </Alert>
+  ) : null;
+}
+```
+
+Utiliser les erreurs de terrain pour les problèmes d'entrée. Utilisez des alertes pour les problèmes au niveau de la soumission.
+
+</Step>
+
+</Steps>
+
+## Exemple complet [#full-example]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Card className="max-w-xl rounded-2xl border-border/60 bg-card/70">
+      <CardHeader>
+        <CardTitle className="text-base">Paramètres du compte</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <Input label="Email" type="email" placeholder="you@company.com" />
+          <Input label="Mot de passe" type="password" placeholder="••••••••" />
+          <Alert>
+            <AlertTitle>Prêt pour la validation</AlertTitle>
+            <AlertDescription>
+              Cet aperçu montre la surface du formulaire. La validation des fils de l'onglet de code, les erreurs et l'état de soumission.
+            </AlertDescription>
+          </Alert>
+          <Button>Enregistrer les modifications</Button>
+        </div>
+      </CardContent>
+    </Card>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="components/account-form.tsx"
+"use client";
+
+import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+} from "@pycolors/ui";
+import {
+  accountFormSchema,
+  type AccountFormValues,
+} from "@/lib/forms/account-schema";
+
+export function AccountForm() {
+  const [formError, setFormError] = React.useState<string | null>(null);
+
+  const form = useForm<AccountFormValues>({
+    resolver: zodResolver(accountFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: AccountFormValues) {
+    setFormError(null);
+
+    try {
+      await saveAccount(values);
+      form.reset(values);
+    } catch {
+      setFormError("We could not save your changes. Please try again.");
+    }
+  }
+
+  return (
+    <Card className="rounded-2xl border-border/60">
+      <CardHeader>
+        <CardTitle>Account settings</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {formError ? (
+            <Alert variant="destructive">
+              <AlertTitle>Submission failed</AlertTitle>
+              <AlertDescription>{formError}</AlertDescription>
+            </Alert>
+          ) : null}
+
+          <Input
+            label="Email"
+            type="email"
+            autoComplete="email"
+            {...form.register("email")}
+            error={form.formState.errors.email?.message}
+          />
+
+          <Input
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            {...form.register("password")}
+            error={form.formState.errors.password?.message}
+          />
+
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Saving…" : "Save changes"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
+
+async function saveAccount(values: AccountFormValues) {
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  return values;
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Guide de décision [#decision-guide]
+
+Utilisez ce modèle si :
+
+- le formulaire a des règles de validation réelles
+- le formulaire envoie les données de manière asynchrone
+- Les utilisateurs ont besoin d’un retour clair sur le terrain
+- les erreurs doivent être accessibles et explicites
+- le même motif apparaîtra sur les surfaces du produit
+
+Évitez de trop abstraire si :
+
+- La forme change encore fréquemment
+- La logique de validation est cachée dans les composants de l'interface utilisateur
+- un seul composant de formulaire nécessite de nombreux accessoires conditionnels
+- l'abstraction rend le débogage plus difficile
+- L’accessibilité devient implicite
+
+<PreferAvoid
+  prefer={[
+    "schema-driven validation",
+    "Erreurs au niveau du champ près du champ",
+    "Alertes au niveau du formulaire pour les échecs de soumission",
+    "État de chargement du bouton clear soumettre",
+    "structure de forme petite, explicite et prévisible",
+  ]}
+  avoid={[
+    "Abstrait toute la forme trop tôt",
+    "masquage des règles de validation dans les primitives de l'interface utilisateur",
+    "ne montrant qu'un toast pour bloquer les erreurs de formulaire",
+    "permettre des soumissions en double",
+    "ne compter que sur la couleur pour communiquer les erreurs",
+  ]}
+/>
+
+### Liste de contrôle de production [#production-checklist]
+
+Avant d'expédier un formulaire, confirmez que :
+
+- chaque champ a une étiquette visible
+- Les messages de validation sont courts et spécifiques
+- Les erreurs de champ sont affichées à proximité du champ
+- submit est désactivé pendant que la demande est en cours d'exécution
+- Les erreurs async sont visibles dans le formulaire, pas seulement dans un toast
+- la navigation du clavier fonctionne du début à la soumission
+- La validation côté serveur reflète le contrat client
+
+<Callout title="Prêt à déplacer ce modèle dans un véritable flux SaaS?">
+  Starter Pro comprend des fondations adaptées à la production pour
+  l'authentification, la facturation, les routes protégés et les flux de
+  produits. `/docs/starter-pro`
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="La validation doit-elle se faire à l'intérieur du composant d'entrée ?">
+    Non. L'entrée doit rendre l'état. Le schéma et la logique de forme doivent définir ce qui est valide.
+  </Accordion>
+
+<Accordion title="Chaque formulaire doit-il utiliser React Hook Form et Zod ?">
+  Pas nécessairement. Cette pile est un défaut fort, mais le principe est plus
+  important: garder les responsabilités de validation, d'état, de rendu et de
+  soumission séparées.
+</Accordion>
+
+  <Accordion title="Dois-je porter un toast pour les erreurs de forme?">
+    Utilisez des toasts pour les notifications non bloquantes. Utilisez des alertes en ligne pour bloquer les erreurs au niveau du formulaire afin que l'utilisateur puisse comprendre ce qui a échoué dans le contexte.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Entrées",
+      href: "/docs/ui/input",
+      description:
+        "Passez en revue les étiquettes, le texte d'aide et les états d'erreur pour les champs de formulaire.",
+      icon: FormInput,
+    },
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Utilisez les commentaires en ligne pour bloquer les erreurs et les messages d'état importants.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Apprenez à communiquer les états asynchrones de l'interface utilisateur de manière cohérente.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Passez des modèles d'interface utilisateur aux fondations SaaS adaptées à la production.",
+      icon: Rocket,
+    },
+  ]}
+/>

@@ -9,8 +9,14 @@ import {
 } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import UiPage, { metadata } from "@/app/(site)/ui/page";
+import UiPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/ui/page";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 describe("UI overview", () => {
   it("connects the live preview, setup, and customization through native links", () => {
@@ -18,7 +24,7 @@ describe("UI overview", () => {
     expect(screen.getAllByRole("main")).toHaveLength(1);
     expect(screen.getByRole("main")).toHaveAttribute("id", "content");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(metadata.alternates).toEqual({ canonical: "/ui" });
+    expect(metadata.alternates).toMatchObject({ canonical: "/ui" });
     expect(
       screen.getByRole("link", { name: "Start building" }),
     ).toHaveAttribute("href", "/docs/ui/installation");

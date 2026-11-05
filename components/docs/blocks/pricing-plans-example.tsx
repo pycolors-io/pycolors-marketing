@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Button } from "@pycolors/ui";
 
@@ -24,6 +25,8 @@ const rates = {
 } as const;
 
 export function PricingPlansExample() {
+  const tSite = useCopy();
+
   const [period, setPeriod] = React.useState<"monthly" | "yearly">("monthly");
   const [selection, setSelection] = React.useState<string>();
   const rate = rates[period];
@@ -31,72 +34,74 @@ export function PricingPlansExample() {
     {
       id: "launch",
       name: "Launch",
-      description: "A fictional offer for a small project.",
+      description: tSite("A fictional offer for a small project."),
       price: rate.launch,
-      priceSuffix: rate.suffix,
-      billingNote: rate.note,
+      priceSuffix: tSite(rate.suffix),
+      billingNote: tSite(rate.note),
       features: [
-        { id: "projects", label: "One sample project" },
-        { id: "exports", label: "Sample export tools" },
+        { id: "projects", label: tSite("One sample project") },
+        { id: "exports", label: tSite("Sample export tools") },
       ],
       action: (
         <Button
-          onClick={() => setSelection(`Launch (${period})`)}
+          onClick={() => setSelection(`Launch (${tSite(period)})`)}
           type="button"
           variant="outline"
         >
-          Try Launch example
+          {tSite("Try Launch example")}
         </Button>
       ),
     },
     {
       id: "studio",
       name: "Studio",
-      description: "A fictional offer for a growing team.",
+      description: tSite("A fictional offer for a growing team."),
       price: rate.studio,
-      priceSuffix: rate.suffix,
-      billingNote: rate.note,
-      highlight: "Featured example",
+      priceSuffix: tSite(rate.suffix),
+      billingNote: tSite(rate.note),
+      highlight: tSite("Featured example"),
       features: [
-        { id: "projects", label: "Ten sample projects" },
-        { id: "collaboration", label: "Sample collaboration tools" },
-        { id: "exports", label: "Sample export tools" },
+        { id: "projects", label: tSite("Ten sample projects") },
+        { id: "collaboration", label: tSite("Sample collaboration tools") },
+        { id: "exports", label: tSite("Sample export tools") },
       ],
       action: (
         <Button
-          onClick={() => setSelection(`Studio (${period})`)}
+          onClick={() => setSelection(`Studio (${tSite(period)})`)}
           type="button"
         >
-          Try Studio example
+          {tSite("Try Studio example")}
         </Button>
       ),
     },
     {
       id: "custom",
-      name: "Custom",
-      description: "An example of a non-numeric, consumer-owned price.",
-      price: "Let's talk",
-      billingNote: "Scope and terms would be agreed separately.",
-      features: [{ id: "scope", label: "A tailored sample scope" }],
+      name: tSite("Custom"),
+      description: tSite("An example of a non-numeric, consumer-owned price."),
+      price: tSite("Let's talk"),
+      billingNote: tSite("Scope and terms would be agreed separately."),
+      features: [{ id: "scope", label: tSite("A tailored sample scope") }],
       action: (
         <Button disabled type="button" variant="outline">
-          Contact is not connected
+          {tSite("Contact is not connected")}
         </Button>
       ),
-      footnote: "This disabled action does not contact a team.",
+      footnote: tSite("This disabled action does not contact a team."),
     },
   ] satisfies readonly PricingPlan[];
 
   return (
     <div className="not-prose space-y-4">
       <PricingPlans
-        description="Fictional offers only, not PyColors product prices. No purchase or network request occurs."
+        description={tSite(
+          "Fictional offers only, not PyColors product prices. No purchase or network request occurs.",
+        )}
         period={{
-          label: "Sample billing period",
+          label: tSite("Sample billing period"),
           value: period,
           options: [
-            { value: "monthly", label: "Monthly" },
-            { value: "yearly", label: "Yearly" },
+            { value: "monthly", label: tSite("Monthly") },
+            { value: "yearly", label: tSite("Yearly") },
           ],
           onValueChange: (value) => {
             if (value === "monthly" || value === "yearly") {
@@ -106,12 +111,17 @@ export function PricingPlansExample() {
           },
         }}
         plans={plans}
-        title="Explore the pricing pattern"
+        title={tSite("Explore the pricing pattern")}
       />
       <p aria-live="polite" className="min-h-5 text-sm text-muted-foreground">
-        {selection
-          ? `Selected ${selection} in local demo state. Nothing was purchased.`
-          : "Choose an example to preview a consumer-owned action."}
+        {tSite(
+          selection
+            ? tSite(
+                "Selected {value0} in local demo state. Nothing was purchased.",
+                { value0: selection },
+              )
+            : "Choose an example to preview a consumer-owned action.",
+        )}
       </p>
     </div>
   );

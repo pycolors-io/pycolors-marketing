@@ -1,0 +1,157 @@
+---
+title: Accompagnement et assistance
+description: Distinguer la licence source, l’assistance standard et un
+  engagement de mise en œuvre à portée distincte.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, FileText, Layers3, ShieldCheck } from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+
+## Choisissez votre point de départ [#choose-your-starting-point]
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Licence source",
+      eyebrow: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+      icon: FileText,
+      description:
+        "Le prix affiché de Starter Pro couvre le paquet source et les droits de sa licence.",
+      items: [
+        "Votre commande et les conditions fournies définissent l'accès à la mise à jour, la période de support et les engagements de service.",
+      ],
+      href: "/license",
+      cta: "Review the licence",
+    },
+    {
+      title: "Mise en œuvre visée",
+      icon: Layers3,
+      description:
+        "Discutez d'un point de départ assisté pour un flux de travail nommé et un environnement cible.",
+      items: [
+        "La mise en œuvre est citée après l'examen de la portée et est distincte de la commande source uniquement.",
+      ],
+      href: "/request-a-quote",
+      cta: "Discuss your project",
+    },
+  ]}
+/>
+
+## Services de mise en œuvre facultatifs [#optional-implementation-services]
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={Object.values(STARTER_PRO_SERVICES).map((service) => ({
+    title: service.title,
+    eyebrow: service.priceLabel,
+    description: service.description,
+    icon: Layers3,
+    items: [...service.features, service.deliverable, service.scope],
+    href: service.href,
+    cta: service.action,
+  }))}
+/>
+
+Ce sont des frais de service de départ. La licence source et les coûts des fournisseurs tiers sont détaillés séparément dans votre devis. Confirmez les livrables, l'environnement cible, les contrôles d'acceptation, le prix total et le suivi inclus par écrit avant le début des travaux. Un devis peut dépasser le prix de départ affiché.
+
+## Demander une proposition écrite [#request-a-written-proposal]
+
+Utilisez le [Brève présentation du projet](/request-a-quote) pour décrire le flux de travail, choisir la configuration ou l'adaptation de l'entreprise et partager un budget indicatif. L'entreprise et le calendrier souhaité sont facultatifs. Gardez les informations d'identification et les données client hors du brief.
+
+La confirmation fournit une référence de demande après que le fournisseur de messagerie ait accepté la transmission à PyColors. Il ne certifie pas la livraison dans la boîte de réception ni ne confirme un prix, une réservation ou une date de livraison. Nous examinons la demande avant de nous mettre d'accord sur une portée écrite. Utilisez la référence affichée lors du suivi avec PyColors.
+
+## Support de démarrage standard [#standard-starter-support]
+
+Le guidage de l'installation et les défauts reproductibles du starter fourni font partie du support de votre offre achetée. Achat d'accès et utilisation de récupération [Aide à l'achat](/orders/support). Partagez votre version, vos étapes minimales, votre code de diagnostic et une capture d'écran expurgée; gardez les secrets, les cookies de session et les données client hors des messages de support.
+
+<Callout title="Vos conditions achetées font autorité">
+  Ce guide ne remplace pas les conditions fournies avec votre commande ou ne
+  réduit pas les droits accordés avec un achat existant. Les fonctionnalités
+  spécifiques à l'entreprise, l'hébergement, le fonctionnement continu et les
+  mises à niveau du code personnalisé nécessitent une portée convenue. Aucun SLA
+  par défaut, délai de réponse ou couverture 24/7 n'est promis par cette page.
+
+</Callout>
+
+## Définir l’engagement [#define-the-engagement]
+
+Un engagement écrit peut définir les étapes suivantes avec PyColors :
+
+<Steps>
+  <Step>
+    ### Licence et base de référence [#licence-and-baseline]
+
+    Identifiez la version source et l'entité autorisée impliquée.
+
+</Step>
+  <Step>
+    ### Configuration initiale [#initial-configuration]
+
+    Convenez de la configuration de la base de données, de l'authentification, du courrier électronique et de la facturation pour votre environnement cible.
+
+</Step>
+  <Step>
+    ### Adaptation ciblée [#targeted-adaptation]
+
+    Nommez le workflow, l'intégration ou le changement de conception et ses critères d'acceptation.
+
+</Step>
+  <Step>
+    ### Validation et passation [#validation-and-handover]
+
+    S'entendre sur les vérifications, les notes d'exploitation et la propriété des informations d'identification, des sauvegardes et des alertes.
+
+</Step>
+  <Step>
+    ### Suivi limité [#bounded-follow-up]
+
+    Notez la période de soutien, y compris l'assistance et la route d'escalade pour cet engagement.
+
+</Step>
+
+</Steps>
+
+## Adapter une fondation partagée [#adapt-one-shared-foundation]
+
+Utilisez les espaces de travail, les projets, les tâches assignées, les dates d'échéance et les discussions inclus comme premier exemple d'entreprise réutilisable. Conservez les paramètres de marque et de produit dans leurs points d'entrée documentés et créez des flux de travail spécifiques au domaine sur cette base de référence. Un flux de travail ou une intégration spécialisée fait partie des critères d'acceptation et de portée convenus. Réexamen [capacités incluses](/docs/starter-pro/what-is-included) avant de définir votre adaptation.
+
+## Inspecter un exemple de livraison [#inspect-an-example-delivery]
+
+Les [Exemple de mise en œuvre](/starters/pro/implementation-example) transforme les deux engagements en briefs concrets : un environnement de prévisualisation configuré ou un flux de travail interne de livraison client. Il montre la portée, l'enregistrement de l'environnement, les preuves d'acceptation et le contenu du passation d'équipe.
+
+[Télécharger l'exemple éditable](/starters/pro/implementation-example/handover) pour revoir le format. Il s'agit d'un document illustratif : ses champs de résultat sont marqués **PAS D'EXÉCUTION**, avec des espaces pour la révision réelle, l'environnement, le testeur, le résultat et les preuves. Complétez-les à l'acceptation de la portée convenue. Conservez les informations d'identification dans votre gestionnaire d'informations d'identification et n'enregistrez que leur propriété et leur emplacement.
+
+## Préparez-vous pour le passation [#prepare-for-handover]
+
+Confirmez qui exploite l'application, gère les comptes fournisseurs et peut restaurer la base de données. Enregistrez la révision livrée, les résultats d'acceptation et la configuration exceptionnelle de l'opérateur.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Couverture de validation",
+      href: "/docs/starter-pro/release-readiness",
+      description:
+        "Passez en revue les contrôles automatisés et votre acceptation de lancement.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Exploitation en production",
+      href: "/docs/starter-pro/operations",
+      description:
+        "Définir les responsabilités de surveillance, de sauvegarde et de récupération.",
+      icon: BookOpen,
+    },
+  ]}
+/>

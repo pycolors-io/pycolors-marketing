@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import {
   Pagination,
@@ -28,32 +29,36 @@ const pageSize = 2;
 const totalPages = Math.ceil(members.length / pageSize);
 
 export function MembersTable() {
+  const tSite = useCopy();
+
   const [page, setPage] = React.useState(1);
   const visibleMembers = members.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="w-full space-y-4">
       <Table>
-        <TableCaption>Example workspace members</TableCaption>
+        <TableCaption>{tSite("Example workspace members")}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead scope="col">Name</TableHead>
-            <TableHead scope="col">Role</TableHead>
+            <TableHead scope="col">{tSite("Name")}</TableHead>
+            <TableHead scope="col">{tSite("Role")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {visibleMembers.map((member) => (
             <TableRow key={member.id}>
-              <TableCell>{member.name}</TableCell>
-              <TableCell>{member.role}</TableCell>
+              <TableCell>{tSite(member.name)}</TableCell>
+              <TableCell>{tSite(member.role)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <p role="status" className="text-center text-sm text-muted-foreground">
-        Page {page} of {totalPages}
+        {tSite("Page ")}
+        {tSite(page)} {tSite(" of ")}
+        {tSite(totalPages)}
       </p>
-      <Pagination aria-label="Members pages">
+      <Pagination aria-label={tSite("Members pages")}>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -65,11 +70,11 @@ export function MembersTable() {
             (number) => (
               <PaginationItem key={number}>
                 <PaginationLink
-                  aria-label={`Page ${number}`}
+                  aria-label={tSite("Page {value0}", { value0: number })}
                   isActive={page === number}
                   onClick={() => setPage(number)}
                 >
-                  {number}
+                  {tSite(number)}
                 </PaginationLink>
               </PaginationItem>
             ),

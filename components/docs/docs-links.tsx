@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
@@ -111,6 +112,8 @@ function DocsLinksItemRow({
   variant,
   tone,
 }: DocsLinksItemRowProps) {
+  const tSite = useCopy();
+
   const Icon = item.icon;
   const isSteps = variant === "steps";
   const isList = variant === "list";
@@ -160,7 +163,7 @@ function DocsLinksItemRow({
         )}
         aria-hidden="true"
       >
-        {isSteps ? index + 1 : null}
+        {tSite(isSteps ? index + 1 : null)}
         {(isList || isGrid) && Icon ? (
           <Icon className={isGrid ? "size-4" : "size-3.5"} />
         ) : null}
@@ -170,7 +173,7 @@ function DocsLinksItemRow({
       <span className={cn("min-w-0", isGrid && "col-span-2 row-start-2")}>
         {item.eyebrow ? (
           <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-            {item.eyebrow}
+            {tSite(item.eyebrow)}
           </span>
         ) : null}
 
@@ -183,10 +186,12 @@ function DocsLinksItemRow({
               styles.text,
             )}
           >
-            {item.title}
+            {tSite(item.title)}
           </span>
 
-          {item.badge ? <DocsLinksBadge>{item.badge}</DocsLinksBadge> : null}
+          {item.badge ? (
+            <DocsLinksBadge>{tSite(item.badge)}</DocsLinksBadge>
+          ) : null}
         </span>
 
         {item.description ? (
@@ -196,14 +201,14 @@ function DocsLinksItemRow({
               isCompact && "mt-1 leading-5",
             )}
           >
-            {item.description}
+            {tSite(item.description)}
           </span>
         ) : null}
 
         {item.badges?.length ? (
           <span className="mt-3 flex flex-wrap gap-1.5">
             {item.badges.map((badge) => (
-              <DocsLinksBadge key={badge}>{badge}</DocsLinksBadge>
+              <DocsLinksBadge key={badge}>{tSite(badge)}</DocsLinksBadge>
             ))}
           </span>
         ) : null}
@@ -233,16 +238,18 @@ function DocsLinksItemRow({
         target="_blank"
         rel="noreferrer"
         className={className}
-        aria-label={`${item.title} opens in a new tab`}
+        aria-label={tSite("{value0} opens in a new tab", {
+          value0: item.title,
+        })}
       >
-        {content}
+        {tSite(content)}
       </a>
     );
   }
 
   return (
     <Link href={item.href} className={className}>
-      {content}
+      {tSite(content)}
     </Link>
   );
 }
@@ -252,6 +259,8 @@ type DocsLinksBadgeProps = Readonly<{
 }>;
 
 function DocsLinksBadge({ children }: DocsLinksBadgeProps) {
+  const tSite = useCopy();
+
   return (
     <span
       className={cn(
@@ -261,7 +270,7 @@ function DocsLinksBadge({ children }: DocsLinksBadgeProps) {
         "text-[11px] font-medium leading-4 text-muted-foreground",
       )}
     >
-      {children}
+      {tSite(children)}
     </span>
   );
 }

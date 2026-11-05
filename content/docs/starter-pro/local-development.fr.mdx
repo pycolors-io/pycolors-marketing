@@ -1,0 +1,453 @@
+---
+title: Développement local
+description: Structurez un environnement SaaS local réaliste avec
+  l'authentification, la facturation, la base de données et les fondations PWA.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AlertTriangle,
+  CreditCard,
+  Database,
+  Globe,
+  Layers3,
+  LockKeyhole,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Smartphone,
+  Terminal,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Développement local</Badge>
+</div>
+
+## L’environnement local doit être réel [#local-environments-should-feel-real]
+
+Starter Pro est conçu de manière à ce que le développement local valide un comportement SaaS réaliste au lieu de pages de démonstration déconnectées.
+
+L’environnement local soutient :
+
+- Authentification
+- facturation
+- Routes protégées
+- Prisma
+- Stripe
+- Comportement PWA
+- workflows adaptées à la production
+
+<DocsUpgradeCTA
+  title="Commencez à partir d'un environnement local adaptées à la production."
+  description="Validez l'authentification, la facturation, l'expérience utilisateur mobile et l'infrastructure de produit avant d'écrire la logique de domaine."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>
+
+<Callout title="Principe de base">
+  Le développement local devrait valider l'infrastructure de produit, pas
+  seulement la composition de l'interface utilisateur.
+
+</Callout>
+
+## Pourquoi cela compte [#why-this-matters]
+
+De nombreux produits SaaS deviennent difficiles à mettre à l’échelle car les environnements de développement locaux ne reflètent jamais le comportement réel de la production.
+
+Cela crée généralement :
+
+- Flux d'auth incohérents
+- Facturation
+- Onboarding cassé
+- Hypothèses de déploiement dangereuses
+- régressions UX mobiles
+- Configuration de l'environnement fragile
+
+Starter Pro est structuré pour réduire cette dérive opérationnelle dès le début.
+
+```txt title="local-development-model.txt"
+Local setup
+  ↓
+Environment variables
+  ↓
+Database
+  ↓
+Auth
+  ↓
+Billing
+  ↓
+Protected routes
+  ↓
+PWA behavior
+  ↓
+Production confidence
+```
+
+<Callout type="info" title="Aperçu de la production">
+  Une configuration locale forte n'est pas seulement une question de commodité.
+  C'est la première porte de sortie pour votre infrastructure de produits.
+
+</Callout>
+
+### Modèle mental [#mental-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Infrastructure",
+      title: "Couche infrastructure",
+      icon: Server,
+      description: (
+        <>
+          <p>
+            The infrastructure layer includes environment variables, database access, local services, and development scripts.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Environment</Badge>
+            <Badge variant="plan">PostgreSQL</Badge>
+            <Badge variant="plan">Prisma</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Product",
+      title: "Comportement du produit",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The product layer includes dashboards, settings, billing pages, protected routes, and starter surfaces.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Dashboard</Badge>
+            <Badge variant="plan">Settings</Badge>
+            <Badge variant="plan">Billing</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Validation",
+      title: "Couche de validation",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            The validation layer confirms that real flows work before deeper customization starts.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Auth</Badge>
+            <Badge variant="plan">Billing</Badge>
+            <Badge variant="plan">PWA</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Infrastructure incluse [#included-infrastructure]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentification",
+      description:
+        "Auth, les fournisseurs OAuth, les sessions et le routage protégé.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Infrastructure de facturation Stripe-ready et flux sensibles aux abonnements.",
+      icon: CreditCard,
+    },
+    {
+      title: "Base de données",
+      description:
+        "Environnement de développement PostgreSQL alimenté par Prisma.",
+      icon: Database,
+    },
+    {
+      title: "PWA",
+      description:
+        "Comportement des applications installables, routage hors ligne, zones sécurisées et tests autonomes.",
+      icon: Smartphone,
+    },
+  ]}
+/>
+
+## Débit de configuration recommandé [#recommended-setup-flow]
+
+<Steps>
+  <Step>
+    ### Installer les dépendances [#install-dependencies]
+
+```bash
+pnpm install
+```
+
+</Step>
+
+  <Step>
+    ### Configurer les variables d'environnement [#configure-environment-variables]
+
+```bash
+cp .env.example .env.local
+```
+
+</Step>
+
+  <Step>
+    ### Démarrage de l'infrastructure [#start-infrastructure]
+
+```bash
+pnpm db:up
+```
+
+</Step>
+
+  <Step>
+    ### Semer et migrer [#seed-and-migrate]
+
+```bash
+pnpm app:setup
+```
+
+</Step>
+
+  <Step>
+    ### Lancer le développement [#start-development]
+
+```bash
+pnpm dev
+```
+
+</Step>
+
+</Steps>
+
+## Liste de contrôle du développement local [#local-development-checklist]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Requis",
+      title: "Validation des infrastructures",
+      icon: Server,
+      description:
+        "Confirmez que l'environnement local est prêt avant de personnaliser la logique du produit.",
+      items: [
+        "Dépendances installées",
+        "Variables d'environnement configurées",
+        "base de données en cours d'exécution",
+        "Client Prisma généré",
+        "données d’exemple terminées",
+      ],
+    },
+    {
+      eyebrow: "Requis",
+      title: "Validation du produit",
+      icon: Rocket,
+      tone: "primary",
+      description:
+        "Confirmez que Starter Pro se comporte comme un vrai SaaS localement.",
+      items: [
+        "auth flows travail",
+        "affichage des routes de facturation",
+        "les pages de paramètres fonctionnent",
+        "pages protégées rediriger correctement",
+        "Travaux de secours PWA",
+      ],
+    },
+  ]}
+/>
+
+## Liste de contrôle de validation recommandée [#recommended-validation-checklist]
+
+Valider :
+
+- Flux d'authentification
+- routes de facturation
+- Pages protégées
+- réactivité mobile
+- Installabilité PWA
+- comportement de secours hors ligne
+- Réglages des surfaces
+- les données d’exemple locales
+
+<Callout type="info" title="Principe de validation">
+  Validez les flux de produits réels localement avant de les personnaliser en
+  profondeur.
+
+</Callout>
+
+### Erreurs courantes [#common-mistakes]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Environnements de démonstration uniquement",
+      description:
+        "Tester des pages isolées sans valider le comportement réel de l'authentification ou de la facturation.",
+      icon: Layers3,
+    },
+    {
+      title: "Sauter la validation mobile",
+      description:
+        "Ignorer le mode autonome, les zones de sécurité et le comportement de navigation mobile.",
+      icon: Smartphone,
+    },
+    {
+      title: "Environnement Drift",
+      description:
+        "Laissez les variables locales, de mise en scène et de production diverger sans documentation claire.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Validation différée",
+      description:
+        "La personnalisation en profondeur avant de confirmer le fonctionnement des flux de produits par défaut.",
+      icon: Terminal,
+    },
+  ]}
+/>
+
+## Explorez la démo isolée [#explore-the-isolated-demo]
+
+Lors d'un déploiement de démonstration, `/demo` offre trois points d'entrée guidés. Tous les trois utilisent le même espace de travail privé et temporaire, de sorte que le changement de parcours conserve les projets et les changements d'équipe du visiteur.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="neutral"
+  items={[
+    {
+      title: "Découvrir le tableau de bord",
+      description:
+        "Explorez des graphiques remplis, créez un projet et examinez l'activité d'espace de travail résultante.",
+      icon: Layers3,
+    },
+    {
+      title: "Collaborer avec une équipe",
+      description:
+        "Invitez un coéquipier  — example.invalid, simulez des rôles de membre et gérez-les à l'aide du service d'espace de travail.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Prévisualiser la facturation",
+      description:
+        "Passez en revue, annulez, confirmez et redémarrez un aperçu de plan clairement étiqueté dans Facturation, sans entrer les détails de paiement.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+<Callout type="info" title="Un aperçu du plan, pas un test de paiement">
+  Free to Pro s'exécute localement dans le navigateur et se réinitialise en
+  quittant la facturation ou le rechargement. Il ne crée aucun abonnement ou
+  droit payé et ne modifie aucune permission de démonstration ou quota. La
+  validation de la démo publique, le portail et les points de terminaison de
+  webhook restent bloqués sur le serveur. Vérifiez la validation Stripe et les
+  webhooks réels dans un environnement de test distinct en utilisant le [guide
+  de facturation](/docs/starter-pro/billing).
+
+</Callout>
+
+Les inclus `DEMO.md` documents dédiés à la configuration de la base de données, aux invitations simulées, à l'expiration des visiteurs et au nettoyage. Les liens publics dépendent d'un déploiement de démonstration vérifié; ils ne sont pas activés par ces seules instructions locales.
+
+Les [recette d'entreprise pas à pas](/docs/starter-pro/recipes) vous donner des scénarios concrets de projet, de tâche et de commentaire à essayer avec des données fictives. Conservez l'accès à leur espace de travail, archivez et rechargez les contrôles lors de l'adaptation de l'interface.
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "valider l'auth avant la personnalisation du produit",
+    "facturation de test localement avec le mode de test Stripe",
+    "utiliser des seed fixtures pour les états reproductibles",
+    "Tester le comportement mobile et autonome",
+    "Conserver les variables d'environnement documentées",
+  ]}
+  avoid={[
+    "personnalisation avant la validation de l'installation",
+    "Tester uniquement les pages statiques",
+    "Sautez des routes protégés",
+    "Utiliser les secrets de production localement",
+    "Ignorer le comportement PWA safe-area",
+  ]}
+/>
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Variables d'environnement",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configurez l'authentification, la facturation, la base de données et l'infrastructure en toute sécurité.",
+      icon: Server,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez Starter Pro avec une infrastructure prête à la production.",
+      icon: Globe,
+    },
+    {
+      title: "Jeux de données de test",
+      href: "/docs/starter-pro/testing-fixtures",
+      description:
+        "Valider les états de compte réalistes et les flux d'intégration.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Configuration PWA",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Valider l'installabilité locale et le comportement mobile de type app.",
+      icon: Smartphone,
+    },
+    {
+      title: "Procédures pas à pas de recette d'affaires",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Effectuer le suivi des clients, les demandes de support et la validation interne avec des enregistrements fictifs.",
+      icon: Layers3,
+    },
+    {
+      title: "Personnalisation et mises à niveau",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Gardez les modifications de configuration et les adaptations de domaine révisables.",
+      icon: Rocket,
+    },
+  ]}
+/>

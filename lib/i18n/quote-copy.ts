@@ -9,7 +9,8 @@ export const QUOTE_COPY = {
     back: "Back to pricing",
     eyebrow: "Your project",
     heading: "Let’s define the next step.",
-    intro: "Share the essentials. Company and timeline are optional.",
+    intro:
+      "Share the essentials. Add optional implementation details if you already have them.",
     legend: "Project brief",
     name: "Name",
     email: "Email",
@@ -24,6 +25,34 @@ export const QUOTE_COPY = {
     brief: "What would you like to build?",
     briefHelp:
       "Describe the workflow, users and outcome. Keep passwords, API keys and customer data out of your brief.",
+    detailsTitle: "Implementation details",
+    detailsHelp:
+      "Optional context that helps us prepare a more precise scope. Skip anything that is still undecided.",
+    projectType: "Product type",
+    projectStage: "Current stage",
+    undecided: "To be defined",
+    projectTypes: {
+      saas: "SaaS application",
+      "client-portal": "Client portal",
+      "internal-tool": "Internal tool",
+      other: "Other",
+    },
+    projectStages: {
+      new: "New product",
+      existing: "Existing product",
+      redesign: "Redesign or rebuild",
+    },
+    audience: "Who will use it?",
+    audiencePlaceholder: "Internal team, customers, partners…",
+    features: "Priority features and workflows",
+    featuresPlaceholder: "The 2–3 essential workflows for your first delivery.",
+    assets: "Existing assets and integrations",
+    assetsPlaceholder:
+      "Existing app, designs, brand assets, APIs or services to connect.",
+    successCriteria: "What would make this delivery successful?",
+    successPlaceholder: "An observable outcome your team can validate.",
+    tooLarge:
+      "Your brief is too long overall. Shorten the description or implementation details, then try again.",
     trap: "Leave this field empty",
     privacy:
       "We use these details to review your request and contact you about this project. Read our",
@@ -47,6 +76,12 @@ export const QUOTE_COPY = {
       budget: "Choose a budget range or To be scoped.",
       timeline: "Keep the timeline under 100 characters.",
       brief: "Describe your project in 40–4,000 characters.",
+      projectType: "Choose a product type or leave it to be defined.",
+      projectStage: "Choose a project stage or leave it to be defined.",
+      audience: "Keep the audience under 240 characters.",
+      features: "Keep priority features under 1,000 characters.",
+      assets: "Keep assets and integrations under 800 characters.",
+      successCriteria: "Keep the expected outcome under 600 characters.",
     },
   },
   fr: {
@@ -60,7 +95,7 @@ export const QUOTE_COPY = {
     eyebrow: "Votre projet",
     heading: "Définissons la prochaine étape.",
     intro:
-      "Partagez l’essentiel. L’entreprise et le calendrier sont facultatifs.",
+      "Partagez l’essentiel. Vous pouvez aussi préciser les détails de réalisation si vous les connaissez déjà.",
     legend: "Présentation du projet",
     name: "Nom",
     email: "Email",
@@ -75,10 +110,39 @@ export const QUOTE_COPY = {
     brief: "Que souhaitez-vous construire ?",
     briefHelp:
       "Décrivez le parcours, les utilisateurs et le résultat attendu. Ne transmettez ni mots de passe, ni clés API, ni données clients.",
+    detailsTitle: "Détails de réalisation",
+    detailsHelp:
+      "Ces précisions facultatives nous aident à cadrer un devis plus juste. Laissez de côté ce qui n’est pas encore décidé.",
+    projectType: "Type de produit",
+    projectStage: "État du projet",
+    undecided: "À définir",
+    projectTypes: {
+      saas: "Application SaaS",
+      "client-portal": "Portail client",
+      "internal-tool": "Outil interne",
+      other: "Autre",
+    },
+    projectStages: {
+      new: "Nouveau produit",
+      existing: "Produit existant",
+      redesign: "Refonte ou reconstruction",
+    },
+    audience: "Qui utilisera le produit ?",
+    audiencePlaceholder: "Équipe interne, clients, partenaires…",
+    features: "Fonctionnalités et parcours prioritaires",
+    featuresPlaceholder:
+      "Les 2–3 parcours essentiels pour votre première livraison.",
+    assets: "Éléments existants et intégrations",
+    assetsPlaceholder:
+      "Application, maquettes, identité visuelle, API ou services à connecter.",
+    successCriteria: "Qu’est-ce qui rendrait cette livraison réussie ?",
+    successPlaceholder: "Un résultat concret que votre équipe pourra vérifier.",
+    tooLarge:
+      "Votre demande est trop longue au total. Raccourcissez la description ou les détails, puis réessayez.",
     trap: "Laisser ce champ vide",
     privacy:
       "Nous utilisons ces informations pour étudier votre demande et vous contacter au sujet de ce projet. Consultez notre",
-    privacyLink: "politique de confidentialité · en anglais",
+    privacyLink: "politique de confidentialité",
     newTab: "(s’ouvre dans un nouvel onglet)",
     submitting: "Envoi de votre demande…",
     submit: "Demander un devis",
@@ -97,6 +161,12 @@ export const QUOTE_COPY = {
       budget: "Choisissez une fourchette ou À définir.",
       timeline: "Limitez le calendrier à 100 caractères.",
       brief: "Décrivez votre projet en 40 à 4 000 caractères.",
+      projectType: "Choisissez un type de produit ou laissez À définir.",
+      projectStage: "Choisissez une étape du projet ou laissez À définir.",
+      audience: "Limitez le public visé à 240 caractères.",
+      features: "Limitez les fonctionnalités prioritaires à 1 000 caractères.",
+      assets: "Limitez les éléments et intégrations à 800 caractères.",
+      successCriteria: "Limitez le résultat attendu à 600 caractères.",
     },
   },
 } as const;

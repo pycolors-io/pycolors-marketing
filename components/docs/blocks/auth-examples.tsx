@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import * as React from "react";
 
 import { PasswordRecoveryPanel } from "@/content/blocks/auth/password-recovery";
@@ -29,14 +30,16 @@ function DemoField({
   placeholder,
   type,
 }: DemoFieldProps) {
+  const tSite = useCopy();
+
   return (
     <label className="grid gap-2 text-sm font-medium text-foreground">
-      {label}
+      {tSite(label)}
       <input
         autoComplete={autoComplete}
         className={inputClassName}
         name={name}
-        placeholder={placeholder}
+        placeholder={tSite(placeholder)}
         type={type}
       />
     </label>
@@ -44,20 +47,27 @@ function DemoField({
 }
 
 function DemoStatus({ message }: { message?: string }) {
+  const tSite = useCopy();
+
   return (
     <p aria-live="polite" className="min-h-5 text-xs text-muted-foreground">
-      {message ?? "Interactive preview only. No network request is performed."}
+      {tSite(
+        message ?? "Interactive preview only. No network request is performed.",
+      )}
     </p>
   );
 }
 
 export function SignInExample() {
+  const tSite = useCopy();
+
   const [status, setStatus] = React.useState<string>();
 
   return (
     <div className="not-prose mx-auto max-w-md space-y-4">
       <SignInPanel
-        description="Use your workspace account to continue."
+        title={tSite("Sign in")}
+        description={tSite("Use your workspace account to continue.")}
         form={
           <form
             className="space-y-4"
@@ -70,20 +80,20 @@ export function SignInExample() {
           >
             <DemoField
               autoComplete="email"
-              label="Email"
+              label={tSite("Email")}
               name="email"
-              placeholder="you@example.com"
+              placeholder={tSite("you@example.com")}
               type="email"
             />
             <DemoField
               autoComplete="current-password"
-              label="Password"
+              label={tSite("Password")}
               name="password"
               placeholder="••••••••"
               type="password"
             />
             <button className={primaryButtonClassName} type="submit">
-              Sign in
+              {tSite("Sign in")}
             </button>
           </form>
         }
@@ -97,17 +107,18 @@ export function SignInExample() {
             }
             type="button"
           >
-            Continue with GitHub
+            {tSite("Continue with GitHub")}
           </button>
         }
         footer={
           <span>
-            Need an account?{" "}
+            {tSite("Need an account?")}
+            {tSite(" ")}
             <Link
               className="font-medium text-foreground underline underline-offset-4"
               href="/docs/blocks/auth/sign-up"
             >
-              View sign up
+              {tSite("View sign up")}
             </Link>
           </span>
         }
@@ -118,12 +129,17 @@ export function SignInExample() {
 }
 
 export function SignUpExample() {
+  const tSite = useCopy();
+
   const [status, setStatus] = React.useState<string>();
 
   return (
     <div className="not-prose mx-auto max-w-md space-y-4">
       <SignUpPanel
-        description="Create a workspace account with application-owned behavior."
+        title={tSite("Create your account")}
+        description={tSite(
+          "Create a workspace account with application-owned behavior.",
+        )}
         form={
           <form
             className="space-y-4"
@@ -136,45 +152,46 @@ export function SignUpExample() {
           >
             <DemoField
               autoComplete="name"
-              label="Name"
+              label={tSite("Name")}
               name="name"
-              placeholder="Alex Morgan"
+              placeholder={tSite("Alex Morgan")}
               type="text"
             />
             <DemoField
               autoComplete="email"
-              label="Email"
+              label={tSite("Email")}
               name="email"
-              placeholder="you@example.com"
+              placeholder={tSite("you@example.com")}
               type="email"
             />
             <DemoField
               autoComplete="new-password"
-              label="Password"
+              label={tSite("Password")}
               name="password"
-              placeholder="Create a password"
+              placeholder={tSite("Create a password")}
               type="password"
             />
             <button className={primaryButtonClassName} type="submit">
-              Create account
+              {tSite("Create account")}
             </button>
           </form>
         }
         consent={
           <span>
-            {
-              "By continuing, you accept your application's terms and privacy policy."
-            }
+            {tSite(
+              "By continuing, you accept your application's terms and privacy policy.",
+            )}
           </span>
         }
         footer={
           <span>
-            Already registered?{" "}
+            {tSite("Already registered?")}
+            {tSite(" ")}
             <Link
               className="font-medium text-foreground underline underline-offset-4"
               href="/docs/blocks/auth/sign-in"
             >
-              View sign in
+              {tSite("View sign in")}
             </Link>
           </span>
         }
@@ -185,12 +202,17 @@ export function SignUpExample() {
 }
 
 export function PasswordRecoveryExample() {
+  const tSite = useCopy();
+
   const [status, setStatus] = React.useState<string>();
 
   return (
     <div className="not-prose mx-auto max-w-md space-y-4">
       <PasswordRecoveryPanel
-        description="Enter the email associated with your workspace account."
+        title={tSite("Recover your account")}
+        description={tSite(
+          "Enter the email associated with your workspace account.",
+        )}
         form={
           <form
             className="space-y-4"
@@ -203,23 +225,23 @@ export function PasswordRecoveryExample() {
           >
             <DemoField
               autoComplete="email"
-              label="Email"
+              label={tSite("Email")}
               name="email"
-              placeholder="you@example.com"
+              placeholder={tSite("you@example.com")}
               type="email"
             />
             <button className={primaryButtonClassName} type="submit">
-              Request recovery link
+              {tSite("Request recovery link")}
             </button>
           </form>
         }
-        help="Use the address your application recognizes."
+        help={tSite("Use the address your application recognizes.")}
         footer={
           <Link
             className="font-medium text-foreground underline underline-offset-4"
             href="/docs/blocks/auth/sign-in"
           >
-            Back to sign in
+            {tSite("Back to sign in")}
           </Link>
         }
       />

@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, cn } from "@pycolors/ui";
 
@@ -30,9 +31,11 @@ export type PageHeroProps = {
 };
 
 function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
+  const tSite = useCopy();
+
   return (
     <span className="inline-flex items-center rounded-md border border-border-subtle bg-background/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
-      {children}
+      {tSite(children)}
     </span>
   );
 }
@@ -68,6 +71,8 @@ export function PageHero({
   align = "center",
   maxWidth = "4xl",
 }: PageHeroProps) {
+  const tSite = useCopy();
+
   const isCentered = align === "center";
   const isCompact = variant === "compact";
   const maxWidthClass = getMaxWidthClass(maxWidth);
@@ -81,7 +86,7 @@ export function PageHero({
         className,
       )}
     >
-      {background}
+      {tSite(background)}
       {!isCompact ? (
         <>
           {/* subtle premium glow */}
@@ -120,8 +125,8 @@ export function PageHero({
                 variant={badge.variant ?? "outline"}
                 className="gap-1.5 rounded-md border-border-subtle px-2.5 py-1 text-[11px] font-medium"
               >
-                {badge.icon ? badge.icon : null}
-                {badge.label}
+                {tSite(badge.icon ? badge.icon : null)}
+                {tSite(badge.label)}
               </Badge>
             ))}
           </div>
@@ -136,11 +141,11 @@ export function PageHero({
             badges.length > 0 ? (isCompact ? "mt-5" : "mt-7") : "mt-0",
           )}
         >
-          {title}
+          {tSite(title)}
 
           {subtitle ? (
             <span className="mt-3 block font-medium tracking-[-0.025em] text-muted-foreground">
-              {subtitle}
+              {tSite(subtitle)}
             </span>
           ) : null}
         </h1>
@@ -152,7 +157,7 @@ export function PageHero({
               isCentered && "mx-auto",
             )}
           >
-            {description}
+            {tSite(description)}
           </p>
         ) : null}
 
@@ -166,7 +171,7 @@ export function PageHero({
               actionsClassName,
             )}
           >
-            {actions}
+            {tSite(actions)}
           </div>
         ) : null}
 
@@ -179,14 +184,14 @@ export function PageHero({
             )}
           >
             {pills.map((pill) => (
-              <Pill key={pill}>{pill}</Pill>
+              <Pill key={pill}>{tSite(pill)}</Pill>
             ))}
           </div>
         ) : null}
 
         {extra ? (
           <div className={cn(isCompact ? "mt-6" : "mt-10", extraClassName)}>
-            {extra}
+            {tSite(extra)}
           </div>
         ) : null}
       </div>

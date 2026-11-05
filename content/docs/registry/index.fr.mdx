@@ -1,0 +1,64 @@
+---
+title: Registry
+description: Comprendre le pilote PyColors Registry, sa compatibilité testée et
+  quand utiliser les paquets npm ou la source manuelle Block à la place.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+Le registre PyColors est une couche de distribution sur les paquets PyColors publics et la source canonique Block. Son premier pilote combine `pycolors-base` avec `feedback-empty-state-panel`, en utilisant l'interface de ligne de commande shadcn amont plutôt qu'un nouvel installateur PyColors.
+
+<Callout title="Documentation pilote, pas une annonce de disponibilité publique">
+  L'installation à partir d'artefacts locaux générés a passé la matrice des
+  consommateurs décrite ci-dessous. L'installation sans justificatifs d'identité
+  à partir du miroir Marketing public, y compris ses dépendances au Registre,
+  nécessite toujours une vérification de disponibilité distincte avec examen
+  humain. Les commandes d'adresse publique dans ce guide sont conditionnelles à
+  cette vérification; elles ne sont pas une preuve que cela s'est produit.
+  Utilisation [Installation manuelle des blocs](/docs/blocks) En attendant.
+
+</Callout>
+
+## Choisissez votre surface d'installation [#choose-your-installation-surface]
+
+- **Paquets npm publics :** utilisation [Installation de l'interface utilisateur](/docs/ui/installation) lorsque vous composez vos propres interfaces. `@pycolors/ui` et `@pycolors/tokens` restent des dépendances avec des exportations publiques.
+- **Source du bloc manuel :** utilisation [Installation des blocs](/docs/blocks) pour copier directement un motif documenté. Vous configurez vous-même les dépendances et les styles et possédez le code copié.
+- **Pilote du registre :** utiliser le [Guide d'installation du registre](/docs/registry/installation) pour inspecter la configuration de base et le premier élément gratuit avant de les appliquer à une application existante compatible. La vérification des transports publics reste une condition préalable.
+
+L'installation du registre ne fait pas de la source copiée un paquet npm mis à jour automatiquement. Il ne fournit pas d'authentification, de facturation, de registre privé ou de téléchargements premium. Il n'y a pas `@pycolors/blocks` paquet ou propriétaire `pycolors init`, `add`ou `doctor` commande dans ce workflow.
+
+## Contexte de l'agent facultatif [#optional-agent-context]
+
+[Utiliser PyColors avec des assistants de développement IA](/docs/registry/agent-context) explique comment partager les conventions PyColors avec votre agent aujourd'hui. Le fichier contextuel facultatif est toujours un fichier pilote en attente de livraison publique du registre; il n'est pas inclus par le pilote de base ou de bloc.
+
+## Compatibilité testée [#tested-compatibility]
+
+Les preuves d'installation couvrent ces scénarios exacts, pas toutes les versions dans une gamme complète:
+
+- Next.js **16.1.1**, App Router, application autonome.
+- Vite **8.0.0**, React application, autonome.
+- La même application dans **`apps/web` d'un espace de travail pnpm**, avec une configuration locale de l'application et un espace de travail frère inchangé.
+
+Les versions communes sont **Node 24**, **pnpm 10.32.1**, **shadcn 4.19.0**,
+**React et React DOM 19.2.0**, **TypeScript 6.0.3**et **Tailwind CSS et son plugin PostCSS 4.3.3**. La matrice installe le public **`@pycolors/ui` 1.5.2**,
+**`@pycolors/tokens` 1.2.2**et **`lucide-react` 1.47.0**. Son outillage de qualité utilise ESLint 9.39.5, eslint-config-next 16.1.1 et Prettier 3.9.6.
+
+La configuration requise est stricte TypeScript/TSX, `radix-nova`, Lucide, variables CSS, classes Tailwind non préfixées, et alias locaux à l'application consommatrice. La feuille de style est `src/app/globals.css` pour Next.js ou `src/styles/globals.css` pour Vite, par rapport à cette application. Vite conserve la base `rsc: true` Paramètre CLI ; cela ne donne pas de composants de serveur de Vite React.
+
+Les autres frameworks ou gestionnaires de packages, la sortie JavaScript, l'interface utilisateur de base, les autres styles, Tailwind 3, les classes préfixées, les différentes profondeurs de feuille de style, la configuration TypeScript héritée et les alias d'applications croisées sont en dehors de ce chemin testé. Commencez par l'installation manuelle plutôt que de supposer que la CLI rejettera en toute sécurité une configuration non prise en charge.
+
+## Ce que prouvent les chèques [#what-the-checks-prove]
+
+Les trois scénarios fonctionnent deux fois chacun avec des projets froids et des magasins de colis. Ils installent de véritables dépendances publiques npm, valident le placement de fichiers et CSS, exercent des conflits d'installation et de fichiers répétés, et exécutent le formatage, les types lint, stricts, les tests de source installés et les builds de production. Les scripts de cycle de vie de dépendance sont désactivés dans ces montages.
+
+Les tests résolvent les artefacts de registre locaux générés. Une charge utile de test temporaire mappe la dépendance de base du pilote à l'artefact de base local ; le manifeste faisant autorité et la source générée originale ne sont pas modifiés. Le test de consommation hors ligne distinct exerce également l'inspection d'article avec `view`.
+
+C’est la preuve de l’installation d’artefacts, et non de la livraison en direct de GitHub, de chaque future résolution de dépendance, de l’interaction du navigateur ou de l’accessibilité visuelle. Les [guide d'installation](/docs/registry/installation) explique l'adressage public et la limite de transport restante.
+
+## Poursuivre [#continue]
+
+[Installer la base et le premier élément](/docs/registry/installation), puis lire [Propriété, mises à jour et restauration](/docs/registry/updates). Pour une étape ratée, utilisez [Dépannage du registre](/docs/registry/troubleshooting).
+
+[Parcourir le catalogue Blocks](/blocks) pour d'autres motifs ; un bloc documenté n'est pas automatiquement un élément de Registre. Besoin d'une fondation d'application complète? [Découvrir Starter Free](/docs/starter), [En savoir plus sur Starter Pro](/docs/starter-pro)ou [Comparer les starters](/starters). Ce sont des produits distincts, pas des capacités de registre premium.

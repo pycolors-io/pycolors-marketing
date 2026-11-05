@@ -1,0 +1,406 @@
+---
+title: Structure du projet
+description: Comprendre comment NA-AI Landing est organisé afin que vous
+  puissiez le personnaliser sans casser l'architecture.
+lastUpdated: "2026-10-17"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
+import {
+  Database,
+  Boxes,
+  FolderTree,
+  Layers3,
+  LayoutTemplate,
+  Palette,
+  Rocket,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Structure</Badge>
+</div>
+
+## Comprendre l'architecture avant de réécrire l'interface utilisateur [#understand-the-architecture-before-rewriting-the-ui]
+
+NA-AI Landing s’organise autour d’une simple séparation :
+
+> Contrôle du contenu. Les sections rendent les blocs de produits. Les composants de mise en page encadrent la page. PyColors UI fournit des primitives.
+
+Cela permet de garder la personnalisation propre, prévisible et plus facile à maintenir à mesure que la page de destination évolue.
+
+La plupart du contenu du produit peut être mis à jour à partir de:
+
+```txt
+src/@data
+```
+
+avant de toucher la mise en œuvre visuelle.
+
+<DocsUpgradeCTA
+  title="La structure est optimisée pour une itération rapide."
+  description="NA-AI Landing sépare le contenu, les sections, la mise en page et les primitives de l'interface utilisateur afin que vous puissiez personnaliser le positionnement et l'image de marque sans reconstruire la base."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
+
+<Callout title="Idée clé">
+  Le modèle est conçu pour que le contenu du produit puisse évoluer sans
+  réécrire constamment la base visuelle.
+
+</Callout>
+
+### Vue d'ensemble de l'architecture [#architecture-overview]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Structure pilotée par les données",
+      icon: FolderTree,
+      description:
+        "Contenu, prix, navigation, FAQ, témoignages et copie CTA en direct dans des fichiers de données centralisés.",
+    },
+    {
+      title: "Sections composables",
+      icon: LayoutTemplate,
+      description:
+        "Les blocs de page d'atterrissage sont isolés en sections de présentation réutilisables.",
+    },
+    {
+      title: "primitives d'interface utilisateur partagée",
+      icon: Boxes,
+      description:
+        "La couche visuelle est alimentée par l'interface utilisateur PyColors et les tokens de conception sémantique.",
+    },
+    {
+      title: "Flux de travail de personnalisation rapide",
+      icon: Sparkles,
+      description:
+        "L'architecture donne la priorité à l'image de marque, au positionnement et à l'itération rapide des produits.",
+    },
+  ]}
+/>
+
+## Structure [#structure]
+
+<Files>
+  <Folder name="src" defaultOpen>
+    <Folder name="@data" defaultOpen>
+      <File name="contact.ts" />
+      <File name="cta.ts" />
+      <File name="customers.ts" />
+      <File name="faq.ts" />
+      <File name="features.ts" />
+      <File name="footer.ts" />
+      <File name="hero.ts" />
+      <File name="index.ts" />
+      <File name="integrations.ts" />
+      <File name="navbar.ts" />
+      <File name="not-found.ts" />
+      <File name="pricing-table.ts" />
+      <File name="pricing.ts" />
+    </Folder>
+
+    <Folder name="app" defaultOpen>
+      <File name="globals.css" />
+      <File name="layout.tsx" />
+      <File name="page.tsx" />
+      <File name="not-found.tsx" />
+      <File name="robots.ts" />
+      <File name="sitemap.ts" />
+    </Folder>
+
+    <Folder name="components" defaultOpen>
+      <Folder name="layout">
+        <File name="footer.tsx" />
+        <File name="na-ai-logo.tsx" />
+        <File name="navbar.tsx" />
+        <File name="section-header.tsx" />
+        <File name="theme-provider.tsx" />
+        <File name="toogle-theme.tsx" />
+      </Folder>
+
+      <Folder name="sections">
+        <Folder name="features" />
+        <Folder name="hero" />
+        <File name="contact.tsx" />
+        <File name="cta.tsx" />
+        <File name="customers.tsx" />
+        <File name="faq.tsx" />
+        <File name="integrations.tsx" />
+        <File name="pricing-table.tsx" />
+        <File name="pricing.tsx" />
+      </Folder>
+
+      <Folder name="ui">
+        <File name="browser-window.tsx" />
+      </Folder>
+    </Folder>
+
+    <Folder name="config">
+      <File name="fonts.ts" />
+      <File name="site.ts" />
+      <File name="template.ts" />
+    </Folder>
+
+  </Folder>
+
+  <Folder name="public" defaultOpen>
+    <Folder name="icons" />
+    <Folder name="na-ai" />
+    <Folder name="seo" />
+    <File name="manifest.webmanifest" />
+  </Folder>
+</Files>
+
+### Flux d'architecture [#architecture-flow]
+
+```txt title="architecture-flow.txt"
+src/@data
+  ↓
+components/sections
+  ↓
+components/layout
+  ↓
+@pycolors/ui + @pycolors/tokens
+```
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Data',
+      title: "Couche de données",
+      icon: Database,
+      description: (
+        <>
+          <p>
+            The data layer owns structured content, pricing values, navigation labels, FAQ items, testimonials, and section configuration.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Content ownership</Badge>
+            <Badge variant="plan">Pricing configuration</Badge>
+            <Badge variant="plan">Navigation structure</Badge>
+            <Badge variant="plan">FAQ and testimonials</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Sections',
+      title: "Couche de section",
+      icon: LayoutTemplate,
+      description: (
+        <>
+          <p>
+            The section layer renders the product blocks that compose the landing page experience and conversion flow.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Hero sections</Badge>
+            <Badge variant="plan">Pricing sections</Badge>
+            <Badge variant="plan">Feature blocks</Badge>
+            <Badge variant="plan">Conversion surfaces</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Layout',
+      title: "Couche de disposition",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The layout layer controls navbar, footer, section framing, theme provider, and shared page composition.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Navbar</Badge>
+            <Badge variant="plan">Footer</Badge>
+            <Badge variant="plan">Theme provider</Badge>
+            <Badge variant="plan">Global layout</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'UI',
+      title: "primitives UI",
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            UI primitives come from <code>@pycolors/ui</code> while visual consistency comes from <code>@pycolors/tokens</code>.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Semantic tokens</Badge>
+            <Badge variant="plan">Shared primitives</Badge>
+            <Badge variant="plan">Consistent spacing</Badge>
+            <Badge variant="plan">Light and dark mode</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Répertoire des données [#data-directory]
+
+| Fichier            | Responsabilité                                                    |
+| ------------------ | ----------------------------------------------------------------- |
+| `hero.ts`          | Copie de héros, CTA, badges et contenu visuel                     |
+| `features.ts`      | Cartes de fonctionnalités et contenu de section d'analyse de l'IA |
+| `integrations.ts`  | Catégories d'intégration et cartes d'intégration                  |
+| `pricing.ts`       | Plans de tarification et de facturation                           |
+| `pricing-table.ts` | Lignes de comparaison des prix                                    |
+| `customers.ts`     | Témoignages et témoignages clients                                |
+| `faq.ts`           | FAQ contenu                                                       |
+| `contact.ts`       | Copie du formulaire de contact et options d'objectif              |
+| `cta.ts`           | Section de conversion finale                                      |
+| `navbar.ts`        | Liens de navigation                                               |
+| `footer.ts`        | Liens de pied de page et copie de pied de page                    |
+
+<Callout title="Règle de personnalisation">
+  Changer les données en premier. Modifiez les composants de la section
+  uniquement lorsque la structure actuelle ne prend plus en charge l'histoire du
+  produit.
+
+</Callout>
+
+## Ajouter une nouvelle section [#add-a-new-section]
+
+<Steps>
+  <Step>
+    ### Créer le fichier de données [#create-the-data-file]
+
+```bash title="terminal"
+touch src/@data/use-cases.ts
+```
+
+</Step>
+
+  <Step>
+    ### Créer le composant de section [#create-the-section-component]
+
+```bash title="terminal"
+touch src/components/sections/use-cases.tsx
+```
+
+</Step>
+
+  <Step>
+    ### Composez la section à l'intérieur de la page [#compose-the-section-inside-the-page]
+
+```tsx title="src/app/page.tsx"
+import { UseCasesSection } from "@/components/sections/use-cases";
+
+export default function Page() {
+  return <UseCasesSection />;
+}
+```
+
+</Step>
+
+</Steps>
+
+## Règles d'architecture recommandées [#recommended-architecture-rules]
+
+<PreferAvoid
+  prefer={[
+    "contenu data-driven",
+    "composants de petite section",
+    "primitives partagées de PyColors",
+    "tokens sémantiques",
+    "UI spécifique au modèle isolé",
+  ]}
+  avoid={[
+    "hardcoding toutes les copies dans les composants",
+    "Mettre la logique backend dans les sections",
+    "dupliquer les enveloppes de mise en page",
+    "supprimer les importations de tokens",
+    "forking des primitives d'interface utilisateur partagées inutilement",
+  ]}
+/>
+
+### Pourquoi cette structure [#why-this-structure-scales]
+
+Au fur et à mesure que les pages de destination se développent, les problèmes proviennent généralement de frontières peu claires:
+
+- copie mélangée avec la logique de mise en page
+- Sections dupliquées
+- Espacement incohérent
+- Valeurs de prix dispersées
+- Des actifs SEO déconnectés
+- remplacements visuels incontrôlés
+
+Cette structure réduit ces problèmes en gardant les responsabilités séparées dès le début.
+
+<Callout title="Principe de mise à l'échelle">
+  Une bonne architecture de landing page devrait rendre l’itération moins chère
+  au fil du temps, pas plus fragile.
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Pourquoi conserver le contenu dans src/ — data ?">
+    Il garde les composants de section concentrés sur la présentation et rend la page de destination plus facile à personnaliser rapidement.
+  </Accordion>
+
+<Accordion title="Puis-je transférer des données ailleurs ?">
+  Oui. Gardez la même séparation : le contenu doit rester indépendant des
+  composants de présentation.
+</Accordion>
+
+<Accordion title="Puis-je connecter un CMS ?">
+  Oui. Remplacez la source de données locale progressivement tout en gardant les
+  composants de section stables.
+</Accordion>
+
+  <Accordion title="Puis-je supprimer PyColors UI?">
+    Vous pouvez, mais ce n'est généralement pas recommandé, sauf si vous voulez reconstruire la fondation de l'interface utilisateur vous-même.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Personnalisation",
+      href: "/docs/templates/na-ai-landing/customization",
+      description:
+        "Mettre à jour la copie, les sections, le branding, les métadonnées SEO et les ressources.",
+      icon: Palette,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/templates/na-ai-landing/deployment",
+      description:
+        "Déployer la page de destination à la production après la personnalisation.",
+      icon: Rocket,
+    },
+  ]}
+/>

@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, FormInput, Layers3, PanelsTopLeft } from "lucide-react";
 
 const groups = [
@@ -48,9 +49,11 @@ const groups = [
 ] as const;
 
 export function DocsComponentCatalog() {
+  const tSite = useCopy();
+
   return (
     <nav
-      aria-label="Component reference"
+      aria-label={tSite("Component reference")}
       className="not-prose grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))]"
     >
       {groups.map(({ title, description, icon: Icon, components }) => (
@@ -60,9 +63,11 @@ export function DocsComponentCatalog() {
         >
           <div className="border-b border-border-subtle bg-linear-to-br from-primary/[0.03] to-transparent p-4">
             <Icon className="mb-4 size-4 text-primary" aria-hidden="true" />
-            <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+            <h3 className="text-sm font-semibold text-foreground">
+              {tSite(title)}
+            </h3>
             <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
-              {description}
+              {tSite(description)}
             </p>
           </div>
           <ul className="m-0 list-none p-2">
@@ -72,7 +77,7 @@ export function DocsComponentCatalog() {
                   href={`/docs/ui/${slug}`}
                   className="group flex min-h-10 items-center justify-between gap-2 rounded-md px-3 py-2 text-sm text-foreground no-underline transition-colors hover:bg-muted/40 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
                 >
-                  {name}
+                  {tSite(name)}
                   <ArrowUpRight
                     className="size-3.5 shrink-0 text-muted-foreground/60 group-hover:text-foreground"
                     aria-hidden="true"

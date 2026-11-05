@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useState } from "react";
 import { Download } from "lucide-react";
 import { SiteButton as Button } from "@/components/site-button";
@@ -9,6 +10,8 @@ export function DownloadButton({
   file,
   label,
 }: Readonly<{ file: ThemeFile; label: string }>) {
+  const tSite = useCopy();
+
   const [result, setResult] = useState<{
     content: string;
     fileName: string;
@@ -44,14 +47,14 @@ export function DownloadButton({
         onClick={handleDownload}
       >
         <Download aria-hidden="true" />
-        {label}
+        {tSite(label)}
       </Button>
       <p
         role="status"
         aria-live="polite"
         className={`max-w-64 text-xs ${current?.error ? "text-destructive" : "text-muted-foreground"} empty:hidden`}
       >
-        {current?.message ?? ""}
+        {tSite(current?.message ?? "")}
       </p>
     </div>
   );

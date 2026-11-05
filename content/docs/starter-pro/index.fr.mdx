@@ -1,0 +1,618 @@
+---
+title: Vue d’ensemble
+description: Découvrez Starter Pro, son contenu et ses fondations compatibles
+  PWA pour accélérer le lancement, la monétisation, la sécurisation, la
+  validation et la préparation de votre SaaS.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  CheckCircle2,
+  CreditCard,
+  Database,
+  Download,
+  FlaskConical,
+  GitBranch,
+  Globe,
+  Layers3,
+  LockKeyhole,
+  MonitorSmartphone,
+  Package,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Terminal,
+  TestTube2,
+  WifiOff,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Pro</Badge>
+  <Badge variant="secondary">Prêt pour PWA</Badge>
+</div>
+
+## Transformez une application adaptée au produit en véritable SaaS [#turn-a-product-shaped-app-into-a-real-saas]
+
+Starter Pro est la couche de production qui vous aide à **UI validée** au **infrastructure SaaS réelle**.
+
+Starter Free vous aide à façonner la surface du produit.
+
+Starter Pro vous aide à vous lancer avec :
+
+- Authentification réelle
+- facturation réelle
+- Structure prête pour le backend
+- Routes protégées
+- livraison sécurisée
+- développement local
+- Facturation des flux de validation
+- Fondements d'applications compatibles PWA
+- workflows SaaS orientés production
+
+Ce n’est pas seulement plus d’UI. C'est la couche qui supprime le travail d'ingénierie qui retarde généralement les revenus.
+
+<DocsUpgradeCTA
+  title="Starter Free valide le produit. Starter Pro dirige l'entreprise."
+  description="Déplacez-vous vers Starter Pro lorsque les flux moqueurs cessent d'être suffisants et que la facturation, les routes protégés, le backend, les jeux de données de test, les fondations d'applications compatibles PWA et la confiance en déploiement deviennent le bloqueur."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="Compare pricing"
+/>
+
+<Callout title="La différence simple">
+  Starter Free valide le produit. Starter Pro dirige l’entreprise et donne à
+  votre SaaS une base plus applicative et prête à la production.
+
+</Callout>
+
+## Ce que Starter Pro résout [#what-starter-pro-solves]
+
+La plupart des projets SaaS ralentissent au même moment :
+
+> L’UI est crédible. Désormais, la facturation, le backend, le déploiement, l'accès protégé, les états de test et les fondations de qualité applicative doivent devenir réalité.
+
+Cette phase est :
+
+- longue durée
+- sensible à la sécurité
+- Revenue-critical
+- Facile de se tromper partiellement
+- facile à retarder en production
+
+Starter Pro existe pour réduire ce coût de mise en œuvre répété afin que vous puissiez passer plus de temps sur la différenciation des produits.
+
+## Ce que Starter Pro inclut [#what-starter-pro-includes]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentification",
+      description:
+        "Auth par e-mail / mot de passe, OAuth, vérification par e-mail, réinitialisation du mot de passe, flux de session et fondations de compte plus sûres.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Stripe Checkout, portail de facturation, abonnements, factures, synchronisation webhook et comportement des produits en accord avec le plan.",
+      icon: CreditCard,
+    },
+    {
+      title: "fondations backend",
+      description:
+        "Structure prête pour les bases de données, modèles Prisma, modèles côté serveur, logique auth-aware et limites de facturation-aware.",
+      icon: Database,
+    },
+    {
+      title: "Jeux de données de test",
+      description:
+        "États de compte local seeded pour valider l'authentification, l'intégration, la facturation, les routes protégés et le comportement des produits compatibles avec les abonnements.",
+      icon: TestTube2,
+    },
+    {
+      title: "Fondation d'application PWA-ready",
+      description:
+        "Mode manifeste, installable, comportement autonome, icônes professionnelles, captures d'écran, gestion de la fenêtre d'affichage mobile et routage de secours hors ligne.",
+      icon: Smartphone,
+    },
+    {
+      title: "Déploiement de la production",
+      description:
+        "Variables d'environnement, domaines de production, HTTPS, webhooks Stripe, validation locale à la production et guide de déploiement pour la confiance de lancement.",
+      icon: Globe,
+    },
+  ]}
+/>
+
+### Modèle de système [#system-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Architecture',
+      title: "Architecture",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            Starter Pro is organized around route groups, feature modules, server boundaries, shared UI foundations, and app-shell patterns.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Route groups</Badge>
+            <Badge variant="plan">Feature modules</Badge>
+            <Badge variant="plan">Server boundaries</Badge>
+            <Badge variant="plan">Shared UI</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Local',
+      title: "Développement local",
+      icon: Terminal,
+      description: (
+        <>
+          <p>
+            Local development validates the real SaaS foundation before deep customization: environment variables, database, seed fixtures, auth, billing, and PWA behavior.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">PostgreSQL</Badge>
+            <Badge variant="plan">Prisma</Badge>
+            <Badge variant="plan">Seed fixtures</Badge>
+            <Badge variant="plan">Stripe test mode</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Validation',
+      title: "Tests et validation",
+      icon: FlaskConical,
+      description: (
+        <>
+          <p>
+            Starter Pro includes guidance for validating account states, billing lifecycle behavior, protected access, and app-ready mobile surfaces before launch.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Testing fixtures</Badge>
+            <Badge variant="plan">Billing testing</Badge>
+            <Badge variant="plan">Protected routes</Badge>
+            <Badge variant="plan">Release checks</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'PWA',
+      title: "Couche app PWA-ready",
+      icon: MonitorSmartphone,
+      description: (
+        <>
+          <p>
+            Starter Pro includes installable app foundations with manifest metadata, standalone mode, icons, screenshots, service worker registration, and offline fallback routing.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Manifest</Badge>
+            <Badge variant="plan">Standalone</Badge>
+            <Badge variant="plan">Offline fallback</Badge>
+            <Badge variant="plan">Mobile app-like UX</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Starter Free vs Starter Pro [#starter-free-vs-starter-pro]
+
+| Capacité                                            | Starter Free           | Starter Pro                   |
+| --------------------------------------------------- | ---------------------- | ----------------------------- |
+| Surfaces d'interface utilisateur adaptée au produit | Inclus                 | Inclus                        |
+| Écrans et états UX                                  | Inclus                 | Inclus + filaire              |
+| Email et mot de passe auth                          | Faux                   | Réel                          |
+| Fournisseurs OAuth                                  | Non inclus             | Google + GitHub               |
+| Vérification par e-mail                             | Non inclus             | Réel                          |
+| Réinitialisation du mot de passe                    | Faux                   | Réel                          |
+| Stripe Checkout                                     | UI uniquement          | Réel                          |
+| Portail de facturation                              | UI uniquement          | Réel                          |
+| Webhook sync                                        | Non inclus             | Réel                          |
+| Guide d'essai de facturation                        | Non inclus             | Inclus                        |
+| Factures et abonnements                             | Faux                   | Réel                          |
+| Routes protégées                                    | Partielle              | Conçu pour la production      |
+| Structure du backend                                | Faux                   | Prêt à l'emploi               |
+| Jeux de données de test                             | Non inclus             | Inclus                        |
+| La voie du développement local                      | De base                | Forme de production           |
+| manifeste PWA                                       | Basic/manuel si ajouté | Fondation incluse             |
+| Mode installable                                    | Non inclus             | Inclus                        |
+| Fallback hors ligne                                 | Non inclus             | Données de référence incluses |
+| Captures d'écran et icônes d'application            | Non inclus             | Fondation incluse             |
+| Directives de déploiement                           | De base                | Orienté vers la production    |
+| Meilleur cas d'utilisation                          | Valider UX             | Lancement plus rapide         |
+
+<Callout title="Libre de valider. Pro pour monétiser et empaqueter.">
+  Starter Free prouve la surface. Starter Pro vous permet de facturer les
+  clients avec des bases d'authentification, de facturation, de backend, de
+  test, de déploiement, de livraison et d'applications compatibles PWA.
+
+</Callout>
+
+## Stratégie de mise à niveau [#upgrade-strategy]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Starter Free",
+      title: "Restez en Free pendant la validation",
+      href: "/docs/starter",
+      icon: Sparkles,
+      description:
+        "Utilisez Starter Free tout en façonnant les routes, les écrans, la copie, les flux de produits et la proposition de valeur de base.",
+      items: [
+        "tableau de bord et navigation",
+        "État des produits simulés",
+        "itération UX rapide",
+        "frontend-première validation",
+        "Exploration MVP rapide",
+      ],
+      cta: "Explore Starter Free →",
+    },
+    {
+      eyebrow: "Starter Pro",
+      title: "Passer à Pro lorsque le câblage devient le bloqueur",
+      href: "/docs/starter-pro",
+      icon: Rocket,
+      tone: "pro",
+      description:
+        "Utilisez Starter Pro lorsque l'authentification, la facturation, les routes protégés, les contrats backend, les états de test locaux, les fondations d'applications prêtes pour PWA et la confiance de la production deviennent le ralentissement du lancement.",
+      items: [
+        "Authentification réelle",
+        "Stripe facturation",
+        "Routes protégées",
+        "fondations backend",
+        "jeux de données de test",
+        "couche PWA installable",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+### Chemin de construction [#builder-path]
+
+La plupart des constructeurs suivent ce chemin :
+
+1. Démarrer avec Starter Free
+2. Valider l’UX et la structure du produit
+3. Déménagement vers Starter Pro
+4. Comprendre l’architecture
+5. configurer le développement local
+6. Configurer les variables d'environnement
+7. valider les jeux de données de test
+8. Authentification filaire
+9. téléfacturation
+10. valider le cycle de vie de facturation
+11. valider l'installabilité PWA
+12. Connecter la logique du backend
+13. Valider la livraison et le déploiement
+14. lancement
+
+Starter Pro est le pont entre :
+
+> On dirait un SaaS
+
+et:
+
+> Cela peut devenir une véritable entreprise SaaS
+
+### Ce que vous construisez [#what-you-still-build]
+
+Starter Pro est une fondation, pas votre produit final.
+
+Vous possédez toujours :
+
+- votre logique de produit
+- votre modèle de domaine
+- vos workflows
+- votre onboarding
+- votre positionnement
+- votre différenciation
+- votre stratégie finale hors ligne si vous avez besoin de plus que du support de secours
+
+C'est là le problème. Starter Pro supprime les travaux d'infrastructure répétés afin que vous puissiez vous concentrer sur ce que les clients paient réellement.
+
+## Pourquoi Starter Pro existe [#why-starter-pro-exists]
+
+Vous n’achetez pas « plus de code ».
+
+Vous achetez :
+
+- temps économisé
+- Risque de lancement réduit
+- exécution plus propre
+- moins de cas d'authentification et de facturation
+- Chemin plus rapide vers les revenus
+- Une plus grande confiance dans la production
+- Des tests locaux réalistes
+- une perception plus crédible des produits app-like
+
+<Callout title="Délais de paiement des recettes">
+  Starter Free prouve que votre produit peut exister. Starter Pro permet de
+  générer des revenus et de se sentir plus proche d'une application SaaS réelle
+  installée.
+
+</Callout>
+
+### Explorez le système [#explore-the-system]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Architecture",
+      href: "/docs/starter-pro/architecture",
+      description:
+        "Comprendre les groupes de routes, les modules de fonctionnalités, les limites de serveur et les fondations d'interface utilisateur partagées.",
+      icon: Layers3,
+    },
+    {
+      title: "Premiers pas",
+      href: "/docs/starter-pro/getting-started",
+      description:
+        "Configurez Starter Pro localement et validez la base de référence adaptées à la production.",
+      icon: Rocket,
+    },
+    {
+      title: "Développement local",
+      href: "/docs/starter-pro/local-development",
+      description:
+        "Structurez un environnement SaaS local réaliste avec auth, facturation, base de données et fondations PWA.",
+      icon: Terminal,
+      badge: "New",
+    },
+    {
+      title: "Jeux de données de test",
+      href: "/docs/starter-pro/testing-fixtures",
+      description:
+        "Valider l'authentification, l'intégration, la facturation, les routes protégés et les états d'abonnement localement.",
+      icon: TestTube2,
+      badge: "New",
+    },
+    {
+      title: "Variables d'environnement",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configurez les URL, l'authentification, la base de données, Stripe et la livraison des e-mails en toute sécurité.",
+      icon: Server,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez Starter Pro avec une infrastructure prête à la production et lancez la confiance.",
+      icon: Globe,
+    },
+    {
+      title: "Authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Comprendre les utilisateurs, les sessions, OAuth, la vérification, la récupération et les fondements du cycle de vie du compte.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Consultez Stripe Checkout, portail client, abonnements, factures et synchronisation d'état basée sur webhook.",
+      icon: CreditCard,
+    },
+    {
+      title: "Test de facturation",
+      href: "/docs/starter-pro/billing-testing",
+      description:
+        "Validez le paiement, les webhooks, le cycle de vie de l'abonnement et l'accès à la facturation avant le lancement.",
+      icon: CheckCircle2,
+      badge: "New",
+    },
+    {
+      title: "PWA",
+      href: "/docs/starter-pro/pwa",
+      description:
+        "Comprenez l'installabilité, le mode autonome, l'UX mobile de type applicatif, les captures d'écran et le routage hors ligne.",
+      icon: Smartphone,
+      badge: "New",
+    },
+    {
+      title: "Backend",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Explorez la structure prête pour les bases de données, les modèles Prisma, les contrôles de propriété et les limites côté serveur.",
+      icon: Database,
+    },
+    {
+      title: "Livraison",
+      href: "/docs/starter-pro/delivery",
+      description:
+        "Découvrez comment fonctionnent l'accès sécurisé aux produits, le stockage privé et la livraison post-achat.",
+      icon: Download,
+    },
+  ]}
+/>
+
+### Fondation de validation locale [#local-validation-foundation]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Configuration",
+      title: "Développement local",
+      href: "/docs/starter-pro/local-development",
+      icon: Terminal,
+      tone: "platform",
+      description:
+        "Validez l'infrastructure, la base de données, l'authentification, la facturation, les routes protégés et le comportement PWA avant une personnalisation en profondeur.",
+      items: [
+        "configuration de l'environnement",
+        "démarrage de la base de données",
+        "données d’exemple et flux migratoires",
+        "Liste de contrôle de validation locale",
+      ],
+      cta: "Open local setup →",
+    },
+    {
+      eyebrow: "Fixtures",
+      title: "Jeux de données de test",
+      href: "/docs/starter-pro/testing-fixtures",
+      icon: TestTube2,
+      tone: "primary",
+      description:
+        "Utilisez les états seeded pour valider les comportements d'authentification, d'intégration, de facturation et d'accès protégé réalistes.",
+      items: [
+        "Utilisateur vérifié",
+        "Utilisateur non vérifié",
+        "Utilisateur OAuth uniquement",
+        "Utilisateur sous abonnement",
+      ],
+      cta: "Open fixtures →",
+    },
+    {
+      eyebrow: "Facturation",
+      title: "Test de facturation",
+      href: "/docs/starter-pro/billing-testing",
+      icon: CreditCard,
+      description:
+        "Validez le paiement, la vérité du webhook, le cycle de vie de l'abonnement et l'accès aux plans avant le lancement.",
+      items: [
+        "Stripe CLI",
+        "webhook sync",
+        "États d'abonnement",
+        "Accès Premium Route",
+      ],
+      cta: "Open billing testing →",
+    },
+  ]}
+/>
+
+<Callout type="info" title="Limite de validation">
+  Starter Pro n’est pas seulement une interface de démarrage. Il inclut le
+  chemin de validation local nécessaire pour tester un comportement SaaS
+  réaliste avant le lancement.
+
+</Callout>
+
+## Fondation PWA-ready [#pwa-ready-foundation]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Qualité de l'application",
+      title: "Base SaaS installable",
+      href: "/docs/starter-pro/pwa",
+      icon: Smartphone,
+      tone: "platform",
+      description:
+        "Starter Pro inclut les détails de qualité applicative qui rendent le produit plus mature sur ordinateur et mobile.",
+      items: [
+        "métadonnées manifestes",
+        "mode autonome",
+        "icônes professionnelles",
+        "captures d'écran du tableau de bord",
+        "viewport mobile-safe",
+      ],
+      cta: "Explore PWA →",
+    },
+    {
+      eyebrow: "Qualité de la publication",
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/pwa-production-checklist",
+      icon: ShieldCheck,
+      description:
+        "Validez l'installabilité, le comportement du service worker, les replis hors ligne, les captures d'écran, iOS, Android et HTTPS de production avant le lancement.",
+      items: [
+        "Chrome DevTools validation",
+        "test de repli hors ligne",
+        "test d'installation mobile",
+        "Contrôle du phare",
+        "vérification HTTPS de production",
+      ],
+      cta: "Open checklist →",
+    },
+  ]}
+/>
+
+<Callout type="info" title="Frontière PWA">
+  Starter Pro fournit une base PWA sûre. Auth, la facturation, l'administration
+  et l'état de l'abonnement restent en ligne et vérifiables par le serveur.
+
+</Callout>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Pourquoi acheter plutôt que tout développer",
+      href: "/docs/starter-pro/why-buy-instead-of-building",
+      description:
+        "Comprendre pourquoi l'achat de la fondation peut être un levier plus important que la reconstruction de l'authentification, de la facturation, du backend et des fondations d'applications.",
+      icon: GitBranch,
+    },
+    {
+      title: "Jeux de données de test",
+      href: "/docs/starter-pro/testing-fixtures",
+      description:
+        "Validez localement les états de compte réalistes, les flux d'intégration, les états de facturation et les routes protégés.",
+      icon: TestTube2,
+      badge: "New",
+    },
+    {
+      title: "Test de facturation",
+      href: "/docs/starter-pro/billing-testing",
+      description:
+        "Validez le paiement, les webhooks, les abonnements et le comportement SaaS sensible à la facturation avant le lancement.",
+      icon: CreditCard,
+      badge: "New",
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validez l'authentification, la facturation, le backend, la livraison, l'environnement et la préparation au déploiement avant le lancement.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Construire le produit. Ne reconstruisez pas les bloqueurs."
+  description="Starter Pro vous donne la base de la production afin que vous puissiez passer plus de temps sur les clients, les produits, les revenus et la différenciation."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="Compare pricing"
+/>

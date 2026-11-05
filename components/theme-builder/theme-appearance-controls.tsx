@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useId } from "react";
 import {
   APPEARANCE_OPTIONS,
@@ -19,6 +20,8 @@ export function ThemeAppearanceControls({
   dashboard,
   onChange,
 }: Props) {
+  const tSite = useCopy();
+
   const id = useId();
   function choice<K extends keyof AppearancePreferences>(
     key: K,
@@ -27,7 +30,7 @@ export function ThemeAppearanceControls({
     return (
       <div key={key}>
         <label htmlFor={`${id}-${key}`} className="text-xs font-medium">
-          {label}
+          {tSite(label)}
         </label>
         <select
           id={`${id}-${key}`}
@@ -42,7 +45,7 @@ export function ThemeAppearanceControls({
         >
           {APPEARANCE_OPTIONS[key].map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {tSite(option.label)}
             </option>
           ))}
         </select>
@@ -58,7 +61,7 @@ export function ThemeAppearanceControls({
   return (
     <div className="mt-5 space-y-5">
       <fieldset>
-        <legend className="text-sm font-medium">Radius</legend>
+        <legend className="text-sm font-medium">{tSite("Radius")}</legend>
         <div className="mt-3 grid grid-cols-5 gap-1.5">
           {APPEARANCE_OPTIONS.radius.map((option) => (
             <button
@@ -68,7 +71,7 @@ export function ThemeAppearanceControls({
               onClick={() => onChange({ radius: option.value })}
               className={`min-h-8 rounded-[3px] border border-border-subtle px-1 text-[11px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring max-sm:min-h-11 ${value.radius === option.value ? "bg-foreground text-background" : "hover:bg-surface-muted"}`}
             >
-              {option.label}
+              {tSite(option.label)}
             </button>
           ))}
         </div>
@@ -76,18 +79,18 @@ export function ThemeAppearanceControls({
       {dashboard ? (
         <details className="border-t border-border-subtle pt-5">
           <summary className="cursor-pointer text-sm font-medium">
-            Dashboard preview
+            {tSite("Dashboard preview")}
           </summary>
           <div className="mt-4 space-y-4">
-            {choice("scale", "Interface scale")}
-            {choice("density", "Density")}
-            {choice("width", "Content width")}
+            {tSite(choice("scale", "Interface scale"))}
+            {tSite(choice("density", "Density"))}
+            {tSite(choice("width", "Content width"))}
             <div>
               <label
                 htmlFor={`${id}-sidebar-mode`}
                 className="text-xs font-medium"
               >
-                Sidebar
+                {tSite("Sidebar")}
               </label>
               <select
                 id={`${id}-sidebar-mode`}
@@ -100,19 +103,21 @@ export function ThemeAppearanceControls({
                     onChange({ sidebar: "collapsed", sidebarCollapse: mode });
                 }}
               >
-                <option value="expanded">Expanded</option>
-                <option value="icons">Icons</option>
-                <option value="hidden">Hidden</option>
+                <option value="expanded">{tSite("Expanded")}</option>
+                <option value="icons">{tSite("Icons")}</option>
+                <option value="hidden">{tSite("Hidden")}</option>
               </select>
             </div>
-            {choice("sidebarVariant", "Sidebar style")}
-            {choice(
-              mode === "light" ? "sidebarLight" : "sidebarDark",
-              "Sidebar background",
+            {tSite(choice("sidebarVariant", "Sidebar style"))}
+            {tSite(
+              choice(
+                mode === "light" ? "sidebarLight" : "sidebarDark",
+                "Sidebar background",
+              ),
             )}
-            {choice("header", "Header")}
-            {choice("canvas", "Canvas")}
-            {choice("motion", "Motion")}
+            {tSite(choice("header", "Header"))}
+            {tSite(choice("canvas", "Canvas"))}
+            {tSite(choice("motion", "Motion"))}
           </div>
         </details>
       ) : null}

@@ -1,0 +1,185 @@
+---
+title: Installation des blocs
+description: Copiez un répertoire source PyColors Block dans votre application,
+  conservez la source sous votre propriété et validez-la avec des importations
+  d'interface utilisateur publique.
+lastUpdated: "2026-10-08"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Blocs</Badge>
+  <Badge>Copie source</Badge>
+</div>
+
+[Explorez le catalogue Blocks](/blocks) choisir un shell d'application, un panneau d'authentification, une surface de commerce, une table de données, une surface de compte / espace de travail, un état vide ou un autre modèle documenté avant de suivre les étapes d'installation ci-dessous.
+
+Dans le catalogue, ouvrez **Code** pour inspecter la source complète et sa structure de dossiers. L'arborescence des fichiers est visible par défaut à côté du code sur le bureau et au-dessus sur mobile. Utilisation **Fichiers** pour le cacher ou le montrer; les blocs avec plusieurs fichiers ont également un sélecteur de fichiers sur mobile.
+
+**Télécharger ZIP** sauvegarde le bloc complet dans une archive, en préservant le bloc `src/components/blocks/<block-slug>/` structure. Extrayez-le, puis déplacez le dossier du bloc dans votre application. **Copier le fichier** copie uniquement le fichier sélectionné; vous pouvez également sélectionner le code manuellement si la copie n'est pas disponible. Conservez tous les fichiers ensemble et préservez leurs importations relatives.
+
+Les blocs simples restent dans un fichier. Les compositions plus grandes utilisent quelques fichiers ciblés avec un `index.tsx` point d'entrée. Le ZIP contient la même source que celle affichée dans l'explorateur ; configurez React, le package d'interface utilisateur publique et les tokens dans votre propre application.
+
+## Copier la source, puis la posséder [#copy-source-then-own-it]
+
+PyColors Blocks utilise un flux manuel de copie de source. Lorsqu'un bloc est disponible, copiez son répertoire source canonique dans votre application, puis traitez le code copié comme votre propre code produit.
+
+<Callout title="Blocs canoniques documentés">
+  Le contrat de catégorie et de dénomination est approuvé. Le catalogue
+  documenté comprend
+  [`app-shells/responsive-sidebar`](/docs/blocks/app-shells/responsive-sidebar),
+  [`auth/sign-in`](/docs/blocks/auth/sign-in),
+  [`auth/sign-up`](/docs/blocks/auth/sign-up),
+  [`auth/password-recovery`](/docs/blocks/auth/password-recovery),
+  [`data/data-table`](/docs/blocks/data/data-table),
+  [`data/stats-overview`](/docs/blocks/data/stats-overview),
+  [`account/settings-panel`](/docs/blocks/account/settings-panel),
+  [`account/onboarding-checklist`](/docs/blocks/account/onboarding-checklist),
+  [`commerce/pricing-plans`](/docs/blocks/commerce/pricing-plans),
+  [`commerce/billing-overview`](/docs/blocks/commerce/billing-overview),
+  [`commerce/payment-method`](/docs/blocks/commerce/payment-method),
+  [`commerce/invoice-history`](/docs/blocks/commerce/invoice-history),
+  [`feedback/empty-state-panel`](/docs/blocks/feedback/empty-state-panel),
+  [`account/workspace-members`](/docs/blocks/account/workspace-members),
+  [`account/workspace-invitations`](/docs/blocks/account/workspace-invitations)
+  et [`account/audit-log`](/docs/blocks/account/audit-log). Une autre source
+  canonique fusionnée est mise en évidence par des problèmes de parité
+  docs/catalogue examinés séparément avant de devenir une partie de ce contrat
+  de découverte publique.
+
+</Callout>
+
+Il n'y a pas `@pycolors/blocks` paquet, propriétaire PyColors CLI, ou synchronisation automatique. La copie de la source ne modifie pas la version du package et ne nécessite pas de Changeset.
+
+Les [Guide pilote du registre](/docs/registry) documente une base distincte et `feedback-empty-state-panel` flux de travail via la CLI shadcn amont. L'installation d'un miroir public nécessite toujours un contrôle de disponibilité séparé. Le flux manuel sur cette page reste supporté et n'est pas remplacé par le pilote.
+
+## Localisation Canonique [#canonical-source-location]
+
+Le dépôt PyColors conserve la source canonique Block à :
+
+```text
+apps/marketing/content/blocks/<category-slug>/<block-slug>/
+```
+
+Les deux segments de chemin utilisent un kebab minuscule. `<category-slug>` doit être l'un des limaces approuvées ci-dessous, et chaque bloc de production possède une écurie `<block-slug>`.
+
+## Catégories approuvées [#approved-categories]
+
+Chaque bloc a une catégorie primaire. Les balises peuvent prendre en charge la découverte secondaire sans créer d'alias de source ou de catégorie en double.
+
+| Catégorie                      | Slug         | Questions de source-propriétaire |
+| ------------------------------ | ------------ | -------------------------------- |
+| Coquilles d ' application      | `app-shells` | #94                              |
+| Authentification               | `auth`       | #95                              |
+| Commerce                       | `commerce`   | — 96 et — 98                     |
+| Compte &amp; espace de travail | `account`    | — 97 et — 99                     |
+| Données et enregistrements     | `data`       | #101                             |
+| Feedback &amp; états           | `feedback`   | #100                             |
+
+La source, la navigation dans la documentation et les métadonnées du Registre utilisent les mêmes `<category-slug>/<block-slug>` Identité. Par exemple, `data/data-table` maps à l'route de documentation `/docs/blocks/data/data-table` et, seulement après une approbation distincte du Registre, l'élément du Registre `data-data-table`.
+
+La disponibilité gratuite et Pro sont des métadonnées distinctes sur cette identité partagée. Ils ne créent pas de taxonomies différentes et n'exposent pas de sources privées.
+
+Les aperçus de documentation doivent importer ou rendre la source de bloc canonique lorsque cela est pratique. Un aperçu n'est jamais une implémentation alternative à copier.
+
+<Callout title="Autorité source">
+  `@pycolors/ui` et `@pycolors/tokens` restent les autorités publiques
+  primitives et symboliques. Starter Free est une preuve de produit et les
+  aperçus de documentation sont des exemples, pas une source de bloc
+  alternative. Les artéfacts de registre ne distribuent que la source canonique,
+  tandis que le futur Pro reste une autorité distincte sous le numéro 36. La
+  première séquence source approuvée était #94, puis #101, puis #97; le
+  séquençage courant est coordonné par #35.
+
+</Callout>
+
+## Installer un bloc [#install-a-block]
+
+<Steps>
+  <Step>
+    ### Copier le répertoire source complet [#copy-the-complete-source-directory]
+
+    Copier le canonique `<block-slug>` dans un emplacement que votre application possède, comme `src/components/blocks/<block-slug>`. Conservez les fichiers locaux du bloc ensemble afin que ses importations relatives restent locales à la source copiée.
+
+    Utilisation **Télécharger ZIP** dans la vue Code du catalogue pour récupérer chaque fichier à la fois, ou copier chaque fichier individuellement. L'archive est assemblée dans votre navigateur à partir de la source affichée. Il n'installe pas de dépendances ou ne met pas à jour votre application.
+
+</Step>
+
+  <Step>
+    ### Utiliser les importations publiques de l'interface utilisateur PyColors [#use-public-pycolors-ui-imports]
+
+    Installer et configurer `@pycolors/ui` dans l'application de consommation en suivant les [Guide d'installation](/docs/ui/installation). Le bloc source doit importer les primitives PyColors à partir du point d'entrée du paquet public uniquement lorsqu'il en a besoin.
+
+    ```tsx title="src/components/blocks/<block-slug>/index.tsx"
+    import { Button, Card } from "@pycolors/ui";
+    ```
+
+    Ne pas utiliser `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, alias d'applications internes ou privés `@pycolors/*` paquets. Les importations React ou Next ne sont appropriées que lorsque le bloc copié en a réellement besoin.
+
+</Step>
+
+  <Step>
+    ### Personnaliser le code copié [#customize-the-copied-code]
+
+    Le code copié appartient à votre application. Adaptez-le à vos routes, votre contenu, votre style, votre état et vos règles produit. PyColors ne met pas automatiquement à jour ou ne synchronise pas la source Block copiée.
+
+</Step>
+
+  <Step>
+    ### Valider le résultat [#validate-the-result]
+
+    Exécutez les commandes lint, type-check, test et build de votre application après avoir copié ou personnalisé un bloc. Conservez la sémantique accessible, le comportement du clavier, les étiquettes et les états de focus visibles tout en apportant des modifications.
+
+</Step>
+
+</Steps>
+
+## Contrôles des dépôts [#repository-checks]
+
+Les mainteneurs PyColors valident ce contrat de copie source avec :
+
+```bash
+pnpm check:blocks-contract
+pnpm test:blocks-contract
+pnpm --filter pycolors-marketing lint
+pnpm --filter pycolors-marketing types:check
+pnpm --filter pycolors-marketing build
+```
+
+Le contrôle structurel applique la catégorie exacte allowlist et les noms minuscules de kebab-case, rejette les espaces réservés vides, profond `@pycolors/ui` les importations, les importations internes d'applications ou de paquets, et les artefacts de paquet, de registre ou d'interface de ligne de commande. Il valide le contrat de livraison sans créer un bloc de production d'échantillons.
+
+## Les mises à jour sont délibérées [#updates-are-deliberate]
+
+Les blocs sont des copies sources, pas une dépendance gérée. Si une future version canonique change, examinez-la délibérément et apportez uniquement les modifications qui correspondent à votre application. Votre copie reste sous votre contrôle jusqu'à ce que vous choisissiez de la mettre à jour.
+
+## Copier directement depuis la documentation [#copy-directly-from-the-documentation]
+
+Chaque bloc disponible a un **Copier la source** avec son implémentation canonique complète. Vous n'avez pas besoin de localiser les fichiers monorepo pour inspecter ou copier ce code:
+
+- [Copier le chat AI](/docs/blocks/app-shells/ai-chat#copy-source).
+- [Barre latérale Copy Responsive](/docs/blocks/app-shells/responsive-sidebar#copy-source).
+- [Copier Connexion](/docs/blocks/auth/sign-in#copy-source).
+- [Copier Inscrivez-vous](/docs/blocks/auth/sign-up#copy-source).
+- [Copier la récupération de mot de passe](/docs/blocks/auth/password-recovery#copy-source).
+- [Copier la table de données](/docs/blocks/data/data-table#copy-source).
+- [Vue d'ensemble de Copy Stats](/docs/blocks/data/stats-overview#copy-source).
+- [Copier le panneau Paramètres](/docs/blocks/account/settings-panel#copy-source).
+- [Copier la liste de contrôle d'intégration](/docs/blocks/account/onboarding-checklist#copy-source).
+- [Plans de prix de copie](/docs/blocks/commerce/pricing-plans#copy-source).
+- [Vue d'ensemble de la facturation](/docs/blocks/commerce/billing-overview#copy-source).
+- [Copier Mode de paiement](/docs/blocks/commerce/payment-method#copy-source).
+- [Copier l'historique des factures](/docs/blocks/commerce/invoice-history#copy-source).
+- [Copier le panneau État vide](/docs/blocks/feedback/empty-state-panel#copy-source).
+- [Copier les membres de l'espace de travail](/docs/blocks/account/workspace-members#copy-source).
+- [Copier les invitations d'espace de travail](/docs/blocks/account/workspace-invitations#copy-source).
+- [Copier le journal d'audit](/docs/blocks/account/audit-log#copy-source).
+
+Ouvrir **Source**, choisissez un fichier lorsque les onglets sont disponibles, puis utilisez le bouton de copie du bloc de code ou sélectionnez le code manuellement. Enregistrez-le au chemin d'accès appartenant à l'application indiqué au-dessus de la source et continuez avec l'exemple d'utilisation de ce guide. Configurer le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation) La source copiée n'installe pas de dépendances ou de styles pour vous.
+
+Chaque fichier affiché est inclus à partir de la source canonique lorsque la documentation se construit. Votre copie d'application reste indépendante : examinez délibérément les modifications, validez votre intégration et gardez les personnalisations locales sous contrôle de version. Il n'y a pas de nouveau programme d'installation ou de service de mise à jour automatique.
+
+Besoin d'une application complète plutôt que d'un modèle? [Comparer les starters](/starters).

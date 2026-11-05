@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useEffect, useState } from "react";
 import { Check, Copy, Link as LinkIcon } from "lucide-react";
 import { SiteButton as Button } from "@/components/site-button";
@@ -16,6 +17,8 @@ function getShareUrl(url: string) {
 }
 
 export function ShareArticle({ title, url }: ShareArticleProps) {
+  const tSite = useCopy();
+
   const [copied, setCopied] = useState<"link" | "post" | null>(null);
   const [error, setError] = useState(false);
   const absoluteUrl = getShareUrl(url);
@@ -51,7 +54,7 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
       <div
         className="flex flex-wrap items-center gap-1.5"
         role="group"
-        aria-label="Share article"
+        aria-label={tSite("Share article")}
       >
         <Button
           size="sm"
@@ -64,14 +67,14 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
           ) : (
             <LinkIcon className="size-3.5" aria-hidden="true" />
           )}
-          {copied === "link" ? "Copied" : "Copy link"}
+          {tSite(copied === "link" ? "Copied" : "Copy link")}
         </Button>
         <Button
           variant="ghost"
           size="icon-sm"
           onClick={() => copy("post")}
-          aria-label="Copy post"
-          title="Copy title and link"
+          aria-label={tSite("Copy post")}
+          title={tSite("Copy title and link")}
           className={iconButton}
         >
           {copied === "post" ? (
@@ -85,8 +88,10 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
             href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label="Share this article on LinkedIn (opens in a new tab)"
-            title="Share on LinkedIn"
+            aria-label={tSite(
+              "Share this article on LinkedIn (opens in a new tab)",
+            )}
+            title={tSite("Share on LinkedIn")}
           >
             <LinkedinIcon className="size-4" aria-hidden="true" />
           </a>
@@ -96,8 +101,8 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
             href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label="Share this article on X (opens in a new tab)"
-            title="Share on X"
+            aria-label={tSite("Share this article on X (opens in a new tab)")}
+            title={tSite("Share on X")}
           >
             <TwitterIcon className="size-4" aria-hidden="true" />
           </a>
@@ -107,13 +112,15 @@ export function ShareArticle({ title, url }: ShareArticleProps) {
         role="status"
         className="mt-1 min-h-5 max-w-72 text-xs leading-5 text-muted-foreground"
       >
-        {error
-          ? "Copy unavailable. Use your browser’s address bar."
-          : copied === "post"
-            ? "Title and link copied."
-            : copied === "link"
-              ? "Article link copied."
-              : ""}
+        {tSite(
+          error
+            ? "Copy unavailable. Use your browser’s address bar."
+            : copied === "post"
+              ? "Title and link copied."
+              : copied === "link"
+                ? "Article link copied."
+                : "",
+        )}
       </p>
     </div>
   );

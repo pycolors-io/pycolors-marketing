@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import {
   Copy,
   MessagesSquare,
@@ -41,6 +42,8 @@ const primitives = [
 ] as const;
 
 export function UiConversationPreview() {
+  const tSite = useCopy();
+
   const [count, setCount] = useState(2);
   return (
     <section
@@ -51,17 +54,18 @@ export function UiConversationPreview() {
       <div className="grid min-w-0 gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="min-w-0">
           <p className="text-xs font-medium text-primary">
-            Conversation primitives · Free UI
+            {tSite("Conversation primitives · Free UI")}
           </p>
           <h3
             id="conversation-primitives-heading"
             className="mt-3 text-2xl font-semibold tracking-tight"
           >
-            Your assistant. Your visual language.
+            {tSite("Your assistant. Your visual language.")}
           </h3>
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            The same colors, typography and controls, now in a conversation.
-            Switch the appearance above, copy a response or add sample messages.
+            {tSite(
+              "The same colors, typography and controls, now in a conversation. Switch the appearance above, copy a response or add sample messages.",
+            )}
           </p>
           <ul className="mt-5 divide-y divide-border/50">
             {primitives.map(({ name, slug, icon: Icon, detail }) => (
@@ -71,24 +75,26 @@ export function UiConversationPreview() {
                   className="inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   <Icon aria-hidden="true" className="size-4 text-primary" />
-                  {name}
+                  {tSite(name)}
                 </Link>
                 <p className="text-xs leading-6 text-muted-foreground">
-                  {detail}
+                  {tSite(detail)}
                 </p>
               </li>
             ))}
           </ul>
           <p className="mt-4 text-xs leading-6 text-muted-foreground">
-            Check the guides for package-version availability. Compose these
-            with{" "}
+            {tSite(
+              "Check the guides for package-version availability. Compose these with",
+            )}
+            {tSite(" ")}
             <Link
               href="/docs/ui/ai-composer"
               className="underline underline-offset-4"
             >
-              AIComposer
+              {tSite("AIComposer")}
             </Link>
-            ; your app supplies the model connection.
+            {tSite("; your app supplies the model connection.")}
           </p>
         </div>
         <div className="min-w-0 self-start overflow-hidden rounded-md border border-border bg-background shadow-sm">
@@ -98,14 +104,16 @@ export function UiConversationPreview() {
               className="size-5 text-primary"
             />
             <div>
-              <p className="text-sm font-medium">Product assistant</p>
+              <p className="text-sm font-medium">
+                {tSite("Product assistant")}
+              </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Sample conversation · No model connected
+                {tSite("Sample conversation · No model connected")}
               </p>
             </div>
           </div>
           <AIConversation
-            label="Product assistant demo"
+            label={tSite("Product assistant demo")}
             messagesLabel="Product assistant messages"
             viewportClassName="h-80 max-h-80"
             className="rounded-none border-0"
@@ -126,9 +134,11 @@ export function UiConversationPreview() {
                   ) : undefined
                 }
               >
-                {index % 2
-                  ? response
-                  : "How can I make my first assistant interface easier to use?"}
+                {tSite(
+                  index % 2
+                    ? response
+                    : "How can I make my first assistant interface easier to use?",
+                )}
               </AIMessage>
             ))}
           </AIConversation>
@@ -141,19 +151,21 @@ export function UiConversationPreview() {
                 onClick={() => setCount((value) => Math.min(value + 2, 20))}
               >
                 <Plus aria-hidden="true" />
-                Add sample exchange
+                {tSite("Add sample exchange")}
               </Button>
               <Button size="sm" variant="ghost" onClick={() => setCount(2)}>
                 <RotateCcw aria-hidden="true" />
-                Reset conversation
+                {tSite("Reset conversation")}
               </Button>
             </div>
             <p role="status" className="text-xs text-muted-foreground">
-              {count} sample messages · Stored only in this preview.
+              {tSite(count)}{" "}
+              {tSite(" sample messages · Stored only in this preview.")}
             </p>
             <p className="text-xs leading-6 text-muted-foreground">
-              Scroll back, then add an exchange. Choose Jump to latest when you
-              are ready to catch up. Copy writes sample text to your clipboard.
+              {tSite(
+                "Scroll back, then add an exchange. Choose Jump to latest when you are ready to catch up. Copy writes sample text to your clipboard.",
+              )}
             </p>
           </div>
         </div>

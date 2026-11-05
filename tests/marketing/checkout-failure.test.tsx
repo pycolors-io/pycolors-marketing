@@ -3,12 +3,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import CheckoutCancelPage, {
-  metadata,
-} from "../../app/(site)/checkout/cancel/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/checkout/cancel/page";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import { trackMoneyPathEvent } from "@/lib/analytics";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.hoisted(() => {
   process.env.NEXT_PUBLIC_API_BASE_URL = "https://api.example.com";

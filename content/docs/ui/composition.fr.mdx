@@ -1,0 +1,472 @@
+---
+title: Composition
+description: Comment combiner les primitives PyColors UI dans des interfaces
+  SaaS réelles sans créer d'abstractions fragiles ou de surfaces de produits
+  incohérentes.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  Boxes,
+  CheckCircle,
+  Layers3,
+  LayoutDashboard,
+  LayoutTemplate,
+  PanelTop,
+  PanelsTopLeft,
+  Rocket,
+  Rows3,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Composition</Badge>
+</div>
+
+### Composez les surfaces du produit à partir de petites primitives [#compose-product-surfaces-from-small-primitives]
+
+Les composants PyColors UI sont intentionnellement petits.
+
+Ils ne sont pas conçus pour posséder tout votre flux de produits.
+
+Ils sont conçus pour être composés de surfaces de produits claires et maintenables:
+
+- tableaux de bord
+- pages de paramètres
+- panneaux de facturation
+- formulaires
+- tableaux
+- superpositions
+- Outils d'administration
+- états vides et d'erreur
+
+L’objectif n’est pas de créer le plus grand composant possible.
+
+L'objectif est de composer des primitives plus petites en interfaces qui restent compréhensibles au fur et à mesure que le produit grandit.
+
+<Callout title="Idée de base">
+  Les composants doivent rester petits. La signification du produit vient de la
+  composition.
+
+</Callout>
+
+## Pourquoi la composition compte [#why-composition-matters]
+
+La plupart des systèmes d'interface utilisateur commencent à nettoyer et deviennent fragiles plus tard.
+
+La cause habituelle n’est pas le design.
+
+C’est la stratégie d’abstraction.
+
+Les produits deviennent difficiles à maintenir lorsque les équipes :
+
+- créer un composant géant pour chaque fonctionnalité
+- dupliquer le même modèle de mise en page à travers les pages
+- mixer la logique métier dans les primitives UI
+- ajouter des variantes uniques au lieu de composer des états
+- Cacher les décisions des produits derrière des accessoires peu clairs
+
+La composition empêche cela.
+
+Il vous permet de garder les primitives réutilisables tout en construisant de vraies expériences SaaS.
+
+## Le modèle de composition [#the-composition-model]
+
+PyColors utilise un modèle mental en couches.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Primitive',
+      title: "Primitif",
+      icon: Boxes,
+      description: (
+        <>
+          <p>
+            A small reusable component with one clear responsibility.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Button</Badge>
+            <Badge variant="plan">Card</Badge>
+            <Badge variant="plan">Input</Badge>
+            <Badge variant="plan">Badge</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Pattern',
+      title: "Motif",
+      icon: LayoutTemplate,
+      description: (
+        <>
+          <p>
+            A reusable product behavior made from multiple primitives,
+            state, and UX rules.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Data table</Badge>
+            <Badge variant="plan">Overlays</Badge>
+            <Badge variant="plan">Async actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Product',
+      title: "Surface du produit",
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            A real feature or page where UI, copy, data, auth, billing,
+            and product decisions meet.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Dashboard</Badge>
+            <Badge variant="plan">Billing</Badge>
+            <Badge variant="plan">Settings</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+<Callout type="info" title="Règle de base">
+  Si le composant décrit la structure visuelle, conservez-le dans l'interface
+  utilisateur. S'il décrit le comportement du produit, déplacez-le dans Guides
+  ou Patterns.
+
+</Callout>
+
+### Principes de composition [#composition-principles]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Structure d'abord",
+      description:
+        "Commencez par la structure de la page, la hiérarchie et le but du contenu avant de mettre en forme les détails.",
+      icon: Layers3,
+    },
+    {
+      title: "Signification sur la décoration",
+      description:
+        "Utilisez des composants pour communiquer l’intention du produit au lieu de décorer chaque surface.",
+      icon: Sparkles,
+    },
+    {
+      title: "Propriété claire",
+      description:
+        "L'interface utilisateur rend l'état. Les règles de logique de produit, d'authentification, de facturation et de backend vivent en dehors des primitives.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Composition des pages [#page-composition]
+
+Une page SaaS de production a généralement quatre responsabilités.
+
+| Zone        | Responsabilité                          | primitives typiques                        |
+| ----------- | --------------------------------------- | ------------------------------------------ |
+| En-tête     | Contexte et action principale           | `Button`, `Badge`                          |
+| Contenu     | Informations principales sur le produit | `Card`, `Table`, `Tabs`                    |
+| Feedback    | Chargement, vide, erreur, succès        | `Skeleton`, `EmptyState`, `Alert`, `Toast` |
+| Revêtements | Flux de travail ciblés ou progressifs   | `Dialog`, `Sheet`, `DropdownMenu`          |
+
+Cela permet de garder la page lisible.
+
+La page coordonne l'intention du produit. Les composants rendent les pièces.
+
+## Exemples [#examples]
+
+Ces exemples illustrent comment la composition transforme de petites primitives d'interface utilisateur en surfaces réelles de produits.
+
+Chaque exemple met en évidence comment la structure, l'état et l'intention de l'utilisateur sont organisés pour créer des interfaces évolutives, prévisibles et faciles à maintenir.
+
+Ne vous concentrez pas uniquement sur les composants. Concentrez-vous sur la façon dont la page coordonne le comportement.
+
+### Exemple : page de paramètres [#example-settings-page]
+
+Une page de paramètres n'est pas un composant.
+
+C'est une composition de surfaces, de navigation, d'entrées et de confirmations.
+
+```tsx title="settings-page.tsx"
+export function SettingsPage() {
+  return (
+    <div className="space-y-6">
+      <SettingsHeader />
+
+      <Tabs defaultValue="profile">
+        <TabsList>
+          <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
+          <TabsTrigger value="billing">Billing</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="profile">
+          <ProfileSettingsCard />
+        </TabsContent>
+
+        <TabsContent value="security">
+          <SecuritySettingsCard />
+        </TabsContent>
+
+        <TabsContent value="billing">
+          <BillingSettingsCard />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
+```
+
+Cette page utilise des primitives, mais la signification du produit provient de la composition :
+
+- onglets séparés préoccupations
+- contenu du groupe de cartes
+- Les entrées collectent les valeurs
+- Les dialogues confirment les actions destructrices
+- alertes communiquent les états bloquants
+
+### Exemple : panneau de facturation [#example-billing-panel]
+
+L’interface utilisateur de facturation a besoin d’une hiérarchie claire car elle affecte la confiance et les revenus.
+
+```tsx title="billing-panel.tsx"
+export function BillingPanel() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Current plan</CardTitle>
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <Badge variant="success">Active</Badge>
+        <p className="text-sm text-muted-foreground">
+          Your subscription is active and renews next month.
+        </p>
+        <Button>Manage billing</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+Les primitives restent simples.
+
+La couche de produit décide:
+
+- Ce que signifie l'état de facturation
+- quelle action est disponible
+- quelle copie rassure l'utilisateur
+- quand l'accès doit être fermé
+
+### Exemple : page lourde de données [#example-data-heavy-page]
+
+Les pages riches en données ne devraient pas rendre la table responsable de tout.
+
+```tsx title="projects-page.tsx"
+export function ProjectsPage() {
+  return (
+    <div className="space-y-6">
+      <ProjectsHeader />
+      <ProjectsToolbar />
+      <ProjectsTable />
+      <ProjectsPagination />
+    </div>
+  );
+}
+```
+
+La table affiche les lignes.
+
+La page coordonne :
+
+- filtres
+- État de chargement
+- état vide
+- Erreur de récupération
+- pagination
+- actions en ligne
+
+<Callout title="Pourquoi cela compte">
+  Une table ne doit pas posséder votre flux de produits. Il devrait rendre les
+  données structurées à l'intérieur d'une plus grande composition de page.
+
+</Callout>
+
+### Workflow de composition [#composition-workflow]
+
+<Steps>
+  <Step>
+    #### Commencez par l'objectif utilisateur [#start-with-the-user-goal]
+
+    Définissez ce que la page aide l'utilisateur à faire. Une bonne composition commence par un but, pas par des composants.
+
+</Step>
+
+  <Step>
+    #### Choisissez la structure de la page [#choose-the-page-structure]
+
+    Décidez des principales régions: en-tête, contenu, contrôles, commentaires, superpositions.
+
+</Step>
+
+  <Step>
+    #### Utiliser des primitives pour chaque responsabilité [#use-primitives-for-each-responsibility]
+
+    Utilisez le bouton pour les actions, la carte pour les surfaces, l'entrée pour les valeurs, le badge pour les métadonnées et l'alerte pour bloquer les commentaires.
+
+</Step>
+
+  <Step>
+    #### Déplacer les comportements répétés dans Patterns [#move-repeated-behavior-into-patterns]
+
+    Si plusieurs pages répètent le même flux, documentez-le sous forme de motif.
+
+</Step>
+
+  <Step>
+    #### Garder la logique métier en dehors des primitives UI [#keep-business-logic-outside-ui-primitives]
+
+    Auth, la facturation, les autorisations, la récupération de données et les règles backend ne doivent pas résider dans des composants d'interface utilisateur de bas niveau.
+
+</Step>
+
+</Steps>
+
+### Quand extraire un composant [#when-to-extract-a-component]
+
+Extraire un composant lorsque :
+
+- La structure visuelle se répète
+- le composant a une responsabilité claire
+- il rend la page plus facile à lire
+- l'abstraction ne cache pas la logique importante du produit
+
+Ne pas extraire lorsque :
+
+- Le composant n'existe qu'une seule fois
+- l'abstraction crée trop d'accessoires
+- la composante mélange des responsabilités non liées
+- le nom ne décrit pas un concept clair
+
+<Callout type="info" title="Règle d'extraction">
+  Extrait pour la clarté, pas pour l'intelligence.
+
+</Callout>
+
+### Quand créer un Pattern [#when-to-create-a-pattern]
+
+Créez un Pattern lorsque le besoin répété inclut un comportement.
+
+Exemples :
+
+| Besoin répété                                                  | Mieux comme               |
+| -------------------------------------------------------------- | ------------------------- |
+| Tableau avec chargement, vide, erreur, filtres, actions        | Tableau de données        |
+| Sauvegarder / réessayer / annuler / retour optimiste           | Actions asynchroneshrones |
+| Décisions Dropdown vs Dialog vs Sheet                          | Motif de recouvrements    |
+| Structure de formulaire avec validation et gestion des erreurs | Guide / Modèle            |
+| Coque de tableau de bord SaaS                                  | Guide / Starter           |
+
+Un modèle peut inclure plusieurs primitives, des règles d'état, des règles de copywriting et des conseils d'accessibilité.
+
+### Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Les petits primitifs avec une responsabilité claire",
+    "composition au niveau de la page pour la signification du produit",
+    "modèles pour un comportement répété",
+    "Les tokens sémantiques sur les valeurs brutes",
+    "structure explicite sur la magie cachée",
+  ]}
+  avoid={[
+    "composants configurables géants",
+    "logique d'entreprise à l'intérieur des primitives",
+    "Dupliquer les flux de produits entre les pages",
+    "styles personnalisés qui contournent les tokens",
+    "Abstrait avant que le motif ne soit clair",
+  ]}
+/>
+
+### Liste de contrôle de la composition [#composition-checklist]
+
+Avant d'expédier une surface d'interface utilisateur composée, confirmez:
+
+- La page a un objectif utilisateur clair
+- chaque composant a une responsabilité claire
+- Les tokens sémantiques sont utilisés pour les rôles visuels.
+- les états de chargement, de vide et d'erreur sont traités
+- Les actions ont un feedback clair
+- Les overlays ne sont utilisés qu'en cas de besoin
+- comportement répété est déplacé dans un motif
+- La logique métier n'est pas cachée dans les primitives
+- la mise en page a toujours du sens sur mobile
+
+<Callout title="Règle de qualité du produit">
+  Une interface utilisateur premium n'est pas plus décorée. Il est plus facile à
+  comprendre, plus facile à entretenir et plus difficile à utiliser.
+
+</Callout>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Pourquoi PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
+      description:
+        "Comprendre la philosophie derrière les petits modèles primitifs et au niveau du produit.",
+      icon: Sparkles,
+    },
+    {
+      title: "Motifs",
+      href: "/docs/patterns",
+      description:
+        "Passez des composants aux blocs de fonctionnalités prêts pour la production.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Construire une mise en page SaaS",
+      href: "/docs/guides/building-a-saas-layout",
+      description:
+        "Composez des primitives dans la structure réelle du tableau de bord.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Découvrez comment la composition de l'interface utilisateur se connecte aux flux d'authentification, de facturation, de backend et de production.",
+      icon: Rocket,
+    },
+  ]}
+/>

@@ -1,0 +1,799 @@
+---
+title: Button
+description: Composant de bouton d'action utilisé dans l'interface utilisateur
+  PyColors, construit sur shadcn/ui. Comprend les variantes, les tailles,
+  l'accessibilité et les règles d'utilisation du produit.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  ClockIcon,
+  DotIcon,
+  ExternalLink,
+  MousePointerClick,
+  Palette,
+  PanelTop,
+  Plus,
+  ShieldAlert,
+  Sparkles,
+  Tags,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Bouton</Badge>
+</div>
+
+## Actions auxquelles les utilisateurs peuvent faire confiance [#actions-users-can-trust]
+
+Les **Bouton** component est la primitive d'action primaire dans PyColors UI.
+
+Utilisez-le pour:
+
+- Soumettre des formulaires
+- Déclenchement des dialogues
+- ouverture feuilles
+- Débuter le paiement
+- enregistrer les changements
+- Confirmer les actions destructrices
+- naviguer quand un élément doit se comporter visuellement comme un bouton
+
+Cette mise en œuvre étend la **primitive de bouton shadcn/ui** et est aligné avec le système de conception PyColors: tokens de couleur sémantiques, rayon, ombres et anneaux de focus.
+
+<Callout title="Idée de base">
+  Les boutons communiquent l'intention. Choisissez la variante en fonction de la
+  priorité d'action et non de la décoration.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="button-import.tsx"
+import { Button } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Button>Cliquez sur moi</Button>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-button.tsx"
+import { Button } from "@pycolors/ui";
+
+export function BasicButton() {
+  return <Button>Click me</Button>;
+}
+```
+
+</Tab>
+
+</Tabs>
+
+Le bouton par défaut utilise des tokens sémantiques primaires et s'adapte automatiquement au mode clair et sombre.
+
+## Modèle d'action produit [#product-action-model]
+
+Les boutons sont l'une des primitives d'interaction à la plus haute fréquence dans un produit SaaS.
+
+Ils influencent :
+
+- clarté de conversion
+- Confiance dans le workflow
+- action destructrice sécurité
+- friction d'embarquement
+- Qualité perçue des produits
+
+<Callout title="Modèle mental">
+  Un bouton n’est pas une décoration. C’est un engagement d’interaction.
+
+</Callout>
+
+## Quand utiliser le bouton [#when-to-use-button]
+
+Utilisez le bouton lorsque l'utilisateur effectue une action.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Actions principales",
+      description:
+        "Utilisez pour soumettre, enregistrer, continuer, passer à le paiement, créer ou mettre à niveau des actions.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Actions secondaires",
+      description:
+        "Utilisez pour annuler, afficher les détails, en savoir plus ou des chemins alternatifs.",
+      icon: Sparkles,
+    },
+    {
+      title: "Actions risquées",
+      description:
+        "Utilisez un style destructeur uniquement pour des actions dangereuses ou irréversibles.",
+      icon: ShieldAlert,
+      tone: "danger",
+    },
+  ]}
+/>
+
+### Modèle de décision [#decision-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Primary',
+      title: "Actions principales",
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Primary buttons represent the highest-priority action inside a product surface.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Upgrade</Badge>
+            <Badge variant="plan">Checkout</Badge>
+            <Badge variant="plan">Continue</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Secondary',
+      title: "Actions secondaires",
+      icon: PanelTop,
+      description: (
+        <>
+          <p>
+            Secondary actions support workflows without competing visually with the primary path.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Preview</Badge>
+            <Badge variant="plan">Cancel</Badge>
+            <Badge variant="plan">Learn more</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Destructive',
+      title: "Actions destructrices",
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Destructive buttons communicate irreversible risk and require strong visual clarity.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Delete</Badge>
+            <Badge variant="plan">Remove</Badge>
+            <Badge variant="plan">Revoke</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Variantes [#variants]
+
+Les boutons prennent en charge les variantes de priorité d'action et de signification sémantique.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex flex-wrap gap-4">
+      <Button variant="default">Par défaut</Button>
+      <Button variant="secondary">Secondaire</Button>
+      <Button variant="outline">Contour</Button>
+      <Button variant="ghost">Discret</Button>
+      <Button variant="destructive">Destructif</Button>
+      <Button variant="link">Lien</Button>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="button-variants.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonVariants() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Variantes disponibles [#available-variants]
+
+| Variante      | Objet                                                            |
+| ------------- | ---------------------------------------------------------------- |
+| `default`     | Action principale, priorité absolue                              |
+| `secondary`   | Action alternative neutre                                        |
+| `outline`     | Action à moyen terme                                             |
+| `ghost`       | Action de faible accentuation dans l'interface utilisateur dense |
+| `destructive` | Action dangereuse ou irréversible                                |
+| `link`        | Action en ligne de style texte                                   |
+
+<Callout type="info" title="Variante de règle">
+  Une page doit généralement avoir une action primaire claire. Utilisez
+  secondaire, contour ou fantôme pour soutenir les actions.
+
+</Callout>
+
+### Tailles [#sizes]
+
+Le bouton prend en charge les tailles standard et les tailles d'icônes uniquement.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="sm">Petit</Button>
+      <Button size="default">Par défaut</Button>
+      <Button size="lg">Grande</Button>
+
+      <Button size="icon" aria-label="History">
+        <ClockIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-sm" aria-label="Small icon button">
+       <DotIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-lg" aria-label="Large icon button">
+        <DotIcon aria-hidden="true" />
+      </Button>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="button-sizes.tsx"
+import { Button } from "@pycolors/ui";
+
+function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+      <path d="M10 1a9 9 0 100 18 9 9 0 000-18zM9 5a1 1 0 012 0v5a1 1 0 01-.293.707l-3 3a1 1 0 11-1.414-1.414L9 9.586V5z" />
+    </svg>
+  );
+}
+
+function DotIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+      <path d="M10 18a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  );
+}
+
+export function ButtonSizes() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+
+      <Button size="icon" aria-label="History">
+        <ClockIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-sm" aria-label="Small icon button">
+        <DotIcon aria-hidden="true" />
+      </Button>
+
+      <Button size="icon-lg" aria-label="Large icon button">
+        <DotIcon aria-hidden="true" />
+      </Button>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Tailles disponibles [#available-sizes]
+
+| Taille    | Objet                                               |
+| --------- | --------------------------------------------------- |
+| `sm`      | Boutons compacts pour des interfaces produit denses |
+| `default` | Taille standard du bouton                           |
+| `lg`      | Poids visuel plus élevé                             |
+| `icon`    | Bouton carré icône seule                            |
+| `icon-sm` | Bouton compact icône seule                          |
+| `icon-lg` | Bouton icône seule plus grande                      |
+
+<Callout title="Règle de taille">
+  Gardez les tailles de boutons cohérentes dans la même section. Utilisation
+  `lg` pour les grands CTA et `sm` pour des actions de produits denses.
+
+</Callout>
+
+### État handicapé [#disabled-state]
+
+Utilisez l'état désactivé lorsqu'une action n'est pas disponible.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex flex-wrap gap-4">
+      <Button disabled>Handicapés</Button>
+      <Button variant="secondary" disabled>Handicapés</Button>
+      <Button variant="outline" disabled>Handicapés</Button>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="button-disabled.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonDisabled() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button disabled>Disabled</Button>
+      <Button variant="secondary" disabled>
+        Disabled
+      </Button>
+      <Button variant="outline" disabled>
+        Disabled
+      </Button>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+Les boutons désactivés utilisent une opacité réduite et suppriment l'interaction avec le pointeur.
+
+<Callout type="info" title="Règle UX">
+  Lorsque vous désactivez un bouton, assurez-vous que l'utilisateur peut
+  comprendre ce qui est nécessaire pour l'activer.
+
+</Callout>
+
+### Avec icône [#with-icon]
+
+Utilisez des icônes lorsqu'elles renforcent l'action.
+
+Le bouton applique une valeur par défaut `size-4` aux icônes SVG imbriquées qui n'ont pas déjà un `size-*` classe.
+
+<Tabs items={["Dirigeant", "Suiveur"]}>
+  <Tab value="Dirigeant">
+
+```tsx title="button-leading-icon.tsx"
+import { Button } from "@pycolors/ui";
+import { Plus } from "lucide-react";
+
+export function ButtonLeadingIcon() {
+  return (
+    <Button>
+      <Plus className="mr-2 size-4" aria-hidden="true" />
+      Add item
+    </Button>
+  );
+}
+```
+
+</Tab>
+
+  <Tab value="Suiveur">
+
+```tsx title="button-trailing-icon.tsx"
+import { Button } from "@pycolors/ui";
+import { ArrowRight } from "lucide-react";
+
+export function ButtonTrailingIcon() {
+  return (
+    <Button>
+      Continue
+      <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+    </Button>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle d'icône">
+  Les icônes devraient soutenir l'étiquette. Pour les boutons icon-only,
+  toujours fournir un `aria-label`.
+
+</Callout>
+
+### État de validation [#validation-state]
+
+Le bouton prend en charge l'état visuel invalide grâce à `aria-invalid`.
+
+Cela peut être utile pour soumettre des actions lorsque le formulaire associé n'est pas valide.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex flex-wrap gap-4">
+      <Button aria-invalid="true">Corriger les erreurs</Button>
+      <Button variant="outline" aria-invalid="true">
+        Réexamen
+      </Button>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="button-invalid.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonInvalid() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button aria-invalid="true">Fix errors</Button>
+      <Button variant="outline" aria-invalid="true">
+        Review
+      </Button>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Avec icône [#with-icon-1]
+
+Utilisation `asChild` pour rendre le bouton comme un autre élément tout en préservant le style du bouton.
+
+Ceci est couramment utilisé pour les liens et les composants de routeur.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Button asChild>
+      <a href="#docs">Aller aux docs</a>
+    </Button>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="button-as-child.tsx"
+import { Button } from "@pycolors/ui";
+
+export function ButtonAsChild() {
+  return (
+    <Button asChild>
+      <a href="#docs">Go to docs</a>
+    </Button>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle sémantique">
+  Si l'action navigue, rendez un lien d'ancre ou de routeur. S'il soumet ou mute
+  l'état, rendez un bouton.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Choisissez la priorité d'action [#choose-the-action-priority]
+
+    Utilisation `default` pour l'action principale, puis choisissez secondaire, contour ou fantôme pour les actions de soutien.
+
+</Step>
+
+  <Step>
+    #### Utiliser l'intention sémantique [#use-semantic-intent]
+
+    Utilisation `destructive` uniquement lorsque l'action est dangereuse ou irréversible.
+
+</Step>
+
+  <Step>
+    #### Gardez les étiquettes orientées vers l'action [#keep-labels-action-oriented]
+
+    Préférez des verbes clairs tels que Enregistrer, Continuer, Créer un projet, Mettre à niveau, Supprimer.
+
+</Step>
+
+  <Step>
+    #### Coupler le chargement avec l'état [#pair-loading-with-state]
+
+    Pendant le travail asynchrone, désactivez le bouton et mettez à jour l'étiquette pour afficher la progression.
+
+</Step>
+
+  <Step>
+    #### Gardez les boutons icon-only accessibles [#keep-icon-only-buttons-accessible]
+
+    Toujours fournir `aria-label` et marquer les icônes décoratives comme `aria-hidden`.
+
+</Step>
+
+</Steps>
+
+## Guide de décision produit [#product-decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Mutation",
+      title: "Utiliser le bouton",
+      icon: MousePointerClick,
+      description:
+        "Les boutons doivent déclencher des actions, des mutations, des soumissions, des confirmations ou la progression du flux de travail.",
+      items: [
+        "enregistrer les données",
+        "Soumettre des formulaires",
+        "overlays ouverts",
+        "Déclencher des actions async",
+      ],
+    },
+    {
+      eyebrow: "Navigation",
+      title: "Utiliser Link",
+      icon: ExternalLink,
+      tone: "primary",
+      description:
+        "Les liens doivent naviguer entre les pages, les routes ou les ressources externes.",
+      items: [
+        "navigation page",
+        "docs externes",
+        "Changements d'route",
+        "liens de ressources",
+      ],
+    },
+  ]}
+/>
+
+## Bouton vs lien vs badge [#button-vs-link-vs-badge]
+
+| Situation                                          | Utilisation                          |
+| -------------------------------------------------- | ------------------------------------ |
+| Soumettre un formulaire                            | Bouton                               |
+| Déclencher une mutation                            | Bouton                               |
+| Ouvrir une boîte de dialogue ou un panneau latéral | Bouton                               |
+| Naviguer vers une autre URL                        | Lien stylé avec `Button asChild`     |
+| Afficher les métadonnées ou l'état                 | Badge                                |
+| Navigation texte en ligne                          | Lien                                 |
+| Actions de rangée compactes                        | Bouton de déclenchement DropdownMenu |
+
+<Callout title="Règle de décision">
+  Le bouton est pour l'intention. Link est pour la navigation. Badge pour les
+  métadonnées.
+
+</Callout>
+
+## API [#api]
+
+| Prop        | Type            | Par défaut  | Désignation              |
+| ----------- | --------------- | ----------- | ------------------------ |
+| `variant`   | `ButtonVariant` | `"default"` | Style visuel             |
+| `size`      | `ButtonSize`    | `"default"` | Taille du bouton         |
+| `asChild`   | `boolean`       | `false`     | Rendu avec Radix Slot    |
+| `disabled`  | `boolean`       | `false`     | Désactiver l'interaction |
+| `className` | `string`        | —           | Autres classes Tailwind  |
+
+Button étend les accessoires de bouton HTML standard.
+
+```ts title="button-props.ts"
+React.ComponentProps<"button">;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="button-types.ts"
+export type ButtonVariant =
+  "default" | "secondary" | "outline" | "ghost" | "destructive" | "link";
+
+export type ButtonSize =
+  "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+```
+
+### Accessibilité [#accessibility]
+
+- Utilisez des étiquettes claires et descriptives.
+- Préserver les styles de focus clavier.
+- Utilisez des boutons d'icône uniquement avec un `aria-label`.
+- Marquer les icônes décoratives avec `aria-hidden="true"`.
+- Utilisation `disabled` pour des actions indisponibles.
+- Ne comptez pas uniquement sur la couleur pour communiquer un état destructeur ou invalide.
+- Utilisez des liens pour la navigation et des boutons pour les actions.
+
+<Callout title="Règle d'accessibilité">
+  Chaque bouton doit avoir un nom accessible. Le texte visible est le meilleur;
+  `aria-label` est nécessaire pour les boutons icon-only.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "une action primaire claire par section",
+    "Étiquettes courtes verbe-first",
+    "Tailles cohérentes dans la même vue",
+    "`asChild` pour les liens qui ressemblent à des boutons",
+    "Étiquettes accessibles pour boutons d'icônes uniquement",
+  ]}
+  avoid={[
+    "Plusieurs boutons principaux concurrents",
+    "Style destructeur pour des actions non destructives",
+    "boutons icon-only sans étiquettes",
+    "boutons utilisés comme navigation sans sémantique de lien",
+    "étiquettes vagues comme « OK » ou « Soumettre » lorsque le contexte n’est pas clair",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes de bouton doivent communiquer clairement l'intention et réduire l'hésitation.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Good',
+      title: "Bonnes étiquettes",
+      icon: CheckCircle,
+      description: (
+        <>
+          <p>
+            Strong labels are explicit, action-oriented, and outcome-focused.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Save changes</Badge>
+            <Badge variant="plan">Create project</Badge>
+            <Badge variant="plan">Upgrade to Pro</Badge>
+            <Badge variant="plan">Invite member</Badge>
+            <Badge variant="plan">Delete project</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Avoid',
+      title: "Évitez les étiquettes vagues",
+      icon: XCircle,
+      description: (
+        <>
+          <p>
+            Generic labels create friction because the outcome is unclear.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">OK</Badge>
+            <Badge variant="plan">Submit</Badge>
+            <Badge variant="plan">Click here</Badge>
+            <Badge variant="plan">Do it</Badge>
+            <Badge variant="plan">Proceed</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Faut-il utiliser le bouton de navigation ?">
+    La navigation doit utiliser des liens. Utilisation `Button asChild` pour styliser un lien d'ancrage ou de routeur comme un bouton.
+  </Accordion>
+
+<Accordion title="Combien de boutons principaux une page doit-elle avoir ?">
+  Généralement une par grande section. Trop de boutons primaires affaiblissent
+  la hiérarchie.
+</Accordion>
+
+<Accordion title="Quand devrais-je utiliser destructif?">
+  Utilisation `destructive` pour des actions dangereuses ou irréversibles,
+  telles que la suppression, la révocation, la suppression ou l'annulation de
+  l'abonnement.
+</Accordion>
+
+  <Accordion title="Les boutons désactivés devraient-ils expliquer pourquoi ils sont désactivés?">
+    Oui. Utilisez le texte d'aide à proximité, les messages de validation ou la copie d'état pour expliquer ce qui est requis.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Badge",
+      href: "/docs/ui/badge",
+      description:
+        "Utilisez des badges pour les métadonnées et le statut, pas pour les actions.",
+      icon: Tags,
+    },
+    {
+      title: "boîte dialogue",
+      href: "/docs/ui/dialog",
+      description:
+        "Utilisez les boutons pour déclencher les tâches et les confirmations modales ciblées.",
+      icon: PanelTop,
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Rôles de couleurs sémantiques utilisés par les variantes de boutons.",
+      icon: Palette,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des actions accessibles avec des étiquettes claires et un support clavier.",
+      icon: Accessibility,
+    },
+  ]}
+/>

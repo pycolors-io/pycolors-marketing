@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { Check, Minus } from "lucide-react";
 import { cn } from "@pycolors/ui";
 import {
@@ -134,7 +135,9 @@ const comparisonGroups = [
 ] as const;
 
 function ComparisonValue({ value }: { readonly value: string | boolean }) {
-  if (typeof value === "string") return value;
+  const tSite = useCopy();
+
+  if (typeof value === "string") return tSite(value);
 
   return (
     <span className="inline-flex items-center justify-center">
@@ -143,23 +146,29 @@ function ComparisonValue({ value }: { readonly value: string | boolean }) {
       ) : (
         <Minus className="size-4 text-muted-foreground" aria-hidden="true" />
       )}
-      <span className="sr-only">{value ? "Included" : "Not included"}</span>
+      <span className="sr-only">
+        {tSite(value ? "Included" : "Not included")}
+      </span>
     </span>
   );
 }
 
 export function PricingComparisonTable() {
+  const tSite = useCopy();
+
   return (
     <div className="min-w-0">
       <p
         id="pricing-scroll-hint"
         className="mb-3 text-xs text-muted-foreground lg:hidden"
       >
-        Scroll horizontally to compare all three products.
+        {tSite("Scroll horizontally to compare all three products.")}
       </p>
       <div
         role="region"
-        aria-label="Product comparison, scroll horizontally for all columns"
+        aria-label={tSite(
+          "Product comparison, scroll horizontally for all columns",
+        )}
         tabIndex={0}
         className="relative scroll-mt-20 overflow-x-auto rounded-[5px] border border-border-subtle focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
       >
@@ -168,7 +177,9 @@ export function PricingComparisonTable() {
           aria-describedby="pricing-setup-note"
         >
           <caption className="sr-only">
-            Compare NA-AI Landing, Starter Free and Starter Pro features
+            {tSite(
+              "Compare NA-AI Landing, Starter Free and Starter Pro features",
+            )}
           </caption>
           <thead>
             <tr className="border-b border-border-subtle">
@@ -176,9 +187,9 @@ export function PricingComparisonTable() {
                 scope="col"
                 className="sticky left-0 z-10 w-1/4 min-w-36 bg-surface p-5 align-bottom font-medium"
               >
-                Features
+                {tSite("Features")}
                 <p className="mt-2 text-xs font-normal text-muted-foreground">
-                  Included in the source code
+                  {tSite("Included in the source code")}
                 </p>
               </th>
               {[
@@ -202,10 +213,10 @@ export function PricingComparisonTable() {
                     name === "Starter Pro" ? "bg-pro-surface" : "bg-surface",
                   )}
                 >
-                  {name}
-                  <p className="mt-3 text-xl tracking-tight">{price}</p>
+                  {tSite(name)}
+                  <p className="mt-3 text-xl tracking-tight">{tSite(price)}</p>
                   <p className="mt-1 text-xs font-normal text-muted-foreground">
-                    {payment}
+                    {tSite(payment)}
                   </p>
                 </th>
               ))}
@@ -219,7 +230,7 @@ export function PricingComparisonTable() {
                   scope="rowgroup"
                   className="px-5 py-3 text-xs font-semibold"
                 >
-                  <span className="sticky left-5">{group.title}</span>
+                  <span className="sticky left-5">{tSite(group.title)}</span>
                 </th>
               </tr>
               {group.rows.map((row) => (
@@ -231,7 +242,7 @@ export function PricingComparisonTable() {
                     scope="row"
                     className="sticky left-0 z-10 bg-surface px-5 py-4 text-xs font-medium leading-6 sm:text-sm"
                   >
-                    {row.feature}
+                    {tSite(row.feature)}
                   </th>
                   <td className="bg-surface px-5 py-4 text-center text-xs leading-6 text-muted-foreground sm:text-sm">
                     <ComparisonValue value={row.template} />
@@ -249,26 +260,31 @@ export function PricingComparisonTable() {
         </table>
       </div>
       <p className="mt-4 text-xs text-muted-foreground">
-        <span className="font-medium text-foreground">✓</span> Included{" "}
+        <span className="font-medium text-foreground">✓</span>{" "}
+        {tSite(" Included")}
+        {tSite(" ")}
         <span className="mx-2" aria-hidden="true">
           ·
-        </span>{" "}
-        — Not included
+        </span>
+        {tSite(" ")}
+        {tSite("— Not included")}
       </p>
       <p
         id="pricing-setup-note"
         className="mt-5 max-w-4xl text-sm leading-7 text-muted-foreground"
       >
-        Starter Pro is source code, not a hosted service. You still configure
-        PostgreSQL, auth, email and Stripe, validate integrations, and deploy
-        your app. Auth and billing stay online-first. Review the{" "}
+        {tSite(
+          "Starter Pro is source code, not a hosted service. You still configure PostgreSQL, auth, email and Stripe, validate integrations, and deploy your app. Auth and billing stay online-first. Review the",
+        )}
+        {tSite(" ")}
         <Link
           href="/docs/starter-pro/production-checklist"
           className="font-medium text-foreground underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          production checklist
-        </Link>{" "}
-        before launch.
+          {tSite("production checklist")}
+        </Link>
+        {tSite(" ")}
+        {tSite("before launch.")}
       </p>
     </div>
   );

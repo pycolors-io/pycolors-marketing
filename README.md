@@ -208,24 +208,60 @@ Docs → https://pycolors.io/docs \
 UI → https://github.com/pycolors-io/pycolors-ui \
 Tokens → https://github.com/pycolors-io/pycolors-tokens
 
-## English and French commercial pages
+## English and French site
 
-English URLs remain stable. French acquisition pages are `/fr`, `/fr/starters/pro`,
-`/fr/tarifs` and `/fr/demande-de-devis`. The route map in `lib/i18n/routes.ts`
-is the allowlist for reciprocal HTML language alternates and sitemap entries.
-Add a route only after its full page and navigation copy are translated.
-Each translation has its own canonical; `x-default` points to English.
-The language switcher uses ordinary document links, with no browser/IP redirect.
-Untranslated documentation and legal pages remain in English and are labelled
-accordingly from the French journey.
+Marketing, documentation and blog articles share the same component layouts in
+English and French. English URLs remain stable; French URLs use `/fr`.
+Commercial aliases include `/fr/tarifs` and `/fr/demande-de-devis`; legal aliases
+are `/fr/licence`, `/fr/conditions` and `/fr/confidentialite`.
 
-Static EN/FR root documents share `components/layout/root-document.tsx` so the
-initial HTML exposes the correct `lang` without request headers or a new i18n
-dependency. Next.js's `experimental.globalNotFound` supplies the existing global
-404 with multiple root layouts; verify English, French, docs and unknown URLs
-when upgrading Next.js. Quote submission and checkout retain their existing API
-contracts; only the client-facing copy is localized.
+`lib/i18n/routing.ts` defines routing and localized links. Use its `Link` and
+navigation helpers instead of assembling locale prefixes. The shared language
+menu is available in the header and both footers, with keyboard navigation and
+the active language indicated. Native locale links keep the current page, query
+and anchor; the footer's smooth-scroll handler leaves them untouched. There is no browser/IP redirect or
+language cookie: links select the language explicitly.
 
-Verify with Marketing lint, types, tests and production build. Check canonical,
-reciprocal hreflang, sitemap, desktop/mobile language links, French form errors
-and confirmation, theme/palette persistence, and the English docs/404 pages.
+Every public page has a self canonical, reciprocal `en`/`fr` alternates and an
+English `x-default`. The sitemap lists both versions. Checkout and purchase-access
+pages retain their noindex rules and API contracts. Product prices, identifiers,
+commands and code examples remain unchanged by translation.
+
+The shared document initializes appearance through `public/site-appearance.js`
+before the first paint, including localized 404s. Keep its `theme` storage key,
+class-based light/dark modes and palette key aligned with `RootProvider`.
+The provider retains theme state and system-preference updates; its inline
+bootstrap is inert so client remounts do not render executable scripts.
+
+### Updating copy
+
+- Server and client components share `useCopy`; async components use `getCopy`.
+  Translate presentation text at its render boundary. Keep identifiers, customer
+  data and code out of this API.
+- Translate server-owned labels before passing them into interactive client
+  components, as in `Breadcrumb` and the guide table of contents. The client
+  catalogue contains the client import graph, not arbitrary strings passed by
+  Server Components. Preserve IDs, values and callback arguments when translating
+  the presentation models of local examples.
+- `messages/en.json` records normalized English source copy; `messages/fr.json`
+  contains the corresponding French copy. Keys come from `messageKey` in
+  `lib/i18n/copy-core.ts`. Preserve `{value0}` placeholders exactly and pass their
+  values separately. Messages are plain text, never HTML.
+- Keep English MDX files and add French siblings as `name.fr.mdx`. Fumadocs owns
+  localized navigation and search, without an English content fallback. Preserve
+  code fences, imports, identifiers and component structure. Explicit `[#id]`
+  headings keep existing deep links valid across languages. Navigation metadata
+  uses `meta.fr.json` with the same page order and icons.
+- Review translations in context, especially commercial and legal copy. A
+  translation must not change the offer, rights, prices or provider behavior.
+- Run `pnpm --filter pycolors-marketing i18n:client` after changing a client
+  component's copy or imports. It derives the serialized client message subset;
+  the complete catalogue stays on the server. English client components use
+  their existing source strings without serializing the English catalogue.
+
+Run Marketing lint, types, tests and a production build. `i18n:check` is included
+in the existing test command and rejects missing messages, changed placeholders
+and a stale client catalogue. It also checks field hints and requires placeholders
+for interpolated copy. Regression tests cover shared layouts, translated FAQ
+search, MDX/code preservation, documentation tabs, locale links and the root palette script.
+Check desktop/mobile rendering and the browser console before public delivery.

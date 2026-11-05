@@ -1,5 +1,7 @@
 "use client";
 
+import { defaultChatTranslate, type ChatTranslate } from "./types";
+
 import * as React from "react";
 import { Alert, Badge, Button, Input, Textarea } from "@pycolors/ui";
 import {
@@ -17,10 +19,12 @@ const labels = {
 
 /** An inline, controlled review form. It never creates or runs an agent itself. */
 export function AgentDefinition({
+  translate = defaultChatTranslate,
   control,
   disabled,
 }: {
   control: AgentDefinitionControl;
+  translate?: ChatTranslate;
   disabled: boolean;
 }) {
   const { draft, status } = control;
@@ -86,20 +90,22 @@ export function AgentDefinition({
             id={`${id}-title`}
             className="text-base font-semibold tracking-tight"
           >
-            Agent definition
+            {translate("Agent definition")}
           </h3>
           <p className="text-sm leading-6 text-muted-foreground">
-            Define its purpose and review its instructions. You stay in control.
+            {translate(
+              "Define its purpose and review its instructions. You stay in control.",
+            )}
           </p>
         </div>
         <Badge variant="outline">
           {confirmed
-            ? "Created locally"
+            ? translate("Created locally")
             : status === "cancelled"
-              ? "Cancelled"
+              ? translate("Cancelled")
               : busy
-                ? "Confirming"
-                : "Needs review"}
+                ? translate("Confirming")
+                : translate("Needs review")}
         </Badge>
       </div>
       <p
@@ -109,7 +115,7 @@ export function AgentDefinition({
         aria-atomic="true"
         className="mb-5 rounded-sm text-sm leading-6 text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       >
-        {stateText}
+        {translate(stateText)}
       </p>
       <form
         ref={form}
@@ -122,7 +128,12 @@ export function AgentDefinition({
           const required = Object.fromEntries(
             fields
               .filter((field) => !draft[field].trim())
-              .map((field) => [field, `${labels[field]} is required.`]),
+              .map((field) => [
+                field,
+                translate("{value0} is required.", {
+                  value0: translate(labels[field]),
+                }),
+              ]),
           );
           setValidation({ revision: draft.revision, errors: required });
           const first = fields.find((field) => required[field]);
@@ -145,7 +156,7 @@ export function AgentDefinition({
               key={field}
               id={`${id}-${field}`}
               name={field}
-              label={labels[field]}
+              label={translate(labels[field])}
               required
               value={draft[field]}
               disabled={disabled || busy}
@@ -170,22 +181,25 @@ export function AgentDefinition({
         })}
         {draft.requestedCapabilities?.length ? (
           <div className="space-y-2 rounded-lg border border-border bg-muted/20 p-4">
-            <p className="text-xs font-medium">Requested capabilities</p>
+            <p className="text-xs font-medium">
+              {translate("Requested capabilities")}
+            </p>
             <ul className="list-inside list-disc space-y-1 text-sm [overflow-wrap:anywhere]">
               {draft.requestedCapabilities.map((capability, index) => (
                 <li key={index}>{capability}</li>
               ))}
             </ul>
             <p className="text-xs leading-5 text-muted-foreground">
-              Requests only. No permissions are granted and no tools are
-              connected.
+              {translate(
+                "Requests only. No permissions are granted and no tools are connected.",
+              )}
             </p>
           </div>
         ) : null}
         {draft.sourceReferences?.length ? (
           <div className="space-y-2">
             <p className="text-xs font-medium text-muted-foreground">
-              Source references · labels only
+              {translate("Source references · labels only")}
             </p>
             <ul className="list-inside list-disc space-y-1 text-sm [overflow-wrap:anywhere]">
               {draft.sourceReferences.map((source, index) => (
@@ -197,7 +211,9 @@ export function AgentDefinition({
         {status === "error" ? (
           <Alert variant="destructive" ariaLive="off">
             {control.errorMessage ||
-              "The definition could not be confirmed. Review your fields and retry."}
+              translate(
+                "The definition could not be confirmed. Review your fields and retry.",
+              )}
           </Alert>
         ) : null}
         {!terminal ? (
@@ -208,10 +224,10 @@ export function AgentDefinition({
               className="min-h-11"
             >
               {busy
-                ? "Confirming…"
+                ? translate("Confirming…")
                 : status === "error"
-                  ? "Retry confirmation"
-                  : "Confirm definition"}
+                  ? translate("Retry confirmation")
+                  : translate("Confirm definition")}
             </Button>
             <Button
               type="button"
@@ -226,27 +242,35 @@ export function AgentDefinition({
                 control.onCancel({ id: draft.id, revision: draft.revision });
               }}
             >
-              Cancel definition
+              {translate("Cancel definition")}
             </Button>
           </div>
         ) : null}
       </form>
       {confirmed ? (
-        <DefinitionExport key={json} json={json} disabled={disabled} />
+        <DefinitionExport
+          translate={translate}
+          key={json}
+          json={json}
+          disabled={disabled}
+        />
       ) : null}
       <p className="mt-5 text-xs leading-5 text-muted-foreground">
-        A local definition, not a running agent. Keep credentials and private
-        data out of these fields.
+        {translate(
+          "A local definition, not a running agent. Keep credentials and private data out of these fields.",
+        )}
       </p>
     </div>
   );
 }
 
 function DefinitionExport({
+  translate = defaultChatTranslate,
   json,
   disabled,
 }: {
   json: string;
+  translate?: ChatTranslate;
   disabled: boolean;
 }) {
   const [feedback, setFeedback] = React.useState("");
@@ -286,7 +310,7 @@ function DefinitionExport({
             }
           }}
         >
-          {copying ? "Copying…" : "Copy JSON"}
+          {copying ? translate("Copying…") : translate("Copy JSON")}
         </Button>
         <Button
           type="button"
@@ -320,7 +344,7 @@ function DefinitionExport({
             }
           }}
         >
-          Download JSON
+          {translate("Download JSON")}
         </Button>
       </div>
       <p
@@ -328,16 +352,16 @@ function DefinitionExport({
         aria-atomic="true"
         className="min-h-5 text-xs leading-5 text-muted-foreground"
       >
-        {feedback}
+        {translate(feedback)}
       </p>
       <details className="rounded-lg border border-border p-4">
         <summary className="cursor-pointer text-sm font-medium">
-          Definition JSON
+          {translate("Definition JSON")}
         </summary>
         <pre
           className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap text-xs leading-6 [overflow-wrap:anywhere]"
           tabIndex={0}
-          aria-label="Confirmed definition JSON"
+          aria-label={translate("Confirmed definition JSON")}
         >
           {json}
         </pre>

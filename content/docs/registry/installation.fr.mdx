@@ -1,0 +1,149 @@
+---
+title: Installation
+description: Préparez une application compatible, inspectez le projet pilote du
+  registre, comprenez les modifications apportées au fichier et validez le
+  résultat appartenant au consommateur.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+Consultez le [test de compatibilité et de disponibilité](/docs/registry) D'abord. La base augmente une application existante compatible shadcn ; elle n'échafaude pas un projet et ne migre pas un projet incompatible.
+
+<Callout title="La vérification des transports publics est toujours nécessaire">
+  Exécutez les exemples d'adresses publiques ci-dessous uniquement après qu'une
+  vérification sans justificatifs d'identité du miroir Marketing et de sa
+  dépendance de base ait été enregistrée. Les tests d'artefacts locaux
+  n'établissent pas cette disponibilité publique. En attendant, [copier le Bloc
+  de sa documentation](/docs/blocks/feedback/empty-state-panel#copy-source) et
+  suivez [Installation de l'interface utilisateur](/docs/ui/installation).
+
+</Callout>
+
+## Préparer l'application de consommation [#prepare-the-consuming-app]
+
+Enregistrez votre travail actuel dans le contrôle de version avant l'installation. Utilisez le nœud 24, pnpm 10.32.1, et l'exacte [versions testées](/docs/registry#tested-compatibility). Gardez l'installation normale de votre application, les peluches, la vérification de type, les tests et la construction en état de marche avant d'ajouter la source du Registre.
+
+La configuration Next.js testée est ci-dessous. Pour Vite, le seul changement `components.json` est `tailwind.css: "src/styles/globals.css"`. Examinez et fusionnez la configuration délibérément ; n'écrasez pas un fichier existant aveuglément.
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "radix-nova",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/app/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+Le propre de l'app `tsconfig.json` Doit résoudre `@/*` au `./src/*` avec TypeScript strict activé. Vite doit aussi résoudre `@` à cette app `src` répertoire dans sa configuration de bundler. La configuration testée n'hérite pas de la configuration TypeScript ni des alias de route vers un package partagé.
+
+Votre framework doit déjà charger sa feuille de style globale, avec Tailwind 4 et `@tailwindcss/postcss` configuré. Avant d'ajouter la base, la feuille de style du luminaire contient `@import "tailwindcss";`. Conservez la feuille de style exactement deux répertoires sous la racine de l'application consommatrice afin que le chemin d'accès relatif au paquet source de la base soit résolu.
+
+### Conserver les versions de dépendance délibérées [#keep-dependency-versions-deliberate]
+
+La base déclare `@pycolors/ui@^1.5.1`, `@pycolors/tokens@^1.2.2`et `lucide-react@>=0.300.0`. Ce sont des plages, pas les versions exactes que chaque future installation résoudra. La matrice utilise l'interface utilisateur publique 1.5.2, et non 1.5.1.
+
+Les luminaires de salle blanche utilisent des remplacements pnpm de niveau racine pour épingler leur [jeu de dépendances testé](/docs/registry#tested-compatibility). Pour conserver les trois mêmes versions du paquet de base, fusionnez ces entrées dans votre configuration pnpm racine existante sans supprimer d'autres remplacements :
+
+```json title="package.json fragment at the standalone or workspace root"
+{
+  "pnpm": {
+    "overrides": {
+      "@pycolors/ui": "1.5.2",
+      "@pycolors/tokens": "1.2.2",
+      "lucide-react": "1.47.0"
+    }
+  }
+}
+```
+
+Ce fragment n'est pas un montage complet ou un gel transitif de dépendance. Gardez le reste de votre application sur la combinaison testée et conservez un fichier de verrouillage révisé. Ne copiez pas le monorepo de PyColors `workspace:*` écraser un consommateur. Passez en revue séparément les approbations de script du cycle de vie des dépendances ; les tests en salle blanche désactivent ces scripts.
+
+## Utiliser l'adresse publique approuvée [#use-the-approved-public-address]
+
+Le pilote utilise l'adressage direct GitHub via le public [Miroir de marketing](https://github.com/pycolors-io/pycolors-marketing):
+`pycolors-io/pycolors-marketing/<item>`. Il ne nécessite pas de `registries` entrée en `components.json`.
+
+Il n'y a pas de support `@pycolors/<item>` Espace de noms ou hébergé `/r` endpoint dans ce pilote. Ne pas passer la source brute du miroir `registry.json` URL comme s'il s'agissait d'un élément installable généré. Ne pas utiliser nu `pycolors-base`: ce n'est pas l'adresse de dépendance PyColors qualifiée.
+
+Le miroir public doit contenir sa racine `registry.json` et les fichiers canoniques référencés par ce manifeste. Une fusion monorepo seule ne prouve pas que la mise à jour du miroir révisé par l'homme ou l'installation sans justificatif d'identité a réussi.
+
+## Inspecter avant d'écrire [#inspect-before-writing]
+
+À partir du répertoire de l'application consommatrice, inspectez les deux éléments et prévisualisez les modifications planifiées de la base :
+
+```bash
+pnpm dlx shadcn@4.19.0 view pycolors-io/pycolors-marketing/pycolors-base
+pnpm dlx shadcn@4.19.0 view pycolors-io/pycolors-marketing/feedback-empty-state-panel
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/pycolors-base --dry-run
+```
+
+Vérifiez les noms d'éléments, les cibles sources, les dépendances de paquets publics et les modifications CSS. Le premier élément est la présentation uniquement; les actions et le comportement de l'application restent sous votre contrôle. L'inspection et l'exécution à sec ne remplacent pas l'examen des modifications apportées au colis ni ne prouvent la compatibilité avec une application non testée.
+
+## Installez la base, puis le premier élément [#install-the-base-then-the-first-item]
+
+Après la condition préalable de disponibilité publique et votre examen sont satisfaits:
+
+```bash
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/pycolors-base --yes
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/feedback-empty-state-panel --dry-run
+pnpm dlx shadcn@4.19.0 add pycolors-io/pycolors-marketing/feedback-empty-state-panel --yes
+```
+
+Ne pas ajouter `--overwrite` à ces commandes. Refusez une invite d'écrasement pour un fichier que vous avez personnalisé et suivez le [Mettre à jour le workflow](/docs/registry/updates).
+
+La base ajoute ses trois dépendances aux applications consommatrices. `package.json`, met à jour le fichier de verrouillage et ajoute ces directives à la feuille de style existante :
+
+```css
+@import "@pycolors/tokens/tokens.css";
+@source "../../node_modules/@pycolors/ui";
+```
+
+La cible principale du pilote est `src/components/blocks/feedback-empty-state-panel/index.tsx`Résolu à travers `aliases.components`. Il importe le public `@pycolors/ui` point d'entrée ; il ne copie pas les composants internes du package d'interface utilisateur. Le pilote réapplique également sa dépendance de base, de sorte que les plages de paquets et le fichier de verrouillage peuvent être revisités. Déjà compatible `components.json` reste inchangé dans le flux testé.
+
+### Réconcilier et vérifier le fichier de verrouillage [#reconcile-and-verify-the-lockfile]
+
+Le CLI et le pnpm épinglés peuvent normaliser les plages de dépendance différemment lors de l'installation répétée. Le flux testé réconcilie délibérément le fichier de verrouillage après ces modifications. À partir de la racine du projet autonome, ou de la racine de l'espace de travail pour un monorepo :
+
+```bash
+pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts --prod=false
+pnpm install --frozen-lockfile --ignore-scripts --prod=false
+```
+
+Passez en revue le diff du paquetage et du fichier de verrouillage résultants. Il s'agit d'une mise à jour explicite de la dépendance des consommateurs, et non d'une autorisation de contourner le CI du fichier de verrouillage gelé ou d'accepter des mises à niveau non liées. Une installation ultérieure gelée doit réussir sans changer le fichier de verrouillage. Répétition `add` Il n'est pas promis à lui seul d'être stable en octet.
+
+## Placement Monorepo [#monorepo-placement]
+
+Le monorepo testé a une application Vite dans `apps/web`, son propre `package.json`,
+`components.json`, `tsconfig.json`et `src/styles/globals.css`. Exécutez toutes les commandes shadcn à partir de `apps/web`Pas la racine de l'espace de travail. L'équivalent en amont `--cwd apps/web` option sélectionne la même application lorsqu'elle est appelée à partir de la racine.
+
+Installez les dépendances publiques dans l’application, et non dans le package racine ou un espace de travail d’interface utilisateur partagé. La cible copiée est `apps/web/src/components/blocks/feedback-empty-state-panel/index.tsx`. Réconcilier le partagé `pnpm-lock.yaml` de la racine de l'espace de travail. Les métadonnées de dépendance racine et les fichiers frères ne doivent pas être modifiés comme un effet secondaire de l'installation des éléments; la configuration délibérée de la version est une condition préalable distincte.
+
+Les alias de paquets partagés, les cibles source inter-espaces de travail et un monorepo Next.js ne font pas partie de cette matrice. Utilisation [installation manuelle](/docs/blocks) pour ces cas jusqu'à ce qu'ils aient leur propre validation.
+
+## Valider votre intégration [#validate-your-integration]
+
+Utilisez le [Utilisation du panneau d'état vide et conseils d'accessibilité](/docs/blocks/feedback/empty-state-panel) avec le chemin source installé ci-dessus. Fournissez votre propre contenu, état et actions ; le Registre n'implémente pas de backend.
+
+Exécutez la mise en forme, la vérification de mise en forme, la charpie, la vérification de type stricte, les tests et la construction de production de votre application. Les fixtures nomment ces scripts `format`, `format:check`,
+`lint`, `types:check`, `test`et `build`Utilisez les équivalents de votre application plutôt que de supposer que ces noms existent. La compilation de production Next.js testée utilise Webpack ; les bundlers alternatifs ne sont pas établis par cette matrice.
+
+Vérifiez que les couleurs des tokens, les états de focus et les styles d’état Radix apparaissent dans l’application construite. Testez l'interaction du clavier et la disposition mobile dans un navigateur ; le rendu statique et les assertions CSS ne remplacent pas cette revue.
+
+Enregistrez la source examinée, les modifications de dépendance et le fichier de verrouillage ensemble. Continuer avec [Mises à jour et restauration](/docs/registry/updates), ou utiliser [dépannage](/docs/registry/troubleshooting) avant de réessayer une étape ratée.

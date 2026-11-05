@@ -1,0 +1,116 @@
+---
+title: Demandes d'assistance
+description: Réutilisez un projet en tant que file d'attente de support interne,
+  avec les tâches de demande et les commentaires d'enquête attribués.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  ClipboardCheck,
+  SlidersHorizontal,
+  Users,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Organiser une file d'attente interne [#organize-an-internal-queue]
+
+Commencez par un **Support produit** projet. Chaque tâche représente une demande; ses commentaires contiennent des notes d'enquête. Il s'agit d'un flux de travail interne manuel sur le modèle existant, sans nouveau schéma ou fournisseur.
+
+| Votre vocabulaire   | Modèle existant                                     | Exemple                                                         |
+| ------------------- | --------------------------------------------------- | --------------------------------------------------------------- |
+| File d'attente      | Projet                                              | Support produit                                                 |
+| Demande             | Titre et description de la tâche                    | L'exportation CSV manque la dernière colonne                    |
+| Agent et date cible | Adhésion responsable et date d'échéance de la tâche | Un coéquipier et une cible de calendrier choisie                |
+| Enquête             | Observations sur les tâches                         | Reproduit avec un CSV synthétique; réparation prête à l'examen. |
+
+## Essayez le workflow [#try-the-workflow]
+
+<Steps>
+  <Step>
+    ### Ouvrir la file d'attente [#open-the-queue]
+
+    Créez le projet de support produit et décrivez sa portée. Maintenez le projet de file d'attente actif pendant que l'équipe traite les demandes.
+
+</Step>
+  <Step>
+    ### Enregistrer une demande [#record-a-request]
+
+    Créez la tâche d'exemple avec le comportement attendu/observé et les étapes de reproduction sûres. Affectez un coéquipier actif et choisissez une date cible.
+
+</Step>
+  <Step>
+    ### Enquêter et résoudre [#investigate-and-resolve]
+
+    Déplacer `TODO` au `IN_PROGRESS`, ajoutez un commentaire interne, puis rechargez. Enregistrer la résolution et marquer la tâche `DONE`. Revenir à la page `IN_PROGRESS` si le travail reprend ; aucune machine d'état de transition de ticket n'est ajoutée.
+
+</Step>
+  <Step>
+    ### Garder la file d'attente et les états de demande séparés [#keep-queue-and-request-states-separate]
+
+    La fermeture d'une tâche ne ferme pas le projet de file d'attente. L'archivage du projet bloque les modifications des tâches/commentaires pour chaque requête qu'il contient jusqu'à ce qu'il soit restauré.
+
+</Step>
+
+</Steps>
+
+<Callout title="Notes internes et objectifs du calendrier">
+  Les commentaires sont visibles par les membres de l'espace de travail et ne
+  sont pas des réponses aux clients. Une date d'échéance de tâche n'envoie pas
+  de rappels, ne mesure pas le temps de réponse et n'applique pas un SLA.
+  L’ingestion d’e-mails, les réponses des clients et un portail client sont des
+  extensions.
+
+</Callout>
+
+## Adapter la présentation [#adapt-the-presentation]
+
+Les expédiés `docs/recipes/support-requests.md` comprend les points d'entrée source et une invite d'assistant. Réutilisez l'affichage des tâches, les champs validés et le service d'espace de travail. Ajoutez des étiquettes de file d'attente / requête localisées dans cette vue sans modifier les codes d'état partagés. Le cessionnaire est un membre de l'espace de travail, pas une identité de demandeur ou une autorisation qui cache le ticket aux autres membres.
+
+## Vérifier avant d'adopter [#check-before-adopting]
+
+- MEMBRE peut créer, attribuer, modifier et commenter des demandes, et supprimer ses propres notes.
+- PROPRIÉTAIRE/ADMIN peut supprimer des tâches et modérer les commentaires d'autres membres; MEMBRE ne peut pas.
+- Les identifiants étrangers et les adhésions révoquées sont rejetés.
+- La résolution et la réouverture préservent la discussion; l'archivage des blocs change le travail.
+
+Priorité, les références client, les pièces jointes, les états en attente de client et l'automatisation des boîtes aux lettres ont besoin de champs de domaine ou d'intégrations explicites. Définissez-les avant de présenter l'adaptation comme un service d'assistance complet.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Fondement de recette d'affaires",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Examiner le modèle partagé, les contrôles d'accès et d'acceptation.",
+    },
+    {
+      title: "Validation interne",
+      icon: ClipboardCheck,
+      href: "/docs/starter-pro/recipes/internal-validation",
+      description:
+        "Coordonner le travail d'examen sans impliquer d'autorité d'approbation.",
+    },
+    {
+      title: "Suivi des clients",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      description:
+        "Utiliser des projets et des suivis pour le travail interne de livraison des clients.",
+      icon: Users,
+    },
+    {
+      title: "Personnalisation gardée",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Recherchez les recettes de service et d'extension d'autorisation avant d'ajouter des règles de domaine.",
+      icon: SlidersHorizontal,
+    },
+  ]}
+/>

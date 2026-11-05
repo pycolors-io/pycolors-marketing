@@ -1,0 +1,647 @@
+import { localizePageMetadata } from "@/lib/i18n/metadata";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
+import type { Metadata } from "next";
+
+import { GuidePageShell } from "@/components/guides/guide-page-shell";
+import {
+  GuideSection as Section,
+  GuideCallout as Alert,
+  GuideCalloutTitle as AlertTitle,
+  GuideCalloutDescription as AlertDescription,
+  GuideNextSteps,
+  GuideChecklistCard as ChecklistCard,
+} from "@/components/guides/guide-content";
+
+import {
+  Card,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@pycolors/ui";
+
+const metadata: Metadata = {
+  title: "SaaS dashboard design patterns",
+  description:
+    "Learn how to design a modern SaaS dashboard: layout, information hierarchy, KPI cards, tables, activity feeds, filters, empty states, and common mistakes.",
+  alternates: { canonical: "/guides/saas-dashboard-design" },
+  openGraph: {
+    title: "SaaS dashboard design patterns · PyColors",
+    description:
+      "Learn how to design a modern SaaS dashboard: layout, information hierarchy, KPI cards, tables, activity feeds, filters, empty states, and common mistakes.",
+    url: "/guides/saas-dashboard-design",
+    images: ["/seo/og-main.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SaaS dashboard design patterns · PyColors",
+    description:
+      "Learn how to design a modern SaaS dashboard: layout, information hierarchy, KPI cards, tables, activity feeds, filters, empty states, and common mistakes.",
+    images: ["/seo/twitter-main.png"],
+  },
+};
+
+const toc = [
+  { id: "overview", label: "Overview" },
+  { id: "why-dashboards-matter", label: "Why dashboards matter" },
+  { id: "dashboard-goals", label: "Dashboard goals" },
+  { id: "layout-structure", label: "Layout structure" },
+  { id: "information-hierarchy", label: "Information hierarchy" },
+  { id: "kpi-cards", label: "KPI cards" },
+  { id: "tables-and-activity", label: "Tables & activity" },
+  { id: "filters-and-search", label: "Filters & search" },
+  { id: "empty-states", label: "Empty states" },
+  { id: "common-mistakes", label: "Common mistakes" },
+  { id: "build-order", label: "Build order" },
+  { id: "next-steps", label: "Next steps" },
+];
+
+export default function GuideSaaSDashboardDesignPage() {
+  const tSite = useCopy();
+
+  return (
+    <GuidePageShell
+      title={tSite("SaaS dashboard design patterns")}
+      description={tSite(
+        "Learn the core patterns behind a modern SaaS dashboard — from layout and information hierarchy to KPI cards, tables, activity feeds, filters, and empty states.",
+      )}
+      toc={toc}
+      tags={["Next.js", "Product UX"]}
+      documentation={{ title: "UI documentation", href: "/docs/ui" }}
+      relatedGuides={[
+        {
+          title: "Why PWA foundations matter for modern SaaS",
+          href: "/guides/pwa-for-saas",
+        },
+        {
+          title: "Admin panels for SaaS products",
+          href: "/guides/saas-admin-panels",
+        },
+      ]}
+      breadcrumb={[
+        { label: "Home", href: "/" },
+        { label: "Guides", href: "/guides" },
+        {
+          label: "SaaS dashboard design patterns",
+          href: "/guides/saas-dashboard-design",
+        },
+      ]}
+    >
+      <div>
+        <section id="overview" className="scroll-mt-28 py-10 sm:py-12">
+          <div className="space-y-6">
+            <Alert>
+              <AlertTitle>{tSite("Core idea")}</AlertTitle>
+              <AlertDescription>
+                {tSite(
+                  "A SaaS dashboard should help users understand the current state of the product quickly, see what matters now, and take the next useful action with minimal friction.",
+                )}
+              </AlertDescription>
+            </Alert>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <ChecklistCard
+                title={tSite("Primary role")}
+                items={[
+                  "Summarize product state",
+                  "Highlight key signals",
+                  "Reduce navigation friction",
+                  "Guide next actions",
+                ]}
+              />
+              <ChecklistCard
+                title={tSite("Common blocks")}
+                items={[
+                  "KPI cards",
+                  "Recent activity",
+                  "Tables and lists",
+                  "Quick actions",
+                ]}
+              />
+              <ChecklistCard
+                title={tSite("UX goals")}
+                items={[
+                  "Fast comprehension",
+                  "Visual clarity",
+                  "Prioritized information",
+                  "Strong empty states",
+                ]}
+              />
+              <ChecklistCard
+                title={tSite("PyColors path")}
+                items={[
+                  "Study real examples",
+                  "Use production-shaped patterns",
+                  "Start with Starter Free",
+                  "Upgrade when needed",
+                ]}
+              />
+            </div>
+
+            <p className="text-sm leading-7 text-muted-foreground sm:text-[15px]">
+              {tSite(
+                "If you want to see how these dashboard patterns look in practice, explore the",
+              )}
+              {tSite(" ")}
+              <Link
+                href="/ui/examples"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("examples")}
+              </Link>
+              {tSite(" ")}
+              {tSite("or browse the")}
+              {tSite(" ")}
+              <Link
+                href="/ui/patterns"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("UI patterns")}
+              </Link>
+              {tSite(" ")}
+              {tSite("before starting with")}
+              {tSite(" ")}
+              <Link
+                href="/starters/free"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("Starter Free")}
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+
+        <Section
+          id="why-dashboards-matter"
+          title={tSite("Why SaaS dashboards matter")}
+          description={tSite(
+            "The dashboard is often the first real product experience after login.",
+          )}
+        >
+          <p>
+            {tSite(
+              "In most SaaS products, the dashboard is where users decide whether the product feels trustworthy, useful, and organized. It is not just a summary page. It is the screen that frames the product.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("What a good dashboard creates")}
+              items={[
+                "Immediate credibility",
+                "Fast product comprehension",
+                "Clear status awareness",
+                "A sense of momentum",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("What a weak dashboard causes")}
+              items={[
+                "Confusion",
+                "Low perceived product maturity",
+                "Too much navigation",
+                "Missed opportunities for action",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "This is why many successful SaaS products invest heavily in dashboard UX early. It is one of the highest-leverage screens in the product.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="dashboard-goals"
+          title={tSite("Define the goal of the dashboard")}
+          description={tSite("Not every dashboard needs to do the same thing.")}
+        >
+          <p>
+            {tSite(
+              "Before designing blocks, decide what your dashboard is supposed to optimize for. Different products need different dashboard priorities.",
+            )}
+          </p>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Dashboard type")}</TableHead>
+                <TableHead>{tSite("Main goal")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Analytics product")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Surface metrics, trends, and reports quickly")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Project management SaaS")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Show active work, deadlines, and collaboration")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("AI SaaS product")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Show usage, credits, prompts, and account state")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("B2B admin platform")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Show organization health, members, and actions")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "A dashboard becomes much easier to design once its main job is explicit. Otherwise, it often turns into a crowded page full of weak signals.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="layout-structure"
+          title={tSite("Use a clear layout structure")}
+          description={tSite(
+            "A strong dashboard usually has a predictable visual flow.",
+          )}
+        >
+          <p>
+            {tSite(
+              "The most common SaaS dashboard pattern is a vertical flow with a few high-value zones: header, KPI summary, main content, and recent activity or secondary context.",
+            )}
+          </p>
+
+          <Card className="p-4">
+            <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`Dashboard
+├─ Header / context
+├─ KPI cards
+├─ Main content area
+│  ├─ Primary table / chart / list
+│  └─ Quick actions
+└─ Secondary context
+   ├─ Activity feed
+   └─ Empty states / guidance`}</pre>
+          </Card>
+
+          <p>
+            {tSite(
+              "This kind of structure works because it mirrors how users scan: first the context, then the signals, then the place where they can act.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="information-hierarchy"
+          title={tSite("Create a strong information hierarchy")}
+          description={tSite(
+            "The dashboard should make importance visually obvious.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Dashboard design is mostly about deciding what deserves the most visual weight. If everything feels equally important, the page feels noisy and users do not know where to focus.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("High-priority content")}
+              items={[
+                "Current account or organization context",
+                "Core product KPIs",
+                "Critical alerts or blockers",
+                "Main table, chart, or list",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Secondary content")}
+              items={[
+                "Activity feed",
+                "Tips and guidance",
+                "Secondary actions",
+                "Less important status blocks",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "Good hierarchy often matters more than visual decoration. A simple dashboard with strong prioritization will outperform a beautiful but noisy one.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="kpi-cards"
+          title={tSite("Design KPI cards carefully")}
+          description={tSite(
+            "KPI cards are one of the most common dashboard building blocks.",
+          )}
+        >
+          <p>
+            {tSite(
+              "KPI cards work best when they show a signal that is useful, current, and easy to compare. They should help users understand the product state quickly, not just decorate the screen.",
+            )}
+          </p>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Good KPI card traits")}</TableHead>
+                <TableHead>{tSite("Weak KPI card traits")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>{tSite("Clear label and value")}</TableCell>
+                <TableCell>{tSite("Vague title or no context")}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{tSite("Supports a decision or action")}</TableCell>
+                <TableCell>
+                  {tSite("Looks impressive but changes nothing")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{tSite("Easy to scan and compare")}</TableCell>
+                <TableCell>
+                  {tSite("Too much detail inside a small card")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{tSite("Consistent formatting")}</TableCell>
+                <TableCell>{tSite("Inconsistent units and styles")}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "A few useful KPI cards are stronger than a wall of mediocre numbers. Most SaaS dashboards improve when the number of KPI cards is reduced and their quality increases.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="tables-and-activity"
+          title={tSite("Use tables, lists, and activity feeds with intent")}
+          description={tSite("Not all dashboard content should be cards.")}
+        >
+          <p>
+            {tSite(
+              "Tables and activity feeds often carry the real operational value of the dashboard. KPI cards create quick awareness, but tables and lists usually support the actual work.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Great uses for tables")}
+              items={[
+                "Projects or resources overview",
+                "Recent invoices or transactions",
+                "Team member lists",
+                "Moderation or admin work queues",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Great uses for activity feeds")}
+              items={[
+                "Recent system events",
+                "User actions",
+                "Alerts and notifications",
+                "Context around ongoing work",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "The key is to avoid turning the dashboard into a duplicate of a full data page. The dashboard should surface just enough detail to support the next action.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="filters-and-search"
+          title={tSite("Add filters and search only when they reduce friction")}
+          description={tSite(
+            "Controls should simplify the experience, not overwhelm it.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Filters and search are useful when the dashboard helps users inspect a changing dataset. They are harmful when they clutter the layout before users even understand the page.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Use filters when")}
+              items={[
+                "Users need multiple views of the same data",
+                "The table or chart is central to the workflow",
+                "Time ranges matter",
+                "Comparisons are useful",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Avoid overloading when")}
+              items={[
+                "The dashboard is mostly high-level",
+                "The page already feels dense",
+                "The data set is still small",
+                "A dedicated data page exists elsewhere",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "A dashboard should feel light enough to scan quickly. If advanced filtering is essential, it may belong on a dedicated page rather than in the landing dashboard.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="empty-states"
+          title={tSite("Design empty states as part of the dashboard")}
+          description={tSite(
+            "A great dashboard still works when no data exists yet.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Many SaaS products fail here. The dashboard looks decent with mock data, but once a real new user signs in, the page becomes empty, awkward, or confusing.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Strong empty states")}
+              items={[
+                "Explain what is missing",
+                "Suggest the next action",
+                "Keep the page visually balanced",
+                "Reduce first-use anxiety",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Weak empty states")}
+              items={[
+                "Blank cards and empty tables",
+                "No obvious next step",
+                "Unclear labels",
+                "Too much placeholder noise",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "Good empty states are part of dashboard design, not an afterthought. They are especially important for onboarding and trial conversion.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="common-mistakes"
+          title={tSite("Common mistakes in SaaS dashboard design")}
+          description={tSite(
+            "Most dashboard problems come from priority mistakes, not missing features.",
+          )}
+        >
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Typical mistakes")}
+              items={[
+                "Too many KPI cards",
+                "No clear primary action",
+                "Crowded layouts with weak hierarchy",
+                "Tables that belong on another page",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Better approach")}
+              items={[
+                "Prioritize a few key signals",
+                "Make next actions obvious",
+                "Use hierarchy to guide scanning",
+                "Keep detailed workflows on dedicated pages",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "A dashboard should not try to do everything. It should help users understand the product state, not replace the rest of the application.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="build-order"
+          title={tSite("Recommended build order for dashboard UI")}
+          description={tSite(
+            "A practical order keeps the dashboard useful early and extensible later.",
+          )}
+        >
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Phase")}</TableHead>
+                <TableHead>{tSite("Focus")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 1")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Header, page context, and primary action")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 2")}
+                </TableCell>
+                <TableCell>
+                  {tSite("KPI cards and one main table or chart")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 3")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Activity feed, secondary actions, and alerts")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 4")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Filters, search, and stronger empty states")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "This sequence makes it easier to ship a dashboard that already feels credible before the entire product is fully wired.",
+            )}
+          </p>
+        </Section>
+
+        <section className="border-t border-border/60 py-8 sm:py-10">
+          <Alert>
+            <AlertTitle>{tSite("Mental model to keep")}</AlertTitle>
+            <AlertDescription>
+              {tSite(
+                "A great SaaS dashboard does not show everything. It shows the right signals, provides the right context, and makes the next useful action easy to take.",
+              )}
+            </AlertDescription>
+          </Alert>
+        </section>
+
+        <GuideNextSteps
+          title={tSite("Build your dashboard faster with PyColors")}
+        />
+      </div>
+    </GuidePageShell>
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return localizePageMetadata(
+    metadata,
+    "/guides/saas-dashboard-design",
+    locale,
+  );
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { Maximize2, Minimize2, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -13,6 +14,8 @@ export function BlockStandalonePreview({
   preview: ReactNode;
   title: string;
 }>) {
+  const tSite = useCopy();
+
   const surfaceRef = useRef<HTMLDivElement>(null);
   const [previewKey, setPreviewKey] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
@@ -43,31 +46,35 @@ export function BlockStandalonePreview({
       <div className="mx-auto flex min-h-[calc(100dvh-1.5rem)] max-w-[1440px] flex-col overflow-hidden rounded-xl border border-border-subtle bg-background sm:min-h-[calc(100dvh-2.5rem)]">
         <header className="flex min-h-14 items-center justify-between gap-4 border-b border-border-subtle px-4 sm:px-6">
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold">{title}</p>
-            <p className="text-xs text-muted-foreground">Interactive preview</p>
+            <p className="truncate text-sm font-semibold">{tSite(title)}</p>
+            <p className="text-xs text-muted-foreground">
+              {tSite("Interactive preview")}
+            </p>
           </div>
           <div
-            aria-label="Preview actions"
+            aria-label={tSite("Preview actions")}
             className="flex items-center gap-1"
             role="group"
           >
             <button
-              aria-label="Reset preview"
+              aria-label={tSite("Reset preview")}
               className={iconButtonClassName}
               onClick={() => setPreviewKey((value) => value + 1)}
-              title="Reset preview"
+              title={tSite("Reset preview")}
               type="button"
             >
               <RotateCcw aria-hidden="true" className="size-4" />
             </button>
             <button
-              aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              aria-label={tSite(
+                fullscreen ? "Exit fullscreen" : "Enter fullscreen",
+              )}
               className={iconButtonClassName}
               disabled={
                 typeof document !== "undefined" && !document.fullscreenEnabled
               }
               onClick={toggleFullscreen}
-              title={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              title={tSite(fullscreen ? "Exit fullscreen" : "Enter fullscreen")}
               type="button"
             >
               {fullscreen ? (
@@ -83,7 +90,7 @@ export function BlockStandalonePreview({
             className="w-full rounded-lg bg-background p-3 shadow-sm sm:p-6 lg:p-8"
             key={previewKey}
           >
-            {preview}
+            {tSite(preview)}
           </div>
         </div>
       </div>

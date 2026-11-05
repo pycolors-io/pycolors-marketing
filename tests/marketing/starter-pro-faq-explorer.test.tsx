@@ -4,10 +4,14 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 import StarterProFaqPage, {
-  metadata,
-} from "../../app/(site)/starters/pro/faq/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/starters/pro/faq/page";
 import { StarterProFaqExplorer } from "../../components/starters/starter-pro-faq-explorer";
 import { starterProBuyerFaqs } from "../../lib/products/starter-pro-buyer-faq";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 function searchInput() {
   return screen.getByRole("searchbox", {

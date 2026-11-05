@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { ChevronDown, PanelLeft } from "lucide-react";
 import {
@@ -20,6 +21,8 @@ const focusRing =
 
 /** Global navigation stays identical; article navigation belongs to the sidebar. */
 export function DocsHeader() {
+  const tSite = useCopy();
+
   const { open, setOpen, mode } = useSidebar();
   const sidebarTriggerRef = React.useRef<HTMLButtonElement>(null);
 
@@ -54,7 +57,7 @@ export function DocsHeader() {
           <Container>
             <SidebarTrigger
               ref={sidebarTriggerRef}
-              aria-label="Browse documentation"
+              aria-label={tSite("Browse documentation")}
               className={`group inline-flex h-11 items-center gap-2 rounded-md text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground motion-reduce:transition-none ${focusRing}`}
             >
               <PanelLeft
@@ -62,7 +65,7 @@ export function DocsHeader() {
                 strokeWidth={1.5}
                 className="size-4"
               />
-              Documentation
+              {tSite("Documentation")}
               <ChevronDown
                 aria-hidden="true"
                 strokeWidth={1.5}

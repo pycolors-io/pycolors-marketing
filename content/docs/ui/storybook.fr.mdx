@@ -1,0 +1,233 @@
+---
+title: Storybook
+description: Rendez PyColors dans votre propre Storybook React/Vite avec des
+  tokens, Tailwind CSS, une barre d'outils thématique et une première histoire
+  interactive.
+lastUpdated: "2026-09-24"
+publishedAt: "2026-09-25"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+## Explorez d'abord, intégrez quand prêt [#explore-first-integrate-when-ready]
+
+[PyColors UI Explorer](https://ui.pycolors.io) est le catalogue public interactif. Utilisez ses contrôles, ses thèmes et ses états de composants sans rien installer. Les **UI Explorer** le menu des ressources renvoie au guide des composants correspondants, à l'installation et à la page produit de l'interface utilisateur. Ces pages Fumadocs restent la documentation canonique d'utilisation et d'accessibilité.
+
+Ce guide met **publié les paquets PyColors dans votre propre Storybook**. Il ne nécessite pas le clonage du monorepo, d'un fournisseur PyColors ou d'alias de paquets privés.
+
+## Configuration vérifiée [#verified-setup]
+
+L'exemple autonome ci-dessous utilise Node 24, pnpm 10.32.1, React 19, Storybook 10.5.9 avec React/Vite et Tailwind CSS 4.3.3. Les versions sont épinglées afin que vous puissiez reproduire la configuration vérifiée. Il ne s’agit pas d’une affirmation selon laquelle chaque version de React, version de Storybook ou combinaison de frameworks a été testée.
+
+<Callout title="Ajouter à une app existante ?">
+  Conservez le framework de votre application, les versions de dépendance, les
+  scripts et les histoires existantes. Fusionnez la configuration pertinente
+  ci-dessous plutôt que de remplacer ses fichiers. Réutilisez votre feuille de
+  style d'application lorsqu'elle comprend déjà des tokens Tailwind et PyColors.
+  Enregistrez le plugin Tailwind Vite une seule fois. Les stories spécifiques à
+  Next.js ont besoin du framework Storybook et des maquettes d'application
+  appropriés ; ce guide vérifie React/Vite.
+
+</Callout>
+
+Créez un répertoire vide en dehors du monorepo PyColors, puis ajoutez ces fichiers.
+
+### Paquet et scripts [#package-and-scripts]
+
+```json title="package.json"
+{
+  "name": "pycolors-storybook-consumer",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "types:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pycolors/ui": "1.5.4",
+    "@pycolors/tokens": "1.2.3",
+    "lucide-react": "1.47.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.5.9",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "storybook": "10.5.9",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vite": "8.1.4"
+  }
+}
+```
+
+React et React DOM sont des pairs obligatoires. Bien que `lucide-react` est déclaré comme un pair optionnel, cette construction de Vite vérifiée en a besoin pour résoudre les importations d'icônes à partir du barillet de l'interface utilisateur publique, même pour l'exemple Button. Gardez-le installé.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src", ".storybook"]
+}
+```
+
+### Storybook et traitement Tailwind [#storybook-and-tailwind-processing]
+
+```ts title=".storybook/main.ts"
+import type { StorybookConfig } from "@storybook/react-vite";
+import tailwindcss from "@tailwindcss/vite";
+
+const config: StorybookConfig = {
+  stories: ["../src/**/*.stories.tsx"],
+  framework: { name: "@storybook/react-vite", options: {} },
+  async viteFinal(config) {
+    config.plugins ??= [];
+    config.plugins.push(tailwindcss());
+    return config;
+  },
+};
+
+export default config;
+```
+
+Cet exemple isolé n'a pas de configuration d'application Vite. Pour une application existante, Storybook's [Vite builder](https://storybook.js.org/docs/builders/vite) peut déjà hériter de ses plugins ; ne dupliquez pas le plugin Tailwind dans `viteFinal`.
+
+### Charger le token CSS et les utilitaires de composants [#load-the-token-css-and-component-utilities]
+
+```css title="src/styles.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+
+@source "../node_modules/@pycolors/ui/dist";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+}
+```
+
+Les tokens fournissent les variables sémantiques et les mappages Tailwind. Tailwind doit encore générer les classes d'utilitaires utilisées par les composants installés : il ne scanne pas `node_modules` automatiquement. Les `@source` Le chemin ci-dessus est relatif à `src/styles.css`; ajustez-le si votre feuille de style est imbriquée ailleurs. Il s'agit d'un emplacement d'analyse CSS, pas d'un chemin d'importation JavaScript ou d'un alias source.
+
+### Barre d'outils aperçu et lumière/obscurité [#preview-and-lightdark-toolbar]
+
+```ts title=".storybook/preview.ts"
+import { createElement } from "react";
+import type { Preview } from "@storybook/react-vite";
+import "../src/styles.css";
+
+const preview: Preview = {
+  initialGlobals: { theme: "light" },
+  globalTypes: {
+    theme: {
+      description: "Color theme",
+      toolbar: {
+        icon: "circlehollow",
+        items: [
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  decorators: [
+    (Story, context) => {
+      const dark = context.globals.theme === "dark";
+      document.documentElement.classList.toggle("dark", dark);
+      document.documentElement.style.colorScheme = dark ? "dark" : "light";
+      return createElement(
+        "main",
+        { "aria-label": "Component preview" },
+        createElement(Story),
+      );
+    },
+  ],
+  parameters: { layout: "padded" },
+};
+
+export default preview;
+```
+
+La feuille de style importe des charges `@pycolors/tokens/tokens.css` dans l'iframe de prévisualisation. Modifier la [valeur globale de la barre d'outils](https://storybook.js.org/docs/essentials/toolbars-and-globals) Relance le décorateur. `.dark` doit être à la racine du document de prévisualisation, pas seulement le gestionnaire de Storybook externe. Cela inclut également les superpositions de thèmes dans le corps de l'iframe. Un gestionnaire sombre ou un arrière-plan de canevas modifié seul ne change pas les tokens PyColors.
+
+### Première histoire [#first-story]
+
+```tsx title="src/button.stories.tsx"
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "@pycolors/ui";
+
+const meta = {
+  title: "Example/Button",
+  component: Button,
+  args: { children: "Save changes" },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+export const Disabled: Story = { args: { disabled: true } };
+```
+
+Exécutez ces commandes à partir de ce répertoire :
+
+```bash
+pnpm install
+pnpm types:check
+pnpm build-storybook
+pnpm storybook
+```
+
+Conservez le fichier de verrouillage généré. Les installations ultérieures peuvent utiliser `pnpm install --frozen-lockfile`. Ouvrez l'URL locale imprimée par Storybook, choisissez **Exemple / Bouton**, et changer le **Lumière / Sombre** barre d'outils. Vérifiez que la surface de la page et les couleurs du bouton changent et que l'histoire désactivée ne peut pas s'activer.
+
+## Vérifiez votre intégration [#check-your-integration]
+
+- Accédez au bouton avec l'onglet. Son indicateur de focus doit rester visible dans les deux thèmes.
+- Comparez les états par défaut et désactivés au bureau et dans une fenêtre d'affichage étroite.
+- Pour vos propres histoires interactives, exercez la saisie au clavier, le retour de focus et les noms accessibles; ajoutez les tests d'interaction et d'accessibilité Storybook appropriés.
+- Valider les superpositions dans les deux thèmes : le contenu du portail doit hériter des mêmes tokens.
+- Une analyse automatisée de l'accessibilité complète l'examen visuel et du lecteur d'écran; ce montage minimal n'installe pas d'addon d'accessibilité et ne certifie pas la conformité.
+
+PyColors utilise les importations publiques de `@pycolors/ui`. Dans une application Next.js, gardez les composants du serveur sur le serveur et placez les gestionnaires d'état/d'événement à la plus petite limite du client. Une histoire de Storybook réussie ne prouve pas RSC, le routage, l'authentification ou l'intégration de données serveur. Utilisez des montages synthétiques et les maquettes prises en charge par votre framework ; ne mettez jamais de secrets de serveur dans les histoires.
+
+## Dépannage [#troubleshooting]
+
+| Symptôme                                                | Vérifier                                                                                                                                                                                                      |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Les composants n'ont pas d'espacement ou de couleurs    | Assurez-vous que Storybook traite Tailwind v4, les importations `src/styles.css`, et scanne l'interface utilisateur installée `dist` répertoire. Les variables de token seules ne génèrent pas d'utilitaires. |
+| Les couleurs sémantiques manquent                       | Confirmer `@pycolors/tokens/tokens.css` est importé une seule fois et n'est pas remplacé par l'application en conflit CSS.                                                                                    |
+| Seul le manager devient sombre                          | Basculer `.dark` sur la racine du document de l'iframe de prévisualisation ; inspectez ce document plutôt que la fenêtre parent.                                                                              |
+| Les dialogues restent légers                            | Vérifiez le niveau racine `.dark` et les styles de corps; thématiser un wrapper d'histoire seul manque le contenu porté.                                                                                      |
+| Un alias d'espace de travail échoue                     | Utilisez les packages installés et `@pycolors/ui`; supprimer les alias pointant vers le monorepo PyColors.                                                                                                    |
+| React les crochets ou les pairs échouent                | Vérifiez les versions compatibles de React/React DOM et les installations en double. Conserver `lucide-react` installé pour cette configuration public-baril/Vite.                                            |
+| App CSS fonctionne mais Storybook CSS ne fonctionne pas | Confirmez que l'aperçu l'importe et que la configuration de Storybook Vite inclut le plugin CSS requis.                                                                                                       |
+| Une histoire spécifique à Next.js échoue                | Configurez son framework Storybook et ses maquettes pris en charge. Le montage autonome React/Vite ne valide pas les services Next.js ou l'exécution RSC.                                                     |
+
+## Poursuivre [#continue]
+
+- [Ouvrez l'exemple du bouton public](https://ui.pycolors.io/?path=/story/components-button--default).
+- [Utilisation et accessibilité des boutons](/docs/ui/button).
+- [Révision de l'installation](/docs/ui/installation) et [thématisation](/docs/ui/theming).
+- [Découvrir Starter Free](/starters/free) pour ces primitives dans une application.

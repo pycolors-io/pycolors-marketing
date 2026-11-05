@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowUp, ChevronDown, List } from "lucide-react";
 import styles from "./blog-article.module.css";
@@ -9,6 +10,8 @@ type ArticleTocItem = { url: string; title: ReactNode };
 
 /** Track the heading at the reading line, including through long code blocks. */
 export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
+  const tSite = useCopy();
+
   const [activeUrl, setActiveUrl] = useState(items[0]?.url);
   const mobileDetails = useRef<HTMLDetailsElement>(null);
 
@@ -66,9 +69,9 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
             }}
           >
             <span aria-hidden="true" className={styles.tocNumber}>
-              {String(index + 1).padStart(2, "0")}
+              {tSite(String(index + 1).padStart(2, "0"))}
             </span>
-            <span>{item.title}</span>
+            <span>{tSite(item.title)}</span>
           </Link>
         </li>
       ))}
@@ -89,24 +92,25 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
             />
           </span>
           <div>
-            <p className="text-xs font-medium">On this page</p>
+            <p className="text-xs font-medium">{tSite("On this page")}</p>
             <p className="mt-1 text-[11px] text-muted-foreground">
-              {items.length} {items.length === 1 ? "section" : "sections"}
+              {tSite(items.length)}{" "}
+              {tSite(items.length === 1 ? "section" : "sections")}
             </p>
           </div>
         </div>
         <nav
-          aria-label="On this page"
+          aria-label={tSite("On this page")}
           className="max-h-[calc(100dvh-18rem)] overflow-y-auto overscroll-contain p-2"
         >
-          {links}
+          {tSite(links)}
         </nav>
         <div className="border-t border-border-subtle px-4 py-1">
           <Link
             href="#article-title"
             className="flex min-h-11 items-center justify-between gap-3 rounded-md text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
-            Back to top
+            {tSite("Back to top")}
             <ArrowUp className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
@@ -119,12 +123,12 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
           className={`${styles.tocHeader} flex min-h-14 cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}
         >
           <List className="size-4" aria-hidden="true" />
-          On this page
+          {tSite("On this page")}
           <span
             className="ml-auto font-mono text-[11px] font-normal text-muted-foreground"
-            aria-label={`${items.length} sections`}
+            aria-label={tSite("{value0} sections", { value0: items.length })}
           >
-            {String(items.length).padStart(2, "0")}
+            {tSite(String(items.length).padStart(2, "0"))}
           </span>
           <ChevronDown
             className="size-4 text-muted-foreground"
@@ -132,10 +136,10 @@ export function ArticleToc({ items }: { readonly items: ArticleTocItem[] }) {
           />
         </summary>
         <nav
-          aria-label="On this page"
+          aria-label={tSite("On this page")}
           className="max-h-[60dvh] overflow-y-auto border-t border-border-subtle p-2"
         >
-          {links}
+          {tSite(links)}
         </nav>
       </details>
     </>

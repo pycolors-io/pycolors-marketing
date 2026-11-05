@@ -1,0 +1,328 @@
+---
+title: Pourquoi utiliser des patterns
+description: Pourquoi la plupart des produits SaaS échouent au niveau des
+  fonctionnalités - et comment les modèles le corrigent.
+lastUpdated: "2026-05-18"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  Layers,
+  Layers3,
+  LoaderCircle,
+  Rocket,
+  Table2,
+  Workflow,
+  Zap,
+} from "lucide-react";
+
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Stratégie</Badge>
+</div>
+
+## La plupart des produits n'échouent pas à l'IU [#most-products-do-not-fail-at-ui]
+
+Ils échouent à la **couche caractéristique**.
+
+Ce n'est pas parce que les boutons sont faux. Pas parce que les couleurs sont éteintes.
+
+Mais parce que :
+
+- caractéristiques se comportent de manière incohérente
+- Les pays manquent ou ne sont pas clairs
+- Les décisions UX changent de page en page
+- Les flux async se brisent dans des conditions réelles
+
+<Callout title="Réalité">
+  Vous ne transportez pas de composants.
+
+Vous expédiez des tableaux avec des filtres, des formulaires avec validation, des mutations avec rétroaction et des tableaux de bord avec des données réelles.
+
+C’est là que la plupart des systèmes se brisent.
+
+</Callout>
+
+### L'écart caché dans la plupart des systèmes d'IU [#the-hidden-gap-in-most-ui-systems]
+
+La plupart des bibliothèques UI s'arrêtent aux primitives :
+
+- boutons
+- entrées
+- cartes
+- dialogues
+
+Ils vous donnent **morceaux**.
+
+Mais ils ne définissent pas :
+
+- Comment structurer une table de données
+- comment gérer les états de chargement, de vide et d'erreur
+- Comment concevoir une mutation UX
+- Comment garder un comportement cohérent entre les fonctionnalités
+
+Les équipes finissent par :
+
+- Réinventer la même logique
+- Prendre des décisions incohérentes
+- Expédition UX fragile
+- ralentir à mesure que le produit se développe
+
+## Ce que les patterns résolvent réellement [#what-patterns-actually-solve]
+
+Les modèles vous donnent quelque chose de différent:
+
+> Une façon par défaut de créer des fonctionnalités qui se comportent correctement.
+
+Ils combinent:
+
+- structure
+- état
+- interaction
+- Feedback
+- Règles UX
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Structure",
+      description:
+        "Séparation claire entre l'en-tête, le contenu, les actions et les surfaces de données.",
+      icon: Layers,
+    },
+    {
+      title: "État",
+      description:
+        "Gestion explicite des flux de chargement, de vide, d'erreur et de mutation.",
+      icon: Workflow,
+    },
+    {
+      title: "Comportement",
+      description:
+        "Les utilisateurs peuvent compter sur des interactions prévisibles sur l’ensemble du produit.",
+      icon: Zap,
+    },
+  ]}
+/>
+
+## Sans patrons vs avec patrons [#without-patterns-vs-with-patterns]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Sans patrons",
+      title: "Chaque caractéristique devient une décision locale",
+      icon: AlertTriangle,
+      description:
+        "Lorsque le comportement du produit n’est pas normalisé, les équipes reconstruisent les mêmes décisions de manière répétée et incohérente.",
+      items: [
+        "Chaque fonctionnalité est construite différemment",
+        "les états de chargement, de vide et d'erreur sont incohérents",
+        "Les décisions UX dépendent du développeur",
+        "Les bugs apparaissent dans les edge cases",
+        "Les fonctionnalités sont difficiles à réutiliser",
+        "La vitesse de l'équipe ralentit",
+      ],
+    },
+    {
+      eyebrow: "Avec Patrons",
+      title: "Les fonctionnalités deviennent prévisibles à grande échelle",
+      icon: CheckCircle,
+      tone: "pro",
+      description:
+        "Les modèles créent une valeur par défaut partagée pour le comportement des produits sur toute la surface SaaS.",
+      items: [
+        "caractéristiques se comportent de la même manière partout",
+        "Les états sont toujours gérés",
+        "Les décisions sont cohérentes",
+        "Les équipes avancent plus vite",
+        "Les utilisateurs font confiance au produit",
+        "Les cas de bord deviennent plus faciles à raisonner",
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Changement de cap">
+  Les motifs ne vous rendent pas plus rapide en vous donnant plus de composants.
+
+Ils vous rendent plus rapide en supprimant les décisions répétées.
+
+</Callout>
+
+### L'effet de levier [#the-leverage-effect]
+
+Les patterns sont a **multiplicateur de force**.
+
+Au lieu de:
+
+> construire 10 caractéristiques — 10 façons différentes
+
+Vous obtenez:
+
+> 10 caractéristiques — 1 système cohérent
+
+Cela signifie :
+
+- moins de code à maintenir
+- Moins de bugs UX
+- Onboarding plus rapide
+- meilleure qualité du produit
+- Une propriété plus claire entre l'interface utilisateur et le comportement du produit
+
+## Pourquoi cela est important pour le SaaS [#why-this-matters-for-saas]
+
+Les produits SaaS ne sont pas statiques
+
+Ils évoluent :
+
+- plus de données
+- plus de fonctionnalités
+- plus d'utilisateurs
+- plus de rôles
+- plus de cas de bord
+
+Sans Patterns, la complexité augmente plus vite que votre système.
+
+Avec Patterns, la complexité devient gérable car le comportement répété du produit a déjà un défaut.
+
+## L'approche PyColors [#the-pycolors-approach]
+
+PyColors est structuré en couches :
+
+| Couche                | Rôle                                                                        |
+| --------------------- | --------------------------------------------------------------------------- |
+| Système de conception | Cohérence visuelle grâce aux tokens, couleurs, typographie, rayon et ombres |
+| composants UI         | Petites primitives réutilisables                                            |
+| Guides                | Raisonnement UX et jugement produit                                         |
+| Motifs                | Implémentation au niveau des fonctionnalités par défaut                     |
+| Starter Pro           | Auth de production, facturation, backend et fondations de lancement         |
+
+Les modèles se situent exactement là où la plupart des systèmes sont faibles: entre les composants de bas niveau et les caractéristiques réelles du produit.
+
+<Callout title="De l'UI au produit">
+  Les composants vous aident à créer des écrans.
+
+Les modèles vous aident à créer des fonctionnalités.
+
+Starter Pro vous aide à lancer une entreprise.
+
+</Callout>
+
+### Où Patterns aide le plus [#where-patterns-help-most]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Écrans chargés de données",
+      description:
+        "Tableaux, filtres, pagination, actions en ligne, actions en bloc et flux de travail opérationnels.",
+      icon: Table2,
+    },
+    {
+      title: "Comportement asynchrone",
+      description:
+        "Charger des états, des retours optimistes, réessayer des chemins, annuler des actions et des confirmations destructrices.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "Flux de produits",
+      description:
+        "Règles au niveau des fonctionnalités qui relient l'interface utilisateur, l'état, la copie et l'intention de l'utilisateur.",
+      icon: Layers3,
+    },
+  ]}
+/>
+
+### Décision [#decision]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Primitif",
+      title:
+        "Utiliser les composants de l'interface utilisateur pour les blocs de construction",
+      icon: Layers,
+      description:
+        "Utilisez des primitives lorsque le problème est la composition visuelle et la structure de l'interface utilisateur réutilisable.",
+      items: ["boutons", "entrées", "cartes", "dialogues", "badges"],
+    },
+    {
+      eyebrow: "Motif",
+      title: "Utiliser des modèles pour le comportement du produit",
+      icon: Workflow,
+      tone: "pro",
+      description:
+        "Utilisez des modèles lorsque la fonctionnalité a besoin d'un état cohérent, de commentaires, d'interaction et de règles UX.",
+      items: [
+        "tableaux de données",
+        "actions async",
+        "filtres",
+        "formulaires",
+        "superpositions",
+      ],
+    },
+    {
+      eyebrow: "Starter Pro",
+      title: "Utiliser Starter Pro pour le câblage de lancement",
+      href: "/docs/starter-pro",
+      icon: Rocket,
+      description:
+        "Utilisez Starter Pro lorsque l'authentification, la facturation, le backend, les routes protégés et la livraison deviennent le bloqueur de lancement.",
+      items: [
+        "Authentification",
+        "facturation",
+        "backend",
+        "flux de production",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+## Prochaine étape [#next-step]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Explorer la table de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Comprendre un modèle SaaS de base utilisé dans presque tous les produits.",
+      icon: Table2,
+    },
+    {
+      title: "Explorer les actions Async",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevoir une mutation UX avec feedback, réessayer et annuler.",
+      icon: LoaderCircle,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Transformez les modèles en un véritable SaaS."
+  description="Les motifs vous donnent le calque de fonctionnalité. Starter Pro vous offre des flux d'authentification, de facturation, de backend et de production."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

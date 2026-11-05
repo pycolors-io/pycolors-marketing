@@ -1,0 +1,381 @@
+---
+title: Politique de publication
+description: Comment PyColors envoie les mises à jour à travers l'écosystème.
+  Versions prévisibles, versioning clair et progrès transparents.
+lastUpdated: "2026-05-18"
+appliesTo: Project
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  GitBranch,
+  History,
+  Layers3,
+  LayoutTemplate,
+  Map,
+  PackageCheck,
+  RefreshCcw,
+  ShieldCheck,
+  Sparkles,
+  TriangleAlert,
+  Wrench,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Référence</Badge>
+  <Badge>Politique de publication</Badge>
+</div>
+
+## Comment les navires PyColors [#how-pycolors-ships]
+
+PyColors est conçu pour se déplacer rapidement **Sans devenir instable**.
+
+Le modèle de publication sépare deux choses qui se mélangent souvent :
+
+- **packages** Versioning technique
+- **écosystème** à la progression du produit
+
+Cette séparation permet à PyColors de publier des mises à jour de paquets précises tout en communiquant la progression du produit de manière à ce que les clients et les développeurs puissent comprendre.
+
+<Callout title="Idée de base">
+  Les paquets suivent la vérité technique. L’écosystème communique l’élan
+  produit.
+
+</Callout>
+
+## Modèle de publication [#release-model]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Paquets",
+      description:
+        "Les paquets publics utilisent Versioning et Changesets sémantiques afin que les modifications techniques restent précises, traçables et sûres à consommer.",
+      icon: PackageCheck,
+    },
+    {
+      title: "Écosystème",
+      description:
+        "Les versions hebdomadaires communiquent les progrès sur l'interface utilisateur, les starters, les modèles, les documents, les modèles et les couches de plate-forme.",
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+### Versioning des paquets [#package-versioning]
+
+Paquets publics tels que `@pycolors/ui`, `@pycolors/tokens`, et les paquets de configuration partagés suivent **Versioning sémantique**.
+
+```txt title="semver.txt"
+MAJOR → breaking changes
+MINOR → new features, backward compatible
+PATCH → fixes and small improvements
+```
+
+Exemples :
+
+```txt title="examples.txt"
+1.0.3 → bug fixes
+1.1.0 → new components or backward-compatible features
+2.0.0 → breaking changes
+```
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Patch',
+      title: "publication des correctifs",
+      icon: Wrench,
+      description: (
+        <>
+          <p>
+            Use for bug fixes, documentation fixes, small polish, dependency-safe maintenance, and internal improvements that do not change the public API.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Bug fixes</Badge>
+            <Badge variant="plan">Docs fixes</Badge>
+            <Badge variant="plan">Small polish</Badge>
+            <Badge variant="plan">Safe maintenance</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Minor',
+      title: "publication mineure",
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Use for new components, new APIs, new exports, new examples, or backward-compatible product additions.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">New components</Badge>
+            <Badge variant="plan">New exports</Badge>
+            <Badge variant="plan">New APIs</Badge>
+            <Badge variant="plan">Backward compatible</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Major',
+      title: "publication majeure",
+      icon: TriangleAlert,
+      description: (
+        <>
+          <p>
+            Use for breaking API changes, removed exports, migration-required behavior, or incompatible design system updates.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Breaking changes</Badge>
+            <Badge variant="plan">Removed exports</Badge>
+            <Badge variant="plan">Migration required</Badge>
+            <Badge variant="plan">Incompatible behavior</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Source de vérité [#source-of-truth]
+
+Les informations de publication sont divisées par audience et par objectif.
+
+| Surface        | Objet                                                        |
+| -------------- | ------------------------------------------------------------ |
+| GitHub         | Détails de la version technique                              |
+| `CHANGELOG.md` | Modifications au niveau des packages générées par Changesets |
+| `/changelog`   | Mises à jour hebdomadaires de l'écosystème                   |
+| `/roadmap`     | Direction des produits et travaux à venir                    |
+
+<Callout type="info" title="Pourquoi ce split">
+  Les développeurs ont besoin de changements techniques précis. Les clients ont
+  besoin d'une progression claire du produit. PyColors garde les deux visibles
+  sans les mélanger.
+
+</Callout>
+
+## Ecosystem Releases [#ecosystem-releases]
+
+Le site Web communique une cadence de diffusion hebdomadaire.
+
+Cela inclut les mises à jour dans :
+
+- PyColors UI
+- Tokens PyColors
+- Starter Free
+- Starter Pro
+- modèles
+- documentation
+- patrons
+- pages marketing
+- plate-forme et couches de livraison
+
+Les colis sont expédiés quand ils sont prêts.
+
+L'écosystème est livré comme un récit de produit clair.
+
+> La vérité technique reste précise. Le progrès du produit reste compréhensible.
+
+## Flux de travail Changesets [#changesets-workflow]
+
+Toutes les versions des paquets suivent le même modèle opérationnel.
+
+<Steps>
+  <Step>
+    ### Apporter des changements dans le monorepo [#make-changes-in-the-monorepo]
+
+    Le développement se produit dans le noyau PyColors monorepo où les packages, les applications, les modèles, les documents et la configuration partagée évoluent ensemble.
+
+</Step>
+
+  <Step>
+    ### Ajouter un changeset [#add-a-changeset]
+
+    Chaque modification au niveau du paquet obtient un jeu de modifications avec le type de version correct : patch, mineur ou majeur.
+
+</Step>
+
+  <Step>
+    ### Fusionner à main [#merge-to-main]
+
+    Les modifications sont examinées et fusionnées via le flux de travail normal du référentiel.
+
+</Step>
+
+  <Step>
+    ### Version et changelog sont mis à jour [#version-and-changelog-are-updated]
+
+    CI met à jour les versions des paquets et génère des entrées de journal des modifications au niveau des paquets.
+
+</Step>
+
+  <Step>
+    ### Publier et publier [#publish-and-release]
+
+    CI publie des paquets et crée des versions GitHub le cas échéant.
+
+</Step>
+
+</Steps>
+
+### Non négociables [#non-negotiables]
+
+Ces règles maintiennent les libérations prévisibles.
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Règles techniques",
+      title: "Garder les libérations de paquets précises",
+      icon: ShieldCheck,
+      description:
+        "Les surfaces de publication techniques doivent rester fiables, traçables et sûres pour les développeurs consommant des paquets PyColors.",
+      items: [
+        "développement se produit dans le noyau monorepo",
+        "Les dépôts publics sont des surfaces de distribution",
+        "Les paquets publics utilisent Changesets",
+        "Les changements nécessitent des versions majeures",
+        "GitHub Releases reste une vérité technique",
+      ],
+    },
+    {
+      eyebrow: "Règles des produits",
+      title: "Gardez les progrès de l'écosystème lisibles",
+      icon: RefreshCcw,
+      tone: "pro",
+      description:
+        "La communication produit devrait rendre les progrès clairs sans exposer les détails opérationnels privés.",
+      items: [
+        "le site web reflète la progression du produit",
+        "Des communiqués hebdomadaires expliquent le mouvement de l'écosystème",
+        "Les entrées du changelog restent lisibles",
+        "Les mises à jour de le panneau latéral de route restent transparentes",
+        "Les secrets internes et les détails CI ne sont pas exposés",
+      ],
+    },
+  ]}
+/>
+
+## Pourquoi cette approche [#why-this-approach]
+
+La plupart des projets tombent dans l'un des deux problèmes de publication:
+
+- les rejets sont trop lents, donc le produit se sent inactif
+- Les versions sont trop chaotiques, donc les utilisateurs perdent confiance
+
+PyColors équilibre les deux:
+
+- itération technique rapide au niveau du paquet
+- Une communication prévisible au niveau de l’écosystème
+
+Cela crée un rythme de publication qui soutient à la fois la confiance des développeurs et la confiance commerciale.
+
+### Ce que cela garantit [#what-this-guarantees]
+
+Cette politique est conçue pour fournir :
+
+- Mises à jour prévisibles
+- versioning clair
+- Pas de changements de rupture cachés
+- Progrès visibles du produit
+- Historique des paquets traçables
+- séparation entre la vérité technique et la narration du produit
+
+<Callout title="Principe de confiance">
+  Un produit de développeur premium ne devrait pas seulement être livré
+  fréquemment. Cela devrait rendre les progrès faciles à comprendre.
+
+</Callout>
+
+## Public vs interne [#public-vs-internal]
+
+Le modèle de publication est public à dessein.
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Publics",
+      title: "Informations de publication visibles",
+      icon: History,
+      description:
+        "Les surfaces de publication publiques aident les clients et les développeurs à comprendre ce qui a changé et où va l’écosystème.",
+      items: [
+        "versions des paquets",
+        "Entrées changelog",
+        "GitHub",
+        "feuille de route progrès",
+        "Mises à jour hebdomadaires de l'écosystème",
+      ],
+    },
+    {
+      eyebrow: "Interne",
+      title: "Détails opérationnels privés",
+      icon: GitBranch,
+      description:
+        "Les internes opérationnels restent privés, de sorte que la communication reste utile sans exposer les détails d'implémentation sensibles.",
+      items: [
+        "CI secrets",
+        "identifiants de déploiement",
+        "Infrastructures internes",
+        "workflows opérationnels privés",
+      ],
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Les paquets bougent avec une précision technique. L’écosystème évolue avec la clarté du produit.
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Historique des versions",
+      href: "/changelog",
+      description:
+        "Suivez les mises à jour hebdomadaires de l'écosystème sur PyColors.",
+      icon: History,
+    },
+    {
+      title: "Sheet de route",
+      href: "/roadmap",
+      description: "Voir ce qui est prévu dans l'écosystème.",
+      icon: Map,
+    },
+    {
+      title: "UI docs",
+      href: "/docs/ui",
+      description:
+        "Explorez les composants PyColors UI et les fondations du système de conception.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Starters",
+      href: "/starters",
+      description: "Comparez les fondations Starter Free et Starter Pro.",
+      icon: Layers3,
+    },
+  ]}
+/>

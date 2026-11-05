@@ -1,0 +1,296 @@
+---
+title: Pourquoi acheter plutôt que tout développer
+description: Décider lors de l'achat de Starter Pro est un mouvement à effet de
+  levier plus élevé que la reconstruction de l'auth, de la facturation et des
+  fondations backend à partir de zéro.
+lastUpdated: "2026-05-18"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  Clock,
+  CreditCard,
+  LockKeyhole,
+  Package,
+  Rocket,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Décision</Badge>
+</div>
+
+## Construire vs acheter est une décision à effet de levier [#build-vs-buy-is-a-leverage-decision]
+
+Vous pouvez créer vous-même l'authentification, la facturation, la structure du backend et la livraison sécurisée.
+
+La question n’est pas de savoir si vous en êtes capable.
+
+La question est :
+
+> Reconstruire est-ce l'utilisation la plus efficace de votre temps avant le lancement?
+
+<DocsUpgradeCTA
+  title="Starter Pro existe pour le moment où la réponse devient non."
+  description="Passez à l'authentification prête pour la production, à la facturation, aux routes protégées et aux fondations de backend lorsque les flux simulés cessent d'être suffisants."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/what-is-included"
+  secondaryLabel="See what’s included"
+/>
+
+<Callout title="La règle simple">
+  Bâtissez votre différenciation. Achetez l'infrastructure qui ne différencie
+  pas votre produit.
+
+</Callout>
+
+## Le mur caché avant le lancement [#the-hidden-wall-before-launch]
+
+La plupart des projets SaaS ne ralentissent pas car les premiers écrans sont durs.
+
+Ils ralentissent lorsque le produit doit devenir réel:
+
+- Les utilisateurs ont besoin de comptes
+- Les routes ont besoin de protection
+- Les clients doivent payer
+- Les événements Stripe doivent être synchronisés
+- L'état de facturation doit débloquer l'accès
+- La structure du backend doit survivre à la croissance
+
+Ce n’est pas du « petit boulot ».
+
+Il est **Infrastructure de blocage de lancement**.
+
+### Le vrai compromis [#the-real-tradeoff]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Construire à partir de zéro",
+      title: "Posséder tout soi-même",
+      icon: Clock,
+      description:
+        "Construisez l'ensemble de la fondation SaaS en interne lorsque vous voulez une propriété architecturale maximale dès le premier jour.",
+      items: [
+        "Contrôle technique complet",
+        "architecture personnalisée",
+        "opportunité d'apprentissage plus profonde",
+        "temps de configuration plus long",
+        "plus de cas d'auth et de facturation",
+        "risque de lancement plus élevé si la mise en œuvre reste partielle",
+      ],
+    },
+    {
+      eyebrow: "Starter Pro",
+      title:
+        "Commencer à partir d'une base de référence prête pour la production",
+      href: "/docs/starter-pro",
+      icon: Zap,
+      tone: "pro",
+      description:
+        "Utilisez Starter Pro pour réduire le travail d'infrastructure répété et vous concentrer plus tôt sur les produits, les utilisateurs et les revenus.",
+      items: [
+        "fondation adaptées à la production immédiatement",
+        "Moins de travaux d'infrastructure répétés",
+        "Diminution de l’incertitude de lancement",
+        "Chemin plus rapide pour charger les clients",
+        "plus de temps pour le produit et la distribution",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+### Où le temps disparaît [#where-time-disappears]
+
+La plupart des constructeurs commencent par :
+
+> Je vais juste filer auth et Stripe rapidement.
+
+Ensuite, le temps disparaît dans l'auth, la facturation et le travail de préparation au lancement qui semble petit de l'extérieur mais devient coûteux.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Auth complexité",
+      description:
+        "Sessions, OAuth, vérification, réinitialisation des flux, règles du fournisseur, liaison de compte et routes protégées.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Risque de facturation",
+      description:
+        "Commander, sessions de portail, historique des factures, synchronisation webhook, état de l'abonnement et accès aux plans.",
+      icon: CreditCard,
+    },
+    {
+      title: "Lancer la confiance",
+      description:
+        "Limites de backend, contrôle d'accès, livraison sécurisée, état de production et moins de cas fragiles.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+<Callout title="Reality Check">
+  Ces systèmes ne différencient généralement pas votre SaaS. Mais s'ils se
+  trompent, ils bloquent votre lancement.
+
+</Callout>
+
+### Le coût caché est le retard [#the-hidden-cost-is-delay]
+
+Le coût réel de tout construire vous-même n’est pas seulement du code.
+
+Il est également:
+
+- Retarder le feedback des utilisateurs
+- Validation ultérieure des revenus
+- Une logique de paiement fragile
+- bugs découverts trop tard
+- Moins de concentration sur les clients et la distribution
+- plus de temps passé sur le travail que vos utilisateurs ne voient pas
+
+Ce coût est souvent supérieur au prix d’achat.
+
+## Ce que Starter Pro saute réellement [#what-starter-pro-actually-skips]
+
+Starter Pro saute les travaux de fondation répétés:
+
+- auth setup
+- OAuth setup
+- e-mail vérification
+- mot de passe reset
+- protection de route
+- Stripe Checkout
+- portail de facturation
+- Webhook Synchronisation
+- État de la souscription
+- accès de livraison
+
+Il ne saute pas le travail qui rend votre produit unique:
+
+- logique du produit
+- modèle de domaine
+- Onboarding
+- Positionnement
+- workflows
+- expérience client
+
+<Callout type="info" title="Important">
+  Vous n’externalisez pas votre produit. Vous rachètez le temps habituellement
+  perdu à l'infrastructure non différenciée.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  preferTitle="Buy Starter Pro if"
+  avoidTitle="Build it yourself if"
+  prefer={[
+    "vous voulez lancer plus rapidement",
+    "L’authentification et la facturation bloquent la progression",
+    "la direction de votre produit est déjà claire",
+    "vous voulez moins de risque d'installation avant de passer en direct",
+    "vous voulez vous concentrer sur les utilisateurs, le produit et la croissance",
+  ]}
+  avoid={[
+    "vous voulez apprendre ces systèmes en profondeur",
+    "vous avez besoin d'une architecture hautement personnalisée",
+    "vous n'essayez pas de lancer bientôt",
+    "La vitesse de lancement n'est pas votre priorité",
+    "Votre objectif est l’expérimentation plutôt que la monétisation",
+  ]}
+/>
+
+### Meilleure question à poser [#better-question-to-ask]
+
+Ne demandez pas :
+
+> Je peux construire ça ?
+
+Demandez :
+
+> La reconstruction créera-t-elle plus de valeur que le lancement plus tôt?
+
+C’est la vraie décision d’affaires.
+
+### Logique ROI [#roi-logic]
+
+Si Starter Pro enregistre :
+
+- quelques jours, vous lancez plus tôt
+- quelques semaines, vous validez plus tôt
+- quelques erreurs, vous évitez les réécritures coûteuses
+- un bug de facturation, vous protégez la confiance des revenus
+
+Ensuite, il a déjà fait son travail.
+
+<Callout title="Ce que vous achetez réellement">
+  Le temps, la clarté et un chemin plus rapide vers les revenus - pas seulement
+  le code.
+
+</Callout>
+
+## Modèle mental final [#final-mental-model]
+
+> Créez ce qui rend votre produit différent. Achetez ce que chaque SaaS sérieux doit reconstruire.
+
+<DocsUpgradeCTA
+  title="Navire plus tôt. Apprenez plus vite. Gagner plus tôt."
+  description="La seule chose pire que de tout reconstruire vous-même est d'expédier trop tard."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Ce qui est inclus",
+      href: "/docs/starter-pro/what-is-included",
+      description:
+        "Passez en revue les systèmes, les fondations et les couches prêtes pour la production inclus dans Starter Pro.",
+      icon: Package,
+    },
+    {
+      title: "Premiers pas",
+      href: "/docs/starter-pro/getting-started",
+      description:
+        "Configurez Starter Pro localement et commencez à partir d'une base de référence prête pour la production.",
+      icon: Rocket,
+    },
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Explorez les sessions, OAuth, la vérification, les flux de récupération et les fondations d'accès protégées.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Comprendre Stripe Checkout, les abonnements, les factures, le portail client et la synchronisation webhook.",
+      icon: CreditCard,
+    },
+  ]}
+/>

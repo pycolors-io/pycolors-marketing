@@ -3,7 +3,13 @@ import { resolve } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { afterAll, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import PatternsPage, { metadata } from "@/app/(site)/ui/patterns/page";
+import PatternsPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/ui/patterns/page";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.hoisted(() =>
   vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.example.com"),

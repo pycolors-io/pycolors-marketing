@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import clientKeys from "@/messages/client-keys.json";
+import fr from "@/messages/fr.json";
+import { docsUI } from "@/lib/i18n/docs";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -15,9 +19,13 @@ import {
 } from "@/lib/seo/website";
 import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
 import { ConsentGatedGtm } from "@/components/privacy/consent-gated-gtm";
-import { SITE_PALETTE_INIT_SCRIPT } from "@/lib/site-palette";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const clientFrenchMessages = {
+  site: Object.fromEntries(
+    clientKeys.map((key) => [key, fr.site[key as keyof typeof fr.site]]),
+  ),
+};
 
 export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -104,24 +112,38 @@ export function RootDocument({
       {/* eslint-disable-next-line @next/next/no-head-element -- Shared App Router root document; native head preserves pre-hydration palette setup. */}
       <head>
         <script
-          id="site-palette-init"
-          dangerouslySetInnerHTML={{ __html: SITE_PALETTE_INIT_SCRIPT }}
+          id="site-appearance-init"
+          src="/site-appearance.js"
+          async
+          blocking="render"
         />
         <JsonLd id="pycolors-site" data={siteJsonLd} />
       </head>
 
       <body className="flex min-h-screen flex-col">
-        <RootProvider
-          theme={{
-            defaultTheme: "system",
-            enableSystem: true,
-          }}
+        <NextIntlClientProvider
+          locale={locale}
+          timeZone="UTC"
+          messages={locale === "fr" ? clientFrenchMessages : { site: {} }}
         >
-          {children}
-          <ConsentGatedGtm gtmId={GTM_ID} />
-          <PrivacyConsentBanner locale={locale} />
-        </RootProvider>
-        <Analytics />
+          <RootProvider
+            i18n={docsUI.provider(locale)}
+            theme={{
+              defaultTheme: "system",
+              enableSystem: true,
+              attribute: "class",
+              storageKey: "theme",
+              // Initialization is a shared render-blocking resource in the head.
+              // Keep next-themes' inline bootstrap inert on client remounts.
+              scriptProps: { type: "text/plain" },
+            }}
+          >
+            {children}
+            <ConsentGatedGtm gtmId={GTM_ID} />
+            <PrivacyConsentBanner locale={locale} />
+          </RootProvider>
+          <Analytics />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

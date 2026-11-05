@@ -1,0 +1,429 @@
+---
+title: Tableaux de données
+description: Créez des tableaux de données prêts pour la production pour les
+  tableaux de bord SaaS avec des actions de chargement, de vide, d'erreur, de
+  filtres, de pagination et de ligne.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle,
+  Filter,
+  LoaderCircle,
+  PanelsTopLeft,
+  ShieldCheck,
+  Table2,
+  Workflow,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+import {
+  DataTableLoading,
+  DataTableEmpty,
+  DataTableError,
+  DataTableWithFiltersSheet,
+  DataTableRowActionsMenu,
+} from "../previews/data-table";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Tableau de données</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Les tableaux de données sont un modèle de tableau de bord SaaS de base.
+
+Ils alimentent les vues d'administration, les écrans de facturation, les listes de clients, les journaux, les abonnements, les projets, les factures et les flux de travail opérationnels. Une table prête pour la production n'est pas seulement des lignes et des colonnes. C’est une interface complète pour comprendre, filtrer, agir et naviguer dans les données structurées.
+
+Utilisez ce modèle lorsque les utilisateurs ont besoin de :
+
+- numériser des enregistrements reproductibles
+- Comparer les valeurs structurées
+- filtrer ou rechercher un jeu de données
+- Agir sur des lignes individuelles
+- Se déplacer à travers les résultats paginés
+- récupérer des états de chargement, de vide et d'erreur
+
+<Callout title="Pourquoi cela compte">
+  Les tableaux sont les endroits où la complexité du produit devient visible. Si
+  le chargement, les filtres, les actions en ligne et la pagination sont
+  incohérents, l’ensemble du tableau de bord est moins fiable.
+
+</Callout>
+
+## Ce que vous allez construire [#what-youll-build]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Anatomie de la table",
+      description:
+        "Structurez la surface en en-tête, barre d'outils, tableau, actions de ligne, pied de page et états asynchrones.",
+      icon: Table2,
+    },
+    {
+      title: "Contrôles",
+      description:
+        "Ajoutez des recherches, des filtres, des actions en masse et des contrôles de lignes réactifs sans surcharger l'interface utilisateur.",
+      icon: Filter,
+    },
+    {
+      title: "États de production",
+      description:
+        "Gérer clairement les états de chargement, de vide, d'erreur, de pagination, de mutation et de récupération.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Modèle mental [#mental-model]
+
+> La table rend la structure. La couche de données possède la vérité. La barre d'outils contrôle l'intention. Le pied de page gère la navigation.
+
+| Zone              | Responsabilité                                                |
+| ----------------- | ------------------------------------------------------------- |
+| En-tête           | Contexte de la page et actions principales                    |
+| Barre d'outils    | Recherche, filtres, actions en masse et contrôles d'affichage |
+| Tableau           | Lignes, colonnes, sélection et rendu des lignes               |
+| Actions en ligne  | Actions contextuelles pour un enregistrement                  |
+| Footer            | Pagination, comptage et résumé de sélection                   |
+| Couche de données | Récupération, tri, filtrage, permissions et mutations         |
+
+<Callout type="info" title="Règle du système">
+  Une table ne doit pas posséder la source de données. Continuez à récupérer,
+  filtrer, trier, les autorisations et les mutations dans le calque de
+  fonctionnalités.
+
+</Callout>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Définir l'anatomie [#define-the-anatomy]
+
+Une table de production est composée de zones distinctes. Chaque domaine doit évoluer indépendamment.
+
+```tsx title="components/projects-table.tsx"
+export function ProjectsTable() {
+  return (
+    <section className="space-y-4">
+      <ProjectsTableHeader />
+      <ProjectsTableToolbar />
+      <ProjectsTableContent />
+      <ProjectsTableFooter />
+    </section>
+  );
+}
+```
+
+Cela permet de garder la table flexible lorsque les exigences du produit augmentent.
+
+</Step>
+
+<Step>
+### Conserver les données en dehors de la table [#keep-data-outside-the-table]
+
+La table devrait recevoir des données, des statuts et des rappels. Il ne doit pas posséder de règles de récupération, de contrôle d'autorisation ou de mutation.
+
+```tsx title="features/projects/projects-table-container.tsx"
+export function ProjectsTableContainer() {
+  const projects = useProjects();
+  const filters = useProjectFilters();
+
+  return (
+    <ProjectsTable
+      data={projects.data}
+      status={projects.status}
+      filters={filters.value}
+      onFiltersChange={filters.setValue}
+      onRetry={projects.refetch}
+    />
+  );
+}
+```
+
+La couche de fonctionnalité possède la vérité. La table affiche l'état actuel.
+
+</Step>
+
+<Step>
+### Concevoir des états avant les lignes [#design-states-before-rows]
+
+Chaque table a besoin d'états de chargement, de vide et d'erreur explicites.
+
+<Tabs items={["Chargement", "Vide", "Erreur"]}>
+  <Tab value="Chargement">
+    <DataTableLoading />
+
+</Tab>
+
+<Tab value="Vide">
+  <DataTableEmpty />
+
+</Tab>
+
+  <Tab value="Erreur">
+    <DataTableError />
+
+</Tab>
+
+</Tabs>
+
+N'ajoutez pas ces états à la fin. Ils définissent la sensation de production de la table.
+
+</Step>
+
+<Step>
+### Ajouter des contrôles délibérément [#add-controls-deliberately]
+
+Les filtres et les actions de ligne devraient soutenir la tâche sans que la table se sente encombrée.
+
+Utiliser la divulgation progressive :
+
+- contrôles en ligne pour les filtres fréquents
+- `Sheet` pour les filtres avancés
+- `DropdownMenu` pour les actions secondaires en ligne
+- la confirmation ou la récupération pour des actions destructrices
+
+<Tabs items={["Filtres", "Actions en ligne"]}>
+  <Tab value="Filtres">
+    <DataTableWithFiltersSheet />
+
+</Tab>
+
+  <Tab value="Actions en ligne">
+    <DataTableRowActionsMenu />
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+</Steps>
+
+## Anatomie [#anatomy]
+
+Une table évolutive a des régions claires.
+
+| Région         | Ce qui y appartient                               | Ce qu'il faut éviter                    |
+| -------------- | ------------------------------------------------- | --------------------------------------- |
+| En-tête        | titre, description, action primaire               | logique de récupération de données      |
+| Barre d'outils | recherche, filtres, actions groupées              | tout contrôle possible à la fois        |
+| Tableau        | lignes, colonnes, sélection, actions de lignes    | règles d'affaires et logique de serveur |
+| Footer         | pagination, nombre d'éléments, nombre sélectionné | État de navigation caché                |
+
+<Callout title="Pourquoi cela compte">
+  Lorsque les responsabilités sont séparées, la table peut se développer sans
+  devenir un seul élément fragile.
+
+</Callout>
+
+## États [#states]
+
+Une table de production gère plus que le chargement et le succès.
+
+| État       | Composante                | Objectif                                                |
+| ---------- | ------------------------- | ------------------------------------------------------- |
+| Chargement | `Skeleton`                | Conserver la forme alors que les données sont attendues |
+| Vide       | `EmptyState`              | Expliquer les résultats valides vides                   |
+| Erreur     | `Alert`                   | Expliquer l'échec et la récupération                    |
+| Filtrage   | État de la barre d'outils | Afficher clairement les contraintes actives             |
+| Mutation   | État en ligne ou toast    | Confirmer les progrès et le rétablissement de l'action  |
+| Paginating | Footer state              | Gardez la navigation prévisible                         |
+
+N'utilisez jamais le même modèle de rétroaction pour chaque état. Le chargement des données, la suppression d'une ligne, l'enregistrement des filtres et la modification des pages sont des expériences utilisateur différentes.
+
+## Variations [#variations]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Simple',
+      title: "Tableau simple",
+      icon: Table2,
+      description: (
+        <>
+          <p>
+            Use when the dataset is small and users mainly need to scan records.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Minimal row actions</Badge>
+            <Badge variant="plan">Simple pagination</Badge>
+            <Badge variant="plan">Clear empty state</Badge>
+            <Badge variant="plan">No advanced filters</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Filtered',
+      title: "Tableau filtré",
+      icon: Filter,
+      description: (
+        <>
+          <p>
+            Use when users need to narrow results across multiple dimensions.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Search input</Badge>
+            <Badge variant="plan">Filter sheet</Badge>
+            <Badge variant="plan">Active filter summary</Badge>
+            <Badge variant="plan">Reset filters action</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Operational',
+      title: "Tableau opérationnel",
+      icon: Workflow,
+      description: (
+        <>
+          <p>
+            Use when users frequently perform actions directly on records.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Row actions</Badge>
+            <Badge variant="plan">Bulk actions</Badge>
+            <Badge variant="plan">Confirmation dialogs</Badge>
+            <Badge variant="plan">Retry and undo flows</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Guide de décision [#decision-guide]
+
+Utilisez ce modèle si :
+
+- la page affiche des données structurées reproductibles
+- les utilisateurs doivent numériser, filtrer, comparer ou agir sur les lignes
+- la table apparaît dans un tableau de bord ou une surface d'administration
+- Les états de chargement, de vide et d'erreur sont importants
+- pagination, actions en ligne ou actions en masse sont requises
+
+Évitez ce modèle si:
+
+- Le contenu est éditorial ou marketing
+- Les données sont mieux représentées sous forme de cartes, de chronologie ou de flux.
+- l'utilisateur n'a besoin que d'une seule valeur de résumé
+- Le scan mobile-first est plus important que la comparaison tabulaire
+- la table cacherait l'action du produit principal
+
+<PreferAvoid
+  prefer={[
+    "chargement explicite, vide et états d'erreur",
+    "Pagination et filtrage contrôlés",
+    "actions en ligne dans les menus contextuels",
+    "filtres progressifs pour les ensembles de données complexes",
+    "une propriété claire entre la couche de données et l'interface utilisateur",
+  ]}
+  avoid={[
+    "récupérer des données dans une primitive de table visuelle",
+    "Utiliser un tableau pour le contenu non-tabulaire",
+    "Cacher les échecs de blocage derrière un toast",
+    "Entasser la barre d'outils avec tous les filtres possibles",
+    "Des actions destructrices sans confirmation ou récupération",
+  ]}
+/>
+
+## Liste de contrôle de production [#production-checklist]
+
+Avant d'expédier une table de données, confirmez que :
+
+- loading préserve la mise en page attendue
+- L'état vide explique le résultat et l'action suivante
+- état d'erreur inclut la récupération ou réessayer
+- La pagination est contrôlée et prévisible
+- Les filtres peuvent être nettoyés
+- Les filtres actifs sont visibles
+- les actions de ligne sont accessibles au clavier
+- Les actions destructrices nécessitent une confirmation ou une récupération
+- L'état de sélection est clair lorsque des actions en masse existent
+- Le comportement mobile est défini
+
+<Callout title="Prêt à transformer ce modèle en une véritable surface SaaS ?">
+  Starter Pro vous donne une base plus solide pour les tableaux de bord de
+  production, les routes protégés, l'authentification, la facturation et
+  les flux de produits backend. `/docs/starter-pro`
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="La table doit-elle récupérer ses propres données ?">
+    Préférez garder les données en dehors de la table. La table doit rendre les données et exposer les callbacks. La couche de fonctionnalité doit posséder la récupération, les autorisations, le filtrage et les mutations.
+  </Accordion>
+
+<Accordion title="Quand les filtres doivent-ils se déplacer dans un panneau latéral?">
+  Déplacez les filtres dans un panneau latéral lorsque la barre d’outils est
+  encombrée, que les filtres sont secondaires ou que l’expérience mobile
+  nécessite un modèle d’interaction plus propre.
+</Accordion>
+
+  <Accordion title="Les actions de ligne doivent-elles toujours être dans une liste déroulante ?">
+    Utilisez une liste déroulante pour les actions secondaires ou contextuelles. Gardez l'action de ligne principale visible uniquement lorsque c'est la principale raison pour laquelle les utilisateurs visitent la table.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Actions asynchrones",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevoir enregistrer, supprimer, réessayer, annuler et flux de mutation optimiste.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Apprenez à communiquer des états asynchrones de manière cohérente sur toutes les surfaces du produit.",
+      icon: AlertCircle,
+    },
+    {
+      title: "Tableau",
+      href: "/docs/ui/table",
+      description:
+        "Passez en revue la primitive utilisée pour rendre le contenu tabulaire structuré.",
+      icon: Table2,
+    },
+    {
+      title: "Construire une mise en page SaaS",
+      href: "/docs/guides/building-a-saas-layout",
+      description:
+        "Placez des tableaux dans des mises en page de tableau de bord évolutives avec la structure de navigation et de contenu.",
+      icon: PanelsTopLeft,
+    },
+  ]}
+/>

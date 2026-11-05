@@ -1,0 +1,303 @@
+---
+title: Déploiement
+description: Déployez NA-AI Landing en production avec Vercel ou une autre
+  plateforme d'hébergement.
+lastUpdated: "2026-05-18"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  Globe,
+  Palette,
+  Rocket,
+  Search,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Déploiement</Badge>
+</div>
+
+## Déployer la landing page vers la production [#deploy-the-landing-page-to-production]
+
+NA-AI Landing est un projet Next.js standard et peut être déployé sur :
+
+- Vercel
+- Netlify
+- Render
+- AWS Amplify
+- environnements Node.js auto-hébergés
+
+Plate-forme recommandée: Vercel.
+
+Le flux de déploiement est volontairement simple afin que vous puissiez passer rapidement de la personnalisation à la production.
+
+<DocsUpgradeCTA
+  title="Lancez la surface de marketing rapidement."
+  description="NA-AI Landing est optimisé pour un déploiement rapide, une présentation premium et une production propre sur les plates-formes d'hébergement Next.js modernes."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
+
+<Callout title="Idée de base">
+  Déployez après la mise à jour de la copie du produit, des métadonnées SEO, des
+  ressources d’aperçu social et de l’URL du site.
+
+</Callout>
+
+### Préparation à la production [#production-readiness]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Déploiement Next.js-ready",
+      icon: Rocket,
+      description:
+        "NA-AI Landing est un projet standard d'App Router compatible avec les plateformes de déploiement modernes.",
+    },
+    {
+      title: "Les fondations SEO incluses",
+      icon: Search,
+      description:
+        "Les ressources Métadonnées, Sitemap, Configuration des robots et Prévisualisation sociale sont déjà structurées.",
+    },
+    {
+      title: "Support de domaine personnalisé",
+      icon: Globe,
+      description:
+        "Déployez derrière un domaine ou un sous-domaine de marque pour une meilleure perception du produit.",
+    },
+    {
+      title: "Frontend-first architecture",
+      icon: Sparkles,
+      description:
+        "Le modèle fonctionne sans configuration de backend ni configuration d'infrastructure.",
+    },
+  ]}
+/>
+
+## Liste de contrôle avant déploiement [#pre-deploy-checklist]
+
+<PreferAvoid
+  preferTitle="Confirm before deploy"
+  avoidTitle="Avoid shipping with"
+  prefer={[
+    "URL du site mise à jour",
+    "Titre et description SEO mis à jour",
+    "Ouvrir l'image graphique remplacée",
+    "L'image Twitter remplacée",
+    "favicon et manifeste mis à jour",
+    "pass de construction de production",
+  ]}
+  avoid={[
+    "copie de produit par défaut",
+    "prix fictifs",
+    "Les images sociales manquantes",
+    "URL canonique incorrecte",
+    "attentes de flux de contact brisées",
+    "Layout mobile non testé",
+  ]}
+/>
+
+## Déployer sur Vercel [#deploy-on-vercel]
+
+<Steps>
+  <Step>
+    ### Pousser le projet vers GitHub [#push-the-project-to-github]
+
+```bash title="terminal"
+git init
+git add .
+git commit -m "Initial NA-AI Landing setup"
+git branch -M main
+git remote add origin <your-repository-url>
+git push -u origin main
+```
+
+</Step>
+
+  <Step>
+    ### Importer le projet dans Vercel [#import-the-project-into-vercel]
+
+    Importez le dépôt GitHub et sélectionnez le paramètre prédéfini Next.js.
+
+</Step>
+
+  <Step>
+    ### Configurer les paramètres de construction [#configure-build-settings]
+
+```txt title="vercel-settings"
+Install Command: pnpm install
+Build Command: pnpm build
+Output: .next
+```
+
+</Step>
+
+  <Step>
+    ### Déclencher le déploiement [#trigger-the-deployment]
+
+    Exécutez le premier déploiement de production et validez le comportement de la page sur l'URL de déploiement générée.
+
+</Step>
+
+  <Step>
+    ### Ajouter un domaine personnalisé [#add-a-custom-domain]
+
+    Connectez votre domaine ou sous-domaine de produit à partir des paramètres du projet Vercel.
+
+</Step>
+
+</Steps>
+
+### Stratégie de domaine [#domain-strategy]
+
+Pour les produits premium, préférez un domaine ou un sous-domaine de marque.
+
+Exemples :
+
+```txt title="domains"
+yourproduct.com
+app.yourproduct.com
+demo.yourproduct.com
+```
+
+Pour les démos appartenant à PyColors, un sous-domaine de marque tel que celui-ci crée une perception plus forte qu'une URL de déploiement brute :
+
+```txt title="example"
+na-ai.pycolors.io
+```
+
+<Callout type="info" title="Règle de perception">
+  Un domaine personnalisé rend le produit intentionnel. Les URL de déploiement
+  brutes semblent souvent temporaires ou inachevées.
+
+</Callout>
+
+## Validation SEO [#seo-validation]
+
+Mise à jour :
+
+```txt title="path"
+src/config/site.ts
+```
+
+Mettre à jour les actifs sociaux :
+
+```txt title="seo-assets"
+public/seo/og-main.jpg
+public/seo/twitter-main.jpg
+```
+
+Avant le lancement, valider :
+
+- URL canonique
+- Ouvrir l'image graphique
+- Image de carte Twitter
+- Titre SEO
+- Description SEO
+- URL du sitemap
+- configuration des robots
+
+<Callout title="Principe SEO">
+  Le premier déploiement public est souvent la première version indexée. Validez
+  les métadonnées avant de partager le produit publiquement.
+
+</Callout>
+
+### Formulaire de contact [#contact-form-note]
+
+Le formulaire de contact est frontend uniquement par défaut.
+
+Avant de promettre la capture de plomb, connectez-le à:
+
+- Routes API
+- endpoints backend
+- Intégrations CRM
+- services de courrier électronique
+- Fournisseurs de formulaires
+- Actions du serveur
+
+<Callout title="Ne pas trop promettre">
+  Si le formulaire n'est pas encore connecté, rendez le comportement CTA
+  explicite ou connectez le formulaire avant le lancement.
+
+</Callout>
+
+### Validation de la production [#production-validation]
+
+Avant de partager la landing page publiquement :
+
+1. Testez les deux thèmes
+2. Valider les mises en page responsives
+3. confirmer les liens de navigation
+4. inspecter les performances du phare
+5. valider les aperçus de métadonnées
+6. Confirmer le comportement du formulaire
+7. prix de révision et CTA copie
+8. testez le domaine de production
+
+Une landing page se sent premium lorsque l’expérience est cohérente entre les appareils, les aperçus et les points d’entrée.
+
+<Callout title="Principe de lancement">
+  Un déploiement de production ne concerne pas seulement la disponibilité. Il
+  s’agit de crédibilité, de clarté et de confiance.
+
+</Callout>
+
+## Erreurs courantes de déploiement [#common-deployment-mistakes]
+
+<PreferAvoid
+  preferTitle="Prefer this approach"
+  avoidTitle="Avoid this approach"
+  prefer={[
+    "déployer à partir du projet racine Next.js",
+    "Valider les métadonnées avant de les partager publiquement",
+    "utiliser un domaine de marque",
+    "exécuter une construction de production localement d'abord",
+    "remplacer les actifs réservés avant le lancement",
+  ]}
+  avoid={[
+    "Déploiement d'une copie inachevée",
+    "partager les URL d'aperçu brut en tant qu'URL principale du produit",
+    "oubli social preview images",
+    "Publication sans test responsive",
+    "Connexion de formulaires sans validation ou protection anti-spam",
+  ]}
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Personnalisation",
+      href: "/docs/templates/na-ai-landing/customization",
+      description:
+        "Revoir la marque, les sections, les métadonnées SEO, les prix et la personnalisation du contenu.",
+      icon: Palette,
+    },
+    {
+      title: "Licence",
+      href: "/docs/templates/na-ai-landing/license",
+      description:
+        "Comprendre l'utilisation commerciale, les limites de redistribution et les limites de licence.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

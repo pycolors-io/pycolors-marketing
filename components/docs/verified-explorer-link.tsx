@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useEffect, useState } from "react";
 import { ExternalLink, MonitorPlay } from "lucide-react";
 import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
@@ -12,6 +13,8 @@ export function VerifiedExplorerLink({
   href: string;
   storyId: string;
 }) {
+  const tSite = useCopy();
+
   const [verified, setVerified] = useState<string>();
   useEffect(() => {
     const controller = new AbortController();
@@ -60,16 +63,16 @@ export function VerifiedExplorerLink({
         className="inline-flex min-h-10 items-center gap-2 text-xs font-medium text-muted-foreground underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         <MonitorPlay className="size-3.5" aria-hidden="true" />
-        Try the example below
+        {tSite("Try the example below")}
       </a>
     );
   return (
     <a
       href={href}
-      aria-label="Open interactive example in PyColors UI Explorer"
+      aria-label={tSite("Open interactive example in PyColors UI Explorer")}
       className="inline-flex min-h-10 items-center gap-2 text-xs font-medium text-muted-foreground underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
-      Open in UI Explorer
+      {tSite("Open in UI Explorer")}
       <ExternalLink className="size-3.5" aria-hidden="true" />
     </a>
   );

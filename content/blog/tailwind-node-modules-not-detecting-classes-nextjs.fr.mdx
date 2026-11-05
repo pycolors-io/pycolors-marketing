@@ -1,0 +1,247 @@
+---
+title: "Tailwind v4 Ne pas styliser les composants installés de l'interface
+  utilisateur? Vérifier la détection de source"
+description: "Correction des utilitaires Tailwind v4 manquants dans une
+  application Next.js à l'aide des composants PyColors installés, avec des
+  chemins d'accès aux sources vérifiés et une reproduction du paquet public."
+author: Patrice Parny
+date: "2026-03-17"
+category: Next.js
+tags:
+  - Tailwind CSS
+  - Next.js
+  - UI Libraries
+  - Monorepo
+  - SaaS Starter
+featured: true
+readingTime: 8 min de lecture
+cover: /seo/blog/og-blog-saas.png
+---
+
+Si les composants PyColors installés sont rendus en tant que contenu brut, vérifiez si leurs utilitaires existent dans le CSS généré. Dans la reproduction de Tailwind v4 ci-dessous, en ajoutant `@source` pour le paquet installé corrige les styles manquants. L'installation du paquet et le passage d'une construction de production ne suffisent pas.
+
+Pour `app/globals.css`, la feuille de style complète est :
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+@source "../node_modules/@pycolors/ui/dist";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+```
+
+Vous importez déjà des tokens Tailwind et PyColors ? Ajouter seulement les manquants `@source` ligne. Gardez les importations en haut; ne dupliquez pas les mappages de tokens.
+
+[Lire le guide d'installation de PyColors](/docs/ui/installation) pour la configuration et les exigences canoniques.
+
+_Révisé le 28 septembre 2026: vérifié par rapport aux emballages publics npm et au consommateur de production décrits ci-dessous. Publication originale : 17 mars 2026._
+
+## Utilisez le chemin relatif à votre feuille de style [#use-the-path-relative-to-your-stylesheet]
+
+Les deux modèles testés nécessitent des enregistrements différents :
+
+| Feuille de style globale | Source d'enregistrement                           |
+| ------------------------ | ------------------------------------------------- |
+| `app/globals.css`        | `@source "../node_modules/@pycolors/ui/dist";`    |
+| `src/app/globals.css`    | `@source "../../node_modules/@pycolors/ui/dist";` |
+
+Tailwind v4 ignore `node_modules` lors de la détection automatique. Un explicite `@source` opte pour ce paquet ; son chemin commence à la feuille de style, pas dans le répertoire de travail du terminal. Voir [La documentation de détection de source de Tailwind](https://tailwindcss.com/docs/detecting-classes-in-source-files).
+
+Utiliser le paquet installé `dist` répertoire pour ce consommateur npm. Un espace de travail qui importe une source locale a un emplacement différent : résolvez cet emplacement à partir de sa feuille de style. Numérisation d'un monorepo entier ou `node_modules` est inutile.
+
+## Ce que la construction défaillante a réellement montré [#what-the-failing-build-actually-showed]
+
+L’exemple utilise le public `Card` et `Button` exporte sans ajouter leurs classes internes à l'application. Les versions défaillantes et corrigées ont toutes deux passé la vérification TypeScript et une compilation de production.
+
+| État                                                | CSS généré                                                             | Résultat du navigateur                                                                                                       |
+| --------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| tokens chargés, pas d'inscription à la bibliothèque | Non `.inline-flex`, `.bg-primary` ou `.bg-card` Règle                  | Link stylé comme un bouton reste en ligne, transparent et non rembourré                                                      |
+| Mauvais chemin de source relative                   | Mêmes règles manquantes                                                | Mêmes composants non stylisés                                                                                                |
+| Corriger le chemin source                           | Les trois règles présentes                                             | Button utilise `inline-flex`, une hauteur de 36px et 8px/16px rembourrage; Bouton et carte ont des arrière-plans thématiques |
+| Source correcte, mappages primaire/carte désactivés | Règle de mise en page présente ; les deux règles de fond sont absentes | Le bouton garde sa disposition mais les deux surfaces sont transparentes                                                     |
+
+Les résultats de source-chemin ont été vérifiés pour **les deux emplacements de feuille de style**. La dernière ligne est un contrôle négatif séparé : le test se réinitialise uniquement `--color-primary` et `--color-card` au `initial` à l'intérieur `@theme`. Il laisse les variables CSS sous-jacentes chargées. N'ajoutez pas cette réinitialisation à votre application.
+
+Ces utilitaires n'ont jamais été générés dans le cas de la source manquante; il ne s'agissait pas de styles de composants existants que Tailwind a ensuite supprimés. Si la règle est présente mais barrée dans le navigateur DevTools, inspectez la cascade et les CSS concurrents au lieu d'ajouter d'autres chemins d'analyse.
+
+## Reproduire avec les paquets publics testés [#reproduce-with-the-tested-public-packages]
+
+Le consommateur a couru avec Node **24.18.1**, ppm **10.32.1**, Next.js **16.1.1**, React/React DOM **19.2.0**, Tailwind CSS et son plugin PostCSS **4.3.3**PostCSS **8.5.28**, UI **1.5.4**, et les tokens **1.2.3**. Ce sont des broches testées, pas une promesse sur toutes les versions compatibles.
+
+Créer un répertoire vide **En dehors d'un monorép** et ajoutez les fichiers ci-dessous. Avec Node 24 et pnpm 10.32.1 disponibles, exécutez:
+
+```bash
+pnpm install --ignore-scripts --prod=false
+pnpm types:check
+pnpm build
+pnpm start
+```
+
+Le manifeste épingle toute dépendance directe. Cette première installation résout les dépendances transitives et crée `pnpm-lock.yaml`; conservez ce fichier et utilisez `pnpm install --frozen-lockfile --ignore-scripts --prod=false` pour les installations ultérieures. Une première installation ultérieure peut résoudre différentes versions transitives, alors enregistrez votre fichier de verrouillage lors de la comparaison des résultats. Aucun accès au référentiel, liens d'espace de travail ou implémentations de composants copiés ne sont nécessaires.
+
+```json title="package.json"
+{
+  "name": "pycolors-tailwind-consumer",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "build": "next build --webpack",
+    "types:check": "next typegen && tsc --noEmit",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@pycolors/ui": "1.5.4",
+    "@pycolors/tokens": "1.2.3",
+    "lucide-react": "1.47.0",
+    "next": "16.1.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "postcss": "8.5.28",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "6.0.3"
+  }
+}
+```
+
+```js title="postcss.config.mjs"
+export default { plugins: { "@tailwindcss/postcss": {} } };
+```
+
+Il s'agit de la configuration de Tailwind v4 PostCSS décrite dans le [Guide officiel du framework Next.js](https://tailwindcss.com/docs/installation/framework-guides/nextjs). Utilisez le `app/globals.css` au début de cet article, puis ajouter :
+
+```tsx title="app/layout.tsx"
+import type { ReactNode } from "react";
+import "./globals.css";
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+```tsx title="app/page.tsx"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+
+export default function Page() {
+  return (
+    <main>
+      <Card>
+        <CardHeader>
+          <CardTitle>Installed components</CardTitle>
+          <CardDescription>
+            Check the package styles in your app.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild>
+            <a href="https://pycolors.io/docs/ui/usage-patterns">
+              Explore usage patterns
+            </a>
+          </Button>
+        </CardContent>
+      </Card>
+    </main>
+  );
+}
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+```ts title="css-imports.d.ts"
+declare module "*.css";
+```
+
+```text title=".gitignore"
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+```
+
+La déclaration CSS prend en charge l'importation de feuille de style à effet secondaire avec la configuration TypeScript 6.0.3 testée. Conserver `.next` hors de la détection de source, et gardez les scripts de diagnostic et les chaînes de classe attendues en dehors du consommateur. Sinon, le test lui-même peut accidentellement faire générer les utilitaires manquants par Tailwind.
+
+Pour la deuxième mise en page, déplacez le `app` Directoire en `src/app` et modifiez uniquement l'enregistrement source sur le deuxième chemin dans la table. Reconstruire à partir d'un propre `.next` répertoire. Les deux configurations ont été testées avec une production fraîche pour chaque condition.
+
+## Vérifiez la production CSS, puis le navigateur [#check-production-css-then-the-browser]
+
+Enlever temporairement le `@source` ligne de l'exemple jetable, construire à nouveau, et inspecter `.next/static/css`. Restaurer la bonne ligne et reconstruire. Rechercher `.inline-flex`, `.bg-primary` et `.bg-card` dans le CSS émis, pas seulement dans l'attribut de classe DOM du composant. Tous les trois devraient apparaître après la correction.
+
+Servez la production avec `pnpm start`. Dans DevTools, inspectez les styles calculés de `[data-slot="button"]` et `[data-slot="card"]`. Pour l'exemple corrigé, Chromium a mesuré ces couleurs de fond:
+
+| Surface | Clair                  | Avec `.dark` sur la racine du document |
+| ------- | ---------------------- | -------------------------------------- |
+| Bouton  | `oklch(0.49 0.23 292)` | `oklch(0.68 0.19 292)`                 |
+| Carte   | `oklch(0.99 0 0)`      | `oklch(0.19 0.008 285)`                |
+
+Attendez que les transitions de couleur se terminent avant de mesurer. Votre application possède sa sélection de thèmes existante ; PyColors ne nécessite pas de nouveau fournisseur. Cette vérification couvre les styles de cette composition, pas une certification d'accessibilité.
+
+## Distinguer la détection de la source de la configuration du token [#distinguish-source-detection-from-token-setup]
+
+Le public `@pycolors/tokens/tokens.css` import fournit déjà les valeurs du thème et leurs mappages sémantiques Tailwind v4. A `--primary` valeur seule ne définit pas une `bg-primary` utilité. Le mapping et une classe détectée sont tous deux nécessaires. Notre contrôle négatif distinct démontre ceci : la disposition survit, tandis que les deux utilitaires d'arrière-plan intentionnellement non cartographiés disparaissent.
+
+Conservez l'importation prise en charge une fois et supprimez les réinitialisations de thèmes conflictuels plutôt que de copier une deuxième couche de mappage. Continuer avec le [guide thématique](/docs/ui/theming) ou [semantic design tokens article](/blog/semantic-design-tokens-tailwind-v4) lorsque le problème restant est des valeurs de thème plutôt que des utilitaires manquants.
+
+Dans vos propres composants, écrivez des noms de classe complets. Tailwind scanne le texte ; il n'évalue pas les chaînes telles que `bg-${color}-500`. Cartographier un accessoire pour compléter les alternatives statiques à la place. Ceci suit le [Détection de classe officielle](https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names).
+
+## Une note pour les lecteurs de la recette précédente Tailwind v3 [#a-note-for-readers-of-the-earlier-tailwind-v3-recipe]
+
+La version précédente de cet article utilisé `tailwind.config` chemins de contenu, une convention Tailwind v3. Tailwind v4 ne détecte pas automatiquement les fichiers de configuration JavaScript. [Guide de mise à niveau](https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file). La configuration PyColors testée ici utilise la configuration CSS v4. Cette reproduction n'établit pas la compatibilité de ces versions avec Tailwind v3.
+
+Les échecs de téléchargement des packages, la configuration ESLint et les journaux de déploiement sont des diagnostics distincts. Le passage de pnpm à npm ne fournit pas de chemin de source manquant ; cette reproduction entière utilise pnpm.
+
+## Contrôles finaux [#final-checks]
+
+- Résolvez le chemin d'accès étroit de la source du paquet à partir de l'emplacement réel de la feuille de style.
+- Importez une fois la feuille de style des tokens publics et préservez ses mappages sémantiques.
+- Vérifiez les utilitaires générés dans une nouvelle version de production.
+- Inspectez les styles de composants calculés dans les deux thèmes ; examinez les remplacements lorsque des règles existent.
+- Gardez les noms de classe complets et évitez les fichiers de diagnostic qui contaminent la détection de la source.
+
+[Lire le guide d'installation de PyColors](/docs/ui/installation), puis utiliser [Modèles d'utilisation de l'interface utilisateur](/docs/ui/usage-patterns) pour construire l'écran suivant.

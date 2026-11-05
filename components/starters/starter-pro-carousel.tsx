@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { SiteButton as Button } from "@/components/site-button";
@@ -13,6 +14,8 @@ const AUTOPLAY_DELAY = 5000;
 
 /** Interactive controls only; the route supplies server-rendered figures. */
 export function StarterProCarousel({ slides }: StarterProCarouselProps) {
+  const tSite = useCopy();
+
   const [{ active, previous, direction }, setSlide] = useState<{
     active: number;
     previous: number | null;
@@ -90,7 +93,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
       ref={carouselRef}
       role="group"
       aria-roledescription="carousel"
-      aria-label="Starter Pro interface previews"
+      aria-label={tSite("Starter Pro interface previews")}
       data-direction={direction}
       data-rotating={rotating}
       className={`${styles.carousel} min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-background`}
@@ -101,10 +104,11 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
       <div className="flex items-center justify-between gap-2 border-b border-border-subtle px-3 py-2 sm:px-5">
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <p>
-            Preview{" "}
+            {tSite("Preview")}
+            {tSite(" ")}
             <span className="ml-2 font-mono text-foreground">
-              {String(active + 1).padStart(2, "0")} /{" "}
-              {String(slides.length).padStart(2, "0")}
+              {tSite(String(active + 1).padStart(2, "0"))} /{tSite(" ")}
+              {tSite(String(slides.length).padStart(2, "0"))}
             </span>
           </p>
           <span
@@ -114,7 +118,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
             <span
               className={`size-1.5 rounded-full ${rotating ? "bg-foreground" : "bg-muted-foreground/40"}`}
             />
-            {rotating ? "Auto-play" : "Paused"}
+            {tSite(rotating ? "Auto-play" : "Paused")}
           </span>
         </div>
         <div className="flex gap-1">
@@ -123,7 +127,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
             variant="ghost"
             size="icon-sm"
             className="rounded-[5px]"
-            aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+            aria-label={tSite(playing ? "Pause slideshow" : "Play slideshow")}
             aria-controls={id}
             onPointerDown={() => {
               // Keep a pointer's intended action when focus also stops rotation.
@@ -155,7 +159,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
             variant="ghost"
             size="icon-sm"
             className="rounded-[5px]"
-            aria-label="Previous preview"
+            aria-label={tSite("Previous preview")}
             aria-controls={id}
             onClick={() => select(active - 1)}
           >
@@ -166,7 +170,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
             variant="ghost"
             size="icon-sm"
             className="rounded-[5px]"
-            aria-label="Next preview"
+            aria-label={tSite("Next preview")}
             aria-controls={id}
             onClick={() => select(active + 1)}
           >
@@ -185,27 +189,31 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
             key={slide.title}
             role="group"
             aria-roledescription="slide"
-            aria-label={`${index + 1} of ${slides.length}: ${slide.title}`}
+            aria-label={tSite("{value0} of {value1}: {value2}", {
+              value0: index + 1,
+              value1: slides.length,
+              value2: slide.title,
+            })}
             aria-hidden={index !== active}
             inert={index !== active}
             data-active={index === active}
             data-exiting={index === previous && index !== active}
             className={`${styles.slide} col-start-1 row-start-1 min-w-0`}
           >
-            {slide.content}
+            {tSite(slide.content)}
           </div>
         ))}
       </div>
       <div
         role="group"
-        aria-label="Choose a preview"
+        aria-label={tSite("Choose a preview")}
         className="grid grid-cols-2 border-t border-border-subtle sm:grid-cols-5"
       >
         {slides.map((slide, index) => (
           <button
             key={slide.title}
             type="button"
-            aria-label={slide.title}
+            aria-label={tSite(slide.title)}
             aria-disabled={index === active}
             aria-current={index === active ? "true" : undefined}
             aria-controls={id}
@@ -218,9 +226,9 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
               aria-hidden="true"
               className="hidden font-mono text-[10px] text-muted-foreground lg:inline"
             >
-              {String(index + 1).padStart(2, "0")}
+              {tSite(String(index + 1).padStart(2, "0"))}
             </span>
-            {slide.title}
+            {tSite(slide.title)}
             {index === active ? (
               <span
                 aria-hidden="true"

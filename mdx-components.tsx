@@ -1,7 +1,8 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { Link as LinkIcon } from "lucide-react";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { Tabs as DocsTabs, Tab } from "fumadocs-ui/components/tabs";
@@ -99,14 +100,16 @@ function slugify(value: string) {
 }
 
 function HeadingAnchor({ id }: Readonly<{ id: string }>) {
+  const tSite = useCopy();
+
   return (
     <a
       href={`#${id}`}
-      aria-label="Link to section"
+      aria-label={tSite("Link to section")}
       className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground/0 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-muted-foreground hover:text-foreground focus:opacity-100 focus:text-foreground focus:outline-none"
     >
       <LinkIcon className="h-3.5 w-3.5" />
-      <span className="sr-only">Link to section</span>
+      <span className="sr-only">{tSite("Link to section")}</span>
     </a>
   );
 }

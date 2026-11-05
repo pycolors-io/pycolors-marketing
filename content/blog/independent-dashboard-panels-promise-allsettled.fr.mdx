@@ -1,0 +1,257 @@
+---
+title: "Une demande de tableau de bord échouée ne doit pas masquer tous les widgets"
+description: "Reproduisez une panne de tableau de bord tout ou rien, puis gardez
+  des panneaux indépendants utiles avec Promise.allSettled et explicites, prêts,
+  vides et résultats d'erreurs."
+author: Patrice Parny
+date: "2026-10-12"
+category: SaaS Engineering
+tags:
+  - React
+  - Next.js
+  - TypeScript
+  - SaaS
+featured: false
+readingTime: 9 min de lecture
+cover: /seo/blog/og-blog-default.png
+cta:
+  label: Explore Stats Overview
+  href: /docs/blocks/data/stats-overview
+  variant: blocks
+---
+
+Une demande de tableau de bord peu fiable ne devrait pas automatiquement vider tous les widgets indépendants. Si une page attend des projets, des alertes et une activité via un `Promise.all()`, une demande d'alertes échouée rejette la promesse combinée - même si les projets et les demandes d'activité ont déjà réussi.
+
+Lorsque ces panneaux sont véritablement indépendants, utiliser **`Promise.allSettled()` à leur frontière commune d'agrégation**Ensuite, donnez à chaque panneau son propre `ready` ou `error` résultat. Un tableau vide réussi est toujours un résultat réussi, pas une erreur. L'exemple ci-dessous reproduit la différence avec des promesses locales, pas d'identifiants et pas d'appels d'API.
+
+**Limite de version vérifiée (12 octobre 2026):** le manifeste PyColors Marketing actuel spécifie Next.js **16.1.1**React et React DOM **^19.3.0**TypeScript **^6.0.3**, Node **24.x**et pnpm **10.32.1**. Ce sont des déclarations de dépôt, pas un consommateur public nouvellement installé. Le standalone `dashboard-outcomes.ts` test ci-dessous a été compilé avec **TypeScript 5.8.3** et courir avec **Noeud 22.16.0** dans un répertoire local isolé. Une version complète de l'application Marketing / React et un test de navigateur ou de lecteur d'écran n'ont pas été exécutés avant l'ouverture de ce projet de PR. L'exemple utilise la norme `Promise` et n'importe pas de bibliothèque privée PyColors.
+
+Il s'agit d'une décision de flux de données d'application, et non d'une fonctionnalité de composant PyColors. Les [Guide des états de vide, de chargement et d'erreur](/docs/guides/empty-loading-error) explique le rôle visuel de chaque état; cet article se concentre sur **empêcher un échec non lié de cacher des résultats valides de frère ou sœur**.
+
+## Reproduire le résultat du tout ou rien [#reproduce-the-all-or-nothing-result]
+
+Imaginez trois sources de tableau de bord indépendantes utiles:
+
+- Projets : une liste de noms de projets.
+- Alertes : avis récents concernant l'espace de travail.
+- Activité : descriptions d'événements récents.
+
+L'agrégation simple perd tous les trois comme un résultat combiné lorsque quelqu'un rejette:
+
+```ts title="dashboard-broken.ts"
+async function loadDashboardBroken() {
+  const [projects, alerts, activity] = await Promise.all([
+    Promise.resolve(["Atlas"]),
+    Promise.reject(new Error("Alert service unavailable")),
+    Promise.resolve(["Project created"]),
+  ]);
+
+  return { projects, alerts, activity };
+}
+```
+
+Les projets et les promesses d’activités s’établissent toujours avec succès; `Promise.all()` fait **non** les annuler. Cependant, l'enfermement `await` rejette, donc cette fonction ne retourne jamais leurs valeurs. Une page qui attrape la seule exception et rend une erreur globale élimine les informations utilisables.
+
+C'est un comportement correct lorsque **chaque résultat est requis pour une décision atomique**. C'est le mauvais comportement lorsque les cartes représentent des informations indépendantes qu'un lecteur pourrait encore utiliser séparément. [MDN `Promise.all()` référence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) documente son comportement de premier rejet.
+
+## Conserver un résultat pour chaque panel [#keep-an-outcome-for-each-panel]
+
+Le code ci-dessous est un module TypeScript complet, indépendant du framework. Les trois sources de données sont injectées afin que le test puisse utiliser des appareils locaux. Dans une application, chaque source serait implémentée par votre propre couche de données de confiance.
+
+```ts title="dashboard-outcomes.ts"
+export type Panel<T> =
+  { status: "ready"; data: T } | { status: "error"; message: string };
+
+export type DashboardSources = {
+  projects: () => Promise<readonly string[]>;
+  alerts: () => Promise<readonly string[]>;
+  activity: () => Promise<readonly string[]>;
+};
+
+function asPanel<T>(result: PromiseSettledResult<T>): Panel<T> {
+  if (result.status === "fulfilled") {
+    return { status: "ready", data: result.value };
+  }
+
+  // Do not echo provider exceptions into the public interface.
+  return { status: "error", message: "This panel could not load." };
+}
+
+export async function loadDashboard(sources: DashboardSources) {
+  const [projects, alerts, activity] = await Promise.allSettled([
+    sources.projects(),
+    sources.alerts(),
+    sources.activity(),
+  ] as const);
+
+  return {
+    projects: asPanel(projects),
+    alerts: asPanel(alerts),
+    activity: asPanel(activity),
+  };
+}
+```
+
+La valeur de retour est maintenant un résultat typé pour **chaque** source. Non `any`, un message d'exception inconnu avalé ou une valeur de repli fabriquée est nécessaire.
+
+`Promise.allSettled()` attend jusqu'à ce que chaque entrée soit remplie ou rejetée, puis retourne les résultats dans **ordre d'entrée**, pas l'ordre d'achèvement. Il ne réessaye pas, n'annule pas, ne cache pas ou ne déduplique aucune requête. Ces décisions restent distinctes. Voir [MDN `Promise.allSettled()` référence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+
+Ceci est un **résultat global final** pattern : il attend l'entrée la plus lente avant de revenir. Si une page a besoin que chaque panneau diffuse ou mette à jour indépendamment dès qu'il s'installe, utilisez des limites asynchrones distinctes ou les primitives de diffusion en continu prises en charge par le framework plutôt que de réclamer `allSettled()` Rendre progressif.
+
+## Testez un échec sans devinettes temporelles [#test-a-failure-without-timing-guesses]
+
+Enregistrez le module comme `dashboard-outcomes.ts`, puis ajoutez ce fichier de test Node indépendant. Le test utilise uniquement intégré `node:test` et `node:assert`; aucune des sources d'exemple n'appelle un service en direct.
+
+```js title="dashboard-outcomes.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { loadDashboard } from "./dist/dashboard-outcomes.js";
+
+test("one failed source does not erase sibling results", async () => {
+  const panels = await loadDashboard({
+    projects: async () => ["Atlas"],
+    alerts: async () => {
+      throw new Error("PRIVATE_PROVIDER_DETAILS");
+    },
+    activity: async () => ["Project created"],
+  });
+
+  assert.deepEqual(panels.projects, {
+    status: "ready",
+    data: ["Atlas"],
+  });
+  assert.deepEqual(panels.alerts, {
+    status: "error",
+    message: "This panel could not load.",
+  });
+  assert.deepEqual(panels.activity, {
+    status: "ready",
+    data: ["Project created"],
+  });
+  assert.equal(
+    JSON.stringify(panels).includes("PRIVATE_PROVIDER_DETAILS"),
+    false,
+  );
+});
+
+test("empty is a valid ready result, not a failed request", async () => {
+  const panels = await loadDashboard({
+    projects: async () => [],
+    alerts: async () => [],
+    activity: async () => [],
+  });
+
+  assert.deepEqual(panels.projects, { status: "ready", data: [] });
+  assert.equal(panels.alerts.status, "ready");
+});
+
+test("each failed source remains an explicit failure", async () => {
+  const failure = async () => {
+    throw new Error("offline");
+  };
+
+  const panels = await loadDashboard({
+    projects: failure,
+    alerts: failure,
+    activity: failure,
+  });
+
+  assert.equal(panels.projects.status, "error");
+  assert.equal(panels.alerts.status, "error");
+  assert.equal(panels.activity.status, "error");
+});
+```
+
+Une façon reproductible d'exécuter ces fichiers dans un répertoire isolé est :
+
+```sh
+# Save dashboard-outcomes.ts and dashboard-outcomes.test.mjs beside package.json.
+printf '{"type":"module","private":true}\n' > package.json
+
+# Use a TypeScript compiler already installed in this directory/environment.
+tsc --strict --target ES2022 --module ES2022 --moduleResolution node \
+  --outDir dist dashboard-outcomes.ts
+
+node --test dashboard-outcomes.test.mjs
+```
+
+Les tests vérifient le contrat de résultat étroit, pas le comportement réel du backend. Avant de l'intégrer dans une application Next.js, exécutez les mêmes cas via vos adaptateurs de données réels et la construction d'applications.
+
+## Le rendu est une décision distincte [#rendering-is-a-separate-decision]
+
+A `ready` Le panneau peut toujours être vide. Ne pas déduire l'échec de `data.length === 0`, et ne remplacez pas zéro par des métriques manquantes. Pour un panneau de projets, la limite d'affichage peut suivre un petit ordre explicite :
+
+```tsx title="projects-panel.tsx"
+import type { Panel } from "./dashboard-outcomes";
+
+export function ProjectsPanel({
+  result,
+}: {
+  result: Panel<readonly string[]>;
+}) {
+  if (result.status === "error") {
+    return (
+      <section aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <p role="alert">{result.message}</p>
+        <a href="/dashboard">Reload the dashboard</a>
+      </section>
+    );
+  }
+
+  return (
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      {result.data.length === 0 ? (
+        <p>No projects yet.</p>
+      ) : (
+        <ul>
+          {result.data.map((name) => (
+            <li key={name}>{name}</li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+```
+
+Il s'agit d'un croquis d'intégration de présentation. Il suppose `/dashboard` est l'route de votre application et les noms uniques du projet dans le petit appareil ; utilisez des identifiants d'enregistrement stables dans des listes réelles. Dans une page rendue par le serveur, un lien simple se recharge ou navigue vers le tableau de bord plutôt que de réessayer une seule source. Si un widget a besoin de réessayer localement sans recharger la page, cette interaction et son état de chargement appartiennent à une limite distincte côté client ou à une abstraction de récupération de données.
+
+Une demande toujours en cours nécessite une **chargement** Cette fonction d'agrégation ne produit des résultats qu'après que les trois promesses se sont établies. Utilisez un état de chargement au niveau de la route environnante ou des limites de panneau distinctes pendant que le travail est en attente. N’affichez pas « Pas encore de projets » avant qu’une réponse réussie indique que la liste est vide.
+
+L'actuel [Guide PyColors async-states](/docs/guides/empty-loading-error) explique où `Skeleton`, `EmptyState`et `Alert` en forme, y compris les considérations de clavier et de messagerie. Cet exemple ne prétend pas tester la parole réelle du lecteur d'écran ni certifier l'accessibilité.
+
+## Quand ne pas utiliser ce modèle [#when-not-to-use-this-pattern]
+
+`Promise.allSettled()` est utile pour **données de présentation en lecture seule indépendantes**. Il ne s'agit pas d'un mécanisme d'idempotence, d'une vérification d'autorisation, d'une file d'orchestration ou d'une frontière de transaction. N'appliquez pas ce modèle de réussite partielle à un flux de paiements/droits dans lequel plusieurs écritures doivent être acceptées ou être conciliées de façon durable. Une liste de projets réussie ne justifie pas de prétendre qu'un résumé de facturation échoué est sain.
+
+Il ne protège pas non plus contre une demande obsolète qui écrase l'état de l'interface utilisateur plus récente lors de modifications répétées de la navigation ou des entrées. Cette race est couverte par [Comment arrêter la validation asynchrone obsolète de l'écrasement de l'état de formulaire React](/blog/prevent-stale-async-validation-react-forms).
+
+Enfin, cet exemple ne définit pas les budgets de réessayer, backoff, mise en cache, délais, annulation, ou l'observabilité des erreurs. Ajoutez-les en fonction du comportement réel de votre application et des limites de données approuvées. Enregistrez les défaillances internes significatives grâce à vos diagnostics sécurisés existants; affichez une copie neutre face à l'utilisateur plutôt que des erreurs de service brutes.
+
+## Liste de vérification [#verification-checklist]
+
+Avant d'utiliser les résultats partiels du tableau de bord dans une application SaaS :
+
+- [ ] Confirmez que chaque source est utile de manière indépendante; ne divisez pas une décision financière ou d'autorisation en un faux succès partiel.
+- [ ] Testez toutes les sources prêtes, une rejetée, et toutes rejetées.
+- [ ] Confirmer qu'une liste vide reste valide `ready`distinct d'un échec.
+- [ ] Gardez les types de retour liés au bon panneau lorsque les promesses sont terminées.
+- [ ] Confirmez que les erreurs de service inconnues ne sont pas intégrées dans le contenu rendu ou la télémétrie.
+- [ ] Décidez si attendre la demande la plus lente est acceptable ; utilisez des limites séparées quand ce n'est pas le cas.
+- [ ] Donnez à chaque panneau échoué une action de récupération significative sans impliquer un nouvel essai.
+- [ ] Vérifier le traitement de chargement indépendamment du traitement final `ready`/`error` résultat.
+- [ ] Testez les mises en page mobiles, la navigation au clavier, la focus, le contraste et la copie vide / d'erreur dans l'application réelle.
+- [ ] Traiter la validation, l'autorisation et la cohérence des données côté serveur comme des responsabilités de l'application.
+
+## Sources et prochaines étapes [#sources-and-next-steps]
+
+Références principales de la plateforme : [MDN `Promise.all()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) et [MDN `Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+
+Références de produits: [Guide PyColors async-state](/docs/guides/empty-loading-error),
+[Bloc de tableau de données](/docs/blocks/data/data-table)et [Statistiques Overview Block](/docs/blocks/data/stats-overview).
+
+Les [Statistiques Overview Block](/docs/blocks/data/stats-overview) rend un résumé métrique responsive à partir de valeurs **vos fournitures d'application**. Il ne récupère pas les données, ne récupère pas les échecs ou n'assemble pas `Promise.allSettled()` résultats. Utilisez-le comme couche de présentation uniquement après avoir décidé quelles données sont réellement disponibles.
+
+Utilisez le [Statistiques Overview Block](/docs/blocks/data/stats-overview) lorsque vous voulez une couche de présentation copiable pour les métriques qui ont été chargées. Votre application reste responsable du chargement des données, de la propriété de l'état, des autorisations et de la récupération.

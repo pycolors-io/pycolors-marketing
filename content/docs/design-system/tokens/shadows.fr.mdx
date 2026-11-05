@@ -1,0 +1,213 @@
+---
+title: Ombres
+description: tokens d'ombre utilisés dans l'interface utilisateur de PyColors
+  pour créer une élévation subtile et prévisible à travers les surfaces.
+lastUpdated: "2026-04-27"
+appliesTo: Design System - Tokens
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import {
+  CheckCircle,
+  Layers3,
+  PanelsTopLeft,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Système de conception</Badge>
+  <Badge>Ombres</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Les ombres définissent **Profondeur et hiérarchie** dans l'interface.
+
+Dans PyColors, l'élévation est intentionnellement subtile. L'objectif n'est pas le drame visuel, mais **Une structure prévisible**.
+
+Un système d'ombre contrôlé garantit que :
+
+- les surfaces se sentent stratifiées sans bruit
+- Les pays focus sont clairs
+- les superpositions se sentent intentionnelles
+- l'interface utilisateur reste calme et lisible
+
+<Callout title="Pourquoi cela compte">
+  Lorsque les ombres sont incohérentes ou trop fortes, les interfaces sont
+  bruyantes et non structurées. Un système d'élévation restreint améliore la
+  clarté et la qualité perçue.
+
+</Callout>
+
+### Ce que vous allez définir [#what-youll-define]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Échelle d'élévation",
+      description:
+        "Un petit ensemble de niveaux d'ombre utilisés sur toutes les surfaces.",
+      icon: Layers3,
+    },
+    {
+      title: "Règles d'utilisation",
+      description:
+        "Contraintes claires pour éviter le bruit visuel et l'incohérence.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Hiérarchie de surface",
+      description:
+        "Définir comment les composants se rapportent visuellement à travers la profondeur.",
+      icon: PanelsTopLeft,
+    },
+  ]}
+/>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Utiliser une échelle d'élévation limitée [#use-a-limited-elevation-scale]
+
+PyColors définit un petit ensemble de tokens d'ombre :
+
+| Token       | Utilisation typique                 |
+| ----------- | ----------------------------------- |
+| `shadow-xs` | boutons, entrées, petites commandes |
+| `shadow-sm` | Cartes et surfaces par défaut       |
+| `shadow-md` | popovers, dropdowns                 |
+| `shadow-lg` | modaux et superpositions            |
+
+Chaque niveau augmente progressivement.
+
+</Step>
+
+<Step>
+### Appliquer les ombres de manière cohérente [#apply-shadows-consistently]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-lg border bg-card p-4 shadow-xs">
+        <div className="text-xs text-muted-foreground mb-1">shadow-xs</div>
+        <div className="text-sm">Petits contrôles</div>
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-sm">
+        <div className="text-xs text-muted-foreground mb-1">shadow-sm</div>
+        <div className="text-sm">Cartes par défaut</div>
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-md">
+        <div className="text-xs text-muted-foreground mb-1">Shadow-Md</div>
+        <div className="text-sm">Popovers</div>
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-lg">
+        <div className="text-xs text-muted-foreground mb-1">shadow-lg</div>
+        <div className="text-sm">Modaux</div>
+      </div>
+    </div>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="components/shadow-preview.tsx"
+export function ShadowPreview() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-lg border bg-card p-4 shadow-xs">shadow-xs</div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-sm">shadow-sm</div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-md">shadow-md</div>
+
+      <div className="rounded-lg border bg-card p-4 shadow-lg">shadow-lg</div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+<Step>
+### Évitez les ombres personnalisées [#avoid-custom-shadows]
+
+Ne pas introduire de coutume `box-shadow` valeurs à l'intérieur des composants.
+
+Au lieu de:
+
+- Réutiliser des tokens existants
+- Étendre le système si nécessaire
+- Garder une hiérarchie visuelle prévisible
+
+<Callout type="info" title="Règle du système">
+  Si une nouvelle ombre est nécessaire plus d'une fois, elle devrait devenir un
+  token.
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## Guide de décision [#decision-guide]
+
+Utilisez ce système si :
+
+- vous avez besoin d'une élévation constante sur plusieurs surfaces
+- vous créez des tableaux de bord ou des produits SaaS
+- vous voulez un comportement de superposition prévisible
+- vous voulez une clarté d'interface utilisateur sans surcharge visuelle
+
+A éviter si :
+
+- L'ombre est décorative
+- il casse l'échelle du système
+- il duplique un token existant
+- il crée un bruit visuel
+
+<PreferAvoid
+  prefer={[
+    "Utiliser des shadow tokens prédéfinis",
+    "garder l'élévation subtile",
+    "Augmentez la profondeur seulement si nécessaire",
+    "aligner l'ombre avec le rayon et la surface",
+  ]}
+  avoid={[
+    "empiler plusieurs ombres",
+    "Contraste élevé ou ombres lourdes",
+    "box-shadow personnalisé par composant",
+    "Niveaux d'élévation incohérents",
+  ]}
+/>
+
+## Pourquoi c'est important [#why-it-matters]
+
+Les ombres sont l’un des moyens les plus rapides de briser la cohérence visuelle.
+
+- trop d'ombres à l'interface bruyante
+- ombres trop fortes pour un look bon marché
+- Des ombres incohérentes à la hiérarchie brisée
+
+Un système contrôlé assure :
+
+- clarté
+- structure
+- calme visuel
+- Qualité perçue des produits

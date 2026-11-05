@@ -2,29 +2,61 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 import BuildGuide, {
-  metadata as buildMetadata,
-} from "../../app/(site)/guides/build-saas-nextjs/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/guides/build-saas-nextjs/page";
 import FoundationGuide, {
-  metadata as foundationMetadata,
-} from "../../app/(site)/guides/production-ready-saas-starter/page";
+  generateMetadata as getLocalizedMetadata1,
+} from "../../app/[locale]/(site)/guides/production-ready-saas-starter/page";
 import AuthGuide, {
-  metadata as authMetadata,
-} from "../../app/(site)/guides/saas-auth-flows/page";
+  generateMetadata as getLocalizedMetadata2,
+} from "../../app/[locale]/(site)/guides/saas-auth-flows/page";
 import BillingGuide, {
-  metadata as billingMetadata,
-} from "../../app/(site)/guides/saas-billing-ux/page";
+  generateMetadata as getLocalizedMetadata3,
+} from "../../app/[locale]/(site)/guides/saas-billing-ux/page";
 import DashboardGuide, {
-  metadata as dashboardMetadata,
-} from "../../app/(site)/guides/saas-dashboard-design/page";
+  generateMetadata as getLocalizedMetadata4,
+} from "../../app/[locale]/(site)/guides/saas-dashboard-design/page";
 import OrganizationGuide, {
-  metadata as organizationMetadata,
-} from "../../app/(site)/guides/saas-organizations/page";
+  generateMetadata as getLocalizedMetadata5,
+} from "../../app/[locale]/(site)/guides/saas-organizations/page";
 import AdminGuide, {
-  metadata as adminMetadata,
-} from "../../app/(site)/guides/saas-admin-panels/page";
+  generateMetadata as getLocalizedMetadata6,
+} from "../../app/[locale]/(site)/guides/saas-admin-panels/page";
 import PwaGuide, {
-  metadata as pwaMetadata,
-} from "../../app/(site)/guides/pwa-for-saas/page";
+  generateMetadata as getLocalizedMetadata7,
+} from "../../app/[locale]/(site)/guides/pwa-for-saas/page";
+
+const buildMetadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const foundationMetadata = await getLocalizedMetadata1({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const authMetadata = await getLocalizedMetadata2({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const billingMetadata = await getLocalizedMetadata3({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const dashboardMetadata = await getLocalizedMetadata4({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const organizationMetadata = await getLocalizedMetadata5({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const adminMetadata = await getLocalizedMetadata6({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const pwaMetadata = await getLocalizedMetadata7({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const guides = [
   ["build-saas-nextjs", BuildGuide, buildMetadata],

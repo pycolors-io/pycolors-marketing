@@ -1,0 +1,259 @@
+---
+title: Vue d’ensemble
+description: Page de destination Premium Next.js pour les produits d'IA, les
+  outils SaaS et les plateformes d'analyse. Construit avec PyColors UI, PyColors
+  Tokens et une structure de contenu axée sur les données.
+lastUpdated: "2026-05-18"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  BarChart3,
+  Code2,
+  LayoutTemplate,
+  Palette,
+  Rocket,
+  Sparkles,
+  Terminal,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Templates</Badge>
+  <Badge>NA-AI Landing</Badge>
+</div>
+
+## Lancer une landing page premium AI plus rapidement [#launch-a-premium-ai-landing-page-faster]
+
+NA-AI Landing est un modèle de marketing frontal poli et prêt à la production pour:
+
+- startups IA
+- Fondateurs SaaS
+- plates-formes analytiques
+- agences
+- indie makers
+
+Il vous donne la surface du produit public en premier:
+
+- premium hero
+- Sections d'analyse de l'IA
+- visualisations métriques
+- intégrations
+- tarification
+- témoignages
+- FAQ
+- formulaire de contact
+- mode sombre et clair
+- Métadonnées prêtes pour SEO
+- structure de contenu axée sur les données
+
+Ce n'est pas une application SaaS complète.
+
+Il s'agit d'une base de landing page ciblée conçue pour vous aider à lancer, valider et présenter votre offre plus rapidement.
+
+<DocsUpgradeCTA
+  title="Lancez la couche marketing plus rapidement."
+  description="NA-AI Landing vous offre une surface de produit publique premium sans reconstruire une base marketing moderne à partir de zéro."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/templates/na-ai-landing"
+  secondaryLabel="View details"
+/>
+
+<Callout title="Idée de base">
+  NA-AI Landing vous aide à lancer la couche marketing. Starter Pro vous aide à
+  câbler la couche métier SaaS.
+
+</Callout>
+
+## Ce qui est inclus [#what-is-included]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Page d'atterrissage premium",
+      icon: LayoutTemplate,
+      description:
+        "Hero, cartes de fonctionnalités, métriques, intégrations, tarification, témoignages, FAQ, CTA et sections de contact.",
+    },
+    {
+      title: "Stack frontal moderne",
+      icon: Code2,
+      description:
+        "Next.js 16+ App Router, TypeScript, Tailwind CSS v4, Framer Motion, Recharts et Lucide icônes.",
+    },
+    {
+      title: "Propulsé par PyColors",
+      icon: Sparkles,
+      description:
+        "Construit avec PyColors UI et PyColors Tokens pour des surfaces, des espaces, des thèmes et des primitives réutilisables cohérents.",
+    },
+    {
+      title: "Contenu piloté par les données",
+      icon: BarChart3,
+      description:
+        "La plupart du contenu est contrôlé à partir de src/ — data afin que vous puissiez personnaliser la page sans creuser dans chaque composant.",
+    },
+  ]}
+/>
+
+### Construit avec [#built-with]
+
+| Couche                | Technologie                       |
+| --------------------- | --------------------------------- |
+| Cadre                 | Next.js 16+ Routeur d'application |
+| Langue                | TypeScript                        |
+| Styling               | Tailwind CSS v4                   |
+| Système de conception | PyColors UI                       |
+| Tokens                | Tokens PyColors                   |
+| primitives UI         | Radix UI                          |
+| Animations            | Framer Motion                     |
+| Graphiques            | Recharts                          |
+| Icônes                | Lucide React                      |
+| Polices               | Plus Jakarta Sans, JetBrains Mono |
+| Thème                 | next-themes                       |
+
+## Portée importante [#important-scope]
+
+NA-AI Landing est une landing page statique.
+
+Il ne comprend pas :
+
+- backend
+- Authentification
+- base de données
+- paiements
+- CMS
+- tableau de bord utilisateur
+- Livraison par email
+
+Vous pouvez le connecter à :
+
+- Node.js
+- NestJS
+- Django
+- Laravel
+- Supabase
+- Firebase
+- Stripe
+- n'importe quel backend ou pile API
+
+<Callout type="info" title="Portée">
+  NA-AI Landing est la surface de marketing. Pour l'authentification, la
+  facturation, les routes protégés et les fondations d'applications SaaS,
+  utilisez Starter Pro.
+
+</Callout>
+
+## Structure pilotée par les données [#data-driven-structure]
+
+La plupart des sections sont contrôlées à partir de fichiers de contenu dédiés.
+
+| Chapitre         | Fichier                      |
+| ---------------- | ---------------------------- |
+| Hero             | `src/@data/hero.ts`          |
+| Caractéristiques | `src/@data/features.ts`      |
+| Intégrations     | `src/@data/integrations.ts`  |
+| Tarifs           | `src/@data/pricing.ts`       |
+| Tableau des prix | `src/@data/pricing-table.ts` |
+| Témoignages      | `src/@data/customers.ts`     |
+| FAQ              | `src/@data/faq.ts`           |
+| CTA              | `src/@data/cta.ts`           |
+| Contact          | `src/@data/contact.ts`       |
+| Footer           | `src/@data/footer.ts`        |
+| Navbar           | `src/@data/navbar.ts`        |
+
+Cette structure maintient la personnalisation plus rapide et plus maintenable.
+
+Au lieu de modifier plusieurs sections manuellement, la plupart du contenu marketing peut être mis à jour à partir de fichiers de données centralisés.
+
+## Inclus vs non inclus [#included-vs-not-included]
+
+<PreferAvoid
+  preferTitle="Included"
+  avoidTitle="Not included"
+  prefer={[
+    "structure complète du projet Next.js",
+    "Sections de page d'atterrissage premium",
+    "Intégration de PyColors UI",
+    "Intégration de PyColors Tokens",
+    "support du mode sombre et lumineux",
+    "Visualisations Recharts",
+    "Configuration des métadonnées SEO",
+    "Plan du site et configuration des robots",
+    "licence d'utilisation commerciale",
+  ]}
+  avoid={[
+    "API backend",
+    "schéma de base de données",
+    "Système d'authentification",
+    "Paiements Stripe",
+    "tableau de bord utilisateur",
+    "Intégration CMS",
+    "infrastructure de livraison d'emails",
+  ]}
+/>
+
+### Flux de travail recommandé [#recommended-workflow]
+
+Un chemin à fort effet de levier ressemble généralement à ceci:
+
+1. Personnaliser le branding
+2. Mise à jour du positionnement
+3. éditer les fichiers de données
+4. Déployer la landing page
+5. Valider la demande publiquement
+6. connecter Starter Free ou Starter Pro plus tard si nécessaire
+
+Cela vous aide à valider le marché avant de reconstruire l’infrastructure trop tôt.
+
+<Callout title="Les modèles sont concentrés intentionnellement">
+  L’objectif n’est pas de devenir un produit SaaS complet immédiatement.
+  L'objectif est de lancer une surface publique crédible plus rapidement.
+
+</Callout>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Configuration",
+      href: "/docs/templates/na-ai-landing/setup",
+      description:
+        "Installez les dépendances, exécutez le modèle localement et validez la construction de production.",
+      icon: Terminal,
+    },
+    {
+      title: "Personnalisation",
+      href: "/docs/templates/na-ai-landing/customization",
+      description:
+        "Personnalisez la marque, le contenu, les sections, les prix, les métadonnées SEO et les ressources.",
+      icon: Palette,
+    },
+    {
+      title: "Starter Free",
+      href: "/starters/free",
+      description:
+        "Validez l'UX SaaS, les tableaux de bord, les paramètres et les flux de produits simulés.",
+      icon: Sparkles,
+    },
+    {
+      title: "Starter Pro",
+      href: "/starters/pro",
+      description:
+        "Déplacez-vous dans l'authentification, la facturation, les routes protégées et les fondations backend.",
+      icon: Rocket,
+    },
+  ]}
+/>

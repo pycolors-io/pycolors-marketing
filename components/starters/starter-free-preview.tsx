@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useState, type ReactNode } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
 
@@ -13,6 +14,8 @@ type StarterFreePreviewProps = Readonly<{
 
 /** The route supplies server-rendered figures; only tab selection is client-side. */
 export function StarterFreePreview({ screens }: StarterFreePreviewProps) {
+  const tSite = useCopy();
+
   const [active, setActive] = useState(screens[0]?.id ?? "");
 
   return (
@@ -22,7 +25,7 @@ export function StarterFreePreview({ screens }: StarterFreePreviewProps) {
       className="gap-0 overflow-hidden rounded-[5px] border border-border-subtle bg-background"
     >
       <TabsList
-        aria-label="Starter Free screens"
+        aria-label={tSite("Starter Free screens")}
         className="grid h-auto w-full grid-cols-3 gap-0 rounded-none border-b border-border-subtle bg-transparent p-0 sm:flex sm:flex-wrap sm:justify-start"
       >
         {screens.map((screen) => (
@@ -31,7 +34,7 @@ export function StarterFreePreview({ screens }: StarterFreePreviewProps) {
             value={screen.id}
             className="min-h-11 flex-none rounded-none border-0 border-b-2 border-transparent px-4 py-3 text-xs text-muted-foreground shadow-none transition-colors hover:bg-surface-muted/50 hover:text-foreground focus-visible:ring-inset focus-visible:ring-offset-0 data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none sm:px-6 sm:text-sm"
           >
-            {screen.label}
+            {tSite(screen.label)}
           </TabsTrigger>
         ))}
       </TabsList>
@@ -46,7 +49,7 @@ export function StarterFreePreview({ screens }: StarterFreePreviewProps) {
             tabIndex={active === screen.id ? 0 : -1}
             className={`col-start-1 row-start-1 m-0 min-w-0 rounded-none focus-visible:ring-inset focus-visible:ring-offset-0 ${active === screen.id ? "visible" : "invisible"}`}
           >
-            {screen.content}
+            {tSite(screen.content)}
           </TabsContent>
         ))}
       </div>

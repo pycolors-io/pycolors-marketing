@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   APPEARANCE_DEFAULTS,
   type AppearancePreferences,
@@ -62,6 +63,8 @@ export function ThemeComponentsPreview({
   view: ThemeComponentsState;
   onViewChange: (view: ThemeComponentsState) => void;
 }>) {
+  const tSite = useCopy();
+
   const id = useId();
   const style = {
     ...createThemePreviewVariables(theme),
@@ -87,12 +90,14 @@ export function ThemeComponentsPreview({
             id={`${id}-heading`}
             className="text-xl font-semibold tracking-tight sm:text-2xl"
           >
-            Your theme in use
+            {tSite("Your theme in use")}
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-            {children
-              ? "One palette, from workspace settings to assistant conversations. Try the controls, then see how the same theme brings a conversation together."
-              : "One palette, across buttons, forms, navigation, and content. Try the components below."}
+            {tSite(
+              children
+                ? "One palette, from workspace settings to assistant conversations. Try the controls, then see how the same theme brings a conversation together."
+                : "One palette, across buttons, forms, navigation, and content. Try the components below.",
+            )}
           </p>
         </div>
         <span className="inline-flex min-h-7 items-center gap-2 text-xs text-muted-foreground">
@@ -100,7 +105,7 @@ export function ThemeComponentsPreview({
             aria-hidden="true"
             className="size-1.5 rounded-full bg-primary"
           />
-          Interactive demo
+          {tSite("Interactive demo")}
         </span>
       </header>
 
@@ -108,12 +113,15 @@ export function ThemeComponentsPreview({
         {(["accent", "neutral"] as const).map((family) => (
           <div key={family} className="min-w-0">
             <div className="mb-2 flex justify-between gap-3 text-[11px] text-muted-foreground">
-              <span>{family === "accent" ? "Accent" : "Neutral"}</span>
-              <span>12 shades</span>
+              <span>{tSite(family === "accent" ? "Accent" : "Neutral")}</span>
+              <span>{tSite("12 shades")}</span>
             </div>
             <div
               role="img"
-              aria-label={`Twelve ${family} shades in the current preview`}
+              aria-label={tSite(
+                "Twelve {value0} shades in the current preview",
+                { value0: family },
+              )}
               className="grid h-5 grid-cols-12 gap-0.5 overflow-hidden rounded-[3px]"
             >
               {SCALE_STEPS.map((step) => (
@@ -133,7 +141,7 @@ export function ThemeComponentsPreview({
         <div className={`${styles.galleryControls} min-w-0 space-y-6`}>
           <section aria-labelledby={`${id}-actions`}>
             <h3 id={`${id}-actions`} className={label}>
-              Actions & feedback
+              {tSite("Actions & feedback")}
             </h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {(
@@ -152,7 +160,7 @@ export function ThemeComponentsPreview({
                   className={`${styles.compactControl} h-auto max-w-full whitespace-normal rounded-[5px] px-3 py-2 text-xs`}
                   onClick={() => onViewChange({ ...view, action: text })}
                 >
-                  {text}
+                  {tSite(text)}
                 </Button>
               ))}
               <Button
@@ -161,16 +169,20 @@ export function ThemeComponentsPreview({
                 size="sm"
                 className={`${styles.compactControl} h-auto rounded-[5px] px-3 py-2 text-xs`}
               >
-                Disabled
+                {tSite("Disabled")}
               </Button>
             </div>
             <p
               role="status"
               className="mt-3 min-h-5 text-xs leading-5 text-muted-foreground"
             >
-              {view.action
-                ? `${view.action} action previewed.`
-                : "Each action is a local demo."}
+              {tSite(
+                view.action
+                  ? tSite("{value0} action previewed.", {
+                      value0: tSite(view.action),
+                    })
+                  : "Each action is a local demo.",
+              )}
             </p>
             <Alert
               className="mt-4 rounded-[5px] border-border/50 shadow-none"
@@ -180,9 +192,11 @@ export function ThemeComponentsPreview({
               <div className="flex items-start gap-2.5">
                 <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
                 <div>
-                  <AlertTitle aria-level={4}>Ready for review</AlertTitle>
+                  <AlertTitle aria-level={4}>
+                    {tSite("Ready for review")}
+                  </AlertTitle>
                   <AlertDescription>
-                    Your team can review the latest changes.
+                    {tSite("Your team can review the latest changes.")}
                   </AlertDescription>
                 </div>
               </div>
@@ -191,7 +205,7 @@ export function ThemeComponentsPreview({
 
           <section aria-labelledby={`${id}-notifications`}>
             <h3 id={`${id}-notifications`} className={label}>
-              Notifications
+              {tSite("Notifications")}
             </h3>
             <div className="mt-3 divide-y divide-border/40 overflow-hidden rounded-[5px] border border-border/50">
               {(
@@ -222,9 +236,11 @@ export function ThemeComponentsPreview({
                     className="mt-0.5 shrink-0"
                   />
                   <span className="min-w-0">
-                    <span className="block text-sm font-medium">{title}</span>
+                    <span className="block text-sm font-medium">
+                      {tSite(title)}
+                    </span>
                     <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                      {description}
+                      {tSite(description)}
                     </span>
                   </span>
                 </label>
@@ -233,11 +249,11 @@ export function ThemeComponentsPreview({
           </section>
           <div
             className="flex flex-wrap gap-2"
-            aria-label="Status label examples"
+            aria-label={tSite("Status label examples")}
           >
-            <Badge variant="success">Active</Badge>
-            <Badge variant="warning">In review</Badge>
-            <Badge variant="outline">Draft</Badge>
+            <Badge variant="success">{tSite("Active")}</Badge>
+            <Badge variant="warning">{tSite("In review")}</Badge>
+            <Badge variant="outline">{tSite("Draft")}</Badge>
           </div>
         </div>
 
@@ -249,10 +265,10 @@ export function ThemeComponentsPreview({
               <Settings2 aria-hidden="true" className="size-5" />
             </div>
             <h3 className="text-xl font-semibold tracking-tight">
-              Workspace settings
+              {tSite("Workspace settings")}
             </h3>
             <p className="mt-2 text-xs leading-6 text-muted-foreground">
-              Inputs, focus, and validation in one place.
+              {tSite("Inputs, focus, and validation in one place.")}
             </p>
             <form
               className="mt-6 space-y-5"
@@ -263,36 +279,38 @@ export function ThemeComponentsPreview({
             >
               <Input
                 id={`${id}-name`}
-                label="Workspace display name"
+                label={tSite("Workspace display name")}
                 value={view.name}
                 maxLength={64}
                 required
                 onChange={(event) =>
                   onViewChange({ ...view, name: event.target.value })
                 }
-                helperText="A sample field for your theme preview."
+                helperText={tSite("A sample field for your theme preview.")}
               />
               <Input
                 id={`${id}-validation`}
-                label="Validation example"
+                label={tSite("Validation example")}
                 value="incomplete@email"
                 readOnly
-                error="Enter a valid email address."
+                error={tSite("Enter a valid email address.")}
               />
               <Button
                 type="submit"
                 className="h-auto min-h-11 w-full whitespace-normal rounded-[5px] px-4 py-2.5 text-sm"
                 disabled={!view.name.trim()}
               >
-                Save demo settings
+                {tSite("Save demo settings")}
               </Button>
               <p
                 role="status"
                 className="min-h-10 text-xs leading-5 text-muted-foreground"
               >
-                {view.savedName === view.name
-                  ? "Demo settings saved in this preview."
-                  : "Changes stay in this preview."}
+                {tSite(
+                  view.savedName === view.name
+                    ? "Demo settings saved in this preview."
+                    : "Changes stay in this preview.",
+                )}
               </p>
             </form>
           </Card>
@@ -301,7 +319,7 @@ export function ThemeComponentsPreview({
         <div className={`${styles.galleryContent} min-w-0 space-y-6`}>
           <section aria-labelledby={`${id}-navigation`}>
             <h3 id={`${id}-navigation`} className={label}>
-              Navigation & content
+              {tSite("Navigation & content")}
             </h3>
             <Tabs
               value={view.tab}
@@ -312,7 +330,7 @@ export function ThemeComponentsPreview({
               className="mt-3"
             >
               <TabsList
-                aria-label="Component demo navigation"
+                aria-label={tSite("Component demo navigation")}
                 className="h-auto w-full justify-start gap-4 rounded-none border-b border-border/50 bg-transparent p-0"
               >
                 {(["overview", "activity"] as const).map((tab) => (
@@ -321,7 +339,7 @@ export function ThemeComponentsPreview({
                     value={tab}
                     className={`${styles.compactControl} rounded-none border-b-2 border-transparent px-2 text-xs data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none`}
                   >
-                    {tab === "overview" ? "Overview" : "Activity"}
+                    {tSite(tab === "overview" ? "Overview" : "Activity")}
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -331,14 +349,16 @@ export function ThemeComponentsPreview({
                     aria-hidden="true"
                     className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground"
                   >
-                    N
+                    {tSite("N")}
                   </span>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">
-                      {view.savedName ?? INITIAL_THEME_COMPONENTS_STATE.name}
+                      {tSite(
+                        view.savedName ?? INITIAL_THEME_COMPONENTS_STATE.name,
+                      )}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Sample team workspace
+                      {tSite("Sample team workspace")}
                     </p>
                   </div>
                 </div>
@@ -350,14 +370,14 @@ export function ThemeComponentsPreview({
                       aria-hidden="true"
                       className="size-1.5 rounded-full bg-primary"
                     />
-                    Design review completed
+                    {tSite("Design review completed")}
                   </li>
                   <li className="flex items-center gap-2">
                     <span
                       aria-hidden="true"
                       className="size-1.5 rounded-full bg-muted-foreground"
                     />
-                    Theme tokens updated
+                    {tSite("Theme tokens updated")}
                   </li>
                 </ul>
               </TabsContent>
@@ -369,17 +389,21 @@ export function ThemeComponentsPreview({
             className="border-t border-border/40 pt-5"
           >
             <h3 id={`${id}-type`} className={label}>
-              Type & hierarchy
+              {tSite("Type & hierarchy")}
             </h3>
             <p className="mt-4 text-2xl font-semibold tracking-tight">
-              Make room for great work.
+              {tSite("Make room for great work.")}
             </p>
             <p className="mt-3 border-l-2 border-primary/40 pl-4 text-sm leading-7 text-muted-foreground">
-              Bring your projects, people, and progress into one place.{" "}
+              {tSite(
+                "Bring your projects, people, and progress into one place.",
+              )}
+              {tSite(" ")}
               <span className="font-medium text-primary">
-                A shared visual language
-              </span>{" "}
-              makes every detail feel connected.
+                {tSite("A shared visual language")}
+              </span>
+              {tSite(" ")}
+              {tSite("makes every detail feel connected.")}
             </p>
           </section>
           <dl className="space-y-3 border-t border-border/40 pt-5 text-[11px]">
@@ -388,21 +412,23 @@ export function ThemeComponentsPreview({
                 key={role}
                 className="flex items-center justify-between gap-3"
               >
-                <dt className="font-mono text-muted-foreground">--{role}</dt>
+                <dt className="font-mono text-muted-foreground">
+                  --{tSite(role)}
+                </dt>
                 <dd className="flex items-center gap-2 font-mono">
                   <span
                     aria-hidden="true"
                     className="size-3 rounded-[3px] border border-border/50"
                     style={{ backgroundColor: theme.semantic[role].srgbHex }}
                   />
-                  {theme.semantic[role].srgbHex.toUpperCase()}
+                  {tSite(theme.semantic[role].srgbHex.toUpperCase())}
                 </dd>
               </div>
             ))}
           </dl>
         </div>
       </div>
-      {children}
+      {tSite(children)}
     </section>
   );
 }

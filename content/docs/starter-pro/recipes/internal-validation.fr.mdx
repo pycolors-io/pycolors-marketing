@@ -1,0 +1,110 @@
+---
+title: Validation interne
+description: Coordonner une liste de contrôle d'examen interne en utilisant les
+  tâches assignées, les objectifs de calendrier et les notes de résultat.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, LifeBuoy, SlidersHorizontal, Users } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Coordonner une révision [#coordinate-a-review]
+
+Utilisez un projet comme une demande d'examen et des tâches comme liste de contrôle. L'exemple **Site web release review** les contrôles de copie, d'accessibilité et de passation de groupes dans l'application existante. Aucun schéma ou autorité d'approbation supplémentaire n'est installé.
+
+| Votre vocabulaire        | Modèle existant                                     | Exemple                                                                    |
+| ------------------------ | --------------------------------------------------- | -------------------------------------------------------------------------- |
+| Demande de réexamen      | Nom et description du projet                        | Site web release review                                                    |
+| Étape de révision        | Tâche                                               | Examinez la copie, vérifiez l'accessibilité, préparez les notes de version |
+| Réviseur et cible prévus | Adhésion responsable et date d'échéance de la tâche | Un coéquipier actif et une date de calendrier                              |
+| Note de résultat         | Commentaire de la tâche                             | Deux problèmes trouvés ; revérifiez après la mise à jour de copie.         |
+
+## Essayez le workflow [#try-the-workflow]
+
+<Steps>
+  <Step>
+    ### Décrire la demande [#describe-the-request]
+
+    Créer le projet et décrire sa portée et ses critères d'acceptation. Ajoutez les trois tâches de révision, attribuez des examinateurs et choisissez les dates cibles.
+
+</Step>
+  <Step>
+    ### Enregistrement des travaux de révision [#record-review-work]
+
+    Déplacer une tâche vers `IN_PROGRESS`, ajoutez une note de résultat et marquez-la `DONE` lorsque ce travail est terminé. Rechargez et inspectez les entrées d'activité correspondantes.
+
+</Step>
+  <Step>
+    ### Revoir le travail si nécessaire [#revisit-work-when-needed]
+
+    Renvoyer une tâche à `IN_PROGRESS` et enregistrer les modifications demandées. La base de référence n'impose aucun ordre de révision, état de rejet ou porte de publication.
+
+</Step>
+  <Step>
+    ### Compléter la demande séparément [#complete-the-request-separately]
+
+    Mettre à jour le statut du projet une fois les travaux d'examen terminés. Archivez-le pour mettre en pause les modifications des tâches/commentaires ; restaurez pour continuer. Les archives sont réversibles.
+
+</Step>
+
+</Steps>
+
+<Callout title="L'achèvement n'est pas un pouvoir d'approbation">
+  `DONE` signifie qu'une tâche est terminée. L'autorisation d'édition par défaut
+  permet à un autre MEMBRE actif de la modifier également, même lorsqu'un autre
+  réviseur est assigné. Les commentaires peuvent être supprimés selon les règles
+  de modération et la suppression de projet supprime les tâches et les
+  commentaires. Ces documents ne sont pas des décisions d'approbation immuables.
+
+</Callout>
+
+## Adapter la présentation [#adapt-the-presentation]
+
+Les expédiés `docs/recipes/internal-validation.md` inclut les points d'entrée et une invite d'assistant portée. Utilisez des étiquettes spécifiques à la révision autour de la vue de tâche existante et conservez ses gardes de serveur et ses codes d'état. Évitez de présenter une étiquette de statut ou un champ cessionnaire comme une approbation avec permission.
+
+## Vérifier avant d'adopter [#check-before-adopting]
+
+- Un réviseur prévu et un autre MEMBRE actif peuvent tous deux modifier la tâche.
+- Un espace de travail non lié et une adhésion révoquée ne peuvent pas accéder à la demande.
+- MEMBRE peut supprimer sa propre note; PROPRIÉTAIRE / ADMIN peut modérer la note d'un autre membre.
+- L'archive bloque les écritures de tâches/commentaires jusqu'à ce qu'elles soient restaurées ; elle ne verrouille pas définitivement une décision.
+
+Si une décision doit autoriser une mainlevée, un paiement ou une autre action protégée, définissez l'approbateur, les règles d'auto-approbation, le traitement des révisions, la version contraignante et la conservation. Une opération distincte gardée et un enregistrement de décision structuré peuvent nécessiter un schéma révisé. Suivez le guide d'extension de permission après que ces décisions de produit soient explicites.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Fondement de recette d'affaires",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description: "Revoir le modèle partagé et les limites d'accès.",
+    },
+    {
+      title: "Personnalisation et extensions sécurisées",
+      icon: SlidersHorizontal,
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Trouvez les recettes de ressources et d'autorisations livrées.",
+    },
+    {
+      title: "Suivi des clients",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      description:
+        "Coordonner le suivi de l’engagement en utilisant le même modèle de projet/tâche.",
+      icon: Users,
+    },
+    {
+      title: "Demandes d'assistance",
+      href: "/docs/starter-pro/recipes/support-requests",
+      description:
+        "Réutilisez le travail et la discussion assignés pour une file d'attente de support interne.",
+      icon: LifeBuoy,
+    },
+  ]}
+/>

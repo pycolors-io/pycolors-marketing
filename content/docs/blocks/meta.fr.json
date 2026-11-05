@@ -1,0 +1,12 @@
+{
+  "title": "Blocs",
+  "pages": [
+    "index",
+    "app-shells",
+    "auth",
+    "data",
+    "account",
+    "commerce",
+    "feedback"
+  ]
+}

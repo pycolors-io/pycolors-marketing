@@ -1,0 +1,366 @@
+---
+title: Déploiement
+description: Déployez Starter Free en production et préparez votre environnement
+  pour de vrais utilisateurs.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle,
+  Cloud,
+  CreditCard,
+  Database,
+  Layers3,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Déploiement</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+L'exécution locale est la première étape. Déployer tôt est la deuxième étape.
+
+Starter Free est intentionnellement simple à déployer car il ne nécessite pas encore de base de données, de secrets Auth, de clés Stripe ou de services backend.
+
+L'objectif est d'obtenir une surface SaaS crédible en ligne rapidement afin que vous puissiez:
+
+- test de production construit
+- Partager une démo en direct
+- Valider la direction du produit
+- Préparer le chemin vers de vrais utilisateurs
+
+<Callout title="Principe de déploiement">
+  Déployez tôt. Fil progressivement. N'attendez pas que le backend existe avant
+  de valider la surface du produit.
+
+</Callout>
+
+### Ce que vous allez faire [#what-youll-do]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Valider localement",
+      description:
+        "Construisez et exécutez l'application localement avant de la déployer en production.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Déployer vers Vercel",
+      description:
+        "Poussez le starter vers votre dépôt et importez le projet dans Vercel.",
+      icon: Cloud,
+    },
+    {
+      title: "Vérifier les routes",
+      description:
+        "Confirmez les principales surfaces SaaS et les flux de navigation en production.",
+      icon: Rocket,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Starter Free se déploie en tant que surface de produit frontale. Le câblage de production vient plus tard.
+
+| Aujourd'hui          | Plus tard                                           |
+| -------------------- | --------------------------------------------------- |
+| Auth simulé          | vrai fournisseur de session                         |
+| Facturation simulée  | Stripe Checkout et Portail                          |
+| factures statiques   | Historique des factures synchronisées               |
+| Données simulées     | enregistrements sauvegardés dans la base de données |
+| Validation UX locale | flux d'utilisateurs de production                   |
+
+<Callout type="info" title="Aucun secret n'est encore requis">
+  Starter Free peut se déployer sans `AUTH_SECRET`, `DATABASE_URL`,
+  `STRIPE_SECRET_KEY`ou `STRIPE_WEBHOOK_SECRET` parce que ces systèmes sont
+  intentionnellement simulés.
+
+</Callout>
+
+### Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Valider la construction de la production localement [#validate-the-production-build-locally]
+
+Exécutez la construction de production avant de déployer.
+
+```bash title="terminal"
+pnpm build
+pnpm start
+```
+
+Puis ouvrir :
+
+```txt title="browser"
+http://localhost:3000
+```
+
+Si l'application se construit et démarre localement, vous avez déjà détecté le problème de déploiement le plus courant.
+
+</Step>
+
+<Step>
+### Poussez vers votre dépôt [#push-to-your-repository]
+
+Créez ou connectez votre dépôt GitHub.
+
+```bash title="terminal"
+git remote remove origin
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+```
+
+Utilisez votre propre nom et organisation de dépôt.
+
+</Step>
+
+<Step>
+### Importer sur Vercel [#import-on-vercel]
+
+Sur Vercel :
+
+1. créer un nouveau projet
+2. importer votre dépôt
+3. conserver les paramètres Next.js détectés
+4. déployer
+
+Starter Free ne nécessite pas de variables d'environnement à ce stade.
+
+</Step>
+
+<Step>
+### Vérifier les routes de production [#verify-production-routes]
+
+Après le déploiement, ouvrez les routes principales :
+
+```txt title="production routes"
+/login
+/register
+/dashboard
+/projects
+/admin
+/billing
+/settings
+```
+
+Vous devriez être en mesure de naviguer sur la surface SaaS simulée.
+
+</Step>
+
+</Steps>
+
+### Variables d'environnement futures [#future-environment-variables]
+
+Vous n'avez pas besoin de ces variables pour Starter Free, mais elles deviennent pertinentes lorsque le produit se déplace vers de vrais utilisateurs.
+
+```bash title=".env.local"
+AUTH_SECRET=
+DATABASE_URL=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Auth',
+      title: "Variables auth",
+      icon: LockKeyhole,
+      description: (
+        <>
+          <p>
+            Authentication variables become necessary once sessions, providers, and protected access are real.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">AUTH_SECRET</Badge>
+            <Badge variant="plan">OAuth providers</Badge>
+            <Badge variant="plan">Session security</Badge>
+            <Badge variant="plan">Password reset</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Database',
+      title: "Variables de base de données",
+      icon: Database,
+      description: (
+        <>
+          <p>
+            Database configuration becomes required when mocked data transitions into persisted product state.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">DATABASE_URL</Badge>
+            <Badge variant="plan">Prisma</Badge>
+            <Badge variant="plan">Persistence</Badge>
+            <Badge variant="plan">Production data</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Stripe',
+      title: "Variables Stripe",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Stripe variables power real billing flows, webhook validation, and subscription synchronization.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">STRIPE_SECRET_KEY</Badge>
+            <Badge variant="plan">Webhook secret</Badge>
+            <Badge variant="plan">Checkout</Badge>
+            <Badge variant="plan">Billing workflows</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Liste de contrôle de production [#production-checklist]
+
+Avant de partager le déploiement, confirmez que :
+
+- `pnpm build` Réussir localement
+- l'application déployée se charge sans erreurs d'exécution
+- Les pages sont accessibles
+- Les pages du tableau de bord sont accessibles
+- projet routes travail
+- Les pages d'administration, de facturation et de paramètres sont rendues
+- Aucune variable d'environnement requise n'est manquante
+- la navigation fonctionne sur ordinateur et mobile
+- la facturation et l'auth simulés sont clairement compris comme câblage de non-production
+
+<Callout title="Bon signal de déploiement">
+  Si toutes les routes se chargent et que la surface du produit semble
+  cohérente, le déploiement est prêt pour les démonstrations, la validation et
+  l'itération du produit.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+Déployez Starter Free lorsque :
+
+- vous souhaitez partager une démo
+- vous avez besoin de commentaires d'utilisateurs ou de clients
+- vous souhaitez valider l’UX avant le travail de backend
+- vous voulez une URL de production pour votre histoire de produit
+- vous voulez attraper les problèmes de construction plus tôt
+
+Déplacer vers Starter Pro lorsque :
+
+- Les vrais utilisateurs ont besoin de comptes
+- Les routes doivent être protégées
+- Stripe doit facturer les clients
+- L'état de facturation doit débloquer les fonctionnalités
+- Les données backend doivent remplacer les données mock
+- Le déploiement doit soutenir les opérations de production
+
+<PreferAvoid
+  prefer={[
+    "Déployer tôt pour valider la surface du produit",
+    "courir `pnpm build` avant de pousser",
+    "vérifier les routes principales après le déploiement",
+    "ajouter des secrets seulement lorsque les systèmes deviennent réels",
+    "mise à niveau lorsque le câblage du backend devient le bloqueur",
+  ]}
+  avoid={[
+    "attendre le intégration backend avant de déployer",
+    "la production de saut construit localement",
+    "Ajouter des variables d'environnement non utilisées trop tôt",
+    "En supposant que la facturation simulée est la facturation de production",
+    "partager une démo avant de vérifier toutes les routes principales",
+  ]}
+/>
+
+## Dépannage [#troubleshooting]
+
+<Accordions type="single">
+  <Accordion title="La construction échoue sur Vercel mais fonctionne localement">
+    Reproduisez d'abord la production locale.
+
+```bash title="terminal"
+rm -rf .next
+pnpm install
+pnpm build
+```
+
+    Ensuite, vérifiez la version de Node.js, l'état du fichier de verrouillage et la configuration du gestionnaire de paquets.
+
+  </Accordion>
+
+<Accordion title="Une page échoue car une variable d'environnement est manquante">
+  Starter Free ne devrait pas nécessiter de secrets de production. Si une page
+  échoue à cause d'un secret, confirmez que vous n'avez pas ajouté d'auth, de
+  base de données ou de code Stripe réel avant de configurer son environnement.
+</Accordion>
+
+  <Accordion title="Le déploiement montre une ancienne version">
+    Confirmez que le dernier commit a été envoyé à la branche connectée à Vercel. Puis redéployez à partir du tableau de bord Vercel si nécessaire.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Sachez quand Starter Free cesse d'être suffisant et Starter Pro devient le chemin le plus rapide à lancer.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Passez de l'UX simulée à l'auth adaptées à la production, à la facturation, au backend et aux fondations de livraison sécurisées.",
+      icon: Layers3,
+      tone: "platform",
+    },
+  ]}
+/>
+
+<Callout title="Libre de déployer. Pro pour lancer.">
+  Starter Free vous donne une surface SaaS en direct. Starter Pro vous donne le
+  câblage de production derrière elle. à{" "}
+  <a href="/pricing" className="font-medium underline underline-offset-4">
+    Mise à niveau vers Starter Pro
+  </a>
+
+</Callout>

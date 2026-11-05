@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { LoaderCircle } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
@@ -37,6 +38,8 @@ export function BuyProductButton({
   showTrustText = false,
   customerEmail,
 }: Readonly<BuyProductButtonProps>) {
+  const tSite = useCopy();
+
   const productName =
     productSlug in PRODUCT_DISPLAY
       ? PRODUCT_DISPLAY[productSlug as keyof typeof PRODUCT_DISPLAY].name
@@ -88,7 +91,7 @@ export function BuyProductButton({
               aria-hidden="true"
             />
 
-            {loadingLabel}
+            {tSite(loadingLabel)}
           </>
         ) : (
           label
@@ -96,7 +99,7 @@ export function BuyProductButton({
       </Button>
 
       {showTrustText ? (
-        <p className="text-xs text-muted-foreground">{trustText}</p>
+        <p className="text-xs text-muted-foreground">{tSite(trustText)}</p>
       ) : null}
 
       {hasError ? <CheckoutFailureNotice locale={locale} /> : null}

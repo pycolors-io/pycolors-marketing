@@ -1,0 +1,4 @@
+{
+  "title": "Authentification",
+  "pages": ["sign-in", "sign-up", "password-recovery"]
+}

@@ -1,0 +1,456 @@
+---
+title: Principes de facturation
+description: Comprendre comment la facturation est modélisée dans Starter Free
+  et où brancher Stripe sans réécriture.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle,
+  CreditCard,
+  FileText,
+  LoaderCircle,
+  RefreshCw,
+  Rocket,
+  ShieldCheck,
+  WalletCards,
+  Webhook,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Facturation</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+La facturation est l’un des flux de travail SaaS les plus importants, mais aussi l’un des plus faciles à câbler de manière incorrecte.
+
+Starter Free vous donne le **surface UX de facturation complète** tout en gardant la mise en œuvre intentionnellement simulée.
+
+Vous obtenez la structure orientée produit:
+
+- plan actuel
+- date de renouvellement
+- sièges
+- mode de paiement
+- Historique des factures
+- point d'entrée du portail de facturation
+
+Mais vous n'avez pas encore le moteur de facturation.
+
+<Callout title="Idée de base">
+  Starter Free modélise l'expérience de facturation. Starter Pro câble la couche
+  métier de facturation.
+
+</Callout>
+
+## Philosophie de facturation [#billing-philosophy]
+
+Starter Gratuit expédie le **surface de facturation**Pas le moteur de facturation.
+
+| Inclus                                   | Non inclus                                      |
+| ---------------------------------------- | ----------------------------------------------- |
+| Affichage des plans                      | Stripe Checkout                                 |
+| Informations sur le renouvellement       | Webhooks à rayures                              |
+| Sièges concept                           | synchronisation du cycle de vie de l'abonnement |
+| Historique des factures UI               | Les vraies factures Stripe                      |
+| Point d'entrée du portail de facturation | Création de session de portail client           |
+| Mode de paiement Surface                 | Contrats de facturation backend                 |
+
+Cette séparation vous permet de valider l'UX de monétisation avant de vous engager dans une architecture Stripe complète.
+
+<Callout type="info" title="Pourquoi cela compte">
+  La facturation n’est pas qu’une page. C’est un workflow de revenus.
+  L'interface utilisateur peut être simulée tôt, mais la mise en œuvre de la
+  production doit être câblée avec soin.
+
+</Callout>
+
+### Ce que vous comprendrez [#what-youll-understand]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Surface de facturation",
+      description:
+        "Comprendre le plan simulé, les sièges, le mode de paiement et les points d'entrée de facturation.",
+      icon: CreditCard,
+    },
+    {
+      title: "Modèle de facture",
+      description:
+        "Découvrez comment l'historique des factures est représenté avant de le remplacer par des données Stripe réelles.",
+      icon: FileText,
+    },
+    {
+      title: "Limite de Stripe",
+      description:
+        "Sachez où Checkout, Portal, webhooks et la synchronisation des abonnements se connectent plus tard.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> L'interface de facturation est stable. La mise en œuvre de la facturation évolue derrière elle.
+
+| Couche          | Responsabilité                                               |
+| --------------- | ------------------------------------------------------------ |
+| UI              | Plan, factures, mode de paiement, sièges, actions du portail |
+| Backend         | Crée des sessions de paiement et de portail                  |
+| Stripe          | Paiements, abonnements, factures, état des clients           |
+| Webhooks        | Source de vérité pour les changements de cycle de vie        |
+| Base de données | Stocke l'état de facturation synchronisée pour l'application |
+
+<Callout title="Règle de production">
+  Ne traitez jamais la page de facturation comme la source de la vérité. Les
+  événements Stripe et votre état de backend doivent générer la facturation de
+  production.
+
+</Callout>
+
+### Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Comprendre l'route de facturation [#understand-the-billing-route]
+
+La surface de facturation vit ici:
+
+```txt title="route"
+app/(app)/billing/page.tsx
+```
+
+Il simule :
+
+- plan actuel
+- sièges
+- date de renouvellement
+- statut de l'abonnement
+- mode de paiement
+- Historique des factures
+- action du portail de facturation
+
+Cet route est conçu pour ressembler à une véritable zone de facturation SaaS avant que le intégration backend n'existe.
+
+</Step>
+
+<Step>
+### Revoir le modèle d'abonnement simulé [#review-the-mocked-subscription-model]
+
+Starter Free utilise un objet d'abonnement simulé.
+
+```tsx title="app/(app)/billing/page.tsx"
+const plan = {
+  name: "Pro",
+  priceLabel: "€29 / month",
+  seats: 10,
+  renewalIso: "2026-03-01",
+  status: "active",
+};
+```
+
+Plus tard, cela devrait être remplacé par votre état d'abonnement backend.
+
+```tsx title="app/(app)/billing/page.tsx"
+const plan = await getCurrentSubscription(user.id);
+```
+
+L'interface utilisateur ne devrait pas avoir besoin d'une réécriture lorsque la source change.
+
+</Step>
+
+<Step>
+### Remplacer les factures par des données sauvegardées par Stripe [#replace-invoices-with-stripe-backed-data]
+
+L'historique des factures commence comme des données fictives.
+
+```tsx title="app/(app)/billing/page.tsx"
+const MOCK_INVOICES = [
+  {
+    number: "INV-0001",
+    amountCents: 2900,
+    status: "paid",
+  },
+];
+```
+
+Plus tard, les factures doivent provenir de Stripe ou d'un tableau de factures synchronisées dans votre base de données.
+
+```ts title="server/billing/invoices.ts"
+export async function listInvoices(customerId: string) {
+  return stripe.invoices.list({
+    customer: customerId,
+    limit: 10,
+  });
+}
+```
+
+</Step>
+
+<Step>
+### Transférer le portail de facturation plus tard [#wire-the-billing-portal-later]
+
+Le frontend doit appeler votre backend, pas Stripe directement.
+
+```txt title="endpoint"
+POST /api/billing/portal
+```
+
+Votre backend crée la session du portail :
+
+```ts title="app/api/billing/portal/route.ts"
+const session = await stripe.billingPortal.sessions.create({
+  customer: stripeCustomerId,
+  return_url: "https://yourapp.com/billing",
+});
+```
+
+Ensuite, le frontend redirige :
+
+```ts title="app/billing/page.tsx"
+window.location.href = session.url;
+```
+
+<Callout type="info" title="Frontière de sécurité">
+  Les clés Stripe doivent rester sur le serveur. Le navigateur ne devrait recevoir qu'une URL de session créée par votre backend.
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## Cycle de vie des Stripe [#stripe-lifecycle]
+
+Un système de facturation de production suit habituellement ce flux :
+
+```txt title="stripe-lifecycle.txt"
+User selects a plan
+  ↓
+Stripe Checkout opens
+  ↓
+Payment or subscription is created
+  ↓
+Stripe sends webhook event
+  ↓
+Backend verifies event
+  ↓
+Database subscription state updates
+  ↓
+App reads updated billing state
+```
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Checkout',
+      title: "Checkout commence à générer des revenus",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Checkout creates the initial payment or subscription flow between your product and Stripe.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Checkout session</Badge>
+            <Badge variant="plan">Subscription creation</Badge>
+            <Badge variant="plan">Backend endpoint</Badge>
+            <Badge variant="plan">Payment initiation</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Webhook',
+      title: "Webhooks synchronise la vérité",
+      icon: Webhook,
+      description: (
+        <>
+          <p>
+            Webhooks keep your application aligned with Stripe billing events and subscription state.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Payment success</Badge>
+            <Badge variant="plan">Renewals</Badge>
+            <Badge variant="plan">Subscription changes</Badge>
+            <Badge variant="plan">Cancellation events</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Portal',
+      title: "Portail gère les clients",
+      icon: WalletCards,
+      description: (
+        <>
+          <p>
+            The billing portal handles customer self-service flows without rebuilding billing management UI.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Payment methods</Badge>
+            <Badge variant="plan">Invoices</Badge>
+            <Badge variant="plan">Plan changes</Badge>
+            <Badge variant="plan">Cancellation flows</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Guide de décision [#decision-guide]
+
+Starter Free est suffisant lorsque :
+
+- vous validez les prix UX
+- vous avez besoin d'une page de facturation crédible dans une démo
+- vous souhaitez afficher les surfaces de plan, de facture et de paiement
+- vous n'acceptez pas encore de paiements réels
+
+Starter Pro devient le chemin le plus rapide lorsque :
+
+- Des paiements réels sont nécessaires
+- Stripe Checkout doit fonctionner
+- webhooks doit mettre à jour votre application
+- les factures doivent refléter l'historique réel des clients
+- l'état de l'abonnement contrôle l'accès au produit
+- Auth et la facturation doivent travailler ensemble
+
+<Callout title="Prêt à transformer la facturation en chiffre d’affaires ?">
+  Starter Free valide l'UX. Starter Pro vous permet **clients pour de vrai**.
+
+→ <a href="/pricing" className="font-medium underline underline-offset-4">Mise à niveau vers Starter Pro</a>
+
+</Callout>
+
+<PreferAvoid
+  prefer={[
+    "garder l'interface de facturation distincte de l'implémentation de Stripe",
+    "créer des sessions Checkout et Portal sur le serveur",
+    "Utiliser les webhooks comme source de vérité du cycle de vie",
+    "stocker l'état de facturation synchronisée dans votre base de données d'applications",
+    "rendre la copie de facturation claire, spécifique et digne de confiance",
+  ]}
+  avoid={[
+    "Appeler les API secrètes de Stripe depuis le navigateur",
+    "Traiter l'état de l'interface utilisateur comme une vérité de facturation",
+    "sauter la vérification de webhook",
+    "Déverrouiller les fonctionnalités payantes avant la confirmation du backend",
+    "Cacher les échecs de paiement derrière des messages d'erreur vagues",
+  ]}
+/>
+
+## copywriting UX [#ux-copywriting]
+
+Les pages de facturation sont des surfaces de confiance. La copie devrait réduire le doute et expliciter les actions liées à l'argent.
+
+Utilisez des étiquettes claires :
+
+- “Gérer la facturation”
+- “Voir les factures”
+- “Mise à jour du mode de paiement”
+- « Changer de plan »
+- « Annuler l’abonnement »
+
+Évitez les étiquettes vagues :
+
+- “Continuer”
+- “Soumettre”
+- “Ouvert”
+- “Confirmer”
+
+<Callout title="Principe de conversion">
+  La copie de facturation devrait rendre la prochaine action évidente. Les
+  utilisateurs ne devraient jamais se demander s’ils commencent à passer à la
+  caisse, ouvrent un portail, modifient un plan ou annulent l’accès.
+
+</Callout>
+
+### Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Pourquoi la facturation est-elle simulée dans Starter Free ?">
+    Parce que l'architecture de facturation dépend de l'état réel du client, des produits Stripe, de la gestion des webhooks et des contrats backend. Starter Free se concentre sur la validation de la surface de facturation avant le câblage du moteur.
+  </Accordion>
+
+<Accordion title="Puis-je connecter Stripe moi-même ?">
+  Oui. Gardez la logique secrète de Stripe sur le serveur, créez des sessions
+  Checkout et Portal via des points de terminaison backend, et utilisez des
+  webhooks pour mettre à jour l'état de votre application.
+</Accordion>
+
+  <Accordion title="La page de facturation doit-elle appeler Stripe directement ?">
+    Non. La page de facturation doit appeler votre backend. Votre backend doit communiquer avec Stripe et renvoyer des URL de session sécurisées ou des données de facturation synchronisées.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Déploiement",
+      href: "/docs/starter/deployment",
+      description:
+        "Déployez le starter et comprenez ce qui reste simulé avant le câblage de production.",
+      icon: Rocket,
+    },
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Passez de l’UX de facturation simulée aux fondations en forme d’auth, de facturation, de backend et de livraison.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+    {
+      title: "Starter Pro facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Passez en revue la base de facturation de production lorsque vous êtes prêt à câbler la couche d'affaires.",
+      icon: CreditCard,
+    },
+    {
+      title: "Actions asynchroneshrones",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevez des actions de paiement, de portail, de réessai et de rétroaction avec une UX prête pour la production.",
+      icon: LoaderCircle,
+    },
+  ]}
+/>
+
+<Callout title="Mise à niveau lorsque la facturation devient réelle">
+  Starter Free vous donne la surface de facturation. Starter Pro vous offre la couche métier prête pour la production : auth, Stripe, structure backend et livraison sécurisée.
+
+<a href="/docs/starter-pro" className=" no-underline  hover:underline">
+  Mettre à niveau vers Starter Pro
+</a>
+
+</Callout>

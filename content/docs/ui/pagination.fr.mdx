@@ -1,0 +1,631 @@
+---
+title: Pagination
+description: primitives de pagination composables pour naviguer dans le contenu
+  paginé sans routage ni logique de données.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import * as React from "react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  buildPaginationRange,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  ChevronRight,
+  Database,
+  LayoutTemplate,
+  LoaderCircle,
+  Rows3,
+  SearchX,
+  Table2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+import {
+  PaginationBasicExample,
+  ProjectsTableWithPagination,
+} from "../previews/pagination-previews";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Pagination</Badge>
+</div>
+
+## Navigation contrôlée pour le contenu paginé [#controlled-navigation-for-paged-content]
+
+Les **Pagination** component fournit des primitives d'interface utilisateur composables pour la navigation dans le contenu paginé.
+
+Utilisez-le pour:
+
+- tableaux de données
+- Listes d'administration
+- rapports
+- factures
+- utilisateurs
+- projets
+- résultats de recherche
+- Vues du tableau de bord
+
+La pagination est intentionnelle **idiot**. Il ne possède pas de routage, de récupération, de synchronisation d'URL, de logique de curseur, de logique de taille de page ou d'état de serveur.
+
+La page ou la couche de données possède la logique. L'interface utilisateur rend la navigation.
+
+<Callout title="Idée de base">
+  La pagination devrait rendre la navigation de page, pas posséder le modèle de
+  données.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="pagination-import.tsx"
+import { Pagination } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+La pagination est composée de petites primitives :
+
+- `Pagination` à l'élément de navigation wrapper
+- `PaginationContent` Liste des conteneurs
+- `PaginationItem` à l'emballage d'article
+- `PaginationLink` pour le contrôle de page
+- `PaginationPrevious` / `PaginationNext` Contrôles directionnels
+- `PaginationEllipsis` à l'indicateur de débordement compact
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <PaginationBasicExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="pagination-basic-example.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  buildPaginationRange,
+} from "@pycolors/ui";
+
+export function PaginationBasicExample() {
+  const [page, setPage] = React.useState(1);
+  const totalPages = 12;
+
+  const tokens = buildPaginationRange({ page, totalPages });
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            disabled={page === 1}
+            onClick={() => setPage((current) => Math.max(1, current - 1))}
+          />
+        </PaginationItem>
+
+        {tokens.map((token) =>
+          token.type === "ellipsis" ? (
+            <PaginationItem key={token.key}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={token.value}>
+              <PaginationLink
+                isActive={token.isActive}
+                onClick={() => setPage(token.value)}
+              >
+                {token.value}
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            disabled={page === totalPages}
+            onClick={() =>
+              setPage((current) => Math.min(totalPages, current + 1))
+            }
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Composition du lien [#link-composition]
+
+`PaginationLink`, `PaginationPrevious`et `PaginationNext` Soutenez le `asChild` modèle de composition. Passer une ancre réelle (ou un cadre) `Link`) comme l'enfant et le contrôle le rend comme élément racine tout en préservant tous les styles, `data-slot`, étiquettes accessibles, et - pour `PaginationPrevious` et `PaginationNext` - l'icône intégrée et le texte visible.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious asChild>
+              <a href="#previous" />
+            </PaginationPrevious>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild>
+              <a href="#page-1">1</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild isActive>
+              <a href="#page-2">2</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink asChild>
+              <a href="#page-3">3</a>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext asChild>
+              <a href="#next" />
+            </PaginationNext>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="pagination-link-composition.tsx"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "@pycolors/ui";
+
+// With real <a> elements — swap for your framework Link:
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious asChild>
+        <a href="/page/1" />
+      </PaginationPrevious>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild>
+        <a href="/page/1">1</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild isActive>
+        <a href="/page/2">2</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink asChild>
+        <a href="/page/3">3</a>
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext asChild>
+        <a href="/page/3" />
+      </PaginationNext>
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>;
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Liens du cadre">
+  Remplacer `<a href="...">` avec votre routeur `Link` composant (Next.js, React Router, TanStack Router, etc.) - le modèle de composition est routeur-neutre.
+
+</Callout>
+
+<Callout
+  type="info"
+  title="PaginationPrécédent et PaginationSuivant avec asChild"
+>
+  Vous n'avez qu'à fournir l'élément d'ancrage en tant qu'enfant. L'icône
+  intégrée ChevronLeft / ChevronRight et le texte visible Précédent / Suivant
+  sont automatiquement affichés à côté de votre élément enfant.
+
+</Callout>
+
+Utilisez Pagination lorsque les utilisateurs ont besoin d'un accès contrôlé à un ensemble fini de pages.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Tableaux",
+      description:
+        "Utilisez la pagination lorsque les tables denses ont besoin d'une navigation stable.",
+      icon: Table2,
+    },
+    {
+      title: "Données mises en page",
+      description:
+        "Utiliser lorsque le backend ou la couche de données expose la navigation basée sur les pages.",
+      icon: Database,
+    },
+    {
+      title: "Résultats de la recherche",
+      description:
+        "Utiliser lorsque les résultats sont finis et que les utilisateurs ont besoin d'une navigation prévisible.",
+      icon: Rows3,
+    },
+  ]}
+/>
+### Tableau + Pagination [#table--pagination]
+
+Cet exemple illustre un modèle SaaS commun : une table avec contrôle de pagination local.
+
+Aucune logique backend n'est incluse. Remplacez la tranche simulée par votre couche de données réelle plus tard.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <ProjectsTableWithPagination />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="projects-table-pagination.tsx"
+type Project = {
+  id: string;
+  name: string;
+  status: "active" | "paused" | "archived";
+  updatedAt: string;
+};
+
+const pageSize = 10;
+const totalPages = Math.ceil(projects.length / pageSize);
+const pageProjects = projects.slice((page - 1) * pageSize, page * pageSize);
+
+// Pass `page`, `totalPages`, and handlers to Pagination.
+// Keep data slicing, fetching, and URL sync outside the UI primitive.
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'architecture">
+  Pagination devrait recevoir des rappels d'état et de rappel. La couche de
+  fonctionnalités doit posséder la source de données, les filtres, le tri et la
+  synchronisation d'URL.
+
+</Callout>
+
+### buildPaginationRange [#buildpaginationrange]
+
+Utilisation `buildPaginationRange` pour générer des tokens de page compacts avec ellipse.
+
+```tsx title="build-pagination-range.ts"
+const tokens = buildPaginationRange({
+  page,
+  totalPages,
+});
+```
+
+Les tokens retournés peuvent représenter :
+
+- Numéros de page
+- Page active
+- marqueurs d'ellipse
+
+Cela maintient la logique de rendu propre tout en gardant Pagination contrôlée.
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Conserver l'état de la page en dehors du composant [#keep-page-state-outside-the-component]
+
+    Stocker `page`, `pageSize`et `totalPages` dans la page, le crochet de fonctionnalité ou la couche de données.
+
+</Step>
+
+  <Step>
+    #### Désactiver la navigation impossible [#disable-impossible-navigation]
+
+    Désactiver Précédent sur la première page et Suivant sur la dernière page.
+
+</Step>
+
+  <Step>
+    #### Utiliser l'ellipse pour les grands nombres de pages [#use-ellipsis-for-large-page-counts]
+
+    Évitez de rendre des dizaines de liens de page. Larges gammes compactes avec ellipses.
+
+</Step>
+
+  <Step>
+    #### Synchronisation de l'URL uniquement au niveau de la couche produit [#sync-url-only-at-the-product-layer]
+
+    La synchronisation d'URL appartient à votre page ou couche de routage, pas à la primitive d'interface utilisateur.
+
+</Step>
+
+  <Step>
+    #### Paire avec états de chargement et de vide [#pair-with-loading-and-empty-states]
+
+    La pagination doit fonctionner avec la table, les états de chargement, les états vides et les filtres comme un modèle de produit.
+
+</Step>
+
+</Steps>
+
+## Pagination vs défilement infini [#pagination-vs-infinite-scroll]
+
+| Situation                                         | Utilisation                               |
+| ------------------------------------------------- | ----------------------------------------- |
+| Tableau d'administration                          | Pagination                                |
+| Résultats de recherche avec nombre de pages connu | Pagination                                |
+| Factures, utilisateurs, abonnements               | Pagination                                |
+| Navigation sous forme de flux                     | Défilement infini                         |
+| API Cursor uniquement sans concept de page        | Contrôles du curseur au niveau du produit |
+| Petit ensemble de données                         | Pas de pagination                         |
+
+<Callout title="Règle de décision">
+  Utilisez Pagination lorsque l'utilisateur bénéficie d'une position stable dans
+  un ensemble de résultats finis.
+
+</Callout>
+
+## API [#api]
+
+#### Composante [#component]
+
+| Composante           | Désignation                                            |
+| -------------------- | ------------------------------------------------------ |
+| `Pagination`         | Wrapper `nav` élément avec la sémantique de pagination |
+| `PaginationContent`  | Liste des conteneurs                                   |
+| `PaginationItem`     | Emballage d'article                                    |
+| `PaginationLink`     | Contrôle de page avec état actif                       |
+| `PaginationPrevious` | Bouton précédent                                       |
+| `PaginationNext`     | Bouton suivant                                         |
+| `PaginationEllipsis` | Indicateur de débordement visuel                       |
+
+#### PaginationLink accessoires [#paginationlink-props]
+
+| Prop        | Type      | Par défaut  | Désignation                                                                                     |
+| ----------- | --------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`     | Rendu comme une enveloppe de fente; fournir une ancre réelle ou un lien de cadre comme l'enfant |
+| `isActive`  | `boolean` | `false`     | Marque la page actuelle                                                                         |
+| `size`      | `string`  | `"icon-sm"` | Cartes à tailles de boutons                                                                     |
+| `className` | `string`  | —           | Autres classes Tailwind                                                                         |
+
+#### PaginationPrécédent [#paginationprevious-props]
+
+| Prop        | Type      | Par défaut        | Désignation                                                            |
+| ----------- | --------- | ----------------- | ---------------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`           | Rendu en tant que wrapper Slot; icône et texte intégrés sont préservés |
+| `label`     | `string`  | `"Previous page"` | Étiquette accessible pour les lecteurs d'écran                         |
+| `className` | `string`  | —                 | Autres classes Tailwind                                                |
+
+#### PaginationProchains accessoires [#paginationnext-props]
+
+| Prop        | Type      | Par défaut    | Désignation                                                            |
+| ----------- | --------- | ------------- | ---------------------------------------------------------------------- |
+| `asChild`   | `boolean` | `false`       | Rendu en tant que wrapper Slot; icône et texte intégrés sont préservés |
+| `label`     | `string`  | `"Next page"` | Étiquette accessible pour les lecteurs d'écran                         |
+| `className` | `string`  | —             | Autres classes Tailwind                                                |
+
+#### Options de buildPaginationRange [#buildpaginationrange-options]
+
+| Variante     | Type     | Désignation           |
+| ------------ | -------- | --------------------- |
+| `page`       | `number` | Page actuelle         |
+| `totalPages` | `number` | Nombre total de pages |
+
+### Accessibilité [#accessibility]
+
+La pagination doit être compréhensible et accessible au clavier.
+
+Directives :
+
+- Utiliser la sémantique `nav` avec étiquetage de pagination
+- marquer la page active avec `aria-current="page"`
+- garder les boutons clavier accessible
+- Désactiver les options Précédent et Suivant en cas d'indisponibilité
+- rendre l'ellipse non interactive
+- éviter les clics minuscules dans les mises en page denses
+- fournir une synchronisation d'URL au niveau du calque de page lorsque la liaison profonde est importante
+
+<Callout title="Règle d'accessibilité">
+  Les contrôles de pagination doivent être navigables, compréhensibles et
+  prévisibles sans dépendre uniquement de la position visuelle.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "État de page contrôlé",
+    "Contrôles désactivés non disponibles",
+    "ellipses pour les grands nombres de pages",
+    "Synchronisation d'URL dans le calque de route si nécessaire",
+    "Effacer les états de chargement et de vide autour des données paginées",
+  ]}
+  avoid={[
+    "récupérer des données dans Pagination",
+    "rendu de chaque page pour de grandes gammes",
+    "ellipse cliquable",
+    "pagination pour les ensembles de données minuscules",
+    "Utilisation de la pagination pour la découverte de style feed",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes de pagination doivent être courtes et prévisibles.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Controls',
+      title: "Précédent / Suivant",
+      icon: ChevronRight,
+      description: (
+        <>
+          <p>
+            Use familiar labels for core navigation.
+            Avoid clever wording or ambiguous actions.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Previous · Next
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Counts',
+      title: "Affichage 1-10 de 48",
+      icon: Rows3,
+      description: (
+        <>
+          <p>
+            If the table needs stronger context,
+            show the current range near pagination controls.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Showing 1–10 of 48
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: "Aucun résultat",
+      icon: SearchX,
+      description: (
+        <>
+          <p>
+            When filters remove all results,
+            show a meaningful empty state and a reset action.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            No results found. Clear filters and try again.
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Faut-il synchroniser Pagination avec l'URL ?">
+    Souvent oui pour les pages riches en données, mais la synchronisation d'URL appartient à la couche de page ou de route. La pagination devrait rester UI-seulement.
+  </Accordion>
+
+<Accordion title="Pagination peut-il fonctionner avec des API basées sur un curseur ?">
+  Oui, mais la logique du curseur appartient à la couche de données. Utilisez
+  les contrôles Précédent et Suivant si les pages numériques n'existent pas.
+</Accordion>
+
+<Accordion title="Quand faut-il cacher la pagination ?">
+  Cachez-le lorsqu'il n'y a qu'une seule page, lorsque l'ensemble de données est
+  minuscule ou lorsqu'un état vide est affiché.
+</Accordion>
+
+  <Accordion title="La taille de la page devrait-elle faire partie de Pagination?">
+    Habituellement non. La sélection de taille de page est un contrôle de barre d'outils ou de table. La pagination devrait se concentrer sur la navigation de page.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Tableau",
+      href: "/docs/ui/table",
+      description:
+        "Rendre les données structurées qui souvent apparient avec Pagination.",
+      icon: Table2,
+    },
+    {
+      title: "Tableaux de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Combinez la table, les filtres, les états, les actions et la pagination dans un modèle SaaS complet.",
+      icon: Rows3,
+    },
+    {
+      title: "Construire une mise en page SaaS",
+      href: "/docs/guides/building-a-saas-layout",
+      description:
+        "Placez la pagination à l'intérieur des mises en page réelles du tableau de bord.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description: "Gérer les états asynchrones autour des données paginées.",
+      icon: LoaderCircle,
+    },
+  ]}
+/>

@@ -1,0 +1,325 @@
+---
+title: "Comment arrêter la validation asynchrone obsolète de l'écrasement de
+  l'état de formulaire React"
+description: "Reproduisez une réponse de validation dans le désordre, puis
+  utilisez la propriété de la demande pour protéger les erreurs de champ React,
+  le chargement des commentaires et l'état du formulaire accessible."
+author: Patrice Parny
+date: "2026-10-05"
+category: React
+tags:
+  - React
+  - Forms
+  - Accessibility
+featured: false
+readingTime: 9 min de lecture
+cover: /seo/blog/og-blog-default.png
+---
+
+Une ancienne réponse de validation peut remettre une erreur après qu'un utilisateur a corrigé un champ. Effacer l'erreur lors de la modification d'entrée n'empêche pas cela: l'ancienne demande a toujours l'autorisation de mettre à jour l'état à la fin.
+
+Donnez à chaque tentative de validation un numéro de génération. Incrémentez-le chaque fois que l'entrée change, capturez-le avant d'attendre le résultat, et mettez à jour les commentaires uniquement si cette tentative est toujours propriétaire de la génération actuelle. Appliquez la même règle aux erreurs, aux messages de succès et à l'état de chargement.
+
+Cet article crée un petit champ de nom d'utilisateur et reproduit l'échec avec des promesses résolues manuellement. Aucun serveur, données de compte, délai de réseau artificiel ou API de validation spécifique à PyColors n'est requis. L'application possède la politique de validation ; les primitives UI affichent l'état résultant.
+
+## Reproduire le problème de commande [#reproduce-the-ordering-problem]
+
+Considérez cette séquence. Retours de chèques réussis `null`; un nom invalide renvoie une chaîne explicative.
+
+| Étape | Entrée ou résultat                                     | Rétroaction correcte        |
+| ----- | ------------------------------------------------------ | --------------------------- |
+| 1     | Demande de démarrage A pour `taken`                    | Vérification                |
+| 2     | Changer pour `available`; début B                      | Vérifier la nouvelle valeur |
+| 3     | B se résout avec `null`                                | Le nom actuel est passé     |
+| 4     | Une résolution avec « Ce nom d’utilisateur est pris ». | Conserver le résultat de B  |
+
+Le réseau ne promet pas de préserver l'ordre dans lequel les requêtes ont commencé. React [Documentation des effets](https://react.dev/reference/react/useEffect#fetching-data-with-effects) affiche un drapeau de nettoyage qui ignore les réponses obsolètes. L'exemple basé sur les événements applique ici ce principe de propriété à la validation initiée par un changement d'entrée.
+
+Voici la partie cassée d'un gestionnaire. C'est un extrait, pas un composant complet; `check` Retourne `Promise<string | null>` et les setters appartiennent au domaine.
+
+```tsx title="broken-handler.tsx"
+async function onValueChange(nextValue: string) {
+  setValue(nextValue);
+  setError(null);
+  setLoading(true);
+  try {
+    const error = await check(nextValue);
+    setError(error);
+  } catch {
+    setError("Could not check this name.");
+  } finally {
+    setLoading(false);
+  }
+}
+```
+
+À l'étape 2, `setError(null)` Supprime le message précédent. À l'étape 4, les appels A `setError` Encore. Les deux mises à jour sont des opérations React valides ; la règle manquante est celle que la requête est toujours autorisée à écrire.
+
+Les `finally` Le bloc a un deuxième bug. Si A se termine alors que B est toujours en attente, A désactive l'indicateur de chargement pour le travail qu'il ne possède pas. Garder seulement `setError` laisse ce problème intact. Debouncing réduit les demandes mais ne révoque pas non plus la propriété d'une demande déjà démarrée.
+
+## Laissez la dernière tentative de commentaires propres [#let-the-latest-attempt-own-feedback]
+
+Enregistrez le composant complet suivant comme `username-field.tsx` dans une application React. Dans Next.js App Router, c'est un composant client ; approvisionnement `check` du code côté client plutôt que de passer une fonction ordinaire à partir d'un composant serveur. `check` doit effectuer une validation en lecture seule et retourner un message d'erreur ou `null`. Une promesse rejetée signifie que la vérification n'était pas disponible, et non que l'entrée n'était pas valide.
+
+La mise en œuvre utilise un seul état de rétroaction, de sorte qu'une réalisation acceptée termine également le chargement. Il n’y a pas d’inconscient `finally` mise à jour.
+
+```tsx title="username-field.tsx"
+"use client";
+
+import { useEffect, useId, useRef, useState } from "react";
+
+export type CheckUsername = (value: string) => Promise<string | null>;
+type Feedback =
+  | { status: "idle" | "checking" | "valid" }
+  | { status: "invalid" | "unavailable"; message: string };
+
+export function UsernameField({ check }: { check: CheckUsername }) {
+  const [value, setValue] = useState("");
+  const [feedback, setFeedback] = useState<Feedback>({ status: "idle" });
+  const generation = useRef(0);
+  const id = useId();
+  const helpId = `${id}-help`;
+  const errorId = `${id}-error`;
+
+  useEffect(() => {
+    return () => {
+      generation.current += 1;
+    };
+  }, []);
+
+  async function validate(nextValue: string) {
+    const attempt = ++generation.current;
+    setValue(nextValue);
+    if (nextValue.trim() === "") {
+      setFeedback({ status: "idle" });
+      return;
+    }
+    setFeedback({ status: "checking" });
+    try {
+      const error = await check(nextValue);
+      if (attempt !== generation.current) return;
+      setFeedback(
+        error === null
+          ? { status: "valid" }
+          : { status: "invalid", message: error },
+      );
+    } catch {
+      if (attempt !== generation.current) return;
+      setFeedback({
+        status: "unavailable",
+        message: "Could not check this name. Edit it to try again.",
+      });
+    }
+  }
+
+  const invalid = feedback.status === "invalid";
+  const message =
+    feedback.status === "invalid" || feedback.status === "unavailable"
+      ? feedback.message
+      : feedback.status === "checking"
+        ? "Checking username…"
+        : feedback.status === "valid"
+          ? "Username passed this check."
+          : "";
+
+  return (
+    <div>
+      <label htmlFor={id}>Username</label>
+      <input
+        id={id}
+        name="username"
+        autoComplete="username"
+        value={value}
+        onChange={(event) => void validate(event.currentTarget.value)}
+        aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? `${helpId} ${errorId}` : helpId}
+      />
+      <p id={helpId}>Try a name. Clearing the field cancels its feedback.</p>
+      <p role="status" aria-atomic="true">
+        <span id={invalid ? errorId : undefined}>{message}</span>
+      </p>
+    </div>
+  );
+}
+```
+
+La génération est incrémentée **avant** La branche d'entrée vide. Même lorsque la nouvelle valeur n'a pas besoin d'une requête, la requête précédente perd son droit de modifier le feedback. La même règle doit s'appliquer aux modifications de champ dépendant et aux modifications effectuées avant le début d'une demande rejetée.
+
+Une génération distingue les tentatives, pas seulement les chaînes. Si l'utilisateur entre `alice`, alors `bob`, alors `alice` Encore une fois, le premier `alice` Le résultat est encore vieux. La comparaison de sa valeur avec le texte actuel passerait à côté de cette distinction.
+
+La référence n'est lue ou écrite que dans le gestionnaire, sa continuation asynchrone et le nettoyage de l'effet. [React `useRef` référence](https://react.dev/reference/react/useRef) explique que les refs conservent les informations non-rendues sur les rendus sans déclencher un rendu. Les commentaires affichés appartiennent à l'état. Le nettoyage incrémente la génération de sorte qu'un achèvement après le démontage ne peut pas passer le contrôle de propriété; il n'arrête pas l'opération sous-jacente.
+
+Le démarrage de la validation dans le gestionnaire de modifications rend l'invalidation immédiate. Il s'agit aussi de la distinction entre [logique d'interaction et effets](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers). Pour la validation pilotée par des props externes, modélisez explicitement le cycle de vie complet des dépendances et du nettoyage ; ne copiez pas un tableau de dépendances vide autour du travail dépendant des props.
+
+## Testez la course sans deviner le timing [#test-the-race-without-timing-guesses]
+
+Utilisez les promesses différées pour choisir directement l'ordre d'achèvement. Le test ne dort pas ou ne dépend pas d'une machine rapide. Il rend le composant, modifie l'entrée deux fois, résout B, puis résout A.
+
+La reproduction a été vérifiée le 5 octobre 2026 avec React et React DOM **19.3.0**TypeScript **6.0.3**Vitest **4.1.11**, Tester la bibliothèque React **16.3.2**jsdom **29.1.1**, Node **24.18.1**et pnpm **10.32.1**. Le fichier de verrouillage de l'application Marketing résout également Next.js **16.1.1**; cette expérience de composant ne repose pas sur une API Next.js.
+
+Pour l'exécuter séparément, placez `username-field.tsx`, la configuration et le test ci-dessous dans un répertoire vide. Ces commandes installent des paquets de test publics ; elles n'appellent pas un service de validation réel.
+
+```sh
+pnpm init
+pnpm add -E react@19.3.0 react-dom@19.3.0
+pnpm add -DE typescript@6.0.3 vitest@4.1.11 jsdom@29.1.1 \
+  @testing-library/react@16.3.2 @types/react@19.3.0 @types/react-dom@19.3.0
+pnpm exec vitest run
+```
+
+```ts title="vitest.config.mts"
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: { environment: "jsdom" },
+});
+```
+
+```tsx title="username-field.test.tsx"
+import * as React from "react";
+import { StrictMode } from "react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react";
+import { afterEach, expect, it, vi } from "vitest";
+import { UsernameField } from "./username-field";
+
+afterEach(cleanup);
+function deferred() {
+  let resolve!: (value: string | null) => void;
+  let reject!: (reason: Error) => void;
+  const promise = new Promise<string | null>((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+it("keeps the newer success when an older error arrives last", async () => {
+  const older = deferred();
+  const newer = deferred();
+  const check = vi
+    .fn()
+    .mockReturnValueOnce(older.promise)
+    .mockReturnValueOnce(newer.promise);
+  render(
+    <StrictMode>
+      <UsernameField check={check} />
+    </StrictMode>,
+  );
+  const input = screen.getByRole("textbox", { name: "Username" });
+  input.focus();
+  fireEvent.change(input, { target: { value: "taken" } });
+  fireEvent.change(input, { target: { value: "available" } });
+  await act(async () => newer.resolve(null));
+  expect(screen.getByRole("status").textContent).toBe(
+    "Username passed this check.",
+  );
+  await act(async () => older.resolve("This username is taken."));
+  expect(screen.getByRole("status").textContent).toBe(
+    "Username passed this check.",
+  );
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+  expect(document.activeElement).toBe(input);
+});
+
+it("keeps loading until the latest request settles, including an older rejection", async () => {
+  const older = deferred();
+  const newer = deferred();
+  const check = vi
+    .fn()
+    .mockReturnValueOnce(older.promise)
+    .mockReturnValueOnce(newer.promise);
+  render(<UsernameField check={check} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "first" } });
+  fireEvent.change(input, { target: { value: "second" } });
+  await act(async () => older.reject(new Error("offline")));
+  expect(screen.getByRole("status").textContent).toBe("Checking username…");
+  await act(async () => newer.resolve("Choose another username."));
+  expect(input.getAttribute("aria-invalid")).toBe("true");
+  const ids = input.getAttribute("aria-describedby")!.split(" ");
+  expect(document.getElementById(ids[1])?.textContent).toBe(
+    "Choose another username.",
+  );
+});
+
+it("invalidates even when the changed input does not start a new request", async () => {
+  const pending = deferred();
+  const check = vi.fn().mockReturnValue(pending.promise);
+  render(<UsernameField check={check} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "taken" } });
+  fireEvent.change(input, { target: { value: "" } });
+  await act(async () => pending.resolve("This username is taken."));
+  expect(check).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole("status").textContent).toBe("");
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+});
+
+it("distinguishes a service failure from invalid input", async () => {
+  const pending = deferred();
+  render(<UsernameField check={() => pending.promise} />);
+  const input = screen.getByRole("textbox");
+  fireEvent.change(input, { target: { value: "name" } });
+  await act(async () => pending.reject(new Error("offline")));
+  expect(screen.getByRole("status").textContent).toContain("Could not check");
+  expect(input.getAttribute("aria-invalid")).toBeNull();
+});
+```
+
+Les quatre tests passent avec le composant protégé. En tant que contrôle négatif, retirez les deux `if (attempt !== generation.current) return;` lignes : les nouveaux tests de succès, de chargement périmé et d'entrées effacées échouent. La rétroaction en matière de compensation reste en place, de sorte que ces défaillances démontrent pourquoi la compensation seule est insuffisante.
+
+Ce sont des tests DOM. Ils vérifient l'état, la rétention de la focus et l'association de l'ID de l'erreur, pas les mots prononcés par un lecteur d'écran ou le comportement d'annulation d'un réseau réel.
+
+## Ignorer les résultats et annuler le transport résolvent différents problèmes [#ignoring-results-and-cancelling-transport-solve-different-problems]
+
+La vérification de génération détermine si un résultat peut mettre à jour ce champ. Un [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) demande une opération de coopération, comme `fetch`, pour arrêter. Ignorer un résultat n'enregistre pas son travail réseau ; l'abandon ne définit pas automatiquement la propriété de chaque étape asynchrone de votre application.
+
+Lors de l'ajout d'une annulation de fetch :
+
+1. Augmenter la génération pour révoquer l'ancienne propriété avant d'annuler.
+2. Abandonner le contrôleur précédent et créer un nouveau contrôleur pour la nouvelle tentative. Passe son `signal` au `fetch`.
+3. Gardez le contrôle de génération après le travail attendu et dans le chemin de rejet.
+4. Avorter sur le nettoyage ainsi que d'invalider la génération.
+
+Un ancien rejet d'abandon ne doit pas remplacer l'état de chargement d'une nouvelle requête par une erreur. Si l'utilisateur annule explicitement _actuel_ essayer sans commencer un remplacement, l'invalider et définir vous-même l'état de l'interface utilisateur inactif / annulé; simplement avaler `AbortError` peut laisser un indicateur de chargement en marche.
+
+Abort ne peut pas annuler une mutation côté serveur. La vérification de ce champ doit être en lecture seule. La sauvegarde des données nécessite ses propres règles de validation, de cohérence et de soumission côté serveur, même si le champ a récemment passé une vérification client.
+
+## Gardez vos commentaires accessibles sans vous focaliser [#keep-feedback-accessible-without-taking-focus-away]
+
+L'entrée native a une étiquette associée visible. Lorsque la dernière vérification signale une entrée non valide, elle reçoit `aria-invalid="true"`et `aria-describedby` liens à la fois les instructions et l'erreur courante. Les valeurs vides et non cochées ne sont pas déclarées invalides simplement parce qu'elles n'ont pas passé un contrôle. Ce qui suit [L'orientation de WAI pour `aria-invalid`](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21).
+
+Les persistants `role="status"` région fournit des commentaires polis sans se déplacer focus. Le texte distingue la vérification, l'entrée invalide et la défaillance de service; la couleur n'est pas le seul signal. Évitez de combiner une alerte assertive et une deuxième région en direct qui annoncent toutes deux la même erreur. Un formulaire de production peut valider les annonces de flou ou de debounce pour éviter les commentaires excessifs lors de la saisie, mais doit toujours invalider la propriété immédiatement à chaque modification.
+
+Ne pas recentrer le champ sur chaque complétion asynchrone. L'utilisateur peut déjà éditer un autre champ. Après un échec explicite, un résumé d'erreur avec des liens vers les champs affectés, ou un focus délibéré sur le premier champ non valide, peut supporter la correction. Voir [Tutoriel de notifications de formulaire de WAI](https://www.w3.org/WAI/tutorials/forms/notifications/) et [Guide de statut des WCAG](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html). Testez le timing des annonces avec votre navigateur actuel et la combinaison assistance-technologie ; ajouter des attributs ARIA n'est pas une certification d'accessibilité.
+
+## Connaître les limites avant d’intégrer [#know-the-limits-before-integrating]
+
+Cet example couvre intentionnellement un champ contrôlé localement. Il ne réserve pas les noms d'utilisateur, ne soumet pas de formulaire ou n'établit pas de limite de sécurité. Une vérification réussie peut devenir obsolète sur le serveur immédiatement après.
+
+Pour plusieurs domaines indépendants, donnez à chaque domaine son propre champ de propriété. Pour une règle cross-field, invalider lorsque **quelconque** la saisie de ces modifications de règle, y compris le contexte d'une organisation ou d'un compte. Si `check` change parce que le contexte change, réinitialise/remonte le champ ou invalide explicitement le travail en attente. L'exemple ne détecte pas ces changements pour vous.
+
+Un garde de génération n'ajoute pas de délai d'attente, de mise en cache, de limitation de taux ou de politique de réessai. Une dernière requête indéfiniment en attente reste en attente. Une bibliothèque de formulaires peut déjà gérer la propriété de la validation asynchrone : inspecter et tester son comportement avant d'ajouter une source concurrente d'erreurs ou un état de chargement.
+
+Lors de l'adoption des primitives PyColors, gardez la même séparation des responsabilités. Les [Référence des entrées](/docs/ui/input) documente l'API de présentation; [guide des formulaires](/docs/guides/forms-with-validation) La composition, et la [Accessibilité de référence](/docs/ui/accessibility) décrit les droits des consommateurs. L'interface utilisateur de PyColors ne fournit pas le garde de génération ni vos règles d'entreprise.
+
+## Liste de vérification [#verification-checklist]
+
+- Résoudre le nouveau succès avant l'erreur plus ancienne; le succès doit rester.
+- Résoudre une ancienne demande pendant que celle en cours est en attente ; continuer à vérifier.
+- Rejeter une ancienne demande ; ne pas montrer son échec comme un échec actuel.
+- Effacez le champ pendant qu'une demande est en attente ; sa réponse ne doit pas restaurer la rétroaction. Répétez l'opération pour les changements de réinitialisation et de champ dépendant dans votre intégration.
+- Essayez de A à B à A; seule la dernière tentative peut publier des commentaires.
+- Démonter ou modifier le contexte du formulaire lors de la vérification ; invalider le travail en cours.
+- Vérifiez séparément les entrées non valides et les pannes de service. Associer les erreurs de champ réelles avec le contrôle et conserver une étiquette visible.
+- Utilisez le clavier et un lecteur d'écran. Confirmer les commentaires ne vole pas le focus, est annoncé de manière appropriée et ne produit pas d’annonces en double.
+- Testez l'annulation et les délais d'attente avec le transport réel si vous les ajoutez.
+- Revalider sur le serveur lors de l'enregistrement ; un succès côté client n'est pas une autorité.
+
+Une fois que les règles de propriété du champ sont explicites, choisissez les primitives qui rendent ses étiquettes, contrôles et commentaires : [Découvrir PyColors UI](/ui).

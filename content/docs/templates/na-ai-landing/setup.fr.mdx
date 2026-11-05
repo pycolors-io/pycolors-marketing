@@ -1,0 +1,290 @@
+---
+title: Configuration
+description: Installez, exécutez et construisez NA-AI Landing localement après l'achat.
+lastUpdated: "2026-05-18"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import { Palette, Rocket, Terminal } from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Configuration</Badge>
+</div>
+
+## Exécuter NA-AI Landing localement [#run-na-ai-landing-locally]
+
+Après l'achat, vous recevez un paquet ZIP contenant le code source complet et la documentation.
+
+Le template est conçu pour fonctionner :
+
+- comme un projet autonome
+- en dehors du privé PyColors monorepo
+- after ZIP télécharger
+- sur Vercel
+- dans des environnements de production
+
+<DocsUpgradeCTA
+  title="Passez rapidement du téléchargement ZIP à l'application en cours d'exécution."
+  description="NA-AI Landing est conçu pour fonctionner, être inspectable et personnalisable sans avoir besoin d'accéder au monorepo privé PyColors."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/customization"
+  secondaryLabel="Customization guide"
+/>
+
+<Callout title="Idée de base">
+  Le modèle doit être exécutable, inspectable et personnalisable sans avoir
+  besoin d'accéder au monorepo privé de PyColors.
+
+</Callout>
+
+### Ressources nécessaires [#requirements]
+
+| Outil                   | Recommandé  |
+| ----------------------- | ----------- |
+| Node.js                 | 20+         |
+| Gestionnaire de paquets | pnpm        |
+| Cadre                   | Next.js 16+ |
+| Déploiement             | Vercel      |
+
+## démarrage rapide [#quick-start]
+
+<Steps>
+  <Step>
+    ### Décompresser le paquet [#unzip-the-package]
+
+```bash title="terminal"
+unzip na-ai-landing.zip
+cd na-ai-landing
+```
+
+</Step>
+
+  <Step>
+    ### Installer les dépendances [#install-dependencies]
+
+```bash title="terminal"
+pnpm install
+```
+
+</Step>
+
+  <Step>
+    ### Exécuter le serveur de développement [#run-the-development-server]
+
+```bash title="terminal"
+pnpm dev
+```
+
+Ouvert:
+
+```txt title="browser"
+http://localhost:3000
+```
+
+</Step>
+
+  <Step>
+    ### Construire pour la production [#build-for-production]
+
+```bash title="terminal"
+pnpm build
+```
+
+</Step>
+
+  <Step>
+    ### Démarrer le serveur de production [#start-the-production-server]
+
+```bash title="terminal"
+pnpm start
+```
+
+</Step>
+
+</Steps>
+
+### Fondations d'installation incluses [#included-setup-foundations]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Structure autonome",
+      icon: Terminal,
+      description:
+        "Le modèle fonctionne indépendamment après l'extraction ZIP sans nécessiter le monorepo privé de PyColors.",
+    },
+    {
+      title: "Pile frontale prête à la production",
+      icon: Rocket,
+      description:
+        "Next.js 16+, TypeScript, Tailwind CSS v4, PyColors UI et PyColors Tokens configurés ensemble.",
+    },
+    {
+      title: "Configuration Frontend-only",
+      icon: Palette,
+      description:
+        "Aucune configuration d'authentification, de Stripe, de base de données ou de backend n'est requise pour exécuter le modèle de base.",
+    },
+    {
+      title: "Base de référence prête pour le déploiement",
+      icon: Rocket,
+      description:
+        "Optimisé pour le déploiement Vercel et les workflows frontaux orientés production.",
+    },
+  ]}
+/>
+
+## Scripts [#scripts]
+
+| Commande       | Objet                                      |
+| -------------- | ------------------------------------------ |
+| `pnpm install` | Installer les dépendances de projet        |
+| `pnpm dev`     | Exécutez le serveur de développement local |
+| `pnpm build`   | Construire pour la production              |
+| `pnpm start`   | Démarrer le serveur de production          |
+
+## Variables d'environnement [#environment-variables]
+
+NA-AI Landing est frontend uniquement par conception.
+
+Il ne nécessite pas de variables d'environnement pour :
+
+- Authentification
+- base de données
+- Stripe
+- email
+- CMS
+
+Vous pouvez ajouter vos propres variables plus tard si vous vous connectez :
+
+- API
+- formulaires
+- Analyses
+- services backend
+
+<Callout type="info" title="Frontend uniquement">
+  Aucune configuration backend n'est requise pour exécuter le modèle de base.
+
+</Callout>
+
+### Vérifier les paquets PyColors [#verify-pycolors-packages]
+
+NA-AI Landing utilise les paquets publics PyColors :
+
+```txt title="packages"
+@pycolors/ui
+@pycolors/tokens
+```
+
+La feuille de style globale importe le paquet de tokens partagés :
+
+```css title="globals.css"
+@import "@pycolors/tokens/tokens.css";
+@import "tailwindcss";
+```
+
+Tailwind CSS v4 analyse également le package d'interface utilisateur installé :
+
+```css title="globals.css"
+@source "../../node_modules/@pycolors/ui";
+```
+
+## Configurer la liste de contrôle [#setup-checklist]
+
+<PreferAvoid
+  preferTitle="Confirm working setup"
+  avoidTitle="Avoid early changes"
+  prefer={[
+    "dépendances installer avec succès",
+    "Le serveur local démarre",
+    "page d'accueil rend correctement",
+    "le mode sombre et clair fonctionne correctement",
+    "pass de construction de production",
+  ]}
+  avoid={[
+    "Supprimer les fichiers de données avant de les lire",
+    "Changer les importations de tokens trop tôt",
+    "Réécriture des mises en page avant la mise à jour de la copie",
+    "ajouter une logique backend à l'intérieur des composants de section",
+    "Supprimer les actifs SEO avant de les remplacer",
+  ]}
+/>
+
+### Flux de travail recommandé [#recommended-workflow]
+
+Un chemin d'installation à fort effet de levier ressemble généralement à ceci:
+
+1. Installer les dépendances
+2. Exécuter le template localement
+3. valider la construction de la production
+4. mise à jour de la marque et copie
+5. personnaliser les fichiers de données
+6. connecter les API uniquement si nécessaire
+7. Déployer publiquement
+
+Cela réduit la complexité inutile au début du cycle de vie du projet.
+
+<Callout title="Règle d'architecture">
+  Les sections de page d'atterrissage doivent rester de présentation. Mettez le
+  câblage API, la gestion des formulaires et l'intégration des services dans des
+  modules dédiés.
+
+</Callout>
+
+## Problèmes communs [#common-issues]
+
+<Accordions type="single">
+  <Accordion title="Les styles semblent incomplets">
+    Vérifiez que la feuille de style globale importe des tokens PyColors et que Tailwind scanne `@pycolors/ui`.
+  </Accordion>
+
+<Accordion title="Le projet se construit localement mais pas sur Vercel">
+  Confirmez que votre gestionnaire de paquets et la version de Node.js
+  correspondent au runtime attendu. Assurez-vous que le projet est déployé à
+  partir du dossier racine contenant l'application Next.js.
+</Accordion>
+
+<Accordion title="Je veux connecter un backend">
+  Le modèle de base est frontend uniquement. Conservez la logique backend en
+  dehors des composants de la section présentation.
+</Accordion>
+
+  <Accordion title="Puis-je utiliser un autre gestionnaire de paquets ?">
+    Oui, mais la configuration par défaut et la documentation sont optimisées autour des workflows pnpm.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Personnalisation",
+      href: "/docs/templates/na-ai-landing/customization",
+      description:
+        "Mettre à jour le contenu, l’image de marque, les sections, les métadonnées SEO et les ressources produit.",
+      icon: Palette,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/templates/na-ai-landing/deployment",
+      description:
+        "Déployez le modèle dans Vercel et connectez un domaine de production.",
+      icon: Rocket,
+    },
+  ]}
+/>

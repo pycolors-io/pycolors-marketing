@@ -1,0 +1,611 @@
+import { localizePageMetadata } from "@/lib/i18n/metadata";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
+import type { Metadata } from "next";
+
+import { GuidePageShell } from "@/components/guides/guide-page-shell";
+import {
+  GuideSection as Section,
+  GuideCallout as Alert,
+  GuideCalloutTitle as AlertTitle,
+  GuideCalloutDescription as AlertDescription,
+  GuideNextSteps,
+  GuideChecklistCard as ChecklistCard,
+} from "@/components/guides/guide-content";
+
+import {
+  Card,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@pycolors/ui";
+
+const metadata: Metadata = {
+  title: "How to Build a Next.js SaaS Application",
+  description:
+    "Learn how to build a modern Next.js SaaS application with authentication, billing systems, dashboards, organizations, admin panels, product architecture, and production-ready foundations.",
+  alternates: {
+    canonical: "/guides/build-saas-nextjs",
+  },
+
+  openGraph: {
+    title: "How to Build a Next.js SaaS Application",
+    description:
+      "Learn how modern SaaS products are built with Next.js across authentication, billing, dashboards, organizations, admin systems, and production-ready architecture.",
+    url: "/guides/build-saas-nextjs",
+    images: ["/seo/og-main.png"],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Build a Next.js SaaS Application",
+    description:
+      "A practical guide to building modern SaaS products with Next.js, auth, billing, dashboards, and production-ready architecture.",
+    images: ["/seo/twitter-main.png"],
+  },
+};
+
+const toc = [
+  { id: "overview", label: "Overview" },
+  { id: "why-nextjs", label: "Why Next.js" },
+  { id: "product-surface", label: "Product surface" },
+  { id: "architecture", label: "Architecture" },
+  { id: "authentication", label: "Authentication" },
+  { id: "billing", label: "Billing" },
+  { id: "dashboard", label: "Dashboard" },
+  { id: "organizations", label: "Teams & organizations" },
+  { id: "common-mistakes", label: "Common mistakes" },
+  { id: "build-order", label: "Build order" },
+  { id: "next-steps", label: "Next steps" },
+];
+
+export default function GuideBuildSaaSNextjsPage() {
+  const tSite = useCopy();
+
+  return (
+    <GuidePageShell
+      title={tSite("How to build a SaaS with Next.js")}
+      description={tSite(
+        "Learn the core product surfaces and architectural decisions behind a modern SaaS built with Next.js — from authentication and billing to dashboards, settings, and team systems.",
+      )}
+      toc={toc}
+      tags={["Next.js", "Foundations"]}
+      documentation={{
+        title: "Getting started",
+        href: "/docs/starter-pro/getting-started",
+      }}
+      relatedGuides={[
+        {
+          title: "Authentication flows for SaaS",
+          href: "/guides/saas-auth-flows",
+        },
+        {
+          title: "SaaS billing UX best practices",
+          href: "/guides/saas-billing-ux",
+        },
+      ]}
+      breadcrumb={[
+        { label: "Home", href: "/" },
+        { label: "Guides", href: "/guides" },
+        {
+          label: "How to build a SaaS with Next.js",
+          href: "/guides/build-saas-nextjs",
+        },
+      ]}
+    >
+      <div>
+        <section id="overview" className="scroll-mt-28 py-10 sm:py-12">
+          <div className="space-y-6">
+            <Alert>
+              <AlertTitle>{tSite("Core idea")}</AlertTitle>
+              <AlertDescription>
+                {tSite(
+                  "The fastest way to build a SaaS is to define the product surface first, then wire the business layer once the UX is credible and validated.",
+                )}
+              </AlertDescription>
+            </Alert>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <ChecklistCard
+                title={tSite("Product surface")}
+                items={["Auth", "Dashboard", "CRUD", "Settings"]}
+              />
+              <ChecklistCard
+                title={tSite("Business layer")}
+                items={["Billing", "Subscriptions", "Roles", "Organizations"]}
+              />
+              <ChecklistCard
+                title={tSite("Architecture")}
+                items={[
+                  "App Router",
+                  "Feature routes",
+                  "Shared UI",
+                  "Scalable structure",
+                ]}
+              />
+              <ChecklistCard
+                title={tSite("Upgrade path")}
+                items={[
+                  "Start with Free",
+                  "Validate UX",
+                  "Upgrade later",
+                  "Scale safely",
+                ]}
+              />
+            </div>
+
+            <p className="text-sm leading-7 text-muted-foreground sm:text-[15px]">
+              {tSite(
+                "If you want to see how these product surfaces look in practice, explore the",
+              )}
+              {tSite(" ")}
+              <Link
+                href="/ui/examples"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("examples")}
+              </Link>
+              {tSite(" ")}
+              {tSite("or browse the")}
+              {tSite(" ")}
+              <Link
+                href="/ui/patterns"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("UI patterns")}
+              </Link>
+              {tSite(" ")}
+              {tSite("before starting with")}
+              {tSite(" ")}
+              <Link
+                href="/starters/free"
+                className="text-foreground underline underline-offset-4"
+              >
+                {tSite("Starter Free")}
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+
+        <Section
+          id="why-nextjs"
+          title={tSite("Why Next.js works well for SaaS")}
+          description={tSite(
+            "Next.js gives SaaS builders a strong balance between product UX, routing, and production flexibility.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Next.js is a strong fit for SaaS because it combines application routing, server capabilities, and deployment ergonomics in a single framework.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Why teams choose it")}
+              items={[
+                "App Router for product structure",
+                "Server and client composition",
+                "Good deployment ergonomics",
+                "Strong ecosystem and adoption",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Why it matters for SaaS")}
+              items={[
+                "Clear route architecture",
+                "Good fit for auth and protected pages",
+                "Works well with dashboards and settings",
+                "Easy path from MVP to production",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "For PyColors, this matters because the product surface maps naturally to SaaS routes like dashboard, billing, settings, and admin — which makes the transition from a mocked UI baseline to a real product much smoother.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="product-surface"
+          title={tSite("1. Define the core SaaS product surface")}
+          description={tSite(
+            "Before backend complexity, define what users actually interact with.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Most SaaS products share the same key screens and flows. Before you think about infrastructure, define the product surface your users expect on day one.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Core surfaces")}
+              items={[
+                "Login / register / forgot password",
+                "Dashboard overview",
+                "Main entity list and CRUD",
+                "Settings and account management",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Business-critical surfaces")}
+              items={[
+                "Billing and subscription pages",
+                "Team and organization management",
+                "Role / permission surfaces",
+                "Upgrade and empty states",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "These are not optional extras. They are the interfaces that make a SaaS feel credible and complete. A product that only has a dashboard and no settings, billing, or account flows usually feels unfinished.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="architecture"
+          title={tSite("2. Choose the right frontend architecture")}
+          description={tSite(
+            "A clear route structure makes the product easier to evolve.",
+          )}
+        >
+          <p>
+            {tSite(
+              "With Next.js App Router, you can structure the product around routes that map directly to user-facing product surfaces.",
+            )}
+          </p>
+
+          <Card className="p-4">
+            <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground">{`app/
+  login/
+  register/
+  dashboard/
+  projects/
+  billing/
+  settings/
+  admin/`}</pre>
+          </Card>
+
+          <p>
+            {tSite(
+              "This structure keeps the product understandable as it grows, especially when features, data, and permissions become more complex.",
+            )}
+          </p>
+
+          <p>
+            {tSite(
+              "It also makes collaboration easier. Teams can reason about the product as a set of surfaces instead of as a pile of disconnected pages and components.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="authentication"
+          title={tSite("3. Implement authentication")}
+          description={tSite(
+            "Authentication is the entry point of every SaaS.",
+          )}
+        >
+          <p>
+            {tSite(
+              "A professional SaaS typically needs more than a single login form. It needs a complete auth experience and a coherent route protection strategy.",
+            )}
+          </p>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Flow")}</TableHead>
+                <TableHead>{tSite("Why it matters")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">{tSite("Login")}</TableCell>
+                <TableCell>
+                  {tSite("Main entry point for returning users")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Register")}
+                </TableCell>
+                <TableCell>
+                  {tSite("First conversion point for new users")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Password reset")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Essential trust and recovery flow")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">{tSite("OAuth")}</TableCell>
+                <TableCell>
+                  {tSite("Reduces friction for fast onboarding")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "Authentication should also define session handling and route protection for the rest of the product. This is one of the biggest reasons teams eventually need a stronger upgrade path than a purely mocked starter.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="billing"
+          title={tSite("4. Add billing and subscriptions")}
+          description={tSite(
+            "Billing is where the product becomes a business.",
+          )}
+        >
+          <p>
+            {tSite(
+              "If your SaaS charges users, billing is not a small feature. It is part of the product itself.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Common billing surfaces")}
+              items={[
+                "Plan selection",
+                "Upgrade / downgrade",
+                "Usage metrics",
+                "Invoice history",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Business-critical wiring")}
+              items={[
+                "Checkout flow",
+                "Subscription state",
+                "Portal access",
+                "Webhook handling",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "Stripe is the most common billing platform for SaaS startups and developer products, but the UX still needs to be designed carefully. Billing should feel integrated into the product, not bolted on as an afterthought.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="dashboard"
+          title={tSite("5. Build the dashboard experience")}
+          description={tSite(
+            "The dashboard is often the first post-login impression.",
+          )}
+        >
+          <p>
+            {tSite(
+              "A good SaaS dashboard helps users understand where they are, what matters now, and what to do next.",
+            )}
+          </p>
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Block")}</TableHead>
+                <TableHead>{tSite("Purpose")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("KPI cards")}
+                </TableCell>
+                <TableCell>{tSite("Show key signals at a glance")}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Recent activity")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Adds context and product credibility")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Quick actions")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Reduce time to first useful action")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Empty states")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Guide users when no data exists yet")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "This is why so many modern SaaS products start by polishing the dashboard before deep backend complexity. The dashboard is where product credibility is often won or lost.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="organizations"
+          title={tSite("6. Add team and organization systems")}
+          description={tSite(
+            "Team systems turn a solo app into a B2B-capable product.",
+          )}
+        >
+          <p>
+            {tSite(
+              "Many SaaS products eventually support multiple users inside one organization. Even if you start simple, it helps to anticipate this structure early.",
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Team system basics")}
+              items={[
+                "Invite members",
+                "Assign roles",
+                "Manage membership state",
+                "Handle owner vs member views",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Scale considerations")}
+              items={[
+                "Organization switching",
+                "Permission patterns",
+                "Billing per seat",
+                "Audit and admin surfaces",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "This is especially important for B2B SaaS. A product that cannot model teams, permissions, and organizations will hit its ceiling quickly once real customers arrive.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="common-mistakes"
+          title={tSite("Common mistakes when building a SaaS")}
+          description={tSite(
+            "Most teams do not fail on features. They fail on structure, sequencing, and product credibility.",
+          )}
+        >
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ChecklistCard
+              title={tSite("Typical mistakes")}
+              items={[
+                "Starting backend complexity too early",
+                "No clear dashboard structure",
+                "Billing added too late",
+                "Weak settings and account UX",
+              ]}
+            />
+            <ChecklistCard
+              title={tSite("Better approach")}
+              items={[
+                "Define the product surface first",
+                "Use production-shaped routes early",
+                "Design auth and billing from the start",
+                "Keep a clean upgrade path for real wiring",
+              ]}
+            />
+          </div>
+
+          <p>
+            {tSite(
+              "Many teams spend weeks on backend detail while the product still has unclear screens and weak user flows. In practice, a better sequencing strategy usually creates more momentum and less rework.",
+            )}
+          </p>
+        </Section>
+
+        <Section
+          id="build-order"
+          title={tSite("Recommended build order")}
+          description={tSite(
+            "A practical order helps reduce rework and keeps momentum high.",
+          )}
+        >
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tSite("Phase")}</TableHead>
+                <TableHead>{tSite("Focus")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 1")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Auth UX, dashboard, core entity, settings")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 2")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Billing surface, team management, empty states")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 3")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Authentication provider, sessions, route protection")}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">
+                  {tSite("Phase 4")}
+                </TableCell>
+                <TableCell>
+                  {tSite("Stripe billing, backend contracts, production setup")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <p>
+            {tSite(
+              "This sequence is one of the reasons a production-shaped starter is so useful. It lets you validate the product surface before the business layer becomes the bottleneck.",
+            )}
+          </p>
+        </Section>
+
+        <section className="border-t border-border/60 py-8 sm:py-10">
+          <Alert>
+            <AlertTitle>{tSite("Mental model to keep")}</AlertTitle>
+            <AlertDescription>
+              {tSite(
+                "Build the product surface first. Then wire authentication, billing, and backend foundations once the UX is stable. This is the fastest path to a real SaaS with less rework.",
+              )}
+            </AlertDescription>
+          </Alert>
+        </section>
+
+        <GuideNextSteps title={tSite("Build your SaaS faster with PyColors")} />
+      </div>
+    </GuidePageShell>
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return localizePageMetadata(metadata, "/guides/build-saas-nextjs", locale);
+}

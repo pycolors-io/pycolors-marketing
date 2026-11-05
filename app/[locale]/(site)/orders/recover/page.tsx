@@ -1,0 +1,183 @@
+import { localizePageMetadata } from "@/lib/i18n/metadata";
+import { useCopy } from "@/lib/i18n/use-copy";
+import type { Metadata } from "next";
+import { Link } from "@/lib/i18n/navigation";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Clock3,
+  LifeBuoy,
+  Mail,
+  PackageOpen,
+  RefreshCcw,
+  ShieldCheck,
+} from "lucide-react";
+
+import { Container } from "@/components/container";
+import { MarketingLinkButton } from "@/components/marketing/cta-panel";
+import { PageHero } from "@/components/marketing/page-hero";
+import { PurchaseRecoveryForm } from "@/components/orders/purchase-recovery-form";
+import styles from "@/components/orders/purchase-recovery.module.css";
+
+const metadata: Metadata = {
+  title: "Recover purchase access",
+  description:
+    "Request a fresh access link for your PyColors purchase using the email from checkout.",
+};
+
+const recoverySteps = [
+  {
+    title: "We check your purchase access",
+    description:
+      "We validate the request against your purchase entitlement before sending a new access link.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Check your inbox",
+    description:
+      "For eligible access, the new claim email contains a link to your product and download instructions. Access links expire 24 hours after they are issued.",
+    icon: Mail,
+  },
+  {
+    title: "Open the link for your product",
+    description:
+      "Choose the product you want to recover, then check its name in the new claim email before downloading. If you still need help, contact support before purchasing again.",
+    icon: PackageOpen,
+  },
+] as const;
+
+export default function RecoverOrderPage() {
+  const tSite = useCopy();
+
+  return (
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
+        <Link href="/orders/support" className={styles.backLink}>
+          <ArrowLeft className="size-3.5" aria-hidden="true" />
+          {tSite("Purchase support")}
+        </Link>
+        <PageHero
+          variant="compact"
+          align="left"
+          className={styles.hero}
+          contentClassName="mx-0"
+          badges={[
+            {
+              label: "Access recovery",
+              icon: <RefreshCcw className="size-3.5" aria-hidden="true" />,
+            },
+          ]}
+          title={tSite("Recover your purchase access.")}
+          description={tSite(
+            "Missing your claim email or using an expired access link? Request a fresh link with the email used at checkout and select your product.",
+          )}
+          extra={
+            <p className={styles.accountNote}>
+              <ShieldCheck className="size-4 shrink-0" aria-hidden="true" />
+              {tSite("No account or new purchase is needed.")}
+            </p>
+          }
+        />
+
+        <div className={styles.workspace}>
+          <PurchaseRecoveryForm />
+
+          <div className={styles.guidance}>
+            <section
+              aria-labelledby="recovery-steps-heading"
+              className={styles.stepsPanel}
+            >
+              <div className={styles.sectionHeader}>
+                <div>
+                  <p className={styles.eyebrow}>
+                    {tSite("From request to download")}
+                  </p>
+                  <h2 id="recovery-steps-heading">
+                    {tSite("What happens next")}
+                  </h2>
+                </div>
+                <span className={styles.expiryLabel}>
+                  <Clock3 className="size-3.5" aria-hidden="true" />
+                  {tSite("24-hour access links")}
+                </span>
+              </div>
+              <ol className={styles.steps}>
+                {recoverySteps.map(({ title, description, icon: Icon }) => (
+                  <li key={title}>
+                    <span className={styles.stepIcon}>
+                      <Icon className="size-4" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <h3>{tSite(title)}</h3>
+                      <p>{tSite(description)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section
+              aria-labelledby="recovery-help-heading"
+              className={styles.helpPanel}
+            >
+              <div className={styles.helpHeading}>
+                <LifeBuoy
+                  className="size-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <h2 id="recovery-help-heading">{tSite("Need manual help?")}</h2>
+              </div>
+              <p className={styles.description}>
+                {tSite("If you still do not receive your claim email, email")}
+                {tSite(" ")}
+                <a
+                  href="mailto:support@pycolors.com?subject=PyColors%20access%20recovery"
+                  className={styles.inlineLink}
+                >
+                  {tSite("support@pycolors.com")}
+                </a>
+                {tSite(" ")}
+                {tSite(
+                  "and include the checkout email, product name, and order reference if available.",
+                )}
+              </p>
+              <p className={styles.description}>
+                {tSite(
+                  "No longer have access to that inbox? Mention it in your support message. The recovery form cannot change the purchase email.",
+                )}
+              </p>
+              <div className={styles.supportAction}>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/orders/support">{tSite("Contact support")}</Link>
+                </MarketingLinkButton>
+                <p>{tSite("No response-time guarantee is promised.")}</p>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div className={styles.pageNote}>
+          <p>
+            <ShieldCheck className="size-4 shrink-0" aria-hidden="true" />
+            {tSite(
+              "Keep your purchase details private. Do not share passwords, card details, or access links.",
+            )}
+          </p>
+          <Link href="/pricing" className={styles.textLink}>
+            {tSite("Back to pricing")}
+            <ArrowRight className="size-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </Container>
+    </main>
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return localizePageMetadata(metadata, "/orders/recover", locale);
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useSyncExternalStore } from "react";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "fumadocs-ui/provider/base";
@@ -26,6 +27,8 @@ export function AppearanceControls({
 }: {
   locale?: "en" | "fr";
 }) {
+  const tSite = useCopy();
+
   const fr = locale === "fr";
   const { theme, setTheme } = useTheme();
   // The server cannot know the saved preference. Keep the same three controls
@@ -41,14 +44,14 @@ export function AppearanceControls({
       <FooterPalette locale={locale} />
       <div
         role="group"
-        aria-label={fr ? "Thème de couleur" : "Color theme"}
+        aria-label={tSite(fr ? "Thème de couleur" : "Color theme")}
         className={styles.appearance}
       >
         {OPTIONS.map(({ value, label, shortLabel, icon: Icon }) => (
           <button
             key={value}
             type="button"
-            aria-label={
+            aria-label={tSite(
               fr
                 ? (
                     {
@@ -57,9 +60,9 @@ export function AppearanceControls({
                       system: "Thème système",
                     } as const
                   )[value]
-                : label
-            }
-            title={
+                : label,
+            )}
+            title={tSite(
               fr
                 ? (
                     {
@@ -68,23 +71,25 @@ export function AppearanceControls({
                       system: "Système",
                     } as const
                   )[value]
-                : label
-            }
+                : label,
+            )}
             aria-pressed={mounted && theme === value}
             disabled={!mounted}
             onClick={() => setTheme(value)}
           >
             <Icon className="size-3.5" aria-hidden="true" />
             <span className={styles.appearanceLabel} aria-hidden="true">
-              {fr
-                ? (
-                    {
-                      light: "Clair",
-                      dark: "Sombre",
-                      system: "Système",
-                    } as const
-                  )[value]
-                : shortLabel}
+              {tSite(
+                fr
+                  ? (
+                      {
+                        light: "Clair",
+                        dark: "Sombre",
+                        system: "Système",
+                      } as const
+                    )[value]
+                  : shortLabel,
+              )}
             </span>
           </button>
         ))}
@@ -99,13 +104,15 @@ export function MobileMenuAppearance({
 }: {
   locale?: "en" | "fr";
 }) {
+  const tSite = useCopy();
+
   return (
     <section
-      aria-label={locale === "fr" ? "Apparence" : "Appearance"}
+      aria-label={tSite(locale === "fr" ? "Apparence" : "Appearance")}
       className="mb-3 space-y-2"
     >
       <p className="text-xs font-medium text-muted-foreground">
-        {locale === "fr" ? "Apparence" : "Appearance"}
+        {tSite(locale === "fr" ? "Apparence" : "Appearance")}
       </p>
       <AppearanceControls locale={locale} />
     </section>

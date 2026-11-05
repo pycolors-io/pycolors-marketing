@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import {
   Badge,
@@ -65,8 +66,13 @@ function ProjectBoard({
   detailId: string;
   onSelect: (project: ShowcaseProject) => void;
 }) {
+  const tSite = useCopy();
+
   return (
-    <ul aria-label="Projects board" className="grid gap-3 sm:grid-cols-2">
+    <ul
+      aria-label={tSite("Projects board")}
+      className="grid gap-3 sm:grid-cols-2"
+    >
       {(["Active", "Review"] as const).map((status) => {
         const column = projects.filter((project) => project.status === status);
         return (
@@ -75,9 +81,9 @@ function ProjectBoard({
             className="min-w-0 rounded-[5px] border border-border-subtle bg-surface-muted/30 p-2.5"
           >
             <div className="mb-3 flex items-center justify-between gap-2 px-1 pt-1">
-              <span className="text-xs font-medium">{status}</span>
+              <span className="text-xs font-medium">{tSite(status)}</span>
               <span className="font-mono text-[10px] text-muted-foreground">
-                {column.length}
+                {tSite(column.length)}
               </span>
             </div>
             {column.length ? (
@@ -94,7 +100,9 @@ function ProjectBoard({
                       <Button
                         type="button"
                         variant="ghost"
-                        aria-label={`Open ${project.name}`}
+                        aria-label={tSite("Open {value0}", {
+                          value0: project.name,
+                        })}
                         aria-pressed={isSelected}
                         aria-controls={detailId}
                         aria-describedby={coverageId}
@@ -125,7 +133,7 @@ function ProjectBoard({
                           />
                         </span>
                         <span className="block text-xs font-semibold leading-5">
-                          {project.name}
+                          {tSite(project.name)}
                         </span>
                         <span
                           className={cn(
@@ -135,15 +143,19 @@ function ProjectBoard({
                               : "text-muted-foreground",
                           )}
                         >
-                          {isSelected
-                            ? "Selected project"
-                            : "View review details"}
+                          {tSite(
+                            isSelected
+                              ? "Selected project"
+                              : "View review details",
+                          )}
                         </span>
                         <span
                           id={coverageId}
                           className="mt-4 block border-t border-border-subtle pt-2.5 text-[10px] font-normal text-muted-foreground"
                         >
-                          {reviewed} of {project.areas.length} areas reviewed
+                          {tSite(reviewed)} {tSite(" of ")}
+                          {tSite(project.areas.length)}{" "}
+                          {tSite(" areas reviewed")}
                         </span>
                       </Button>
                     </li>
@@ -152,7 +164,7 @@ function ProjectBoard({
               </ul>
             ) : (
               <p className="px-1 py-6 text-[11px] leading-5 text-muted-foreground">
-                No projects in this view.
+                {tSite("No projects in this view.")}
               </p>
             )}
           </li>
@@ -163,6 +175,8 @@ function ProjectBoard({
 }
 
 function ProjectStatus({ status }: { status: "Active" | "Review" }) {
+  const tSite = useCopy();
+
   return (
     <Badge
       variant="outline"
@@ -175,13 +189,15 @@ function ProjectStatus({ status }: { status: "Active" | "Review" }) {
           status === "Active" ? "bg-success" : "bg-warning",
         )}
       />
-      {status}
+      {tSite(status)}
     </Badge>
   );
 }
 
 /** One local state boundary; all content also has deterministic server markup. */
 export function ShowcaseWorkspace() {
+  const tSite = useCopy();
+
   const [filter, setFilter] = React.useState<ShowcaseFilter>("all");
   const [selectedId, setSelectedId] = React.useState<ShowcaseProjectId | null>(
     "customer-portal",
@@ -248,14 +264,14 @@ export function ShowcaseWorkspace() {
           <span data-showcase-workspace-icon aria-hidden="true">
             <Folder className="size-4" />
           </span>
-          Projects
+          {tSite("Projects")}
           <span className="font-mono text-xs text-muted-foreground">
-            {showcaseProjects.length}
+            {tSite(showcaseProjects.length)}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <TabsList
-            aria-label="Filter projects"
+            aria-label={tSite("Filter projects")}
             className="h-auto min-h-12 max-w-full flex-wrap rounded-[5px] bg-surface-muted p-1"
           >
             {filters.map(({ value, label }) => (
@@ -265,13 +281,13 @@ export function ShowcaseWorkspace() {
                 ref={value === "all" ? allTab : undefined}
                 className="min-h-11 min-w-11 rounded-[3px] px-3 motion-reduce:transition-none"
               >
-                {label}
+                {tSite(label)}
               </TabsTrigger>
             ))}
           </TabsList>
           <div
             role="group"
-            aria-label="Project layout"
+            aria-label={tSite("Project layout")}
             className="flex max-w-full rounded-[5px] border border-border-subtle bg-background p-1"
           >
             {(
@@ -295,7 +311,7 @@ export function ShowcaseWorkspace() {
                 )}
               >
                 <Icon className="size-3.5" aria-hidden="true" />
-                {label}
+                {tSite(label)}
               </Button>
             ))}
           </div>
@@ -313,13 +329,15 @@ export function ShowcaseWorkspace() {
               className="min-h-112 min-w-0 px-4 py-6 sm:px-6 lg:col-span-2 lg:py-8"
             >
               <div className="mb-4 flex items-baseline justify-between gap-3">
-                <h3 className="text-sm font-semibold">Workspace overview</h3>
+                <h3 className="text-sm font-semibold">
+                  {tSite("Workspace overview")}
+                </h3>
                 <span className="text-xs text-muted-foreground">
-                  All projects
+                  {tSite("All projects")}
                 </span>
               </div>
               <dl
-                aria-label="Workspace totals"
+                aria-label={tSite("Workspace totals")}
                 data-showcase-metrics
                 className="mb-6 grid grid-cols-3 gap-2 sm:gap-3"
               >
@@ -329,22 +347,24 @@ export function ShowcaseWorkspace() {
                     className="min-w-0 rounded-[5px] border border-border-subtle bg-background px-3 py-3.5 sm:px-4"
                   >
                     <dt className="flex items-center justify-between gap-1 text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
-                      {label}
+                      {tSite(label)}
                       <Icon
                         className="hidden size-3.5 sm:block"
                         aria-hidden="true"
                       />
                     </dt>
                     <dd className="mt-2 font-mono text-2xl font-medium tracking-tight sm:text-[28px]">
-                      {count}
+                      {tSite(count)}
                     </dd>
                   </div>
                 ))}
               </dl>
               <div className="mb-3 flex items-baseline justify-between gap-3">
-                <h4 className="text-xs font-medium">Your projects</h4>
+                <h4 className="text-xs font-medium">
+                  {tSite("Your projects")}
+                </h4>
                 <span className="text-[11px] text-muted-foreground">
-                  {visibleProjects.length} shown
+                  {tSite(visibleProjects.length)} {tSite(" shown")}
                 </span>
               </div>
               <div key={view} data-showcase-view={view}>
@@ -357,16 +377,21 @@ export function ShowcaseWorkspace() {
                       onSelect={selectProject}
                     />
                   ) : (
-                    <Table aria-label="Projects" className="table-fixed">
+                    <Table
+                      aria-label={tSite("Projects")}
+                      className="table-fixed"
+                    >
                       <TableHeader>
                         <TableRow className="hover:bg-transparent motion-reduce:transition-none">
                           <TableHead className="w-2/3 px-3 sm:w-[52%]">
-                            Project
+                            {tSite("Project")}
                           </TableHead>
                           <TableHead className="hidden px-3 sm:table-cell sm:w-[26%]">
-                            Interface review
+                            {tSite("Interface review")}
                           </TableHead>
-                          <TableHead className="px-2 sm:px-3">Status</TableHead>
+                          <TableHead className="px-2 sm:px-3">
+                            {tSite("Status")}
+                          </TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -390,7 +415,9 @@ export function ShowcaseWorkspace() {
                                 <Button
                                   type="button"
                                   variant="ghost"
-                                  aria-label={`Open ${project.name}`}
+                                  aria-label={tSite("Open {value0}", {
+                                    value0: project.name,
+                                  })}
                                   aria-pressed={isSelected}
                                   aria-controls={detailId}
                                   aria-describedby={coverageId}
@@ -410,7 +437,7 @@ export function ShowcaseWorkspace() {
                                   </span>
                                   <span className="min-w-0">
                                     <span className="block break-words text-sm font-semibold leading-5">
-                                      {project.name}
+                                      {tSite(project.name)}
                                     </span>
                                     <span
                                       className={cn(
@@ -420,16 +447,20 @@ export function ShowcaseWorkspace() {
                                           : "text-muted-foreground",
                                       )}
                                     >
-                                      {isSelected
-                                        ? "Selected project"
-                                        : "View review details"}
+                                      {tSite(
+                                        isSelected
+                                          ? "Selected project"
+                                          : "View review details",
+                                      )}
                                     </span>
                                     <span
                                       aria-hidden="true"
                                       className="mt-1 block text-[10px] font-normal text-muted-foreground sm:hidden"
                                     >
-                                      {projectReviewed} of{" "}
-                                      {project.areas.length} reviewed
+                                      {tSite(projectReviewed)} {tSite(" of")}
+                                      {tSite(" ")}
+                                      {tSite(project.areas.length)}{" "}
+                                      {tSite(" reviewed")}
                                     </span>
                                   </span>
                                 </Button>
@@ -439,8 +470,10 @@ export function ShowcaseWorkspace() {
                                   id={coverageId}
                                   className="text-[11px] text-muted-foreground"
                                 >
-                                  {projectReviewed} of {project.areas.length}{" "}
-                                  reviewed
+                                  {tSite(projectReviewed)} {tSite(" of ")}
+                                  {tSite(project.areas.length)}
+                                  {tSite(" ")}
+                                  {tSite("reviewed")}
                                 </span>
                                 <div
                                   aria-hidden="true"
@@ -472,15 +505,17 @@ export function ShowcaseWorkspace() {
                   <EmptyState
                     ariaLive="off"
                     icon={<Archive aria-hidden="true" className="size-6" />}
-                    title="No archived projects"
-                    description="Nothing in this demo workspace has been archived. Return to all projects to continue the interface review."
+                    title={tSite("No archived projects")}
+                    description={tSite(
+                      "Nothing in this demo workspace has been archived. Return to all projects to continue the interface review.",
+                    )}
                     action={
                       <Button
                         type="button"
                         onClick={recover}
                         className="min-h-11 whitespace-normal motion-reduce:transition-none"
                       >
-                        Show all projects
+                        {tSite("Show all projects")}
                       </Button>
                     }
                     className="min-h-72 rounded-[5px] border-border-subtle bg-surface-muted/30 px-4"
@@ -493,8 +528,9 @@ export function ShowcaseWorkspace() {
                   className="mt-0.5 size-3.5 shrink-0"
                 />
                 <p>
-                  Select a project to inspect its interface review. Progress
-                  tracks the three checklist areas for each demo project.
+                  {tSite(
+                    "Select a project to inspect its interface review. Progress tracks the three checklist areas for each demo project.",
+                  )}
                 </p>
               </div>
             </div>
@@ -505,9 +541,11 @@ export function ShowcaseWorkspace() {
               onClick={() => setMobileDetailsOpen((open) => !open)}
               className="flex min-h-11 w-full items-center justify-between gap-3 border-t border-border-subtle px-4 py-3 text-xs font-medium text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring lg:hidden"
             >
-              {mobileDetailsOpen
-                ? "Hide project details"
-                : "Show project details"}
+              {tSite(
+                mobileDetailsOpen
+                  ? "Hide project details"
+                  : "Show project details",
+              )}
               <ChevronDown
                 aria-hidden="true"
                 className={cn("size-3.5", mobileDetailsOpen && "rotate-180")}
@@ -524,7 +562,7 @@ export function ShowcaseWorkspace() {
             >
               <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                 <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                  Project detail
+                  {tSite("Project detail")}
                 </p>
                 {selected && <ProjectStatus status={selected.status} />}
               </div>
@@ -537,24 +575,23 @@ export function ShowcaseWorkspace() {
                     id={detailHeadingId}
                     className="break-words text-xl font-semibold tracking-tight"
                   >
-                    {selected?.name ?? "No project selected"}
+                    {tSite(selected?.name ?? "No project selected")}
                   </h3>
                 </div>
                 {selected ? (
                   <>
                     <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                      {selected.description}
+                      {tSite(selected.description)}
                     </p>
                     <div data-showcase-review>
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
                         <span className="text-xs font-medium">
-                          Demo interface review
+                          {tSite("Demo interface review")}
                         </span>
                         <span className="font-mono text-2xl font-medium tracking-tight">
-                          {reviewed}
+                          {tSite(reviewed)}
                           <span className="text-base text-muted-foreground">
-                            {" "}
-                            / {selected.areas.length}
+                            {tSite(" ")}/ {tSite(selected.areas.length)}
                           </span>
                         </span>
                       </div>
@@ -573,12 +610,16 @@ export function ShowcaseWorkspace() {
                         ))}
                       </div>
                       <p className="mt-2 text-[11px] text-muted-foreground">
-                        {reviewed} of {selected.areas.length} areas reviewed ·{" "}
-                        {selected.areas.length - reviewed} remaining
+                        {tSite(reviewed)} {tSite(" of ")}
+                        {tSite(selected.areas.length)}{" "}
+                        {tSite(" areas reviewed ·")}
+                        {tSite(" ")}
+                        {tSite(selected.areas.length - reviewed)}{" "}
+                        {tSite(" remaining")}
                       </p>
                     </div>
                     <ul
-                      aria-label="Interface review areas"
+                      aria-label={tSite("Interface review areas")}
                       className="mt-5 divide-y divide-border-subtle"
                     >
                       {selected.areas.map((area) => (
@@ -602,9 +643,11 @@ export function ShowcaseWorkspace() {
                             )}
                           </span>
                           <div className="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                            <p className="text-xs font-medium">{area.name}</p>
+                            <p className="text-xs font-medium">
+                              {tSite(area.name)}
+                            </p>
                             <p className="text-[10px] text-muted-foreground">
-                              {area.reviewed ? "Reviewed" : "To review"}
+                              {tSite(area.reviewed ? "Reviewed" : "To review")}
                             </p>
                           </div>
                         </li>
@@ -616,13 +659,13 @@ export function ShowcaseWorkspace() {
                         className="mt-5 rounded-[5px] border border-primary/15 bg-background/70 p-3.5"
                       >
                         <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
-                          Next area to review
+                          {tSite("Next area to review")}
                         </p>
                         <p className="mt-2 text-xs font-semibold">
-                          {nextArea.name}
+                          {tSite(nextArea.name)}
                         </p>
                         <p className="mt-1 text-[11px] leading-5 text-muted-foreground">
-                          {showcaseAreaDescriptions[nextArea.name]}
+                          {tSite(showcaseAreaDescriptions[nextArea.name])}
                         </p>
                       </div>
                     )}
@@ -631,12 +674,14 @@ export function ShowcaseWorkspace() {
                         aria-hidden="true"
                         className="mt-0.5 size-3.5 shrink-0"
                       />
-                      Read-only checklist · no changes are saved
+                      {tSite("Read-only checklist · no changes are saved")}
                     </p>
                   </>
                 ) : (
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    Show all projects to inspect a project’s interface review.
+                    {tSite(
+                      "Show all projects to inspect a project’s interface review.",
+                    )}
                   </p>
                 )}
               </div>
@@ -650,7 +695,7 @@ export function ShowcaseWorkspace() {
         aria-atomic="true"
         className="sr-only"
       >
-        {announcement}
+        {tSite(announcement)}
       </p>
     </Tabs>
   );

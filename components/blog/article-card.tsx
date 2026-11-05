@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { Clock3 } from "lucide-react";
 
 import { Badge, Card, cn } from "@pycolors/ui";
@@ -14,6 +15,8 @@ const focusRing =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export function ArticleCard({ post }: ArticleCardProps) {
+  const tSite = useCopy();
+
   return (
     <Card className="group flex h-full flex-col justify-between rounded-lg border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-elevated">
       <div className="space-y-5">
@@ -22,33 +25,35 @@ export function ArticleCard({ post }: ArticleCardProps) {
             variant="outline"
             className="rounded-md border-platform-border-subtle bg-platform-muted text-[11px]"
           >
-            {post.category}
+            {tSite(post.category)}
           </Badge>
 
           {post.featured ? (
-            <Badge className="rounded-md text-[11px]">Featured</Badge>
+            <Badge className="rounded-md text-[11px]">
+              {tSite("Featured")}
+            </Badge>
           ) : null}
         </div>
 
         <div className="space-y-2.5">
           <h3 className="font-brand text-base font-semibold leading-snug tracking-normal text-foreground">
             <Link href={post.url} className={cn("outline-none", focusRing)}>
-              {post.title}
+              {tSite(post.title)}
             </Link>
           </h3>
 
           <p className="line-clamp-3 text-sm leading-7 text-muted-foreground">
-            {post.description}
+            {tSite(post.description)}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-          <span>{formatDate(post.date)}</span>
+          <span>{tSite(formatDate(post.date, tSite.locale))}</span>
 
           {post.readingTime ? (
             <span className="inline-flex items-center gap-1.5">
               <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-              {post.readingTime}
+              {tSite(post.readingTime)}
             </span>
           ) : null}
         </div>
@@ -64,7 +69,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
             focusRing,
           )}
         >
-          <Link href={post.url}>Read article</Link>
+          <Link href={post.url}>{tSite("Read article")}</Link>
         </Button>
       </div>
     </Card>

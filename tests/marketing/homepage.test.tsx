@@ -4,9 +4,15 @@ import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
 import { localizedAlternates } from "@/lib/i18n/routes";
-import HomePage, { metadata } from "../../app/(site)/page";
+import HomePage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 

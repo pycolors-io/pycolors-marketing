@@ -1,0 +1,286 @@
+---
+title: Tableau de données
+description: Un workflow d'enregistrements source-copy avec recherche contrôlée,
+  filtres personnalisés, tri, taille de page, pagination et récupération des
+  résultats vides.
+lastUpdated: "2026-10-08"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import {
+  DataTableEmptyExample,
+  DataTableExample,
+  DataTablePageSizeExample,
+  DataTableQueryExample,
+  DataTableSortingExample,
+} from "@/components/docs/blocks/data-table-example";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Données et enregistrements</Badge>
+  <Badge>tableau de données</Badge>
+</div>
+
+## Parcourir les enregistrements sans adopter un cadre de grille de données [#browse-records-without-adopting-a-data-grid-framework]
+
+`DataTable` rend une composition de navigation d'enregistrement dactylographiée à partir de colonnes et de lignes appartenant au consommateur. Il fournit des états de prêt, de chargement, de vide et d'erreur déterministes, des actions de ligne facultatives, des requêtes et des demandes de tri contrôlées, la taille de la page et la navigation dans la page.
+
+Le bloc ne récupère, ne filtre, ne trie, ne mute, n'achemine ou n'interprète jamais d'enregistrements. Ces décisions restent dans la fonction consommatrice ou la couche de données.
+
+<Callout title="Bloc source-copie">
+  Copiez le répertoire canonique complet dans votre application. Il n'y a pas de
+  package Blocks, d'installateur de registre, de CLI ou de canal de mise à jour
+  automatique pour ce bloc aujourd'hui.
+
+</Callout>
+
+Les propriétés de pagination `previousLabel` et `nextLabel` personnalisent le texte visible et le nom accessible des boutons. `morePagesLabel` traduit l’annonce des points de suspension. Les valeurs par défaut restent en anglais.
+
+## Identité canonique [#canonical-identity]
+
+| Contrat                                 | Valeur                                                    |
+| --------------------------------------- | --------------------------------------------------------- |
+| Catégorie                               | `Data & records`                                          |
+| Catégorie slug                          | `data`                                                    |
+| Bloc limace                             | `data-table`                                              |
+| Source                                  | `apps/marketing/content/blocks/data/data-table/`          |
+| Point d'entrée                          | `apps/marketing/content/blocks/data/data-table/index.tsx` |
+| Exportation                             | `DataTable`                                               |
+| Information future Identité du registre | `data-data-table`                                         |
+
+L'identité du registre est purement informative. L'installation du Registre n'est pas disponible, et ce Bloc ne crée pas de manifeste, généré JSON, route ou service de livraison.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/data-table/` dans votre application. Copiez les quatre fichiers ci-dessous, en conservant leurs importations relatives et leurs directives client. Dans l’onglet Source, choisissez un fichier et utilisez son bouton de copie, ou sélectionnez le code manuellement lorsque l’accès au presse-papiers n’est pas disponible.
+
+Pour récupérer les quatre fichiers à la fois, ouvrez **Code à télécharger ZIP** pour Tableau de données dans le [Blocage du catalogue](/blocks#category-data). Extrayez l'archive et déplacez son `src/components/blocks/data-table/` dossier dans votre application.
+
+### Structure du fichier [#file-structure]
+
+<Files>
+  <Folder name="src/components/blocks/data-table" defaultOpen>
+    <File name="index.tsx" />
+    <File name="pagination.tsx" />
+    <File name="query-controls.tsx" />
+    <File name="types.ts" />
+  </Folder>
+</Files>
+
+| Fichier              | Responsabilité                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| `index.tsx`          | Composition de la table, contrôles de tri, états d'affichage et exportations publiques.    |
+| `pagination.tsx`     | Navigation des pages, sélection de la taille des pages et validation de la pagination.     |
+| `query-controls.tsx` | Recherche d'entrée, filtre les fentes, action de réinitialisation et résumé des résultats. |
+| `types.ts`           | Colonnes, lignes, contrôleurs et accessoires de composants saisis.                         |
+
+Importation `DataTable` et ses types à partir du répertoire `index.tsx` point d'entrée. Les contrôles séparés gardent la personnalisation locale ; les opérations de données restent les vôtres.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <DataTableExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <Tabs items={["index.tsx", "pagination.tsx", "query-controls.tsx", "types.ts"]}>
+      <Tab value="index.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/index.tsx"'
+        >
+          ../../../blocks/data/data-table/index.tsx
+        </include>
+
+</Tab>
+      <Tab value="pagination.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/pagination.tsx"'
+        >
+          ../../../blocks/data/data-table/pagination.tsx
+        </include>
+
+</Tab>
+      <Tab value="query-controls.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/data-table/query-controls.tsx"'
+        >
+          ../../../blocks/data/data-table/query-controls.tsx
+        </include>
+
+</Tab>
+      <Tab value="types.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/data-table/types.ts"'
+        >
+          ../../../blocks/data/data-table/types.ts
+        </include>
+
+</Tab>
+
+</Tabs>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `DataTable` à travers son agencement local déterministe. Il n'effectue aucune récupération de données ou demande réseau. L'onglet Source inclut les fichiers canoniques complets au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Examinez les modifications canoniques ultérieures délibérément et validez-les dans votre application avant de les adopter. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `data-table` un répertoire vers un chemin appartenant à l'application, tel que `src/components/blocks/data-table/`.
+2. Installer React 18 ou plus récent et le public `@pycolors/ui` paquet.
+3. Charger `@pycolors/tokens/tokens.css` et configurez les utilitaires Tailwind sémantiques utilisés par le Block.
+4. Importation `DataTable` et ses types à partir du point d'entrée local copié.
+
+```tsx title="records-table.tsx"
+"use client";
+
+import { DataTable, type DataTableColumn } from "./blocks/data-table";
+
+type RecordRow = Readonly<{
+  id: string;
+  label: string;
+  state: "Available" | "Paused";
+}>;
+
+const columns = [
+  { id: "label", header: "Record", cell: (row) => row.label, sortable: true },
+  { id: "state", header: "State", cell: (row) => row.state, sortable: true },
+] satisfies readonly DataTableColumn<RecordRow>[];
+
+export function RecordsTable({ rows }: { rows: readonly RecordRow[] }) {
+  return (
+    <DataTable
+      caption="Available records"
+      columns={columns}
+      emptyDescription="Add a record to begin."
+      emptyTitle="No records"
+      getRowId={(row) => row.id}
+      rows={rows}
+    />
+  );
+}
+```
+
+## Contrat de consommation [#consumer-owned-contract]
+
+Le consommateur possède le type de ligne, les lignes actuelles, les ID de ligne stables, les ID de colonne uniques, les en-têtes, le rendu de cellule, la copie d'état, les actions de ligne, les valeurs de recherche, les filtres, les règles de correspondance, le nombre de résultats, la logique de tri, la pagination et l'état de taille de page. `DataTable` n'induit pas d'identifiants à partir de positions de texte ou de tableau visibles et n'interprète pas les valeurs des cellules.
+
+La composition principale accepte `caption`, `columns`, `rows`, `getRowId`,
+`emptyTitle`, facultatif `emptyDescription`, `emptyAction`, `renderRowActions`,
+`rowActionsLabel`, `pagination`, `pageSize`, `sorting`, `query`, `state` et `className`. Fournissez au moins une colonne significative et maintenez les identifiants de ligne/colonne stables entre les rendus.
+
+## Rechercher, filtrer, trier et paginer [#search-filter-sort-and-paginate]
+
+Passez l'option `query` contrôleur pour composer une entrée de recherche en direct étiquetée, des filtres appartenant au consommateur, une action de réinitialisation facultative et un résumé des résultats au-dessus du tableau. Le bloc transmet les valeurs contrôlées brutes; la correspondance, le débouncing, l'annulation de la demande et la réinitialisation de la page restent des responsabilités du consommateur.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableQueryExample />
+</Preview>
+
+La démonstration recherche une collection fictive complète avant le tri et la pagination. Réinitialiser les modifications uniquement dans l'état de démonstration local. Rien n'est demandé ou sauvegardé. Pour les enregistrements à distance, utilisez le total et l'ordre correspondant du serveur plutôt que de filtrer uniquement une page téléchargée.
+
+## État de préparation, de chargement, de vide et d'erreur [#ready-loading-empty-and-error-states]
+
+Ready est la valeur par défaut. Le chargement remplace les lignes périmées par la présentation publique de chargement et supprime la pagination. La présentation des erreurs utilise des actions de copie et de récupération appartenant au consommateur alors que les lignes et la pagination restent cachées. Un résultat prêt à l'emploi est distinct du chargement et de l'échec.
+
+Pass `emptyAction` pour une première utilisation utile ou sans résultats étape suivante. L'action est rendue inchangée en dehors du scroller de table ; la création d'enregistrements, la réinitialisation des filtres, les autorisations et le focus après la disparition de l'état vide restent la propriété du consommateur.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample />
+</Preview>
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableEmptyExample filtered />
+</Preview>
+
+```tsx title="empty-table-action.tsx"
+<DataTable
+  {...tableProps}
+  rows={filteredRows}
+  emptyTitle="No matching records"
+  emptyDescription="Clear your filters to see all available records."
+  emptyAction={
+    <button onClick={clearFilters} type="button">
+      Clear filters
+    </button>
+  }
+/>
+```
+
+## Actions de ligne facultatives [#optional-row-actions]
+
+`renderRowActions` reçoit la ligne en cours et peut renvoyer des boutons, des liens ou des menus appartenant au consommateur. Donnez à chaque contrôle répété un nom accessible spécifique. Le bloc ne fournit pas d'autorisations, de confirmation, de routage, de mutation ou de comportement destructeur et ne rend jamais la ligne entière interactive.
+
+## Pagination contrôlée en option [#optional-controlled-pagination]
+
+La pagination est basée sur un. Le bloc rend la navigation de page valide de fourni `page` et `totalPages`Émet uniquement des demandes de page valides et ne coupe pas les lignes, ne récupère pas de données, ne synchronise pas les URL ou ne déplace pas le focus. Ces comportements restent chez le consommateur.
+
+```tsx title="controlled-record-pages.tsx"
+<DataTable
+  {...tableProps}
+  pagination={{
+    navigationLabel: "Record pages",
+    onPageChange: setPage,
+    page,
+    summary: `Page ${page} of ${totalPages}`,
+    totalPages,
+  }}
+/>
+```
+
+## Taille de page contrôlée en option [#optional-controlled-page-size]
+
+Pass `pageSize` avec un entier sûr positif sélectionné, des options autorisées et un `onPageSizeChange` rappel. Le bloc valide le contrat de présentation, mais ne coupe pas les lignes et ne réinitialise pas la page actuelle pour vous.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTablePageSizeExample />
+</Preview>
+
+L'exemple modifie l'état de la taille/page locale et trie une nouvelle copie avant de la découper. Rien n'est demandé à un serveur ou persisté. Pour la pagination du serveur, conservez les tailles approuvées, les totaux réels, l'annulation et la gestion des résultats périmés dans votre couche de données.
+
+## Tri contrôlé en option [#optional-controlled-sorting]
+
+Marquer les colonnes `sortable: true` et passer un `sorting` contrôleur. Les boutons d'en-tête demandent un état ascendant ou descendant ; ils ne réorganisent pas les lignes fournies. Votre application doit renvoyer les lignes qui correspondent à l'état de tri affiché.
+
+<Preview className="my-6 overflow-hidden">
+  <DataTableSortingExample />
+</Preview>
+
+L'en-tête triable actif reçoit `aria-sort`; les glyphes de direction sont décoratifs. Tab, Enter et Space utilisent le comportement des boutons natifs. Le mouvement de focus, le choix du comparateur, les paramètres régionaux, la réinitialisation de la page et la commande à distance restent la propriété du consommateur.
+
+## Comportement réactif et d'accessibilité [#responsive-and-accessibility-behavior]
+
+- La sémantique native de la table reste intacte à chaque taille de fenêtre.
+- Le tableau défile horizontalement à l'intérieur de son enveloppe délimitée si nécessaire.
+- Les contrôles de requête restent en dehors du scroller de table et s'enroulent sur des mises en page étroites.
+- Les contrôles de pagination et de taille de page utilisent des contrôles natifs étiquetés.
+- Le chargement, le vide et la copie d'erreur restent visibles sans compter uniquement sur la couleur.
+- Les actions des lignes de consommateurs doivent rester utilisables au clavier et clairement étiquetées.
+- Le bloc ne déplace pas le focus après les modifications de requête, de page, de taille ou de tri.
+
+Des tests sémantiques, d'interaction et de hache représentative ciblés vérifient ces contrats, mais ils ne constituent pas une certification d'accessibilité complète. Passez en revue le contenu long réel, les largeurs mobiles, les deux thèmes, la focus clavier et la technologie d'assistance dans l'application consommatrice.
+
+## Exclusions délibérées [#deliberate-exclusions]
+
+Ce bloc n'inclut pas la sélection de lignes, les actions groupées, un moteur de filtrage, un moteur de tri, le tri multi-colonnes, la visibilité des colonnes, le redimensionnement, la réorganisation, la virtualisation, l'édition en ligne, l'exportation, les vues enregistrées, la récupération de données, la pagination du serveur, la mise en cache, le routage, les autorisations, les mutations, l'authentification ou la facturation.
+
+Il ne dépend pas de TanStack Table, Next.js, Starter Free, Starter Pro, des importations de paquets privés/profonds ou d'une nouvelle bibliothèque d'exécution. Composez des contrôles spécifiques au produit grâce à `query.filters` ou à l'extérieur du bloc et passer des lignes préparées.
+
+## Propriété, mises à jour et restauration [#ownership-updates-and-rollback]
+
+Après la copie, le consommateur est propriétaire de la source, de l'intégration, du contenu des cellules, du comportement de l'action, du cycle de vie des données et de la maintenance future. Il n'y a pas de chemin de mise à jour automatique ou de synchronisation. Comparez délibérément les révisions canoniques futures et n'adoptez que les modifications qui correspondent à l'application.
+
+La restauration est la suppression ou la réversion de la copie `data-table` répertoire et son intégration locale. Aucune version de paquet, état de Registre ou état de Bloc distant n'est impliqué.

@@ -1,0 +1,409 @@
+---
+title: Personnalisation
+description: Personnalisez le contenu, la marque, les prix, les sections, le
+  référencement et les actifs NA-AI en utilisant sa structure axée sur les
+  données.
+lastUpdated: "2026-10-17"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
+import { FolderTree, Palette, Rocket, Search, Sparkles } from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Personnalisation</Badge>
+</div>
+
+## Personnaliser sans réécrire chaque composant [#customize-without-rewriting-every-component]
+
+NA-AI Landing est basée sur les données.
+
+La plupart du contenu de la copie et de la section du produit se trouve dans :
+
+```txt
+src/@data
+```
+
+Cela rend le modèle plus facile à adapter car vous pouvez :
+
+- Mettre à jour l'histoire du produit en premier
+- Valider le positionnement rapidement
+- Modifier les prix et la messagerie de manière centralisée
+- éviter de réécrire tous les composants tôt
+
+<DocsUpgradeCTA
+  title="Changez l'histoire avant de changer l'interface utilisateur."
+  description="NA-AI Landing est structuré de manière à ce que la marque, les prix, les témoignages et le référencement puissent évoluer via des fichiers de données centralisés au lieu de réécritures de composants dispersés."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/docs/templates/na-ai-landing/project-structure"
+  secondaryLabel="Project structure"
+/>
+
+<Callout title="Idée de base">
+  Commencez par changer les données, pas les composants. Réécrivez l'histoire du
+  produit avant de réécrire l'interface utilisateur.
+
+</Callout>
+
+## Ordre de personnalisation recommandé [#recommended-customization-order]
+
+<Steps>
+  <Step>
+    ### Mettre à jour les paramètres du site [#update-site-settings]
+
+    EDIT :
+
+```txt title="path"
+src/config/site.ts
+```
+
+    Mise à jour :
+
+    - Nom du produit
+    - tagline
+    - URL du site
+    - Titre SEO
+    - social preview configuration
+
+</Step>
+
+  <Step>
+    ### Mettre à jour le contenu principal [#update-core-content]
+
+    Éditez les fichiers sous :
+
+```txt title="path"
+src/@data
+```
+
+    Débuter avec :
+
+    - héros
+    - caractéristiques
+    - tarification
+    - témoignages
+    - FAQ
+    - CTA
+    - contact
+
+</Step>
+
+  <Step>
+    ### Remplacer les actifs [#replace-assets]
+
+    Mise à jour :
+
+    - logo
+    - icônes
+    - Ouvrir les images du graphique
+    - Twitter preview images
+    - actifs manifestes
+
+</Step>
+
+  <Step>
+    ### Ajuster la marque [#adjust-branding]
+
+    Mise à jour :
+
+    - fontes
+    - token d'utilisation
+    - paramètres du thème
+    - visuels du produit
+
+    Ne faites cela qu'une fois que la direction du contenu devient claire.
+
+</Step>
+
+  <Step>
+    ### Tester et déployer [#test-and-deploy]
+
+    Exécutez la construction de production, inspectez les deux thèmes et validez les mises en page réactives avant le déploiement.
+
+</Step>
+
+</Steps>
+
+## Fondations de personnalisation [#customization-foundations]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Contenu centralisé",
+      icon: FolderTree,
+      description:
+        "La plupart des sections sont contrôlées via des fichiers de données dédiés au lieu de composants profondément imbriqués.",
+    },
+    {
+      title: "Structure SEO-ready",
+      icon: Search,
+      description:
+        "Les métadonnées, les ressources Open Graph, les aperçus Twitter, le plan du site et la configuration des robots sont faciles à personnaliser.",
+    },
+    {
+      title: "fondations design PyColors",
+      icon: Palette,
+      description:
+        "Les tokens partagés et les primitives d'interface utilisateur fournissent une base visuelle stable en mode clair et sombre.",
+    },
+    {
+      title: "Flux de lancement rapide",
+      icon: Sparkles,
+      description:
+        "La structure donne la priorité à une itération rapide sur le positionnement, les prix, la marque et la messagerie produit.",
+    },
+  ]}
+/>
+
+### Fichiers de données [#data-files]
+
+| Chapitre         | Fichier                      |
+| ---------------- | ---------------------------- |
+| Hero             | `src/@data/hero.ts`          |
+| Caractéristiques | `src/@data/features.ts`      |
+| Intégrations     | `src/@data/integrations.ts`  |
+| Tarifs           | `src/@data/pricing.ts`       |
+| Tableau des prix | `src/@data/pricing-table.ts` |
+| Témoignages      | `src/@data/customers.ts`     |
+| FAQ              | `src/@data/faq.ts`           |
+| CTA              | `src/@data/cta.ts`           |
+| Contact          | `src/@data/contact.ts`       |
+| Footer           | `src/@data/footer.ts`        |
+| Navbar           | `src/@data/navbar.ts`        |
+
+### Configuration du site [#site-configuration]
+
+EDIT :
+
+```txt title="path"
+src/config/site.ts
+```
+
+Utilisez-le pour mettre à jour :
+
+- Nom du produit
+- tagline
+- URL du site
+- Titre SEO
+- Description SEO
+- Ouvrir l'image graphique
+- Twitter image
+
+<Callout type="info" title="Règle SEO">
+  Mettez à jour l'URL du site et les ressources de prévisualisation sociale
+  avant de les déployer publiquement.
+
+</Callout>
+
+### Branding et tokens [#branding-and-tokens]
+
+NA-AI Landing utilise:
+
+```txt title="packages"
+@pycolors/ui
+@pycolors/tokens
+```
+
+Les tokens partagés fournissent une base visuelle stable pour:
+
+- couleurs
+- surfaces
+- frontières
+- rayon
+- ombres
+- focus states
+- mode sombre et clair
+
+<Callout title="Règle de conception">
+  Préférez les tokens sémantiques aux valeurs de couleur brutes. Cela permet de
+  garder la page visuellement cohérente entre les thèmes.
+
+</Callout>
+
+## Stratégie de contenu [#content-strategy]
+
+<PreferAvoid
+  prefer={[
+    "Promesse de produit claire",
+    "Cas d'utilisation spécifique AI ou SaaS",
+    "Étiquettes courtes",
+    "Sections orientées vers les preuves",
+    "prix aligné avec votre offre",
+  ]}
+  avoid={[
+    "générique AI buzzwords",
+    "Changer chaque composant en premier",
+    "Trop de CTA concurrents",
+    "Supprimer les sections de confiance",
+    "Publication avec des actifs SEO par défaut",
+  ]}
+/>
+
+### Prévisualiser l'identité et les destinations [#preview-identity-and-destinations]
+
+`src/config/template.ts` centralise l'avis de prévisualisation et les liens vers la page produit, la documentation et le support PyColors. Remplacez ces liens et adaptez la bannière à `components/layout/navbar.tsx` lors du lancement de votre propre produit. Les sections de navigation et de pied de page restent configurées dans `src/@data`.
+
+<Callout title="Remplacer le contenu de l'échantillon">
+  NA-AI Analytics est une fiction. Des mesures, des témoignages, des
+  intégrations, des plans SaaS et des descriptions de capacités illustrent la
+  mise en page. Remplacez-les par un contenu précis pour votre produit avant de
+  le publier. Les plans d'échantillonnage sont distincts du prix d'achat de
+  NA-AI Landing.
+
+</Callout>
+
+### Apparence et mouvement [#appearance-and-motion]
+
+La palette claire et sombre, les rayons et les aides à la mise en page sont définis dans `src/app/globals.css`. Utilisez les tokens sémantiques existants dans vos sections pour que les deux apparences restent cohérentes.
+
+Les animations d'entrée s'exécutent une fois et respectent la préférence de mouvement réduit du visiteur. `components/motion/reveal.tsx` garde le contenu visible dans le HTML rendu par le serveur et ajoute un mouvement après que la section entre dans la fenêtre d'affichage. La FAQ utilise des divulgations natives afin que les réponses puissent être ouvertes avec un clavier, y compris sans JavaScript.
+
+### Connectez le formulaire de contact [#connect-the-contact-form]
+
+La forme en `components/sections/contact.tsx` est une démonstration locale : elle valide les champs obligatoires, puis confirme qu'aucun message n'a été envoyé. Les entrées ne sont ni envoyées ni enregistrées. La soumission est désactivée sans JavaScript.
+
+<Steps>
+  <Step>
+    ### Ajoutez votre propre gestionnaire de soumission [#add-your-own-submission-handler]
+
+    Connectez votre backend, validez l'entrée sur le serveur et gérez les erreurs avant d'afficher une confirmation de livraison. Aucun service de messagerie n'est inclus.
+
+</Step>
+  <Step>
+    ### Adapter la copie [#adapt-the-copy]
+
+    Mise à jour `src/@data/contact.ts`, l'avis de démonstration et le message de confirmation pour décrire ce que votre gestionnaire fait réellement. Les paramètres de contact de vente hérités ne sont pas utilisés par la démo locale.
+
+</Step>
+  <Step>
+    ### Vérifiez l'interaction complète [#check-the-complete-interaction]
+
+    Testez les états d'entrée non valides, de focus clavier, de succès et d'échec sur mobile et bureau. Vérifiez le service de réception avant de déclarer qu'un message a été livré.
+
+</Step>
+
+</Steps>
+
+### Personnaliser les prix [#customize-pricing]
+
+Le contenu des prix est réparti entre :
+
+```txt title="pricing-files"
+src/@data/pricing.ts
+src/@data/pricing-table.ts
+```
+
+Utilisez-le pour mettre à jour :
+
+- Noms des régimes
+- Tarifs mensuels et annuels
+- Lignes de comparaison
+- Disponibilité des fonctionnalités
+- Étiquettes CTA
+- Positionnement copie
+
+<Callout title="Règle de tarification">
+  Les prix devraient clarifier la décision d'achat, pas seulement les
+  caractéristiques de la liste.
+
+</Callout>
+
+### Personnaliser le SEO et les actifs [#customize-seo-and-assets]
+
+Mettre à jour les images de prévisualisation sociale :
+
+```txt title="seo-assets"
+public/seo/og-main.jpg
+public/seo/twitter-main.jpg
+```
+
+Icônes de mise à jour :
+
+```txt title="icons"
+public/icons
+```
+
+Mettre à jour le manifeste Web :
+
+```txt title="manifest"
+public/manifest.webmanifest
+```
+
+### Flux de travail recommandé [#recommended-workflow]
+
+Un chemin de personnalisation à fort effet de levier ressemble généralement à ceci:
+
+1. Définir le positionnement
+2. mise à jour héros et prix
+3. remplacer les actifs de marque
+4. ajuster les preuves et les témoignages
+5. Valider les métadonnées SEO
+6. affiner la mise en page et les visuels
+7. Déployer publiquement
+
+Cela maintient le processus de lancement axé sur la clarté et la conversion avant la suringénierie visuelle.
+
+<Callout title="Principe de positionnement">
+  Une page de destination devient précieuse lorsque l’offre est claire, crédible
+  et facile à comprendre rapidement.
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Puis-je l'utiliser pour un SaaS non-AI ?">
+    Oui. NA-AI Landing est optimisé pour l'IA et le positionnement analytique, mais la structure fonctionne bien pour de nombreux produits SaaS B2B.
+  </Accordion>
+
+<Accordion title="Puis-je ajouter un backend plus tard ?">
+  Oui. Conservez la logique API en dehors des composants de la section
+  présentation et connectez les formulaires ou les analyses via des modules
+  dédiés.
+</Accordion>
+
+<Accordion title="Dois-je remplacer PyColors UI ?">
+  Habituellement non. Conservez l'interface utilisateur et les tokens PyColors,
+  sauf si vous avez une bonne raison de reconstruire la base de l'interface
+  utilisateur.
+</Accordion>
+
+  <Accordion title="Puis-je supprimer des sections ?">
+    Oui. Supprimez les sections seulement après avoir vérifié que la page explique toujours clairement l'offre, la preuve, le prix, les objections et la prochaine action.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Structure du projet",
+      href: "/docs/templates/na-ai-landing/project-structure",
+      description:
+        "Comprendre où se trouvent le contenu, les sections, la mise en page, la configuration et les ressources.",
+      icon: FolderTree,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/templates/na-ai-landing/deployment",
+      description:
+        "Déployez votre page de destination personnalisée dans un environnement de production.",
+      icon: Rocket,
+    },
+  ]}
+/>

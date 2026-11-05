@@ -1,0 +1,219 @@
+---
+title: Votre table n’est pas vide. Votre pagination est périmée.
+description: Reproduisez un faux état vide après le filtrage, réinitialisez la
+  pagination de la requête et les limites de la page de test avant de connecter
+  une table de données React.
+author: Patrice Parny
+date: "2026-11-02"
+category: SaaS Engineering
+tags:
+  - React
+  - Data Tables
+  - Pagination
+  - Testing
+featured: true
+readingTime: 8 min de lecture
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Explore Data Table
+  href: /docs/blocks/data/data-table
+  variant: blocks
+---
+
+## Trois matchs, zéro ligne visible [#three-matches-zero-visible-rows]
+
+Un utilisateur atteint la page trois d’une table, applique un filtre et voit « Aucun enregistrement correspondant ». Le filtre a en fait trouvé trois enregistrements. L'application application toujours la troisième page d'un jeu de résultats qui correspond maintenant à la première page.
+
+**Réinitialisez la page lorsque la requête change, serrez une page hors de portée avant de trancher et calculez les lignes et le résumé de pagination à partir de la même collection filtrée.** La modification de la copie à l'état vide ne répare pas une page non valide.
+
+Cet article reproduit cet échec avec une collection complète en mémoire et teste la réparation sans cadre d'interface utilisateur ni backend. Il ne s'agit pas d'un rapport de défaut dans un produit PyColors. La pagination à distance a besoin d'une frontière de données différente, couverte ci-dessous.
+
+## Reproduire le faux état vide [#reproduce-the-false-empty-state]
+
+Voici 24 projets fictifs. Trois correspondent au filtre actif. Une taille de page de dix rend la page trois valide avant le filtrage, mais invalide par la suite.
+
+```js title="reproduce.mjs"
+const records = Array.from({ length: 24 }, (_, index) => ({
+  id: `project-${index + 1}`,
+  active: index < 3,
+}));
+
+const page = 3;
+const pageSize = 10;
+const matches = records.filter((record) => record.active);
+const start = (page - 1) * pageSize;
+const visibleRows = matches.slice(start, start + pageSize);
+
+console.log({ matches: matches.length, visible: visibleRows.length });
+// { matches: 3, visible: 0 }
+```
+
+Rien n'a manqué de charger. Le décalage demandé est simplement en dehors de la collection filtrée. JavaScript [Comportement de tranchage de tableau](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) renvoie un tableau vide lorsque le début est à sa longueur ou au-delà.
+
+Cela nous donne trois situations différentes, pas une condition générique «vide»:
+
+- La collection complète, chargée avec succès, est vide : offrez une action de première utilisation appropriée.
+- La collection contient des enregistrements, mais la requête actuelle ne correspond à aucun : offre la récupération de filtre.
+- La requête correspond aux enregistrements mais la page demandée est hors de portée : réparez la page avant d'interpréter le résultat.
+
+Une demande échouée ou en attente n'appartient à aucune catégorie successful-empty. Gardez ces états séparés en utilisant les [chargement, vide et guide d'erreur](/docs/guides/empty-loading-error).
+
+## Réinitialiser l'intention, puis normaliser les limites [#reset-intent-then-normalize-bounds]
+
+La réinitialisation et le serrage résolvent différents problèmes.
+
+**Réinitialiser une nouvelle requête.** Lancer une recherche différente sur la première page est le comportement explicite choisi pour cet exemple, même lorsque l'ancien numéro de page serait toujours valide. Modifiez la requête et la page ensemble au lieu de vous fier à un effet secondaire ultérieur pour remarquer la non-concordance. React [orientation de la structure d'État](https://react.dev/learn/choosing-the-state-structure) recommande de grouper l'état associé et de dériver des valeurs plutôt que de conserver des copies redondantes.
+
+**Pince après les changements de collection.** Un rafraîchissement ou une suppression en arrière-plan peut supprimer le seul enregistrement de la page finale sans modifier la requête. Un gestionnaire de réinitialisation seul ne peut pas protéger cette transition. Normaliser la page demandée par rapport au nombre résultant avant de calculer son décalage.
+
+Enregistrer la prochaine liste comme `table-page.mjs`. Accepte la collection complète _après_ Filtrage et commande. Il ne mute pas ce tableau et n'effectue pas ces opérations lui-même.
+
+```js title="table-page.mjs"
+export function paginate(rows, requestedPage, pageSize) {
+  if (!Array.isArray(rows)) {
+    throw new TypeError("rows must be an array");
+  }
+
+  for (const value of [requestedPage, pageSize]) {
+    if (!Number.isSafeInteger(value) || value < 1) {
+      throw new RangeError("page and pageSize must be positive safe integers");
+    }
+  }
+
+  const totalRows = rows.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / pageSize));
+  const page = Math.min(requestedPage, totalPages);
+  const start = (page - 1) * pageSize;
+
+  return {
+    page,
+    totalPages,
+    totalRows,
+    rows: rows.slice(start, start + pageSize),
+  };
+}
+
+export function changeQuery(state, query) {
+  return { ...state, query, page: 1 };
+}
+```
+
+Pour zéro correspondance, cet assistant utilise la première page et une limite inférieure d'une page comme convention interne. Ce n'est pas une preuve que les registres existent. Affiche l'état vide et cache la navigation de la page lorsque `totalRows` est zéro; ne pas annoncer une page de résultat fictive.
+
+Utilisez le retour `page` pour les contrôles et le résumé, pas la valeur hors plage originale. Cette fonction calcule une vue ; elle ne persiste pas dans l'état corrigé. Lorsqu’un rafraîchissement réduit la collection, réconciliez la page retournée avec votre contrôleur ou votre URL à la limite qui accepte les nouvelles données. Sinon, une ancienne page demandée pourrait réapparaître lorsque la collection se développera à nouveau.
+
+Pour les modifications de requête, appelez `changeQuery` à l'intérieur de la mise à jour de l'état propriétaire. Pour un changement de taille de page, choisissez et implémentez également une stratégie explicite : la réinitialisation à la page 1 est l'option la plus simple ; la préservation du premier enregistrement visible en est un autre, mais nécessite une arithmétique et des tests différents. Aucun comportement ne doit se produire accidentellement.
+
+## Testez les transitions, pas seulement le chemin heureux [#test-the-transitions-not-only-the-happy-path]
+
+Enregistrez ce second fichier à côté de l'assistant. Le premier test démontre l'échec initial. Les tests restants exercent la limite corrigée, y compris la réinitialisation de la requête, la suppression de la dernière page, les zéros authentiques, les entrées non valides et la préservation du tableau.
+
+```js title="table-page.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { changeQuery, paginate } from "./table-page.mjs";
+
+const records = Array.from({ length: 24 }, (_, index) => ({
+  id: `project-${index + 1}`,
+  active: index < 3,
+}));
+
+const matches = records.filter((record) => record.active);
+
+test("reproduces an empty page despite three matching records", () => {
+  assert.equal(matches.length, 3);
+  assert.deepEqual(matches.slice(20, 30), []);
+});
+
+test("clamps before slicing the filtered collection", () => {
+  const view = paginate(matches, 3, 10);
+  assert.equal(view.page, 1);
+  assert.equal(view.totalRows, 3);
+  assert.deepEqual(view.rows, matches);
+});
+
+test("a new query resets even when page 3 would still be valid", () => {
+  const previous = { query: "old", page: 3, pageSize: 10 };
+  const next = changeQuery(previous, "new");
+  assert.deepEqual(next, { query: "new", page: 1, pageSize: 10 });
+  assert.equal(previous.page, 3);
+  assert.equal(paginate(records, next.page, next.pageSize).page, 1);
+});
+
+test("removing the final row of page 3 returns page 2", () => {
+  const before = records.slice(0, 21);
+  assert.equal(paginate(before, 3, 10).rows.length, 1);
+  const after = paginate(before.slice(0, 20), 3, 10);
+  assert.equal(after.page, 2);
+  assert.equal(after.rows.length, 10);
+});
+
+test("zero matches remain a genuine empty result", () => {
+  assert.deepEqual(paginate([], 3, 10), {
+    page: 1,
+    totalPages: 1,
+    totalRows: 0,
+    rows: [],
+  });
+});
+
+test("rejects invalid page numbers and sizes", () => {
+  for (const invalid of [0, -1, 1.5, NaN, Infinity, "2"]) {
+    assert.throws(() => paginate(records, invalid, 10), RangeError);
+    assert.throws(() => paginate(records, 1, invalid), RangeError);
+  }
+  assert.throws(() => paginate(null, 1, 10), TypeError);
+});
+
+test("does not mutate the supplied collection", () => {
+  const frozen = Object.freeze([...records]);
+  const view = paginate(frozen, 2, 10);
+  assert.deepEqual(view.rows, records.slice(10, 20));
+  assert.notEqual(view.rows, frozen);
+  assert.equal(frozen.length, 24);
+});
+```
+
+Exécutez le coureur de test Node.js intégré:
+
+```sh
+node --test table-page.test.mjs
+```
+
+**Base de vérification:** ces fichiers autonomes exacts ont passé les sept tests avec Node.js **22.16.0** le 2 novembre 2026. En tant que contrôle négatif, le remplacement de la pince par la page demandée non modifiée a provoqué l'échec de trois tests. Restaurer la pince a rendu la suite verte. Aucune application React, paquet PyColors ou service de paiement n'a été installé pour cette expérience.
+
+Il s'agit de la preuve de la transformation des données et de ses transitions sélectionnées, et non d'un navigateur, d'une accessibilité ou d'un test d'intégration backend. Les [documentation du coureur de test Node.js](https://nodejs.org/download/release/v22.16.0/docs/api/test.html) décrit les API de test utilisées ici.
+
+## Gardez la table et le propriétaire des données en accord [#keep-the-table-and-the-data-owner-in-agreement]
+
+Les [Bloc de données PyColors](/docs/blocks/data/data-table) accepte les lignes appartenant au consommateur et les valeurs de requête, de tri, de taille de page et de pagination contrôlées. Son contrat public utilise des numéros de page basés sur une seule page. Il ne récupère pas, ne filtre pas, ne trie pas et ne réinitialise pas votre page pour vous.
+
+Pour une collection locale complète, la frontière d'intégration doit donc produire une vue cohérente : filtrer la collection complète, appliquer un ordre déterministe, normaliser la page, puis trancher. Passez cette tranche au tableau et passez la page effective et le nombre total de pages de la même vue à ses contrôles. Dérivez le résumé des résultats du total correspondant, et non de la longueur de la tranche de page.
+
+L'assistant de cet article est une logique d'application originale, pas une API PyColors exportée. Adoptez le bloc grâce à son flux de copie de source documenté et conservez la propriété des fichiers copiés et de la couche de données. Le Bloc fournit des demandes de présentation et de contrôle ; il ne peut pas réparer des valeurs contradictoires fournies par un consommateur.
+
+## Ne pas filtrer une page téléchargée comme si c'était le jeu de données [#do-not-filter-a-downloaded-page-as-though-it-were-the-dataset]
+
+L'exemple suppose que vous possédez déjà la collection complète. Lorsque l'API ne renvoie qu'une seule page, le filtrage de cette page peut manquer les enregistrements correspondants sur d'autres pages. Sa longueur de tableau n'est pas le nombre total de correspondances côté serveur.
+
+Pour la pagination du serveur, intégrez les modifications de requête, de filtre, de tri et de taille de page dans le contrat de requête. Utilisez les totaux et les commandes pour la même requête. Définissez comment le serveur et le client récupèrent à partir d'une requête hors de portée ; ne réétiquetez pas une réponse vide comme une page sans récupérer les lignes correspondantes.
+
+Les demandes de chevauchement introduisent un problème de réponse périmée distinct. Associez les réponses à la requête qui les possède et empêchez une requête plus ancienne de remplacer le résultat actuel. Les [article de validation async](/blog/prevent-stale-async-validation-react-forms) explique un échec de réponse-propriété connexe; l'assistant de pagination local ici n'implémente pas l'annulation, l'identité de cache ou la protection de course.
+
+La pagination Cursor a également besoin de son propre design. Un curseur n'est pas une page numérotée, et cette aide basée sur le décalage ne doit pas être appliquée aux curseurs opaques.
+
+## Une checklist de vérification avant intégration [#a-verification-checklist-before-integration]
+
+- [ ] Commencez sur une page ultérieure, appliquez un filtre restrictif et vérifiez que les enregistrements correspondants restent visibles.
+- [ ] Modifiez la requête tant que plusieurs pages restent valides ; confirmez le comportement de réinitialisation prévu.
+- [ ] Supprimez le dernier enregistrement de la dernière page et vérifiez la page effective, les lignes affichées et le résumé ensemble.
+- [ ] Séparez une collection véritablement vide, une requête sans correspondance, le chargement et l'échec de la demande.
+- [ ] Testez les modifications de taille de page, les valeurs d'URL non valides et la navigation en arrière/avant du navigateur dans l'application réelle.
+- [ ] Gardez les lignes et les totaux distants liés à la même requête ; ne jamais déduire un total de serveur à partir d'une page téléchargée.
+- [ ] Passez en revue le focus du clavier, les annonces de résultats et le rendu en petit écran après les changements d'état. Les tests de pure-fonction ne les couvrent pas.
+
+## Prochaine étape [#next-step]
+
+**Explorer la table de données** pour inspecter le Bloc public, son installation de copie source et son contrat de pagination contrôlée. Connectez-le à un propriétaire de données testé plutôt que de vous attendre à ce qu'un composant de présentation infère les enregistrements ou la page corrects.
+
+La règle pratique est simple : **Une tranche vide n'est pas une preuve suffisante pour un message de résultat vide.** Vérifiez d'abord le total de la requête et la validité de la page demandée.

@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import Image from "next/image";
 import { cn } from "@pycolors/ui";
 import {
@@ -24,13 +25,15 @@ export function ProductPreviewMedia({
   sizes = "(min-width: 1280px) 520px, (min-width: 768px) 43vw, 95vw",
   priority = false,
 }: ProductPreviewMediaProps) {
+  const tSite = useCopy();
+
   const media = PRODUCT_PREVIEW_MEDIA[product];
 
   return (
     <div
       data-product-preview={product}
       role="img"
-      aria-label={alt ?? media.alt}
+      aria-label={tSite(alt ?? media.alt)}
       className={cn(
         "relative isolate aspect-[16/10] w-full overflow-hidden rounded-[5px] border border-border-subtle bg-surface-muted/60 p-2 sm:p-3",
         className,

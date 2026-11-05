@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { Check } from "lucide-react";
@@ -17,6 +18,8 @@ export function MarketingCheckItem({
   children,
   className,
 }: MarketingCheckItemProps) {
+  const tSite = useCopy();
+
   return (
     <li
       className={cn(
@@ -30,7 +33,7 @@ export function MarketingCheckItem({
       >
         <Check className="h-3 w-3 text-foreground" />
       </span>
-      <span className="leading-6">{children}</span>
+      <span className="leading-6">{tSite(children)}</span>
     </li>
   );
 }

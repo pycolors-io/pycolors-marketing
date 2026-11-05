@@ -1,7 +1,13 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
-import PrivacyPage, { metadata } from "@/app/(site)/privacy/page";
+import PrivacyPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/privacy/page";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const sections = [
   ["controller", "1. Controller"],
@@ -25,7 +31,7 @@ const sections = [
 
 describe("Privacy Policy page", () => {
   it("preserves SEO, the revised policy date, and controller details", () => {
-    const { container } = render(<PrivacyPage />);
+    render(<PrivacyPage />);
     expect(metadata.alternates?.canonical).toBe("/privacy");
     expect(metadata.openGraph?.url).toBe("/privacy");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -50,8 +56,7 @@ describe("Privacy Policy page", () => {
       within(controller).getByRole("link", { name: "contact@pycolors.com" }),
     ).toHaveAttribute("href", "mailto:contact@pycolors.com");
     const breadcrumb = JSON.parse(
-      container.querySelector('script[type="application/ld+json"]')!
-        .textContent!,
+      document.getElementById("breadcrumb-jsonld")!.textContent!,
     );
     expect(
       breadcrumb.itemListElement.map((item: { item: string }) => item.item),

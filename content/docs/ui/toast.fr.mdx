@@ -1,0 +1,537 @@
+---
+title: Toast
+description: Messages de rétroaction non bloquants utilisés pour confirmer des
+  actions ou afficher de courts messages système.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  Bell,
+  CheckCircle,
+  CircleAlert,
+  Info,
+  MessageSquare,
+  PanelTop,
+  RefreshCcw,
+  ShieldAlert,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+import { ClientOnly } from "../previews/client-only";
+import {
+  ToastTriggerPreview,
+  ToastVariantsPreview,
+} from "../previews/toast-previews";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Toast</Badge>
+</div>
+
+## Rétroaction non bloquante pour les actions produit [#non-blocking-feedback-for-product-actions]
+
+Les **Toast** Le composant affiche des commentaires courts, temporaires et non bloquants.
+
+Utilisez-le pour :
+
+- Confirmer les actions
+- Résumer les résultats
+- afficher de courts messages système
+- fournir une réessai légère ou annuler les commentaires
+- Reconnaître l'intention de l'utilisateur sans interrompre le flux
+
+Toast est intentionnellement minime dans PyColors UI.
+
+Il fournit une structure et une accessibilité, et non un système de notification complet avec des files d'attente, des magasins globaux, du dédoublonnage ou un historique de notification persistant.
+
+<Callout title="Idée de base">
+  Les toasts sont des commentaires temporaires. Ils devraient confirmer, résumer
+  ou récupérer - ne pas bloquer la tâche.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="toast-import.tsx"
+import { Toast } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Toast est contrôlé explicitement par la page ou le composant.
+
+Enveloppez votre application, votre route ou votre sous-arbre de mise en page avec `ToastProvider`, puis rendre une `ToastViewport` par étendue de fournisseur.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <ToastTriggerPreview />
+    </ClientOnly>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="toast-example.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  Button,
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  ToastTitle,
+  ToastDescription,
+} from "@pycolors/ui";
+
+export function ToastExample() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <ToastProvider>
+      <Button onClick={() => setOpen(true)} variant="outline" size="sm">
+        Trigger toast
+      </Button>
+
+      <Toast
+        open={open}
+        onOpenChange={setOpen}
+        variant="success"
+        duration={2500}
+      >
+        <ToastTitle>Changes saved</ToastTitle>
+        <ToastDescription>Your settings were updated.</ToastDescription>
+      </Toast>
+
+      <ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
+    </ToastProvider>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle du fournisseur">
+  Rendre un `ToastViewport` par étendue de fournisseur. Évitez de rendre une
+  fenêtre d'affichage à l'intérieur de chaque composant de fonctionnalité.
+
+</Callout>
+
+## Quand utiliser Toast [#when-to-use-toast]
+
+Utilisez Toast lorsque le feedback doit être perceptible mais ne doit pas interrompre l'utilisateur.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Confirmation",
+      description:
+        "Confirmez qu’une action d’enregistrement, de mise à jour, d’archivage ou d’arrière-plan est terminée.",
+      icon: CheckCircle,
+      tone: "success",
+    },
+    {
+      title: "Réessayer ou annuler",
+      description:
+        "Offrez une récupération légère pour les actions réversibles ou les mises à jour d'arrière-plan échouées.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Feedback système",
+      description:
+        "Afficher des commentaires système courts qui n'appartiennent pas en permanence à la page.",
+      icon: Bell,
+    },
+  ]}
+/>
+
+### Variantes [#variants]
+
+Toast prend en charge un petit ensemble de variantes. Les variantes de succès, d'avertissement et de destruction utilisent des couleurs de bordure sémantiques avec le texte de premier plan normal, préservant ainsi le contraste lisible des messages dans les deux thèmes. Inclure un titre descriptif ou un message afin que la signification ne dépende pas uniquement de la couleur. Consommateur `className` Les surcharges ont toujours préséance.
+
+Gardez les variantes limitées pour éviter de transformer chaque message en événement.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <ClientOnly fallback={<div className="text-sm text-muted-foreground">Loading preview…</div>}>
+      <ToastVariantsPreview />
+    </ClientOnly>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="toast-variants.tsx"
+<Toast variant="default">
+  <ToastTitle>Default</ToastTitle>
+</Toast>
+
+<Toast variant="success">
+  <ToastTitle>Success</ToastTitle>
+</Toast>
+
+<Toast variant="warning">
+  <ToastTitle>Warning</ToastTitle>
+</Toast>
+
+<Toast variant="destructive">
+  <ToastTitle>Error</ToastTitle>
+  <ToastDescription>
+    Something went wrong.
+  </ToastDescription>
+</Toast>
+
+<Toast variant="info">
+  <ToastTitle>Information</ToastTitle>
+</Toast>
+```
+
+</Tab>
+
+</Tabs>
+
+### Variantes disponibles [#available-variants]
+
+| Variante      | Objet                                                     |
+| ------------- | --------------------------------------------------------- |
+| `default`     | Confirmation ou information neutre                        |
+| `success`     | Confirmation positive                                     |
+| `warning`     | Attention nécessaire, toujours non bloquante              |
+| `destructive` | Feedback d'erreur non bloquant                            |
+| `info`        | Message d'information - annonce poliment (non affirmatif) |
+
+<Callout type="info" title="Variante de règle">
+  Utilisation `destructive` uniquement pour les défaillances récupérables ou non
+  bloquantes. Utilisez Alert pour bloquer les erreurs.
+
+</Callout>
+
+### Avec description [#with-description]
+
+Utilisation `ToastDescription` Quand le titre seul ne suffit pas.
+
+```tsx title="toast-description.tsx"
+<Toast variant="warning">
+  <ToastTitle>Unsaved changes</ToastTitle>
+  <ToastDescription>
+    Save before leaving this page to avoid losing your work.
+  </ToastDescription>
+</Toast>
+```
+
+Gardez la description courte.
+
+Si le message a besoin de plus d'explications, il appartient probablement à une section Alerte, Boîte de dialogue ou page.
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Déclenchement après le début ou la fin de l'action [#trigger-after-the-action-starts-or-completes]
+
+    Utilisez la rétroaction après une action significative : sauvegardée, archivée, restaurée, copiée, échouée ou mise en file d'attente.
+
+</Step>
+
+  <Step>
+    #### Gardez le message court [#keep-the-message-short]
+
+    Les toasts sont temporaires. L’utilisateur doit les comprendre d’un seul coup d’œil.
+
+</Step>
+
+  <Step>
+    #### Utiliser l'état inline pour un travail actif [#use-inline-state-for-active-work]
+
+    Pour le chargement ou la soumission, préférez le texte de bouton tel que `Saving…` avant de porter le toast final.
+
+</Step>
+
+  <Step>
+    #### Utilisez les actions de récupération avec précaution [#use-recovery-actions-carefully]
+
+    Annuler et réessayer fonctionnent bien pour les actions réversibles, mais elles nécessitent un véritable support backend.
+
+</Step>
+
+</Steps>
+
+## Toast vs Alerte vs Dialogue [#toast-vs-alert-vs-dialog]
+
+| Situation                                      | Utilisation    |
+| ---------------------------------------------- | -------------- |
+| Enregistrer la confirmation                    | Toast          |
+| Copie au presse-papiers                        | Toast          |
+| Synchronisation d'arrière-plan terminée        | Toast          |
+| Erreur de page de blocage                      | Alerte         |
+| Problème de validation au niveau du formulaire | Alerte         |
+| Confirmation destructive                       | boîte dialogue |
+| L'utilisateur doit choisir avant de continuer  | boîte dialogue |
+
+<Callout title="Règle de décision">
+  Toast est pour la rétroaction après un flux. L'alerte est pour l'information à
+  l'intérieur d'un flux. La boîte de dialogue sert à bloquer les décisions.
+
+</Callout>
+
+### Guide des produits [#product-guidance]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Save',
+      title: "Enregistrer la confirmation",
+      icon: CheckCircle,
+      description: (
+        <>
+          <p>
+            Use toast feedback after the save completes.
+            Keep loading state inline on the submit button.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Changes saved successfully.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Delete',
+      title: "Supprimer le flux",
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Confirm destructive intent in a Dialog first.
+            Use toast feedback afterward for confirmation or Undo.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            Project deleted.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Retry',
+      title: "Retry flow",
+      icon: RefreshCcw,
+      description: (
+        <>
+          <p>
+            Use retry for recoverable background failures.
+            Avoid hiding critical failures only inside toast notifications.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Failed to sync data. Try again.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Undo',
+      title: "Annuler le flux",
+      icon: MessageSquare,
+      description: (
+        <>
+          <p>
+            Use Undo for reversible actions such as archive,
+            remove, delete, or bulk actions.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Member removed. Undo
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## API [#api]
+
+| Prop           | Type                                                   | Par défaut       | Désignation                                     |
+| -------------- | ------------------------------------------------------ | ---------------- | ----------------------------------------------- |
+| `variant`      | `"default" \| "success" \| "warning" \| "destructive"` | `"default"`      | Style visuel                                    |
+| `open`         | `boolean`                                              | —                | État ouvert contrôlé                            |
+| `onOpenChange` | `(open: boolean) => void`                              | —                | Gestionnaire d'État                             |
+| `duration`     | `number`                                               | Radix par défaut | Délai de fermeture automatique en millisecondes |
+| `className`    | `string`                                               | —                | Classes Tailwind personnalisées                 |
+
+Toast s'étend Radix Toast racine accessoires:
+
+```ts title="toast-types.ts"
+React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>;
+```
+
+### ToastProvider [#toastprovider]
+
+Enveloppe la zone où les toasts sont utilisés.
+
+```tsx title="toast-provider.tsx"
+<ToastProvider>{/* app or route subtree */}</ToastProvider>
+```
+
+### ToastViewport [#toastviewport]
+
+Définit où les toasts apparaissent à l'écran.
+
+Rendre un viewport par portée de fournisseur.
+
+```tsx title="toast-viewport.tsx"
+<ToastViewport className="fixed bottom-4 right-4 z-50 flex max-w-sm flex-col gap-2 outline-none" />
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="toast-types.ts"
+export type ToastVariant = "default" | "success" | "warning" | "destructive";
+
+export interface ToastProps
+  extends
+    React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>,
+    VariantProps<typeof toastVariants> {}
+```
+
+### Accessibilité [#accessibility]
+
+- Toast est construit sur les primitives Radix Toast.
+- Les toasts ne doivent pas piéger le focus.
+- Les toasts ne doivent pas interrompre l'entrée du formulaire.
+- Les toasts sont annoncés sous forme de mises à jour en direct de la région, à une urgence qui correspond `variant`:
+
+  | Variante      | Avis                                 | Radix `type`   |
+  | ------------- | ------------------------------------ | -------------- |
+  | `default`     | Polite - en attente d'une pause      | `"background"` |
+  | `success`     | Polite - en attente d'une pause      | `"background"` |
+  | `warning`     | Assertive - interrompt immédiatement | `"foreground"` |
+  | `destructive` | Assertive - interrompt immédiatement | `"foreground"` |
+  | `info`        | Polite - en attente d'une pause      | `"background"` |
+
+  Passez un explicite `type` prop pour remplacer cette valeur par défaut sur un toast spécifique.
+
+- Gardez la copie courte pour que les annonces soient compréhensibles.
+- Ne comptez pas uniquement sur la couleur pour les messages destructeurs ou d'avertissement.
+- N'utilisez pas Toast comme seul endroit pour les erreurs critiques.
+
+<Callout title="Règle d'accessibilité">
+  Les toasts sont utiles quand ils sont courts. Les messages longs ou critiques
+  doivent entrer dans la page avec Alert.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "messages de confirmation courts",
+    "Un toast par action significative",
+    "chargement en ligne avant la fin du toast",
+    "Réessayer ou annuler uniquement lorsque pris en charge",
+    "Alerte pour bloquer les pannes",
+  ]}
+  avoid={[
+    "Toast pour la validation sur le terrain",
+    "Cacher les erreurs de blocage dans Toast uniquement",
+    "Empiler plusieurs toasts à la fois",
+    "longs paragraphes à l'intérieur des descriptions toast",
+    "Utilisation de Toast comme centre de notification",
+  ]}
+/>
+
+### Quand ne pas utiliser Toast [#when-not-to-use-toast]
+
+N'utilisez pas Toast pour:
+
+- Erreurs de blocage
+- Validation sur le terrain
+- Flux d'intégration
+- Centres de notification persistants
+- Les échecs de paiement qui bloquent la progression
+- Erreurs d'autorisation nécessitant une explication
+- messages importants que l'utilisateur doit lire avant de continuer
+
+Utilisez plutôt Alerte, État vide, Boîte de dialogue ou un modèle dédié.
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Toast doit-il gérer l'état de notification global ?">
+    Pas par défaut. PyColors Toast est intentionnellement minime. Ajoutez un magasin global uniquement lorsque votre produit a besoin d'historique de file d'attente, de déduplication, de persistance ou de notification.
+  </Accordion>
+
+<Accordion title="Toast peut-il inclure des actions ?">
+  Oui, mais gardez les actions courtes et récupérables, comme Annuler ou
+  Réessayer. Si l'utilisateur doit prendre une décision, utilisez la boîte de
+  dialogue.
+</Accordion>
+
+<Accordion title="Faut-il utiliser le toast ?">
+  Seulement des erreurs non bloquantes ou récupérables. Les erreurs de blocage
+  doivent utiliser Alert dans le contexte.
+</Accordion>
+
+  <Accordion title="Combien de ToastViewports dois-je rendre ?">
+    Habituellement un par app ou portée de mise en page. Évitez de rendre une fenêtre d'affichage dans chaque composant.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Rétroaction en ligne pour bloquer les messages et les états de produits persistants.",
+      icon: CircleAlert,
+    },
+    {
+      title: "boîte dialogue",
+      href: "/docs/ui/dialog",
+      description:
+        "Utilisez la boîte de dialogue lorsque l'utilisateur doit confirmer ou terminer une tâche ciblée.",
+      icon: PanelTop,
+    },
+    {
+      title: "Actions asynchroneshrones",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Sauvegarder, réessayer, UI optimiste, annuler et rétroaction de mutation.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des commentaires accessibles avec une sémantique claire et des annonces.",
+      icon: Accessibility,
+    },
+  ]}
+/>

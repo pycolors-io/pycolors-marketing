@@ -13,6 +13,7 @@ const navigation = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => preference }));
 vi.mock("next/navigation", () => ({
   useRouter: () => navigation,
+  usePathname: () => "/docs",
 }));
 vi.mock("@/components/logo", () => ({
   Logo: ({ variant }: { variant?: "default" | "docs" }) => (
@@ -40,6 +41,9 @@ describe("documentation footer", () => {
     const footer = screen.getByRole("contentinfo", {
       name: "PyColors Docs footer",
     });
+    expect(
+      within(footer).getByRole("button", { name: "Language: English" }),
+    ).toHaveTextContent("English");
     for (const title of ["Documentation", "Build", "Resources", "Help"]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Docs footer ${title}`,
@@ -86,7 +90,7 @@ describe("documentation footer", () => {
         ).toBe(true);
       } else if (href.startsWith("/")) {
         expect(
-          existsSync(resolve("app/(site)", href.slice(1), "page.tsx")),
+          existsSync(resolve("app/[locale]/(site)", href.slice(1), "page.tsx")),
           href,
         ).toBe(true);
       }

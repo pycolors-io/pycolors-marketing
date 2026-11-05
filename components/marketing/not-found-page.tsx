@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowRight,
   BookOpen,
@@ -120,6 +121,8 @@ const recoveryPaths: RecoveryPath[] = [
 ];
 
 export default function NotFound() {
+  const tSite = useCopy();
+
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-background">
       <SiteHeader />
@@ -136,18 +139,18 @@ export default function NotFound() {
                   className="inline-flex h-1.5 w-1.5 rounded-full bg-warning"
                   aria-hidden="true"
                 />
-                <span>404 · Page not found</span>
+                <span>{tSite("404 · Page not found")}</span>
               </Badge>
             </div>
 
             <h1 className="mt-5 text-balance font-brand text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              This page moved as the PyColors ecosystem evolved.
+              {tSite("This page moved as the PyColors ecosystem evolved. ")}
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl text-balance text-sm leading-7 text-muted-foreground sm:text-base">
-              The route may be outdated, renamed, or removed. Use the
-              recommended paths below to get back to the product, docs, pricing,
-              or starter that best matches what you were looking for.
+              {tSite(
+                "The route may be outdated, renamed, or removed. Use the recommended paths below to get back to the product, docs, pricing, or starter that best matches what you were looking for. ",
+              )}
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -157,14 +160,16 @@ export default function NotFound() {
                 className="h-11 min-w-55 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/starters/free">
-                  Start with Starter Free
+                  {tSite("Start with Starter Free ")}
                   <Rocket className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
 
               <BuyStarterProButton
                 fullWidth={false}
-                label={`Buy Starter Pro — ${starterProPriceLabel}`}
+                label={tSite("Buy Starter Pro — {value0}", {
+                  value0: starterProPriceLabel,
+                })}
               />
 
               <Button
@@ -174,7 +179,7 @@ export default function NotFound() {
                 className="h-11 min-w-45 rounded-[5px] px-6 text-sm font-medium"
               >
                 <Link href="/docs">
-                  Browse docs
+                  {tSite("Browse docs ")}
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
@@ -182,22 +187,22 @@ export default function NotFound() {
 
             <div className="mt-5 flex flex-wrap justify-center gap-2">
               <Badge variant="outline" className="rounded-[5px]">
-                Starter Free
+                {tSite("Starter Free ")}
               </Badge>
               <Badge variant="outline" className="rounded-[5px]">
-                Starter Pro
+                {tSite("Starter Pro ")}
               </Badge>
               <Badge variant="outline" className="rounded-[5px]">
-                Pricing
+                {tSite("Pricing ")}
               </Badge>
               <Badge variant="outline" className="rounded-[5px]">
-                Docs
+                {tSite("Docs ")}
               </Badge>
               <Badge variant="outline" className="rounded-[5px]">
-                Patterns
+                {tSite("Patterns ")}
               </Badge>
               <Badge variant="outline" className="rounded-[5px]">
-                Roadmap
+                {tSite("Roadmap ")}
               </Badge>
             </div>
           </section>
@@ -208,16 +213,17 @@ export default function NotFound() {
                 variant="outline"
                 className="rounded-[5px] border-border-subtle bg-surface-muted"
               >
-                Recommended recovery paths
+                {tSite("Recommended recovery paths ")}
               </Badge>
 
               <h2 className="mt-4 font-brand text-2xl font-semibold tracking-tight sm:text-3xl">
-                Find the right path back into PyColors.
+                {tSite("Find the right path back into PyColors. ")}
               </h2>
 
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-                PyColors is structured around a simple progression: learn,
-                explore, validate, then upgrade when the business layer matters.
+                {tSite(
+                  "PyColors is structured around a simple progression: learn, explore, validate, then upgrade when the business layer matters. ",
+                )}
               </p>
             </div>
 
@@ -227,20 +233,20 @@ export default function NotFound() {
                   <Card className="h-full rounded-[5px] border border-border-subtle bg-surface p-5 shadow-soft transition-colors hover:border-border hover:bg-surface-muted">
                     <div className="flex h-full flex-col">
                       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                        {item.icon}
-                        {item.label}
+                        {tSite(item.icon)}
+                        {tSite(item.label)}
                       </div>
 
                       <h3 className="mt-3 text-base font-semibold">
-                        {item.title}
+                        {tSite(item.title)}
                       </h3>
 
                       <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        {item.description}
+                        {tSite(item.description)}
                       </p>
 
                       <div className="mt-5 flex items-center text-sm font-medium text-foreground">
-                        Open page
+                        {tSite("Open page ")}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </div>
                     </div>
@@ -257,17 +263,17 @@ export default function NotFound() {
                   variant="outline"
                   className="rounded-[5px] border-border-subtle bg-surface-muted"
                 >
-                  Popular destinations
+                  {tSite("Popular destinations ")}
                 </Badge>
 
                 <h2 className="mt-4 font-brand text-2xl font-semibold tracking-tight">
-                  Continue from a core PyColors surface.
+                  {tSite("Continue from a core PyColors surface. ")}
                 </h2>
               </div>
 
               <Button asChild variant="outline" className="rounded-[5px]">
                 <Link href="/changelog">
-                  Latest updates
+                  {tSite("Latest updates ")}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
@@ -292,16 +298,16 @@ export default function NotFound() {
                               item.featured && "text-primary",
                             )}
                           >
-                            {item.icon}
+                            {tSite(item.icon)}
                           </div>
 
                           <div className="text-left">
                             <div className="text-sm font-semibold sm:text-base">
-                              {item.title}
+                              {tSite(item.title)}
                             </div>
 
                             <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                              {item.description}
+                              {tSite(item.description)}
                             </p>
                           </div>
                         </div>
@@ -311,13 +317,13 @@ export default function NotFound() {
                             variant={item.featured ? "secondary" : "outline"}
                             className="shrink-0 rounded-[5px] text-[11px]"
                           >
-                            {item.badge}
+                            {tSite(item.badge)}
                           </Badge>
                         ) : null}
                       </div>
 
                       <div className="mt-5 flex items-center text-sm font-medium text-foreground">
-                        Open page
+                        {tSite("Open page ")}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </div>
                     </div>
@@ -336,17 +342,17 @@ export default function NotFound() {
                       className="h-4 w-4 text-primary"
                       aria-hidden="true"
                     />
-                    Ecosystem map
+                    {tSite("Ecosystem map ")}
                   </div>
 
                   <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-                    Recover from the right product surface.
+                    {tSite("Recover from the right product surface. ")}
                   </h2>
 
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    PyColors is organized around docs, starters, patterns,
-                    pricing, and product direction. Start from the surface
-                    closest to what you were trying to reach.
+                    {tSite(
+                      "PyColors is organized around docs, starters, patterns, pricing, and product direction. Start from the surface closest to what you were trying to reach. ",
+                    )}
                   </p>
                 </div>
 
@@ -413,7 +419,7 @@ export default function NotFound() {
                     >
                       <div className="flex items-center gap-2 text-sm font-medium">
                         <group.icon className="h-4 w-4 text-muted-foreground" />
-                        {group.title}
+                        {tSite(group.title)}
                       </div>
 
                       <div className="flex flex-wrap gap-2">
@@ -423,7 +429,7 @@ export default function NotFound() {
                             href={link.href}
                             className="group inline-flex h-8 items-center gap-1.5 rounded-[5px] border border-border-subtle bg-background px-3 text-xs font-medium text-muted-foreground transition-colors hover:border-border hover:bg-surface hover:text-foreground"
                           >
-                            {link.label}
+                            {tSite(link.label)}
                             <ArrowRight
                               className="h-3.5 w-3.5 opacity-50 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100"
                               aria-hidden="true"
@@ -444,19 +450,19 @@ export default function NotFound() {
                 <div className="space-y-2 text-left">
                   <div className="inline-flex items-center gap-2 text-sm font-medium">
                     <LifeBuoy className="h-4 w-4" aria-hidden="true" />
-                    Ready to choose the right path?
+                    {tSite("Ready to choose the right path? ")}
                   </div>
 
                   <p className="text-sm leading-7 text-muted-foreground">
-                    Compare Starter Free and Starter Pro to decide whether you
-                    want to validate first or start from a production-ready SaaS
-                    foundation.
+                    {tSite(
+                      "Compare Starter Free and Starter Pro to decide whether you want to validate first or start from a production-ready SaaS foundation. ",
+                    )}
                   </p>
                 </div>
 
                 <Button asChild className="rounded-[5px]">
                   <Link href="/pricing">
-                    View pricing
+                    {tSite("View pricing ")}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
@@ -464,8 +470,9 @@ export default function NotFound() {
             </Card>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              PyColors is maintained as an evolving SaaS ecosystem: starters,
-              docs, patterns, changelog, and roadmap move together.
+              {tSite(
+                "PyColors is maintained as an evolving SaaS ecosystem: starters, docs, patterns, changelog, and roadmap move together. ",
+              )}
             </p>
           </section>
         </Container>

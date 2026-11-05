@@ -1,0 +1,107 @@
+---
+title: Aperçu des statistiques
+description: Un tableau de bord recopiable avec des valeurs formatées, des
+  étiquettes de comparaison et des périodes de reporting.
+lastUpdated: "2026-10-05"
+appliesTo: Blocks
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { StatsOverviewExample } from "@/components/docs/blocks/stats-overview-example";
+
+## Mettez les chiffres clés en premier [#put-the-key-numbers-first]
+
+`StatsOverview` présente une section de tableau de bord nommée avec une période de reporting et une grille réactive de métriques. Chaque mesure peut inclure une comparaison et une brève explication. Votre application fournit des valeurs formatées et décide si un changement est positif, négatif ou neutre ; une augmentation n’est pas toujours une bonne nouvelle.
+
+L'aperçu utilise des données d'espace de travail fictives. Il n'interroge pas un service d'analyse, ne calcule pas de tendances, ne suit pas les visiteurs ou ne persiste pas d'informations.
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Données et enregistrements**limace `data`.
+- Bloquer : `stats-overview`, exportation `StatsOverview`.
+- Source canonique : `apps/marketing/content/blocks/data/stats-overview/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/stats-overview/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source ou sélectionnez le code manuellement si l'accès au presse-papiers n'est pas disponible. Le fichier complet est inclus à partir de la source canonique au moment de la compilation.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <StatsOverviewExample />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/stats-overview/index.tsx"'
+    >
+      ../../../blocks/data/stats-overview/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Collez la source complète à la destination ci-dessus et importez votre copie locale. Garder le public `@pycolors/ui` import et configuration de votre token d'interface utilisateur. Aucune dépendance supplémentaire, paquet Blocs ou installation du Registre n'est nécessaire. Votre copie ne reçoit pas de mises à jour automatiques; validez-la dans votre application après la copie et chaque fois que vous adoptez une révision canonique ultérieure.
+
+```tsx title="workspace-summary.tsx"
+import { StatsOverview } from "./blocks/stats-overview";
+
+export function WorkspaceSummary() {
+  return (
+    <StatsOverview
+      id="workspace-summary"
+      heading="Workspace overview"
+      periodLabel="September 2026"
+      metrics={[
+        {
+          id: "projects",
+          label: "Active projects",
+          value: "24",
+          change: { label: "Up 4 from August", tone: "positive" },
+          description: "Across all workspace teams",
+        },
+      ]}
+    />
+  );
+}
+```
+
+Remplacez l'échantillon par vos propres données validées. Le bloc est uniquement de présentation et ne nécessite ni état ni `"use client"` directive. Il peut effectuer un rendu dans un composant serveur Next.js. Un wrapper client peut fournir des accessoires mis à jour lorsque votre application a besoin de filtrage ou de données en direct; le bloc ne les récupère pas lui-même.
+
+## Props et contenu [#props-and-content]
+
+| Prop           | Objet                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `id`           | ID HTML stable et non vide requis, unique sur la page et le code dérivé `${id}-heading` ID.                                    |
+| `heading`      | Nom de section requis.                                                                                                         |
+| `headingLevel` | `2` par défaut ; choisir `2` par `6` pour correspondre à la hiérarchie de titre environnante.                                  |
+| `description`  | Explication facultative sous le titre.                                                                                         |
+| `periodLabel`  | Période de reporting facultative, affichée sous forme de texte plutôt que de sélecteur de date.                                |
+| `metrics`      | Lecture seule du tableau de métriques. Chacun a besoin d'une stabilité, unique `id`, a `label` et une chaîne formatée `value`. |
+| `emptyMessage` | Message pour un tableau vide ; par défaut, « Aucune métrique disponible ».                                                     |
+| `className`    | Personnalisation de la racine via public `cn`Les classes de consommateurs ont préséance.                                       |
+
+Une métrique optionnelle `description` explique sa portée. Son facultatif `change` contient un visible `label` et a `tone`: `positive`, `negative` ou `neutral` (par défaut). Incluez la direction, les unités et la période de comparaison dans l’étiquette, par exemple “Down 3 from August”.
+
+Formatez les devises, les pourcentages, les unités et les dates localisées avant de les passer. Utilisez un espace réservé significatif tel que « Indisponible » lorsqu’une valeur est manquante ; ne remplacez pas zéro par des données indisponibles. Sans métriques, le bloc affiche uniquement le titre, le contexte facultatif et le message vide, sans grille vide.
+
+## Mise en page et accessibilité [#layout-and-accessibility]
+
+Les métriques utilisent une liste de description (`dl`, `dt`, `dd`) associer les labels à leurs valeurs et à leur contexte. La région utilise son titre comme nom accessible. Fournissez des identifiants distincts lors du rendu de plusieurs aperçus. Il n'y a pas de contrôles de focus, d'annonces automatiques ou de changements de focus; votre application possède des annonces lorsque les valeurs sont mises à jour dynamiquement.
+
+La grille utilise une colonne sur les écrans étroits, deux de `sm`, et quatre de `xl`. Une à quatre métriques fonctionnent mieux pour un aperçu concis; métriques supplémentaires wrap. Les étiquettes longues, les valeurs et le texte de comparaison peuvent s'enrouler. Les tokens de couleur sémantique prennent en charge les thèmes clairs et sombres. Passez en revue votre propre contenu à des largeurs étroites et avec zoom.
+
+## Valider et conserver votre copie [#validate-and-maintain-your-copy]
+
+Exécutez la charpie de votre application, les contrôles de type, les tests et la construction de production. Vérifiez le contenu rempli et vide, les métriques sans étiquettes de comparaison, les données réorganisées, les instances multiples, les valeurs longues et les deux thèmes de couleurs. Aucun comportement de chargement, d'erreur, de filtrage ou d'autorisation de données n'est intégré; ceux-ci restent avec votre application.
+
+Gardez la source copiée sous contrôle de version. Passez en revue les modifications canoniques ultérieures délibérément et préservez vos personnalisations locales. La restauration du fichier local annule la présentation sans modifier vos données sous-jacentes.
+
+Jumeler ce résumé avec le [Tableau de données](/docs/blocks/data/data-table), explorez la [Blocage du catalogue](/blocks), ou personnaliser les couleurs partagées dans [Theme Builder](/tools/theme-builder).

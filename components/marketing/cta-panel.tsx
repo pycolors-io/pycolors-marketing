@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -39,6 +40,8 @@ export function MarketingActionGroup({
   align = "left",
   className,
 }: MarketingActionGroupProps) {
+  const tSite = useCopy();
+
   return (
     <div
       className={cn(
@@ -47,7 +50,7 @@ export function MarketingActionGroup({
         className,
       )}
     >
-      {children}
+      {tSite(children)}
     </div>
   );
 }
@@ -69,6 +72,8 @@ export function MarketingCtaPanel({
   titleId,
   className,
 }: MarketingCtaPanelProps) {
+  const tSite = useCopy();
+
   const Heading = `h${headingLevel}` as const;
   const isCentered = align === "center";
 
@@ -85,7 +90,7 @@ export function MarketingCtaPanel({
         id={titleId}
         className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
       >
-        {title}
+        {tSite(title)}
       </Heading>
 
       {description ? (
@@ -95,11 +100,11 @@ export function MarketingCtaPanel({
             isCentered ? "mx-auto max-w-2xl" : "max-w-2xl",
           )}
         >
-          {description}
+          {tSite(description)}
         </p>
       ) : null}
 
-      {actions ? <div className="mt-8">{actions}</div> : null}
+      {actions ? <div className="mt-8">{tSite(actions)}</div> : null}
     </div>
   );
 }
@@ -121,6 +126,8 @@ export function MarketingLinkButton({
   variant = "default",
   className,
 }: MarketingLinkButtonProps) {
+  const tSite = useCopy();
+
   return (
     <Button
       asChild
@@ -132,7 +139,7 @@ export function MarketingLinkButton({
         className,
       )}
     >
-      {children}
+      {tSite(children)}
     </Button>
   );
 }

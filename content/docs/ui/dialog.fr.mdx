@@ -1,0 +1,535 @@
+---
+title: Dialog
+description: Composant de dialogue modal construit sur Radix Dialog. Utilisez-le
+  pour les confirmations, les formulaires et les tâches ciblées.
+lastUpdated: "2026-10-30"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
+} from "@pycolors/ui";
+import {
+  Accessibility,
+  CheckCircle,
+  ClipboardCheck,
+  FilePenLine,
+  FolderPlus,
+  Layers3,
+  MousePointerClick,
+  PanelsTopLeft,
+  PencilLine,
+  ShieldAlert,
+  SquareStack,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>boîte dialogue</Badge>
+</div>
+
+## Tâches modales ciblées [#focused-modal-tasks]
+
+Les **boîte dialogue** component rend une superposition modale pour les tâches ciblées qui nécessitent l'attention de l'utilisateur.
+
+Utilisez-le pour:
+
+- confirmations
+- Formes courtes
+- Décisions destructrices
+- créer ou modifier des flux
+- tâches qui ne devraient pas s'éloigner de la page actuelle
+
+Le dialogue est construit sur **Boîte de dialogue Radix** et stylisé avec des tokens PyColors tels que `bg-card`, `border-border`et `text-card-foreground`.
+
+<Callout title="Idée de base">
+  La boîte de dialogue est pour les décisions ou les tâches ciblées. Si le flux
+  devient long, de navigation ou en plusieurs étapes, utilisez un panneau latéral ou
+  une page dédiée.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="dialog-import.tsx"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez la boîte de dialogue pour un formulaire ciblé ou une tâche courte qui doit rester dans son contexte.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">Ouvrir la boîte de dialogue</Button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Modifier le profil</DialogTitle>
+            <DialogDescription>{"Mettez à jour les détails de votre compte. Les modifications sont enregistrées lors de la soumission."}</DialogDescription>
+          </DialogHeader>
+
+          <div className="mt-4 grid gap-3">
+            <Input label="Nom" placeholder="Patrice" />
+            <Input label="Email" placeholder="patrice@pycolors.com" />
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Annuler</Button>
+            </DialogClose>
+            <Button>Enregistrer</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="edit-profile-dialog.tsx"
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
+} from "@pycolors/ui";
+
+export function EditProfileDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">
+          Open dialog
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Update your account details. Changes are saved on submit.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="patrice@pycolors.com" />
+        </div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Défilement lié [#bounded-scrolling]
+
+Conservez un contenu d'examen plus long à l'intérieur d'une surface délimitée par une fenêtre d'affichage telle que `flex max-h-[80dvh] flex-col overflow-hidden`. Donner l'en-tête et le pied de page `shrink-0`, et mettre `min-h-0 flex-1 overflow-y-auto` dans la région de contenu. Le titre et les actions restent alors visibles pendant que le corps défile.
+
+Donnez à la région scrollable un nom accessible et `tabIndex={0}` afin que les utilisateurs de clavier puissent l'atteindre et le faire défiler. Les [Exemple à long contenu](https://ui.pycolors.io/?path=/story/components-dialog--long-content) démontre cette disposition et vérifie le focus, le défilement et les actions atteignables.
+
+## Quand utiliser Dialog [#when-to-use-dialog]
+
+Utilisez la boîte de dialogue lorsque l'utilisateur doit terminer, confirmer ou annuler une tâche ciblée.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Confirmation",
+      description:
+        "Confirmez les actions à risque ou irréversibles avant qu’elles ne se produisent.",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "Abrégé",
+      description:
+        "Modifiez un petit élément de données sans quitter la page en cours.",
+      icon: FilePenLine,
+    },
+    {
+      title: "Tâche ciblée",
+      description:
+        "Gardez l'utilisateur concentré sur une action limitée avec des choix clairs.",
+      icon: MousePointerClick,
+    },
+  ]}
+/>
+
+### Confirmation destructive [#destructive-confirmation]
+
+Utilisez la boîte de dialogue pour les actions destructrices qui nécessitent une intention explicite de l'utilisateur.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive" size="sm">Supprimer...</Button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Supprimer le projet</DialogTitle>
+            <DialogDescription>{"Cette action ne peut pas être annulée. Cela supprimera définitivement le projet et ses données."}</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary">Annuler</Button>
+            </DialogClose>
+            <Button variant="destructive">Supprimer</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="delete-dialog.tsx"
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@pycolors/ui";
+
+export function DeleteDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="destructive" size="sm">
+          Delete…
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete project</DialogTitle>
+          <DialogDescription>
+            This action can’t be undone. This will permanently delete the
+            project and its data.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button variant="destructive">Delete</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle d'écoulement destructif">
+  L'action destructrice doit être explicite, visuellement distincte et placée
+  après l'option la plus sûre.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Déclenchement avec un élément sémantique [#trigger-with-a-semantic-element]
+
+    Utilisation `DialogTrigger asChild` avec a `Button` ou un autre déclencheur sémantique.
+
+</Step>
+
+  <Step>
+    #### Fournir un contexte clair [#provide-clear-context]
+
+    Chaque dialogue doit avoir un `DialogTitle` et une utile `DialogDescription`.
+
+</Step>
+
+  <Step>
+    #### Gardez le contenu concentré [#keep-the-content-focused]
+
+    Un dialogue doit généralement contenir une tâche, un formulaire ou une décision.
+
+</Step>
+
+  <Step>
+    #### Placer les actions dans le pied de page [#place-actions-in-the-footer]
+
+    Gardez annuler et confirmer les actions dans `DialogFooter` pour un placement prévisible.
+
+</Step>
+
+  <Step>
+    #### Fermer uniquement lorsque la tâche est terminée ou annulée [#close-only-when-the-task-is-complete-or-canceled]
+
+    Ne fermez pas la boîte de dialogue automatiquement si la soumission échoue. Afficher l'erreur dans le contexte.
+
+</Step>
+
+</Steps>
+
+## Boîte de dialogue vs feuille vs menu déroulant [#dialog-vs-sheet-vs-dropdown-menu]
+
+| Situation                                     | Utilisation     |
+| --------------------------------------------- | --------------- |
+| Confirmer l'action destructrice               | boîte dialogue  |
+| Forme courte                                  | boîte dialogue  |
+| Créer ou modifier un petit enregistrement     | boîte dialogue  |
+| Filtres avancés                               | Sheet           |
+| Flux de travail latéral ou panneau de détails | Sheet           |
+| Actions de rangée ou petit menu contextuel    | menu déroulant  |
+| Long débit multi-étapes                       | Page ou feuille |
+
+<Callout type="info" title="Règle de décision">
+  La boîte de dialogue bloque la page pour une tâche ciblée. Sheet étend la page
+  pour les flux de travail latéraux. DropdownMenu expose des actions rapides.
+
+</Callout>
+
+## API [#api]
+
+#### Composants [#components]
+
+| Composante          | Désignation                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `Dialog`            | Récipient racine                                                         |
+| `DialogTrigger`     | Élément déclencheur, généralement avec `asChild`                         |
+| `DialogContent`     | Surface modale, superposition et comportement proche                     |
+| `DialogHeader`      | Titre et description stack helper                                        |
+| `DialogFooter`      | Action Row Helper                                                        |
+| `DialogTitle`       | Titre du dialogue accessible                                             |
+| `DialogDescription` | Texte d ' appui                                                          |
+| `DialogClose`       | Fermez le contrôle, généralement en enveloppant un bouton avec `asChild` |
+
+#### Props [#props]
+
+Les composants de la boîte de dialogue étendent leurs accessoires Radix Dialog respectifs.
+
+```ts title="dialog-props.ts"
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Trigger>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>;
+```
+
+### Accessibilité [#accessibility]
+
+- La boîte de dialogue est construite sur les primitives Radix Dialog.
+- La focus est piégée à l'intérieur du dialogue lorsqu'elle est ouverte.
+- La focus est restaurée sur le déclencheur lorsque la boîte de dialogue se ferme.
+- Escape devrait fermer la boîte de dialogue à moins que le flux ne nécessite une manipulation personnalisée minutieuse.
+- Chaque dialogue a besoin d’une `DialogTitle`.
+- Utilisation `DialogDescription` pour expliquer la tâche ou le risque.
+- Évitez les dialogues imbriqués.
+- N'utilisez pas Dialog pour les longs flux de navigation.
+
+<Callout title="Règle d'accessibilité">
+  Un dialogue sans titre clair n'est pas un dialogue complet. Le titre donne aux
+  utilisateurs de technologies d'assistance le contexte dont ils ont besoin.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Une tâche par dialogue",
+    "Titre clair et courte description",
+    "Déclencheur sémantique avec `asChild`",
+    "annuler et confirmer les actions dans le pied de page",
+    "retour d'erreur en ligne pour les soumissions échouées",
+  ]}
+  avoid={[
+    "de longs flux de travail à plusieurs étapes",
+    "dialogues imbriqués",
+    "dialogues sans titres",
+    "Fermeture sur les erreurs de soumission",
+    "Utilisation de la boîte de dialogue pour des actions de ligne simples",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+La copie de la boîte de dialogue doit être directe et spécifique.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Create',
+      title: "Créer un projet",
+      icon: FolderPlus,
+      description: (
+        <>
+          <p>
+            Creation flows should feel lightweight, guided, and reversible.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Give your project a name. You can change these details later.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Edit',
+      title: "Modifier le profil",
+      icon: PencilLine,
+      description: (
+        <>
+          <p>
+            Editing flows should communicate persistence and reduce ambiguity.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Update your account details. Changes are saved when you submit.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Delete',
+      title: "Supprimer le projet",
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Destructive flows should clearly communicate risk and permanence.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            This action can’t be undone. This will permanently delete the project and its data.
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Les formulaires doivent-ils toujours utiliser la boîte de dialogue ?">
+    Non. Utilisez la boîte de dialogue pour les formes courtes et ciblées. Utilisez une page ou un panneau latéral pour les formulaires longs, les flux en plusieurs étapes ou les flux de travail qui nécessitent plus d’espace.
+  </Accordion>
+
+<Accordion title="La boîte de dialogue peut-elle contenir une table ?">
+  Habituellement non. Les tables ont souvent besoin d'espace, de numérisation et
+  d'interaction avec les lignes. Utilisez plutôt une page ou un panneau latéral.
+</Accordion>
+
+<Accordion title="Les actions destructrices devraient-elles toujours utiliser la boîte de dialogue?">
+  Utilisez la boîte de dialogue lorsque l'action est risquée, irréversible ou
+  nécessite une confirmation explicite. Pour des actions réversibles, un toast
+  avec Undo peut suffire après une interaction plus sûre.
+</Accordion>
+
+  <Accordion title="Puis-je masquer le titre visuellement ?">
+    Vous pouvez masquer visuellement un titre si la conception l'exige, mais le titre accessible doit toujours exister.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Actions utilisées à l'intérieur des déclencheurs et des pieds de page de dialogue.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Utilisez Sheet pour des flux de travail latéraux, des filtres et des panneaux de détails plus importants.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Motif de recouvrements",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choisissez entre Dialog, Sheet et DropdownMenu pour les flux de produits.",
+      icon: Layers3,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des superpositions accessibles avec focus, clavier et structure sémantique.",
+      icon: Accessibility,
+    },
+  ]}
+/>

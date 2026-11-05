@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/seo/website";
 
 export type SiteLocale = "en" | "fr";
-/** Only published translations belong here. Do not invent /fr/docs fallbacks. */
+/** Compatibility names for existing acquisition metadata; general routing lives in routing.ts. */
 export const LOCALIZED_ROUTES = {
   home: { en: "/", fr: "/fr" },
   starterPro: { en: "/starters/pro", fr: "/fr/starters/pro" },

@@ -119,7 +119,7 @@ test("renders Northstar as a branded application shell instead of a component de
     new URL("./theme-preview.tsx", import.meta.url),
     "utf8",
   );
-  assert.match(previewSource, /aria-label="Northstar workspace"/u);
+  assert.match(previewSource, /aria-label=\{tSite\("Northstar workspace"\)\}/u);
   assert.match(previewSource, /Northstar workspace/u);
   assert.match(previewSource, /Dashboard/u);
   assert.match(previewSource, /Active projects/u);
@@ -132,7 +132,7 @@ test("renders Northstar as a branded application shell instead of a component de
   assert.match(previewSource, /Focus-ready action/u);
   assert.match(previewSource, /bg-primary\/5/u);
   assert.match(previewSource, /data-\[state=active\]:bg-primary/u);
-  assert.match(previewSource, /aria-label="Northstar projects"/u);
+  assert.match(previewSource, /aria-label=\{tSite\("Northstar projects"\)\}/u);
   assert.doesNotMatch(
     previewSource,
     /Manage the project defaults used by your delivery team\./u,

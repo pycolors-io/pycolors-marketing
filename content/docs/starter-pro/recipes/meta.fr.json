@@ -1,0 +1,9 @@
+{
+  "title": "Business recipes",
+  "pages": [
+    "index",
+    "client-tracking",
+    "support-requests",
+    "internal-validation"
+  ]
+}

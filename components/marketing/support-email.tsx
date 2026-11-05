@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { SiteButton as Button } from "@/components/site-button";
@@ -10,6 +11,8 @@ export function SupportEmail({
   label = "Support email",
   copyLabel = "Copy support email",
 }: Readonly<{ email: string; label?: string; copyLabel?: string }>) {
+  const tSite = useCopy();
+
   const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
   const [copying, setCopying] = useState(false);
 
@@ -30,9 +33,9 @@ export function SupportEmail({
     <div className={styles.emailPanel}>
       <div className={styles.emailRow}>
         <div className="min-w-0">
-          <p className={styles.emailLabel}>{label}</p>
+          <p className={styles.emailLabel}>{tSite(label)}</p>
           <a href={`mailto:${email}`} className={styles.email}>
-            {email}
+            {tSite(email)}
           </a>
         </div>
         <Button
@@ -40,8 +43,8 @@ export function SupportEmail({
           variant="ghost"
           size="icon-sm"
           className={styles.copyButton}
-          aria-label={copyLabel}
-          title={copyLabel}
+          aria-label={tSite(copyLabel)}
+          title={tSite(copyLabel)}
           disabled={copying}
           onClick={copyEmail}
         >
@@ -53,11 +56,13 @@ export function SupportEmail({
         </Button>
       </div>
       <p role="status" aria-live="polite" className={styles.copyStatus}>
-        {status === "copied"
-          ? "Email address copied."
-          : status === "error"
-            ? "Copy unavailable. Select the address to copy it."
-            : "Copy the address to use your preferred email service."}
+        {tSite(
+          status === "copied"
+            ? "Email address copied."
+            : status === "error"
+              ? "Copy unavailable. Select the address to copy it."
+              : "Copy the address to use your preferred email service.",
+        )}
       </p>
     </div>
   );

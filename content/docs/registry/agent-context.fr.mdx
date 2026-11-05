@@ -1,0 +1,69 @@
+---
+title: Utiliser PyColors avec des assistants de développement IA
+description: "Conventions du système de conception PyColors pour React UI : API
+  publiques, tokens de conception, composition accessible et validation en
+  fonction du projet."
+lastUpdated: "2026-09-27"
+publishedAt: "2026-10-02"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+**Agent Context est une référence d'intégration PyColors optionnelle pour les assistants de développement IA.** Il explique comment utiliser les composants, les tokens et les modèles PyColors dans votre application, de sorte que l'agent dispose de conventions concrètes à suivre lors de la génération ou de la réparation de l'interface utilisateur React.
+
+<Callout title="Statut: Pilote">
+  Le fichier contextuel facultatif n'est pas encore disponible dans le Registre
+  public. Vous pouvez utiliser la documentation publique avec votre agent
+  aujourd'hui, comme indiqué ci-dessous.
+
+</Callout>
+
+## Démarrage rapide : utilisez les documents publics dès aujourd'hui [#quick-start-use-the-public-docs-today]
+
+1. Suivre [Installation de l'interface utilisateur](/docs/ui/installation) si votre application n'utilise pas déjà PyColors. Conservez votre configuration existante et les versions de package installées.
+2. Partager le [modèles d'utilisation](/docs/ui/usage-patterns),
+   [thématisation](/docs/ui/theming) et [accessibilité](/docs/ui/accessibility) guides pertinents pour votre tâche. Si votre agent ne peut pas ouvrir de liens, fournissez vous-même les extraits pertinents.
+3. Donnez à l'agent une tâche concrète et demandez-lui de vérifier votre application avant de l'éditer. Par exemple :
+
+```text
+Use the PyColors guides I shared to build an account settings form.
+Inspect this app's installed @pycolors/ui and @pycolors/tokens versions
+and existing components first. Reuse public APIs, semantic tokens and
+labeled controls. Connect to our existing save handler; explain any
+missing behavior. Run the app's relevant checks and report the results.
+Follow this repository's instructions and your host's permissions.
+```
+
+Ce flux de travail n'a pas besoin de plugin d'agent spécifique à PyColors. Examiner les modifications proposées; la documentation n'accorde pas d'autorisations supplémentaires à un agent.
+
+## Ce que l'agent reçoit [#what-the-agent-receives]
+
+Le contexte pilote rassemble des orientations sur:
+
+- **Composants et API :** inspecter les exportations publiques installées, réutiliser les primitives existantes et les blocs copiés, et éviter les importations ou les accessoires devinés.
+- **tokens de design et composition :** Suivez les couleurs sémantiques, les conventions de thème et les modèles d'interface utilisateur existants tout en préservant vos personnalisations.
+- **Accessibilité et limites de React :** conserver les étiquettes, l'interaction avec le clavier et le focus visible ; conserver les composants serveur Next.js par défaut avec de petits composants clients interactifs.
+- **Contrôles de mise en œuvre:** utiliser les scripts de validation de votre application et distinguer un formulaire rendu de la persistance ou de l'autorisation de travail.
+
+Il pointe vers la documentation faisant autorité et les types installés ; il ne s'agit pas d'un catalogue de composants complet ou d'un remplacement pour les instructions de votre dépôt.
+
+## Exemple : une page de paramètres de compte [#example-an-account-settings-page]
+
+Une demande générique de « créer une page de paramètres » peut produire des noms de composants inconnus ou des couleurs codées en dur. Avec les conseils de PyColors, l'agent peut inspecter vos API installées, adapter [Exemple de paramètres](/docs/ui/usage-patterns), utilisez des tokens sémantiques et préservez les champs étiquetés et votre gestionnaire de sauvegarde.
+
+Vérifiez les importations résultantes, le flux du clavier et le comportement d'enregistrement. La référence guide le travail, elle ne garantit pas un résultat correct ou accessible.
+
+## Disponibilité [#availability]
+
+- **Disponible aujourd'hui:** Guides d'interface utilisateur publics, documentation des composants et exemples de blocs copiables à partager avec un agent.
+- **Pilote :** un fichier contextuel Markdown optionnel avec une installation opt-in testée en interne. Ces contrôles n'établissent pas la qualité de la disponibilité publique ou de la réponse au modèle.
+- **Encore à venir :** livraison publique de l'élément de contexte du Registre. Une compétence d'intégration packagée et son évaluation de réponse sont des travaux distincts.
+
+Si vous avez déjà une copie pilote révisée, demandez explicitement à votre agent de la lire pour la tâche. Il n'est pas activé automatiquement. Vous possédez cette copie : passez en revue les mises à jour manuellement ou supprimez le fichier et tout pointeur que vous avez ajouté à vos propres instructions. Il n'ajoute pas de runtime, d'appel de modèle ou de télémétrie PyColors ; le traitement et les autorisations de votre agent restent régis par son hôte.
+
+## Prochaines étapes [#next-steps]
+
+- [Explorer les composants de l'interface utilisateur](/docs/ui) et [modèles d'utilisation](/docs/ui/usage-patterns).
+- [Réutiliser les blocs](/docs/blocks) ou [Démarrer avec Starter Free](/docs/starter).
+- [Comprendre le registre](/docs/registry) et ses [flux de travail d'installation](/docs/registry/installation).

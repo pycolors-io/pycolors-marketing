@@ -1,0 +1,352 @@
+---
+title: Ce qui est inclus
+description: Découvrez ce que Starter Pro inclut, ce qui est déjà construit et
+  ce que vous construisez encore vous-même.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  Database,
+  Download,
+  LockKeyhole,
+  Package,
+  Rocket,
+  Scale,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Inclus</Badge>
+</div>
+
+## Ce qui est inclus dans Starter Pro [#what-is-included-in-starter-pro]
+
+Starter Pro inclut les fondations de production qui ralentissent généralement les lancements SaaS.
+
+Ce n’est pas une affaire de SaaS terminée. Ce n'est pas un bundle générique. Ce n'est pas une collection de démos déconnectées.
+
+C'est une **Fondation SaaS prête à la production** construit autour des couches dont la plupart des produits payants ont besoin avant le lancement:
+
+- Authentification
+- facturation
+- Routes protégées
+- Structure prête pour le backend
+- livraison sécurisée
+- App Foundations
+
+<Callout title="Idée de base">
+  Starter Pro inclut la couche d'infrastructure qui rend un produit launchable.
+  Vous construisez toujours la logique du produit qui le rend précieux.
+
+</Callout>
+
+<DocsUpgradeCTA
+  title="Construire le produit. Ne reconstruisez pas les bloqueurs."
+  description="Starter Pro vous donne la base du lancement afin que vous puissiez passer plus de temps sur les clients, les produits et les revenus."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+### Systèmes inclus [#included-systems]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Authentification",
+      description:
+        "Fondements de compte réels avec identifiants, OAuth, vérification des e-mails, réinitialisation des flux, sessions et gestion plus sûre du cycle de vie du compte.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Stripe Checkout, le portail de facturation, les abonnements, les factures, la synchronisation webhook et le comportement des produits sensibles à la facturation.",
+      icon: CreditCard,
+    },
+    {
+      title: "fondations backend",
+      description:
+        "Structure Prisma-ready, architecture orientée base de données, modèles côté serveur et limites de domaine claires.",
+      icon: Database,
+    },
+    {
+      title: "passation acheteur",
+      description:
+        "ZIP autonome validé, inventaire des révisions source, guides de configuration et de personnalisation, et une procédure de mise à niveau par étapes.",
+      icon: Download,
+    },
+  ]}
+/>
+
+## Workflows de produits connectés [#connected-product-workflows]
+
+- **Comptes :** Onboarding guidé, profil / avatar modifiable, langue / fuseau horaire, sessions révocables et cycle de vie du compte propriétaire.
+- **Équipes :** plusieurs espaces de travail, des contrôles de rôles en direct, des invitations, des notifications et des activités paginées avec des acteurs et des ressources.
+- **Travaux du projet:** descriptions, statut, membres responsables, archivage, tâches, dates d'échéance du calendrier et discussions paginées. Les projets archivés rejettent les modifications jusqu'à ce qu'elles soient restaurées.
+- **Apparence :** palettes, typographie, géométrie, échelle d'interface et commandes de barre latérale avec persistance du navigateur et états de chargement correspondants.
+- **Recettes d'affaires:** [suivi des clients, demandes de support et validation interne](/docs/starter-pro/recipes), avec des adaptations guidées du modèle projet/tâche/commentaire et des limites de domaine explicites.
+- **Opérations :** diagnostics, état de santé/préparation, références d'erreurs contrôlées, points d’intégration des alertes et exercice synthétique de restauration PostgreSQL.
+
+La facturation appartient à la **compte utilisateur**. Les quotas d'espace de travail/ressources sont appliqués sur le serveur lorsqu'ils sont configurés et **non plafonné par défaut**. La licence source et l'abonnement de votre application sont séparés. La récupération des achats et la livraison ZIP sont opérées par PyColors; la vitrine PyColors n'est pas un module d'application fourni dans votre ZIP de démarrage.
+
+Réexamen [Preuve de validation](/docs/starter-pro/release-readiness),
+[personnalisation et mises à jour](/docs/starter-pro/customization-and-upgrades) et [domaine d ' application](/docs/starter-pro/implementation-support).
+
+## Portée détaillée [#detailed-scope]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Authentification",
+      title: "Les vraies fondations Auth",
+      icon: LockKeyhole,
+      description:
+        "Les fondations d'authentification sont nécessaires avant qu'un produit SaaS puisse être lancé en toute sécurité.",
+      items: [
+        "email et mot de passe auth",
+        "Google OAuth",
+        "Github OAuth",
+        "e-mail vérification",
+        "mot de passe oublié",
+        "réinitialiser le mot de passe",
+        "changement de mot de passe",
+        "modèles de comptes connectés",
+        "flows conscients des sessions",
+      ],
+    },
+    {
+      eyebrow: "Facturation",
+      title: "Fondements des recettes",
+      icon: CreditCard,
+      tone: "platform",
+      description:
+        "Fondements Stripe pour les abonnements, les factures et les flux de monétisation.",
+      items: [
+        "Stripe Checkout",
+        "portail de facturation",
+        "Gestion du cycle de vie des abonnements",
+        "flux prêts à recevoir des factures",
+        "Webhook Synchronisation",
+        "logique de produit plan-conscient",
+        "surfaces de monétisation prêtes à être améliorées",
+      ],
+    },
+    {
+      eyebrow: "Backend",
+      title: "Structure prête pour le backend",
+      icon: Database,
+      description:
+        "Une structure orientée backend conçue pour une évolution produit à long terme.",
+      items: [
+        "Structure Prisma-ready",
+        "architecture orientée base de données",
+        "Modèles d'intégration côté serveur",
+        "Auth-Aware Logique",
+        "logique de facturation-consciente",
+        "patterns de séparation de domaine",
+      ],
+    },
+    {
+      eyebrow: "Passation",
+      title: "Paquet source autonome",
+      icon: Download,
+      description:
+        "Une base de référence installable avec des conseils explicites de validation et de mise à niveau.",
+      items: [
+        "manifest autonome, fichier de verrouillage et patchs de dépendance révisés",
+        "Schéma de Prisma et migrations engagées",
+        "version source, révision et inventaire des fichiers",
+        "Guides d'installation, de personnalisation et de mise à niveau",
+        "notes de passation opérationnelles et de soutien",
+      ],
+    },
+  ]}
+/>
+
+### Portée [#scope-boundaries]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Inclus",
+      title: "Lancer les fondations",
+      tone: "platform",
+      description:
+        "Starter Pro supprime les travaux d'infrastructure répétés dont les produits SaaS sérieux ont généralement besoin avant le lancement.",
+      items: [
+        "auth fondations",
+        "fondations de facturation",
+        "Structure d'application protégée",
+        "Structure prête pour le backend",
+        "chemin de livraison",
+        "sérieux de base pour le lancement",
+      ],
+    },
+    {
+      eyebrow: "Non inclus",
+      title: "Votre différenciation",
+      description:
+        "Vous possédez toujours les pièces qui rendent le produit unique et commercialement précieux.",
+      items: [
+        "votre logique produit unique",
+        "votre stratégie de produit final",
+        "vos flux de travail de niche",
+        "votre différenciation du marché",
+        "votre expérience d'intégration",
+        "vos décisions d'affaires",
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Séparation saine">
+  Starter Pro supprime les travaux d'infrastructure répétés. Il ne remplace pas
+  le jugement du produit.
+
+</Callout>
+
+## Ce que cela signifie en pratique [#what-this-means-in-practice]
+
+Starter Pro est commercialement utile car il supprime le travail des systèmes dont les produits payants ont généralement besoin avant le lancement:
+
+- connexion
+- sessions
+- facturation
+- protection
+- Règles d'abonnement
+- intégration backend
+- livraison sécurisée
+
+Ce travail différencie rarement l’entreprise, mais il doit être bien fait.
+
+Starter Pro vous donne une base de référence sérieuse afin que vous puissiez vous concentrer sur:
+
+- valeur du produit
+- clients
+- Positionnement
+- workflows
+- différenciation
+- distribution
+
+### Ce que vous achetez [#what-you-are-buying]
+
+Vous n'achetez pas un SaaS fini.
+
+Vous achetez un chemin plus rapide à travers les couches qui sont généralement:
+
+- répétitifs
+- sensible à la sécurité
+- Revenue-critical
+- Ennuyeux à reconstruire
+- cher à patcher plus tard
+
+<Callout title="La meilleure question">
+  La question n'est pas "combien de choses sont incluses?"
+
+La meilleure question est : « Est-ce que cela supprime le travail qui retarderait le lancement ? »
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  preferTitle="Starter Pro is for"
+  avoidTitle="Starter Pro is not for"
+  prefer={[
+    "Constructeurs prêts à utiliser une authentification réelle",
+    "Les produits SaaS se préparent à facturer les clients",
+    "Les équipes qui veulent moins de lanceurs bloqueurs",
+    "développeurs à la recherche d'une base de production plus solide",
+    "les produits qui nécessitent un accès protégé et un état de facturation",
+  ]}
+  avoid={[
+    "externaliser l’ensemble de votre stratégie produit",
+    "remplacer votre modèle de domaine",
+    "Décider de votre positionnement sur le marché",
+    "automatiser l'acquisition de clients",
+    "expédition sans adapter le produit à votre cas d'utilisation",
+  ]}
+/>
+
+## Modèle mental [#mental-model]
+
+> Inclus : les couches nécessaires pour lancer sérieusement. Non inclus : les pièces qui font de votre produit le vôtre.
+
+Starter Pro n’est pas destiné à impressionner par la quantité.
+
+Il est destiné à supprimer les bons bloqueurs.
+
+<DocsUpgradeCTA
+  title="Lancer avec une base de référence plus forte."
+  description="Starter Pro supprime les travaux d'infrastructure répétés afin que vous puissiez vous concentrer plus tôt sur les clients, la valeur du produit et les revenus."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Premiers pas",
+      href: "/docs/starter-pro/getting-started",
+      description:
+        "Apprenez à approcher Starter Pro et à comprendre la base de référence prête pour la production.",
+      icon: Rocket,
+    },
+    {
+      title: "Pourquoi acheter plutôt que tout développer",
+      href: "/docs/starter-pro/why-buy-instead-of-building",
+      description:
+        "Comprendre le coût réel de la reconstruction de l'authentification, de la facturation et du lancement des fondations.",
+      icon: Scale,
+    },
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Passez en revue la base d'authentification incluse dans Starter Pro.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Passez en revue la facturation, les factures, les abonnements, le portail client et les fondations de webhook.",
+      icon: CreditCard,
+    },
+    {
+      title: "Recettes métier",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Découvrez comment le travail de projet inclus prend en charge trois adaptations commerciales guidées.",
+      icon: Package,
+    },
+    {
+      title: "Personnalisation et mises à niveau",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Passez en revue la configuration du produit, les points d'extension et le flux de travail de mise à niveau.",
+      icon: Rocket,
+    },
+  ]}
+/>

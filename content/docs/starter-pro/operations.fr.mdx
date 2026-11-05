@@ -1,0 +1,148 @@
+---
+title: Exploitation en production
+description: Préparez des diagnostics, des contrôles d'état, des références
+  d'erreur, un routage d'alerte et une procédure de restauration vérifiée.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  Activity,
+  BookOpen,
+  GitBranch,
+  ShieldCheck,
+  Terminal,
+} from "lucide-react";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Diagnostiquer votre environnement [#diagnose-your-environment]
+
+Exécutez le diagnostic à partir du starter installé avant le déploiement :
+
+<CopyableCommand command="pnpm ops:diagnose" />
+
+Il vérifie la configuration de base, le courrier électronique, les informations d'identification OAuth appariées, l'exhaustivité de la facturation et l'isolation de la démo / de la graine. La sortie contient des codes de contrôle et des valeurs de correction plutôt que des valeurs secrètes. La facturation facultative non configurée laisse le paiement indisponible.
+
+Configurez HTTPS, vos propres identifiants et une base de données migrée. Désactivez les installations de développement et conservez les déploiements de démonstration sur une base de données distincte. Les diagnostics ne contactent pas les fournisseurs pour certifier leur configuration.
+
+## Surveillez et alertez [#monitor-and-alert]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Processus vivacité",
+      eyebrow: "GET /api/santé",
+      icon: Activity,
+      description:
+        "Santé des processus non mis en cache, indépendamment des données de compte ou de l'espace de travail.",
+    },
+    {
+      title: "Préparation de la application",
+      eyebrow: "GET /api/readiness",
+      icon: ShieldCheck,
+      description:
+        "Les contrôles de configuration et de schéma requis renvoient HTTP 200 ou 503.",
+    },
+    {
+      title: "Sonde programmée",
+      eyebrow: "pnpm ops:chèque",
+      icon: Terminal,
+      description:
+        "Une sonde de préparation de cinq secondes émet un résultat structuré et sort non nul en cas de défaillance.",
+    },
+    {
+      title: "Références d'erreur",
+      eyebrow: "starter-pro.error",
+      icon: BookOpen,
+      description:
+        "Les échecs de demande et de facturation émettent un code contrôlé et une référence de corrélation.",
+    },
+  ]}
+/>
+
+<Steps>
+  <Step>
+    ### Connecter les signaux [#connect-the-signals]
+
+    Configurez la surveillance de votre plate-forme, un opérateur et une destination d'alerte pour les échecs répétés de préparation et les échecs de webhook de facturation. Le starter fournit des crochets; il ne fournit pas de compte de surveillance ni n'envoie d'alertes à un destinataire prédéfini.
+
+</Step>
+  <Step>
+    ### Exercer un incident dans la mise en scène [#exercise-an-incident-in-staging]
+
+    Déclenchez une défaillance délibérée, vérifiez que la destination choisie reçoit l'alerte et vérifiez la récupération avant de vous fier à l'intégration.
+
+</Step>
+  <Step>
+    ### Enquêter et relire [#investigate-and-replay]
+
+    Suivez les références aux côtés des tableaux de bord des fournisseurs et des reçus de webhook échoués. Corrigez la cause avant de renvoyer un événement de Stripe. Les demandes en double sont rapprochées; l'octroi manuel de plans ou la suppression de l'historique de facturation ne constituent pas une procédure de recouvrement.
+
+</Step>
+
+</Steps>
+
+## Répéter la restauration [#rehearse-restoration]
+
+<Steps>
+  <Step>
+    ### Correspond aux outils PostgreSQL [#match-the-postgresql-tools]
+
+    Installer `pg_dump` et `pg_restore` correspondant à la version principale du serveur. La commande de vérification utilise des bases de données d'assurance qualité locales jetables.
+
+</Step>
+  <Step>
+    ### Exécuter la perceuse isolée [#run-the-isolated-drill]
+
+    <CopyableCommand command="STARTER_PRO_TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5433/pycolors_workspace_restore pnpm ops:verify-restore" />
+
+    La commande crée deux bases de données, migre et ensemence des données synthétiques, effectue une sauvegarde et la restaure dans une transaction. Il ne peut pas cibler une base de données d'applications existante.
+
+</Step>
+  <Step>
+    ### Examiner le rapport de vérification [#review-the-verification-report]
+
+    La commande compare le nombre de lignes et l'empreinte de chaque table, conserve le rapport et supprime les bases de données qu'elle a créées.
+
+</Step>
+
+</Steps>
+
+<Callout title="Vérifier vos sauvegardes de production">
+  Configurez les sauvegardes et la rétention cryptées avec votre opérateur.
+  Restaurer une sauvegarde réelle dans un environnement isolé restreint et
+  enregistrer le point de récupération, la vérification et la procédure d'accès.
+  Un foret synthétique n'établit pas la fraîcheur ou l'accessibilité d'une
+  sauvegarde de production.
+
+</Callout>
+
+Conservez l'artefact d'application précédent et vérifiez la compatibilité schéma/session avant la restauration. Le plein `docs/operations.md` reste disponible dans votre source.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Personnalisation et mises à niveau",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description: "Répéter les migrations et planifier le démantèlement.",
+      icon: GitBranch,
+    },
+    {
+      title: "Couverture de validation",
+      href: "/docs/starter-pro/release-readiness",
+      description:
+        "Contrôles automatisés séparés de l'acceptation du lancement.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

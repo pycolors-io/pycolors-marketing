@@ -229,8 +229,10 @@ export function useWorkSimulation() {
 
 export function WorkSimulationControls({
   simulation,
+  translate = (value: string) => value,
 }: {
   simulation: ReturnType<typeof useWorkSimulation>;
+  translate?: (value: string) => string;
 }) {
   const work = simulation.work;
   if (!work) return null;
@@ -238,11 +240,12 @@ export function WorkSimulationControls({
   return (
     <details className="rounded-lg border border-border px-4 py-3">
       <summary className="cursor-pointer text-sm font-medium">
-        Work simulation controls
+        {translate("Work simulation controls")}
       </summary>
       <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        These buttons supply fictional states manually. They do not execute
-        work, call a model or write a file.
+        {translate(
+          "These buttons supply fictional states manually. They do not execute work, call a model or write a file.",
+        )}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <Button
@@ -252,7 +255,7 @@ export function WorkSimulationControls({
           disabled={blocked || work.status !== "planned"}
           onClick={simulation.requestApproval}
         >
-          Simulate approval request
+          {translate("Simulate approval request")}
         </Button>
         <Button
           type="button"
@@ -265,7 +268,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.advance}
         >
-          Advance one step
+          {translate("Advance one step")}
         </Button>
         <Button
           type="button"
@@ -278,7 +281,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.complete}
         >
-          Supply sample result
+          {translate("Supply sample result")}
         </Button>
         <Button
           type="button"
@@ -287,7 +290,7 @@ export function WorkSimulationControls({
           disabled={blocked || work.status !== "running"}
           onClick={simulation.fail}
         >
-          Simulate failure
+          {translate("Simulate failure")}
         </Button>
         <Button
           type="button"
@@ -301,7 +304,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.unknown}
         >
-          Simulate unknown status
+          {translate("Simulate unknown status")}
         </Button>
         <Button
           type="button"
@@ -310,7 +313,7 @@ export function WorkSimulationControls({
           disabled={work.pendingAction !== "cancel"}
           onClick={simulation.confirmCancellation}
         >
-          Confirm simulated cancellation
+          {translate("Confirm simulated cancellation")}
         </Button>
       </div>
     </details>

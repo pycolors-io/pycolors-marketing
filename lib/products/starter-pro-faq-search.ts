@@ -45,6 +45,7 @@ function normalizeSearchText(value: string): string {
 export function filterStarterProFaqs(
   query = "",
   topic: StarterProFaqFilter = "all",
+  translate: (text: string) => string = (text) => text,
 ) {
   const terms = normalizeSearchText(query).trim().split(/\s+/u).filter(Boolean);
 
@@ -55,7 +56,7 @@ export function filterStarterProFaqs(
 
     const labels = faq.links.map((link) => link.label);
     const text = normalizeSearchText(
-      [faq.question, faq.answer, ...labels].join(" "),
+      [faq.question, faq.answer, ...labels].map(translate).join(" "),
     );
 
     return terms.every((term) => text.includes(term));

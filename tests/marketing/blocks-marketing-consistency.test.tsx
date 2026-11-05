@@ -36,8 +36,11 @@ vi.mock("@/components/marketing/blocks/block-showcase-tabs", () => ({
   ),
 }));
 
-const { default: BlocksPage, metadata } =
-  await import("../../app/(site)/blocks/page");
+const { default: BlocksPage, generateMetadata } =
+  await import("../../app/[locale]/(site)/blocks/page");
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const sectionNames = [
   "Choose the interface you need next",
@@ -184,7 +187,7 @@ describe("Blocks Marketing consistency", () => {
     expect(secondary).toHaveAttribute("href", "/docs/blocks");
     expectLinkButton(primary, true);
     expectLinkButton(secondary, false);
-    expect(metadata.alternates).toEqual({ canonical: "/blocks" });
+    expect(metadata.alternates).toMatchObject({ canonical: "/blocks" });
   });
 
   it("keeps icons decorative and passes structural axe checks", async () => {

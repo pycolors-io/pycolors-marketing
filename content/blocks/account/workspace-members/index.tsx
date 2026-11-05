@@ -19,6 +19,8 @@ export interface WorkspaceMembersPanelProps {
   description?: string;
   members: readonly WorkspaceMember[];
   actions?: React.ReactNode;
+  roleLabel?: string;
+  statusLabel?: string;
   emptyTitle?: string;
   emptyDescription?: string;
   className?: string;
@@ -45,6 +47,8 @@ export function WorkspaceMembersPanel({
   description,
   members,
   actions,
+  roleLabel = "Role",
+  statusLabel = "Status",
   emptyTitle = "No members to display",
   emptyDescription,
   className,
@@ -122,13 +126,17 @@ export function WorkspaceMembersPanel({
                 </div>
                 <dl className="flex min-w-0 flex-wrap gap-x-6 gap-y-2">
                   <div className="min-w-0 space-y-1">
-                    <dt className="text-xs text-muted-foreground">Role</dt>
+                    <dt className="text-xs text-muted-foreground">
+                      {roleLabel}
+                    </dt>
                     <dd className="min-w-0 break-words text-sm">
                       {member.role}
                     </dd>
                   </div>
                   <div className="min-w-0 space-y-1">
-                    <dt className="text-xs text-muted-foreground">Status</dt>
+                    <dt className="text-xs text-muted-foreground">
+                      {statusLabel}
+                    </dt>
                     <dd className="min-w-0">
                       <Badge
                         variant="outline"

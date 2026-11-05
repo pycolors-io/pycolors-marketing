@@ -1,0 +1,447 @@
+---
+title: Tests de facturation
+description: Validez Stripe Checkout, les abonnements, les webhooks et le
+  comportement SaaS de facturation avant le lancement.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AlertTriangle,
+  CheckCircle2,
+  CreditCard,
+  Database,
+  Globe,
+  Layers3,
+  LockKeyhole,
+  RefreshCcw,
+  Rocket,
+  ShieldCheck,
+  Webhook,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Tests de facturation</Badge>
+</div>
+
+## Valider la facturation avant le lancement [#validate-billing-before-launch]
+
+Les systèmes de facturation nécessitent plus que l'interface de paiement.
+
+Starter Pro comprend des fondations de facturation adaptées à la production conçues pour valider:
+
+- Comportement de paiement
+- Webhook Synchronisation
+- cycle de vie de l'abonnement
+- accès au produit plan-conscient
+- navigation de facturation-consciente
+- protection de la route premium
+
+<DocsUpgradeCTA
+  title="Valider la monétisation avant le lancement."
+  description="Réduisez les problèmes d'incohérence de facturation, de dérive de webhook et d'accès à l'abonnement avant l'expédition."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/billing"
+  secondaryLabel="Billing system"
+/>
+
+<Callout title="Principe de base">
+  Les redirections sont UX. Webhooks sont la vérité de facturation.
+
+</Callout>
+
+## Pourquoi les tests de facturation sont importants [#why-billing-testing-matters]
+
+Les systèmes de facturation sont des systèmes d'État distribués.
+
+Une redirection réussie ne garantit pas un état d'abonnement synchronisé.
+
+Le frontend peut avoir l'air correct alors que l'état du backend est toujours erroné :
+
+- Le checkout peut être complet
+- l'utilisateur peut revenir à l'application
+- L'abonnement ne peut pas être synchronisé
+- accès premium peut rester verrouillé
+- Le traitement du webhook peut échouer silencieusement
+- état de facturation peut dériver de Stripe
+
+C'est pourquoi la facturation doit être testée comme un cycle de vie, pas comme un bouton.
+
+```txt title="billing-lifecycle.txt"
+Checkout
+  ↓
+Stripe
+  ↓
+Webhook verification
+  ↓
+Subscription sync
+  ↓
+Application billing state
+  ↓
+Plan-aware access
+  ↓
+Protected product routes
+```
+
+<Callout type="info" title="Aperçu de la production">
+  Les bugs de facturation les plus dangereux apparaissent souvent après le
+  paiement. Validez le chemin de synchronisation d'état, pas seulement la page
+  de paiement.
+
+</Callout>
+
+### Modèle mental de facturation [#billing-mental-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Checkout",
+      title: "Checkout démarre le flux",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Checkout creates payment intent and subscription intent. It does not prove your application state is already synchronized.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Checkout session</Badge>
+            <Badge variant="plan">Success URL</Badge>
+            <Badge variant="plan">Cancel URL</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Webhook",
+      title: "Webhook confirme la vérité",
+      icon: Webhook,
+      description: (
+        <>
+          <p>
+            Webhooks tell your backend what actually happened in Stripe after checkout, renewal, cancellation, or failed payment.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Signature verification</Badge>
+            <Badge variant="plan">Subscription sync</Badge>
+            <Badge variant="plan">Invoice events</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Access",
+      title: "Access lit l'état de l'application",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Protected routes should read synchronized billing state from your app, not assume access from a client redirect.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Plan-aware access</Badge>
+            <Badge variant="plan">Server-verifiable</Badge>
+            <Badge variant="plan">Protected routes</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Zones de validation de facturation [#billing-validation-areas]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Stripe Checkout",
+      description:
+        "Validez la création de session, les redirections réussies, annulez les redirections et le mappage client en toute sécurité.",
+      icon: CreditCard,
+    },
+    {
+      title: "Synchronisation Webhook",
+      description:
+        "Confirmez que les événements Stripe synchronisent correctement l'abonnement, la facture et l'état du client.",
+      icon: Webhook,
+    },
+    {
+      title: "Cycle de vie des abonnements",
+      description:
+        "Valider les états de paiement actifs, d'essai, annulés, en souffrance et échoués.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Accès protégé",
+      description:
+        "Validez l'accès aux produits premium, la navigation basée sur la facturation et le blocage côté serveur.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Stripe CLI [#stripe-cli]
+
+Utilisez Stripe CLI pour transférer des événements Webhook locaux vers Starter Pro.
+
+```bash title="stripe-cli.sh"
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Puis configurez le secret webhook dans `.env.local`.
+
+```bash title=".env.local"
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+```
+
+<Callout title="Règle de Webhook">
+  Si le secret du webhook est erroné, la synchronisation de facturation devrait
+  échouer en toute sécurité. Ne contournez pas la vérification de webhook
+  pendant le développement.
+
+</Callout>
+
+## Flux de validation recommandé [#recommended-validation-flow]
+
+<Steps>
+  <Step>
+    ### Démarrez l'application locale [#start-the-local-app]
+
+```bash
+pnpm dev
+```
+
+</Step>
+
+  <Step>
+    ### Démarrer Stripe webhook forwarding [#start-stripe-webhook-forwarding]
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+</Step>
+
+  <Step>
+    ### Démarrez le flux de mise à niveau [#start-the-upgrade-flow]
+
+    Déclenchez le paiement à partir de la tarification, de la facturation ou d'un CTA de mise à niveau.
+
+</Step>
+
+  <Step>
+    ### Compléter le paiement en mode test [#complete-checkout-in-test-mode]
+
+    Utilisez une carte de test Stripe et revenez à l'application.
+
+</Step>
+
+  <Step>
+    ### Confirmer la synchronisation webhook [#confirm-webhook-synchronization]
+
+    Validez que l'état de l'abonnement a été synchronisé dans votre base de données et reflété dans les routes protégées.
+
+</Step>
+
+  <Step>
+    ### Valider le comportement d'accès [#validate-access-behavior]
+
+    Vérifiez que les surfaces premium se comportent correctement après les changements d'état de l'abonnement.
+
+</Step>
+
+</Steps>
+
+## Liste de contrôle de validation recommandée [#recommended-validation-checklist]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Checkout",
+      title: "Flux de mise à niveau",
+      icon: CreditCard,
+      description:
+        "Validez le cycle de vie complet de la mise à niveau et de la redirection.",
+      items: [
+        "Création de la session Checkout",
+        "Redirection réussie",
+        "Annuler la redirection",
+        "association des comptes aux clients Stripe",
+        "prix points d'entrée",
+      ],
+    },
+    {
+      eyebrow: "Webhooks",
+      title: "Synchronisation des abonnements",
+      icon: Webhook,
+      tone: "primary",
+      description:
+        "Valider la vérité du webhook et la synchronisation du backend.",
+      items: [
+        "abonnement créé",
+        "abonnement mis à jour",
+        "Paiement réussi",
+        "paiement échoué",
+        "Traitement idempotent",
+      ],
+    },
+    {
+      eyebrow: "Accès",
+      title: "Comportement adapté à l’offre",
+      icon: ShieldCheck,
+      description:
+        "Validez que l'accès au produit suit l'état de facturation synchronisé.",
+      items: [
+        "Accès Premium Route",
+        "mise à niveau rediriger",
+        "État de la page de facturation",
+        "Contrôles côté serveur",
+      ],
+    },
+    {
+      eyebrow: "État",
+      title: "Couverture du cycle de vie",
+      icon: RefreshCcw,
+      description: "Validez plus que le chemin heureux avant le lancement.",
+      items: ["procès", "actif", "Passé dû", "Annulé"],
+    },
+  ]}
+/>
+
+## Carte de test Stripe [#stripe-test-card]
+
+```txt title="stripe-test-card.txt"
+4242 4242 4242 4242
+```
+
+Utiliser:
+
+- toute date d'expiration future
+- tout CVC
+- n'importe quel code postal
+
+### Erreurs de production courantes [#common-production-mistakes]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Validation Redirigée uniquement",
+      description:
+        "En supposant qu’une redirection réussie prouve que l’état de l’abonnement a été synchronisé.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Contrôles d'accès client uniquement",
+      description:
+        "Protéger l'accès premium uniquement dans le frontend au lieu de la logique vérifiable par le serveur.",
+      icon: Layers3,
+    },
+    {
+      title: "Modes Mixed Stripe",
+      description:
+        "Utiliser des clés API de test avec des identifiants de produit ou de prix en direct, ou l'inverse.",
+      icon: CreditCard,
+    },
+    {
+      title: "Raccourcis Webhook",
+      description:
+        "Sauter la vérification de signature de webhook ou ignorer le comportement de réessayer.",
+      icon: Webhook,
+    },
+  ]}
+/>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "valider la facturation de bout en bout",
+    "Traiter les webhooks comme des vérités",
+    "État du cycle de vie de l'abonnement de test",
+    "protéger les routes premium côté serveur",
+    "Confirmer l'état de facturation dans la base de données",
+  ]}
+  avoid={[
+    "Déverrouiller l'accès uniquement à partir des redirections",
+    "Tester uniquement la page de tarification",
+    "sauter la vérification de webhook",
+    "mélange de Stripe test et live IDs",
+    "hardcoding accès premium pendant les tests",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Pourquoi les webhooks sont-ils nécessaires ?">
+    Parce que les redirections seules ne peuvent pas confirmer ce qui s’est réellement passé à l’intérieur de Stripe. Les webhooks sont la couche de synchronisation backend.
+  </Accordion>
+
+<Accordion title="Les contrôles d'accès devraient-ils se faire uniquement côté client?">
+  Non. L'accès sensible à la facturation doit rester vérifiable par le serveur.
+  L'interface utilisateur peut refléter l'état d'accès, mais le serveur doit
+  protéger les ressources précieuses.
+</Accordion>
+
+  <Accordion title="Dois-je tester les paiements échoués avant le lancement ?">
+    Oui. Les états de paiement et d'annulation échoués font partie du comportement réel du cycle de vie de l'abonnement et ne doivent pas être découverts après le lancement.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description: "Comprendre l'architecture de facturation Stripe complète.",
+      icon: CreditCard,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez l'infrastructure de facturation en toute sécurité.",
+      icon: Globe,
+    },
+    {
+      title: "fondations",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Comprendre comment l'état de facturation se connecte à l'accès côté serveur.",
+      icon: Database,
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validez l'infrastructure, l'authentification, la facturation et la disponibilité des versions.",
+      icon: CheckCircle2,
+    },
+  ]}
+/>

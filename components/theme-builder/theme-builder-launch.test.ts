@@ -20,7 +20,9 @@ function readMarketingFile(path: string) {
 }
 
 test("publishes the Theme Builder SEO contract and launch limitations", () => {
-  const page = readMarketingFile("app/(site)/tools/theme-builder/page.tsx");
+  const page = readMarketingFile(
+    "app/[locale]/(site)/tools/theme-builder/page.tsx",
+  );
 
   assert.equal(
     THEME_BUILDER_TITLE,
@@ -97,17 +99,19 @@ test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
   assert.match(output, /THEME_BUILDER_CTA_LINKS\.map/u);
 
   for (const routeFile of [
-    "app/(site)/tools/theme-builder/page.tsx",
+    "app/[locale]/(site)/tools/theme-builder/page.tsx",
     "content/docs/ui/theming.mdx",
     "content/docs/design-system/tokens/index.mdx",
-    "app/(site)/starters/pro/page.tsx",
+    "app/[locale]/(site)/starters/pro/page.tsx",
   ]) {
     assert.equal(existsSync(join(marketingRoot, routeFile)), true);
   }
 });
 
 test("uses current serializer output without analytics or a second Tailwind contract", () => {
-  const page = readMarketingFile("app/(site)/tools/theme-builder/page.tsx");
+  const page = readMarketingFile(
+    "app/[locale]/(site)/tools/theme-builder/page.tsx",
+  );
   const output = readMarketingFile("components/theme-builder/theme-output.tsx");
   const themeSources = [
     page,

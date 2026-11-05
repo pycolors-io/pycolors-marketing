@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowRight,
   ArrowLeftRight,
@@ -63,23 +64,27 @@ const comparisonRows = [
 ] as const;
 
 export function StarterComparisonTable(): React.ReactElement {
+  const tSite = useCopy();
+
   return (
     <div className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-background">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-border-subtle px-5 py-4 sm:px-6">
         <p className="text-xs font-medium text-foreground">
-          Same UI foundation. Different integration depth.
+          {tSite("Same UI foundation. Different integration depth.")}
         </p>
         <span className="flex items-center gap-2 text-xs text-muted-foreground md:hidden">
           <ArrowLeftRight className="size-3.5" aria-hidden="true" />
-          Scroll to compare
+          {tSite("Scroll to compare")}
         </span>
         <span className="hidden text-xs text-muted-foreground md:inline">
-          Compare what ships
+          {tSite("Compare what ships")}
         </span>
       </div>
       <div
         role="region"
-        aria-label="Starter comparison, scroll horizontally for all columns"
+        aria-label={tSite(
+          "Starter comparison, scroll horizontally for all columns",
+        )}
         tabIndex={0}
         className="relative overflow-x-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
@@ -88,7 +93,7 @@ export function StarterComparisonTable(): React.ReactElement {
           aria-describedby="starter-comparison-setup"
         >
           <caption className="sr-only">
-            Compare Starter Free and Starter Pro
+            {tSite("Compare Starter Free and Starter Pro")}
           </caption>
           <thead>
             <tr className="align-top">
@@ -96,7 +101,7 @@ export function StarterComparisonTable(): React.ReactElement {
                 scope="col"
                 className="w-[22%] bg-background px-4 py-6 text-xs font-medium text-muted-foreground sm:sticky sm:left-0 sm:z-10 sm:px-6"
               >
-                Capability
+                {tSite("Capability")}
               </th>
               <th
                 scope="col"
@@ -107,24 +112,25 @@ export function StarterComparisonTable(): React.ReactElement {
                   id="comparison-free-name"
                   className="block font-brand text-xl font-semibold tracking-tight sm:text-2xl"
                 >
-                  Starter Free
+                  {tSite("Starter Free")}
                 </span>
                 <p className="mt-2 max-w-64 text-sm leading-6 text-muted-foreground">
-                  Explore screens and validate your workflows.
+                  {tSite("Explore screens and validate your workflows.")}
                 </p>
                 <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <span className="text-xl font-semibold tracking-tight">
-                    {STARTER_FREE_PRICE_LABEL}
+                    {tSite(STARTER_FREE_PRICE_LABEL)}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    Public repository
+                    {tSite("Public repository")}
                   </span>
                 </p>
                 <Link
                   href="/starters/free"
                   className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-[5px] text-xs font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                 >
-                  Explore Starter Free{" "}
+                  {tSite("Explore Starter Free")}
+                  {tSite(" ")}
                   <ArrowRight className="size-3.5" aria-hidden="true" />
                 </Link>
               </th>
@@ -137,24 +143,27 @@ export function StarterComparisonTable(): React.ReactElement {
                   id="comparison-pro-name"
                   className="block font-brand text-xl font-semibold tracking-tight sm:text-2xl"
                 >
-                  Starter Pro
+                  {tSite("Starter Pro")}
                 </span>
                 <p className="mt-2 max-w-64 text-sm leading-6 text-muted-foreground">
-                  Build on real auth, billing and database foundations.
+                  {tSite(
+                    "Build on real auth, billing and database foundations.",
+                  )}
                 </p>
                 <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <span className="text-xl font-semibold tracking-tight">
-                    {PRODUCT_DISPLAY["starter-pro"].priceLabel}
+                    {tSite(PRODUCT_DISPLAY["starter-pro"].priceLabel)}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    One-time payment
+                    {tSite("One-time payment")}
                   </span>
                 </p>
                 <Link
                   href="/docs/starter/upgrade"
                   className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-[5px] text-xs font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                 >
-                  Plan the upgrade from Free{" "}
+                  {tSite("Plan the upgrade from Free")}
+                  {tSite(" ")}
                   <ArrowRight className="size-3.5" aria-hidden="true" />
                 </Link>
               </th>
@@ -170,12 +179,14 @@ export function StarterComparisonTable(): React.ReactElement {
                   scope="row"
                   className="bg-background px-4 py-5 text-xs font-medium leading-6 sm:sticky sm:left-0 sm:z-10 sm:px-6 sm:text-sm"
                 >
-                  {row.label}
+                  {tSite(row.label)}
                 </th>
                 <td className="px-5 py-5 leading-6 text-muted-foreground sm:px-6">
-                  {row.free}
+                  {tSite(row.free)}
                 </td>
-                <td className="px-5 py-5 leading-6 sm:px-6">{row.pro}</td>
+                <td className="px-5 py-5 leading-6 sm:px-6">
+                  {tSite(row.pro)}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -189,22 +200,21 @@ export function StarterComparisonTable(): React.ReactElement {
               className="size-4 text-muted-foreground"
               aria-hidden="true"
             />
-            Before you launch
+            {tSite("Before you launch")}
           </h3>
           <p
             id="starter-comparison-setup"
             className="mt-3 text-sm leading-7 text-muted-foreground"
           >
-            Starter Pro is source code, not a hosted service. You still
-            configure PostgreSQL, auth, email, and Stripe, validate the
-            integrations, and complete the production checklist. Buying Pro does
-            not provision or deploy your app.
+            {tSite(
+              "Starter Pro is source code, not a hosted service. You still configure PostgreSQL, auth, email, and Stripe, validate the integrations, and complete the production checklist. Buying Pro does not provision or deploy your app.",
+            )}
           </p>
           <Link
             href="/docs/starter-pro/production-checklist"
             className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-[5px] text-xs font-medium transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
-            Review production responsibilities
+            {tSite("Review production responsibilities")}
             <ArrowRight className="size-3.5 shrink-0" aria-hidden="true" />
           </Link>
         </div>
@@ -214,14 +224,12 @@ export function StarterComparisonTable(): React.ReactElement {
               className="size-4 text-muted-foreground"
               aria-hidden="true"
             />
-            Moving from Free to Pro
+            {tSite("Moving from Free to Pro")}
           </h3>
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            Stay on Free while validating screens and workflows. Choose Pro when
-            real accounts and payments become the next implementation step. Pro
-            is separate source code to configure. Bring your existing UI work
-            across deliberately; buying Pro does not automatically migrate your
-            app or data. It does not unlock the running Free demo.
+            {tSite(
+              "Stay on Free while validating screens and workflows. Choose Pro when real accounts and payments become the next implementation step. Pro is separate source code to configure. Bring your existing UI work across deliberately; buying Pro does not automatically migrate your app or data. It does not unlock the running Free demo.",
+            )}
           </p>
         </div>
       </div>

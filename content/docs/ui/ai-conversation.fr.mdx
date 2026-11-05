@@ -1,0 +1,182 @@
+---
+title: AI Conversation
+description: Composez une fenêtre d'affichage de conversation sensible au
+  lecteur avec des messages et des commentaires explicites.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+publishedAt: "2026-10-16"
+icon: MessagesSquare
+---
+
+import { AIConversationExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import {
+  ArrowDownToLine,
+  BookOpen,
+  Cable,
+  Copy,
+  Keyboard,
+  MessageSquare,
+  MessagesSquare,
+} from "lucide-react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Composez votre conversation [#compose-your-conversation]
+
+`AIConversation` affiche une liste de messages déroulante et étiquetée. Il suit le nouveau contenu alors que le lecteur est à la fin et conserve leur position quand ils font défiler vers l'arrière. Votre application fournit des messages et du transport ; ce composant ne fait aucune demande de modèle.
+
+<Callout title="Disponibilité du forfait">
+  AIConversation, AIMessage et AIMessageActions sont introduits par la
+  conversation primitives minor Changeset. Utilisez l’espace de travail du
+  référentiel jusqu’à ce que cette version soit publiée. Ils ne sont pas
+  exportés par `@pycolors/ui@1.6.1` ou plus tôt.
+
+</Callout>
+
+<DocsFeatureGrid
+  columns={3}
+  items={[
+    {
+      title: "Suivez le lecteur",
+      icon: BookOpen,
+      description:
+        "Le nouveau contenu suit la fenêtre d'affichage uniquement pendant que le lecteur reste à la fin.",
+    },
+    {
+      title: "Retourner explicitement",
+      icon: ArrowDownToLine,
+      description:
+        "Retourne à la fin et restaure le focus dans la fenêtre de conversation.",
+    },
+    {
+      title: "Garder la propriété de l'application",
+      icon: Cable,
+      description:
+        "Fournissez vous-même le contenu du message, le transport du modèle, la persistance et les rappels du presse-papiers.",
+    },
+  ]}
+/>
+
+## Aperçu [#preview]
+
+<AIConversationExample />
+
+L'exemple s'exécute ici dans la documentation. Le lien Explorer apparaît lorsque cette histoire est disponible dans le catalogue publié ; sinon, utilisez cet aperçu en ligne.
+
+## Composition contrôlée [#controlled-composition]
+
+```tsx title="conversation.tsx"
+"use client";
+
+import { AIConversation, AIMessage, AIMessageActions } from "@pycolors/ui";
+
+type Message = { id: string; author: string; text: string };
+
+export function Conversation({ messages }: { messages: Message[] }) {
+  return (
+    <AIConversation
+      label="Support conversation"
+      messagesLabel="Support messages"
+    >
+      {messages.map((message) => (
+        <AIMessage
+          key={message.id}
+          author={message.author}
+          actions={
+            <AIMessageActions
+              value={message.text}
+              copyAriaLabel={`Copy ${message.author} message`}
+              onCopy={(text) => navigator.clipboard.writeText(text)}
+            />
+          }
+        >
+          {message.text}
+        </AIMessage>
+      ))}
+    </AIConversation>
+  );
+}
+```
+
+Lieu [AIComposer](/docs/ui/ai-composer) après la conversation. Gardez les erreurs de demande, réessayez et annulez chez votre consommateur, ou utilisez le [AI Chat Bloquer](/docs/blocks/app-shells/ai-chat) pour toute la surface composée. Ce composant n'analyse pas Markdown ou HTML.
+
+## Comportement et accessibilité [#behavior-and-accessibility]
+
+<Steps>
+
+<Step>
+
+### Fournir des messages sémantiques [#supply-semantic-messages]
+
+Les enfants font partie d’une liste ordonnée. Render `AIMessage` ou natif `li` éléments, avec des clés stables. L'état vide appartient en dehors de cette liste. Utilisez un sens `label` et `messagesLabel` lorsque plus d'une conversation apparaît sur la page.
+
+</Step>
+
+<Step>
+
+### Respecter la position de lecture [#respect-reading-position]
+
+La fenêtre de focus suit le contenu et redimensionne les modifications à la fin. Le défilement de plus de 32 pixels des pauses suivantes. Retour vers la fin ou choix **Aller au plus tard** Je reprends. Les modifications de mise en page ne forcent pas un lecteur à revenir vers le bas. Sans ResizeObserver, les mises à jour enfants React suivent toujours.
+
+</Step>
+
+<Step>
+
+### Annoncer l'état de la demande dans votre demande [#announce-request-state-in-your-application]
+
+La liste des messages n'est pas une région en direct: les tokens de diffusion ne doivent pas interrompre de manière répétée un lecteur d'écran. Fournir des annonces concises du statut de la demande en dehors de la liste. Le saut utilise le défilement immédiat et restaure le focus de la fenêtre sans mouvement animé. La vérification du clavier et du lecteur d'écran fait partie des vérifications d'intégration de votre application.
+
+</Step>
+
+</Steps>
+
+## API [#api]
+
+| Prop                          | Par défaut       | Objet                                                              |
+| ----------------------------- | ---------------- | ------------------------------------------------------------------ |
+| `children`                    | —                | Éléments de liste sémantique, généralement des instances AIMessage |
+| `label`                       | `Conversation`   | Nom de viewport accessible                                         |
+| `messagesLabel`               | `Messages`       | Nom de liste ordonnée accessible                                   |
+| `jumpLabel`                   | `Jump to latest` | Étiquette de bouton de retour visible                              |
+| `viewportClassName`           | —                | Remplacer la valeur par défaut `max-h-[28rem]` Style de viewport   |
+| `className`, native div props | —                | Attributs et style de l'emballage extérieur                        |
+| `ref`                         | —                | HTMLDivElement externe, pas la fenêtre d'affichage interne         |
+
+Emplacements: `ai-conversation` et `ai-conversation-viewport`. Les classes d'appelants utilisent la norme PyColors `cn()` priorité. La fenêtre d'affichage possède son comportement de gestion du défilement et de focus. Utilisez une clé de composant stable pour réinitialiser une conversation entière.
+
+## Composants associés [#related-components]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Message AI",
+      icon: MessageSquare,
+      href: "/docs/ui/ai-message",
+      description:
+        "Rendre un haut-parleur, le contenu et les actions facultatives.",
+    },
+    {
+      title: "Actions de message AI",
+      icon: Copy,
+      href: "/docs/ui/ai-message-actions",
+      description:
+        "Copier avec en attente, succès et retour d'erreur récupérable.",
+    },
+    {
+      title: "AI Composer",
+      icon: Keyboard,
+      href: "/docs/ui/ai-composer",
+      description: "Connectez une entrée contrôlée à votre application.",
+    },
+    {
+      title: "AI Chat Bloquer",
+      icon: MessagesSquare,
+      href: "/docs/blocks/app-shells/ai-chat",
+      description:
+        "Utilisez la composition libre complète et des exemples locaux.",
+    },
+  ]}
+/>

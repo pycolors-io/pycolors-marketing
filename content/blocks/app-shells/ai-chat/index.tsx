@@ -1,5 +1,7 @@
 "use client";
 
+import { defaultChatTranslate } from "./types";
+
 import * as React from "react";
 import { AIComposer, Alert, Button, cn } from "@pycolors/ui";
 import { AgentDefinition } from "./agent-definition";
@@ -40,6 +42,7 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
       onRetry,
       onCopy,
       suggestions = [],
+      translate = defaultChatTranslate,
       agentDefinition,
       attachments,
       work,
@@ -92,32 +95,39 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             id={`${id}-title`}
             className="text-sm font-semibold tracking-tight"
           >
-            Conversation
+            {translate("Conversation")}
           </h2>
           <span className="text-xs text-muted-foreground">
-            Your context. Your next step.
+            {translate("Your context. Your next step.")}
           </span>
         </div>
         {messages.length ? (
-          <ChatThread messages={messages} disabled={disabled} onCopy={onCopy} />
+          <ChatThread
+            translate={translate}
+            messages={messages}
+            disabled={disabled}
+            onCopy={onCopy}
+          />
         ) : (
           <div className="space-y-5 px-5 py-10 sm:px-8 sm:py-14">
             <div className="max-w-md space-y-3">
               <p className="text-xs font-medium text-muted-foreground">
-                A clear place to start
+                {translate("A clear place to start")}
               </p>
               <p className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                What are you working on?
+                {translate("What are you working on?")}
               </p>
               <p className="text-sm leading-6 text-muted-foreground">
-                Start with a question, an idea, or a problem to work through.
+                {translate(
+                  "Start with a question, an idea, or a problem to work through.",
+                )}
               </p>
             </div>
             {suggestions.length ? (
               <div
                 className="flex flex-wrap gap-2"
                 role="group"
-                aria-label="Suggested prompts"
+                aria-label={translate("Suggested prompts")}
               >
                 {suggestions.map((suggestion) => (
                   <Button
@@ -138,9 +148,12 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             ) : null}
           </div>
         )}
-        {work ? <ChatWork control={work} disabled={disabled} /> : null}
+        {work ? (
+          <ChatWork translate={translate} control={work} disabled={disabled} />
+        ) : null}
         {agentDefinition ? (
           <AgentDefinition
+            translate={translate}
             key={agentDefinition.draft.id}
             control={agentDefinition}
             disabled={disabled}
@@ -153,12 +166,14 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             aria-atomic="true"
             className="text-xs leading-5 text-muted-foreground"
           >
-            {statusText}
+            {translate(statusText)}
           </p>
           {status === "error" ? (
             <Alert ariaLive="off" variant="destructive" id={`${id}-error`}>
               {errorMessage ||
-                "The response could not be completed. Try again when you are ready."}
+                translate(
+                  "The response could not be completed. Try again when you are ready.",
+                )}
             </Alert>
           ) : null}
           {recoverable && onRetry ? (
@@ -173,18 +188,19 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
                 onRetry();
               }}
             >
-              Retry response
+              {translate("Retry response")}
             </Button>
           ) : null}
           {attachments ? (
             <ChatAttachments
+              translate={translate}
               control={attachments}
               disabled={disabled}
               onPrefill={() => input.current?.focus({ preventScroll: true })}
             />
           ) : null}
           <label htmlFor={`${id}-input`} className="sr-only">
-            Message
+            {translate("Message")}
           </label>
           <AIComposer
             ref={(element) => {
@@ -215,7 +231,9 @@ export const AIChat = React.forwardRef<HTMLTextAreaElement, AIChatProps>(
             disabled={disabled}
             aria-invalid={status === "error" || undefined}
             aria-describedby={`${id}-status${status === "error" ? ` ${id}-error` : ""}`}
-            placeholder="Write a message…"
+            placeholder={translate("Write a message…")}
+            submitLabel={translate("Send message")}
+            stopLabel={translate("Stop response")}
             rows={3}
             className="min-h-24 resize-y bg-background text-sm"
           />

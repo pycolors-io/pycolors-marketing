@@ -1,0 +1,391 @@
+---
+title: Couleurs
+description: Rôles de couleur sémantique, architecture de thème et directives
+  d'utilisation utilisés dans l'interface utilisateur de PyColors.
+lastUpdated: "2026-08-25"
+appliesTo: Design System
+---
+
+import Link from "next/link";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
+import {
+  Blocks,
+  CircleDot,
+  Layers3,
+  Palette,
+  Sparkles,
+  Type,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+## Vue d’ensemble [#overview]
+
+Couleurs dans PyColors UI sont conçus comme **Rôles sémantiques des produits**Pas de valeurs décoratives.
+
+Le système donne à chaque couche d'interface une signification stable: surfaces de page, cartes, texte, actions, états, bordures, contrôles de formulaire, barres latérales et graphiques. Les composants consomment ces rôles à travers des utilitaires comme `bg-card`, `text-foreground`, `text-muted-foreground`, `bg-primary`et `border-border` au lieu de coder les valeurs visuelles localement.
+
+À la fin de cette page, vous comprendrez comment PyColors structure les rôles de couleur, comment le mode clair et sombre reste prévisible et comment appliquer les décisions de couleur sans créer de dérive de thème.
+
+<Callout title="Pourquoi cela compte">
+  La cohérence des couleurs est l'un des signaux les plus rapides de la qualité
+  du produit. Un système de couleurs sémantique maintient les tableaux de bord,
+  les pages marketing, la documentation, les formulaires et les composants
+  réutilisables visuellement alignés sans forcer chaque composant à réinventer
+  sa propre palette.
+
+</Callout>
+
+### Principes [#principles]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      eyebrow: "Rôle d'abord",
+      title: "Décrire l'intention",
+      description:
+        "Utilisez des tokens qui expliquent la signification du produit: surface, texte, action, état, entrée et données.",
+    },
+    {
+      eyebrow: "Thème sûr",
+      title: "Changement central",
+      description:
+        "Mapper les variables CSS dans les utilitaires Tailwind afin que les composants restent stables lorsque les thèmes évoluent.",
+    },
+    {
+      eyebrow: "Conçu pour la production",
+      title: "Échelle cohérente",
+      description:
+        "Conservez la cohérence visuelle des composants réutilisables, des tableaux de bord, des documents et des pages commerciales.",
+    },
+  ]}
+/>
+
+## Ce que vous allez faire [#what-youll-do]
+
+<Steps>
+  <Step>— Comprendre le modèle sémantique derrière les couleurs PyColors.</Step>
+  <Step>
+    #### Map des variables CSS aux utilitaires Tailwind à travers la couche de
+    token. [#map-css-variables-to-tailwind-utilities-through-the-token-layer]
+
+</Step>
+  <Step>
+    #### Appliquer des couleurs dans des composants sans valeurs brutes ou
+    remplacements ponctuels.
+    [#apply-colors-in-components-without-raw-values-or-one-off-overrides]
+
+</Step>
+  <Step>
+    #### Utilisez des règles de décision pour conserver les couleurs de
+    l'interface utilisateur, les couleurs d'état et les couleurs du graphique
+    [#use-decision-rules-to-keep-ui-colors-state-colors-and-chart-colors]
+    Séparer.
+
+</Step>
+
+</Steps>
+
+### Architecture [#architecture]
+
+PyColors utilise une **Système de couleurs basé sur OKLCH** exposés à travers des variables CSS et mappés dans les utilitaires sémantiques Tailwind.
+
+OKLCH donne à la couche de tokens un contrôle plus prévisible sur la légèreté perçue, le contraste et l'équilibre du thème que les valeurs RVB brutes ou HSL uniques. C'est important lorsqu'un produit doit prendre en charge le mode lumière, le mode sombre, les composants d'interface utilisateur réutilisables, les longues pages de documentation, les tableaux de bord, les écrans de paramètres et les surfaces commerciales.
+
+<Callout type="info" title="Principe de base">
+  Les composants doivent consommer des rôles de couleur. La couche de tokens
+  devrait décider de l'apparence de ces rôles.
+
+</Callout>
+
+<Callout type="info" title="Générer un point de départ sémantique">
+  Besoin d'un ensemble de départ concret de valeurs sémantiques claires et
+  sombres? Utilisez le{" "}
+  <Link href="/tools/theme-builder">Créateur de thèmes PyColors</Link> pour
+  générer des remplacements CSS côté client, puis examinez le résultat dans
+  votre contexte de produit complet.
+
+</Callout>
+
+<Tabs items={["Cartographie thématique", "Utilisation des composants", "Valeurs du thème"]}>
+  <Tab value="Cartographie thématique">
+
+```css title="tokens.css" {2-11}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+```
+
+</Tab>
+
+  <Tab value="Utilisation des composants">
+
+```tsx title="example-card.tsx" {3-7}
+export function ExampleCard() {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5 text-card-foreground">
+      <p className="text-sm font-medium text-foreground">Semantic surface</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        This component uses product roles instead of raw color values.
+      </p>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+  <Tab value="Valeurs du thème">
+
+```css title="themes.css" {1,8}
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+Cela maintient la stabilité de l'API du composant tout en permettant au thème sous-jacent d'évoluer de manière centralisée. Les composants conservent les mêmes classes, la signification des tokens reste stable et le calque de thème gère le contraste et l'équilibre visuel.
+
+## Modèle de rôle [#role-model]
+
+PyColors regroupe les couleurs par responsabilité du produit. Cela permet de garder le système plus facile à raisonner et empêche la table des matières de devenir bruyante.
+
+| Catégorie  | Tokens                                              | Utilisé pour                                                    |
+| ---------- | --------------------------------------------------- | --------------------------------------------------------------- |
+| Surfaces   | `background`, `card`, `popover`, `sidebar`          | Calques, cartes, superpositions, navigation                     |
+| Texte      | `foreground`, `muted-foreground`, `card-foreground` | Copie primaire, copie secondaire, texte spécifique à la surface |
+| Actions    | `primary`, `secondary`, `accent`, `muted`           | Boutons, accent, zones d'interaction subtiles                   |
+| États      | `destructive`, `success`, `warning`                 | Feedback produit, validation, risque, confirmation              |
+| Apports    | `border`, `input`, `ring`                           | Formes, états de focus, séparateurs, contours de contrôle       |
+| Graphiques | `chart-1` au `chart-5`                              | Visualisation des données uniquement                            |
+
+<Callout title="Pourquoi cela compte">
+  La séparation des rôles d'interface utilisateur des rôles de graphique empêche
+  les couleurs de visualisation des données de s'infiltrer dans les états du
+  produit. Une palette graphique ne doit pas devenir la source de vérité pour
+  les boutons, les alertes ou les actions destructrices.
+
+</Callout>
+
+<div className="not-prose mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      Contexte
+    </div>
+    <div className="h-11 rounded-xl border border-border bg-background" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">carte</div>
+    <div className="h-11 rounded-xl border border-border bg-card" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      primaire
+    </div>
+    <div className="h-11 rounded-xl bg-primary" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      secondaire
+    </div>
+    <div className="h-11 rounded-xl bg-secondary" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">accent</div>
+    <div className="h-11 rounded-xl bg-accent" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">muet</div>
+    <div className="h-11 rounded-xl bg-muted" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      Destructive
+    </div>
+    <div className="h-11 rounded-xl bg-destructive" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">Succès</div>
+    <div className="h-11 rounded-xl bg-success" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      avertissement
+    </div>
+    <div className="h-11 rounded-xl bg-warning" />
+  </div>
+  <div className="rounded-2xl border border-border/60 bg-card p-4">
+    <div className="mb-3 text-xs font-medium text-muted-foreground">
+      frontière
+    </div>
+    <div className="h-11 rounded-xl border border-border bg-background" />
+  </div>
+</div>
+
+## Exécution [#implementation]
+
+Utilisez des utilitaires sémantiques dans chaque composant réutilisable.
+
+```tsx title="recommended.tsx" {3-8}
+export function ProductNotice() {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5 text-card-foreground">
+      <p className="text-sm font-medium text-foreground">
+        Production-ready surface
+      </p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        The visual intent comes from the design system, not from local
+        overrides.
+      </p>
+    </div>
+  );
+}
+```
+
+Évitez les valeurs brutes à l'intérieur de l'interface utilisateur réutilisable.
+
+```tsx title="avoid.tsx" {3-5}
+export function ProductNotice() {
+  return (
+    <div className="rounded-2xl border border-[#e5e7eb] bg-[#ffffff] p-5 text-[#111827]">
+      <p className="text-sm text-[#6b7280]">This creates theme drift.</p>
+    </div>
+  );
+}
+```
+
+<Callout type="warn" title="Piège commun">
+  Ne résolvez pas les besoins de couleurs répétés avec des remplacements locaux.
+  Si la même intention visuelle apparaît à plusieurs endroits, définissez ou
+  ajustez plutôt le rôle sémantique.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+Utilisez les rôles de couleur sémantiques PyColors lorsque :
+
+- Le composant est réutilisable
+- l'interface utilisateur doit prendre en charge le mode clair et sombre
+- la surface apparaît dans les tableaux de bord, les documents, le marketing ou les paramètres
+- la même signification visuelle doit rester stable sur l'ensemble du produit
+- Les mises à jour du thème doivent être centralisées
+
+Évitez les valeurs brutes locales lorsque :
+
+- le composant appartient au système de conception
+- la valeur représente un état de produit
+- la couleur affecte le contraste du texte ou la visibilité du focus
+- la couleur sera probablement réutilisée ailleurs
+- la valeur doit survivre aux changements de thème futurs
+
+<Callout title="Inline CTA">
+  Prêt à passer de la cohérence visuelle à une fondation SaaS en forme de
+  production? Explorer <Link href="/docs/starter-pro">Starter Pro</Link> pour
+  les modèles d'authentification, de facturation, de backend et de livraison
+  basés sur l'interface utilisateur PyColors.
+
+</Callout>
+
+## Erreurs courantes [#common-mistakes]
+
+<Accordions type="single">
+  <Accordion title="Utilisation des valeurs hexadécimales brutes dans les composants réutilisables">
+    Les valeurs brutes créent une dérive de thème, rendent le mode sombre plus difficile à maintenir et cachent les décisions visuelles à l'intérieur de l'implémentation des composants. Préférez les utilitaires tels que `bg-card`, `text-muted-foreground`et `border-border`.
+  </Accordion>
+
+<Accordion title="Réutiliser les couleurs des graphiques pour les états de produits">
+  Les couleurs des graphiques sont utilisées pour la visualisation des données.
+  Les états de produit tels que le succès, l'avertissement et les actions
+  destructrices nécessitent des rôles sémantiques dédiés afin que les
+  commentaires restent cohérents.
+</Accordion>
+
+<Accordion title="Traiter l’accent comme une décoration">
+  `accent` Il faut mettre l’accent intentionnellement. Si chaque section invente
+  un comportement d'accent différent, le produit commence à se sentir
+  incohérent.
+</Accordion>
+
+<Accordion title="Fixation d'un écran au lieu du calque de tokens">
+  Les correctifs locaux résolvent l'écran actuel, mais créent des coûts de
+  maintenance à long terme. Si le besoin se répète, mettez à jour le rôle
+  sémantique de manière centralisée.
+</Accordion>
+
+  <Accordion title="Sauter les contrôles de contraste en mode sombre">
+    Chaque rôle utilisé pour le texte, les actions, les entrées et les états doit rester lisible en mode clair et sombre avant l'expédition.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Poursuivez avec une hiérarchie, un rythme et une structure de texte sémantique lisibles.",
+      icon: Type,
+    },
+    {
+      title: "tokens de conception",
+      href: "/docs/design-system/tokens",
+      description:
+        "Comprenez la couche de token qui maintient l'interface utilisateur de PyColors cohérente entre les produits.",
+      icon: Layers3,
+    },
+    {
+      title: "Theme Builder",
+      href: "/tools/theme-builder",
+      description:
+        "Générez des remplacements sémantiques sensibles au contraste et examinez-les dans un aperçu adaptées à la production.",
+      icon: Palette,
+    },
+    {
+      title: "Composants de l'interface utilisateur",
+      href: "/docs/ui",
+      description:
+        "Découvrez comment les primitives consomment des rôles sémantiques sur des interfaces produits réelles.",
+      icon: Blocks,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Passez de la cohérence de l'interface utilisateur aux fondations de production avec la structure auth, la facturation et le backend.",
+      icon: Sparkles,
+    },
+  ]}
+/>

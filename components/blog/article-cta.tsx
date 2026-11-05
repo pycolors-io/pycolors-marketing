@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowRight,
   Blocks,
@@ -49,6 +50,8 @@ const variantContent: Record<
 };
 
 export function ArticleCTA({ cta }: ArticleCTAProps) {
+  const tSite = useCopy();
+
   if (!cta) return null;
   const { badge, Icon, title, description } =
     variantContent[cta.variant ?? "free"];
@@ -61,13 +64,13 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
         className="mb-5 w-fit gap-1.5 border-border-subtle bg-background text-[11px]"
       >
         <Icon className="size-3" aria-hidden="true" />
-        {badge}
+        {tSite(badge)}
       </Badge>
       <h2 className="max-w-xl text-balance font-brand text-xl font-semibold leading-snug tracking-heading sm:text-2xl">
-        {title}
+        {tSite(title)}
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-        {description}
+        {tSite(description)}
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Button
@@ -75,14 +78,14 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
           className="site-primary-action h-auto max-w-full whitespace-normal rounded-md"
         >
           <Link href={cta.href}>
-            <span className="min-w-0 wrap-anywhere">{cta.label}</span>
+            <span className="min-w-0 wrap-anywhere">{tSite(cta.label)}</span>
           </Link>
         </Button>
         <Link
           href="/guides"
           className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          Read Guides
+          {tSite("Read Guides")}
           <ArrowRight className="size-3.5" aria-hidden="true" />
         </Link>
       </div>

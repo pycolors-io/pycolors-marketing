@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -13,6 +14,8 @@ import {
 } from "@/lib/privacy-consent";
 
 export function PrivacyConsentSettings() {
+  const tSite = useCopy();
+
   return (
     <Button
       type="button"
@@ -21,7 +24,7 @@ export function PrivacyConsentSettings() {
         globalThis.dispatchEvent(new Event(PRIVACY_SETTINGS_EVENT))
       }
     >
-      Manage cookie preferences
+      {tSite("Manage cookie preferences")}
     </Button>
   );
 }
@@ -113,8 +116,8 @@ export function PrivacyConsentBanner({
       </p>
       <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
         {[
-          { label: fr ? "Confidentialité · EN" : "Privacy", href: "/privacy" },
-          { label: fr ? "Conditions · EN" : "Terms", href: "/terms" },
+          { label: fr ? "Confidentialité" : "Privacy", href: "/privacy" },
+          { label: fr ? "Conditions" : "Terms", href: "/terms" },
         ].map(({ label, href }) => (
           <Link
             key={href}

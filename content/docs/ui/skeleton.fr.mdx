@@ -1,0 +1,488 @@
+---
+title: Skeleton
+description: Espace réservé visuel utilisé pour représenter le chargement du
+  contenu tout en préservant la structure de la mise en page.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  Circle,
+  Clock,
+  Inbox,
+  LayoutTemplate,
+  Rows3,
+  Sparkles,
+  Table2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Squelette</Badge>
+</div>
+
+## Préserver la mise en page pendant le chargement du contenu [#preserve-layout-while-content-loads]
+
+Les **Squelette** Un composant est un espace réservé visuel utilisé pendant les états de chargement.
+
+Il aide:
+
+- préserver la structure de mise en page
+- réduire la mise en page
+- améliorer les performances perçues
+- communiquer que le contenu est attendu bientôt
+- garder les surfaces du produit stables pendant les charges de données
+
+Le squelette est un **pure UI primitive**. Il rend les formes et ne possède aucune logique de chargement, de récupération ou d'async.
+
+<Callout title="Idée de base">
+  Le squelette montre la forme du contenu qui arrive. Ce n'est pas un message,
+  une explication ou un état d'erreur.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="skeleton-import.tsx"
+import { Skeleton, type SkeletonProps } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez Skeleton pour remplacer temporairement le contenu pendant le chargement des données.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-skeleton.tsx"
+import { Skeleton } from "@pycolors/ui";
+
+export function BasicSkeleton() {
+  return (
+    <div className="space-y-2">
+      <Skeleton className="h-4 w-2/3" />
+      <Skeleton className="h-4 w-1/2" />
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser le squelette [#when-to-use-skeleton]
+
+Utilisez Skeleton lorsque la mise en page est connue et que du contenu réel est attendu prochainement.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Mise en page connue",
+      description:
+        "Utilisez-le lorsque vous connaissez déjà la forme du contenu final.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Courte attente",
+      description:
+        "Utilisez-le pour charger du contenu qui devrait apparaître bientôt.",
+      icon: Clock,
+    },
+    {
+      title: "Surfaces de données",
+      description:
+        "Utilisez-le dans les cartes, les tableaux, les listes, les tableaux de bord et les sections de profil.",
+      icon: Rows3,
+    },
+  ]}
+/>
+
+### État de chargement de la carte [#card-loading-state]
+
+Le squelette se compose naturellement avec des surfaces telles que la carte.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="card-loading-skeleton.tsx"
+import { Card, CardHeader, CardContent, Skeleton } from "@pycolors/ui";
+
+export function CardLoadingSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### État de chargement de la table [#table-loading-state]
+
+Utilisez Squelette à l'intérieur des lignes de la table lorsque la forme de la table est connue.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="table-loading-skeleton.tsx"
+import { Skeleton, Table, TableBody, TableRow, TableCell } from "@pycolors/ui";
+
+export function TableLoadingSkeleton() {
+  return (
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Squelette circulaire [#circular-skeleton]
+
+Utilisation `circle` pour l'avatar, l'icône ou les espaces réservés aux médias ronds.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex items-center gap-3">
+      <Skeleton circle className="h-10 w-10" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="circular-skeleton.tsx"
+import { Skeleton } from "@pycolors/ui";
+
+export function CircularSkeleton() {
+  return (
+    <div className="flex items-center gap-3">
+      <Skeleton circle className="h-10 w-10" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Correspond à la forme finale du contenu [#match-the-final-content-shape]
+
+    Le squelette doit se rapprocher du contenu qu’il remplace : lignes de texte, avatars, cartes ou lignes.
+
+</Step>
+
+  <Step>
+    #### Préserver la hauteur de disposition [#preserve-layout-height]
+
+    Gardez l'état de chargement proche de la hauteur finale pour réduire le décalage de disposition.
+
+</Step>
+
+  <Step>
+    #### Gardez les choses simples [#keep-it-simple]
+
+    Préférez quelques formes claires à une fausse version détaillée de l'interface utilisateur finale.
+
+</Step>
+
+  <Step>
+    #### Remplacez rapidement lorsque les données sont prêtes [#replace-quickly-when-data-is-ready]
+
+    Le squelette est temporaire. Il devrait disparaître dès que le contenu réel peut être rendu.
+
+</Step>
+
+  <Step>
+    #### Utiliser un autre état à la fin du chargement [#use-another-state-when-loading-ends]
+
+    Les états vides, d'erreur et de succès ont besoin de leur propre interface utilisateur. Le squelette ne représente que le chargement.
+
+</Step>
+
+</Steps>
+
+## Skeleton vs Spinner vs EmptyState vs Alerte [#skeleton-vs-spinner-vs-emptystate-vs-alert]
+
+| Situation                                                          | Utilisation                           |
+| ------------------------------------------------------------------ | ------------------------------------- |
+| La disposition est connue et le contenu est en cours de chargement | Squelette                             |
+| Courte tâche de fond inconnue                                      | Spinner ou chargement en ligne        |
+| Demande réussie mais aucune donnée n'existe                        | EmptyState                            |
+| La demande a échoué                                                | Alerte                                |
+| Opération de longue durée nécessitant des explications             | Statut dédié UI                       |
+| Blocage du chargement au niveau de l'application                   | UI de chargement au niveau de l'route |
+
+<Callout type="info" title="Règle de décision">
+  Utilisez Skeleton pour le contenu attendu. Utilisez EmptyState pour une
+  absence valide. Utilisez Alert en cas d'échec.
+
+</Callout>
+
+## API [#api]
+
+#### Props [#props]
+
+| Prop        | Type      | Par défaut | Désignation                  |
+| ----------- | --------- | ---------- | ---------------------------- |
+| `circle`    | `boolean` | `false`    | Rend un squelette circulaire |
+| `className` | `string`  | —          | Autres classes Tailwind      |
+
+Skeleton accepte également le code HTML standard `div` props.
+
+```ts title="skeleton-props.ts"
+React.HTMLAttributes<HTMLDivElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="skeleton-types.ts"
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  circle?: boolean;
+}
+```
+
+### Accessibilité [#accessibility]
+
+Le squelette n'est que visuel.
+
+Directives :
+
+- Squelette rend toujours avec `aria-hidden="true"` - il s'agit d'une garantie fixe du composant et ne peut pas être remplacée par un accessoire transmis
+- Le squelette ne devrait jamais recevoir de concentration
+- Le squelette ne doit pas être utilisé comme message d'état
+- N'annoncez pas tous les espaces réservés aux lecteurs d'écran
+- Fournir une sémantique de chargement accessible à un niveau supérieur lorsque nécessaire
+- L'animation pulse respecte `prefers-reduced-motion` et est désactivé automatiquement pour les utilisateurs qui en font la demande
+- Remplacez les squelettes par du contenu réel dès que possible
+
+<Callout title="Règle d'accessibilité">
+  Les squelettes décrivent la forme visuelle pour les utilisateurs voyants. Ils
+  ne sont pas le contenu et ne doivent pas être annoncés comme contenu.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "correspondant à la forme finale du contenu",
+    "géométrie simple de placeholder",
+    "Hauteur de disposition stable",
+    "squelettes de table pour les lignes de table",
+    "Séparer les états vide et erreur",
+  ]}
+  avoid={[
+    "Utiliser le squelette pour les erreurs",
+    "Skeleton pour les états vides",
+    "Fausses mises en page trop détaillées",
+    "squelettes de longue durée sans explication",
+    "décalage entre les états de chargement et de chargement",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Skeleton n'a généralement pas besoin de copie.
+
+<Tabs items={["Bon", "Éviter"]}>
+  <Tab value="Bon">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Forme de chargement silencieux
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Laissez l'espace réservé communiquer que le contenu arrive lorsque l'attente est courte.
+      </div>
+    </div>
+
+</Tab>
+
+  <Tab value="Éviter">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Trop de copie de chargement
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Évitez d'expliquer chaque espace réservé de chargement. Utilisez la copie uniquement pour des attentes plus longues ou inhabituelles.
+      </div>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Le squelette devrait-il inclure du texte pour les lecteurs d'écran?">
+    Habituellement non. Le squelette devrait être caché des technologies d'assistance. Si l'état du chargement est important, annoncez-le au niveau de la région parent.
+  </Accordion>
+
+<Accordion title="Devrais-je utiliser un squelette ou un spinner?">
+  Utilisez Skeleton lorsque la disposition finale est connue. Utilisez un
+  spinner ou un état de chargement en ligne lorsque la forme est inconnue ou que
+  l'action est petite.
+</Accordion>
+
+<Accordion title="Le squelette peut-il être utilisé dans les tables ?">
+  Oui. Utilisez des cellules squelettes à l'intérieur des lignes de la table
+  pour préserver la structure de la table pendant le chargement des données.
+</Accordion>
+
+  <Accordion title="À quel point un squelette doit-il être détaillé ?">
+    Restez simple. Correspond à la structure principale, pas à chaque détail.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Concevoir des états asynchrones cohérents sur les surfaces réelles du produit.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Tableau",
+      href: "/docs/ui/table",
+      description:
+        "Utilisez Squelette à l'intérieur des lignes de la table pour les états de chargement structurés.",
+      icon: Table2,
+    },
+    {
+      title: "EmptyState",
+      href: "/docs/ui/empty-state",
+      description:
+        "Utilisez EmptyState lorsque le chargement a réussi mais aucune donnée n'existe.",
+      icon: Inbox,
+    },
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Utilisez Alerte lorsqu’une demande échoue ou a besoin d’un retour important.",
+      icon: CircleAlert,
+    },
+  ]}
+/>

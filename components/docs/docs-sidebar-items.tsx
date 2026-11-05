@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   createContext,
   useContext,
@@ -61,6 +62,8 @@ export function DocsSidebarPublications({
   dates: PublicationDates;
   children: ReactNode;
 }) {
+  const tSite = useCopy();
+
   const today = useSyncExternalStore(
     subscribeToDayChange,
     getToday,
@@ -70,12 +73,14 @@ export function DocsSidebarPublications({
 
   return (
     <PublicationsContext.Provider value={value}>
-      {children}
+      {tSite(children)}
     </PublicationsContext.Provider>
   );
 }
 
 export function DocsSidebarItem({ item }: { item: PageTree.Item }) {
+  const tSite = useCopy();
+
   const pathname = usePathname();
   const depth = useFolderDepth();
   const active = item.url.replace(/\/$/, "") === pathname.replace(/\/$/, "");
@@ -90,7 +95,8 @@ export function DocsSidebarItem({ item }: { item: PageTree.Item }) {
       className="relative flex items-center gap-2 rounded-lg p-2 text-start text-fd-muted-foreground transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 data-[active=true]:bg-fd-primary/10 data-[active=true]:text-fd-primary focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring [&_svg]:size-4 [&_svg]:shrink-0"
       style={{ paddingInlineStart: `calc(${2 + 3 * depth} * var(--spacing))` }}
     >
-      <span className="min-w-0 flex-1 wrap-anywhere">{item.name}</span>{" "}
+      <span className="min-w-0 flex-1 wrap-anywhere">{tSite(item.name)}</span>
+      {tSite(" ")}
       {!item.external && <DocsNewArticleBadge href={item.url} />}
     </SidebarItem>
   );
@@ -98,6 +104,8 @@ export function DocsSidebarItem({ item }: { item: PageTree.Item }) {
 
 /** Shared by the desktop tree and the mobile list of documentation pages. */
 export function DocsNewArticleBadge({ href }: { href: string }) {
+  const tSite = useCopy();
+
   const { dates, today } = useContext(PublicationsContext);
   const publishedAt = dates[href];
   if (!publishedAt) return null;
@@ -111,9 +119,11 @@ export function DocsNewArticleBadge({ href }: { href: string }) {
       // Keep its footprint; current badges inherit the navigation's visibility.
       style={{ visibility: isNew ? undefined : "hidden" }}
       aria-hidden={isNew ? undefined : true}
-      title={`Published ${publishedAt} · New for 30 days`}
+      title={tSite("Published {value0} · New for 30 days", {
+        value0: publishedAt,
+      })}
     >
-      New
+      {tSite("New")}
     </Badge>
   );
 }

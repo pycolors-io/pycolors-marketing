@@ -8,6 +8,7 @@ export class QuoteSubmissionError extends Error {
   constructor(
     readonly fields: readonly QuoteField[] = [],
     readonly rateLimited = false,
+    readonly tooLarge = false,
   ) {
     super("Unable to confirm quote submission.");
   }
@@ -35,10 +36,13 @@ export async function submitQuoteRequest(
         controller.signal.throwIfAborted();
         const base = process.env.NEXT_PUBLIC_API_BASE_URL;
         if (!base) throw new QuoteSubmissionError();
+        const body = JSON.stringify(input);
+        if (new TextEncoder().encode(body).byteLength > 16_384)
+          throw new QuoteSubmissionError([], false, true);
         const response = await fetch(`${base}/api/v1/quotes`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(input),
+          body,
           signal: controller.signal,
         });
         const data: unknown = await response.json();
@@ -55,7 +59,11 @@ export async function submitQuoteRequest(
                     QUOTE_FIELDS.some((field) => field === value),
                 )
               : [];
-          throw new QuoteSubmissionError(fields, response.status === 429);
+          throw new QuoteSubmissionError(
+            fields,
+            response.status === 429,
+            response.status === 413,
+          );
         }
         if (
           response.status !== 202 ||

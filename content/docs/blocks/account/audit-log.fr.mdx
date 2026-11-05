@@ -1,0 +1,131 @@
+---
+title: Journal d’activité
+description: Un flux d'activité source-copie avec des événements, des filtres,
+  des actions, des horodatages, des autorisations et de la persistance
+  appartenant aux consommateurs.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { AuditLogExample } from "@/components/docs/blocks/canonical-examples";
+
+## Activité actuelle du compte sans posséder d'infrastructure d'audit [#present-account-activity-without-owning-audit-infrastructure]
+
+`AuditLogPanel` rend une section d'activité nommée, des événements ordonnés, des horodatages lisibles par machine, des détails optionnels, des filtres et des actions. Votre application fournit les données d'audit et décide quels contrôles sont disponibles.
+
+<Callout title="Présentation seulement">
+  Ce bloc ne collecte pas d'événements, n'écrit pas de piste d'audit, n'accède
+  pas à l'activité, n'autorise pas les spectateurs, ne conserve pas les journaux
+  ou n'effectue pas de mutations. Traiter l’ingestion, l’intégrité, la rétention
+  et le contrôle d’accès de l’audit de production comme des responsabilités
+  d’application / backend.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Compte &amp; espace de travail**limace `account`.
+- Bloquer : `audit-log`, exportation `AuditLogPanel`.
+- Source canonique : `apps/marketing/content/blocks/account/audit-log/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+Il n'y a pas de paquet npm Blocks, d'installateur de registre ou de CLI dans ce flux. Le fichier canonique est la source de présentation React que vous copiez dans votre application.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/audit-log/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <AuditLogExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/audit-log/index.tsx"'
+    >
+      ../../../blocks/account/audit-log/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `AuditLogPanel` avec des événements fictifs et déterministes et des contrôles locaux inertes. Il n'effectue aucune collecte d'audit, persistance ou opération de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Connectez vos propres données d'audit et autorisations, puis validez-les dans votre application. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `audit-log` répertoire dans un chemin appartenant à l'application.
+2. Configurer React, `@pycolors/ui`, les tokens et les styles sémantiques à travers le [Guide d'installation](/docs/ui/installation).
+3. Fournissez des identités d'événement stables, des horodatages, des étiquettes et des actions appartenant au consommateur.
+4. Exécutez lint, type-check, tests et build dans l'application consommatrice.
+
+```tsx title="src/components/workspace-audit-log.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+import { AuditLogPanel } from "./blocks/audit-log";
+
+export function WorkspaceAuditLog() {
+  return (
+    <AuditLogPanel
+      id="workspace-audit-log"
+      heading="Recent activity"
+      description="Security and workspace events supplied by the application."
+      events={[
+        {
+          id: "event-1",
+          actor: "Alex Morgan",
+          action: "updated",
+          target: "workspace settings",
+          occurredAt: "2026-09-15T08:30:00Z",
+          occurredAtLabel: "15 September 2026, 08:30 UTC",
+          details: "Example event metadata owned by the application.",
+          actions: (
+            <Button type="button" variant="outline">
+              View details
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+Le bouton ci-dessus est intentionnellement déconnecté exemple UI. Votre application possède son gestionnaire, sa destination, son autorisation et le comportement qui en résulte.
+
+## Les données et les autorisations restent les vôtres [#data-and-permissions-remain-yours]
+
+`id`, `heading` et `events` sont nécessaires. Utiliser un HTML stable et unique `id` pour chaque panel. Chaque événement a besoin d'une écurie `id`, `actor`, `action`, lisible par machine `occurredAt` valeur et formaté par le consommateur `occurredAtLabel`.
+
+`target`, `details` et par événement `actions` sont facultatifs. Le bloc rend les valeurs dans l'ordre fourni ; il ne trie pas, ne filtre pas, ne caviarde pas, ne formate pas les horodatages ou n'infère pas la sévérité de l'événement. Fournissez des données déjà autorisées et prêtes à être affichées.
+
+`filters` et de haut niveau `actions` sont des nœuds React arbitraires. Ils peuvent héberger des contrôles natifs ou des composants publics de l'interface utilisateur PyColors, mais le bloc ne lit jamais leur état, ne modifie pas une requête ou n'obtient pas de résultats. Conservez la logique de filtrage et de pagination chez le consommateur lorsqu'un historique d'audit dépasse une liste bornée.
+
+N'utilisez pas l'état visible de l'interface utilisateur comme limite d'autorisation. Vérifiez les rôles d'espace de travail, les autorisations de journal d'audit et la portée des ressources sur les chemins d'application/dossier approuvés avant de renvoyer des événements ou d'effectuer des actions.
+
+## Des états vides, réactifs et accessibles [#empty-responsive-and-accessible-states]
+
+Avec `events={[]}`, le bloc rend `emptyTitle` et facultatif `emptyDescription`. Un résultat vide réussi n'est pas un état de chargement ou d'erreur ; rendez ces états explicitement dans l'application quand nécessaire.
+
+La section est étiquetée par son en-tête, les événements utilisent une liste ordonnée, et chaque horodatage machine est rendu avec un horodatage sémantique. `<time dateTime>` valeur. Le texte des événements, les détails et les actions s'enroulent sur des mises en page étroites, tandis que le contenu détaillé préformaté peut défiler horizontalement dans sa zone délimitée.
+
+Le bloc ne déplace pas le focus et n'intercepte pas le comportement du clavier. Les contrôles des consommateurs conservent leur focus natif et leur sémantique désactivée. Donner des actions répétées des noms accessibles distincts lorsque leurs étiquettes visibles seraient autrement ambiguës.
+
+## Propriété et limites opérationnelles [#ownership-and-operational-boundaries]
+
+Votre application possède la production d'événements, le stockage, les garanties d'immuabilité, la rétention, l'exportation, la recherche, la pagination, les autorisations, la rédaction et la réponse aux incidents. Le bloc ne fournit pas la conformité d'audit en soi.
+
+Après la copie, examinez les modifications canoniques futures délibérément et préservez les personnalisations locales. Valider les longs acteurs/actions/cibles, les états vides, les largeurs étroites, les deux thèmes, le focus sur le clavier et les vraies combinaisons d'autorisations avant la production.
+
+Aucune ingestion d'audit, base de données / schéma, pipeline de télémétrie, authentification, autorisation, backend / demande de réseau, Registre ou CLI comportement n'est introduit par ce bloc ou guide.

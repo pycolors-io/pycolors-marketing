@@ -23,6 +23,10 @@ export interface WorkspaceInvitationsPanelProps {
   description?: string;
   invitations: readonly WorkspaceInvitation[];
   actions?: React.ReactNode;
+  roleLabel?: string;
+  statusLabel?: string;
+  sentLabel?: string;
+  expiresLabel?: string;
   emptyTitle?: string;
   emptyDescription?: string;
   className?: string;
@@ -49,6 +53,10 @@ export function WorkspaceInvitationsPanel({
   description,
   invitations,
   actions,
+  roleLabel = "Role",
+  statusLabel = "Status",
+  sentLabel = "Sent",
+  expiresLabel = "Expires",
   emptyTitle = "No invitations to display",
   emptyDescription,
   className,
@@ -115,13 +123,17 @@ export function WorkspaceInvitationsPanel({
 
                 <dl className="flex min-w-0 flex-wrap gap-x-6 gap-y-3">
                   <div className="min-w-0 space-y-1">
-                    <dt className="text-xs text-muted-foreground">Role</dt>
+                    <dt className="text-xs text-muted-foreground">
+                      {roleLabel}
+                    </dt>
                     <dd className="min-w-0 break-words text-sm">
                       {invitation.role}
                     </dd>
                   </div>
                   <div className="min-w-0 space-y-1">
-                    <dt className="text-xs text-muted-foreground">Status</dt>
+                    <dt className="text-xs text-muted-foreground">
+                      {statusLabel}
+                    </dt>
                     <dd className="min-w-0">
                       <span
                         data-slot="workspace-invitation-status"
@@ -132,7 +144,9 @@ export function WorkspaceInvitationsPanel({
                     </dd>
                   </div>
                   <div className="min-w-0 space-y-1">
-                    <dt className="text-xs text-muted-foreground">Sent</dt>
+                    <dt className="text-xs text-muted-foreground">
+                      {sentLabel}
+                    </dt>
                     <dd className="min-w-0 break-words text-sm">
                       <time dateTime={invitation.sentAt}>
                         {invitation.sentAtLabel}
@@ -141,7 +155,9 @@ export function WorkspaceInvitationsPanel({
                   </div>
                   {invitation.expiresAt && invitation.expiresAtLabel ? (
                     <div className="min-w-0 space-y-1">
-                      <dt className="text-xs text-muted-foreground">Expires</dt>
+                      <dt className="text-xs text-muted-foreground">
+                        {expiresLabel}
+                      </dt>
                       <dd className="min-w-0 break-words text-sm">
                         <time dateTime={invitation.expiresAt}>
                           {invitation.expiresAtLabel}

@@ -1,0 +1,158 @@
+---
+title: bibliothèque UI
+description: Réagissez aux composants des formulaires, du contenu, de la
+  navigation et des commentaires. Trouvez un exemple, inspectez son API et
+  composez-le dans votre application.
+lastUpdated: "2026-10-07"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import {
+  Box,
+  Palette,
+  PanelsTopLeft,
+  Accessibility,
+  Code2,
+  Route,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsComponentCatalog } from "@/components/docs/docs-component-catalog";
+import { DocsSectionLinks } from "@/components/docs/docs-section-links";
+
+<DocsSectionLinks
+  items={[
+    {
+      title: "Configuration",
+      href: "#build-interfaces-that-scale-with-your-product",
+    },
+    { title: "Composants", href: "#start-with-the-essentials" },
+    { title: "Exemples en direct", href: "#interactive-component-examples" },
+  ]}
+/>
+
+## Créez des interfaces évolutives avec votre produit [#build-interfaces-that-scale-with-your-product]
+
+Commencez avec une application React et Tailwind CSS v4. Installez les paquets publics, chargez les styles et vérifiez un composant avant de construire un écran plus grand.
+
+<DocsLinks
+  variant="list"
+  tone="neutral"
+  items={[
+    {
+      title: "Installer la bibliothèque",
+      href: "/docs/ui/installation",
+      description:
+        "Ajoutez les packages, configurez Tailwind et rendez votre premier composant.",
+      icon: Box,
+    },
+    {
+      title: "Faites-en votre propre",
+      href: "/docs/ui/theming",
+      description:
+        "Appliquez votre marque via des tokens partagés et des thèmes clairs et sombres.",
+      icon: Palette,
+    },
+  ]}
+/>
+
+## Commencez par l'essentiel [#start-with-the-essentials]
+
+Chaque référence de composant comprend un aperçu de travail, un code copiable, des détails sur l'API et des conseils d'accessibilité.
+
+<DocsComponentCatalog />
+
+## Exemples de composants interactifs [#interactive-component-examples]
+
+Ouvrir [PyColors UI Explorer](https://ui.pycolors.io) pour essayer les états des composants et les interactions du clavier dans les thèmes clairs et sombres. Chaque page de composant renvoie directement à son exemple.
+
+Pour mettre en place des exemples dans votre propre application, suivez le [guide du consommateur Storybook](/docs/ui/storybook). Vous pouvez également essayer un [Aperçu complet de l'interface](/ui#ui-preview) ou créer une palette dans [Theme Builder](/tools/theme-builder).
+
+## Règles de composition [#composition-rules]
+
+Gardez les pièces petites et connectez-les dans votre application:
+
+- **Utilisez des tokens sémantiques.** Utilitaires comme `bg-card`, `text-muted-foreground`et `border-border` Gardez les composants cohérents entre les thèmes.
+- **Composez un écran à partir de primitives.** Combinez les champs, les boutons, les cartes et les commentaires autour d'une tâche.
+- **Gardez la logique du produit dans votre application.** Le routage, la récupération de données, l'authentification et la facturation restent des responsabilités de l'application.
+
+<Callout title="Commencez avec un écran de travail">
+  Vérifiez le style, la focus clavier et la construction de
+  l'application avant de remplacer une zone de produit plus vaste. Les
+  [checklist d'installation](/docs/ui/installation#verify-the-first-screen)
+  couvre ces contrôles.
+
+</Callout>
+
+## Quand utiliser Patterns [#when-to-use-patterns]
+
+Utilisez un composant pour une partie d'une interface. Utilisez un modèle lorsque plusieurs composants doivent travailler ensemble, tels que la validation, la pagination ou la rétroaction de mutation.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Composer des flux communs",
+      href: "/docs/ui/usage-patterns",
+      description:
+        "Essayez les formulaires de paramètres, les boîtes de dialogue, les tables paginées et enregistrez les commentaires.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Construire à partir d'un bloc",
+      href: "/docs/blocks",
+      description:
+        "Copiez une section composée lorsque vous avez besoin d'un point de départ plus grand.",
+      icon: Code2,
+    },
+  ]}
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="list"
+  tone="neutral"
+  items={[
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Passez en revue les étiquettes, le comportement du clavier, la focus et les commentaires dans votre application.",
+      icon: Accessibility,
+    },
+    {
+      title: "Orientation en matière de migration",
+      href: "/docs/ui/migration-guidance",
+      description:
+        "Adoptez progressivement des composants dans une application React ou Next.js existante.",
+      icon: Route,
+    },
+  ]}
+/>
+
+<Accordions className="mt-8">
+  <Accordion title="Contribuer aux exemples de composants" id="maintaining-examples">
+
+Les contributeurs peuvent exécuter Storybook à partir de la racine du référentiel :
+
+```bash
+pnpm --filter @pycolors/ui storybook
+```
+
+Des exemples canoniques vivent dans `packages/ui/stories/components/<family>.stories.tsx`. Le public `src/index.ts` Le baril reste la source de vérité pour les familles soutenues. Les fondations démontrent des tokens existants; les compositions sont de petits exemples synthétiques. La navigation locale commande les fondations, les composants, puis les compositions.
+
+Lorsqu'un élément public ou un état significatif change :
+
+1. Mettre à jour son module de famille dactylographié avec un `components-<family>` ID, histoire stable exports, a `Default`une description utile et son lien Fumadocs. Importer par `../../src/index.js`, jamais le fichier interne d'un composant.
+2. Exposer uniquement les args/contrôles supportés. Les exemples contrôlés possèdent leur propre état; garder les étiquettes, la sémantique native / Radix, les tokens et les deux thèmes intacts.
+3. Mettez à jour les tests des composants correspondants et la page Fumadocs lorsque le comportement change. Exécuter `pnpm --filter @pycolors/ui verify`, `pnpm check:ui-package`et `pnpm --filter pycolors-marketing types:check` pour les changements de documentation.
+4. Installez Chromium avec `pnpm --filter @pycolors/ui test:storybook:install`, puis courir `pnpm --filter @pycolors/ui test:storybook` pour les interactions, les scans d'accessibilité, les vérifications lumière/obscurité et desktop/mobile. Vérifiez les ID d'histoire générés séparément. Les contrôles automatisés ne remplacent pas la technologie d'assistance et l'examen visuel; la configuration, la sélection et les diagnostics sont dans le guide de l'histoire.
+5. Préserver les anciens identifiants via des entrées de compatibilité de rendu partagé lors de la migration des liens. Le registre des migrations et les règles de dépréciation vivent dans `packages/ui/stories/README.md`; le module legacy ne contient pas de nouveaux exemples.
+
+Les modifications story-only n'ont pas besoin d'une version de paquet. Les modifications API/comportement publiques conservent leurs exigences normales en matière de Changeset, de test et de documentation. Les stories publiques ne doivent contenir que des primitives et des fixtures publiques : pas de source Pro, d'importations privées, d'identifiants ou de données client. Voir `packages/ui/stories/README.md` dans le dépôt pour les conventions de configuration des contributeurs et d'ID d'histoire.
+
+  </Accordion>
+</Accordions>

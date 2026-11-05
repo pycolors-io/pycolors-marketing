@@ -5,10 +5,14 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import ProductStudioPage, {
-  metadata,
-} from "@/app/(site)/showcase/product-studio/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/showcase/product-studio/page";
 import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 import { productStudio } from "@/lib/showcase/product-studio";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@vercel/analytics", () => ({ track: vi.fn() }));
 beforeEach(() => vi.stubEnv("NEXT_PUBLIC_STARTER_PRO_DEMO_URL", ""));
@@ -95,7 +99,9 @@ describe("PyColors-owned product reference", () => {
     const html = renderToStaticMarkup(<ProductStudioReference />);
     expect(html).toContain(`href="${productStudio.href}"`);
     expect(html).toContain(productStudio.disclosure);
-    expect(metadata.alternates).toEqual({ canonical: productStudio.href });
+    expect(metadata.alternates).toMatchObject({
+      canonical: productStudio.href,
+    });
     expect(metadata.openGraph).toMatchObject({
       url: productStudio.href,
       images: [{ url: productStudio.images.dashboard.light }],
@@ -112,7 +118,11 @@ describe("PyColors-owned product reference", () => {
       else if (href.startsWith("/"))
         expect(
           existsSync(
-            resolve("app/(site)", href.slice(1).split("#")[0]!, "page.tsx"),
+            resolve(
+              "app/[locale]/(site)",
+              href.slice(1).split("#")[0]!,
+              "page.tsx",
+            ),
           ),
           href,
         ).toBe(true);

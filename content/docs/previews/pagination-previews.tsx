@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { SiteText } from "@/components/site-text";
+import { useCopy } from "@/lib/i18n/use-copy";
+import * as React from "react";
 
 import {
   Badge,
@@ -20,13 +22,15 @@ import {
   TableHead,
   TableCell,
   TableCaption,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 /* -----------------------------------------------------------------------------
  * Basic pagination (stateful preview)
  * -------------------------------------------------------------------------- */
 
 export function PaginationBasicExample() {
+  const tSite = useCopy();
+
   const [page, setPage] = React.useState(1);
   const totalPages = 12;
 
@@ -35,11 +39,11 @@ export function PaginationBasicExample() {
   return (
     <div className="flex flex-col items-center gap-3">
       <p className="text-sm text-muted-foreground">
-        Page{' '}
-        <span className="font-medium text-foreground">{page}</span> /{' '}
-        <span className="font-medium text-foreground">
-          {totalPages}
-        </span>
+        {tSite("Page")}
+        {tSite(" ")}
+        <span className="font-medium text-foreground">{tSite(page)}</span> /
+        {tSite(" ")}
+        <span className="font-medium text-foreground">{tSite(totalPages)}</span>
       </p>
 
       <Pagination>
@@ -52,7 +56,7 @@ export function PaginationBasicExample() {
           </PaginationItem>
 
           {tokens.map((t) =>
-            t.type === 'ellipsis' ? (
+            t.type === "ellipsis" ? (
               <PaginationItem key={t.key}>
                 <PaginationEllipsis />
               </PaginationItem>
@@ -62,7 +66,7 @@ export function PaginationBasicExample() {
                   isActive={Boolean(t.isActive)}
                   onClick={() => setPage(t.value)}
                 >
-                  {t.value}
+                  {tSite(t.value)}
                 </PaginationLink>
               </PaginationItem>
             ),
@@ -71,9 +75,7 @@ export function PaginationBasicExample() {
           <PaginationItem>
             <PaginationNext
               disabled={page === totalPages}
-              onClick={() =>
-                setPage((p) => Math.min(totalPages, p + 1))
-              }
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             />
           </PaginationItem>
         </PaginationContent>
@@ -89,41 +91,49 @@ export function PaginationBasicExample() {
 type Project = {
   id: string;
   name: string;
-  status: 'active' | 'paused' | 'archived';
+  status: "active" | "paused" | "archived";
   updatedAt: string;
 };
 
-const mockProjects: Project[] = Array.from({ length: 23 }).map(
-  (_, i) => {
-    const n = i + 1;
-    const status =
-      n % 3 === 0 ? 'paused' : n % 5 === 0 ? 'archived' : 'active';
+const mockProjects: Project[] = Array.from({ length: 23 }).map((_, i) => {
+  const n = i + 1;
+  const status = n % 3 === 0 ? "paused" : n % 5 === 0 ? "archived" : "active";
 
-    return {
-      id: `p_${String(n).padStart(3, '0')}`,
-      name: `Project ${n}`,
-      status,
-      updatedAt: '2026-01-21',
-    };
-  },
-);
+  return {
+    id: `p_${String(n).padStart(3, "0")}`,
+    name: `Project ${n}`,
+    status,
+    updatedAt: "2026-01-21",
+  };
+});
 
-function statusBadge(status: Project['status']) {
-  if (status === 'active')
-    return <Badge variant="success">Active</Badge>;
-  if (status === 'paused')
-    return <Badge variant="warning">Paused</Badge>;
-  return <Badge variant="muted">Archived</Badge>;
+function statusBadge(status: Project["status"]) {
+  if (status === "active")
+    return (
+      <Badge variant="success">
+        <SiteText text={"Active"} />
+      </Badge>
+    );
+  if (status === "paused")
+    return (
+      <Badge variant="warning">
+        <SiteText text={"Paused"} />
+      </Badge>
+    );
+  return (
+    <Badge variant="muted">
+      <SiteText text={"Archived"} />
+    </Badge>
+  );
 }
 
 export function ProjectsTableWithPagination() {
+  const tSite = useCopy();
+
   const pageSize = 5;
   const [page, setPage] = React.useState(1);
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(mockProjects.length / pageSize),
-  );
+  const totalPages = Math.max(1, Math.ceil(mockProjects.length / pageSize));
   const safePage = Math.min(page, totalPages);
 
   const start = (safePage - 1) * pageSize;
@@ -136,29 +146,31 @@ export function ProjectsTableWithPagination() {
     <div className="space-y-4">
       <Table>
         <TableCaption>
-          <i>Mock data — swap with Prisma later.</i>
+          <i>{tSite("Mock data — swap with Prisma later.")}</i>
         </TableCaption>
 
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Updated</TableHead>
-            <TableHead className="w-35 text-right">Actions</TableHead>
+            <TableHead>{tSite("Name")}</TableHead>
+            <TableHead>{tSite("Status")}</TableHead>
+            <TableHead>{tSite("Updated")}</TableHead>
+            <TableHead className="w-35 text-right">
+              {tSite("Actions")}
+            </TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {rows.map((p) => (
             <TableRow key={p.id}>
-              <TableCell className="font-medium">{p.name}</TableCell>
-              <TableCell>{statusBadge(p.status)}</TableCell>
+              <TableCell className="font-medium">{tSite(p.name)}</TableCell>
+              <TableCell>{tSite(statusBadge(p.status))}</TableCell>
               <TableCell className="text-muted-foreground">
-                {p.updatedAt}
+                {tSite(p.updatedAt)}
               </TableCell>
               <TableCell className="text-right">
                 <Button size="sm" variant="outline">
-                  View
+                  {tSite("View")}
                 </Button>
               </TableCell>
             </TableRow>
@@ -168,17 +180,20 @@ export function ProjectsTableWithPagination() {
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing{' '}
+          {tSite("Showing")}
+          {tSite(" ")}
           <span className="font-medium text-foreground">
-            {start + 1}
+            {tSite(start + 1)}
           </span>
-          {'–'}
+          {tSite("–")}
           <span className="font-medium text-foreground">
-            {Math.min(end, mockProjects.length)}
-          </span>{' '}
-          of{' '}
+            {tSite(Math.min(end, mockProjects.length))}
+          </span>
+          {tSite(" ")}
+          {tSite("of")}
+          {tSite(" ")}
           <span className="font-medium text-foreground">
-            {mockProjects.length}
+            {tSite(mockProjects.length)}
           </span>
         </p>
 
@@ -192,7 +207,7 @@ export function ProjectsTableWithPagination() {
             </PaginationItem>
 
             {tokens.map((t) =>
-              t.type === 'ellipsis' ? (
+              t.type === "ellipsis" ? (
                 <PaginationItem key={t.key}>
                   <PaginationEllipsis />
                 </PaginationItem>
@@ -202,7 +217,7 @@ export function ProjectsTableWithPagination() {
                     isActive={Boolean(t.isActive)}
                     onClick={() => setPage(t.value)}
                   >
-                    {t.value}
+                    {tSite(t.value)}
                   </PaginationLink>
                 </PaginationItem>
               ),
@@ -211,9 +226,7 @@ export function ProjectsTableWithPagination() {
             <PaginationItem>
               <PaginationNext
                 disabled={safePage === totalPages}
-                onClick={() =>
-                  setPage((p) => Math.min(totalPages, p + 1))
-                }
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               />
             </PaginationItem>
           </PaginationContent>

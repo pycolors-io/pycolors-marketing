@@ -1,0 +1,132 @@
+---
+title: Membres de l'espace de travail
+description: Une liste de membres source-copie avec les identités appartenant
+  aux consommateurs, les étiquettes de rôle et de statut et les actions natives.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { WorkspaceMembersExample } from "@/components/docs/blocks/workspace-members-example";
+
+## Afficher les personnes dans un espace de travail [#show-the-people-in-a-workspace]
+
+`WorkspaceMembersPanel` compose une section nommée, une liste de membres, des étiquettes de rôle et d'état lisibles et des actions facultatives. Votre application fournit chaque membre et choisit les contrôles à afficher. Le Bloc ne gère pas l'identité ou l'accès.
+
+<Callout title="Démonstration locale fictive">
+  Les noms et adresses ci-dessous sont des exemples. Les contrôles modifient
+  uniquement l'état de démonstration local ou sélectionnent un membre de
+  l'échantillon. Ils n'envoient pas d'invitations ou d'e-mails, ne modifient pas
+  les autorisations, n'appellent pas un backend ou n'enregistrent pas de
+  données. Le lien de configuration de l'interface utilisateur est la navigation
+  dans la documentation.
+
+</Callout>
+
+Utilisez les propriétés facultatives `roleLabel` et `statusLabel` pour traduire les libellés. L’application fournit aussi les rôles et statuts traduits. Les valeurs par défaut restent en anglais.
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Compte &amp; espace de travail**limace `account`.
+- Bloquer : `workspace-members`, exportation `WorkspaceMembersPanel`.
+- Source canonique : `apps/marketing/content/blocks/account/workspace-members/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+Le bloc canonique utilise React et le paquetage public de l'interface utilisateur uniquement. Il ne nécessite pas Next.js, un alias d'application, un autre bloc copié ou un service. Il n'y a pas de paquet npm Blocks, d'installateur de registre ou de CLI dans ce flux.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/workspace-members/index.tsx` dans votre application. Utilisez le bouton de copie de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible. La source affichée est incluse au moment de la création de la documentation ; il ne s'agit pas d'une seconde implémentation ou d'une copie de la démo interactive.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <WorkspaceMembersExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/workspace-members/index.tsx"'
+    >
+      ../../../blocks/account/workspace-members/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `WorkspaceMembersPanel` grâce à son équipement local existant. Il n'effectue aucune invitation, autorisation ou opération réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Conservez le fichier complet sur le chemin d'accès appartenant à l'application ci-dessus. Installez et configurez votre public compatible `@pycolors/ui` et `@pycolors/tokens` dépendances d'abord; copier la source n'installe pas les paquets ou CSS. Remplacez les exemples de contenu et de routes par les vôtres, puis validez-les dans votre application.
+
+```tsx title="src/components/workspace-people.tsx"
+import { Button } from "@pycolors/ui";
+import { WorkspaceMembersPanel } from "./blocks/workspace-members";
+
+export function WorkspacePeople() {
+  return (
+    <WorkspaceMembersPanel
+      id="workspace-people"
+      heading="Workspace members"
+      description="People associated with this workspace."
+      members={[
+        {
+          id: "example-alex",
+          name: "Alex Morgan",
+          secondaryText: "alex@example.com",
+          role: "Project observer",
+          status: "Active",
+          actions: (
+            <Button asChild variant="outline">
+              <a href="/workspace/members/example-alex">View Alex Morgan</a>
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+L'exemple de route appartient à votre application, pas à PyColors. Le fichier canonique n'a pas besoin `"use client"` directive ou des crochets. Lorsque vous fournissez des gestionnaires d'événements ordinaires, définissez-les à l'intérieur d'une frontière client-consommateur appropriée ; ne passez pas les gestionnaires d'un composant serveur à travers cette frontière. L'exemple de documentation interactive possède son état local et sa frontière client séparément.
+
+## Le contenu et les actions restent les vôtres [#content-and-actions-remain-yours]
+
+`id`, `heading` et `members` sont nécessaires. Utiliser un stable, non vide `id` unique à travers la page, y compris ses dérivés `-heading` et facultatif `-description` Identifiants. Chaque membre a besoin d'une écurie `id` Unique dans la liste. Les membres dans des panneaux séparés peuvent partager les identifiants des membres car il s'agit de clés React, et non d'identifiants HTML.
+
+La section utilise un `h2`; les noms des membres et l'utilisation du titre à l'état vide `h3`. Placez-le sous le titre de votre page. Facultatif `description` Le texte nomme le but de la section. Membre `secondaryText` est un texte brut facultatif, pas un lien de courrier électronique implicite. Une valeur secondaire absente ne rend aucun paragraphe vide.
+
+Membre `role` et `status` sont des chaînes d'affichage. Ils n'autorisent pas un utilisateur, ne choisissent pas d'actions ou de cartes pour accéder aux droits. Status utilise un badge neutre avec un texte visible plutôt qu'une couleur inférée ou une région en direct non sollicitée. Le bloc préserve l'ordre et les valeurs des membres et ne les trie ni ne les filtre.
+
+Panneau d'alimentation en option `actions` et par membre `actions` comme des nœuds de React. Les nœuds sont rendus inchangés, préservant les réfs, les callbacks, les destinations natives, l'état désactivé et les types de boutons. Utilisez des noms accessibles tels que **Voir Alex Morgan** lorsque plusieurs membres ont des contrôles similaires. Définir `type="button"` pour les contrôles qui ne doivent pas soumettre un formulaire environnant. La présentation désactivée n'est pas une limite de sécurité : appliquez les autorisations dans le backend validé de votre application.
+
+Les emplacements d'action manquants, null, false, chaîne vide et tableau vide omettent le groupe d'action. Les composants opaques qui ne rendent rien restent des contenus appartenant au consommateur. Omettre toutes les actions lorsqu'il n'y a pas d'étape suivante utile; ne pas inventer des autorisations désactivées ou exposer une action destructrice uniquement pour remplir la mise en page.
+
+## Cas de non-lieu, de handicap et de longue durée [#empty-disabled-and-long-content-cases]
+
+Pass `members={[]}` pour un résultat vide réussi. Le public `EmptyState` primitive rend `emptyTitle` (par défaut) **Aucun membre à afficher**) et facultatif `emptyDescription`, avec des annonces off. Les actions de panel restent disponibles si votre application les a fournies. Le chargement et l'échec de la demande ne sont pas des états vides ; rendez votre propre interface utilisateur de chargement/erreur appropriée en dehors de ce bloc de présentation.
+
+Le sélecteur d'état de l'aperçu affiche à la fois les listes remplies et vides. Son action supprime les actions de section et de membre ; la ligne d'échantillon finale a un contrôle local explicitement désactivé et un texte délibérément long. Ce sont des choix de démonstration, pas des permissions inférées ou des états membres de production.
+
+La mise en page s'empile sur de petits écrans et organise le contenu et les actions horizontalement à partir de `sm`, tandis que les étiquettes et les actions s'enroulent. Les tokens sémantiques prennent en charge les deux thèmes. Utilisation `className` pour les remplacements de root via public `cn`; les classes de consommateurs ont priorité. Passez en revue les noms longs réels, le rôle/le statut du texte et les contrôles à des largeurs étroites, en particulier les contrôles avec leurs propres dimensions fixes.
+
+## Focus, validation et maintenance [#focus-validation-and-maintenance]
+
+Le Bloc ne déplace jamais le focus, n'intercepte pas les clés, ne récupère pas les données ou ne modifie pas les membres. Les contrôles natifs gardent leur comportement. Votre application possède le focus après avoir supprimé un contrôle actif ou remplacé du contenu. La démo maintient le bouton cliqué en place et signale la sélection locale via un message de statut poli distinct.
+
+Exécutez la charpie, la vérification de type, les tests et la construction de production de votre application après la copie. Passez en revue les listes remplies/vides, aucune action, les contrôles désactivés, les renvois, les panneaux multiples, le contenu long, le focus clavier, les thèmes et les mises en page étroites. Les tests d'exécution exercent le bloc réel et la démo; les contrôles de hache représentatifs ne certifient pas le contraste visuel, le comportement du lecteur d'écran ou l'accessibilité complète.
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Passez en revue les modifications canoniques ultérieures, préservez les personnalisations locales et validez-les dans votre application avant leur adoption. Retournez votre copie locale pour annuler la présentation sans modifier les données des membres.
+
+## Limites et prochaines étapes [#boundaries-and-next-steps]
+
+Aucune invitation, modification de rôle, suppression, authentification, autorisation, facturation, e-mail, analyse, persistance ou services de production ne sont implémentés ici. Les séparés [Tableau de données](/docs/blocks/data/data-table) possède une pagination tabulaire et une composition de lignes ; ce bloc est une liste de membres ciblée, pas un autre moteur de données.
+
+Explorez le [Blocage du catalogue](/blocks) pour d'autres compositions, ou [Comparer les Starters](/starters) pour une fondation d'application.

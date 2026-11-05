@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { MouseEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
@@ -8,6 +9,8 @@ export function FooterNavigation({
   className,
   label = "PyColors site footer",
 }: Readonly<{ children: ReactNode; className?: string; label?: string }>) {
+  const tSite = useCopy();
+
   const router = useRouter();
 
   function navigateFromFooter(event: MouseEvent<HTMLElement>) {
@@ -27,6 +30,7 @@ export function FooterNavigation({
     if (
       !(link instanceof HTMLAnchorElement) ||
       link.hasAttribute("download") ||
+      link.hasAttribute("data-native-navigation") ||
       (link.target && link.target !== "_self")
     ) {
       return;
@@ -65,10 +69,10 @@ export function FooterNavigation({
   return (
     <footer
       className={className}
-      aria-label={label}
+      aria-label={tSite(label)}
       onClickCapture={navigateFromFooter}
     >
-      {children}
+      {tSite(children)}
     </footer>
   );
 }

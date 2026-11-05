@@ -1,0 +1,103 @@
+---
+title: Checklist de démarrage
+description: Une liste de contrôle d'installation copiable avec les progrès
+  d'achèvement et les actions appartenant à l'application.
+lastUpdated: "2026-10-05"
+appliesTo: Blocks
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { OnboardingChecklistExample } from "@/components/docs/blocks/onboarding-checklist-example";
+
+## Rendez la prochaine étape claire [#make-the-next-step-clear]
+
+`OnboardingChecklist` regroupe les premières tâches dans un espace de travail en une liste ordonnée avec un indicateur de progression. Votre application fournit l'état d'achèvement et les actions natives. Le Bloc ne crée pas d’espaces de travail, n’invite pas les membres, ne navigue pas, ne stocke pas la progression ou ne décide pas si une étape de configuration a été réellement terminée.
+
+L'aperçu bascule des étapes fictives localement. Ses contrôles n'effectuent pas les tâches décrites; ils démontrent comment l'interface utilisateur répond aux accessoires mis à jour.
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Compte &amp; espace de travail**limace `account`.
+- Bloquer : `onboarding-checklist`, exportation `OnboardingChecklist`.
+- Source canonique : `apps/marketing/content/blocks/account/onboarding-checklist/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/onboarding-checklist/index.tsx` dans votre application. Utilisez le bouton de copie de l'onglet Source ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible. Le fichier canonique complet est inclus au moment de la compilation.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <OnboardingChecklistExample />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/onboarding-checklist/index.tsx"'
+    >
+      ../../../blocks/account/onboarding-checklist/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Collez le fichier complet à la destination ci-dessus. Garder le public `@pycolors/ui` Importation et configuration du token d'interface utilisateur. Aucune dépendance supplémentaire, le package Blocs ou le programme d'installation du Registre n'est nécessaire. Votre copie ne reçoit pas de mises à jour automatiques ; validez-la dans votre application après la copie et lors de l'adoption d'une révision canonique ultérieure.
+
+```tsx title="workspace-setup.tsx"
+import { Button } from "@pycolors/ui";
+import { OnboardingChecklist } from "./blocks/onboarding-checklist";
+
+export function WorkspaceSetup() {
+  return (
+    <OnboardingChecklist
+      id="workspace-setup"
+      heading="Set up your workspace"
+      steps={[
+        { id: "workspace", title: "Create a workspace", complete: true },
+        {
+          id: "project",
+          title: "Add your first project",
+          description: "Organize the work your team wants to ship.",
+          complete: false,
+          action: (
+            <Button asChild variant="outline">
+              <a href="/projects/new">Create project</a>
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+Remplacez les valeurs d'exemple de destination et de complétion par des routes d'application réelles et un état validé. Le bloc canonique n'a pas `"use client"` directive et peut rendre sur le serveur. Les callbacks se trouvent dans un emballage client approprié. Dans Next.js, marquez cette enveloppe `"use client"`; ne passez pas de fonctions ordinaires à travers une limite de composant de serveur.
+
+## Props et responsabilité [#props-and-responsibility]
+
+`id`, `heading` et `steps` sont nécessaires. Utilisez un ID HTML stable et non vide unique sur toute la page, y compris les `${id}-heading` ID. Chaque étape nécessite une écurie unique `id`, a `title` et un booléen `complete`; `description` et `action` sont facultatifs. La valeur de progression est dérivée des étapes complétées fournies. Le Bloc ne marque jamais une étape complète par lui-même.
+
+`headingLevel` par défaut à `2` et accepte `2` par `6` pour s'adapter à votre page. `description` introduit la checklist. `completedLabel` et `incompleteLabel` par défaut « Terminé » et « À faire » ; fournissez du texte localisé au besoin. `emptyMessage` Une liste vide affiche ce message sans indicateur de progression ni liste. `className` s'applique à la racine par l'intermédiaire du public `cn`Les classes de consommateurs ont préséance.
+
+Les actions sont rendues inchangées, y compris les refs, les callbacks, les destinations de liens, la sémantique désactivée et les types de boutons natifs. Utilisation `type="button"` pour les actions qui ne doivent pas soumettre de formulaire ci-joint. Une étape terminée peut conserver une action, offrir une action différente ou l’omettre; cette décision appartient à votre application. Les indicateurs d'achèvement sont une présentation, jamais une limite d'autorisation.
+
+## Accessibilité et responsive layout [#accessibility-and-responsive-layout]
+
+La section nommée contient une liste ordonnée et un indicateur de progression natif. Les étiquettes d'état visibles communiquent l'achèvement sans dépendre de la couleur. Les longs enveloppements de contenu et les actions se déplacent vers une autre ligne lorsque l'espace est limité. Les tokens sémantiques prennent en charge les thèmes clairs et sombres.
+
+Le Bloc ne déplace pas le focus et n'annonce pas les mises à jour. Votre application possède ces comportements lorsque vous terminez une tâche qui modifie la page. Gardez une action stable ou déplacez le focus délibérément si vous retirez le contrôle focalisé. La démo conserve le même bouton à bascule et annonce un bref résumé d'achèvement local.
+
+## Valider et conserver votre copie [#validate-and-maintain-your-copy]
+
+Exécutez l'application lint, les contrôles de type, les tests et une compilation de production. Cochez les listes vides, partiellement complétées et entièrement terminées; actions manquantes et désactivées; focus clavier; instances multiples; texte long; largeurs étroites; et les deux thèmes. Le chargement du réseau, les erreurs, la persistance et la validation d'achèvement appartiennent à votre application et ne sont pas déduits par ce bloc.
+
+Gardez les modifications locales sous contrôle de version. Revoyez délibérément les révisions canoniques ultérieures ; aucune synchronisation ne se produit. La restauration du fichier copié modifie uniquement la présentation et n'annule pas les tâches d'application terminées.
+
+Combinez ceci avec le [Navigation latérale responsive](/docs/blocks/app-shells/responsive-sidebar) ou [Aperçu des statistiques](/docs/blocks/data/stats-overview), et explorez la [Blocage du catalogue](/blocks) pour l'écran suivant.

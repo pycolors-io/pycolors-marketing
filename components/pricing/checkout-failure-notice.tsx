@@ -1,11 +1,14 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 
 export function CheckoutFailureNotice({
-  locale = "en",
+  locale: requestedLocale,
 }: {
   locale?: "en" | "fr";
 }) {
-  const fr = locale === "fr";
+  const tSite = useCopy();
+
+  const fr = (requestedLocale ?? tSite.locale) === "fr";
   return (
     <div role="alert" className="max-w-md space-y-2 text-sm leading-6">
       <p className="font-medium text-destructive">
@@ -22,9 +25,7 @@ export function CheckoutFailureNotice({
         href="/orders/support"
         className="inline-block font-medium text-foreground underline underline-offset-4"
       >
-        {fr
-          ? "Contacter l’assistance achat · en anglais"
-          : "Contact purchase support"}
+        {fr ? "Contacter l’assistance achat" : "Contact purchase support"}
       </Link>
     </div>
   );

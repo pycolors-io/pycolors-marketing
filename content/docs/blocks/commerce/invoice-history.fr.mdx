@@ -1,0 +1,112 @@
+---
+title: Historique des factures
+description: Un tableau de facture de présentation uniquement avec les dates,
+  les montants, les statuts, les actions et l'état vide appartenant au
+  consommateur.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { InvoiceHistoryExample } from "@/components/docs/blocks/canonical-examples";
+
+## Présenter l'historique des factures sans posséder la récupération des factures [#present-invoice-history-without-owning-invoice-retrieval]
+
+`InvoiceHistoryPanel` présente les enregistrements de facture fournis par votre application dans une table lisible avec un état vide explicite. Votre backend de facturation reste responsable de la récupération des enregistrements, du formatage de la vérité monétaire et de l'autorisation de toute action de téléchargement ou de détail.
+
+<Callout title="Données de facturation appartenant aux consommateurs">
+  Le bloc ne récupère pas les factures, ne génère pas de documents, ne formate
+  pas la devise, ne résout pas le statut de paiement ou n'autorise pas les
+  téléchargements. Passez les valeurs d'affichage déjà résolues et connectez les
+  actions via votre propre limite de facturation validée.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Commerce**limace `commerce`.
+- Bloquer : `invoice-history`, exportation `InvoiceHistoryPanel`.
+- Source canonique : `apps/marketing/content/blocks/commerce/invoice-history/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/invoice-history/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible. Si l'accès au presse-papiers n'est pas disponible, sélectionnez le code manuellement.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <InvoiceHistoryExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/invoice-history/index.tsx"'
+    >
+      ../../../blocks/commerce/invoice-history/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `InvoiceHistoryPanel` avec des enregistrements fictifs et des contrôles locaux inertes. Il n'effectue aucune récupération de facture, téléchargement ou opération de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Examinez délibérément les modifications futures et validez-les dans votre application avant leur adoption. Retour à l'accueil [Blocage du catalogue](/blocks) Comparer un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `invoice-history` répertoire dans votre chemin Blocks appartenant à l'application.
+2. Configurez le paquet public PyColors UI et les tokens via le [Guide d'installation](/docs/ui/installation).
+3. Fournissez des lignes de facture à partir de vos propres données de facturation et connectez toute action de ligne.
+4. Exécutez lint, type-check, teste et build, puis passez en revue le débordement, les valeurs longues, les données vides, les thèmes et le comportement du clavier.
+
+```tsx title="src/components/invoice-history.tsx"
+"use client";
+
+import { InvoiceHistoryPanel } from "./blocks/invoice-history";
+
+const invoices = [
+  {
+    id: "invoice-example-1",
+    date: "September 1, 2026",
+    amount: "$49.00",
+    status: "Paid",
+    action: <a href="/billing/invoices/example">View invoice</a>,
+  },
+] as const;
+
+export function InvoiceHistory() {
+  return (
+    <InvoiceHistoryPanel
+      title="Invoice history"
+      description="Example records supplied by your application."
+      invoices={invoices}
+      emptyState="No invoices are available."
+    />
+  );
+}
+```
+
+L'exemple de destination appartient à l'application. Connectez des fichiers de facture ou des enregistrements de fournisseur uniquement via un route qui revérifie l'autorisation sur le serveur.
+
+## Contrat de consommation [#consumer-owned-contract]
+
+`title` et `invoices` sont nécessaires. Chaque facture a besoin d'une écurie `id`, affichage `date` et affichage `amount`; `status` et `action` sont facultatifs. Les étiquettes de colonne et l'état vide peuvent être remplacés par une copie spécifique au produit.
+
+Le bloc affiche les valeurs fournies sans calculer les totaux, formater la devise, traduire les états du fournisseur ou décider si une action de facture est disponible. Gardez les ID de ligne stables et rendez les étiquettes d'action spécifiques à leur résultat.
+
+## Notes réactives et d'accessibilité [#responsive-and-accessibility-notes]
+
+Le panneau utilise une étiquette `section` et une table sémantique lorsque des enregistrements existent. Le tableau conserve une largeur minimale lisible à l'intérieur d'un conteneur de débordement horizontal afin que le contenu ne soit pas écrasé sur des écrans étroits. Testez la disposition contenant et assurez-vous que les utilisateurs de clavier peuvent atteindre chaque action de ligne interactive sans perdre le contexte.
+
+## Propriété et limites [#ownership-and-boundaries]
+
+Votre application possède la récupération des factures, le formatage des devises, la vérité fiscale et de facturation, le stockage des documents, les URL signées, l'autorisation, l'intégration du fournisseur, les mutations et la gestion des erreurs. Le bloc n'inclut pas la génération de factures, les services de téléchargement, les API Stripe, le paiement, les webhooks, la persistance, l'authentification, l'analyse, le registre ou le comportement CLI.
+
+Explorez le [Blocage du catalogue](/blocks), comparer [Aperçu de la facturation](/docs/blocks/commerce/billing-overview)ou [Comparer les Starters](/starters) pour une fondation d'application complète.

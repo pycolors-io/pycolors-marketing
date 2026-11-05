@@ -14,6 +14,7 @@ const preference = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
 const navigation = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock("next/navigation", () => ({
   useRouter: () => navigation,
+  usePathname: () => "/",
 }));
 vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => preference }));
 vi.mock("@/components/logo", () => ({
@@ -43,6 +44,9 @@ describe("marketing footer", () => {
     const footer = screen.getByRole("contentinfo", {
       name: "PyColors site footer",
     });
+    expect(
+      within(footer).getByRole("button", { name: "Language: English" }),
+    ).toHaveTextContent("English");
     for (const group of ["Products", "Resources", "Compare", "Company"]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${group}`,
@@ -92,7 +96,7 @@ describe("marketing footer", () => {
     );
     for (const href of expected.filter((href) => href !== "/docs")) {
       expect(
-        existsSync(resolve("app/(site)", href.slice(1), "page.tsx")),
+        existsSync(resolve("app/[locale]/(site)", href.slice(1), "page.tsx")),
         href,
       ).toBe(true);
     }
@@ -197,6 +201,10 @@ describe("marketing footer", () => {
     link.setAttribute("download", "terms.html");
     fireEvent.click(link);
     link.removeAttribute("download");
+    link.setAttribute("data-native-navigation", "");
+    link.setAttribute("href", "/fr/conditions");
+    fireEvent.click(link);
+    link.removeAttribute("data-native-navigation");
     link.setAttribute("href", "/terms#company");
     fireEvent.click(link);
     link.setAttribute("href", "https://github.com/pycolors-io");

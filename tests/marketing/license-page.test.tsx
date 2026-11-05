@@ -3,8 +3,14 @@ import { resolve } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
-import LicensePage, { metadata } from "@/app/(site)/license/page";
+import LicensePage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/license/page";
 import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 describe("License page", () => {
   it("preserves metadata, document date, publisher and a reachable main landmark", () => {
@@ -24,8 +30,7 @@ describe("License page", () => {
       "2026-11-05",
     );
     const breadcrumb = JSON.parse(
-      container.querySelector('script[type="application/ld+json"]')!
-        .textContent!,
+      document.getElementById("breadcrumb-jsonld")!.textContent!,
     );
     expect(
       breadcrumb.itemListElement.map((item: { item: string }) => item.item),
@@ -160,7 +165,11 @@ describe("License page", () => {
       if (href.startsWith("/"))
         expect(
           existsSync(
-            resolve("app/(site)", href.slice(1).split("#")[0]!, "page.tsx"),
+            resolve(
+              "app/[locale]/(site)",
+              href.slice(1).split("#")[0]!,
+              "page.tsx",
+            ),
           ),
           href,
         ).toBe(true);

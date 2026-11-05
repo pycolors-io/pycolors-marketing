@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { cn } from "@pycolors/ui";
 import { MarketingSectionHeader } from "./section-header";
@@ -32,6 +33,8 @@ export function MarketingFaq({
   items,
   className,
 }: MarketingFaqProps) {
+  const tSite = useCopy();
+
   return (
     <div
       className={cn(
@@ -41,9 +44,9 @@ export function MarketingFaq({
     >
       <MarketingSectionHeader
         titleId={titleId}
-        eyebrow={eyebrow}
-        title={title}
-        description={description}
+        eyebrow={tSite(eyebrow)}
+        title={tSite(title)}
+        description={tSite(description)}
         align="left"
         className="mb-0 self-start"
       />
@@ -51,7 +54,7 @@ export function MarketingFaq({
         {items.map((item) => (
           <details key={item.question} className={cn("group", styles.item)}>
             <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded-md py-5 text-sm font-medium text-foreground transition-colors duration-150 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
-              <span>{item.question}</span>
+              <span>{tSite(item.question)}</span>
               <span
                 aria-hidden="true"
                 className={cn(
@@ -64,7 +67,7 @@ export function MarketingFaq({
             </summary>
             <div className={styles.content}>
               <div className="pb-6 pr-7 text-sm leading-7 text-muted-foreground">
-                <div>{item.answer}</div>
+                <div>{tSite(item.answer)}</div>
                 {item.links?.length ? (
                   <ul className="mt-3 space-y-1">
                     {item.links.map((link) => (
@@ -73,7 +76,7 @@ export function MarketingFaq({
                           href={link.href}
                           className="inline-flex min-h-11 items-center gap-2 rounded-md py-2 font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                         >
-                          {link.label}
+                          {tSite(link.label)}
                           <ArrowRight
                             className="size-3.5 shrink-0"
                             aria-hidden="true"

@@ -1,0 +1,451 @@
+---
+title: Accès selon l’offre
+description: Modèle prêt pour la production pour les capacités SaaS haut de
+  gamme, l'accès aux fonctionnalités et les flux de monétisation sans endommager
+  l'expérience utilisateur du produit.
+lastUpdated: "2026-06-04"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  AlertTriangle,
+  CheckCircle,
+  CreditCard,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Monétisation</Badge>
+</div>
+
+## La monétisation doit être intégrée au produit [#monetization-should-feel-integrated-into-the-product]
+
+La plupart des produits SaaS ont finalement besoin :
+
+- Limites du plan
+- Fonctionnalités premium
+- restrictions d'utilisation
+- Amélioration de l'espace de travail
+- billing-aware
+
+Le problème est que de nombreux systèmes de mise à niveau se sentent:
+
+- agressif
+- déconnecté
+- faux
+- marketing-heavy
+- frustrant
+
+UpgradeGate existe pour résoudre ce problème.
+
+Il fournit un modèle prêt à la production pour:
+
+- Restrictions de fonctionnalité
+- monétisation UX
+- Mettre à niveau la messagerie
+- positionnement premium
+- Capacités Gated
+
+sans nuire à la crédibilité du produit.
+
+<Callout title="Idée de base">
+  UpgradeGate n'est pas un popup paywall.
+
+Il s’agit d’un modèle SaaS structuré pour présenter :
+
+- capacités restreintes
+- accès premium
+- Limites de monétisation
+- Chemins de mise à niveau
+- différenciation des caractéristiques
+
+</Callout>
+
+## Quel problème cela résout [#what-problem-this-solves]
+
+Sans un modèle de mise à niveau clair:
+
+- Fonctionnalités premium ressenties au hasard
+- Les limites sont frustrantes
+- Mise à niveau de la messagerie se sent déconnecté
+- produit UX devient incohérent
+
+Les équipes finissent souvent par :
+
+- Inventer une mise à jour UX à plusieurs reprises
+- Mélanger la logique de facturation dans les composants
+- Créer un comportement de blocage incohérent
+- confiance dommageable avec des upsells agressifs
+
+UpgradeGate crée un système partagé pour le comportement des limites premium.
+
+### Qu'est-ce que UpgradeGate [#what-upgradegate-actually-is]
+
+UpgradeGate combine:
+
+- Prévisualisation des surfaces
+- Restriction visuelle
+- Capacité de cadrage
+- Mise à niveau de la structure CTA
+- messagerie premium
+- Limites de monétisation
+
+dans un modèle de produit réutilisable.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Restriction des caractéristiques",
+      description: "Créez des limites claires sans casser l'UX du produit.",
+      icon: Lock,
+    },
+    {
+      title: "Mise à niveau du positionnement",
+      description:
+        "Présentez des chemins de mise à niveau naturellement à l'intérieur de la surface du produit.",
+      icon: Sparkles,
+    },
+    {
+      title: "Structure de monétisation",
+      description:
+        "Gardez un comportement de produit cohérent sur l'ensemble de l'application.",
+      icon: Wallet,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Une bonne monétisation ressemble à une structure de produit.
+>
+> La mauvaise monétisation est comme une interruption.
+
+UpgradeGate devrait :
+
+- préserver la crédibilité du produit
+- Expliquer clairement la valeur
+- Maintenir la cohérence UX
+- s’intégrer naturellement dans le workflow
+
+Il ne devrait jamais se sentir comme:
+
+- spam
+- Fausse urgence
+- motifs sombres
+- superpositions de marketing
+
+## Bon vs mauvais gant [#good-vs-bad-gating]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Mauvais classement",
+      title: "Monétisation agressive",
+      icon: AlertTriangle,
+      description:
+        "Faible mise à niveau UX nuit à la confiance et rend les produits se sentent de mauvaise qualité.",
+      items: [
+        "Bloquer les workflows de base",
+        "Fausse urgence",
+        "popups interruptifs",
+        "Restrictions confuses",
+        "Limites cachées",
+        "superpositions lourdes",
+      ],
+    },
+    {
+      eyebrow: "Bonne gating",
+      title: "Limites claires des primes",
+      icon: CheckCircle,
+      tone: "pro",
+      description:
+        "Une forte mise à niveau UX crée des niveaux de produits compréhensibles et des limites de capacité claires.",
+      items: [
+        "structure premium visible",
+        "une explication claire des capacités",
+        "flux de mise à niveau intégrés",
+        "Des restrictions prévisibles",
+        "Différenciation réelle des produits",
+        "monétisation crédible UX",
+      ],
+    },
+  ]}
+/>
+
+<Callout type="info" title="Principe important">
+  Les utilisateurs doivent comprendre : - Ce qui est restreint - Pourquoi est-il
+  restreint - Ce qui le déverrouille - quelle valeur ils obtiennent
+
+</Callout>
+
+## Où UpgradeGate fonctionne le mieux [#where-upgradegate-works-best]
+
+### Facturation [#billing]
+
+Utilisez UpgradeGate pour :
+
+- abonnement upgrades
+- Capacités adapté à l’offre
+- facture d'exportation
+- renseignements de facturation
+- flux de travail de facturation premium
+
+### Tableau de bord [#dashboard]
+
+Utilisez UpgradeGate pour :
+
+- Mises à jour analytiques
+- Fonctionnalités de l'IA
+- aperçus opérationnels
+- Reporting avancé
+- outils d'espace de travail premium
+
+### Projets [#projects]
+
+Utilisez UpgradeGate pour :
+
+- quotas
+- workflows avancés
+- premium collaboration
+- Limites d'espace de travail évolutives
+
+### Admin [#admin]
+
+Utilisez UpgradeGate pour :
+
+- Autorisations avancées
+- Contrôles organisationnels
+- collaboration d'entreprise
+- systèmes d'audit
+
+### Copie de bon positionnement [#good-positioning-copy]
+
+#### Bon [#good]
+
+```txt
+Upgrade to unlock workspace analytics and advanced collaboration workflows.
+```
+
+#### Mauvais [#bad]
+
+```txt
+LIMITED TIME OFFER — BUY NOW TO ACCESS ENTERPRISE AI.
+```
+
+### Philosophie des produits [#product-philosophy]
+
+UpgradeGate devrait ressentir :
+
+- calme
+- structurées
+- intégré
+- orientées produits
+- architecture-conscient
+
+Il ne devrait jamais ressentir :
+
+- désespérée
+- manipulateur
+- Trop de marketing
+- crypto/startup-template-like
+
+L’objectif est :
+
+> positionnement du produit premium
+
+pas de pression.
+
+### Relation avec FeatureShowcase [#relationship-with-featureshowcase]
+
+FeatureShowcase et UpgradeGate résolvent différents problèmes.
+
+| Motif           | Rôle                                           |
+| --------------- | ---------------------------------------------- |
+| FeatureShowcase | Extensibilité actuelle et évolution du produit |
+| upgradegate     | Limiter et monétiser les capacités             |
+
+### FeatureShowcase [#featureshowcase]
+
+Utilisez FeatureShowcase lorsque :
+
+- vous souhaitez présenter une architecture évolutive
+- vous souhaitez communiquer sur les capacités futures
+- le système supporte déjà conceptuellement l'extension
+
+### upgradegate [#upgradegate]
+
+Utilisez UpgradeGate lorsque :
+
+- L'accès est volontairement restreint
+- capacité de contrôle d'accès
+- les plans changent le comportement du produit
+- Les limites de monétisation existent
+
+<Callout title="Une distinction simple">
+  FeatureShowcase explique l'évolution.
+
+UpgradeGate contrôle l'accès.
+
+</Callout>
+
+### Principes visuels [#visual-principles]
+
+Un bon style UpgradeGate devrait se sentir:
+
+- subtile
+- prime
+- product-native
+- intégré dans la surface
+
+Coiffure recommandée :
+
+- flou doux
+- Superpositions restreintes
+- frontières minces
+- badges premium en sourdine
+- gradients à faible contraste
+
+Éviter :
+
+- paywalls géants
+- popups agressifs
+- CTAs clignotants
+- Fausse urgence
+- Animations excessives
+
+## Erreurs courantes [#common-mistakes]
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "limites claires des primes",
+    "monétisation intégrée UX",
+    "Flux de mise à niveau prévisibles",
+    "différenciation réelle des capacités",
+    "Un positionnement premium crédible",
+  ]}
+  avoidTitle="Avoid"
+  avoid={[
+    "les paywalls interrompus",
+    "Fausse rareté",
+    "Des upsells agressives",
+    "bloquer les workflows de base",
+    "marketing-first overlays",
+  ]}
+/>
+
+### Quand ne pas utiliser UpgradeGate [#when-not-to-use-upgradegate]
+
+N'utilisez pas UpgradeGate :
+
+- sur toutes les fonctionnalités
+- pour la fonctionnalité de base du produit
+- avant de valider le produit de base
+- comme substitut de la valeur réelle
+- Limiter artificiellement les produits faibles
+
+UpgradeGate devrait supporter la monétisation.
+
+Il ne doit pas compenser la mauvaise qualité du produit.
+
+### Approche PyColors [#pycolors-approach]
+
+PyColors utilise UpgradeGate pour :
+
+- structure monétisation UX
+- Limites actuelles de la capacité premium
+- renforcer la crédibilité des produits
+- Soutenir la monétisation SaaS évolutive
+
+Le motif est intentionnellement:
+
+- sobre
+- prime
+- orientées architecture
+- produit d'abord
+
+## Guide de décision [#decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Utiliser UpgradeGate",
+      title: "Quand les limites des primes importent",
+      icon: CreditCard,
+      tone: "pro",
+      description:
+        "Utilisez UpgradeGate lorsque les plans, les abonnements ou la disponibilité de la fonctionnalité de changement de facturation.",
+      items: [
+        "abonnements plans",
+        "Limites d'espace de travail",
+        "Mises à jour analytiques",
+        "Capacités IA",
+        "Fonctionnalités de facturation",
+        "premium collaboration",
+      ],
+    },
+    {
+      eyebrow: "Évitez UpgradeGate",
+      title: "Quand la fonctionnalité doit rester accessible",
+      icon: ShieldCheck,
+      description:
+        "Ne limitez pas les fonctionnalités nécessaires à la confiance ou à la convivialité de base du produit.",
+      items: [
+        "navigation principale",
+        "base CRUD",
+        "Onboarding essentiel",
+        "Accès aux comptes critiques",
+        "workflows fondamentaux",
+      ],
+    },
+  ]}
+/>
+
+## Prochaine étape [#next-step]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Présentation des fonctionnalités",
+      href: "/docs/patterns/feature-showcase",
+      description:
+        "Présentez l'évolution évolutive des produits sans faux positionnement d'entreprise.",
+      icon: Sparkles,
+    },
+    {
+      title: "Actions Async",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Créez des flux de mutation plus sûrs avec un comportement de chargement et de rétroaction plus clair.",
+      icon: Wallet,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Transformez la monétisation en système produit."
+  description="Starter Pro utilise les modèles UpgradeGate pour la facturation, l'analyse, la collaboration et les fonctionnalités SaaS haut de gamme."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/billing"
+  secondaryLabel="Explore billing"
+/>

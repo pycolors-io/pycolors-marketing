@@ -1,0 +1,165 @@
+---
+title: Principes d’authentification
+description: Comprendre comment l'authentification est modélisée dans Starter
+  Free et comment la transmettre en toute sécurité à votre fournisseur.
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Res</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+L'authentification est la **point d'entrée de chaque produit SaaS**.
+
+Starter Free vous donne un complet **surface d'authentification**:
+
+- connexion
+- enregistrer
+- mot de passe oublié
+- validation
+- états de chargement
+- États d'erreur
+- rediriger les flux
+
+Mais **Aucun fournisseur n'est câblé**.
+
+C'est intentionnel.
+
+<Callout title="Idée de base">
+  Starter Free définit les **auth UX contract**. Vous branchez le fournisseur
+  lorsque votre produit devient réel.
+
+</Callout>
+
+## Modèle mental [#mental-model]
+
+> L'interface utilisateur est stable. La mise en œuvre est remplaçable.
+
+| Couche              | Responsabilité                           |
+| ------------------- | ---------------------------------------- |
+| UI                  | Formulaires, états, validation, feedback |
+| Routage             | Redirections, pages protégées            |
+| Fournisseur         | Sessions, tokens, identité               |
+| Backend (plus tard) | autorisations, rôles, contrôle d'accès   |
+
+## Ce que Starter Free vous donne [#what-starter-free-gives-you]
+
+<PreferAvoid
+  preferTitle="Included"
+  avoidTitle="Not included (on purpose)"
+  prefer={[
+    "login / enregistrer / oublié les écrans de mot de passe",
+    "Validation de formulaire et états d'erreur",
+    "États de chargement et de désactivation",
+    "rediriger les flux",
+    "Mise en page AuthShell",
+  ]}
+  avoid={[
+    "gestion des sessions",
+    "JWT / cookies",
+    "Fournisseurs OAuth",
+    "Livraison par email",
+    "mot de passe reset backend",
+  ]}
+/>
+
+## Autres routes [#auth-routes]
+
+```txt title="routes"
+app/(auth)/
+  login/
+  register/
+  forgot-password/
+```
+
+## Motif AuthShell [#authshell-pattern]
+
+```tsx title="components/auth/auth-shell.tsx"
+<AuthShell
+  title="Welcome back"
+  description="Sign in to your account"
+  footer={...}
+/>
+```
+
+## Flux [#flows]
+
+<Tabs items={["Identifiant", "Registre", "Mot de passe oublié"]}>
+
+<Tab value="Identifiant">
+
+```txt
+User submits form
+→ validate inputs
+→ call signIn()
+→ redirect to /dashboard
+```
+
+</Tab>
+
+<Tab value="Registre">
+
+```txt
+User creates account
+→ validate inputs
+→ call signUp()
+→ redirect to /dashboard
+```
+
+</Tab>
+
+<Tab value="Mot de passe oublié">
+
+```txt
+User submits email
+→ always show success state
+→ never reveal if email exists
+```
+
+</Tab>
+
+</Tabs>
+
+## Câblage de votre fournisseur [#wiring-your-provider]
+
+Starter Free est indépendant du fournisseur :
+
+- Auth.js / NextAuth
+- Greffier
+- Supabase Auth
+- Backend personnalisé
+
+```tsx title="auth-action.ts"
+async function onSubmit(values) {
+  await signIn(values.email, values.password);
+  router.push("/dashboard");
+}
+```
+
+## Règles UX [#ux-rules]
+
+<PreferAvoid
+  prefer={[
+    "messages d'erreur clairs",
+    "Désactivé pendant le chargement",
+    "Redirections cohérentes",
+    "États de réussite explicites",
+  ]}
+  avoid={[
+    "Erreurs génériques",
+    "Doubles soumissions",
+    "Pas de feedback",
+    "existence d'un utilisateur",
+  ]}
+/>

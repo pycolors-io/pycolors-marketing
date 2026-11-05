@@ -9,8 +9,8 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import ContactPage from "../../app/(site)/contact/page";
-import AboutPage from "../../app/(site)/about/page";
+import ContactPage from "../../app/[locale]/(site)/contact/page";
+import AboutPage from "../../app/[locale]/(site)/about/page";
 
 const originalClipboard = Object.getOwnPropertyDescriptor(
   navigator,
@@ -68,7 +68,7 @@ describe("Contact page", () => {
       const href = link.getAttribute("href")!;
       if (href.startsWith("/") && href !== "/docs") {
         expect(
-          existsSync(resolve("app/(site)", href.slice(1), "page.tsx")),
+          existsSync(resolve("app/[locale]/(site)", href.slice(1), "page.tsx")),
           href,
         ).toBe(true);
       }

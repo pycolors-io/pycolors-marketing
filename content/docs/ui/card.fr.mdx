@@ -1,0 +1,675 @@
+---
+title: Card
+description: Composant de surface utilisé pour regrouper le contenu, les actions
+  et les métadonnées dans l'interface utilisateur PyColors.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  FileText,
+  Heading1,
+  Layers3,
+  LayoutDashboard,
+  MousePointerClick,
+  Palette,
+  PanelsTopLeft,
+  Radius,
+  Settings,
+  SquareStack,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Carte</Badge>
+</div>
+
+## Surfaces structurées pour interface produit [#structured-surfaces-for-product-ui]
+
+Les **Carte** Component est une surface fondamentale utilisée pour regrouper le contenu, les actions et les métadonnées associés.
+
+Utilisez-le pour:
+
+- tuiles de tableau de bord
+- blocs de tarification
+- panneaux de réglages
+- résumés de facturation
+- caractéristiques des cartes
+- liste des éléments
+- états vides
+- sections de compte
+- surfaces des produits
+
+La carte est construite sur des tokens sémantiques tels que `bg-card`, `border-border`et `text-card-foreground`, de sorte qu'il reste cohérent à travers des thèmes clairs et sombres.
+
+<Callout title="Idée de base">
+  La carte crée la structure. Utilisez-le pour regrouper du contenu
+  significatif, pas comme décoration.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="card-import.tsx"
+import { Card } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez Card pour regrouper un titre, une description, un contenu et des actions de pied de page facultatives.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Card className="max-w-sm">
+        <CardHeader>
+          <CardTitle>Compte</CardTitle>
+          <CardDescription>Gérez vos paramètres de profil.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm text-muted-foreground">
+            Mettez à jour les détails personnels, les préférences de sécurité et les intégrations.
+          </div>
+        </CardContent>
+        <CardFooter className="justify-end gap-2">
+          <Button variant="outline">Annuler</Button>
+          <Button>Enregistrer</Button>
+        </CardFooter>
+      </Card>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="account-card.tsx"
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@pycolors/ui";
+
+export function AccountCard() {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <CardTitle>Account</CardTitle>
+        <CardDescription>Manage your profile settings.</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div className="text-sm text-muted-foreground">
+          Update personal details, security preferences, and integrations.
+        </div>
+      </CardContent>
+
+      <CardFooter className="justify-end gap-2">
+        <Button variant="secondary">Cancel</Button>
+        <Button>Save</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser la carte [#when-to-use-card]
+
+Utilisez Card lorsque le contenu a besoin d'une surface claire, d'une limite ou d'un groupement.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Tableaux de bord",
+      description:
+        "Utilisez pour les tuiles KPI, les résumés analytiques et les sections de tableau de bord groupées.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Paramètres",
+      description:
+        "Utilisation pour les panneaux de paramètres de profil, d'organisation, de sécurité et de facturation.",
+      icon: Settings,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Utilisez pour les résumés de plan, les blocs de facture et les surfaces de méthodes de paiement.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+### Variantes [#variants]
+
+Les cartes supportent les variantes sémantiques de surface.
+
+Utilisez des variantes pour ajuster le contraste sans changer la mise en page.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Par défaut</CardTitle>
+            <CardDescription>Surface standard.</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card variant="muted">
+          <CardHeader>
+            <CardTitle>Muted</CardTitle>
+            <CardDescription>Surface secondaire subtile.</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card variant="transparent" className="border-dashed">
+          <CardHeader>
+            <CardTitle>transparent</CardTitle>
+            <CardDescription>Surface de mise en page uniquement.</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="card-variants.tsx"
+import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+export function CardVariants() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-3">
+      <Card>
+        <CardHeader>
+          <CardTitle>Default</CardTitle>
+          <CardDescription>Standard surface.</CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card variant="muted">
+        <CardHeader>
+          <CardTitle>Muted</CardTitle>
+          <CardDescription>Subtle secondary surface.</CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card variant="transparent" className="border-dashed">
+        <CardHeader>
+          <CardTitle>Transparent</CardTitle>
+          <CardDescription>Layout-only surface.</CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Variantes disponibles [#available-variants]
+
+| Variante      | Objet                                                         |
+| ------------- | ------------------------------------------------------------- |
+| `default`     | Surface principale utilisant `bg-card`                        |
+| `muted`       | Surface secondaire utilisant un fond plus doux                |
+| `transparent` | Conteneur de mise en page uniquement sans arrière-plan rempli |
+
+<Callout type="info" title="Variante de règle">
+  Utilisation `default` pour les surfaces primaires, `muted` pour les groupes
+  secondaires, et `transparent` Lorsque vous n’avez besoin que de structure.
+
+</Callout>
+
+### Cartes interactives [#interactive-cards]
+
+`interactive` ajoute des affordances visuelles uniquement - curseur, arrière-plan plan et un anneau focus-visible. La carte n'attache jamais son propre clic ou la manipulation du clavier, donc une carte interactive doit composer `asChild` avec un réel `<button>` pour une action ou un réel `<a>`/`Link` pour la navigation. Ces éléments fournissent le clavier correct, la focus et le clic sémantique nativement - Card n'a pas besoin (et ne doit pas) les recréer.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Card asChild interactive>
+          <button type="button" className="block w-full text-left">
+            <CardHeader>
+              <CardTitle>Sélectionnez un plan</CardTitle>
+              <CardDescription>Un bouton réel donne le clic natif et le comportement du clavier gratuitement.</CardDescription>
+            </CardHeader>
+          </button>
+        </Card>
+
+        <Card asChild interactive variant="muted">
+          <a href="/pricing" className="block">
+            <CardHeader>
+              <CardTitle>Voir les tarifs</CardTitle>
+              <CardDescription>Un lien réel donne une navigation native et un comportement d'ouverture dans un nouvel onglet.</CardDescription>
+            </CardHeader>
+          </a>
+        </Card>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="interactive-cards.tsx"
+import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+export function InteractiveCards() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Card asChild interactive>
+        <button
+          type="button"
+          className="block w-full text-left"
+          onClick={() => selectPlan("pro")}
+        >
+          <CardHeader>
+            <CardTitle>Select a plan</CardTitle>
+            <CardDescription>
+              A real button gives native click and keyboard behavior for free.
+            </CardDescription>
+          </CardHeader>
+        </button>
+      </Card>
+
+      <Card asChild interactive variant="muted">
+        <a href="/pricing" className="block">
+          <CardHeader>
+            <CardTitle>View pricing</CardTitle>
+            <CardDescription>
+              A real link gives native navigation and open-in-new-tab behavior.
+            </CardDescription>
+          </CardHeader>
+        </a>
+      </Card>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Support clavier">
+  `interactive` Ne jamais ajouter `role`, `tabIndex`, ou la manipulation du
+  clavier - il est visuel seulement. A nue `Card interactive` avec aucun
+  `asChild` target n'est pas accessible au clavier ou au lecteur d'écran.
+  Toujours composer `asChild` avec un réel `button` pour des actions ou un réel
+  `a`/`Link` pour la navigation.
+
+</Callout>
+
+### Avec icône [#with-icon]
+
+Utilisation `asChild` pour rendre la carte comme un autre élément tout en préservant son style.
+
+Ceci est utile pour les cartes de lien.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Card asChild interactive className="max-w-sm">
+        <a href="/docs" className="block">
+          <CardHeader>
+            <CardTitle>Lire les docs</CardTitle>
+            <CardDescription>Aller à la documentation</CardDescription>
+          </CardHeader>
+        </a>
+      </Card>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="card-as-link.tsx"
+import { Card, CardHeader, CardTitle, CardDescription } from "@pycolors/ui";
+
+export function CardAsLink() {
+  return (
+    <Card asChild interactive className="max-w-sm">
+      <a href="/docs" className="block">
+        <CardHeader>
+          <CardTitle>Read the docs</CardTitle>
+          <CardDescription>Go to documentation →</CardDescription>
+        </CardHeader>
+      </a>
+    </Card>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Composition [#composition]
+
+Une carte suit généralement cette structure:
+
+```tsx title="card-anatomy.tsx"
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+
+  <CardContent>Content</CardContent>
+
+  <CardFooter>Actions</CardFooter>
+</Card>
+```
+
+Utilisez chaque slot intentionnellement :
+
+| Emplacement       | Objet                                             |
+| ----------------- | ------------------------------------------------- |
+| `CardHeader`      | Présente la surface                               |
+| `CardTitle`       | Nomme le contenu groupé                           |
+| `CardDescription` | Ajoute un contexte court                          |
+| `CardContent`     | Contient le corps principal                       |
+| `CardFooter`      | Détient des actions ou des métadonnées de support |
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Commencez par le groupe de contenu [#start-with-the-content-group]
+
+    Utilisez Card uniquement lorsque le contenu appartient ensemble.
+
+</Step>
+
+  <Step>
+    #### Ajouter un titre clair [#add-a-clear-title]
+
+    La plupart des cartes devraient avoir un titre qui explique le but de la surface.
+
+</Step>
+
+  <Step>
+    #### Gardez les actions dans le pied de page [#keep-actions-in-the-footer]
+
+    Les actions de pied de page rendent la carte plus facile à numériser et à garder la mise en page prévisible.
+
+</Step>
+
+  <Step>
+    #### Utilisez l'interactivité délibérément [#use-interactivity-deliberately]
+
+    Les cartes interactives doivent être cliquables ou sélectionnables. Les cartes statiques ne devraient pas avoir d'affordances en vol stationnaire.
+
+</Step>
+
+  <Step>
+    #### Préserver le comportement sémantique [#preserve-semantic-behavior]
+
+    Utilisation `asChild` avec un véritable lien pour les cartes de navigation.
+
+</Step>
+
+</Steps>
+
+## Carte vs section vs liste [#card-vs-section-vs-list-item]
+
+| Situation                               | Utilisation               |
+| --------------------------------------- | ------------------------- |
+| Contenu groupé avec une surface visible | Carte                     |
+| Grande section de page avec des titres  | Chapitre                  |
+| Rangées compactes répétées              | Élément de liste          |
+| Tuile de navigation                     | Carte avec `asChild` lien |
+| KPI ou métrique                         | Carte                     |
+| Données du tableau                      | Tableau                   |
+| Statut temporaire ou erreur             | Alerte ou état vide       |
+
+<Callout title="Règle de décision">
+  Utilisez Card lorsque la surface aide les utilisateurs à comprendre le
+  regroupement, la priorité ou l'interaction.
+
+</Callout>
+
+## API [#api]
+
+#### Composants [#components]
+
+| Composante        | Désignation                            |
+| ----------------- | -------------------------------------- |
+| `Card`            | Surface des racines                    |
+| `CardHeader`      | Zone de tête                           |
+| `CardTitle`       | Titre de la carte                      |
+| `CardDescription` | Texte d ' appui                        |
+| `CardContent`     | Zone de contenu principale             |
+| `CardFooter`      | Actions de pied de page ou métadonnées |
+
+#### Card props [#card-props]
+
+| Prop          | Type          | Par défaut  | Désignation                                    |
+| ------------- | ------------- | ----------- | ---------------------------------------------- |
+| `variant`     | `CardVariant` | `"default"` | Style de surface                               |
+| `interactive` | `boolean`     | `false`     | Ajoute des commentaires hover et focus-visible |
+| `asChild`     | `boolean`     | `false`     | Rendu via Radix Slot                           |
+| `className`   | `string`      | —           | Autres classes Tailwind                        |
+
+La carte étend le standard HTML `div` props.
+
+```ts title="card-props.ts"
+React.HTMLAttributes<HTMLDivElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="card-types.ts"
+export type CardVariant = "default" | "muted" | "transparent";
+
+export type CardInteractive = boolean;
+```
+
+### Accessibilité [#accessibility]
+
+Directives :
+
+- utiliser des en-têtes significatifs à l'intérieur des cartes lorsqu'elles introduisent une section
+- `interactive` ajoute seulement des affordances visuelles (curseur, hover, anneau de focus-visible) - il n'ajoute jamais `role`, `tabIndex`, ou manipulation du clavier
+- a nues `Card interactive` avec aucun `asChild` target n'est pas accessible au clavier ou au lecteur d'écran - il s'agit uniquement de style
+- utilisation `asChild` avec un réel `a`/`Link` pour les cartes de navigation
+- utilisation `asChild` avec un réel `button` pour les cartes d'action
+- `asChild interactive` emballer un élément non focalisable (par exemple un `div`) n'est pas valide - l'enfant sloté doit être un élément interactif réel
+- éviter les contrôles interactifs imbriqués dans une carte cliquable
+- garder les états de focus visibles pour les cartes interactives
+- ne pas rendre une carte interactive uniquement pour la décoration visuelle
+
+<Callout title="Règle d'accessibilité">
+  Carte ne synthétise jamais le clavier ou le comportement de focus. Une
+  carte interactive n'est vraiment accessible que lorsque `asChild` Envelopper
+  un réel `a`/`Link` (navigation) ou `button` (action) - ces éléments
+  fournissent un clavier correct, une focus et une sémantique de clic
+  nativement.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Groupement clair",
+    "Rythme de carte cohérent",
+    "Rubriques sémantiques",
+    "actions de pied de page pour les actions de niveau carte",
+    "sémantique du lien réel pour les cartes de navigation",
+  ]}
+  avoid={[
+    "Cartes utilisées uniquement pour la décoration",
+    "Trop de cartes imbriquées",
+    "Style interactif sur le contenu statique",
+    "Cartes cliquables sans sémantique de lien ou de bouton",
+    "plusieurs actions concurrentes à l'intérieur d'une carte cliquable",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+La copie de la carte devrait rendre le contenu groupé facile à comprendre.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Title',
+      title: "Exemples de titres forts",
+      icon: Heading1,
+      description: (
+        <>
+          <p>
+            Titles should describe the surface immediately without extra wording.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Account</Badge>
+            <Badge variant="plan">Current plan</Badge>
+            <Badge variant="plan">Recent invoices</Badge>
+            <Badge variant="plan">Project activity</Badge>
+            <Badge variant="plan">Team members</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Description',
+      title: "Description des exemples",
+      icon: FileText,
+      description: (
+        <>
+          <p>
+            Descriptions should provide context, not repeat the title.
+          </p>
+
+          <div className="mt-3 space-y-2">
+            <div className="arrondi-[5px] border border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+              Manage profile details and account preferences.
+            </div>
+
+            <div className="arrondi-[5px] border border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+              Review recent billing activity.
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Footer',
+      title: "Exemples d'actions de footer",
+      icon: MousePointerClick,
+      description: (
+        <>
+          <p>
+            Footer actions should stay clear, actionable, and easy to scan.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Save changes</Badge>
+            <Badge variant="plan">Manage billing</Badge>
+            <Badge variant="plan">Invite member</Badge>
+            <Badge variant="plan">View all invoices</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Chaque groupe de contenu devrait-il être une carte?">
+    Non. Utilisez la carte lorsque la surface améliore le regroupement, la hiérarchie ou l'interaction. Les sections simples n'ont pas toujours besoin d'une surface bordée.
+  </Accordion>
+
+<Accordion title="Une carte peut-elle être cliquable ?">
+  Oui. Utilisation `asChild` avec un lien ou un bouton sémantique et activer
+  `interactive` pour le feedback visuel.
+</Accordion>
+
+<Accordion title="Quand dois-je utiliser la variante en sourdine?">
+  Utilisation `muted` pour les surfaces secondaires, les dispositions denses ou
+  les panneaux de support où la carte par défaut est trop forte visuellement.
+</Accordion>
+
+  <Accordion title="Les cartes peuvent-elles contenir des formulaires ?">
+    Oui. Les cartes fonctionnent bien pour les formulaires de paramètres. Gardez les étiquettes, la validation et les actions claires.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description: "Rôles de surface sémantiques utilisés par les cartes.",
+      icon: Palette,
+    },
+    {
+      title: "Arrondi",
+      href: "/docs/design-system/tokens/radius",
+      description:
+        "tokens de rayon d'angle utilisés pour les surfaces de cartes.",
+      icon: Radius,
+    },
+    {
+      title: "Ombres",
+      href: "/docs/design-system/tokens/shadows",
+      description: "Échelle d'élévation pour cartes et surfaces flottantes.",
+      icon: Layers3,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des surfaces accessibles avec des en-têtes, des sémantiques et des états de focus.",
+      icon: Accessibility,
+    },
+  ]}
+/>

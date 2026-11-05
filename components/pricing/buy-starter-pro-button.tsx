@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { LoaderCircle } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
@@ -25,7 +26,7 @@ const STARTER_PRO = PRODUCT_DISPLAY["starter-pro"];
 
 export function BuyStarterProButton({
   className,
-  locale = "en",
+  locale: requestedLocale,
   fullWidth = true,
   size = "lg",
   variant = "default",
@@ -34,6 +35,9 @@ export function BuyStarterProButton({
   trustText = "One-time payment · Claim email shortly after purchase",
   showTrustText = false,
 }: BuyStarterProButtonProps) {
+  const tSite = useCopy();
+  const locale = requestedLocale ?? tSite.locale;
+
   const { handleBuy, isLoading, hasError } = useProductCheckout({
     productSlug: STARTER_PRO.slug,
     productName: STARTER_PRO.name,
@@ -78,7 +82,7 @@ export function BuyStarterProButton({
               className="mr-2 h-4 w-4 animate-spin"
               aria-hidden="true"
             />
-            {loadingLabel}
+            {tSite(loadingLabel)}
           </>
         ) : (
           label
@@ -86,7 +90,7 @@ export function BuyStarterProButton({
       </Button>
 
       {showTrustText ? (
-        <p className="text-xs text-muted-foreground">{trustText}</p>
+        <p className="text-xs text-muted-foreground">{tSite(trustText)}</p>
       ) : null}
 
       {hasError ? <CheckoutFailureNotice locale={locale} /> : null}

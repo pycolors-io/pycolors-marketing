@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   Button,
   Sheet,
@@ -7,33 +8,35 @@ import {
   SheetTitle,
   SheetDescription,
   Input,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function SheetFiltersDemo() {
+  const tSite = useCopy();
+
   return (
     <div className="mt-6">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">Open filters</Button>
+          <Button variant="outline">{tSite("Open filters")}</Button>
         </SheetTrigger>
 
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Filters</SheetTitle>
+            <SheetTitle>{tSite("Filters")}</SheetTitle>
             <SheetDescription>
-              Advanced options live here. Apply explicitly.
+              {tSite("Advanced options live here. Apply explicitly.")}
             </SheetDescription>
           </SheetHeader>
 
           <div className="mt-6 space-y-4">
             <Input
-              label="Search"
-              placeholder="Acme, billing, logs…"
+              label={tSite("Search")}
+              placeholder={tSite("Acme, billing, logs…")}
             />
             <div className="flex gap-2">
-              <Button className="flex-1">Apply</Button>
+              <Button className="flex-1">{tSite("Apply")}</Button>
               <Button variant="outline" className="flex-1">
-                Reset
+                {tSite("Reset")}
               </Button>
             </div>
           </div>

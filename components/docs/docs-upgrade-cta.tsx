@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -33,6 +34,8 @@ export function DocsUpgradeCTA({
   showTrustText = true,
   className,
 }: DocsUpgradeCTAProps) {
+  const tSite = useCopy();
+
   return (
     <section
       className={cn(
@@ -49,13 +52,13 @@ export function DocsUpgradeCTA({
         <div className="max-w-3xl">
           {title ? (
             <h3 className="m-0 text-base font-semibold tracking-tight text-foreground sm:text-lg">
-              {title}
+              {tSite(title)}
             </h3>
           ) : null}
 
           {description ? (
             <div className="mt-2 text-sm leading-7 text-muted-foreground">
-              {description}
+              {tSite(description)}
             </div>
           ) : null}
         </div>
@@ -70,7 +73,7 @@ export function DocsUpgradeCTA({
       >
         <BuyProductButton
           productSlug={productSlug}
-          label={buyLabel}
+          label={tSite(buyLabel)}
           fullWidth
           showTrustText={false}
           className="w-full sm:w-auto"
@@ -81,14 +84,14 @@ export function DocsUpgradeCTA({
             variant="outline"
             className="w-full rounded-md font-medium no-underline sm:w-auto"
           >
-            <Link href={secondaryHref}>{secondaryLabel}</Link>
+            <Link href={secondaryHref}>{tSite(secondaryLabel)}</Link>
           </Button>
         ) : null}
       </div>
 
       {showTrustText ? (
         <p className="mt-3 text-xs leading-5 text-muted-foreground">
-          {trustText}
+          {tSite(trustText)}
         </p>
       ) : null}
     </section>

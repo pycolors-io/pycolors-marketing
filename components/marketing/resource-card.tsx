@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { Card, cn } from "@pycolors/ui";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
@@ -53,6 +54,8 @@ export function MarketingResourceCard({
   headingLevel = 3,
   className,
 }: MarketingResourceCardProps) {
+  const tSite = useCopy();
+
   const Heading = `h${headingLevel}` as const;
   const isExternal = isExternalHref(href);
   const isPlainAnchor = isExternal || isNonRoutedHref(href);
@@ -61,19 +64,19 @@ export function MarketingResourceCard({
     <>
       <div className="space-y-2">
         {meta ? (
-          <div className="text-xs text-muted-foreground">{meta}</div>
+          <div className="text-xs text-muted-foreground">{tSite(meta)}</div>
         ) : null}
 
         <Heading className="font-brand text-base font-semibold leading-snug tracking-normal">
-          {title}
+          {tSite(title)}
           {isExternal ? (
-            <span className="sr-only"> (opens in a new tab)</span>
+            <span className="sr-only"> {tSite(" (opens in a new tab)")}</span>
           ) : null}
         </Heading>
 
         {description ? (
           <p className="text-sm leading-7 text-muted-foreground">
-            {description}
+            {tSite(description)}
           </p>
         ) : null}
       </div>
@@ -107,10 +110,10 @@ export function MarketingResourceCard({
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
         >
-          {content}
+          {tSite(content)}
         </a>
       ) : (
-        <Link href={href}>{content}</Link>
+        <Link href={href}>{tSite(content)}</Link>
       )}
     </Card>
   );

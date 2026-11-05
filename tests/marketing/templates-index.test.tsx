@@ -19,10 +19,16 @@ import {
 } from "vitest";
 import { axe } from "vitest-axe";
 
-import TemplatesPage, { metadata } from "../../app/(site)/templates/page";
+import TemplatesPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/templates/page";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import { trackMoneyPathEvent } from "@/lib/analytics";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.hoisted(() =>
   vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.example.com"),
@@ -143,7 +149,7 @@ describe("Templates discovery page", () => {
         expect(document.getElementById(href.slice(1))).not.toBeNull();
       if (href.startsWith("/"))
         expect(
-          existsSync(resolve("app/(site)", href.slice(1), "page.tsx")),
+          existsSync(resolve("app/[locale]/(site)", href.slice(1), "page.tsx")),
           href,
         ).toBe(true);
     }
