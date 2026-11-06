@@ -6,7 +6,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { CircleAlert, LoaderCircle, Check, ChevronDown } from "lucide-react";
 import { Input, Textarea } from "@pycolors/ui";
 import { SiteButton } from "@/components/site-button";
-import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+import { QUOTE_SERVICES } from "@/lib/products/project-services";
 import {
   QUOTE_BUDGETS,
   QUOTE_PROJECT_TYPES,
@@ -39,7 +39,7 @@ export function QuoteRequestForm({
   const locale = requestedLocale ?? tSite.locale;
   const copy = QUOTE_COPY[locale];
   const fieldErrors = copy.fields;
-  const services = Object.values(STARTER_PRO_SERVICES);
+  const services = QUOTE_SERVICES;
   const budgets =
     locale === "fr"
       ? {

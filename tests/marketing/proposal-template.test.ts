@@ -1,8 +1,14 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
 import { createProposalTemplate } from "@/lib/quotes/proposal-template";
+import {
+  proposalDocument,
+  proposalInlines,
+} from "@/lib/quotes/proposal-document";
+import { createProposalDocx } from "@/lib/quotes/proposal-docx";
+import { unzipSync, strFromU8 } from "fflate";
 import { LEGAL_COMPANY } from "@/lib/products/commercial-policy";
-import { GET } from "@/app/[locale]/(site)/request-a-quote/template/route";
+import { GET } from "@/app/[locale]/(site)/request-a-quote/template/word/route";
 import { localizedHref } from "@/lib/i18n/routing";
 
 describe("editable implementation proposal", () => {
@@ -15,15 +21,39 @@ describe("editable implementation proposal", () => {
       );
       expect(response.status).toBe(200);
       expect(response.headers.get("content-type")).toBe(
-        "text/markdown; charset=utf-8",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       );
       expect(response.headers.get("content-disposition")).toContain(
-        `pycolors-proposal-template-${locale}.md`,
+        `pycolors-proposal-template-${locale}.docx`,
       );
       expect(response.headers.get("x-robots-tag")).toBe("noindex");
       expect(response.headers.get("x-content-type-options")).toBe("nosniff");
-      const text = await response.text();
-      expect(text).toBe(createProposalTemplate(locale));
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      const files = unzipSync(bytes);
+      const documentXml = strFromU8(files["word/document.xml"]!);
+      const text = createProposalTemplate(locale);
+      const document = proposalDocument(locale);
+      expect(document.sections).toHaveLength(10);
+      expect(
+        document.sections
+          .flatMap((section) => section.blocks)
+          .filter((block) => block.type === "table"),
+      ).toHaveLength(4);
+      for (const section of document.sections)
+        expect(documentXml).toContain(section.title);
+      expect(documentXml.match(/<w:tbl>/g)).toHaveLength(4);
+      expect(documentXml).toContain("<w:tblHeader/>");
+      expect(documentXml).not.toContain("**");
+      expect(Object.keys(files).some((name) => /vba|macro/i.test(name))).toBe(
+        false,
+      );
+      expect(strFromU8(files["word/styles.xml"]!)).toContain(
+        'w:styleId="Title"',
+      );
+      expect(strFromU8(files["word/_rels/document.xml.rels"]!)).toContain(
+        localizedHref("/terms", locale),
+      );
+      expect(createProposalDocx(locale)).toEqual(bytes);
       expect(text.match(/^## /gm)).toHaveLength(10);
       expect(text).toContain(LEGAL_COMPANY.name);
       expect(text).toContain(LEGAL_COMPANY.vatNumber);
@@ -46,5 +76,23 @@ describe("editable implementation proposal", () => {
     expect(localizedHref("/fr/demande-de-devis/modele", "en")).toBe(
       "/request-a-quote/template",
     );
+    expect(localizedHref("/request-a-quote/template/word", "fr")).toBe(
+      "/fr/demande-de-devis/modele/word",
+    );
+  });
+  it("preserves placeholders and only interprets the template's own inline markup", () => {
+    expect(
+      proposalInlines(
+        "Client: [complete] **Scope** [terms](https://pycolors.io/terms)",
+      ),
+    ).toEqual([
+      { text: "Client: [complete] " },
+      { text: "Scope", bold: true },
+      { text: " " },
+      { text: "terms", href: "https://pycolors.io/terms" },
+    ]);
+    expect(proposalInlines("[bad](javascript:alert(1))")).toEqual([
+      { text: "[bad](javascript:alert(1))" },
+    ]);
   });
 });

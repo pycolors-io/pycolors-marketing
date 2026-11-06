@@ -55,6 +55,7 @@ const GROUPS = [
     title: "Company",
     links: [
       { label: "About PyColors", href: "/about" },
+      { label: "Services", href: "/services" },
       { label: "Purchase support", href: "/orders/support" },
       { label: "Recover purchase", href: "/orders/recover" },
       { label: "Contact", href: "/contact" },

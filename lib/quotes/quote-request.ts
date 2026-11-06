@@ -28,7 +28,8 @@ export const QUOTE_PROJECT_TYPES = [
 ] as const;
 export const QUOTE_PROJECT_STAGES = ["new", "existing", "redesign"] as const;
 export type QuoteField = (typeof QUOTE_FIELDS)[number];
-export type QuoteService = "guided-setup" | "business-adaptation";
+export type QuoteService =
+  "guided-setup" | "business-adaptation" | "custom-product";
 export type QuoteRequest = {
   requestId: string;
   name: string;
@@ -48,7 +49,9 @@ export type QuoteRequest = {
   successCriteria?: string;
 };
 export function quoteService(value: unknown): QuoteService | "" {
-  return value === "guided-setup" || value === "business-adaptation"
+  return value === "guided-setup" ||
+    value === "business-adaptation" ||
+    value === "custom-product"
     ? value
     : "";
 }

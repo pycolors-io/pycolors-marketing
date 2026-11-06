@@ -561,16 +561,20 @@ export default function HomePage() {
               <div className={styles.implementationHeader}>
                 <div className={styles.implementationCopy}>
                   <p className={styles.implementationEyebrow}>
-                    {tSite("Starter Pro · Implementation services")}
+                    {tSite("PyColors Services")}
                   </p>
                   <h3 id="home-implementation-heading">
-                    {tSite("Implementation, scoped to your product.")}
+                    {tSite("Custom software, built around your business.")}
                   </h3>
                   <p className={styles.implementationDescription}>
                     {tSite(
-                      "Work with PyColors to configure your foundation or build a defined business workflow. Start with agreed deliverables and a written proposal.",
+                      "Client portals, internal tools, document workflows and SaaS applications. Define your project with PyColors through a written proposal, or start with the focused engagements below.",
                     )}
                   </p>
+                  <Link href="/services" className={linkClass}>
+                    {tSite("Explore our services")}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </Link>
                 </div>
                 <ol
                   aria-label={tSite("Implementation process")}

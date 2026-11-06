@@ -197,9 +197,14 @@ describe("product homepage", () => {
     render(<HomePage />);
     const production = screen.getByRole("region", { name: headings[2] });
     const implementation = within(production).getByRole("complementary", {
-      name: "Implementation, scoped to your product.",
+      name: "Custom software, built around your business.",
     });
     expect(implementation).toHaveTextContent("written proposal");
+    expect(
+      within(implementation).getByRole("link", {
+        name: "Explore our services",
+      }),
+    ).toHaveAttribute("href", "/services");
     expect(implementation).toHaveTextContent(
       "Source licence and provider costs are separate.",
     );

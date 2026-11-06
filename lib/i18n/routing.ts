@@ -8,6 +8,10 @@ export const localizedPathnames: Record<string, { en: string; fr: string }> = {
     en: "/request-a-quote/template",
     fr: "/demande-de-devis/modele",
   },
+  "/request-a-quote/template/word": {
+    en: "/request-a-quote/template/word",
+    fr: "/demande-de-devis/modele/word",
+  },
   "/about": { en: "/about", fr: "/a-propos" },
   "/license": { en: "/license", fr: "/licence" },
   "/terms": { en: "/terms", fr: "/conditions" },

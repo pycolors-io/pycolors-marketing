@@ -77,6 +77,16 @@ describe("Project quote requests", () => {
       "A clear scope for your next product.",
     );
     expect(screen.getByLabelText("Service")).toHaveValue("business-adaptation");
+    expect(
+      screen.getByRole("heading", {
+        name: "Your quote, prepared by PyColors.",
+      }),
+    ).toBeVisible();
+    const proposal = screen.getByRole("link", {
+      name: "See what a proposal includes",
+    });
+    expect(proposal).toHaveAttribute("href", "/request-a-quote/template");
+    expect(proposal).not.toHaveAttribute("download");
     expect(metadata.alternates).toMatchObject({
       canonical: "/request-a-quote",
       languages: {
@@ -97,6 +107,26 @@ describe("Project quote requests", () => {
       }),
     );
     expect(screen.getByLabelText("Service")).toHaveValue("");
+  });
+  it("carries a custom project enquiry from its URL into the validated request", async () => {
+    render(
+      await QuoteRequestPage({
+        params: Promise.resolve({ locale: "en" }),
+        searchParams: Promise.resolve({ service: "custom-product" }),
+      }),
+    );
+    expect(screen.getByRole("combobox", { name: "Service" })).toHaveValue(
+      "custom-product",
+    );
+    expect(screen.getByRole("option", { name: "Custom software" })).toHaveValue(
+      "custom-product",
+    );
+    fill();
+    submit();
+    await screen.findByRole("status");
+    expect(
+      JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body)),
+    ).toMatchObject({ service: "custom-product", brief });
   });
   it("submits optional implementation details with the brief", async () => {
     render(<QuoteRequestForm initialService="business-adaptation" />);

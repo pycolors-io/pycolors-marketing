@@ -38,7 +38,7 @@ export function createProposalTemplate(locale: SiteLocale = "en") {
 - Problème à résoudre : [à compléter]
 - Parcours prioritaires pour cette mission : [à compléter]
 - Résultat observable attendu : [à compléter]
-- Prestation retenue : [Guided setup / Business adaptation — confirmer le périmètre]
+- Prestation retenue : [Logiciel sur mesure / Démarrage accompagné / Adaptation métier — confirmer le périmètre]
 
 ## 3. Périmètre et livrables
 
@@ -146,7 +146,7 @@ Ne commencer la réalisation qu’après confirmation des engagements et préreq
 - Problem to solve: [complete]
 - Priority workflows for this engagement: [complete]
 - Observable outcome: [complete]
-- Selected service: [Guided setup / Business adaptation — confirm scope]
+- Selected service: [Custom software / Guided setup / Business adaptation — confirm scope]
 
 ## 3. Scope and deliverables
 

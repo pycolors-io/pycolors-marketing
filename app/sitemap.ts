@@ -31,6 +31,7 @@ const STATIC_ROUTES = [
   "/compare/build-vs-buy",
   "/pricing",
   "/request-a-quote",
+  "/services",
   "/upgrade",
   "/starters/free",
   "/demo",

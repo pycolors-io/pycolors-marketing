@@ -6,15 +6,14 @@ import { Link } from "@/lib/i18n/navigation";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
 import { QuoteRequestForm } from "@/components/quotes/quote-request-form";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
-import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+import { QUOTE_SERVICES } from "@/lib/products/project-services";
 import { quoteService } from "@/lib/quotes/quote-request";
 import styles from "@/components/quotes/quote-request.module.css";
 
 const description =
-  "Discuss Starter Pro setup or a targeted business adaptation. Share your workflow and receive a scope-led proposal from PyColors.";
+  "Discuss a custom SaaS application, business tool or Starter Pro engagement. Share your project and receive a scoped proposal from PyColors.";
 const metadata: Metadata = {
-  title: "Request a quote · Starter Pro",
+  title: "Discuss your project · PyColors",
   description,
   alternates: {
     canonical: "/request-a-quote",
@@ -23,7 +22,7 @@ const metadata: Metadata = {
   openGraph: {
     locale: "en_US",
     alternateLocale: "fr_FR",
-    title: "Request a quote · Starter Pro",
+    title: "Discuss your project · PyColors",
     description,
     url: "/request-a-quote",
     type: "website",
@@ -45,7 +44,7 @@ export default async function QuoteRequestPage({
           variant="compact"
           align="left"
           contentClassName="mx-0 max-w-4xl"
-          badges={[{ label: "Starter Pro · Implementation" }]}
+          badges={[{ label: "PyColors Services" }]}
           title={tSite("A clear scope for your next product.")}
           description={tSite(
             "Tell us what you’re building. We’ll review your workflow, define the deliverables and prepare a written proposal.",
@@ -57,18 +56,18 @@ export default async function QuoteRequestPage({
             aria-labelledby="quote-scope-heading"
           >
             <span className={styles.eyebrow}>
-              {tSite("One foundation. Your workflow.")}
+              {tSite("Your project. A clear scope.")}
             </span>
             <h2 id="quote-scope-heading">
               {tSite("Help where it moves your product forward.")}
             </h2>
             <p className={styles.intro}>
               {tSite(
-                "Start with the complete Starter Pro source. Add an engagement for your environment or a specific business workflow, with a scope your team can review.",
+                "Tell us about your users and the work they need to do. We can scope a custom product, configure Starter Pro or extend an existing workflow.",
               )}
             </p>
             <div className={styles.services}>
-              {Object.values(STARTER_PRO_SERVICES).map((service) => (
+              {QUOTE_SERVICES.map((service) => (
                 <section
                   className={styles.service}
                   key={service.id}
@@ -83,7 +82,11 @@ export default async function QuoteRequestPage({
                     href={service.example.href}
                     className="mt-2 inline-flex min-h-11 items-center text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                   >
-                    {tSite("View example delivery")}
+                    {tSite(
+                      service.id === "custom-product"
+                        ? "Explore our reference implementation"
+                        : "View example delivery",
+                    )}
                   </Link>
                 </section>
               ))}
@@ -117,32 +120,23 @@ export default async function QuoteRequestPage({
               aria-labelledby="proposal-outline-heading"
             >
               <h3 id="proposal-outline-heading">
-                {tSite("Your quote, in writing.")}
+                {tSite("Your quote, prepared by PyColors.")}
               </h3>
               <p>
                 {tSite(
-                  "A reviewable scope with deliverables, milestones, acceptance criteria, responsibilities and an itemized budget.",
+                  "After reviewing your brief, we prepare the scope, deliverables, timeline and itemized budget for your review.",
                 )}
               </p>
               <a
                 href={tSite.href("/request-a-quote/template")}
-                download
                 className="inline-flex min-h-11 items-center text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
-                {tSite("Download the editable proposal template")}
+                {tSite("See what a proposal includes")}
               </a>
-              <p className={styles.help}>
-                {tSite(
-                  "Blank example to complete for your engagement. Prices and commitments are agreed before work begins.",
-                )}
-              </p>
             </section>
             <p className={styles.scope}>
-              {tSite("Starting service fees. The")}
-              {tSite(" ")}
-              {tSite(PRODUCT_DISPLAY["starter-pro"].priceLabel)}{" "}
               {tSite(
-                " source licence and provider costs are itemized separately. Review",
+                "Your proposal itemizes development, any source licence and provider costs. Scope and included follow-up are agreed in writing. Review",
               )}
               {tSite(" ")}
               <Link href="/docs/starter-pro/implementation-support">

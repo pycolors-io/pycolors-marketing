@@ -344,6 +344,7 @@ describe("Marketing product discovery navigation", () => {
     const primary = within(screen.getByRole("navigation", { name: "Primary" }));
     expect(PRIMARY_NAV_ITEMS.map((item) => item.label)).toEqual([
       "Products",
+      "Services",
       "Docs",
       "Resources",
       "Demos",
