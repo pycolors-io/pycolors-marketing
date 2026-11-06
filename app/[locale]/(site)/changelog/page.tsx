@@ -65,6 +65,57 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
+    version: "v1.32.0",
+    title:
+      "PyColors Marketing v1.32.0: explore in your language, shape your project",
+    dateLabel: "Fri 6 Nov 2026",
+    dateISO: "2026-11-06",
+    status: "Stable",
+    releaseWeekLabel: "Nov 2026 (weekly release)",
+    summary:
+      "Explore PyColors in English or French, then turn a project idea into a clearer implementation brief.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Browse product pages, documentation, articles and interactive Block examples in English or French.",
+          "Explore Services and describe a custom software project with its audience, priorities and desired outcomes.",
+          "Preview a structured project proposal and download an editable Word template before discussing the scope.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Move between languages while keeping the relevant page and navigation context.",
+          "Use translated guides and Block examples to choose a starting point and adapt it to your application.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Existing English links remain available, with navigation and search in both languages covered by automated checks.",
+          "Project enquiries support both languages with clearer feedback for missing information.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Read a guide in your preferred language and compare its example with the interface.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Clarify your project audience, priorities and acceptance goals before agreeing on an implementation scope.",
+        ],
+      },
+    ],
+    cta: {
+      label: "Explore Services",
+      href: "/services",
+    },
+  },
+  {
     version: "v1.31.0",
     title: "PyColors Marketing v1.31.0: from evaluation to implementation",
     dateLabel: "Wed 4 Nov 2026",

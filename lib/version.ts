@@ -1,4 +1,4 @@
-export const APP_VERSION = "1.31.0" as const;
+export const APP_VERSION = "1.32.0" as const;
 export const UI_VERSION = "1.7.1" as const;
 export const TOKENS_VERSION = "1.2.3" as const;
 

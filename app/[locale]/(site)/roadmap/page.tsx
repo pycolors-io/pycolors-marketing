@@ -127,7 +127,7 @@ const milestones: Array<{
     id: "Nov 2026",
     title: "November 2026",
     subtitle:
-      "PyColors Marketing v1.31.0, dated 4 November 2026, connects Starter Pro evaluation, reusable workflow guides and scoped implementation handover.",
+      "PyColors Marketing v1.32.0, dated 6 November 2026, connects bilingual product discovery, translated guides and a clearer Services and project enquiry journey.",
   },
   {
     id: "Release Week",
@@ -203,6 +203,15 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.32.0",
+    description:
+      "Release notes for 6 November 2026: explore PyColors in English or French, use translated guides and prepare a clearer project brief with Services and editable proposal templates.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Marketing", "Docs", "Services"],
+    href: "/changelog",
+  },
   {
     title: "PyColors Marketing v1.31.0",
     description:
